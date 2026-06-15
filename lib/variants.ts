@@ -25,10 +25,15 @@ export function preferredVariantIds(models: ClientModel[]): Map<string, string> 
     const pickOrder = (order: string[]) => order.map(byVar).find(Boolean) as ClientModel | undefined;
     let pick = rows[0];
     if (k.startsWith("gpt-")) {
-      pick = pickOrder(["high", "xhigh", "medium", "low", "non-reasoning", "default"]) || rows[0];
+      // Prefer the "(high)" reasoning effort. "xhigh" is demoted below the other
+      // efforts so it only survives when a family has no high/medium/low variant.
+      pick = pickOrder(["high", "medium", "low", "xhigh", "minimal", "non-reasoning", "default"]) || rows[0];
     } else if (k.startsWith("claude-")) {
-      const adaptive = rows.find((r) => /adaptive reasoning/i.test(r.display_name));
-      pick = adaptive || pickOrder(["max", "high", "reasoning", "non-reasoning", "default"]) || rows[0];
+      // Keep the reasoning variant. Anthropic labels the reasoning tier of Opus
+      // 4.6/4.7/4.8, Sonnet 4.6 and Fable as "Adaptive Reasoning, Max Effort" —
+      // there is no reasoning "High Effort" variant — so "Max" survives for those;
+      // the 4.5-era families use the plain "(Reasoning)" variant.
+      pick = pickOrder(["reasoning", "high", "max", "adaptive", "default", "non-reasoning"]) || rows[0];
     } else {
       // GLM / Kimi: keep the reasoning/default variant, drop "(Non-reasoning)"
       pick = pickOrder(["reasoning", "default", "max", "high", "adaptive", "non-reasoning"]) || rows[0];
