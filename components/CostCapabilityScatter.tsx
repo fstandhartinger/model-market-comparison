@@ -7,7 +7,7 @@ import {
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { modelCost } from "../lib/cost";
+import { modelCost, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
 import { Toggle } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels } from "../lib/variants";
@@ -32,20 +32,21 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
-  const allowed = s.providerSet;
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
   const [logX, setLogX] = useState(true);
   const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
 
   const points = useMemo(() => {
     let pool = data.models;
     if (s.collapse) pool = collapseModels(pool, preferredId);
+    if (s.excludeUnauthorized) pool = pool.filter((m) => !isUnauthorizedModel(m.family_key));
     if (s.featured) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     return pool
       .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
-      .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0)
+      .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
       .map((x) => ({ x: x.cost as number, y: x.sc as number, name: x.m.display_name, org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.excludeUnauthorized, s.minScore, preferredId]);
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();

@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers } from "../lib/cost";
+import { modelCost, rankedOffers, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds } from "../lib/variants";
@@ -14,21 +14,20 @@ type SortKey = "name" | "org" | "score" | "cost" | "providers";
 export function ModelExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = s.providerSet;
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
   const [sort, setSort] = useState<SortKey>("score");
   const [asc, setAsc] = useState(false);
   const [q, setQ] = useState("");
   const [openFilter, setOpenFilter] = useState<"all" | "open" | "closed">("all");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
   const [org, setOrg] = useState("");
-  const [minScore, setMinScore] = useState("");
   const [maxCost, setMaxCost] = useState("");
 
   const orgs = useMemo(() => Array.from(new Set(data.models.map((m) => m.org))).sort(), [data.models]);
   const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
 
   const rows = useMemo(() => {
-    const minS = parseFloat(minScore), maxC = parseFloat(maxCost);
+    const maxC = parseFloat(maxCost);
     let r = data.models.map((m) => ({
       m, sc: m.scores[score], cost: modelCost(m, data, allowed),
       cheap: rankedOffers(data.offersByFamily[m.family_key], allowed).slice(0, 3),
@@ -39,15 +38,18 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       if (!k.startsWith("gpt-") && !k.startsWith("claude-")) return true;
       return preferredId.get(k) === x.m.id;
     });
+    if (s.excludeUnauthorized) r = r.filter((x) => !isUnauthorizedModel(x.m.family_key));
     if (s.featured) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (openFilter !== "all") r = r.filter((x) => x.m.open_weights === (openFilter === "open"));
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
     if (withScoreOnly) r = r.filter((x) => x.sc != null);
-    if (Number.isFinite(minS)) r = r.filter((x) => (x.sc ?? -Infinity) >= minS);
+    if (s.minScore > 0) r = r.filter((x) => x.sc == null || x.sc >= s.minScore);
     if (Number.isFinite(maxC)) r = r.filter((x) => x.cost != null && x.cost <= maxC);
-    if (allowed) r = r.filter((x) => x.ncheap > 0);
+    // Only an explicit provider allow-list should drop models entirely; the
+    // exclude-Chinese toggle just reprices via the remaining providers.
+    if (s.providerSet) r = r.filter((x) => x.ncheap > 0);
 
     const dir = asc ? 1 : -1;
     r.sort((a, b) => {
@@ -58,7 +60,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, openFilter, org, q, withScoreOnly, minScore, maxCost, sort, asc, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.excludeUnauthorized, s.providerSet, openFilter, org, q, withScoreOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);
@@ -78,7 +80,6 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           <option value="">All orgs</option>
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
-        <NumFilter label="Min score" value={minScore} onChange={setMinScore} placeholder="e.g. 40" />
         <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
         <select value={openFilter} onChange={(e) => setOpenFilter(e.target.value as "all" | "open" | "closed")} className="rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
           <option value="all">All weights</option><option value="open">Open weights</option><option value="closed">Closed</option>

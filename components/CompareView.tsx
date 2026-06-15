@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ClientData, ClientModel } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers } from "../lib/cost";
+import { modelCost, rankedOffers, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels } from "../lib/variants";
@@ -19,7 +19,7 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
 
 export function CompareView({ data }: { data: ClientData }) {
   const s = useSettings();
-  const allowed = s.providerSet;
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
   const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
@@ -27,11 +27,13 @@ export function CompareView({ data }: { data: ClientData }) {
   const models = useMemo(() => {
     let r = data.models.filter((m) => m.scores[s.score] != null || rankedOffers(data.offersByFamily[m.family_key], null).length);
     if (s.collapse) r = collapseModels(r, preferredId);
+    if (s.excludeUnauthorized) r = r.filter((m) => !isUnauthorizedModel(m.family_key));
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
+    if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] == null || (m.scores[s.score] as number) >= s.minScore);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((m) => m.display_name.toLowerCase().includes(t) || m.org.toLowerCase().includes(t)); }
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, s.score, s.collapse, s.featured, s.familySet, q, preferredId]);
+  }, [data, s.score, s.collapse, s.featured, s.familySet, s.excludeUnauthorized, s.minScore, q, preferredId]);
 
   const maxScore = Math.max(1, ...models.map((m) => m.scores[s.score] ?? 0));
 

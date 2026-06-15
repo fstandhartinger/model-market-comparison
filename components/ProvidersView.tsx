@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num } from "../lib/format";
-import { rankedOffers } from "../lib/cost";
+import { rankedOffers, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 
@@ -22,26 +22,34 @@ interface Row {
 export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
   const [mode, setMode] = useState<Mode>("all");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
+
+  const eligible = (m: { family_key: string; scores: Record<string, number | null> }) => {
+    if (s.excludeUnauthorized && isUnauthorizedModel(m.family_key)) return false;
+    if (s.familySet && !s.familySet.has(m.family_key)) return false;
+    if (s.minScore > 0 && m.scores[score] != null && (m.scores[score] as number) < s.minScore) return false;
+    return true;
+  };
 
   // models eligible for the peer set
   const peerModels = useMemo(() => {
     const fams = new Map<string, { family_key: string }>();
     for (const m of data.models) {
       if (scorePeersOnly && m.scores[score] == null) continue;
-      if (s.familySet && !s.familySet.has(m.family_key)) continue;
+      if (!eligible(m)) continue;
       if (!fams.has(m.family_key)) fams.set(m.family_key, { family_key: m.family_key });
     }
     return [...fams.values()];
-  }, [data, score, scorePeersOnly, s.familySet]);
+  }, [data, score, scorePeersOnly, s.familySet, s.excludeUnauthorized, s.minScore]);
 
   const modelOptions = useMemo(
-    () => data.models.filter((m) => rankedOffers(data.offersByFamily[m.family_key], null).length)
-      .filter((m) => !s.familySet || s.familySet.has(m.family_key))
+    () => data.models.filter((m) => rankedOffers(data.offersByFamily[m.family_key], allowed).length)
+      .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, score, s.familySet]
+    [data, score, allowed, s.familySet, s.excludeUnauthorized, s.minScore]
   );
   const selectedModel = modelOptions.find((m) => m.id === modelId) || modelOptions[0];
 
@@ -53,7 +61,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
     };
     // aggregate across peer-set families
     for (const fam of peerModels) {
-      const ranked = rankedOffers(data.offersByFamily[fam.family_key], null);
+      const ranked = rankedOffers(data.offersByFamily[fam.family_key], allowed);
       ranked.forEach((o, idx) => {
         const a = ensure(o.key, o.platform, o.provider);
         a.ranks.push(idx + 1);
@@ -61,7 +69,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
       });
     }
     // single-model ranking
-    const modelRanked = selectedModel ? rankedOffers(data.offersByFamily[selectedModel.family_key], null) : [];
+    const modelRanked = selectedModel ? rankedOffers(data.offersByFamily[selectedModel.family_key], allowed) : [];
     const modelRankByKey = new Map<string, { rank: number; price: number }>();
     modelRanked.forEach((o, i) => modelRankByKey.set(o.key, { rank: i + 1, price: o.blended }));
 
@@ -84,7 +92,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
     if (mode === "model") out.sort((x, y) => (x.model_price ?? Infinity) - (y.model_price ?? Infinity));
     else out.sort((x, y) => (x.avg_rank ?? Infinity) - (y.avg_rank ?? Infinity));
     return out;
-  }, [data, peerModels, selectedModel, mode]);
+  }, [data, peerModels, selectedModel, mode, allowed]);
 
   let shown = mode === "model" ? rows.filter((r) => r.model_price != null) : rows.filter((r) => r.models_offered > 0);
   if (s.providerSet) shown = shown.filter((r) => s.providerSet!.has(r.key));
