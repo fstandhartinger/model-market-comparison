@@ -17,6 +17,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   const [featuredOnly, setFeaturedOnly] = useState(true);
   const [openFilter, setOpenFilter] = useState<"all" | "open" | "closed">("all");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
+  const [collapseVariants, setCollapseVariants] = useState(true);
   const [org, setOrg] = useState("");
   const [minScore, setMinScore] = useState("");
   const [maxCost, setMaxCost] = useState("");
@@ -24,6 +25,32 @@ export function ModelExplorer({ data }: { data: ClientData }) {
 
   const allowed = providerSel.size ? providerSel : null;
   const orgs = useMemo(() => Array.from(new Set(data.models.map((m) => m.org))).sort(), [data.models]);
+
+  // For GPT-* and Claude-* families (which expose many reasoning variants), pick
+  // a single representative: GPT → the "(high)" effort variant; Claude → the
+  // "Adaptive Reasoning" variant. Fallbacks apply when a family lacks that exact one.
+  const preferredId = useMemo(() => {
+    const byFamily = new Map<string, typeof data.models>();
+    for (const m of data.models) {
+      const k = m.family_key;
+      if (!k.startsWith("gpt-") && !k.startsWith("claude-")) continue;
+      if (!byFamily.has(k)) byFamily.set(k, []);
+      byFamily.get(k)!.push(m);
+    }
+    const ids = new Map<string, string>();
+    for (const [k, rows] of byFamily) {
+      const byVar = (v: string) => rows.find((r) => r.variant === v);
+      let pick = rows[0];
+      if (k.startsWith("gpt-")) {
+        for (const v of ["high", "xhigh", "medium", "low", "non-reasoning", "default"]) { const r = byVar(v); if (r) { pick = r; break; } }
+      } else {
+        const adaptive = rows.find((r) => /adaptive reasoning/i.test(r.display_name));
+        pick = adaptive || (["max", "high", "reasoning", "non-reasoning", "default"].map(byVar).find(Boolean) as typeof pick) || rows[0];
+      }
+      ids.set(k, pick.id);
+    }
+    return ids;
+  }, [data.models]);
 
   const rows = useMemo(() => {
     const minS = parseFloat(minScore);
@@ -35,6 +62,11 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       cheap: rankedOffers(data.offersByFamily[m.family_key], allowed).slice(0, 3),
       ncheap: rankedOffers(data.offersByFamily[m.family_key], allowed).length,
     }));
+    if (collapseVariants) r = r.filter((x) => {
+      const k = x.m.family_key;
+      if (!k.startsWith("gpt-") && !k.startsWith("claude-")) return true;
+      return preferredId.get(k) === x.m.id;
+    });
     if (featuredOnly) r = r.filter((x) => x.m.featured);
     if (openFilter !== "all") r = r.filter((x) => x.m.open_weights === (openFilter === "open"));
     if (org) r = r.filter((x) => x.m.org === org);
@@ -54,7 +86,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, featuredOnly, openFilter, org, q, withScoreOnly, minScore, maxCost, sort, asc]);
+  }, [data, score, allowed, featuredOnly, openFilter, org, q, withScoreOnly, minScore, maxCost, sort, asc, collapseVariants, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);
@@ -80,6 +112,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
         </select>
         <NumFilter label="Min score" value={minScore} onChange={setMinScore} placeholder="e.g. 40" />
         <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
+        <Toggle label="One variant per GPT/Claude" on={collapseVariants} set={setCollapseVariants} />
         <Toggle label="Featured" on={featuredOnly} set={setFeaturedOnly} />
         <select value={openFilter} onChange={(e) => setOpenFilter(e.target.value as "all" | "open" | "closed")} className="rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
           <option value="all">All weights</option>
