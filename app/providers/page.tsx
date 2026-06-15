@@ -1,19 +1,23 @@
 import { getDataset } from "../../lib/data";
+import { clientData } from "../../lib/client-model";
+import { ProvidersView } from "../../components/ProvidersView";
 
 export const dynamic = "force-dynamic";
 
 export default async function ProvidersPage() {
   const ds = await getDataset();
+  const data = clientData(ds);
   const platforms = new Map<string, number>();
   for (const p of ds.providers) platforms.set(p.platform, (platforms.get(p.platform) || 0) + 1);
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Providers &amp; platforms</h1>
+      <h1 className="text-2xl font-bold">Providers &amp; price ranking</h1>
       <p className="mt-1 mb-5 max-w-3xl text-sm text-gray-400">
-        Every inference provider and pricing platform tracked, with how many model families each one
-        prices. OpenRouter entries are individual inference providers; AWS Bedrock, Azure AI Foundry,
-        Anthropic and GitHub Copilot are first-party platforms.
+        Every inference provider and pricing platform tracked, ranked by how cheap they are.
+        Rank either by a provider&apos;s average price position across all the models it offers
+        (optionally limited to models that have the selected benchmark), or by a single model&apos;s
+        prices across providers. Data bars make the comparison visual.
       </p>
 
       <div className="mb-6 flex flex-wrap gap-3">
@@ -25,24 +29,7 @@ export default async function ProvidersPage() {
         ))}
       </div>
 
-      <div className="card overflow-x-auto">
-        <table className="grid w-full text-sm">
-          <thead><tr>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">Provider</th>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">Platform</th>
-            <th className="px-3 py-2 text-right text-xs text-gray-400">Model families priced</th>
-          </tr></thead>
-          <tbody>
-            {ds.providers.map((p, i) => (
-              <tr key={i}>
-                <td className="px-3 py-2">{p.provider}</td>
-                <td className="px-3 py-2 text-gray-400">{p.platform}</td>
-                <td className="px-3 py-2 text-right tabular font-semibold">{p.model_count}</td>
-              </tr>
-            ))}
-          </tbody>
-        </table>
-      </div>
+      <ProvidersView data={data} />
     </div>
   );
 }

@@ -1,12 +1,12 @@
 import { getDataset } from "../../lib/data";
-import { clientRows } from "../../lib/client-model";
+import { clientData } from "../../lib/client-model";
 import { ChartsBoard } from "../../components/ChartsBoard";
 
 export const dynamic = "force-dynamic";
 
 export default async function ChartsPage() {
   const ds = await getDataset();
-  const rows = clientRows(ds);
+  const data = clientData(ds);
   return (
     <div>
       <h1 className="text-2xl font-bold">Charts</h1>
@@ -15,7 +15,7 @@ export default async function ChartsPage() {
         Switch the score and toggle the featured set. For the price/capability scatter, see{" "}
         <a href="/scatter" className="text-accent">Cost vs Capability</a>.
       </p>
-      <ChartsBoard models={rows} />
+      <ChartsBoard data={data} />
     </div>
   );
 }

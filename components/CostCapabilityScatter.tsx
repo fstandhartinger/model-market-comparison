@@ -2,106 +2,102 @@
 import { useMemo, useState } from "react";
 import { useRouter } from "next/navigation";
 import {
-  ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip,
-  ResponsiveContainer, Label,
+  ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
 } from "recharts";
-import type { ClientModel } from "../lib/client-model";
+import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS, type ScoreKey } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
+import { DEFAULT_SCORE, modelCost } from "../lib/cost";
+import { ScoreSelect, Toggle, ProviderFilter } from "./ui";
 
-const SCORE_OPTIONS: ScoreKey[] = [
-  "aa_coding_index",
-  "aa_intelligence_index",
-  "designarena_frontend",
-  "designarena_fullstack",
-];
+// shape: closed-lab = circle, open-weights = square
+function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: { open?: boolean } }) {
+  const { cx, cy, fill, payload } = props;
+  if (cx == null || cy == null) return <g />;
+  if (payload?.open) return <rect x={cx - 4.5} y={cy - 4.5} width={9} height={9} fill={fill} stroke="#0e1116" strokeWidth={0.5} />;
+  return <circle cx={cx} cy={cy} r={5} fill={fill} stroke="#0e1116" strokeWidth={0.5} />;
+}
 
-export function CostCapabilityScatter({ models }: { models: ClientModel[] }) {
+function logTicks(min: number, max: number): number[] {
+  const ticks: number[] = [];
+  for (let e = -3; e <= 3; e++) for (const m of [1, 3]) {
+    const v = m * 10 ** e;
+    if (v >= min * 0.9 && v <= max * 1.1) ticks.push(v);
+  }
+  return ticks.length ? ticks : [min, max];
+}
+
+export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const router = useRouter();
-  const [score, setScore] = useState<ScoreKey>("aa_coding_index");
+  const [score, setScore] = useState<ScoreKey>(DEFAULT_SCORE);
   const [featuredOnly, setFeaturedOnly] = useState(true);
   const [logX, setLogX] = useState(true);
+  const [providerSel, setProviderSel] = useState<Set<string>>(new Set());
+  const allowed = providerSel.size ? providerSel : null;
 
   const points = useMemo(() => {
-    return models
+    return data.models
       .filter((m) => (featuredOnly ? m.featured : true))
-      .filter((m) => m.scores[score] != null && m.cost10to1 != null && (m.cost10to1 as number) > 0)
-      .map((m) => ({
-        x: m.cost10to1 as number,
-        y: m.scores[score] as number,
-        name: m.display_name,
-        org: m.org,
-        id: m.id,
-        open: m.open_weights,
-        z: 100,
-      }));
-  }, [models, score, featuredOnly]);
+      .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
+      .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0)
+      .map((x) => ({ x: x.cost as number, y: x.sc as number, name: x.m.display_name, org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
+  }, [data, score, featuredOnly, allowed]);
 
-  // group by org so each org gets its colour + legend entry
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();
     for (const p of points) { if (!g.has(p.org)) g.set(p.org, []); g.get(p.org)!.push(p); }
     return [...g.entries()].sort((a, b) => b[1].length - a[1].length);
   }, [points]);
 
+  const xs = points.map((p) => p.x);
+  const xMin = xs.length ? Math.min(...xs) : 0.1;
+  const xMax = xs.length ? Math.max(...xs) : 100;
   const isElo = score.startsWith("designarena");
 
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <label className="text-sm text-gray-400">Capability (Y)</label>
-        <select value={score} onChange={(e) => setScore(e.target.value as ScoreKey)}
-          className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
-          {SCORE_OPTIONS.map((s) => <option key={s} value={s}>{SCORE_LABELS[s]}</option>)}
-        </select>
-        <button onClick={() => setFeaturedOnly(!featuredOnly)}
-          className={`rounded-md border px-3 py-1.5 text-sm ${featuredOnly ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
-          {featuredOnly ? "✓ " : ""}Featured only
-        </button>
-        <button onClick={() => setLogX(!logX)}
-          className={`rounded-md border px-3 py-1.5 text-sm ${logX ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
-          {logX ? "✓ " : ""}Log cost axis
-        </button>
-        <span className="ml-auto text-xs text-gray-500">{points.length} models · cost = (10·input + 1·output) / 11</span>
+        <ScoreSelect value={score} onChange={setScore} label="Capability (Y)" />
+        <ProviderFilter providers={data.providers} selected={providerSel} setSelected={setProviderSel} />
+        <Toggle label="Featured only" on={featuredOnly} set={setFeaturedOnly} />
+        <Toggle label="Log cost axis" on={logX} set={setLogX} />
+        <span className="ml-auto text-xs text-gray-500">{points.length} models · cost = cheapest (10·in + 1·out)/11{allowed ? " · within selected providers" : ""}</span>
       </div>
 
-      <div className="card p-4" style={{ height: 560 }}>
+      <div className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 20, right: 30, bottom: 50, left: 20 }}>
+          <ScatterChart margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
             <CartesianGrid stroke="#222932" />
-            <XAxis
-              type="number" dataKey="x" name="Cost"
-              scale={logX ? "log" : "linear"} domain={logX ? ["auto", "auto"] : [0, "auto"]}
-              tickFormatter={(v) => usdPerM(v)} stroke="#8a93a3" fontSize={12}
-            >
-              <Label value="Cost →  cheapest blended $/1M tokens (10:1 input:output)" position="bottom" offset={20} fill="#8a93a3" fontSize={12} />
+            <XAxis type="number" dataKey="x" name="Cost"
+              scale={logX ? "log" : "linear"}
+              domain={logX ? [xMin * 0.85, xMax * 1.15] : [0, xMax * 1.1]}
+              ticks={logX ? logTicks(xMin, xMax) : undefined}
+              allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
+              tickFormatter={(v) => usdPerM(v)} stroke="#8a93a3" fontSize={12}>
+              <Label value="Cost →  cheapest blended $/1M tokens (10:1 input:output)" position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
-            <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12}
-              domain={isElo ? ["auto", "auto"] : [0, "auto"]}>
-              <Label value={`Capability →  ${SCORE_LABELS[score]}`} angle={-90} position="left" offset={0} fill="#8a93a3" fontSize={12} />
+            <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : [0, "auto"]}>
+              <Label value={SCORE_LABELS[score]} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
             {byOrg.map(([org, pts]) => (
-              <Scatter key={org} name={org} data={pts} fill={orgColor(org)}
-                onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)}
-                style={{ cursor: "pointer" }} />
+              <Scatter key={org} name={org} data={pts} fill={orgColor(org)} shape={PointShape}
+                onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
             ))}
           </ScatterChart>
         </ResponsiveContainer>
       </div>
 
-      <div className="mt-3 flex flex-wrap gap-3 text-xs text-gray-400">
+      <div className="mt-3 flex flex-wrap items-center gap-x-4 gap-y-2 text-xs text-gray-400">
+        <span className="inline-flex items-center gap-1.5"><svg width="14" height="14"><circle cx="7" cy="7" r="5" fill="#aeb6c2" /></svg> closed lab</span>
+        <span className="inline-flex items-center gap-1.5"><svg width="14" height="14"><rect x="2" y="2" width="10" height="10" fill="#aeb6c2" /></svg> open weights</span>
+        <span className="mx-1 h-3 w-px bg-line" />
         {byOrg.map(([org]) => (
-          <span key={org} className="inline-flex items-center gap-1.5">
-            <span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: orgColor(org) }} />{org}
-          </span>
+          <span key={org} className="inline-flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: orgColor(org) }} />{org}</span>
         ))}
       </div>
-      <p className="mt-3 text-xs text-gray-500">
-        Up &amp; to the left is better: more capability per dollar. Click any point to open the model detail.
-        Cost uses each model&apos;s cheapest token offer across all providers.
-      </p>
+      <p className="mt-3 text-xs text-gray-500">Up &amp; to the left is better: more capability per dollar. Click any point to open the model detail.</p>
     </div>
   );
 }
@@ -112,7 +108,7 @@ function Dot({ active, payload }: { active?: boolean; payload?: { payload: { nam
   return (
     <div className="card px-3 py-2 text-xs">
       <div className="font-semibold">{p.name}</div>
-      <div className="text-gray-400">{p.org}{p.open ? " · open weights" : ""}</div>
+      <div className="text-gray-400">{p.org}{p.open ? " · open weights" : " · closed"}</div>
       <div className="mt-1">Capability: <span className="font-semibold">{p.y.toFixed(1)}</span></div>
       <div>Cheapest 10:1 cost: <span className="font-semibold">{usdPerM(p.x)}</span> / 1M</div>
     </div>

@@ -1,12 +1,12 @@
 import { getDataset } from "../../lib/data";
-import { clientRows } from "../../lib/client-model";
+import { clientData } from "../../lib/client-model";
 import { CostCapabilityScatter } from "../../components/CostCapabilityScatter";
 
 export const dynamic = "force-dynamic";
 
 export default async function ScatterPage() {
   const ds = await getDataset();
-  const rows = clientRows(ds);
+  const data = clientData(ds);
   return (
     <div>
       <h1 className="text-2xl font-bold">Cost vs Capability</h1>
@@ -15,7 +15,7 @@ export default async function ScatterPage() {
         cost per million tokens at a 10:1 input/output mix; the y-axis is your chosen benchmark score.
         The best value sits in the upper-left.
       </p>
-      <CostCapabilityScatter models={rows} />
+      <CostCapabilityScatter data={data} />
     </div>
   );
 }

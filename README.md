@@ -12,17 +12,22 @@ providers, **AWS Bedrock**, **Azure AI Foundry**, **GitHub Copilot**, and the
 
 ## Features
 
-- **Overview** — sortable model table with a **selectable score** (AA Coding, AA
-  Intelligence, DesignArena Frontend/Full-Stack), cheapest 10:1 blended cost, and
-  top providers. Filter by featured / open-weights / org / search.
+- **Overview** — fully sortable model table (every column) with per-column filters
+  (search, org, min score, max cost, provider, open/closed), a **selectable score**
+  (default: DesignArena Full-Stack), and Excel-style **data bars** on score and cost.
+- **Compare** (master-detail) — pick a model, see every provider's input/output/
+  blended price side-by-side with data bars; cheapest highlighted.
 - **Cost vs Capability** — scatter plot: **x = cost** (cheapest 10:1 blended $/1M),
-  **y = capability** (selected score), colored by vendor. Best value is upper-left.
+  **y = capability** (selected score), colored by vendor, **circle = closed lab /
+  square = open weights**, with a **provider-subset filter** (e.g. only AWS+Azure,
+  or only the open-source market) that recomputes the cheapest cost live.
 - **Charts** — capability leaderboard, cheapest-model ranking, open-weights vs
-  closed comparisons.
+  closed comparisons; with max-price / min-capability / provider filters.
 - **Model detail** — **top-5 cheapest providers**, all token offers grouped by
   platform, full benchmark breakdown, reasoning-variant comparison, and GitHub
   Copilot per-request cost.
-- **Providers** — every provider/platform and how many model families it prices.
+- **Providers** — every provider/platform with a **price-ranking** column (avg price
+  rank across models, or a single model's prices across providers) and data bars.
 - **JSON API** — `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`.
 
 Featured models include GPT-5.5 / GPT-5.4 (with Mini and low/medium/high/xhigh

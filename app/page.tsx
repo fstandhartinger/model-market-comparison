@@ -1,13 +1,13 @@
 import { getDataset } from "../lib/data";
-import { clientRows } from "../lib/client-model";
+import { clientData } from "../lib/client-model";
 import { ModelExplorer } from "../components/ModelExplorer";
 
 export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const ds = await getDataset();
-  const rows = clientRows(ds);
-  const featured = rows.filter((r) => r.featured).length;
+  const data = clientData(ds);
+  const featured = data.models.filter((r) => r.featured).length;
 
   return (
     <div>
@@ -28,7 +28,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <ModelExplorer models={rows} />
+      <ModelExplorer data={data} />
     </div>
   );
 }

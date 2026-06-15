@@ -85,6 +85,17 @@ const EXCLUDE_RE = /(image|vision-only|\bvideo\b|sora|dall|whisper|\btts\b|speec
 // The models the product brief explicitly asks us to feature.
 const FEATURED_RE = /^(gpt-5\.[45]|claude-opus-4\.[678]|claude-sonnet-4\.6|claude-fable-5|kimi-k2\.[567]|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
 
+// Canonicalize vendor names that arrive spelled differently across sources.
+const ORG_ALIASES = {
+  "Z AI": "Z.ai", "ZAI": "Z.ai", "Zhipu": "Z.ai", "Zhipu AI": "Z.ai",
+  "Kimi": "Moonshot AI", "Moonshot": "Moonshot AI",
+  "Meta Llama": "Meta", "Meta-Llama": "Meta",
+  "Alibaba Cloud": "Alibaba", "Qwen": "Alibaba",
+  "MistralAI": "Mistral", "Mistral AI": "Mistral",
+  "xAI (Grok)": "xAI", "X AI": "xAI",
+};
+function canonOrg(org) { return ORG_ALIASES[org] || org; }
+
 function guessOrg(key) {
   if (key.startsWith("claude") || key.includes("fable") || key.includes("opus") || key.includes("sonnet") || key.includes("haiku")) return "Anthropic";
   if (key.startsWith("gpt") || key.includes("o3") || key.includes("o4") || key.includes("gpt-oss")) return "OpenAI";
@@ -319,6 +330,7 @@ async function build() {
 
   const modelRows = [...models.values()];
   for (const r of modelRows) {
+    r.org = canonOrg(r.org);
     r.featured = FEATURED_RE.test(r.family_key);
     const b = r.benchmarks || {};
     r.has_benchmark = b.aa_coding_index != null || b.aa_intelligence_index != null ||
