@@ -51,8 +51,16 @@ async function main() {
   const ds = JSON.parse(await readFile(DATASET, "utf8"));
   const client = await pool.connect();
   try {
-    await client.query("BEGIN");
     await client.query(SCHEMA);
+    // Skip if already seeded with this exact snapshot (keeps cold starts fast).
+    if (process.env.FORCE_SEED !== "1") {
+      const existing = await client.query("SELECT generated_at FROM dataset_meta ORDER BY id DESC LIMIT 1");
+      if (existing.rows.length && new Date(existing.rows[0].generated_at).getTime() === new Date(ds.generated_at).getTime()) {
+        console.log("✓ already seeded with current snapshot — skipping");
+        return;
+      }
+    }
+    await client.query("BEGIN");
     await client.query("TRUNCATE models, offers, dataset_meta RESTART IDENTITY");
 
     await client.query(
