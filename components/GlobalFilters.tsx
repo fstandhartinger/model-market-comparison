@@ -14,7 +14,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
         <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Global</span>
         <ScoreSelect value={s.score} onChange={s.setScore} />
         <NumFilter label="Min score" value={String(s.minScore)} onChange={(v) => s.setMinScore(v === "" ? 0 : (parseFloat(v) || 0))} placeholder={String(defaultMinFor(s.score))} />
-        <Toggle label="One variant / GPT·Claude" on={s.collapse} set={s.setCollapse} />
+        <Toggle label="One variant for Reasoning models" on={s.collapse} set={s.setCollapse} />
         <Toggle label="Featured" on={s.featured} set={s.setFeatured} />
         <Toggle label="Exclude Chinese providers" on={s.excludeChinese} set={s.setExcludeChinese} />
         <Toggle label="Hide GPT-5.5 / Opus 4.8 / Fable" on={s.excludeUnauthorized} set={s.setExcludeUnauthorized} />

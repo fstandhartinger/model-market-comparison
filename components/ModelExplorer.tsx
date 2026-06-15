@@ -7,7 +7,7 @@ import { usdPerM, num, orgColor } from "../lib/format";
 import { modelCost, rankedOffers, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds } from "../lib/variants";
+import { preferredVariantIds, isCollapsibleFamily } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers";
 
@@ -33,11 +33,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       cheap: rankedOffers(data.offersByFamily[m.family_key], allowed).slice(0, 3),
       ncheap: rankedOffers(data.offersByFamily[m.family_key], allowed).length,
     }));
-    if (s.collapse) r = r.filter((x) => {
-      const k = x.m.family_key;
-      if (!k.startsWith("gpt-") && !k.startsWith("claude-")) return true;
-      return preferredId.get(k) === x.m.id;
-    });
+    if (s.collapse) r = r.filter((x) => !isCollapsibleFamily(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
     if (s.excludeUnauthorized) r = r.filter((x) => !isUnauthorizedModel(x.m.family_key));
     if (s.featured) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
