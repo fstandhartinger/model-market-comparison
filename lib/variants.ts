@@ -25,9 +25,9 @@ export function preferredVariantIds(models: ClientModel[]): Map<string, string> 
     const pickOrder = (order: string[]) => order.map(byVar).find(Boolean) as ClientModel | undefined;
     let pick = rows[0];
     if (k.startsWith("gpt-")) {
-      // Prefer the "(high)" reasoning effort. "xhigh" is demoted below the other
-      // efforts so it only survives when a family has no high/medium/low variant.
-      pick = pickOrder(["high", "medium", "low", "xhigh", "minimal", "non-reasoning", "default"]) || rows[0];
+      // Prefer "(high)", then "(medium)". Families without either (e.g. GPT-5.4,
+      // Pro/codex-only families) fall back to "(xhigh)" — their strongest tier.
+      pick = pickOrder(["high", "medium", "xhigh", "low", "minimal", "non-reasoning", "default"]) || rows[0];
     } else if (k.startsWith("claude-")) {
       // Keep the reasoning variant. Anthropic labels the reasoning tier of Opus
       // 4.6/4.7/4.8, Sonnet 4.6 and Fable as "Adaptive Reasoning, Max Effort" —
