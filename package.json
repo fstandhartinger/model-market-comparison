@@ -1,0 +1,37 @@
+{
+  "name": "model-market-comparison",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Compare open-source & frontier LLM prices across providers with ArtificialAnalysis & DesignArena benchmarks",
+  "scripts": {
+    "dev": "next dev -p 3000",
+    "build": "next build",
+    "start": "next start -p ${PORT:-3000}",
+    "lint": "next lint",
+    "data:fetch": "node scripts/fetch-live.mjs",
+    "data:build": "node scripts/build-dataset.mjs",
+    "data:refresh": "node scripts/fetch-live.mjs && node scripts/build-dataset.mjs",
+    "db:seed": "node scripts/seed-db.mjs",
+    "test": "node --test test/"
+  },
+  "dependencies": {
+    "next": "^15.5.19",
+    "pg": "^8.13.1",
+    "react": "19.0.0",
+    "react-dom": "19.0.0",
+    "recharts": "^2.15.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.17.0",
+    "@types/pg": "^8.11.10",
+    "@types/react": "^19.0.0",
+    "@types/react-dom": "^19.0.0",
+    "autoprefixer": "^10.4.20",
+    "postcss": "^8.4.49",
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.3"
+  },
+  "engines": {
+    "node": ">=20"
+  }
+}

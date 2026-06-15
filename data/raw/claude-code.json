@@ -1,0 +1,58 @@
+{
+  "source": "Anthropic Claude (Claude Code / Enterprise, list token pricing)",
+  "collected_at": "2026-06-15",
+  "method": "claude-api skill SKILL.md model table (cached 2026-06-04) + official Anthropic pricing page https://platform.claude.com/docs/en/about-claude/pricing.md (verified 2026-06-15, identical)",
+  "models": [
+    {
+      "model_name": "Claude Opus 4.8",
+      "model_id": "claude-opus-4-8",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.00,
+      "output_per_1m_usd": 25.00,
+      "cache_write_per_1m_usd": 6.25,
+      "cache_read_per_1m_usd": 0.50,
+      "notes": "5m cache write $6.25/MTok (1.25x); 1h cache write $10/MTok (2x); cache read $0.50/MTok (0.1x). Output price covers thinking tokens (no separate thinking/non-thinking rate). 1M context window at standard pricing (no long-context premium). 128K max output. Batch API: $2.50 in / $12.50 out (50% off). Fast mode (research preview): $10 in / $50 out."
+    },
+    {
+      "model_name": "Claude Opus 4.7",
+      "model_id": "claude-opus-4-7",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.00,
+      "output_per_1m_usd": 25.00,
+      "cache_write_per_1m_usd": 6.25,
+      "cache_read_per_1m_usd": 0.50,
+      "notes": "Same token pricing as Opus 4.8. 5m cache write $6.25/MTok; 1h cache write $10/MTok; cache read $0.50/MTok. Output incl. thinking. 1M context at standard pricing. Batch API: $2.50 in / $12.50 out. Fast mode (research preview): $30 in / $150 out."
+    },
+    {
+      "model_name": "Claude Opus 4.6",
+      "model_id": "claude-opus-4-6",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.00,
+      "output_per_1m_usd": 25.00,
+      "cache_write_per_1m_usd": 6.25,
+      "cache_read_per_1m_usd": 0.50,
+      "notes": "Same token pricing as Opus 4.7/4.8. 5m cache write $6.25/MTok; 1h cache write $10/MTok; cache read $0.50/MTok. Output incl. thinking. 1M context at standard pricing. Batch API: $2.50 in / $12.50 out. Fast mode (research preview): $30 in / $150 out."
+    },
+    {
+      "model_name": "Claude Sonnet 4.6",
+      "model_id": "claude-sonnet-4-6",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 3.00,
+      "output_per_1m_usd": 15.00,
+      "cache_write_per_1m_usd": 3.75,
+      "cache_read_per_1m_usd": 0.30,
+      "notes": "Highest Sonnet > 4.5. 5m cache write $3.75/MTok (1.25x); 1h cache write $6/MTok (2x); cache read $0.30/MTok (0.1x). Output incl. thinking. 1M context at standard pricing. 64K max output. Batch API: $1.50 in / $7.50 out. No Fast mode."
+    },
+    {
+      "model_name": "Claude Fable 5",
+      "model_id": "claude-fable-5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 10.00,
+      "output_per_1m_usd": 50.00,
+      "cache_write_per_1m_usd": 12.50,
+      "cache_read_per_1m_usd": 1.00,
+      "notes": "Claude 5 / Mythos-class tier, above Opus. Most capable widely released model. 5m cache write $12.50/MTok (1.25x); 1h cache write $20/MTok (2x); cache read $1/MTok (0.1x). Output incl. thinking (thinking always on). 1M context at standard pricing. 128K max output. Batch API: $5 in / $25 out. Requires 30-day data retention. Claude Mythos 5 (claude-mythos-5, Project Glasswing only) has identical pricing."
+    }
+  ],
+  "plan_notes": "These are first-party Claude Developer Platform (API) list/standard per-token prices in USD per 1M tokens. This is what an enterprise consuming the API or Claude Code via API key (token-metered) pays. Claude Code can be driven either by API token metering (these rates) or via a Claude subscription seat (Pro/Team/Max/Enterprise) where usage is bundled into the seat with usage caps rather than per-token billing. Claude Code Enterprise is sold as a seat-based subscription (per-user seats, sold via Anthropic enterprise sales, custom volume pricing) that bundles Claude Code usage; large/heavy enterprise consumption is typically run against the API at these per-token rates (or negotiated volume discounts). Prompt-caching: cache write = 1.25x base input (5m) or 2x (1h); cache read (hit) = 0.1x base input. Batch API = 50% discount on both input and output. 1M context window included at standard pricing for Fable 5, Opus 4.6/4.7/4.8, and Sonnet 4.6 (no long-context surcharge). US-only data residency (inference_geo='us') adds a 1.1x multiplier on all categories for Opus 4.6+/Sonnet 4.6+; global (default) is standard. Thinking vs non-thinking: no pricing difference — output tokens (including thinking) are billed at the single output rate. Note: Opus 4.7+ uses a new tokenizer that may produce up to ~35% more tokens for the same text vs earlier models."
+}

@@ -1,0 +1,27 @@
+# Render Blueprint — Next.js web service + managed Postgres.
+# Provision via the Render dashboard ("New + → Blueprint") or the Render MCP.
+databases:
+  - name: model-market-db
+    plan: free
+    databaseName: model_market
+    user: model_market
+
+services:
+  - type: web
+    name: model-market-comparison
+    runtime: node
+    plan: free
+    buildCommand: npm install && npm run build
+    # Seed/refresh the DB from the committed dataset.json before each release.
+    preDeployCommand: npm run db:seed
+    startCommand: npm run start
+    healthCheckPath: /api/health
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: model-market-db
+          property: connectionString
+      - key: NODE_VERSION
+        value: "20"
+      - key: ARTIFICIAL_ANALYSIS_API_KEY
+        sync: false

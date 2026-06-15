@@ -1,0 +1,29 @@
+{
+  "source": "Manual supplements",
+  "collected_at": "2026-06-15",
+  "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
+  "models": [
+    {
+      "family_key": "glm-5.2",
+      "family_name": "GLM 5.2",
+      "org": "Z.ai",
+      "open_weights": true,
+      "release_date": "2026-06-15",
+      "notes": "Announced 2026-06-15; API releases 2026-06-16. Listed in the OpenRouter frontend catalog (z-ai/glm-5.2) but per-provider pricing and ArtificialAnalysis benchmarks are not yet published. Offers below are an early indicative estimate based on GLM 5.1 launch pricing and should be refreshed once endpoints go live."
+    }
+  ],
+  "offers": [
+    {
+      "family_key": "glm-5.2",
+      "source": "OpenRouter",
+      "provider": "Z.ai (estimated)",
+      "platform": "OpenRouter",
+      "input_per_1m": 0.98,
+      "output_per_1m": 3.08,
+      "region": "global",
+      "unit": "per_1m_token",
+      "estimated": true,
+      "notes": "Indicative — mirrors GLM 5.1 launch pricing; replace after 2026-06-16 endpoint launch."
+    }
+  ]
+}
