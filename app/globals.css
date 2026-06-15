@@ -19,9 +19,9 @@ a { color: inherit; }
 .card { background: #161b22; border: 1px solid #272e3a; border-radius: 12px; }
 .tabular { font-variant-numeric: tabular-nums; }
 
-table.grid th, table.grid td { border-bottom: 1px solid #21272f; }
-table.grid thead th {
+table.dtable th, table.dtable td { border-bottom: 1px solid #21272f; }
+table.dtable thead th {
   position: sticky; top: 0; background: #12161c; z-index: 1;
   cursor: pointer; user-select: none;
 }
-table.grid tbody tr:hover { background: #171d25; }
+table.dtable tbody tr:hover { background: #171d25; }

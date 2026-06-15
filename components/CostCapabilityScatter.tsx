@@ -5,12 +5,13 @@ import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
 } from "recharts";
 import type { ClientData } from "../lib/client-model";
-import { SCORE_LABELS, type ScoreKey } from "../lib/types";
+import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { DEFAULT_SCORE, modelCost } from "../lib/cost";
-import { ScoreSelect, Toggle, ProviderFilter } from "./ui";
+import { modelCost } from "../lib/cost";
+import { Toggle } from "./ui";
+import { useSettings } from "./SettingsContext";
+import { preferredVariantIds, collapseModels } from "../lib/variants";
 
-// shape: closed-lab = circle, open-weights = square
 function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: { open?: boolean } }) {
   const { cx, cy, fill, payload } = props;
   if (cx == null || cy == null) return <g />;
@@ -29,19 +30,22 @@ function logTicks(min: number, max: number): number[] {
 
 export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const router = useRouter();
-  const [score, setScore] = useState<ScoreKey>(DEFAULT_SCORE);
-  const [featuredOnly, setFeaturedOnly] = useState(true);
+  const s = useSettings();
+  const score = s.score;
+  const allowed = s.providerSet;
   const [logX, setLogX] = useState(true);
-  const [providerSel, setProviderSel] = useState<Set<string>>(new Set());
-  const allowed = providerSel.size ? providerSel : null;
+  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
 
   const points = useMemo(() => {
-    return data.models
-      .filter((m) => (featuredOnly ? m.featured : true))
+    let pool = data.models;
+    if (s.collapse) pool = collapseModels(pool, preferredId);
+    if (s.featured) pool = pool.filter((m) => m.featured);
+    if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
+    return pool
       .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
       .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0)
       .map((x) => ({ x: x.cost as number, y: x.sc as number, name: x.m.display_name, org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, score, featuredOnly, allowed]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, preferredId]);
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();
@@ -57,24 +61,22 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <ScoreSelect value={score} onChange={setScore} label="Capability (Y)" />
-        <ProviderFilter providers={data.providers} selected={providerSel} setSelected={setProviderSel} />
-        <Toggle label="Featured only" on={featuredOnly} set={setFeaturedOnly} />
+        <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
         <Toggle label="Log cost axis" on={logX} set={setLogX} />
-        <span className="ml-auto text-xs text-gray-500">{points.length} models · cost = cheapest (10·in + 1·out)/11{allowed ? " · within selected providers" : ""}</span>
+        <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{allowed ? " · provider-filtered" : ""}</span>
       </div>
 
       <div className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
             <CartesianGrid stroke="#222932" />
-            <XAxis type="number" dataKey="x" name="Cost"
+            <XAxis type="number" dataKey="x" name="Cost" reversed
               scale={logX ? "log" : "linear"}
               domain={logX ? [xMin * 0.85, xMax * 1.15] : [0, xMax * 1.1]}
               ticks={logX ? logTicks(xMin, xMax) : undefined}
               allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
               tickFormatter={(v) => usdPerM(v)} stroke="#8a93a3" fontSize={12}>
-              <Label value="Cost →  cheapest blended $/1M tokens (10:1 input:output)" position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
+              <Label value="← more expensive    ·    cheaper → (cheapest blended $/1M, 10:1)" position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : [0, "auto"]}>
               <Label value={SCORE_LABELS[score]} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
@@ -97,7 +99,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
           <span key={org} className="inline-flex items-center gap-1.5"><span className="inline-block h-2.5 w-2.5 rounded-full" style={{ background: orgColor(org) }} />{org}</span>
         ))}
       </div>
-      <p className="mt-3 text-xs text-gray-500">Up &amp; to the left is better: more capability per dollar. Click any point to open the model detail.</p>
+      <p className="mt-3 text-xs text-gray-500">Up &amp; to the <b>right</b> is better: more capability for less money. Click any point to open the model detail.</p>
     </div>
   );
 }

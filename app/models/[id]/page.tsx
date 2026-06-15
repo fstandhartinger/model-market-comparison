@@ -44,7 +44,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         <section className="card p-4">
           <h2 className="mb-3 font-semibold">Top {Math.min(5, cheapest.length)} cheapest providers <span className="text-xs font-normal text-gray-500">(10:1 blended)</span></h2>
           {cheapest.length ? (
-            <table className="grid w-full text-sm">
+            <table className="dtable w-full text-sm">
               <thead><tr>
                 <th className="px-2 py-1 text-left text-xs text-gray-400">#</th>
                 <th className="px-2 py-1 text-left text-xs text-gray-400">Provider</th>
@@ -93,7 +93,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {variants.length > 1 && (
         <section className="card mt-6 p-4">
           <h2 className="mb-3 font-semibold">Variants / reasoning settings</h2>
-          <table className="grid w-full text-sm">
+          <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-2 py-1 text-left text-xs text-gray-400">Variant</th>
               <th className="px-2 py-1 text-right text-xs text-gray-400">Coding</th>
@@ -136,7 +136,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         {[...byPlatform.entries()].map(([platform, offers]) => (
           <div key={platform} className="mb-4">
             <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({offers.length})</span></h3>
-            <table className="grid w-full text-sm">
+            <table className="dtable w-full text-sm">
               <tbody>
                 {offers
                   .map((o) => ({ o, bl: blendedCost(o.input_per_1m, o.output_per_1m) ?? Infinity }))

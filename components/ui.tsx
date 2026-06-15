@@ -84,6 +84,46 @@ export function ProviderFilter({
   );
 }
 
+export interface FamilyOption { key: string; name: string; org: string }
+
+/** Searchable multi-select for model families. Empty selection = all models. */
+export function ModelFilter({
+  families, selected, setSelected,
+}: { families: FamilyOption[]; selected: Set<string>; setSelected: (s: Set<string>) => void }) {
+  const [open, setOpen] = useState(false);
+  const [q, setQ] = useState("");
+  const shown = q.trim()
+    ? families.filter((f) => f.name.toLowerCase().includes(q.toLowerCase()) || f.org.toLowerCase().includes(q.toLowerCase()))
+    : families;
+  const toggle = (k: string) => { const n = new Set(selected); n.has(k) ? n.delete(k) : n.add(k); setSelected(n); };
+  const label = selected.size === 0 ? "All models" : `${selected.size} model${selected.size > 1 ? "s" : ""}`;
+  return (
+    <div className="relative inline-block">
+      <button onClick={() => setOpen(!open)}
+        className={`rounded-md border px-3 py-1.5 text-sm ${selected.size ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-300"}`}>
+        Models: {label} ▾
+      </button>
+      {open && (
+        <div className="absolute z-20 mt-1 max-h-[60vh] w-80 overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
+          <div className="mb-2 flex items-center gap-2">
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search models…" className="flex-1 rounded border border-line bg-ink px-2 py-1 text-xs" />
+            <button onClick={() => setSelected(new Set())} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">Clear</button>
+          </div>
+          <div className="grid grid-cols-1 gap-0.5">
+            {shown.slice(0, 200).map((f) => (
+              <label key={f.key} className="flex items-center gap-1.5 text-xs text-gray-300">
+                <input type="checkbox" checked={selected.has(f.key)} onChange={() => toggle(f.key)} />
+                <span className="truncate" title={`${f.name} · ${f.org}`}>{f.name} <span className="text-gray-600">{f.org}</span></span>
+              </label>
+            ))}
+            {shown.length > 200 && <div className="mt-1 text-[10px] text-gray-500">…{shown.length - 200} more — refine search</div>}
+          </div>
+        </div>
+      )}
+    </div>
+  );
+}
+
 /** Excel-style data bar behind a value. `frac` is 0..1. */
 export function DataBar({ frac, color = "#5b9dff", children, align = "left" }: { frac: number; color?: string; children: React.ReactNode; align?: "left" | "right" }) {
   const pct = Math.max(0, Math.min(1, frac)) * 100;

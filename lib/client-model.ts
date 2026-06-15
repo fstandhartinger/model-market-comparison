@@ -43,11 +43,14 @@ export interface ProviderInfo {
   model_count: number;
 }
 
+export interface FamilyOption { key: string; name: string; org: string }
+
 export interface ClientData {
   generated_at: string;
   models: ClientModel[];
   offersByFamily: Record<string, ClientOffer[]>;
   providers: ProviderInfo[];
+  families: FamilyOption[];
 }
 
 function offerKey(platform: string, provider: string) {
@@ -95,5 +98,9 @@ export function clientData(ds: Dataset): ClientData {
     key: offerKey(p.platform, p.provider), platform: p.platform, provider: p.provider, model_count: p.model_count,
   }));
 
-  return { generated_at: ds.generated_at, models, offersByFamily, providers };
+  const famMap = new Map<string, FamilyOption>();
+  for (const m of models) if (!famMap.has(m.family_key)) famMap.set(m.family_key, { key: m.family_key, name: m.family_name, org: m.org });
+  const families = [...famMap.values()].sort((a, b) => a.name.localeCompare(b.name));
+
+  return { generated_at: ds.generated_at, models, offersByFamily, providers, families };
 }

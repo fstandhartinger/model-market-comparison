@@ -11,9 +11,9 @@ export default async function ScatterPage() {
     <div>
       <h1 className="text-2xl font-bold">Cost vs Capability</h1>
       <p className="mt-1 mb-5 max-w-3xl text-sm text-gray-400">
-        Every model plotted by price (x) against capability (y). The x-axis is the cheapest blended
-        cost per million tokens at a 10:1 input/output mix; the y-axis is your chosen benchmark score.
-        The best value sits in the upper-left.
+        Every model plotted by price (x) against capability (y). The x-axis is inverted — cheaper to
+        the right — and shows the cheapest blended cost per million tokens at a 10:1 input/output mix;
+        the y-axis is your chosen benchmark score. The best value sits in the upper-right.
       </p>
       <CostCapabilityScatter data={data} />
     </div>

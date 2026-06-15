@@ -1,10 +1,11 @@
 "use client";
 import { useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
-import { SCORE_LABELS, type ScoreKey } from "../lib/types";
+import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num } from "../lib/format";
-import { DEFAULT_SCORE, rankedOffers } from "../lib/cost";
-import { ScoreSelect, DataBar } from "./ui";
+import { rankedOffers } from "../lib/cost";
+import { DataBar } from "./ui";
+import { useSettings } from "./SettingsContext";
 
 type Mode = "all" | "model";
 
@@ -19,7 +20,8 @@ interface Row {
 }
 
 export function ProvidersView({ data }: { data: ClientData }) {
-  const [score, setScore] = useState<ScoreKey>(DEFAULT_SCORE);
+  const s = useSettings();
+  const score = s.score;
   const [mode, setMode] = useState<Mode>("all");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
@@ -29,15 +31,17 @@ export function ProvidersView({ data }: { data: ClientData }) {
     const fams = new Map<string, { family_key: string }>();
     for (const m of data.models) {
       if (scorePeersOnly && m.scores[score] == null) continue;
+      if (s.familySet && !s.familySet.has(m.family_key)) continue;
       if (!fams.has(m.family_key)) fams.set(m.family_key, { family_key: m.family_key });
     }
     return [...fams.values()];
-  }, [data, score, scorePeersOnly]);
+  }, [data, score, scorePeersOnly, s.familySet]);
 
   const modelOptions = useMemo(
     () => data.models.filter((m) => rankedOffers(data.offersByFamily[m.family_key], null).length)
+      .filter((m) => !s.familySet || s.familySet.has(m.family_key))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, score]
+    [data, score, s.familySet]
   );
   const selectedModel = modelOptions.find((m) => m.id === modelId) || modelOptions[0];
 
@@ -82,7 +86,8 @@ export function ProvidersView({ data }: { data: ClientData }) {
     return out;
   }, [data, peerModels, selectedModel, mode]);
 
-  const shown = mode === "model" ? rows.filter((r) => r.model_price != null) : rows.filter((r) => r.models_offered > 0);
+  let shown = mode === "model" ? rows.filter((r) => r.model_price != null) : rows.filter((r) => r.models_offered > 0);
+  if (s.providerSet) shown = shown.filter((r) => s.providerSet!.has(r.key));
   const maxAvgRank = Math.max(1, ...shown.map((r) => r.avg_rank ?? 0));
   const maxAvgPrice = Math.max(1, ...shown.map((r) => r.avg_price ?? 0));
   const maxModelPrice = Math.max(1, ...shown.map((r) => r.model_price ?? 0));
@@ -103,7 +108,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
           </select>
         ) : (
           <>
-            <ScoreSelect value={score} onChange={setScore} label="Peer score" />
+            <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
             <button onClick={() => setScorePeersOnly(!scorePeersOnly)}
               className={`rounded-md border px-3 py-1.5 text-sm ${scorePeersOnly ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
               {scorePeersOnly ? "✓ " : ""}Only models with this score
@@ -114,7 +119,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
       </div>
 
       <div className="card overflow-x-auto">
-        <table className="grid w-full table-fixed text-sm">
+        <table className="dtable w-full table-fixed text-sm">
           <colgroup><col style={{ width: "26%" }} /><col style={{ width: "20%" }} /><col style={{ width: "12%" }} /><col style={{ width: "21%" }} /><col style={{ width: "21%" }} /></colgroup>
           <thead><tr>
             <th className="px-3 py-2 text-left text-xs text-gray-400">Provider</th>
