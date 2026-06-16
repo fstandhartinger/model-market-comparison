@@ -23,7 +23,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
   const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
-  const [mode, setMode] = useState<Mode>("all");
+  const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
 
@@ -51,7 +51,9 @@ export function ProvidersView({ data }: { data: ClientData }) {
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
     [data, score, allowed, s.familySet, s.excludeUnauthorized, s.minScore]
   );
-  const selectedModel = modelOptions.find((m) => m.id === modelId) || modelOptions[0];
+  const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
+    || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];
+  const selectedModel = modelOptions.find((m) => m.id === modelId) || defaultModel;
 
   const rows = useMemo<Row[]>(() => {
     const agg = new Map<string, { ranks: number[]; prices: number[]; platform: string; provider: string }>();

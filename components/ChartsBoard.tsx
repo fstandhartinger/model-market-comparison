@@ -72,7 +72,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               <CartesianGrid stroke="#222932" horizontal={false} />
               <XAxis type="number" stroke="#8a93a3" fontSize={11} domain={isElo ? ["dataMin - 20", "dataMax"] : [0, "auto"]} />
               <YAxis type="category" dataKey="name" width={205} tick={truncTick} interval={0} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} />
+              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
               <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                 {leaderboard.map((d, i) => <Cell key={i} fill={orgColor(d.org)} />)}
                 <LabelList dataKey="value" position="right" fill="#cbd5e1" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
@@ -87,7 +87,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               <CartesianGrid stroke="#222932" horizontal={false} />
               <XAxis type="number" stroke="#8a93a3" fontSize={11} tickFormatter={(v) => usdPerM(v)} />
               <YAxis type="category" dataKey="name" width={205} tick={truncTick} interval={0} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} formatter={(v: number) => usdPerM(v)} />
+              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => usdPerM(v)} />
               <Bar dataKey="value" radius={[0, 4, 4, 0]}>
                 {cheapest.map((d, i) => <Cell key={i} fill={orgColor(d.org)} />)}
                 <LabelList dataKey="value" position="right" fill="#cbd5e1" fontSize={11} formatter={(v: number) => usdPerM(v)} />
@@ -102,7 +102,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               <CartesianGrid stroke="#222932" vertical={false} />
               <XAxis dataKey="name" stroke="#8a93a3" fontSize={12} />
               <YAxis stroke="#8a93a3" fontSize={11} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} />
+              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
               <Bar dataKey="avgScore" name="Avg score" radius={[4, 4, 0, 0]}>
                 <Cell fill="#7ee0c0" /><Cell fill="#5b9dff" />
                 <LabelList dataKey="avgScore" position="top" fill="#cbd5e1" fontSize={11} formatter={(v: number) => v.toFixed(1)} />
@@ -117,7 +117,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               <CartesianGrid stroke="#222932" vertical={false} />
               <XAxis dataKey="name" stroke="#8a93a3" fontSize={12} />
               <YAxis stroke="#8a93a3" fontSize={11} tickFormatter={(v) => usdPerM(v)} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} formatter={(v: number) => usdPerM(v)} />
+              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => usdPerM(v)} />
               <Bar dataKey="avgCost" name="Avg cost" radius={[4, 4, 0, 0]}>
                 <Cell fill="#7ee0c0" /><Cell fill="#5b9dff" />
                 <LabelList dataKey="avgCost" position="top" fill="#cbd5e1" fontSize={11} formatter={(v: number) => usdPerM(v)} />
@@ -130,7 +130,9 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   );
 }
 
-const tip = { background: "#161b22", border: "1px solid #272e3a", borderRadius: 8, fontSize: 12 };
+const tip = { background: "#161b22", border: "1px solid #272e3a", borderRadius: 8, fontSize: 12, color: "#e6edf3" };
+const tipLabel = { color: "#e6edf3", fontWeight: 600 };
+const tipItem = { color: "#cbd5e1" };
 
 function Panel({ title, children }: { title: string; children: React.ReactNode }) {
   return <div className="card p-4"><h2 className="mb-3 text-sm font-semibold text-gray-200">{title}</h2>{children}</div>;
