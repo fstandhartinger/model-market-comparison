@@ -20,6 +20,7 @@ export default async function AboutPage() {
         <li><b>DesignArena</b> — Agentic Web Dev Frontend &amp; Full-Stack Elo leaderboards.</li>
         <li><b>AWS Bedrock</b> — on-demand token pricing, European regions (eu-central-1 where available).</li>
         <li><b>Azure AI Foundry</b> — token pricing for EU deployments (Sweden Central / West Europe).</li>
+        <li><b>Google Vertex AI</b> — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); EU region (europe-west4).</li>
         <li><b>GitHub Copilot</b> — premium-request multipliers (commercial, June 2026+). Priced per request, shown separately.</li>
         <li><b>Anthropic / Claude Code</b> — list token pricing for Opus 4.6/4.7/4.8, Sonnet 4.6, Fable 5.</li>
       </ul>

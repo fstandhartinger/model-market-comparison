@@ -30,7 +30,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <main className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>
           <footer className="mx-auto max-w-[1400px] px-4 py-10 text-xs text-gray-500">
             Data: OpenRouter · ArtificialAnalysis · DesignArena · AWS Bedrock · Azure AI Foundry ·
-            GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted.
+            Google Vertex AI · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted.
             Not affiliated with any provider — figures may be stale; verify before relying on them.
           </footer>
         </SettingsProvider>

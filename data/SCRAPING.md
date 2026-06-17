@@ -42,6 +42,7 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 |---|---|---|
 | AWS Bedrock (EU on-demand token prices) | `data/raw/aws-bedrock.json` | [aws-bedrock.method.md](raw/aws-bedrock.method.md) — AWS Price List Bulk API per region + pricing page for Claude |
 | Azure AI Foundry (EU token prices) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API (`prices.azure.com`) |
+| Google Vertex AI (Gemini + Model Garden partner models, EU) | `data/raw/google-vertex.json` | [google-vertex.method.md](raw/google-vertex.method.md) — official Vertex AI generative-ai pricing page |
 | GitHub Copilot (premium-request multipliers, commercial June 2026+) | `data/raw/github-copilot.json` | [github-copilot.method.md](raw/github-copilot.method.md) — GitHub Copilot docs |
 | Anthropic / Claude Code (Opus 4.6–4.8, Sonnet 4.6, Fable 5 list token price) | `data/raw/claude-code.json` | [claude-code.method.md](raw/claude-code.method.md) — Anthropic pricing page + `claude-api` skill |
 | Manual supplements (models not yet in the live APIs, e.g. GLM 5.2) | `data/raw/manual.json` | Hand-edit; remove entries once upstream data is live |

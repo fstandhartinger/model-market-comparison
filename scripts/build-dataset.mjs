@@ -159,6 +159,7 @@ async function build() {
   const or = await readJSON("openrouter.json");
   const aws = await readJSON("aws-bedrock.json");
   const azure = await readJSON("azure-foundry.json");
+  const vertex = await readJSON("google-vertex.json").catch(() => ({ models: [] }));
   const copilot = await readJSON("github-copilot.json");
   const claude = await readJSON("claude-code.json");
 
@@ -260,6 +261,17 @@ async function build() {
     });
   }
 
+  // --- Google Vertex AI ---
+  for (const m of vertex.models || []) {
+    const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
+    const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
+    fam.offers.push({
+      source: "Google Vertex AI", provider: "Google Vertex AI", platform: "Google Vertex AI",
+      input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
+      region: m.region || "europe-west4", unit: "per_1m_token", notes: m.notes || "",
+    });
+  }
+
   // --- Anthropic direct / Claude Code (token list price) ---
   for (const m of claude.models || []) {
     const { familyKey } = normalizeFamily(m.model_name, "Anthropic");
@@ -356,7 +368,7 @@ async function build() {
     sources: {
       openrouter: or.collected_at, artificialanalysis: aa.collected_at, designarena: da.collected_at,
       aws_bedrock: aws.collected_at, azure_foundry: azure.collected_at,
-      github_copilot: copilot.collected_at, claude_code: claude.collected_at,
+      google_vertex: vertex.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
     },
     models: modelRows,
     providers,

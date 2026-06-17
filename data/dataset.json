@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-17T15:08:16.519Z",
+  "generated_at": "2026-06-17T17:07:30.583Z",
   "counts": {
-    "models": 687,
-    "families": 558,
-    "providers": 75,
-    "offers": 1487
+    "models": 689,
+    "families": 560,
+    "providers": 76,
+    "offers": 1529
   },
   "sources": {
     "openrouter": "2026-06-17",
@@ -12,6 +12,7 @@
     "designarena": "2026-06-17",
     "aws_bedrock": "2026-06-15",
     "azure_foundry": "2026-06-15",
+    "google_vertex": "2026-06-17",
     "github_copilot": "2026-06-15",
     "claude_code": "2026-06-15"
   },
@@ -2336,6 +2337,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.72,
+          "output_per_1m": 0.72,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
         }
       ],
       "designarena": {},
@@ -2525,6 +2536,16 @@
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-4-scout",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.25,
+          "output_per_1m": 0.7,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
         }
       ],
       "designarena": {},
@@ -2606,6 +2627,16 @@
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-4-maverick",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.35,
+          "output_per_1m": 1.15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
         }
       ],
       "designarena": {},
@@ -2737,6 +2768,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.5-flash",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.65,
+          "output_per_1m": 9.9,
+          "region": "europe-west4",
+          "unit": "per_1m_token",
+          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global rates take effect 2026-07-01; before then Global applies"
         }
       ],
       "designarena": {
@@ -3101,6 +3142,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.1-pro-preview",
           "status": -5
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 2,
+          "output_per_1m": 12,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Preview. Standard tier, <=200K input tokens; >200K tier is $4 in / $18 out. Global pricing (same on non-global until 2026-07-01)"
         }
       ],
       "designarena": {
@@ -3213,6 +3264,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.5-flash",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.65,
+          "output_per_1m": 9.9,
+          "region": "europe-west4",
+          "unit": "per_1m_token",
+          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global rates take effect 2026-07-01; before then Global applies"
         }
       ],
       "designarena": {
@@ -3382,6 +3443,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.1-flash-lite-preview",
           "status": -2
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.275,
+          "output_per_1m": 1.65,
+          "region": "europe-west4",
+          "unit": "per_1m_token",
+          "notes": "Non-global (EU) pricing; Global is $0.25 in / $1.50 out. Text/image/video input; audio input $0.55 (non-global)"
         }
       ],
       "designarena": {},
@@ -3441,6 +3512,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.5-flash",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.65,
+          "output_per_1m": 9.9,
+          "region": "europe-west4",
+          "unit": "per_1m_token",
+          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global rates take effect 2026-07-01; before then Global applies"
         }
       ],
       "designarena": {
@@ -3583,6 +3664,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Standard tier, <=200K input tokens; >200K tier is $2.50 in / $15 out"
         }
       ],
       "designarena": {},
@@ -3715,6 +3806,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-fable-5",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 10,
+          "output_per_1m": 50,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model. Same per-1M as Anthropic list price"
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -3900,6 +4001,16 @@
           "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
         },
         {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
+        },
+        {
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
@@ -4041,6 +4152,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.7",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4207,6 +4328,16 @@
           "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
         },
         {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
+        },
+        {
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
@@ -4350,6 +4481,16 @@
           "status": 0
         },
         {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
+        },
+        {
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
@@ -4491,6 +4632,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.8",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model. >=200K input tokens billed at long-context rates"
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -19293,6 +19444,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3-flash-preview",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.5,
+          "output_per_1m": 3,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Preview. Text/image/video input; audio input is $1/1M"
         }
       ],
       "designarena": {
@@ -19380,6 +19541,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash-lite",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Text/image/video input; audio input is $0.30/1M"
         }
       ],
       "designarena": {},
@@ -19508,6 +19679,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
           "status": -2
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Text/image/video input; audio input is $1/1M"
         }
       ],
       "designarena": {},
@@ -19589,6 +19770,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
           "status": -2
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Text/image/video input; audio input is $1/1M"
         }
       ],
       "designarena": {},
@@ -19659,6 +19850,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash-lite",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Text/image/video input; audio input is $0.30/1M"
         }
       ],
       "designarena": {},
@@ -20098,6 +20299,16 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3-flash-preview",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.5,
+          "output_per_1m": 3,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Preview. Text/image/video input; audio input is $1/1M"
         }
       ],
       "designarena": {
@@ -20708,6 +20919,16 @@
           "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
         },
         {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
+        },
+        {
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
@@ -20861,6 +21082,16 @@
           "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
         },
         {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
+        },
+        {
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
@@ -20980,6 +21211,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.5",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
         }
       ],
       "designarena": {
@@ -21089,6 +21330,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.5",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
         }
       ],
       "designarena": {
@@ -21820,12 +22071,23 @@
         "output_tps": 156.338,
         "ttft_s": 0.551
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Mistral Small 3.1 (25.03). Model Garden partner model"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "mistral-3::medium",
@@ -21867,6 +22129,16 @@
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-medium-3",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.4,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
         }
       ],
       "designarena": {},
@@ -22728,6 +23000,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global; reasoning"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.35,
+          "output_per_1m": 5.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "DeepSeek-R1 (0528). Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -22988,6 +23270,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.56,
+          "output_per_1m": 1.68,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "DeepSeek-V3.2. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -23156,6 +23448,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.56,
+          "output_per_1m": 1.68,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "DeepSeek-V3.2. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -23442,6 +23744,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.6,
+          "output_per_1m": 1.7,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "DeepSeek-V3.1. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -23708,6 +24020,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.6,
+          "output_per_1m": 1.7,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "DeepSeek-V3.1. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -29164,6 +29486,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.22,
+          "output_per_1m": 0.88,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Qwen3-235B-A22B-Instruct-2507. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -30516,6 +30848,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.22,
+          "output_per_1m": 0.88,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Qwen3-235B-A22B-Instruct-2507. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -31136,6 +31478,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.22,
+          "output_per_1m": 1.8,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Qwen3-Coder-480B-A35B-Instruct. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -31370,6 +31722,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.22,
+          "output_per_1m": 0.88,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Qwen3-235B-A22B-Instruct-2507. Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -32279,6 +32641,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-sonnet-4.5",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
         }
       ],
       "designarena": {
@@ -34970,6 +35342,16 @@
           "region": "eu-central-1 (EU cross-region inference profile)",
           "unit": "per_1m_token",
           "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1,
+          "output_per_1m": 5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -35569,6 +35951,16 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.1",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 15,
+          "output_per_1m": 75,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model"
         }
       ],
       "designarena": {},
@@ -38769,6 +39161,74 @@
       "has_pricing": true
     },
     {
+      "id": "codestral-2::default",
+      "family_key": "codestral-2",
+      "family_name": "Codestral 2",
+      "display_name": "Codestral 2",
+      "org": "Mistral",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.9,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "qwen3-next-80b::default",
+      "family_key": "qwen3-next-80b",
+      "family_name": "Qwen3 Next 80B",
+      "display_name": "Qwen3 Next 80B",
+      "org": "Alibaba",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.15,
+          "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Qwen3-Next-80B-Thinking. Model Garden partner model"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.15,
+          "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Qwen3-Next-80B-Instruct. Model Garden partner model"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
       "id": "raptor-mini::default",
       "family_key": "raptor-mini",
       "family_name": "Raptor Mini",
@@ -38863,6 +39323,11 @@
       "platform": "OpenRouter",
       "provider": "Parasail",
       "model_count": 29
+    },
+    {
+      "platform": "Google Vertex AI",
+      "provider": "Google Vertex AI",
+      "model_count": 28
     },
     {
       "platform": "OpenRouter",
