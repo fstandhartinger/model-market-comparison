@@ -1,13 +1,13 @@
 {
-  "generated_at": "2026-06-17T07:27:30.459Z",
+  "generated_at": "2026-06-17T07:42:46.392Z",
   "counts": {
     "models": 687,
     "families": 558,
     "providers": 75,
-    "offers": 1480
+    "offers": 1489
   },
   "sources": {
-    "openrouter": "2026-06-16",
+    "openrouter": "2026-06-17",
     "artificialanalysis": "2026-06-17",
     "designarena": "2026-06-16",
     "aws_bedrock": "2026-06-15",
@@ -88,7 +88,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -176,11 +176,22 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-120b",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Groq",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -192,17 +203,6 @@
         {
           "source": "OpenRouter",
           "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Groq",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -224,7 +224,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -242,7 +242,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -354,7 +354,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -442,11 +442,22 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-120b",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Groq",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -458,17 +469,6 @@
         {
           "source": "OpenRouter",
           "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Groq",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -490,7 +490,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -508,7 +508,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -598,7 +598,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -694,7 +694,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -720,17 +720,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.04,
-          "output_per_1m": 0.15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-20b",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.04,
@@ -739,6 +728,17 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Phala",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.04,
+          "output_per_1m": 0.15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-20b",
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -804,7 +804,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -837,7 +837,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "AWS Bedrock",
@@ -895,7 +895,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-mini",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -968,7 +968,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -994,17 +994,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.04,
-          "output_per_1m": 0.15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-20b",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.04,
@@ -1013,6 +1002,17 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Phala",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.04,
+          "output_per_1m": 0.15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-20b",
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -1078,7 +1078,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -1111,7 +1111,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "AWS Bedrock",
@@ -1216,7 +1216,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -1323,7 +1323,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -1430,7 +1430,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-nano",
-          "status": -2
+          "status": 0
         },
         {
           "source": "Azure AI Foundry",
@@ -1488,7 +1488,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-mini",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -1609,7 +1609,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-mini",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -1693,7 +1693,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -1800,7 +1800,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-nano",
-          "status": -2
+          "status": 0
         },
         {
           "source": "Azure AI Foundry",
@@ -1869,7 +1869,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -2059,7 +2059,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-nano",
-          "status": -2
+          "status": 0
         },
         {
           "source": "Azure AI Foundry",
@@ -2128,7 +2128,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.3-codex",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {
@@ -2204,7 +2204,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -2248,7 +2248,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -2303,7 +2303,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -2718,7 +2718,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -2729,7 +2729,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3194,7 +3194,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3205,7 +3205,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3341,6 +3341,17 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Google AI Studio",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 1.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-3.1-flash-lite",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
@@ -3352,29 +3363,18 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 1.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-3.1-flash-lite",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 1.5,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.1-flash-lite-preview",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 1.5,
@@ -3422,7 +3422,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3433,7 +3433,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3516,11 +3516,22 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
           "provider": "Google AI Studio",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro",
+          "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.25,
           "output_per_1m": 10,
@@ -3537,17 +3548,6 @@
           "output_per_1m": 10,
           "region": "global",
           "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview",
           "status": 0
         },
@@ -3560,7 +3560,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -3571,7 +3571,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -3582,7 +3582,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -3803,6 +3803,28 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -3814,17 +3836,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -3836,7 +3847,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -3854,11 +3865,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -3869,18 +3880,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -3978,28 +3978,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -4018,7 +3996,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.7",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -4040,7 +4018,29 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.7",
-          "status": -2
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4110,6 +4110,28 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -4121,17 +4143,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -4143,7 +4154,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -4161,11 +4172,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -4176,18 +4187,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -4285,28 +4285,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -4325,7 +4303,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.7",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -4347,7 +4325,29 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.7",
-          "status": -2
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4428,7 +4428,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -4446,18 +4446,18 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.8",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.8",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -4483,7 +4483,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -5055,7 +5055,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -5066,7 +5066,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5136,7 +5136,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Fireworks",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
           "output_per_1m": 3.48,
@@ -5147,14 +5147,14 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
+          "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5165,7 +5165,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5285,7 +5285,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -5296,7 +5296,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5366,7 +5366,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Fireworks",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
           "output_per_1m": 3.48,
@@ -5377,14 +5377,14 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
+          "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5395,7 +5395,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5515,7 +5515,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -5526,7 +5526,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5596,7 +5596,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Fireworks",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
           "output_per_1m": 3.48,
@@ -5607,14 +5607,14 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
+          "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5625,7 +5625,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5694,6 +5694,17 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Wafer",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.09,
+          "output_per_1m": 0.18,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-flash",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.098,
@@ -5745,7 +5756,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -5939,6 +5950,17 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Wafer",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.09,
+          "output_per_1m": 0.18,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-flash",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.098,
@@ -5990,7 +6012,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -6184,6 +6206,17 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Wafer",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.09,
+          "output_per_1m": 0.18,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-flash",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.098,
@@ -6235,7 +6268,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -7820,17 +7853,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Fireworks",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 1.2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "minimax/minimax-m2.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -7853,10 +7875,32 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Fireworks",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "minimax/minimax-m2.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Mara",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "minimax/minimax-m2.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.5,
+          "output_per_1m": 2.25,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
@@ -7871,7 +7915,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -7893,7 +7937,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
-          "status": -2
+          "status": 0
         }
       ],
       "designarena": {},
@@ -7974,7 +8018,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m3",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -8184,7 +8228,7 @@
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.5,
-          "output_per_1m": 2.5,
+          "output_per_1m": 2.2,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-ultra-550b-a55b",
@@ -8698,7 +8742,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -8753,7 +8797,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -8808,7 +8852,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -8819,7 +8863,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -8830,7 +8874,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -8968,7 +9012,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -9023,7 +9067,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -9078,7 +9122,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -9089,7 +9133,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -9100,7 +9144,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -9176,9 +9220,9 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Ambient",
+          "provider": "DeepInfra",
           "platform": "OpenRouter",
-          "input_per_1m": 0.75,
+          "input_per_1m": 0.74,
           "output_per_1m": 3.5,
           "region": "global",
           "unit": "per_1m_token",
@@ -9198,10 +9242,21 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
+          "provider": "Ambient",
           "platform": "OpenRouter",
           "input_per_1m": 0.75,
           "output_per_1m": 3.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2.7-code",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Venice",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.8999999999999999,
+          "output_per_1m": 4.300000000000001,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
@@ -9238,7 +9293,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -9249,7 +9304,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -10654,7 +10709,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "xiaomi/mimo-v2.5-pro",
-          "status": 0
+          "status": -5
         }
       ],
       "designarena": {},
@@ -10831,7 +10886,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "xiaomi/mimo-v2.5-pro",
-          "status": 0
+          "status": -5
         }
       ],
       "designarena": {},
@@ -12073,7 +12128,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12110,17 +12165,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
@@ -12129,6 +12173,17 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
           "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Friendli",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -12144,6 +12199,17 @@
         {
           "source": "OpenRouter",
           "provider": "Z.AI",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
@@ -12172,18 +12238,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Friendli",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12194,7 +12249,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -12332,7 +12387,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12369,17 +12424,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
@@ -12388,6 +12432,17 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
           "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Friendli",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -12403,6 +12458,17 @@
         {
           "source": "OpenRouter",
           "provider": "Z.AI",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
@@ -12431,18 +12497,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Friendli",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12453,7 +12508,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -12518,6 +12573,17 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Cloudflare",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Z.AI",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
@@ -12526,6 +12592,50 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.2",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Io Net",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Friendli",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": -2
         }
       ],
       "designarena": {},
@@ -13176,17 +13286,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Ambient",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.09,
-          "output_per_1m": 1.1,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-next-80b-a3b-instruct",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Alibaba",
           "platform": "OpenRouter",
           "input_per_1m": 0.0975,
@@ -13289,7 +13388,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Alibaba",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -13300,7 +13399,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Alibaba",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -13377,7 +13476,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -13421,7 +13520,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -13454,11 +13553,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13476,11 +13575,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
-          "provider": "StreamLake",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13491,7 +13590,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "GMICloud",
+          "provider": "StreamLake",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13707,7 +13806,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -13751,7 +13850,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -13784,11 +13883,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13806,11 +13905,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
-          "provider": "StreamLake",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13821,7 +13920,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "GMICloud",
+          "provider": "StreamLake",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13936,17 +14035,6 @@
         {
           "source": "OpenRouter",
           "provider": "DeepInfra",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.09,
-          "output_per_1m": 1.1,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-next-80b-a3b-instruct",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Ambient",
           "platform": "OpenRouter",
           "input_per_1m": 0.09,
           "output_per_1m": 1.1,
@@ -14466,7 +14554,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -14839,7 +14927,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -15093,7 +15181,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Alibaba",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -15104,7 +15192,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Alibaba",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -15510,7 +15598,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -15521,7 +15609,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -15632,7 +15720,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -15643,7 +15731,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -15893,29 +15981,29 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 2,
@@ -16047,7 +16135,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16058,7 +16146,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16489,7 +16577,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16500,7 +16588,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16664,7 +16752,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -16675,7 +16763,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -17122,29 +17210,29 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 2,
@@ -17224,7 +17312,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.1-codex-mini",
-          "status": -2
+          "status": 0
         }
       ],
       "designarena": {},
@@ -17386,7 +17474,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 2,
           "output_per_1m": 8,
@@ -17397,7 +17485,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 2,
           "output_per_1m": 8,
@@ -17654,29 +17742,29 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 2,
@@ -17738,7 +17826,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -17749,7 +17837,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -17992,7 +18080,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -18003,7 +18091,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -18107,7 +18195,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -18118,7 +18206,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -19408,7 +19496,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -19419,7 +19507,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -19441,7 +19529,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -19489,7 +19577,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -19500,7 +19588,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -19522,7 +19610,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -20589,6 +20677,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -20607,22 +20706,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.6",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
           "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -20742,6 +20830,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -20760,22 +20859,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.6",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
           "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -20862,29 +20950,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -20913,7 +20979,29 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.5",
-          "status": -2
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
         }
       ],
       "designarena": {
@@ -20971,29 +21059,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -21022,7 +21088,29 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.5",
-          "status": -2
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
         }
       ],
       "designarena": {
@@ -22651,7 +22739,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-r1",
-          "status": -2
+          "status": 0
         },
         {
           "source": "Azure AI Foundry",
@@ -22713,7 +22801,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -22724,7 +22812,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -23211,7 +23299,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -23222,7 +23310,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -23321,7 +23409,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-chat-v3.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -23587,7 +23675,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-chat-v3.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -24849,7 +24937,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AkashML",
+          "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 1.15,
@@ -24860,7 +24948,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
+          "provider": "AkashML",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 1.15,
@@ -24926,7 +25014,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Mara",
+          "provider": "Minimax",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -24948,18 +25036,18 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Minimax",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.5",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -24981,7 +25069,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Parasail",
+          "provider": "Mara",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25246,7 +25334,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "Minimax",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25257,7 +25345,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Minimax",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25533,7 +25621,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
+          "provider": "Moonshot AI",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -25544,7 +25632,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Moonshot AI",
+          "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -25626,17 +25714,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.6,
-          "output_per_1m": 2.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2-thinking",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
@@ -25649,6 +25726,17 @@
         {
           "source": "OpenRouter",
           "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2-thinking",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 2.5,
@@ -25750,17 +25838,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.6,
-          "output_per_1m": 2.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2-thinking",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
@@ -25773,6 +25850,17 @@
         {
           "source": "OpenRouter",
           "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2-thinking",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 2.5,
@@ -25973,7 +26061,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
+          "provider": "Moonshot AI",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -25984,7 +26072,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Moonshot AI",
+          "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -26478,7 +26566,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26500,7 +26588,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26609,7 +26697,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26620,7 +26708,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26708,7 +26796,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26719,7 +26807,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26939,7 +27027,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -26961,7 +27049,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "AWS Bedrock",
@@ -27239,7 +27327,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27261,7 +27349,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -5
         },
         {
           "source": "AWS Bedrock",
@@ -27396,7 +27484,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27487,7 +27575,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6v",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27557,7 +27645,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27740,7 +27828,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27762,7 +27850,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27860,7 +27948,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6v",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -28457,7 +28545,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-thinking",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28479,7 +28567,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28505,17 +28593,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 1.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -28523,7 +28600,18 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
+          "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "AtlasCloud",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
+          "status": -5
         },
         {
           "source": "AWS Bedrock",
@@ -28618,17 +28706,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -28640,14 +28717,14 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "AtlasCloud",
           "platform": "OpenRouter",
-          "input_per_1m": 0.19999999999999998,
-          "output_per_1m": 0.7,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28659,6 +28736,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
           "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.19999999999999998,
+          "output_per_1m": 0.7,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28728,7 +28816,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-thinking",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28750,7 +28838,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28776,17 +28864,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 1.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -28794,7 +28871,18 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
+          "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "AtlasCloud",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
+          "status": -5
         },
         {
           "source": "AWS Bedrock",
@@ -28933,7 +29021,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -28955,7 +29043,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -29214,7 +29302,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -29409,7 +29497,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-coder-30b-a3b-instruct",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -29885,17 +29973,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -29907,14 +29984,14 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "AtlasCloud",
           "platform": "OpenRouter",
-          "input_per_1m": 0.19999999999999998,
-          "output_per_1m": 0.7,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -29926,6 +30003,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
           "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.19999999999999998,
+          "output_per_1m": 0.7,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -29984,7 +30072,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-14b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -30127,17 +30215,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 2.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.5-27b",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -30146,6 +30223,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Phala",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.5-27b",
+          "status": -2
         }
       ],
       "designarena": {},
@@ -30193,7 +30281,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-14b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -30285,7 +30373,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -30307,7 +30395,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -30530,7 +30618,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -30909,7 +30997,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -31139,7 +31227,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -31161,7 +31249,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -31624,17 +31712,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 2.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.5-27b",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -31643,6 +31720,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Phala",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.5-27b",
+          "status": -2
         }
       ],
       "designarena": {},
@@ -32139,6 +32227,28 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -32172,18 +32282,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.5",
-          "status": -5
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -32194,17 +32293,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.5",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -32212,7 +32300,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-sonnet-4.5",
-          "status": -2
+          "status": 0
         }
       ],
       "designarena": {
@@ -32294,7 +32382,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nex-agi/nex-n2-pro:free",
-          "status": -2
+          "status": -5
         }
       ],
       "designarena": {},
@@ -32384,6 +32472,17 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "stepfun/step-3.7-flash",
+          "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.19999999999999998,
+          "output_per_1m": 1.15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "stepfun/step-3.7-flash",
           "status": 0
         },
         {
@@ -32395,7 +32494,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "stepfun/step-3.7-flash",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -32886,7 +32985,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "tencent/hy3-preview",
-          "status": -5
+          "status": -2
         }
       ],
       "designarena": {},
@@ -32975,7 +33074,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it:free",
-          "status": 0
+          "status": -5
         }
       ],
       "designarena": {},
@@ -33005,7 +33104,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33049,7 +33148,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -33060,7 +33159,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -33082,7 +33181,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33093,7 +33192,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -33208,7 +33307,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -33252,7 +33351,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -33439,7 +33538,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "StreamLake",
+          "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -33450,7 +33549,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
+          "provider": "StreamLake",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -33547,7 +33646,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-super-120b-a12b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33663,7 +33762,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -33674,7 +33773,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -34181,7 +34280,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-nano-30b-a3b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -34438,7 +34537,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/ministral-14b-2512",
-          "status": -2
+          "status": 0
         }
       ],
       "designarena": {},
@@ -35428,7 +35527,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b:free",
-          "status": 0
+          "status": -5
         }
       ],
       "designarena": {},
@@ -35462,17 +35561,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 15,
-          "output_per_1m": 75,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 15,
@@ -35485,6 +35573,17 @@
         {
           "source": "OpenRouter",
           "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 15,
+          "output_per_1m": 75,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.1",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 15,
           "output_per_1m": 75,
@@ -35551,7 +35650,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-coder:free",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -35737,7 +35836,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -35898,7 +35997,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-small-3.2-24b-instruct",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -36136,7 +36235,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview-05-06",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -36147,7 +36246,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview-05-06",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -36158,7 +36257,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview-05-06",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -37026,7 +37125,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct:free",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -37056,7 +37155,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "amazon/nova-lite-v1",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -37299,7 +37398,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen-2.5-7b-instruct",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -37441,7 +37540,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.2-3b-instruct:free",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -37673,7 +37772,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nousresearch/hermes-3-llama-3.1-405b:free",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -37767,7 +37866,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -37778,7 +37877,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -37815,7 +37914,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-nemo",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -37837,7 +37936,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-nemo",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -38740,12 +38839,12 @@
     {
       "platform": "OpenRouter",
       "provider": "Novita",
-      "model_count": 62
+      "model_count": 63
     },
     {
       "platform": "OpenRouter",
       "provider": "DeepInfra",
-      "model_count": 60
+      "model_count": 62
     },
     {
       "platform": "AWS Bedrock",
@@ -38790,7 +38889,7 @@
     {
       "platform": "OpenRouter",
       "provider": "Venice",
-      "model_count": 27
+      "model_count": 28
     },
     {
       "platform": "Azure AI Foundry",
@@ -38834,13 +38933,13 @@
     },
     {
       "platform": "OpenRouter",
-      "provider": "Google AI Studio",
+      "provider": "Cloudflare",
       "model_count": 13
     },
     {
       "platform": "OpenRouter",
-      "provider": "Cloudflare",
-      "model_count": 12
+      "provider": "Google AI Studio",
+      "model_count": 13
     },
     {
       "platform": "OpenRouter",
@@ -38909,6 +39008,11 @@
     },
     {
       "platform": "OpenRouter",
+      "provider": "Friendli",
+      "model_count": 6
+    },
+    {
+      "platform": "OpenRouter",
       "provider": "DekaLLM",
       "model_count": 5
     },
@@ -38924,8 +39028,8 @@
     },
     {
       "platform": "OpenRouter",
-      "provider": "Friendli",
-      "model_count": 5
+      "provider": "Io Net",
+      "model_count": 4
     },
     {
       "platform": "OpenRouter",
@@ -38969,22 +39073,12 @@
     },
     {
       "platform": "OpenRouter",
-      "provider": "Io Net",
-      "model_count": 3
-    },
-    {
-      "platform": "OpenRouter",
       "provider": "Inceptron",
       "model_count": 3
     },
     {
       "platform": "OpenRouter",
       "provider": "Moonshot AI",
-      "model_count": 3
-    },
-    {
-      "platform": "OpenRouter",
-      "provider": "Ambient",
       "model_count": 3
     },
     {
@@ -39005,6 +39099,16 @@
     {
       "platform": "OpenRouter",
       "provider": "DeepSeek",
+      "model_count": 2
+    },
+    {
+      "platform": "OpenRouter",
+      "provider": "Wafer",
+      "model_count": 2
+    },
+    {
+      "platform": "OpenRouter",
+      "provider": "Ambient",
       "model_count": 2
     },
     {
@@ -39045,11 +39149,6 @@
     {
       "platform": "OpenRouter",
       "provider": "Decart",
-      "model_count": 1
-    },
-    {
-      "platform": "OpenRouter",
-      "provider": "Wafer",
       "model_count": 1
     },
     {
