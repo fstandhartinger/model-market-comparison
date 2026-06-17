@@ -24,6 +24,7 @@ export interface ClientModel {
   featured: boolean;
   release_date: string | null;
   scores: {
+    composite: number | null;
     aa_coding_index: number | null;
     aa_intelligence_index: number | null;
     designarena_frontend: number | null;
@@ -81,6 +82,7 @@ export function clientData(ds: Dataset): ClientData {
       featured: m.featured,
       release_date: m.release_date,
       scores: {
+        composite: null, // filled in below once cross-model ranges are known
         aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
         aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
         designarena_frontend: m.designarena?.frontend?.elo ?? null,
@@ -93,6 +95,24 @@ export function clientData(ds: Dataset): ClientData {
       copilot_usd_per_request: m.copilot?.usd_per_request ?? null,
     };
   });
+
+  // Composite score: min-max normalize each of the four base scores to 0–100
+  // across all models, then average each model's available normalized components.
+  const baseKeys = ["aa_coding_index", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
+  const ranges: Record<string, { min: number; max: number } | null> = {};
+  for (const k of baseKeys) {
+    const vals = models.map((m) => m.scores[k]).filter((v): v is number => v != null);
+    ranges[k] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals) } : null;
+  }
+  for (const m of models) {
+    const norms: number[] = [];
+    for (const k of baseKeys) {
+      const v = m.scores[k]; const r = ranges[k];
+      if (v == null || !r) continue;
+      norms.push(r.max > r.min ? ((v - r.min) / (r.max - r.min)) * 100 : 100);
+    }
+    m.scores.composite = norms.length ? Math.round((norms.reduce((a, b) => a + b, 0) / norms.length) * 10) / 10 : null;
+  }
 
   const providers: ProviderInfo[] = ds.providers.map((p) => ({
     key: offerKey(p.platform, p.provider), platform: p.platform, provider: p.provider, model_count: p.model_count,

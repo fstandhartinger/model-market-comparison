@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num } from "../lib/format";
-import { rankedOffers, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
+import { rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 
@@ -28,7 +28,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const [modelId, setModelId] = useState<string>("");
 
   const eligible = (m: { family_key: string; scores: Record<string, number | null> }) => {
-    if (s.excludeUnauthorized && isUnauthorizedModel(m.family_key)) return false;
+    if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
     if (s.familySet && !s.familySet.has(m.family_key)) return false;
     if (s.minScore > 0 && m.scores[score] != null && (m.scores[score] as number) < s.minScore) return false;
     return true;
@@ -43,13 +43,13 @@ export function ProvidersView({ data }: { data: ClientData }) {
       if (!fams.has(m.family_key)) fams.set(m.family_key, { family_key: m.family_key });
     }
     return [...fams.values()];
-  }, [data, score, scorePeersOnly, s.familySet, s.excludeUnauthorized, s.minScore]);
+  }, [data, score, scorePeersOnly, s.familySet, s.hideGptOpus, s.hideFable, s.minScore]);
 
   const modelOptions = useMemo(
     () => data.models.filter((m) => rankedOffers(data.offersByFamily[m.family_key], allowed).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, score, allowed, s.familySet, s.excludeUnauthorized, s.minScore]
+    [data, score, allowed, s.familySet, s.hideGptOpus, s.hideFable, s.minScore]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];

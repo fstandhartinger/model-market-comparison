@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, effectiveAllowed, isUnauthorizedModel } from "../lib/cost";
+import { modelCost, rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, isCollapsibleFamily } from "../lib/variants";
@@ -34,7 +34,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       ncheap: rankedOffers(data.offersByFamily[m.family_key], allowed).length,
     }));
     if (s.collapse) r = r.filter((x) => !isCollapsibleFamily(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
-    if (s.excludeUnauthorized) r = r.filter((x) => !isUnauthorizedModel(x.m.family_key));
+    r = r.filter((x) => !isHiddenModel(x.m.family_key, s.hideGptOpus, s.hideFable));
     if (s.featured) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (openFilter !== "all") r = r.filter((x) => x.m.open_weights === (openFilter === "open"));
@@ -56,7 +56,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.excludeUnauthorized, s.providerSet, openFilter, org, q, withScoreOnly, maxCost, sort, asc, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.providerSet, openFilter, org, q, withScoreOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);

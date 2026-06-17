@@ -65,5 +65,6 @@ export function scoreOf(model: ModelRow, key: ScoreKey): number | null {
     case "aa_intelligence_index": return model.benchmarks?.aa_intelligence_index ?? null;
     case "designarena_frontend": return model.designarena?.frontend?.elo ?? null;
     case "designarena_fullstack": return model.designarena?.fullstack?.elo ?? null;
+    case "composite": return null; // blended score is computed client-side (needs cross-model normalization)
   }
 }

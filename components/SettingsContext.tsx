@@ -7,9 +7,10 @@ interface SettingsState {
   score: ScoreKey;
   collapse: boolean;       // one variant per GPT/Claude family
   featured: boolean;
-  excludeChinese: boolean;      // hide Chinese-based inference providers (not their models)
-  excludeUnauthorized: boolean; // hide GPT-5.5 / Opus 4.8 / Fable from the model list
-  minScore: number;        // hide models scoring below this (score-aware default)
+  excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
+  hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
+  hideFable: boolean;       // hide Claude Fable (on by default)
+  minScore: number;         // hide models scoring below this (score-aware default)
   providers: string[];     // selected provider keys; empty = all
   families: string[];      // selected model family keys; empty = all
 }
@@ -19,7 +20,8 @@ interface SettingsCtx extends SettingsState {
   setCollapse: (b: boolean) => void;
   setFeatured: (b: boolean) => void;
   setExcludeChinese: (b: boolean) => void;
-  setExcludeUnauthorized: (b: boolean) => void;
+  setHideGptOpus: (b: boolean) => void;
+  setHideFable: (b: boolean) => void;
   setMinScore: (n: number) => void;
   setProviders: (k: string[]) => void;
   setFamilies: (k: string[]) => void;
@@ -27,7 +29,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, excludeUnauthorized: true, minScore: defaultMinFor(DEFAULT_SCORE), providers: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), providers: [], families: [] };
 const KEY = "mmc.settings.v1";
 
 const Ctx = createContext<SettingsCtx | null>(null);
@@ -53,7 +55,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setCollapse: (collapse) => setState((s) => ({ ...s, collapse })),
     setFeatured: (featured) => setState((s) => ({ ...s, featured })),
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
-    setExcludeUnauthorized: (excludeUnauthorized) => setState((s) => ({ ...s, excludeUnauthorized })),
+    setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
+    setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
     setProviders: (providers) => setState((s) => ({ ...s, providers })),
     setFamilies: (families) => setState((s) => ({ ...s, families })),

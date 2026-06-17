@@ -2,6 +2,7 @@ import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
 
 export const SCORE_OPTIONS: ScoreKey[] = [
+  "composite",
   "designarena_fullstack",
   "designarena_frontend",
   "aa_coding_index",
@@ -9,7 +10,7 @@ export const SCORE_OPTIONS: ScoreKey[] = [
 ];
 
 /** Default score across the whole app. */
-export const DEFAULT_SCORE: ScoreKey = "designarena_fullstack";
+export const DEFAULT_SCORE: ScoreKey = "composite";
 
 export function blend(input: number | null, output: number | null, inputWeight = 10): number | null {
   if (input == null && output == null) return null;
@@ -53,8 +54,10 @@ export function scoreOf(m: ClientModel, key: ScoreKey): number | null {
   return m.scores[key] ?? null;
 }
 
-/** Sensible default minimum for a score: DesignArena is Elo (~1000), AA indices ~35. */
+/** Sensible default minimum for a score: DesignArena is Elo (~1000), AA indices ~35,
+ *  Composite is a 0–100 blend (no floor by default). */
 export function defaultMinFor(score: ScoreKey): number {
+  if (score === "composite") return 0;
   return score.startsWith("designarena") ? 1000 : 35;
 }
 
@@ -85,11 +88,13 @@ export function effectiveAllowed(
   return base;
 }
 
-// "Unauthorized" frontier models to hide by default (GPT-5.5*, Claude Opus 4.8,
-// Claude Fable). Matched on family_key, so all variants are covered.
-export const UNAUTHORIZED_FAMILY_RE = /^(gpt-5\.5|claude-opus-4\.8|claude-fable)/;
-export function isUnauthorizedModel(familyKey: string): boolean {
-  return UNAUTHORIZED_FAMILY_RE.test(familyKey);
+// Two independent "hide" toggles, matched on family_key (covers all variants):
+//  - GPT-5.5* and Claude Opus 4.8  (off by default)
+//  - Claude Fable                  (on by default)
+export const HIDE_GPT_OPUS_RE = /^(gpt-5\.5|claude-opus-4\.8)/;
+export const HIDE_FABLE_RE = /^claude-fable/;
+export function isHiddenModel(familyKey: string, hideGptOpus: boolean, hideFable: boolean): boolean {
+  return (hideGptOpus && HIDE_GPT_OPUS_RE.test(familyKey)) || (hideFable && HIDE_FABLE_RE.test(familyKey));
 }
 
 // Provider-filter presets (point 5).

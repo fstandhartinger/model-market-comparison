@@ -69,12 +69,14 @@ export interface Dataset {
 }
 
 export type ScoreKey =
+  | "composite"
   | "aa_coding_index"
   | "aa_intelligence_index"
   | "designarena_frontend"
   | "designarena_fullstack";
 
 export const SCORE_LABELS: Record<ScoreKey, string> = {
+  composite: "Composite (blended, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
