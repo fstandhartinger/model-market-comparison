@@ -1,15 +1,15 @@
 {
-  "generated_at": "2026-06-17T07:42:46.392Z",
+  "generated_at": "2026-06-17T15:08:16.519Z",
   "counts": {
     "models": 687,
     "families": 558,
     "providers": 75,
-    "offers": 1489
+    "offers": 1487
   },
   "sources": {
     "openrouter": "2026-06-17",
     "artificialanalysis": "2026-06-17",
-    "designarena": "2026-06-16",
+    "designarena": "2026-06-17",
     "aws_bedrock": "2026-06-15",
     "azure_foundry": "2026-06-15",
     "github_copilot": "2026-06-15",
@@ -42,8 +42,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 362.528,
-        "ttft_s": 0.506
+        "output_tps": 355.409,
+        "ttft_s": 0.525
       },
       "offers": [
         {
@@ -154,7 +154,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -176,22 +176,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "DeepInfra",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-120b",
           "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Groq",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -213,6 +202,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Groq",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-120b",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Nebius",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -224,7 +224,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -242,7 +242,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -308,8 +308,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 348.488,
-        "ttft_s": 0.527
+        "output_tps": 348.796,
+        "ttft_s": 0.524
       },
       "offers": [
         {
@@ -420,7 +420,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -442,22 +442,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "DeepInfra",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-120b",
           "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Groq",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -479,6 +468,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Groq",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-120b",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Nebius",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -490,7 +490,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -508,7 +508,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -574,7 +574,7 @@
         "blended_3to1": 11.25
       },
       "aa_speed": {
-        "output_tps": 53.858,
+        "output_tps": 52.678,
         "ttft_s": 0.853
       },
       "offers": [
@@ -598,7 +598,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -636,13 +636,13 @@
         "frontend": {
           "elo": 1184,
           "winRate": 46.1,
-          "battles": 3614,
+          "battles": 3633,
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1163,
-          "winRate": 46,
-          "battles": 2357,
+          "elo": 1162,
+          "winRate": 45.8,
+          "battles": 2372,
           "modelId": "gpt-5.5"
         }
       },
@@ -681,8 +681,8 @@
         "blended_3to1": 0.088
       },
       "aa_speed": {
-        "output_tps": 239.421,
-        "ttft_s": 0.484
+        "output_tps": 241.996,
+        "ttft_s": 0.476
       },
       "offers": [
         {
@@ -720,17 +720,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.04,
-          "output_per_1m": 0.15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-20b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.04,
@@ -742,6 +731,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.04,
+          "output_per_1m": 0.15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-20b",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.04,
@@ -749,7 +749,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -882,8 +882,8 @@
         "blended_3to1": 1.688
       },
       "aa_speed": {
-        "output_tps": 177.06,
-        "ttft_s": 5.156
+        "output_tps": 175.196,
+        "ttft_s": 5.667
       },
       "offers": [
         {
@@ -955,8 +955,8 @@
         "blended_3to1": 0.095
       },
       "aa_speed": {
-        "output_tps": 224.25,
-        "ttft_s": 0.475
+        "output_tps": 226.354,
+        "ttft_s": 0.48
       },
       "offers": [
         {
@@ -994,17 +994,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.04,
-          "output_per_1m": 0.15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-oss-20b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.04,
@@ -1016,6 +1005,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.04,
+          "output_per_1m": 0.15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-20b",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.04,
@@ -1023,7 +1023,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -1192,8 +1192,8 @@
         "blended_3to1": 11.25
       },
       "aa_speed": {
-        "output_tps": 66.647,
-        "ttft_s": 60.724
+        "output_tps": 62.974,
+        "ttft_s": 59.753
       },
       "offers": [
         {
@@ -1216,7 +1216,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -1254,13 +1254,13 @@
         "frontend": {
           "elo": 1184,
           "winRate": 46.1,
-          "battles": 3614,
+          "battles": 3633,
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1163,
-          "winRate": 46,
-          "battles": 2357,
+          "elo": 1162,
+          "winRate": 45.8,
+          "battles": 2372,
           "modelId": "gpt-5.5"
         }
       },
@@ -1299,7 +1299,7 @@
         "blended_3to1": 11.25
       },
       "aa_speed": {
-        "output_tps": 58.731,
+        "output_tps": 57.221,
         "ttft_s": 5.013
       },
       "offers": [
@@ -1323,7 +1323,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -1361,13 +1361,13 @@
         "frontend": {
           "elo": 1184,
           "winRate": 46.1,
-          "battles": 3614,
+          "battles": 3633,
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1163,
-          "winRate": 46,
-          "battles": 2357,
+          "elo": 1162,
+          "winRate": 45.8,
+          "battles": 2372,
           "modelId": "gpt-5.5"
         }
       },
@@ -1407,7 +1407,7 @@
       },
       "aa_speed": {
         "output_tps": 147.639,
-        "ttft_s": 3.162
+        "ttft_s": 3.106
       },
       "offers": [
         {
@@ -1430,7 +1430,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-nano",
-          "status": 0
+          "status": -2
         },
         {
           "source": "Azure AI Foundry",
@@ -1475,7 +1475,7 @@
         "blended_3to1": 1.688
       },
       "aa_speed": {
-        "output_tps": 179.746,
+        "output_tps": 173.394,
         "ttft_s": 5.632
       },
       "offers": [
@@ -1548,8 +1548,8 @@
         "blended_3to1": 3.5
       },
       "aa_speed": {
-        "output_tps": 119.63,
-        "ttft_s": 6.596
+        "output_tps": 116.277,
+        "ttft_s": 6.632
       },
       "offers": [
         {
@@ -1596,8 +1596,8 @@
         "blended_3to1": 1.688
       },
       "aa_speed": {
-        "output_tps": 160.033,
-        "ttft_s": 0.53
+        "output_tps": 156.462,
+        "ttft_s": 0.543
       },
       "offers": [
         {
@@ -1669,8 +1669,8 @@
         "blended_3to1": 11.25
       },
       "aa_speed": {
-        "output_tps": 59.27,
-        "ttft_s": 20.702
+        "output_tps": 55.15,
+        "ttft_s": 18.322
       },
       "offers": [
         {
@@ -1693,7 +1693,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -1731,13 +1731,13 @@
         "frontend": {
           "elo": 1184,
           "winRate": 46.1,
-          "battles": 3614,
+          "battles": 3633,
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1163,
-          "winRate": 46,
-          "battles": 2357,
+          "elo": 1162,
+          "winRate": 45.8,
+          "battles": 2372,
           "modelId": "gpt-5.5"
         }
       },
@@ -1776,8 +1776,8 @@
         "blended_3to1": 0.463
       },
       "aa_speed": {
-        "output_tps": 155.183,
-        "ttft_s": 0.553
+        "output_tps": 159.635,
+        "ttft_s": 0.557
       },
       "offers": [
         {
@@ -1800,7 +1800,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-nano",
-          "status": 0
+          "status": -2
         },
         {
           "source": "Azure AI Foundry",
@@ -1845,7 +1845,7 @@
         "blended_3to1": 11.25
       },
       "aa_speed": {
-        "output_tps": 64.473,
+        "output_tps": 58.376,
         "ttft_s": 1.886
       },
       "offers": [
@@ -1869,7 +1869,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -1907,13 +1907,13 @@
         "frontend": {
           "elo": 1184,
           "winRate": 46.1,
-          "battles": 3614,
+          "battles": 3633,
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1163,
-          "winRate": 46,
-          "battles": 2357,
+          "elo": 1162,
+          "winRate": 45.8,
+          "battles": 2372,
           "modelId": "gpt-5.5"
         }
       },
@@ -2035,8 +2035,8 @@
         "blended_3to1": 0.463
       },
       "aa_speed": {
-        "output_tps": 150.697,
-        "ttft_s": 3.625
+        "output_tps": 150.506,
+        "ttft_s": 3.664
       },
       "offers": [
         {
@@ -2059,7 +2059,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-nano",
-          "status": 0
+          "status": -2
         },
         {
           "source": "Azure AI Foundry",
@@ -2104,7 +2104,7 @@
         "blended_3to1": 4.813
       },
       "aa_speed": {
-        "output_tps": 89.269,
+        "output_tps": 82.218,
         "ttft_s": 74.399
       },
       "offers": [
@@ -2128,12 +2128,12 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.3-codex",
-          "status": -2
+          "status": -5
         }
       ],
       "designarena": {
         "frontend": {
-          "elo": 1124,
+          "elo": 1123,
           "winRate": 39.1,
           "battles": 2820,
           "modelId": "gpt-5.3-codex"
@@ -2180,8 +2180,8 @@
         "blended_3to1": 0.612
       },
       "aa_speed": {
-        "output_tps": 97.113,
-        "ttft_s": 0.611
+        "output_tps": 95.947,
+        "ttft_s": 0.608
       },
       "offers": [
         {
@@ -2204,7 +2204,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -2303,7 +2303,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -2371,7 +2371,7 @@
       },
       "aa_speed": {
         "output_tps": 36.78,
-        "ttft_s": 0.687
+        "ttft_s": 0.683
       },
       "offers": [],
       "designarena": {},
@@ -2406,8 +2406,8 @@
         "blended_3to1": 1.38
       },
       "aa_speed": {
-        "output_tps": 47.259,
-        "ttft_s": 0.554
+        "output_tps": 42.421,
+        "ttft_s": 0.564
       },
       "offers": [],
       "designarena": {},
@@ -2442,8 +2442,8 @@
         "blended_3to1": 0.245
       },
       "aa_speed": {
-        "output_tps": 87.395,
-        "ttft_s": 0.54
+        "output_tps": 87.261,
+        "ttft_s": 0.524
       },
       "offers": [],
       "designarena": {},
@@ -2478,8 +2478,8 @@
         "blended_3to1": 0.292
       },
       "aa_speed": {
-        "output_tps": 105.086,
-        "ttft_s": 0.61
+        "output_tps": 103.734,
+        "ttft_s": 0.612
       },
       "offers": [
         {
@@ -2559,8 +2559,8 @@
         "blended_3to1": 0.475
       },
       "aa_speed": {
-        "output_tps": 92.379,
-        "ttft_s": 0.585
+        "output_tps": 94.299,
+        "ttft_s": 0.59
       },
       "offers": [
         {
@@ -2677,7 +2677,7 @@
       },
       "aa_speed": {
         "output_tps": 34.55,
-        "ttft_s": 0.991
+        "ttft_s": 1.001
       },
       "offers": [],
       "designarena": {},
@@ -2712,13 +2712,13 @@
         "blended_3to1": 3.375
       },
       "aa_speed": {
-        "output_tps": 204.424,
-        "ttft_s": 0.811
+        "output_tps": 202.859,
+        "ttft_s": 0.829
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -2729,7 +2729,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -2743,13 +2743,13 @@
         "frontend": {
           "elo": 1268,
           "winRate": 55,
-          "battles": 3695,
+          "battles": 3711,
           "modelId": "gemini-3.5-flash"
         },
         "fullstack": {
-          "elo": 1278,
-          "winRate": 59.2,
-          "battles": 3024,
+          "elo": 1277,
+          "winRate": 59.1,
+          "battles": 3033,
           "modelId": "gemini-3.5-flash"
         }
       },
@@ -2860,7 +2860,7 @@
         "blended_3to1": 0.198
       },
       "aa_speed": {
-        "output_tps": 48.031,
+        "output_tps": 46.96,
         "ttft_s": 0.712
       },
       "offers": [],
@@ -2896,8 +2896,8 @@
         "blended_3to1": 0.205
       },
       "aa_speed": {
-        "output_tps": 53.747,
-        "ttft_s": 0.861
+        "output_tps": 49.991,
+        "ttft_s": 0.863
       },
       "offers": [],
       "designarena": {},
@@ -2932,8 +2932,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 158.645,
-        "ttft_s": 1.367
+        "output_tps": 158.685,
+        "ttft_s": 1.375
       },
       "offers": [],
       "designarena": {},
@@ -3076,7 +3076,7 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 126.783,
+        "output_tps": 124.709,
         "ttft_s": 29.692
       },
       "offers": [
@@ -3100,20 +3100,20 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.1-pro-preview",
-          "status": -2
+          "status": -5
         }
       ],
       "designarena": {
         "frontend": {
           "elo": 1203,
-          "winRate": 49.5,
-          "battles": 4678,
+          "winRate": 49.4,
+          "battles": 4698,
           "modelId": "gemini-3.1-pro-preview"
         },
         "fullstack": {
           "elo": 1147,
           "winRate": 46.1,
-          "battles": 3191,
+          "battles": 3200,
           "modelId": "gemini-3.1-pro-preview"
         }
       },
@@ -3188,13 +3188,13 @@
         "blended_3to1": 3.375
       },
       "aa_speed": {
-        "output_tps": 203.302,
+        "output_tps": 205.086,
         "ttft_s": 16.451
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3205,7 +3205,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3219,13 +3219,13 @@
         "frontend": {
           "elo": 1268,
           "winRate": 55,
-          "battles": 3695,
+          "battles": 3711,
           "modelId": "gemini-3.5-flash"
         },
         "fullstack": {
-          "elo": 1278,
-          "winRate": 59.2,
-          "battles": 3024,
+          "elo": 1277,
+          "winRate": 59.1,
+          "battles": 3033,
           "modelId": "gemini-3.5-flash"
         }
       },
@@ -3335,10 +3335,21 @@
         "blended_3to1": 0.563
       },
       "aa_speed": {
-        "output_tps": 294.584,
-        "ttft_s": 4.955
+        "output_tps": 301.276,
+        "ttft_s": 5.055
       },
       "offers": [
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 1.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-3.1-flash-lite",
+          "status": -2
+        },
         {
           "source": "OpenRouter",
           "provider": "Google AI Studio",
@@ -3352,13 +3363,13 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 1.5,
           "region": "global",
           "unit": "per_1m_token",
-          "or_model_id": "google/gemini-3.1-flash-lite",
+          "or_model_id": "google/gemini-3.1-flash-lite-preview",
           "status": 0
         },
         {
@@ -3371,17 +3382,6 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-3.1-flash-lite-preview",
           "status": -2
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google AI Studio",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 1.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-3.1-flash-lite-preview",
-          "status": 0
         }
       ],
       "designarena": {},
@@ -3422,7 +3422,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3433,7 +3433,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google AI Studio",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 1.5,
           "output_per_1m": 9,
@@ -3447,13 +3447,13 @@
         "frontend": {
           "elo": 1268,
           "winRate": 55,
-          "battles": 3695,
+          "battles": 3711,
           "modelId": "gemini-3.5-flash"
         },
         "fullstack": {
-          "elo": 1278,
-          "winRate": 59.2,
-          "battles": 3024,
+          "elo": 1277,
+          "winRate": 59.1,
+          "battles": 3033,
           "modelId": "gemini-3.5-flash"
         }
       },
@@ -3505,29 +3505,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google AI Studio",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -3542,36 +3520,25 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro-preview",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro-preview",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Google AI Studio",
           "platform": "OpenRouter",
           "input_per_1m": 1.25,
           "output_per_1m": 10,
           "region": "global",
           "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro-preview",
-          "status": -5
+          "or_model_id": "google/gemini-2.5-pro",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -3583,6 +3550,39 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview",
           "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro-preview",
+          "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google AI Studio",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro-preview",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro-preview",
+          "status": 0
         }
       ],
       "designarena": {},
@@ -3621,7 +3621,7 @@
         "blended_3to1": 2
       },
       "aa_speed": {
-        "output_tps": 108.373,
+        "output_tps": 104.143,
         "ttft_s": 0.689
       },
       "offers": [],
@@ -3762,7 +3762,7 @@
       },
       "aa_speed": {
         "output_tps": 151.313,
-        "ttft_s": 11.598
+        "ttft_s": 12.396
       },
       "offers": [],
       "designarena": {},
@@ -3797,32 +3797,10 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 48.334,
-        "ttft_s": 0.981
+        "output_tps": 47.268,
+        "ttft_s": 0.996
       },
       "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": 0
-        },
         {
           "source": "OpenRouter",
           "provider": "Amazon Bedrock",
@@ -3836,6 +3814,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -3847,7 +3836,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -3869,7 +3858,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -3880,7 +3869,18 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -3920,9 +3920,9 @@
           "modelId": "claude-sonnet-4-6"
         },
         "fullstack": {
-          "elo": 1282,
+          "elo": 1281,
           "winRate": 63.1,
-          "battles": 2031,
+          "battles": 2032,
           "modelId": "claude-sonnet-4-6"
         }
       },
@@ -3961,8 +3961,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 53.793,
-        "ttft_s": 24.189
+        "output_tps": 53.277,
+        "ttft_s": 26.209
       },
       "offers": [
         {
@@ -3978,6 +3978,28 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -4012,28 +4034,6 @@
         {
           "source": "OpenRouter",
           "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -4104,32 +4104,10 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 63.249,
-        "ttft_s": 47.159
+        "output_tps": 66.218,
+        "ttft_s": 47.935
       },
       "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.6",
-          "status": 0
-        },
         {
           "source": "OpenRouter",
           "provider": "Amazon Bedrock",
@@ -4143,6 +4121,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
@@ -4154,7 +4143,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -4176,7 +4165,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
+          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -4187,7 +4176,18 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Google",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -4227,9 +4227,9 @@
           "modelId": "claude-sonnet-4-6"
         },
         "fullstack": {
-          "elo": 1282,
+          "elo": 1281,
           "winRate": 63.1,
-          "battles": 2031,
+          "battles": 2032,
           "modelId": "claude-sonnet-4-6"
         }
       },
@@ -4268,7 +4268,7 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 45.649,
+        "output_tps": 43.632,
         "ttft_s": 0.784
       },
       "offers": [
@@ -4285,6 +4285,28 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -4319,28 +4341,6 @@
         {
           "source": "OpenRouter",
           "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -4411,7 +4411,7 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 67.637,
+        "output_tps": 66.674,
         "ttft_s": 34.613
       },
       "offers": [
@@ -4428,6 +4428,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -4461,29 +4472,18 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.8",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.8",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -4507,7 +4507,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1326,
+          "elo": 1325,
           "winRate": 67.7,
           "battles": 594,
           "modelId": "claude-opus-4-8"
@@ -4548,8 +4548,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 103.581,
-        "ttft_s": 0.454
+        "output_tps": 107.926,
+        "ttft_s": 0.431
       },
       "offers": [],
       "designarena": {},
@@ -4631,8 +4631,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 57.042,
-        "ttft_s": 0.636
+        "output_tps": 52.987,
+        "ttft_s": 0.613
       },
       "offers": [],
       "designarena": {},
@@ -4667,8 +4667,8 @@
         "blended_3to1": 2.75
       },
       "aa_speed": {
-        "output_tps": 41.081,
-        "ttft_s": 0.609
+        "output_tps": 40.457,
+        "ttft_s": 0.606
       },
       "offers": [],
       "designarena": {},
@@ -4703,8 +4703,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 156.776,
-        "ttft_s": 0.525
+        "output_tps": 152.984,
+        "ttft_s": 0.552
       },
       "offers": [],
       "designarena": {},
@@ -4739,8 +4739,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 163.987,
-        "ttft_s": 0.548
+        "output_tps": 161.927,
+        "ttft_s": 0.555
       },
       "offers": [],
       "designarena": {},
@@ -4775,8 +4775,8 @@
         "blended_3to1": 0.75
       },
       "aa_speed": {
-        "output_tps": 64.303,
-        "ttft_s": 0.666
+        "output_tps": 63.66,
+        "ttft_s": 0.67
       },
       "offers": [
         {
@@ -4832,8 +4832,8 @@
         "blended_3to1": 0.2
       },
       "aa_speed": {
-        "output_tps": 107.819,
-        "ttft_s": 0.427
+        "output_tps": 106.666,
+        "ttft_s": 0.421
       },
       "offers": [],
       "designarena": {},
@@ -4904,8 +4904,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 67.104,
-        "ttft_s": 0.657
+        "output_tps": 82.034,
+        "ttft_s": 0.645
       },
       "offers": [
         {
@@ -4962,8 +4962,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 54.083,
-        "ttft_s": 0.626
+        "output_tps": 50.256,
+        "ttft_s": 0.769
       },
       "offers": [],
       "designarena": {},
@@ -4999,7 +4999,7 @@
       },
       "aa_speed": {
         "output_tps": 60.177,
-        "ttft_s": 1.178
+        "ttft_s": 1.079
       },
       "offers": [
         {
@@ -5055,7 +5055,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5136,17 +5136,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.74,
-          "output_per_1m": 3.48,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
@@ -5155,6 +5144,17 @@
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Together",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.74,
+          "output_per_1m": 3.48,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-pro",
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -5191,7 +5191,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1023,
+          "elo": 1022,
           "winRate": 26.6,
           "battles": 969,
           "modelId": "deepseek-v4-pro"
@@ -5228,8 +5228,8 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 62.063,
-        "ttft_s": 1.134
+        "output_tps": 58.464,
+        "ttft_s": 1.159
       },
       "offers": [
         {
@@ -5285,7 +5285,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5366,17 +5366,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.74,
-          "output_per_1m": 3.48,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
@@ -5385,6 +5374,17 @@
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Together",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.74,
+          "output_per_1m": 3.48,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-pro",
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -5421,7 +5421,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1023,
+          "elo": 1022,
           "winRate": 26.6,
           "battles": 969,
           "modelId": "deepseek-v4-pro"
@@ -5458,8 +5458,8 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 61.632,
-        "ttft_s": 1.17
+        "output_tps": 60.151,
+        "ttft_s": 1.126
       },
       "offers": [
         {
@@ -5515,7 +5515,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -5596,17 +5596,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.74,
-          "output_per_1m": 3.48,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 1.74,
@@ -5615,6 +5604,17 @@
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
           "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Together",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.74,
+          "output_per_1m": 3.48,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-pro",
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -5651,7 +5651,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1023,
+          "elo": 1022,
           "winRate": 26.6,
           "battles": 969,
           "modelId": "deepseek-v4-pro"
@@ -5891,17 +5891,6 @@
           "status": 0
         },
         {
-          "source": "OpenRouter",
-          "provider": "Io Net",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.204,
-          "output_per_1m": 0.39,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
-        },
-        {
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
@@ -5945,7 +5934,7 @@
       },
       "aa_speed": {
         "output_tps": 99.161,
-        "ttft_s": 1.018
+        "ttft_s": 1.026
       },
       "offers": [
         {
@@ -6141,17 +6130,6 @@
           "platform": "OpenRouter",
           "input_per_1m": 0.16999999999999998,
           "output_per_1m": 0.35,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Io Net",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.204,
-          "output_per_1m": 0.39,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
@@ -6200,8 +6178,8 @@
         "blended_3to1": 0.175
       },
       "aa_speed": {
-        "output_tps": 100.292,
-        "ttft_s": 1.013
+        "output_tps": 98.288,
+        "ttft_s": 0.997
       },
       "offers": [
         {
@@ -6397,17 +6375,6 @@
           "platform": "OpenRouter",
           "input_per_1m": 0.16999999999999998,
           "output_per_1m": 0.35,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Io Net",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.204,
-          "output_per_1m": 0.39,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
@@ -6528,8 +6495,8 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 159.777,
-        "ttft_s": 21.873
+        "output_tps": 159.239,
+        "ttft_s": 24.163
       },
       "offers": [
         {
@@ -6556,15 +6523,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1207,
-          "winRate": 48.6,
-          "battles": 4519,
+          "elo": 1206,
+          "winRate": 48.5,
+          "battles": 4531,
           "modelId": "grok-4.3"
         },
         "fullstack": {
           "elo": 1079,
-          "winRate": 32.6,
-          "battles": 1554,
+          "winRate": 32.5,
+          "battles": 1563,
           "modelId": "grok-4.3"
         }
       },
@@ -6599,7 +6566,7 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 136.851,
+        "output_tps": 147.141,
         "ttft_s": 14.687
       },
       "offers": [
@@ -6627,15 +6594,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1207,
-          "winRate": 48.6,
-          "battles": 4519,
+          "elo": 1206,
+          "winRate": 48.5,
+          "battles": 4531,
           "modelId": "grok-4.3"
         },
         "fullstack": {
           "elo": 1079,
-          "winRate": 32.6,
-          "battles": 1554,
+          "winRate": 32.5,
+          "battles": 1563,
           "modelId": "grok-4.3"
         }
       },
@@ -6670,8 +6637,8 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 131.847,
-        "ttft_s": 0.545
+        "output_tps": 125.717,
+        "ttft_s": 0.54
       },
       "offers": [
         {
@@ -6698,15 +6665,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1207,
-          "winRate": 48.6,
-          "battles": 4519,
+          "elo": 1206,
+          "winRate": 48.5,
+          "battles": 4531,
           "modelId": "grok-4.3"
         },
         "fullstack": {
           "elo": 1079,
-          "winRate": 32.6,
-          "battles": 1554,
+          "winRate": 32.5,
+          "battles": 1563,
           "modelId": "grok-4.3"
         }
       },
@@ -6741,8 +6708,8 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 145.573,
-        "ttft_s": 4.923
+        "output_tps": 141.934,
+        "ttft_s": 4.677
       },
       "offers": [
         {
@@ -6769,15 +6736,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1207,
-          "winRate": 48.6,
-          "battles": 4519,
+          "elo": 1206,
+          "winRate": 48.5,
+          "battles": 4531,
           "modelId": "grok-4.3"
         },
         "fullstack": {
           "elo": 1079,
-          "winRate": 32.6,
-          "battles": 1554,
+          "winRate": 32.5,
+          "battles": 1563,
           "modelId": "grok-4.3"
         }
       },
@@ -6812,7 +6779,7 @@
         "blended_3to1": 0.061
       },
       "aa_speed": {
-        "output_tps": 284.164,
+        "output_tps": 278.969,
         "ttft_s": 0.602
       },
       "offers": [
@@ -6896,7 +6863,7 @@
       },
       "aa_speed": {
         "output_tps": 124.448,
-        "ttft_s": 14.589
+        "ttft_s": 15.441
       },
       "offers": [],
       "designarena": {},
@@ -6931,8 +6898,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 177.147,
-        "ttft_s": 16.551
+        "output_tps": 174.675,
+        "ttft_s": 13.473
       },
       "offers": [
         {
@@ -6978,8 +6945,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 186.605,
-        "ttft_s": 15.523
+        "output_tps": 177.031,
+        "ttft_s": 16.06
       },
       "offers": [
         {
@@ -7025,8 +6992,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 231.3,
-        "ttft_s": 0.814
+        "output_tps": 229.635,
+        "ttft_s": 0.841
       },
       "offers": [
         {
@@ -7072,8 +7039,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 131.642,
-        "ttft_s": 5.933
+        "output_tps": 131.467,
+        "ttft_s": 5.986
       },
       "offers": [],
       "designarena": {},
@@ -7144,7 +7111,7 @@
         "blended_3to1": 5
       },
       "aa_speed": {
-        "output_tps": 73.151,
+        "output_tps": 72.495,
         "ttft_s": 1.101
       },
       "offers": [],
@@ -7180,8 +7147,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 164.345,
-        "ttft_s": 5.261
+        "output_tps": 167.647,
+        "ttft_s": 5.771
       },
       "offers": [
         {
@@ -7227,8 +7194,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 143.837,
-        "ttft_s": 0.728
+        "output_tps": 140.65,
+        "ttft_s": 0.726
       },
       "offers": [],
       "designarena": {},
@@ -7299,7 +7266,7 @@
         "blended_3to1": 0.219
       },
       "aa_speed": {
-        "output_tps": 36.033,
+        "output_tps": 34.192,
         "ttft_s": 0.526
       },
       "offers": [
@@ -7346,8 +7313,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 12.316,
-        "ttft_s": 0.394
+        "output_tps": 12.426,
+        "ttft_s": 0.398
       },
       "offers": [],
       "designarena": {},
@@ -7382,8 +7349,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 25.645,
-        "ttft_s": 1.262
+        "output_tps": 25.826,
+        "ttft_s": 1.193
       },
       "offers": [],
       "designarena": {},
@@ -7418,8 +7385,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 229.299,
-        "ttft_s": 1.385
+        "output_tps": 227.92,
+        "ttft_s": 1.268
       },
       "offers": [],
       "designarena": {},
@@ -7490,8 +7457,8 @@
         "blended_3to1": 0.052
       },
       "aa_speed": {
-        "output_tps": 127.576,
-        "ttft_s": 0.284
+        "output_tps": 126.593,
+        "ttft_s": 0.275
       },
       "offers": [],
       "designarena": {},
@@ -7562,7 +7529,7 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 344.758,
+        "output_tps": 345.799,
         "ttft_s": 1.067
       },
       "offers": [],
@@ -7598,8 +7565,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 551.096,
-        "ttft_s": 1.415
+        "output_tps": 540.528,
+        "ttft_s": 1.299
       },
       "offers": [],
       "designarena": {},
@@ -7634,8 +7601,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 497.701,
-        "ttft_s": 0.908
+        "output_tps": 494.665,
+        "ttft_s": 0.988
       },
       "offers": [],
       "designarena": {},
@@ -7814,8 +7781,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 35.233,
-        "ttft_s": 1.92
+        "output_tps": 31.838,
+        "ttft_s": 2.161
       },
       "offers": [
         {
@@ -7849,7 +7816,18 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
-          "status": -5
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Fireworks",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "minimax/minimax-m2.7",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -7865,17 +7843,6 @@
         {
           "source": "OpenRouter",
           "provider": "Minimax",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 1.2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "minimax/minimax-m2.7",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Fireworks",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -7904,7 +7871,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -7937,7 +7904,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -7972,8 +7939,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 57.012,
-        "ttft_s": 1.875
+        "output_tps": 57.097,
+        "ttft_s": 1.917
       },
       "offers": [
         {
@@ -8018,7 +7985,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m3",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -8064,8 +8031,8 @@
         "blended_3to1": 1.2
       },
       "aa_speed": {
-        "output_tps": 302.17,
-        "ttft_s": 4.01
+        "output_tps": 304.483,
+        "ttft_s": 3.861
       },
       "offers": [],
       "designarena": {},
@@ -8147,8 +8114,8 @@
         "blended_3to1": 0.07
       },
       "aa_speed": {
-        "output_tps": 55.606,
-        "ttft_s": 12.18
+        "output_tps": 60.108,
+        "ttft_s": 13.666
       },
       "offers": [],
       "designarena": {},
@@ -8183,7 +8150,7 @@
         "blended_3to1": 0.088
       },
       "aa_speed": {
-        "output_tps": 58.66,
+        "output_tps": 60.384,
         "ttft_s": 0.313
       },
       "offers": [],
@@ -8219,8 +8186,8 @@
         "blended_3to1": 1.175
       },
       "aa_speed": {
-        "output_tps": 159.697,
-        "ttft_s": 0.789
+        "output_tps": 158.328,
+        "ttft_s": 0.788
       },
       "offers": [
         {
@@ -8278,8 +8245,8 @@
         "blended_3to1": 0.086
       },
       "aa_speed": {
-        "output_tps": 135.234,
-        "ttft_s": 1.289
+        "output_tps": 118.346,
+        "ttft_s": 1.457
       },
       "offers": [],
       "designarena": {},
@@ -8314,7 +8281,7 @@
         "blended_3to1": 0.131
       },
       "aa_speed": {
-        "output_tps": 301.083,
+        "output_tps": 301.233,
         "ttft_s": 0.569
       },
       "offers": [],
@@ -8350,8 +8317,8 @@
         "blended_3to1": 0.9
       },
       "aa_speed": {
-        "output_tps": 52.04,
-        "ttft_s": 0.736
+        "output_tps": 52.094,
+        "ttft_s": 0.728
       },
       "offers": [],
       "designarena": {},
@@ -8422,8 +8389,8 @@
         "blended_3to1": 0.175
       },
       "aa_speed": {
-        "output_tps": 49.836,
-        "ttft_s": 0.3
+        "output_tps": 49.999,
+        "ttft_s": 0.28
       },
       "offers": [],
       "designarena": {},
@@ -8494,8 +8461,8 @@
         "blended_3to1": 0.175
       },
       "aa_speed": {
-        "output_tps": 50.126,
-        "ttft_s": 0.303
+        "output_tps": 48.018,
+        "ttft_s": 0.289
       },
       "offers": [],
       "designarena": {},
@@ -8567,7 +8534,7 @@
       },
       "aa_speed": {
         "output_tps": 294.55,
-        "ttft_s": 0.252
+        "ttft_s": 0.259
       },
       "offers": [],
       "designarena": {},
@@ -8602,8 +8569,8 @@
         "blended_3to1": 0.3
       },
       "aa_speed": {
-        "output_tps": 224.434,
-        "ttft_s": 0.582
+        "output_tps": 223.289,
+        "ttft_s": 0.471
       },
       "offers": [],
       "designarena": {},
@@ -8638,7 +8605,7 @@
         "blended_3to1": 0.096
       },
       "aa_speed": {
-        "output_tps": 59.237,
+        "output_tps": 61.167,
         "ttft_s": 5.562
       },
       "offers": [],
@@ -8674,8 +8641,8 @@
         "blended_3to1": 1.712
       },
       "aa_speed": {
-        "output_tps": 28.319,
-        "ttft_s": 1.42
+        "output_tps": 27.574,
+        "ttft_s": 1.475
       },
       "offers": [
         {
@@ -8742,7 +8709,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -8797,7 +8764,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -8852,7 +8819,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -8902,14 +8869,14 @@
       "designarena": {
         "frontend": {
           "elo": 1264,
-          "winRate": 59.2,
-          "battles": 5082,
+          "winRate": 59.1,
+          "battles": 5095,
           "modelId": "kimi-k2.6"
         },
         "fullstack": {
           "elo": 1231,
-          "winRate": 57.2,
-          "battles": 3005,
+          "winRate": 57.1,
+          "battles": 3018,
           "modelId": "kimi-k2.6"
         }
       },
@@ -8944,8 +8911,8 @@
         "blended_3to1": 1.712
       },
       "aa_speed": {
-        "output_tps": 41.133,
-        "ttft_s": 1.292
+        "output_tps": 40.336,
+        "ttft_s": 1.312
       },
       "offers": [
         {
@@ -9012,7 +8979,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -9067,7 +9034,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -9122,7 +9089,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -9172,14 +9139,14 @@
       "designarena": {
         "frontend": {
           "elo": 1264,
-          "winRate": 59.2,
-          "battles": 5082,
+          "winRate": 59.1,
+          "battles": 5095,
           "modelId": "kimi-k2.6"
         },
         "fullstack": {
           "elo": 1231,
-          "winRate": 57.2,
-          "battles": 3005,
+          "winRate": 57.1,
+          "battles": 3018,
           "modelId": "kimi-k2.6"
         }
       },
@@ -9214,7 +9181,7 @@
         "blended_3to1": 1.712
       },
       "aa_speed": {
-        "output_tps": 51.71,
+        "output_tps": 52.383,
         "ttft_s": 1.201
       },
       "offers": [
@@ -9227,11 +9194,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
-          "provider": "Parasail",
+          "provider": "Ambient",
           "platform": "OpenRouter",
           "input_per_1m": 0.75,
           "output_per_1m": 3.5,
@@ -9242,7 +9209,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Ambient",
+          "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 0.75,
           "output_per_1m": 3.5,
@@ -9293,7 +9260,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -9342,9 +9309,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1208,
-          "winRate": 51.7,
-          "battles": 404,
+          "elo": 1216,
+          "winRate": 52.8,
+          "battles": 464,
           "modelId": "kimi-k2.7-code"
         }
       },
@@ -9451,8 +9418,8 @@
         "blended_3to1": 0.438
       },
       "aa_speed": {
-        "output_tps": 372.022,
-        "ttft_s": 0.78
+        "output_tps": 376.246,
+        "ttft_s": 0.805
       },
       "offers": [],
       "designarena": {},
@@ -9487,8 +9454,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 200.715,
-        "ttft_s": 1.524
+        "output_tps": 210.122,
+        "ttft_s": 1.088
       },
       "offers": [],
       "designarena": {},
@@ -9955,8 +9922,8 @@
         "blended_3to1": 0.063
       },
       "aa_speed": {
-        "output_tps": 126.768,
-        "ttft_s": 0.441
+        "output_tps": 121.677,
+        "ttft_s": 0.438
       },
       "offers": [],
       "designarena": {},
@@ -9991,8 +9958,8 @@
         "blended_3to1": 0.107
       },
       "aa_speed": {
-        "output_tps": 505.922,
-        "ttft_s": 8.708
+        "output_tps": 575.568,
+        "ttft_s": 8.722
       },
       "offers": [],
       "designarena": {},
@@ -10100,7 +10067,7 @@
       },
       "aa_speed": {
         "output_tps": 1069.647,
-        "ttft_s": 3.285
+        "ttft_s": 3.499
       },
       "offers": [],
       "designarena": {},
@@ -10135,8 +10102,8 @@
         "blended_3to1": 0.35
       },
       "aa_speed": {
-        "output_tps": 92.335,
-        "ttft_s": 1.782
+        "output_tps": 91.716,
+        "ttft_s": 1.813
       },
       "offers": [],
       "designarena": {},
@@ -10171,8 +10138,8 @@
         "blended_3to1": 0.198
       },
       "aa_speed": {
-        "output_tps": 81.42,
-        "ttft_s": 0.616
+        "output_tps": 78.322,
+        "ttft_s": 0.627
       },
       "offers": [],
       "designarena": {},
@@ -10279,8 +10246,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 40.135,
-        "ttft_s": 0.767
+        "output_tps": 40.394,
+        "ttft_s": 0.762
       },
       "offers": [],
       "designarena": {},
@@ -10315,8 +10282,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 37.141,
-        "ttft_s": 0.773
+        "output_tps": 37.402,
+        "ttft_s": 0.804
       },
       "offers": [],
       "designarena": {},
@@ -10351,8 +10318,8 @@
         "blended_3to1": 0.198
       },
       "aa_speed": {
-        "output_tps": 69.599,
-        "ttft_s": 0.617
+        "output_tps": 65.756,
+        "ttft_s": 0.615
       },
       "offers": [],
       "designarena": {},
@@ -10675,7 +10642,7 @@
       },
       "aa_speed": {
         "output_tps": 38.793,
-        "ttft_s": 1.974
+        "ttft_s": 1.932
       },
       "offers": [
         {
@@ -10709,7 +10676,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "xiaomi/mimo-v2.5-pro",
-          "status": -5
+          "status": -2
         }
       ],
       "designarena": {},
@@ -10744,7 +10711,7 @@
         "blended_3to1": 0.175
       },
       "aa_speed": {
-        "output_tps": 71.887,
+        "output_tps": 70.792,
         "ttft_s": 1.801
       },
       "offers": [
@@ -10803,8 +10770,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 157.886,
-        "ttft_s": 1.268
+        "output_tps": 158.705,
+        "ttft_s": 1.257
       },
       "offers": [
         {
@@ -10851,8 +10818,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 48.819,
-        "ttft_s": 1.938
+        "output_tps": 45.045,
+        "ttft_s": 1.991
       },
       "offers": [
         {
@@ -10886,7 +10853,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "xiaomi/mimo-v2.5-pro",
-          "status": -5
+          "status": -2
         }
       ],
       "designarena": {},
@@ -10957,7 +10924,7 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 151.795,
+        "output_tps": 157.285,
         "ttft_s": 1.286
       },
       "offers": [
@@ -11077,8 +11044,8 @@
         "blended_3to1": 0.047
       },
       "aa_speed": {
-        "output_tps": 233.535,
-        "ttft_s": 1.173
+        "output_tps": 231.729,
+        "ttft_s": 1.174
       },
       "offers": [],
       "designarena": {},
@@ -11149,7 +11116,7 @@
         "blended_3to1": 0.065
       },
       "aa_speed": {
-        "output_tps": 363.749,
+        "output_tps": 360.394,
         "ttft_s": 0.591
       },
       "offers": [],
@@ -11185,8 +11152,8 @@
         "blended_3to1": 1.25
       },
       "aa_speed": {
-        "output_tps": 75.661,
-        "ttft_s": 0.433
+        "output_tps": 81.777,
+        "ttft_s": 0.452
       },
       "offers": [],
       "designarena": {},
@@ -11221,8 +11188,8 @@
         "blended_3to1": 0.2
       },
       "aa_speed": {
-        "output_tps": 128.169,
-        "ttft_s": 2.615
+        "output_tps": 129.709,
+        "ttft_s": 2.67
       },
       "offers": [],
       "designarena": {},
@@ -11257,8 +11224,8 @@
         "blended_3to1": 0.2
       },
       "aa_speed": {
-        "output_tps": 126.397,
-        "ttft_s": 2.254
+        "output_tps": 123.39,
+        "ttft_s": 2.28
       },
       "offers": [],
       "designarena": {},
@@ -11293,8 +11260,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 118.471,
-        "ttft_s": 0.919
+        "output_tps": 117.095,
+        "ttft_s": 0.932
       },
       "offers": [],
       "designarena": {},
@@ -11329,8 +11296,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 116.291,
-        "ttft_s": 0.922
+        "output_tps": 116.074,
+        "ttft_s": 0.915
       },
       "offers": [],
       "designarena": {},
@@ -11941,8 +11908,8 @@
         "blended_3to1": 0.395
       },
       "aa_speed": {
-        "output_tps": 172.444,
-        "ttft_s": 0.61
+        "output_tps": 170.649,
+        "ttft_s": 0.642
       },
       "offers": [],
       "designarena": {},
@@ -12049,8 +12016,8 @@
         "blended_3to1": 2.15
       },
       "aa_speed": {
-        "output_tps": 62.866,
-        "ttft_s": 0.774
+        "output_tps": 56.335,
+        "ttft_s": 0.813
       },
       "offers": [
         {
@@ -12062,7 +12029,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12103,6 +12070,17 @@
           "platform": "OpenRouter",
           "input_per_1m": 1.19,
           "output_per_1m": 3.74,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "SiliconFlow",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.19,
+          "output_per_1m": 4.300000000000001,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
@@ -12165,18 +12143,18 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Parasail",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Friendli",
+          "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
@@ -12209,28 +12187,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "SiliconFlow",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Ambient",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
@@ -12238,7 +12194,18 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -2
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Friendli",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -12249,7 +12216,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12265,15 +12232,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1251,
-          "winRate": 56.5,
-          "battles": 4731,
+          "elo": 1250,
+          "winRate": 56.4,
+          "battles": 4745,
           "modelId": "glm-5.1"
         },
         "fullstack": {
           "elo": 1240,
           "winRate": 57.5,
-          "battles": 2593,
+          "battles": 2600,
           "modelId": "glm-5.1"
         }
       },
@@ -12308,8 +12275,8 @@
         "blended_3to1": 2.15
       },
       "aa_speed": {
-        "output_tps": 69.096,
-        "ttft_s": 0.827
+        "output_tps": 67.97,
+        "ttft_s": 0.867
       },
       "offers": [
         {
@@ -12321,7 +12288,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12362,6 +12329,17 @@
           "platform": "OpenRouter",
           "input_per_1m": 1.19,
           "output_per_1m": 3.74,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "SiliconFlow",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.19,
+          "output_per_1m": 4.300000000000001,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
@@ -12424,18 +12402,18 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Parasail",
+          "provider": "Together",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Friendli",
+          "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
@@ -12468,28 +12446,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Together",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "SiliconFlow",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Ambient",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
@@ -12497,7 +12453,18 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": -2
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Friendli",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.1",
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -12508,7 +12475,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -12524,15 +12491,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1251,
-          "winRate": 56.5,
-          "battles": 4731,
+          "elo": 1250,
+          "winRate": 56.4,
+          "battles": 4745,
           "modelId": "glm-5.1"
         },
         "fullstack": {
           "elo": 1240,
           "winRate": 57.5,
-          "battles": 2593,
+          "battles": 2600,
           "modelId": "glm-5.1"
         }
       },
@@ -12567,8 +12534,8 @@
         "blended_3to1": 2.15
       },
       "aa_speed": {
-        "output_tps": 114.163,
-        "ttft_s": 2.085
+        "output_tps": 114.156,
+        "ttft_s": 2.125
       },
       "offers": [
         {
@@ -12585,17 +12552,6 @@
         {
           "source": "OpenRouter",
           "provider": "Z.AI",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.4,
-          "output_per_1m": 4.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.2",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Io Net",
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
@@ -12632,6 +12588,28 @@
           "platform": "OpenRouter",
           "input_per_1m": 1.4,
           "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": -5
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "AtlasCloud",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.2",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Io Net",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.68,
+          "output_per_1m": 5.28,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.2",
@@ -12676,15 +12654,15 @@
       "offers": [],
       "designarena": {
         "frontend": {
-          "elo": 1192,
-          "winRate": 47.3,
-          "battles": 3517,
+          "elo": 1191,
+          "winRate": 47.2,
+          "battles": 3537,
           "modelId": "glm-5v-turbo"
         },
         "fullstack": {
           "elo": 1220,
           "winRate": 55.6,
-          "battles": 2261,
+          "battles": 2270,
           "modelId": "glm-5v-turbo"
         }
       },
@@ -12767,8 +12745,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 188.294,
-        "ttft_s": 0.192
+        "output_tps": 187.312,
+        "ttft_s": 0.189
       },
       "offers": [],
       "designarena": {},
@@ -12803,8 +12781,8 @@
         "blended_3to1": 4.375
       },
       "aa_speed": {
-        "output_tps": 75.938,
-        "ttft_s": 0.278
+        "output_tps": 75.217,
+        "ttft_s": 0.287
       },
       "offers": [
         {
@@ -12852,7 +12830,7 @@
       },
       "aa_speed": {
         "output_tps": 125.373,
-        "ttft_s": 0.297
+        "ttft_s": 0.318
       },
       "offers": [],
       "designarena": {},
@@ -12887,8 +12865,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 200.569,
-        "ttft_s": 0.17
+        "output_tps": 203.825,
+        "ttft_s": 0.177
       },
       "offers": [],
       "designarena": {},
@@ -12960,7 +12938,7 @@
       },
       "aa_speed": {
         "output_tps": 57.849,
-        "ttft_s": 1.048
+        "ttft_s": 1.058
       },
       "offers": [],
       "designarena": {},
@@ -13067,8 +13045,8 @@
         "blended_3to1": 3.75
       },
       "aa_speed": {
-        "output_tps": 106.319,
-        "ttft_s": 1.671
+        "output_tps": 97.191,
+        "ttft_s": 1.657
       },
       "offers": [
         {
@@ -13086,8 +13064,8 @@
       "designarena": {
         "fullstack": {
           "elo": 1215,
-          "winRate": 48.1,
-          "battles": 349,
+          "winRate": 48,
+          "battles": 352,
           "modelId": "qwen3.7-max"
         }
       },
@@ -13122,8 +13100,8 @@
         "blended_3to1": 0.844
       },
       "aa_speed": {
-        "output_tps": 181.956,
-        "ttft_s": 1.392
+        "output_tps": 179.176,
+        "ttft_s": 1.395
       },
       "offers": [
         {
@@ -13215,7 +13193,7 @@
       },
       "aa_speed": {
         "output_tps": 165.165,
-        "ttft_s": 1.129
+        "ttft_s": 1.133
       },
       "offers": [
         {
@@ -13282,7 +13260,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-next-80b-a3b-instruct",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -13382,13 +13360,13 @@
         "blended_3to1": 1.1
       },
       "aa_speed": {
-        "output_tps": 145.29,
-        "ttft_s": 1.204
+        "output_tps": 144.093,
+        "ttft_s": 1.19
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Alibaba",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -13399,7 +13377,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Alibaba",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -13464,7 +13442,7 @@
       },
       "aa_speed": {
         "output_tps": 51.197,
-        "ttft_s": 1.686
+        "ttft_s": 1.717
       },
       "offers": [
         {
@@ -13476,7 +13454,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -13498,7 +13476,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -13553,11 +13531,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "GMICloud",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13575,11 +13553,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "StreamLake",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13590,7 +13568,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "StreamLake",
+          "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13643,8 +13621,8 @@
         "blended_3to1": 0.563
       },
       "aa_speed": {
-        "output_tps": 93.673,
-        "ttft_s": 1.408
+        "output_tps": 90.781,
+        "ttft_s": 1.422
       },
       "offers": [
         {
@@ -13656,7 +13634,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-coder-next",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -13745,8 +13723,8 @@
         "blended_3to1": 0.59
       },
       "aa_speed": {
-        "output_tps": 52.646,
-        "ttft_s": 1.332
+        "output_tps": 52.343,
+        "ttft_s": 1.346
       },
       "offers": [
         {
@@ -13793,8 +13771,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 52.465,
-        "ttft_s": 1.661
+        "output_tps": 52.587,
+        "ttft_s": 1.704
       },
       "offers": [
         {
@@ -13806,7 +13784,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -13828,7 +13806,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -13883,11 +13861,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "GMICloud",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13905,11 +13883,11 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "StreamLake",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13920,7 +13898,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "StreamLake",
+          "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3.5999999999999996,
@@ -13973,7 +13951,7 @@
         "blended_3to1": 1.875
       },
       "aa_speed": {
-        "output_tps": 174.546,
+        "output_tps": 175.108,
         "ttft_s": 1.171
       },
       "offers": [
@@ -14041,7 +14019,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-next-80b-a3b-instruct",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -14141,8 +14119,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 61.096,
-        "ttft_s": 1.522
+        "output_tps": 61.979,
+        "ttft_s": 1.516
       },
       "offers": [
         {
@@ -14187,7 +14165,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -14198,7 +14176,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -14277,7 +14255,7 @@
         "blended_3to1": 0.557
       },
       "aa_speed": {
-        "output_tps": 154.836,
+        "output_tps": 152.812,
         "ttft_s": 1.241
       },
       "offers": [
@@ -14369,8 +14347,8 @@
         "blended_3to1": 0.43
       },
       "aa_speed": {
-        "output_tps": 104.941,
-        "ttft_s": 1.011
+        "output_tps": 104.123,
+        "ttft_s": 0.971
       },
       "offers": [],
       "designarena": {},
@@ -14405,8 +14383,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 63.357,
-        "ttft_s": 1.531
+        "output_tps": 61.407,
+        "ttft_s": 1.524
       },
       "offers": [
         {
@@ -14451,7 +14429,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -14462,7 +14440,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -14541,8 +14519,8 @@
         "blended_3to1": 0.113
       },
       "aa_speed": {
-        "output_tps": 63.1,
-        "ttft_s": 0.778
+        "output_tps": 62.153,
+        "ttft_s": 0.791
       },
       "offers": [
         {
@@ -14554,7 +14532,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -14587,7 +14565,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -14623,7 +14601,7 @@
       },
       "aa_speed": {
         "output_tps": 105.704,
-        "ttft_s": 0.883
+        "ttft_s": 0.878
       },
       "offers": [],
       "designarena": {},
@@ -14658,8 +14636,8 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 189.923,
-        "ttft_s": 1.273
+        "output_tps": 189.188,
+        "ttft_s": 1.318
       },
       "offers": [
         {
@@ -14704,7 +14682,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-35b-a3b",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -14794,8 +14772,8 @@
         "blended_3to1": 1.125
       },
       "aa_speed": {
-        "output_tps": 51.759,
-        "ttft_s": 1.639
+        "output_tps": 51.923,
+        "ttft_s": 1.653
       },
       "offers": [
         {
@@ -14842,8 +14820,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 54.197,
-        "ttft_s": 1.223
+        "output_tps": 54.934,
+        "ttft_s": 1.228
       },
       "offers": [],
       "designarena": {},
@@ -14927,7 +14905,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -14960,7 +14938,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -14995,8 +14973,8 @@
         "blended_3to1": 0.06
       },
       "aa_speed": {
-        "output_tps": 22.671,
-        "ttft_s": 0.536
+        "output_tps": 21.019,
+        "ttft_s": 0.5
       },
       "offers": [],
       "designarena": {},
@@ -15067,8 +15045,8 @@
         "blended_3to1": 0.02
       },
       "aa_speed": {
-        "output_tps": 21.422,
-        "ttft_s": 0.495
+        "output_tps": 20.854,
+        "ttft_s": 0.505
       },
       "offers": [],
       "designarena": {},
@@ -15103,8 +15081,8 @@
         "blended_3to1": 0.04
       },
       "aa_speed": {
-        "output_tps": 27.867,
-        "ttft_s": 0.457
+        "output_tps": 26.746,
+        "ttft_s": 0.414
       },
       "offers": [],
       "designarena": {},
@@ -15139,8 +15117,8 @@
         "blended_3to1": 0.06
       },
       "aa_speed": {
-        "output_tps": 23.635,
-        "ttft_s": 0.45
+        "output_tps": 22.882,
+        "ttft_s": 0.449
       },
       "offers": [],
       "designarena": {},
@@ -15175,13 +15153,13 @@
         "blended_3to1": 1.1
       },
       "aa_speed": {
-        "output_tps": 167.752,
-        "ttft_s": 1.186
+        "output_tps": 168.238,
+        "ttft_s": 1.107
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Alibaba",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -15192,7 +15170,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Alibaba",
           "platform": "OpenRouter",
           "input_per_1m": 0.26,
           "output_per_1m": 2.08,
@@ -15256,8 +15234,8 @@
         "blended_3to1": 0.275
       },
       "aa_speed": {
-        "output_tps": 250.75,
-        "ttft_s": 0.95
+        "output_tps": 250.126,
+        "ttft_s": 0.949
       },
       "offers": [],
       "designarena": {},
@@ -15364,8 +15342,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 123.382,
-        "ttft_s": 1.848
+        "output_tps": 122.975,
+        "ttft_s": 1.909
       },
       "offers": [],
       "designarena": {},
@@ -15598,7 +15576,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -15609,7 +15587,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -15655,8 +15633,8 @@
         "blended_3to1": 15
       },
       "aa_speed": {
-        "output_tps": 30.984,
-        "ttft_s": 1.346
+        "output_tps": 29.821,
+        "ttft_s": 1.394
       },
       "offers": [
         {
@@ -15703,8 +15681,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 77.715,
-        "ttft_s": 0.499
+        "output_tps": 79.057,
+        "ttft_s": 0.507
       },
       "offers": [
         {
@@ -15720,7 +15698,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -15731,7 +15709,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 0.6,
@@ -15846,8 +15824,8 @@
         "blended_3to1": 0.175
       },
       "aa_speed": {
-        "output_tps": 139.631,
-        "ttft_s": 0.384
+        "output_tps": 138.897,
+        "ttft_s": 0.401
       },
       "offers": [
         {
@@ -15916,8 +15894,8 @@
         "blended_3to1": 1.925
       },
       "aa_speed": {
-        "output_tps": 211.047,
-        "ttft_s": 6.103
+        "output_tps": 208.741,
+        "ttft_s": 6.417
       },
       "offers": [
         {
@@ -15975,35 +15953,35 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 96.849,
-        "ttft_s": 81.383
+        "output_tps": 96.137,
+        "ttft_s": 82.621
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "OpenAI",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 2,
@@ -16059,8 +16037,8 @@
         "blended_3to1": 1.925
       },
       "aa_speed": {
-        "output_tps": 196.103,
-        "ttft_s": 16.241
+        "output_tps": 194.028,
+        "ttft_s": 16.644
       },
       "offers": [
         {
@@ -16118,8 +16096,8 @@
         "blended_3to1": 0.138
       },
       "aa_speed": {
-        "output_tps": 159.315,
-        "ttft_s": 0.658
+        "output_tps": 157.356,
+        "ttft_s": 0.64
       },
       "offers": [
         {
@@ -16135,7 +16113,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16146,7 +16124,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16198,8 +16176,8 @@
         "blended_3to1": 0.7
       },
       "aa_speed": {
-        "output_tps": 79.579,
-        "ttft_s": 0.496
+        "output_tps": 78.726,
+        "ttft_s": 0.512
       },
       "offers": [
         {
@@ -16268,8 +16246,8 @@
         "blended_3to1": 35
       },
       "aa_speed": {
-        "output_tps": 29.094,
-        "ttft_s": 71.701
+        "output_tps": 25.87,
+        "ttft_s": 72.69
       },
       "offers": [
         {
@@ -16316,8 +16294,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 179.764,
-        "ttft_s": 8.261
+        "output_tps": 183.064,
+        "ttft_s": 7.236
       },
       "offers": [
         {
@@ -16355,7 +16333,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1094,
+          "elo": 1093,
           "winRate": 44.1,
           "battles": 526,
           "modelId": "gpt-5.1-codex"
@@ -16402,7 +16380,7 @@
         "blended_3to1": 5.625
       },
       "aa_speed": {
-        "output_tps": 165.817,
+        "output_tps": 164.95,
         "ttft_s": 90.332
       },
       "offers": [
@@ -16441,7 +16419,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1145,
+          "elo": 1144,
           "winRate": 41.8,
           "battles": 3816,
           "modelId": "gpt-5.4"
@@ -16488,8 +16466,8 @@
         "blended_3to1": 4.813
       },
       "aa_speed": {
-        "output_tps": 125.284,
-        "ttft_s": 2.607
+        "output_tps": 121.819,
+        "ttft_s": 2.404
       },
       "offers": [
         {
@@ -16523,7 +16501,7 @@
           "modelId": "gpt-5.2-codex"
         },
         "fullstack": {
-          "elo": 1068,
+          "elo": 1067,
           "winRate": 37,
           "battles": 2168,
           "modelId": "gpt-5.2-codex"
@@ -16577,7 +16555,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16588,7 +16566,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -16640,8 +16618,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 115.007,
-        "ttft_s": 27.053
+        "output_tps": 109.615,
+        "ttft_s": 31.913
       },
       "offers": [
         {
@@ -16752,7 +16730,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -16763,7 +16741,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -16807,9 +16785,9 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1163,
+          "elo": 1162,
           "winRate": 45.7,
-          "battles": 3945,
+          "battles": 3946,
           "modelId": "gpt-5.2"
         },
         "fullstack": {
@@ -16850,7 +16828,7 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 104.853,
+        "output_tps": 102.745,
         "ttft_s": 80.969
       },
       "offers": [
@@ -16941,8 +16919,8 @@
         "blended_3to1": 5.906
       },
       "aa_speed": {
-        "output_tps": 112.296,
-        "ttft_s": 0.776
+        "output_tps": 110.517,
+        "ttft_s": 0.758
       },
       "offers": [
         {
@@ -16980,7 +16958,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1145,
+          "elo": 1144,
           "winRate": 41.8,
           "battles": 3816,
           "modelId": "gpt-5.4"
@@ -17027,7 +17005,7 @@
         "blended_3to1": 5.906
       },
       "aa_speed": {
-        "output_tps": 113.05,
+        "output_tps": 105.441,
         "ttft_s": 1.336
       },
       "offers": [
@@ -17066,7 +17044,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1145,
+          "elo": 1144,
           "winRate": 41.8,
           "battles": 3816,
           "modelId": "gpt-5.4"
@@ -17114,7 +17092,7 @@
       },
       "aa_speed": {
         "output_tps": 70.779,
-        "ttft_s": 0.82
+        "ttft_s": 0.844
       },
       "offers": [
         {
@@ -17204,35 +17182,35 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 98.699,
-        "ttft_s": 0.752
+        "output_tps": 97.242,
+        "ttft_s": 0.748
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "OpenAI",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 2,
@@ -17288,7 +17266,7 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 218.714,
+        "output_tps": 217.88,
         "ttft_s": 2.482
       },
       "offers": [
@@ -17351,8 +17329,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 96.77,
-        "ttft_s": 0.65
+        "output_tps": 93.988,
+        "ttft_s": 0.654
       },
       "offers": [
         {
@@ -17457,8 +17435,8 @@
         "blended_3to1": 3.5
       },
       "aa_speed": {
-        "output_tps": 109.258,
-        "ttft_s": 0.553
+        "output_tps": 101.791,
+        "ttft_s": 0.561
       },
       "offers": [
         {
@@ -17474,7 +17452,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 2,
           "output_per_1m": 8,
@@ -17485,7 +17463,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 2,
           "output_per_1m": 8,
@@ -17527,8 +17505,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 176.774,
-        "ttft_s": 6.194
+        "output_tps": 171.721,
+        "ttft_s": 6.347
       },
       "offers": [
         {
@@ -17575,8 +17553,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 82.139,
-        "ttft_s": 41.884
+        "output_tps": 86.246,
+        "ttft_s": 42.857
       },
       "offers": [
         {
@@ -17666,7 +17644,7 @@
         "blended_3to1": 37.5
       },
       "aa_speed": {
-        "output_tps": 31.899,
+        "output_tps": 32.902,
         "ttft_s": 0.999
       },
       "offers": [
@@ -17736,35 +17714,35 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 92.976,
-        "ttft_s": 13.555
+        "output_tps": 97.774,
+        "ttft_s": 13.724
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.25,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5-mini",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "OpenAI",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-5-mini",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.25,
           "output_per_1m": 2,
@@ -17820,13 +17798,13 @@
         "blended_3to1": 4.813
       },
       "aa_speed": {
-        "output_tps": 68.86,
-        "ttft_s": 0.738
+        "output_tps": 68.353,
+        "ttft_s": 0.759
       },
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -17837,7 +17815,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -17881,9 +17859,9 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1163,
+          "elo": 1162,
           "winRate": 45.7,
-          "battles": 3945,
+          "battles": 3946,
           "modelId": "gpt-5.2"
         },
         "fullstack": {
@@ -17925,7 +17903,7 @@
       },
       "aa_speed": {
         "output_tps": 85.487,
-        "ttft_s": 9.62
+        "ttft_s": 9.007
       },
       "offers": [
         {
@@ -18015,8 +17993,8 @@
         "blended_3to1": 1.925
       },
       "aa_speed": {
-        "output_tps": 189.373,
-        "ttft_s": 22.147
+        "output_tps": 183.724,
+        "ttft_s": 23.131
       },
       "offers": [
         {
@@ -18080,7 +18058,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -18091,7 +18069,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -18135,9 +18113,9 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1163,
+          "elo": 1162,
           "winRate": 45.7,
-          "battles": 3945,
+          "battles": 3946,
           "modelId": "gpt-5.2"
         },
         "fullstack": {
@@ -18178,7 +18156,7 @@
         "blended_3to1": 0.138
       },
       "aa_speed": {
-        "output_tps": 156.706,
+        "output_tps": 158.795,
         "ttft_s": 36.901
       },
       "offers": [
@@ -18195,7 +18173,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -18206,7 +18184,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 0.049999999999999996,
           "output_per_1m": 0.39999999999999997,
@@ -18341,8 +18319,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 178.861,
-        "ttft_s": 0.545
+        "output_tps": 176.344,
+        "ttft_s": 0.553
       },
       "offers": [
         {
@@ -18561,8 +18539,8 @@
         "blended_3to1": 0.56
       },
       "aa_speed": {
-        "output_tps": 32.854,
-        "ttft_s": 0.602
+        "output_tps": 32.225,
+        "ttft_s": 0.604
       },
       "offers": [
         {
@@ -18631,8 +18609,8 @@
         "blended_3to1": 0.1
       },
       "aa_speed": {
-        "output_tps": 204.885,
-        "ttft_s": 0.512
+        "output_tps": 202.376,
+        "ttft_s": 0.511
       },
       "offers": [
         {
@@ -18734,7 +18712,7 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 52.264,
+        "output_tps": 52.22,
         "ttft_s": 0.58
       },
       "offers": [
@@ -18792,8 +18770,8 @@
         "blended_3to1": 1.175
       },
       "aa_speed": {
-        "output_tps": 46.137,
-        "ttft_s": 0.723
+        "output_tps": 45.284,
+        "ttft_s": 0.742
       },
       "offers": [
         {
@@ -18850,8 +18828,8 @@
         "blended_3to1": 0.07
       },
       "aa_speed": {
-        "output_tps": 81.137,
-        "ttft_s": 0.478
+        "output_tps": 81.052,
+        "ttft_s": 0.47
       },
       "offers": [
         {
@@ -18908,8 +18886,8 @@
         "blended_3to1": 0.05
       },
       "aa_speed": {
-        "output_tps": 86.457,
-        "ttft_s": 0.565
+        "output_tps": 86.565,
+        "ttft_s": 0.556
       },
       "offers": [
         {
@@ -19291,7 +19269,7 @@
       },
       "aa_speed": {
         "output_tps": 198.257,
-        "ttft_s": 0.93
+        "ttft_s": 0.963
       },
       "offers": [
         {
@@ -19319,7 +19297,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1192,
+          "elo": 1191,
           "winRate": 49.5,
           "battles": 4368,
           "modelId": "gemini-3-flash-preview"
@@ -19367,7 +19345,7 @@
       },
       "aa_speed": {
         "output_tps": 210.892,
-        "ttft_s": 0.32
+        "ttft_s": 0.334
       },
       "offers": [
         {
@@ -19496,7 +19474,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -19507,7 +19485,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -19529,7 +19507,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -19564,8 +19542,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 219.087,
-        "ttft_s": 13.433
+        "output_tps": 219.277,
+        "ttft_s": 14.498
       },
       "offers": [
         {
@@ -19577,7 +19555,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -19588,7 +19566,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -19610,7 +19588,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-flash",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -19768,7 +19746,7 @@
       "offers": [],
       "designarena": {
         "frontend": {
-          "elo": 1195,
+          "elo": 1194,
           "winRate": 50.3,
           "battles": 4532,
           "modelId": "gemini-3-pro-preview"
@@ -19934,8 +19912,8 @@
         "blended_3to1": 0.025
       },
       "aa_speed": {
-        "output_tps": 50.415,
-        "ttft_s": 0.448
+        "output_tps": 52.322,
+        "ttft_s": 0.442
       },
       "offers": [],
       "designarena": {},
@@ -19976,7 +19954,7 @@
       "offers": [],
       "designarena": {
         "frontend": {
-          "elo": 1195,
+          "elo": 1194,
           "winRate": 50.3,
           "battles": 4532,
           "modelId": "gemini-3-pro-preview"
@@ -20095,8 +20073,8 @@
         "blended_3to1": 1.125
       },
       "aa_speed": {
-        "output_tps": 197.343,
-        "ttft_s": 5.765
+        "output_tps": 195.538,
+        "ttft_s": 6.267
       },
       "offers": [
         {
@@ -20124,7 +20102,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1192,
+          "elo": 1191,
           "winRate": 49.5,
           "battles": 4368,
           "modelId": "gemini-3-flash-preview"
@@ -20530,8 +20508,8 @@
         "blended_3to1": 30
       },
       "aa_speed": {
-        "output_tps": 36.752,
-        "ttft_s": 1.953
+        "output_tps": 35.403,
+        "ttft_s": 1.938
       },
       "offers": [],
       "designarena": {},
@@ -20566,8 +20544,8 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 52.9,
-        "ttft_s": 1.229
+        "output_tps": 52.269,
+        "ttft_s": 1.197
       },
       "offers": [],
       "designarena": {},
@@ -20602,8 +20580,8 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 53.77,
-        "ttft_s": 7.828
+        "output_tps": 51.971,
+        "ttft_s": 8.131
       },
       "offers": [],
       "designarena": {},
@@ -20677,17 +20655,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -20711,6 +20678,17 @@
         {
           "source": "OpenRouter",
           "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -20791,8 +20769,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 45.982,
-        "ttft_s": 1.65
+        "output_tps": 44.369,
+        "ttft_s": 1.684
       },
       "offers": [
         {
@@ -20830,17 +20808,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 5,
@@ -20864,6 +20831,17 @@
         {
           "source": "OpenRouter",
           "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -20944,13 +20922,35 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 56.983,
-        "ttft_s": 1.334
+        "output_tps": 55.894,
+        "ttft_s": 1.331
       },
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -20980,33 +20980,11 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.5",
           "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
         }
       ],
       "designarena": {
         "frontend": {
-          "elo": 1228,
+          "elo": 1227,
           "winRate": 54.2,
           "battles": 2991,
           "modelId": "claude-opus-4-5-20251101"
@@ -21053,13 +21031,35 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 59.281,
+        "output_tps": 57.491,
         "ttft_s": 11.317
       },
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 5,
+          "output_per_1m": 25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 5,
           "output_per_1m": 25,
@@ -21089,33 +21089,11 @@
           "unit": "per_1m_token",
           "or_model_id": "anthropic/claude-opus-4.5",
           "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.5",
-          "status": 0
         }
       ],
       "designarena": {
         "frontend": {
-          "elo": 1228,
+          "elo": 1227,
           "winRate": 54.2,
           "battles": 2991,
           "modelId": "claude-opus-4-5-20251101"
@@ -21235,7 +21213,7 @@
       },
       "aa_speed": {
         "output_tps": 36.567,
-        "ttft_s": 1.735
+        "ttft_s": 1.701
       },
       "offers": [],
       "designarena": {},
@@ -21271,7 +21249,7 @@
       },
       "aa_speed": {
         "output_tps": 35.491,
-        "ttft_s": 9.003
+        "ttft_s": 9.782
       },
       "offers": [],
       "designarena": {},
@@ -21343,7 +21321,7 @@
       },
       "aa_speed": {
         "output_tps": 57.943,
-        "ttft_s": 10.425
+        "ttft_s": 10.644
       },
       "offers": [],
       "designarena": {},
@@ -21378,8 +21356,8 @@
         "blended_3to1": 30
       },
       "aa_speed": {
-        "output_tps": 37.484,
-        "ttft_s": 10.806
+        "output_tps": 37.44,
+        "ttft_s": 9.726
       },
       "offers": [],
       "designarena": {},
@@ -21487,7 +21465,7 @@
       },
       "aa_speed": {
         "output_tps": 61.248,
-        "ttft_s": 0.661
+        "ttft_s": 0.695
       },
       "offers": [],
       "designarena": {},
@@ -21522,8 +21500,8 @@
         "blended_3to1": 0.104
       },
       "aa_speed": {
-        "output_tps": 154.198,
-        "ttft_s": 0.536
+        "output_tps": 152.759,
+        "ttft_s": 0.542
       },
       "offers": [],
       "designarena": {},
@@ -21558,8 +21536,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 153.38,
-        "ttft_s": 0.521
+        "output_tps": 152.877,
+        "ttft_s": 0.533
       },
       "offers": [
         {
@@ -21792,8 +21770,8 @@
         "blended_3to1": 0.206
       },
       "aa_speed": {
-        "output_tps": 112.173,
-        "ttft_s": 0.44
+        "output_tps": 112.964,
+        "ttft_s": 0.435
       },
       "offers": [
         {
@@ -21840,7 +21818,7 @@
       },
       "aa_speed": {
         "output_tps": 156.338,
-        "ttft_s": 0.558
+        "ttft_s": 0.551
       },
       "offers": [],
       "designarena": {},
@@ -21876,7 +21854,7 @@
       },
       "aa_speed": {
         "output_tps": 48.776,
-        "ttft_s": 0.562
+        "ttft_s": 0.57
       },
       "offers": [
         {
@@ -21971,8 +21949,8 @@
         "blended_3to1": 0.8
       },
       "aa_speed": {
-        "output_tps": 78.205,
-        "ttft_s": 0.569
+        "output_tps": 76.763,
+        "ttft_s": 0.541
       },
       "offers": [
         {
@@ -22055,8 +22033,8 @@
         "blended_3to1": 0.8
       },
       "aa_speed": {
-        "output_tps": 56.895,
-        "ttft_s": 0.602
+        "output_tps": 54.695,
+        "ttft_s": 0.604
       },
       "offers": [
         {
@@ -22150,7 +22128,7 @@
       },
       "aa_speed": {
         "output_tps": 142.744,
-        "ttft_s": 0.43
+        "ttft_s": 0.432
       },
       "offers": [],
       "designarena": {},
@@ -22221,8 +22199,8 @@
         "blended_3to1": 4.088
       },
       "aa_speed": {
-        "output_tps": 88.154,
-        "ttft_s": 0.606
+        "output_tps": 69.022,
+        "ttft_s": 0.592
       },
       "offers": [],
       "designarena": {},
@@ -22257,8 +22235,8 @@
         "blended_3to1": 0.787
       },
       "aa_speed": {
-        "output_tps": 39.012,
-        "ttft_s": 0.517
+        "output_tps": 40.326,
+        "ttft_s": 0.522
       },
       "offers": [
         {
@@ -22409,7 +22387,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-chat-v3-0324",
-          "status": -2
+          "status": -5
         }
       ],
       "designarena": {},
@@ -22801,7 +22779,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -22812,7 +22790,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -22999,7 +22977,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v3.2",
-          "status": 0
+          "status": -2
         },
         {
           "source": "AWS Bedrock",
@@ -23167,7 +23145,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v3.2",
-          "status": 0
+          "status": -2
         },
         {
           "source": "AWS Bedrock",
@@ -23299,7 +23277,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -23310,7 +23288,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "SiliconFlow",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.27,
           "output_per_1m": 1,
@@ -24052,7 +24030,7 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 133.331,
+        "output_tps": 131.583,
         "ttft_s": 0.444
       },
       "offers": [
@@ -24070,15 +24048,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1220,
+          "elo": 1219,
           "winRate": 51.9,
-          "battles": 2996,
+          "battles": 3011,
           "modelId": "grok-4.20-0309-reasoning"
         },
         "fullstack": {
-          "elo": 1126,
-          "winRate": 42.7,
-          "battles": 2061,
+          "elo": 1125,
+          "winRate": 42.5,
+          "battles": 2077,
           "modelId": "grok-4.20-0309-reasoning"
         }
       },
@@ -24326,8 +24304,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 132.853,
-        "ttft_s": 0.45
+        "output_tps": 132.701,
+        "ttft_s": 0.422
       },
       "offers": [],
       "designarena": {},
@@ -24434,7 +24412,7 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 138.111,
+        "output_tps": 141.48,
         "ttft_s": 21.794
       },
       "offers": [],
@@ -24531,15 +24509,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1220,
+          "elo": 1219,
           "winRate": 51.9,
-          "battles": 2996,
+          "battles": 3011,
           "modelId": "grok-4.20-0309-reasoning"
         },
         "fullstack": {
-          "elo": 1126,
-          "winRate": 42.7,
-          "battles": 2061,
+          "elo": 1125,
+          "winRate": 42.5,
+          "battles": 2077,
           "modelId": "grok-4.20-0309-reasoning"
         }
       },
@@ -24693,8 +24671,8 @@
         "blended_3to1": 0.105
       },
       "aa_speed": {
-        "output_tps": 189.168,
-        "ttft_s": 0.687
+        "output_tps": 180.222,
+        "ttft_s": 0.689
       },
       "offers": [
         {
@@ -24812,7 +24790,7 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 528.487,
+        "output_tps": 519.468,
         "ttft_s": 1.342
       },
       "offers": [],
@@ -24848,8 +24826,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 79.837,
-        "ttft_s": 0.951
+        "output_tps": 79.693,
+        "ttft_s": 0.949
       },
       "offers": [],
       "designarena": {},
@@ -24920,7 +24898,7 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 210.193,
+        "output_tps": 194.85,
         "ttft_s": 10.512
       },
       "offers": [
@@ -24937,7 +24915,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
+          "provider": "AkashML",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 1.15,
@@ -24948,7 +24926,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AkashML",
+          "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
           "output_per_1m": 1.15,
@@ -25014,7 +24992,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Minimax",
+          "provider": "Mara",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25036,7 +25014,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "Minimax",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25047,7 +25025,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Parasail",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25069,7 +25047,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Mara",
+          "provider": "Parasail",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25155,7 +25133,7 @@
       },
       "aa_speed": {
         "output_tps": 121.97,
-        "ttft_s": 1.125
+        "ttft_s": 1.19
       },
       "offers": [
         {
@@ -25317,8 +25295,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 179.05,
-        "ttft_s": 8.971
+        "output_tps": 173.404,
+        "ttft_s": 9.932
       },
       "offers": [
         {
@@ -25334,7 +25312,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Minimax",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25345,7 +25323,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "Minimax",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -25517,7 +25495,7 @@
       },
       "aa_speed": {
         "output_tps": 42.05,
-        "ttft_s": 1.24
+        "ttft_s": 1.247
       },
       "offers": [
         {
@@ -25621,7 +25599,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Moonshot AI",
+          "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -25632,7 +25610,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
+          "provider": "Moonshot AI",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -25665,7 +25643,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1201,
+          "elo": 1200,
           "winRate": 50.3,
           "battles": 3930,
           "modelId": "kimi-k2.5"
@@ -25708,10 +25686,21 @@
         "blended_3to1": 1.075
       },
       "aa_speed": {
-        "output_tps": 24.929,
-        "ttft_s": 1.496
+        "output_tps": 24.803,
+        "ttft_s": 1.503
       },
       "offers": [
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2-thinking",
+          "status": 0
+        },
         {
           "source": "OpenRouter",
           "provider": "AtlasCloud",
@@ -25726,17 +25715,6 @@
         {
           "source": "OpenRouter",
           "provider": "Novita",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.6,
-          "output_per_1m": 2.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2-thinking",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 2.5,
@@ -25832,10 +25810,21 @@
         "blended_3to1": 1.075
       },
       "aa_speed": {
-        "output_tps": 120.16,
-        "ttft_s": 0.874
+        "output_tps": 123.41,
+        "ttft_s": 0.891
       },
       "offers": [
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2-thinking",
+          "status": 0
+        },
         {
           "source": "OpenRouter",
           "provider": "AtlasCloud",
@@ -25850,17 +25839,6 @@
         {
           "source": "OpenRouter",
           "provider": "Novita",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.6,
-          "output_per_1m": 2.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2-thinking",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 2.5,
@@ -25957,7 +25935,7 @@
       },
       "aa_speed": {
         "output_tps": 35.451,
-        "ttft_s": 1.293
+        "ttft_s": 1.262
       },
       "offers": [
         {
@@ -26061,7 +26039,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Moonshot AI",
+          "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -26072,7 +26050,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
+          "provider": "Moonshot AI",
           "platform": "OpenRouter",
           "input_per_1m": 0.6,
           "output_per_1m": 3,
@@ -26105,7 +26083,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1201,
+          "elo": 1200,
           "winRate": 50.3,
           "battles": 3930,
           "modelId": "kimi-k2.5"
@@ -26328,8 +26306,8 @@
         "blended_3to1": 0.35
       },
       "aa_speed": {
-        "output_tps": 85.722,
-        "ttft_s": 1.752
+        "output_tps": 85.241,
+        "ttft_s": 1.753
       },
       "offers": [],
       "designarena": {},
@@ -26364,8 +26342,8 @@
         "blended_3to1": 0.3
       },
       "aa_speed": {
-        "output_tps": 30.517,
-        "ttft_s": 0.371
+        "output_tps": 29.452,
+        "ttft_s": 0.379
       },
       "offers": [],
       "designarena": {},
@@ -26400,8 +26378,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 38.87,
-        "ttft_s": 2.11
+        "output_tps": 35.253,
+        "ttft_s": 2.021
       },
       "offers": [],
       "designarena": {},
@@ -26436,8 +26414,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 161.155,
-        "ttft_s": 1.35
+        "output_tps": 166.52,
+        "ttft_s": 1.346
       },
       "offers": [
         {
@@ -26520,8 +26498,8 @@
         "blended_3to1": 1
       },
       "aa_speed": {
-        "output_tps": 111.159,
-        "ttft_s": 0.648
+        "output_tps": 112.182,
+        "ttft_s": 0.721
       },
       "offers": [
         {
@@ -26544,7 +26522,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26636,7 +26614,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1125,
+          "elo": 1124,
           "winRate": 44.9,
           "battles": 1649,
           "modelId": "glm-4.7"
@@ -26674,7 +26652,7 @@
       },
       "aa_speed": {
         "output_tps": 41.323,
-        "ttft_s": 1.467
+        "ttft_s": 1.51
       },
       "offers": [
         {
@@ -26697,7 +26675,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -26735,9 +26713,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1106,
+          "elo": 1105,
           "winRate": 42.3,
-          "battles": 1908,
+          "battles": 1909,
           "modelId": "glm-4.6"
         }
       },
@@ -26772,8 +26750,8 @@
         "blended_3to1": 1
       },
       "aa_speed": {
-        "output_tps": 48.141,
-        "ttft_s": 1.701
+        "output_tps": 47.825,
+        "ttft_s": 1.737
       },
       "offers": [
         {
@@ -26796,7 +26774,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -26834,9 +26812,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1106,
+          "elo": 1105,
           "winRate": 42.3,
-          "battles": 1908,
+          "battles": 1909,
           "modelId": "glm-4.6"
         }
       },
@@ -26871,8 +26849,8 @@
         "blended_3to1": 1.55
       },
       "aa_speed": {
-        "output_tps": 67.418,
-        "ttft_s": 1.167
+        "output_tps": 63.891,
+        "ttft_s": 1.172
       },
       "offers": [
         {
@@ -26884,7 +26862,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -26928,7 +26906,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -26950,7 +26928,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -26972,7 +26950,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27027,7 +27005,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27049,7 +27027,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "AWS Bedrock",
@@ -27064,9 +27042,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1198,
-          "winRate": 53.8,
-          "battles": 4036,
+          "elo": 1197,
+          "winRate": 53.7,
+          "battles": 4049,
           "modelId": "glm-5"
         }
       },
@@ -27101,7 +27079,7 @@
         "blended_3to1": 0.372
       },
       "aa_speed": {
-        "output_tps": 72.898,
+        "output_tps": 74.916,
         "ttft_s": 1.501
       },
       "offers": [
@@ -27171,8 +27149,8 @@
         "blended_3to1": 1.55
       },
       "aa_speed": {
-        "output_tps": 79.335,
-        "ttft_s": 0.707
+        "output_tps": 77.684,
+        "ttft_s": 0.747
       },
       "offers": [
         {
@@ -27184,7 +27162,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -27228,7 +27206,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27250,7 +27228,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27272,7 +27250,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27327,7 +27305,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27349,7 +27327,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": -5
+          "status": 0
         },
         {
           "source": "AWS Bedrock",
@@ -27364,9 +27342,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1198,
-          "winRate": 53.8,
-          "battles": 4036,
+          "elo": 1197,
+          "winRate": 53.7,
+          "battles": 4049,
           "modelId": "glm-5"
         }
       },
@@ -27401,7 +27379,7 @@
         "blended_3to1": 1
       },
       "aa_speed": {
-        "output_tps": 58.126,
+        "output_tps": 56.62,
         "ttft_s": 1.201
       },
       "offers": [
@@ -27460,8 +27438,8 @@
         "blended_3to1": 0.153
       },
       "aa_speed": {
-        "output_tps": 110.388,
-        "ttft_s": 1.155
+        "output_tps": 127.974,
+        "ttft_s": 1.062
       },
       "offers": [
         {
@@ -27495,7 +27473,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27506,7 +27484,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27562,8 +27540,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 74.122,
-        "ttft_s": 1.261
+        "output_tps": 65.516,
+        "ttft_s": 1.325
       },
       "offers": [
         {
@@ -27575,7 +27553,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6v",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27621,8 +27599,8 @@
         "blended_3to1": 0.153
       },
       "aa_speed": {
-        "output_tps": 79.643,
-        "ttft_s": 0.921
+        "output_tps": 74.16,
+        "ttft_s": 0.883
       },
       "offers": [
         {
@@ -27656,7 +27634,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27667,7 +27645,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27724,7 +27702,7 @@
       },
       "aa_speed": {
         "output_tps": 23.826,
-        "ttft_s": 1.353
+        "ttft_s": 1.296
       },
       "offers": [
         {
@@ -27782,8 +27760,8 @@
         "blended_3to1": 1
       },
       "aa_speed": {
-        "output_tps": 103.577,
-        "ttft_s": 0.628
+        "output_tps": 109.154,
+        "ttft_s": 0.617
       },
       "offers": [
         {
@@ -27806,7 +27784,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -27898,7 +27876,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1125,
+          "elo": 1124,
           "winRate": 44.9,
           "battles": 1649,
           "modelId": "glm-4.7"
@@ -27935,8 +27913,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 79.379,
-        "ttft_s": 1.321
+        "output_tps": 76.67,
+        "ttft_s": 1.361
       },
       "offers": [
         {
@@ -27948,7 +27926,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6v",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -27994,8 +27972,8 @@
         "blended_3to1": 0.9
       },
       "aa_speed": {
-        "output_tps": 25.754,
-        "ttft_s": 79.89
+        "output_tps": 22.794,
+        "ttft_s": 73.586
       },
       "offers": [
         {
@@ -28233,8 +28211,8 @@
         "blended_3to1": 0.25
       },
       "aa_speed": {
-        "output_tps": 181.381,
-        "ttft_s": 0.833
+        "output_tps": 182.966,
+        "ttft_s": 0.845
       },
       "offers": [],
       "designarena": {},
@@ -28270,7 +28248,7 @@
       },
       "aa_speed": {
         "output_tps": 59.281,
-        "ttft_s": 0.95
+        "ttft_s": 1.074
       },
       "offers": [],
       "designarena": {},
@@ -28449,8 +28427,8 @@
         "blended_3to1": 0.088
       },
       "aa_speed": {
-        "output_tps": 109.227,
-        "ttft_s": 1.088
+        "output_tps": 110.695,
+        "ttft_s": 1.025
       },
       "offers": [],
       "designarena": {},
@@ -28522,7 +28500,7 @@
       },
       "aa_speed": {
         "output_tps": 48.979,
-        "ttft_s": 1.112
+        "ttft_s": 1.15
       },
       "offers": [
         {
@@ -28534,7 +28512,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-thinking",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28556,7 +28534,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28567,7 +28545,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -28578,7 +28556,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -28593,7 +28571,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.5,
@@ -28604,7 +28582,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.5,
@@ -28656,8 +28634,8 @@
         "blended_3to1": 0.338
       },
       "aa_speed": {
-        "output_tps": 127.779,
-        "ttft_s": 1.042
+        "output_tps": 127.764,
+        "ttft_s": 1.096
       },
       "offers": [
         {
@@ -28706,17 +28684,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -28728,18 +28695,29 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.19999999999999998,
           "output_per_1m": 0.7,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.19999999999999998,
           "output_per_1m": 0.7,
@@ -28792,8 +28770,8 @@
         "blended_3to1": 2.174
       },
       "aa_speed": {
-        "output_tps": 51.992,
-        "ttft_s": 2.466
+        "output_tps": 52.121,
+        "ttft_s": 1.58
       },
       "offers": [
         {
@@ -28805,7 +28783,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-thinking",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28827,7 +28805,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -28838,7 +28816,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -28849,7 +28827,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -28864,7 +28842,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.5,
@@ -28875,7 +28853,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.5,
@@ -28986,7 +28964,7 @@
         "blended_3to1": 0.356
       },
       "aa_speed": {
-        "output_tps": 70.081,
+        "output_tps": 67.973,
         "ttft_s": 1.196
       },
       "offers": [
@@ -29021,7 +28999,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -29043,7 +29021,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -29220,8 +29198,8 @@
         "blended_3to1": 0.745
       },
       "aa_speed": {
-        "output_tps": 32.697,
-        "ttft_s": 0.445
+        "output_tps": 32.614,
+        "ttft_s": 0.447
       },
       "offers": [],
       "designarena": {},
@@ -29256,8 +29234,8 @@
         "blended_3to1": 0.213
       },
       "aa_speed": {
-        "output_tps": 183.986,
-        "ttft_s": 1.085
+        "output_tps": 175.946,
+        "ttft_s": 1.162
       },
       "offers": [
         {
@@ -29302,7 +29280,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -29414,7 +29392,7 @@
         "blended_3to1": 0.185
       },
       "aa_speed": {
-        "output_tps": 65.336,
+        "output_tps": 65.505,
         "ttft_s": 1.408
       },
       "offers": [
@@ -29473,8 +29451,8 @@
         "blended_3to1": 0.352
       },
       "aa_speed": {
-        "output_tps": 109.026,
-        "ttft_s": 1.517
+        "output_tps": 109.628,
+        "ttft_s": 1.591
       },
       "offers": [
         {
@@ -29497,7 +29475,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-coder-30b-a3b-instruct",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -29565,7 +29543,7 @@
       },
       "aa_speed": {
         "output_tps": 134.723,
-        "ttft_s": 1.088
+        "ttft_s": 1.175
       },
       "offers": [
         {
@@ -29693,7 +29671,7 @@
       },
       "aa_speed": {
         "output_tps": 62.833,
-        "ttft_s": 1.341
+        "ttft_s": 1.345
       },
       "offers": [
         {
@@ -29751,8 +29729,8 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 165.909,
-        "ttft_s": 1.156
+        "output_tps": 161.404,
+        "ttft_s": 1.064
       },
       "offers": [
         {
@@ -29797,7 +29775,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-35b-a3b",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -29924,7 +29902,7 @@
       },
       "aa_speed": {
         "output_tps": 125.418,
-        "ttft_s": 1.071
+        "ttft_s": 1.061
       },
       "offers": [
         {
@@ -29973,17 +29951,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DeepInfra",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -29995,18 +29962,29 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
           "platform": "OpenRouter",
           "input_per_1m": 0.19999999999999998,
           "output_per_1m": 0.7,
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
+          "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.19999999999999998,
           "output_per_1m": 0.7,
@@ -30060,7 +30038,7 @@
       },
       "aa_speed": {
         "output_tps": 65.657,
-        "ttft_s": 1.189
+        "ttft_s": 1.129
       },
       "offers": [
         {
@@ -30165,8 +30143,8 @@
         "blended_3to1": 0.825
       },
       "aa_speed": {
-        "output_tps": 85.136,
-        "ttft_s": 1.35
+        "output_tps": 84.866,
+        "ttft_s": 1.344
       },
       "offers": [
         {
@@ -30189,7 +30167,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -30215,17 +30193,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 2.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.5-27b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -30234,6 +30201,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
           "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.5-27b",
+          "status": 0
         }
       ],
       "designarena": {},
@@ -30268,8 +30246,8 @@
         "blended_3to1": 0.731
       },
       "aa_speed": {
-        "output_tps": 65.876,
-        "ttft_s": 1.063
+        "output_tps": 65.958,
+        "ttft_s": 1.037
       },
       "offers": [
         {
@@ -30373,7 +30351,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -30395,7 +30373,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -30572,8 +30550,8 @@
         "blended_3to1": 0.673
       },
       "aa_speed": {
-        "output_tps": 145.027,
-        "ttft_s": 1.031
+        "output_tps": 147.224,
+        "ttft_s": 0.995
       },
       "offers": [
         {
@@ -30618,7 +30596,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -30838,8 +30816,8 @@
         "blended_3to1": 0.26
       },
       "aa_speed": {
-        "output_tps": 91.283,
-        "ttft_s": 1.081
+        "output_tps": 89.015,
+        "ttft_s": 1.056
       },
       "offers": [
         {
@@ -30951,8 +30929,8 @@
         "blended_3to1": 0.133
       },
       "aa_speed": {
-        "output_tps": 110.743,
-        "ttft_s": 1.091
+        "output_tps": 110.98,
+        "ttft_s": 1.103
       },
       "offers": [
         {
@@ -30997,7 +30975,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b-instruct-2507",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -31145,7 +31123,7 @@
         "blended_3to1": 0.675
       },
       "aa_speed": {
-        "output_tps": 67.627,
+        "output_tps": 64.889,
         "ttft_s": 1.553
       },
       "offers": [
@@ -31227,7 +31205,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -31249,7 +31227,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-thinking-2507",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -31534,7 +31512,7 @@
         "blended_3to1": 0.31
       },
       "aa_speed": {
-        "output_tps": 147.749,
+        "output_tps": 146.871,
         "ttft_s": 0.922
       },
       "offers": [
@@ -31662,8 +31640,8 @@
         "blended_3to1": 0.875
       },
       "aa_speed": {
-        "output_tps": 92.666,
-        "ttft_s": 1.437
+        "output_tps": 93.946,
+        "ttft_s": 1.468
       },
       "offers": [
         {
@@ -31686,7 +31664,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -31712,17 +31690,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Novita",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 2.4,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.5-27b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -31731,6 +31698,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
           "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Novita",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.5-27b",
+          "status": 0
         }
       ],
       "designarena": {},
@@ -31765,8 +31743,8 @@
         "blended_3to1": 2.925
       },
       "aa_speed": {
-        "output_tps": 45.036,
-        "ttft_s": 1.844
+        "output_tps": 44.5,
+        "ttft_s": 1.915
       },
       "offers": [
         {
@@ -31813,8 +31791,8 @@
         "blended_3to1": 1.225
       },
       "aa_speed": {
-        "output_tps": 74.543,
-        "ttft_s": 1.16
+        "output_tps": 74.144,
+        "ttft_s": 1.121
       },
       "offers": [
         {
@@ -31861,7 +31839,7 @@
         "blended_3to1": 0.276
       },
       "aa_speed": {
-        "output_tps": 99.165,
+        "output_tps": 97.623,
         "ttft_s": 1.076
       },
       "offers": [
@@ -32010,8 +31988,8 @@
         "blended_3to1": 2.625
       },
       "aa_speed": {
-        "output_tps": 96.506,
-        "ttft_s": 1.338
+        "output_tps": 96.415,
+        "ttft_s": 1.339
       },
       "offers": [
         {
@@ -32130,8 +32108,8 @@
         "blended_3to1": 0.247
       },
       "aa_speed": {
-        "output_tps": 62.564,
-        "ttft_s": 1.362
+        "output_tps": 55.066,
+        "ttft_s": 1.346
       },
       "offers": [],
       "designarena": {},
@@ -32202,8 +32180,8 @@
         "blended_3to1": 0.3
       },
       "aa_speed": {
-        "output_tps": 34.434,
-        "ttft_s": 1.549
+        "output_tps": 35.802,
+        "ttft_s": 1.562
       },
       "offers": [],
       "designarena": {},
@@ -32227,7 +32205,29 @@
       "offers": [
         {
           "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-sonnet-4.5",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -32249,29 +32249,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-sonnet-4.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
           "platform": "OpenRouter",
           "input_per_1m": 3,
           "output_per_1m": 15,
@@ -32311,9 +32289,9 @@
           "modelId": "claude-sonnet-4-5-20250929"
         },
         "fullstack": {
-          "elo": 1128,
+          "elo": 1127,
           "winRate": 43.5,
-          "battles": 643,
+          "battles": 644,
           "modelId": "claude-sonnet-4-5-20250929"
         }
       },
@@ -32382,7 +32360,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nex-agi/nex-n2-pro:free",
-          "status": -5
+          "status": -2
         }
       ],
       "designarena": {},
@@ -32472,7 +32450,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "stepfun/step-3.7-flash",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33074,7 +33052,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it:free",
-          "status": -5
+          "status": -2
         }
       ],
       "designarena": {},
@@ -33137,7 +33115,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": -5
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -33148,7 +33126,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33170,7 +33148,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33181,7 +33159,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -33307,7 +33285,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33340,7 +33318,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33351,7 +33329,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33362,7 +33340,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -33373,7 +33351,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -33538,7 +33516,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "AtlasCloud",
+          "provider": "StreamLake",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -33549,7 +33527,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "StreamLake",
+          "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
           "output_per_1m": 1.2,
@@ -33657,7 +33635,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-super-120b-a12b",
-          "status": 0
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -33762,7 +33740,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -33773,7 +33751,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 1.75,
           "output_per_1m": 14,
@@ -34029,7 +34007,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "stepfun/step-3.5-flash",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -34280,7 +34258,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-nano-30b-a3b",
-          "status": -2
+          "status": 0
         },
         {
           "source": "OpenRouter",
@@ -34291,7 +34269,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-nano-30b-a3b",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -34302,7 +34280,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-nano-30b-a3b",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -35527,7 +35505,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b:free",
-          "status": -5
+          "status": 0
         }
       ],
       "designarena": {},
@@ -35561,6 +35539,17 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Anthropic",
+          "platform": "OpenRouter",
+          "input_per_1m": 15,
+          "output_per_1m": 75,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "anthropic/claude-opus-4.1",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Google",
           "platform": "OpenRouter",
           "input_per_1m": 15,
@@ -35573,17 +35562,6 @@
         {
           "source": "OpenRouter",
           "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 15,
-          "output_per_1m": 75,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.1",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Anthropic",
           "platform": "OpenRouter",
           "input_per_1m": 15,
           "output_per_1m": 75,
@@ -35997,7 +35975,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-small-3.2-24b-instruct",
-          "status": -2
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -36224,29 +36202,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview-05-06",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro-preview-05-06",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google AI Studio",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemini-2.5-pro-preview-05-06",
-          "status": -5
+          "status": -2
         },
         {
           "source": "OpenRouter",
@@ -36258,6 +36214,28 @@
           "unit": "per_1m_token",
           "or_model_id": "google/gemini-2.5-pro-preview-05-06",
           "status": -2
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google AI Studio",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro-preview-05-06",
+          "status": 0
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Google",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "google/gemini-2.5-pro-preview-05-06",
+          "status": 0
         }
       ],
       "designarena": {},
@@ -36560,7 +36538,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-3-27b-it",
-          "status": 0
+          "status": -5
         },
         {
           "source": "OpenRouter",
@@ -36571,7 +36549,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-3-27b-it",
-          "status": -5
+          "status": -2
         }
       ],
       "designarena": {},
@@ -37611,7 +37589,7 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen-2.5-72b-instruct",
-          "status": 0
+          "status": -2
         }
       ],
       "designarena": {},
@@ -37866,7 +37844,7 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "OpenAI",
+          "provider": "Azure",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -37877,7 +37855,7 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Azure",
+          "provider": "OpenAI",
           "platform": "OpenRouter",
           "input_per_1m": 2.5,
           "output_per_1m": 10,
@@ -38859,7 +38837,7 @@
     {
       "platform": "OpenRouter",
       "provider": "AtlasCloud",
-      "model_count": 37
+      "model_count": 38
     },
     {
       "platform": "OpenRouter",
@@ -39028,11 +39006,6 @@
     },
     {
       "platform": "OpenRouter",
-      "provider": "Io Net",
-      "model_count": 4
-    },
-    {
-      "platform": "OpenRouter",
       "provider": "xAI",
       "model_count": 4
     },
@@ -39069,6 +39042,11 @@
     {
       "platform": "OpenRouter",
       "provider": "Mara",
+      "model_count": 3
+    },
+    {
+      "platform": "OpenRouter",
+      "provider": "Io Net",
       "model_count": 3
     },
     {
