@@ -1,7 +1,7 @@
 {
   "source": "DesignArena leaderboard API",
   "endpoint": "POST https://www.designarena.ai/api/leaderboard",
-  "collected_at": "2026-06-17",
+  "collected_at": "2026-06-18",
   "leaderboards": {
     "frontend": {
       "request": {
@@ -13,12 +13,12 @@
       "data": [
         {
           "modelId": "claude-opus-4-7-thinking",
-          "wins": 869,
-          "losses": 456,
-          "battles": 1325,
-          "winRate": 65.6,
-          "elo": 1335,
-          "btStdErr": null,
+          "wins": 870,
+          "losses": 458,
+          "battles": 1328,
+          "winRate": 65.5,
+          "elo": 1332,
+          "btStdErr": 10.61,
           "avgGenerationTimeMs": null
         },
         {
@@ -27,38 +27,38 @@
           "losses": 1211,
           "battles": 3095,
           "winRate": 60.9,
-          "elo": 1273,
-          "btStdErr": null,
+          "elo": 1271,
+          "btStdErr": 7.2852,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "gemini-3.5-flash",
-          "wins": 2043,
-          "losses": 1670,
-          "battles": 3713,
+          "wins": 2053,
+          "losses": 1682,
+          "battles": 3735,
           "winRate": 55,
-          "elo": 1268,
-          "btStdErr": null,
+          "elo": 1265,
+          "btStdErr": 6.8528,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "kimi-k2.6",
-          "wins": 3011,
-          "losses": 2087,
-          "battles": 5098,
-          "winRate": 59.1,
-          "elo": 1263,
-          "btStdErr": null,
+          "wins": 3024,
+          "losses": 2106,
+          "battles": 5130,
+          "winRate": 59,
+          "elo": 1261,
+          "btStdErr": 6.095,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "claude-opus-4-7",
-          "wins": 847,
-          "losses": 644,
-          "battles": 1491,
+          "wins": 849,
+          "losses": 645,
+          "battles": 1494,
           "winRate": 56.8,
-          "elo": 1261,
-          "btStdErr": null,
+          "elo": 1259,
+          "btStdErr": 9.741,
           "avgGenerationTimeMs": null
         },
         {
@@ -67,18 +67,28 @@
           "losses": 1335,
           "battles": 3022,
           "winRate": 55.8,
-          "elo": 1252,
-          "btStdErr": null,
+          "elo": 1250,
+          "btStdErr": 7.3073,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "glm-5.1",
-          "wins": 2677,
-          "losses": 2070,
-          "battles": 4747,
-          "winRate": 56.4,
-          "elo": 1250,
-          "btStdErr": null,
+          "wins": 2686,
+          "losses": 2082,
+          "battles": 4768,
+          "winRate": 56.3,
+          "elo": 1248,
+          "btStdErr": 6.1874,
+          "avgGenerationTimeMs": null
+        },
+        {
+          "modelId": "kimi-k2.7-code",
+          "wins": 303,
+          "losses": 288,
+          "battles": 591,
+          "winRate": 51.3,
+          "elo": 1246,
+          "btStdErr": 14.7035,
           "avgGenerationTimeMs": null
         },
         {
@@ -87,38 +97,38 @@
           "losses": 1371,
           "battles": 2991,
           "winRate": 54.2,
-          "elo": 1227,
-          "btStdErr": null,
+          "elo": 1225,
+          "btStdErr": 7.2523,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "grok-4.20-0309-reasoning",
-          "wins": 1563,
-          "losses": 1449,
-          "battles": 3012,
-          "winRate": 51.9,
-          "elo": 1219,
-          "btStdErr": null,
+          "wins": 1577,
+          "losses": 1457,
+          "battles": 3034,
+          "winRate": 52,
+          "elo": 1218,
+          "btStdErr": 7.2122,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "grok-4.3",
-          "wins": 2198,
-          "losses": 2337,
-          "battles": 4535,
-          "winRate": 48.5,
-          "elo": 1206,
-          "btStdErr": null,
+          "wins": 2208,
+          "losses": 2351,
+          "battles": 4559,
+          "winRate": 48.4,
+          "elo": 1204,
+          "btStdErr": 6.2598,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "gemini-3.1-pro-preview",
-          "wins": 2322,
-          "losses": 2377,
-          "battles": 4699,
-          "winRate": 49.4,
-          "elo": 1203,
-          "btStdErr": null,
+          "wins": 2335,
+          "losses": 2384,
+          "battles": 4719,
+          "winRate": 49.5,
+          "elo": 1201,
+          "btStdErr": 6.1759,
           "avgGenerationTimeMs": null
         },
         {
@@ -127,8 +137,8 @@
           "losses": 1954,
           "battles": 3930,
           "winRate": 50.3,
-          "elo": 1200,
-          "btStdErr": null,
+          "elo": 1198,
+          "btStdErr": 6.5188,
           "avgGenerationTimeMs": null
         },
         {
@@ -137,8 +147,18 @@
           "losses": 2252,
           "battles": 4532,
           "winRate": 50.3,
-          "elo": 1194,
-          "btStdErr": null,
+          "elo": 1192,
+          "btStdErr": 6.1326,
+          "avgGenerationTimeMs": null
+        },
+        {
+          "modelId": "glm-5v-turbo",
+          "wins": 1689,
+          "losses": 1889,
+          "battles": 3578,
+          "winRate": 47.2,
+          "elo": 1190,
+          "btStdErr": 6.7862,
           "avgGenerationTimeMs": null
         },
         {
@@ -147,28 +167,18 @@
           "losses": 2207,
           "battles": 4368,
           "winRate": 49.5,
-          "elo": 1191,
-          "btStdErr": null,
-          "avgGenerationTimeMs": null
-        },
-        {
-          "modelId": "glm-5v-turbo",
-          "wins": 1672,
-          "losses": 1868,
-          "battles": 3540,
-          "winRate": 47.2,
-          "elo": 1191,
-          "btStdErr": null,
+          "elo": 1189,
+          "btStdErr": 6.2388,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "gpt-5.5",
-          "wins": 1675,
-          "losses": 1960,
-          "battles": 3635,
-          "winRate": 46.1,
-          "elo": 1184,
-          "btStdErr": null,
+          "wins": 1686,
+          "losses": 1977,
+          "battles": 3663,
+          "winRate": 46,
+          "elo": 1182,
+          "btStdErr": 6.7876,
           "avgGenerationTimeMs": null
         },
         {
@@ -177,8 +187,8 @@
           "losses": 2142,
           "battles": 3946,
           "winRate": 45.7,
-          "elo": 1162,
-          "btStdErr": null,
+          "elo": 1160,
+          "btStdErr": 6.4775,
           "avgGenerationTimeMs": null
         },
         {
@@ -187,8 +197,8 @@
           "losses": 2223,
           "battles": 3816,
           "winRate": 41.8,
-          "elo": 1144,
-          "btStdErr": null,
+          "elo": 1142,
+          "btStdErr": 6.7653,
           "avgGenerationTimeMs": null
         },
         {
@@ -197,8 +207,8 @@
           "losses": 1013,
           "battles": 1779,
           "winRate": 43.1,
-          "elo": 1136,
-          "btStdErr": null,
+          "elo": 1134,
+          "btStdErr": 8.778,
           "avgGenerationTimeMs": null
         },
         {
@@ -207,8 +217,8 @@
           "losses": 2251,
           "battles": 3780,
           "winRate": 40.5,
-          "elo": 1132,
-          "btStdErr": null,
+          "elo": 1130,
+          "btStdErr": 6.7265,
           "avgGenerationTimeMs": null
         },
         {
@@ -217,8 +227,8 @@
           "losses": 1718,
           "battles": 2820,
           "winRate": 39.1,
-          "elo": 1123,
-          "btStdErr": null,
+          "elo": 1121,
+          "btStdErr": 7.6065,
           "avgGenerationTimeMs": null
         },
         {
@@ -227,8 +237,8 @@
           "losses": 294,
           "battles": 526,
           "winRate": 44.1,
-          "elo": 1093,
-          "btStdErr": null,
+          "elo": 1091,
+          "btStdErr": 15.7741,
           "avgGenerationTimeMs": null
         },
         {
@@ -237,8 +247,8 @@
           "losses": 711,
           "battles": 969,
           "winRate": 26.6,
-          "elo": 1022,
-          "btStdErr": null,
+          "elo": 1020,
+          "btStdErr": 12.952,
           "avgGenerationTimeMs": null
         }
       ]
@@ -256,8 +266,8 @@
           "losses": 164,
           "battles": 592,
           "winRate": 72.3,
-          "elo": 1398,
-          "btStdErr": null,
+          "elo": 1386,
+          "btStdErr": 16.5074,
           "avgGenerationTimeMs": null
         },
         {
@@ -266,8 +276,8 @@
           "losses": 192,
           "battles": 594,
           "winRate": 67.7,
-          "elo": 1325,
-          "btStdErr": null,
+          "elo": 1313,
+          "btStdErr": 15.4433,
           "avgGenerationTimeMs": null
         },
         {
@@ -276,8 +286,8 @@
           "losses": 480,
           "battles": 1527,
           "winRate": 68.6,
-          "elo": 1295,
-          "btStdErr": null,
+          "elo": 1283,
+          "btStdErr": 10.0961,
           "avgGenerationTimeMs": null
         },
         {
@@ -286,28 +296,28 @@
           "losses": 749,
           "battles": 2032,
           "winRate": 63.1,
-          "elo": 1281,
-          "btStdErr": null,
+          "elo": 1269,
+          "btStdErr": 8.6839,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "gemini-3.5-flash",
-          "wins": 1794,
-          "losses": 1242,
-          "battles": 3036,
+          "wins": 1799,
+          "losses": 1243,
+          "battles": 3042,
           "winRate": 59.1,
-          "elo": 1277,
-          "btStdErr": null,
+          "elo": 1266,
+          "btStdErr": 7.5638,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "glm-5.1",
-          "wins": 1496,
-          "losses": 1104,
-          "battles": 2600,
+          "wins": 1499,
+          "losses": 1106,
+          "battles": 2605,
           "winRate": 57.5,
-          "elo": 1240,
-          "btStdErr": null,
+          "elo": 1228,
+          "btStdErr": 7.6351,
           "avgGenerationTimeMs": null
         },
         {
@@ -316,58 +326,58 @@
           "losses": 566,
           "battles": 1410,
           "winRate": 59.9,
-          "elo": 1231,
-          "btStdErr": null,
+          "elo": 1219,
+          "btStdErr": 10.004,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "kimi-k2.6",
-          "wins": 1722,
-          "losses": 1296,
-          "battles": 3018,
-          "winRate": 57.1,
-          "elo": 1230,
-          "btStdErr": null,
-          "avgGenerationTimeMs": null
-        },
-        {
-          "modelId": "glm-5v-turbo",
-          "wins": 1264,
-          "losses": 1007,
-          "battles": 2271,
-          "winRate": 55.7,
-          "elo": 1220,
-          "btStdErr": null,
+          "wins": 1726,
+          "losses": 1300,
+          "battles": 3026,
+          "winRate": 57,
+          "elo": 1219,
+          "btStdErr": 7.2067,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "kimi-k2.7-code",
-          "wins": 252,
-          "losses": 221,
-          "battles": 473,
+          "wins": 276,
+          "losses": 242,
+          "battles": 518,
           "winRate": 53.3,
-          "elo": 1219,
-          "btStdErr": null,
+          "elo": 1209,
+          "btStdErr": 15.6573,
+          "avgGenerationTimeMs": null
+        },
+        {
+          "modelId": "glm-5v-turbo",
+          "wins": 1266,
+          "losses": 1014,
+          "battles": 2280,
+          "winRate": 55.5,
+          "elo": 1208,
+          "btStdErr": 7.9991,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "qwen3.7-max",
-          "wins": 169,
-          "losses": 184,
-          "battles": 353,
-          "winRate": 47.9,
-          "elo": 1214,
-          "btStdErr": null,
+          "wins": 170,
+          "losses": 189,
+          "battles": 359,
+          "winRate": 47.4,
+          "elo": 1201,
+          "btStdErr": 18.568,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "glm-5",
-          "wins": 2176,
-          "losses": 1873,
-          "battles": 4049,
+          "wins": 2179,
+          "losses": 1878,
+          "battles": 4057,
           "winRate": 53.7,
-          "elo": 1197,
-          "btStdErr": null,
+          "elo": 1186,
+          "btStdErr": 6.3426,
           "avgGenerationTimeMs": null
         },
         {
@@ -376,18 +386,18 @@
           "losses": 828,
           "battles": 1806,
           "winRate": 54.1,
-          "elo": 1189,
-          "btStdErr": null,
+          "elo": 1177,
+          "btStdErr": 8.8285,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "gpt-5.5",
-          "wins": 1087,
-          "losses": 1287,
-          "battles": 2374,
-          "winRate": 45.8,
-          "elo": 1162,
-          "btStdErr": null,
+          "wins": 1088,
+          "losses": 1291,
+          "battles": 2379,
+          "winRate": 45.7,
+          "elo": 1150,
+          "btStdErr": 7.9076,
           "avgGenerationTimeMs": null
         },
         {
@@ -396,18 +406,18 @@
           "losses": 1166,
           "battles": 2270,
           "winRate": 48.6,
-          "elo": 1148,
-          "btStdErr": null,
+          "elo": 1137,
+          "btStdErr": 8.0258,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "gemini-3.1-pro-preview",
-          "wins": 1475,
-          "losses": 1725,
-          "battles": 3200,
-          "winRate": 46.1,
-          "elo": 1147,
-          "btStdErr": null,
+          "wins": 1480,
+          "losses": 1734,
+          "battles": 3214,
+          "winRate": 46,
+          "elo": 1135,
+          "btStdErr": 6.9268,
           "avgGenerationTimeMs": null
         },
         {
@@ -416,8 +426,8 @@
           "losses": 1256,
           "battles": 2373,
           "winRate": 47.1,
-          "elo": 1137,
-          "btStdErr": null,
+          "elo": 1125,
+          "btStdErr": 7.8637,
           "avgGenerationTimeMs": null
         },
         {
@@ -426,18 +436,8 @@
           "losses": 364,
           "battles": 644,
           "winRate": 43.5,
-          "elo": 1127,
-          "btStdErr": null,
-          "avgGenerationTimeMs": null
-        },
-        {
-          "modelId": "grok-4.20-0309-reasoning",
-          "wins": 884,
-          "losses": 1195,
-          "battles": 2079,
-          "winRate": 42.5,
-          "elo": 1125,
-          "btStdErr": null,
+          "elo": 1115,
+          "btStdErr": 14.0447,
           "avgGenerationTimeMs": null
         },
         {
@@ -446,8 +446,18 @@
           "losses": 908,
           "battles": 1649,
           "winRate": 44.9,
-          "elo": 1124,
-          "btStdErr": null,
+          "elo": 1113,
+          "btStdErr": 9.168,
+          "avgGenerationTimeMs": null
+        },
+        {
+          "modelId": "grok-4.20-0309-reasoning",
+          "wins": 884,
+          "losses": 1201,
+          "battles": 2085,
+          "winRate": 42.4,
+          "elo": 1113,
+          "btStdErr": 8.3246,
           "avgGenerationTimeMs": null
         },
         {
@@ -456,8 +466,8 @@
           "losses": 1219,
           "battles": 2177,
           "winRate": 44,
-          "elo": 1117,
-          "btStdErr": null,
+          "elo": 1105,
+          "btStdErr": 8.1855,
           "avgGenerationTimeMs": null
         },
         {
@@ -466,8 +476,8 @@
           "losses": 1101,
           "battles": 1909,
           "winRate": 42.3,
-          "elo": 1105,
-          "btStdErr": null,
+          "elo": 1094,
+          "btStdErr": 8.6556,
           "avgGenerationTimeMs": null
         },
         {
@@ -476,8 +486,8 @@
           "losses": 86,
           "battles": 155,
           "winRate": 44.5,
-          "elo": 1099,
-          "btStdErr": null,
+          "elo": 1087,
+          "btStdErr": 27.8534,
           "avgGenerationTimeMs": null
         },
         {
@@ -486,8 +496,8 @@
           "losses": 1278,
           "battles": 2161,
           "winRate": 40.9,
-          "elo": 1093,
-          "btStdErr": null,
+          "elo": 1081,
+          "btStdErr": 8.3322,
           "avgGenerationTimeMs": null
         },
         {
@@ -496,18 +506,18 @@
           "losses": 1209,
           "battles": 2005,
           "winRate": 39.7,
-          "elo": 1084,
-          "btStdErr": null,
+          "elo": 1072,
+          "btStdErr": 8.5438,
           "avgGenerationTimeMs": null
         },
         {
           "modelId": "grok-4.3",
-          "wins": 508,
-          "losses": 1056,
-          "battles": 1564,
-          "winRate": 32.5,
-          "elo": 1079,
-          "btStdErr": null,
+          "wins": 509,
+          "losses": 1063,
+          "battles": 1572,
+          "winRate": 32.4,
+          "elo": 1067,
+          "btStdErr": 9.9221,
           "avgGenerationTimeMs": null
         },
         {
@@ -516,8 +526,8 @@
           "losses": 1365,
           "battles": 2168,
           "winRate": 37,
-          "elo": 1067,
-          "btStdErr": null,
+          "elo": 1055,
+          "btStdErr": 8.3798,
           "avgGenerationTimeMs": null
         },
         {
@@ -526,8 +536,8 @@
           "losses": 710,
           "battles": 1116,
           "winRate": 36.4,
-          "elo": 1058,
-          "btStdErr": null,
+          "elo": 1046,
+          "btStdErr": 11.2575,
           "avgGenerationTimeMs": null
         }
       ]
