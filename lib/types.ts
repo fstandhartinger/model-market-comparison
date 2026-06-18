@@ -58,6 +58,7 @@ export interface ModelRow {
   copilot: CopilotPricing | null;
   offers: Offer[];
   manual_notes?: string;
+  benchmark_override_note?: string;
 }
 
 export interface Dataset {

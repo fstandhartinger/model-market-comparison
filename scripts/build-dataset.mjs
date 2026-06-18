@@ -313,8 +313,10 @@ async function build() {
   }
 
   // --- Manual supplements (required models missing from live APIs) ---
+  let benchmarkOverrides = [];
   try {
     const manual = await readJSON("manual.json");
+    benchmarkOverrides = manual.benchmark_overrides || [];
     for (const m of manual.models || []) {
       const key = canonFamily(m.family_key);
       const fam = family(key, m.org || guessOrg(key));
@@ -358,6 +360,14 @@ async function build() {
   }
 
   const modelRows = [...models.values()];
+  // Apply documented benchmark overrides (e.g. suppress a corrupt AA value).
+  for (const ov of benchmarkOverrides) {
+    for (const r of modelRows) {
+      if (r.family_key !== canonFamily(ov.family_key)) continue;
+      if (ov.variant && r.variant !== ov.variant) continue;
+      if (r.benchmarks && ov.field in r.benchmarks) { r.benchmarks[ov.field] = ov.value ?? null; r.benchmark_override_note = ov.reason; }
+    }
+  }
   for (const r of modelRows) {
     r.org = canonOrg(r.org);
     r.featured = FEATURED_RE.test(r.family_key);

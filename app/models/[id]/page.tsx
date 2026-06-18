@@ -86,6 +86,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
             <Metric label="AA Math Index" value={num(b.aa_math_index)} />
             <Metric label="Output speed (t/s)" value={num(model.aa_speed?.output_tps, 0)} />
           </div>
+          {model.benchmark_override_note && (
+            <p className="mt-3 border-t border-line/50 pt-2 text-xs text-warn/90">⚠ {model.benchmark_override_note}</p>
+          )}
         </section>
       </div>
 

@@ -4,5 +4,13 @@
   "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
   "notes": "GLM 5.2 is now live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) so the earlier estimated offer was removed — it is sourced from openrouter.json. GLM 5.2 ships MIT open-weights (HuggingFace zai-org/GLM-5.2). As of 2026-06-16 it has no ArtificialAnalysis or DesignArena benchmark yet. Kimi K2.7 Coding has a DesignArena Full-Stack Elo but is not yet on ArtificialAnalysis.",
   "models": [],
-  "offers": []
+  "offers": [],
+  "benchmark_overrides": [
+    {
+      "family_key": "glm-5.2",
+      "field": "aa_coding_index",
+      "value": null,
+      "reason": "AA's API reported a Coding Index of 67 (2026-06-18) — higher than GPT-5.5 (58.5) and Opus 4.8 (56.7) — but GLM 5.2's individual coding sub-benchmarks are all BELOW those models (SciCode 0.505 vs 0.559/0.535; Terminal-Bench-Hard 0.508 vs 0.598/0.583; Terminal-Bench v2.1 0.753 vs 0.794/0.846). The composite is internally inconsistent (likely an incomplete/erroneous eval), so we withhold it until AA corrects the source. Remove this override once AA's value is consistent with the sub-benchmarks."
+    }
+  ]
 }
