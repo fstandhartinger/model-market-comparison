@@ -14,7 +14,7 @@ type SortKey = "name" | "org" | "score" | "cost" | "providers";
 export function ModelExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly), [s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly]);
   const [sort, setSort] = useState<SortKey>("score");
   const [asc, setAsc] = useState(false);
   const [q, setQ] = useState("");

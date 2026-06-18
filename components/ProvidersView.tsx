@@ -22,7 +22,7 @@ interface Row {
 export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers), [s.providerSet, s.excludeChinese, data.providers]);
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly), [s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly]);
   const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");

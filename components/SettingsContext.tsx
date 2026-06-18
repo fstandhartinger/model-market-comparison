@@ -8,6 +8,8 @@ interface SettingsState {
   collapse: boolean;       // one variant per GPT/Claude family
   featured: boolean;
   excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
+  euHostedOnly: boolean;    // only providers that serve from EU data centers
+  nonUsOnly: boolean;       // only providers whose company is not US-based
   hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
   hideFable: boolean;       // hide Claude Fable (on by default)
   minScore: number;         // hide models scoring below this (score-aware default)
@@ -20,6 +22,8 @@ interface SettingsCtx extends SettingsState {
   setCollapse: (b: boolean) => void;
   setFeatured: (b: boolean) => void;
   setExcludeChinese: (b: boolean) => void;
+  setEuHostedOnly: (b: boolean) => void;
+  setNonUsOnly: (b: boolean) => void;
   setHideGptOpus: (b: boolean) => void;
   setHideFable: (b: boolean) => void;
   setMinScore: (n: number) => void;
@@ -29,7 +33,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), providers: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), providers: [], families: [] };
 const KEY = "mmc.settings.v1";
 
 const Ctx = createContext<SettingsCtx | null>(null);
@@ -55,6 +59,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setCollapse: (collapse) => setState((s) => ({ ...s, collapse })),
     setFeatured: (featured) => setState((s) => ({ ...s, featured })),
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
+    setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
+    setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
     setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
     setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),

@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-18T07:39:48.770Z",
+  "generated_at": "2026-06-18T13:13:57.856Z",
   "counts": {
-    "models": 692,
-    "families": 563,
-    "providers": 76,
-    "offers": 1637
+    "models": 702,
+    "families": 573,
+    "providers": 79,
+    "offers": 1681
   },
   "sources": {
     "openrouter": "2026-06-17",
@@ -13,6 +13,8 @@
     "aws_bedrock": "2026-06-17",
     "azure_foundry": "2026-06-17",
     "google_vertex": "2026-06-17",
+    "nebius": "2026-06-18",
+    "inceptron": "2026-06-18",
     "github_copilot": "2026-06-15",
     "claude_code": "2026-06-15"
   },
@@ -285,6 +287,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (open-weight). Batch is half price."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -561,6 +573,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (open-weight). Batch is half price."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -2407,6 +2429,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (MaaS pay-as-you-go)."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.13,
+          "output_per_1m": 0.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -5474,6 +5506,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1.75,
+          "output_per_1m": 3.5,
+          "region": "uk",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: uk-south1"
         }
       ],
       "designarena": {
@@ -5714,6 +5756,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1.75,
+          "output_per_1m": 3.5,
+          "region": "uk",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: uk-south1"
         }
       ],
       "designarena": {
@@ -5954,6 +6006,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1.75,
+          "output_per_1m": 3.5,
+          "region": "uk",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: uk-south1"
         }
       ],
       "designarena": {
@@ -9339,6 +9401,26 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.95,
+          "output_per_1m": 4,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
+        },
+        {
+          "source": "Inceptron",
+          "provider": "Inceptron",
+          "platform": "Inceptron",
+          "input_per_1m": 0.68,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "int4 quant, 262K context, 1T, multimodal (text+image). Cache read $0.25/1M. Input price is $0.68/1M per api.inceptron.io and OpenRouter; the rendered website models page shows $0.73/1M (minor discrepancy, API value used as canonical). Output $3.50/1M everywhere."
         }
       ],
       "designarena": {
@@ -9619,6 +9701,26 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.95,
+          "output_per_1m": 4,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
+        },
+        {
+          "source": "Inceptron",
+          "provider": "Inceptron",
+          "platform": "Inceptron",
+          "input_per_1m": 0.68,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "int4 quant, 262K context, 1T, multimodal (text+image). Cache read $0.25/1M. Input price is $0.68/1M per api.inceptron.io and OpenRouter; the rendered website models page shows $0.73/1M (minor discrepancy, API value used as canonical). Output $3.50/1M everywhere."
         }
       ],
       "designarena": {
@@ -11796,12 +11898,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.2,
+          "output_per_1m": 1.1,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "motif-2-12.7b::reasoning",
@@ -12699,6 +12812,26 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        },
+        {
+          "source": "Inceptron",
+          "provider": "Inceptron",
+          "platform": "Inceptron",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "fp8 quant, 202K context, 754B. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
         }
       ],
       "designarena": {
@@ -12968,6 +13101,26 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        },
+        {
+          "source": "Inceptron",
+          "provider": "Inceptron",
+          "platform": "Inceptron",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "fp8 quant, 202K context, 754B. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
         }
       ],
       "designarena": {
@@ -13095,6 +13248,16 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.2",
           "status": -2
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -14068,6 +14231,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
           "status": 0
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.6,
+          "output_per_1m": 3.6,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
         }
       ],
       "designarena": {},
@@ -14398,6 +14571,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
           "status": 0
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.6,
+          "output_per_1m": 3.6,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
         }
       ],
       "designarena": {},
@@ -20261,6 +20444,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -23983,6 +24176,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "DeepSeek-V3.2. Model Garden partner model. Cache hit $0.056/1M."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.45,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
         }
       ],
       "designarena": {},
@@ -24181,6 +24384,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "DeepSeek-V3.2. Model Garden partner model. Cache hit $0.056/1M."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.45,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
         }
       ],
       "designarena": {},
@@ -26338,6 +26551,26 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.2,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
+        },
+        {
+          "source": "Inceptron",
+          "provider": "Inceptron",
+          "platform": "Inceptron",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.9,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "fp8 quant, 196K context, 230B. Cache read $0.05/1M. Inceptron model id MiniMaxAI/MiniMax-M2.5. Matches OpenRouter Inceptron endpoint (in 0.15 / out 0.90)."
         }
       ],
       "designarena": {},
@@ -28346,6 +28579,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (NEW on Vertex - GLM section added). Cache hit $0.1/1M."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1,
+          "output_per_1m": 3.2,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
         }
       ],
       "designarena": {
@@ -28666,6 +28909,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (NEW on Vertex - GLM section added). Cache hit $0.1/1M."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1,
+          "output_per_1m": 3.2,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
         }
       ],
       "designarena": {
@@ -30706,6 +30959,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b",
           "status": -2
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -32032,6 +32295,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b",
           "status": -2
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -32253,6 +32526,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -32411,6 +32694,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-30b-a3b",
           "status": -2
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -33296,6 +33589,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -38229,6 +38532,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen2.5-vl-72b-instruct",
           "status": 0
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.25,
+          "output_per_1m": 0.75,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1; vision/multimodal (text-token priced)"
         }
       ],
       "designarena": {},
@@ -40345,6 +40658,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model."
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.15,
+          "output_per_1m": 1.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -40374,6 +40697,316 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (MaaS pay-as-you-go)."
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "nemotron-3-ultra-550b::default",
+      "family_key": "nemotron-3-ultra-550b",
+      "family_name": "Nemotron 3 Ultra 550B",
+      "display_name": "Nemotron 3 Ultra 550B",
+      "org": "NVIDIA",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1,
+          "output_per_1m": 3,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "cosmos3-super-reasoner::default",
+      "family_key": "cosmos3-super-reasoner",
+      "family_name": "Cosmos3 Super Reasoner",
+      "display_name": "Cosmos3 Super Reasoner",
+      "org": "NVIDIA",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1; vision/multimodal (text-token priced)"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "minicpm-v-4.5::default",
+      "family_key": "minicpm-v-4.5",
+      "family_name": "Minicpm V 4.5",
+      "display_name": "Minicpm V 4.5",
+      "org": "OpenBMB",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.658,
+          "output_per_1m": 1.11,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1; vision/multimodal (text-token priced)"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "nemotron-3-nano-omni::default",
+      "family_key": "nemotron-3-nano-omni",
+      "family_name": "Nemotron 3 Nano Omni",
+      "display_name": "Nemotron 3 Nano Omni",
+      "org": "NVIDIA",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.06,
+          "output_per_1m": 0.24,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.06,
+          "output_per_1m": 0.24,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1; -m = managed/mirror variant, same price"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "nemotron-3-super-120b::default",
+      "family_key": "nemotron-3-super-120b",
+      "family_name": "Nemotron 3 Super 120B",
+      "display_name": "Nemotron 3 Super 120B",
+      "org": "NVIDIA",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.9,
+          "region": "us",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: us-central1"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "hermes-4-405b::default",
+      "family_key": "hermes-4-405b",
+      "family_name": "Hermes 4 405B",
+      "display_name": "Hermes 4 405B",
+      "org": "Nous Research",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 1,
+          "output_per_1m": 3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "hermes-4-70b::default",
+      "family_key": "hermes-4-70b",
+      "family_name": "Hermes 4 70B",
+      "display_name": "Hermes 4 70B",
+      "org": "Nous Research",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.13,
+          "output_per_1m": 0.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "qwen3-235b::default",
+      "family_key": "qwen3-235b",
+      "family_name": "Qwen3 235B",
+      "display_name": "Qwen3 235B",
+      "org": "Alibaba",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.6,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "llama-3.1-nemotron-ultra-253b::default",
+      "family_key": "llama-3.1-nemotron-ultra-253b",
+      "family_name": "Llama 3.1 Nemotron Ultra 253B",
+      "display_name": "Llama 3.1 Nemotron Ultra 253B",
+      "org": "NVIDIA",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.6,
+          "output_per_1m": 1.8,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
+        },
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.6,
+          "output_per_1m": 1.8,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1; -m = managed/mirror variant, same price"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "nemotron-3-nano-30b::default",
+      "family_key": "nemotron-3-nano-30b",
+      "family_name": "Nemotron 3 Nano 30B",
+      "display_name": "Nemotron 3 Nano 30B",
+      "org": "NVIDIA",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Nebius",
+          "provider": "Nebius",
+          "platform": "Nebius",
+          "input_per_1m": 0.06,
+          "output_per_1m": 0.24,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "tier: Base; served region: eu-north1"
         }
       ],
       "designarena": {},
@@ -40430,382 +41063,714 @@
     {
       "platform": "Azure AI Foundry",
       "provider": "Azure AI Foundry",
-      "model_count": 64
+      "model_count": 64,
+      "eu_hosted": true,
+      "non_us": false,
+      "country": "US",
+      "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served)."
     },
     {
       "platform": "OpenRouter",
       "provider": "Novita",
-      "model_count": 63
+      "model_count": 63,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "DeepInfra",
-      "model_count": 62
+      "model_count": 62,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "No EU region."
     },
     {
       "platform": "AWS Bedrock",
       "provider": "AWS Bedrock",
-      "model_count": 60
+      "model_count": 60,
+      "eu_hosted": true,
+      "non_us": false,
+      "country": "US",
+      "note": "EU residency via the eu. cross-region Geo profile; ZDR by default. US parent (CLOUD Act)."
     },
     {
       "platform": "OpenRouter",
       "provider": "OpenAI",
-      "model_count": 44
+      "model_count": 44,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "Google Vertex AI",
       "provider": "Google Vertex AI",
-      "model_count": 38
+      "model_count": 38,
+      "eu_hosted": true,
+      "non_us": false,
+      "country": "US",
+      "note": "EU residency via europe-west / EU multi-region; never the global endpoint. US parent."
     },
     {
       "platform": "OpenRouter",
       "provider": "AtlasCloud",
-      "model_count": 38
+      "model_count": 38,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Google",
-      "model_count": 34
+      "model_count": 34,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Alibaba",
-      "model_count": 33
+      "model_count": 33,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "SiliconFlow",
-      "model_count": 32
+      "model_count": 32,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Azure",
-      "model_count": 30
+      "model_count": 30,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Parasail",
-      "model_count": 29
+      "model_count": 29,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Venice",
-      "model_count": 28
+      "model_count": 28,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "Privacy-first but US."
+    },
+    {
+      "platform": "Nebius",
+      "provider": "Nebius",
+      "model_count": 26,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "Netherlands",
+      "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
     },
     {
       "platform": "OpenRouter",
       "provider": "Amazon Bedrock",
-      "model_count": 23
+      "model_count": 23,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Together",
-      "model_count": 22
+      "model_count": 22,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "EU residency only via dedicated/enterprise endpoints."
     },
     {
       "platform": "OpenRouter",
       "provider": "WandB",
-      "model_count": 19
+      "model_count": 19,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "StreamLake",
-      "model_count": 17
+      "model_count": 17,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Phala",
-      "model_count": 16
+      "model_count": 16,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "TEE/confidential but US/India nodes, not EU-resident."
     },
     {
       "platform": "OpenRouter",
       "provider": "NextBit",
-      "model_count": 16
+      "model_count": 16,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Mistral",
-      "model_count": 15
+      "model_count": 15,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "France",
+      "note": "EU-default residency; own models only."
     },
     {
       "platform": "OpenRouter",
       "provider": "Cloudflare",
-      "model_count": 13
+      "model_count": 13,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "EU via Enterprise custom regions."
     },
     {
       "platform": "OpenRouter",
       "provider": "Google AI Studio",
-      "model_count": 13
+      "model_count": 13,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Nebius",
-      "model_count": 12
+      "model_count": 12,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "Netherlands",
+      "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
     },
     {
       "platform": "OpenRouter",
       "provider": "DigitalOcean",
-      "model_count": 11
+      "model_count": 11,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Anthropic",
-      "model_count": 9
+      "model_count": 9,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Z.AI",
-      "model_count": 9
+      "model_count": 9,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Minimax",
-      "model_count": 8
+      "model_count": 8,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Chutes",
-      "model_count": 8
+      "model_count": 8,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "TEE models available; node location not EU-pinned."
     },
     {
       "platform": "OpenRouter",
       "provider": "Groq",
-      "model_count": 7
+      "model_count": 7,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Fireworks",
-      "model_count": 7
+      "model_count": 7,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "EU only via dedicated (Ireland/Iceland), not serverless."
     },
     {
       "platform": "OpenRouter",
       "provider": "GMICloud",
-      "model_count": 7
+      "model_count": 7,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Morph",
-      "model_count": 7
+      "model_count": 7,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Nvidia",
-      "model_count": 7
+      "model_count": 7,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "AkashML",
-      "model_count": 6
+      "model_count": 6,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "DePIN."
     },
     {
       "platform": "OpenRouter",
       "provider": "Baidu",
-      "model_count": 6
+      "model_count": 6,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Friendli",
-      "model_count": 6
+      "model_count": 6,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "South Korea",
+      "note": "ZDR by default; Korea-based."
     },
     {
       "platform": "OpenRouter",
       "provider": "DekaLLM",
-      "model_count": 5
+      "model_count": 5,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "Indonesia",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "SambaNova",
-      "model_count": 5
+      "model_count": 5,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "Anthropic",
       "provider": "Anthropic",
-      "model_count": 5
+      "model_count": 5,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "xAI",
-      "model_count": 4
+      "model_count": 4,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Cohere",
-      "model_count": 4
+      "model_count": 4,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "Canada",
+      "note": "Non-US; EU via VPC."
     },
     {
       "platform": "OpenRouter",
       "provider": "Seed",
-      "model_count": 4
+      "model_count": 4,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": "ByteDance."
     },
     {
       "platform": "OpenRouter",
       "provider": "AionLabs",
-      "model_count": 4
+      "model_count": 4,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Perplexity",
-      "model_count": 4
+      "model_count": 4,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Mancer 2",
-      "model_count": 4
+      "model_count": 4,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "BaseTen",
-      "model_count": 3
+      "model_count": 3,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Mara",
-      "model_count": 3
+      "model_count": 3,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Io Net",
-      "model_count": 3
+      "model_count": 3,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "DePIN, no residency control."
     },
     {
       "platform": "OpenRouter",
       "provider": "Inceptron",
-      "model_count": 3
+      "model_count": 3,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "Sweden",
+      "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
     },
     {
       "platform": "OpenRouter",
       "provider": "Moonshot AI",
-      "model_count": 3
+      "model_count": 3,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
+    },
+    {
+      "platform": "Inceptron",
+      "provider": "Inceptron",
+      "model_count": 3,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "Sweden",
+      "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
     },
     {
       "platform": "OpenRouter",
       "provider": "OpenInference",
-      "model_count": 3
+      "model_count": 3,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Cerebras",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "DeepSeek",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Wafer",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Ambient",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Xiaomi",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "ModelRun",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Poolside",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Darkbloom",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Reka",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Relace",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Infermatic",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Inflection",
-      "model_count": 2
+      "model_count": 2,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Decart",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Ionstream",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Nex AGI",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "StepFun",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "China",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Perceptron",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Stealth",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Arcee AI",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Inception",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Upstage",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "South Korea",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Liquid",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Clarifai",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "AI21",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": true,
+      "country": "Israel",
+      "note": ""
     },
     {
       "platform": "OpenRouter",
       "provider": "Switchpoint",
-      "model_count": 1
+      "model_count": 1,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": null,
+      "note": ""
+    },
+    {
+      "platform": "TrustedRouter",
+      "provider": "TrustedRouter",
+      "model_count": 0,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "EU",
+      "note": "EU-based, security-focused router — still being launched, not production-ready yet.",
+      "coming_soon": true
     }
   ]
 }

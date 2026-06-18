@@ -161,6 +161,9 @@ async function build() {
   const aws = await readJSON("aws-bedrock.json");
   const azure = await readJSON("azure-foundry.json");
   const vertex = await readJSON("google-vertex.json").catch(() => ({ models: [] }));
+  const nebius = await readJSON("nebius.json").catch(() => ({ models: [] }));
+  const inceptron = await readJSON("inceptron.json").catch(() => ({ models: [] }));
+  const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
   const copilot = await readJSON("github-copilot.json");
   const claude = await readJSON("claude-code.json");
 
@@ -273,6 +276,19 @@ async function build() {
     });
   }
 
+  // --- EU-native platforms: Nebius & Inceptron ---
+  for (const [plat, src] of [["Nebius", nebius], ["Inceptron", inceptron]]) {
+    for (const m of src.models || []) {
+      const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
+      const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
+      fam.offers.push({
+        source: plat, provider: plat, platform: plat,
+        input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
+        region: m.region || "eu", unit: "per_1m_token", notes: m.notes || "",
+      });
+    }
+  }
+
   // --- Anthropic direct / Claude Code (token list price) ---
   for (const m of claude.models || []) {
     const { familyKey } = normalizeFamily(m.model_name, "Anthropic");
@@ -360,7 +376,21 @@ async function build() {
       providerStats.get(k).model_count.add(r.family_key);
     }
   }
-  const providers = [...providerStats.values()].map((p) => ({ platform: p.platform, provider: p.provider, model_count: p.model_count.size })).sort((a, b) => b.model_count - a.model_count);
+  const pmeta = providerMeta.providers || {};
+  const metaFor = (name) => pmeta[name] || {};
+  const providers = [...providerStats.values()].map((p) => {
+    const m = metaFor(p.provider);
+    return {
+      platform: p.platform, provider: p.provider, model_count: p.model_count.size,
+      eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, country: m.country || null, note: m.note || "",
+    };
+  }).sort((a, b) => b.model_count - a.model_count);
+  // Surface providers from the metadata that have no priced offers yet (e.g. TrustedRouter, still launching).
+  for (const [name, m] of Object.entries(pmeta)) {
+    if (!m.coming_soon) continue;
+    if (providers.some((p) => p.provider === name)) continue;
+    providers.push({ platform: name, provider: name, model_count: 0, eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, country: m.country || null, note: m.note || "", coming_soon: true });
+  }
 
   const dataset = {
     generated_at: new Date().toISOString(),
@@ -369,7 +399,8 @@ async function build() {
     sources: {
       openrouter: or.collected_at, artificialanalysis: aa.collected_at, designarena: da.collected_at,
       aws_bedrock: aws.collected_at, azure_foundry: azure.collected_at,
-      google_vertex: vertex.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
+      google_vertex: vertex.collected_at, nebius: nebius.collected_at, inceptron: inceptron.collected_at,
+      github_copilot: copilot.collected_at, claude_code: claude.collected_at,
     },
     models: modelRows,
     providers,

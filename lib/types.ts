@@ -65,7 +65,10 @@ export interface Dataset {
   counts: { models: number; families: number; providers: number; offers: number };
   sources: Record<string, string>;
   models: ModelRow[];
-  providers: { platform: string; provider: string; model_count: number }[];
+  providers: {
+    platform: string; provider: string; model_count: number;
+    eu_hosted?: boolean; non_us?: boolean; country?: string | null; note?: string; coming_soon?: boolean;
+  }[];
 }
 
 export type ScoreKey =

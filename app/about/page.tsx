@@ -21,6 +21,7 @@ export default async function AboutPage() {
         <li><b>AWS Bedrock</b> — on-demand token pricing, European regions (eu-central-1 where available).</li>
         <li><b>Azure AI Foundry</b> — token pricing for EU deployments (Sweden Central / West Europe).</li>
         <li><b>Google Vertex AI</b> — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); EU region (europe-west4).</li>
+        <li><b>Nebius</b> (Netherlands) &amp; <b>Inceptron</b> (Sweden) — EU-hosted serverless APIs that carry the SOTA open coding models (GLM, Kimi, DeepSeek V4, MiniMax). See the <a href="/eu" className="text-accent">EU &amp; Sovereign</a> tab.</li>
         <li><b>GitHub Copilot</b> — premium-request multipliers (commercial, June 2026+). Priced per request, shown separately.</li>
         <li><b>Anthropic / Claude Code</b> — list token pricing for Opus 4.6/4.7/4.8, Sonnet 4.6, Fable 5.</li>
       </ul>
