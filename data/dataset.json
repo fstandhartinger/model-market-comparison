@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-18T14:08:26.780Z",
+  "generated_at": "2026-06-18T15:37:08.634Z",
   "counts": {
     "models": 703,
     "families": 574,
@@ -13192,7 +13192,7 @@
       "release_date": "2026-06-16",
       "benchmarks": {
         "aa_intelligence_index": 50.7,
-        "aa_coding_index": null,
+        "aa_coding_index": 67,
         "aa_math_index": null,
         "aa_livecodebench": null,
         "aa_scicode": 0.505,
@@ -13323,7 +13323,6 @@
       ],
       "designarena": {},
       "copilot": null,
-      "benchmark_override_note": "AA's API reported a Coding Index of 67 (2026-06-18) — higher than GPT-5.5 (58.5) and Opus 4.8 (56.7) — but GLM 5.2's individual coding sub-benchmarks are all BELOW those models (SciCode 0.505 vs 0.559/0.535; Terminal-Bench-Hard 0.508 vs 0.598/0.583; Terminal-Bench v2.1 0.753 vs 0.794/0.846). The composite is internally inconsistent (likely an incomplete/erroneous eval), so we withhold it until AA corrects the source. Remove this override once AA's value is consistent with the sub-benchmarks.",
       "featured": true,
       "has_benchmark": true,
       "has_pricing": true
