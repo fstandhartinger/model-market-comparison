@@ -63,7 +63,8 @@ function normalizeFamily(rawName, orgHint) {
   x = x
     .replace(/^claude-/, "claude-")
     .replace(/^gpt-?/, "gpt-")
-    .replace(/kimi-k2(\d)/, "kimi-k2.$1");
+    .replace(/kimi-k2(\d)/, "kimi-k2.$1")
+    .replace(/^minimax-(\d)/, "minimax-m$1"); // "MiniMax 2.7" → minimax-m2.7
   // collapse trailing version separators
   x = x.replace(/\.$/, "");
   const familyKey = canonFamily(x || rawName.toLowerCase());

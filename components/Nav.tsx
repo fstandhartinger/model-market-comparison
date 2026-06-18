@@ -7,7 +7,7 @@ const LINKS = [
   ["/compare", "Compare"],
   ["/scatter", "Cost vs Capability"],
   ["/charts", "Charts"],
-  ["/providers", "Providers"],
+  ["/providers", "Providers per Model"],
   ["/about", "About"],
 ];
 

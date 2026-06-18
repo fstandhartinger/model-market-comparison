@@ -12,7 +12,7 @@ export default async function ProvidersPage() {
 
   return (
     <div>
-      <h1 className="text-2xl font-bold">Providers &amp; price ranking</h1>
+      <h1 className="text-2xl font-bold">Providers per Model</h1>
       <p className="mt-1 mb-5 max-w-3xl text-sm text-gray-400">
         Every inference provider and pricing platform tracked, ranked by how cheap they are.
         Rank either by a provider&apos;s average price position across all the models it offers

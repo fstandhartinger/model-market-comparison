@@ -1,8 +1,8 @@
 {
   "source": "Azure AI Foundry",
-  "region": "swedencentral / westeurope unless noted (Global-deployment list price; identical across EU regions)",
-  "collected_at": "2026-06-15",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices)",
+  "region": "swedencentral",
+  "collected_at": "2026-06-17",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across EU regions; Global tier list price unless noted",
   "models": [
     {
       "model_name": "GPT-5",
@@ -10,7 +10,15 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
       "region": "swedencentral",
-      "notes": "Global deployment; DataZone EU input/output 1.375/11.0"
+      "notes": "Global; DataZone EU in/out 1.375/11.0"
+    },
+    {
+      "model_name": "GPT-5 Chat",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 10.0,
+      "region": "swedencentral",
+      "notes": "Global (chat-tuned)"
     },
     {
       "model_name": "GPT-5 Mini",
@@ -18,7 +26,7 @@
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 2.0,
       "region": "swedencentral",
-      "notes": "Global; DataZone EU 0.275/2.2"
+      "notes": "Global; DataZone EU in/out 0.275/2.2"
     },
     {
       "model_name": "GPT-5 Nano",
@@ -26,15 +34,39 @@
       "input_per_1m_usd": 0.05,
       "output_per_1m_usd": 0.4,
       "region": "swedencentral",
-      "notes": "Global; smallest GPT-5"
+      "notes": "Global; DataZone EU in/out 0.055/0.44"
+    },
+    {
+      "model_name": "GPT-5 Pro",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 15.0,
+      "output_per_1m_usd": 120.0,
+      "region": "swedencentral",
+      "notes": "Global; reasoning pro tier"
+    },
+    {
+      "model_name": "GPT-5 Codex",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 10.0,
+      "region": "swedencentral",
+      "notes": "Global; coding"
     },
     {
       "model_name": "GPT-5.1",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 2.5,
-      "output_per_1m_usd": 20.0,
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 10.0,
       "region": "swedencentral",
-      "notes": "Global standard tier"
+      "notes": "Global; DataZone EU in/out 1.375/11.0"
+    },
+    {
+      "model_name": "GPT-5.1 Chat",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 10.0,
+      "region": "swedencentral",
+      "notes": "Global"
     },
     {
       "model_name": "GPT-5.1 Codex",
@@ -42,15 +74,55 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
       "region": "swedencentral",
-      "notes": "Global; coding-optimized"
+      "notes": "Global; coding"
+    },
+    {
+      "model_name": "GPT-5.1 Codex Mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 2.0,
+      "region": "swedencentral",
+      "notes": "Global; coding"
+    },
+    {
+      "model_name": "GPT-5.1 Codex Max",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 10.0,
+      "region": "swedencentral",
+      "notes": "Global; coding"
     },
     {
       "model_name": "GPT-5.2",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 3.5,
-      "output_per_1m_usd": 28.0,
+      "input_per_1m_usd": 1.75,
+      "output_per_1m_usd": 14.0,
       "region": "swedencentral",
-      "notes": "Global standard tier"
+      "notes": "Global; DataZone EU in/out 1.925/15.4"
+    },
+    {
+      "model_name": "GPT-5.2 Chat",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.75,
+      "output_per_1m_usd": 14.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-5.2 Codex",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.75,
+      "output_per_1m_usd": 14.0,
+      "region": "swedencentral",
+      "notes": "Global; coding"
+    },
+    {
+      "model_name": "GPT-5.2 Pro",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 21.0,
+      "output_per_1m_usd": 168.0,
+      "region": "swedencentral",
+      "notes": "Global; reasoning pro tier"
     },
     {
       "model_name": "GPT-5.3 Chat",
@@ -61,12 +133,20 @@
       "notes": "Global"
     },
     {
+      "model_name": "GPT-5.3 Codex",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.75,
+      "output_per_1m_usd": 14.0,
+      "region": "swedencentral",
+      "notes": "Global; coding"
+    },
+    {
       "model_name": "GPT-5.4",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.5,
       "output_per_1m_usd": 15.0,
       "region": "swedencentral",
-      "notes": "Global; DataZone EU 2.75/16.5"
+      "notes": "Global; DataZone EU in/out 2.75/16.5"
     },
     {
       "model_name": "GPT-5.4 Mini",
@@ -85,12 +165,20 @@
       "notes": "Global"
     },
     {
+      "model_name": "GPT-5.4 Pro",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 30.0,
+      "output_per_1m_usd": 180.0,
+      "region": "swedencentral",
+      "notes": "Global; reasoning pro tier"
+    },
+    {
       "model_name": "GPT-5.5 (short context)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 5.0,
       "output_per_1m_usd": 30.0,
       "region": "swedencentral",
-      "notes": "Global; default short-context tier; LongCo EU 11.0/49.5"
+      "notes": "Global; default short-context tier"
     },
     {
       "model_name": "GPT-5.5 (long context)",
@@ -101,12 +189,148 @@
       "notes": "Global; long-context tier"
     },
     {
+      "model_name": "GPT-5 chat-latest",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 30.0,
+      "region": "swedencentral",
+      "notes": "Global; rolling chat-latest (2026-05-28)"
+    },
+    {
+      "model_name": "o4-mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.1,
+      "output_per_1m_usd": 4.4,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "codex-mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.5,
+      "output_per_1m_usd": 6.0,
+      "region": "swedencentral",
+      "notes": "Global; coding"
+    },
+    {
+      "model_name": "o3-deep-research",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 10.0,
+      "output_per_1m_usd": 40.0,
+      "region": "swedencentral",
+      "notes": "Global; deep research"
+    },
+    {
+      "model_name": "o3",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 2.0,
+      "output_per_1m_usd": 8.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "o3-pro",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 20.0,
+      "output_per_1m_usd": 80.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "o3-mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.1,
+      "output_per_1m_usd": 4.4,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "o1",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 15.0,
+      "output_per_1m_usd": 60.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "o1-mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.1,
+      "output_per_1m_usd": 4.4,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "o1-pro",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 150.0,
+      "output_per_1m_usd": 600.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-4.1",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 2.0,
+      "output_per_1m_usd": 8.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-4.1 Mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.4,
+      "output_per_1m_usd": 1.6,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-4.1 Nano",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.1,
+      "output_per_1m_usd": 0.4,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-4.5",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 75.0,
+      "output_per_1m_usd": 150.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-4o (2024-11-20)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 2.5,
+      "output_per_1m_usd": 10.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "GPT-4o mini",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 0.6,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "gpt-oss-120B",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 0.6,
+      "region": "swedencentral",
+      "notes": "Global; open-weight"
+    },
+    {
       "model_name": "DeepSeek-V4 Pro",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.74,
       "output_per_1m_usd": 3.48,
       "region": "swedencentral",
-      "notes": "Global; DataZone EU available"
+      "notes": "Global"
     },
     {
       "model_name": "DeepSeek-V4 Flash",
@@ -117,12 +341,116 @@
       "notes": "Global"
     },
     {
+      "model_name": "DeepSeek-V3.2",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.58,
+      "output_per_1m_usd": 1.68,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "DeepSeek-V3.1",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1.23,
+      "output_per_1m_usd": 4.94,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "DeepSeek-V3-0324",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1.14,
+      "output_per_1m_usd": 4.56,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "DeepSeek-V3",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1.14,
+      "output_per_1m_usd": 4.56,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
       "model_name": "DeepSeek-R1",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.35,
       "output_per_1m_usd": 5.4,
       "region": "swedencentral",
       "notes": "Global; reasoning"
+    },
+    {
+      "model_name": "MAI-DS-R1",
+      "provider_org": "Microsoft",
+      "input_per_1m_usd": 1.35,
+      "output_per_1m_usd": 5.4,
+      "region": "swedencentral",
+      "notes": "Global; MS-tuned DeepSeek-R1"
+    },
+    {
+      "model_name": "Grok 4.3",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 2.5,
+      "region": "swedencentral",
+      "notes": "Global; DataZone EU in/out 1.375/2.75"
+    },
+    {
+      "model_name": "Grok 4.2",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 2.5,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "Grok 4.1",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.5,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "Grok 4",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 3.0,
+      "output_per_1m_usd": 15.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "Grok 4 Fast",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.5,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "Grok 3",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 3.0,
+      "output_per_1m_usd": 15.0,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "Grok 3 Mini",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 1.27,
+      "region": "swedencentral",
+      "notes": "Global"
+    },
+    {
+      "model_name": "Grok Code Fast 1",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 1.5,
+      "region": "swedencentral",
+      "notes": "Global; coding"
     },
     {
       "model_name": "Llama 3.3 70B",
@@ -142,7 +470,7 @@
     },
     {
       "model_name": "Mistral Large 3",
-      "provider_org": "Mistral",
+      "provider_org": "Mistral AI",
       "input_per_1m_usd": 0.5,
       "output_per_1m_usd": 1.5,
       "region": "swedencentral",
@@ -150,35 +478,19 @@
     },
     {
       "model_name": "Mistral Medium 3.5",
-      "provider_org": "Mistral",
+      "provider_org": "Mistral AI",
       "input_per_1m_usd": 1.5,
       "output_per_1m_usd": 7.5,
       "region": "swedencentral",
       "notes": "Global"
     },
     {
-      "model_name": "Grok 4.3",
-      "provider_org": "xAI",
-      "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 2.5,
+      "model_name": "Codestral",
+      "provider_org": "Mistral AI",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 0.9,
       "region": "swedencentral",
-      "notes": "Global"
-    },
-    {
-      "model_name": "Grok 4 Fast",
-      "provider_org": "xAI",
-      "input_per_1m_usd": 0.2,
-      "output_per_1m_usd": 0.5,
-      "region": "swedencentral",
-      "notes": "Global"
-    },
-    {
-      "model_name": "gpt-oss-120B",
-      "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.6,
-      "region": "swedencentral",
-      "notes": "Global; open-weight"
+      "notes": "Global; coding"
     },
     {
       "model_name": "Cohere Command A",
@@ -194,7 +506,23 @@
       "input_per_1m_usd": 0.125,
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
-      "notes": "swedencentral; small model"
+      "notes": "Regional (swedencentral); no Global tier"
+    },
+    {
+      "model_name": "Phi-4 Mini",
+      "provider_org": "Microsoft",
+      "input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 0.3,
+      "region": "swedencentral",
+      "notes": "Regional (swedencentral)"
+    },
+    {
+      "model_name": "Phi-4 Reasoning",
+      "provider_org": "Microsoft",
+      "input_per_1m_usd": 0.125,
+      "output_per_1m_usd": 0.5,
+      "region": "swedencentral",
+      "notes": "Regional (swedencentral); reasoning"
     },
     {
       "model_name": "Phi-4 Reasoning Plus",
@@ -202,7 +530,79 @@
       "input_per_1m_usd": 0.125,
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
-      "notes": "swedencentral; reasoning"
+      "notes": "Regional (swedencentral); reasoning"
+    },
+    {
+      "model_name": "Phi-4 Mini Reasoning",
+      "provider_org": "Microsoft",
+      "input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 0.3,
+      "region": "swedencentral",
+      "notes": "Regional (swedencentral); reasoning"
+    },
+    {
+      "model_name": "Kimi K2.5",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.66,
+      "output_per_1m_usd": 3.3,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+    },
+    {
+      "model_name": "Kimi K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 1.045,
+      "output_per_1m_usd": 4.4,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+    },
+    {
+      "model_name": "GLM 5",
+      "provider_org": "Zhipu AI",
+      "input_per_1m_usd": 1.1,
+      "output_per_1m_usd": 3.52,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+    },
+    {
+      "model_name": "GLM 5.1",
+      "provider_org": "Zhipu AI",
+      "input_per_1m_usd": 1.54,
+      "output_per_1m_usd": 4.84,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+    },
+    {
+      "model_name": "MiniMax M2.5",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.33,
+      "output_per_1m_usd": 1.32,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+    },
+    {
+      "model_name": "MiniMax 2.7",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.33,
+      "output_per_1m_usd": 1.32,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+    },
+    {
+      "model_name": "DeepSeek-V4 Pro (Fireworks)",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1.925,
+      "output_per_1m_usd": 3.828,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
+    },
+    {
+      "model_name": "DeepSeek-V3.2 (Fireworks)",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.62,
+      "output_per_1m_usd": 1.85,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted alt of DeepSeek V3.2; DataZone EU tier"
     }
   ]
 }

@@ -1,7 +1,7 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-06-17
-**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`)
+**Collected:** 2026-06-17 (refreshed)
+**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 41 models
 
 ## Sources
 
@@ -11,70 +11,84 @@ Primary (authoritative), the official Vertex AI / "Agent Platform" pricing page:
   (redirects to `cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing`)
 
 This single page contains both Google's Gemini pricing and the **Partner models**
-section (Anthropic Claude, Meta Llama, Mistral, DeepSeek, Qwen). The partner tables
-are rendered client-side, so a plain HTTP fetch returns only the Gemini section — the
-page was loaded in a **headless browser (Playwright)** and the rendered text scraped to
-read the partner tables.
+section (Anthropic Claude, xAI Grok, DeepSeek, MiniMax, Moonshot/Kimi, GLM, Qwen,
+OpenAI gpt-oss, Meta Llama, Mistral). The partner tables and the per-region Claude
+tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
+section — the page was loaded in a **headless browser (`agent-browser`)** and
+`document.body.innerText` scraped to read the partner tables.
 
-Supporting / cross-reference (not used for final numbers):
-- https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/claude (model list only)
-- https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/mistral (model list only)
-- https://cloud.google.com/vertex-ai/generative-ai/docs/partner-models/llama (model list only)
-- Anthropic's own list prices (via the `claude-api` skill catalog) confirm Claude-on-Vertex
-  mirrors Anthropic list pricing exactly (Fable 5 $10/$50, Opus 4.x $5/$25, Sonnet 4.x $3/$15,
-  Haiku 4.5 $1/$5).
+## What changed since the prior snapshot (was 29 models, now 41)
 
-## Region assumption (europe-west4)
+NEW partner makers/models now present on Vertex Model Garden:
+- **xAI Grok** (entirely new section): Grok 4.3, Grok 4.20 Reasoning/Non-Reasoning,
+  Grok 4.1 Fast Reasoning/Non-Reasoning.
+- **MiniMax-M2** — now has a usable per-token row (previously only a header).
+- **Moonshot Kimi-K2-Thinking** — new "Moonshot's models" section.
+- **GLM** (Zhipu) — new section: GLM-5 and GLM-4.7.
+- **OpenAI gpt-oss-120b / gpt-oss-20b** — new open-weight rows.
+- **Gemini 2.0 Flash** added.
+- DeepSeek-OCR appeared too (omitted — priced per page, not a general LLM).
 
-Vertex AI generative-AI token pricing is largely region-independent:
+So **Kimi, GLM, and MiniMax ARE now on Vertex** (they were not before). **MiMo is
+NOT** present. (For the record: Kimi=Moonshot, GLM=Zhipu, MiniMax=MiniMax.)
 
-- **Partner models** (Claude, Llama, Mistral, DeepSeek, Qwen) are priced **per token with no
-  regional differentiation** on the pricing page — Claude is listed under "Global" / "US
-  Multi-Region (us)" with identical rates, and the open-model tables show a single global rate.
-  These rows are tagged `"region": "global"` in the JSON; the EU price equals the listed price.
-- **Gemini** pricing is per-token and global for the 2.x family. The **Gemini 3.x family** has a
-  small **non-global surcharge**: Gemini 3.5 Flash is $1.50/$9.00 (Global) vs **$1.65/$9.90
-  (Non-global)**, and Gemini 3.1 Flash-Lite is $0.25/$1.50 (Global) vs **$0.275/$1.65
-  (Non-global)**. Since the task targets EU regions (europe-west4), the JSON uses the
-  **non-global** numbers for those two models (tagged `"region": "europe-west4"`) and notes the
-  Global figure. **Caveat:** Google states non-global pricing for GA Gemini 3+ takes effect
-  **2026-07-01**; before that date Global pricing applies even to europe-west4. Gemini 3.1 Pro and
-  Gemini 3 Flash show no non-global surcharge and are tagged `"region": "global"`.
+## Region handling (europe-west4 target)
+
+- **Open partner models** (DeepSeek, MiniMax, Kimi, GLM, Qwen, gpt-oss, Llama,
+  Mistral, Grok) are priced **per token with no regional differentiation** — single
+  global rate. Tagged `"region": "global"`; the EU price equals the listed price.
+- **Anthropic Claude** DOES have per-region pricing now (a region selector:
+  Global / US Multi-Region / EU Multi-Region (eu) / us-east5 / europe-west1 /
+  asia-southeast1 / asia-east1). **There is no europe-west4 tab.** The EU regions
+  carry a **~10% surcharge** over Global. Crucially, the two EU regions list
+  **different model subsets**:
+  - **EU Multi-Region (eu)**: only Fable 5 ($11/$55), Opus 4.8 ($5.50/$27.50),
+    Opus 4.7 ($5.50/$27.50).
+  - **europe-west1**: Opus 4.6 & 4.5 ($5.50/$27.50), Sonnet 4.6 & 4.5
+    ($3.30/$16.50), Haiku 4.5 ($1.10/$5.50).
+  The JSON records each Claude model at its EU rate, tagging `region` as `eu` or
+  `europe-west1` accordingly (with the Global rate noted). Claude Opus 4.1 has
+  uniform pricing across all regions → `global`.
+- **Gemini** 2.x family is global. The **Gemini 3+ family** has a **non-global
+  surcharge** (Gemini 3.5 Flash $1.50/$9.00 Global vs **$1.65/$9.90 Non-global**;
+  Gemini 3.1 Flash-Lite $0.25/$1.50 vs **$0.275/$1.65**). Those two use the
+  non-global numbers tagged `europe-west4`. **Caveat:** Google states non-global
+  pricing for GA Gemini 3+ takes effect **2026-07-01**; before that date Global
+  pricing applies even to europe-west4. Gemini 3.1 Pro and Gemini 3 Flash show no
+  non-global surcharge → `global`.
 
 ## Gemini context-tier caveat
 
-Gemini Pro models are tiered by input context length:
-- **Gemini 3.1 Pro:** $2 / $12 for ≤200K input tokens; **$4 / $18 for >200K**.
-- **Gemini 2.5 Pro:** $1.25 / $10 for ≤200K; **$2.50 / $15 for >200K**.
-
-The JSON records the **standard ≤200K base tier** (the larger >200K tier is noted in each
-model's `notes`). Flash / Flash-Lite tiers are flat across context length.
-
-## Claude-on-Vertex note
-
-Claude models are Model Garden **partner models** offered as managed APIs. Their Vertex
-per-1M prices **mirror Anthropic's own list prices** exactly. Vertex charges all tokens
-(input + output) at long-context rates once a query's input context ≥ 200K tokens; the base
-(<200K) rate is recorded. `region` is set to `global` because Claude on Vertex is offered
-through Global / US-multi-region endpoints with no separate EU token price on the pricing page.
+Gemini Pro models are tiered by input context length (the JSON records the **base
+≤200K tier**; the >200K tier is noted per-model):
+- **Gemini 3.1 Pro:** $2/$12 for ≤200K; $4/$18 for >200K.
+- **Gemini 2.5 Pro:** $1.25/$10 for ≤200K; $2.50/$15 for >200K.
+Flash / Flash-Lite tiers are flat across context length. Grok also has a >200K
+tier ($2.50/$5.00) noted in its rows.
 
 ## Notes / omissions
 
-- **Multimodal sub-rates** (audio/image/video input, image output) are not separate rows —
-  for Gemini Flash models the text/image/video input rate is used and the audio rate noted.
-- **Batch / cache-hit / priority** prices are omitted (only on-demand standard pay-go captured).
-- **Deprecated Claude** rows older than Opus 4.1 (Opus 4, Sonnet 4, Claude 3.x) and Mistral OCR
-  (priced per page, not per useful token) were omitted to keep the set to current/comparable
-  pay-go LLMs. MiniMax appeared as a partner header but no usable per-token row was rendered, so
-  it was omitted.
-- No model that is **self-deploy/throughput-only** (no MaaS pay-go rate) was included.
+- **Multimodal sub-rates** (audio/image/video input, image output) are not separate
+  rows — text input rate used; audio noted.
+- **Batch / cache-hit / priority / cache-write** prices omitted (only on-demand
+  standard pay-go captured; some cache-hit values noted).
+- **Deprecated Claude** rows (Opus 4, Sonnet 4, Claude 3.x) omitted.
+- **DeepSeek-OCR** and **Mistral OCR** omitted (per-page pricing, not general LLMs).
+- **Gemini image/video-only** models (3 Pro Image, 3.1 Flash Image, 2.5 Flash
+  Image, Deep Research Agent, Live API) omitted — not text-LLM pay-go rows.
 
 ## How to refresh
 
-1. Open https://cloud.google.com/vertex-ai/generative-ai/pricing in a headless browser
-   (Playwright) — a plain fetch misses the JS-rendered partner tables.
-2. Scrape `document.body.innerText` and grep for the partner section ("Anthropic's Claude
-   models", "Meta's Llama models", "Mistral AI's models", "Deepseek's models", "Qwen's models")
-   and the Gemini 3 / 2.5 tables.
-3. Update the standard ≤200K base-tier input/output numbers. Re-check the non-global Gemini 3+
-   surcharge and whether it has gone into effect (2026-07-01 cutover).
+1. `agent-browser close` then
+   `agent-browser open https://cloud.google.com/vertex-ai/generative-ai/pricing`
+   (a plain fetch misses the JS-rendered partner + per-region Claude tables).
+2. `agent-browser eval 'document.body.innerText' > /tmp/vertex.txt`, un-escape
+   `\n`/`\t`, then grep the Gemini 3 / 2.5 tables and each partner header
+   (Anthropic, xAI, Deepseek, MiniMax, Moonshot, Qwen, GLM, OpenAI, Meta's Llama,
+   Mistral AI).
+3. For Claude EU rates: click the region selector links `EU Multi-Region (eu)`
+   and `europe-west1` (in the "More" dropdown) and re-dump innerText each time —
+   the two EU regions list different model subsets.
+4. Update the standard ≤200K base-tier input/output numbers. Re-check the
+   non-global Gemini 3+ surcharge and whether it has gone into effect
+   (2026-07-01 cutover) and the Claude EU surcharge (~10%).

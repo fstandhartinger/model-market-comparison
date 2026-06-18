@@ -1,14 +1,30 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-06-15",
-  "method": "price list bulk api (EU regions) + pricing page for Anthropic/Cohere/Titan gaps",
+  "collected_at": "2026-06-17",
+  "method": "AWS Price List bulk API (EU region indexes, version 20260616180421) for per-token on-demand; pricing page + web search for Anthropic Claude / Cohere / Titan gaps not in EU bulk data.",
   "models": [
     {
       "model_name": "Nova 2.0 Lite",
       "provider_org": "Amazon",
       "input_per_1m_usd": 0.195,
       "output_per_1m_usd": 1.635,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
+      "model_name": "Nova 2.0 Omni",
+      "provider_org": "Amazon",
+      "input_per_1m_usd": 0.4,
+      "output_per_1m_usd": 3.3,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
+      "model_name": "Nova 2.0 Pro",
+      "provider_org": "Amazon",
+      "input_per_1m_usd": 0.815,
+      "output_per_1m_usd": 6.54,
       "region": "eu-central-1",
       "notes": ""
     },
@@ -45,7 +61,7 @@
       "notes": ""
     },
     {
-      "model_name": "DeepSeek v3.2",
+      "model_name": "DeepSeek V3.2",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.74,
       "output_per_1m_usd": 2.22,
@@ -77,6 +93,30 @@
       "notes": ""
     },
     {
+      "model_name": "Gemma 4 26B A4B",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.156,
+      "output_per_1m_usd": 0.48,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
+      "model_name": "Gemma 4 31B",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.168,
+      "output_per_1m_usd": 0.48,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
+      "model_name": "Gemma 4 E2B",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.048,
+      "output_per_1m_usd": 0.096,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
       "model_name": "Llama 3.2 1B",
       "provider_org": "Meta",
       "input_per_1m_usd": 0.13,
@@ -93,6 +133,22 @@
       "notes": ""
     },
     {
+      "model_name": "MiniMax M2",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.36,
+      "output_per_1m_usd": 1.44,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
+      "model_name": "MiniMax M2.1",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.36,
+      "output_per_1m_usd": 1.44,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
       "model_name": "MiniMax M2.5",
       "provider_org": "MiniMax",
       "input_per_1m_usd": 0.36,
@@ -101,18 +157,10 @@
       "notes": ""
     },
     {
-      "model_name": "Minimax M2",
-      "provider_org": "MiniMax",
-      "input_per_1m_usd": 0.36,
-      "output_per_1m_usd": 1.44,
-      "region": "eu-central-1",
-      "notes": ""
-    },
-    {
-      "model_name": "Minimax M2.1",
-      "provider_org": "MiniMax",
-      "input_per_1m_usd": 0.36,
-      "output_per_1m_usd": 1.44,
+      "model_name": "Devstral",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.48,
+      "output_per_1m_usd": 2.4,
       "region": "eu-central-1",
       "notes": ""
     },
@@ -177,14 +225,6 @@
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.12,
       "output_per_1m_usd": 0.36,
-      "region": "eu-central-1",
-      "notes": ""
-    },
-    {
-      "model_name": "Devstral",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.48,
-      "output_per_1m_usd": 2.4,
       "region": "eu-central-1",
       "notes": ""
     },
@@ -357,36 +397,12 @@
       "notes": ""
     },
     {
-      "model_name": "Mistral 7B",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.16,
-      "output_per_1m_usd": 0.22,
-      "region": "eu-west-1",
-      "notes": "not in eu-central-1; eu-west-1 (Ireland) price"
-    },
-    {
-      "model_name": "Mistral Large",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 4.3,
-      "output_per_1m_usd": 13.0,
-      "region": "eu-west-1",
-      "notes": "not in eu-central-1; eu-west-1 (Ireland) price"
-    },
-    {
-      "model_name": "Mixtral 8x7B",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.49,
-      "output_per_1m_usd": 0.76,
-      "region": "eu-west-1",
-      "notes": "not in eu-central-1; eu-west-1 (Ireland) price"
-    },
-    {
       "model_name": "Llama 3 70B",
       "provider_org": "Meta",
       "input_per_1m_usd": 3.45,
       "output_per_1m_usd": 4.55,
       "region": "eu-west-2",
-      "notes": "not in eu-central-1; eu-west-2 (London) price"
+      "notes": "not in eu-central-1; eu-west-2 price"
     },
     {
       "model_name": "Llama 3 8B",
@@ -394,7 +410,31 @@
       "input_per_1m_usd": 0.39,
       "output_per_1m_usd": 0.78,
       "region": "eu-west-2",
-      "notes": "not in eu-central-1; eu-west-2 (London) price"
+      "notes": "not in eu-central-1; eu-west-2 price"
+    },
+    {
+      "model_name": "Mistral 7B",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.26,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
+    },
+    {
+      "model_name": "Mistral Large",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 5.2,
+      "output_per_1m_usd": 15.6,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
+    },
+    {
+      "model_name": "Mixtral 8x7B",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.59,
+      "output_per_1m_usd": 0.91,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
     },
     {
       "model_name": "Claude Opus 4.6",
@@ -402,7 +442,7 @@
       "input_per_1m_usd": 5.0,
       "output_per_1m_usd": 25.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*). Latest Anthropic Opus on Bedrock; 4.7/4.8 not yet on Bedrock."
     },
     {
       "model_name": "Claude Sonnet 4.6",
@@ -410,7 +450,7 @@
       "input_per_1m_usd": 3.0,
       "output_per_1m_usd": 15.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
     },
     {
       "model_name": "Claude Haiku 4.5",
@@ -418,7 +458,7 @@
       "input_per_1m_usd": 1.0,
       "output_per_1m_usd": 5.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
     },
     {
       "model_name": "Cohere Command",

@@ -1,17 +1,17 @@
 {
-  "generated_at": "2026-06-17T18:20:55.340Z",
+  "generated_at": "2026-06-18T07:39:48.770Z",
   "counts": {
-    "models": 689,
-    "families": 560,
+    "models": 692,
+    "families": 563,
     "providers": 76,
-    "offers": 1527
+    "offers": 1637
   },
   "sources": {
     "openrouter": "2026-06-17",
     "artificialanalysis": "2026-06-17",
     "designarena": "2026-06-17",
-    "aws_bedrock": "2026-06-15",
-    "azure_foundry": "2026-06-15",
+    "aws_bedrock": "2026-06-17",
+    "azure_foundry": "2026-06-17",
     "google_vertex": "2026-06-17",
     "github_copilot": "2026-06-15",
     "claude_code": "2026-06-15"
@@ -275,6 +275,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global; open-weight"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.09,
+          "output_per_1m": 0.36,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (open-weight). Batch is half price."
         }
       ],
       "designarena": {},
@@ -541,6 +551,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global; open-weight"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.09,
+          "output_per_1m": 0.36,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (open-weight). Batch is half price."
         }
       ],
       "designarena": {},
@@ -620,7 +640,7 @@
           "output_per_1m": 30,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; default short-context tier; LongCo EU 11.0/49.5"
+          "notes": "Global; default short-context tier"
         },
         {
           "source": "Azure AI Foundry",
@@ -849,6 +869,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.07,
+          "output_per_1m": 0.25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (open-weight). Cache hit $0.007/1M."
         }
       ],
       "designarena": {},
@@ -1123,6 +1153,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.07,
+          "output_per_1m": 0.25,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (open-weight). Cache hit $0.007/1M."
         }
       ],
       "designarena": {},
@@ -1238,7 +1278,7 @@
           "output_per_1m": 30,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; default short-context tier; LongCo EU 11.0/49.5"
+          "notes": "Global; default short-context tier"
         },
         {
           "source": "Azure AI Foundry",
@@ -1345,7 +1385,7 @@
           "output_per_1m": 30,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; default short-context tier; LongCo EU 11.0/49.5"
+          "notes": "Global; default short-context tier"
         },
         {
           "source": "Azure AI Foundry",
@@ -1563,6 +1603,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o3",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 2,
+          "output_per_1m": 8,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -1715,7 +1765,7 @@
           "output_per_1m": 30,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; default short-context tier; LongCo EU 11.0/49.5"
+          "notes": "Global; default short-context tier"
         },
         {
           "source": "Azure AI Foundry",
@@ -1891,7 +1941,7 @@
           "output_per_1m": 30,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; default short-context tier; LongCo EU 11.0/49.5"
+          "notes": "Global; default short-context tier"
         },
         {
           "source": "Azure AI Foundry",
@@ -2130,6 +2180,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.3-codex",
           "status": -2
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
         }
       ],
       "designarena": {
@@ -2346,7 +2406,7 @@
           "output_per_1m": 0.72,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)."
         }
       ],
       "designarena": {},
@@ -2545,7 +2605,7 @@
           "output_per_1m": 0.7,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)."
         }
       ],
       "designarena": {},
@@ -2636,7 +2696,7 @@
           "output_per_1m": 1.15,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)."
         }
       ],
       "designarena": {},
@@ -2710,12 +2770,23 @@
         "output_tps": 34.401,
         "ttft_s": 1.004
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.168,
+          "output_per_1m": 0.48,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemini-3.5-flash::minimal",
@@ -2777,7 +2848,7 @@
           "output_per_1m": 9.9,
           "region": "europe-west4",
           "unit": "per_1m_token",
-          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global rates take effect 2026-07-01; before then Global applies"
+          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global GA Gemini 3+ rates take effect 2026-07-01; before then Global applies even to europe-west4. Text/image/video/audio input."
         }
       ],
       "designarena": {
@@ -2832,12 +2903,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.156,
+          "output_per_1m": 0.48,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemma-4-e2b::non-reasoning",
@@ -2868,12 +2950,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.048,
+          "output_per_1m": 0.096,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemma-4-26b-a4b::non-reasoning",
@@ -2904,12 +2997,23 @@
         "output_tps": 47.614,
         "ttft_s": 0.7
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.156,
+          "output_per_1m": 0.48,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemma-4-31b::non-reasoning",
@@ -2940,12 +3044,23 @@
         "output_tps": 51.203,
         "ttft_s": 0.886
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.168,
+          "output_per_1m": 0.48,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemma-4-12b::reasoning",
@@ -3084,12 +3199,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.048,
+          "output_per_1m": 0.096,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemini-3.1-pro::default",
@@ -3151,7 +3277,7 @@
           "output_per_1m": 12,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Preview. Standard tier, <=200K input tokens; >200K tier is $4 in / $18 out. Global pricing (same on non-global until 2026-07-01)"
+          "notes": "Preview. Standard tier, <=200K input tokens; >200K tier is $4 in / $18 out. No non-global surcharge shown; Global pricing applies."
         }
       ],
       "designarena": {
@@ -3273,7 +3399,7 @@
           "output_per_1m": 9.9,
           "region": "europe-west4",
           "unit": "per_1m_token",
-          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global rates take effect 2026-07-01; before then Global applies"
+          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global GA Gemini 3+ rates take effect 2026-07-01; before then Global applies even to europe-west4. Text/image/video/audio input."
         }
       ],
       "designarena": {
@@ -3452,7 +3578,7 @@
           "output_per_1m": 1.65,
           "region": "europe-west4",
           "unit": "per_1m_token",
-          "notes": "Non-global (EU) pricing; Global is $0.25 in / $1.50 out. Text/image/video input; audio input $0.55 (non-global)"
+          "notes": "Non-global (EU) pricing; Global is $0.25 in / $1.50 out. Non-global rates take effect 2026-07-01; before then Global applies. Text/image/video input; audio input $0.55 (non-global)."
         }
       ],
       "designarena": {},
@@ -3521,7 +3647,7 @@
           "output_per_1m": 9.9,
           "region": "europe-west4",
           "unit": "per_1m_token",
-          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global rates take effect 2026-07-01; before then Global applies"
+          "notes": "Non-global (EU) pricing; Global is $1.50 in / $9.00 out. Non-global GA Gemini 3+ rates take effect 2026-07-01; before then Global applies even to europe-west4. Text/image/video/audio input."
         }
       ],
       "designarena": {
@@ -3673,7 +3799,7 @@
           "output_per_1m": 10,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Standard tier, <=200K input tokens; >200K tier is $2.50 in / $15 out"
+          "notes": "Standard tier, <=200K input tokens; >200K tier is $2.50 in / $15 out. 2.x family is global (no EU surcharge)."
         }
       ],
       "designarena": {},
@@ -3811,11 +3937,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "region": "global",
+          "input_per_1m": 11,
+          "output_per_1m": 55,
+          "region": "eu",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model. Same per-1M as Anthropic list price"
+          "notes": "Model Garden partner model. EU Multi-Region (eu) rate (~10% surcharge vs Global $10/$50). Offered in EU Multi-Region; not in europe-west1. >=200K input billed at long-context rates."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -3998,17 +4124,17 @@
           "output_per_1m": 15,
           "region": "eu-central-1 (EU cross-region inference profile)",
           "unit": "per_1m_token",
-          "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+          "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
         },
         {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
+          "input_per_1m": 3.3,
+          "output_per_1m": 16.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $3/$15). Offered in europe-west1; not in EU Multi-Region (eu)."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4157,11 +4283,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "eu",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. EU Multi-Region (eu) rate (Global is $5/$25). Offered in EU Multi-Region; not in europe-west1."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4325,17 +4451,17 @@
           "output_per_1m": 15,
           "region": "eu-central-1 (EU cross-region inference profile)",
           "unit": "per_1m_token",
-          "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+          "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
         },
         {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
+          "input_per_1m": 3.3,
+          "output_per_1m": 16.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $3/$15). Offered in europe-west1; not in EU Multi-Region (eu)."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4484,11 +4610,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "eu",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. EU Multi-Region (eu) rate (Global is $5/$25). Offered in EU Multi-Region; not in europe-west1."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -4637,11 +4763,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "eu",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model. >=200K input tokens billed at long-context rates"
+          "notes": "Model Garden partner model. EU Multi-Region (eu) rate (Global is $5/$25). Offered in EU Multi-Region; not in europe-west1."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -5337,7 +5463,17 @@
           "output_per_1m": 3.48,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU available"
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.925,
+          "output_per_1m": 3.828,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
         }
       ],
       "designarena": {
@@ -5567,7 +5703,17 @@
           "output_per_1m": 3.48,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU available"
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.925,
+          "output_per_1m": 3.828,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
         }
       ],
       "designarena": {
@@ -5797,7 +5943,17 @@
           "output_per_1m": 3.48,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU available"
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.925,
+          "output_per_1m": 3.828,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted alt of DeepSeek V4 Pro; DataZone EU tier"
         }
       ],
       "designarena": {
@@ -6669,7 +6825,17 @@
           "output_per_1m": 2.5,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global"
+          "notes": "Global; DataZone EU in/out 1.375/2.75"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out. No EU regional differentiation listed."
         }
       ],
       "designarena": {
@@ -6740,7 +6906,17 @@
           "output_per_1m": 2.5,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global"
+          "notes": "Global; DataZone EU in/out 1.375/2.75"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out. No EU regional differentiation listed."
         }
       ],
       "designarena": {
@@ -6811,7 +6987,17 @@
           "output_per_1m": 2.5,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global"
+          "notes": "Global; DataZone EU in/out 1.375/2.75"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out. No EU regional differentiation listed."
         }
       ],
       "designarena": {
@@ -6882,7 +7068,17 @@
           "output_per_1m": 2.5,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global"
+          "notes": "Global; DataZone EU in/out 1.375/2.75"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out. No EU regional differentiation listed."
         }
       ],
       "designarena": {
@@ -6980,12 +7176,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.4,
+          "output_per_1m": 3.3,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "nova-2.0-pro::medium",
@@ -7016,12 +7223,23 @@
         "output_tps": 126.628,
         "ttft_s": 15.441
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.815,
+          "output_per_1m": 6.54,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "nova-2.0-lite::high",
@@ -7193,12 +7411,23 @@
         "output_tps": 131.467,
         "ttft_s": 5.664
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.815,
+          "output_per_1m": 6.54,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "nova-2.0-omni::non-reasoning",
@@ -7229,12 +7458,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.4,
+          "output_per_1m": 3.3,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "nova-premier::default",
@@ -7348,12 +7588,23 @@
         "output_tps": 138.629,
         "ttft_s": 0.728
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.815,
+          "output_per_1m": 6.54,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "nova-2.0-omni::medium",
@@ -7384,12 +7635,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "AWS Bedrock",
+          "provider": "AWS Bedrock",
+          "platform": "AWS Bedrock",
+          "input_per_1m": 0.4,
+          "output_per_1m": 3.3,
+          "region": "eu-central-1",
+          "unit": "per_1m_token",
+          "notes": ""
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "phi-4::default",
@@ -7429,7 +7691,17 @@
           "output_per_1m": 0.5,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "swedencentral; small model"
+          "notes": "Regional (swedencentral); no Global tier"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.125,
+          "output_per_1m": 0.5,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Regional (swedencentral); reasoning"
         }
       ],
       "designarena": {},
@@ -7503,12 +7775,33 @@
         "output_tps": 36.481,
         "ttft_s": 1.262
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.075,
+          "output_per_1m": 0.3,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Regional (swedencentral)"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.075,
+          "output_per_1m": 0.3,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Regional (swedencentral); reasoning"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "lfm2.5-8b-a1b::default",
@@ -8056,6 +8349,16 @@
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.33,
+          "output_per_1m": 1.32,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {},
@@ -9026,6 +9329,16 @@
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.045,
+          "output_per_1m": 4.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {
@@ -9296,6 +9609,16 @@
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.045,
+          "output_per_1m": 4.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {
@@ -12366,6 +12689,16 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.54,
+          "output_per_1m": 4.84,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {
@@ -12625,6 +12958,16 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.54,
+          "output_per_1m": 4.84,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {
@@ -15638,6 +15981,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o1",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 15,
+          "output_per_1m": 60,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -15675,12 +16028,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.1,
+          "output_per_1m": 4.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gpt-4o::default",
@@ -15733,6 +16097,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-4o",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 2.5,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -15855,6 +16229,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-4o-mini",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -15998,6 +16382,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-4.1-nano",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.1,
+          "output_per_1m": 0.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -16057,6 +16451,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o3-mini",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.1,
+          "output_per_1m": 4.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -16136,7 +16540,7 @@
           "output_per_1m": 2,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU 0.275/2.2"
+          "notes": "Global; DataZone EU in/out 0.275/2.2"
         }
       ],
       "designarena": {},
@@ -16200,6 +16604,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o3-mini",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.1,
+          "output_per_1m": 4.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -16279,7 +16693,7 @@
           "output_per_1m": 0.4,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; smallest GPT-5"
+          "notes": "Global; DataZone EU in/out 0.055/0.44"
         }
       ],
       "designarena": {},
@@ -16350,6 +16764,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-4.1-mini",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.4,
+          "output_per_1m": 1.6,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -16398,6 +16822,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o3-pro",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 20,
+          "output_per_1m": 80,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -16466,7 +16900,7 @@
           "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; coding-optimized"
+          "notes": "Global; coding"
         }
       ],
       "designarena": {
@@ -16552,7 +16986,7 @@
           "output_per_1m": 15,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU 2.75/16.5"
+          "notes": "Global; DataZone EU in/out 2.75/16.5"
         }
       ],
       "designarena": {
@@ -16629,6 +17063,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.2-codex",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
         }
       ],
       "designarena": {
@@ -16721,7 +17165,7 @@
           "output_per_1m": 0.4,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; smallest GPT-5"
+          "notes": "Global; DataZone EU in/out 0.055/0.44"
         }
       ],
       "designarena": {},
@@ -16819,11 +17263,21 @@
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
-          "input_per_1m": 2.5,
-          "output_per_1m": 20,
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global standard tier"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -16914,11 +17368,21 @@
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
-          "input_per_1m": 3.5,
-          "output_per_1m": 28,
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global standard tier"
+          "notes": "Global; DataZone EU in/out 1.925/15.4"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {
@@ -17022,7 +17486,27 @@
           "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global deployment; DataZone EU input/output 1.375/11.0"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global (chat-tuned)"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 5,
+          "output_per_1m": 30,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; rolling chat-latest (2026-05-28)"
         }
       ],
       "designarena": {},
@@ -17091,7 +17575,7 @@
           "output_per_1m": 15,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU 2.75/16.5"
+          "notes": "Global; DataZone EU in/out 2.75/16.5"
         }
       ],
       "designarena": {
@@ -17177,7 +17661,7 @@
           "output_per_1m": 15,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU 2.75/16.5"
+          "notes": "Global; DataZone EU in/out 2.75/16.5"
         }
       ],
       "designarena": {
@@ -17285,7 +17769,27 @@
           "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global deployment; DataZone EU input/output 1.375/11.0"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global (chat-tuned)"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 5,
+          "output_per_1m": 30,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; rolling chat-latest (2026-05-28)"
         }
       ],
       "designarena": {},
@@ -17365,7 +17869,7 @@
           "output_per_1m": 2,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU 0.275/2.2"
+          "notes": "Global; DataZone EU in/out 0.275/2.2"
         }
       ],
       "designarena": {},
@@ -17429,6 +17933,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.1-codex-mini",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.25,
+          "output_per_1m": 2,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
         }
       ],
       "designarena": {},
@@ -17530,11 +18044,21 @@
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
-          "input_per_1m": 2.5,
-          "output_per_1m": 20,
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global standard tier"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -17609,6 +18133,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-4.1",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 2,
+          "output_per_1m": 8,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -17657,6 +18191,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5-codex",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
         }
       ],
       "designarena": {},
@@ -17747,7 +18291,27 @@
           "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global deployment; DataZone EU input/output 1.375/11.0"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global (chat-tuned)"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 5,
+          "output_per_1m": 30,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; rolling chat-latest (2026-05-28)"
         }
       ],
       "designarena": {},
@@ -17897,7 +18461,7 @@
           "output_per_1m": 2,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; DataZone EU 0.275/2.2"
+          "notes": "Global; DataZone EU in/out 0.275/2.2"
         }
       ],
       "designarena": {},
@@ -17988,11 +18552,21 @@
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
-          "input_per_1m": 3.5,
-          "output_per_1m": 28,
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global standard tier"
+          "notes": "Global; DataZone EU in/out 1.925/15.4"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {
@@ -18096,7 +18670,27 @@
           "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global deployment; DataZone EU input/output 1.375/11.0"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global (chat-tuned)"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 5,
+          "output_per_1m": 30,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; rolling chat-latest (2026-05-28)"
         }
       ],
       "designarena": {},
@@ -18156,6 +18750,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o4-mini",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.1,
+          "output_per_1m": 4.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -18242,11 +18846,21 @@
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
-          "input_per_1m": 3.5,
-          "output_per_1m": 28,
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global standard tier"
+          "notes": "Global; DataZone EU in/out 1.925/15.4"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.75,
+          "output_per_1m": 14,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {
@@ -18339,7 +18953,7 @@
           "output_per_1m": 0.4,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global; smallest GPT-5"
+          "notes": "Global; DataZone EU in/out 0.055/0.44"
         }
       ],
       "designarena": {},
@@ -18423,6 +19037,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o1-pro",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 150,
+          "output_per_1m": 600,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -18513,7 +19137,27 @@
           "output_per_1m": 10,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "Global deployment; DataZone EU input/output 1.375/11.0"
+          "notes": "Global; DataZone EU in/out 1.375/11.0"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global (chat-tuned)"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 5,
+          "output_per_1m": 30,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; rolling chat-latest (2026-05-28)"
         }
       ],
       "designarena": {},
@@ -18551,12 +19195,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 75,
+          "output_per_1m": 150,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gpt-5.4-pro::xhigh",
@@ -18609,6 +19264,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.4-pro",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 30,
+          "output_per_1m": 180,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; reasoning pro tier"
         }
       ],
       "designarena": {},
@@ -18931,7 +19596,7 @@
           "output_per_1m": 4.55,
           "region": "eu-west-2",
           "unit": "per_1m_token",
-          "notes": "not in eu-central-1; eu-west-2 (London) price"
+          "notes": "not in eu-central-1; eu-west-2 price"
         }
       ],
       "designarena": {},
@@ -18989,7 +19654,7 @@
           "output_per_1m": 0.78,
           "region": "eu-west-2",
           "unit": "per_1m_token",
-          "notes": "not in eu-central-1; eu-west-2 (London) price"
+          "notes": "not in eu-central-1; eu-west-2 price"
         }
       ],
       "designarena": {},
@@ -19229,12 +19894,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Token-based pricing; audio input is $1/1M. Batch is half price."
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "gemini-1.5-pro::default",
@@ -19440,7 +20116,7 @@
           "output_per_1m": 3,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Preview. Text/image/video input; audio input is $1/1M"
+          "notes": "Preview. Text/image/video input; audio input is $1/1M. No non-global surcharge shown."
         }
       ],
       "designarena": {
@@ -19537,7 +20213,7 @@
           "output_per_1m": 0.4,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Text/image/video input; audio input is $0.30/1M"
+          "notes": "Text/image/video input; audio input is $0.30/1M."
         }
       ],
       "designarena": {},
@@ -19675,7 +20351,7 @@
           "output_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Text/image/video input; audio input is $1/1M"
+          "notes": "Text/image/video input; audio input is $1/1M."
         }
       ],
       "designarena": {},
@@ -19766,7 +20442,7 @@
           "output_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Text/image/video input; audio input is $1/1M"
+          "notes": "Text/image/video input; audio input is $1/1M."
         }
       ],
       "designarena": {},
@@ -19846,7 +20522,7 @@
           "output_per_1m": 0.4,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Text/image/video input; audio input is $0.30/1M"
+          "notes": "Text/image/video input; audio input is $0.30/1M."
         }
       ],
       "designarena": {},
@@ -20295,7 +20971,7 @@
           "output_per_1m": 3,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Preview. Text/image/video input; audio input is $1/1M"
+          "notes": "Preview. Text/image/video input; audio input is $1/1M. No non-global surcharge shown."
         }
       ],
       "designarena": {
@@ -20903,17 +21579,17 @@
           "output_per_1m": 25,
           "region": "eu-central-1 (EU cross-region inference profile)",
           "unit": "per_1m_token",
-          "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+          "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*). Latest Anthropic Opus on Bedrock; 4.7/4.8 not yet on Bedrock."
         },
         {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $5/$25). Offered in europe-west1; not in EU Multi-Region (eu)."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -21066,17 +21742,17 @@
           "output_per_1m": 25,
           "region": "eu-central-1 (EU cross-region inference profile)",
           "unit": "per_1m_token",
-          "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+          "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*). Latest Anthropic Opus on Bedrock; 4.7/4.8 not yet on Bedrock."
         },
         {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $5/$25). Offered in europe-west1; not in EU Multi-Region (eu)."
         },
         {
           "source": "Anthropic API / Claude Code",
@@ -21203,11 +21879,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $5/$25). Offered in europe-west1; not in EU Multi-Region (eu)."
         }
       ],
       "designarena": {
@@ -21322,11 +21998,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
+          "input_per_1m": 5.5,
+          "output_per_1m": 27.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $5/$25). Offered in europe-west1; not in EU Multi-Region (eu)."
         }
       ],
       "designarena": {
@@ -21922,11 +22598,11 @@
           "source": "AWS Bedrock",
           "provider": "AWS Bedrock",
           "platform": "AWS Bedrock",
-          "input_per_1m": 4.3,
-          "output_per_1m": 13,
-          "region": "eu-west-1",
+          "input_per_1m": 5.2,
+          "output_per_1m": 15.6,
+          "region": "eu-west-3",
           "unit": "per_1m_token",
-          "notes": "not in eu-central-1; eu-west-1 (Ireland) price"
+          "notes": "not in eu-central-1; eu-west-3 price"
         }
       ],
       "designarena": {},
@@ -21969,11 +22645,11 @@
           "source": "AWS Bedrock",
           "provider": "AWS Bedrock",
           "platform": "AWS Bedrock",
-          "input_per_1m": 0.49,
-          "output_per_1m": 0.76,
-          "region": "eu-west-1",
+          "input_per_1m": 0.59,
+          "output_per_1m": 0.91,
+          "region": "eu-west-3",
           "unit": "per_1m_token",
-          "notes": "not in eu-central-1; eu-west-1 (Ireland) price"
+          "notes": "not in eu-central-1; eu-west-3 price"
         }
       ],
       "designarena": {},
@@ -22016,11 +22692,11 @@
           "source": "AWS Bedrock",
           "provider": "AWS Bedrock",
           "platform": "AWS Bedrock",
-          "input_per_1m": 0.16,
-          "output_per_1m": 0.22,
-          "region": "eu-west-1",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.26,
+          "region": "eu-west-3",
           "unit": "per_1m_token",
-          "notes": "not in eu-central-1; eu-west-1 (Ireland) price"
+          "notes": "not in eu-central-1; eu-west-3 price"
         }
       ],
       "designarena": {},
@@ -22067,7 +22743,7 @@
           "output_per_1m": 0.3,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Mistral Small 3.1 (25.03). Model Garden partner model"
+          "notes": "Mistral Small 3.1 (25.03). Model Garden partner model."
         }
       ],
       "designarena": {},
@@ -22125,7 +22801,7 @@
           "output_per_1m": 2,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)."
         }
       ],
       "designarena": {},
@@ -22647,6 +23323,26 @@
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-chat-v3-0324",
           "status": -2
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.14,
+          "output_per_1m": 4.56,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.14,
+          "output_per_1m": 4.56,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
         }
       ],
       "designarena": {},
@@ -22996,7 +23692,7 @@
           "output_per_1m": 5.4,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "DeepSeek-R1 (0528). Model Garden partner model"
+          "notes": "DeepSeek-R1 (0528). Model Garden partner model."
         }
       ],
       "designarena": {},
@@ -23259,6 +23955,26 @@
           "notes": ""
         },
         {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.58,
+          "output_per_1m": 1.68,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.62,
+          "output_per_1m": 1.85,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted alt of DeepSeek V3.2; DataZone EU tier"
+        },
+        {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
@@ -23266,7 +23982,7 @@
           "output_per_1m": 1.68,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "DeepSeek-V3.2. Model Garden partner model"
+          "notes": "DeepSeek-V3.2. Model Garden partner model. Cache hit $0.056/1M."
         }
       ],
       "designarena": {},
@@ -23437,6 +24153,26 @@
           "notes": ""
         },
         {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.58,
+          "output_per_1m": 1.68,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.62,
+          "output_per_1m": 1.85,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted alt of DeepSeek V3.2; DataZone EU tier"
+        },
+        {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
@@ -23444,7 +24180,7 @@
           "output_per_1m": 1.68,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "DeepSeek-V3.2. Model Garden partner model"
+          "notes": "DeepSeek-V3.2. Model Garden partner model. Cache hit $0.056/1M."
         }
       ],
       "designarena": {},
@@ -23733,6 +24469,16 @@
           "notes": ""
         },
         {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.23,
+          "output_per_1m": 4.94,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
@@ -23740,7 +24486,7 @@
           "output_per_1m": 1.7,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "DeepSeek-V3.1. Model Garden partner model"
+          "notes": "DeepSeek-V3.1. Model Garden partner model. Cache hit $0.06/1M."
         }
       ],
       "designarena": {},
@@ -24009,6 +24755,16 @@
           "notes": ""
         },
         {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.23,
+          "output_per_1m": 4.94,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
@@ -24016,7 +24772,7 @@
           "output_per_1m": 1.7,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "DeepSeek-V3.1. Model Garden partner model"
+          "notes": "DeepSeek-V3.1. Model Garden partner model. Cache hit $0.06/1M."
         }
       ],
       "designarena": {},
@@ -24306,12 +25062,23 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "grok-4.20::non-reasoning",
@@ -24353,6 +25120,26 @@
           "unit": "per_1m_token",
           "or_model_id": "x-ai/grok-4.20",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out."
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out."
         }
       ],
       "designarena": {
@@ -24403,12 +25190,43 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.5,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). Cache hit $0.05/1M."
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). Cache hit $0.05/1M."
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "grok-4::reasoning",
@@ -24440,6 +25258,16 @@
         "ttft_s": 0
       },
       "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
         {
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
@@ -24491,6 +25319,16 @@
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
           "input_per_1m": 0.2,
           "output_per_1m": 0.5,
           "region": "swedencentral",
@@ -24534,6 +25372,16 @@
         "ttft_s": 0
       },
       "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
         {
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
@@ -24652,12 +25500,23 @@
         "output_tps": 67.269,
         "ttft_s": 0.533
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.25,
+          "output_per_1m": 1.27,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "grok-4.1::reasoning",
@@ -24688,12 +25547,43 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.5,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). Cache hit $0.05/1M."
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). Cache hit $0.05/1M."
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "grok-4.20-v2::reasoning",
@@ -24760,7 +25650,18 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.2,
+          "output_per_1m": 1.5,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
+        }
+      ],
       "designarena": {
         "fullstack": {
           "elo": 1084,
@@ -24772,7 +25673,7 @@
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "grok-4.20::reasoning",
@@ -24814,6 +25715,26 @@
           "unit": "per_1m_token",
           "or_model_id": "x-ai/grok-4.20",
           "status": 0
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out."
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (new). <=200K input tier; >200K is $2.50 in / $5.00 out."
         }
       ],
       "designarena": {
@@ -25407,6 +26328,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.33,
+          "output_per_1m": 1.32,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {},
@@ -25498,6 +26429,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (NEW on Vertex - now has a usable per-token row). Cache hit $0.03/1M."
         }
       ],
       "designarena": {},
@@ -25948,6 +26889,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.66,
+          "output_per_1m": 3.3,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {
@@ -26085,6 +27036,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Kimi-K2-Thinking. Model Garden partner model (NEW on Vertex - Moonshot section added). Cache hit $0.06/1M."
         }
       ],
       "designarena": {},
@@ -26209,6 +27170,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Kimi-K2-Thinking. Model Garden partner model (NEW on Vertex - Moonshot section added). Cache hit $0.06/1M."
         }
       ],
       "designarena": {},
@@ -26388,6 +27359,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.66,
+          "output_per_1m": 3.3,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         }
       ],
       "designarena": {
@@ -26907,6 +27888,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (NEW on Vertex - GLM section added)."
         }
       ],
       "designarena": {
@@ -27335,6 +28326,26 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.1,
+          "output_per_1m": 3.52,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1,
+          "output_per_1m": 3.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (NEW on Vertex - GLM section added). Cache hit $0.1/1M."
         }
       ],
       "designarena": {
@@ -27635,6 +28646,26 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.1,
+          "output_per_1m": 3.52,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 1,
+          "output_per_1m": 3.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (NEW on Vertex - GLM section added). Cache hit $0.1/1M."
         }
       ],
       "designarena": {
@@ -28169,6 +29200,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (NEW on Vertex - GLM section added)."
         }
       ],
       "designarena": {
@@ -29470,7 +30511,7 @@
           "output_per_1m": 0.88,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Qwen3-235B-A22B-Instruct-2507. Model Garden partner model"
+          "notes": "Model Garden partner model."
         }
       ],
       "designarena": {},
@@ -30832,7 +31873,7 @@
           "output_per_1m": 0.88,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Qwen3-235B-A22B-Instruct-2507. Model Garden partner model"
+          "notes": "Model Garden partner model."
         }
       ],
       "designarena": {},
@@ -31462,7 +32503,7 @@
           "output_per_1m": 1.8,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Qwen3-Coder-480B-A35B-Instruct. Model Garden partner model"
+          "notes": "Model Garden partner model. Cache hit $0.022/1M."
         }
       ],
       "designarena": {},
@@ -31706,7 +32747,7 @@
           "output_per_1m": 0.88,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Qwen3-235B-A22B-Instruct-2507. Model Garden partner model"
+          "notes": "Model Garden partner model."
         }
       ],
       "designarena": {},
@@ -32621,11 +33662,11 @@
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "region": "global",
+          "input_per_1m": 3.3,
+          "output_per_1m": 16.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $3/$15)."
         }
       ],
       "designarena": {
@@ -34658,6 +35699,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.2-pro",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 21,
+          "output_per_1m": 168,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; reasoning pro tier"
         }
       ],
       "designarena": {},
@@ -34777,6 +35828,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5.1-codex-max",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 10,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
         }
       ],
       "designarena": {},
@@ -35316,17 +36377,17 @@
           "output_per_1m": 5,
           "region": "eu-central-1 (EU cross-region inference profile)",
           "unit": "per_1m_token",
-          "notes": "Not present in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*); cross-region adds ~10% in some configs."
+          "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
         },
         {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
           "platform": "Google Vertex AI",
-          "input_per_1m": 1,
-          "output_per_1m": 5,
-          "region": "global",
+          "input_per_1m": 1.1,
+          "output_per_1m": 5.5,
+          "region": "europe-west1",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. europe-west1 rate (Global is $1/$5)."
         }
       ],
       "designarena": {},
@@ -35361,6 +36422,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/o3-deep-research",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 10,
+          "output_per_1m": 40,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; deep research"
         }
       ],
       "designarena": {},
@@ -35451,6 +36522,16 @@
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-5-pro",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 15,
+          "output_per_1m": 120,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; reasoning pro tier"
         }
       ],
       "designarena": {},
@@ -35935,7 +37016,7 @@
           "output_per_1m": 75,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Model Garden partner model"
+          "notes": "Model Garden partner model. Uniform pricing across all regions (no EU surcharge). No >200K tier."
         }
       ],
       "designarena": {},
@@ -35966,6 +37047,16 @@
           "unit": "per_1m_token",
           "or_model_id": "mistralai/codestral-2508",
           "status": 0
+        },
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.9,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
         }
       ],
       "designarena": {},
@@ -37236,10 +38327,10 @@
       "has_pricing": true
     },
     {
-      "id": "minimax-01::default",
-      "family_key": "minimax-01",
-      "family_name": "Minimax 01",
-      "display_name": "Minimax 01",
+      "id": "minimax-m01::default",
+      "family_key": "minimax-m01",
+      "family_name": "Minimax M01",
+      "display_name": "Minimax M01",
       "org": "MiniMax",
       "variant": "default",
       "open_weights": true,
@@ -39049,6 +40140,93 @@
       "has_pricing": true
     },
     {
+      "id": "codex-mini::default",
+      "family_key": "codex-mini",
+      "family_name": "Codex Mini",
+      "display_name": "Codex Mini",
+      "org": "OpenAI",
+      "variant": "default",
+      "open_weights": false,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.5,
+          "output_per_1m": 6,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; coding"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "mai-ds-r1::default",
+      "family_key": "mai-ds-r1",
+      "family_name": "Mai Ds R1",
+      "display_name": "Mai Ds R1",
+      "org": "Microsoft",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.35,
+          "output_per_1m": 5.4,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global; MS-tuned DeepSeek-R1"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "grok-4.2::default",
+      "family_key": "grok-4.2",
+      "family_name": "Grok 4.2",
+      "display_name": "Grok 4.2",
+      "org": "xAI",
+      "variant": "default",
+      "open_weights": false,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Azure AI Foundry",
+          "provider": "Azure AI Foundry",
+          "platform": "Azure AI Foundry",
+          "input_per_1m": 1.25,
+          "output_per_1m": 2.5,
+          "region": "swedencentral",
+          "unit": "per_1m_token",
+          "notes": "Global"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
       "id": "llama-4-maverick-17b::default",
       "family_key": "llama-4-maverick-17b",
       "family_name": "Llama 4 Maverick 17B",
@@ -39127,36 +40305,7 @@
           "output_per_1m": 0.5,
           "region": "swedencentral",
           "unit": "per_1m_token",
-          "notes": "swedencentral; reasoning"
-        }
-      ],
-      "designarena": {},
-      "copilot": null,
-      "featured": false,
-      "has_pricing": true
-    },
-    {
-      "id": "codestral-2::default",
-      "family_key": "codestral-2",
-      "family_name": "Codestral 2",
-      "display_name": "Codestral 2",
-      "org": "Mistral",
-      "variant": "default",
-      "open_weights": true,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "Google Vertex AI",
-          "provider": "Google Vertex AI",
-          "platform": "Google Vertex AI",
-          "input_per_1m": 0.3,
-          "output_per_1m": 0.9,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Model Garden partner model (MaaS pay-as-you-go)"
+          "notes": "Regional (swedencentral); reasoning"
         }
       ],
       "designarena": {},
@@ -39185,7 +40334,7 @@
           "output_per_1m": 1.2,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Qwen3-Next-80B-Thinking. Model Garden partner model"
+          "notes": "Model Garden partner model."
         },
         {
           "source": "Google Vertex AI",
@@ -39195,7 +40344,36 @@
           "output_per_1m": 1.2,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Qwen3-Next-80B-Instruct. Model Garden partner model"
+          "notes": "Model Garden partner model."
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "codestral-2::default",
+      "family_key": "codestral-2",
+      "family_name": "Codestral 2",
+      "display_name": "Codestral 2",
+      "org": "Mistral",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Google Vertex AI",
+          "provider": "Google Vertex AI",
+          "platform": "Google Vertex AI",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.9,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "Model Garden partner model (MaaS pay-as-you-go)."
         }
       ],
       "designarena": {},
@@ -39250,6 +40428,11 @@
   ],
   "providers": [
     {
+      "platform": "Azure AI Foundry",
+      "provider": "Azure AI Foundry",
+      "model_count": 64
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Novita",
       "model_count": 63
@@ -39262,12 +40445,17 @@
     {
       "platform": "AWS Bedrock",
       "provider": "AWS Bedrock",
-      "model_count": 55
+      "model_count": 60
     },
     {
       "platform": "OpenRouter",
       "provider": "OpenAI",
       "model_count": 44
+    },
+    {
+      "platform": "Google Vertex AI",
+      "provider": "Google Vertex AI",
+      "model_count": 38
     },
     {
       "platform": "OpenRouter",
@@ -39300,19 +40488,9 @@
       "model_count": 29
     },
     {
-      "platform": "Google Vertex AI",
-      "provider": "Google Vertex AI",
-      "model_count": 28
-    },
-    {
       "platform": "OpenRouter",
       "provider": "Venice",
       "model_count": 28
-    },
-    {
-      "platform": "Azure AI Foundry",
-      "provider": "Azure AI Foundry",
-      "model_count": 24
     },
     {
       "platform": "OpenRouter",

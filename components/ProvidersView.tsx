@@ -2,7 +2,7 @@
 import { useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
-import { usdPerM, num } from "../lib/format";
+import { usdPerM, num, orgColor } from "../lib/format";
 import { rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
@@ -26,6 +26,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
+  const [modelQ, setModelQ] = useState("");
 
   const eligible = (m: { family_key: string; scores: Record<string, number | null> }) => {
     if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
@@ -54,6 +55,14 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];
   const selectedModel = modelOptions.find((m) => m.id === modelId) || defaultModel;
+
+  // Searchable model picker: composite-sorted, filtered by the search box.
+  const pickerRows = useMemo(() => {
+    let r = [...modelOptions];
+    if (modelQ.trim()) { const t = modelQ.toLowerCase(); r = r.filter((m) => m.display_name.toLowerCase().includes(t) || m.org.toLowerCase().includes(t)); }
+    return r.sort((a, b) => (b.scores.composite ?? -Infinity) - (a.scores.composite ?? -Infinity));
+  }, [modelOptions, modelQ]);
+  const pickerMaxComposite = Math.max(1, ...pickerRows.map((m) => m.scores.composite ?? 0));
 
   const rows = useMemo<Row[]>(() => {
     const agg = new Map<string, { ranks: number[]; prices: number[]; platform: string; provider: string }>();
@@ -102,33 +111,8 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const maxAvgPrice = Math.max(1, ...shown.map((r) => r.avg_price ?? 0));
   const maxModelPrice = Math.max(1, ...shown.map((r) => r.model_price ?? 0));
 
-  return (
-    <div>
-      <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="inline-flex items-center gap-2">
-          <label className="text-sm text-gray-400">Rank by</label>
-          <select value={mode} onChange={(e) => setMode(e.target.value as Mode)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
-            <option value="all">Avg price rank across models</option>
-            <option value="model">A single model&apos;s offers</option>
-          </select>
-        </span>
-        {mode === "model" ? (
-          <select value={selectedModel?.id || ""} onChange={(e) => setModelId(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
-            {modelOptions.map((m) => <option key={m.id} value={m.id}>{m.display_name}</option>)}
-          </select>
-        ) : (
-          <>
-            <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
-            <button onClick={() => setScorePeersOnly(!scorePeersOnly)}
-              className={`rounded-md border px-3 py-1.5 text-sm ${scorePeersOnly ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
-              {scorePeersOnly ? "✓ " : ""}Only models with this score
-            </button>
-          </>
-        )}
-        <span className="ml-auto text-xs text-gray-500">{shown.length} providers</span>
-      </div>
-
-      <div className="card overflow-x-auto">
+  const providersTable = (
+    <div className="card overflow-x-auto">
         <table className="dtable w-full table-fixed text-sm">
           <colgroup><col style={{ width: "26%" }} /><col style={{ width: "20%" }} /><col style={{ width: "12%" }} /><col style={{ width: "21%" }} /><col style={{ width: "21%" }} /></colgroup>
           <thead><tr>
@@ -159,11 +143,86 @@ export function ProvidersView({ data }: { data: ClientData }) {
           </tbody>
         </table>
       </div>
-      <p className="mt-3 text-xs text-gray-500">
-        {mode === "model"
-          ? "Providers ranked by their 10:1 blended price for the selected model."
-          : "Avg price rank = the provider's average position (1 = cheapest) across every model it offers" + (scorePeersOnly ? " that has the selected score." : ".") + " Lower is cheaper."}
-      </p>
+  );
+
+  const modelPicker = (
+    <div className="card flex flex-col">
+      <div className="border-b border-line p-3">
+        <input value={modelQ} onChange={(e) => setModelQ(e.target.value)} placeholder="Search model / org…"
+          className="w-full rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
+        <p className="mt-1 text-[11px] text-gray-500">Pick a model — sorted by Composite score.</p>
+      </div>
+      <div className="max-h-[70vh] overflow-y-auto">
+        <table className="dtable w-full table-fixed text-sm">
+          <colgroup><col style={{ width: "62%" }} /><col style={{ width: "38%" }} /></colgroup>
+          <thead><tr>
+            <th className="px-3 py-2 text-left text-xs text-gray-400">Model</th>
+            <th className="px-3 py-2 text-right text-xs text-gray-400">Composite ▼</th>
+          </tr></thead>
+          <tbody>
+            {pickerRows.map((m) => {
+              const c = m.scores.composite;
+              const active = selectedModel?.id === m.id;
+              return (
+                <tr key={m.id} onClick={() => setModelId(m.id)} className={`cursor-pointer ${active ? "bg-accent/15" : ""}`}>
+                  <td className="px-3 py-2 truncate">
+                    <span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{m.display_name}</span>
+                    {m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}
+                  </td>
+                  <td className="px-3 py-2">
+                    {c != null ? <DataBar frac={c / pickerMaxComposite} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(c, 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}
+                  </td>
+                </tr>
+              );
+            })}
+            {pickerRows.length === 0 && <tr><td colSpan={2} className="px-3 py-6 text-center text-gray-500">No models match.</td></tr>}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  );
+
+  return (
+    <div>
+      <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
+        <span className="inline-flex items-center gap-2">
+          <label className="text-sm text-gray-400">Rank by</label>
+          <select value={mode} onChange={(e) => setMode(e.target.value as Mode)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
+            <option value="model">A single model&apos;s offers</option>
+            <option value="all">Avg price rank across models</option>
+          </select>
+        </span>
+        {mode === "model" ? (
+          <span className="text-sm text-gray-400">Selected: <b className="text-gray-200">{selectedModel?.display_name ?? "—"}</b></span>
+        ) : (
+          <>
+            <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
+            <button onClick={() => setScorePeersOnly(!scorePeersOnly)}
+              className={`rounded-md border px-3 py-1.5 text-sm ${scorePeersOnly ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
+              {scorePeersOnly ? "✓ " : ""}Only models with this score
+            </button>
+          </>
+        )}
+        <span className="ml-auto text-xs text-gray-500">{shown.length} providers</span>
+      </div>
+
+      {mode === "model" ? (
+        <div className="grid gap-4 lg:grid-cols-[minmax(320px,0.85fr)_minmax(420px,1.15fr)]">
+          {modelPicker}
+          <div>
+            {providersTable}
+            <p className="mt-3 text-xs text-gray-500">Providers ranked by their 10:1 blended price for <b>{selectedModel?.display_name}</b>.</p>
+          </div>
+        </div>
+      ) : (
+        <>
+          {providersTable}
+          <p className="mt-3 text-xs text-gray-500">
+            Avg price rank = the provider&apos;s average position (1 = cheapest) across every model it offers
+            {scorePeersOnly ? " that has the selected score." : "."} Lower is cheaper.
+          </p>
+        </>
+      )}
     </div>
   );
 }
