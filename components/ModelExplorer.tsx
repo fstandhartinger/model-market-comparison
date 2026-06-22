@@ -20,6 +20,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   const [q, setQ] = useState("");
   const [openFilter, setOpenFilter] = useState<"all" | "open" | "closed">("all");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
+  const [hasProviderOnly, setHasProviderOnly] = useState(true);
   const [org, setOrg] = useState("");
   const [maxCost, setMaxCost] = useState("");
 
@@ -43,9 +44,8 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     if (withScoreOnly) r = r.filter((x) => x.sc != null);
     if (s.minScore > 0) r = r.filter((x) => x.sc == null || x.sc >= s.minScore);
     if (Number.isFinite(maxC)) r = r.filter((x) => x.cost != null && x.cost <= maxC);
-    // Only an explicit provider allow-list should drop models entirely; the
-    // exclude-Chinese toggle just reprices via the remaining providers.
-    if (s.providerSet) r = r.filter((x) => x.ncheap > 0);
+    // "Has provider": keep only models offered by ≥1 provider within the active filters.
+    if (hasProviderOnly) r = r.filter((x) => x.ncheap > 0);
 
     const dir = asc ? 1 : -1;
     r.sort((a, b) => {
@@ -56,7 +56,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.providerSet, openFilter, org, q, withScoreOnly, maxCost, sort, asc, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, openFilter, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);
@@ -81,6 +81,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           <option value="all">All weights</option><option value="open">Open weights</option><option value="closed">Closed</option>
         </select>
         <Toggle label="Has score" on={withScoreOnly} set={setWithScoreOnly} />
+        <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
         <span className="ml-auto text-xs text-gray-500">{rows.length} models{allowed ? " · provider-filtered cost" : ""}</span>
       </div>
 
