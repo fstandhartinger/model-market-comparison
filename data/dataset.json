@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-22T10:24:34.888Z",
+  "generated_at": "2026-06-22T10:52:39.409Z",
   "counts": {
     "models": 707,
     "families": 578,
     "providers": 77,
-    "offers": 1675
+    "offers": 1676
   },
   "sources": {
     "openrouter": "2026-06-22",
@@ -9903,6 +9903,17 @@
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
           "status": 0
+        },
+        {
+          "source": "Inceptron",
+          "provider": "Inceptron",
+          "platform": "Inceptron",
+          "input_per_1m": 0.66,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "estimated": true,
+          "notes": "Listed SERVERLESS (NEW) on the Inceptron console (console.inceptron.io) but not yet exposed by the public /v1/models API. Price is an ESTIMATE mirroring Inceptron's Kimi K2.6 ($0.66/$3.50) — replace with the exact console figure once available."
         }
       ],
       "designarena": {
@@ -41509,6 +41520,15 @@
       "note": ""
     },
     {
+      "platform": "Inceptron",
+      "provider": "Inceptron",
+      "model_count": 4,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "Sweden",
+      "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Poolside",
       "model_count": 4,
@@ -41597,15 +41617,6 @@
       "non_us": true,
       "country": "China",
       "note": ""
-    },
-    {
-      "platform": "Inceptron",
-      "provider": "Inceptron",
-      "model_count": 3,
-      "eu_hosted": true,
-      "non_us": true,
-      "country": "Sweden",
-      "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
     },
     {
       "platform": "OpenRouter",
