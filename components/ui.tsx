@@ -38,13 +38,15 @@ export function ProviderFilter({
     byPlatform.get(p.platform)!.push(p);
   }
   const all = providers.map((p) => p.key);
+  const isAll = selected.size === 0; // empty selection means "all providers included"
+  const isChecked = (k: string) => isAll || selected.has(k);
   const toggle = (k: string) => {
-    const n = new Set(selected);
-    n.has(k) ? n.delete(k) : n.add(k);
-    setSelected(n);
+    const base = isAll ? new Set(all) : new Set(selected);
+    base.has(k) ? base.delete(k) : base.add(k);
+    setSelected(base.size === all.length ? new Set() : base); // back to "all" collapses to empty
   };
   const applyPreset = (match: (p: ProviderInfo) => boolean) => setSelected(new Set(providers.filter(match).map((p) => p.key)));
-  const label = selected.size === 0 ? "All providers" : `${selected.size} provider${selected.size > 1 ? "s" : ""}`;
+  const label = isAll ? "All providers" : `${selected.size} of ${all.length}`;
 
   return (
     <div className="relative inline-block">
@@ -54,24 +56,24 @@ export function ProviderFilter({
       </button>
       {open && (
         <div className="absolute z-20 mt-1 max-h-[60vh] w-80 overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
-          <div className="mb-2 flex flex-wrap gap-1">
+          <div className="mb-1 flex flex-wrap gap-1">
             <button onClick={() => setSelected(new Set())} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">All</button>
-            <button onClick={() => setSelected(new Set(all))} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">Select all</button>
             {PROVIDER_PRESETS.map((p) => (
               <button key={p.label} onClick={() => applyPreset(p.match)} className="rounded border border-accent/40 px-2 py-0.5 text-xs text-accent">{p.label}</button>
             ))}
           </div>
+          <p className="mb-2 text-[10px] text-gray-500">All checked = no restriction. Uncheck to exclude providers (the EU-hosted / Non-US toggles still apply on top).</p>
           {[...byPlatform.entries()].map(([platform, list]) => (
             <div key={platform} className="mb-2">
               <div className="mb-1 flex items-center justify-between">
                 <span className="text-xs font-semibold text-accent">{platform}</span>
-                <button onClick={() => { const n = new Set(selected); list.forEach((p) => n.add(p.key)); setSelected(n); }}
-                  className="text-[10px] text-gray-500 hover:text-gray-300">+ all</button>
+                <button onClick={() => { const base = isAll ? new Set(all) : new Set(selected); list.forEach((p) => base.delete(p.key)); setSelected(base.size === all.length ? new Set() : base); }}
+                  className="text-[10px] text-gray-500 hover:text-gray-300">exclude all</button>
               </div>
               <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">
                 {list.sort((a, b) => b.model_count - a.model_count).map((p) => (
                   <label key={p.key} className="flex items-center gap-1.5 text-xs text-gray-300">
-                    <input type="checkbox" checked={selected.has(p.key)} onChange={() => toggle(p.key)} />
+                    <input type="checkbox" checked={isChecked(p.key)} onChange={() => toggle(p.key)} />
                     <span className="truncate" title={`${p.provider} (${p.model_count})`}>{p.provider}</span>
                   </label>
                 ))}
