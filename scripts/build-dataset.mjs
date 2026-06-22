@@ -86,7 +86,12 @@ const canonFamily = (k) => FAMILY_ALIASES[k] || k;
 
 // Providers ingested as their own first-party platform; their OpenRouter-routed
 // duplicate is dropped so each appears once in the provider list/filter.
-const DIRECT_PLATFORM_PROVIDERS = new Set(["Nebius", "Inceptron"]);
+const DIRECT_PLATFORM_PROVIDERS = new Set(["Nebius", "Inceptron", "Chutes"]);
+
+// OpenRouter-routed providers that genuinely run inference inside a hardware TEE
+// (confidential compute). Their offers are flagged tee:true so the "TEE only" filter
+// surfaces them alongside Chutes' first-party TEE listing.
+const TEE_OR_PROVIDERS = new Set(["Phala", "Venice"]);
 
 // Non-text / non-LLM modalities to exclude from the comparison.
 const EXCLUDE_RE = /(image|vision-only|\bvideo\b|sora|dall|whisper|\btts\b|speech|audio|embed|rerank|moderation|ocr|guard)/i;
@@ -171,6 +176,7 @@ async function build() {
   const vertex = await readJSON("google-vertex.json").catch(() => ({ models: [] }));
   const nebius = await readJSON("nebius.json").catch(() => ({ models: [] }));
   const inceptron = await readJSON("inceptron.json").catch(() => ({ models: [] }));
+  const chutes = await readJSON("chutes.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
   const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
   const copilot = await readJSON("github-copilot.json");
@@ -251,6 +257,7 @@ async function build() {
         unit: "per_1m_token",
         or_model_id: m.id,
         status: e.status ?? null,
+        tee: TEE_OR_PROVIDERS.has(e.provider_name) || undefined,
       });
     }
   }
@@ -299,6 +306,18 @@ async function build() {
         region: m.region || "eu", unit: "per_1m_token", notes: m.notes || "",
       });
     }
+  }
+
+  // --- Chutes (first-party, all confidential-compute / TEE) ---
+  for (const m of chutes.models || []) {
+    const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
+    const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
+    fam.offers.push({
+      source: "Chutes", provider: "Chutes", platform: "Chutes",
+      input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
+      region: m.region || "global", unit: "per_1m_token",
+      tee: m.confidential_compute === true, notes: m.notes || "",
+    });
   }
 
   // --- Anthropic direct / Claude Code (token list price) ---
@@ -437,6 +456,7 @@ async function build() {
       openrouter: or.collected_at, artificialanalysis: aa.collected_at, designarena: da.collected_at,
       aws_bedrock: aws.collected_at, azure_foundry: azure.collected_at,
       google_vertex: vertex.collected_at, nebius: nebius.collected_at, inceptron: inceptron.collected_at,
+      chutes: chutes.collected_at,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
     },
     models: modelRows,

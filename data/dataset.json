@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-22T12:03:01.032Z",
+  "generated_at": "2026-06-22T16:16:38.897Z",
   "counts": {
     "models": 707,
     "families": 578,
     "providers": 77,
-    "offers": 1676
+    "offers": 1686
   },
   "sources": {
     "openrouter": "2026-06-22",
@@ -15,6 +15,7 @@
     "google_vertex": "2026-06-18",
     "nebius": "2026-06-18",
     "inceptron": "2026-06-18",
+    "chutes": "2026-06-22",
     "aa_coding_agents": "2026-06-18",
     "github_copilot": "2026-06-15",
     "claude_code": "2026-06-15"
@@ -92,7 +93,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -303,7 +305,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-20b",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -646,7 +649,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -931,7 +935,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "openai/gpt-oss-120b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -2805,6 +2810,17 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.12,
+          "output_per_1m": 0.37,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -3028,6 +3044,17 @@
           "output_per_1m": 0.48,
           "region": "eu-central-1",
           "unit": "per_1m_token",
+          "notes": ""
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.12,
+          "output_per_1m": 0.37,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
           "notes": ""
         }
       ],
@@ -5448,7 +5475,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -5764,7 +5792,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Azure AI Foundry",
@@ -6009,7 +6038,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Azure AI Foundry",
@@ -6189,7 +6219,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -6440,7 +6471,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-pro",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -6756,7 +6788,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "deepseek/deepseek-v4-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Azure AI Foundry",
@@ -9195,17 +9228,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.66,
-          "output_per_1m": 3.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Io Net",
           "platform": "OpenRouter",
           "input_per_1m": 0.66,
@@ -9290,7 +9312,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -9356,7 +9379,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -9420,6 +9444,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.20/1M. Inceptron model id moonshotai/Kimi-K2.6. Input price $0.67/1M per api.inceptron.io and OpenRouter (was $0.68 on 2026-06-18 prior snapshot). Output $3.50/1M everywhere."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.66,
+          "output_per_1m": 3.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -9485,17 +9520,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.66,
-          "output_per_1m": 3.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Io Net",
           "platform": "OpenRouter",
           "input_per_1m": 0.66,
@@ -9580,7 +9604,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -9646,7 +9671,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.6",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -9710,6 +9736,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.20/1M. Inceptron model id moonshotai/Kimi-K2.6. Input price $0.67/1M per api.inceptron.io and OpenRouter (was $0.68 on 2026-06-18 prior snapshot). Output $3.50/1M everywhere."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.66,
+          "output_per_1m": 3.5,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -9825,7 +9862,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.7-code",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -12685,7 +12723,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.2",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -12828,6 +12867,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; tag: New; id GLM-5.2"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -12882,17 +12932,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.98,
-          "output_per_1m": 3.08,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.98,
@@ -12966,7 +13005,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -13076,7 +13116,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Azure AI Foundry",
@@ -13107,6 +13148,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "fp8 quant, 202K context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.98,
+          "output_per_1m": 3.08,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -13161,17 +13213,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.98,
-          "output_per_1m": 3.08,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.1",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "GMICloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.98,
@@ -13245,7 +13286,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -13355,7 +13397,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5.1",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Azure AI Foundry",
@@ -13386,6 +13429,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "fp8 quant, 202K context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.98,
+          "output_per_1m": 3.08,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -14332,17 +14386,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -14361,7 +14404,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -14383,7 +14427,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -14406,6 +14451,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
           "status": 0
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -14577,7 +14633,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-35b-a3b",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -14889,17 +14946,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.44999999999999996,
-          "output_per_1m": 3,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.44999999999999996,
@@ -14951,7 +14997,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": -5,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -15006,7 +15053,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Nebius",
@@ -15017,6 +15065,17 @@
           "region": "us",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: us-central1; multimodal hybrid MoE"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.45,
+          "output_per_1m": 3,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -15221,17 +15280,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.44999999999999996,
-          "output_per_1m": 3,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.44999999999999996,
@@ -15283,7 +15331,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": -5
+          "status": -5,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -15338,7 +15387,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-397b-a17b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "Nebius",
@@ -15349,6 +15399,17 @@
           "region": "us",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: us-central1; multimodal hybrid MoE"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.45,
+          "output_per_1m": 3,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -15411,17 +15472,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "SiliconFlow",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -15440,7 +15490,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -15462,7 +15513,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -15485,6 +15537,17 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.6-27b",
           "status": 0
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.3,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -15554,7 +15617,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -15828,7 +15892,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -22775,7 +22840,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-small-2603",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -24068,6 +24134,17 @@
           "region": "us",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: us-central1; DEPRECATED on page"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 1,
+          "output_per_1m": 1,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -24646,6 +24723,17 @@
           "region": "us",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: us-central1; DEPRECATED on page"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 1,
+          "output_per_1m": 1,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -26568,17 +26656,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 1.2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "minimax/minimax-m2.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Phala",
           "platform": "OpenRouter",
           "input_per_1m": 0.19999999999999998,
@@ -26586,7 +26663,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -26707,7 +26785,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -26759,6 +26838,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "fp8 quant, 196K context. Cache read $0.05/1M. Inceptron model id MiniMaxAI/MiniMax-M2.5. Matches OpenRouter Inceptron endpoint (in 0.15 / out 0.90)."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.15,
+          "output_per_1m": 1.2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -27370,17 +27460,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.44,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.44999999999999996,
@@ -27432,7 +27511,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -27465,7 +27545,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.5",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "AWS Bedrock",
@@ -27486,6 +27567,17 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.44,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -27561,17 +27653,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.44,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2.5",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DeepInfra",
           "platform": "OpenRouter",
           "input_per_1m": 0.44999999999999996,
@@ -27623,7 +27704,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -27656,7 +27738,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "moonshotai/kimi-k2.5",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "AWS Bedrock",
@@ -27677,6 +27760,17 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.44,
+          "output_per_1m": 2,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -28189,7 +28283,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {
@@ -28288,7 +28383,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -28321,7 +28417,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -28451,7 +28548,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -28484,7 +28582,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -28614,7 +28713,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.6",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {
@@ -28728,17 +28828,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.95,
-          "output_per_1m": 2.5500000000000003,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.95,
@@ -28812,7 +28901,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -28834,7 +28924,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "AWS Bedrock",
@@ -28875,6 +28966,17 @@
           "region": "us",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: us-central1; DEPRECATED on page"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.95,
+          "output_per_1m": 2.55,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -28962,7 +29064,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -28973,7 +29076,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "AWS Bedrock",
@@ -29090,17 +29194,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Chutes",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.95,
-          "output_per_1m": 2.5500000000000003,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5",
-          "status": -2
-        },
-        {
-          "source": "OpenRouter",
           "provider": "AtlasCloud",
           "platform": "OpenRouter",
           "input_per_1m": 0.95,
@@ -29174,7 +29267,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -29196,7 +29290,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "AWS Bedrock",
@@ -29237,6 +29332,17 @@
           "region": "us",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: us-central1; DEPRECATED on page"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.95,
+          "output_per_1m": 2.55,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {
@@ -29512,7 +29618,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -29523,7 +29630,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-4.7-flash",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "AWS Bedrock",
@@ -30316,6 +30424,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.104,
+          "output_per_1m": 0.416,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -30428,6 +30547,17 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1"
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.104,
+          "output_per_1m": 0.416,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -30519,7 +30649,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -30783,7 +30914,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-2507",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -30881,6 +31013,17 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.2989,
+          "output_per_1m": 1.1957,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -31067,7 +31210,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -31531,7 +31675,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-2507",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -31629,6 +31774,17 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.2989,
+          "output_per_1m": 1.1957,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -31742,7 +31898,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": -5
+          "status": -5,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -31913,7 +32070,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-235b-a22b-instruct",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -32457,7 +32615,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-235b-a22b-2507",
-          "status": -2
+          "status": -2,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -32555,6 +32714,17 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.2989,
+          "output_per_1m": 1.1957,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -32668,7 +32838,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-vl-30b-a3b-instruct",
-          "status": -5
+          "status": -5,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -32826,7 +32997,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-35b-a3b",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -33521,7 +33693,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-27b",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -35012,7 +35185,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-26b-a4b-it",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -35094,22 +35268,12 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
           "provider": "DeepInfra",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.12,
-          "output_per_1m": 0.37,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "google/gemma-4-31b-it",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Chutes",
           "platform": "OpenRouter",
           "input_per_1m": 0.12,
           "output_per_1m": 0.37,
@@ -35171,7 +35335,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-4-31b-it",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -35234,7 +35399,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "arcee-ai/trinity-large-thinking",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -37120,7 +37286,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-next-80b-a3b-instruct:free",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -37460,7 +37627,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-coder:free",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -37512,7 +37680,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3-coder",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -37646,7 +37815,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "cognitivecomputations/dolphin-mistral-24b-venice-edition:free",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -37818,7 +37988,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-small-3.2-24b-instruct",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -38370,7 +38541,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "google/gemma-3-27b-it",
-          "status": -2
+          "status": -2,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -38934,7 +39106,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.3-70b-instruct:free",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -39207,7 +39380,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen-2.5-7b-instruct",
-          "status": 0
+          "status": 0,
+          "tee": true
         },
         {
           "source": "OpenRouter",
@@ -39349,7 +39523,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "meta-llama/llama-3.2-3b-instruct:free",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -39581,7 +39756,8 @@
           "region": "global",
           "unit": "per_1m_token",
           "or_model_id": "nousresearch/hermes-3-llama-3.1-405b:free",
-          "status": 0
+          "status": 0,
+          "tee": true
         }
       ],
       "designarena": {},
@@ -39757,6 +39933,17 @@
           "unit": "per_1m_token",
           "or_model_id": "mistralai/mistral-nemo",
           "status": 0
+        },
+        {
+          "source": "Chutes",
+          "provider": "Chutes",
+          "platform": "Chutes",
+          "input_per_1m": 0.0245,
+          "output_per_1m": 0.0978,
+          "region": "global",
+          "unit": "per_1m_token",
+          "tee": true,
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -41348,6 +41535,15 @@
       "note": "EU via Enterprise custom regions."
     },
     {
+      "platform": "Chutes",
+      "provider": "Chutes",
+      "model_count": 13,
+      "eu_hosted": false,
+      "non_us": false,
+      "country": "US",
+      "note": "TEE models available; node location not EU-pinned."
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Google AI Studio",
       "model_count": 13,
@@ -41400,15 +41596,6 @@
       "non_us": true,
       "country": "China",
       "note": ""
-    },
-    {
-      "platform": "OpenRouter",
-      "provider": "Chutes",
-      "model_count": 8,
-      "eu_hosted": false,
-      "non_us": false,
-      "country": "US",
-      "note": "TEE models available; node location not EU-pinned."
     },
     {
       "platform": "OpenRouter",

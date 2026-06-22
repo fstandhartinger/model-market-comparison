@@ -1,0 +1,20 @@
+{
+  "source": "Chutes — llm.chutes.ai/v1/models (first-party)",
+  "collected_at": "2026-06-22",
+  "method": "GET https://llm.chutes.ai/v1/models. This endpoint lists Chutes' confidential-compute (TEE) catalogue; every model carries confidential_compute:true and runs in a Trusted Execution Environment (Intel TDX CPU + NVIDIA H100/H200 confidential computing). Prices are price.input.usd / price.output.usd, already per 1M tokens. model_name is the base model (vendor prefix and -TEE/-FP8 quant suffixes stripped) so offers attach to the existing model families.",
+  "models": [
+    { "model_name": "Qwen3-32B", "provider_org": "Alibaba", "input_per_1m_usd": 0.104, "output_per_1m_usd": 0.416, "context_length": 40960, "confidential_compute": true, "tee_model_id": "Qwen/Qwen3-32B-TEE" },
+    { "model_name": "gemma-4-31B", "provider_org": "Google", "input_per_1m_usd": 0.12, "output_per_1m_usd": 0.37, "context_length": 131072, "confidential_compute": true, "tee_model_id": "google/gemma-4-31B-turbo-TEE" },
+    { "model_name": "GLM-5.1", "provider_org": "Z.ai", "input_per_1m_usd": 0.98, "output_per_1m_usd": 3.08, "context_length": 202752, "confidential_compute": true, "tee_model_id": "zai-org/GLM-5.1-TEE" },
+    { "model_name": "Kimi-K2.6", "provider_org": "Moonshot AI", "input_per_1m_usd": 0.66, "output_per_1m_usd": 3.5, "context_length": 262144, "confidential_compute": true, "tee_model_id": "moonshotai/Kimi-K2.6-TEE" },
+    { "model_name": "DeepSeek-V3.2", "provider_org": "DeepSeek", "input_per_1m_usd": 1.0, "output_per_1m_usd": 1.0, "context_length": 131072, "confidential_compute": true, "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE" },
+    { "model_name": "Kimi-K2.5", "provider_org": "Moonshot AI", "input_per_1m_usd": 0.44, "output_per_1m_usd": 2.0, "context_length": 262144, "confidential_compute": true, "tee_model_id": "moonshotai/Kimi-K2.5-TEE" },
+    { "model_name": "GLM-5", "provider_org": "Z.ai", "input_per_1m_usd": 0.95, "output_per_1m_usd": 2.55, "context_length": 202752, "confidential_compute": true, "tee_model_id": "zai-org/GLM-5-TEE" },
+    { "model_name": "Qwen3.5-397B-A17B", "provider_org": "Alibaba", "input_per_1m_usd": 0.45, "output_per_1m_usd": 3.0, "context_length": 262144, "confidential_compute": true, "tee_model_id": "Qwen/Qwen3.5-397B-A17B-TEE" },
+    { "model_name": "Qwen3.6-27B", "provider_org": "Alibaba", "input_per_1m_usd": 0.3, "output_per_1m_usd": 2.0, "context_length": 262144, "confidential_compute": true, "tee_model_id": "Qwen/Qwen3.6-27B-TEE" },
+    { "model_name": "MiniMax-M2.5", "provider_org": "MiniMax", "input_per_1m_usd": 0.15, "output_per_1m_usd": 1.2, "context_length": 196608, "confidential_compute": true, "tee_model_id": "MiniMaxAI/MiniMax-M2.5-TEE" },
+    { "model_name": "Qwen3-235B-A22B", "provider_org": "Alibaba", "input_per_1m_usd": 0.2989, "output_per_1m_usd": 1.1957, "context_length": 262144, "confidential_compute": true, "tee_model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507-TEE" },
+    { "model_name": "GLM-5.2", "provider_org": "Z.ai", "input_per_1m_usd": 1.4, "output_per_1m_usd": 4.4, "context_length": 1048576, "confidential_compute": true, "tee_model_id": "zai-org/GLM-5.2-TEE" },
+    { "model_name": "Mistral-Nemo", "provider_org": "Mistral", "input_per_1m_usd": 0.0245, "output_per_1m_usd": 0.0978, "context_length": null, "confidential_compute": true, "tee_model_id": "unsloth/Mistral-Nemo-Instruct-2407-TEE" }
+  ]
+}

@@ -13,6 +13,7 @@ interface SettingsState {
   hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
   hideFable: boolean;       // hide Claude Fable (on by default)
   minScore: number;         // hide models scoring below this (score-aware default)
+  teeOnly: boolean;         // only models with a TEE / confidential-compute offer
   providers: string[];     // selected provider keys; empty = all
   families: string[];      // selected model family keys; empty = all
 }
@@ -27,13 +28,14 @@ interface SettingsCtx extends SettingsState {
   setHideGptOpus: (b: boolean) => void;
   setHideFable: (b: boolean) => void;
   setMinScore: (n: number) => void;
+  setTeeOnly: (b: boolean) => void;
   setProviders: (k: string[]) => void;
   setFamilies: (k: string[]) => void;
   providerSet: Set<string> | null; // null = all
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), providers: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providers: [], families: [] };
 // v2: reset persisted state. v1 could store an explicit "all providers" list (via the
 // old "Select all" button); when new providers were later added, that stale set excluded
 // them (e.g. Nebius), wrongly filtering models. v2 starts clean (empty = all).
@@ -67,6 +69,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
     setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
+    setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
     setProviders: (providers) => setState((s) => ({ ...s, providers })),
     setFamilies: (families) => setState((s) => ({ ...s, families })),
     providerSet: state.providers.length ? new Set(state.providers) : null,

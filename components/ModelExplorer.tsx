@@ -46,6 +46,8 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     if (Number.isFinite(maxC)) r = r.filter((x) => x.cost != null && x.cost <= maxC);
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
     if (hasProviderOnly) r = r.filter((x) => x.ncheap > 0);
+    // "TEE only": keep models with at least one TEE / confidential-compute offer.
+    if (s.teeOnly) r = r.filter((x) => (data.offersByFamily[x.m.family_key] || []).some((o) => o.tee));
 
     const dir = asc ? 1 : -1;
     r.sort((a, b) => {
@@ -56,7 +58,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, openFilter, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.teeOnly, openFilter, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);

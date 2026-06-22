@@ -32,6 +32,7 @@ export interface Offer {
   notes?: string;
   or_model_id?: string;
   status?: number | null;
+  tee?: boolean; // runs in a Trusted Execution Environment (confidential compute)
 }
 
 export interface CopilotPricing {

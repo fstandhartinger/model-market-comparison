@@ -11,6 +11,7 @@ export interface ClientOffer {
   region: string;
   estimated?: boolean;
   notes?: string;
+  tee?: boolean;
 }
 
 export interface ClientModel {
@@ -74,7 +75,7 @@ export function clientData(ds: Dataset): ClientData {
         key: offerKey(o.platform, o.provider),
         source: o.source, provider: o.provider, platform: o.platform,
         input_per_1m: o.input_per_1m, output_per_1m: o.output_per_1m,
-        region: o.region, estimated: o.estimated, notes: o.notes,
+        region: o.region, estimated: o.estimated, notes: o.notes, tee: o.tee,
       }));
     }
     return {
