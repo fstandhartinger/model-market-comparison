@@ -74,6 +74,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           <h2 className="mb-3 font-semibold">Benchmarks</h2>
           <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
             <Metric label="AA Coding Index" value={num(b.aa_coding_index)} hi />
+            <Metric label="AA Coding Agent Index" value={num(b.aa_coding_agent_index)} hi />
             <Metric label="AA Intelligence Index" value={num(b.aa_intelligence_index)} hi />
             <Metric label="DesignArena Frontend Elo" value={num(da?.frontend?.elo, 0)} hi />
             <Metric label="DesignArena Full-Stack Elo" value={num(da?.fullstack?.elo, 0)} hi />

@@ -38,12 +38,13 @@ All three appear identically in:
 | Model | Maker | in $/1M | out $/1M | cache read $/1M | quant | ctx |
 |-------|-------|---------|----------|-----------------|-------|-----|
 | GLM 5.1 | Z.ai | 1.40 | 4.40 | 0.26 | fp8 | 202K |
-| Kimi K2.6 | Moonshot AI | 0.68* | 3.50 | 0.25 | int4 | 262K (multimodal) |
+| Kimi K2.6 | Moonshot AI | 0.67* | 3.50 | 0.20 | int4 | 262K (multimodal) |
 | MiniMax M2.5 | MiniMax | 0.15 | 0.90 | 0.05 | fp8 | 196K |
 
-\* Kimi K2.6 input price: `api.inceptron.io` and OpenRouter both report **$0.68/1M**;
-the rendered website models page shows **$0.73/1M**. The machine-readable API value
-($0.68) is used as canonical in `inceptron.json`; note the discrepancy on refresh.
+\* Kimi K2.6 input price: `api.inceptron.io` and OpenRouter both now report
+**$0.67/1M** (down from $0.68 on the prior snapshot); cache-read also dropped to
+$0.20/1M (was $0.25). The machine-readable API value ($0.67) is used as canonical
+in `inceptron.json`. Output unchanged at $3.50/1M.
 
 ## Models NOT served (despite being mentioned on the site)
 The homepage / models page mention "Run and scale Llama, Qwen, Kimi, and DeepSeek",

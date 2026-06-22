@@ -1,6 +1,6 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-06-17 (75 text LLMs)
+**Last collected:** 2026-06-18 (76 text LLMs)
 **Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
 
 ## TL;DR refresh recipe (2026-06-17)
@@ -26,8 +26,10 @@ items to `/tmp/azure_raw.json`).
   through the `Azure Fireworks Models` product (Fireworks-on-Azure). Meter pattern:
   `FW <Model> Inp DZ Tokens` / `FW <Model> Outp DZ Tokens` (also `Cache Inp` = skip).
   These have **DataZone EU tier only — no Global tier**. Prices identical across all 6 EU regions.
-- NOT found on Azure as of 2026-06-17: Kimi K2.7, GLM 5.2, MiniMax M3, MiMo (any), Qwen
-  (any), and any Anthropic Claude (Opus/Sonnet) — searched all fields, zero hits.
+- NOT found on Azure as of 2026-06-18 (re-verified, zero substring hits in all fields):
+  Kimi K2.7, GLM 5.2, MiniMax M3/MiniMax 3, MiMo (any), Qwen (any), and any Anthropic
+  Claude (Opus/Sonnet/Anthropic). The Fireworks catalog is unchanged from 2026-06-17:
+  Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7, DeepSeek V3.2/V4-Pro, GPT OSS 120B only.
 - DeepSeek V4 Pro / V3.2 exist BOTH first-party (`Azure Deepseek Models`, has Global tier)
   AND via Fireworks (DataZone-only); both are listed (Fireworks ones suffixed "(Fireworks)").
 

@@ -1,14 +1,22 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-06-17",
-  "method": "AWS Price List bulk API (EU region indexes, version 20260616180421) for per-token on-demand; pricing page + web search for Anthropic Claude / Cohere / Titan gaps not in EU bulk data.",
+  "collected_at": "2026-06-18",
+  "method": "AWS Price List bulk API (EU region indexes, version 20260619225109) for per-token on-demand; pricing page + web search for Anthropic Claude / Cohere gaps not in EU bulk data.",
   "models": [
+    {
+      "model_name": "Amazon Titan Text Express",
+      "provider_org": "Amazon",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 0.863,
+      "region": "eu-central-1",
+      "notes": ""
+    },
     {
       "model_name": "Nova 2.0 Lite",
       "provider_org": "Amazon",
-      "input_per_1m_usd": 0.195,
-      "output_per_1m_usd": 1.635,
+      "input_per_1m_usd": 0.39,
+      "output_per_1m_usd": 3.597,
       "region": "eu-central-1",
       "notes": ""
     },
@@ -23,23 +31,23 @@
     {
       "model_name": "Nova 2.0 Pro",
       "provider_org": "Amazon",
-      "input_per_1m_usd": 0.815,
-      "output_per_1m_usd": 6.54,
+      "input_per_1m_usd": 1.63,
+      "output_per_1m_usd": 13.08,
       "region": "eu-central-1",
       "notes": ""
     },
     {
       "model_name": "Nova Lite",
       "provider_org": "Amazon",
-      "input_per_1m_usd": 0.039,
-      "output_per_1m_usd": 0.156,
+      "input_per_1m_usd": 0.078,
+      "output_per_1m_usd": 0.312,
       "region": "eu-central-1",
       "notes": ""
     },
     {
       "model_name": "Nova Micro",
       "provider_org": "Amazon",
-      "input_per_1m_usd": 0.023,
+      "input_per_1m_usd": 0.046,
       "output_per_1m_usd": 0.184,
       "region": "eu-central-1",
       "notes": ""
@@ -51,6 +59,14 @@
       "output_per_1m_usd": 4.2,
       "region": "eu-central-1",
       "notes": ""
+    },
+    {
+      "model_name": "Amazon Titan Text Lite",
+      "provider_org": "Amazon",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.25,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
     },
     {
       "model_name": "DeepSeek V3.1",
@@ -115,6 +131,22 @@
       "output_per_1m_usd": 0.096,
       "region": "eu-central-1",
       "notes": ""
+    },
+    {
+      "model_name": "Llama 3 70B",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 3.45,
+      "output_per_1m_usd": 4.55,
+      "region": "eu-west-2",
+      "notes": "not in eu-central-1; eu-west-2 price"
+    },
+    {
+      "model_name": "Llama 3 8B",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 0.39,
+      "output_per_1m_usd": 0.78,
+      "region": "eu-west-2",
+      "notes": "not in eu-central-1; eu-west-2 price"
     },
     {
       "model_name": "Llama 3.2 1B",
@@ -197,12 +229,36 @@
       "notes": ""
     },
     {
+      "model_name": "Mistral 7B",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.26,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
+    },
+    {
+      "model_name": "Mistral Large",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 5.2,
+      "output_per_1m_usd": 15.6,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
+    },
+    {
       "model_name": "Mistral Large 3",
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 1.8,
       "region": "eu-central-1",
       "notes": ""
+    },
+    {
+      "model_name": "Mixtral 8x7B",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.59,
+      "output_per_1m_usd": 0.91,
+      "region": "eu-west-3",
+      "notes": "not in eu-central-1; eu-west-3 price"
     },
     {
       "model_name": "Pixtral Large 25.02",
@@ -295,8 +351,8 @@
     {
       "model_name": "gpt-oss-120b",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.1,
-      "output_per_1m_usd": 0.4,
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.79,
       "region": "eu-central-1",
       "notes": ""
     },
@@ -319,7 +375,7 @@
     {
       "model_name": "Qwen3 32B",
       "provider_org": "Qwen",
-      "input_per_1m_usd": 0.1,
+      "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.79,
       "region": "eu-central-1",
       "notes": ""
@@ -327,7 +383,7 @@
     {
       "model_name": "Qwen3 Coder 30B A3B",
       "provider_org": "Qwen",
-      "input_per_1m_usd": 0.1,
+      "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.79,
       "region": "eu-central-1",
       "notes": ""
@@ -397,46 +453,6 @@
       "notes": ""
     },
     {
-      "model_name": "Llama 3 70B",
-      "provider_org": "Meta",
-      "input_per_1m_usd": 3.45,
-      "output_per_1m_usd": 4.55,
-      "region": "eu-west-2",
-      "notes": "not in eu-central-1; eu-west-2 price"
-    },
-    {
-      "model_name": "Llama 3 8B",
-      "provider_org": "Meta",
-      "input_per_1m_usd": 0.39,
-      "output_per_1m_usd": 0.78,
-      "region": "eu-west-2",
-      "notes": "not in eu-central-1; eu-west-2 price"
-    },
-    {
-      "model_name": "Mistral 7B",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.2,
-      "output_per_1m_usd": 0.26,
-      "region": "eu-west-3",
-      "notes": "not in eu-central-1; eu-west-3 price"
-    },
-    {
-      "model_name": "Mistral Large",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 5.2,
-      "output_per_1m_usd": 15.6,
-      "region": "eu-west-3",
-      "notes": "not in eu-central-1; eu-west-3 price"
-    },
-    {
-      "model_name": "Mixtral 8x7B",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.59,
-      "output_per_1m_usd": 0.91,
-      "region": "eu-west-3",
-      "notes": "not in eu-central-1; eu-west-3 price"
-    },
-    {
       "model_name": "Claude Opus 4.6",
       "provider_org": "Anthropic",
       "input_per_1m_usd": 5.0,
@@ -475,14 +491,6 @@
       "output_per_1m_usd": 0.6,
       "region": "us-east-1 (not offered in EU regions)",
       "notes": "Not in EU bulk API; price from public pricing page, US region."
-    },
-    {
-      "model_name": "Amazon Titan Text Lite",
-      "provider_org": "Amazon",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 0.4,
-      "region": "us-east-1 (legacy)",
-      "notes": "Legacy Titan; not in EU bulk API. Price per 1K converted ($0.0003/$0.0004). Largely superseded by Nova."
     }
   ]
 }

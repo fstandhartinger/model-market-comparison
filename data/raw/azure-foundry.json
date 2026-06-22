@@ -1,8 +1,8 @@
 {
   "source": "Azure AI Foundry",
   "region": "swedencentral",
-  "collected_at": "2026-06-17",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across EU regions; Global tier list price unless noted",
+  "collected_at": "2026-06-18",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across EU regions; Global tier list price unless noted (Fireworks/Phi tier-locked)",
   "models": [
     {
       "model_name": "GPT-5",
@@ -197,6 +197,14 @@
       "notes": "Global; rolling chat-latest (2026-05-28)"
     },
     {
+      "model_name": "gpt-oss-120B",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 0.6,
+      "region": "swedencentral",
+      "notes": "Global; open-weight"
+    },
+    {
       "model_name": "o4-mini",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.1,
@@ -317,14 +325,6 @@
       "notes": "Global"
     },
     {
-      "model_name": "gpt-oss-120B",
-      "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.6,
-      "region": "swedencentral",
-      "notes": "Global; open-weight"
-    },
-    {
       "model_name": "DeepSeek-V4 Pro",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.74,
@@ -394,7 +394,7 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "swedencentral",
-      "notes": "Global; DataZone EU in/out 1.375/2.75"
+      "notes": "Global; DataZone EU in/out 1.375/2.75; long-context (>128k) in/out 2.5/5.0"
     },
     {
       "model_name": "Grok 4.2",
@@ -603,6 +603,14 @@
       "output_per_1m_usd": 1.85,
       "region": "swedencentral",
       "notes": "Fireworks-hosted alt of DeepSeek V3.2; DataZone EU tier"
+    },
+    {
+      "model_name": "gpt-oss-120B (Fireworks)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.165,
+      "output_per_1m_usd": 0.66,
+      "region": "swedencentral",
+      "notes": "Fireworks-hosted open-weight; DataZone EU tier"
     }
   ]
 }

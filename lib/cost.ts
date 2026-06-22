@@ -3,6 +3,7 @@ import type { ScoreKey } from "./types";
 
 export const SCORE_OPTIONS: ScoreKey[] = [
   "composite",
+  "aa_coding_agent",
   "designarena_fullstack",
   "designarena_frontend",
   "aa_coding_index",

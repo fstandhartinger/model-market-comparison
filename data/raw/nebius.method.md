@@ -32,6 +32,12 @@ OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.
 ## Result
 - **29 public endpoints** rendered (header showed `Public 29 / Private 0` for the
   anonymous view). Wrote **28** to `nebius.json`.
+- **Refreshed 2026-06-18:** catalog & prices unchanged vs prior snapshot. A new
+  banner warns "Some public serverless endpoints will be deprecated on June 22."
+  Models now carrying a `Deprecated` tag on the page: **GLM-5**, **DeepSeek-V3.2**,
+  and **gpt-oss-120b** (flagged in each model's `notes`). INTELLECT-3 is no longer
+  flagged deprecated in this render. Prices for all 28 priced endpoints are
+  identical to the previous capture.
 - **Omitted (1):** `Qwen3-Embedding-8B` ($0.01/1M in, 4096 dims) — an embedding
   model with no output-token price; not a text/chat LLM.
 - Vision/multimodal models that are still text-token-priced ARE included and flagged

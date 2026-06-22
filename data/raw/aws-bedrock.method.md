@@ -1,12 +1,12 @@
 # AWS Bedrock pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/aws-bedrock.json`
-**Last collected:** 2026-06-17 (bulk API version `20260616180421`)
-**Primary method:** AWS Price List Bulk API (no auth). Pricing-page WebFetch + web search used only to fill gaps the bulk API doesn't cover (Anthropic Claude, Cohere, Titan).
+**Last collected:** 2026-06-18 (bulk API version `20260619225109`)
+**Primary method:** AWS Price List Bulk API (no auth). Pricing-page WebFetch + web search used only to fill gaps the bulk API doesn't cover (Anthropic Claude, Cohere).
 
-**2026-06-17 snapshot result:** 60 models — 49 priced directly from `eu-central-1`, 8 from other EU regions (`eu-west-3`: Mistral 7B / Mistral Large / Mixtral 8x7B; `eu-west-2`: Llama 3 8B / 70B), 3 gap-filled (3 Anthropic Claude served via EU cross-region profile, + Cohere/Titan US-region). New since the prior (2026-06-15) snapshot: **Nova 2.0 Omni, Nova 2.0 Pro, Gemma 4 (26B A4B / 31B / E2B)**. Image/audio-only models with no text-token meter (Nova Canvas, Nova Sonic, Nova Sonic 2.0) are intentionally excluded.
+**2026-06-18 snapshot result:** 61 models — 54 priced directly from `eu-central-1`, 2 from `eu-west-2` (Llama 3 8B / 70B), 4 from `eu-west-3` (Mistral 7B / Mistral Large / Mixtral 8x7B / Amazon Titan Text Lite), 5 gap-filled (3 Anthropic Claude served via EU cross-region profile + 2 Cohere Command US-region). New since the prior (2026-06-17) snapshot: **Amazon Titan Text Express (eu-central-1, $0.30 in / $0.863 out per 1M)** now appears directly in the EU bulk API, and **Amazon Titan Text Lite** is now sourced from the `eu-west-3` bulk index ($0.20/$0.25 per 1M) instead of the US pricing page, replacing the previous US-region gap-fill. Image/audio-only and embedding models with no text-token meter (Nova Canvas, Nova Sonic/2.0, Titan Embeddings G1/V2) are intentionally excluded.
 
-**Models explicitly checked for and NOT on Bedrock (2026-06-17):** Kimi K2.6 / K2.7, GLM 5.1 / 5.2, MiniMax M2.7 / M3, MiMo, DeepSeek V4, Claude Opus 4.7 / 4.8 — none are present in the bulk API EU indexes or on the pricing page. Latest Bedrock versions are Kimi K2.5, GLM 5, MiniMax M2.5, DeepSeek V3.2, Claude Opus 4.6 / Sonnet 4.6 / Haiku 4.5. (As always Bedrock carries no OpenAI GPT or Google Gemini chat models — only Google Gemma open weights and OpenAI gpt-oss.)
+**Models explicitly checked for and NOT on Bedrock (2026-06-18):** Kimi K2.6 / K2.7, GLM 5.1 / 5.2, MiniMax M2.6 / M2.7 / M3, MiMo, DeepSeek V4, Claude Opus 4.7 / 4.8 — none are present in the bulk API EU indexes or on the pricing page. Latest Bedrock versions remain Kimi K2.5, GLM 5, MiniMax M2.5, DeepSeek V3.2, Claude Opus 4.6 / Sonnet 4.6 / Haiku 4.5. (As always Bedrock carries no OpenAI GPT or Google Gemini chat models — only Google Gemma open weights and OpenAI gpt-oss.)
 
 ## 1. Price List Bulk API (primary, no auth, no AWS account)
 

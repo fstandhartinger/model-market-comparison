@@ -26,6 +26,7 @@ export interface ClientModel {
   scores: {
     composite: number | null;
     aa_coding_index: number | null;
+    aa_coding_agent: number | null;
     aa_intelligence_index: number | null;
     designarena_frontend: number | null;
     designarena_fullstack: number | null;
@@ -89,6 +90,7 @@ export function clientData(ds: Dataset): ClientData {
       scores: {
         composite: null, // filled in below once cross-model ranges are known
         aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
+        aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
         aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
         designarena_frontend: m.designarena?.frontend?.elo ?? null,
         designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
@@ -103,7 +105,7 @@ export function clientData(ds: Dataset): ClientData {
 
   // Composite score: min-max normalize each of the four base scores to 0–100
   // across all models, then average each model's available normalized components.
-  const baseKeys = ["aa_coding_index", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
+  const baseKeys = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
   const ranges: Record<string, { min: number; max: number } | null> = {};
   for (const k of baseKeys) {
     const vals = models.map((m) => m.scores[k]).filter((v): v is number => v != null);

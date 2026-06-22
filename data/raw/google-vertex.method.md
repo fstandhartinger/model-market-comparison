@@ -1,7 +1,7 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-06-17 (refreshed)
-**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 41 models
+**Collected:** 2026-06-18 (refreshed)
+**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 42 models
 
 ## Sources
 
@@ -17,7 +17,18 @@ tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
 
-## What changed since the prior snapshot (was 29 models, now 41)
+## What changed at the 2026-06-18 refresh (was 41, now 42)
+
+Compared the live page to the 2026-06-17 snapshot — pricing is essentially
+unchanged in 24h. Only delta: **Gemini 2.0 Flash Lite** ($0.075 in / $0.30 out)
+was added as its own row (it was on the page before but omitted from the JSON).
+All Gemini, Claude EU-region (eu / europe-west1), Grok, DeepSeek, MiniMax, Kimi,
+GLM, Qwen, gpt-oss, Llama, and Mistral rates verified identical to the prior
+snapshot. The Claude region tables (one `<section data-tab=...>` per region inside
+the `<devsite-selector>`) are all present in the DOM at once, so no clicking is
+needed — read each section's `innerText` directly. EU surcharge is exactly +10%.
+
+## What changed at the prior refresh (was 29 models, then 41)
 
 NEW partner makers/models now present on Vertex Model Garden:
 - **xAI Grok** (entirely new section): Grok 4.3, Grok 4.20 Reasoning/Non-Reasoning,
@@ -86,9 +97,18 @@ tier ($2.50/$5.00) noted in its rows.
    `\n`/`\t`, then grep the Gemini 3 / 2.5 tables and each partner header
    (Anthropic, xAI, Deepseek, MiniMax, Moonshot, Qwen, GLM, OpenAI, Meta's Llama,
    Mistral AI).
-3. For Claude EU rates: click the region selector links `EU Multi-Region (eu)`
-   and `europe-west1` (in the "More" dropdown) and re-dump innerText each time —
-   the two EU regions list different model subsets.
+3. For Claude EU rates: NO clicking needed. The region selector is a
+   `<devsite-selector>` web component whose region panes are all `<section
+   data-tab="...">` siblings present in the DOM simultaneously. Read each region's
+   text directly, e.g.:
+   `agent-browser eval '(() => { const ds=[...document.querySelectorAll("devsite-selector")].find(d=>/EU Multi-Region/.test(d.textContent)); const s=[...ds.querySelectorAll("section")]; return s.find(x=>x.getAttribute("data-tab")==="eu-multi-region-eu").innerText; })()'`
+   Region data-tabs: `global`, `us-multi-region-us`, `eu-multi-region-eu`,
+   `us-east5`, `europe-west1`, `asia-southeast1`, `asia-east1`. The two EU regions
+   list different model subsets (eu: Fable 5 + Opus 4.8/4.7; europe-west1: Opus
+   4.6/4.5 + Sonnet 4.6/4.5 + Haiku 4.5).
+   NOTE: use a dedicated `agent-browser --session vertex ...` — the shared `default`
+   session can be hijacked by other concurrent agent-browser users and drift to a
+   different URL mid-scrape.
 4. Update the standard ≤200K base-tier input/output numbers. Re-check the
    non-global Gemini 3+ surcharge and whether it has gone into effect
    (2026-07-01 cutover) and the Claude EU surcharge (~10%).

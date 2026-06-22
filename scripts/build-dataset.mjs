@@ -77,6 +77,10 @@ const FAMILY_ALIASES = {
   "claude-fable": "claude-fable-5",
   "claude-opus": "claude-opus-4.8",
   "claude-sonnet": "claude-sonnet-4.6",
+  // AA's Coding Agent Index drops the "Claude" prefix (e.g. "Opus 4.8", "Sonnet 4.6").
+  "opus-4.8": "claude-opus-4.8", "opus-4.7": "claude-opus-4.7", "opus-4.6": "claude-opus-4.6", "opus-4.5": "claude-opus-4.5",
+  "sonnet-4.6": "claude-sonnet-4.6", "sonnet-4.5": "claude-sonnet-4.5",
+  "fable-5": "claude-fable-5", "haiku-4.5": "claude-haiku-4.5",
 };
 const canonFamily = (k) => FAMILY_ALIASES[k] || k;
 
@@ -164,6 +168,7 @@ async function build() {
   const nebius = await readJSON("nebius.json").catch(() => ({ models: [] }));
   const inceptron = await readJSON("inceptron.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
+  const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
   const copilot = await readJSON("github-copilot.json");
   const claude = await readJSON("claude-code.json");
 
@@ -359,7 +364,22 @@ async function build() {
     }
   }
 
+  // AA Coding Agent Index: per family, the HIGHEST score across all harnesses
+  // (Claude Code / Codex / Cursor CLI / …). Scores are 0–1 → store as 0–100.
+  const agentMax = new Map();
+  for (const r of codingAgents.rows || []) {
+    const sc = num(r.score);
+    if (sc == null) continue;
+    const { familyKey } = normalizeFamily(r.model_name);
+    const v = sc * 100;
+    if (!agentMax.has(familyKey) || v > agentMax.get(familyKey)) agentMax.set(familyKey, Math.round(v * 10) / 10);
+  }
+
   const modelRows = [...models.values()];
+  // Attach the family-level Coding Agent Index to every variant row.
+  for (const r of modelRows) {
+    if (agentMax.has(r.family_key)) { r.benchmarks = r.benchmarks || {}; r.benchmarks.aa_coding_agent_index = agentMax.get(r.family_key); }
+  }
   // Apply documented benchmark overrides (e.g. suppress a corrupt AA value).
   for (const ov of benchmarkOverrides) {
     for (const r of modelRows) {
@@ -372,7 +392,7 @@ async function build() {
     r.org = canonOrg(r.org);
     r.featured = FEATURED_RE.test(r.family_key);
     const b = r.benchmarks || {};
-    r.has_benchmark = b.aa_coding_index != null || b.aa_intelligence_index != null ||
+    r.has_benchmark = b.aa_coding_index != null || b.aa_intelligence_index != null || b.aa_coding_agent_index != null ||
       (r.designarena && (r.designarena.frontend || r.designarena.fullstack));
     r.has_pricing = r.offers.some((o) => o.input_per_1m != null || o.output_per_1m != null);
   }
@@ -410,7 +430,7 @@ async function build() {
       openrouter: or.collected_at, artificialanalysis: aa.collected_at, designarena: da.collected_at,
       aws_bedrock: aws.collected_at, azure_foundry: azure.collected_at,
       google_vertex: vertex.collected_at, nebius: nebius.collected_at, inceptron: inceptron.collected_at,
-      github_copilot: copilot.collected_at, claude_code: claude.collected_at,
+      aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
     },
     models: modelRows,
     providers,

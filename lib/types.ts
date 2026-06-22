@@ -1,6 +1,7 @@
 export interface Benchmarks {
   aa_intelligence_index?: number | null;
   aa_coding_index?: number | null;
+  aa_coding_agent_index?: number | null;
   aa_math_index?: number | null;
   aa_livecodebench?: number | null;
   aa_scicode?: number | null;
@@ -75,6 +76,7 @@ export interface Dataset {
 export type ScoreKey =
   | "composite"
   | "aa_coding_index"
+  | "aa_coding_agent"
   | "aa_intelligence_index"
   | "designarena_frontend"
   | "designarena_fullstack";
@@ -82,6 +84,7 @@ export type ScoreKey =
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (blended, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
+  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index (best harness)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
   designarena_fullstack: "DesignArena — Agentic Web Dev (Full-Stack) Elo",

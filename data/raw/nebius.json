@@ -3,7 +3,7 @@
   "region": "eu (Finland/France)",
   "collected_at": "2026-06-18",
   "listing_url": "https://tokenfactory.nebius.com/models",
-  "method": "agent-browser (headless Chromium) rendered the public Token Factory model catalog; parsed per-model In/Out USD per 1M tokens, tier, and served region from the page. Embedding model omitted (no output-token price).",
+  "method": "agent-browser (headless Chromium) rendered the public Token Factory model catalog (JS SPA); parsed per-model In/Out USD per 1M tokens, tier, and served region from each card. Header showed Public 29 / Private 0. Embedding model (Qwen3-Embedding-8B) omitted (no output-token price). region:'eu' set only for EU-served (eu-north1) models; us-central1/uk-south1 served models flagged region:'us'/'uk' with raw region in notes. NOTE: a banner warns some public serverless endpoints will be deprecated on June 22; models tagged 'Deprecated' on the page are flagged in notes.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -11,7 +11,7 @@
       "input_per_1m_usd": 1.4,
       "output_per_1m_usd": 4.4,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; tag: New; id GLM-5.2"
     },
     {
       "model_name": "Nemotron 3 Ultra 550B",
@@ -19,7 +19,7 @@
       "input_per_1m_usd": 1.0,
       "output_per_1m_usd": 3.0,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; tag: New; id Nemotron-3-Ultra-550b-a55b"
     },
     {
       "model_name": "Cosmos3 Super Reasoner",
@@ -27,7 +27,7 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.3,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1; vision/multimodal (text-token priced)"
+      "notes": "tier: Base; served region: eu-north1; tag: New; vision/multimodal (text-token priced); 33B reasoning"
     },
     {
       "model_name": "MiniCPM-V 4.5",
@@ -43,7 +43,7 @@
       "input_per_1m_usd": 0.95,
       "output_per_1m_usd": 4.0,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; native multimodal agentic"
     },
     {
       "model_name": "DeepSeek V4 Pro",
@@ -51,7 +51,7 @@
       "input_per_1m_usd": 1.75,
       "output_per_1m_usd": 3.5,
       "region": "uk",
-      "notes": "tier: Base; served region: uk-south1"
+      "notes": "tier: Base; served region: uk-south1; id DeepSeek-V4-Pro"
     },
     {
       "model_name": "Nemotron 3 Nano Omni",
@@ -75,7 +75,7 @@
       "input_per_1m_usd": 1.4,
       "output_per_1m_usd": 4.4,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id GLM-5.1"
     },
     {
       "model_name": "MiniMax M2.5",
@@ -83,7 +83,7 @@
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 1.2,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; agentic coding"
     },
     {
       "model_name": "Nemotron 3 Super 120B",
@@ -91,7 +91,7 @@
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 0.9,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; id Nemotron-3-Super-120b-a12b"
     },
     {
       "model_name": "Qwen3.5-397B-A17B",
@@ -99,7 +99,7 @@
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 3.6,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; multimodal hybrid MoE"
     },
     {
       "model_name": "GLM 5",
@@ -107,7 +107,7 @@
       "input_per_1m_usd": 1.0,
       "output_per_1m_usd": 3.2,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; DEPRECATED on page"
     },
     {
       "model_name": "DeepSeek V3.2",
@@ -115,7 +115,7 @@
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 0.45,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1"
+      "notes": "tier: Base; served region: us-central1; DEPRECATED on page"
     },
     {
       "model_name": "Hermes 4 405B",
@@ -139,7 +139,7 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; DEPRECATED on page"
     },
     {
       "model_name": "INTELLECT-3",
@@ -147,7 +147,7 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 1.1,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; 100B+ MoE"
     },
     {
       "model_name": "Qwen3-235B",
@@ -155,7 +155,7 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.6,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Qwen3-235B-A22B-Instruct-2507"
     },
     {
       "model_name": "Qwen3-30B-A3B",
@@ -163,7 +163,7 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.3,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Qwen3-30B-A3B-Instruct-2507"
     },
     {
       "model_name": "Qwen3-Next-80B",
@@ -171,7 +171,7 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 1.2,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Qwen3-Next-80B-A3B-Thinking"
     },
     {
       "model_name": "Qwen3-32B",
@@ -187,7 +187,7 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.3,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Gemma-3-27b-it"
     },
     {
       "model_name": "Llama 3.1 Nemotron Ultra 253B",
@@ -195,7 +195,7 @@
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 1.8,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Llama-3_1-Nemotron-Ultra-253B-v1"
     },
     {
       "model_name": "Llama 3.1 Nemotron Ultra 253B (m)",
@@ -211,7 +211,7 @@
       "input_per_1m_usd": 0.06,
       "output_per_1m_usd": 0.24,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Nemotron-3-Nano-30B-A3B"
     },
     {
       "model_name": "Qwen2.5-VL-72B",
@@ -227,7 +227,7 @@
       "input_per_1m_usd": 0.13,
       "output_per_1m_usd": 0.4,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1"
+      "notes": "tier: Base; served region: eu-north1; id Llama-3.3-70B-Instruct"
     }
   ]
 }
