@@ -34,7 +34,10 @@ interface SettingsCtx extends SettingsState {
 }
 
 const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), providers: [], families: [] };
-const KEY = "mmc.settings.v1";
+// v2: reset persisted state. v1 could store an explicit "all providers" list (via the
+// old "Select all" button); when new providers were later added, that stale set excluded
+// them (e.g. Nebius), wrongly filtering models. v2 starts clean (empty = all).
+const KEY = "mmc.settings.v2";
 
 const Ctx = createContext<SettingsCtx | null>(null);
 

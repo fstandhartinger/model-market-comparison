@@ -84,6 +84,10 @@ const FAMILY_ALIASES = {
 };
 const canonFamily = (k) => FAMILY_ALIASES[k] || k;
 
+// Providers ingested as their own first-party platform; their OpenRouter-routed
+// duplicate is dropped so each appears once in the provider list/filter.
+const DIRECT_PLATFORM_PROVIDERS = new Set(["Nebius", "Inceptron"]);
+
 // Non-text / non-LLM modalities to exclude from the comparison.
 const EXCLUDE_RE = /(image|vision-only|\bvideo\b|sora|dall|whisper|\btts\b|speech|audio|embed|rerank|moderation|ocr|guard)/i;
 
@@ -231,6 +235,9 @@ async function build() {
     const { familyKey, org } = normalizeFamily(m.id);
     const fam = family(familyKey, org);
     for (const e of m.endpoints || []) {
+      // Providers we already ingest as their own first-party platform (with EU region
+      // info) — skip their OpenRouter-routed duplicate so they appear only once.
+      if (DIRECT_PLATFORM_PROVIDERS.has(e.provider_name)) continue;
       const inP = num(e.pricing?.prompt);
       const outP = num(e.pricing?.completion);
       if (inP == null && outP == null) continue;
