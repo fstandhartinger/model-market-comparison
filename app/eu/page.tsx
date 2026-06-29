@@ -31,6 +31,17 @@ const SOVEREIGN = [
   { name: "SAP Generative AI Hub", org: "SAP (DE)", certs: "enterprise · opaque CU billing", models: "mostly proprietary frontier; open weights deprecated/BYOM", url: "https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/models-and-scenarios-in-generative-ai-hub" },
 ];
 
+// EU providers that do NOT offer a usable per-token API for benchmarked models —
+// either they serve only their own proprietary models (not in any public benchmark)
+// or they are GPU/dedicated rental only. Listed for completeness; excluded from the
+// price comparison. (Set surfaced by llm-tracker.eu.)
+const PROPRIETARY = [
+  { name: "Aleph Alpha", org: "DE", what: "Own proprietary Pharia models only — not in public benchmarks; sovereign on-prem/Gaia-X focus." },
+  { name: "IBM watsonx", org: "US/EU regions", what: "Pushes own Granite models; not benchmark-competitive for SOTA coding." },
+  { name: "GPU / dedicated rental only", org: "Hetzner, OVHcloud (bare GPU), Open Telekom Cloud, Exoscale, Scaleway GPU, IONOS GPU, CoreWeave EU, Aruba, elastx, Genesis, gridscale, Seeweb, UpCloud, Cloudiax", what: "Rent GPUs / VMs and self-host any model — no managed per-token API, so no comparable price." },
+  { name: "US-law platforms (EU region only)", org: "Hugging Face, Together AI", what: "EU data residency only via enterprise/dedicated; operating company under US law." },
+];
+
 export default async function EuPage() {
   const ds = await getDataset();
   const find = (k: string) => ds.models.find((m) => m.family_key === k);
@@ -127,6 +138,35 @@ export default async function EuPage() {
           </tbody>
         </table>
       </div>
+
+      <h2 className="mt-6 mb-2 text-lg font-semibold">⛔ Proprietary-only &amp; GPU-rental EU providers (not in the comparison)</h2>
+      <p className="mb-3 text-sm text-gray-400">
+        These EU vendors appear in residency trackers but are <b>excluded from the price comparison</b>: they either serve
+        only their own proprietary models that aren&apos;t in any public benchmark (e.g. <b>Aleph Alpha&apos;s Pharia</b>,
+        IBM Granite), or they only rent GPUs/VMs with no managed per-token API.
+      </p>
+      <div className="card overflow-x-auto">
+        <table className="dtable w-full text-sm">
+          <thead><tr>
+            <th className="px-3 py-2 text-left text-xs text-gray-400">Provider</th>
+            <th className="px-3 py-2 text-left text-xs text-gray-400">Where</th>
+            <th className="px-3 py-2 text-left text-xs text-gray-400">Why it&apos;s not listed</th>
+          </tr></thead>
+          <tbody>
+            {PROPRIETARY.map((p) => (
+              <tr key={p.name}>
+                <td className="px-3 py-2 font-medium">{p.name}</td>
+                <td className="px-3 py-2 text-xs text-gray-400">{p.org}</td>
+                <td className="px-3 py-2 text-xs text-gray-400">{p.what}</td>
+              </tr>
+            ))}
+          </tbody>
+        </table>
+      </div>
+      <p className="mt-3 text-sm text-gray-400">
+        📊 For a continuously-maintained map of which LLMs actually run on EU soil (and which providers are under the US
+        CLOUD Act), see the community <a href="https://llm-tracker.eu/" target="_blank" rel="noopener" className="text-accent">EU LLM Hosting Tracker (llm-tracker.eu) ↗</a>.
+      </p>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">Hyperscaler EU regions &amp; confidentiality</h2>
       <ul className="space-y-1.5 text-sm text-gray-300">

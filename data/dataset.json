@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-29T09:32:22.884Z",
+  "generated_at": "2026-06-29T10:22:00.491Z",
   "counts": {
-    "models": 704,
-    "families": 575,
-    "providers": 78,
-    "offers": 1700
+    "models": 707,
+    "families": 578,
+    "providers": 80,
+    "offers": 1705
   },
   "sources": {
     "openrouter": "2026-06-29",
@@ -15,6 +15,9 @@
     "google_vertex": "2026-06-23",
     "nebius": "2026-06-23",
     "inceptron": "2026-06-23",
+    "scaleway": "2026-06-29",
+    "ionos": "2026-06-29",
+    "mistral": "2026-06-29",
     "chutes": "2026-06-22",
     "aa_coding_agents": "2026-06-23",
     "github_copilot": "2026-06-15",
@@ -310,6 +313,26 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; no longer flagged deprecated (was Deprecated on 2026-06-18)"
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.65,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.15/€0.60"
+        },
+        {
+          "source": "IONOS",
+          "provider": "IONOS",
+          "platform": "IONOS",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.7,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.15/€0.65"
         }
       ],
       "designarena": {},
@@ -607,6 +630,26 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; no longer flagged deprecated (was Deprecated on 2026-06-18)"
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.65,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.15/€0.60"
+        },
+        {
+          "source": "IONOS",
+          "provider": "IONOS",
+          "platform": "IONOS",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.7,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.15/€0.65"
         }
       ],
       "designarena": {},
@@ -2437,6 +2480,26 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; id Llama-3.3-70B-Instruct"
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.97,
+          "output_per_1m": 0.97,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.90/€0.90"
+        },
+        {
+          "source": "IONOS",
+          "provider": "IONOS",
+          "platform": "IONOS",
+          "input_per_1m": 0.7,
+          "output_per_1m": 0.7,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.65/€0.65"
         }
       ],
       "designarena": {},
@@ -2474,12 +2537,23 @@
         "output_tps": 84.174,
         "ttft_s": 0.716
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "IONOS",
+          "provider": "IONOS",
+          "platform": "IONOS",
+          "input_per_1m": 1.89,
+          "output_per_1m": 1.89,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€1.75/€1.75"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "llama-3.2-90b::default",
@@ -4924,6 +4998,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global"
+        },
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 0.5,
+          "output_per_1m": 1.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "open-weight"
         }
       ],
       "designarena": {},
@@ -4997,12 +5081,23 @@
         "output_tps": 177.571,
         "ttft_s": 0.537
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "Apache-2.0"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "ministral-3-8b::default",
@@ -5152,12 +5247,33 @@
         "output_tps": 65.892,
         "ttft_s": 0.717
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.43,
+          "output_per_1m": 2.16,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.40/€2.00"
+        },
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 0.4,
+          "output_per_1m": 2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "coding, open-weights"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "magistral-1.2::medium",
@@ -5224,12 +5340,23 @@
         "output_tps": 155.261,
         "ttft_s": 0.54
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "Apache-2.0"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "devstral-small-2::default",
@@ -5298,17 +5425,6 @@
       },
       "offers": [
         {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.5,
-          "output_per_1m": 7.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-medium-3-5",
-          "status": 0
-        },
-        {
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
@@ -5317,6 +5433,26 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global"
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 1.62,
+          "output_per_1m": 8.1,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€1.50/€7.50"
+        },
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 1.5,
+          "output_per_1m": 7.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -20899,6 +21035,16 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; id Gemma-3-27b-it"
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.27,
+          "output_per_1m": 0.54,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.25/€0.50"
         }
       ],
       "designarena": {},
@@ -23148,17 +23294,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-small-2603",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Venice",
           "platform": "OpenRouter",
           "input_per_1m": 0.1875,
@@ -23205,24 +23340,12 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 2,
-          "output_per_1m": 6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mixtral-8x22b-instruct",
-          "status": 0
-        }
-      ],
+      "offers": [],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": true
+      "has_pricing": false
     },
     {
       "id": "mistral-large::default",
@@ -23254,39 +23377,6 @@
         "ttft_s": 0
       },
       "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.5,
-          "output_per_1m": 1.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-large-2512",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 2,
-          "output_per_1m": 6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-large-2407",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 2,
-          "output_per_1m": 6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-large",
-          "status": 0
-        },
         {
           "source": "AWS Bedrock",
           "provider": "AWS Bedrock",
@@ -23510,24 +23600,12 @@
         "output_tps": 0,
         "ttft_s": 0
       },
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.19999999999999998,
-          "output_per_1m": 0.6,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-saba",
-          "status": 0
-        }
-      ],
+      "offers": [],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": true
+      "has_pricing": false
     },
     {
       "id": "devstral-small::default",
@@ -23630,12 +23708,33 @@
         "output_tps": 152.358,
         "ttft_s": 0.416
       },
-      "offers": [],
+      "offers": [
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.38,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.15/€0.35"
+        },
+        {
+          "source": "IONOS",
+          "provider": "IONOS",
+          "platform": "IONOS",
+          "input_per_1m": 0.11,
+          "output_per_1m": 0.32,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.10/€0.30 (Mistral Small 24B)"
+        }
+      ],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": false
+      "has_pricing": true
     },
     {
       "id": "mistral-3::medium",
@@ -23667,17 +23766,6 @@
         "ttft_s": 0.547
       },
       "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.39999999999999997,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-medium-3",
-          "status": 0
-        },
         {
           "source": "Google Vertex AI",
           "provider": "Google Vertex AI",
@@ -23724,24 +23812,12 @@
         "output_tps": 92.461,
         "ttft_s": 0.548
       },
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.39999999999999997,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-medium-3.1",
-          "status": 0
-        }
-      ],
+      "offers": [],
       "designarena": {},
       "copilot": null,
       "featured": false,
       "has_benchmark": true,
-      "has_pricing": true
+      "has_pricing": false
     },
     {
       "id": "mistral::medium",
@@ -23809,17 +23885,6 @@
         "ttft_s": 0.587
       },
       "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.39999999999999997,
-          "output_per_1m": 2,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/devstral-2512",
-          "status": 0
-        },
         {
           "source": "AWS Bedrock",
           "provider": "AWS Bedrock",
@@ -36750,17 +36815,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.19999999999999998,
-          "output_per_1m": 0.19999999999999998,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/ministral-14b-2512",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "NextBit",
           "platform": "OpenRouter",
           "input_per_1m": 0.35,
@@ -36791,17 +36845,6 @@
       "offers": [
         {
           "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/ministral-8b-2512",
-          "status": 0
-        },
-        {
-          "source": "OpenRouter",
           "provider": "NextBit",
           "platform": "OpenRouter",
           "input_per_1m": 0.3,
@@ -36830,17 +36873,6 @@
       "aa_reference_price": {},
       "aa_speed": {},
       "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.09999999999999999,
-          "output_per_1m": 0.09999999999999999,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/ministral-3b-2512",
-          "status": 0
-        },
         {
           "source": "OpenRouter",
           "provider": "NextBit",
@@ -37008,23 +37040,11 @@
       "benchmarks": {},
       "aa_reference_price": {},
       "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.09999999999999999,
-          "output_per_1m": 0.3,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/voxtral-small-24b-2507",
-          "status": 0
-        }
-      ],
+      "offers": [],
       "designarena": {},
       "copilot": null,
       "featured": false,
-      "has_pricing": true
+      "has_pricing": false
     },
     {
       "id": "nemotron-nano-12b-v2-vl-free::default",
@@ -37819,17 +37839,6 @@
       "aa_speed": {},
       "offers": [
         {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.3,
-          "output_per_1m": 0.8999999999999999,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/codestral-2508",
-          "status": 0
-        },
-        {
           "source": "Azure AI Foundry",
           "provider": "Azure AI Foundry",
           "platform": "Azure AI Foundry",
@@ -37838,6 +37847,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global; coding"
+        },
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.9,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "coding"
         }
       ],
       "designarena": {},
@@ -38230,17 +38249,6 @@
           "or_model_id": "mistralai/mistral-small-3.2-24b-instruct",
           "status": 0,
           "tee": true
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.09999999999999999,
-          "output_per_1m": 0.3,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-small-3.2-24b-instruct",
-          "status": 0
         }
       ],
       "designarena": {},
@@ -40142,17 +40150,6 @@
           "status": -5
         },
         {
-          "source": "OpenRouter",
-          "provider": "Mistral",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "mistralai/mistral-nemo",
-          "status": 0
-        },
-        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -41365,6 +41362,16 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; id Qwen3-235B-A22B-Instruct-2507"
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.81,
+          "output_per_1m": 2.43,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.75/€2.25"
         }
       ],
       "designarena": {},
@@ -41423,6 +41430,93 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: eu-north1; id Nemotron-3-Nano-30B-A3B"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "qwen3-coder-30b::default",
+      "family_key": "qwen3-coder-30b",
+      "family_name": "Qwen3 Coder 30B",
+      "display_name": "Qwen3 Coder 30B",
+      "org": "Alibaba",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.22,
+          "output_per_1m": 0.86,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.20/€0.80"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "qwen-3.5-397b::default",
+      "family_key": "qwen-3.5-397b",
+      "family_name": "Qwen 3.5 397B",
+      "display_name": "Qwen 3.5 397B",
+      "org": "Alibaba",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 0.65,
+          "output_per_1m": 3.89,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.60/€3.60"
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "magistral::default",
+      "family_key": "magistral",
+      "family_name": "Magistral",
+      "display_name": "Magistral",
+      "org": "Mistral",
+      "variant": "default",
+      "open_weights": true,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "Mistral",
+          "provider": "Mistral",
+          "platform": "Mistral",
+          "input_per_1m": 2,
+          "output_per_1m": 5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "reasoning"
         }
       ],
       "designarena": {},
@@ -41658,15 +41752,6 @@
     },
     {
       "platform": "OpenRouter",
-      "provider": "Mistral",
-      "model_count": 15,
-      "eu_hosted": false,
-      "non_us": true,
-      "country": "France",
-      "note": "EU-default residency; own models only."
-    },
-    {
-      "platform": "OpenRouter",
       "provider": "Cloudflare",
       "model_count": 13,
       "eu_hosted": false,
@@ -41709,6 +41794,15 @@
       "non_us": true,
       "country": "China",
       "note": ""
+    },
+    {
+      "platform": "Scaleway",
+      "provider": "Scaleway",
+      "model_count": 9,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "France",
+      "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)."
     },
     {
       "platform": "OpenRouter",
@@ -41792,6 +41886,15 @@
       "note": "DePIN."
     },
     {
+      "platform": "Mistral",
+      "provider": "Mistral",
+      "model_count": 6,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "France",
+      "note": "FR-resident first-party API; own (open-weight) models only — Large/Medium/Magistral/Codestral/Devstral."
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Baidu",
       "model_count": 6,
@@ -41853,6 +41956,15 @@
       "non_us": true,
       "country": "Canada",
       "note": "Non-US; EU via VPC."
+    },
+    {
+      "platform": "IONOS",
+      "provider": "IONOS",
+      "model_count": 4,
+      "eu_hosted": true,
+      "non_us": true,
+      "country": "Germany",
+      "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)."
     },
     {
       "platform": "OpenRouter",

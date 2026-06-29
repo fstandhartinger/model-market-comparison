@@ -1,0 +1,18 @@
+{
+  "source": "Scaleway Generative APIs",
+  "region": "eu (Paris)",
+  "collected_at": "2026-06-29",
+  "currency_note": "Source prices are EUR/1M; converted to USD at EUR/USD = 1.08 (2026-06). Re-verify on refresh.",
+  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), via llm-tracker.eu cross-check. EU-sovereign, ZDR by default.",
+  "models": [
+    { "model_name": "Llama 3.3 70B", "provider_org": "Meta", "input_per_1m_usd": 0.97, "output_per_1m_usd": 0.97, "region": "eu", "notes": "€0.90/€0.90" },
+    { "model_name": "Qwen3 235B", "provider_org": "Alibaba", "input_per_1m_usd": 0.81, "output_per_1m_usd": 2.43, "region": "eu", "notes": "€0.75/€2.25" },
+    { "model_name": "Qwen3 Coder 30B", "provider_org": "Alibaba", "input_per_1m_usd": 0.22, "output_per_1m_usd": 0.86, "region": "eu", "notes": "€0.20/€0.80" },
+    { "model_name": "Mistral Small 3.2", "provider_org": "Mistral", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.38, "region": "eu", "notes": "€0.15/€0.35" },
+    { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.62, "output_per_1m_usd": 8.10, "region": "eu", "notes": "€1.50/€7.50" },
+    { "model_name": "gpt-oss-120b", "provider_org": "OpenAI", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.65, "region": "eu", "notes": "€0.15/€0.60" },
+    { "model_name": "Qwen 3.5 397B", "provider_org": "Alibaba", "input_per_1m_usd": 0.65, "output_per_1m_usd": 3.89, "region": "eu", "notes": "€0.60/€3.60" },
+    { "model_name": "Devstral 2", "provider_org": "Mistral", "input_per_1m_usd": 0.43, "output_per_1m_usd": 2.16, "region": "eu", "notes": "€0.40/€2.00" },
+    { "model_name": "Gemma 3 27B", "provider_org": "Google", "input_per_1m_usd": 0.27, "output_per_1m_usd": 0.54, "region": "eu", "notes": "€0.25/€0.50" }
+  ]
+}

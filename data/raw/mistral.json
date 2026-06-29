@@ -1,0 +1,14 @@
+{
+  "source": "Mistral AI (La Plateforme)",
+  "region": "eu (France)",
+  "collected_at": "2026-06-29",
+  "method": "Mistral first-party API pricing (https://mistral.ai/pricing), prices already in USD. EU-resident (FR).",
+  "models": [
+    { "model_name": "Mistral Large 3", "provider_org": "Mistral", "input_per_1m_usd": 0.50, "output_per_1m_usd": 1.50, "region": "eu", "notes": "open-weight" },
+    { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.50, "output_per_1m_usd": 7.50, "region": "eu", "notes": "" },
+    { "model_name": "Magistral Medium", "provider_org": "Mistral", "input_per_1m_usd": 2.00, "output_per_1m_usd": 5.00, "region": "eu", "notes": "reasoning" },
+    { "model_name": "Mistral Small 4", "provider_org": "Mistral", "input_per_1m_usd": 0.15, "output_per_1m_usd": 0.60, "region": "eu", "notes": "Apache-2.0" },
+    { "model_name": "Codestral", "provider_org": "Mistral", "input_per_1m_usd": 0.30, "output_per_1m_usd": 0.90, "region": "eu", "notes": "coding" },
+    { "model_name": "Devstral 2", "provider_org": "Mistral", "input_per_1m_usd": 0.40, "output_per_1m_usd": 2.00, "region": "eu", "notes": "coding, open-weights" }
+  ]
+}
