@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T11:03:30.276Z",
+  "generated_at": "2026-06-29T16:58:52.952Z",
   "counts": {
     "models": 707,
     "families": 578,
@@ -41576,6 +41576,7 @@
       "model_count": 64,
       "eu_hosted": true,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served)."
     },
@@ -41585,6 +41586,7 @@
       "model_count": 62,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)"
     },
@@ -41594,6 +41596,7 @@
       "model_count": 61,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "US-HQ, AWS-backed global per-token API; single endpoint api.novita.ai, no region param. GDPR-compliance claims only, no EU region for self-serve serverless."
     },
@@ -41603,6 +41606,7 @@
       "model_count": 59,
       "eu_hosted": true,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "EU residency via the eu. cross-region Geo profile; ZDR by default. US parent (CLOUD Act)."
     },
@@ -41612,6 +41616,7 @@
       "model_count": 44,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41621,6 +41626,7 @@
       "model_count": 39,
       "eu_hosted": true,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "EU residency via europe-west / EU multi-region; never the global endpoint. US parent."
     },
@@ -41630,6 +41636,7 @@
       "model_count": 38,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": true,
       "country": "US",
       "note": "Public per-token API is US/global with no region selection; an eu-west region exists only for deploy-your-own dedicated serverless endpoints (out of scope)."
     },
@@ -41639,6 +41646,7 @@
       "model_count": 34,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -41648,6 +41656,7 @@
       "model_count": 34,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41657,6 +41666,7 @@
       "model_count": 34,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -41666,6 +41676,7 @@
       "model_count": 31,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "Privacy-first / no-logs but US (per own privacy policy the Service is US-hosted); compute is a global decentralized GPU pool (Akash/Phala/etc.) with no selectable/guaranteed EU geography. No-logs != EU residency."
     },
@@ -41675,6 +41686,7 @@
       "model_count": 30,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": true,
       "country": "US",
       "note": "US-HQ (San Mateo, CA). Single global auto-routed serverless endpoint, no EU region pin; region handling is a paid Dedicated/sales feature only."
     },
@@ -41684,6 +41696,7 @@
       "model_count": 30,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41693,6 +41706,7 @@
       "model_count": 23,
       "eu_hosted": true,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "Netherlands",
       "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
     },
@@ -41702,6 +41716,7 @@
       "model_count": 22,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41711,6 +41726,7 @@
       "model_count": 22,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": true,
       "country": "US",
       "note": "EU footprint (Sweden, since Sep 2025) is GPU clusters / dedicated endpoints only; the per-token serverless API has no EU region selector and runs from US capacity. US HQ (CLOUD Act). Not an EU serverless price source."
     },
@@ -41720,6 +41736,7 @@
       "model_count": 20,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "CoreWeave-powered serverless is US-only (multi-tenant on GCP North America, only coreweave-us storage); EU exists solely for sales-gated Dedicated Cloud. CoreWeave (US) owned."
     },
@@ -41729,6 +41746,7 @@
       "model_count": 18,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -41738,6 +41756,7 @@
       "model_count": 16,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "Serverless inference is US-only (single global endpoint inference.do-ai.run, no region param); EU regions run only NA-restricted Dedicated/Agent products. DO states GDPR EU inference regions are roadmap, not shipped (re-check 2026-H2)."
     },
@@ -41747,6 +41766,7 @@
       "model_count": 16,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "TEE/confidential but US/India nodes, not EU-resident."
     },
@@ -41756,6 +41776,7 @@
       "model_count": 13,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": true,
       "country": "US",
       "note": "Self-serve Workers AI uses global anycast to nearest GPU, no EU pinning; EU/region-locked inference is Enterprise-only via Data Localization Suite / Custom Regions (\"not yet self-serve\")."
     },
@@ -41765,6 +41786,7 @@
       "model_count": 13,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41774,6 +41796,7 @@
       "model_count": 13,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "TEE models available; node location not EU-pinned."
     },
@@ -41783,6 +41806,7 @@
       "model_count": 13,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41792,6 +41816,7 @@
       "model_count": 11,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -41801,6 +41826,7 @@
       "model_count": 9,
       "eu_hosted": true,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "France",
       "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)."
     },
@@ -41810,6 +41836,7 @@
       "model_count": 9,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41819,6 +41846,7 @@
       "model_count": 8,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41828,6 +41856,7 @@
       "model_count": 8,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41837,6 +41866,7 @@
       "model_count": 8,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -41846,8 +41876,9 @@
       "model_count": 7,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": true,
       "country": "US",
-      "note": "EU only via dedicated (Ireland/Iceland), not serverless."
+      "note": "EU only via dedicated (Frankfurt/Iceland) / BYOC GPU deployments, not serverless."
     },
     {
       "platform": "OpenRouter",
@@ -41855,6 +41886,7 @@
       "model_count": 7,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41864,6 +41896,7 @@
       "model_count": 7,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41873,6 +41906,7 @@
       "model_count": 6,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41882,6 +41916,7 @@
       "model_count": 6,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "DePIN."
     },
@@ -41891,6 +41926,7 @@
       "model_count": 6,
       "eu_hosted": true,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "France",
       "note": "FR-resident first-party API; own (open-weight) models only — Large/Medium/Magistral/Codestral/Devstral."
     },
@@ -41900,6 +41936,7 @@
       "model_count": 6,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -41909,6 +41946,7 @@
       "model_count": 6,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "South Korea",
       "note": "ZDR by default; Korea-based."
     },
@@ -41918,6 +41956,7 @@
       "model_count": 5,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "Indonesia",
       "note": ""
     },
@@ -41927,6 +41966,7 @@
       "model_count": 5,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41936,6 +41976,7 @@
       "model_count": 5,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -41945,6 +41986,7 @@
       "model_count": 5,
       "eu_hosted": true,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "Sweden",
       "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
     },
@@ -41954,6 +41996,7 @@
       "model_count": 5,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "Canada",
       "note": "Non-US; EU via VPC."
     },
@@ -41963,6 +42006,7 @@
       "model_count": 4,
       "eu_hosted": true,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "Germany",
       "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)."
     },
@@ -41972,6 +42016,7 @@
       "model_count": 4,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41981,6 +42026,7 @@
       "model_count": 4,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -41990,6 +42036,7 @@
       "model_count": 4,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": "ByteDance."
     },
@@ -41999,6 +42046,7 @@
       "model_count": 4,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42008,6 +42056,7 @@
       "model_count": 4,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42017,6 +42066,7 @@
       "model_count": 3,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42026,6 +42076,7 @@
       "model_count": 3,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42035,6 +42086,7 @@
       "model_count": 3,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42044,6 +42096,7 @@
       "model_count": 3,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42053,6 +42106,7 @@
       "model_count": 3,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -42062,6 +42116,7 @@
       "model_count": 3,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42071,6 +42126,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42080,6 +42136,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -42089,6 +42146,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42098,6 +42156,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42107,6 +42166,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -42116,6 +42176,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": "DePIN, no residency control."
     },
@@ -42125,6 +42186,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42134,6 +42196,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42143,6 +42206,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42152,6 +42216,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42161,6 +42226,7 @@
       "model_count": 2,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42170,6 +42236,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42179,6 +42246,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42188,6 +42256,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -42197,6 +42266,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "China",
       "note": ""
     },
@@ -42206,6 +42276,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42215,6 +42286,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42224,6 +42296,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42233,6 +42306,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42242,6 +42316,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "South Korea",
       "note": ""
     },
@@ -42251,6 +42326,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42260,6 +42336,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": "US",
       "note": ""
     },
@@ -42269,6 +42346,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "Israel",
       "note": ""
     },
@@ -42278,6 +42356,7 @@
       "model_count": 1,
       "eu_hosted": false,
       "non_us": false,
+      "eu_dedicated": false,
       "country": null,
       "note": ""
     },
@@ -42287,6 +42366,7 @@
       "model_count": 0,
       "eu_hosted": true,
       "non_us": true,
+      "eu_dedicated": false,
       "country": "EU",
       "note": "EU-based, security-focused router — still being launched, not production-ready yet.",
       "coming_soon": true

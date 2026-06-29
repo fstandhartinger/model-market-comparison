@@ -8,6 +8,8 @@ const LINKS = [
   ["/scatter", "Cost vs Capability"],
   ["/charts", "Charts"],
   ["/providers", "Providers per Model"],
+  ["/provider-explorer", "Provider explorer"],
+  ["/gateways", "Gateways"],
   ["/eu", "EU & Sovereign"],
   ["/about", "About"],
 ];

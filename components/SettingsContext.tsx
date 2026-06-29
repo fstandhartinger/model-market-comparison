@@ -9,6 +9,7 @@ interface SettingsState {
   featured: boolean;
   excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
   euHostedOnly: boolean;    // only providers that serve from EU data centers
+  euDedicated: boolean;     // widen EU-hosted filter to also include EU-via-dedicated/BYOC providers
   nonUsOnly: boolean;       // only providers whose company is not US-based
   hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
   hideFable: boolean;       // hide Claude Fable (on by default)
@@ -24,6 +25,7 @@ interface SettingsCtx extends SettingsState {
   setFeatured: (b: boolean) => void;
   setExcludeChinese: (b: boolean) => void;
   setEuHostedOnly: (b: boolean) => void;
+  setEuDedicated: (b: boolean) => void;
   setNonUsOnly: (b: boolean) => void;
   setHideGptOpus: (b: boolean) => void;
   setHideFable: (b: boolean) => void;
@@ -35,7 +37,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providers: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, euDedicated: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providers: [], families: [] };
 // v2: reset persisted state. v1 could store an explicit "all providers" list (via the
 // old "Select all" button); when new providers were later added, that stale set excluded
 // them (e.g. Nebius), wrongly filtering models. v2 starts clean (empty = all).
@@ -65,6 +67,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setFeatured: (featured) => setState((s) => ({ ...s, featured })),
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
     setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
+    setEuDedicated: (euDedicated) => setState((s) => ({ ...s, euDedicated })),
     setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
     setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
     setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),

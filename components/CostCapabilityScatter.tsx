@@ -39,7 +39,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly), [s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly]);
+  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
   const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);

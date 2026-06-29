@@ -33,8 +33,13 @@ price — normalized to USD per 1M tokens.
 - **Model detail** — top-5 cheapest providers, all offers by platform, full benchmark
   breakdown, reasoning-variant comparison, GitHub Copilot per-request cost.
 - **Providers per Model** — searchable model picker → that model's providers ranked by price.
+- **Provider explorer** — pick one provider → every model it offers; click a model to compare
+  that provider's price against all others (ranked, with its price-rank in the field).
+- **Gateways** — 35+ LLM gateways/routers/aggregators compared on EU routing capability,
+  self-host/local, open-source license, HQ and pricing.
 - **EU & Sovereign** — which providers are EU-hosted/sovereign and which SOTA models they
-  actually serve (incl. TEE/confidentiality notes).
+  actually serve (incl. TEE/confidentiality notes + a dedicated/BYOC-only list). The global
+  **EU-hosted only** filter has a **＋ incl. EU via dedicated/BYOC** modifier.
 - **Public read-only JSON API** (CORS-enabled) — `/api/dataset` (full export),
   `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`. See [API.md](API.md).
 
