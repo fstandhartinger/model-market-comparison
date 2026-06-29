@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-06-29T10:22:00.491Z",
+  "generated_at": "2026-06-29T11:03:30.276Z",
   "counts": {
     "models": 707,
     "families": 578,
@@ -41586,7 +41586,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": "No EU region."
+      "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)"
     },
     {
       "platform": "OpenRouter",
@@ -41595,7 +41595,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": ""
+      "note": "US-HQ, AWS-backed global per-token API; single endpoint api.novita.ai, no region param. GDPR-compliance claims only, no EU region for self-serve serverless."
     },
     {
       "platform": "AWS Bedrock",
@@ -41631,7 +41631,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": ""
+      "note": "Public per-token API is US/global with no region selection; an eu-west region exists only for deploy-your-own dedicated serverless endpoints (out of scope)."
     },
     {
       "platform": "OpenRouter",
@@ -41667,7 +41667,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": "Privacy-first but US."
+      "note": "Privacy-first / no-logs but US (per own privacy policy the Service is US-hosted); compute is a global decentralized GPU pool (Akash/Phala/etc.) with no selectable/guaranteed EU geography. No-logs != EU residency."
     },
     {
       "platform": "OpenRouter",
@@ -41676,7 +41676,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": ""
+      "note": "US-HQ (San Mateo, CA). Single global auto-routed serverless endpoint, no EU region pin; region handling is a paid Dedicated/sales feature only."
     },
     {
       "platform": "OpenRouter",
@@ -41712,7 +41712,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": "EU residency only via dedicated/enterprise endpoints."
+      "note": "EU footprint (Sweden, since Sep 2025) is GPU clusters / dedicated endpoints only; the per-token serverless API has no EU region selector and runs from US capacity. US HQ (CLOUD Act). Not an EU serverless price source."
     },
     {
       "platform": "OpenRouter",
@@ -41721,7 +41721,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": ""
+      "note": "CoreWeave-powered serverless is US-only (multi-tenant on GCP North America, only coreweave-us storage); EU exists solely for sales-gated Dedicated Cloud. CoreWeave (US) owned."
     },
     {
       "platform": "OpenRouter",
@@ -41739,7 +41739,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": ""
+      "note": "Serverless inference is US-only (single global endpoint inference.do-ai.run, no region param); EU regions run only NA-restricted Dedicated/Agent products. DO states GDPR EU inference regions are roadmap, not shipped (re-check 2026-H2)."
     },
     {
       "platform": "OpenRouter",
@@ -41757,7 +41757,7 @@
       "eu_hosted": false,
       "non_us": false,
       "country": "US",
-      "note": "EU via Enterprise custom regions."
+      "note": "Self-serve Workers AI uses global anycast to nearest GPU, no EU pinning; EU/region-locked inference is Enterprise-only via Data Localization Suite / Custom Regions (\"not yet self-serve\")."
     },
     {
       "platform": "OpenRouter",

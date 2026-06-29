@@ -174,6 +174,7 @@ export default async function EuPage() {
         <li>• <b>Azure AI Foundry</b> EU Data Zone — Mistral-Large-3 etc.; but Fireworks-hosted Kimi/GLM/MiniMax are <b>outside</b> the EU boundary.</li>
         <li>• <b>Google Vertex AI</b> europe-west / EU multi-region — Gemini + Model-Garden open models; never use the global endpoint.</li>
         <li>• <b>Confidentiality (TEE)</b> for GLM/Kimi/MiniMax: <b>Chutes</b> (Intel TDX + NVIDIA CC, 13 TEE models) gives confidentiality but no EU pinning; <b>Privatemode</b> (Edgeless Systems, Germany) is EU-pinned + confidential but narrow.</li>
+        <li>• <b>&ldquo;EU available&rdquo; but dedicated/enterprise only — not self-serve serverless</b> (so excluded as price sources): <b>Together AI</b> (Sweden GPU clusters / dedicated endpoints, Sep 2025), <b>Fireworks</b> (Frankfurt/Iceland dedicated/BYOC), <b>Cloudflare</b> (Data Localization Suite, Enterprise add-on), <b>AtlasCloud</b> (eu-west dedicated). Their public per-token APIs have no EU region selector and run from US capacity. <b>DigitalOcean</b> has EU serverless on its roadmap only. All are US-HQ (CLOUD Act).</li>
       </ul>
 
       <p className="mt-6 text-xs text-gray-500">
