@@ -1,34 +1,42 @@
 # Model Market Comparison
 
 Compare **open-source and frontier LLMs** by capability and price in one place.
-Capability comes from [ArtificialAnalysis](https://artificialanalysis.ai) (Coding &
-Intelligence indices) and [DesignArena](https://www.designarena.ai) (Agentic Web Dev
-Frontend & Full-Stack Elo). Prices are aggregated across **OpenRouter** inference
-providers, **AWS Bedrock**, **Azure AI Foundry**, **GitHub Copilot**, and the
-**Anthropic / Claude Code** list price — normalized to USD per 1M tokens.
+Capability comes from [ArtificialAnalysis](https://artificialanalysis.ai) (Coding,
+Coding Agent & Intelligence indices) and [DesignArena](https://www.designarena.ai)
+(Agentic Web Dev Frontend & Full-Stack Elo). Prices are aggregated across **OpenRouter**
+inference providers, **AWS Bedrock**, **Azure AI Foundry**, **Google Vertex AI**,
+**Nebius**, **Inceptron**, **GitHub Copilot**, and the **Anthropic / Claude Code** list
+price — normalized to USD per 1M tokens.
 
 > 📋 Product spec: [PRD.md](PRD.md) · 🗂️ Data schema: [data/SCHEMA.md](data/SCHEMA.md) ·
-> 🔄 How the data is collected & refreshed: [data/SCRAPING.md](data/SCRAPING.md)
+> 🔄 Data collection & refresh: [data/SCRAPING.md](data/SCRAPING.md) ·
+> 🔌 Public API: [API.md](API.md) · 🚀 Deploy / migrate / env vars: [DEPLOYMENT.md](DEPLOYMENT.md)
 
 ## Features
 
-- **Overview** — fully sortable model table (every column) with per-column filters
-  (search, org, min score, max cost, provider, open/closed), a **selectable score**
-  (default: DesignArena Full-Stack), and Excel-style **data bars** on score and cost.
-- **Compare** (master-detail) — pick a model, see every provider's input/output/
-  blended price side-by-side with data bars; cheapest highlighted.
-- **Cost vs Capability** — scatter plot: **x = cost** (cheapest 10:1 blended $/1M),
-  **y = capability** (selected score), colored by vendor, **circle = closed lab /
-  square = open weights**, with a **provider-subset filter** (e.g. only AWS+Azure,
-  or only the open-source market) that recomputes the cheapest cost live.
-- **Charts** — capability leaderboard, cheapest-model ranking, open-weights vs
-  closed comparisons; with max-price / min-capability / provider filters.
-- **Model detail** — **top-5 cheapest providers**, all token offers grouped by
-  platform, full benchmark breakdown, reasoning-variant comparison, and GitHub
-  Copilot per-request cost.
-- **Providers** — every provider/platform with a **price-ranking** column (avg price
-  rank across models, or a single model's prices across providers) and data bars.
-- **JSON API** — `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`.
+- **Global filter bar** (applies across every tab, persisted): selectable **score**,
+  min-score, **One variant for Reasoning models** (collapse GPT/Claude/GLM/Kimi to one),
+  **Featured**, **Exclude Chinese providers**, **EU-hosted only**, **Non-US provider only**,
+  **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
+  provider- and model-checklist filters.
+- **Selectable scores**: **Composite** (blended 0–100, default), ArtificialAnalysis
+  **Coding Index**, **Coding Agent Index** (best harness per model), **Intelligence Index**,
+  and DesignArena **Frontend** / **Full-Stack** Elo.
+- **Overview** — fully sortable table with per-column filters, **Has score** / **Has provider**
+  toggles, and Excel-style **data bars** on score & cost.
+- **Compare** — pick two models (A/B) head-to-head; scores & cheapest price shown big with
+  the winner highlighted, plus each model's cheapest providers side by side.
+- **Cost vs Capability** — scatter: **x = cost** (cheapest 10:1 blended $/1M, axis inverted
+  so cheaper is right), **y = capability**, circle = closed / square = open, with a
+  **Pareto frontier** line of best-value models.
+- **Charts** — capability leaderboard, cheapest-model ranking, open vs closed comparisons.
+- **Model detail** — top-5 cheapest providers, all offers by platform, full benchmark
+  breakdown, reasoning-variant comparison, GitHub Copilot per-request cost.
+- **Providers per Model** — searchable model picker → that model's providers ranked by price.
+- **EU & Sovereign** — which providers are EU-hosted/sovereign and which SOTA models they
+  actually serve (incl. TEE/confidentiality notes).
+- **Public read-only JSON API** (CORS-enabled) — `/api/dataset` (full export),
+  `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`. See [API.md](API.md).
 
 Featured models include GPT-5.5 / GPT-5.4 (with Mini and low/medium/high/xhigh
 settings), Claude Opus 4.8 / 4.7 / 4.6, Sonnet 4.6, **Fable 5**, Kimi K2.5 / K2.6 /
@@ -63,12 +71,13 @@ npm run db:seed
 See [data/SCRAPING.md](data/SCRAPING.md) for per-source details (incl. how to update
 the manually scraped AWS / Azure / Copilot / Claude snapshots).
 
-## Deploy (Render)
+## Deploy / migrate
 
-This repo ships a [`render.yaml`](render.yaml) Blueprint that provisions a Node web
-service plus a managed Postgres, runs `npm run db:seed` as the pre-deploy step, and
-serves the app. Point Render at this repo as a Blueprint, or create the service +
-database manually and set `DATABASE_URL`.
+Full guide incl. **required env vars / secrets**, Postgres setup, Docker and **Azure**
+hosting: [DEPLOYMENT.md](DEPLOYMENT.md). In short — the only runtime secret is the
+optional `DATABASE_URL` (the app falls back to the bundled `data/dataset.json` snapshot
+without it); `ARTIFICIAL_ANALYSIS_API_KEY` is needed only to refresh data, not at runtime.
+A [`render.yaml`](render.yaml) Blueprint and a [`Dockerfile`](Dockerfile) are included.
 
 ## Methodology & caveats
 

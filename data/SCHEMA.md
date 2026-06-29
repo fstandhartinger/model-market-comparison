@@ -21,7 +21,9 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
       "has_benchmark": true,
       "has_pricing": true,
       "benchmarks": {                  // ArtificialAnalysis; null where unpublished
-        "aa_intelligence_index": 0, "aa_coding_index": 0, "aa_math_index": 0,
+        "aa_intelligence_index": 0, "aa_coding_index": 0,
+        "aa_coding_agent_index": 0,    // family-level MAX across harnesses (Claude Code/Codex/…)
+        "aa_math_index": 0,
         "aa_livecodebench": 0, "aa_scicode": 0, "aa_terminalbench_hard": 0,
         "aa_tau2": 0, "aa_gpqa": 0, "aa_mmlu_pro": 0
       },
@@ -34,20 +36,34 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
       "copilot": { "multiplier": 0, "usd_per_request": 0, "notes": "" } | null,
       "offers": [                      // family-level; shared by all variants
         {
-          "source": "OpenRouter" | "AWS Bedrock" | "Azure AI Foundry" | "Anthropic API / Claude Code",
+          "source": "OpenRouter" | "AWS Bedrock" | "Azure AI Foundry" | "Google Vertex AI"
+                  | "Nebius" | "Inceptron" | "Anthropic API / Claude Code",
           "provider": "Novita", "platform": "OpenRouter",
           "input_per_1m": 0.57, "output_per_1m": 2.3,
           "cache_read_per_1m": null, "cache_write_per_1m": null,
-          "region": "global" | "eu-central-1" | …,
+          "region": "global" | "eu-central-1" | "eu" | …,
           "unit": "per_1m_token",
-          "estimated": false, "notes": ""
+          "estimated": false,            // true = hand-estimated price
+          "tee": false,                  // true = runs in a Trusted Execution Environment
+          "notes": ""
         }
       ]
     }
   ],
-  "providers": [ { "platform": "OpenRouter", "provider": "Novita", "model_count": 0 } ]
+  "providers": [ {
+    "platform": "Nebius", "provider": "Nebius", "model_count": 0,
+    "eu_hosted": true,   // serves from EU data centres (provider-level flag)
+    "non_us": true,      // company HQ is not the United States
+    "country": "Netherlands", "note": "", "coming_soon": false
+  } ]
 }
 ```
+
+## Score keys (`ScoreKey`)
+
+`composite` (blended 0–100, min-max-normalized mean of available base scores),
+`aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, best harness per model),
+`aa_intelligence_index`, `designarena_frontend`, `designarena_fullstack`.
 
 ## Normalization
 
