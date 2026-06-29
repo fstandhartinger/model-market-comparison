@@ -1,21 +1,13 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-06-18",
+  "collected_at": "2026-06-23",
   "method": "AWS Price List bulk API (EU region indexes, version 20260619225109) for per-token on-demand; pricing page + web search for Anthropic Claude / Cohere gaps not in EU bulk data.",
   "models": [
     {
-      "model_name": "Amazon Titan Text Express",
-      "provider_org": "Amazon",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 0.863,
-      "region": "eu-central-1",
-      "notes": ""
-    },
-    {
       "model_name": "Nova 2.0 Lite",
       "provider_org": "Amazon",
-      "input_per_1m_usd": 0.39,
+      "input_per_1m_usd": 0.429,
       "output_per_1m_usd": 3.597,
       "region": "eu-central-1",
       "notes": ""
@@ -61,12 +53,44 @@
       "notes": ""
     },
     {
-      "model_name": "Amazon Titan Text Lite",
-      "provider_org": "Amazon",
-      "input_per_1m_usd": 0.2,
-      "output_per_1m_usd": 0.25,
-      "region": "eu-west-3",
-      "notes": "not in eu-central-1; eu-west-3 price"
+      "model_name": "Claude Haiku 4.5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 1.0,
+      "output_per_1m_usd": 5.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
+    },
+    {
+      "model_name": "Claude Opus 4.6",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 25.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*). Latest Anthropic Opus on Bedrock; 4.7/4.8 not yet on Bedrock."
+    },
+    {
+      "model_name": "Claude Sonnet 4.6",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 3.0,
+      "output_per_1m_usd": 15.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
+    },
+    {
+      "model_name": "Cohere Command",
+      "provider_org": "Cohere",
+      "input_per_1m_usd": 1.5,
+      "output_per_1m_usd": 2.0,
+      "region": "us-east-1 (not offered in EU regions)",
+      "notes": "Not in EU bulk API; price from public pricing page, US region."
+    },
+    {
+      "model_name": "Cohere Command Light",
+      "provider_org": "Cohere",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 0.6,
+      "region": "us-east-1 (not offered in EU regions)",
+      "notes": "Not in EU bulk API; price from public pricing page, US region."
     },
     {
       "model_name": "DeepSeek V3.1",
@@ -301,6 +325,14 @@
       "notes": ""
     },
     {
+      "model_name": "Nemotron Nano 3 30B",
+      "provider_org": "NVIDIA",
+      "input_per_1m_usd": 0.072,
+      "output_per_1m_usd": 0.288,
+      "region": "eu-central-1",
+      "notes": ""
+    },
+    {
       "model_name": "NVIDIA Nemotron 3 Super 120B A12B",
       "provider_org": "NVIDIA",
       "input_per_1m_usd": 0.18,
@@ -321,14 +353,6 @@
       "provider_org": "NVIDIA",
       "input_per_1m_usd": 0.24,
       "output_per_1m_usd": 0.72,
-      "region": "eu-central-1",
-      "notes": ""
-    },
-    {
-      "model_name": "Nemotron Nano 3 30B",
-      "provider_org": "NVIDIA",
-      "input_per_1m_usd": 0.072,
-      "output_per_1m_usd": 0.288,
       "region": "eu-central-1",
       "notes": ""
     },
@@ -451,46 +475,6 @@
       "output_per_1m_usd": 3.84,
       "region": "eu-central-1",
       "notes": ""
-    },
-    {
-      "model_name": "Claude Opus 4.6",
-      "provider_org": "Anthropic",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 25.0,
-      "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*). Latest Anthropic Opus on Bedrock; 4.7/4.8 not yet on Bedrock."
-    },
-    {
-      "model_name": "Claude Sonnet 4.6",
-      "provider_org": "Anthropic",
-      "input_per_1m_usd": 3.0,
-      "output_per_1m_usd": 15.0,
-      "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
-    },
-    {
-      "model_name": "Claude Haiku 4.5",
-      "provider_org": "Anthropic",
-      "input_per_1m_usd": 1.0,
-      "output_per_1m_usd": 5.0,
-      "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
-    },
-    {
-      "model_name": "Cohere Command",
-      "provider_org": "Cohere",
-      "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 2.0,
-      "region": "us-east-1 (not offered in EU regions)",
-      "notes": "Not in EU bulk API; price from public pricing page, US region."
-    },
-    {
-      "model_name": "Cohere Command Light",
-      "provider_org": "Cohere",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 0.6,
-      "region": "us-east-1 (not offered in EU regions)",
-      "notes": "Not in EU bulk API; price from public pricing page, US region."
     }
   ]
 }

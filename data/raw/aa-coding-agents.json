@@ -1,8 +1,8 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
-  "collected_at": "2026-06-18",
-  "endpoint": "https://artificialanalysis.ai/ (homepage) \u2014 data embedded in the Next.js RSC stream (self.__next_f) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. No public v2 API endpoint exists for this dataset (probed data/llms/coding-agents, data/llms/agentic-index, etc. all 404; the v2 models API has a per-model `agentic_index`/`coding_index` but no per-harness pairings).",
-  "method": "curl the homepage HTML, locate the escaped JSON `rows` array in the RSC payload, unescape and bracket-match to parse it. Each row: agentName=harness, display.model=model, indexScore=score (0-1 scale).",
+  "collected_at": "2026-06-23",
+  "endpoint": "https://artificialanalysis.ai/ (homepage) \u2014 data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. No public v2 API endpoint exists for this dataset; the v2 models API exposes per-model agentic/coding indices but no per-harness pairings.",
+  "method": "curl the homepage HTML, locate the escaped JSON `\\\"rows\\\":[` token in the RSC payload, unescape JS string escapes (\\\" -> \", \\\\ -> \\, \\uXXXX, etc.), bracket-match to isolate the array, json.loads. Each row: agentName=harness, display.model=model, indexScore=score (0-1 scale).",
   "score_scale": "0-1 (indexScore). Multiply by 100 for percentage.",
   "rows": [
     {
@@ -16,7 +16,7 @@
     {
       "model_name": "Fable 5 (max) (with fallback)",
       "harness": "Claude Code",
-      "score": 0.7718342762598043,
+      "score": 0.7718342762598047,
       "display_label": "Claude Code - Fable 5 (max) (with fallback)",
       "host_model_slug": "anthropic_claude-fable-5",
       "model_creator": "Anthropic"
@@ -40,7 +40,7 @@
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Claude Code",
-      "score": 0.568492780519192,
+      "score": 0.5684927805191924,
       "display_label": "Claude Code - Opus 4.7 (medium)",
       "host_model_slug": "anthropic_claude-opus-4-7",
       "model_creator": "Anthropic"
@@ -56,7 +56,7 @@
     {
       "model_name": "Opus 4.8 (medium)",
       "harness": "Claude Code",
-      "score": 0.6703462322295177,
+      "score": 0.6703462322295174,
       "display_label": "Claude Code - Opus 4.8 (medium)",
       "host_model_slug": "anthropic_claude-opus-4-8",
       "model_creator": "Anthropic"
@@ -96,7 +96,7 @@
     {
       "model_name": "GLM-5.2",
       "harness": "Claude Code",
-      "score": 0.5767008439528805,
+      "score": 0.5767008439528807,
       "display_label": "Claude Code - GLM-5.2",
       "host_model_slug": "novita_glm-5-2_fp8",
       "model_creator": "Z.ai"
@@ -104,7 +104,7 @@
     {
       "model_name": "GPT-5.4 (medium)",
       "harness": "Codex",
-      "score": 0.711422745711725,
+      "score": 0.7114227457117256,
       "display_label": "Codex - GPT-5.4 (medium)",
       "host_model_slug": "openai_gpt-5-4",
       "model_creator": "OpenAI"
@@ -120,7 +120,7 @@
     {
       "model_name": "GPT-5.5 (xhigh)",
       "harness": "Codex",
-      "score": 0.7642065796509271,
+      "score": 0.7642065796509268,
       "display_label": "Codex - GPT-5.5 (xhigh)",
       "host_model_slug": "openai_gpt-5-5",
       "model_creator": "OpenAI"
@@ -160,7 +160,7 @@
     {
       "model_name": "GPT-5.4 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6881333072836661,
+      "score": 0.6881333072836665,
       "display_label": "Cursor CLI - GPT-5.4 (medium)",
       "host_model_slug": "openai_gpt-5-4",
       "model_creator": "OpenAI"
@@ -184,7 +184,7 @@
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Opencode",
-      "score": 0.6450943205982174,
+      "score": 0.6450943205982176,
       "display_label": "Opencode - Opus 4.7 (medium)",
       "host_model_slug": "anthropic_claude-opus-4-7",
       "model_creator": "Anthropic"

@@ -1,10 +1,18 @@
 {
   "source": "Inceptron",
   "region": "eu (Sweden)",
-  "collected_at": "2026-06-18",
+  "collected_at": "2026-06-23",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "Prices from Inceptron's own public OpenAI-compatible catalog API https://api.inceptron.io/v1/models (pricing.prompt / pricing.completion, USD per token x 1e6); cross-checked against OpenRouter provider endpoint data (provider_name=='Inceptron'). Both sources agree on the 3-model catalog and on all prices (in/out).",
+  "method": "Prices from Inceptron's own public OpenAI-compatible catalog API https://api.inceptron.io/v1/models (no auth; pricing.prompt / pricing.completion in USD per token x 1e6); cross-checked against OpenRouter endpoint data (provider_name=='Inceptron'). The public API now lists 6 priced text LLMs (was 3 on 2026-06-18) — GLM 5.2, Kimi K2.6 Fast, and Kimi K2.7 Code are newly exposed publicly. All 6 prices agree between api.inceptron.io and OpenRouter (in/out).",
   "models": [
+    {
+      "model_name": "GLM 5.2",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 1.2,
+      "output_per_1m_usd": 4.2,
+      "region": "eu",
+      "notes": "fp4 quant, 1.05M context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.2. NEW in public /v1/models (not present on 2026-06-18). Matches OpenRouter Inceptron endpoint (in 1.20 / out 4.20)."
+    },
     {
       "model_name": "GLM 5.1",
       "provider_org": "Z.ai",
@@ -14,12 +22,28 @@
       "notes": "fp8 quant, 202K context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
     },
     {
-      "model_name": "Kimi K2.6",
+      "model_name": "Kimi K2.7 Code",
       "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.67,
+      "input_per_1m_usd": 0.75,
       "output_per_1m_usd": 3.5,
       "region": "eu",
-      "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.20/1M. Inceptron model id moonshotai/Kimi-K2.6. Input price $0.67/1M per api.inceptron.io and OpenRouter (was $0.68 on 2026-06-18 prior snapshot). Output $3.50/1M everywhere."
+      "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.20/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. NOW PRESENT in public /v1/models (was missing on 2026-06-18, only visible in logged-in console). Confirmed on OpenRouter Inceptron endpoint (in 0.75 / out 3.50)."
+    },
+    {
+      "model_name": "Kimi K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.66,
+      "output_per_1m_usd": 3.5,
+      "region": "eu",
+      "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.20/1M. Inceptron model id moonshotai/Kimi-K2.6. Input now $0.66/1M (was $0.67 on 2026-06-18, $0.68 prior). Matches OpenRouter Inceptron endpoint (in 0.66 / out 3.50)."
+    },
+    {
+      "model_name": "Kimi K2.6 Fast",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 1.32,
+      "output_per_1m_usd": 7.0,
+      "region": "eu",
+      "notes": "fp4 quant, 262K context, multimodal (text+image input). Cache read $0.40/1M. Inceptron model id moonshotai/Kimi-K2.6-Fast. NEW in public /v1/models — higher-throughput 'Fast' tier of Kimi K2.6 at 2x the price."
     },
     {
       "model_name": "MiniMax M2.5",

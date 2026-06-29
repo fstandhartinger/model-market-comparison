@@ -1,6 +1,6 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-06-18 (76 text LLMs)
+**Last collected:** 2026-06-23 (76 text LLMs)
 **Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
 
 ## TL;DR refresh recipe (2026-06-17)
@@ -26,7 +26,7 @@ items to `/tmp/azure_raw.json`).
   through the `Azure Fireworks Models` product (Fireworks-on-Azure). Meter pattern:
   `FW <Model> Inp DZ Tokens` / `FW <Model> Outp DZ Tokens` (also `Cache Inp` = skip).
   These have **DataZone EU tier only — no Global tier**. Prices identical across all 6 EU regions.
-- NOT found on Azure as of 2026-06-18 (re-verified, zero substring hits in all fields):
+- NOT found on Azure as of 2026-06-23 (re-verified, zero substring hits in all fields):
   Kimi K2.7, GLM 5.2, MiniMax M3/MiniMax 3, MiMo (any), Qwen (any), and any Anthropic
   Claude (Opus/Sonnet/Anthropic). The Fireworks catalog is unchanged from 2026-06-17:
   Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7, DeepSeek V3.2/V4-Pro, GPT OSS 120B only.
@@ -126,9 +126,11 @@ caches to `/tmp/azure_raw.json`, decodes meter names, pairs input+output per mod
 `NextPageLink`; ~6,800 EU items as of 2026-06-17).
 
 Things to watch for on the next refresh:
-- New GPT version prefixes (`5.6`, etc.) in `Azure OpenAI GPT5`.
+- New GPT version prefixes (`5.6`, etc.) in `Azure OpenAI GPT5`. As of 2026-06-23 the GPT5
+  product spans 5 / 5.1 / 5.2 / 5.3 / 5.4 / 5.5 (incl. codex/chat/mini/nano/pro variants) plus
+  `chat-latest` rolling meters dated 05052026 and 05282026 (both 5.0/30.0 Global).
 - New rows under `Azure Fireworks Models` (Kimi K2.7, GLM 5.2, MiniMax M3, MiMo, Qwen —
-  none present 2026-06-17 but this is the product they would appear under).
+  none present 2026-06-23 but this is the product they would appear under).
 - Any new `Azure <Vendor> Models` productName (e.g. an Anthropic product — none today).
 - Verify a known anchor after each run: `GPT 5 Inpt Glbl 1M Tokens` must be 1.25 /1M and
   `V4 Pro Inp glbl Tokens` must be 0.00174 /1K (= 1.74 /1M).

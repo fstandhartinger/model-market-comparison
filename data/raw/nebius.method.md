@@ -1,7 +1,7 @@
 # Nebius (Token Factory) pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/nebius.json`
-**Last collected:** 2026-06-18
+**Last collected:** 2026-06-23 (prior: 2026-06-18)
 **Provider:** Nebius B.V. — Netherlands-based EU AI cloud. The serverless per-token
 LLM product is **Nebius Token Factory** (formerly *Nebius AI Studio*).
 OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.
@@ -29,15 +29,21 @@ OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.
 3. **Tier:** every public model in this snapshot is the **`Base`** tier (no `Fast`
    tier offered on the public endpoints right now). Captured in each model's `notes`.
 
-## Result
-- **29 public endpoints** rendered (header showed `Public 29 / Private 0` for the
-  anonymous view). Wrote **28** to `nebius.json`.
-- **Refreshed 2026-06-18:** catalog & prices unchanged vs prior snapshot. A new
-  banner warns "Some public serverless endpoints will be deprecated on June 22."
-  Models now carrying a `Deprecated` tag on the page: **GLM-5**, **DeepSeek-V3.2**,
-  and **gpt-oss-120b** (flagged in each model's `notes`). INTELLECT-3 is no longer
-  flagged deprecated in this render. Prices for all 28 priced endpoints are
-  identical to the previous capture.
+## Result (2026-06-23 refresh)
+- **24 public endpoints** rendered (anonymous header showed `All 24 / Private 0 /
+  Public 24`). Wrote **23** to `nebius.json` (24 minus the embedding model).
+- **Catalog shrank from 29 → 24** vs 2026-06-18. The "deprecated on June 22" banner
+  did its thing: the previously `Deprecated`-tagged **GLM-5** and **DeepSeek-V3.2**
+  are **gone**; the two `…-m` mirror variants (**Nemotron 3 Nano Omni (m)**,
+  **Llama 3.1 Nemotron Ultra 253B (m)**) and **INTELLECT-3** are also **gone**.
+- **gpt-oss-120b survived** and is **no longer flagged deprecated**.
+- **Region change:** **GLM-5.2 now serves from `us-central1`** (was `eu-north1` on
+  2026-06-18) → re-flagged `region:"us"`. All other prices unchanged from prior.
+- **No more deprecation banner / no `Deprecated` tags** in this render.
+
+### Prior snapshot (2026-06-18, for history)
+- 29 public endpoints, wrote 28. Deprecation banner present; GLM-5, DeepSeek-V3.2,
+  gpt-oss-120b carried `Deprecated` tags. Two `…-m` mirror variants present.
 - **Omitted (1):** `Qwen3-Embedding-8B` ($0.01/1M in, 4096 dims) — an embedding
   model with no output-token price; not a text/chat LLM.
 - Vision/multimodal models that are still text-token-priced ARE included and flagged
@@ -85,6 +91,28 @@ OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.
   "**zero-retention data flow**" for endpoints, and Nebius positions Token Factory as
   GDPR-compliant with no training on customer data. This is a vendor claim from the
   product page, not an independently audited certificate — treat accordingly.
+
+## TEE / confidential-compute verdict (checked 2026-06-23)
+- **Does Nebius / Token Factory advertise TEE / confidential-computing / hardware-
+  attested SERVERLESS inference? NO.** It offers only standard hosting with
+  zero-retention + compliance certs — NOT confidential compute for the serverless
+  endpoints.
+- **Evidence:**
+  - The live models page `tokenfactory.nebius.com/models` contains **no** mention of
+    TEE, "Trusted Execution", confidential, attestation, enclave, SGX/SEV/TDX. (The
+    only "tee" substring on the page is inside the word "guaranteed".)
+  - The Token Factory product page `nebius.com/services/token-factory` lists the
+    security posture as: **zero-retention mode** ("requests and outputs are never
+    stored or reused for training"), **SOC 2 Type II / HIPAA / ISO 27001**, **EU & US
+    data-residency** (data centres in Finland, France, US), custom DPAs, SSO/RBAC.
+    **No** TEE / confidential-compute / hardware-attestation language.
+  - The only Nebius "confidential computing" footprint found is a **research proof-of-
+    concept** — the ELIXIR BioHackathon "BioHackCloud" Attested-TLS demo for private
+    LLM inference (`nebius.com/blog/posts/elixir-biohackathon`). That is a one-off PoC,
+    **not** a productized feature of the Token Factory serverless catalog.
+- **Bottom line:** our prior belief is **confirmed** — Nebius Token Factory serverless
+  inference is standard hosting with ZDR / no-training, **not** TEE / confidential
+  compute.
 
 ## How to refresh
 1. Re-run the agent-browser steps above against

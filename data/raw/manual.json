@@ -4,19 +4,7 @@
   "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
   "notes": "GLM 5.2 is now live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) so the earlier estimated offer was removed — it is sourced from openrouter.json. GLM 5.2 ships MIT open-weights (HuggingFace zai-org/GLM-5.2). As of 2026-06-16 it has no ArtificialAnalysis or DesignArena benchmark yet. Kimi K2.7 Coding has a DesignArena Full-Stack Elo but is not yet on ArtificialAnalysis.",
   "models": [],
-  "offers": [
-    {
-      "family_key": "kimi-k2.7-code",
-      "source": "Inceptron",
-      "provider": "Inceptron",
-      "platform": "Inceptron",
-      "input_per_1m": 0.75,
-      "output_per_1m": 3.5,
-      "region": "eu",
-      "unit": "per_1m_token",
-      "notes": "Listed SERVERLESS (NEW) on the Inceptron console (console.inceptron.io), not yet in the public /v1/models API. Price confirmed from the console DETAILS page ($0.75 in / $3.50 out). Remove this manual entry once the public API exposes it."
-    }
-  ],
+  "offers": [],
   "_benchmark_overrides_doc": "Optional list of documented corrections that override a benchmark value from a live source (each: {family_key, variant?, field, value, reason}). Use ONLY for confirmed source errors. Currently empty — GLM 5.2's Coding Index of 67 was verified against ArtificialAnalysis's own leaderboard (ranked #4, above Opus 4.8) and is correct.",
   "benchmark_overrides": []
 }

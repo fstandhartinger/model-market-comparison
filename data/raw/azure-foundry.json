@@ -1,8 +1,8 @@
 {
   "source": "Azure AI Foundry",
   "region": "swedencentral",
-  "collected_at": "2026-06-18",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across EU regions; Global tier list price unless noted (Fireworks/Phi tier-locked)",
+  "collected_at": "2026-06-23",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across six EU regions; Global tier list price unless noted (Fireworks/Phi tier-locked to DataZone-EU/regional)",
   "models": [
     {
       "model_name": "GPT-5",
@@ -50,7 +50,7 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
       "region": "swedencentral",
-      "notes": "Global; coding"
+      "notes": "Global; coding (codex input meter; codex-class 10.0 output)"
     },
     {
       "model_name": "GPT-5.1",
@@ -319,10 +319,10 @@
     {
       "model_name": "GPT-4o mini",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.6,
+      "input_per_1m_usd": 0.165,
+      "output_per_1m_usd": 0.66,
       "region": "swedencentral",
-      "notes": "Global"
+      "notes": "DataZone EU tier (only EU token meter present; Global token meter not in EU snapshot)"
     },
     {
       "model_name": "DeepSeek-V4 Pro",

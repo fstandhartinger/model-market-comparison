@@ -1,6 +1,6 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-06-18 (refreshed)
+**Collected:** 2026-06-23 (refreshed)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 42 models
 
 ## Sources
@@ -16,6 +16,27 @@ OpenAI gpt-oss, Meta Llama, Mistral). The partner tables and the per-region Clau
 tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
+
+## What changed at the 2026-06-23 refresh (still 42, no price deltas)
+
+Re-scraped the live page in a dedicated `--session vertex` headless browser
+(agent-browser 0.8.5). Compared against the 2026-06-18 snapshot — **all rates
+unchanged**, model roster identical (still 42 captured). Re-verified:
+- Gemini 3 family: only **Gemini 3.5 Flash** ($1.50/$9.00 Global vs $1.65/$9.90
+  non-global) and **Gemini 3.1 Flash-Lite** ($0.25/$1.50 vs $0.275/$1.65) carry a
+  non-global surcharge. **Gemini 3.1 Pro** ($2/$12) and **Gemini 3 Flash**
+  ($0.5/$3) show no surcharge (Global only). The 2026-07-01 non-global cutover note
+  for GA Gemini 3+ is still on the page.
+- Claude EU tables (read from the Anthropic `<devsite-selector>` `<section
+  data-tab>` panes): EU Multi-Region (eu) = Fable 5 $11/$55, Opus 4.8 $5.50/$27.50,
+  Opus 4.7 $5.50/$27.50; europe-west1 = Opus 4.6/4.5 $5.50/$27.50, Sonnet 4.6/4.5
+  $3.30/$16.50, Haiku 4.5 $1.10/$5.50. EU surcharge exactly +10%. Opus 4.1
+  $15/$75 uniform (global).
+- Partner roster on Vertex: **Kimi-K2-Thinking (Moonshot), GLM-5 + GLM-4.7 (Zhipu),
+  MiniMax-M2 — all present**. **DeepSeek: only V3.1, V3.2, R1 (0528) (+ OCR,
+  omitted) — NO DeepSeek-V4 on Vertex.** No MiMo. Grok 4.3 / 4.20 R+NR / 4.1 Fast
+  R+NR, Qwen3 (4 models), gpt-oss 120b/20b, Llama 4 Maverick/Scout + 3.3 70B,
+  Mistral Medium 3 / Small 3.1 / Codestral 2 all unchanged.
 
 ## What changed at the 2026-06-18 refresh (was 41, now 42)
 

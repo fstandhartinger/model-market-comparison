@@ -1,6 +1,6 @@
 # Inceptron — data collection method
 
-**Date collected:** 2026-06-18
+**Date collected:** 2026-06-23 (prior: 2026-06-18)
 **Output:** `data/raw/inceptron.json`
 
 ## What Inceptron is
@@ -27,34 +27,45 @@ batched inference, and elastic GPUs across clouds, plus bring-your-own-model.
 - No dedicated `/security` page exists (returns 404); claims are surfaced on the
   homepage only.
 
-## Catalog
-Inceptron currently serves **exactly 3 text LLMs** via its standard priced API.
-All three appear identically in:
+## Catalog (2026-06-23)
+Inceptron now serves **6 priced text LLMs** via its standard public API (was **3**
+on 2026-06-18 — GLM 5.2, Kimi K2.6 Fast, and **Kimi K2.7 Code** are newly exposed
+in the public `/v1/models`). All 6 appear identically in:
 1. Inceptron's own catalog API `https://api.inceptron.io/v1/models` (authoritative,
-   includes `pricing.prompt` / `pricing.completion` in USD per token),
+   no auth, includes `pricing.prompt` / `pricing.completion` in USD per token),
 2. the rendered website `https://www.inceptron.io/models`,
-3. OpenRouter endpoint data (`provider_name == "Inceptron"`).
+3. OpenRouter endpoint data (`provider_name == "Inceptron"`) — all 6 confirmed.
 
 | Model | Maker | in $/1M | out $/1M | cache read $/1M | quant | ctx |
 |-------|-------|---------|----------|-----------------|-------|-----|
+| GLM 5.2 | Z.ai | 1.20 | 4.20 | 0.26 | fp4 | 1.05M |
 | GLM 5.1 | Z.ai | 1.40 | 4.40 | 0.26 | fp8 | 202K |
-| Kimi K2.6 | Moonshot AI | 0.67* | 3.50 | 0.20 | int4 | 262K (multimodal) |
+| Kimi K2.7 Code | Moonshot AI | 0.75 | 3.50 | 0.20 | int4 | 262K (multimodal) |
+| Kimi K2.6 | Moonshot AI | 0.66* | 3.50 | 0.20 | int4 | 262K (multimodal) |
+| Kimi K2.6 Fast | Moonshot AI | 1.32 | 7.00 | 0.40 | fp4 | 262K (multimodal) |
 | MiniMax M2.5 | MiniMax | 0.15 | 0.90 | 0.05 | fp8 | 196K |
 
-\* Kimi K2.6 input price: `api.inceptron.io` and OpenRouter both now report
-**$0.67/1M** (down from $0.68 on the prior snapshot); cache-read also dropped to
-$0.20/1M (was $0.25). The machine-readable API value ($0.67) is used as canonical
-in `inceptron.json`. Output unchanged at $3.50/1M.
+\* Kimi K2.6 input price is now **$0.66/1M** ($0.67 on 2026-06-18, $0.68 prior);
+output unchanged at $3.50/1M. The machine-readable API value is canonical.
+
+### Kimi K2.7 Code — NOW PUBLIC (2026-06-23)
+On 2026-06-18 Kimi K2.7 Code showed only in the logged-in console (SERVERLESS/NEW,
+$0.75 in / $3.50 out) and was **absent** from the public `/v1/models` API. As of
+2026-06-23 it **is** present in the public API (`id moonshotai/Kimi-K2.7-Code`,
+int4, 262K ctx, multimodal, in $0.75 / out $3.50, cache read $0.20) and is also
+confirmed on the OpenRouter `moonshotai/kimi-k2.7-code` Inceptron endpoint at the
+same $0.75 / $3.50. The previously-held manual entry can be dropped — it is now a
+real public catalog model and is included in `inceptron.json`.
 
 ## Models NOT served (despite being mentioned on the site)
 The homepage / models page mention "Run and scale Llama, Qwen, Kimi, and DeepSeek",
 show a `meta-llama/Llama-3.3-70B-Instruct` curl example, and reference
-"DeepSeek V3.2 Exp Thinking". These are **marketing / BYOM (bring-your-own-model) /
-dedicated-deployment** references, NOT standard priced endpoints. The authoritative
-`/v1/models` API and OpenRouter both list only the 3 models above. None of the
-prioritized GLM 5.2, Kimi K2.5/K2.7, DeepSeek V4/V3.2/R1, MiniMax M2.7/M3, Qwen3,
-Mistral, or gpt-oss models are served by Inceptron as priced endpoints as of
-2026-06-18.
+"DeepSeek V3.2 Exp Thinking". These remain **marketing / BYOM (bring-your-own-model)
+/ dedicated-deployment** references, NOT standard priced endpoints — the authoritative
+`/v1/models` API and OpenRouter list only the 6 models above. Of the prioritized set,
+GLM 5.2, Kimi K2.6 and Kimi K2.7 Code ARE now served; DeepSeek V4/V3.2/R1, MiniMax
+M2.7/M3, Qwen3, Mistral, and gpt-oss are still NOT served by Inceptron as priced
+endpoints as of 2026-06-23.
 
 ## How to refresh
 1. **Primary (authoritative, fastest):**
