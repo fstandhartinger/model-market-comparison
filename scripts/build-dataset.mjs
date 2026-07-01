@@ -86,7 +86,7 @@ const canonFamily = (k) => FAMILY_ALIASES[k] || k;
 
 // Providers ingested as their own first-party platform; their OpenRouter-routed
 // duplicate is dropped so each appears once in the provider list/filter.
-const DIRECT_PLATFORM_PROVIDERS = new Set(["Nebius", "Inceptron", "Chutes", "Scaleway", "IONOS", "Mistral"]);
+const DIRECT_PLATFORM_PROVIDERS = new Set(["Nebius", "Inceptron", "Chutes", "Scaleway", "IONOS", "Mistral", "TensorX"]);
 
 // OpenRouter-routed providers that genuinely run inference inside a hardware TEE
 // (confidential compute). Their offers are flagged tee:true so the "TEE only" filter
@@ -179,6 +179,7 @@ async function build() {
   const scaleway = await readJSON("scaleway.json").catch(() => ({ models: [] }));
   const ionos = await readJSON("ionos.json").catch(() => ({ models: [] }));
   const mistral = await readJSON("mistral.json").catch(() => ({ models: [] }));
+  const tensorx = await readJSON("tensorx.json").catch(() => ({ models: [] }));
   const chutes = await readJSON("chutes.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
   const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
@@ -298,8 +299,8 @@ async function build() {
     });
   }
 
-  // --- EU-native platforms: Nebius, Inceptron, Scaleway, IONOS, Mistral ---
-  for (const [plat, src] of [["Nebius", nebius], ["Inceptron", inceptron], ["Scaleway", scaleway], ["IONOS", ionos], ["Mistral", mistral]]) {
+  // --- EU-native platforms: Nebius, Inceptron, Scaleway, IONOS, Mistral, TensorX ---
+  for (const [plat, src] of [["Nebius", nebius], ["Inceptron", inceptron], ["Scaleway", scaleway], ["IONOS", ionos], ["Mistral", mistral], ["TensorX", tensorx]]) {
     for (const m of src.models || []) {
       const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
       const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
@@ -459,7 +460,7 @@ async function build() {
       openrouter: or.collected_at, artificialanalysis: aa.collected_at, designarena: da.collected_at,
       aws_bedrock: aws.collected_at, azure_foundry: azure.collected_at,
       google_vertex: vertex.collected_at, nebius: nebius.collected_at, inceptron: inceptron.collected_at,
-      scaleway: scaleway.collected_at, ionos: ionos.collected_at, mistral: mistral.collected_at,
+      scaleway: scaleway.collected_at, ionos: ionos.collected_at, mistral: mistral.collected_at, tensorx: tensorx.collected_at,
       chutes: chutes.collected_at,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
     },

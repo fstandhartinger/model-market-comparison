@@ -18,7 +18,7 @@ const SOTA = [
   { key: "mimo-v2.5-pro", name: "Xiaomi MiMo-V2.5-Pro" },
 ];
 
-const EU_HOSTED = new Set(["Nebius", "Inceptron", "AWS Bedrock", "Azure AI Foundry", "Google Vertex AI"]);
+const EU_HOSTED = new Set(["Nebius", "Inceptron", "TensorX", "AWS Bedrock", "Azure AI Foundry", "Google Vertex AI"]);
 
 // EU-sovereign providers that DO expose a per-token API but only for Western open
 // models — i.e. not an option for the SOTA coding models above.
@@ -96,12 +96,15 @@ export default async function EuPage() {
         </table>
       </div>
       <p className="mt-2 text-xs text-gray-500">
-        <b className="text-accent2">Nebius</b> (Netherlands; EU regions in Finland/France; ZDR + no-training) is the
-        broadest EU option — it carries GLM 5.1/5.2, Kimi K2.6, DeepSeek V4 Pro and MiniMax. <b className="text-accent2">Inceptron</b>
-        {" "}(Sweden; ISO 27001, zero-retention) adds GLM 5.1, Kimi K2.6 and MiniMax M2.5. ⚠️ Nebius serves a few
-        models from non-EU regions (per model — check the note); and Azure&apos;s Kimi/GLM/MiniMax are <b>Fireworks-hosted
-        and excluded from the EU Data Boundary</b> (US-served), so they are not a true EU route. MiniMax M2.7/M3, Kimi
-        K2.7 and MiMo currently have <b>no managed EU host</b>.
+        <b className="text-accent2">TensorX</b> (Ireland; 3 EU data-centre regions, 100% EU-sovereign / isolated from US
+        hyperscalers, zero data retention) is now the <b>broadest</b> EU-sovereign option — a self-serve per-token API
+        carrying GLM 5.2/5.1/5, <b>Kimi K2.7 Code</b>/K2.6/K2.5, DeepSeek V4 Pro/Flash/V3.2, <b>MiniMax M3</b>/M2.5 and Qwen,
+        all in-EU. <b className="text-accent2">Nebius</b> (Netherlands; Finland/France; ZDR + no-training) carries GLM 5.1/5.2,
+        Kimi K2.6, DeepSeek V4 Pro and MiniMax; <b className="text-accent2">Inceptron</b> (Sweden; ISO 27001, zero-retention)
+        adds GLM 5.1/5.2, Kimi K2.7 Code and MiniMax M2.5. ⚠️ Nebius serves a few models from non-EU regions (per model —
+        check the note); and Azure&apos;s Kimi/GLM/MiniMax are <b>Fireworks-hosted and excluded from the EU Data Boundary</b>
+        {" "}(US-served), so they are not a true EU route. Thanks to TensorX, <b>Kimi K2.7 Code and MiniMax M3 now have a
+        managed EU host</b>; MiniMax M2.7 and Xiaomi MiMo still do not.
       </p>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">🟡 Coming soon</h2>

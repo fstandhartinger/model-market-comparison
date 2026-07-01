@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-06-29T16:58:52.952Z",
+  "generated_at": "2026-07-01T06:45:26.812Z",
   "counts": {
     "models": 707,
     "families": 578,
-    "providers": 80,
-    "offers": 1705
+    "providers": 81,
+    "offers": 1745
   },
   "sources": {
     "openrouter": "2026-06-29",
@@ -18,6 +18,7 @@
     "scaleway": "2026-06-29",
     "ionos": "2026-06-29",
     "mistral": "2026-06-29",
+    "tensorx": "2026-07-01",
     "chutes": "2026-06-22",
     "aa_coding_agents": "2026-06-23",
     "github_copilot": "2026-06-15",
@@ -333,6 +334,16 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "€0.15/€0.65"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.04,
+          "output_per_1m": 0.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.01/1M"
         }
       ],
       "designarena": {},
@@ -650,6 +661,16 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "€0.15/€0.65"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.04,
+          "output_per_1m": 0.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.01/1M"
         }
       ],
       "designarena": {},
@@ -5699,6 +5720,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.04/1M"
         }
       ],
       "designarena": {},
@@ -5944,6 +5975,16 @@
           "region": "uk",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: uk-south1; id DeepSeek-V4-Pro"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.75,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.44/1M"
         }
       ],
       "designarena": {
@@ -6196,6 +6237,16 @@
           "region": "uk",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: uk-south1; id DeepSeek-V4-Pro"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.75,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.44/1M"
         }
       ],
       "designarena": {
@@ -6449,6 +6500,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.04/1M"
         }
       ],
       "designarena": {},
@@ -6694,6 +6755,16 @@
           "region": "uk",
           "unit": "per_1m_token",
           "notes": "tier: Base; served region: uk-south1; id DeepSeek-V4-Pro"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.75,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.44/1M"
         }
       ],
       "designarena": {
@@ -6947,6 +7018,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Global"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.3,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.04/1M"
         }
       ],
       "designarena": {},
@@ -8637,6 +8718,16 @@
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m3",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.4,
+          "output_per_1m": 2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.10/1M"
         }
       ],
       "designarena": {},
@@ -9717,6 +9808,16 @@
           "notes": "fp4 quant, 262K context, multimodal (text+image input). Cache read $0.40/1M. Inceptron model id moonshotai/Kimi-K2.6-Fast. NEW in public /v1/models — higher-throughput 'Fast' tier of Kimi K2.6 at 2x the price."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1,
+          "output_per_1m": 4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.25/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -10030,6 +10131,16 @@
           "notes": "fp4 quant, 262K context, multimodal (text+image input). Cache read $0.40/1M. Inceptron model id moonshotai/Kimi-K2.6-Fast. NEW in public /v1/models — higher-throughput 'Fast' tier of Kimi K2.6 at 2x the price."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1,
+          "output_per_1m": 4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.25/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -10221,6 +10332,16 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.20/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. NOW PRESENT in public /v1/models (was missing on 2026-06-18, only visible in logged-in console). Confirmed on OpenRouter Inceptron endpoint (in 0.75 / out 3.50)."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.25,
+          "output_per_1m": 4.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "256K ctx; cache-read $0.31/1M"
         }
       ],
       "designarena": {
@@ -13275,6 +13396,16 @@
           "notes": "fp4 quant, 1.05M context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.2. NEW in public /v1/models (not present on 2026-06-18). Matches OpenRouter Inceptron endpoint (in 1.20 / out 4.20)."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.5,
+          "output_per_1m": 4.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "1M ctx; cache-read $0.38/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -13554,6 +13685,16 @@
           "region": "eu",
           "unit": "per_1m_token",
           "notes": "fp8 quant, 202K context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.35/1M"
         },
         {
           "source": "Chutes",
@@ -13837,6 +13978,16 @@
           "notes": "fp8 quant, 202K context. Cache read $0.26/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.40 / out 4.40)."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.4,
+          "output_per_1m": 4.4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.35/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -13918,6 +14069,16 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5-turbo",
           "status": -2
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.2,
+          "output_per_1m": 4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.30/1M"
         }
       ],
       "designarena": {},
@@ -13966,6 +14127,16 @@
           "unit": "per_1m_token",
           "or_model_id": "z-ai/glm-5v-turbo",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1.2,
+          "output_per_1m": 4,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "vision; cache-read $0.30/1M"
         }
       ],
       "designarena": {
@@ -14833,6 +15004,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-122b-a10b",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.5,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "256K ctx; cache-read $0.13/1M"
         }
       ],
       "designarena": {},
@@ -15208,6 +15389,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-122b-a10b",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.5,
+          "output_per_1m": 3.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "256K ctx; cache-read $0.13/1M"
         }
       ],
       "designarena": {},
@@ -15374,6 +15565,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.04/1M"
         }
       ],
       "designarena": {},
@@ -16484,6 +16685,16 @@
           "unit": "per_1m_token",
           "or_model_id": "qwen/qwen3.5-9b",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.04/1M"
         }
       ],
       "designarena": {},
@@ -24518,6 +24729,16 @@
           "notes": "Model Garden partner model. Cache hit $0.056. Batch $0.28 in / $0.84 out. NOTE: no DeepSeek-V4 is offered on Vertex as of 2026-06-23."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.08/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -24661,6 +24882,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Batch $0.675 in / $2.70 out."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.66,
+          "output_per_1m": 2.6,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.17/1M"
         }
       ],
       "designarena": {},
@@ -24841,6 +25072,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Cache hit $0.06. Batch $0.30 in / $0.85 out."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.8,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "deepseek-chat-v3.1; cache-read $0.05/1M"
         }
       ],
       "designarena": {},
@@ -25181,6 +25422,16 @@
           "notes": "Model Garden partner model. Cache hit $0.056. Batch $0.28 in / $0.84 out. NOTE: no DeepSeek-V4 is offered on Vertex as of 2026-06-23."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.5,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.08/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -25334,6 +25585,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Cache hit $0.06. Batch $0.30 in / $0.85 out."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.2,
+          "output_per_1m": 0.8,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "deepseek-chat-v3.1; cache-read $0.05/1M"
         }
       ],
       "designarena": {},
@@ -27246,6 +27507,16 @@
           "notes": "fp8 quant, 196K context. Cache read $0.05/1M. Inceptron model id MiniMaxAI/MiniMax-M2.5. Matches OpenRouter Inceptron endpoint (in 0.15 / out 0.90)."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.3,
+          "output_per_1m": 1.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.08/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -27841,6 +28112,16 @@
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.5,
+          "output_per_1m": 2.8,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.13/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -28166,6 +28447,16 @@
           "region": "swedencentral",
           "unit": "per_1m_token",
           "notes": "Fireworks-hosted; DataZone EU tier (no Global tier)"
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.5,
+          "output_per_1m": 2.8,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.13/1M"
         },
         {
           "source": "Chutes",
@@ -28756,6 +29047,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (GLM section)."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.15/1M"
         }
       ],
       "designarena": {
@@ -28986,6 +29287,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (GLM section). Cache hit $0.10."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1,
+          "output_per_1m": 3.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.25/1M"
         },
         {
           "source": "Chutes",
@@ -29227,6 +29538,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (GLM section). Cache hit $0.10."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 1,
+          "output_per_1m": 3.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.25/1M"
         },
         {
           "source": "Chutes",
@@ -29503,6 +29824,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model (GLM section)."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.6,
+          "output_per_1m": 2.2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.15/1M"
         }
       ],
       "designarena": {
@@ -30998,6 +31329,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.21,
+          "output_per_1m": 1.9,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "vision; from /pricing page"
         }
       ],
       "designarena": {},
@@ -31379,6 +31720,16 @@
           "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
         },
         {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.07,
+          "output_per_1m": 0.46,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.02/1M"
+        },
+        {
           "source": "Chutes",
           "provider": "Chutes",
           "platform": "Chutes",
@@ -31742,6 +32093,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.21,
+          "output_per_1m": 1.9,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "vision; from /pricing page"
         }
       ],
       "designarena": {},
@@ -32057,6 +32418,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.07,
+          "output_per_1m": 0.46,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.02/1M"
         },
         {
           "source": "Chutes",
@@ -33042,6 +33413,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.06,
+          "output_per_1m": 0.25,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": ""
         }
       ],
       "designarena": {},
@@ -33298,6 +33679,16 @@
           "region": "global",
           "unit": "per_1m_token",
           "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.07,
+          "output_per_1m": 0.46,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "cache-read $0.02/1M"
         },
         {
           "source": "Chutes",
@@ -35997,6 +36388,16 @@
           "unit": "per_1m_token",
           "or_model_id": "nvidia/nemotron-3-super-120b-a12b",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.3,
+          "output_per_1m": 0.9,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "256K ctx; cache-read $0.08/1M"
         }
       ],
       "designarena": {},
@@ -41709,6 +42110,16 @@
       "eu_dedicated": false,
       "country": "Netherlands",
       "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
+    },
+    {
+      "platform": "TensorX",
+      "provider": "TensorX",
+      "model_count": 23,
+      "eu_hosted": true,
+      "non_us": true,
+      "eu_dedicated": false,
+      "country": "Ireland",
+      "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU."
     },
     {
       "platform": "OpenRouter",

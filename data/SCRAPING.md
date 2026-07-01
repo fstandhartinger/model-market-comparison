@@ -49,6 +49,7 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 | Scaleway Generative APIs (FR-sovereign, EUR→USD) | `data/raw/scaleway.json` | scaleway.com/en/generative-apis/ pricing — prices are EUR, converted at the rate in `currency_note` |
 | IONOS AI Model Hub (DE-sovereign, EUR→USD) | `data/raw/ionos.json` | cloud.ionos.de/managed/ai-model-hub pricing — prices are EUR, converted at the rate in `currency_note` |
 | Mistral first-party API (FR, USD) | `data/raw/mistral.json` | mistral.ai/pricing — own open-weight models only |
+| TensorX (EU-sovereign, IE, USD) | `data/raw/tensorx.json` | tensorx.ai/models + /pricing — OpenAI-compatible per-token; serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss in-EU |
 | ArtificialAnalysis Coding Agent Index (model × harness; we take the per-model max) | `data/raw/aa-coding-agents.json` | reverse-engineered from the AA homepage RSC payload (`self.__next_f` `rows` array) |
 | GitHub Copilot (premium-request multipliers, commercial June 2026+) | `data/raw/github-copilot.json` | [github-copilot.method.md](raw/github-copilot.method.md) — GitHub Copilot docs |
 | Anthropic / Claude Code (Opus 4.6–4.8, Sonnet 4.6, Fable 5 list token price) | `data/raw/claude-code.json` | [claude-code.method.md](raw/claude-code.method.md) — Anthropic pricing page + `claude-api` skill |
