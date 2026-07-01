@@ -29,8 +29,8 @@ export function Toggle({ label, on, set }: { label: string; on: boolean; set: (b
 /** A reusable provider/platform checkbox filter with presets. An empty selection
  *  means "all providers". */
 export function ProviderFilter({
-  providers, selected, setSelected,
-}: { providers: ProviderInfo[]; selected: Set<string>; setSelected: (s: Set<string>) => void }) {
+  providers, excluded, setExcluded,
+}: { providers: ProviderInfo[]; excluded: Set<string>; setExcluded: (s: Set<string>) => void }) {
   const [open, setOpen] = useState(false);
   const byPlatform = new Map<string, ProviderInfo[]>();
   for (const p of providers) {
@@ -38,36 +38,38 @@ export function ProviderFilter({
     byPlatform.get(p.platform)!.push(p);
   }
   const all = providers.map((p) => p.key);
-  const isAll = selected.size === 0; // empty selection means "all providers included"
-  const isChecked = (k: string) => isAll || selected.has(k);
+  // `excluded` is a BLOCKLIST: empty = every provider included (incl. any added later).
+  const isChecked = (k: string) => !excluded.has(k);
   const toggle = (k: string) => {
-    const base = isAll ? new Set(all) : new Set(selected);
+    const base = new Set(excluded);
     base.has(k) ? base.delete(k) : base.add(k);
-    setSelected(base.size === all.length ? new Set() : base); // back to "all" collapses to empty
+    setExcluded(base);
   };
-  const applyPreset = (match: (p: ProviderInfo) => boolean) => setSelected(new Set(providers.filter(match).map((p) => p.key)));
-  const label = isAll ? "All providers" : `${selected.size} of ${all.length}`;
+  // A preset selects a subset → exclude everything that does NOT match.
+  const applyPreset = (match: (p: ProviderInfo) => boolean) => setExcluded(new Set(providers.filter((p) => !match(p)).map((p) => p.key)));
+  const isAll = excluded.size === 0;
+  const label = isAll ? "All providers" : `${all.length - excluded.size} of ${all.length}`;
 
   return (
     <div className="relative inline-block">
       <button onClick={() => setOpen(!open)}
-        className={`rounded-md border px-3 py-1.5 text-sm ${selected.size ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-300"}`}>
+        className={`rounded-md border px-3 py-1.5 text-sm ${excluded.size ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-300"}`}>
         Providers: {label} ▾
       </button>
       {open && (
         <div className="absolute z-20 mt-1 max-h-[60vh] w-80 overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
           <div className="mb-1 flex flex-wrap gap-1">
-            <button onClick={() => setSelected(new Set())} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">All</button>
+            <button onClick={() => setExcluded(new Set())} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">All</button>
             {PROVIDER_PRESETS.map((p) => (
               <button key={p.label} onClick={() => applyPreset(p.match)} className="rounded border border-accent/40 px-2 py-0.5 text-xs text-accent">{p.label}</button>
             ))}
           </div>
-          <p className="mb-2 text-[10px] text-gray-500">All checked = no restriction. Uncheck to exclude providers (the EU-hosted / Non-US toggles still apply on top).</p>
+          <p className="mb-2 text-[10px] text-gray-500">All checked = no restriction (new providers included by default). Uncheck to exclude providers (the EU-hosted / Non-US toggles still apply on top).</p>
           {[...byPlatform.entries()].map(([platform, list]) => (
             <div key={platform} className="mb-2">
               <div className="mb-1 flex items-center justify-between">
                 <span className="text-xs font-semibold text-accent">{platform}</span>
-                <button onClick={() => { const base = isAll ? new Set(all) : new Set(selected); list.forEach((p) => base.delete(p.key)); setSelected(base.size === all.length ? new Set() : base); }}
+                <button onClick={() => { const base = new Set(excluded); list.forEach((p) => base.add(p.key)); setExcluded(base); }}
                   className="text-[10px] text-gray-500 hover:text-gray-300">exclude all</button>
               </div>
               <div className="grid grid-cols-2 gap-x-2 gap-y-0.5">

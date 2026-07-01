@@ -78,21 +78,23 @@ export function chineseProviderKeys(providers: { key: string; provider: string }
 
 type ProviderFlag = { key: string; provider: string; eu_hosted?: boolean; non_us?: boolean; eu_dedicated?: boolean };
 
-/** Combine an explicit provider allow-list with the global provider toggles
- *  (exclude-Chinese, EU-hosted-only, non-US-only) into one allowed-key set
- *  (null = all providers, no restriction). When `euDedicated` is set, the
- *  EU-hosted filter is widened to also admit providers that only offer EU via
- *  dedicated/BYOC/enterprise deployments. */
+/** Combine the provider blocklist (`excluded` = keys the user unchecked) with the
+ *  global provider toggles (exclude-Chinese, EU-hosted-only, non-US-only) into one
+ *  allowed-key set (null = all providers, no restriction). Starting from ALL
+ *  providers and subtracting `excluded` means providers added later are included by
+ *  default (no stale inclusion snapshot). When `euDedicated` is set, the EU-hosted
+ *  filter is widened to also admit providers that only offer EU via dedicated/BYOC. */
 export function effectiveAllowed(
-  providerSet: Set<string> | null,
+  excluded: Set<string> | null,
   excludeChinese: boolean,
   providers: ProviderFlag[],
   euHostedOnly = false,
   nonUsOnly = false,
   euDedicated = false
 ): Set<string> | null {
-  if (!providerSet && !excludeChinese && !euHostedOnly && !nonUsOnly) return null;
-  let base = providerSet ? new Set(providerSet) : new Set(providers.map((p) => p.key));
+  if ((!excluded || excluded.size === 0) && !excludeChinese && !euHostedOnly && !nonUsOnly) return null;
+  let base = new Set(providers.map((p) => p.key));
+  if (excluded) for (const k of excluded) base.delete(k);
   if (excludeChinese) for (const k of chineseProviderKeys(providers)) base.delete(k);
   if (euHostedOnly) { const ok = new Set(providers.filter((p) => p.eu_hosted || (euDedicated && p.eu_dedicated)).map((p) => p.key)); base = new Set([...base].filter((k) => ok.has(k))); }
   if (nonUsOnly) { const ok = new Set(providers.filter((p) => p.non_us).map((p) => p.key)); base = new Set([...base].filter((k) => ok.has(k))); }

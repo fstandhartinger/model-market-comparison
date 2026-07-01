@@ -15,7 +15,7 @@ interface SettingsState {
   hideFable: boolean;       // hide Claude Fable (on by default)
   minScore: number;         // hide models scoring below this (score-aware default)
   teeOnly: boolean;         // only models with a TEE / confidential-compute offer
-  providers: string[];     // selected provider keys; empty = all
+  providersExcluded: string[]; // BLOCKLIST of deselected provider keys; empty = all included (incl. future providers)
   families: string[];      // selected model family keys; empty = all
 }
 
@@ -31,17 +31,20 @@ interface SettingsCtx extends SettingsState {
   setHideFable: (b: boolean) => void;
   setMinScore: (n: number) => void;
   setTeeOnly: (b: boolean) => void;
-  setProviders: (k: string[]) => void;
+  setProvidersExcluded: (k: string[]) => void;
   setFamilies: (k: string[]) => void;
-  providerSet: Set<string> | null; // null = all
+  excludedSet: Set<string> | null; // null = nothing excluded
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, euDedicated: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providers: [], families: [] };
-// v2: reset persisted state. v1 could store an explicit "all providers" list (via the
-// old "Select all" button); when new providers were later added, that stale set excluded
-// them (e.g. Nebius), wrongly filtering models. v2 starts clean (empty = all).
-const KEY = "mmc.settings.v2";
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, euDedicated: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
+// v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
+// an inclusion list. An inclusion list is a snapshot of the providers that existed when
+// the user last touched the filter, so any provider added later (e.g. TensorX) was
+// silently excluded — and with "EU-hosted only" on, models whose only EU route is a new
+// provider vanished. A blocklist includes future providers by default. Bumping v2→v3
+// discards the old (inclusion-shaped) persisted `providers` array.
+const KEY = "mmc.settings.v3";
 
 const Ctx = createContext<SettingsCtx | null>(null);
 
@@ -73,9 +76,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
-    setProviders: (providers) => setState((s) => ({ ...s, providers })),
+    setProvidersExcluded: (providersExcluded) => setState((s) => ({ ...s, providersExcluded })),
     setFamilies: (families) => setState((s) => ({ ...s, families })),
-    providerSet: state.providers.length ? new Set(state.providers) : null,
+    excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,
   }), [state]);
 

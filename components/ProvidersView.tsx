@@ -22,7 +22,7 @@ interface Row {
 export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.providerSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
+  const allowed = useMemo(() => effectiveAllowed(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
   const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
@@ -106,7 +106,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   }, [data, peerModels, selectedModel, mode, allowed]);
 
   let shown = mode === "model" ? rows.filter((r) => r.model_price != null) : rows.filter((r) => r.models_offered > 0);
-  if (s.providerSet) shown = shown.filter((r) => s.providerSet!.has(r.key));
+  if (s.excludedSet) shown = shown.filter((r) => !s.excludedSet!.has(r.key));
   const maxAvgRank = Math.max(1, ...shown.map((r) => r.avg_rank ?? 0));
   const maxAvgPrice = Math.max(1, ...shown.map((r) => r.avg_price ?? 0));
   const maxModelPrice = Math.max(1, ...shown.map((r) => r.model_price ?? 0));
