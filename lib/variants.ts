@@ -33,13 +33,20 @@ export function preferredVariantIds(models: ClientModel[]): Map<string, string> 
 }
 
 const TRAILING_PAREN_RE = /\s*\([^()]*\)\s*$/;
+// A trailing "(...)" that describes a reasoning/effort/thinking setting (the AA variant
+// suffix), e.g. "(Adaptive Reasoning, Max Effort)", "(high)", "(Non-reasoning, Low Effort)".
+const REASONING_PAREN_RE = /\s*\([^()]*\b(reasoning|effort|thinking|adaptive|non-reasoning|xhigh|high|medium|low|minimal|max)\b[^()]*\)\s*$/i;
 /** Name to show for a model row. When "one variant per reasoning family" (collapse) is
- *  on, a multi-variant family's row stands in for the whole family, so drop the trailing
- *  variant detail in parentheses — e.g. "Claude Sonnet 5 (Adaptive Reasoning, Max
- *  Effort)" → "Claude Sonnet 5", "DeepSeek V4 Pro (Reasoning, Max Effort)" → "DeepSeek
- *  V4 Pro". Single-variant models (and the expanded view) keep their full name. */
+ *  on, drop the trailing variant detail in parentheses so the row reads as the model
+ *  name — e.g. "Claude Opus 4.8 (Adaptive Reasoning, Max Effort)" → "Claude Opus 4.8",
+ *  "DeepSeek V4 Pro (Reasoning, Max Effort)" → "DeepSeek V4 Pro", "GPT-5.5 (high)" →
+ *  "GPT-5.5". Multi-variant families drop any trailing "(...)" (the chosen representative);
+ *  single-variant models drop the suffix only when it's a reasoning descriptor (so e.g. a
+ *  "(Vision)" tag is preserved). The expanded view keeps full names. */
 export function collapsedName(m: { display_name: string; family_key: string }, collapse: boolean, preferredId: Map<string, string>): string {
-  return collapse && preferredId.has(m.family_key) ? m.display_name.replace(TRAILING_PAREN_RE, "").trim() : m.display_name;
+  if (!collapse) return m.display_name;
+  const re = preferredId.has(m.family_key) ? TRAILING_PAREN_RE : REASONING_PAREN_RE;
+  return m.display_name.replace(re, "").trim();
 }
 
 /** Apply the collapse rule to a model list (keep only the preferred variant per
