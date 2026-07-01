@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-01T09:49:34.475Z",
+  "generated_at": "2026-07-01T10:44:30.891Z",
   "counts": {
     "models": 711,
     "families": 578,
     "providers": 80,
-    "offers": 1782
+    "offers": 1783
   },
   "sources": {
     "openrouter": "2026-07-01",
@@ -4163,13 +4163,13 @@
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.3,
-          "cache_write_per_1m": 3.75,
+          "input_per_1m": 2,
+          "output_per_1m": 10,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
+          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6. Prices shown are the INTRODUCTORY promo in effect through 2026-08-31 ($2 in / $10 out / cache read $0.20 / 5m cache write $2.50). REVERTS to STANDARD $3/$15 (cache read $0.30 / 5m write $3.75 / 1h write $6) on 2026-09-01 — update then. Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
         }
       ],
       "designarena": {},
@@ -5101,13 +5101,13 @@
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.3,
-          "cache_write_per_1m": 3.75,
+          "input_per_1m": 2,
+          "output_per_1m": 10,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
+          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6. Prices shown are the INTRODUCTORY promo in effect through 2026-08-31 ($2 in / $10 out / cache read $0.20 / 5m cache write $2.50). REVERTS to STANDARD $3/$15 (cache read $0.30 / 5m write $3.75 / 1h write $6) on 2026-09-01 — update then. Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
         }
       ],
       "designarena": {},
@@ -5246,13 +5246,13 @@
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.3,
-          "cache_write_per_1m": 3.75,
+          "input_per_1m": 2,
+          "output_per_1m": 10,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
+          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6. Prices shown are the INTRODUCTORY promo in effect through 2026-08-31 ($2 in / $10 out / cache read $0.20 / 5m cache write $2.50). REVERTS to STANDARD $3/$15 (cache read $0.30 / 5m write $3.75 / 1h write $6) on 2026-09-01 — update then. Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
         }
       ],
       "designarena": {},
@@ -5592,13 +5592,13 @@
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.3,
-          "cache_write_per_1m": 3.75,
+          "input_per_1m": 2,
+          "output_per_1m": 10,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
+          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6. Prices shown are the INTRODUCTORY promo in effect through 2026-08-31 ($2 in / $10 out / cache read $0.20 / 5m cache write $2.50). REVERTS to STANDARD $3/$15 (cache read $0.30 / 5m write $3.75 / 1h write $6) on 2026-09-01 — update then. Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
         }
       ],
       "designarena": {},
@@ -5737,13 +5737,13 @@
           "source": "Anthropic API / Claude Code",
           "provider": "Anthropic",
           "platform": "Anthropic",
-          "input_per_1m": 3,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.3,
-          "cache_write_per_1m": 3.75,
+          "input_per_1m": 2,
+          "output_per_1m": 10,
+          "cache_read_per_1m": 0.2,
+          "cache_write_per_1m": 2.5,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
+          "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6. Prices shown are the INTRODUCTORY promo in effect through 2026-08-31 ($2 in / $10 out / cache read $0.20 / 5m cache write $2.50). REVERTS to STANDARD $3/$15 (cache read $0.30 / 5m write $3.75 / 1h write $6) on 2026-09-01 — update then. Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
         }
       ],
       "designarena": {},
@@ -14079,11 +14079,11 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 1.19,
+          "input_per_1m": 1.4,
           "output_per_1m": 3.74,
           "region": "eu",
           "unit": "per_1m_token",
-          "notes": "fp8 quant, 202K context. Cache read $0.60/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.19 / out 3.74). Price cut vs 2026-06-23 (was 1.40/4.40)."
+          "notes": "fp8 quant, 202K context. Cache read $0.60/1M. Inceptron model id zai-org/GLM-5.1-FP8. Verified live api.inceptron.io 2026-07-01: in $1.40 / out $3.74 (input was briefly 1.19 earlier in the day)."
         },
         {
           "source": "TensorX",
@@ -14459,11 +14459,21 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 1.16,
+          "input_per_1m": 1.2,
           "output_per_1m": 3.62,
           "region": "eu",
           "unit": "per_1m_token",
-          "notes": "fp4 quant, 1.05M context. Cache read $0.21/1M. Inceptron model id zai-org/GLM-5.2. Matches OpenRouter Inceptron endpoint (in 1.16 / out 3.62). Price cut vs 2026-06-23 (was 1.20/4.20)."
+          "notes": "fp4 quant, 1.05M context. Cache read $0.21/1M. Inceptron model id zai-org/GLM-5.2. Verified live api.inceptron.io 2026-07-01: in $1.20 / out $3.62 (input was briefly 1.16 earlier in the day)."
+        },
+        {
+          "source": "Scaleway",
+          "provider": "Scaleway",
+          "platform": "Scaleway",
+          "input_per_1m": 1.94,
+          "output_per_1m": 5.94,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€1.80/€5.50 (added 2026-07-01)"
         },
         {
           "source": "TensorX",
@@ -14750,11 +14760,11 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 1.19,
+          "input_per_1m": 1.4,
           "output_per_1m": 3.74,
           "region": "eu",
           "unit": "per_1m_token",
-          "notes": "fp8 quant, 202K context. Cache read $0.60/1M. Inceptron model id zai-org/GLM-5.1-FP8. Matches OpenRouter Inceptron endpoint (in 1.19 / out 3.74). Price cut vs 2026-06-23 (was 1.40/4.40)."
+          "notes": "fp8 quant, 202K context. Cache read $0.60/1M. Inceptron model id zai-org/GLM-5.1-FP8. Verified live api.inceptron.io 2026-07-01: in $1.40 / out $3.74 (input was briefly 1.19 earlier in the day)."
         },
         {
           "source": "TensorX",
@@ -42810,6 +42820,16 @@
       "note": ""
     },
     {
+      "platform": "Scaleway",
+      "provider": "Scaleway",
+      "model_count": 10,
+      "eu_hosted": true,
+      "non_us": true,
+      "eu_dedicated": false,
+      "country": "France",
+      "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)."
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Anthropic",
       "model_count": 10,
@@ -42818,16 +42838,6 @@
       "eu_dedicated": false,
       "country": "US",
       "note": ""
-    },
-    {
-      "platform": "Scaleway",
-      "provider": "Scaleway",
-      "model_count": 9,
-      "eu_hosted": true,
-      "non_us": true,
-      "eu_dedicated": false,
-      "country": "France",
-      "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)."
     },
     {
       "platform": "OpenRouter",

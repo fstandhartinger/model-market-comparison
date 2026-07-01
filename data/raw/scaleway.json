@@ -5,6 +5,7 @@
   "currency_note": "Source prices are EUR/1M; converted to USD at EUR/USD = 1.08 (2026-06). Re-verify on refresh.",
   "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), via llm-tracker.eu cross-check. EU-sovereign, ZDR by default.",
   "models": [
+    { "model_name": "GLM 5.2", "provider_org": "Z.ai", "input_per_1m_usd": 1.94, "output_per_1m_usd": 5.94, "region": "eu", "notes": "€1.80/€5.50 (added 2026-07-01)" },
     { "model_name": "Llama 3.3 70B", "provider_org": "Meta", "input_per_1m_usd": 0.97, "output_per_1m_usd": 0.97, "region": "eu", "notes": "€0.90/€0.90" },
     { "model_name": "Qwen3 235B", "provider_org": "Alibaba", "input_per_1m_usd": 0.81, "output_per_1m_usd": 2.43, "region": "eu", "notes": "€0.75/€2.25" },
     { "model_name": "Qwen3 Coder 30B", "provider_org": "Alibaba", "input_per_1m_usd": 0.22, "output_per_1m_usd": 0.86, "region": "eu", "notes": "€0.20/€0.80" },

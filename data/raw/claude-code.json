@@ -37,11 +37,11 @@
       "model_name": "Claude Sonnet 5",
       "model_id": "claude-sonnet-5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 3.00,
-      "output_per_1m_usd": 15.00,
-      "cache_write_per_1m_usd": 3.75,
-      "cache_read_per_1m_usd": 0.30,
-      "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
+      "input_per_1m_usd": 2.00,
+      "output_per_1m_usd": 10.00,
+      "cache_write_per_1m_usd": 2.50,
+      "cache_read_per_1m_usd": 0.20,
+      "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6. Prices shown are the INTRODUCTORY promo in effect through 2026-08-31 ($2 in / $10 out / cache read $0.20 / 5m cache write $2.50). REVERTS to STANDARD $3/$15 (cache read $0.30 / 5m write $3.75 / 1h write $6) on 2026-09-01 — update then. Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
     },
     {
       "model_name": "Claude Sonnet 4.6",
