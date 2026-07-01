@@ -1,7 +1,24 @@
 # Inceptron — data collection method
 
-**Date collected:** 2026-06-23 (prior: 2026-06-18)
+**Date collected:** 2026-07-01 (prior: 2026-06-23, 2026-06-18)
 **Output:** `data/raw/inceptron.json`
+
+## Price changes on 2026-07-01
+The catalog is stable at **6 priced text LLMs**, but prices moved (native API
+values confirmed identically on OpenRouter, provider_name=="Inceptron"):
+
+| Model | in $/1M (was) | out $/1M (was) |
+|-------|---------------|----------------|
+| GLM 5.2 | 1.16 (1.20) | 3.62 (4.20) |
+| GLM 5.1 | 1.19 (1.40) | 3.74 (4.40) |
+| Kimi K2.7 Code | 0.85 (0.75) | 3.50 (3.50) |
+| Kimi K2.6 | 0.66 (0.66) | 3.41 (3.50) |
+| Kimi K2.6 Fast | 1.32 (1.32) | 7.00 (7.00) |
+| MiniMax M2.5 | 0.15 (0.15) | 0.90 (0.90) |
+
+GLM 5.1/5.2 saw notable output-price cuts; Kimi K2.7 Code input rose to $0.85.
+Cache-read tiers per native API `input_cache_reads`: GLM 5.2 $0.21, GLM 5.1 $0.60,
+K2.7 Code $0.18, K2.6 $0.14, K2.6 Fast $0.40, MiniMax M2.5 $0.05 (per 1M).
 
 ## What Inceptron is
 Inceptron is an EU-based ("enterprise-ready") LLM inference provider. It runs an

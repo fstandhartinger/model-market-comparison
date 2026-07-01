@@ -1,8 +1,8 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-06-23",
-  "method": "AWS Price List bulk API (EU region indexes, version 20260619225109) for per-token on-demand; pricing page + web search for Anthropic Claude / Cohere gaps not in EU bulk data.",
+  "collected_at": "2026-07-01",
+  "method": "AWS Price List bulk API (EU region indexes, version 20260619225109) for per-token on-demand text-LLM meters (standard tier only; flex/priority/batch/cache/image/audio/video excluded); pricing page + web search for Anthropic Claude (served via EU cross-region inference profile, no EU bulk entries) and Cohere (US-only) gaps.",
   "models": [
     {
       "model_name": "Nova 2.0 Lite",
@@ -58,15 +58,23 @@
       "input_per_1m_usd": 1.0,
       "output_per_1m_usd": 5.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
     },
     {
-      "model_name": "Claude Opus 4.6",
+      "model_name": "Claude Opus 4.7",
       "provider_org": "Anthropic",
       "input_per_1m_usd": 5.0,
       "output_per_1m_usd": 25.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*). Latest Anthropic Opus on Bedrock; 4.7/4.8 not yet on Bedrock."
+      "notes": "Still available on Bedrock alongside Opus 4.8. Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
+    },
+    {
+      "model_name": "Claude Opus 4.8",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 25.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "On Bedrock since ~2026-05-28 (DevelopersIO). Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API). Served in EU via EU cross-region inference profile (eu.anthropic.*). Fast Mode ($10/$50) not captured."
     },
     {
       "model_name": "Claude Sonnet 4.6",
@@ -74,7 +82,15 @@
       "input_per_1m_usd": 3.0,
       "output_per_1m_usd": 15.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API as of 2026-06). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
+      "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API). Served in EU via EU cross-region inference profile (eu.anthropic.claude-sonnet-4-6)."
+    },
+    {
+      "model_name": "Claude Sonnet 5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 3.0,
+      "output_per_1m_usd": 15.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Released 2026-06-30; live on Bedrock (AWS blog 'Introducing Claude Sonnet 5 on AWS'). Not in Price List bulk API EU data; served in EU via EU cross-region inference profile (eu.anthropic.claude-sonnet-5). Listed price is the STANDARD on-demand rate; Anthropic introductory promo of $2 in / $10 out per 1M applies through 2026-08-31."
     },
     {
       "model_name": "Cohere Command",

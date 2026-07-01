@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude (Claude Code / Enterprise, list token pricing)",
-  "collected_at": "2026-06-15",
-  "method": "claude-api skill SKILL.md model table (cached 2026-06-04) + official Anthropic pricing page https://platform.claude.com/docs/en/about-claude/pricing.md (verified 2026-06-15, identical)",
+  "collected_at": "2026-07-01",
+  "method": "claude-api skill SKILL.md model table + official Anthropic pricing page https://platform.claude.com/docs/en/about-claude/pricing.md (verified 2026-07-01). Added Claude Sonnet 5 (launched 2026-06-30).",
   "models": [
     {
       "model_name": "Claude Opus 4.8",
@@ -32,6 +32,16 @@
       "cache_write_per_1m_usd": 6.25,
       "cache_read_per_1m_usd": 0.50,
       "notes": "Same token pricing as Opus 4.7/4.8. 5m cache write $6.25/MTok; 1h cache write $10/MTok; cache read $0.50/MTok. Output incl. thinking. 1M context at standard pricing. Batch API: $2.50 in / $12.50 out. Fast mode (research preview): $30 in / $150 out."
+    },
+    {
+      "model_name": "Claude Sonnet 5",
+      "model_id": "claude-sonnet-5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 3.00,
+      "output_per_1m_usd": 15.00,
+      "cache_write_per_1m_usd": 3.75,
+      "cache_read_per_1m_usd": 0.30,
+      "notes": "Launched 2026-06-30, drop-in replacement for Sonnet 4.6 at the same STANDARD price ($3/$15). INTRODUCTORY promo through 2026-08-31: input $2 / output $10 / cache read $0.20 / 5m cache write $2.50 (reverts to standard $3/$15/$0.30/$3.75 on 2026-09-01; 1h cache write $6). Output incl. thinking (adaptive thinking ON by default; effort param low/medium/high/xhigh/max — manual budget_tokens + sampling params now 400). 1M context, 128K max output; new tokenizer ~30% more tokens per text. Batch API: $1.50 in / $7.50 out standard. Live at launch on AWS Bedrock (anthropic.claude-sonnet-5), Google Vertex, Azure Foundry (preview); EU regional/multi-region +10%. AA Intelligence Index 53 (max effort)."
     },
     {
       "model_name": "Claude Sonnet 4.6",

@@ -1,7 +1,16 @@
 # Nebius (Token Factory) pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/nebius.json`
-**Last collected:** 2026-06-23 (prior: 2026-06-18)
+**Last collected:** 2026-07-01 (prior: 2026-06-23, 2026-06-18)
+
+## Update 2026-07-01
+Re-rendered via agent-browser (`--session nebius`). Anonymous header: All **25** /
+Private 0 / Public 25. Catalog grew 24 -> 25 endpoints: **Kimi-K2.7-Code** is a NEW
+public endpoint (Moonshot AI, us-central1, tag New, $0.95 in / $4.00 out, Base). All
+other Base-tier prices are **unchanged** from 2026-06-23. Region flags recomputed
+(eu-north1->eu, us-central1->us, uk-south1->uk). Notable: GLM-5.2 still on us-central1;
+Kimi-K2.6 now shown under the Vision category. Embedding-only Qwen3-Embedding-8B
+($0.01/1M In, no output price) excluded, leaving 24 text-priced models in the JSON.
 **Provider:** Nebius B.V. — Netherlands-based EU AI cloud. The serverless per-token
 LLM product is **Nebius Token Factory** (formerly *Nebius AI Studio*).
 OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.

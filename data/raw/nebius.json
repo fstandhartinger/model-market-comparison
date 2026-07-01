@@ -1,17 +1,25 @@
 {
   "source": "Nebius",
   "region": "eu (Finland/France)",
-  "collected_at": "2026-06-23",
+  "collected_at": "2026-07-01",
   "listing_url": "https://tokenfactory.nebius.com/models",
-  "method": "agent-browser (headless Chromium, --session nebius) rendered the public Token Factory model catalog (JS SPA at tokenfactory.nebius.com/models, redirects to /endpoints) and read body.innerText. Parsed each card's In/Out USD per 1M tokens, tier, and served region. Anonymous header showed All 24 / Private 0 / Public 24. Embedding model (Qwen3-Embedding-8B) omitted (no output-token price). region:'eu' set only for EU-served (eu-north1) models; us-central1/uk-south1 served models flagged region:'us'/'uk' with raw region in notes. Catalog shrank from 29 endpoints (2026-06-18) to 24: the previously-Deprecated GLM-5, DeepSeek-V3.2, gpt-oss-120b-deprecated tags and the two '-m' mirror variants are gone; gpt-oss-120b is still present (no longer flagged deprecated). Notable change: GLM-5.2 now serves from us-central1 (was eu-north1 on 2026-06-18).",
+  "method": "agent-browser (headless Chromium, --session nebius) rendered the public Token Factory model catalog (JS SPA at tokenfactory.nebius.com/models, redirects to /endpoints) and read document.body.innerText. Parsed each card's In/Out USD per 1M tokens (Base tier), and served region. Anonymous header showed All 25 / Private 0 / Public 25. Embedding model (Qwen3-Embedding-8B, $0.01/1M In only, no output price) omitted. region:'eu' set only for eu-north1-served models; us-central1-served flagged region:'us', uk-south1-served flagged region:'uk', with the raw served region kept in notes. Change vs 2026-06-23: catalog grew 24->25 with Kimi-K2.7-Code (us-central1, New). GLM-5.2 still serves from us-central1 (moved off eu-north1 on 2026-06-18). Kimi-K2.6 now flagged Vision. All Base-tier prices unchanged from 2026-06-23.",
   "models": [
+    {
+      "model_name": "Kimi K2.7 Code",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.95,
+      "output_per_1m_usd": 4.0,
+      "region": "us",
+      "notes": "tier: Base; served region: us-central1; tag: New; id Kimi-K2.7-Code; code-focused reasoning/agentic; NEW endpoint vs 2026-06-23 (catalog 24->25)"
+    },
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.4,
       "output_per_1m_usd": 4.4,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1 (was eu-north1 on 2026-06-18); tag: New; id GLM-5.2"
+      "notes": "tier: Base; served region: us-central1; tag: New; id GLM-5.2; flagship multimodal"
     },
     {
       "model_name": "Nemotron 3 Ultra 550B",
@@ -27,7 +35,7 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.3,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1; tag: New; vision/multimodal (text-token priced); 33B reasoning"
+      "notes": "tier: Base; served region: eu-north1; category: Vision (text-token priced); 33B reasoning"
     },
     {
       "model_name": "MiniCPM-V 4.5",
@@ -35,7 +43,7 @@
       "input_per_1m_usd": 0.658,
       "output_per_1m_usd": 1.11,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1; vision/multimodal (text-token priced); id openbmb/MiniCPM-V-4_5"
+      "notes": "tier: Base; served region: eu-north1; category: Vision (text-token priced); id openbmb/MiniCPM-V-4_5"
     },
     {
       "model_name": "Kimi K2.6",
@@ -43,7 +51,7 @@
       "input_per_1m_usd": 0.95,
       "output_per_1m_usd": 4.0,
       "region": "us",
-      "notes": "tier: Base; served region: us-central1; native multimodal agentic (Vision)"
+      "notes": "tier: Base; served region: us-central1; category: Vision; native multimodal agentic"
     },
     {
       "model_name": "DeepSeek V4 Pro",
@@ -115,7 +123,7 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1; no longer flagged deprecated (was Deprecated on 2026-06-18)"
+      "notes": "tier: Base; served region: eu-north1"
     },
     {
       "model_name": "Qwen3-235B",
@@ -179,7 +187,7 @@
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 0.75,
       "region": "eu",
-      "notes": "tier: Base; served region: eu-north1; vision/multimodal (text-token priced); id Qwen2.5-VL-72B-Instruct"
+      "notes": "tier: Base; served region: eu-north1; category: Vision (text-token priced); id Qwen2.5-VL-72B-Instruct"
     },
     {
       "model_name": "Llama 3.3 70B",

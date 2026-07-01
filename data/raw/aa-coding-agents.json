@@ -1,193 +1,124 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
-  "collected_at": "2026-06-23",
-  "endpoint": "https://artificialanalysis.ai/ (homepage) \u2014 data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. No public v2 API endpoint exists for this dataset; the v2 models API exposes per-model agentic/coding indices but no per-harness pairings.",
-  "method": "curl the homepage HTML, locate the escaped JSON `\\\"rows\\\":[` token in the RSC payload, unescape JS string escapes (\\\" -> \", \\\\ -> \\, \\uXXXX, etc.), bracket-match to isolate the array, json.loads. Each row: agentName=harness, display.model=model, indexScore=score (0-1 scale).",
-  "score_scale": "0-1 (indexScore). Multiply by 100 for percentage.",
+  "collected_at": "2026-07-01",
+  "endpoint": "https://artificialanalysis.ai/ (homepage) — data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. Not in the v2 API.",
+  "method": "curl the homepage HTML, locate the escaped JSON `\\\"rows\\\":[` token in the RSC payload, unescape JS string escapes (\\\" -> \"), bracket-match the clean JSON to isolate the array, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1).",
+  "score_scale": "0-1",
   "rows": [
     {
       "model_name": "Qwen3.7 Plus (thinking)",
       "harness": "Claude Code",
-      "score": 0.5187857331965647,
-      "display_label": "Claude Code - Qwen3.7 Plus (thinking)",
-      "host_model_slug": "alibaba_cloud_qwen3-7-plus",
-      "model_creator": "Alibaba Cloud"
+      "score": 0.5187857331965647
     },
     {
       "model_name": "Fable 5 (max) (with fallback)",
       "harness": "Claude Code",
-      "score": 0.7718342762598047,
-      "display_label": "Claude Code - Fable 5 (max) (with fallback)",
-      "host_model_slug": "anthropic_claude-fable-5",
-      "model_creator": "Anthropic"
+      "score": 0.7718342762598047
     },
     {
       "model_name": "Opus 4.6 (medium)",
       "harness": "Claude Code",
-      "score": 0.7106373350614436,
-      "display_label": "Claude Code - Opus 4.6 (medium)",
-      "host_model_slug": "anthropic_claude-opus-4-6",
-      "model_creator": "Anthropic"
+      "score": 0.7106373350614436
     },
     {
       "model_name": "Opus 4.7 (max)",
       "harness": "Claude Code",
-      "score": 0.649784505935955,
-      "display_label": "Claude Code - Opus 4.7 (max)",
-      "host_model_slug": "anthropic_claude-opus-4-7",
-      "model_creator": "Anthropic"
+      "score": 0.649784505935955
     },
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Claude Code",
-      "score": 0.5684927805191924,
-      "display_label": "Claude Code - Opus 4.7 (medium)",
-      "host_model_slug": "anthropic_claude-opus-4-7",
-      "model_creator": "Anthropic"
+      "score": 0.5684927805191924
     },
     {
       "model_name": "Opus 4.8 (max)",
       "harness": "Claude Code",
-      "score": 0.7253661427657621,
-      "display_label": "Claude Code - Opus 4.8 (max)",
-      "host_model_slug": "anthropic_claude-opus-4-8",
-      "model_creator": "Anthropic"
+      "score": 0.7253661427657621
     },
     {
       "model_name": "Opus 4.8 (medium)",
       "harness": "Claude Code",
-      "score": 0.6703462322295174,
-      "display_label": "Claude Code - Opus 4.8 (medium)",
-      "host_model_slug": "anthropic_claude-opus-4-8",
-      "model_creator": "Anthropic"
+      "score": 0.6703462322295174
     },
     {
       "model_name": "Sonnet 4.6 (medium)",
       "harness": "Claude Code",
-      "score": 0.5409274235870386,
-      "display_label": "Claude Code - Sonnet 4.6 (medium)",
-      "host_model_slug": "anthropic_claude-sonnet-4-6",
-      "model_creator": "Anthropic"
+      "score": 0.5409274235870386
     },
     {
       "model_name": "DeepSeek V4 Pro (high)",
       "harness": "Claude Code",
-      "score": 0.4699593794521551,
-      "display_label": "Claude Code - DeepSeek V4 Pro (high)",
-      "host_model_slug": "deepseek_deepseek-v4-pro-1m",
-      "model_creator": "DeepSeek"
+      "score": 0.4699593794521551
     },
     {
       "model_name": "GLM-5.1",
       "harness": "Claude Code",
-      "score": 0.522734858833396,
-      "display_label": "Claude Code - GLM-5.1",
-      "host_model_slug": "friendliai_glm-5-1",
-      "model_creator": "Z.ai"
+      "score": 0.522734858833396
     },
     {
       "model_name": "Kimi K2.6",
       "harness": "Claude Code",
-      "score": 0.46869496288215534,
-      "display_label": "Claude Code - Kimi K2.6",
-      "host_model_slug": "moonshot_kimi-k2-6",
-      "model_creator": "Moonshot AI"
+      "score": 0.46869496288215534
     },
     {
       "model_name": "GLM-5.2",
       "harness": "Claude Code",
-      "score": 0.5767008439528807,
-      "display_label": "Claude Code - GLM-5.2",
-      "host_model_slug": "novita_glm-5-2_fp8",
-      "model_creator": "Z.ai"
+      "score": 0.5767008439528807
     },
     {
       "model_name": "GPT-5.4 (medium)",
       "harness": "Codex",
-      "score": 0.7114227457117256,
-      "display_label": "Codex - GPT-5.4 (medium)",
-      "host_model_slug": "openai_gpt-5-4",
-      "model_creator": "OpenAI"
+      "score": 0.7114227457117256
     },
     {
       "model_name": "GPT-5.5 (medium)",
       "harness": "Codex",
-      "score": 0.7050411052321743,
-      "display_label": "Codex - GPT-5.5 (medium)",
-      "host_model_slug": "openai_gpt-5-5",
-      "model_creator": "OpenAI"
+      "score": 0.7050411052321743
     },
     {
       "model_name": "GPT-5.5 (xhigh)",
       "harness": "Codex",
-      "score": 0.7642065796509268,
-      "display_label": "Codex - GPT-5.5 (xhigh)",
-      "host_model_slug": "openai_gpt-5-5",
-      "model_creator": "OpenAI"
+      "score": 0.7642065796509268
     },
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6020844471016523,
-      "display_label": "Cursor CLI - Opus 4.7 (medium)",
-      "host_model_slug": "anthropic_claude-opus-4-7",
-      "model_creator": "Anthropic"
+      "score": 0.6020844471016523
     },
     {
       "model_name": "Composer 2",
       "harness": "Cursor CLI",
-      "score": 0.6659095230414745,
-      "display_label": "Cursor CLI - Composer 2",
-      "host_model_slug": "cursor_composer-2",
-      "model_creator": "Cursor"
+      "score": 0.6659095230414745
     },
     {
       "model_name": "Composer 2.5",
       "harness": "Cursor CLI",
-      "score": 0.5175640913138324,
-      "display_label": "Cursor CLI - Composer 2.5",
-      "host_model_slug": "cursor_composer-2-5",
-      "model_creator": "Cursor"
+      "score": 0.5175640913138324
     },
     {
       "model_name": "Composer 2.5 Fast",
       "harness": "Cursor CLI",
-      "score": 0.5175640913138324,
-      "display_label": "Cursor CLI - Composer 2.5 Fast",
-      "host_model_slug": "cursor_composer-2-5-fast",
-      "model_creator": "Cursor"
+      "score": 0.5175640913138324
     },
     {
       "model_name": "GPT-5.4 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6881333072836665,
-      "display_label": "Cursor CLI - GPT-5.4 (medium)",
-      "host_model_slug": "openai_gpt-5-4",
-      "model_creator": "OpenAI"
+      "score": 0.6881333072836665
     },
     {
       "model_name": "GPT-5.5 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6185271360402347,
-      "display_label": "Cursor CLI - GPT-5.5 (medium)",
-      "host_model_slug": "openai_gpt-5-5-medium",
-      "model_creator": "OpenAI"
+      "score": 0.6185271360402347
     },
     {
       "model_name": "Gemini 3.1 Pro (high)",
       "harness": "Gemini CLI",
-      "score": 0.42654930401115004,
-      "display_label": "Gemini CLI - Gemini 3.1 Pro (high)",
-      "host_model_slug": "google_gemini-3-1-pro_ai-studio",
-      "model_creator": "Google"
+      "score": 0.42654930401115004
     },
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Opencode",
-      "score": 0.6450943205982176,
-      "display_label": "Opencode - Opus 4.7 (medium)",
-      "host_model_slug": "anthropic_claude-opus-4-7",
-      "model_creator": "Anthropic"
+      "score": 0.6450943205982176
     }
   ]
 }

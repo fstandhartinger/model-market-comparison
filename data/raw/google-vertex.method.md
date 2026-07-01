@@ -1,7 +1,7 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-06-23 (refreshed)
-**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 42 models
+**Collected:** 2026-07-01 (refreshed)
+**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 43 models
 
 ## Sources
 
@@ -16,6 +16,35 @@ OpenAI gpt-oss, Meta Llama, Mistral). The partner tables and the per-region Clau
 tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
+
+## What changed at the 2026-07-01 refresh (was 42, now 43)
+
+Re-scraped the live page in the dedicated `--session vertex` headless browser
+(agent-browser 0.8.5). One net-new model: **Claude Sonnet 5** — Anthropic released
+it 2026-06-30 and it is now on Vertex Model Garden with **per-region pricing**
+(present in the `global`, `us-multi-region-us`, and `eu-multi-region-eu` panes of
+the Anthropic devsite-selector; NOT in `europe-west1`). It carries a **dual-price
+schedule**: a **Promotional price through 2026-08-31** and a **Standard price from
+2026-09-01**. As of today (2026-07-01) the promotional price is active, so the JSON
+records the **EU Multi-Region (eu) promotional** rate:
+- Sonnet 5 promo (eu): **$2.20 in / $11.00 out** (Global promo $2/$10) — the +10% EU surcharge.
+- Sonnet 5 standard-from-Sept-1 (eu): $3.30 in / $16.50 out (Global $3/$15) — noted per-row.
+
+**Gemini 3+ non-global surcharge is now IN EFFECT (2026-07-01 cutover reached).**
+The page's footnote ("pricing will go into effect for GA Gemini 3 and later on
+July 1, 2026") is now current, so **Gemini 3.5 Flash** ($1.65/$9.90 non-global) and
+**Gemini 3.1 Flash-Lite** ($0.275/$1.65 non-global) are recorded at their non-global
+(europe-west4) rates rather than Global. **Gemini 3.1 Pro** ($2/$12) and **Gemini 3
+Flash** ($0.5/$3) still show no non-global surcharge on the Gemini 3 table → `global`.
+Live labels are "Gemini 3.1 Pro Preview" and "Gemini 3 Flash Preview".
+
+Everything else unchanged from 2026-06-23: Claude EU subsets (eu: Fable 5 + Opus
+4.8/4.7 [+ now Sonnet 5]; europe-west1: Opus 4.6/4.5 + Sonnet 4.6/4.5 + Haiku 4.5),
+Opus 4.1 uniform $15/$75 (global). Partner roster identical — Kimi-K2-Thinking,
+GLM-5 + GLM-4.7, MiniMax-M2, Grok 4.3/4.20 R+NR/4.1 Fast R+NR, DeepSeek V3.1/V3.2/
+R1(0528) (still NO DeepSeek-V4), Qwen3 (4 models), gpt-oss 120b/20b, Llama 4
+Maverick/Scout + 3.3 70B, Mistral Medium 3 / Small 3.1 / Codestral 2 — all at the
+same rates. DeepSeek-OCR and Mistral OCR still omitted (per-page). Total captured: 43.
 
 ## What changed at the 2026-06-23 refresh (still 42, no price deltas)
 
