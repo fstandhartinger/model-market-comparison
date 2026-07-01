@@ -9,7 +9,7 @@ import { usdPerM, orgColor } from "../lib/format";
 import { modelCost, effectiveAllowed, isHiddenModel } from "../lib/cost";
 import { NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapseModels } from "../lib/variants";
+import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
 
 function truncTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   const t = payload.value.length > 26 ? payload.value.slice(0, 25) + "…" : payload.value;
@@ -38,13 +38,13 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
-      .map((x) => ({ name: x.m.display_name, value: x.sc as number, org: x.m.org })),
-    [pool]);
+      .map((x) => ({ name: collapsedName(x.m, s.collapse), value: x.sc as number, org: x.m.org })),
+    [pool, s.collapse]);
 
   const cheapest = useMemo(() =>
     pool.filter((x) => x.cost != null).sort((a, b) => (a.cost as number) - (b.cost as number)).slice(0, 18)
-      .map((x) => ({ name: x.m.display_name, value: x.cost as number, org: x.m.org })),
-    [pool]);
+      .map((x) => ({ name: collapsedName(x.m, s.collapse), value: x.cost as number, org: x.m.org })),
+    [pool, s.collapse]);
 
   const openVsClosed = useMemo(() => {
     const groups = { Open: pool.filter((x) => x.m.open_weights), Closed: pool.filter((x) => !x.m.open_weights) };

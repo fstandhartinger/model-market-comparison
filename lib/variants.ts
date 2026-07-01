@@ -43,6 +43,16 @@ export function preferredVariantIds(models: ClientModel[]): Map<string, string> 
   return ids;
 }
 
+const TRAILING_PAREN_RE = /\s*\([^()]*\)\s*$/;
+/** Name to show for a model row. When "one variant per reasoning family" (collapse)
+ *  is on, the row stands in for the whole family, so drop the trailing variant detail
+ *  in parentheses — e.g. "Claude Sonnet 5 (Adaptive Reasoning, Max Effort)" → "Claude
+ *  Sonnet 5", "GPT-5.5 (high)" → "GPT-5.5". Only for collapsible families; other
+ *  models (and the expanded view) keep their full name. */
+export function collapsedName(m: { display_name: string; family_key: string }, collapse: boolean): string {
+  return collapse && isCollapsibleFamily(m.family_key) ? m.display_name.replace(TRAILING_PAREN_RE, "").trim() : m.display_name;
+}
+
 /** Apply the collapse rule to a model list (keep only the preferred variant per
  *  collapsible reasoning family). */
 export function collapseModels<T extends ClientModel>(models: T[], preferredId: Map<string, string>): T[] {

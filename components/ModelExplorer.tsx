@@ -7,7 +7,7 @@ import { usdPerM, num, orgColor } from "../lib/format";
 import { modelCost, rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, isCollapsibleFamily } from "../lib/variants";
+import { preferredVariantIds, isCollapsibleFamily, collapsedName } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers";
 
@@ -105,7 +105,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
             {rows.map(({ m, sc, cost, cheap, ncheap }) => (
               <tr key={m.id}>
                 <td className="px-3 py-2 truncate">
-                  <Link href={`/models/${encodeURIComponent(m.id)}`} className="font-medium hover:text-accent">{m.display_name}</Link>
+                  <Link href={`/models/${encodeURIComponent(m.id)}`} className="font-medium hover:text-accent">{collapsedName(m, s.collapse)}</Link>
                   {m.open_weights && <span className="ml-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
                   {m.featured && <span className="ml-1 text-[10px] text-warn">★</span>}
                 </td>
