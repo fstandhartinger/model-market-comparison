@@ -38,13 +38,13 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
-      .map((x) => ({ name: collapsedName(x.m, s.collapse), value: x.sc as number, org: x.m.org })),
-    [pool, s.collapse]);
+      .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, org: x.m.org })),
+    [pool, s.collapse, preferredId]);
 
   const cheapest = useMemo(() =>
     pool.filter((x) => x.cost != null).sort((a, b) => (a.cost as number) - (b.cost as number)).slice(0, 18)
-      .map((x) => ({ name: collapsedName(x.m, s.collapse), value: x.cost as number, org: x.m.org })),
-    [pool, s.collapse]);
+      .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.cost as number, org: x.m.org })),
+    [pool, s.collapse, preferredId]);
 
   const openVsClosed = useMemo(() => {
     const groups = { Open: pool.filter((x) => x.m.open_weights), Closed: pool.filter((x) => !x.m.open_weights) };

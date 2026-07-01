@@ -53,7 +53,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
     return pool
       .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
       .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
-      .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
+      .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
   }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.minScore, preferredId]);
 
   const byOrg = useMemo(() => {
