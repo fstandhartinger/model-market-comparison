@@ -103,7 +103,10 @@ export function effectiveAllowed(
 
 // Two independent "hide" toggles, matched on family_key (covers all variants):
 //  - GPT-5.5* and Claude Opus 4.8  (off by default)
-//  - Claude Fable                  (on by default)
+//  - Claude Fable                  (ON by default). Fable 5 tops the capability
+//    benchmarks but Anthropic states it falls back to Opus 4.8 for "routine tasks like
+//    coding and debugging" — so it isn't usable as a standalone coding model and would
+//    just sit misleadingly at #1. Hidden by default; users can opt in via the toggle.
 export const HIDE_GPT_OPUS_RE = /^(gpt-5\.5|claude-opus-4\.8)/;
 export const HIDE_FABLE_RE = /^claude-fable/;
 export function isHiddenModel(familyKey: string, hideGptOpus: boolean, hideFable: boolean): boolean {
