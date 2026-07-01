@@ -387,6 +387,21 @@ async function build() {
       models.set(rowId, row);
       rows.push(row);
     }
+    // Collapse multiple offers from the SAME (platform, provider) to a single cheapest
+    // one. A provider often lists several tiers/SKUs for one model — short vs long
+    // context, Global vs DataZone-EU, or duplicate OpenRouter slugs (thinking / dated) —
+    // which otherwise render as two rows with different prices for the same provider.
+    // The comparison shows one price per provider: the cheapest (standard) blended rate.
+    const blendOf = (o) => (o.input_per_1m != null && o.output_per_1m != null)
+      ? (10 * o.input_per_1m + o.output_per_1m) / 11
+      : (o.input_per_1m ?? o.output_per_1m ?? Infinity);
+    const bestByProvider = new Map();
+    for (const o of fam.offers) {
+      const pk = `${o.platform}::${o.provider}`;
+      const prev = bestByProvider.get(pk);
+      if (!prev || blendOf(o) < blendOf(prev)) bestByProvider.set(pk, o);
+    }
+    fam.offers = [...bestByProvider.values()];
     for (const r of rows) {
       r.offers = fam.offers;
       r.designarena = fam.designarena;

@@ -104,22 +104,38 @@ export function clientData(ds: Dataset): ClientData {
     };
   });
 
-  // Composite score: min-max normalize each of the four base scores to 0–100
-  // across all models, then average each model's available normalized components.
+  // Composite score: min-max normalize each base metric to 0–100 across all models,
+  // then average all five per model. Missing metrics are IMPUTED (partial pooling)
+  // rather than dropped: a gap is filled with the mean of (that metric's field average)
+  // and (the model's own average of the metrics it does have). Plain "mean of present"
+  // is wrong — it lets a model that only carries the metrics it's strong on outrank one
+  // that beats it on every shared metric but is additionally measured (and weaker) on a
+  // benchmark the first model simply lacks (e.g. DesignArena). Shrinkage keeps missing
+  // data from inflating a score without unfairly sinking strong models that just haven't
+  // been benchmarked everywhere yet.
   const baseKeys = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
-  const ranges: Record<string, { min: number; max: number } | null> = {};
+  const ranges: Record<string, { min: number; max: number; mean: number } | null> = {};
   for (const k of baseKeys) {
     const vals = models.map((m) => m.scores[k]).filter((v): v is number => v != null);
-    ranges[k] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals) } : null;
+    ranges[k] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals), mean: vals.reduce((a, b) => a + b, 0) / vals.length } : null;
   }
+  const normOf = (k: (typeof baseKeys)[number], v: number) => {
+    const r = ranges[k]; if (!r) return null;
+    return r.max > r.min ? ((v - r.min) / (r.max - r.min)) * 100 : 100;
+  };
+  const fieldMeanNorm: Record<string, number | null> = {};
+  for (const k of baseKeys) fieldMeanNorm[k] = ranges[k] ? normOf(k, ranges[k]!.mean) : null;
   for (const m of models) {
-    const norms: number[] = [];
-    for (const k of baseKeys) {
-      const v = m.scores[k]; const r = ranges[k];
-      if (v == null || !r) continue;
-      norms.push(r.max > r.min ? ((v - r.min) / (r.max - r.min)) * 100 : 100);
-    }
-    m.scores.composite = norms.length ? Math.round((norms.reduce((a, b) => a + b, 0) / norms.length) * 10) / 10 : null;
+    const present = baseKeys.map((k) => (m.scores[k] != null ? normOf(k, m.scores[k] as number) : null)).filter((v): v is number => v != null);
+    if (!present.length) { m.scores.composite = null; continue; }
+    const ownMean = present.reduce((a, b) => a + b, 0) / present.length;
+    const filled = baseKeys.map((k) => {
+      const v = m.scores[k] != null ? normOf(k, m.scores[k] as number) : null;
+      if (v != null) return v;
+      const fm = fieldMeanNorm[k];
+      return fm != null ? (fm + ownMean) / 2 : ownMean; // impute: shrink toward field mean
+    });
+    m.scores.composite = Math.round((filled.reduce((a, b) => a + b, 0) / filled.length) * 10) / 10;
   }
 
   const providers: ProviderInfo[] = ds.providers.map((p) => ({
