@@ -1,7 +1,17 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-07-01 (76 text LLMs)
+**Last collected:** 2026-07-01 (76 text LLMs; 6,773 EU items fetched — comprehensive re-scrape)
 **Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
+
+**GLM 5.2 special-focus verdict (2026-07-01):** GLM 5.2 is **NOT on Azure AI Foundry** —
+zero substring hits across productName/meterName/skuName/productId/skuId in the full 6,773-item
+EU pull. GLM is present only as **GLM 5** and **GLM 5.1**, both via the `Azure Fireworks Models`
+partner catalog (Fireworks-on-Azure), DataZone-EU tier only. There is **no Microsoft-native /
+first-party Z.ai product**, and DataZone-EU is excluded by Microsoft from the EU Data Boundary,
+so these are effectively US/Fireworks-served. Also re-verified absent 2026-07-01: **Kimi K2.7,
+MiniMax M3, standalone DeepSeek V4** (only V4 Pro + V4 Flash exist first-party; V4 Pro also via
+Fireworks). Fireworks catalog unchanged: Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7,
+DeepSeek V3.2/V4-Pro, GPT OSS 120B.
 
 ## TL;DR refresh recipe (2026-06-17)
 Three paginated queries (USD), looping `NextPageLink`, over the six EU regions

@@ -2,7 +2,7 @@
   "source": "Azure AI Foundry",
   "region": "swedencentral",
   "collected_at": "2026-07-01",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across six EU regions; Global tier list price unless noted (Fireworks/Phi tier-locked to DataZone-EU/regional)",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across six EU regions (6,773 items 2026-07-01); Global tier list price unless noted (Fireworks/Phi tier-locked to DataZone-EU/regional). SPECIAL-FOCUS check 2026-07-01: GLM 5.2, Kimi K2.7, MiniMax M3, and a standalone DeepSeek V4 are NOT on Azure Foundry (zero substring hits in all fields). GLM is present only as GLM 5 + GLM 5.1 via the Azure Fireworks Models partner catalog (DataZone-EU only, which Microsoft excludes from the EU Data Boundary = effectively US/Fireworks-served, NOT Microsoft-native). No first-party/native Z.ai product exists.",
   "models": [
     {
       "model_name": "GPT-5",
@@ -546,7 +546,7 @@
       "input_per_1m_usd": 0.66,
       "output_per_1m_usd": 3.3,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted; DataZone EU only (no Global tier)"
+      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). Kimi K2.7 NOT on Azure as of 2026-07-01 (verified)."
     },
     {
       "model_name": "Kimi K2.6",
@@ -554,7 +554,7 @@
       "input_per_1m_usd": 1.045,
       "output_per_1m_usd": 4.4,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted; DataZone EU only (no Global tier)"
+      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). Kimi K2.7 NOT on Azure as of 2026-07-01 (verified)."
     },
     {
       "model_name": "GLM 5",
@@ -562,7 +562,7 @@
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 3.52,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted; DataZone EU only (no Global tier)"
+      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU tier only (no Global tier). DataZone-EU is EXCLUDED from the EU Data Boundary = effectively US/Fireworks-served. GLM 5.2 NOT on Azure as of 2026-07-01 (verified)."
     },
     {
       "model_name": "GLM 5.1",
@@ -570,7 +570,7 @@
       "input_per_1m_usd": 1.54,
       "output_per_1m_usd": 4.84,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted; DataZone EU only (no Global tier)"
+      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU tier only (no Global tier). DataZone-EU is EXCLUDED from the EU Data Boundary = effectively US/Fireworks-served. GLM 5.2 NOT on Azure as of 2026-07-01 (verified)."
     },
     {
       "model_name": "MiniMax M2.5",
@@ -578,7 +578,7 @@
       "input_per_1m_usd": 0.33,
       "output_per_1m_usd": 1.32,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted; DataZone EU only (no Global tier)"
+      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). MiniMax M3 NOT on Azure as of 2026-07-01 (verified)."
     },
     {
       "model_name": "MiniMax 2.7",
@@ -586,7 +586,7 @@
       "input_per_1m_usd": 0.33,
       "output_per_1m_usd": 1.32,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted; DataZone EU only (no Global tier)"
+      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). MiniMax M3 NOT on Azure as of 2026-07-01 (verified)."
     },
     {
       "model_name": "DeepSeek-V4 Pro (Fireworks)",
@@ -594,7 +594,7 @@
       "input_per_1m_usd": 1.925,
       "output_per_1m_usd": 3.828,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted alt of DeepSeek-V4 Pro; DataZone EU only"
+      "notes": "Fireworks-partner alt of DeepSeek-V4 Pro (also exists Microsoft-native as DeepSeek-V4 Pro w/ Global tier); DataZone-EU only (excluded from EU Data Boundary)"
     },
     {
       "model_name": "DeepSeek-V3.2 (Fireworks)",
@@ -602,7 +602,7 @@
       "input_per_1m_usd": 0.62,
       "output_per_1m_usd": 1.85,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted alt of DeepSeek-V3.2; DataZone EU only"
+      "notes": "Fireworks-partner alt of DeepSeek-V3.2 (also exists Microsoft-native w/ Global tier); DataZone-EU only (excluded from EU Data Boundary)"
     },
     {
       "model_name": "gpt-oss-120B (Fireworks)",
@@ -610,7 +610,7 @@
       "input_per_1m_usd": 0.165,
       "output_per_1m_usd": 0.66,
       "region": "swedencentral",
-      "notes": "Fireworks-hosted open-weight; DataZone EU only"
+      "notes": "Fireworks-partner open-weight (also exists Microsoft-native w/ Global tier); DataZone-EU only (excluded from EU Data Boundary)"
     }
   ]
 }

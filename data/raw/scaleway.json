@@ -1,19 +1,24 @@
 {
   "source": "Scaleway Generative APIs",
   "region": "eu (Paris)",
-  "collected_at": "2026-06-29",
+  "collected_at": "2026-07-01",
   "currency_note": "Source prices are EUR/1M; converted to USD at EUR/USD = 1.08 (2026-06). Re-verify on refresh.",
-  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), via llm-tracker.eu cross-check. EU-sovereign, ZDR by default.",
+  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), fetched fresh 2026-07-01. EU-sovereign (Paris), ZDR by default. Catalog grew vs prior snapshot: added qwen3.6-35b-a3b, gemma-4-26b-a4b-it, holo2-30b-a3b, voxtral-small-24b-2507, pixtral-12b-2409, mistral-medium-3.5-128b (Mistral Medium 3.5 line item). GLM 5.2 unchanged at EUR1.80/EUR5.50. All prior model prices unchanged.",
   "models": [
-    { "model_name": "GLM 5.2", "provider_org": "Z.ai", "input_per_1m_usd": 1.94, "output_per_1m_usd": 5.94, "region": "eu", "notes": "€1.80/€5.50 (added 2026-07-01)" },
-    { "model_name": "Llama 3.3 70B", "provider_org": "Meta", "input_per_1m_usd": 0.97, "output_per_1m_usd": 0.97, "region": "eu", "notes": "€0.90/€0.90" },
-    { "model_name": "Qwen3 235B", "provider_org": "Alibaba", "input_per_1m_usd": 0.81, "output_per_1m_usd": 2.43, "region": "eu", "notes": "€0.75/€2.25" },
-    { "model_name": "Qwen3 Coder 30B", "provider_org": "Alibaba", "input_per_1m_usd": 0.22, "output_per_1m_usd": 0.86, "region": "eu", "notes": "€0.20/€0.80" },
-    { "model_name": "Mistral Small 3.2", "provider_org": "Mistral", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.38, "region": "eu", "notes": "€0.15/€0.35" },
-    { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.62, "output_per_1m_usd": 8.10, "region": "eu", "notes": "€1.50/€7.50" },
-    { "model_name": "gpt-oss-120b", "provider_org": "OpenAI", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.65, "region": "eu", "notes": "€0.15/€0.60" },
-    { "model_name": "Qwen 3.5 397B", "provider_org": "Alibaba", "input_per_1m_usd": 0.65, "output_per_1m_usd": 3.89, "region": "eu", "notes": "€0.60/€3.60" },
-    { "model_name": "Devstral 2", "provider_org": "Mistral", "input_per_1m_usd": 0.43, "output_per_1m_usd": 2.16, "region": "eu", "notes": "€0.40/€2.00" },
-    { "model_name": "Gemma 3 27B", "provider_org": "Google", "input_per_1m_usd": 0.27, "output_per_1m_usd": 0.54, "region": "eu", "notes": "€0.25/€0.50" }
+    { "model_name": "GLM 5.2", "provider_org": "Z.ai", "input_per_1m_usd": 1.94, "output_per_1m_usd": 5.94, "region": "eu", "notes": "€1.80/€5.50; glm-5.2; unchanged 2026-07-01" },
+    { "model_name": "Llama 3.3 70B", "provider_org": "Meta", "input_per_1m_usd": 0.97, "output_per_1m_usd": 0.97, "region": "eu", "notes": "€0.90/€0.90; llama-3.3-70b-instruct" },
+    { "model_name": "Qwen3 235B", "provider_org": "Alibaba", "input_per_1m_usd": 0.81, "output_per_1m_usd": 2.43, "region": "eu", "notes": "€0.75/€2.25; qwen3-235b-a22b-instruct-2507" },
+    { "model_name": "Qwen 3.5 397B", "provider_org": "Alibaba", "input_per_1m_usd": 0.65, "output_per_1m_usd": 3.89, "region": "eu", "notes": "€0.60/€3.60; qwen3.5-397b-a17b" },
+    { "model_name": "Qwen 3.6 35B", "provider_org": "Alibaba", "input_per_1m_usd": 0.27, "output_per_1m_usd": 1.62, "region": "eu", "notes": "€0.25/€1.50; qwen3.6-35b-a3b; new vs prior snapshot" },
+    { "model_name": "Qwen3 Coder 30B", "provider_org": "Alibaba", "input_per_1m_usd": 0.22, "output_per_1m_usd": 0.86, "region": "eu", "notes": "€0.20/€0.80; qwen3-coder-30b-a3b-instruct" },
+    { "model_name": "Mistral Small 3.2", "provider_org": "Mistral", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.38, "region": "eu", "notes": "€0.15/€0.35; mistral-small-3.2-24b-instruct-2506" },
+    { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.62, "output_per_1m_usd": 8.10, "region": "eu", "notes": "€1.50/€7.50; mistral-medium-3.5-128b" },
+    { "model_name": "Devstral 2", "provider_org": "Mistral", "input_per_1m_usd": 0.43, "output_per_1m_usd": 2.16, "region": "eu", "notes": "€0.40/€2.00; devstral-2-123b-instruct-2512" },
+    { "model_name": "Voxtral Small", "provider_org": "Mistral", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.38, "region": "eu", "notes": "€0.15/€0.35; voxtral-small-24b-2507; audio+text; new vs prior snapshot" },
+    { "model_name": "Pixtral 12B", "provider_org": "Mistral", "input_per_1m_usd": 0.22, "output_per_1m_usd": 0.22, "region": "eu", "notes": "€0.20/€0.20; pixtral-12b-2409; vision+text; new vs prior snapshot" },
+    { "model_name": "gpt-oss-120b", "provider_org": "OpenAI", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.65, "region": "eu", "notes": "€0.15/€0.60; gpt-oss-120b" },
+    { "model_name": "Gemma 3 27B", "provider_org": "Google", "input_per_1m_usd": 0.27, "output_per_1m_usd": 0.54, "region": "eu", "notes": "€0.25/€0.50; gemma-3-27b-it" },
+    { "model_name": "Gemma 4 26B", "provider_org": "Google", "input_per_1m_usd": 0.27, "output_per_1m_usd": 0.54, "region": "eu", "notes": "€0.25/€0.50; gemma-4-26b-a4b-it; new vs prior snapshot" },
+    { "model_name": "Holo2 30B", "provider_org": "H Company", "input_per_1m_usd": 0.32, "output_per_1m_usd": 0.76, "region": "eu", "notes": "€0.30/€0.70; holo2-30b-a3b; new vs prior snapshot" }
   ]
 }

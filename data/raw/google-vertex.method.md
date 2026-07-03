@@ -1,6 +1,6 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-07-01 (refreshed)
+**Collected:** 2026-07-01 (comprehensive re-scrape)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 43 models
 
 ## Sources
@@ -16,6 +16,32 @@ OpenAI gpt-oss, Meta Llama, Mistral). The partner tables and the per-region Clau
 tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
+
+## 2026-07-01 comprehensive re-scrape (still 43, no price deltas)
+
+Full re-scrape of the live page in the dedicated `--session vertex` headless
+browser (agent-browser 0.8.5). **All rates unchanged; model roster identical (43
+captured).** Special-focus verification for this pass:
+- **GLM-5.2: NOT present.** The GLM section lists only **GLM-4.7** ($0.60/$2.20)
+  and **GLM-5** (rendered "GLM-5 *", $1.00/$3.20, Cache Hit $0.10) — GLM-5 is the
+  newest GLM on Vertex. No GLM-5.2 anywhere on the page. (Maker labeled "GLM's
+  models"; provider org normalized to **Z.ai**, formerly tagged "Zhipu AI".)
+- **Kimi K2.7: NOT present.** Moonshot section has only **Kimi-K2-Thinking**
+  ($0.60/$2.50).
+- **MiniMax M3: NOT present.** MiniMax section has only **MiniMax-M2** ($0.30/$1.20).
+- **DeepSeek V4: NOT present.** DeepSeek section: V3.1, V3.2, R1(0528), + OCR
+  (omitted). No V4.
+- Claude EU region tables re-read from the `<devsite-selector>` panes — unchanged:
+  eu = Sonnet 5 (promo $2.20/$11.00) + Fable 5 $11/$55 + Opus 4.8/4.7 $5.50/$27.50;
+  europe-west1 = Opus 4.6/4.5 $5.50/$27.50 + Sonnet 4.6/4.5 $3.30/$16.50 + Haiku 4.5
+  $1.10/$5.50. Opus 4.1 confirmed still present under the flat "Models with uniform
+  pricing across all regions" Claude sub-table at $15/$75 (global). Sonnet 5 promo
+  through 2026-08-31; standard-from-Sept-1 $3.30/$16.50 (eu).
+- Gemini 3+ non-global (EU) surcharge in effect (2026-07-01 cutover reached): Gemini
+  3.5 Flash $1.65/$9.90 + 3.1 Flash-Lite $0.275/$1.65 recorded non-global; 3.1 Pro
+  $2/$12 and 3 Flash $0.5/$3 still Global. Gemini 2.5 Pro $1.25/$10, 2.5 Flash
+  $0.30/$2.50, 2.5 Flash Lite $0.10/$0.40, 2.0 Flash $0.15/$0.60, 2.0 Flash Lite
+  $0.075/$0.30 all unchanged.
 
 ## What changed at the 2026-07-01 refresh (was 42, now 43)
 

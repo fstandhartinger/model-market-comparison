@@ -1,13 +1,15 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-06-29",
+  "collected_at": "2026-07-01",
   "currency_note": "Source prices are EUR/1M; converted to USD at EUR/USD = 1.08 (2026-06). Re-verify on refresh.",
-  "method": "IONOS AI Model Hub pricing (https://cloud.ionos.de/managed/ai-model-hub), OpenAI-compatible pay-per-use, via llm-tracker.eu cross-check. EU-sovereign (DE).",
+  "method": "IONOS AI Model Hub pricing (https://cloud.ionos.de/managed/ai-model-hub), OpenAI-compatible pay-per-use, fetched fresh 2026-07-01. EU-sovereign (DE). Prior 4 models unchanged; added Llama 3.1 8B Instruct and Mistral Nemo Instruct (both €0.15/€0.15) now shown in the table.",
   "models": [
     { "model_name": "gpt-oss-120b", "provider_org": "OpenAI", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.70, "region": "eu", "notes": "€0.15/€0.65" },
     { "model_name": "Llama 3.3 70B", "provider_org": "Meta", "input_per_1m_usd": 0.70, "output_per_1m_usd": 0.70, "region": "eu", "notes": "€0.65/€0.65" },
     { "model_name": "Llama 3.1 405B", "provider_org": "Meta", "input_per_1m_usd": 1.89, "output_per_1m_usd": 1.89, "region": "eu", "notes": "€1.75/€1.75" },
-    { "model_name": "Mistral Small 3.2", "provider_org": "Mistral", "input_per_1m_usd": 0.11, "output_per_1m_usd": 0.32, "region": "eu", "notes": "€0.10/€0.30 (Mistral Small 24B)" }
+    { "model_name": "Llama 3.1 8B", "provider_org": "Meta", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.16, "region": "eu", "notes": "€0.15/€0.15; Llama 3.1 8B Instruct; new vs prior snapshot" },
+    { "model_name": "Mistral Small 3.2", "provider_org": "Mistral", "input_per_1m_usd": 0.11, "output_per_1m_usd": 0.32, "region": "eu", "notes": "€0.10/€0.30 (Mistral Small 24B Instruct)" },
+    { "model_name": "Mistral Nemo", "provider_org": "Mistral", "input_per_1m_usd": 0.16, "output_per_1m_usd": 0.16, "region": "eu", "notes": "€0.15/€0.15; Mistral Nemo Instruct; new vs prior snapshot" }
   ]
 }
