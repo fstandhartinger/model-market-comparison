@@ -1,6 +1,6 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-07-01 (comprehensive re-scrape)
+**Collected:** 2026-07-06 (comprehensive re-scrape)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 43 models
 
 ## Sources
@@ -16,6 +16,31 @@ OpenAI gpt-oss, Meta Llama, Mistral). The partner tables and the per-region Clau
 tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
+
+## 2026-07-06 comprehensive re-scrape (still 43, no price deltas)
+
+Full re-scrape of the live page in the dedicated `--session vertex` headless
+browser (agent-browser 0.8.5). **All rates unchanged; model roster identical (43
+captured)** vs the 2026-07-01 snapshot. New-model watch for this pass:
+- **GLM-5.2: NOT present.** GLM section still lists only **GLM-4.7** ($0.60/$2.20)
+  and **GLM-5** (rendered "GLM-5 *", $1.00/$3.20, Cache Hit $0.10). No GLM-5.2.
+- **Kimi K2.7: NOT present.** Moonshot section: only **Kimi-K2-Thinking** ($0.60/$2.50).
+- **MiniMax M3: NOT present.** MiniMax section: only **MiniMax-M2** ($0.30/$1.20).
+- **DeepSeek V4: NOT present.** DeepSeek section: V3.1 ($0.60/$1.70), V3.2
+  ($0.56/$1.68), R1(0528) ($1.35/$5.40), + OCR (omitted). No V4.
+- Claude EU panes re-read from the `<devsite-selector>` sections — unchanged:
+  eu = Sonnet 5 (promo $2.20/$11.00, standard-from-Sept-1 $3.30/$16.50) + Fable 5
+  $11/$55 + Opus 4.8/4.7 $5.50/$27.50; europe-west1 = Opus 4.6/4.5 $5.50/$27.50 +
+  Sonnet 4.6/4.5 $3.30/$16.50 (Sonnet 4.5 >200K $6.60/$24.75) + Haiku 4.5 $1.10/$5.50.
+  Opus 4.1 uniform $15/$75 (global). EU surcharge exactly +10%.
+- Gemini 3+ non-global (EU) surcharge remains IN EFFECT: 3.5 Flash $1.65/$9.90 +
+  3.1 Flash-Lite $0.275/$1.65 recorded non-global; 3.1 Pro $2/$12 and 3 Flash $0.5/$3
+  still Global. Gemini 2.5 Pro $1.25/$10, 2.5 Flash $0.30/$2.50, 2.5 Flash Lite
+  $0.10/$0.40, 2.0 Flash $0.15/$0.60, 2.0 Flash Lite $0.075/$0.30 all unchanged.
+- On-page since prior passes but still omitted (per omission policy, not text-LLM
+  pay-go rows): Gemini Omni Flash ($1.50/$9), Gemini Deep Research Agent ($2/$12),
+  Gemini 3 Pro/3.1 Flash Image (Nano Banana), 2.5 Flash Image, Live API models,
+  DeepSeek-OCR, Mistral OCR, deprecated Claude (Opus 4, Sonnet 4, Claude 3.x).
 
 ## 2026-07-01 comprehensive re-scrape (still 43, no price deltas)
 

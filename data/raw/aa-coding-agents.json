@@ -1,8 +1,8 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
-  "collected_at": "2026-07-01",
+  "collected_at": "2026-07-06",
   "endpoint": "https://artificialanalysis.ai/ (homepage) — data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. Not in the v2 API.",
-  "method": "curl the homepage HTML, locate the escaped JSON `\\\"rows\\\":[` token in the RSC payload, unescape JS string escapes (\\\" -> \"), bracket-match the clean JSON to isolate the array, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1).",
+  "method": "curl the homepage HTML, locate the escaped JSON `\\\"rows\\\":[` token in the RSC payload (immediately after the escaped title 'Artificial Analysis Coding Agent Index'), unescape JS string escapes (\\\" -> \"), bracket-match the clean JSON to isolate the array, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1).",
   "score_scale": "0-1",
   "rows": [
     {
@@ -113,12 +113,12 @@
     {
       "model_name": "Gemini 3.1 Pro (high)",
       "harness": "Gemini CLI",
-      "score": 0.42654930401115004
+      "score": 0.4265493040111497
     },
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Opencode",
-      "score": 0.6450943205982176
+      "score": 0.6450943205982174
     }
   ]
 }

@@ -1,9 +1,9 @@
 {
   "source": "Scaleway Generative APIs",
   "region": "eu (Paris)",
-  "collected_at": "2026-07-01",
+  "collected_at": "2026-07-06",
   "currency_note": "Source prices are EUR/1M; converted to USD at EUR/USD = 1.08 (2026-06). Re-verify on refresh.",
-  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), fetched fresh 2026-07-01. EU-sovereign (Paris), ZDR by default. Catalog grew vs prior snapshot: added qwen3.6-35b-a3b, gemma-4-26b-a4b-it, holo2-30b-a3b, voxtral-small-24b-2507, pixtral-12b-2409, mistral-medium-3.5-128b (Mistral Medium 3.5 line item). GLM 5.2 unchanged at EUR1.80/EUR5.50. All prior model prices unchanged.",
+  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), fetched fresh 2026-07-06 (prices parsed directly from the server-rendered pricing table in the page HTML). EU-sovereign (Paris), ZDR by default. Catalog unchanged vs 2026-07-01: same 15 priced text/vision LLMs. GLM 5.2 unchanged at EUR1.80/EUR5.50. All model EUR prices identical to the 2026-07-01 snapshot (no changes).",
   "models": [
     { "model_name": "GLM 5.2", "provider_org": "Z.ai", "input_per_1m_usd": 1.94, "output_per_1m_usd": 5.94, "region": "eu", "notes": "€1.80/€5.50; glm-5.2; unchanged 2026-07-01" },
     { "model_name": "Llama 3.3 70B", "provider_org": "Meta", "input_per_1m_usd": 0.97, "output_per_1m_usd": 0.97, "region": "eu", "notes": "€0.90/€0.90; llama-3.3-70b-instruct" },

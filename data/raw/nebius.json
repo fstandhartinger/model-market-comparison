@@ -1,9 +1,9 @@
 {
   "source": "Nebius",
   "region": "eu (Finland/France)",
-  "collected_at": "2026-07-01",
+  "collected_at": "2026-07-06",
   "listing_url": "https://tokenfactory.nebius.com/models",
-  "method": "agent-browser (headless Chromium, --session nebius) rendered the public Token Factory model catalog (JS SPA at tokenfactory.nebius.com/models, redirects to /endpoints) and read document.body.innerText. Parsed each card's In/Out USD per 1M tokens (Base tier), and served region. Anonymous header showed All 25 / Private 0 / Public 25. Embedding model (Qwen3-Embedding-8B, $0.01/1M In only, no output price) omitted, leaving 24 text/vision models. region:'eu' set only for eu-north1-served models; us-central1-served flagged region:'us', uk-south1-served flagged region:'uk', with the raw served region kept in notes. Fresh pull 2026-07-01: catalog unchanged at 25 endpoints; GLM-5.2 still serves from us-central1 at $1.40 In / $4.40 Out. ALL Base-tier prices identical to the 2026-06-23 snapshot (no changes).",
+  "method": "agent-browser (headless Chromium, --session nebius) rendered the public Token Factory model catalog (JS SPA at tokenfactory.nebius.com/models, redirects to /endpoints) and read document.body.innerText. Parsed each card's In/Out USD per 1M tokens (Base tier), and served region. Anonymous header showed All 25 / Private 0 / Public 25. Embedding model (Qwen3-Embedding-8B, $0.01/1M In only, no output price) omitted, leaving 24 text/vision models. region:'eu' set only for eu-north1-served models; us-central1-served flagged region:'us', uk-south1-served flagged region:'uk', with the raw served region kept in notes. Fresh pull 2026-07-06: catalog unchanged at 25 endpoints; GLM-5.2 still serves from us-central1 at $1.40 In / $4.40 Out. ALL Base-tier prices identical to the 2026-07-01 snapshot (no changes).",
   "models": [
     {
       "model_name": "Kimi K2.7 Code",

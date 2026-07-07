@@ -1,8 +1,8 @@
 {
   "source": "TensorX",
   "region": "eu (Ireland)",
-  "collected_at": "2026-07-01",
-  "method": "agent-browser (headless Chromium, --session tensorx) rendered tensorx.ai/pricing/ (JS SPA). Native USD per 1M tokens, OpenAI-compatible (api.tensorx.ai/v1). Pricing page shows '24 of 24 models'. Embedding-only qwen3-embedding-8b (output '-') excluded, leaving 23 text LLMs. EU-sovereign: TensorX Ltd (Company No. 796387, formerly Tensorix), Dublin HQ, EU regions Dublin/Helsinki/Paris, zero data retention, ISO 27001-ready & GDPR Art.44. Each model also has a cache-read input tier (~25% of input) captured in notes, not modeled separately. Fresh pull 2026-07-01: GLM 5.2 still $1.50 In / $4.50 Out; ALL 23 text-LLM prices identical to the prior snapshot (no changes).",
+  "collected_at": "2026-07-06",
+  "method": "agent-browser (headless Chromium, --session tensorx) rendered tensorx.ai/pricing/ (JS SPA). Native USD per 1M tokens, OpenAI-compatible (api.tensorx.ai/v1). Pricing page shows '24 of 24 models'. Embedding-only qwen3-embedding-8b (output '-') excluded, leaving 23 text LLMs. EU-sovereign: TensorX Ltd (Company No. 796387, formerly Tensorix), Dublin HQ, EU regions Dublin/Helsinki/Paris, zero data retention, ISO 27001-ready & GDPR Art.44. Each model also has a cache-read input tier (~25% of input) captured in notes, not modeled separately. Fresh pull 2026-07-06: GLM 5.2 still $1.50 In / $4.50 Out; ALL 23 text-LLM prices identical to the 2026-07-01 snapshot (no changes).",
   "models": [
     { "model_name": "GLM 5.2", "provider_org": "Z.ai", "input_per_1m_usd": 1.50, "output_per_1m_usd": 4.50, "region": "eu", "notes": "1M ctx; cache-read $0.38/1M" },
     { "model_name": "GLM 5.1", "provider_org": "Z.ai", "input_per_1m_usd": 1.40, "output_per_1m_usd": 4.40, "region": "eu", "notes": "198K ctx; cache-read $0.35/1M" },
