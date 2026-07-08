@@ -1,5 +1,5 @@
 "use client";
-import { useMemo, useState } from "react";
+import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
@@ -10,6 +10,14 @@ import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapsedName } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers";
+const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: string; dp: number }[] = [
+  { key: "composite", label: "Composite", dp: 1 },
+  { key: "aa_coding_index", label: "AA Coding", dp: 1 },
+  { key: "aa_coding_agent", label: "AA Coding-Agent", dp: 1 },
+  { key: "aa_intelligence_index", label: "AA Intelligence", dp: 1 },
+  { key: "designarena_frontend", label: "DA Frontend Elo", dp: 0 },
+  { key: "designarena_fullstack", label: "DA Full-Stack Elo", dp: 0 },
+];
 
 export function ModelExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
@@ -26,6 +34,8 @@ export function ModelExplorer({ data }: { data: ClientData }) {
 
   const orgs = useMemo(() => Array.from(new Set(data.models.map((m) => m.org))).sort(), [data.models]);
   const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+  const provByKey = useMemo(() => new Map(data.providers.map((p) => [p.key, p])), [data.providers]);
+  const [expanded, setExpanded] = useState<string | null>(null);
 
   const rows = useMemo(() => {
     const maxC = parseFloat(maxCost);
@@ -102,10 +112,15 @@ export function ModelExplorer({ data }: { data: ClientData }) {
             <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">Top providers</th>
           </tr></thead>
           <tbody>
-            {rows.map(({ m, sc, cost, cheap, ncheap }) => (
-              <tr key={m.id}>
+            {rows.map(({ m, sc, cost, cheap, ncheap }) => {
+              const isOpen = expanded === m.id;
+              const allOffers = rankedOffers(data.offersByFamily[m.family_key], null);
+              return (
+              <Fragment key={m.id}>
+              <tr className="cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
                 <td className="px-3 py-2 truncate">
-                  <Link href={`/models/${encodeURIComponent(m.id)}`} className="font-medium hover:text-accent">{collapsedName(m, s.collapse, preferredId)}</Link>
+                  <span className="mr-1 text-[10px] text-gray-500">{isOpen ? "▾" : "▸"}</span>
+                  <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{collapsedName(m, s.collapse, preferredId)}</Link>
                   {m.open_weights && <span className="ml-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
                   {m.featured && <span className="ml-1 text-[10px] text-warn">★</span>}
                 </td>
@@ -118,7 +133,67 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                   {ncheap === 0 && <span className="text-gray-600">no token pricing</span>}
                 </td>
               </tr>
-            ))}
+              {isOpen && (
+                <tr>
+                  <td colSpan={6} className="bg-[#0c0f14] px-4 py-3">
+                    <div className="grid gap-4 md:grid-cols-[minmax(220px,280px)_1fr]">
+                      {/* model details */}
+                      <div>
+                        <div className="mb-1.5 flex items-center justify-between">
+                          <span className="text-[11px] uppercase tracking-wide text-gray-500">Benchmarks — {m.display_name}</span>
+                          <Link href={`/models/${encodeURIComponent(m.id)}`} className="text-[11px] text-accent">full detail ↗</Link>
+                        </div>
+                        <table className="w-full text-xs">
+                          <tbody>
+                            {SCORE_ROWS.map((sr) => {
+                              const v = m.scores[sr.key];
+                              return (
+                                <tr key={sr.key}>
+                                  <td className="py-0.5 text-gray-400">{sr.label}</td>
+                                  <td className="py-0.5 text-right tabular font-medium">{v != null ? num(v, sr.dp) : <span className="text-gray-600">—</span>}</td>
+                                </tr>
+                              );
+                            })}
+                            <tr><td className="py-0.5 text-gray-400">Weights</td><td className="py-0.5 text-right">{m.open_weights ? "open" : "closed"}</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                      {/* provider list for this model */}
+                      <div>
+                        <div className="mb-1.5 text-[11px] uppercase tracking-wide text-gray-500">Providers — {allOffers.length} offer{allOffers.length === 1 ? "" : "s"} (cheapest first, 10:1 blended)</div>
+                        {allOffers.length === 0 ? <span className="text-xs text-gray-600">no token pricing</span> : (
+                        <div className="max-h-64 overflow-y-auto">
+                        <table className="w-full text-xs">
+                          <tbody>
+                            {allOffers.map((o, i) => {
+                              const p = provByKey.get(o.key);
+                              return (
+                                <tr key={o.key + i} className="border-b border-line/40">
+                                  <td className="py-1 pr-1 text-gray-500">#{i + 1}</td>
+                                  <td className="py-1 pr-2 font-medium">{o.provider}
+                                    {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
+                                    {p?.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
+                                    {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
+                                    <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
+                                  </td>
+                                  <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)} in</td>
+                                  <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.output_per_1m)} out</td>
+                                  <td className="py-1 tabular text-right font-semibold">{usdPerM(o.blended)}</td>
+                                </tr>
+                              );
+                            })}
+                          </tbody>
+                        </table>
+                        </div>
+                        )}
+                      </div>
+                    </div>
+                  </td>
+                </tr>
+              )}
+              </Fragment>
+              );
+            })}
           </tbody>
         </table>
       </div>

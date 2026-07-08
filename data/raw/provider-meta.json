@@ -1,68 +1,357 @@
 {
   "source": "Hand-curated provider metadata from data/research/ (2026-06-18)",
-  "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global 'EU hosted' and 'Non-US provider' filters. Keyed by provider NAME (applies whether reached directly or via OpenRouter).",
+  "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global 'EU hosted' and 'Non-US provider' filters. Keyed by provider NAME (applies whether reached directly or via OpenRouter). hyperscaler=true for AWS Bedrock / Azure AI Foundry / Google Vertex AI (the big-cloud managed catalogs).",
   "providers": {
-    "AWS Bedrock":        { "country": "US",          "eu_hosted": true,  "non_us": false, "url": "https://aws.amazon.com/bedrock/", "note": "EU residency via the eu. cross-region Geo profile; ZDR by default. US parent (CLOUD Act)." },
-    "Azure AI Foundry":   { "country": "US",          "eu_hosted": true,  "non_us": false, "url": "https://azure.microsoft.com/en-us/products/ai-foundry", "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served)." },
-    "Google Vertex AI":   { "country": "US",          "eu_hosted": true,  "non_us": false, "url": "https://cloud.google.com/vertex-ai", "note": "EU residency via europe-west / EU multi-region; never the global endpoint. US parent." },
-    "Nebius":             { "country": "Netherlands", "eu_hosted": true,  "non_us": true,  "url": "https://nebius.com/", "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)." },
-    "Inceptron":          { "country": "Sweden",      "eu_hosted": true,  "non_us": true,  "url": "https://www.inceptron.io/models", "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax." },
-    "Scaleway":           { "country": "France",      "eu_hosted": true,  "non_us": true,  "url": "https://www.scaleway.com/en/generative-apis/", "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)." },
-    "IONOS":              { "country": "Germany",     "eu_hosted": true,  "non_us": true,  "url": "https://cloud.ionos.de/managed/ai-model-hub", "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)." },
-    "TensorX":            { "country": "Ireland",     "eu_hosted": true,  "non_us": true,  "url": "https://tensorx.ai/models/", "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU." },
-    "TrustedRouter":      { "country": "EU",          "eu_hosted": true,  "non_us": true,  "url": "https://api.trustedrouter.eu/", "coming_soon": true, "note": "EU-based, security-focused router — still being launched, not production-ready yet." },
-
-    "Anthropic":          { "country": "US", "eu_hosted": false, "non_us": false },
-    "OpenAI":             { "country": "US", "eu_hosted": false, "non_us": false },
-    "Google":             { "country": "US", "eu_hosted": false, "non_us": false },
-    "Google AI Studio":   { "country": "US", "eu_hosted": false, "non_us": false },
-    "DeepInfra":          { "country": "US", "eu_hosted": false, "non_us": false, "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)" },
-    "Together":           { "country": "US", "eu_hosted": false, "non_us": false, "eu_dedicated": true, "note": "EU footprint (Sweden, since Sep 2025) is GPU clusters / dedicated endpoints only; the per-token serverless API has no EU region selector and runs from US capacity. US HQ (CLOUD Act). Not an EU serverless price source." },
-    "Fireworks":          { "country": "US", "eu_hosted": false, "non_us": false, "eu_dedicated": true, "note": "EU only via dedicated (Frankfurt/Iceland) / BYOC GPU deployments, not serverless." },
-    "Groq":               { "country": "US", "eu_hosted": false, "non_us": false },
-    "Cerebras":           { "country": "US", "eu_hosted": false, "non_us": false },
-    "SambaNova":          { "country": "US", "eu_hosted": false, "non_us": false },
-    "BaseTen":            { "country": "US", "eu_hosted": false, "non_us": false },
-    "Parasail":           { "country": "US", "eu_hosted": false, "non_us": false, "eu_dedicated": true, "note": "US-HQ (San Mateo, CA). Single global auto-routed serverless endpoint, no EU region pin; region handling is a paid Dedicated/sales feature only." },
-    "Cloudflare":         { "country": "US", "eu_hosted": false, "non_us": false, "eu_dedicated": true, "note": "Self-serve Workers AI uses global anycast to nearest GPU, no EU pinning; EU/region-locked inference is Enterprise-only via Data Localization Suite / Custom Regions (\"not yet self-serve\")." },
-    "Nvidia":             { "country": "US", "eu_hosted": false, "non_us": false },
-    "Perplexity":         { "country": "US", "eu_hosted": false, "non_us": false },
-    "Venice":             { "country": "US", "eu_hosted": false, "non_us": false, "note": "Privacy-first / no-logs but US (per own privacy policy the Service is US-hosted); compute is a global decentralized GPU pool (Akash/Phala/etc.) with no selectable/guaranteed EU geography. No-logs != EU residency." },
-    "Novita":             { "country": "US", "eu_hosted": false, "non_us": false, "note": "US-HQ, AWS-backed global per-token API; single endpoint api.novita.ai, no region param. GDPR-compliance claims only, no EU region for self-serve serverless." },
-    "AtlasCloud":         { "country": "US", "eu_hosted": false, "non_us": false, "eu_dedicated": true, "note": "Public per-token API is US/global with no region selection; an eu-west region exists only for deploy-your-own dedicated serverless endpoints (out of scope)." },
-    "WandB":              { "country": "US", "eu_hosted": false, "non_us": false, "note": "CoreWeave-powered serverless is US-only (multi-tenant on GCP North America, only coreweave-us storage); EU exists solely for sales-gated Dedicated Cloud. CoreWeave (US) owned." },
-    "Infermatic":         { "country": "US", "eu_hosted": false, "non_us": false },
-    "Wafer":              { "country": "US", "eu_hosted": false, "non_us": false },
-    "Ionstream":          { "country": "US", "eu_hosted": false, "non_us": false },
-    "Mara":               { "country": "US", "eu_hosted": false, "non_us": false },
-    "Liquid":             { "country": "US", "eu_hosted": false, "non_us": false },
-    "Inception":          { "country": "US", "eu_hosted": false, "non_us": false },
-    "Arcee AI":           { "country": "US", "eu_hosted": false, "non_us": false },
-    "Io Net":             { "country": "US", "eu_hosted": false, "non_us": false, "note": "DePIN, no residency control." },
-    "AkashML":            { "country": "US", "eu_hosted": false, "non_us": false, "note": "DePIN." },
-    "Phala":              { "country": "US", "eu_hosted": false, "non_us": false, "note": "TEE/confidential but US/India nodes, not EU-resident." },
-    "Chutes":             { "country": "US", "eu_hosted": false, "non_us": false, "note": "TEE models available; node location not EU-pinned." },
-    "GMICloud":           { "country": "US", "eu_hosted": false, "non_us": false },
-    "DigitalOcean":       { "country": "US", "eu_hosted": false, "non_us": false, "note": "Serverless inference is US-only (single global endpoint inference.do-ai.run, no region param); EU regions run only NA-restricted Dedicated/Agent products. DO states GDPR EU inference regions are roadmap, not shipped (re-check 2026-H2)." },
-    "Clarifai":           { "country": "US", "eu_hosted": false, "non_us": false },
-    "Friendli":           { "country": "South Korea", "eu_hosted": false, "non_us": true, "note": "ZDR by default; Korea-based." },
-    "Upstage":            { "country": "South Korea", "eu_hosted": false, "non_us": true },
-    "AI21":               { "country": "Israel",      "eu_hosted": false, "non_us": true },
-    "DekaLLM":            { "country": "Indonesia",   "eu_hosted": false, "non_us": true },
-    "Reka":               { "country": "US",          "eu_hosted": false, "non_us": false },
-    "Mistral":            { "country": "France",      "eu_hosted": true,  "non_us": true,  "url": "https://mistral.ai/pricing", "note": "FR-resident first-party API; own (open-weight) models only — Large/Medium/Magistral/Codestral/Devstral." },
-    "Cohere":             { "country": "Canada",      "eu_hosted": false, "non_us": true,  "note": "Non-US; EU via VPC." },
-    "Alibaba":            { "country": "China",       "eu_hosted": false, "non_us": true },
-    "DeepSeek":           { "country": "China",       "eu_hosted": false, "non_us": true },
-    "Z.AI":               { "country": "China",       "eu_hosted": false, "non_us": true },
-    "Moonshot AI":        { "country": "China",       "eu_hosted": false, "non_us": true },
-    "Minimax":            { "country": "China",       "eu_hosted": false, "non_us": true },
-    "Baidu":              { "country": "China",       "eu_hosted": false, "non_us": true },
-    "StepFun":            { "country": "China",       "eu_hosted": false, "non_us": true },
-    "StreamLake":         { "country": "China",       "eu_hosted": false, "non_us": true },
-    "SiliconFlow":        { "country": "China",       "eu_hosted": false, "non_us": true },
-    "Xiaomi":             { "country": "China",       "eu_hosted": false, "non_us": true },
-    "Seed":               { "country": "China",       "eu_hosted": false, "non_us": true, "note": "ByteDance." },
-    "Nex AGI":            { "country": "China",       "eu_hosted": false, "non_us": true }
+    "AWS Bedrock": {
+      "country": "US",
+      "eu_hosted": true,
+      "non_us": false,
+      "url": "https://aws.amazon.com/bedrock/",
+      "note": "EU residency via the eu. cross-region Geo profile; ZDR by default. US parent (CLOUD Act).",
+      "hyperscaler": true
+    },
+    "Azure AI Foundry": {
+      "country": "US",
+      "eu_hosted": true,
+      "non_us": false,
+      "url": "https://azure.microsoft.com/en-us/products/ai-foundry",
+      "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served).",
+      "hyperscaler": true
+    },
+    "Google Vertex AI": {
+      "country": "US",
+      "eu_hosted": true,
+      "non_us": false,
+      "url": "https://cloud.google.com/vertex-ai",
+      "note": "EU residency via europe-west / EU multi-region; never the global endpoint. US parent.",
+      "hyperscaler": true
+    },
+    "Nebius": {
+      "country": "Netherlands",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://nebius.com/",
+      "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
+    },
+    "Inceptron": {
+      "country": "Sweden",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://www.inceptron.io/models",
+      "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
+    },
+    "Scaleway": {
+      "country": "France",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://www.scaleway.com/en/generative-apis/",
+      "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)."
+    },
+    "IONOS": {
+      "country": "Germany",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://cloud.ionos.de/managed/ai-model-hub",
+      "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)."
+    },
+    "TensorX": {
+      "country": "Ireland",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://tensorx.ai/models/",
+      "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU."
+    },
+    "TrustedRouter": {
+      "country": "EU",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://api.trustedrouter.eu/",
+      "coming_soon": true,
+      "note": "EU-based, security-focused router — still being launched, not production-ready yet."
+    },
+    "Anthropic": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "OpenAI": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Google": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Google AI Studio": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "DeepInfra": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)"
+    },
+    "Together": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": true,
+      "note": "EU footprint (Sweden, since Sep 2025) is GPU clusters / dedicated endpoints only; the per-token serverless API has no EU region selector and runs from US capacity. US HQ (CLOUD Act). Not an EU serverless price source."
+    },
+    "Fireworks": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": true,
+      "note": "EU only via dedicated (Frankfurt/Iceland) / BYOC GPU deployments, not serverless."
+    },
+    "Groq": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Cerebras": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "SambaNova": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "BaseTen": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Parasail": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": true,
+      "note": "US-HQ (San Mateo, CA). Single global auto-routed serverless endpoint, no EU region pin; region handling is a paid Dedicated/sales feature only."
+    },
+    "Cloudflare": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": true,
+      "note": "Self-serve Workers AI uses global anycast to nearest GPU, no EU pinning; EU/region-locked inference is Enterprise-only via Data Localization Suite / Custom Regions (\"not yet self-serve\")."
+    },
+    "Nvidia": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Perplexity": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Venice": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "Privacy-first / no-logs but US (per own privacy policy the Service is US-hosted); compute is a global decentralized GPU pool (Akash/Phala/etc.) with no selectable/guaranteed EU geography. No-logs != EU residency."
+    },
+    "Novita": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "US-HQ, AWS-backed global per-token API; single endpoint api.novita.ai, no region param. GDPR-compliance claims only, no EU region for self-serve serverless."
+    },
+    "AtlasCloud": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": true,
+      "note": "Public per-token API is US/global with no region selection; an eu-west region exists only for deploy-your-own dedicated serverless endpoints (out of scope)."
+    },
+    "WandB": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "CoreWeave-powered serverless is US-only (multi-tenant on GCP North America, only coreweave-us storage); EU exists solely for sales-gated Dedicated Cloud. CoreWeave (US) owned."
+    },
+    "Infermatic": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Wafer": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Ionstream": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Mara": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Liquid": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Inception": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Arcee AI": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Io Net": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "DePIN, no residency control."
+    },
+    "AkashML": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "DePIN."
+    },
+    "Phala": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "TEE/confidential but US/India nodes, not EU-resident."
+    },
+    "Chutes": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "TEE models available; node location not EU-pinned."
+    },
+    "GMICloud": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "DigitalOcean": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "Serverless inference is US-only (single global endpoint inference.do-ai.run, no region param); EU regions run only NA-restricted Dedicated/Agent products. DO states GDPR EU inference regions are roadmap, not shipped (re-check 2026-H2)."
+    },
+    "Clarifai": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Friendli": {
+      "country": "South Korea",
+      "eu_hosted": false,
+      "non_us": true,
+      "note": "ZDR by default; Korea-based."
+    },
+    "Upstage": {
+      "country": "South Korea",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "AI21": {
+      "country": "Israel",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "DekaLLM": {
+      "country": "Indonesia",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Reka": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false
+    },
+    "Mistral": {
+      "country": "France",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://mistral.ai/pricing",
+      "note": "FR-resident first-party API; own (open-weight) models only — Large/Medium/Magistral/Codestral/Devstral."
+    },
+    "Cohere": {
+      "country": "Canada",
+      "eu_hosted": false,
+      "non_us": true,
+      "note": "Non-US; EU via VPC."
+    },
+    "Alibaba": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "DeepSeek": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Z.AI": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Moonshot AI": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Minimax": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Baidu": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "StepFun": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "StreamLake": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "SiliconFlow": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Xiaomi": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    },
+    "Seed": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true,
+      "note": "ByteDance."
+    },
+    "Nex AGI": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true
+    }
   }
 }

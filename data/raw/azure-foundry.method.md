@@ -1,10 +1,11 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-07-06 (76 text LLMs; 6,757 EU items fetched — comprehensive re-scrape)
+**Last collected:** 2026-07-07 (76 text LLMs; 6,757 EU items fetched — comprehensive re-scrape;
+IDENTICAL to 2026-07-06: no additions, no price changes)
 **Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
 
-**GLM 5.2 special-focus verdict (2026-07-06, re-check):** GLM 5.2 is **STILL NOT priced on
-Azure AI Foundry** — as of 2026-07-06 there is **no `FW GLM 5.2 Inp/Outp DZ Tokens` meter** in
+**GLM 5.2 special-focus verdict (2026-07-07, re-check):** GLM 5.2 is **STILL NOT priced on
+Azure AI Foundry** — as of 2026-07-07 there is **no `FW GLM 5.2 Inp/Outp DZ Tokens` meter** in
 the Retail Prices API (zero substring hits for `GLM 5.2`/`GLM5.2` across
 productName/meterName/skuName/productId/skuId in the full 6,757-item EU pull). The `Azure
 Fireworks Models` GLM meters remain only **FW GLM 5** (Inp 0.0011/1K = 1.10/1M, Outp 0.00352/1K
@@ -14,10 +15,11 @@ observable via the priced Retail API; only priced meters are visible here.) GLM 
 as **GLM 5** and **GLM 5.1**, both via the `Azure Fireworks Models` partner catalog
 (Fireworks-on-Azure), DataZone-EU tier only. There is **no Microsoft-native / first-party Z.ai
 product**, and DataZone-EU is excluded by Microsoft from the EU Data Boundary, so these are
-effectively US/Fireworks-served. Also re-verified absent 2026-07-06: **Kimi K2.7, MiniMax M3,
+effectively US/Fireworks-served. Also re-verified absent 2026-07-07: **Kimi K2.7, MiniMax M3,
 standalone DeepSeek V4** (only V4 Pro + V4 Flash exist first-party; V4 Pro also via Fireworks).
-Fireworks catalog unchanged: Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7, DeepSeek V3.2/V4-Pro,
-GPT OSS 120B. Also still absent: Qwen, MiMo, and any Anthropic Claude (Opus/Sonnet), Gemini.
+Fireworks catalog unchanged (9 priced models): Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7,
+DeepSeek V3.2/V4-Pro, GPT OSS 120B. Also still absent 2026-07-07: MiMo, Qwen, Gemini, and any
+Anthropic Claude (Opus/Sonnet). Also still absent: Qwen, MiMo, and any Anthropic Claude (Opus/Sonnet), Gemini.
 
 ## TL;DR refresh recipe (2026-06-17)
 Three paginated queries (USD), looping `NextPageLink`, over the six EU regions
@@ -42,7 +44,7 @@ items to `/tmp/azure_raw.json`).
   through the `Azure Fireworks Models` product (Fireworks-on-Azure). Meter pattern:
   `FW <Model> Inp DZ Tokens` / `FW <Model> Outp DZ Tokens` (also `Cache Inp` = skip).
   These have **DataZone EU tier only — no Global tier**. Prices identical across all 6 EU regions.
-- NOT found on Azure as of 2026-07-06 (re-verified, zero substring hits in all fields):
+- NOT found on Azure as of 2026-07-07 (re-verified, zero substring hits in all fields):
   Kimi K2.7, GLM 5.2, MiniMax M3/MiniMax 3, MiMo (any), Qwen (any), and any Anthropic
   Claude (Opus/Sonnet/Anthropic — incl. Claude Sonnet 5 released 2026-06-30;
   Claude remains absent from Azure Foundry, confirming Anthropic is still not on Azure).
