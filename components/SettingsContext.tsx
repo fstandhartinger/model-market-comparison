@@ -13,6 +13,7 @@ interface SettingsState {
   nonUsOnly: boolean;       // only providers whose company is not US-based
   hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
   hideFable: boolean;       // hide Claude Fable (on by default)
+  openOnly: boolean;        // only open-weights models (off by default)
   minScore: number;         // hide models scoring below this (score-aware default)
   teeOnly: boolean;         // only models with a TEE / confidential-compute offer
   providersExcluded: string[]; // BLOCKLIST of deselected provider keys; empty = all included (incl. future providers)
@@ -29,6 +30,7 @@ interface SettingsCtx extends SettingsState {
   setNonUsOnly: (b: boolean) => void;
   setHideGptOpus: (b: boolean) => void;
   setHideFable: (b: boolean) => void;
+  setOpenOnly: (b: boolean) => void;
   setMinScore: (n: number) => void;
   setTeeOnly: (b: boolean) => void;
   setProvidersExcluded: (k: string[]) => void;
@@ -37,7 +39,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, euDedicated: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, euDedicated: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
@@ -74,6 +76,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
     setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
     setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),
+    setOpenOnly: (openOnly) => setState((s) => ({ ...s, openOnly })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
     setProvidersExcluded: (providersExcluded) => setState((s) => ({ ...s, providersExcluded })),

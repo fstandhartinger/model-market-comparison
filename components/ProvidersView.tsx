@@ -28,8 +28,9 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const [modelId, setModelId] = useState<string>("");
   const [modelQ, setModelQ] = useState("");
 
-  const eligible = (m: { family_key: string; scores: Record<string, number | null> }) => {
+  const eligible = (m: { family_key: string; open_weights: boolean; scores: Record<string, number | null> }) => {
     if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
+    if (s.openOnly && !m.open_weights) return false;
     if (s.familySet && !s.familySet.has(m.family_key)) return false;
     if (s.minScore > 0 && m.scores[score] != null && (m.scores[score] as number) < s.minScore) return false;
     return true;
@@ -44,13 +45,13 @@ export function ProvidersView({ data }: { data: ClientData }) {
       if (!fams.has(m.family_key)) fams.set(m.family_key, { family_key: m.family_key });
     }
     return [...fams.values()];
-  }, [data, score, scorePeersOnly, s.familySet, s.hideGptOpus, s.hideFable, s.minScore]);
+  }, [data, score, scorePeersOnly, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
 
   const modelOptions = useMemo(
     () => data.models.filter((m) => rankedOffers(data.offersByFamily[m.family_key], allowed).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, score, allowed, s.familySet, s.hideGptOpus, s.hideFable, s.minScore]
+    [data, score, allowed, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];

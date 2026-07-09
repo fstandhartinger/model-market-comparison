@@ -36,6 +36,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
     const ok = new Set<string>();
     for (const [fam, m] of modelByFamily) {
       if (isHiddenModel(fam, s.hideGptOpus, s.hideFable)) continue;
+      if (s.openOnly && !m.open_weights) continue;
       if (s.featured && !m.featured) continue;
       if (s.familySet && !s.familySet.has(fam)) continue;
       const sc = scoreOf(m, s.score);
@@ -44,7 +45,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       ok.add(fam);
     }
     return ok;
-  }, [modelByFamily, s.hideGptOpus, s.hideFable, s.featured, s.familySet, s.minScore, s.score, s.teeOnly, data.offersByFamily]);
+  }, [modelByFamily, s.hideGptOpus, s.hideFable, s.openOnly, s.featured, s.familySet, s.minScore, s.score, s.teeOnly, data.offersByFamily]);
 
   // Per-provider model count over the FILTERED families (so the directory count matches the
   // list you actually see when you click through).

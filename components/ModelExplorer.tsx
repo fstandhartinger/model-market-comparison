@@ -46,6 +46,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     }));
     if (s.collapse) r = r.filter((x) => !preferredId.has(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
     r = r.filter((x) => !isHiddenModel(x.m.family_key, s.hideGptOpus, s.hideFable));
+    if (s.openOnly) r = r.filter((x) => x.m.open_weights);
     if (s.featured) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (openFilter !== "all") r = r.filter((x) => x.m.open_weights === (openFilter === "open"));
@@ -68,7 +69,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.teeOnly, openFilter, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, s.teeOnly, openFilter, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);

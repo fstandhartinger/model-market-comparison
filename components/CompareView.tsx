@@ -28,12 +28,13 @@ export function CompareView({ data }: { data: ClientData }) {
     let r = data.models.filter((m) => m.scores[s.score] != null || rankedOffers(data.offersByFamily[m.family_key], null).length);
     if (s.collapse) r = collapseModels(r, preferredId);
     r = r.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
+    if (s.openOnly) r = r.filter((m) => m.open_weights);
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
     if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] == null || (m.scores[s.score] as number) >= s.minScore);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((m) => m.display_name.toLowerCase().includes(t) || m.org.toLowerCase().includes(t)); }
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.minScore, q, preferredId]);
+  }, [data, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, q, preferredId]);
 
   const maxScore = Math.max(1, ...models.map((m) => m.scores[s.score] ?? 0));
 

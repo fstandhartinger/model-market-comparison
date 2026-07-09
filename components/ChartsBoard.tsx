@@ -28,13 +28,14 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     let base = data.models;
     if (s.collapse) base = collapseModels(base, preferredId);
     base = base.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
+    if (s.openOnly) base = base.filter((m) => m.open_weights);
     if (s.featured) base = base.filter((m) => m.featured);
     if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
     return base
       .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
       .filter((x) => (Number.isFinite(maxC) ? x.cost != null && x.cost <= maxC : true))
       .filter((x) => (s.minScore > 0 ? x.sc == null || x.sc >= s.minScore : true));
-  }, [data, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.minScore, maxCost, allowed, preferredId]);
+  }, [data, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, allowed, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
