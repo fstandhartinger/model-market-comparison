@@ -105,35 +105,56 @@ export function clientData(ds: Dataset): ClientData {
     };
   });
 
-  // Composite score: min-max normalize each base metric to 0–100 across all models,
-  // then average all five per model. Missing metrics are IMPUTED (partial pooling)
-  // rather than dropped: a gap is filled with the mean of (that metric's field average)
-  // and (the model's own average of the metrics it does have). Plain "mean of present"
-  // is wrong — it lets a model that only carries the metrics it's strong on outrank one
-  // that beats it on every shared metric but is additionally measured (and weaker) on a
-  // benchmark the first model simply lacks (e.g. DesignArena). Shrinkage keeps missing
-  // data from inflating a score without unfairly sinking strong models that just haven't
-  // been benchmarked everywhere yet.
-  const baseKeys = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
+  // Composite score: a blend over FOUR equally-weighted slots — AA Coding, AA Coding-Agent,
+  // AA Intelligence, and a single combined DesignArena slot (average of the frontend &
+  // full-stack Elo). Each metric is min-max normalized 0–100 across all models first.
+  //
+  // DesignArena is deliberately ONE slot, not two: it's a narrow web-dev-arena signal that
+  // only covers ~30 models, so counting frontend + full-stack separately over-weighted it
+  // (40% of the score) and let it flip the overall ranking — e.g. Opus 4.8 edging out
+  // Fable 5 despite Fable leading every AA capability index. At 25% it still counts without
+  // dominating the general-capability signal.
+  //
+  // Missing slots are IMPUTED (partial pooling): a gap is filled with the mean of (that
+  // slot's field average) and (the model's own average of the slots it does have). Plain
+  // "mean of present" is wrong — it lets a model carrying only the metrics it's strong on
+  // outrank one measured (and weaker) on a benchmark the first simply lacks. Shrinkage keeps
+  // missing data from inflating a score without unfairly sinking strong-but-partly-unbenchmarked models.
+  const metricKeys = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
   const ranges: Record<string, { min: number; max: number; mean: number } | null> = {};
-  for (const k of baseKeys) {
+  for (const k of metricKeys) {
     const vals = models.map((m) => m.scores[k]).filter((v): v is number => v != null);
     ranges[k] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals), mean: vals.reduce((a, b) => a + b, 0) / vals.length } : null;
   }
-  const normOf = (k: (typeof baseKeys)[number], v: number) => {
+  const normOf = (k: (typeof metricKeys)[number], v: number) => {
     const r = ranges[k]; if (!r) return null;
     return r.max > r.min ? ((v - r.min) / (r.max - r.min)) * 100 : 100;
   };
-  const fieldMeanNorm: Record<string, number | null> = {};
-  for (const k of baseKeys) fieldMeanNorm[k] = ranges[k] ? normOf(k, ranges[k]!.mean) : null;
+  const nm = (m: (typeof models)[number], k: (typeof metricKeys)[number]) => (m.scores[k] != null ? normOf(k, m.scores[k] as number) : null);
+  // The four composite slots. `da` = average of whichever DesignArena boards a model is on.
+  const slots = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "da"] as const;
+  const slotValue = (m: (typeof models)[number], slot: (typeof slots)[number]): number | null => {
+    if (slot !== "da") return nm(m, slot as (typeof metricKeys)[number]);
+    const da = [nm(m, "designarena_frontend"), nm(m, "designarena_fullstack")].filter((v): v is number => v != null);
+    return da.length ? da.reduce((a, b) => a + b, 0) / da.length : null;
+  };
+  const daFieldMean = [ranges.designarena_frontend, ranges.designarena_fullstack]
+    .map((r, i) => (r ? normOf(i === 0 ? "designarena_frontend" : "designarena_fullstack", r.mean) : null))
+    .filter((v): v is number => v != null);
+  const fieldMean: Record<string, number | null> = {
+    aa_coding_index: ranges.aa_coding_index ? normOf("aa_coding_index", ranges.aa_coding_index.mean) : null,
+    aa_coding_agent: ranges.aa_coding_agent ? normOf("aa_coding_agent", ranges.aa_coding_agent.mean) : null,
+    aa_intelligence_index: ranges.aa_intelligence_index ? normOf("aa_intelligence_index", ranges.aa_intelligence_index.mean) : null,
+    da: daFieldMean.length ? daFieldMean.reduce((a, b) => a + b, 0) / daFieldMean.length : null,
+  };
   for (const m of models) {
-    const present = baseKeys.map((k) => (m.scores[k] != null ? normOf(k, m.scores[k] as number) : null)).filter((v): v is number => v != null);
+    const present = slots.map((sl) => slotValue(m, sl)).filter((v): v is number => v != null);
     if (!present.length) { m.scores.composite = null; continue; }
     const ownMean = present.reduce((a, b) => a + b, 0) / present.length;
-    const filled = baseKeys.map((k) => {
-      const v = m.scores[k] != null ? normOf(k, m.scores[k] as number) : null;
+    const filled = slots.map((sl) => {
+      const v = slotValue(m, sl);
       if (v != null) return v;
-      const fm = fieldMeanNorm[k];
+      const fm = fieldMean[sl];
       return fm != null ? (fm + ownMean) / 2 : ownMean; // impute: shrink toward field mean
     });
     m.scores.composite = Math.round((filled.reduce((a, b) => a + b, 0) / filled.length) * 10) / 10;

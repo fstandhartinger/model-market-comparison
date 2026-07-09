@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-08T17:25:42.970Z",
+  "generated_at": "2026-07-09T12:34:13.086Z",
   "counts": {
-    "models": 722,
-    "families": 588,
-    "providers": 80,
-    "offers": 1561
+    "models": 725,
+    "families": 591,
+    "providers": 81,
+    "offers": 1564
   },
   "sources": {
     "openrouter": "2026-07-08",
@@ -40394,6 +40394,93 @@
       },
       "featured": false,
       "has_pricing": false
+    },
+    {
+      "id": "gpt-5.6-sol::default",
+      "family_key": "gpt-5.6-sol",
+      "family_name": "GPT 5.6 Sol",
+      "display_name": "GPT 5.6 Sol",
+      "org": "OpenAI",
+      "variant": "default",
+      "open_weights": false,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "OpenAI API",
+          "provider": "OpenAI",
+          "platform": "OpenAI",
+          "input_per_1m": 5,
+          "output_per_1m": 30,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "GPT-5.6 Sol — flagship tier (has 'Ultra' parallel-subagent + max-reasoning modes). Previewed 2026-06-26, GA 2026-07-09. First-party OpenAI list price. Not on OpenRouter/AA/DesignArena yet; model id expected gpt-5.6-sol (unconfirmed). Terminal-Bench 2.1: 88.8% (Ultra 91.9%). METR flagged eval-gaming — treat coding leadership cautiously."
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "gpt-5.6-terra::default",
+      "family_key": "gpt-5.6-terra",
+      "family_name": "GPT 5.6 Terra",
+      "display_name": "GPT 5.6 Terra",
+      "org": "OpenAI",
+      "variant": "default",
+      "open_weights": false,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "OpenAI API",
+          "provider": "OpenAI",
+          "platform": "OpenAI",
+          "input_per_1m": 2.5,
+          "output_per_1m": 15,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "GPT-5.6 Terra — balanced/high-volume tier ('competitive with GPT-5.5 at 2x cheaper'). Previewed 2026-06-26, GA 2026-07-09. First-party list price; model id expected gpt-5.6-terra (unconfirmed). Terminal-Bench 2.1: 82.5%."
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
+    },
+    {
+      "id": "gpt-5.6-luna::default",
+      "family_key": "gpt-5.6-luna",
+      "family_name": "GPT 5.6 Luna",
+      "display_name": "GPT 5.6 Luna",
+      "org": "OpenAI",
+      "variant": "default",
+      "open_weights": false,
+      "release_date": null,
+      "benchmarks": {},
+      "aa_reference_price": {},
+      "aa_speed": {},
+      "offers": [
+        {
+          "source": "OpenAI API",
+          "provider": "OpenAI",
+          "platform": "OpenAI",
+          "input_per_1m": 1,
+          "output_per_1m": 6,
+          "region": "global",
+          "unit": "per_1m_token",
+          "notes": "GPT-5.6 Luna — fastest/cheapest tier. Previewed 2026-06-26, GA 2026-07-09. First-party list price; model id expected gpt-5.6-luna (unconfirmed). Terminal-Bench 2.1: 84.3%."
+        }
+      ],
+      "designarena": {},
+      "copilot": null,
+      "featured": false,
+      "has_pricing": true
     }
   ],
   "providers": [
@@ -41011,6 +41098,17 @@
       "eu_dedicated": false,
       "hyperscaler": false,
       "country": null,
+      "note": ""
+    },
+    {
+      "platform": "OpenAI",
+      "provider": "OpenAI",
+      "model_count": 3,
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": false,
+      "hyperscaler": false,
+      "country": "US",
       "note": ""
     },
     {
