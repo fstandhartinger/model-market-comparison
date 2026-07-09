@@ -87,9 +87,11 @@ export default async function EuPage() {
           <tbody>
             {SOTA.map((s) => {
               const m = find(s.key);
-              // Azure serves GLM/Kimi/MiniMax only via Fireworks, which is excluded from
-              // the EU Data Boundary — so don't count it as a true EU route for those.
-              const azureFireworks = /^(glm-|kimi-|minimax-)/.test(s.key);
+              // Azure serves GLM and MiniMax via Fireworks (US-served, outside the EU Data
+              // Boundary) — so don't count Azure as a true EU route for those. Kimi, by
+              // contrast, is a Microsoft-direct Foundry model with its own EU Data Zone meter,
+              // so Azure IS a valid EU route for Kimi (not excluded here).
+              const azureFireworks = /^(glm-|minimax-)/.test(s.key);
               // n=100 (≈ all offers) so mid-priced EU providers aren't truncated away by cheaper
               // Chinese/US offers before the EU filter runs; isEuRegion drops routes a provider
               // serves from outside the EU (e.g. Nebius' US-region GLM 5.2).
@@ -117,8 +119,9 @@ export default async function EuPage() {
         ZDR + no-training) lists GLM 5.1/5.2, Kimi K2.6, DeepSeek V4 Pro and MiniMax — but <b>serves several of them from
         US/UK regions</b>, so its only SOTA model currently running in an EU region is <b>GLM 5.1</b>. The table lists a
         provider for a model <b>only where that specific model runs in-EU</b> — a provider being EU-capable in general
-        isn&apos;t enough. ⚠️ Azure&apos;s Kimi/GLM/MiniMax are <b>Fireworks-hosted and excluded from the EU Data Boundary</b>
-        {" "}(US-served), so they are not a true EU route either. Thanks to TensorX, <b>Kimi K2.7 Code and MiniMax M3 now have a
+        isn&apos;t enough. ⚠️ Azure&apos;s GLM/MiniMax are <b>Fireworks-hosted and excluded from the EU Data Boundary</b>
+        {" "}(US-served), so Azure is not a true EU route for those (Kimi, by contrast, is a Microsoft-direct Foundry
+        model with an EU Data Zone meter, so it does count). Thanks to TensorX, <b>Kimi K2.7 Code and MiniMax M3 now have a
         managed EU host</b>; MiniMax M2.7 and Xiaomi MiMo still do not.
       </p>
 

@@ -1,8 +1,8 @@
 {
-  "generated_at": "2026-07-09T17:12:06.511Z",
+  "generated_at": "2026-07-09T17:29:10.613Z",
   "counts": {
-    "models": 725,
-    "families": 591,
+    "models": 724,
+    "families": 590,
     "providers": 81,
     "offers": 1564
   },
@@ -8897,16 +8897,6 @@
           "unit": "per_1m_token",
           "or_model_id": "minimax/minimax-m2.7",
           "status": 0
-        },
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 0.33,
-          "output_per_1m": 1.32,
-          "region": "swedencentral",
-          "unit": "per_1m_token",
-          "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). MiniMax M3 NOT on Azure as of 2026-07-07 (re-verified, still no meter)."
         }
       ],
       "designarena": {},
@@ -9780,7 +9770,7 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 0.66,
+          "input_per_1m": 0.65,
           "output_per_1m": 3.41,
           "region": "eu",
           "unit": "per_1m_token",
@@ -10082,7 +10072,7 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 0.66,
+          "input_per_1m": 0.65,
           "output_per_1m": 3.41,
           "region": "eu",
           "unit": "per_1m_token",
@@ -10306,11 +10296,11 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 0.75,
-          "output_per_1m": 3.15,
+          "input_per_1m": 0.72,
+          "output_per_1m": 3.5,
           "region": "eu",
           "unit": "per_1m_token",
-          "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. Matches OpenRouter Inceptron endpoint (in 0.75 / out 3.15). DOWN from 0.85/3.50 on 2026-07-01."
+          "notes": "int4 quant, 262K context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. Matches OpenRouter Inceptron endpoint (in 0.75 / out 3.15). DOWN from 0.85/3.50 on 2026-07-01. | Re-verified 2026-07-09 vs native API."
         },
         {
           "source": "TensorX",
@@ -11942,6 +11932,16 @@
           "unit": "per_1m_token",
           "or_model_id": "xiaomi/mimo-v2.5",
           "status": 0
+        },
+        {
+          "source": "TensorX",
+          "provider": "TensorX",
+          "platform": "TensorX",
+          "input_per_1m": 0.4,
+          "output_per_1m": 2,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "Xiaomi omni model (text/image, tool-calling), 1M ctx. Added 2026-07-09 from tensorx.ai/pricing."
         }
       ],
       "designarena": {},
@@ -13938,11 +13938,11 @@
           "source": "Inceptron",
           "provider": "Inceptron",
           "platform": "Inceptron",
-          "input_per_1m": 0.9,
-          "output_per_1m": 2.86,
+          "input_per_1m": 0.76,
+          "output_per_1m": 3.08,
           "region": "eu",
           "unit": "per_1m_token",
-          "notes": "fp4 quant, 1.05M context. Cache read $0.17/1M. Inceptron model id zai-org/GLM-5.2. Native api.inceptron.io 2026-07-06: in $0.90 / out $2.86 (DOWN from 1.15/3.62 on 2026-07-01). No live Inceptron OpenRouter endpoint to cross-check currently."
+          "notes": "fp4 quant, 1.05M context. Cache read $0.17/1M. Inceptron model id zai-org/GLM-5.2. Native api.inceptron.io 2026-07-06: in $0.90 / out $2.86 (DOWN from 1.15/3.62 on 2026-07-01). No live Inceptron OpenRouter endpoint to cross-check currently. | Re-verified 2026-07-09 vs native API."
         },
         {
           "source": "Scaleway",
@@ -15333,6 +15333,16 @@
           "region": "eu-central-1",
           "unit": "per_1m_token",
           "notes": ""
+        },
+        {
+          "source": "IONOS",
+          "provider": "IONOS",
+          "platform": "IONOS",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.86,
+          "region": "eu",
+          "unit": "per_1m_token",
+          "notes": "€0.15/€0.80. 128k ctx coding specialist. Added 2026-07-09 from IONOS AI Model Hub."
         }
       ],
       "designarena": {},
@@ -39636,35 +39646,6 @@
       "has_pricing": true
     },
     {
-      "id": "grok-4.2::default",
-      "family_key": "grok-4.2",
-      "family_name": "Grok 4.2",
-      "display_name": "Grok 4.2",
-      "org": "xAI",
-      "variant": "default",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 1.25,
-          "output_per_1m": 2.5,
-          "region": "swedencentral",
-          "unit": "per_1m_token",
-          "notes": "Global"
-        }
-      ],
-      "designarena": {},
-      "copilot": null,
-      "featured": false,
-      "has_pricing": true
-    },
-    {
       "id": "llama-4-maverick-17b::default",
       "family_key": "llama-4-maverick-17b",
       "family_name": "Llama 4 Maverick 17B",
@@ -40485,17 +40466,6 @@
   ],
   "providers": [
     {
-      "platform": "Azure AI Foundry",
-      "provider": "Azure AI Foundry",
-      "model_count": 64,
-      "eu_hosted": true,
-      "non_us": false,
-      "eu_dedicated": false,
-      "hyperscaler": true,
-      "country": "US",
-      "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served)."
-    },
-    {
       "platform": "OpenRouter",
       "provider": "DeepInfra",
       "model_count": 63,
@@ -40505,6 +40475,17 @@
       "hyperscaler": false,
       "country": "US",
       "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)"
+    },
+    {
+      "platform": "Azure AI Foundry",
+      "provider": "Azure AI Foundry",
+      "model_count": 62,
+      "eu_hosted": true,
+      "non_us": false,
+      "eu_dedicated": false,
+      "hyperscaler": true,
+      "country": "US",
+      "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served)."
     },
     {
       "platform": "OpenRouter",
@@ -40639,6 +40620,17 @@
       "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
     },
     {
+      "platform": "TensorX",
+      "provider": "TensorX",
+      "model_count": 24,
+      "eu_hosted": true,
+      "non_us": true,
+      "eu_dedicated": false,
+      "hyperscaler": false,
+      "country": "Ireland",
+      "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU."
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Amazon Bedrock",
       "model_count": 23,
@@ -40648,17 +40640,6 @@
       "hyperscaler": false,
       "country": null,
       "note": ""
-    },
-    {
-      "platform": "TensorX",
-      "provider": "TensorX",
-      "model_count": 23,
-      "eu_hosted": true,
-      "non_us": true,
-      "eu_dedicated": false,
-      "hyperscaler": false,
-      "country": "Ireland",
-      "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU."
     },
     {
       "platform": "OpenRouter",
@@ -40848,6 +40829,17 @@
       "note": "EU only via dedicated (Frankfurt/Iceland) / BYOC GPU deployments, not serverless."
     },
     {
+      "platform": "IONOS",
+      "provider": "IONOS",
+      "model_count": 7,
+      "eu_hosted": true,
+      "non_us": true,
+      "eu_dedicated": false,
+      "hyperscaler": false,
+      "country": "Germany",
+      "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)."
+    },
+    {
       "platform": "OpenRouter",
       "provider": "Baidu",
       "model_count": 7,
@@ -40879,17 +40871,6 @@
       "hyperscaler": false,
       "country": "US",
       "note": ""
-    },
-    {
-      "platform": "IONOS",
-      "provider": "IONOS",
-      "model_count": 6,
-      "eu_hosted": true,
-      "non_us": true,
-      "eu_dedicated": false,
-      "hyperscaler": false,
-      "country": "Germany",
-      "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)."
     },
     {
       "platform": "Anthropic",
