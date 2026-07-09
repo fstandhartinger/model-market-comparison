@@ -115,23 +115,48 @@ export function clientData(ds: Dataset): ClientData {
   // Fable 5 despite Fable leading every AA capability index. At 25% it still counts without
   // dominating the general-capability signal.
   //
-  // Missing slots are IMPUTED (partial pooling): a gap is filled with the mean of (that
-  // slot's field average) and (the model's own average of the slots it does have). Plain
-  // "mean of present" is wrong — it lets a model carrying only the metrics it's strong on
-  // outrank one measured (and weaker) on a benchmark the first simply lacks. Shrinkage keeps
-  // missing data from inflating a score without unfairly sinking strong-but-partly-unbenchmarked models.
+  // RELIABILITY GATE: a DesignArena Elo is only counted toward the composite if the board
+  // has at least MIN_DA_BATTLES battles for that model. An Elo from a handful of matches has
+  // a huge confidence interval (~±40–50 Elo at ~170 battles) and shouldn't move a ranking —
+  // e.g. Fable 5's full-stack Elo rests on only 170 battles and, left in, dragged its
+  // composite down to a near-tie with Opus 4.8 despite Fable leading every AA index. The
+  // battle counts have a clean natural break (150/155/170 then ≥504), so 500 excludes exactly
+  // the statistically-unreliable boards. A model whose only DA data is below the gate is then
+  // treated as DA-absent and imputed (below), rather than penalized for thin arena data. The
+  // raw Elo is still SHOWN in the model detail — the gate only affects the composite.
+  const MIN_DA_BATTLES = 500;
+  const daBattles = new Map<string, { frontend: number | null; fullstack: number | null }>();
+  for (const m of ds.models) {
+    daBattles.set(m.id, {
+      frontend: m.designarena?.frontend?.battles ?? null,
+      fullstack: m.designarena?.fullstack?.battles ?? null,
+    });
+  }
+  const daReliable = (m: (typeof models)[number], board: "frontend" | "fullstack") =>
+    (daBattles.get(m.id)?.[board] ?? 0) >= MIN_DA_BATTLES;
+  // Effective DA Elo used for BOTH range-building and slot values: null unless the board
+  // clears the battle gate, so unreliable Elos never enter the normalization either.
+  const daEff = (m: (typeof models)[number], k: "designarena_frontend" | "designarena_fullstack") => {
+    const board = k === "designarena_frontend" ? "frontend" : "fullstack";
+    return daReliable(m, board) ? m.scores[k] : null;
+  };
   const metricKeys = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"] as const;
+  const isDa = (k: string): k is "designarena_frontend" | "designarena_fullstack" => k === "designarena_frontend" || k === "designarena_fullstack";
+  const rawScore = (m: (typeof models)[number], k: (typeof metricKeys)[number]) => (isDa(k) ? daEff(m, k) : m.scores[k]);
   const ranges: Record<string, { min: number; max: number; mean: number } | null> = {};
   for (const k of metricKeys) {
-    const vals = models.map((m) => m.scores[k]).filter((v): v is number => v != null);
+    const vals = models.map((m) => rawScore(m, k)).filter((v): v is number => v != null);
     ranges[k] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals), mean: vals.reduce((a, b) => a + b, 0) / vals.length } : null;
   }
   const normOf = (k: (typeof metricKeys)[number], v: number) => {
     const r = ranges[k]; if (!r) return null;
     return r.max > r.min ? ((v - r.min) / (r.max - r.min)) * 100 : 100;
   };
-  const nm = (m: (typeof models)[number], k: (typeof metricKeys)[number]) => (m.scores[k] != null ? normOf(k, m.scores[k] as number) : null);
-  // The four composite slots. `da` = average of whichever DesignArena boards a model is on.
+  const nm = (m: (typeof models)[number], k: (typeof metricKeys)[number]) => {
+    const v = rawScore(m, k);
+    return v != null ? normOf(k, v) : null;
+  };
+  // The four composite slots. `da` = average of whichever reliable DesignArena boards a model is on.
   const slots = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "da"] as const;
   const slotValue = (m: (typeof models)[number], slot: (typeof slots)[number]): number | null => {
     if (slot !== "da") return nm(m, slot as (typeof metricKeys)[number]);

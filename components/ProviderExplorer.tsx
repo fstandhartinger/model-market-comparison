@@ -1,6 +1,9 @@
 "use client";
 import { Fragment, useMemo, useState } from "react";
 import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
+import { useSettings } from "./SettingsContext";
+import { isHiddenModel, scoreOf } from "../lib/cost";
+import { preferredVariantIds } from "../lib/variants";
 
 const blended = (o: { input_per_1m: number | null; output_per_1m: number | null }) =>
   o.input_per_1m != null && o.output_per_1m != null ? (10 * o.input_per_1m + o.output_per_1m) / 11 : null;
@@ -11,16 +14,62 @@ const Badge = ({ children, cls }: { children: React.ReactNode; cls: string }) =>
 );
 
 export function ProviderExplorer({ data }: { data: ClientData }) {
+  const s = useSettings();
+  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+
+  // One representative model per family = the preferred (collapsed) variant, matching the
+  // main table. Used to read the family's featured flag / score for the global filters.
+  const modelByFamily = useMemo(() => {
+    const m = new Map<string, (typeof data.models)[number]>();
+    for (const mo of data.models) {
+      const isPref = !preferredId.has(mo.family_key) || preferredId.get(mo.family_key) === mo.id;
+      if (isPref) m.set(mo.family_key, mo);
+    }
+    for (const mo of data.models) if (!m.has(mo.family_key)) m.set(mo.family_key, mo);
+    return m;
+  }, [data.models, preferredId]);
+
+  // Families that pass the global filter bar (Featured, family set, hide GPT/Opus/Fable,
+  // min-score, TEE-only). The provider explorer's model list respects the same filters as
+  // every other tab, so selecting "Featured" here shows only featured models.
+  const familyAllowed = useMemo(() => {
+    const ok = new Set<string>();
+    for (const [fam, m] of modelByFamily) {
+      if (isHiddenModel(fam, s.hideGptOpus, s.hideFable)) continue;
+      if (s.featured && !m.featured) continue;
+      if (s.familySet && !s.familySet.has(fam)) continue;
+      const sc = scoreOf(m, s.score);
+      if (s.minScore > 0 && sc != null && sc < s.minScore) continue;
+      if (s.teeOnly && !(data.offersByFamily[fam] || []).some((o) => o.tee)) continue;
+      ok.add(fam);
+    }
+    return ok;
+  }, [modelByFamily, s.hideGptOpus, s.hideFable, s.featured, s.familySet, s.minScore, s.score, s.teeOnly, data.offersByFamily]);
+
+  // Per-provider model count over the FILTERED families (so the directory count matches the
+  // list you actually see when you click through).
+  const provCounts = useMemo(() => {
+    const c = new Map<string, number>();
+    for (const [fam, offers] of Object.entries(data.offersByFamily)) {
+      if (!familyAllowed.has(fam)) continue;
+      for (const k of new Set(offers.map((o) => o.key))) c.set(k, (c.get(k) ?? 0) + 1);
+    }
+    return c;
+  }, [data.offersByFamily, familyAllowed]);
+
   const providers = useMemo(
-    () => data.providers.filter((p) => p.model_count > 0),
-    [data.providers]
+    () => data.providers.map((p) => ({ ...p, model_count: provCounts.get(p.key) ?? 0 })).filter((p) => p.model_count > 0),
+    [data.providers, provCounts]
   );
-  const [sel, setSel] = useState(providers.slice().sort((a, b) => b.model_count - a.model_count)[0]?.key ?? "");
+  const [sel, setSel] = useState("");
   const [q, setQ] = useState("");
   const [pSort, setPSort] = useState<"models" | "name" | "eu">("models");
   const [sort, setSort] = useState<"price" | "score">("price");
   const [open, setOpen] = useState<Set<string>>(new Set());
-  const provider = providers.find((p) => p.key === sel);
+  // Fall back to the biggest provider when nothing is selected or the selection was filtered out.
+  const provider = providers.find((p) => p.key === sel)
+    ?? providers.slice().sort((a, b) => b.model_count - a.model_count)[0];
+  const activeKey = provider?.key ?? "";
 
   // Provider directory rows (left pane): filtered + sorted.
   const dir = useMemo(() => {
@@ -34,26 +83,21 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
     return r;
   }, [providers, q, pSort]);
 
-  const modelByFamily = useMemo(() => {
-    const m = new Map<string, (typeof data.models)[number]>();
-    for (const mo of data.models) if (!m.has(mo.family_key)) m.set(mo.family_key, mo);
-    return m;
-  }, [data.models]);
-
-  // Models the selected provider offers + the full cross-provider field for each.
+  // Models the selected provider offers (within the global filter) + the full cross-provider field.
   const rows = useMemo(() => {
-    if (!sel) return [];
+    if (!activeKey) return [];
     const out: { fam: string; name: string; org: string; score: number | null; mine: ClientOffer; ranked: ClientOffer[]; rank: number }[] = [];
     for (const [fam, offers] of Object.entries(data.offersByFamily)) {
-      const mine = offers.find((o) => o.key === sel);
+      if (!familyAllowed.has(fam)) continue;
+      const mine = offers.find((o) => o.key === activeKey);
       if (!mine) continue;
       const ranked = offers.filter((o) => blended(o) != null).sort((a, b) => (blended(a) as number) - (blended(b) as number));
       const mod = modelByFamily.get(fam);
-      out.push({ fam, name: mod?.family_name ?? fam, org: mod?.org ?? "", score: mod?.scores.composite ?? null, mine, ranked, rank: ranked.findIndex((o) => o.key === sel) });
+      out.push({ fam, name: mod?.family_name ?? fam, org: mod?.org ?? "", score: mod?.scores.composite ?? null, mine, ranked, rank: ranked.findIndex((o) => o.key === activeKey) });
     }
     out.sort((a, b) => sort === "price" ? (blended(a.mine) ?? Infinity) - (blended(b.mine) ?? Infinity) : (b.score ?? -1) - (a.score ?? -1));
     return out;
-  }, [sel, data.offersByFamily, modelByFamily, sort]);
+  }, [activeKey, data.offersByFamily, modelByFamily, familyAllowed, sort]);
 
   const toggle = (fam: string) => setOpen((s) => { const n = new Set(s); n.has(fam) ? n.delete(fam) : n.add(fam); return n; });
   const flags = (p: ProviderInfo) => (
@@ -89,7 +133,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
             <tbody>
               {dir.map((p) => (
                 <tr key={p.key} onClick={() => { setSel(p.key); setOpen(new Set()); }}
-                  className={`cursor-pointer ${p.key === sel ? "bg-accent/15" : "hover:bg-white/5"}`}>
+                  className={`cursor-pointer ${p.key === activeKey ? "bg-accent/15" : "hover:bg-white/5"}`}>
                   <td className="px-2 py-1.5">
                     <div className="font-medium">{p.provider}</div>
                     <div className="text-[10px] text-gray-500">{p.platform !== p.provider ? p.platform + " · " : ""}{p.country ?? "—"}</div>
@@ -148,14 +192,14 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                           <table className="w-full text-xs">
                             <tbody>
                               {r.ranked.map((o, i) => (
-                                <tr key={o.key} className={o.key === sel ? "bg-accent/10" : ""}>
+                                <tr key={o.key} className={o.key === activeKey ? "bg-accent/10" : ""}>
                                   <td className="px-2 py-1 text-gray-500">#{i + 1}</td>
                                   <td className="px-2 py-1 font-medium">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""}</span></td>
                                   <td className="px-2 py-1 text-gray-500">{o.region}</td>
                                   <td className="px-2 py-1 tabular text-right">{fmt(o.input_per_1m)} in</td>
                                   <td className="px-2 py-1 tabular text-right">{fmt(o.output_per_1m)} out</td>
                                   <td className="px-2 py-1 tabular text-right font-semibold">{fmt(blended(o))} blended</td>
-                                  <td className="px-2 py-1">{o.tee && <span className="rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}{o.key === sel && <span className="ml-1 text-[10px] text-accent">← selected</span>}</td>
+                                  <td className="px-2 py-1">{o.tee && <span className="rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}{o.key === activeKey && <span className="ml-1 text-[10px] text-accent">← selected</span>}</td>
                                 </tr>
                               ))}
                             </tbody>
