@@ -58,10 +58,19 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
     return c;
   }, [data.offersByFamily, familyAllowed]);
 
-  const providers = useMemo(
-    () => data.providers.map((p) => ({ ...p, model_count: provCounts.get(p.key) ?? 0 })).filter((p) => p.model_count > 0),
-    [data.providers, provCounts]
-  );
+  const [euOnly, setEuOnly] = useState(false);
+  const [inclDedicated, setInclDedicated] = useState(false);
+  const [showEmpty, setShowEmpty] = useState(false);
+
+  // Directory rows: recompute per-provider model_count over the filtered families, then apply
+  // the directory-local filters — EU hosting (optionally incl. EU-via-dedicated/BYOC) and the
+  // "keep providers with 0 matching models" toggle.
+  const providers = useMemo(() => {
+    let r = data.providers.map((p) => ({ ...p, model_count: provCounts.get(p.key) ?? 0 }));
+    if (euOnly) r = r.filter((p) => p.eu_hosted || (inclDedicated && p.eu_dedicated));
+    if (!showEmpty) r = r.filter((p) => p.model_count > 0);
+    return r;
+  }, [data.providers, provCounts, euOnly, inclDedicated, showEmpty]);
   const [sel, setSel] = useState("");
   const [q, setQ] = useState("");
   const [pSort, setPSort] = useState<"models" | "name" | "eu">("models");
@@ -123,6 +132,22 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
               {s === "models" ? "by #models" : s === "eu" ? "EU first" : "A–Z"}
             </button>
           ))}
+        </div>
+        <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
+          <label className="flex cursor-pointer items-center gap-1 text-gray-400">
+            <input type="checkbox" checked={euOnly} onChange={(e) => setEuOnly(e.target.checked)} className="accent-emerald-500" />
+            EU-hosted only
+          </label>
+          {euOnly && (
+            <label className="flex cursor-pointer items-center gap-1 text-gray-400">
+              <input type="checkbox" checked={inclDedicated} onChange={(e) => setInclDedicated(e.target.checked)} className="accent-emerald-500" />
+              ＋ incl. EU via dedicated/BYOC
+            </label>
+          )}
+          <label className="flex cursor-pointer items-center gap-1 text-gray-400">
+            <input type="checkbox" checked={showEmpty} onChange={(e) => setShowEmpty(e.target.checked)} className="accent-accent" />
+            Show providers with 0 matching models
+          </label>
         </div>
         <div className="card max-h-[70vh] overflow-y-auto p-0">
           <table className="dtable w-full text-sm">

@@ -45,6 +45,7 @@ export interface ProviderInfo {
   provider: string;
   model_count: number;
   eu_hosted?: boolean;
+  eu_dedicated?: boolean;
   non_us?: boolean;
   hyperscaler?: boolean;
   country?: string | null;
@@ -187,7 +188,7 @@ export function clientData(ds: Dataset): ClientData {
 
   const providers: ProviderInfo[] = ds.providers.map((p) => ({
     key: offerKey(p.platform, p.provider), platform: p.platform, provider: p.provider, model_count: p.model_count,
-    eu_hosted: (p as ProviderInfo).eu_hosted, non_us: (p as ProviderInfo).non_us, hyperscaler: (p as ProviderInfo).hyperscaler,
+    eu_hosted: (p as ProviderInfo).eu_hosted, eu_dedicated: (p as ProviderInfo).eu_dedicated, non_us: (p as ProviderInfo).non_us, hyperscaler: (p as ProviderInfo).hyperscaler,
     country: (p as ProviderInfo).country, note: (p as ProviderInfo).note, coming_soon: (p as ProviderInfo).coming_soon,
   }));
 
