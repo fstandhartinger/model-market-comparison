@@ -109,9 +109,15 @@ export function ModelFilter({
       </button>
       {open && (
         <div className="absolute z-20 mt-1 max-h-[60vh] w-80 overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
-          <div className="mb-2 flex items-center gap-2">
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search models…" className="flex-1 rounded border border-line bg-ink px-2 py-1 text-xs" />
-            <button onClick={() => setSelected(new Set())} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">Clear</button>
+          <button
+            onClick={() => setSelected(new Set())}
+            disabled={selected.size === 0}
+            className={`mb-2 w-full rounded-md border px-2 py-1.5 text-xs font-medium ${selected.size === 0 ? "cursor-default border-line text-gray-500" : "border-accent/60 bg-accent/15 text-accent hover:bg-accent/25"}`}
+            title="Reset to all models (clears the selection)">
+            {selected.size === 0 ? "✓ All models selected" : `↺ Select all models (clear ${selected.size} selected)`}
+          </button>
+          <div className="mb-2">
+            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search models…" className="w-full rounded border border-line bg-ink px-2 py-1 text-xs" />
           </div>
           <div className="grid grid-cols-1 gap-0.5">
             {shown.slice(0, 200).map((f) => (
