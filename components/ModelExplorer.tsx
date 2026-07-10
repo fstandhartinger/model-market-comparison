@@ -26,7 +26,6 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   const [sort, setSort] = useState<SortKey>("score");
   const [asc, setAsc] = useState(false);
   const [q, setQ] = useState("");
-  const [openFilter, setOpenFilter] = useState<"all" | "open" | "closed">("all");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
   const [hasProviderOnly, setHasProviderOnly] = useState(true);
   const [org, setOrg] = useState("");
@@ -49,7 +48,6 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     if (s.openOnly) r = r.filter((x) => x.m.open_weights);
     if (s.featured) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
-    if (openFilter !== "all") r = r.filter((x) => x.m.open_weights === (openFilter === "open"));
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
     if (withScoreOnly) r = r.filter((x) => x.sc != null);
@@ -69,7 +67,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, s.teeOnly, openFilter, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, s.teeOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);
@@ -90,9 +88,6 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
         <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
-        <select value={openFilter} onChange={(e) => setOpenFilter(e.target.value as "all" | "open" | "closed")} className="rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
-          <option value="all">All weights</option><option value="open">Open weights</option><option value="closed">Closed</option>
-        </select>
         <Toggle label="Has score" on={withScoreOnly} set={setWithScoreOnly} />
         <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
         <span className="ml-auto text-xs text-gray-500">{rows.length} models{allowed ? " · provider-filtered cost" : ""}</span>

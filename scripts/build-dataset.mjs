@@ -97,7 +97,7 @@ const TEE_OR_PROVIDERS = new Set(["Phala", "Venice"]);
 const EXCLUDE_RE = /(image|vision-only|\bvideo\b|sora|dall|whisper|\btts\b|speech|audio|embed|rerank|moderation|ocr|guard)/i;
 
 // The models the product brief explicitly asks us to feature.
-const FEATURED_RE = /^(gpt-5\.[45]|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
+const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
 
 // Canonicalize vendor names that arrive spelled differently across sources.
 const ORG_ALIASES = {

@@ -2,25 +2,9 @@
   "source": "Manual supplements",
   "collected_at": "2026-06-16",
   "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
-  "notes": "GLM 5.2 is now live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) so the earlier estimated offer was removed — it is sourced from openrouter.json. GLM 5.2 ships MIT open-weights (HuggingFace zai-org/GLM-5.2). As of 2026-06-16 it has no ArtificialAnalysis or DesignArena benchmark yet. Kimi K2.7 Coding has a DesignArena Full-Stack Elo but is not yet on ArtificialAnalysis.",
+  "notes": "GLM 5.2 is now live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) so the earlier estimated offer was removed — it is sourced from openrouter.json. GLM 5.2 ships MIT open-weights (HuggingFace zai-org/GLM-5.2). As of 2026-06-16 it has no ArtificialAnalysis or DesignArena benchmark yet. Kimi K2.7 Coding has a DesignArena Full-Stack Elo but is not yet on ArtificialAnalysis. | GPT-5.6 Sol/Terra/Luna hand-curated offers removed 2026-07-10 — now sourced live from OpenRouter + AA (ArtificialAnalysis added GPT-5.6 scores; OpenRouter added real per-token prices incl. Pro tiers).",
   "models": [],
-  "offers": [
-    {
-      "family_key": "gpt-5.6-sol", "source": "OpenAI API", "provider": "OpenAI", "platform": "OpenAI",
-      "input_per_1m": 5.0, "output_per_1m": 30.0, "region": "global", "unit": "per_1m_token",
-      "notes": "GPT-5.6 Sol — flagship tier (has 'Ultra' parallel-subagent + max-reasoning modes). Previewed 2026-06-26, GA 2026-07-09. First-party OpenAI list price. Not on OpenRouter/AA/DesignArena yet; model id expected gpt-5.6-sol (unconfirmed). Terminal-Bench 2.1: 88.8% (Ultra 91.9%). METR flagged eval-gaming — treat coding leadership cautiously."
-    },
-    {
-      "family_key": "gpt-5.6-terra", "source": "OpenAI API", "provider": "OpenAI", "platform": "OpenAI",
-      "input_per_1m": 2.5, "output_per_1m": 15.0, "region": "global", "unit": "per_1m_token",
-      "notes": "GPT-5.6 Terra — balanced/high-volume tier ('competitive with GPT-5.5 at 2x cheaper'). Previewed 2026-06-26, GA 2026-07-09. First-party list price; model id expected gpt-5.6-terra (unconfirmed). Terminal-Bench 2.1: 82.5%."
-    },
-    {
-      "family_key": "gpt-5.6-luna", "source": "OpenAI API", "provider": "OpenAI", "platform": "OpenAI",
-      "input_per_1m": 1.0, "output_per_1m": 6.0, "region": "global", "unit": "per_1m_token",
-      "notes": "GPT-5.6 Luna — fastest/cheapest tier. Previewed 2026-06-26, GA 2026-07-09. First-party list price; model id expected gpt-5.6-luna (unconfirmed). Terminal-Bench 2.1: 84.3%."
-    }
-  ],
+  "offers": [],
   "_benchmark_overrides_doc": "Optional list of documented corrections that override a benchmark value from a live source (each: {family_key, variant?, field, value, reason}). Use ONLY for confirmed source errors. Currently empty — GLM 5.2's Coding Index of 67 was verified against ArtificialAnalysis's own leaderboard (ranked #4, above Opus 4.8) and is correct.",
   "benchmark_overrides": []
 }
