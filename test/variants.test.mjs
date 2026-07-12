@@ -17,13 +17,15 @@ const model = (family_key, variant, agent, { composite = 50, coverage = agent ==
   composite_coverage: coverage,
 });
 
-test("collapse prefers a measured GPT effort for the selected score", () => {
+test("collapse picks the strongest measured GPT effort for the selected score", () => {
+  // The family is represented by its best measured configuration (like AA's
+  // Coding-Agent "max across harnesses") — not a static effort preference.
   const models = [
     model("gpt-5.5", "high", null),
     model("gpt-5.5", "medium", 70.5),
     model("gpt-5.5", "xhigh", 76.4),
   ];
-  assert.equal(variants.preferredVariantIds(models, "aa_coding_agent").get("gpt-5.5"), "gpt-5.5::medium");
+  assert.equal(variants.preferredVariantIds(models, "aa_coding_agent").get("gpt-5.5"), "gpt-5.5::xhigh");
 });
 
 test("collapse keeps DeepSeek Coding-Agent evidence instead of an unmeasured max row", () => {
@@ -67,13 +69,16 @@ test("collapsed representative fallback is deterministic and prefers a measured 
   }
 });
 
-test("deprecated rows are removed before choosing a collapsed representative", () => {
+test("hide-deprecated hides whole families, not individual variants", () => {
+  // AA deprecates individual effort rows when it re-benchmarks; a live family
+  // routinely keeps its strongest measurements on a deprecated row (GPT-5.4
+  // (xhigh)). Variants stay selectable as long as the FAMILY has any active row.
   const deprecatedReasoning = { ...model("mixed", "reasoning", 90), deprecated: true };
   const activeDefault = { ...model("mixed", "default", 70), deprecated: false };
   const hidden = variants.selectableModels([deprecatedReasoning, activeDefault], true);
 
-  assert.deepEqual(hidden.map((row) => row.id), ["mixed::default"]);
-  assert.equal(variants.preferredVariantIds(hidden, "aa_coding_agent").has("mixed"), false);
+  assert.deepEqual(hidden.map((row) => row.id).sort(), ["mixed::default", "mixed::reasoning"]);
+  assert.equal(variants.preferredVariantIds(hidden, "aa_coding_agent").get("mixed"), "mixed::reasoning");
 
   const shown = variants.selectableModels([deprecatedReasoning, activeDefault], false);
   assert.equal(variants.preferredVariantIds(shown, "aa_coding_agent").get("mixed"), "mixed::reasoning");

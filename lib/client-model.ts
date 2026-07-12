@@ -159,7 +159,55 @@ export function clientData(ds: Dataset): ClientData {
   // percentile. An evidence-free row receives 50 but keeps coverage 0 so it cannot
   // masquerade as a measured family representative.
   const rawById = new Map(ds.models.map((m) => [m.id, m]));
+  // FAMILY BACKFILL: benchmark sources attach to different effort rows of the same
+  // family (AA Coding/Intelligence on the flagship effort, Coding-Agent and DesignArena
+  // on an alias row like "GPT-5.4 (medium)"), so no single row sees the family's full
+  // evidence. A missing slot is therefore filled with the family's best REAL measurement
+  // of that slot before imputation — a real sibling measurement beats assuming the
+  // model's own mean percentile. Without this, whichever row represents a family is
+  // punished for the slots that happen to live on its siblings (GPT-5.4 ranked below its
+  // own mini/nano), and low-coverage rows game the imputation upward.
+  const famBest = new Map<string, { c: number | null; ca: number | null; i: number | null; df: { elo: number; battles: number | null } | null; ds: { elo: number; battles: number | null } | null }>();
+  for (const m of models) {
+    const raw = rawById.get(m.id);
+    const fb = famBest.get(m.family_key) ?? { c: null, ca: null, i: null, df: null, ds: null };
+    const better = (a: number | null, b: number | null) => (a == null ? b : b == null ? a : Math.max(a, b));
+    fb.c = better(fb.c, m.scores.aa_coding_index);
+    fb.ca = better(fb.ca, m.scores.aa_coding_agent);
+    fb.i = better(fb.i, m.scores.aa_intelligence_index);
+    const df = m.scores.designarena_frontend;
+    if (df != null && (fb.df == null || df > fb.df.elo)) fb.df = { elo: df, battles: raw?.designarena?.frontend?.battles ?? null };
+    const dsv = m.scores.designarena_fullstack;
+    if (dsv != null && (fb.ds == null || dsv > fb.ds.elo)) fb.ds = { elo: dsv, battles: raw?.designarena?.fullstack?.battles ?? null };
+    famBest.set(m.family_key, fb);
+  }
   const compositeInputs = models.map((m) => {
+    const raw = rawById.get(m.id);
+    const fb = famBest.get(m.family_key)!;
+    const ownDf = m.scores.designarena_frontend;
+    const ownDs = m.scores.designarena_fullstack;
+    return {
+      id: m.id,
+      scores: {
+        ...m.scores,
+        aa_coding_index: m.scores.aa_coding_index ?? fb.c,
+        aa_coding_agent: m.scores.aa_coding_agent ?? fb.ca,
+        aa_intelligence_index: m.scores.aa_intelligence_index ?? fb.i,
+        designarena_frontend: ownDf ?? fb.df?.elo ?? null,
+        designarena_fullstack: ownDs ?? fb.ds?.elo ?? null,
+      },
+      designarenaBattles: {
+        frontend: ownDf != null ? raw?.designarena?.frontend?.battles ?? null : fb.df?.battles ?? null,
+        fullstack: ownDs != null ? raw?.designarena?.fullstack?.battles ?? null : fb.ds?.battles ?? null,
+      },
+    };
+  });
+  const { scores: composites, baseScores } = computeCompositeScoreDetails(compositeInputs);
+  // Coverage counts a row's OWN measurements only (pre-backfill): backfilled slots make
+  // every sibling inherit the family maxima, so counting them would let a never-measured
+  // catalog row (e.g. a bare OpenRouter listing) pose as the family's measured
+  // representative and win the collapse pick.
+  const ownEvidenceInputs = models.map((m) => {
     const raw = rawById.get(m.id);
     return {
       id: m.id,
@@ -170,8 +218,7 @@ export function clientData(ds: Dataset): ClientData {
       },
     };
   });
-  const { scores: composites, baseScores } = computeCompositeScoreDetails(compositeInputs);
-  const coverage = new Map(compositeInputs.map((row) => [row.id, compositeEvidenceCount(row)]));
+  const coverage = new Map(ownEvidenceInputs.map((row) => [row.id, compositeEvidenceCount(row)]));
   for (const m of models) {
     m.scores.composite = composites.get(m.id) ?? 50;
     m.composite_base = baseScores.get(m.id) ?? 50;
