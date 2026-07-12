@@ -796,6 +796,12 @@ async function build() {
   for (const r of codingAgents.rows || []) {
     const sc = num(r.score);
     if (sc == null) continue;
+    // PARTIAL indices are not comparable: AA computes the Coding-Agent Index from a
+    // fixed set of component benchmarks; a row whose evalCount is below the component
+    // count (e.g. "Opus 4.6 (medium)" at 2/3) hasn't been run on every component. AA's
+    // own visible chart omits such rows — the RSC payload still carries them, and
+    // ingesting one gave Opus 4.6 a phantom 71.1 that outranked Opus 4.8 (medium).
+    if (r.complete === false) continue;
     const normalizedAgent = normalizeFamily(r.model_name);
     const codingAgentFamilyAliases = {
       // AA labels the Fable harness run by its documented Opus fallback path;
@@ -986,7 +992,8 @@ async function build() {
   }
 
   const attachedAgentResults = modelRows.reduce((sum, row) => sum + (row.coding_agent_results?.length || 0), 0);
-  const expectedAgentResults = (codingAgents.rows || []).filter((row) => num(row.score) != null).length;
+  // Partial rows (complete === false) are intentionally not ingested — see the filter above.
+  const expectedAgentResults = (codingAgents.rows || []).filter((row) => num(row.score) != null && row.complete !== false).length;
   if (attachedAgentResults !== expectedAgentResults) {
     throw new Error(`Coding Agent result loss: expected ${expectedAgentResults}, attached ${attachedAgentResults}`);
   }

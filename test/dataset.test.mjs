@@ -94,9 +94,12 @@ test("open-weights filter metadata excludes audited proprietary families", () =>
   assert.equal(isOpen("sonar"), false);
   assert.equal(isOpen("sonar-pro"), false);
   assert.equal(isOpen("palmyra-x5"), false);
-  for (const family of ["composer-2", "composer-2.5", "composer-2.5-fast", "raptor-mini", "grok-4.5"]) {
+  // composer-2 dropped out of the catalog when partial Coding-Agent rows (its only
+  // data point, 2/3 eval components) stopped being ingested.
+  for (const family of ["composer-2.5", "composer-2.5-fast", "raptor-mini", "grok-4.5"]) {
     assert.equal(isOpen(family), false, family);
   }
+  assert.equal(ds.models.some((model) => model.family_key === "composer-2"), false, "composer-2 only ever had a partial CA row");
   assert.equal(ds.models.some((model) => model.family_key === "yoda"), false, "registry alias yoda must join Grok 4.5");
 
   const grok = ds.models.filter((model) => model.family_key.startsWith("grok"));
@@ -510,9 +513,13 @@ test("canonical organizations are consistent across source aliases", () => {
   assert.ok(ds.models.filter((model) => model.family_key.startsWith("ui-tars-")).every((model) => model.org === "ByteDance Seed"));
 });
 
-test("every Coding Agent harness result is retained and the summary is its median", () => {
+test("every COMPLETE Coding Agent harness result is retained and the summary is its median", () => {
+  // Partial rows (complete === false, evalCount < indexComponentCount) are not
+  // comparable index values and are intentionally not ingested — AA's own visible
+  // chart omits them (e.g. "Opus 4.6 (medium)" at 2/3 components).
   const rows = ds.models.filter((model) => model.coding_agent_results?.length);
-  assert.equal(rows.reduce((sum, model) => sum + model.coding_agent_results.length, 0), codingAgents.rows.length);
+  const expected = codingAgents.rows.filter((row) => row.complete !== false).length;
+  assert.equal(rows.reduce((sum, model) => sum + model.coding_agent_results.length, 0), expected);
   for (const model of rows) {
     const tenths = model.coding_agent_results.map((result) => Math.round(result.score * 10)).sort((a, b) => a - b);
     const middle = Math.floor(tenths.length / 2);

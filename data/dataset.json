@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-12T15:40:29.708Z",
+  "generated_at": "2026-07-12T21:58:37.347Z",
   "counts": {
-    "models": 758,
-    "families": 600,
+    "models": 755,
+    "families": 599,
     "providers": 85,
-    "offers": 2368
+    "offers": 2349
   },
   "sources": {
     "openrouter": "2026-07-12",
@@ -101,8 +101,8 @@
         ]
       }
     ],
-    "coding_agent_results_input": 43,
-    "coding_agent_results_output": 43
+    "coding_agent_results_input": 39,
+    "coding_agent_results_output": 39
   },
   "models": [
     {
@@ -43710,7 +43710,20 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1131,
+          "winRate": 41.7,
+          "battles": 3819,
+          "modelId": "gpt-5.4"
+        },
+        "fullstack": {
+          "elo": 1082,
+          "winRate": 40.8,
+          "battles": 2166,
+          "modelId": "gpt-5.4"
+        }
+      },
       "copilot": {
         "multiplier": 6,
         "usd_per_request": 0.24,
@@ -43737,6 +43750,7 @@
         },
         "notes": "Legacy annual-plan multiplier."
       },
+      "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to gpt-5.4::xhigh, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
       "featured": true,
       "has_benchmark": true,
       "has_pricing": true
@@ -52170,7 +52184,20 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1260,
+          "winRate": 60.9,
+          "battles": 3097,
+          "modelId": "claude-opus-4-6"
+        },
+        "fullstack": {
+          "elo": 1284,
+          "winRate": 68.6,
+          "battles": 1529,
+          "modelId": "claude-opus-4-6"
+        }
+      },
       "copilot": {
         "multiplier": 27,
         "usd_per_request": 1.08,
@@ -52192,6 +52219,7 @@
         },
         "notes": "Legacy annual-plan multiplier."
       },
+      "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to claude-opus-4.6::max, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
       "featured": true,
       "has_benchmark": true,
       "has_pricing": true
@@ -70648,280 +70676,6 @@
       "has_pricing": true
     },
     {
-      "id": "claude-opus-4.6::medium",
-      "family_key": "claude-opus-4.6",
-      "family_name": "Claude Opus 4.6",
-      "display_name": "Opus 4.6 (medium)",
-      "org": "Anthropic",
-      "variant": "medium",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {
-        "aa_coding_agent_index": 71.1
-      },
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "AWS Bedrock",
-          "provider": "AWS Bedrock",
-          "platform": "AWS Bedrock",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "eu-central-1 (EU cross-region inference profile)",
-          "unit": "per_1m_token",
-          "notes": "Active standard on-demand Bedrock offer served through the documented EU Geo inference profile.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": true,
-          "non_us": false
-        },
-        {
-          "source": "Google Vertex AI",
-          "provider": "Google Vertex AI",
-          "platform": "Google Vertex AI",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Google Vertex AI",
-          "provider": "Google Vertex AI",
-          "platform": "Google Vertex AI",
-          "input_per_1m": 5.5,
-          "output_per_1m": 27.5,
-          "region": "europe-west1",
-          "unit": "per_1m_token",
-          "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.55; batch $2.75/$13.75.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": true,
-          "non_us": false
-        },
-        {
-          "source": "T-Systems LLM Hub",
-          "provider": "T-Systems LLM Hub",
-          "platform": "T-Systems LLM Hub",
-          "input_per_1m": 5.66,
-          "output_per_1m": 28.29,
-          "cache_read_per_1m": null,
-          "cache_write_per_1m": null,
-          "input_per_1m_eur": 4.95,
-          "output_per_1m_eur": 24.75,
-          "currency": "EUR",
-          "region": "eu",
-          "unit": "per_1m_token",
-          "notes": "",
-          "provider_model_id": null,
-          "context_length": null,
-          "catalog_status": "active",
-          "hosting_class": "routed_gcp_eu",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": true,
-          "non_us": true
-        },
-        {
-          "source": "Anthropic API / Claude Code",
-          "provider": "Anthropic",
-          "platform": "Anthropic",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "1M context at standard pricing. Fast mode was removed June 29, 2026; speed='fast' now runs and bills at standard speed and rates.",
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "internal_reasoning_per_1m": null,
-          "region": "eu",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "or_canonical_slug": "anthropic/claude-4.6-opus-20260205",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "google-vertex/europe",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": true,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "or_canonical_slug": "anthropic/claude-4.6-opus-20260205",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "amazon-bedrock/us-east-1",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "or_canonical_slug": "anthropic/claude-4.6-opus-20260205",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure/us-east-2",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "or_canonical_slug": "anthropic/claude-4.6-opus-20260205",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "anthropic/2",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "or_canonical_slug": "anthropic/claude-4.6-opus-20260205",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "google-vertex/global",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 25,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-opus-4.6",
-          "or_canonical_slug": "anthropic/claude-4.6-opus-20260205",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "anthropic",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1260,
-          "winRate": 60.9,
-          "battles": 3097,
-          "modelId": "claude-opus-4-6"
-        },
-        "fullstack": {
-          "elo": 1284,
-          "winRate": 68.6,
-          "battles": 1529,
-          "modelId": "claude-opus-4-6"
-        }
-      },
-      "copilot": {
-        "multiplier": 27,
-        "usd_per_request": 1.08,
-        "current": {
-          "input_per_1m": 5,
-          "cached_input_per_1m": 0.5,
-          "cache_write_per_1m": 6.25,
-          "output_per_1m": 25,
-          "release_status": "GA",
-          "category": "Powerful",
-          "long_context": null,
-          "promotion_ends_at": null,
-          "standard_pricing_from": null,
-          "standard_input_per_1m": null,
-          "standard_cached_input_per_1m": null,
-          "standard_cache_write_per_1m": null,
-          "standard_output_per_1m": null,
-          "notes": ""
-        },
-        "notes": "Legacy annual-plan multiplier."
-      },
-      "coding_agent_results": [
-        {
-          "harness": "Claude Code",
-          "score": 71.1,
-          "source_model_name": "Opus 4.6 (medium)"
-        }
-      ],
-      "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to claude-opus-4.6::medium, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
-      "featured": true,
-      "has_benchmark": true,
-      "has_pricing": true
-    },
-    {
       "id": "claude-opus-4.7::medium",
       "family_key": "claude-opus-4.7",
       "family_name": "Claude Opus 4.7",
@@ -71783,259 +71537,6 @@
       "featured": true,
       "has_benchmark": true,
       "has_pricing": true
-    },
-    {
-      "id": "gpt-5.4::medium",
-      "family_key": "gpt-5.4",
-      "family_name": "GPT 5.4",
-      "display_name": "GPT-5.4 (medium)",
-      "org": "OpenAI",
-      "variant": "medium",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {
-        "aa_coding_agent_index": 70
-      },
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "AWS Bedrock",
-          "provider": "AWS Bedrock",
-          "platform": "AWS Bedrock",
-          "input_per_1m": 2.75,
-          "output_per_1m": 16.5,
-          "region": "us-east-1",
-          "unit": "per_1m_token",
-          "notes": "Official Bedrock Mantle standard in-region price. Also available in us-east-2 and us-west-2; no EU region, Geo or Global inference profile. Cached input is $0.275/1M.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 2.5,
-          "output_per_1m": 15,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Global; DataZone EU in/out 2.75/16.5",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 2.75,
-          "output_per_1m": 16.5,
-          "region": "eu",
-          "unit": "per_1m_token",
-          "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": true,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.5,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.25,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.4",
-          "or_canonical_slug": "openai/gpt-5.4-20260305",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai",
-          "quantization": "unknown",
-          "context_length": 1050000,
-          "max_completion_tokens": 128000,
-          "status": -2,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 7.5,
-          "cache_read_per_1m": 0.125,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.4",
-          "or_canonical_slug": "openai/gpt-5.4-20260305",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai/flex",
-          "quantization": "unknown",
-          "context_length": 1050000,
-          "max_completion_tokens": 128000,
-          "status": -2,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 5,
-          "output_per_1m": 30,
-          "cache_read_per_1m": 0.5,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.4",
-          "or_canonical_slug": "openai/gpt-5.4-20260305",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai/priority",
-          "quantization": "unknown",
-          "context_length": 1050000,
-          "max_completion_tokens": 128000,
-          "status": -2,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.5,
-          "output_per_1m": 15,
-          "cache_read_per_1m": 0.25,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.4",
-          "or_canonical_slug": "openai/gpt-5.4-20260305",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure",
-          "quantization": "unknown",
-          "context_length": 1050000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.75,
-          "output_per_1m": 16.5,
-          "cache_read_per_1m": 0.275,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "eu",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.4",
-          "or_canonical_slug": "openai/gpt-5.4-20260305",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure/eu",
-          "quantization": "unknown",
-          "context_length": 1050000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": true,
-          "non_us": false
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1131,
-          "winRate": 41.7,
-          "battles": 3819,
-          "modelId": "gpt-5.4"
-        },
-        "fullstack": {
-          "elo": 1082,
-          "winRate": 40.8,
-          "battles": 2166,
-          "modelId": "gpt-5.4"
-        }
-      },
-      "copilot": {
-        "multiplier": 6,
-        "usd_per_request": 0.24,
-        "current": {
-          "input_per_1m": 2.5,
-          "cached_input_per_1m": 0.25,
-          "cache_write_per_1m": null,
-          "output_per_1m": 15,
-          "release_status": "GA",
-          "category": "Versatile",
-          "long_context": {
-            "threshold_input_tokens_gt": 272000,
-            "input_per_1m_usd": 5,
-            "cached_input_per_1m_usd": 0.5,
-            "output_per_1m_usd": 22.5
-          },
-          "promotion_ends_at": null,
-          "standard_pricing_from": null,
-          "standard_input_per_1m": null,
-          "standard_cached_input_per_1m": null,
-          "standard_cache_write_per_1m": null,
-          "standard_output_per_1m": null,
-          "notes": ""
-        },
-        "notes": "Legacy annual-plan multiplier."
-      },
-      "coding_agent_results": [
-        {
-          "harness": "Codex",
-          "score": 71.1,
-          "source_model_name": "GPT-5.4 (medium)"
-        },
-        {
-          "harness": "Cursor CLI",
-          "score": 68.8,
-          "source_model_name": "GPT-5.4 (medium)"
-        }
-      ],
-      "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to gpt-5.4::medium, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
-      "featured": true,
-      "has_benchmark": true,
-      "has_pricing": true
-    },
-    {
-      "id": "composer-2::default",
-      "family_key": "composer-2",
-      "family_name": "Composer 2",
-      "display_name": "Composer 2",
-      "org": "Cursor",
-      "variant": "default",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {
-        "aa_coding_agent_index": 66.8
-      },
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [],
-      "designarena": {},
-      "copilot": null,
-      "coding_agent_results": [
-        {
-          "harness": "Cursor CLI",
-          "score": 66.8,
-          "source_model_name": "Composer 2"
-        }
-      ],
-      "featured": false,
-      "has_benchmark": true,
-      "has_pricing": false
     },
     {
       "id": "composer-2.5::default",
