@@ -35,7 +35,7 @@ export DATABASE_URL=postgres://user:pass@host/db
 npm run db:seed       # creates tables + loads the snapshot (idempotent)
 ```
 
-The app reads Postgres when `DATABASE_URL` is set and falls back to the bundled snapshot otherwise. On the reference Render deployment the start command is `node scripts/seed-db.mjs; npm start`, so it seeds at boot (skipping if the snapshot is unchanged).
+The app reads Postgres when `DATABASE_URL` is set and falls back to the bundled snapshot otherwise. On the reference Render deployment `npm run db:seed` runs as the pre-deploy command, followed by `npm start`, so the new snapshot is loaded before traffic moves to the release.
 
 ## Refreshing the data
 
@@ -50,7 +50,8 @@ Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) and the AA Coding Agent In
 
 `render.yaml` provisions a Node web service + managed Postgres:
 - Build: `npm install && npm run build`
-- Start: `node scripts/seed-db.mjs; npm start`
+- Pre-deploy: `npm run db:seed`
+- Start: `npm start`
 - `DATABASE_URL` wired from the managed DB; `healthCheckPath: /api/health`.
 
 ## Hosting on Microsoft Azure

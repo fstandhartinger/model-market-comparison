@@ -1,57 +1,58 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-07-07 (76 text LLMs; 6,757 EU items fetched — comprehensive re-scrape;
-IDENTICAL to 2026-07-06: no additions, no price changes)
+**Last collected:** 2026-07-12 (90 offer rows; comprehensive Retail API and deployment-scope re-check)
 **Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
 
-**GLM 5.2 special-focus verdict (2026-07-07, re-check):** GLM 5.2 is **STILL NOT priced on
-Azure AI Foundry** — as of 2026-07-07 there is **no `FW GLM 5.2 Inp/Outp DZ Tokens` meter** in
-the Retail Prices API (zero substring hits for `GLM 5.2`/`GLM5.2` across
-productName/meterName/skuName/productId/skuId in the full 6,757-item EU pull). The `Azure
-Fireworks Models` GLM meters remain only **FW GLM 5** (Inp 0.0011/1K = 1.10/1M, Outp 0.00352/1K
-= 3.52/1M) and **FW GLM 5.1** (Inp 0.00154/1K = 1.54/1M, Outp 0.00484/1K = 4.84/1M) — unchanged
-from 2026-07-01. (Note: even the earlier "GA-listed-but-unpriced FW-GLM-5.2 catalog entry" is not
-observable via the priced Retail API; only priced meters are visible here.) GLM is present only
-as **GLM 5** and **GLM 5.1**, both via the `Azure Fireworks Models` partner catalog
-(Fireworks-on-Azure), DataZone-EU tier only. There is **no Microsoft-native / first-party Z.ai
-product**, and DataZone-EU is excluded by Microsoft from the EU Data Boundary, so these are
-effectively US/Fireworks-served. Also re-verified absent 2026-07-07: **Kimi K2.7, MiniMax M3,
-standalone DeepSeek V4** (only V4 Pro + V4 Flash exist first-party; V4 Pro also via Fireworks).
-Fireworks catalog unchanged (9 priced models): Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7,
-DeepSeek V3.2/V4-Pro, GPT OSS 120B. Also still absent 2026-07-07: MiMo, Qwen, Gemini, and any
-Anthropic Claude (Opus/Sonnet). Also still absent: Qwen, MiMo, and any Anthropic Claude (Opus/Sonnet), Gemini.
+**2026-07-12 result:** The Retail API now contains pay-per-token Fireworks meters for **GLM 5.2**
+(`$1.54/$4.84`, cached input `$0.15`, effective 2026-07-01), **Kimi K2.7 Code**
+(`$1.05/$4.40`, cached input `$0.21`, effective 2026-07-01), and **MiniMax 2.7**
+(`$0.33/$1.32`, cached input `$0.066`, effective 2026-06-01). The previous absence/BYO-only
+conclusions were stale and have been removed from the JSON.
+
+The current fetch must also query the separate product **`Azure Kimi`**. It is not matched by the
+old OpenAI/Models/AI Foundry filters. Azure Kimi is a native/direct product with separate Global
+and DZ meters, while similarly named rows under **`Azure Fireworks Models`** are partner-hosted
+offers with different prices. They are represented as distinct rows with explicit `(Azure Direct)`
+or `(Fireworks)` labels.
+
+**Hosting semantics:** `armRegionName=swedencentral` identifies the Azure resource/billing meter;
+it does not prove where inference runs. Global deployments are therefore stored as `region=global`.
+Fireworks documents only US deployment regions and explicitly excludes its inference from the Azure
+EU Data Boundary, so every Fireworks row is stored as `region=us, eu_hosted=false`. Only verified
+Europe Data Zone or regional deployments are represented as EU-hosted offer rows.
+
+GPT-5.6 Sol, Terra, and Luna are visible in the current Azure availability documentation, but the
+Retail Prices API still exposes no standard token meters for them. They are intentionally omitted
+rather than populated with OpenAI-direct prices that have not been confirmed as Azure prices.
 
 ## TL;DR refresh recipe (2026-06-17)
-Three paginated queries (USD), looping `NextPageLink`, over the six EU regions
+Four paginated query families (USD), looping `NextPageLink`, over the six EU resource regions
 `swedencentral, westeurope, francecentral, germanywestcentral, polandcentral, spaincentral`:
 
 ```
 $filter=contains(productName,'OpenAI') and (<six armRegionName eq ...>)
 $filter=contains(productName,'Models')  and (<six armRegionName eq ...>)
 $filter=contains(productName,'AI Foundry') and (<six armRegionName eq ...>)
+$filter=productName eq 'Azure Kimi' and (<six armRegionName eq ...>)
 ```
 
 That returns ~6,800 EU items. The model families live under these `productName`s:
 `Azure OpenAI`, `Azure OpenAI GPT5`, `Azure OpenAI Reasoning`, `Azure OpenAI OSS Models`,
 `Azure Deepseek Models`, `Azure Grok Models`, `Azure Llama Models`, `Azure Mistral Models`,
-`Azure Phi Models`, `Cohere Models`, `MAI Models`, and **`Azure Fireworks Models`** (NEW —
-this is where Kimi / GLM / MiniMax live, see below). Fetch + build scripts are kept in
+`Azure Phi Models`, `Cohere Models`, `MAI Models`, **`Azure Kimi`**, and
+**`Azure Fireworks Models`**. Fetch + build scripts are kept in
 `/tmp/fetch_azure.py` + `/tmp/build_azure.py` (regenerate from this doc — they cache raw
 items to `/tmp/azure_raw.json`).
 
-### Partner / open models are hosted via Fireworks (critical, NEW 2026)
-- **Kimi K2.5, Kimi K2.6, GLM 5, GLM 5.1, MiniMax M2.5, MiniMax 2.7** are offered ONLY
-  through the `Azure Fireworks Models` product (Fireworks-on-Azure). Meter pattern:
-  `FW <Model> Inp DZ Tokens` / `FW <Model> Outp DZ Tokens` (also `Cache Inp` = skip).
-  These have **DataZone EU tier only — no Global tier**. Prices identical across all 6 EU regions.
-- NOT found on Azure as of 2026-07-07 (re-verified, zero substring hits in all fields):
-  Kimi K2.7, GLM 5.2, MiniMax M3/MiniMax 3, MiMo (any), Qwen (any), and any Anthropic
-  Claude (Opus/Sonnet/Anthropic — incl. Claude Sonnet 5 released 2026-06-30;
-  Claude remains absent from Azure Foundry, confirming Anthropic is still not on Azure).
-  The Fireworks catalog is unchanged from 2026-06-17:
-  Kimi K2.5/K2.6, GLM 5/5.1, MiniMax M2.5/2.7, DeepSeek V3.2/V4-Pro, GPT OSS 120B only.
-- DeepSeek V4 Pro / V3.2 exist BOTH first-party (`Azure Deepseek Models`, has Global tier)
-  AND via Fireworks (DataZone-only); both are listed (Fireworks ones suffixed "(Fireworks)").
+### Fireworks partner offers versus Azure Direct
+- Fireworks rows are identified by `productName = Azure Fireworks Models` and `FW ...` meters.
+  The `DZ` text in those billing meter names must not be interpreted as EU residency: Microsoft's
+  Fireworks deployment guide lists only US regions and excludes the service from the EU Data Boundary.
+- Native Kimi rows come from `productName = Azure Kimi`; never pair these meters with Fireworks
+  input/output meters. Native Global prices are K2 Thinking `$0.60/$2.50`, K2.5 `$0.60/$3.00`,
+  K2.6 `$0.95/$4.00`, and K2.7 Code `$0.95/$4.00`.
+- DeepSeek V4 Pro and V3.2 likewise exist as Azure Direct Global offers and as distinct Fireworks
+  partner alternatives. Keep the `(Fireworks)` suffix and US hosting metadata on the latter.
 
 ## 1. The API
 
@@ -102,16 +103,18 @@ Prices are encoded in `meterName`, not in a clean model field. Abbreviations:
 | `regnl` / `regnl` | Regional deployment tier |
 | `LongCo` / `longco` | long-context tier (GPT-5.4/5.5) |
 | `ShortCo` | short-context tier = the **default** GPT-5.5 tier |
-| `FW ...` | **Fireworks-hosted** model (Kimi/GLM/MiniMax/DeepSeek). `DZ` = DataZone EU, the ONLY tier offered |
+| `FW ...` | **Fireworks-hosted** model. `DZ` is part of the billing-meter label; it does **not** override Fireworks' documented US-only inference scope or EU Data Boundary exclusion. |
 | `Cache` / `Ch ` | cached input — skip for standard price |
 
 Unit is in `unitOfMeasure`: `1M` (already per-million) or `1K` (multiply by 1000 to get per-million).
 
 ### Tier choice for this dataset
-We use the **Global** tier list price (`Gl`/`glbl`). Global prices are identical
-across all EU regions and are the headline numbers. **Data Zone (EU)** prices
-(`Dz`/`DZone`) are ~10% higher (EU data-residency premium) and noted in the model
-`notes` where relevant. We exclude cached (`cd`/`cchd`), batch, and PP/priority meters.
+Deployment tiers are separate offers. Global list-price rows use `region=global` and do
+not qualify as EU-hosted. A Data Zone meter becomes an `region=eu` row only when the
+current model availability documentation confirms Europe Data Zone deployment. Regional
+meters retain their real Azure region. Fireworks rows always use `region=us` and
+`eu_hosted=false`. Cached (`cd`/`cchd`), batch, and PP/priority meters are excluded from
+the primary input/output values; useful cache prices may be retained in notes.
 
 ### Example meters
 ```
@@ -126,39 +129,48 @@ across all EU regions and are the headline numbers. **Data Zone (EU)** prices
 ## 3. Normalization
 - All prices → **USD per 1,000,000 tokens**, input and output separate.
 - `1K` meters multiplied by 1000.
-- When picking a region for a meter, prefer order: swedencentral, westeurope,
-  francecentral, germanywestcentral, polandcentral, spaincentral. The Global-tier
-  retail price is region-independent so the chosen region label is informational.
+- When deduplicating replicated billing meters, prefer order: swedencentral, westeurope,
+  francecentral, germanywestcentral, polandcentral, spaincentral. Never copy that billing
+  region into the offer's inference `region`; derive the latter from deployment scope.
 
 ## 4. EU region caveats
 - **Phi** models are only metered in `swedencentral` (no Global tier). Region-locked.
-- OpenAI / partner models have a 3-tier model: **Global** (cheapest, no data residency),
-  **Data Zone EU** (~+10%, EU residency), **Regional** (highest, single-region). EU
-  customers most often deploy Global or Data Zone EU. We list Global; EU Data Zone
-  noted inline.
+- OpenAI and Azure Direct partner models may expose **Global**, **Data Zone EU**, and
+  **Regional** tiers. Global has no EU processing guarantee. The JSON stores verified EU
+  Data Zone offers separately so filtering does not confuse an EU billing resource with
+  EU inference.
+- Native Azure Kimi has DZ Retail meters, but the current Europe Data Zone availability
+  table does not yet list those Kimi deployments. The prices are documented in notes,
+  while the offers remain non-EU until Microsoft documents deployment availability.
+- The same conservative rule applies to current Grok, DeepSeek, and Cohere Command A Plus
+  DZ meters: the Europe Data Zone table does not list these deployments as of 2026-07-12.
+  They remain Global rows; a billing meter alone is not evidence of EU processing.
+- **Fireworks is not an EU tier.** Its inference is outside the EU Data Boundary and only
+  documented in US deployment regions, even when a replicated meter was fetched through
+  an EU resource region.
 - `Cognitive Services` serviceName filter is dead — always filter on `productName`.
 
 ## 5. Re-run
-The build pulls three `contains(productName,...)` queries for the six main EU regions,
+The build pulls the three broad `contains(productName,...)` queries plus the exact
+`productName eq 'Azure Kimi'` query for the six main EU resource regions,
 caches to `/tmp/azure_raw.json`, decodes meter names, pairs input+output per model
-(preferring Global tier; Fireworks + Phi are tier-locked), converts to per-1M, and writes
+within the same product and deployment tier, converts to per-1M, and writes
 `azure-foundry.json`. To refresh: re-run the fetch + build scripts (fetch loops
-`NextPageLink`; ~6,800 EU items as of 2026-06-17).
+`NextPageLink`).
 
 Things to watch for on the next refresh:
 - New GPT version prefixes (`5.6`, etc.) in `Azure OpenAI GPT5`. As of 2026-06-23 the GPT5
   product spans 5 / 5.1 / 5.2 / 5.3 / 5.4 / 5.5 (incl. codex/chat/mini/nano/pro variants) plus
   `chat-latest` rolling meters dated 05052026 and 05282026 (both 5.0/30.0 Global).
-- New rows under `Azure Fireworks Models` (Kimi K2.7, GLM 5.2, MiniMax M3, MiMo, Qwen —
-  none present 2026-06-23 but this is the product they would appear under).
+- New rows under `Azure Fireworks Models` (MiniMax M3, MiMo, Qwen). Kimi K2.7 and GLM 5.2
+  are already present as of 2026-07-01 meters.
 - Any new `Azure <Vendor> Models` productName (e.g. an Anthropic product — none today).
 - Verify a known anchor after each run: `GPT 5 Inpt Glbl 1M Tokens` must be 1.25 /1M and
   `V4 Pro Inp glbl Tokens` must be 0.00174 /1K (= 1.74 /1M).
 
-## 6. EU vs US note (2026-06-17)
-Azure **Global**-tier list prices are region-independent (same in EU and US). The EU
-**DataZone** tier carries a residency premium (typically ~+10% on OpenAI/Grok; noted
-inline per model). Fireworks-hosted models (Kimi/GLM/MiniMax) ship DataZone-EU-only and
-priced identically across all six EU regions; there is no separate cheaper Global tier for
-them. Phi is regional (swedencentral) only. So for EU deployment the numbers in this file
-are accurate as-is; US customers on Global tier pay the same Global prices.
+## 6. EU versus Global versus Fireworks
+Azure **Global** list prices can be replicated across EU resource regions without gaining
+data residency; these rows remain `global`. Verified **Europe Data Zone** offers carry a
+residency premium and are separate `eu` rows. **Fireworks** is a partner backend with US-only
+deployment and an explicit EU Data Boundary exclusion, so its `DZ`-named Retail meters are
+never treated as EU-hosted. Phi remains a genuine regional `swedencentral` offer.

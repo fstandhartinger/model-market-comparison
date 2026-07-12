@@ -3,9 +3,10 @@ import { useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
+import { rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
+import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
 
 type Mode = "all" | "model";
 
@@ -22,36 +23,41 @@ interface Row {
 export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
+  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
   const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
   const [modelQ, setModelQ] = useState("");
 
-  const eligible = (m: { family_key: string; open_weights: boolean; scores: Record<string, number | null> }) => {
+  const eligible = (m: { family_key: string; open_weights: boolean; featured: boolean; scores: Record<string, number | null> }) => {
     if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
     if (s.openOnly && !m.open_weights) return false;
+    if (s.featured && !m.featured) return false;
     if (s.familySet && !s.familySet.has(m.family_key)) return false;
-    if (s.minScore > 0 && m.scores[score] != null && (m.scores[score] as number) < s.minScore) return false;
+    if (s.minScore > 0 && (m.scores[score] == null || (m.scores[score] as number) < s.minScore)) return false;
     return true;
   };
 
   // models eligible for the peer set
   const peerModels = useMemo(() => {
     const fams = new Map<string, { family_key: string }>();
-    for (const m of data.models) {
+    const candidates = s.collapse ? collapseModels(data.models, preferredId) : data.models;
+    for (const m of candidates) {
       if (scorePeersOnly && m.scores[score] == null) continue;
       if (!eligible(m)) continue;
+      if (!rankedOffers(data.offersByFamily[m.family_key], offerScope).length) continue;
       if (!fams.has(m.family_key)) fams.set(m.family_key, { family_key: m.family_key });
     }
     return [...fams.values()];
-  }, [data, score, scorePeersOnly, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
+  }, [data, score, scorePeersOnly, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
 
   const modelOptions = useMemo(
-    () => data.models.filter((m) => rankedOffers(data.offersByFamily[m.family_key], allowed).length)
+    () => (s.collapse ? collapseModels(data.models, preferredId) : data.models)
+      .filter((m) => rankedOffers(data.offersByFamily[m.family_key], offerScope).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, score, allowed, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
+    [data, score, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];
@@ -73,7 +79,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
     };
     // aggregate across peer-set families
     for (const fam of peerModels) {
-      const ranked = rankedOffers(data.offersByFamily[fam.family_key], allowed);
+      const ranked = rankedOffers(data.offersByFamily[fam.family_key], offerScope);
       ranked.forEach((o, idx) => {
         const a = ensure(o.key, o.platform, o.provider);
         a.ranks.push(idx + 1);
@@ -81,7 +87,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
       });
     }
     // single-model ranking
-    const modelRanked = selectedModel ? rankedOffers(data.offersByFamily[selectedModel.family_key], allowed) : [];
+    const modelRanked = selectedModel ? rankedOffers(data.offersByFamily[selectedModel.family_key], offerScope) : [];
     const modelRankByKey = new Map<string, { rank: number; price: number }>();
     modelRanked.forEach((o, i) => modelRankByKey.set(o.key, { rank: i + 1, price: o.blended }));
 
@@ -104,10 +110,9 @@ export function ProvidersView({ data }: { data: ClientData }) {
     if (mode === "model") out.sort((x, y) => (x.model_price ?? Infinity) - (y.model_price ?? Infinity));
     else out.sort((x, y) => (x.avg_rank ?? Infinity) - (y.avg_rank ?? Infinity));
     return out;
-  }, [data, peerModels, selectedModel, mode, allowed]);
+  }, [data, peerModels, selectedModel, mode, offerScope]);
 
   let shown = mode === "model" ? rows.filter((r) => r.model_price != null) : rows.filter((r) => r.models_offered > 0);
-  if (s.excludedSet) shown = shown.filter((r) => !s.excludedSet!.has(r.key));
   const maxAvgRank = Math.max(1, ...shown.map((r) => r.avg_rank ?? 0));
   const maxAvgPrice = Math.max(1, ...shown.map((r) => r.avg_price ?? 0));
   const maxModelPrice = Math.max(1, ...shown.map((r) => r.model_price ?? 0));
@@ -167,7 +172,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
               return (
                 <tr key={m.id} onClick={() => setModelId(m.id)} className={`cursor-pointer ${active ? "bg-accent/15" : ""}`}>
                   <td className="px-3 py-2 truncate">
-                    <span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{m.display_name}</span>
+                    <span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{collapsedName(m, s.collapse, preferredId)}</span>
                     {m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}
                   </td>
                   <td className="px-3 py-2">
@@ -194,7 +199,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
           </select>
         </span>
         {mode === "model" ? (
-          <span className="text-sm text-gray-400">Selected: <b className="text-gray-200">{selectedModel?.display_name ?? "—"}</b></span>
+          <span className="text-sm text-gray-400">Selected: <b className="text-gray-200">{selectedModel ? collapsedName(selectedModel, s.collapse, preferredId) : "—"}</b></span>
         ) : (
           <>
             <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>

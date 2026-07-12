@@ -1,9 +1,9 @@
 {
   "source": "Nebius",
-  "region": "eu (Finland/France)",
-  "collected_at": "2026-07-06",
+  "region": "mixed (eu-north1 / us-central1 / uk-south1)",
+  "collected_at": "2026-07-12",
   "listing_url": "https://tokenfactory.nebius.com/models",
-  "method": "agent-browser (headless Chromium, --session nebius) rendered the public Token Factory model catalog (JS SPA at tokenfactory.nebius.com/models, redirects to /endpoints) and read document.body.innerText. Parsed each card's In/Out USD per 1M tokens (Base tier), and served region. Anonymous header showed All 25 / Private 0 / Public 25. Embedding model (Qwen3-Embedding-8B, $0.01/1M In only, no output price) omitted, leaving 24 text/vision models. region:'eu' set only for eu-north1-served models; us-central1-served flagged region:'us', uk-south1-served flagged region:'uk', with the raw served region kept in notes. Fresh pull 2026-07-06: catalog unchanged at 25 endpoints; GLM-5.2 still serves from us-central1 at $1.40 In / $4.40 Out. ALL Base-tier prices identical to the 2026-07-01 snapshot (no changes).",
+  "method": "Nebius' unauthenticated structured catalog API https://tokenfactory.nebius.com/api/public/models_info (cross-checked against its Markdown view at /api/public/models_info.md). Parsed flavors[].input_price_per_million_tokens / output_price_per_million_tokens and flavors[].regions. The 2026-07-12 catalog has 26 public models; embedding-only Qwen3-Embedding-8B ($0.01/1M input, no text output price) is omitted, leaving 25 text/vision models. region:'eu' is used only for eu-north1; us-central1 is 'us' and uk-south1 is 'uk'. New since 2026-07-06: MiniMax-M3 at $0.30/$1.20 in us-central1. All previously tracked prices and regions are unchanged.",
   "models": [
     {
       "model_name": "Kimi K2.7 Code",
@@ -84,6 +84,14 @@
       "output_per_1m_usd": 1.2,
       "region": "us",
       "notes": "tier: Base; served region: us-central1; agentic coding; id MiniMax-M2.5"
+    },
+    {
+      "model_name": "MiniMax M3",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 1.2,
+      "region": "us",
+      "notes": "tier: Base; served region: us-central1; id MiniMaxAI/MiniMax-M3; 1,048,576 context; added 2026-07-10"
     },
     {
       "model_name": "Nemotron 3 Super 120B",

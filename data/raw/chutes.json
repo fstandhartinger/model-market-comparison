@@ -1,7 +1,7 @@
 {
-  "source": "Chutes — llm.chutes.ai/v1/models (first-party)",
-  "collected_at": "2026-06-22",
-  "method": "GET https://llm.chutes.ai/v1/models. This endpoint lists Chutes' confidential-compute (TEE) catalogue; every model carries confidential_compute:true and runs in a Trusted Execution Environment (Intel TDX CPU + NVIDIA H100/H200 confidential computing). Prices are price.input.usd / price.output.usd, already per 1M tokens. model_name is the base model (vendor prefix and -TEE/-FP8 quant suffixes stripped) so offers attach to the existing model families.",
+  "source": "Chutes — llm.chutes.ai/v1/models and api.chutes.ai/chutes/{chute_id} (first-party)",
+  "collected_at": "2026-07-12",
+  "method": "GET https://llm.chutes.ai/v1/models on 2026-07-12 returned 13 live models. Each catalog price.input.usd / price.output.usd value was cross-checked against the corresponding first-party Chute metadata at GET https://api.chutes.ai/chutes/{chute_id}, current_estimated_price.per_million_tokens.input.usd / output.usd. All values matched exactly and are USD per 1M tokens. Every live entry carries confidential_compute:true and an -TEE model id. model_name is the base model (vendor prefix and serving/quantization suffixes such as -TEE, -FP8, and -turbo stripped where needed) so offers attach to the existing model families.",
   "models": [
     { "model_name": "Qwen3-32B", "provider_org": "Alibaba", "input_per_1m_usd": 0.104, "output_per_1m_usd": 0.416, "context_length": 40960, "confidential_compute": true, "tee_model_id": "Qwen/Qwen3-32B-TEE" },
     { "model_name": "gemma-4-31B", "provider_org": "Google", "input_per_1m_usd": 0.12, "output_per_1m_usd": 0.37, "context_length": 131072, "confidential_compute": true, "tee_model_id": "google/gemma-4-31B-turbo-TEE" },

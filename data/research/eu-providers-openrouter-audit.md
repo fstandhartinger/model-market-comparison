@@ -32,7 +32,7 @@
 | **Nvidia NIM** | 🇺🇸 US | **Yes via self-hosted NIM** on EU infra; DGX Lepton EU providers | Self-host = customer-controlled (EULA/DPA) | **TEE** (H100/H200 confidential GPU), self-host residency | GLM 5.1, DeepSeek V4, MiniMax M2.7, Qwen3-Coder-480B, Llama 4 Maverick, Mistral Large 3 | self-host (AI Enterprise ~$4.5k/GPU/yr) | **EU-region (self-host) + strong-conf** (hosted build.nvidia.com disclaims GDPR data) |
 | **Chutes** | unknown (decentralized; Rayon Labs) | EU hosting regions exist; **LLM-API pin unverified** | self-claim GDPR; no ISO/SOC2 found | **TEE** (Intel TDX + NVIDIA CC), optional E2EE, effective ZDR/no-train | GLM 5.1/5, Kimi K2.5/6, MiniMax M2.5, Qwen3.5/3.6, Gemma 4 (broader likely) | unknown (sub tiers $10/$20-mo) | **EU-region (unverified) + strong-conf** |
 | **Phala / RedPill** | ambiguous (US/SG, decentralized) | **None** (US/India TEE nodes) | SOC 2 I (Trust Center); RedPill marketing claims more (unverified) | **Best-in-class TEE** (Intel TDX + NVIDIA confidential GPU, dual attestation) | GLM 5.1, Kimi K2.5/6, DeepSeek V3/R1, MiniMax M2.5, Qwen3, gpt-oss | gpt-oss-120b 0.15→0.60 | **NON-EU + strong-conf** (no EU node) |
-| **Venice AI** | 🇺🇸 US | **None** (by design) | None published | **ZDR default**, no-train, **TEE** (NEAR/Phala e2ee models) | GLM 5.1/5.2, Kimi K2.5/6/7, DeepSeek V4 Pro/V3.2, MiniMax M2.5/M2.7/M3, Qwen3 Coder-480B/235B/Next-80B, gpt-oss, MiMo | Kimi K2.6 ~0.85→4.66 | **NON-EU + strong-conf** (broad catalog, privacy-first) |
+| **Venice AI** | 🇺🇸 US | **None** (by design) | None published | **ZDR default**, no-train; some routed models reference NEAR/Phala, but no provider-wide attested TEE guarantee | GLM 5.1/5.2, Kimi K2.5/6/7, DeepSeek V4 Pro/V3.2, MiniMax M2.5/M2.7/M3, Qwen3 Coder-480B/235B/Next-80B, gpt-oss, MiMo | Kimi K2.6 ~0.85→4.66 | **NON-EU + privacy-first** (broad catalog; current offers not marked TEE) |
 | **DeepInfra** | 🇺🇸 US | None (US DCs only) | SOC 2 I, ISO 27001 (Trust Center 403'd) | **ZDR default**, no-train | Broadest: GLM 5.1/5.2, Kimi K2.5/6/7, DeepSeek V4 Pro/V3.2/R1, MiniMax M2.5/7, Qwen3 all, Llama 4 M/S, gpt-oss, MiMo | gpt-oss-120b 0.039→0.19 | **NON-EU + strong-conf** |
 | **Cerebras** | 🇺🇸 US | Emerging (France DC ~Q4'25; self-pin unconfirmed) | SOC 2 II, GDPR, DPA (no ISO) | No-train, default-ish ZDR | Qwen3-Coder-480B/235B, gpt-oss-120b, GLM-4.7, Llama 4 Maverick | gpt-oss-120b ~0.39 | **NON-EU (watchlist: France DC)** |
 | **DigitalOcean** (Gradient) | 🇺🇸 US | **None for inference** (EU on roadmap); has EU DCs for other products | SOC 2 II/3, ISO 27001 (facilities), DPA+SCC | ZDR sync, no-train | GLM 5, Kimi K2.5/6, DeepSeek V4 Pro/Flash/V3.2, MiniMax M2.5, Llama 4 Maverick, gpt-oss, **MiMo V2.5/Pro** | GLM 5 1.00→3.20 | **NON-EU (inference)** |
@@ -240,7 +240,7 @@
 
 ### Strong-confidentiality but NON-EU (privacy without residency)
 - **Phala / RedPill** — best-in-class TEE (Intel TDX + NVIDIA confidential GPU, dual attestation) but **no EU node** (US/India). Compliance-cert claims are RedPill marketing not substantiated by Phala's Trust Center (only SOC 2 I). `https://api.redpill.ai/v1`.
-- **Venice AI** — privacy-first (ZDR default, no-train, TEE via NEAR/Phala e2ee models), very broad open-model catalog incl. MiMo, but **no EU residency by design** (decentralized GPU pool). `https://api.venice.ai/api/v1`.
+- **Venice AI** — privacy-first (ZDR default, no-train), very broad open-model catalog incl. MiMo, but **no EU residency by design** (decentralized GPU pool). Some routes reference NEAR/Phala confidentiality, but this is not a provider-wide attested-TEE guarantee, so current Venice offers are not marked TEE. `https://api.venice.ai/api/v1`.
 - **DeepInfra** — cheapest + broadest catalog, ZDR default + no-train, but **US DCs only**. `https://api.deepinfra.com/v1/openai`.
 - **Friendli** — default ZDR + no-train, SOC 2 II + HIPAA, strong DeepSeek/GLM coverage, but no documented EU region. `https://api.friendli.ai/serverless/v1`.
 - **Chutes** — TEE (Intel TDX + NVIDIA CC) + optional post-quantum E2EE, EU hosting regions exist but **LLM-API EU-pinning unverified**; no ISO/SOC2 found. `https://llm.chutes.ai/v1`.
@@ -284,7 +284,7 @@
 
 **Small EU-HQ players to validate:** **NextBit** (ES), **Inceptron** (SE).
 
-**Confidentiality-first but NOT EU** (use if privacy/TEE matters more than residency): **Phala/RedPill**, **Venice**, **Chutes**, **DeepInfra**, **Friendli**.
+**Confidentiality/privacy-first but NOT EU** (capabilities differ; only exact attested offers receive the TEE flag): **Phala/RedPill**, **Venice**, **Chutes**, **DeepInfra**, **Friendli**.
 
 **Exclude for EU residency:** all Chinese first-parties, US-only providers, and the DePIN networks (Io Net, AkashML) — see exclusion table above.
 

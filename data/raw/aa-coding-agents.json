@@ -1,19 +1,20 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
-  "collected_at": "2026-07-06",
+  "collected_at": "2026-07-12",
   "endpoint": "https://artificialanalysis.ai/ (homepage) — data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. Not in the v2 API.",
   "method": "curl the homepage HTML, locate the escaped JSON `\\\"rows\\\":[` token in the RSC payload (immediately after the escaped title 'Artificial Analysis Coding Agent Index'), unescape JS string escapes (\\\" -> \"), bracket-match the clean JSON to isolate the array, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1).",
   "score_scale": "0-1",
+  "count": 43,
   "rows": [
     {
       "model_name": "Qwen3.7 Plus (thinking)",
       "harness": "Claude Code",
-      "score": 0.5187857331965647
+      "score": 0.520108484519316
     },
     {
       "model_name": "Fable 5 (max) (with fallback)",
       "harness": "Claude Code",
-      "score": 0.7718342762598047
+      "score": 0.7718342762598043
     },
     {
       "model_name": "Opus 4.6 (medium)",
@@ -43,12 +44,12 @@
     {
       "model_name": "Sonnet 4.6 (medium)",
       "harness": "Claude Code",
-      "score": 0.5409274235870386
+      "score": 0.54225017490979
     },
     {
       "model_name": "DeepSeek V4 Pro (high)",
       "harness": "Claude Code",
-      "score": 0.4699593794521551
+      "score": 0.4726048820976578
     },
     {
       "model_name": "GLM-5.1",
@@ -58,12 +59,12 @@
     {
       "model_name": "Kimi K2.6",
       "harness": "Claude Code",
-      "score": 0.46869496288215534
+      "score": 0.4700177142049067
     },
     {
       "model_name": "GLM-5.2",
       "harness": "Claude Code",
-      "score": 0.5767008439528807
+      "score": 0.5794443281778461
     },
     {
       "model_name": "GPT-5.4 (medium)",
@@ -81,14 +82,104 @@
       "score": 0.7642065796509268
     },
     {
+      "model_name": "GPT-5.6 Sol (high)",
+      "harness": "Codex",
+      "score": 0.7709353469992464
+    },
+    {
+      "model_name": "GPT-5.6 Sol (low)",
+      "harness": "Codex",
+      "score": 0.690522701295337
+    },
+    {
+      "model_name": "GPT-5.6 Sol (max)",
+      "harness": "Codex",
+      "score": 0.80022722954059
+    },
+    {
+      "model_name": "GPT-5.6 Sol (medium)",
+      "harness": "Codex",
+      "score": 0.7459643585471714
+    },
+    {
+      "model_name": "GPT-5.6 Sol (none)",
+      "harness": "Codex",
+      "score": 0.5841442300952927
+    },
+    {
+      "model_name": "GPT-5.6 Sol (xhigh)",
+      "harness": "Codex",
+      "score": 0.7866380685179897
+    },
+    {
+      "model_name": "GPT-5.6 Terra (high)",
+      "harness": "Codex",
+      "score": 0.7175671912212057
+    },
+    {
+      "model_name": "GPT-5.6 Terra (low)",
+      "harness": "Codex",
+      "score": 0.538113224421773
+    },
+    {
+      "model_name": "GPT-5.6 Terra (max)",
+      "harness": "Codex",
+      "score": 0.773828138965165
+    },
+    {
+      "model_name": "GPT-5.6 Terra (medium)",
+      "harness": "Codex",
+      "score": 0.641969717659995
+    },
+    {
+      "model_name": "GPT-5.6 Terra (none)",
+      "harness": "Codex",
+      "score": 0.4032014320038603
+    },
+    {
+      "model_name": "GPT-5.6 Terra (xhigh)",
+      "harness": "Codex",
+      "score": 0.7319936585572157
+    },
+    {
+      "model_name": "GPT-5.6 Luna (high)",
+      "harness": "Codex",
+      "score": 0.6794381346030687
+    },
+    {
+      "model_name": "GPT-5.6 Luna (low)",
+      "harness": "Codex",
+      "score": 0.4243608863528916
+    },
+    {
+      "model_name": "GPT-5.6 Luna (max)",
+      "harness": "Codex",
+      "score": 0.7458830217330726
+    },
+    {
+      "model_name": "GPT-5.6 Luna (medium)",
+      "harness": "Codex",
+      "score": 0.5874584190418037
+    },
+    {
+      "model_name": "GPT-5.6 Luna (none)",
+      "harness": "Codex",
+      "score": 0.3727598751633143
+    },
+    {
+      "model_name": "GPT-5.6 Luna (xhigh)",
+      "harness": "Codex",
+      "score": 0.708208380748474
+    },
+    {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6020844471016523
+      "score": 0.602084447101653
     },
     {
       "model_name": "Composer 2",
       "harness": "Cursor CLI",
-      "score": 0.6659095230414745
+      "score": 0.6678936500256014
     },
     {
       "model_name": "Composer 2.5",
@@ -103,22 +194,32 @@
     {
       "model_name": "GPT-5.4 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6881333072836665
+      "score": 0.6881333072836661
     },
     {
       "model_name": "GPT-5.5 (medium)",
       "harness": "Cursor CLI",
-      "score": 0.6185271360402347
+      "score": 0.6185271360402343
     },
     {
       "model_name": "Gemini 3.1 Pro (high)",
       "harness": "Gemini CLI",
-      "score": 0.4265493040111497
+      "score": 0.42654930401115004
+    },
+    {
+      "model_name": "Grok 4.5 (high)",
+      "harness": "Grok Build",
+      "score": 0.7637711373905511
     },
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Opencode",
-      "score": 0.6450943205982174
+      "score": 0.6450943205982176
+    },
+    {
+      "model_name": "Muse Spark 1.1 (xhigh)",
+      "harness": "Opencode",
+      "score": 0.685515598605579
     }
   ]
 }

@@ -1,95 +1,93 @@
-// Diagnose the composite score: replicate lib/client-model.ts composite and print
-// the per-metric normalized breakdown so we can see why one model outranks another.
+// Diagnose the production composite implementation and print normalized evidence
+// coverage for models whose ordering is sensitive to missing benchmark results.
 import { readFileSync } from "node:fs";
+import { computeCompositeScores, DEFAULT_MIN_DA_BATTLES } from "../lib/composite.mjs";
+
 const ds = JSON.parse(readFileSync(new URL("../data/dataset.json", import.meta.url)));
+const ATOMIC = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"];
+const SLOTS = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "da"];
 
-const BASE = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"];
-const scoreOf = (m) => ({
-  aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
-  aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
-  aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
-  designarena_frontend: m.designarena?.frontend?.elo ?? null,
-  designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
-});
-const rows = ds.models.map((m) => ({ id: m.id, name: m.display_name, fk: m.family_key, featured: m.featured, s: scoreOf(m) }));
+const rows = ds.models.map((m) => ({
+  id: m.id,
+  name: m.display_name,
+  featured: m.featured,
+  scores: {
+    aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
+    aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
+    aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
+    designarena_frontend: m.designarena?.frontend?.elo ?? null,
+    designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
+  },
+  designarenaBattles: {
+    frontend: m.designarena?.frontend?.battles ?? null,
+    fullstack: m.designarena?.fullstack?.battles ?? null,
+  },
+}));
 
-// ranges per metric
+const composites = computeCompositeScores(rows);
+const effective = rows.map((r) => ({
+  ...r,
+  values: {
+    ...r.scores,
+    designarena_frontend: (r.designarenaBattles.frontend ?? 0) >= DEFAULT_MIN_DA_BATTLES ? r.scores.designarena_frontend : null,
+    designarena_fullstack: (r.designarenaBattles.fullstack ?? 0) >= DEFAULT_MIN_DA_BATTLES ? r.scores.designarena_fullstack : null,
+  },
+}));
+
 const ranges = {};
-for (const k of BASE) {
-  const vals = rows.map((r) => r.s[k]).filter((v) => v != null);
-  ranges[k] = vals.length ? { min: Math.min(...vals), max: Math.max(...vals), mean: vals.reduce((a, b) => a + b, 0) / vals.length } : null;
+for (const key of ATOMIC) {
+  const values = effective.map((r) => r.values[key]).filter((v) => v != null);
+  ranges[key] = values.length ? { min: Math.min(...values), max: Math.max(...values) } : null;
 }
-const norm = (k, v) => (v == null || !ranges[k] ? null : ranges[k].max > ranges[k].min ? ((v - ranges[k].min) / (ranges[k].max - ranges[k].min)) * 100 : 100);
-
-// current composite = mean of present normalized
-const compCurrent = (r) => { const n = BASE.map((k) => norm(k, r.s[k])).filter((v) => v != null); return n.length ? n.reduce((a, b) => a + b, 0) / n.length : null; };
-// mean-imputed: missing metric -> that metric's normalized cross-model mean
-const meanNorm = {}; for (const k of BASE) meanNorm[k] = ranges[k] ? norm(k, ranges[k].mean) : 50;
-const compImputed = (r) => { const n = BASE.map((k) => norm(k, r.s[k]) ?? meanNorm[k]); return n.reduce((a, b) => a + b, 0) / n.length; };
-
-console.log("Per-metric normalized cross-model MEAN (imputation value):");
-for (const k of BASE) console.log(`  ${k}: mean=${ranges[k]?.mean?.toFixed(1)} -> norm ${meanNorm[k]?.toFixed(1)} | range ${ranges[k]?.min}..${ranges[k]?.max}`);
-
-const show = (name) => {
-  const r = rows.find((x) => x.name.startsWith(name)) || rows.find((x) => x.name.includes(name));
-  if (!r) return console.log("NOT FOUND:", name);
-  console.log(`\n${r.name}`);
-  for (const k of BASE) console.log(`  ${k}: raw=${r.s[k]} norm=${norm(k, r.s[k])?.toFixed(1) ?? "— (missing → imputed " + meanNorm[k].toFixed(1) + ")"}`);
-  console.log(`  composite CURRENT (mean of present) = ${compCurrent(r)?.toFixed(1)}`);
-  console.log(`  composite IMPUTED (missing=field mean) = ${compImputed(r).toFixed(1)}`);
+const norm = (key, value) => {
+  const range = ranges[key];
+  if (value == null || !range) return null;
+  return range.max === range.min ? 50 : ((value - range.min) / (range.max - range.min)) * 100;
 };
-show("MiniMax M3");
-show("GPT-5.5 (high)");
-
-// --- Candidate fixes ---
-const AA = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index"];
-// (A) AA-only, mean of present
-const compAApresent = (r) => { const n = AA.map((k) => norm(k, r.s[k])).filter((v) => v != null); return n.length ? n.reduce((a, b) => a + b, 0) / n.length : null; };
-// (B) AA-only, impute missing AA metric with field mean
-const compAAimputed = (r) => { const n = AA.map((k) => norm(k, r.s[k]) ?? meanNorm[k]); return n.reduce((a, b) => a + b, 0) / n.length; };
-// dominance check: does A beat B on every SHARED metric but lose composite?
-const shared = (a, b) => BASE.filter((k) => a.s[k] != null && b.s[k] != null);
-const dominates = (a, b) => { const sh = shared(a, b); return sh.length >= 2 && sh.every((k) => a.s[k] > b.s[k]); };
-const violations = (compFn, label) => {
-  let bad = 0; const ex = [];
-  for (const a of feat) for (const b of feat) if (a.id !== b.id && dominates(a, b) && compFn(a) != null && compFn(b) != null && compFn(a) < compFn(b)) { bad++; if (ex.length < 4) ex.push(`${a.name.slice(0,22)}>${b.name.slice(0,22)} on shared but comp ${compFn(a).toFixed(1)}<${compFn(b).toFixed(1)}`); }
-  console.log(`  [${label}] dominance violations: ${bad}` + (ex.length ? "\n     " + ex.join("\n     ") : ""));
-};
-
-// (C) DesignArena collapsed to ONE metric (avg of fe+fs), mean of present.
-//     Keys: coding, coding_agent, intelligence, designarena(=avg). Reduces DA weight 2/5→1/4.
-const KEYS4 = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index"];
-const daNorm = (r) => { const f = norm("designarena_frontend", r.s.designarena_frontend), s = norm("designarena_fullstack", r.s.designarena_fullstack); const a = [f, s].filter((v) => v != null); return a.length ? a.reduce((x, y) => x + y, 0) / a.length : null; };
-const compDAcombined = (r) => { const n = [...KEYS4.map((k) => norm(k, r.s[k])), daNorm(r)].filter((v) => v != null); return n.length ? n.reduce((a, b) => a + b, 0) / n.length : null; };
-// (D) Shrinkage imputation over all 5: missing = avg(field mean, model's own present mean).
-const compShrink = (r) => {
-  const present = BASE.map((k) => norm(k, r.s[k])).filter((v) => v != null);
-  if (!present.length) return null;
-  const ownMean = present.reduce((a, b) => a + b, 0) / present.length;
-  const n = BASE.map((k) => norm(k, r.s[k]) ?? (meanNorm[k] + ownMean) / 2);
-  return n.reduce((a, b) => a + b, 0) / n.length;
-};
-
-console.log("\n=== Dominance-violation counts (A beats B on every shared metric but ranks lower) ===");
-const feat = rows.filter((r) => r.featured && compCurrent(r) != null);
-violations(compCurrent, "CURRENT (mean of present, all 5)");
-violations(compImputed, "IMPUTED all-5 (missing=field mean)");
-violations(compDAcombined, "DA-combined (mean of present, DA=1 key)");
-violations(compShrink, "SHRINKAGE (missing=avg(field,own))");
-const lead = (fn, label) => { console.log(`\n--- top 14 by ${label} ---`); [...feat].sort((a, b) => fn(b) - fn(a)).slice(0, 14).forEach((r, i) => console.log(`${String(i + 1).padStart(2)}  ${r.name.slice(0, 38).padEnd(40)} ${fn(r).toFixed(1)}`)); };
-lead(compDAcombined, "DA-combined");
-lead(compShrink, "SHRINKAGE");
-
-console.log("\n=== Featured leaderboard: CURRENT vs AA-only-IMPUTED ===");
-const aaRank = new Map([...feat].sort((a, b) => compAAimputed(b) - compAAimputed(a)).map((r, i) => [r.id, i + 1]));
-[...feat].sort((a, b) => compAAimputed(b) - compAAimputed(a)).slice(0, 20).forEach((r, i) => {
-  console.log(`${String(i + 1).padStart(2)}  ${r.name.slice(0, 40).padEnd(42)} AAimp=${compAAimputed(r).toFixed(1).padStart(5)}  (was cur ${compCurrent(r).toFixed(1)})`);
+const slotRows = effective.map((r) => {
+  const da = [norm("designarena_frontend", r.values.designarena_frontend), norm("designarena_fullstack", r.values.designarena_fullstack)]
+    .filter((v) => v != null);
+  return {
+    ...r,
+    slots: {
+      aa_coding_index: norm("aa_coding_index", r.values.aa_coding_index),
+      aa_coding_agent: norm("aa_coding_agent", r.values.aa_coding_agent),
+      aa_intelligence_index: norm("aa_intelligence_index", r.values.aa_intelligence_index),
+      da: da.length ? da.reduce((a, b) => a + b, 0) / da.length : null,
+    },
+    composite: composites.get(r.id),
+  };
 });
 
-console.log("\n=== (old) Featured leaderboard: CURRENT vs IMPUTED composite ===");
-const byCur = [...feat].sort((a, b) => compCurrent(b) - compCurrent(a));
-console.log("rank  CURRENT (name = comp)                    | IMPUTED");
-const impRank = new Map([...feat].sort((a, b) => compImputed(b) - compImputed(a)).map((r, i) => [r.id, i + 1]));
-byCur.forEach((r, i) => {
-  console.log(`${String(i + 1).padStart(2)}  ${r.name.slice(0, 40).padEnd(42)} ${compCurrent(r).toFixed(1).padStart(5)}  | imp#${String(impRank.get(r.id)).padStart(2)} ${compImputed(r).toFixed(1)}`);
-});
+function show(id) {
+  const r = slotRows.find((x) => x.id === id);
+  if (!r) return console.log(`NOT FOUND: ${id}`);
+  console.log(`\n${r.name} [${r.id}]`);
+  for (const key of SLOTS) {
+    const v = r.slots[key];
+    console.log(`  ${key}: ${v == null ? "missing (neutral)" : v.toFixed(1)}`);
+  }
+  console.log(`  coverage: ${SLOTS.filter((key) => r.slots[key] != null).length}/${SLOTS.length}`);
+  console.log(`  composite: ${r.composite?.toFixed(1) ?? "—"}`);
+}
+
+show("deepseek-v4-pro::high");
+show("deepseek-v4-pro::max");
+show("deepseek-v4-flash::max");
+show("gpt-5.5::medium");
+show("gpt-5.5::xhigh");
+
+const shared = (a, b) => SLOTS.filter((key) => a.slots[key] != null && b.slots[key] != null);
+const dominatesShared = (a, b) => {
+  const keys = shared(a, b);
+  return keys.length >= 2 && keys.every((key) => a.slots[key] >= b.slots[key]) && keys.some((key) => a.slots[key] > b.slots[key]);
+};
+const featured = slotRows.filter((r) => r.featured && r.composite != null);
+const violations = [];
+for (const a of featured) for (const b of featured) {
+  if (a !== b && dominatesShared(a, b) && a.composite < b.composite) violations.push({ a, b });
+}
+console.log(`\nFeatured shared-dominance violations: ${violations.length}`);
+for (const { a, b } of violations.slice(0, 10)) {
+  console.log(`  ${a.name} (${a.composite.toFixed(1)}) < ${b.name} (${b.composite.toFixed(1)})`);
+}

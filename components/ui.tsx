@@ -7,10 +7,10 @@ import { SCORE_OPTIONS } from "../lib/cost";
 
 export function ScoreSelect({ value, onChange, label = "Score" }: { value: ScoreKey; onChange: (s: ScoreKey) => void; label?: string }) {
   return (
-    <span className="inline-flex items-center gap-2">
+    <span className="inline-flex max-w-full items-center gap-2">
       <label className="text-sm text-gray-400">{label}</label>
       <select value={value} onChange={(e) => onChange(e.target.value as ScoreKey)}
-        className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
+        className="min-w-0 max-w-[240px] rounded-md border border-line bg-ink px-3 py-1.5 text-sm sm:max-w-none">
         {SCORE_OPTIONS.map((s) => <option key={s} value={s}>{SCORE_LABELS[s]}</option>)}
       </select>
     </span>

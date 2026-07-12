@@ -22,19 +22,63 @@ export function blend(input: number | null, output: number | null, inputWeight =
 
 export interface RankedOffer extends ClientOffer { blended: number }
 
+export interface OfferScope {
+  allowed: Set<string> | null;
+  providerByKey: Map<string, ProviderFlag>;
+  euHostedOnly: boolean;
+  euDedicated: boolean;
+  teeOnly: boolean;
+  restricted: boolean;
+}
+
+type OfferSelection = Set<string> | OfferScope | null;
+
+function isOfferScope(value: OfferSelection): value is OfferScope {
+  return value != null && !(value instanceof Set);
+}
+
+/** Fallback for snapshots created before per-offer `eu_hosted` was added. */
+export function isEuOffer(offer: ClientOffer): boolean {
+  if (offer.eu_hosted != null) return offer.eu_hosted;
+  if (/outside the eu data boundary|excluded from the eu data boundary|us-served|served region:\s*(us|uk)/i.test(offer.notes || "")) return false;
+  const region = (offer.region || "").toLowerCase();
+  return region === "eu" || region.startsWith("eu-") || region.startsWith("europe-")
+    || /\b(eu cross-region|swedencentral|westeurope|francecentral|germanywestcentral|polandcentral|spaincentral)\b/.test(region);
+}
+
+export function offerMatchesScope(offer: ClientOffer, selection: OfferSelection): boolean {
+  if (!isOfferScope(selection)) return !selection || selection.has(offer.key);
+  if (selection.allowed && !selection.allowed.has(offer.key)) return false;
+  if (selection.teeOnly && !offer.tee) return false;
+  if (selection.euHostedOnly) {
+    const provider = selection.providerByKey.get(offer.key);
+    if (!(selection.euDedicated && provider?.eu_dedicated) && !isEuOffer(offer)) return false;
+  }
+  return true;
+}
+
 /** Offers for a family, filtered to allowed provider keys (empty/null = all),
  *  with the 10:1 blended cost, sorted cheapest first. */
 export function rankedOffers(
   offers: ClientOffer[] | undefined,
-  allowed: Set<string> | null,
+  selection: OfferSelection,
   inputWeight = 10
 ): RankedOffer[] {
   if (!offers) return [];
-  return offers
-    .filter((o) => !allowed || allowed.has(o.key))
+  const ranked = offers
+    .filter((o) => offerMatchesScope(o, selection))
     .map((o) => ({ ...o, blended: blend(o.input_per_1m, o.output_per_1m, inputWeight) ?? Infinity }))
     .filter((o) => Number.isFinite(o.blended))
     .sort((a, b) => a.blended - b.blended);
+  // A provider can have several retained routes (e.g. Global + DataZone-EU or
+  // standard + TEE). Once the scope is applied, show/rank that provider exactly
+  // once at its cheapest matching route.
+  const seen = new Set<string>();
+  return ranked.filter((offer) => {
+    if (seen.has(offer.key)) return false;
+    seen.add(offer.key);
+    return true;
+  });
 }
 
 /** Cheapest blended cost for a model given a provider filter, falling back to
@@ -42,12 +86,14 @@ export function rankedOffers(
 export function modelCost(
   m: ClientModel,
   data: ClientData,
-  allowed: Set<string> | null,
+  selection: OfferSelection,
   inputWeight = 10
 ): number | null {
-  const r = rankedOffers(data.offersByFamily[m.family_key], allowed, inputWeight);
+  const r = rankedOffers(data.offersByFamily[m.family_key], selection, inputWeight);
   if (r.length) return r[0].blended;
-  if (!allowed) return blend(m.aa_ref_input, m.aa_ref_output, inputWeight);
+  if (!selection || (isOfferScope(selection) && !selection.restricted)) {
+    return blend(m.aa_ref_input, m.aa_ref_output, inputWeight);
+  }
   return null;
 }
 
@@ -66,39 +112,61 @@ export function defaultMinFor(score: ScoreKey): number {
 // providers/endpoints, NOT the model labs — open-weight models from Chinese labs
 // (GLM, Kimi, DeepSeek, Qwen, MiniMax, MiMo…) stay listed and get priced via the
 // remaining non-Chinese providers (DeepInfra, Together, Fireworks, Novita, …).
-export const CHINESE_PROVIDER_RE = /\b(alibaba|qwen|deepseek|zhipu|z\.?ai|glm|moonshot|kimi|baidu|ernie|wenxin|baichuan|siliconflow|silicon\s*flow|tencent|hunyuan|bytedance|volcengine|volc|doubao|stepfun|minimax|iflytek|01\.?ai|inclusionai|ant\s*group|xiaomi|mimo|sensetime|modelscope|infinigence|infini-?ai|gitee)\b/i;
+export const CHINESE_PROVIDER_RE = /\b(alibaba|qwen|deepseek|zhipu|z\.?ai|glm|moonshot|kimi|baidu|ernie|wenxin|baichuan|siliconflow|silicon\s*flow|tencent|hunyuan|bytedance|volcengine|volc|doubao|stepfun|minimax|streamlake|seed|nex\s*agi|iflytek|01\.?ai|inclusionai|ant\s*group|xiaomi|mimo|sensetime|modelscope|infinigence|infini-?ai|gitee)\b/i;
 
 export function isChineseProvider(name: string): boolean {
   return CHINESE_PROVIDER_RE.test(name);
 }
 
-export function chineseProviderKeys(providers: { key: string; provider: string }[]): Set<string> {
-  return new Set(providers.filter((p) => isChineseProvider(p.provider)).map((p) => p.key));
+export function chineseProviderKeys(providers: { key: string; provider: string; country?: string | null }[]): Set<string> {
+  return new Set(providers.filter((p) => isChineseProvider(p.provider) || /^(china|cn|hong kong)$/i.test(p.country || "")).map((p) => p.key));
 }
 
-type ProviderFlag = { key: string; provider: string; eu_hosted?: boolean; non_us?: boolean; eu_dedicated?: boolean };
+type ProviderFlag = { key: string; provider: string; eu_hosted?: boolean; non_us?: boolean; eu_dedicated?: boolean; country?: string | null };
 
 /** Combine the provider blocklist (`excluded` = keys the user unchecked) with the
- *  global provider toggles (exclude-Chinese, EU-hosted-only, non-US-only) into one
- *  allowed-key set (null = all providers, no restriction). Starting from ALL
+ *  provider-level global toggles (exclude-Chinese, non-US-only) into one allowed-key
+ *  set (null = all providers, no restriction). EU hosting is intentionally evaluated
+ *  on each offer later; a provider-wide flag is not residency evidence. Starting from ALL
  *  providers and subtracting `excluded` means providers added later are included by
- *  default (no stale inclusion snapshot). When `euDedicated` is set, the EU-hosted
- *  filter is widened to also admit providers that only offer EU via dedicated/BYOC. */
+ *  default (no stale inclusion snapshot). Dedicated/BYOC widening is evaluated later
+ *  against the exact offer and provider metadata. */
 export function effectiveAllowed(
   excluded: Set<string> | null,
   excludeChinese: boolean,
   providers: ProviderFlag[],
   euHostedOnly = false,
   nonUsOnly = false,
-  euDedicated = false
 ): Set<string> | null {
   if ((!excluded || excluded.size === 0) && !excludeChinese && !euHostedOnly && !nonUsOnly) return null;
   let base = new Set(providers.map((p) => p.key));
   if (excluded) for (const k of excluded) base.delete(k);
   if (excludeChinese) for (const k of chineseProviderKeys(providers)) base.delete(k);
-  if (euHostedOnly) { const ok = new Set(providers.filter((p) => p.eu_hosted || (euDedicated && p.eu_dedicated)).map((p) => p.key)); base = new Set([...base].filter((k) => ok.has(k))); }
   if (nonUsOnly) { const ok = new Set(providers.filter((p) => p.non_us).map((p) => p.key)); base = new Set([...base].filter((k) => ok.has(k))); }
   return base;
+}
+
+/** Build the one offer scope shared by every interactive view. Provider-level
+ * flags choose candidate providers; offer-level flags/regions then prevent a
+ * US/UK/global route from leaking through merely because that provider also has
+ * some EU capacity. */
+export function createOfferScope(
+  excluded: Set<string> | null,
+  excludeChinese: boolean,
+  providers: ProviderFlag[],
+  euHostedOnly = false,
+  nonUsOnly = false,
+  euDedicated = false,
+  teeOnly = false,
+): OfferScope {
+  return {
+    allowed: effectiveAllowed(excluded, excludeChinese, providers, euHostedOnly, nonUsOnly),
+    providerByKey: new Map(providers.map((provider) => [provider.key, provider])),
+    euHostedOnly,
+    euDedicated,
+    teeOnly,
+    restricted: !!(excluded?.size || excludeChinese || euHostedOnly || nonUsOnly || teeOnly),
+  };
 }
 
 // Two independent "hide" toggles, matched on family_key (covers all variants):

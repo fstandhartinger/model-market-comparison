@@ -1,8 +1,8 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-07-07",
-  "method": "AWS Price List bulk API (EU region indexes, version 20260707080509) for per-token on-demand text-LLM meters (standard tier only; flex/priority/batch/cache/image/audio/video excluded); pricing page + web search for Anthropic Claude (served via EU cross-region inference profile, no EU bulk entries) and Cohere (US-only) gaps.",
+  "collected_at": "2026-07-12",
+  "method": "AWS Price List bulk API EU region indexes (current version 20260707080509) for standard on-demand text-token meters; official Bedrock pricing and model-card/region pages for current models absent from the EU bulk feed. Flex, priority, batch, cache and non-text modalities are excluded. EU rows use the actual regional price (not the lower US price). Claude Sonnet 5 stores the stable standard price and documents the active launch promotion in notes. Legacy Cohere Command/Command Light are excluded because the current pricing page exposes them as Provisioned Throughput rather than comparable on-demand token offers.",
   "models": [
     {
       "model_name": "Nova 2.0 Lite",
@@ -93,28 +93,12 @@
       "notes": "Released 2026-06-30; live on Bedrock (AWS blog 'Introducing Claude Sonnet 5 on AWS'). Not in Price List bulk API EU data; served in EU via EU cross-region inference profile (eu.anthropic.claude-sonnet-5). Listed price is the STANDARD on-demand rate; Anthropic introductory promo of $2 in / $10 out per 1M applies through 2026-08-31."
     },
     {
-      "model_name": "Cohere Command",
-      "provider_org": "Cohere",
-      "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 2.0,
-      "region": "us-east-1 (not offered in EU regions)",
-      "notes": "Not in EU bulk API; price from public pricing page, US region."
-    },
-    {
-      "model_name": "Cohere Command Light",
-      "provider_org": "Cohere",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 0.6,
-      "region": "us-east-1 (not offered in EU regions)",
-      "notes": "Not in EU bulk API; price from public pricing page, US region."
-    },
-    {
       "model_name": "DeepSeek V3.1",
       "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.58,
-      "output_per_1m_usd": 1.68,
+      "input_per_1m_usd": 0.696,
+      "output_per_1m_usd": 2.016,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
     },
     {
       "model_name": "DeepSeek V3.2",
@@ -123,6 +107,14 @@
       "output_per_1m_usd": 2.22,
       "region": "eu-central-1",
       "notes": ""
+    },
+    {
+      "model_name": "DeepSeek R1",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 1.35,
+      "output_per_1m_usd": 5.4,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Current Bedrock model-card gap filled from the official pricing example and regional-availability page. US-only; not EU-hosted."
     },
     {
       "model_name": "Gemma 3 12B",
@@ -229,12 +221,12 @@
       "notes": ""
     },
     {
-      "model_name": "Devstral",
+      "model_name": "Devstral 2 123B",
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.48,
       "output_per_1m_usd": 2.4,
       "region": "eu-central-1",
-      "notes": ""
+      "notes": "Current official Bedrock display name; EU bulk price."
     },
     {
       "model_name": "Magistral Small 1.2",
@@ -391,50 +383,66 @@
     {
       "model_name": "gpt-oss-120b",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.6,
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.79,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
     },
     {
       "model_name": "gpt-oss-20b",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.07,
-      "output_per_1m_usd": 0.3,
+      "input_per_1m_usd": 0.09,
+      "output_per_1m_usd": 0.4,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
+    },
+    {
+      "model_name": "GPT-5.4",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 2.75,
+      "output_per_1m_usd": 16.5,
+      "region": "us-east-1",
+      "notes": "Official Bedrock Mantle standard in-region price. Also available in us-east-2 and us-west-2; no EU region, Geo or Global inference profile. Cached input is $0.275/1M."
+    },
+    {
+      "model_name": "GPT-5.5",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 5.5,
+      "output_per_1m_usd": 33.0,
+      "region": "us-east-1",
+      "notes": "Official Bedrock Mantle standard in-region price. Also available in us-east-2; no EU region, Geo or Global inference profile. Cached input is $0.55/1M."
     },
     {
       "model_name": "Qwen3 235B A22B 2507",
       "provider_org": "Qwen",
-      "input_per_1m_usd": 0.22,
-      "output_per_1m_usd": 0.88,
+      "input_per_1m_usd": 0.29,
+      "output_per_1m_usd": 1.16,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
     },
     {
       "model_name": "Qwen3 32B",
       "provider_org": "Qwen",
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.6,
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.79,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
     },
     {
       "model_name": "Qwen3 Coder 30B A3B",
       "provider_org": "Qwen",
-      "input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 0.6,
+      "input_per_1m_usd": 0.2,
+      "output_per_1m_usd": 0.79,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
     },
     {
       "model_name": "Qwen3 Coder 480B A35B",
       "provider_org": "Qwen",
-      "input_per_1m_usd": 0.45,
-      "output_per_1m_usd": 1.8,
+      "input_per_1m_usd": 0.54,
+      "output_per_1m_usd": 2.16,
       "region": "eu-central-1",
-      "notes": "Corrected 2026-07-09: prior value was inflated ~1.2-1.33x; AWS Bedrock EU on-demand = US price (verified vs AWS pricing + eu-central-1 calculator)."
+      "notes": "Official AWS Price List bulk API standard on-demand price for EU (Frankfurt); regional EU pricing is higher than the US price."
     },
     {
       "model_name": "Qwen3 Coder Next",
@@ -461,12 +469,36 @@
       "notes": ""
     },
     {
+      "model_name": "Writer Palmyra X4",
+      "provider_org": "Writer",
+      "input_per_1m_usd": 2.5,
+      "output_per_1m_usd": 10.0,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Current Bedrock model-card gap filled from the official on-demand pricing table. US-only; not EU-hosted."
+    },
+    {
+      "model_name": "Writer Palmyra X5",
+      "provider_org": "Writer",
+      "input_per_1m_usd": 0.6,
+      "output_per_1m_usd": 6.0,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Current Bedrock model-card gap filled from the official on-demand pricing table. US-only; not EU-hosted."
+    },
+    {
       "model_name": "Writer Palmyra Vision 7B",
       "provider_org": "Writer",
       "input_per_1m_usd": 0.18,
       "output_per_1m_usd": 0.72,
       "region": "eu-central-1",
       "notes": ""
+    },
+    {
+      "model_name": "Grok 4.3",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 2.5,
+      "region": "us-west-2",
+      "notes": "Official Bedrock Mantle model-card region and standard on-demand pricing. The pricing table also lists US East meters; the model card currently confirms us-west-2. No EU inference profile. Cached input is $0.20/1M."
     },
     {
       "model_name": "GLM 4.7",

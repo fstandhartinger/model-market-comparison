@@ -18,26 +18,14 @@ const SOTA = [
   { key: "mimo-v2.5-pro", name: "Xiaomi MiMo-V2.5-Pro" },
 ];
 
-const EU_HOSTED = new Set(["Nebius", "Inceptron", "TensorX", "AWS Bedrock", "Azure AI Foundry", "Google Vertex AI"]);
-
-// A provider can be EU-capable overall yet serve a *specific* model from a US/UK region
-// (e.g. Nebius runs GLM 5.2 / Kimi K2.6 / DeepSeek from US/UK). Only offers whose region is
-// actually in the EU count as a genuine EU-hosted route. Blocklist, not allowlist, so an
-// unlabelled/new EU zone (e.g. "eu-central-1", "swedencentral") is still treated as EU.
-const NON_EU_REGIONS = new Set(["us", "uk", "global", "row", "non-eu", "asia"]);
-const isEuRegion = (r?: string | null) => {
-  const x = (r ?? "").toLowerCase();
-  return !NON_EU_REGIONS.has(x) && !x.startsWith("us-") && !x.startsWith("us");
-};
-
-// EU-sovereign providers that DO expose a per-token API but only for Western open
-// models — i.e. not an option for the SOTA coding models above.
+// Additional EU-sovereign providers that expose a per-token API. Most focus on
+// Western open models; Scaleway now also carries GLM 5.2 from its Paris region.
 const SOVEREIGN = [
   { name: "STACKIT AI Model Serving", org: "Schwarz Group (DE)", certs: "BSI C5, ISO 27001", models: "gpt-oss-120b/20b, Qwen3-VL-235B, Llama 3.3 70B, Gemma 3", url: "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/" },
   { name: "T-Systems LLMHub (Telekom)", org: "Deutsche Telekom (DE)", certs: "sovereign T-Cloud · €1,000/mo min", models: "gpt-oss-120b, Llama 3.3, Mistral, Qwen3", url: "https://docs.llmhub.t-systems.net/models" },
   { name: "IONOS AI Model Hub", org: "IONOS (DE)", certs: "BSI C5, Gaia-X", models: "gpt-oss-120b, Llama 3.1/3.3, Mistral, Qwen3-Coder-Next-80B", url: "https://docs.ionos.com/cloud/ai/ai-model-hub/models/models-comparison" },
   { name: "OVHcloud AI Endpoints", org: "OVHcloud (FR)", certs: "SecNumCloud/ANSSI, ZDR", models: "gpt-oss-120b, Llama 3.3, Qwen3.x, Mistral", url: "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/" },
-  { name: "Scaleway Generative APIs", org: "Scaleway (FR)", certs: "GDPR, ZDR by default", models: "Qwen3-235B, Mistral, gpt-oss-120b, MiniMax M2.5, DeepSeek", url: "https://www.scaleway.com/en/docs/generative-apis/reference-content/supported-models/" },
+  { name: "Scaleway Generative APIs", org: "Scaleway (FR)", certs: "GDPR, ZDR by default", models: "GLM 5.2, Qwen3.x, Mistral, Llama, Gemma, gpt-oss-120b, Holo2", url: "https://www.scaleway.com/en/pricing/model-as-a-service/" },
   { name: "SAP Generative AI Hub", org: "SAP (DE)", certs: "enterprise · opaque CU billing", models: "mostly proprietary frontier; open weights deprecated/BYOM", url: "https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/models-and-scenarios-in-generative-ai-hub" },
 ];
 
@@ -87,15 +75,10 @@ export default async function EuPage() {
           <tbody>
             {SOTA.map((s) => {
               const m = find(s.key);
-              // Azure serves GLM and MiniMax via Fireworks (US-served, outside the EU Data
-              // Boundary) — so don't count Azure as a true EU route for those. Kimi, by
-              // contrast, is a Microsoft-direct Foundry model with its own EU Data Zone meter,
-              // so Azure IS a valid EU route for Kimi (not excluded here).
-              const azureFireworks = /^(glm-|minimax-)/.test(s.key);
-              // n=100 (≈ all offers) so mid-priced EU providers aren't truncated away by cheaper
-              // Chinese/US offers before the EU filter runs; isEuRegion drops routes a provider
-              // serves from outside the EU (e.g. Nebius' US-region GLM 5.2).
-              const euOffers = m ? cheapestOffers(m, 100).filter((o) => EU_HOSTED.has(o.provider) && isEuRegion(o.region) && !(azureFireworks && o.provider === "Azure AI Foundry")) : [];
+              // EU residency is audited per model offer during the dataset build. A provider
+              // being EU-capable overall is deliberately not enough (Nebius and the
+              // hyperscalers can serve different models from different regions).
+              const euOffers = m ? cheapestOffers(m, 100, 10, (offer) => offer.eu_hosted === true) : [];
               return (
                 <tr key={s.key}>
                   <td className="px-3 py-2 font-medium">{m ? <Link href={`/models/${encodeURIComponent(m.id)}`} className="hover:text-accent">{s.name}</Link> : s.name}</td>
@@ -114,15 +97,18 @@ export default async function EuPage() {
         <b className="text-accent2">TensorX</b> (Ireland; 3 EU data-centre regions, 100% EU-sovereign / isolated from US
         hyperscalers, zero data retention) is now the <b>broadest</b> EU-sovereign option — a self-serve per-token API
         carrying GLM 5.2/5.1/5, <b>Kimi K2.7 Code</b>/K2.6/K2.5, DeepSeek V4 Pro/Flash/V3.2, <b>MiniMax M3</b>/M2.5 and Qwen,
-        all in-EU. <b className="text-accent2">Inceptron</b> (Sweden; ISO 27001, zero-retention) serves GLM 5.1/5.2,
-        Kimi K2.6/K2.7 Code and MiniMax M2.5 from the EU. <b className="text-accent2">Nebius</b> (Netherlands; Finland/France;
-        ZDR + no-training) lists GLM 5.1/5.2, Kimi K2.6, DeepSeek V4 Pro and MiniMax — but <b>serves several of them from
+        all in-EU. <b className="text-accent2">Inceptron</b> (Swedish HQ, Finnish datacenter; zero-retention) serves GLM 5.2,
+        Kimi K2.6/K2.7 Code and MiniMax M2.5 from the EU. <b className="text-accent2">Scaleway</b> now also serves GLM 5.2
+        from Paris. <b className="text-accent2">Nebius</b> (Netherlands; Finland/France; ZDR + no-training) lists GLM 5.1/5.2,
+        Kimi K2.6/K2.7 Code, DeepSeek V4 Pro and MiniMax M2.5/M3 — but <b>serves several of them from
         US/UK regions</b>, so its only SOTA model currently running in an EU region is <b>GLM 5.1</b>. The table lists a
         provider for a model <b>only where that specific model runs in-EU</b> — a provider being EU-capable in general
         isn&apos;t enough. ⚠️ Azure&apos;s GLM/MiniMax are <b>Fireworks-hosted and excluded from the EU Data Boundary</b>
-        {" "}(US-served), so Azure is not a true EU route for those (Kimi, by contrast, is a Microsoft-direct Foundry
-        model with an EU Data Zone meter, so it does count). Thanks to TensorX, <b>Kimi K2.7 Code and MiniMax M3 now have a
-        managed EU host</b>; MiniMax M2.7 and Xiaomi MiMo still do not.
+        {" "}(US-served), so Azure is not a true EU route for those. Azure&apos;s direct Kimi catalog currently documents
+        global/Data-Zone availability but not a model-specific EU inference location clearly enough to count it as
+        EU-hosted here. Thanks to TensorX, <b>Kimi K2.7 Code and MiniMax M3 now have a
+        managed EU host</b>; <b>NextBit</b> additionally serves DeepSeek V4 Flash from Spain. MiniMax M2.7 and Xiaomi
+        MiMo-V2.5-Pro still have no managed EU route.
       </p>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">🟡 Coming soon</h2>
@@ -132,12 +118,11 @@ export default async function EuPage() {
         once it goes live.
       </p>
 
-      <h2 className="mt-6 mb-2 text-lg font-semibold">❌ EU-sovereign providers — real, but not an option for SOTA coding</h2>
+      <h2 className="mt-6 mb-2 text-lg font-semibold">EU-sovereign per-token providers and their catalogs</h2>
       <p className="mb-3 text-sm text-gray-400">
-        These German/French sovereign clouds expose proper per-token APIs with strong residency &amp; certifications,
-        but their catalogs are limited to <b>Western open models</b> (gpt-oss / Llama / Mistral / Qwen). None host the
-        SOTA Chinese coding models, so for top-tier coding capability with EU residency they are <b>not currently a
-        substitute</b>. Their model listings:
+        These sovereign clouds expose proper per-token APIs with strong residency and certifications. Most catalogs
+        center on Western open models (gpt-oss / Llama / Mistral / Qwen), while Scaleway now also hosts <b>GLM 5.2</b>
+        in Paris. Their current model listings:
       </p>
       <div className="card overflow-x-auto">
         <table className="dtable w-full text-sm">
@@ -192,7 +177,7 @@ export default async function EuPage() {
       <h2 className="mt-6 mb-2 text-lg font-semibold">Hyperscaler EU regions &amp; confidentiality</h2>
       <ul className="space-y-1.5 text-sm text-gray-300">
         <li>• <b>AWS Bedrock</b> (EU Geo profile) — strongest turnkey EU posture: EU cross-region inference + zero-data-retention by default. Western open models only (Llama/Mistral/DeepSeek V3.2/Nova/gpt-oss).</li>
-        <li>• <b>Azure AI Foundry</b> EU Data Zone — Mistral-Large-3 etc.; but Fireworks-hosted Kimi/GLM/MiniMax are <b>outside</b> the EU boundary.</li>
+        <li>• <b>Azure AI Foundry</b> EU Data Zone — use only model offers that explicitly document EU inference residency; Fireworks-hosted GLM/MiniMax are <b>outside</b> the EU boundary, and the direct Kimi catalog is treated conservatively until model-specific EU serving is confirmed.</li>
         <li>• <b>Google Vertex AI</b> europe-west / EU multi-region — Model-Garden open models (Llama/Gemma/DeepSeek V3.2); never use the global endpoint.</li>
         <li>• <b>Confidentiality (TEE)</b> for GLM/Kimi/MiniMax: <b>Chutes</b> (Intel TDX + NVIDIA CC, 13 TEE models) gives confidentiality but no EU pinning; <b>Privatemode</b> (Edgeless Systems, Germany) is EU-pinned + confidential but narrow.</li>
         <li>• <b>&ldquo;EU available&rdquo; but dedicated/enterprise only — not self-serve serverless</b> (so excluded as price sources): <b>Together AI</b> (Sweden GPU clusters / dedicated endpoints, Sep 2025), <b>Fireworks</b> (Frankfurt/Iceland dedicated/BYOC), <b>Cloudflare</b> (Data Localization Suite, Enterprise add-on), <b>AtlasCloud</b> (eu-west dedicated). Their public per-token APIs have no EU region selector and run from US capacity. <b>DigitalOcean</b> has EU serverless on its roadmap only. All are US-HQ (CLOUD Act).</li>
@@ -200,7 +185,7 @@ export default async function EuPage() {
 
       <p className="mt-6 text-xs text-gray-500">
         Use the global <b>&ldquo;EU-hosted only&rdquo;</b> and <b>&ldquo;Non-US provider only&rdquo;</b> filters (top bar) to
-        restrict every tab&apos;s pricing to these providers. Full research with sources lives in
+        restrict the interactive comparison views and linked model details to matching offers. Full research with sources lives in
         {" "}<code>data/research/</code> in the repository.
       </p>
     </div>

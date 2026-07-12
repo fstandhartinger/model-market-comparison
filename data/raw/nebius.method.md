@@ -1,7 +1,25 @@
 # Nebius (Token Factory) pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/nebius.json`
-**Last collected:** 2026-07-01 (prior: 2026-06-23, 2026-06-18)
+**Last collected:** 2026-07-12 (prior: 2026-07-06, 2026-07-01)
+
+## Update 2026-07-12
+The unauthenticated structured catalog now exposes **26** public models. The
+embedding-only Qwen3-Embedding-8B is omitted from the comparison, leaving **25**
+text/vision models. **MiniMax-M3** is new since the 2026-07-06 snapshot: Base tier,
+`us-central1`, $0.30/1M input and $1.20/1M output, 1,048,576-token context. All
+previously tracked prices and served regions are unchanged.
+
+The structured endpoint is now the primary source and avoids scraping the SPA:
+
+```bash
+curl -s https://tokenfactory.nebius.com/api/public/models_info
+```
+
+Its human-readable equivalent is
+<https://tokenfactory.nebius.com/api/public/models_info.md>. Region must remain an
+offer-level property: the live catalog mixes `eu-north1`, `us-central1`, and
+`uk-south1`; Nebius being EU-capable does not make every Nebius model EU-hosted.
 
 ## Update 2026-07-01
 Re-rendered via agent-browser (`--session nebius`). Anonymous header: All **25** /
@@ -80,7 +98,8 @@ OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.
 - GLM 5.1 IS present; **GLM 5.2** IS present (it is the newest, "New" tag).
 - **Kimi K2.5 / K2.7** — not present (only K2.6).
 - **DeepSeek R1** — not present (only V4 Pro + deprecated V3.2).
-- **MiniMax M2.7 / M3** — not present (only M2.5).
+- **MiniMax M2.7** — not present. MiniMax M3 was added on 2026-07-10, but is served
+  from `us-central1` rather than the EU.
 - **Qwen3 Coder-480B** — not present. (Newest Qwen is Qwen3.5-397B-A17B + Qwen3-235B.)
 - **Llama 4 Maverick / Scout** — not present (only Llama 3.3 70B + NVIDIA Nemotron-Llama variants).
 - **gpt-oss-20b** — not present (only 120b).
@@ -124,12 +143,14 @@ OpenAI-compatible API host: `https://api.tokenfactory.nebius.com/v1`.
   compute.
 
 ## How to refresh
-1. Re-run the agent-browser steps above against
-   <https://tokenfactory.nebius.com/models>.
-2. (Optional, needs auth) The OpenAI-compatible model list at
+1. Fetch the unauthenticated structured source at
+   <https://tokenfactory.nebius.com/api/public/models_info>; use the adjacent `.md`
+   endpoint for a quick human-readable cross-check.
+2. (Optional, needs auth) The OpenAI-compatible runtime model list at
    `GET https://api.tokenfactory.nebius.com/v1/models` returns `{"detail":"Couldn't
    authenticate..."}` without a key — it does NOT include prices anyway, so the
-   rendered catalog page remains the source of truth for pricing. To use it, set a
+   public `models_info` catalog remains the source of truth for pricing. To use the
+   runtime endpoint, set a
    Nebius API key as `Authorization: Bearer <key>` (we don't currently store one).
-3. Re-parse, re-normalize model names to lab style, omit the embedding model,
+3. Re-normalize model names to lab style, omit the embedding model,
    rebuild `nebius.json`.

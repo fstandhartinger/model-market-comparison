@@ -15,8 +15,8 @@ export default async function Home() {
         <h1 className="text-2xl font-bold">LLM Price &amp; Capability Comparison</h1>
         <p className="mt-1 max-w-3xl text-sm text-gray-400">
           Open-source and frontier LLMs ranked by capability and priced across providers —
-          OpenRouter inference providers, AWS Bedrock, Azure AI Foundry, GitHub Copilot and the
-          Anthropic / Claude Code list price. Capability is measured with ArtificialAnalysis indices
+          OpenRouter inference providers, hyperscalers, EU-native APIs, Chutes, GitHub Copilot and
+          the Anthropic / Claude Code list price. Capability is measured with ArtificialAnalysis indices
           and DesignArena Elo. Pick a score, then sort by cheapest 10:1 blended cost.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">

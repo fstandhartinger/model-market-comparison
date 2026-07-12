@@ -6,7 +6,7 @@ import {
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { modelCost, effectiveAllowed, isHiddenModel } from "../lib/cost";
+import { modelCost, rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
 import { NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
@@ -19,9 +19,9 @@ function truncTick({ x, y, payload }: { x: number; y: number; payload: { value: 
 export function ChartsBoard({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
   const [maxCost, setMaxCost] = useState("");
-  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
 
   const pool = useMemo(() => {
     const maxC = parseFloat(maxCost);
@@ -32,10 +32,11 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     if (s.featured) base = base.filter((m) => m.featured);
     if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
     return base
-      .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
+      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], offerCount: rankedOffers(data.offersByFamily[m.family_key], offerScope).length }))
+      .filter((x) => !offerScope.restricted || x.offerCount > 0)
       .filter((x) => (Number.isFinite(maxC) ? x.cost != null && x.cost <= maxC : true))
-      .filter((x) => (s.minScore > 0 ? x.sc == null || x.sc >= s.minScore : true));
-  }, [data, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, allowed, preferredId]);
+      .filter((x) => (s.minScore > 0 ? x.sc != null && x.sc >= s.minScore : true));
+  }, [data, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, offerScope, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
@@ -63,7 +64,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
         <span className="text-sm text-gray-400">Score: <b className="text-gray-200">{SCORE_LABELS[score]}</b> · min {s.minScore}</span>
         <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
-        <span className="ml-auto text-xs text-gray-500">{pool.length} models</span>
+        <span className="ml-auto text-xs text-gray-500">{pool.length} models within global provider filters</span>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">

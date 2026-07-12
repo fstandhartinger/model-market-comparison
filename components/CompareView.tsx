@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ClientData, ClientModel } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
+import { modelCost, rankedOffers, createOfferScope, isHiddenModel, type OfferScope } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels } from "../lib/variants";
@@ -19,33 +19,46 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
 
 export function CompareView({ data }: { data: ClientData }) {
   const s = useSettings();
-  const allowed = useMemo(() => effectiveAllowed(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
-  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+  const preferredId = useMemo(() => preferredVariantIds(data.models, s.score), [data.models, s.score]);
 
   const models = useMemo(() => {
-    let r = data.models.filter((m) => m.scores[s.score] != null || rankedOffers(data.offersByFamily[m.family_key], null).length);
+    let r = data.models.filter((m) => {
+      const hasOffer = rankedOffers(data.offersByFamily[m.family_key], offerScope).length > 0;
+      return offerScope.restricted ? hasOffer : hasOffer || m.scores[s.score] != null;
+    });
     if (s.collapse) r = collapseModels(r, preferredId);
     r = r.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) r = r.filter((m) => m.open_weights);
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
-    if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] == null || (m.scores[s.score] as number) >= s.minScore);
-    if (q.trim()) { const t = q.toLowerCase(); r = r.filter((m) => m.display_name.toLowerCase().includes(t) || m.org.toLowerCase().includes(t)); }
+    if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScore);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, q, preferredId]);
+  }, [data, offerScope, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
 
-  const maxScore = Math.max(1, ...models.map((m) => m.scores[s.score] ?? 0));
+  const visibleModels = useMemo(() => {
+    if (!q.trim()) return models;
+    const term = q.toLowerCase();
+    return models.filter((m) => m.display_name.toLowerCase().includes(term) || m.org.toLowerCase().includes(term));
+  }, [models, q]);
 
-  const pick = (id: string) => setPicks((p) => p.includes(id) ? p.filter((x) => x !== id) : (p.length < 2 ? [...p, id] : [p[1], id]));
-  const A = data.models.find((m) => m.id === picks[0]);
-  const B = data.models.find((m) => m.id === picks[1]);
-  const slotOf = (id: string) => picks[0] === id ? "A" : picks[1] === id ? "B" : null;
+  const maxScore = Math.max(1, ...visibleModels.map((m) => m.scores[s.score] ?? 0));
+  const modelIds = useMemo(() => new Set(models.map((m) => m.id)), [models]);
+
+  const pick = (id: string) => setPicks((p) => {
+    const current = p.filter((picked) => modelIds.has(picked));
+    return current.includes(id) ? current.filter((picked) => picked !== id) : (current.length < 2 ? [...current, id] : [current[1], id]);
+  });
+  const activePicks = picks.filter((picked) => modelIds.has(picked));
+  const A = models.find((m) => m.id === activePicks[0]);
+  const B = models.find((m) => m.id === activePicks[1]);
+  const slotOf = (id: string) => activePicks[0] === id ? "A" : activePicks[1] === id ? "B" : null;
 
   const metricVal = (m: ClientModel | undefined, key: ScoreKey | "cost"): number | null => {
     if (!m) return null;
-    return key === "cost" ? modelCost(m, data, allowed) : m.scores[key];
+    return key === "cost" ? modelCost(m, data, offerScope) : m.scores[key];
   };
 
   return (
@@ -65,7 +78,7 @@ export function CompareView({ data }: { data: ClientData }) {
               <th className="px-3 py-2 text-right text-xs text-gray-400">Score</th>
             </tr></thead>
             <tbody>
-              {models.map((m) => {
+              {visibleModels.map((m) => {
                 const sc = m.scores[s.score]; const slot = slotOf(m.id);
                 return (
                   <tr key={m.id} onClick={() => pick(m.id)} className={`cursor-pointer ${slot ? "bg-accent/15" : ""}`}>
@@ -138,7 +151,7 @@ export function CompareView({ data }: { data: ClientData }) {
             {/* Provider price tables side by side */}
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {[A, B].map((m, i) => (
-                <ProviderMini key={i} slot={i === 0 ? "A" : "B"} model={m} data={data} allowed={allowed} />
+                <ProviderMini key={i} slot={i === 0 ? "A" : "B"} model={m} data={data} offerScope={offerScope} />
               ))}
             </div>
           </>
@@ -148,8 +161,8 @@ export function CompareView({ data }: { data: ClientData }) {
   );
 }
 
-function ProviderMini({ slot, model, data, allowed }: { slot: string; model?: ClientModel; data: ClientData; allowed: Set<string> | null }) {
-  const offers = model ? rankedOffers(data.offersByFamily[model.family_key], allowed).slice(0, 8) : [];
+function ProviderMini({ slot, model, data, offerScope }: { slot: string; model?: ClientModel; data: ClientData; offerScope: OfferScope }) {
+  const offers = model ? rankedOffers(data.offersByFamily[model.family_key], offerScope).slice(0, 8) : [];
   const max = Math.max(1, ...offers.map((o) => o.blended));
   return (
     <div className="card p-3">
@@ -167,7 +180,7 @@ function ProviderMini({ slot, model, data, allowed }: { slot: string; model?: Cl
               ))}
             </tbody>
           </table>
-        ) : <p className="text-xs text-gray-500">No token pricing{allowed ? " within the selected providers" : ""}.</p>
+        ) : <p className="text-xs text-gray-500">No token pricing within the global filters.</p>
       ) : <p className="text-xs text-gray-600">—</p>}
     </div>
   );

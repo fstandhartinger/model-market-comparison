@@ -1,15 +1,15 @@
 {
   "source": "Azure AI Foundry",
-  "region": "swedencentral",
-  "collected_at": "2026-07-07",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices); productName filters OpenAI/Models/AI Foundry across six EU regions (6,757 items 2026-07-07); Global tier list price unless noted (Fireworks/Phi tier-locked to DataZone-EU/regional). SPECIAL-FOCUS re-check 2026-07-07: GLM 5.2, Kimi K2.7, MiniMax M3, and a standalone DeepSeek V4 are STILL NOT on Azure Foundry (zero substring hits in all fields; re-verified 2026-07-07 — GLM 5.2 still has NO price meter in the Retail Prices API, only FW GLM 5 = 1.10/3.52 and FW GLM 5.1 = 1.54/4.84 exist). GLM is present only as GLM 5 + GLM 5.1 via the Azure Fireworks Models partner catalog (DataZone-EU only, which Microsoft excludes from the EU Data Boundary = effectively US/Fireworks-served, NOT Microsoft-native). No first-party/native Z.ai product exists. No additions or price changes vs 2026-07-06.",
+  "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
+  "collected_at": "2026-07-12",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not EU-resident; only documented EU Data Zone or regional offers use an EU region. Azure Fireworks Models are separate partner offers, run only in documented US deployment regions, and are explicitly outside the Azure EU Data Boundary (region=us, eu_hosted=false). Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded from the primary input/output prices.",
   "models": [
     {
       "model_name": "GPT-5",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; DataZone EU in/out 1.375/11.0"
     },
     {
@@ -17,7 +17,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global (chat-tuned)"
     },
     {
@@ -25,7 +25,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 2.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; DataZone EU in/out 0.275/2.2"
     },
     {
@@ -33,7 +33,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.05,
       "output_per_1m_usd": 0.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; DataZone EU in/out 0.055/0.44"
     },
     {
@@ -41,7 +41,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 15.0,
       "output_per_1m_usd": 120.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; reasoning pro tier"
     },
     {
@@ -49,7 +49,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -57,7 +57,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; DataZone EU in/out 1.375/11.0"
     },
     {
@@ -65,7 +65,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -73,7 +73,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -81,7 +81,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 2.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -89,7 +89,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -97,15 +97,15 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
       "output_per_1m_usd": 14.0,
-      "region": "swedencentral",
-      "notes": "Global; DataZone EU in/out 1.925/15.4"
+      "region": "global",
+      "notes": "Global. DZ meter is $1.925/$15.40, but GPT-5.2 is not listed in the current Europe Data Zone availability table; no EU-hosted row is created."
     },
     {
       "model_name": "GPT-5.2 Chat",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
       "output_per_1m_usd": 14.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -113,7 +113,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
       "output_per_1m_usd": 14.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -121,7 +121,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 21.0,
       "output_per_1m_usd": 168.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; reasoning pro tier"
     },
     {
@@ -129,7 +129,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
       "output_per_1m_usd": 14.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -137,7 +137,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
       "output_per_1m_usd": 14.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -145,7 +145,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.5,
       "output_per_1m_usd": 15.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; DataZone EU in/out 2.75/16.5"
     },
     {
@@ -153,7 +153,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.75,
       "output_per_1m_usd": 4.5,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -161,7 +161,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 1.25,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -169,7 +169,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 30.0,
       "output_per_1m_usd": 180.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; reasoning pro tier"
     },
     {
@@ -177,7 +177,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 5.0,
       "output_per_1m_usd": 30.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; default short-context tier"
     },
     {
@@ -185,23 +185,23 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 10.0,
       "output_per_1m_usd": 45.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; long-context tier"
     },
     {
-      "model_name": "GPT-5 chat-latest",
+      "model_name": "GPT-chat-latest",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 5.0,
       "output_per_1m_usd": 30.0,
-      "region": "swedencentral",
-      "notes": "Global; rolling chat-latest (2026-05-28)"
+      "region": "global",
+      "notes": "Global; rolling chat-latest, current documented model version 2026-06-24. Retail meter remains $5/$30."
     },
     {
       "model_name": "gpt-oss-120B",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; open-weight"
     },
     {
@@ -209,7 +209,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 4.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -217,7 +217,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.5,
       "output_per_1m_usd": 6.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -225,7 +225,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 10.0,
       "output_per_1m_usd": 40.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; deep research"
     },
     {
@@ -233,7 +233,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.0,
       "output_per_1m_usd": 8.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -241,7 +241,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 20.0,
       "output_per_1m_usd": 80.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -249,7 +249,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 4.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -257,7 +257,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 15.0,
       "output_per_1m_usd": 60.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -265,7 +265,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 4.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -273,7 +273,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 150.0,
       "output_per_1m_usd": 600.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -281,7 +281,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.0,
       "output_per_1m_usd": 8.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -289,7 +289,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.4,
       "output_per_1m_usd": 1.6,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -297,7 +297,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -305,7 +305,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 75.0,
       "output_per_1m_usd": 150.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -313,7 +313,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.5,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -321,7 +321,7 @@
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -329,7 +329,7 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.74,
       "output_per_1m_usd": 3.48,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -337,7 +337,7 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.19,
       "output_per_1m_usd": 0.51,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -345,15 +345,23 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.58,
       "output_per_1m_usd": 1.68,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
+    },
+    {
+      "model_name": "DeepSeek-V3.2 Speciale",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.58,
+      "output_per_1m_usd": 1.68,
+      "region": "global",
+      "notes": "Azure Direct Global standard token meter. A $0.64/$1.85 DZ meter exists, but the current Europe Data Zone table does not list this model; no EU-hosted offer is inferred from the meter alone."
     },
     {
       "model_name": "DeepSeek-V3.1",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.23,
       "output_per_1m_usd": 4.94,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -361,7 +369,7 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.14,
       "output_per_1m_usd": 4.56,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -369,7 +377,7 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.14,
       "output_per_1m_usd": 4.56,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -377,7 +385,7 @@
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.35,
       "output_per_1m_usd": 5.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; reasoning"
     },
     {
@@ -385,7 +393,7 @@
       "provider_org": "Microsoft",
       "input_per_1m_usd": 1.35,
       "output_per_1m_usd": 5.4,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; MS-tuned DeepSeek-R1"
     },
     {
@@ -393,15 +401,31 @@
       "provider_org": "xAI",
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
-      "region": "swedencentral",
-      "notes": "Global; DataZone EU in/out 1.375/2.75"
+      "region": "global",
+      "notes": "Global. A $1.375/$2.75 DZ meter exists, but the current Europe Data Zone table does not list Grok; no EU-hosted offer is inferred from the meter alone."
     },
     {
-      "model_name": "Grok 4.1",
+      "model_name": "Grok 4.20 Reasoning",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 2.5,
+      "region": "global",
+      "notes": "Azure Direct Global standard token meter. Distinct reasoning deployment. The current Europe Data Zone table does not list Grok."
+    },
+    {
+      "model_name": "Grok 4.20 Non-Reasoning",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 1.25,
+      "output_per_1m_usd": 2.5,
+      "region": "global",
+      "notes": "Azure Direct Global standard token meter. Distinct non-reasoning deployment. The current Europe Data Zone table does not list Grok."
+    },
+    {
+      "model_name": "Grok 4.1 Fast Reasoning",
       "provider_org": "xAI",
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.5,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -409,15 +433,15 @@
       "provider_org": "xAI",
       "input_per_1m_usd": 3.0,
       "output_per_1m_usd": 15.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
-      "model_name": "Grok 4 Fast",
+      "model_name": "Grok 4.1 Fast Non-Reasoning",
       "provider_org": "xAI",
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.5,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -425,7 +449,7 @@
       "provider_org": "xAI",
       "input_per_1m_usd": 3.0,
       "output_per_1m_usd": 15.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -433,7 +457,7 @@
       "provider_org": "xAI",
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 1.27,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -441,7 +465,7 @@
       "provider_org": "xAI",
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 1.5,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -449,7 +473,7 @@
       "provider_org": "Meta",
       "input_per_1m_usd": 0.71,
       "output_per_1m_usd": 0.71,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -457,7 +481,7 @@
       "provider_org": "Meta",
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 1.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -465,7 +489,7 @@
       "provider_org": "Mistral AI",
       "input_per_1m_usd": 0.5,
       "output_per_1m_usd": 1.5,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -473,7 +497,7 @@
       "provider_org": "Mistral AI",
       "input_per_1m_usd": 1.5,
       "output_per_1m_usd": 7.5,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
     },
     {
@@ -481,7 +505,7 @@
       "provider_org": "Mistral AI",
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 0.9,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global; coding"
     },
     {
@@ -489,8 +513,61 @@
       "provider_org": "Cohere",
       "input_per_1m_usd": 2.5,
       "output_per_1m_usd": 10.0,
-      "region": "swedencentral",
+      "region": "global",
       "notes": "Global"
+    },
+    {
+      "model_name": "Cohere Command A Plus",
+      "provider_org": "Cohere",
+      "input_per_1m_usd": 0.8,
+      "output_per_1m_usd": 3.2,
+      "region": "global",
+      "notes": "Azure Direct Global standard token meter, effective 2026-07-01. A $0.88/$3.52 DZ meter exists, but the current Europe Data Zone table does not list Command A Plus."
+    },
+    {
+      "model_name": "GPT-5 (EU Data Zone)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.375,
+      "output_per_1m_usd": 11.0,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+    },
+    {
+      "model_name": "GPT-5 Mini (EU Data Zone)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.275,
+      "output_per_1m_usd": 2.2,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+    },
+    {
+      "model_name": "GPT-5 Nano (EU Data Zone)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.055,
+      "output_per_1m_usd": 0.44,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+    },
+    {
+      "model_name": "GPT-5.1 (EU Data Zone)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.375,
+      "output_per_1m_usd": 11.0,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+    },
+    {
+      "model_name": "GPT-5.4 (EU Data Zone)",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 2.75,
+      "output_per_1m_usd": 16.5,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
     },
     {
       "model_name": "Phi-4",
@@ -498,6 +575,7 @@
       "input_per_1m_usd": 0.125,
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
+      "eu_hosted": true,
       "notes": "Regional (swedencentral); no Global tier"
     },
     {
@@ -506,6 +584,7 @@
       "input_per_1m_usd": 0.075,
       "output_per_1m_usd": 0.3,
       "region": "swedencentral",
+      "eu_hosted": true,
       "notes": "Regional (swedencentral)"
     },
     {
@@ -514,6 +593,7 @@
       "input_per_1m_usd": 0.125,
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
+      "eu_hosted": true,
       "notes": "Regional (swedencentral); reasoning"
     },
     {
@@ -522,6 +602,7 @@
       "input_per_1m_usd": 0.125,
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
+      "eu_hosted": true,
       "notes": "Regional (swedencentral); reasoning"
     },
     {
@@ -530,71 +611,143 @@
       "input_per_1m_usd": 0.075,
       "output_per_1m_usd": 0.3,
       "region": "swedencentral",
+      "eu_hosted": true,
       "notes": "Regional (swedencentral); reasoning"
     },
     {
-      "model_name": "Kimi K2.5",
+      "model_name": "Kimi K2 Thinking (Azure Direct)",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.6,
+      "output_per_1m_usd": 2.5,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Native Azure Kimi product, Global deployment. Retail also exposes a $0.66/$2.75 DZ meter, but the current Europe Data Zone availability table does not confirm this model; therefore this row is not marked EU-hosted."
+    },
+    {
+      "model_name": "Kimi K2.5 Thinking (Azure Direct)",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.6,
+      "output_per_1m_usd": 3.0,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Native Azure Kimi product, Global deployment. Retail DZ meter is $0.66/$3.30; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.10/1M."
+    },
+    {
+      "model_name": "Kimi K2.6 Thinking (Azure Direct)",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.95,
+      "output_per_1m_usd": 4.0,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Native Azure Kimi product, Global deployment. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.16/1M."
+    },
+    {
+      "model_name": "Kimi K2.7 Code (Azure Direct)",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.95,
+      "output_per_1m_usd": 4.0,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M."
+    },
+    {
+      "model_name": "Kimi K2.5 Thinking (Fireworks)",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.66,
       "output_per_1m_usd": 3.3,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). Kimi K2.7 NOT on Azure as of 2026-07-07 (re-verified, still no meter)."
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models partner offer. Fireworks inference is available only in documented US deployment regions and is excluded from the Azure EU Data Boundary; EU resource-region meters are billing metadata, not EU hosting."
     },
     {
-      "model_name": "Kimi K2.6",
+      "model_name": "Kimi K2.6 Thinking (Fireworks)",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 1.045,
       "output_per_1m_usd": 4.4,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). Kimi K2.7 NOT on Azure as of 2026-07-07 (re-verified, still no meter)."
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models partner offer. Fireworks inference is available only in documented US deployment regions and is excluded from the Azure EU Data Boundary."
     },
     {
-      "model_name": "GLM 5",
-      "provider_org": "Zhipu AI",
+      "model_name": "Kimi K2.7 Code (Fireworks)",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 1.05,
+      "output_per_1m_usd": 4.4,
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-07-01; cached input is $0.21/1M. US deployment only and excluded from the Azure EU Data Boundary."
+    },
+    {
+      "model_name": "GLM 5 (Fireworks)",
+      "provider_org": "Z.ai",
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 3.52,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU tier only (no Global tier). DataZone-EU is EXCLUDED from the EU Data Boundary = effectively US/Fireworks-served. GLM 5.2 NOT on Azure as of 2026-07-07 (re-verified, still no meter)."
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models partner offer; not Microsoft-native. US deployment only and excluded from the Azure EU Data Boundary."
     },
     {
-      "model_name": "GLM 5.1",
-      "provider_org": "Zhipu AI",
+      "model_name": "GLM 5.1 (Fireworks)",
+      "provider_org": "Z.ai",
       "input_per_1m_usd": 1.54,
       "output_per_1m_usd": 4.84,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU tier only (no Global tier). DataZone-EU is EXCLUDED from the EU Data Boundary = effectively US/Fireworks-served. GLM 5.2 NOT on Azure as of 2026-07-07 (re-verified, still no meter)."
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models partner offer; not Microsoft-native. US deployment only and excluded from the Azure EU Data Boundary."
     },
     {
-      "model_name": "MiniMax M2.5",
+      "model_name": "GLM 5.2 (Fireworks)",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 1.54,
+      "output_per_1m_usd": 4.84,
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-07-01; cached input is $0.15/1M. US deployment only and excluded from the Azure EU Data Boundary."
+    },
+    {
+      "model_name": "MiniMax M2.5 (Fireworks)",
       "provider_org": "MiniMax",
       "input_per_1m_usd": 0.33,
       "output_per_1m_usd": 1.32,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner (Azure Fireworks Models), NOT Microsoft-native; DataZone-EU only (excluded from EU Data Boundary). MiniMax M3 NOT on Azure as of 2026-07-07 (re-verified, still no meter)."
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models partner offer. US deployment only and excluded from the Azure EU Data Boundary."
+    },
+    {
+      "model_name": "MiniMax M2.7 (Fireworks)",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.33,
+      "output_per_1m_usd": 1.32,
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-06-01; cached input is $0.066/1M. US deployment only and excluded from the Azure EU Data Boundary."
     },
     {
       "model_name": "DeepSeek-V4 Pro (Fireworks)",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.925,
       "output_per_1m_usd": 3.828,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner alt of DeepSeek-V4 Pro (also exists Microsoft-native as DeepSeek-V4 Pro w/ Global tier); DataZone-EU only (excluded from EU Data Boundary)"
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Fireworks partner alternative to the Azure Direct Global offer. US deployment only and excluded from the Azure EU Data Boundary."
     },
     {
       "model_name": "DeepSeek-V3.2 (Fireworks)",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.62,
       "output_per_1m_usd": 1.85,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner alt of DeepSeek-V3.2 (also exists Microsoft-native w/ Global tier); DataZone-EU only (excluded from EU Data Boundary)"
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Fireworks partner alternative to the Azure Direct Global offer. US deployment only and excluded from the Azure EU Data Boundary."
     },
     {
       "model_name": "gpt-oss-120B (Fireworks)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.165,
       "output_per_1m_usd": 0.66,
-      "region": "swedencentral",
-      "notes": "Fireworks-partner open-weight (also exists Microsoft-native w/ Global tier); DataZone-EU only (excluded from EU Data Boundary)"
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Fireworks partner alternative to the Azure Direct Global offer. US deployment only and excluded from the Azure EU Data Boundary."
     }
   ]
 }

@@ -1,5 +1,6 @@
 import { NextResponse } from "next/server";
 import { getDataset, cheapestOffers, modelCost, scoreOf } from "../../../lib/data";
+import { clientData } from "../../../lib/client-model";
 import type { ScoreKey } from "../../../lib/types";
 
 export const dynamic = "force-dynamic";
@@ -10,6 +11,9 @@ export async function GET(req: Request) {
   const hasBenchmark = searchParams.get("hasBenchmark") === "1";
   const score = (searchParams.get("score") as ScoreKey) || "aa_coding_index";
   const ds = await getDataset();
+  const compositeById = score === "composite"
+    ? new Map(clientData(ds).models.map((model) => [model.id, model.scores.composite]))
+    : null;
 
   let models = ds.models;
   if (featured) models = models.filter((m) => m.featured);
@@ -24,7 +28,7 @@ export async function GET(req: Request) {
     variant: m.variant,
     open_weights: m.open_weights,
     featured: m.featured,
-    score: scoreOf(m, score),
+    score: compositeById ? (compositeById.get(m.id) ?? null) : scoreOf(m, score),
     benchmarks: m.benchmarks,
     designarena: m.designarena,
     cost_blended_10to1: modelCost(m),

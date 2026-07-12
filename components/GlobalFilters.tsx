@@ -4,7 +4,7 @@ import { useSettings } from "./SettingsContext";
 import { ScoreSelect, Toggle, ProviderFilter, ModelFilter, NumFilter, type FamilyOption } from "./ui";
 import { defaultMinFor } from "../lib/cost";
 
-/** Top-level filter bar shown on every page; settings apply across all tabs. */
+/** Top-level filter bar; settings apply to interactive comparisons and model offers. */
 export function GlobalFilters({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
   const s = useSettings();
   const active = s.providersExcluded.length || s.families.length || !s.featured || !s.collapse || !s.excludeChinese || s.euHostedOnly || s.euDedicated || s.nonUsOnly || s.hideGptOpus || !s.hideFable || s.openOnly || s.teeOnly || s.minScore !== defaultMinFor(s.score);
@@ -30,7 +30,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           <button onClick={() => { s.setProvidersExcluded([]); s.setFamilies([]); s.setFeatured(true); s.setCollapse(true); s.setExcludeChinese(true); s.setEuHostedOnly(false); s.setEuDedicated(false); s.setNonUsOnly(false); s.setHideGptOpus(false); s.setHideFable(true); s.setOpenOnly(false); s.setTeeOnly(false); s.setMinScore(defaultMinFor(s.score)); }}
             className="rounded-md border border-line px-2 py-1 text-xs text-gray-400 hover:text-gray-200">Reset</button>
         )}
-        <span className="ml-auto text-[11px] text-gray-600">Filters apply to every tab</span>
+        <span className="ml-auto text-[11px] text-gray-600">Applies to comparisons &amp; model offers</span>
       </div>
     </div>
   );

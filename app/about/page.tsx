@@ -10,7 +10,7 @@ export default async function AboutPage() {
       <p className="mt-2 text-sm text-gray-400">
         This tool merges pricing and benchmark data for open-source and frontier LLMs into one
         comparable view. Prices are normalized to USD per 1M tokens (input and output) unless a
-        platform prices differently (GitHub Copilot is per premium request).
+        platform prices differently (GitHub Copilot&apos;s current token/AI-Credit rates and legacy request billing are shown on a separate product axis).
       </p>
 
       <h2 className="mt-6 mb-2 font-semibold">Sources</h2>
@@ -19,11 +19,11 @@ export default async function AboutPage() {
         <li><b>ArtificialAnalysis</b> — Intelligence &amp; Coding indices plus sub-benchmarks (LiveCodeBench, SciCode, Terminal-Bench Hard, τ²-Bench, GPQA, MMLU-Pro) via the v2 API.</li>
         <li><b>DesignArena</b> — Agentic Web Dev Frontend &amp; Full-Stack Elo leaderboards.</li>
         <li><b>AWS Bedrock</b> — on-demand token pricing, European regions (eu-central-1 where available).</li>
-        <li><b>Azure AI Foundry</b> — token pricing for EU deployments (Sweden Central / West Europe).</li>
-        <li><b>Google Vertex AI</b> — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); EU region (europe-west4).</li>
-        <li><b>Nebius</b> (Netherlands) &amp; <b>Inceptron</b> (Sweden) — EU-hosted serverless APIs that carry the SOTA open coding models (GLM, Kimi, DeepSeek V4, MiniMax). See the <a href="/eu" className="text-accent">EU &amp; Sovereign</a> tab.</li>
-        <li><b>GitHub Copilot</b> — premium-request multipliers (commercial, June 2026+). Priced per request, shown separately.</li>
-        <li><b>Anthropic / Claude Code</b> — list token pricing for Opus 4.6/4.7/4.8, Sonnet 4.6, Fable 5.</li>
+        <li><b>Azure AI Foundry</b> — retail token meters plus model-card serving-region checks. A billing/resource region alone is not treated as proof that inference stays in the EU.</li>
+        <li><b>Google Vertex AI</b> — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); offers are marked EU-hosted only where the model supports a documented European serving location.</li>
+        <li><b>TensorX, Inceptron, Scaleway, IONOS, Mistral &amp; Nebius</b> — direct European serverless APIs. TensorX is the broadest in-EU host for GLM/Kimi/DeepSeek/MiniMax; Inceptron serves GLM/Kimi/MiniMax from Finland; Scaleway serves GLM 5.2 from Paris. Nebius is EU-capable but mixes EU, US and UK serving regions, so every model offer is checked separately. See the <a href="/eu" className="text-accent">EU &amp; Sovereign</a> tab.</li>
+        <li><b>GitHub Copilot</b> — current 26-model AI-Credit/token-price catalog plus the 25-model legacy premium-request multiplier table. The UI&apos;s separate per-request field applies only to eligible legacy annual Pro/Pro+ plans.</li>
+        <li><b>Anthropic / Claude Code</b> — all 11 currently callable first-party API models, their cache/batch/list prices, active promotions and Claude Code Enterprise terms.</li>
       </ul>
 
       <h2 className="mt-6 mb-2 font-semibold">What are &ldquo;Featured&rdquo; models?</h2>
@@ -35,9 +35,9 @@ export default async function AboutPage() {
         stay focused. The featured set is:
       </p>
       <ul className="mt-2 grid grid-cols-1 gap-1 text-sm text-gray-300 sm:grid-cols-2">
-        <li>• GPT-5.5 &amp; GPT-5.4 (incl. Mini/Nano, low→xhigh effort)</li>
+        <li>• GPT-5.6 Sol/Terra/Luna, GPT-5.5 &amp; GPT-5.4 (incl. Mini/Nano, low→xhigh effort)</li>
         <li>• Claude Opus 4.8 / 4.7 / 4.6</li>
-        <li>• Claude Sonnet 4.6 &amp; Claude Fable 5</li>
+        <li>• Claude Sonnet 4.6 / 5 &amp; Claude Fable 5</li>
         <li>• Kimi K2.5 / K2.6 / K2.7-Coding</li>
         <li>• GLM 5.1 / 5.2</li>
         <li>• MiniMax M2.5 / M2.7 / M3</li>
@@ -65,7 +65,15 @@ export default async function AboutPage() {
         The &ldquo;10:1 blended&rdquo; cost is <code className="text-accent2">(10·input + 1·output) / 11</code> per 1M tokens,
         approximating a read-heavy workload. The cheapest such cost across all providers is used for the
         cost axis. Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
-        Model names are normalized across sources, so a model&apos;s benchmark and its provider prices line up.
+        The Composite score first normalizes four capability slots: AA Coding, AA Coding Agent, AA Intelligence,
+        and a combined DesignArena result (only boards with at least 500 battles qualify). Pairwise differences use
+        <b className="text-gray-200"> only the slots both models actually have</b> and are fitted into one relative
+        rating graph; pairs without shared evidence create no edge. Every edge keeps the same four-slot denominator,
+        while a slot missing on either side contributes zero difference, so absence cannot amplify the remaining
+        scores or add a bonus/penalty. Identical shared-score profiles are hard-tied when one has only a subset of
+        the other&apos;s coverage, preventing missing coverage from dodging an otherwise applicable comparison. Coding
+        Agent results are attached to the exact model and reasoning-effort variant and use that variant&apos;s best
+        published harness result. Model names are normalized across sources, so a model&apos;s benchmark and its provider prices line up.
         See the repository README and <code>data/SCRAPING.md</code> for how each source is collected and refreshed.
       </p>
     </div>

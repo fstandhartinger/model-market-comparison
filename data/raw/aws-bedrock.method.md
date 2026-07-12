@@ -1,8 +1,14 @@
 # AWS Bedrock pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/aws-bedrock.json`
-**Last collected:** 2026-07-07 (re-scrape; bulk API version `20260707080509`)
-**Primary method:** AWS Price List Bulk API (no auth). Pricing-page WebFetch + web search used only to fill gaps the bulk API doesn't cover (Anthropic Claude, Cohere).
+**Last collected:** 2026-07-12 (bulk API version `20260707080509`; model cards and public pricing re-checked)
+**Primary method:** AWS Price List Bulk API (no auth) for regional standard on-demand meters. The official Bedrock pricing page plus official model-card and regional-availability pages fill current-model gaps that are not represented in the EU bulk indexes.
+
+**2026-07-12 snapshot result:** 65 text LLM rows. The EU bulk version did not advance, but a verification against the current official model catalog found six valid US-only gaps with published standard token prices: GPT-5.4, GPT-5.5, Grok 4.3, DeepSeek R1, Writer Palmyra X4, and Writer Palmyra X5. Their rows use the actual documented US in-region or US cross-region scope and must not pass an EU-hosted filter. Legacy Cohere Command and Command Light were removed: the current pricing table exposes them under Provisioned Throughput, not as comparable token-based on-demand offers.
+
+Seven `eu-central-1` rows had accidentally been overwritten with lower US prices on 2026-07-09. The authoritative Frankfurt bulk feed explicitly labels and prices these meters for EU (Frankfurt), so the regional values were restored: DeepSeek V3.1 `$0.696/$2.016`; gpt-oss-120b `$0.20/$0.79`; gpt-oss-20b `$0.09/$0.40`; Qwen3 235B A22B 2507 `$0.29/$1.16`; Qwen3 32B `$0.20/$0.79`; Qwen3 Coder 30B A3B `$0.20/$0.79`; Qwen3 Coder 480B A35B `$0.54/$2.16`. Cross-region routing has no surcharge, but AWS charges the source-region rate; that does not make the US price valid for a Frankfurt offer.
+
+Claude Sonnet 5 deliberately stores the stable standard price (`$3/$15`). Its row documents that the currently active launch promotion is `$2/$10` through 2026-08-31. This avoids silently changing the meaning of the stored price when the promotion expires.
 
 **2026-07-07 snapshot result:** 61 models — 54 priced directly from the bulk API (49 from `eu-central-1`, 2 from `eu-west-2` (Llama 3 8B / 70B), 3 from `eu-west-3` (Mistral 7B / Mistral Large / Mixtral 8x7B)), 7 gap-filled (5 Anthropic Claude via EU cross-region profile + 2 Cohere US-region). The bulk API version is **still `20260707080509`** (unchanged since 2026-07-06; `current/` did not advance) and the bulk-priced model set is **byte-for-byte identical to the 2026-07-06 snapshot: same 54 models, same prices, ZERO additions/removals/price changes.** Cosmetic raw-name quirks persist and are normalized as before (`google.gemma-4-26b-a4b/-31b/-e2b` -> `Gemma 4 26B A4B/31B/E2B`, `DeepSeek v3.2` -> `DeepSeek V3.2`, `Minimax M2/M2.1` -> `MiniMax M2/M2.1`). Anthropic + Cohere gap-fills preserved unchanged (bulk API still has no EU Anthropic entries). **NEW models re-checked and NOT found (2026-07-07):** GLM 5.1 / **GLM 5.2** (still NOT on Bedrock — latest Z.ai model is GLM 5, only `GLM 4.7`, `GLM 4.7 Flash`, `GLM 5` present across all 8 EU indexes), Kimi K2.6 / K2.7 (latest = K2.5; only `Kimi K2 Thinking` + `Kimi K2.5`), MiniMax M2.7 / M3 (latest = M2.5), DeepSeek V4 (latest = V3.2). No new Qwen3 / Nova / Llama / gpt-oss / Nemotron versions either.
 
@@ -73,14 +79,14 @@ Parsing logic (Python, used 2026-06-17): for each region file build `sku->USD` f
   - Claude Sonnet 4.6 — $3 in / $15 out per 1M
   - Claude Haiku 4.5 — $1 in / $5 out per 1M
   - In EU, Claude is served via the **EU cross-region inference profile** (`eu.anthropic.*`), not a single-region model. Cross-region inference can add ~10% in some configs (e.g. Sonnet 5 shows $2.20/1M for the eu-north-1 leg at promo rate).
-- **Cohere Command / Command Light:** not in EU bulk API. Prices from public pricing page, US region ($0.0015/$0.0020 and $0.0003/$0.0006 per 1K). Marked region `us-east-1`.
+- **Cohere Command / Command Light:** excluded. The current public pricing table lists these legacy models under Provisioned Throughput rather than the comparable on-demand token table. Do not reconstruct token rows from the old pricing examples. Current Cohere models should only be added when an official on-demand token meter and supported region are both available.
 - **Amazon Titan Text:** legacy, largely superseded by Nova. As of the 2026-06-23 snapshot, Titan Text Express and Titan Text Lite are **no longer present in ANY EU bulk index** (they briefly appeared in the 2026-06-18 snapshot) and are now dropped from the output entirely rather than gap-filled with stale US pricing-page values. If they need to be re-included, the historical US-region pricing was ~$0.0003/$0.0004 per 1K (Lite) / ~$0.0008/$0.0016 per 1K (Express).
 
 To refresh these gap models, WebFetch `https://aws.amazon.com/bedrock/pricing/` (note: the page is JS-heavy and the markdown conversion is often partial/stale — cross-check with a web search for "AWS Bedrock <model> pricing per million tokens").
 
 ## 3. Caveats
 
-- **EU availability:** Many flagship models (esp. Anthropic) are only invokable in EU via **cross-region inference profiles**, not as a regional model — the bulk API lists them per *underlying* region (US) rather than EU. Prices for the model are identical; the `region` field in the JSON notes where the listed price came from.
+- **EU availability:** Many flagship models (esp. Anthropic) are only invokable in EU via **EU cross-region inference profiles**, not as a single-region model. AWS prices Geo cross-region inference at the source-region rate. Never substitute a lower US price into an EU-region row; the JSON records the offer/inference scope used by that price.
 - Prices are **on-demand** only. Batch = ~50% off; prompt caching = up to ~90% off cached input. Not captured here.
 - The bulk API `publicationDate` (e.g. 2026-06-11) tells you data freshness. Re-run Steps A–C to update; the dated `<VERSION>` path is immutable, `current/` always points at the latest.
 - Provider name normalization applied in output: `Mistral AI`->`Mistral`, `Minimax AI`->`MiniMax`, `Z AI`->`Z.ai`, `Nvidia`->`NVIDIA`.

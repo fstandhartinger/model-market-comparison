@@ -1,24 +1,23 @@
 # Inceptron — data collection method
 
-**Date collected:** 2026-07-01 (prior: 2026-06-23, 2026-06-18)
+**Date collected:** 2026-07-12 (prior: 2026-07-06, 2026-07-01)
 **Output:** `data/raw/inceptron.json`
 
-## Price changes on 2026-07-01
-The catalog is stable at **6 priced text LLMs**, but prices moved (native API
-values confirmed identically on OpenRouter, provider_name=="Inceptron"):
+## Live catalog on 2026-07-12
+The unauthenticated native API currently exposes **4 priced text LLMs**. The native
+prices and current OpenRouter Inceptron routes agree for GLM 5.2, Kimi K2.7 Code,
+and Kimi K2.6:
 
-| Model | in $/1M (was) | out $/1M (was) |
-|-------|---------------|----------------|
-| GLM 5.2 | 1.16 (1.20) | 3.62 (4.20) |
-| GLM 5.1 | 1.19 (1.40) | 3.74 (4.40) |
-| Kimi K2.7 Code | 0.85 (0.75) | 3.50 (3.50) |
-| Kimi K2.6 | 0.66 (0.66) | 3.41 (3.50) |
-| Kimi K2.6 Fast | 1.32 (1.32) | 7.00 (7.00) |
-| MiniMax M2.5 | 0.15 (0.15) | 0.90 (0.90) |
+| Model | in $/1M | out $/1M | cache read $/1M |
+|-------|----------|-----------|------------------|
+| GLM 5.2 | 0.95 | 3.04 | 0.18 |
+| Kimi K2.7 Code | 0.72 | 3.50 | 0.15 |
+| Kimi K2.6 | 0.66 | 3.41 | 0.15 |
+| MiniMax M2.5 | 0.15 | 0.90 | 0.05 |
 
-GLM 5.1/5.2 saw notable output-price cuts; Kimi K2.7 Code input rose to $0.85.
-Cache-read tiers per native API `input_cache_reads`: GLM 5.2 $0.21, GLM 5.1 $0.60,
-K2.7 Code $0.18, K2.6 $0.14, K2.6 Fast $0.40, MiniMax M2.5 $0.05 (per 1M).
+GLM 5.1 and Kimi K2.6 Fast are no longer in the public native catalog. Do not infer
+availability from older snapshots or marketing examples. OpenRouter provider metadata
+reports headquarters Sweden (`SE`) and serving datacenter Finland (`FI`).
 
 ## What Inceptron is
 Inceptron is an EU-based ("enterprise-ready") LLM inference provider. It runs an
@@ -96,12 +95,12 @@ endpoints as of 2026-06-23.
 2. **Cross-source (OpenRouter):** for each candidate slug, GET
    `https://openrouter.ai/api/v1/models/{author}/{slug}/endpoints` and filter
    `data.endpoints[].provider_name == "Inceptron"`; `pricing.prompt` /
-   `pricing.completion` are USD/token. Slugs seen served: `z-ai/glm-5.1`,
-   `moonshotai/kimi-k2.6`, `minimax/minimax-m2.5`. (Scanned all ~330 OR models;
-   only those 3 had Inceptron endpoints.)
+   `pricing.completion` are USD/token. Live slugs on 2026-07-12:
+   `z-ai/glm-5.2`, `moonshotai/kimi-k2.7-code`, and
+   `moonshotai/kimi-k2.6`. MiniMax M2.5 is currently native-catalog-only.
 3. **Website (visual confirmation):** render `https://www.inceptron.io/models`
    with agent-browser (Framer SPA — static `curl` returns only the shell, must
    render JS). HQ/compliance claims live on `https://www.inceptron.io/`.
 4. **Provider metadata (HQ / datacenters / data policy):**
-   `https://openrouter.ai/api/frontend/all-providers` -> entry with
+   `https://openrouter.ai/api/v1/providers` -> entry with
    `slug == "inceptron"`.

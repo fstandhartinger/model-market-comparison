@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, effectiveAllowed, isHiddenModel } from "../lib/cost";
+import { modelCost, rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapsedName } from "../lib/variants";
@@ -22,7 +22,7 @@ const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: st
 export function ModelExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
   const [sort, setSort] = useState<SortKey>("score");
   const [asc, setAsc] = useState(false);
   const [q, setQ] = useState("");
@@ -32,16 +32,16 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   const [maxCost, setMaxCost] = useState("");
 
   const orgs = useMemo(() => Array.from(new Set(data.models.map((m) => m.org))).sort(), [data.models]);
-  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
   const provByKey = useMemo(() => new Map(data.providers.map((p) => [p.key, p])), [data.providers]);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const rows = useMemo(() => {
     const maxC = parseFloat(maxCost);
     let r = data.models.map((m) => ({
-      m, sc: m.scores[score], cost: modelCost(m, data, allowed),
-      cheap: rankedOffers(data.offersByFamily[m.family_key], allowed).slice(0, 3),
-      ncheap: rankedOffers(data.offersByFamily[m.family_key], allowed).length,
+      m, sc: m.scores[score], cost: modelCost(m, data, offerScope),
+      cheap: rankedOffers(data.offersByFamily[m.family_key], offerScope).slice(0, 3),
+      ncheap: rankedOffers(data.offersByFamily[m.family_key], offerScope).length,
     }));
     if (s.collapse) r = r.filter((x) => !preferredId.has(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
     r = r.filter((x) => !isHiddenModel(x.m.family_key, s.hideGptOpus, s.hideFable));
@@ -51,12 +51,10 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
     if (withScoreOnly) r = r.filter((x) => x.sc != null);
-    if (s.minScore > 0) r = r.filter((x) => x.sc == null || x.sc >= s.minScore);
+    if (s.minScore > 0) r = r.filter((x) => x.sc != null && x.sc >= s.minScore);
     if (Number.isFinite(maxC)) r = r.filter((x) => x.cost != null && x.cost <= maxC);
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
-    if (hasProviderOnly) r = r.filter((x) => x.ncheap > 0);
-    // "TEE only": keep models with at least one TEE / confidential-compute offer.
-    if (s.teeOnly) r = r.filter((x) => (data.offersByFamily[x.m.family_key] || []).some((o) => o.tee));
+    if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
 
     const dir = asc ? 1 : -1;
     r.sort((a, b) => {
@@ -67,7 +65,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, s.teeOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, score, offerScope, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);
@@ -90,7 +88,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
         <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
         <Toggle label="Has score" on={withScoreOnly} set={setWithScoreOnly} />
         <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
-        <span className="ml-auto text-xs text-gray-500">{rows.length} models{allowed ? " · provider-filtered cost" : ""}</span>
+        <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       <div className="card overflow-x-auto">
@@ -110,7 +108,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           <tbody>
             {rows.map(({ m, sc, cost, cheap, ncheap }) => {
               const isOpen = expanded === m.id;
-              const allOffers = rankedOffers(data.offersByFamily[m.family_key], null);
+              const allOffers = rankedOffers(data.offersByFamily[m.family_key], offerScope);
               return (
               <Fragment key={m.id}>
               <tr className="cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
@@ -156,7 +154,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                       </div>
                       {/* provider list for this model */}
                       <div>
-                        <div className="mb-1.5 text-[11px] uppercase tracking-wide text-gray-500">Providers — {allOffers.length} offer{allOffers.length === 1 ? "" : "s"} (cheapest first, 10:1 blended)</div>
+                        <div className="mb-1.5 text-[11px] uppercase tracking-wide text-gray-500">Providers within global filters — {allOffers.length} offer{allOffers.length === 1 ? "" : "s"} (cheapest first, 10:1 blended)</div>
                         {allOffers.length === 0 ? <span className="text-xs text-gray-600">no token pricing</span> : (
                         <div className="max-h-64 overflow-y-auto">
                         <table className="w-full text-xs">
@@ -168,7 +166,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                                   <td className="py-1 pr-1 text-gray-500">#{i + 1}</td>
                                   <td className="py-1 pr-2 font-medium">{o.provider}
                                     {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
-                                    {p?.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
+                                    {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
                                     {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
                                     <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
                                   </td>

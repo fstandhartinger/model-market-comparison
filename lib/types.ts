@@ -33,12 +33,34 @@ export interface Offer {
   or_model_id?: string;
   status?: number | null;
   tee?: boolean; // runs in a Trusted Execution Environment (confidential compute)
+  eu_hosted?: boolean; // this specific offer/model is served from an EU region
+  non_us?: boolean; // provider company is not US-based (copied from provider metadata)
+}
+
+export interface CopilotTokenPricing {
+  input_per_1m: number | null;
+  cached_input_per_1m: number | null;
+  cache_write_per_1m: number | null;
+  output_per_1m: number | null;
+  release_status?: string;
+  feature_status?: string;
+  category?: string;
+  long_context?: Record<string, unknown> | null;
+  promotion_ends_at?: string | null;
+  standard_pricing_from?: string | null;
+  standard_input_per_1m?: number | null;
+  standard_cached_input_per_1m?: number | null;
+  standard_cache_write_per_1m?: number | null;
+  standard_output_per_1m?: number | null;
+  notes?: string;
 }
 
 export interface CopilotPricing {
   multiplier: number | null;
   usd_per_request: number | null;
   notes?: string;
+  current?: CopilotTokenPricing;
+  fast_mode?: CopilotTokenPricing;
 }
 
 export interface ModelRow {
@@ -70,7 +92,8 @@ export interface Dataset {
   models: ModelRow[];
   providers: {
     platform: string; provider: string; model_count: number;
-    eu_hosted?: boolean; non_us?: boolean; country?: string | null; note?: string; coming_soon?: boolean;
+    eu_hosted?: boolean; eu_dedicated?: boolean; non_us?: boolean; hyperscaler?: boolean;
+    country?: string | null; note?: string; coming_soon?: boolean;
   }[];
 }
 
@@ -83,7 +106,7 @@ export type ScoreKey =
   | "designarena_fullstack";
 
 export const SCORE_LABELS: Record<ScoreKey, string> = {
-  composite: "Composite (blended, 0–100)",
+  composite: "Composite (missing-neutral, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
   aa_coding_agent: "ArtificialAnalysis — Coding Agent Index (best harness)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",

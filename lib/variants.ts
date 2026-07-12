@@ -1,4 +1,5 @@
 import type { ClientModel } from "./client-model";
+import type { ScoreKey } from "./types";
 
 /** For families that expose MULTIPLE variants (reasoning effort / thinking settings),
  *  choose one representative per family. Data-driven: any family_key with >1 variant is
@@ -8,7 +9,7 @@ import type { ClientModel } from "./client-model";
  *   - Claude → the reasoning variant ("(high)"/"Adaptive Reasoning"/"Max Effort")
  *   - everything else → the reasoning/max variant, dropping "(Non-reasoning)"
  *  Returns family_key -> chosen model id (only for multi-variant families). */
-export function preferredVariantIds(models: ClientModel[]): Map<string, string> {
+export function preferredVariantIds(models: ClientModel[], score?: ScoreKey): Map<string, string> {
   const byFamily = new Map<string, ClientModel[]>();
   for (const m of models) {
     if (!byFamily.has(m.family_key)) byFamily.set(m.family_key, []);
@@ -17,8 +18,13 @@ export function preferredVariantIds(models: ClientModel[]): Map<string, string> 
   const ids = new Map<string, string>();
   for (const [k, rows] of byFamily) {
     if (rows.length < 2) continue; // single-variant families need no collapsing
-    const byVar = (v: string) => rows.find((r) => r.variant === v);
-    const pick = (order: string[]) => (order.map(byVar).find(Boolean) as ClientModel | undefined) || rows[0];
+    // When a score is selected, prefer a measured variant. Exact Coding-Agent
+    // attachment must not make a family disappear merely because its generic
+    // display representative is an unmeasured sibling effort.
+    const measured = score ? rows.filter((row) => row.scores[score] != null) : [];
+    const candidates = measured.length ? measured : rows;
+    const byVar = (v: string) => candidates.find((r) => r.variant === v);
+    const pick = (order: string[]) => (order.map(byVar).find(Boolean) as ClientModel | undefined) || candidates[0];
     let chosen: ClientModel;
     if (k.startsWith("gpt-")) {
       chosen = pick(["high", "medium", "xhigh", "low", "minimal", "non-reasoning", "default"]);

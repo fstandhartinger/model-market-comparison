@@ -41,12 +41,24 @@ export function tokenOffers(model: ModelRow): Offer[] {
 }
 
 /** Cheapest token offers by 10:1 blended cost. */
-export function cheapestOffers(model: ModelRow, n = 5, inputWeight = 10): (Offer & { blended: number })[] {
-  return tokenOffers(model)
+export function cheapestOffers(
+  model: ModelRow,
+  n = 5,
+  inputWeight = 10,
+  predicate: (offer: Offer) => boolean = () => true,
+): (Offer & { blended: number })[] {
+  const ranked = tokenOffers(model)
+    .filter(predicate)
     .map((o) => ({ ...o, blended: blendedCost(o.input_per_1m, o.output_per_1m, inputWeight) ?? Infinity }))
     .filter((o) => Number.isFinite(o.blended))
-    .sort((a, b) => a.blended - b.blended)
-    .slice(0, n);
+    .sort((a, b) => a.blended - b.blended);
+  const seen = new Set<string>();
+  return ranked.filter((offer) => {
+    const key = `${offer.platform}::${offer.provider}`;
+    if (seen.has(key)) return false;
+    seen.add(key);
+    return true;
+  }).slice(0, n);
 }
 
 /** Representative (cheapest) blended cost for the cost axis of the scatter. */

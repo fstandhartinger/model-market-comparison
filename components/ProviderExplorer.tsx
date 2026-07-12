@@ -1,8 +1,9 @@
 "use client";
 import { Fragment, useMemo, useState } from "react";
 import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
+import { SCORE_LABELS } from "../lib/types";
 import { useSettings } from "./SettingsContext";
-import { isHiddenModel, scoreOf } from "../lib/cost";
+import { createOfferScope, isHiddenModel, rankedOffers, scoreOf } from "../lib/cost";
 import { preferredVariantIds } from "../lib/variants";
 
 const blended = (o: { input_per_1m: number | null; output_per_1m: number | null }) =>
@@ -15,7 +16,17 @@ const Badge = ({ children, cls }: { children: React.ReactNode; cls: string }) =>
 
 export function ProviderExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
-  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+  const preferredId = useMemo(() => preferredVariantIds(data.models, s.score), [data.models, s.score]);
+  const [euOnly, setEuOnly] = useState(false);
+  const [inclDedicated, setInclDedicated] = useState(false);
+  const [showEmpty, setShowEmpty] = useState(false);
+  const effectiveEuOnly = s.euHostedOnly || euOnly;
+  // A directory-local modifier must never broaden a stricter global EU scope.
+  const effectiveDedicated = s.euHostedOnly ? s.euDedicated : inclDedicated;
+  const offerScope = useMemo(
+    () => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, effectiveDedicated, s.teeOnly),
+    [s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, effectiveDedicated, s.teeOnly],
+  );
 
   // One representative model per family = the preferred (collapsed) variant, matching the
   // main table. Used to read the family's featured flag / score for the global filters.
@@ -40,12 +51,11 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       if (s.featured && !m.featured) continue;
       if (s.familySet && !s.familySet.has(fam)) continue;
       const sc = scoreOf(m, s.score);
-      if (s.minScore > 0 && sc != null && sc < s.minScore) continue;
-      if (s.teeOnly && !(data.offersByFamily[fam] || []).some((o) => o.tee)) continue;
+      if (s.minScore > 0 && (sc == null || sc < s.minScore)) continue;
       ok.add(fam);
     }
     return ok;
-  }, [modelByFamily, s.hideGptOpus, s.hideFable, s.openOnly, s.featured, s.familySet, s.minScore, s.score, s.teeOnly, data.offersByFamily]);
+  }, [modelByFamily, s.hideGptOpus, s.hideFable, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
 
   // Per-provider model count over the FILTERED families (so the directory count matches the
   // list you actually see when you click through).
@@ -53,24 +63,33 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
     const c = new Map<string, number>();
     for (const [fam, offers] of Object.entries(data.offersByFamily)) {
       if (!familyAllowed.has(fam)) continue;
-      for (const k of new Set(offers.map((o) => o.key))) c.set(k, (c.get(k) ?? 0) + 1);
+      const scoped = rankedOffers(offers, offerScope);
+      for (const k of new Set(scoped.map((o) => o.key))) c.set(k, (c.get(k) ?? 0) + 1);
     }
     return c;
-  }, [data.offersByFamily, familyAllowed]);
+  }, [data.offersByFamily, familyAllowed, offerScope]);
 
-  const [euOnly, setEuOnly] = useState(false);
-  const [inclDedicated, setInclDedicated] = useState(false);
-  const [showEmpty, setShowEmpty] = useState(false);
+  // Providers that have at least one offer matching the provider/residency/TEE
+  // scope anywhere in the catalog. This keeps "show 0" useful for model/score
+  // filters without reintroducing providers that cannot satisfy EU/TEE at all.
+  const scopeCapableKeys = useMemo(() => {
+    const keys = new Set<string>();
+    for (const offers of Object.values(data.offersByFamily)) {
+      for (const offer of rankedOffers(offers, offerScope)) keys.add(offer.key);
+    }
+    return keys;
+  }, [data.offersByFamily, offerScope]);
 
   // Directory rows: recompute per-provider model_count over the filtered families, then apply
   // the directory-local filters — EU hosting (optionally incl. EU-via-dedicated/BYOC) and the
   // "keep providers with 0 matching models" toggle.
   const providers = useMemo(() => {
     let r = data.providers.map((p) => ({ ...p, model_count: provCounts.get(p.key) ?? 0 }));
-    if (euOnly) r = r.filter((p) => p.eu_hosted || (inclDedicated && p.eu_dedicated));
+    if (offerScope.allowed) r = r.filter((p) => offerScope.allowed!.has(p.key));
+    if (offerScope.euHostedOnly || offerScope.teeOnly) r = r.filter((p) => scopeCapableKeys.has(p.key));
     if (!showEmpty) r = r.filter((p) => p.model_count > 0);
     return r;
-  }, [data.providers, provCounts, euOnly, inclDedicated, showEmpty]);
+  }, [data.providers, provCounts, offerScope, scopeCapableKeys, showEmpty]);
   const [sel, setSel] = useState("");
   const [q, setQ] = useState("");
   const [pSort, setPSort] = useState<"models" | "name" | "eu">("models");
@@ -99,21 +118,22 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
     const out: { fam: string; name: string; org: string; score: number | null; mine: ClientOffer; ranked: ClientOffer[]; rank: number }[] = [];
     for (const [fam, offers] of Object.entries(data.offersByFamily)) {
       if (!familyAllowed.has(fam)) continue;
-      const mine = offers.find((o) => o.key === activeKey);
+      const scoped = rankedOffers(offers, offerScope);
+      const mine = scoped.find((o) => o.key === activeKey);
       if (!mine) continue;
-      const ranked = offers.filter((o) => blended(o) != null).sort((a, b) => (blended(a) as number) - (blended(b) as number));
+      const ranked = scoped;
       const mod = modelByFamily.get(fam);
-      out.push({ fam, name: mod?.family_name ?? fam, org: mod?.org ?? "", score: mod?.scores.composite ?? null, mine, ranked, rank: ranked.findIndex((o) => o.key === activeKey) });
+      out.push({ fam, name: mod?.family_name ?? fam, org: mod?.org ?? "", score: mod ? scoreOf(mod, s.score) : null, mine, ranked, rank: ranked.findIndex((o) => o.key === activeKey) });
     }
     out.sort((a, b) => sort === "price" ? (blended(a.mine) ?? Infinity) - (blended(b.mine) ?? Infinity) : (b.score ?? -1) - (a.score ?? -1));
     return out;
-  }, [activeKey, data.offersByFamily, modelByFamily, familyAllowed, sort]);
+  }, [activeKey, data.offersByFamily, modelByFamily, familyAllowed, offerScope, sort, s.score]);
 
   const toggle = (fam: string) => setOpen((s) => { const n = new Set(s); n.has(fam) ? n.delete(fam) : n.add(fam); return n; });
   const flags = (p: ProviderInfo) => (
     <>
       {p.hyperscaler && <Badge cls="bg-amber-500/20 text-amber-300">Hyperscaler</Badge>}
-      {p.eu_hosted && <Badge cls="bg-emerald-500/20 text-emerald-300">EU</Badge>}
+      {p.eu_hosted && <Badge cls="bg-emerald-500/20 text-emerald-300">EU-capable</Badge>}
       {p.non_us && !p.eu_hosted && <Badge cls="bg-sky-500/20 text-sky-300">Non-US</Badge>}
     </>
   );
@@ -135,12 +155,12 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         </div>
         <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
           <label className="flex cursor-pointer items-center gap-1 text-gray-400">
-            <input type="checkbox" checked={euOnly} onChange={(e) => setEuOnly(e.target.checked)} className="accent-emerald-500" />
+            <input type="checkbox" checked={effectiveEuOnly} disabled={s.euHostedOnly} onChange={(e) => setEuOnly(e.target.checked)} className="accent-emerald-500" />
             EU-hosted only
           </label>
-          {euOnly && (
+          {effectiveEuOnly && (
             <label className="flex cursor-pointer items-center gap-1 text-gray-400">
-              <input type="checkbox" checked={inclDedicated} onChange={(e) => setInclDedicated(e.target.checked)} className="accent-emerald-500" />
+              <input type="checkbox" checked={effectiveDedicated} disabled={s.euHostedOnly} onChange={(e) => setInclDedicated(e.target.checked)} className="accent-emerald-500" />
               ＋ incl. EU via dedicated/BYOC
             </label>
           )}
@@ -194,7 +214,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         <div className="card overflow-x-auto">
           <table className="dtable w-full text-sm">
             <thead><tr>
-              {["Model", "Composite", `in / out / blended ($/1M)`, "Price rank", ""].map((h) => (
+              {["Model", SCORE_LABELS[s.score], `in / out / blended ($/1M)`, "Price rank", ""].map((h) => (
                 <th key={h} className="px-3 py-2 text-left text-xs text-gray-400">{h}</th>
               ))}
             </tr></thead>
@@ -206,7 +226,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                   <Fragment key={r.fam}>
                     <tr className="cursor-pointer hover:bg-white/5" onClick={() => toggle(r.fam)}>
                       <td className="px-3 py-2"><span className="font-medium">{r.name}</span> <span className="text-[11px] text-gray-500">{r.org}</span></td>
-                      <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(1) ?? "—"}</td>
+                      <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(s.score.startsWith("designarena") ? 0 : 1) ?? "—"}</td>
                       <td className="px-3 py-2 tabular">{fmt(r.mine.input_per_1m)} / {fmt(r.mine.output_per_1m)} / <b>{fmt(blended(r.mine))}</b>{r.mine.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}</td>
                       <td className="px-3 py-2 text-xs">{r.rank >= 0 ? <span className={cheapest ? "text-emerald-300" : "text-gray-300"}>#{r.rank + 1} of {r.ranked.length}{cheapest ? " · cheapest" : ""}</span> : "—"}</td>
                       <td className="px-3 py-2 text-xs text-gray-500">{isOpen ? "▾ hide" : `▸ compare ${r.ranked.length}`}</td>

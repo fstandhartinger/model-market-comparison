@@ -15,25 +15,29 @@ const readJSON = async (f) => JSON.parse(await readFile(join(RAW, f), "utf8"));
 // ---------------------------------------------------------------------------
 // Normalization
 // ---------------------------------------------------------------------------
-const VENDOR_PREFIXES = ["anthropic/", "openai/", "z-ai/", "moonshotai/", "minimax/", "xiaomi/", "deepseek/", "google/", "meta-llama/", "mistralai/", "qwen/", "x-ai/", "cohere/", "nvidia/", "amazon/", "writer/"];
+const VENDOR_PREFIXES = ["anthropic/", "openai/", "z-ai/", "moonshotai/", "minimax/", "xiaomi/", "deepseek/", "google/", "meta-llama/", "mistralai/", "qwen/", "x-ai/", "cohere/", "nvidia/", "amazon/", "writer/", "perplexity/"];
 
 function stripVendor(s) {
   let x = s.trim().replace(/^~/, "");
   const low = x.toLowerCase();
   for (const p of VENDOR_PREFIXES) if (low.startsWith(p)) { x = x.slice(p.length); break; }
-  return x;
+  return x.replace(/:free$/i, "");
 }
 
 // Reasoning / effort variant detection.
 function detectVariant(raw) {
-  const s = raw.toLowerCase();
+  // AA expresses reasoning effort in parenthetical qualifiers. Restricting the
+  // detector to those qualifiers avoids treating product names such as MiniMax,
+  // Mistral Medium and Qwen Max as effort variants.
+  const s = [...raw.matchAll(/\(([^)]*)\)/g)].map((match) => match[1]).join(" ").toLowerCase();
+  if (!s) return "default";
   const tests = [
     [/non[- ]?reasoning/, "non-reasoning"],
     [/x ?high|xhigh/, "xhigh"],
-    [/max effort|max\b/, "max"],
-    [/high effort|high\b/, "high"],
-    [/medium\b/, "medium"],
-    [/minimal\b/, "minimal"],
+    [/max effort|\bmax\b/, "max"],
+    [/high effort|\bhigh\b/, "high"],
+    [/\bmedium\b/, "medium"],
+    [/\bminimal\b/, "minimal"],
     [/\blow\b/, "low"],
     [/adaptive/, "adaptive"],
     [/thinking/, "thinking"],
@@ -53,7 +57,7 @@ function normalizeFamily(rawName, orgHint) {
        .replace(/-?\b\d{4}\b(?=\s|$|-)/g, (m) => (/^-?(0[1-9]|1[0-2])/.test(m) ? " " : " ")) // drop bare 4-digit dates/codes
        .replace(/\b(fast|latest|preview|instruct|chat|turbo-preview)\b/gi, " ")
        .replace(/\bthinking\b/gi, " ")
-       .replace(/\b(non[- ]?reasoning|reasoning|adaptive|max effort|high effort|low effort|xhigh|x high|minimal|medium|high|low)\b/gi, " ")
+       .replace(/\b(non[- ]?reasoning|reasoning|adaptive|max effort|high effort|low effort|xhigh|x high|minimal)\b/gi, " ")
        .replace(/\bmay 20\d\d\b/gi, " ");
   // unify version dashes: 4-8 -> 4.8 ; k2-6 stays handled below
   x = x.replace(/(\d)[-_](\d)\b/g, "$1.$2");
@@ -69,7 +73,7 @@ function normalizeFamily(rawName, orgHint) {
   x = x.replace(/\.$/, "");
   const familyKey = canonFamily(x || rawName.toLowerCase());
   // display name: title-ish from the cleaned key
-  return { familyKey, org: orgHint || guessOrg(familyKey) };
+  return { familyKey, org: canonOrg(orgHint || guessOrg(familyKey)) };
 }
 
 // Families that should be merged into a canonical key (alias -> canonical).
@@ -81,8 +85,20 @@ const FAMILY_ALIASES = {
   "opus-4.8": "claude-opus-4.8", "opus-4.7": "claude-opus-4.7", "opus-4.6": "claude-opus-4.6", "opus-4.5": "claude-opus-4.5",
   "sonnet-5": "claude-sonnet-5", "sonnet-4.6": "claude-sonnet-4.6", "sonnet-4.5": "claude-sonnet-4.5",
   "fable-5": "claude-fable-5", "haiku-4.5": "claude-haiku-4.5",
+  // Provider-prefixed product labels from managed-cloud catalogs must join the
+  // benchmark/OpenRouter family rather than creating a second model.
+  "cohere-command-a": "command-a",
+  "cohere-command-a-plus": "command-a+",
+  "command-a-plus": "command-a+",
 };
-const canonFamily = (k) => FAMILY_ALIASES[k] || k;
+const canonFamily = (k) => {
+  const exact = FAMILY_ALIASES[k];
+  if (exact) return exact;
+  return k
+    .replace(/^writer-(palmyra(?:-|$))/, "$1")
+    .replace(/^perplexity-(sonar(?:-|$))/, "$1")
+    .replace(/^nvidia-(nemotron(?:-|$))/, "$1");
+};
 
 // Providers ingested as their own first-party platform; their OpenRouter-routed
 // duplicate is dropped so each appears once in the provider list/filter.
@@ -91,10 +107,13 @@ const DIRECT_PLATFORM_PROVIDERS = new Set(["Nebius", "Inceptron", "Chutes", "Sca
 // OpenRouter-routed providers that genuinely run inference inside a hardware TEE
 // (confidential compute). Their offers are flagged tee:true so the "TEE only" filter
 // surfaces them alongside Chutes' first-party TEE listing.
-const TEE_OR_PROVIDERS = new Set(["Phala", "Venice"]);
+const TEE_OR_PROVIDERS = new Set(["Phala"]);
 
 // Non-text / non-LLM modalities to exclude from the comparison.
-const EXCLUDE_RE = /(image|vision-only|\bvideo\b|sora|dall|whisper|\btts\b|speech|audio|embed|rerank|moderation|ocr|guard)/i;
+const EXCLUDE_RE = /(image|vision-only|\bvideo\b|sora|dall|whisper|\btts\b|speech|audio|embed|rerank|moderation|ocr|guard|\blyria\b|^openrouter\/(?:free|auto|fusion|bodybuilder|pareto-code)$)/i;
+// A moving generic alias is not a stable model identity. Its current price can
+// be compared only after the upstream catalog names the concrete model version.
+const AMBIGUOUS_MODEL_RE = /^(?:~?openai\/)?gpt(?:[- ](?:chat|mini))?[- ]latest$/i;
 
 // The models the product brief explicitly asks us to feature.
 const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
@@ -106,7 +125,7 @@ const ORG_ALIASES = {
   "Meta Llama": "Meta", "Meta-Llama": "Meta",
   "Alibaba Cloud": "Alibaba", "Qwen": "Alibaba",
   "MistralAI": "Mistral", "Mistral AI": "Mistral",
-  "xAI (Grok)": "xAI", "X AI": "xAI",
+  "xAI (Grok)": "xAI", "X AI": "xAI", "SpaceXAI": "xAI",
 };
 function canonOrg(org) { return ORG_ALIASES[org] || org; }
 
@@ -120,6 +139,9 @@ function guessOrg(key) {
   if (key.startsWith("deepseek")) return "DeepSeek";
   if (key.startsWith("gemini") || key.startsWith("gemma")) return "Google";
   if (key.startsWith("grok")) return "xAI";
+  if (key.startsWith("sonar")) return "Perplexity";
+  if (key.startsWith("palmyra")) return "Writer";
+  if (key.startsWith("nemotron")) return "NVIDIA";
   if (key.startsWith("llama")) return "Meta";
   if (key.startsWith("mistral") || key.includes("magistral") || key.includes("ministral") || key.includes("pixtral") || key.includes("devstral")) return "Mistral";
   if (key.startsWith("qwen")) return "Alibaba";
@@ -144,9 +166,11 @@ function familyDisplay(key) {
 }
 
 // Open-weights heuristic.
-const CLOSED_ORGS = new Set(["Anthropic", "OpenAI", "Google", "xAI"]);
+const CLOSED_ORGS = new Set(["Anthropic", "OpenAI", "Google", "xAI", "Amazon"]);
+const CLOSED_FAMILY_RE = /^(command(?:-|$)|sonar(?:-|$)|palmyra(?:-|$)|magistral-medium(?:-|$)|codestral(?:-|$)|mistral-medium-(?:3|3\.1)(?:-|$)|mistral-large$|mai(?:-|$))/;
 const isOpenWeights = (org, key) => {
   if (key.includes("gpt-oss") || key.includes("gemma")) return true;
+  if (CLOSED_FAMILY_RE.test(key)) return false;
   return !CLOSED_ORGS.has(org);
 };
 
@@ -157,7 +181,7 @@ const models = new Map(); // rowId -> model row
 const families = new Map(); // familyKey -> { offers:[], designarena:{}, copilot:null, meta }
 
 function family(key, org) {
-  if (!families.has(key)) families.set(key, { familyKey: key, familyName: familyDisplay(key), org, offers: [], designarena: {}, copilot: null });
+  if (!families.has(key)) families.set(key, { familyKey: key, familyName: familyDisplay(key), org: canonOrg(org), offers: [], designarena: {}, copilot: null });
   return families.get(key);
 }
 
@@ -165,6 +189,20 @@ function num(x) {
   if (x == null || x === "") return null;
   const n = Number(x);
   return Number.isFinite(n) ? n : null;
+}
+
+function offerRunsInEu(offer, meta = {}) {
+  if (typeof offer.eu_hosted === "boolean") return offer.eu_hosted;
+  const notes = offer.notes || "";
+  if (/outside the eu data boundary|excluded from the eu data boundary|us-served|served region:\s*(us|uk)/i.test(notes)) return false;
+  const region = String(offer.region || "").toLowerCase();
+  if (region === "us" || region === "uk" || region.startsWith("us-") || region.startsWith("uk-")) return false;
+  if (region === "eu" || region.startsWith("eu-") || region.startsWith("europe-")
+      || /\b(eu cross-region|swedencentral|westeurope|francecentral|germanywestcentral|polandcentral|spaincentral)\b/.test(region)) return true;
+  // OpenRouter exposes no region field. A provider-level EU flag may be used
+  // only for an audited provider whose public serverless fleet itself is EU
+  // hosted (not merely EU-capable via a separate dedicated/BYOC product).
+  return offer.platform === "OpenRouter" && region === "global" && !!meta.eu_hosted && !meta.eu_dedicated;
 }
 
 async function build() {
@@ -241,7 +279,7 @@ async function build() {
 
   // --- OpenRouter: per-provider token offers ---
   for (const m of or.models) {
-    if (EXCLUDE_RE.test(m.id) || EXCLUDE_RE.test(m.name || "")) continue;
+    if (EXCLUDE_RE.test(m.id) || EXCLUDE_RE.test(m.name || "") || AMBIGUOUS_MODEL_RE.test(m.id)) continue;
     const { familyKey, org } = normalizeFamily(m.id);
     const fam = family(familyKey, org);
     for (const e of m.endpoints || []) {
@@ -274,17 +312,20 @@ async function build() {
       source: "AWS Bedrock", provider: "AWS Bedrock", platform: "AWS Bedrock",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       region: m.region || "eu-central-1", unit: "per_1m_token", notes: m.notes || "",
+      eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
     });
   }
 
   // --- Azure AI Foundry ---
   for (const m of azure.models || []) {
+    if (AMBIGUOUS_MODEL_RE.test(m.model_name || "")) continue;
     const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
       source: "Azure AI Foundry", provider: "Azure AI Foundry", platform: "Azure AI Foundry",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       region: m.region || "swedencentral", unit: "per_1m_token", notes: m.notes || "",
+      eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
     });
   }
 
@@ -296,6 +337,7 @@ async function build() {
       source: "Google Vertex AI", provider: "Google Vertex AI", platform: "Google Vertex AI",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       region: m.region || "europe-west4", unit: "per_1m_token", notes: m.notes || "",
+      eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
     });
   }
 
@@ -308,6 +350,7 @@ async function build() {
         source: plat, provider: plat, platform: plat,
         input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
         region: m.region || "eu", unit: "per_1m_token", notes: m.notes || "",
+        eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
       });
     }
   }
@@ -321,6 +364,7 @@ async function build() {
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       region: m.region || "global", unit: "per_1m_token",
       tee: m.confidential_compute === true, notes: m.notes || "",
+      eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
     });
   }
 
@@ -336,11 +380,39 @@ async function build() {
     });
   }
 
-  // --- GitHub Copilot (per-request pricing — separate axis) ---
+  // --- GitHub Copilot current AI-Credit/token billing (separate product axis) ---
+  for (const m of copilot.current_models || []) {
+    const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
+    const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
+    const mode = /fast mode/i.test(m.model_name) ? "fast_mode" : "current";
+    fam.copilot = {
+      ...(fam.copilot || { multiplier: null, usd_per_request: null }),
+      [mode]: {
+        input_per_1m: num(m.input_per_1m_usd),
+        cached_input_per_1m: num(m.cached_input_per_1m_usd),
+        cache_write_per_1m: num(m.cache_write_per_1m_usd),
+        output_per_1m: num(m.output_per_1m_usd),
+        release_status: m.release_status || undefined,
+        feature_status: m.feature_status || undefined,
+        category: m.category || undefined,
+        long_context: m.long_context || null,
+        promotion_ends_at: m.promotion_ends_at || null,
+        standard_pricing_from: m.standard_pricing_from || null,
+        standard_input_per_1m: num(m.standard_input_per_1m_usd),
+        standard_cached_input_per_1m: num(m.standard_cached_input_per_1m_usd),
+        standard_cache_write_per_1m: num(m.standard_cache_write_per_1m_usd),
+        standard_output_per_1m: num(m.standard_output_per_1m_usd),
+        notes: m.notes || "",
+      },
+    };
+  }
+
+  // Legacy annual Pro/Pro+ premium-request billing — separate from current token billing.
   for (const m of copilot.models || []) {
     const { familyKey } = normalizeFamily(m.model_name, m.provider_org);
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.copilot = {
+      ...(fam.copilot || {}),
       multiplier: num(m.premium_request_multiplier),
       usd_per_request: num(m.effective_usd_per_request),
       notes: m.notes || "",
@@ -387,21 +459,24 @@ async function build() {
       models.set(rowId, row);
       rows.push(row);
     }
-    // Collapse multiple offers from the SAME (platform, provider) to a single cheapest
-    // one. A provider often lists several tiers/SKUs for one model — short vs long
-    // context, Global vs DataZone-EU, or duplicate OpenRouter slugs (thinking / dated) —
-    // which otherwise render as two rows with different prices for the same provider.
-    // The comparison shows one price per provider: the cheapest (standard) blended rate.
+    // Collapse duplicate tiers/SKUs while retaining materially different serving
+    // scopes. In particular, a cheap Global route must not erase the same provider's
+    // DataZone-EU route, and a non-TEE route must not erase its confidential route.
+    // The UI selects the cheapest matching route per provider *after* applying the
+    // active residency/confidentiality filters.
     const blendOf = (o) => (o.input_per_1m != null && o.output_per_1m != null)
       ? (10 * o.input_per_1m + o.output_per_1m) / 11
       : (o.input_per_1m ?? o.output_per_1m ?? Infinity);
-    const bestByProvider = new Map();
+    const bestByProviderScope = new Map();
     for (const o of fam.offers) {
-      const pk = `${o.platform}::${o.provider}`;
-      const prev = bestByProvider.get(pk);
-      if (!prev || blendOf(o) < blendOf(prev)) bestByProvider.set(pk, o);
+      const meta = (providerMeta.providers || {})[o.provider] || {};
+      o.eu_hosted = offerRunsInEu(o, meta);
+      o.non_us = !!meta.non_us;
+      const pk = `${o.platform}::${o.provider}::eu=${o.eu_hosted ? 1 : 0}::tee=${o.tee ? 1 : 0}`;
+      const prev = bestByProviderScope.get(pk);
+      if (!prev || blendOf(o) < blendOf(prev)) bestByProviderScope.set(pk, o);
     }
-    fam.offers = [...bestByProvider.values()];
+    fam.offers = [...bestByProviderScope.values()];
     for (const r of rows) {
       r.offers = fam.offers;
       r.designarena = fam.designarena;
@@ -409,21 +484,41 @@ async function build() {
     }
   }
 
-  // AA Coding Agent Index: per family, the HIGHEST score across all harnesses
-  // (Claude Code / Codex / Cursor CLI / …). Scores are 0–1 → store as 0–100.
+  // AA Coding Agent Index: take the HIGHEST score across harnesses for the exact
+  // model variant. The RSC feed distinguishes effort settings (e.g. GPT-5.5
+  // medium/xhigh and DeepSeek V4 Pro high); spreading one setting's result over
+  // every family variant gives untested variants a fictitious benchmark score.
+  // Scores are 0–1 → store as 0–100.
+  const codingAgentAliases = new Map([
+    // The Coding-Agent card omits GLM-5.2's effort suffix, while AA's model feed
+    // exposes this generation only as the max variant.
+    ["glm-5.2::default", "glm-5.2::max"],
+  ]);
   const agentMax = new Map();
   for (const r of codingAgents.rows || []) {
     const sc = num(r.score);
     if (sc == null) continue;
     const { familyKey } = normalizeFamily(r.model_name);
+    // AA calls the no-reasoning GPT-5.6 setting "none" in the Coding-Agent feed.
+    const variant = /\(\s*none\s*\)/i.test(r.model_name) ? "non-reasoning" : detectVariant(r.model_name);
+    const sourceId = `${familyKey}::${variant}`;
+    const modelId = codingAgentAliases.get(sourceId) || sourceId;
     const v = sc * 100;
-    if (!agentMax.has(familyKey) || v > agentMax.get(familyKey)) agentMax.set(familyKey, Math.round(v * 10) / 10);
+    if (!agentMax.has(modelId) || v > agentMax.get(modelId)) agentMax.set(modelId, v);
   }
 
   const modelRows = [...models.values()];
-  // Attach the family-level Coding Agent Index to every variant row.
+  const unmatchedAgentRows = [...agentMax.keys()].filter((id) => !models.has(id));
+  if (unmatchedAgentRows.length) {
+    console.warn(`AA Coding Agent rows left unmatched (no exact variant): ${unmatchedAgentRows.join(", ")}`);
+  }
+  // Attach only to the exact model+variant row. Ambiguous/unrepresented effort
+  // settings remain unmatched rather than silently leaking to sibling variants.
   for (const r of modelRows) {
-    if (agentMax.has(r.family_key)) { r.benchmarks = r.benchmarks || {}; r.benchmarks.aa_coding_agent_index = agentMax.get(r.family_key); }
+    if (agentMax.has(r.id)) {
+      r.benchmarks = r.benchmarks || {};
+      r.benchmarks.aa_coding_agent_index = Math.round(agentMax.get(r.id) * 10) / 10;
+    }
   }
   // Apply documented benchmark overrides (e.g. suppress a corrupt AA value).
   for (const ov of benchmarkOverrides) {
@@ -478,6 +573,7 @@ async function build() {
       scaleway: scaleway.collected_at, ionos: ionos.collected_at, mistral: mistral.collected_at, tensorx: tensorx.collected_at,
       chutes: chutes.collected_at,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
+      provider_meta: providerMeta.collected_at,
     },
     models: modelRows,
     providers,

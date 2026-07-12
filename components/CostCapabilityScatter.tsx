@@ -7,7 +7,7 @@ import {
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { modelCost, effectiveAllowed, isHiddenModel } from "../lib/cost";
+import { modelCost, createOfferScope, isHiddenModel } from "../lib/cost";
 import { Toggle } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
@@ -39,10 +39,10 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
-  const allowed = useMemo(() => effectiveAllowed(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
-  const preferredId = useMemo(() => preferredVariantIds(data.models), [data.models]);
+  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
 
   const points = useMemo(() => {
     let pool = data.models;
@@ -52,10 +52,10 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
     if (s.featured) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     return pool
-      .map((m) => ({ m, cost: modelCost(m, data, allowed), sc: m.scores[score] }))
+      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score] }))
       .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
       .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, score, allowed, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
+  }, [data, score, offerScope, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();
@@ -84,7 +84,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
         <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
         <Toggle label="Log cost axis" on={logX} set={setLogX} />
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
-        <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{allowed ? " · provider-filtered" : ""}</span>
+        <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       <div className="card p-4" style={{ height: 580 }}>

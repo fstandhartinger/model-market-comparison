@@ -1,39 +1,39 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-07-06",
-  "currency_note": "Source prices are EUR/1M; converted to USD at EUR/USD = 1.08 (2026-06). Re-verify on refresh.",
-  "method": "IONOS AI Model Hub pricing (https://cloud.ionos.de/managed/ai-model-hub), OpenAI-compatible pay-per-use, fetched fresh 2026-07-06 (prices parsed directly from the server-rendered pricing table in the page HTML). EU-sovereign (DE). Catalog unchanged vs 2026-07-01: same 6 models, all EUR prices identical (no changes).",
+  "collected_at": "2026-07-12",
+  "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
+  "method": "IONOS AI Model Hub official USD pricing at https://cloud.ionos.com/prices, cross-checked against the EUR table at https://cloud.ionos.de/managed/ai-model-hub and the official model documentation. OpenAI-compatible pay-per-use, EU-sovereign (DE). The 2026-07-12 text/code catalog has 7 models, including Qwen3-Coder-Next 80B.",
   "models": [
     {
       "model_name": "gpt-oss-120b",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.16,
-      "output_per_1m_usd": 0.7,
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.71,
       "region": "eu",
       "notes": "€0.15/€0.65"
     },
     {
       "model_name": "Llama 3.3 70B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 0.7,
-      "output_per_1m_usd": 0.7,
+      "input_per_1m_usd": 0.71,
+      "output_per_1m_usd": 0.71,
       "region": "eu",
       "notes": "€0.65/€0.65"
     },
     {
       "model_name": "Llama 3.1 405B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 1.89,
-      "output_per_1m_usd": 1.89,
+      "input_per_1m_usd": 1.93,
+      "output_per_1m_usd": 1.93,
       "region": "eu",
       "notes": "€1.75/€1.75"
     },
     {
       "model_name": "Llama 3.1 8B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 0.16,
-      "output_per_1m_usd": 0.16,
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.17,
       "region": "eu",
       "notes": "€0.15/€0.15; Llama 3.1 8B Instruct; new vs prior snapshot"
     },
@@ -41,25 +41,25 @@
       "model_name": "Mistral Small 3.2",
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.11,
-      "output_per_1m_usd": 0.32,
+      "output_per_1m_usd": 0.33,
       "region": "eu",
       "notes": "€0.10/€0.30 (Mistral Small 24B Instruct)"
     },
     {
       "model_name": "Mistral Nemo",
       "provider_org": "Mistral",
-      "input_per_1m_usd": 0.16,
-      "output_per_1m_usd": 0.16,
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.17,
       "region": "eu",
       "notes": "€0.15/€0.15; Mistral Nemo Instruct; new vs prior snapshot"
     },
     {
       "model_name": "Qwen3 Coder Next",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.16,
-      "output_per_1m_usd": 0.86,
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.89,
       "region": "eu",
-      "notes": "€0.15/€0.80. 128k ctx coding specialist. Added 2026-07-09 from IONOS AI Model Hub."
+      "notes": "€0.15/€0.80; Qwen/Qwen3-Coder-Next; 80B int4 coding specialist; 256k context; launched 2026-03-30."
     }
   ]
 }

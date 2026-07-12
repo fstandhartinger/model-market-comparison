@@ -1,5 +1,6 @@
 {
-  "source": "Hand-curated provider metadata from data/research/ (2026-06-18)",
+  "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata (refreshed 2026-07-12)",
+  "collected_at": "2026-07-12",
   "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global 'EU hosted' and 'Non-US provider' filters. Keyed by provider NAME (applies whether reached directly or via OpenRouter). hyperscaler=true for AWS Bedrock / Azure AI Foundry / Google Vertex AI (the big-cloud managed catalogs).",
   "providers": {
     "AWS Bedrock": {
@@ -31,28 +32,28 @@
       "eu_hosted": true,
       "non_us": true,
       "url": "https://nebius.com/",
-      "note": "EU regions (Finland/France); opt-in ZDR + no-training; ISO 27001/27701, SOC 2 II. Yandex heritage (now NL-incorporated)."
+      "note": "EU-capable Netherlands provider with Finland/France infrastructure, opt-in ZDR + no-training, ISO 27001/27701 and SOC 2 II. The serverless catalog is mixed-region: every offer's eu-north1/us-central1/uk-south1 region must be checked separately."
     },
     "Inceptron": {
       "country": "Sweden",
       "eu_hosted": true,
       "non_us": true,
       "url": "https://www.inceptron.io/models",
-      "note": "Sweden-based; zero-retention; serves GLM/Kimi/MiniMax."
+      "note": "Sweden-based; OpenRouter metadata reports its serving datacenter in Finland (FI). Zero-retention; current catalog serves GLM 5.2, Kimi K2.6/K2.7 Code, and MiniMax M2.5."
     },
     "Scaleway": {
       "country": "France",
       "eu_hosted": true,
       "non_us": true,
       "url": "https://www.scaleway.com/en/generative-apis/",
-      "note": "FR-sovereign Generative APIs (FR/NL/PL); ZDR by default. Serves Llama/Qwen/Mistral/gpt-oss (open models only)."
+      "note": "FR-sovereign Generative APIs, current serverless pricing region Paris; ZDR by default. Serves GLM 5.2 plus Llama/Qwen/Mistral/Gemma/gpt-oss/Holo open models; no current DeepSeek or MiniMax endpoint."
     },
     "IONOS": {
       "country": "Germany",
       "eu_hosted": true,
       "non_us": true,
       "url": "https://cloud.ionos.de/managed/ai-model-hub",
-      "note": "DE-sovereign AI Model Hub, OpenAI-compatible. Serves Llama/Mistral/gpt-oss (open models only)."
+      "note": "DE-sovereign OpenAI-compatible AI Model Hub. Serves Llama/Mistral/gpt-oss and Qwen3-Coder-Next 80B (open models only)."
     },
     "TensorX": {
       "country": "Ireland",
@@ -60,6 +61,13 @@
       "non_us": true,
       "url": "https://tensorx.ai/models/",
       "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU."
+    },
+    "NextBit": {
+      "country": "Spain",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://www.nextbit256.com/",
+      "note": "OpenRouter metadata reports headquarters ES and datacenters ES; EU-hosted OpenRouter endpoints, including DeepSeek V4 Flash."
     },
     "TrustedRouter": {
       "country": "EU",
@@ -123,6 +131,12 @@
       "country": "US",
       "eu_hosted": false,
       "non_us": false
+    },
+    "Sakana AI": {
+      "country": "Japan",
+      "eu_hosted": false,
+      "non_us": true,
+      "note": "Tokyo-headquartered AI lab; OpenRouter serving location is global/unspecified, so non-US company filtering applies but EU hosting does not."
     },
     "BaseTen": {
       "country": "US",
@@ -269,6 +283,13 @@
       "eu_hosted": false,
       "non_us": true
     },
+    "AionLabs": {
+      "country": "Israel",
+      "eu_hosted": false,
+      "non_us": true,
+      "url": "https://www.aionlabs.ai/",
+      "note": "OpenRouter metadata reports headquarters IL and no guaranteed EU datacenter."
+    },
     "DekaLLM": {
       "country": "Indonesia",
       "eu_hosted": false,
@@ -283,8 +304,8 @@
       "country": "France",
       "eu_hosted": true,
       "non_us": true,
-      "url": "https://mistral.ai/pricing",
-      "note": "FR-resident first-party API; own (open-weight) models only — Large/Medium/Magistral/Codestral/Devstral."
+      "url": "https://mistral.ai/pricing/api",
+      "note": "French first-party API; data is hosted in the EU by default unless the explicit US endpoint is selected. Serves Mistral's own Open, Premier, and Labs models."
     },
     "Cohere": {
       "country": "Canada",

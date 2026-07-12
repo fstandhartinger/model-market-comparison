@@ -23,6 +23,9 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
   `GET https://openrouter.ai/api/v1/models/{author}/{slug}/endpoints` →
   `data.endpoints[].provider_name` + `pricing.{prompt,completion}` (USD **per token**;
   multiply by 1e6 for per-1M). Fetched for every catalog model with a concurrency cap.
+- `:free` slugs are merged into the same model family as their paid slug (the free
+  endpoint remains an offer). OpenRouter router/meta IDs (`openrouter/free`, `auto`,
+  `fusion`, `bodybuilder`, `pareto-code`) and non-text Lyria music models are excluded.
 
 ### ArtificialAnalysis — coding & intelligence benchmarks
 - `GET https://artificialanalysis.ai/api/v2/data/llms/models` with header
@@ -41,18 +44,19 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 
 | Source | Snapshot | How to refresh |
 |---|---|---|
-| AWS Bedrock (EU on-demand token prices) | `data/raw/aws-bedrock.json` | [aws-bedrock.method.md](raw/aws-bedrock.method.md) — AWS Price List Bulk API per region + pricing page for Claude |
-| Azure AI Foundry (EU token prices) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API (`prices.azure.com`) |
-| Google Vertex AI (Gemini + Model Garden partner models, EU) | `data/raw/google-vertex.json` | [google-vertex.method.md](raw/google-vertex.method.md) — Vertex pricing page (JS-rendered → agent-browser) |
-| Nebius Token Factory (EU serverless catalog) | `data/raw/nebius.json` | [nebius.method.md](raw/nebius.method.md) — tokenfactory.nebius.com/models (JS SPA → agent-browser) |
+| AWS Bedrock (regional on-demand token prices) | `data/raw/aws-bedrock.json` | [aws-bedrock.method.md](raw/aws-bedrock.method.md) — AWS Price List Bulk API per region + model cards; EU and non-EU offers stay distinct |
+| Azure AI Foundry (retail token meters + serving scope) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API plus model-card/partner-region checks; a billing region is not assumed to be the inference region |
+| Google Vertex AI (Gemini + Model Garden partner models) | `data/raw/google-vertex.json` | [google-vertex.method.md](raw/google-vertex.method.md) — Vertex pricing and model-location docs; `global` is never marked EU-hosted |
+| Nebius Token Factory (mixed-region serverless catalog) | `data/raw/nebius.json` | [nebius.method.md](raw/nebius.method.md) — public models-info API; serving region is audited per model |
 | Inceptron (EU serverless catalog) | `data/raw/inceptron.json` | [inceptron.method.md](raw/inceptron.method.md) — public `api.inceptron.io/v1/models` + OpenRouter cross-check |
 | Scaleway Generative APIs (FR-sovereign, EUR→USD) | `data/raw/scaleway.json` | scaleway.com/en/generative-apis/ pricing — prices are EUR, converted at the rate in `currency_note` |
 | IONOS AI Model Hub (DE-sovereign, EUR→USD) | `data/raw/ionos.json` | cloud.ionos.de/managed/ai-model-hub pricing — prices are EUR, converted at the rate in `currency_note` |
 | Mistral first-party API (FR, USD) | `data/raw/mistral.json` | mistral.ai/pricing — own open-weight models only |
 | TensorX (EU-sovereign, IE, USD) | `data/raw/tensorx.json` | tensorx.ai/models + /pricing — OpenAI-compatible per-token; serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss in-EU |
-| ArtificialAnalysis Coding Agent Index (model × harness; we take the per-model max) | `data/raw/aa-coding-agents.json` | reverse-engineered from the AA homepage RSC payload (`self.__next_f` `rows` array) |
-| GitHub Copilot (premium-request multipliers, commercial June 2026+) | `data/raw/github-copilot.json` | [github-copilot.method.md](raw/github-copilot.method.md) — GitHub Copilot docs |
-| Anthropic / Claude Code (Opus 4.6–4.8, Sonnet 4.6, Fable 5 list token price) | `data/raw/claude-code.json` | [claude-code.method.md](raw/claude-code.method.md) — Anthropic pricing page + `claude-api` skill |
+| ArtificialAnalysis Coding Agent Index (model/effort × harness; exact-variant max) | `data/raw/aa-coding-agents.json` | reverse-engineered from the AA homepage RSC payload (`self.__next_f` `rows` array); unmatched effort variants are not smeared across a family |
+| Chutes (live models, token prices and TEE flags) | `data/raw/chutes.json` | [chutes.method.md](raw/chutes.method.md) — first-party models endpoint plus per-chute `current_estimated_price` verification |
+| GitHub Copilot (current AI-Credit token catalog + legacy request multipliers) | `data/raw/github-copilot.json` | [github-copilot.method.md](raw/github-copilot.method.md) — GitHub supported-model, pricing and billing docs; the two billing systems remain separate |
+| Anthropic / Claude Code (all callable first-party models + Enterprise terms) | `data/raw/claude-code.json` | [claude-code.method.md](raw/claude-code.method.md) — official pricing, model lifecycle, retention and Enterprise billing docs |
 | Provider metadata (eu_hosted / non_us / country / TEE notes) | `data/raw/provider-meta.json` | Hand-curated from `data/research/` |
 | Manual supplements & benchmark overrides | `data/raw/manual.json` | Hand-edit; remove entries once upstream data is live (currently empty) |
 

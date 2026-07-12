@@ -1,14 +1,23 @@
 {
   "source": "Mistral AI (La Plateforme)",
   "region": "eu (France)",
-  "collected_at": "2026-07-06",
-  "method": "Mistral first-party API pricing (https://mistral.ai/pricing/api), prices already in USD. EU-resident (FR). Fetched fresh 2026-07-06 via agent-browser (--session mistral; plain curl returns a JS shell). All 6 tracked flagship models unchanged (Mistral Large 3 0.50/1.50, Mistral Medium 3.5 1.50/7.50, Magistral Medium 2.00/5.00, Mistral Small 4 0.15/0.60, Codestral 0.30/0.90, Devstral 2 0.40/2.00). La Plateforme also lists Magistral Small, Devstral Small 2, Ministral 3 (3B/8B/14B), Voxtral, Mistral NeMo, Mixtral 8x7B/8x22B, not tracked here to preserve this file's flagship-only scope.",
+  "collected_at": "2026-07-12",
+  "method": "Mistral first-party API pricing at https://mistral.ai/pricing/api, parsed from the server-rendered page on 2026-07-12; prices are native USD. Mistral hosts data in the EU by default unless the explicit US API endpoint is selected. This file includes all 15 currently priced chat/text models (including Voxtral Small's text-token axis), while excluding embeddings, classifiers, OCR-only, transcription-only, TTS, and temporary free Labs endpoints.",
   "models": [
     { "model_name": "Mistral Large 3", "provider_org": "Mistral", "input_per_1m_usd": 0.50, "output_per_1m_usd": 1.50, "region": "eu", "notes": "open-weight" },
-    { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.50, "output_per_1m_usd": 7.50, "region": "eu", "notes": "" },
-    { "model_name": "Magistral Medium", "provider_org": "Mistral", "input_per_1m_usd": 2.00, "output_per_1m_usd": 5.00, "region": "eu", "notes": "reasoning" },
+    { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.50, "output_per_1m_usd": 7.50, "region": "eu", "notes": "open-weight, Modified MIT; 256k context" },
+    { "model_name": "Magistral Medium", "provider_org": "Mistral", "input_per_1m_usd": 2.00, "output_per_1m_usd": 5.00, "region": "eu", "notes": "Premier reasoning model" },
     { "model_name": "Mistral Small 4", "provider_org": "Mistral", "input_per_1m_usd": 0.15, "output_per_1m_usd": 0.60, "region": "eu", "notes": "Apache-2.0" },
-    { "model_name": "Codestral", "provider_org": "Mistral", "input_per_1m_usd": 0.30, "output_per_1m_usd": 0.90, "region": "eu", "notes": "coding" },
-    { "model_name": "Devstral 2", "provider_org": "Mistral", "input_per_1m_usd": 0.40, "output_per_1m_usd": 2.00, "region": "eu", "notes": "coding, open-weights" }
+    { "model_name": "Codestral", "provider_org": "Mistral", "input_per_1m_usd": 0.30, "output_per_1m_usd": 0.90, "region": "eu", "notes": "Premier coding model" },
+    { "model_name": "Devstral 2", "provider_org": "Mistral", "input_per_1m_usd": 0.40, "output_per_1m_usd": 2.00, "region": "eu", "notes": "coding, open-weights" },
+    { "model_name": "Voxtral Small", "provider_org": "Mistral", "input_per_1m_usd": 0.10, "output_per_1m_usd": 0.40, "region": "eu", "notes": "open-weight audio+text chat model; audio input $0.004/min" },
+    { "model_name": "Devstral Small 2", "provider_org": "Mistral", "input_per_1m_usd": 0.10, "output_per_1m_usd": 0.30, "region": "eu", "notes": "Labs coding model; open weights" },
+    { "model_name": "Magistral Small", "provider_org": "Mistral", "input_per_1m_usd": 0.50, "output_per_1m_usd": 1.50, "region": "eu", "notes": "reasoning; open-weight Apache-2.0 releases" },
+    { "model_name": "Ministral 3 3B", "provider_org": "Mistral", "input_per_1m_usd": 0.10, "output_per_1m_usd": 0.10, "region": "eu", "notes": "open-weight edge model" },
+    { "model_name": "Ministral 3 8B", "provider_org": "Mistral", "input_per_1m_usd": 0.15, "output_per_1m_usd": 0.15, "region": "eu", "notes": "open-weight edge model" },
+    { "model_name": "Ministral 3 14B", "provider_org": "Mistral", "input_per_1m_usd": 0.20, "output_per_1m_usd": 0.20, "region": "eu", "notes": "open-weight edge model" },
+    { "model_name": "Mistral Nemo", "provider_org": "Mistral", "input_per_1m_usd": 0.15, "output_per_1m_usd": 0.15, "region": "eu", "notes": "open-weight" },
+    { "model_name": "Mixtral 8x7B", "provider_org": "Mistral", "input_per_1m_usd": 0.70, "output_per_1m_usd": 0.70, "region": "eu", "notes": "open-weight legacy model" },
+    { "model_name": "Mixtral 8x22B", "provider_org": "Mistral", "input_per_1m_usd": 2.00, "output_per_1m_usd": 6.00, "region": "eu", "notes": "open-weight legacy model" }
   ]
 }

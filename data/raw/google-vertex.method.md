@@ -1,6 +1,6 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-07-07 (comprehensive re-scrape)
+**Collected:** 2026-07-12 (comprehensive live re-scrape plus endpoint-location audit)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 43 models
 
 ## Sources
@@ -17,7 +17,20 @@ tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
 
-## 2026-07-07 comprehensive re-scrape (still 43, no price deltas)
+## 2026-07-12 comprehensive re-scrape (still 43, no price deltas)
+
+The live pricing DOM is price- and roster-identical to 2026-07-07: 43 captured text
+LLMs, with no GLM-5.2, Kimi K2.7, MiniMax-M3, DeepSeek-V4, or GPT-5.6 row. The
+important correction is deployment scope, not price. Google's current endpoint-location
+documentation says the Global endpoint provides no processing-location guarantee.
+Consequently, `global` open/partner rows remain global and must not pass an EU-hosted filter.
+
+The official Mistral model pages document `europe-west4` availability and EU multi-region
+ML processing for Mistral Medium 3, Mistral Small 3.1 (25.03), and Codestral 2. These
+three rows now use `region=europe-west4` with the unchanged prices. Claude EU/europe-west1
+and the two non-global Gemini rows were already correctly region-scoped.
+
+## 2026-07-07 comprehensive re-scrape (historical; still 43, no price deltas)
 
 Full re-scrape of the live page in the dedicated `--session vertex` headless
 browser (agent-browser 0.8.5). **All rates unchanged; model roster identical (43
@@ -167,11 +180,16 @@ NEW partner makers/models now present on Vertex Model Garden:
 So **Kimi, GLM, and MiniMax ARE now on Vertex** (they were not before). **MiMo is
 NOT** present. (For the record: Kimi=Moonshot, GLM=Zhipu, MiniMax=MiniMax.)
 
-## Region handling (europe-west4 target)
+## Region handling
 
-- **Open partner models** (DeepSeek, MiniMax, Kimi, GLM, Qwen, gpt-oss, Llama,
-  Mistral, Grok) are priced **per token with no regional differentiation** — single
-  global rate. Tagged `"region": "global"`; the EU price equals the listed price.
+- A single **Global** rate does not establish EU hosting. Google states that requests to
+  the Global endpoint can be processed in any region supported by the model and that the
+  caller cannot control or know the processing region. DeepSeek, MiniMax, Kimi, GLM,
+  Qwen, gpt-oss, Llama, and Grok rows therefore remain `"region": "global"` and must not
+  qualify for EU-only filtering merely because Vertex itself has European regions.
+- **Mistral Medium 3, Mistral Small 3.1 (25.03), and Codestral 2** have documented
+  `europe-west4` endpoints with EU multi-region ML processing. Their token rates do not
+  change, but their rows use `"region": "europe-west4"` and are valid EU-hosted offers.
 - **Anthropic Claude** DOES have per-region pricing now (a region selector:
   Global / US Multi-Region / EU Multi-Region (eu) / us-east5 / europe-west1 /
   asia-southeast1 / asia-east1). **There is no europe-west4 tab.** The EU regions
@@ -184,7 +202,8 @@ NOT** present. (For the record: Kimi=Moonshot, GLM=Zhipu, MiniMax=MiniMax.)
   The JSON records each Claude model at its EU rate, tagging `region` as `eu` or
   `europe-west1` accordingly (with the Global rate noted). Claude Opus 4.1 has
   uniform pricing across all regions → `global`.
-- **Gemini** 2.x family is global. The **Gemini 3+ family** has a **non-global
+- **Gemini** Global rows remain global offers even when the same family may be reachable
+  from other endpoints. The **Gemini 3+ family** has a **non-global
   surcharge** (Gemini 3.5 Flash $1.50/$9.00 Global vs **$1.65/$9.90 Non-global**;
   Gemini 3.1 Flash-Lite $0.25/$1.50 vs **$0.275/$1.65**). Those two use the
   non-global numbers tagged `europe-west4`. **Caveat:** Google states non-global

@@ -1,44 +1,388 @@
 {
-  "source": "GitHub Copilot (Business/Enterprise, commercial)",
-  "collected_at": "2026-06-15",
-  "method": "Scraped official GitHub Docs (model-multipliers-for-annual-plans legacy reference + copilot-requests concept page + about-premium-requests) and corroborated with web search (benday.com, mindstudio.ai, groundy.com). See github-copilot.method.md.",
-  "pricing_model": "per_premium_request",
+  "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
+  "collected_at": "2026-07-12",
+  "method": "Official GitHub Docs only: supported AI models, current models-and-pricing table, organization/enterprise and individual usage-based billing, plans, and the annual-plan legacy multiplier table. See github-copilot.method.md.",
+  "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
+  "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
-  "billing_note": "As of June 1, 2026 GitHub moved NEW usage to token-metered 'AI Credits' (1 credit = $0.01 USD) billed at each model's published per-token API rate with NO monthly ceiling. The per-premium-request multiplier system documented here is now LEGACY: it applies only to subscribers on existing annual plans who remained on request-based billing after June 1, 2026. Multipliers were repriced sharply upward in 2026 (frontier models 15x-57x) because Microsoft could no longer absorb inference cost.",
+  "billing_note": "Current Copilot billing is token-metered: model token cost is converted to GitHub AI Credits at 1 credit = $0.01 USD. Business and Enterprise have used this model since June 1, 2026; they do not use premium-request multipliers. The models[] array is retained as the complete official legacy multiplier table for existing annual Copilot Pro/Pro+ subscribers who remained on request-based billing after June 1, 2026. GitHub says those legacy subscribers do not receive new models or features.",
   "plans": [
-    {"name": "Business", "monthly_usd": 19, "included_premium_requests": 300, "per_seat": true},
-    {"name": "Enterprise", "monthly_usd": 39, "included_premium_requests": 1000, "per_seat": true},
-    {"name": "Pro", "monthly_usd": 10, "included_premium_requests": 300, "per_seat": false},
-    {"name": "Pro+", "monthly_usd": 39, "included_premium_requests": 1500, "per_seat": false}
+    {
+      "name": "Business",
+      "monthly_usd": 19,
+      "included_ai_credits": 1900,
+      "promotional_ai_credits": 3000,
+      "promotion_starts_at": "2026-06-01",
+      "promotion_ends_at_exclusive": "2026-09-01",
+      "per_seat": true,
+      "pooled_at_billing_entity": true,
+      "notes": "Existing Business customers receive the promotional allowance during June-August 2026; standard allowance is 1,900 credits per licensed user per month."
+    },
+    {
+      "name": "Enterprise",
+      "monthly_usd": 39,
+      "included_ai_credits": 3900,
+      "promotional_ai_credits": 7000,
+      "promotion_starts_at": "2026-06-01",
+      "promotion_ends_at_exclusive": "2026-09-01",
+      "per_seat": true,
+      "pooled_at_billing_entity": true,
+      "notes": "Existing Enterprise customers receive the promotional allowance during June-August 2026; standard allowance is 3,900 credits per licensed user per month."
+    },
+    {
+      "name": "Pro",
+      "monthly_usd": 10,
+      "included_ai_credits": 1500,
+      "base_ai_credits": 1000,
+      "flex_ai_credits": 500,
+      "legacy_included_premium_requests": 300,
+      "per_seat": false
+    },
+    {
+      "name": "Pro+",
+      "monthly_usd": 39,
+      "included_ai_credits": 7000,
+      "base_ai_credits": 3900,
+      "flex_ai_credits": 3100,
+      "legacy_included_premium_requests": 1500,
+      "per_seat": false
+    },
+    {
+      "name": "Max",
+      "monthly_usd": 100,
+      "included_ai_credits": 20000,
+      "base_ai_credits": 10000,
+      "flex_ai_credits": 10000,
+      "per_seat": false
+    }
   ],
+  "current_models": [
+    {
+      "model_name": "GPT-5 mini",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.25,
+      "cached_input_per_1m_usd": 0.025,
+      "output_per_1m_usd": 2.00
+    },
+    {
+      "model_name": "GPT-5.3-Codex",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 1.75,
+      "cached_input_per_1m_usd": 0.175,
+      "output_per_1m_usd": 14.00
+    },
+    {
+      "model_name": "GPT-5.4",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 2.50,
+      "cached_input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 15.00,
+      "long_context": {
+        "threshold_input_tokens_gt": 272000,
+        "input_per_1m_usd": 5.00,
+        "cached_input_per_1m_usd": 0.50,
+        "output_per_1m_usd": 22.50
+      }
+    },
+    {
+      "model_name": "GPT-5.4 mini",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.75,
+      "cached_input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 4.50
+    },
+    {
+      "model_name": "GPT-5.4 nano",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.20,
+      "cached_input_per_1m_usd": 0.02,
+      "output_per_1m_usd": 1.25
+    },
+    {
+      "model_name": "GPT-5.5",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.00,
+      "cached_input_per_1m_usd": 0.50,
+      "output_per_1m_usd": 30.00,
+      "long_context": {
+        "threshold_input_tokens_gt": 272000,
+        "input_per_1m_usd": 10.00,
+        "cached_input_per_1m_usd": 1.00,
+        "output_per_1m_usd": 45.00
+      }
+    },
+    {
+      "model_name": "GPT-5.6 Luna",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 1.00,
+      "cached_input_per_1m_usd": 0.10,
+      "output_per_1m_usd": 6.00,
+      "long_context": {
+        "threshold_input_tokens_gt": 200000,
+        "input_per_1m_usd": 2.00,
+        "cached_input_per_1m_usd": 0.20,
+        "output_per_1m_usd": 9.00
+      }
+    },
+    {
+      "model_name": "GPT-5.6 Sol",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.00,
+      "cached_input_per_1m_usd": 0.50,
+      "output_per_1m_usd": 30.00,
+      "long_context": {
+        "threshold_input_tokens_gt": 272000,
+        "input_per_1m_usd": 10.00,
+        "cached_input_per_1m_usd": 1.00,
+        "output_per_1m_usd": 45.00
+      }
+    },
+    {
+      "model_name": "GPT-5.6 Terra",
+      "provider_org": "OpenAI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 2.50,
+      "cached_input_per_1m_usd": 0.25,
+      "output_per_1m_usd": 15.00,
+      "long_context": {
+        "threshold_input_tokens_gt": 272000,
+        "input_per_1m_usd": 5.00,
+        "cached_input_per_1m_usd": 0.50,
+        "output_per_1m_usd": 22.50
+      }
+    },
+    {
+      "model_name": "Claude Fable 5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 10.00,
+      "cached_input_per_1m_usd": 1.00,
+      "cache_write_per_1m_usd": 12.50,
+      "output_per_1m_usd": 50.00,
+      "notes": "Business and Enterprise administrators must explicitly enable this model; Anthropic retention requirements differ from other Claude models."
+    },
+    {
+      "model_name": "Claude Haiku 4.5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 1.00,
+      "cached_input_per_1m_usd": 0.10,
+      "cache_write_per_1m_usd": 1.25,
+      "output_per_1m_usd": 5.00
+    },
+    {
+      "model_name": "Claude Opus 4.5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.00,
+      "cached_input_per_1m_usd": 0.50,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.00
+    },
+    {
+      "model_name": "Claude Opus 4.6",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.00,
+      "cached_input_per_1m_usd": 0.50,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.00
+    },
+    {
+      "model_name": "Claude Opus 4.7",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.00,
+      "cached_input_per_1m_usd": 0.50,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.00
+    },
+    {
+      "model_name": "Claude Opus 4.8",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.00,
+      "cached_input_per_1m_usd": 0.50,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.00
+    },
+    {
+      "model_name": "Claude Opus 4.8 (fast mode) (preview)",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "feature_status": "research preview",
+      "category": "Powerful",
+      "input_per_1m_usd": 10.00,
+      "cached_input_per_1m_usd": 1.00,
+      "cache_write_per_1m_usd": 12.50,
+      "output_per_1m_usd": 50.00
+    },
+    {
+      "model_name": "Claude Sonnet 4.5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 3.00,
+      "cached_input_per_1m_usd": 0.30,
+      "cache_write_per_1m_usd": 3.75,
+      "output_per_1m_usd": 15.00
+    },
+    {
+      "model_name": "Claude Sonnet 4.6",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 3.00,
+      "cached_input_per_1m_usd": 0.30,
+      "cache_write_per_1m_usd": 3.75,
+      "output_per_1m_usd": 15.00
+    },
+    {
+      "model_name": "Claude Sonnet 5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 2.00,
+      "cached_input_per_1m_usd": 0.20,
+      "cache_write_per_1m_usd": 2.50,
+      "output_per_1m_usd": 10.00,
+      "promotion_ends_at": "2026-08-31",
+      "standard_pricing_from": "2026-09-01",
+      "standard_input_per_1m_usd": 3.00,
+      "standard_cached_input_per_1m_usd": 0.30,
+      "standard_cache_write_per_1m_usd": 3.75,
+      "standard_output_per_1m_usd": 15.00,
+      "notes": "Stored token prices are the active introductory promotion through August 31, 2026."
+    },
+    {
+      "model_name": "Gemini 2.5 Pro",
+      "provider_org": "Google",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 1.25,
+      "cached_input_per_1m_usd": 0.125,
+      "output_per_1m_usd": 10.00
+    },
+    {
+      "model_name": "Gemini 3 Flash",
+      "provider_org": "Google",
+      "release_status": "Public preview",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.50,
+      "cached_input_per_1m_usd": 0.05,
+      "output_per_1m_usd": 3.00
+    },
+    {
+      "model_name": "Gemini 3.1 Pro",
+      "provider_org": "Google",
+      "release_status": "Public preview",
+      "category": "Powerful",
+      "input_per_1m_usd": 2.00,
+      "cached_input_per_1m_usd": 0.20,
+      "output_per_1m_usd": 12.00,
+      "long_context": {
+        "threshold_input_tokens_gt": 200000,
+        "input_per_1m_usd": 4.00,
+        "cached_input_per_1m_usd": 0.40,
+        "output_per_1m_usd": 18.00
+      }
+    },
+    {
+      "model_name": "Gemini 3.5 Flash",
+      "provider_org": "Google",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 1.50,
+      "cached_input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 9.00
+    },
+    {
+      "model_name": "MAI-Code-1-Flash",
+      "provider_org": "Microsoft",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.75,
+      "cached_input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 4.50
+    },
+    {
+      "model_name": "Raptor mini",
+      "provider_org": "GitHub",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 0.25,
+      "cached_input_per_1m_usd": 0.025,
+      "output_per_1m_usd": 2.00,
+      "notes": "GitHub fine-tuned GPT-5 mini."
+    },
+    {
+      "model_name": "Kimi K2.7 Code",
+      "provider_org": "Moonshot AI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 0.95,
+      "cached_input_per_1m_usd": 0.19,
+      "output_per_1m_usd": 4.00
+    }
+  ],
+  "legacy_scope": "Existing annual Copilot Pro and Copilot Pro+ subscribers who explicitly remained on request-based billing after June 1, 2026.",
+  "legacy_auto_selection_discount_pct": 10,
   "models": [
-    {"model_name": "Claude Haiku 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Cheapest Claude tier (bargain)."},
-    {"model_name": "Claude Sonnet 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Sonnet repriced up from historical 1x."},
-    {"model_name": "Claude Sonnet 4.6", "provider_org": "Anthropic", "premium_request_multiplier": 9, "effective_usd_per_request": 0.36, "notes": ""},
-    {"model_name": "Claude Opus 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 15, "effective_usd_per_request": 0.60, "notes": "Frontier Opus tier."},
-    {"model_name": "Claude Opus 4.6", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Among the most expensive models on Copilot."},
-    {"model_name": "Claude Opus 4.7", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Multiplier climbed 7.5x -> 15x -> 27x over ~60 days in 2026."},
-    {"model_name": "Claude Opus 4.8", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Latest Opus; same 27x tier."},
-    {"model_name": "GPT-4o", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""},
-    {"model_name": "GPT-4o mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""},
-    {"model_name": "GPT-5 mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""},
-    {"model_name": "GPT-5.1", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": ""},
-    {"model_name": "GPT-5.1-Codex", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": ""},
-    {"model_name": "GPT-5.1-Codex-Mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""},
-    {"model_name": "GPT-5.1-Codex-Max", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": ""},
-    {"model_name": "GPT-5.3-Codex", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Jumped 1x -> 6x with June 1 2026 repricing."},
-    {"model_name": "GPT-5.4", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": ""},
-    {"model_name": "GPT-5.4 mini", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": ""},
-    {"model_name": "GPT-5.5", "provider_org": "OpenAI", "premium_request_multiplier": 57, "effective_usd_per_request": 2.28, "notes": "Most expensive model in the legacy multiplier table."},
-    {"model_name": "Gemini 2.5 Pro", "provider_org": "Google", "premium_request_multiplier": 1, "effective_usd_per_request": 0.04, "notes": ""},
-    {"model_name": "Gemini 3 Flash", "provider_org": "Google", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""},
-    {"model_name": "Gemini 3 Pro", "provider_org": "Google", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": ""},
-    {"model_name": "Gemini 3.1 Pro", "provider_org": "Google", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Jumped 1x -> 6x with June 1 2026 repricing."},
-    {"model_name": "Gemini 3.5 Flash", "provider_org": "Google", "premium_request_multiplier": 14, "effective_usd_per_request": 0.56, "notes": "Notably expensive for a Flash-tier model."},
-    {"model_name": "Raptor mini", "provider_org": "GitHub/Microsoft", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""},
-    {"model_name": "MAI-Code-1-Flash", "provider_org": "Microsoft", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": ""}
+    {"model_name": "Claude Haiku 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Claude Opus 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 15, "effective_usd_per_request": 0.60, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Claude Opus 4.6", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Claude Opus 4.7", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Claude Opus 4.8", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Claude Sonnet 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Claude Sonnet 4.6", "provider_org": "Anthropic", "premium_request_multiplier": 9, "effective_usd_per_request": 0.36, "notes": "GitHub marks this multiplier as subject to change."},
+    {"model_name": "Gemini 2.5 Pro", "provider_org": "Google", "premium_request_multiplier": 1, "effective_usd_per_request": 0.04, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Gemini 3 Flash", "provider_org": "Google", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Gemini 3 Pro", "provider_org": "Google", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "Gemini 3.1 Pro", "provider_org": "Google", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Gemini 3.5 Flash", "provider_org": "Google", "premium_request_multiplier": 14, "effective_usd_per_request": 0.56, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "GPT-4o", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "GPT-4o mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "GPT-5.1", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "GPT-5.1-Codex", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "GPT-5.1-Codex-Mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "GPT-5.1-Codex-Max", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
+    {"model_name": "GPT-5.3-Codex", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "GPT-5.4", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "GPT-5.4 mini", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "GitHub marks this multiplier as subject to change."},
+    {"model_name": "GPT-5.5", "provider_org": "OpenAI", "premium_request_multiplier": 57, "effective_usd_per_request": 2.28, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "GPT-5 mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "Raptor mini", "provider_org": "GitHub", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
+    {"model_name": "MAI-Code-1-Flash", "provider_org": "Microsoft", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "GitHub identifies this as a promotional multiplier and publishes no end date."}
   ],
   "feature_multipliers": [
-    {"feature": "Copilot code review", "premium_request_multiplier": 13, "effective_usd_per_review": 0.52, "notes": "Per PR evaluation, effective June 1 2026."}
+    {
+      "feature": "Copilot code review",
+      "premium_request_multiplier": 13,
+      "effective_usd_per_review": 0.52,
+      "notes": "Legacy annual request billing only. Under current usage-based billing, code review consumes model tokens in AI credits plus GitHub Actions minutes; no fixed 13x charge applies."
+    }
   ]
 }

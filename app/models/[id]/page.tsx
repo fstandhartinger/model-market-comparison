@@ -1,27 +1,23 @@
 import Link from "next/link";
 import { notFound } from "next/navigation";
-import { getDataset, cheapestOffers, tokenOffers, blendedCost } from "../../../lib/data";
-import { usdPerM, num, pct, orgColor } from "../../../lib/format";
-import type { Offer } from "../../../lib/types";
+import { getDataset } from "../../../lib/data";
+import { num, pct, orgColor, usdPerM } from "../../../lib/format";
+import { clientData } from "../../../lib/client-model";
+import { ModelDetailOffers } from "../../../components/ModelDetailOffers";
 
 export const dynamic = "force-dynamic";
 
 export default async function ModelDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const ds = await getDataset();
+  const data = clientData(ds);
   const model = ds.models.find((m) => m.id === decodeURIComponent(id) || m.family_key === decodeURIComponent(id));
   if (!model) notFound();
 
   const variants = ds.models
     .filter((m) => m.family_key === model.family_key)
     .sort((a, b) => (b.benchmarks?.aa_coding_index ?? -1) - (a.benchmarks?.aa_coding_index ?? -1));
-  const cheapest = cheapestOffers(model, 5);
-  const allOffers = tokenOffers(model);
-  const byPlatform = new Map<string, Offer[]>();
-  for (const o of allOffers) {
-    if (!byPlatform.has(o.platform)) byPlatform.set(o.platform, []);
-    byPlatform.get(o.platform)!.push(o);
-  }
+  const offers = data.offersByFamily[model.family_key] || [];
   const b = model.benchmarks;
   const da = model.designarena;
 
@@ -35,44 +31,17 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         {model.featured && <span className="rounded bg-warn/15 px-2 py-0.5 text-xs text-warn">★ featured</span>}
       </div>
       <div className="mt-1 text-sm text-gray-400">
-        {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {allOffers.length} token offers
+        {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {offers.length} recorded token offers
       </div>
       {model.manual_notes && <p className="mt-2 max-w-3xl text-xs text-warn/90">{model.manual_notes}</p>}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        {/* Cheapest providers */}
-        <section className="card p-4">
-          <h2 className="mb-3 font-semibold">Top {Math.min(5, cheapest.length)} cheapest providers <span className="text-xs font-normal text-gray-500">(10:1 blended)</span></h2>
-          {cheapest.length ? (
-            <table className="dtable w-full text-sm">
-              <thead><tr>
-                <th className="px-2 py-1 text-left text-xs text-gray-400">#</th>
-                <th className="px-2 py-1 text-left text-xs text-gray-400">Provider</th>
-                <th className="px-2 py-1 text-left text-xs text-gray-400">Platform</th>
-                <th className="px-2 py-1 text-right text-xs text-gray-400">Input/1M</th>
-                <th className="px-2 py-1 text-right text-xs text-gray-400">Output/1M</th>
-                <th className="px-2 py-1 text-right text-xs text-gray-400">Blended</th>
-              </tr></thead>
-              <tbody>
-                {cheapest.map((o, i) => (
-                  <tr key={i}>
-                    <td className="px-2 py-1 text-gray-500">{i + 1}</td>
-                    <td className="px-2 py-1">{o.provider}{o.estimated && <span className="ml-1 text-[10px] text-warn">est.</span>}</td>
-                    <td className="px-2 py-1 text-gray-400">{o.platform}</td>
-                    <td className="px-2 py-1 text-right tabular">{usdPerM(o.input_per_1m)}</td>
-                    <td className="px-2 py-1 text-right tabular">{usdPerM(o.output_per_1m)}</td>
-                    <td className="px-2 py-1 text-right tabular font-semibold">{usdPerM(o.blended)}</td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          ) : <p className="text-sm text-gray-500">No per-token pricing found for this model.</p>}
-        </section>
+        <ModelDetailOffers offers={offers} providers={data.providers} view="top" />
 
         {/* Benchmarks */}
-        <section className="card p-4">
+        <section className="card min-w-0 p-4">
           <h2 className="mb-3 font-semibold">Benchmarks</h2>
-          <div className="grid grid-cols-2 gap-x-6 gap-y-1.5 text-sm">
+          <div className="grid grid-cols-1 gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2">
             <Metric label="AA Coding Index" value={num(b.aa_coding_index)} hi />
             <Metric label="AA Coding Agent Index" value={num(b.aa_coding_agent_index)} hi />
             <Metric label="AA Intelligence Index" value={num(b.aa_intelligence_index)} hi />
@@ -95,7 +64,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
 
       {/* Variants */}
       {variants.length > 1 && (
-        <section className="card mt-6 p-4">
+        <section className="card mt-6 overflow-x-auto p-4">
           <h2 className="mb-3 font-semibold">Variants / reasoning settings</h2>
           <table className="dtable w-full text-sm">
             <thead><tr>
@@ -125,41 +94,50 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {/* GitHub Copilot */}
       {model.copilot && (
         <section className="card mt-6 p-4">
-          <h2 className="mb-2 font-semibold">GitHub Copilot <span className="text-xs font-normal text-gray-500">(per premium request, not per token)</span></h2>
-          <div className="flex flex-wrap gap-6 text-sm">
-            <div><span className="text-gray-400">Multiplier</span> <span className="font-semibold tabular">{num(model.copilot.multiplier, 2)}×</span></div>
-            <div><span className="text-gray-400">Effective cost</span> <span className="font-semibold tabular">${num(model.copilot.usd_per_request, 3)}</span> / request</div>
-          </div>
-          {model.copilot.notes && <p className="mt-2 text-xs text-gray-500">{model.copilot.notes}</p>}
+          <h2 className="mb-2 font-semibold">GitHub Copilot</h2>
+          {model.copilot.current && (
+            <div>
+              <p className="mb-2 text-xs text-gray-500">Current usage-based billing · model token cost is converted to AI Credits at 1 credit = $0.01.</p>
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+                <div><span className="text-gray-400">Input</span> <span className="font-semibold tabular">{usdPerM(model.copilot.current.input_per_1m)}</span> / 1M</div>
+                <div><span className="text-gray-400">Cached input</span> <span className="font-semibold tabular">{usdPerM(model.copilot.current.cached_input_per_1m)}</span> / 1M</div>
+                {model.copilot.current.cache_write_per_1m != null && <div><span className="text-gray-400">Cache write</span> <span className="font-semibold tabular">{usdPerM(model.copilot.current.cache_write_per_1m)}</span> / 1M</div>}
+                <div><span className="text-gray-400">Output</span> <span className="font-semibold tabular">{usdPerM(model.copilot.current.output_per_1m)}</span> / 1M</div>
+                {model.copilot.current.release_status && <div><span className="text-gray-400">Status</span> <span className="font-semibold">{model.copilot.current.release_status}{model.copilot.current.feature_status ? ` · ${model.copilot.current.feature_status}` : ""}</span></div>}
+              </div>
+              {model.copilot.current.standard_pricing_from && (
+                <p className="mt-2 text-xs text-warn/90">
+                  Promotional pricing ends {model.copilot.current.promotion_ends_at}; from {model.copilot.current.standard_pricing_from}: {usdPerM(model.copilot.current.standard_input_per_1m)} input / {usdPerM(model.copilot.current.standard_output_per_1m)} output per 1M.
+                </p>
+              )}
+              {model.copilot.current.notes && <p className="mt-2 text-xs text-gray-500">{model.copilot.current.notes}</p>}
+            </div>
+          )}
+          {model.copilot.fast_mode && (
+            <div className="mt-4 border-t border-line pt-3">
+              <p className="mb-2 text-xs text-gray-500">Fast mode research preview · separate opt-in mode, not the standard model price.</p>
+              <div className="flex flex-wrap gap-x-6 gap-y-1 text-sm">
+                <div><span className="text-gray-400">Input</span> <span className="font-semibold tabular">{usdPerM(model.copilot.fast_mode.input_per_1m)}</span> / 1M</div>
+                <div><span className="text-gray-400">Cached input</span> <span className="font-semibold tabular">{usdPerM(model.copilot.fast_mode.cached_input_per_1m)}</span> / 1M</div>
+                <div><span className="text-gray-400">Output</span> <span className="font-semibold tabular">{usdPerM(model.copilot.fast_mode.output_per_1m)}</span> / 1M</div>
+              </div>
+              {model.copilot.fast_mode.notes && <p className="mt-2 text-xs text-gray-500">{model.copilot.fast_mode.notes}</p>}
+            </div>
+          )}
+          {model.copilot.multiplier != null && (
+            <div className={model.copilot.current ? "mt-4 border-t border-line pt-3" : ""}>
+              <p className="mb-2 text-xs text-gray-500">Legacy annual Pro/Pro+ request billing only.</p>
+              <div className="flex flex-wrap gap-6 text-sm">
+                <div><span className="text-gray-400">Multiplier</span> <span className="font-semibold tabular">{num(model.copilot.multiplier, 2)}×</span></div>
+                <div><span className="text-gray-400">Effective cost</span> <span className="font-semibold tabular">${num(model.copilot.usd_per_request, 3)}</span> / request</div>
+              </div>
+              {model.copilot.notes && <p className="mt-2 text-xs text-gray-500">{model.copilot.notes}</p>}
+            </div>
+          )}
         </section>
       )}
 
-      {/* All offers grouped by platform */}
-      <section className="card mt-6 p-4">
-        <h2 className="mb-3 font-semibold">All token offers by platform</h2>
-        {[...byPlatform.entries()].map(([platform, offers]) => (
-          <div key={platform} className="mb-4">
-            <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({offers.length})</span></h3>
-            <table className="dtable w-full text-sm">
-              <tbody>
-                {offers
-                  .map((o) => ({ o, bl: blendedCost(o.input_per_1m, o.output_per_1m) ?? Infinity }))
-                  .sort((a, b2) => a.bl - b2.bl)
-                  .map(({ o, bl }, i) => (
-                    <tr key={i}>
-                      <td className="px-2 py-1">{o.provider}</td>
-                      <td className="px-2 py-1 text-xs text-gray-500">{o.region}</td>
-                      <td className="px-2 py-1 text-right tabular">{usdPerM(o.input_per_1m)}<span className="text-gray-600"> in</span></td>
-                      <td className="px-2 py-1 text-right tabular">{usdPerM(o.output_per_1m)}<span className="text-gray-600"> out</span></td>
-                      <td className="px-2 py-1 text-right tabular font-semibold">{usdPerM(Number.isFinite(bl) ? bl : null)}</td>
-                    </tr>
-                  ))}
-              </tbody>
-            </table>
-          </div>
-        ))}
-        {allOffers.length === 0 && <p className="text-sm text-gray-500">No token offers recorded.</p>}
-      </section>
+      <ModelDetailOffers offers={offers} providers={data.providers} view="all" />
     </div>
   );
 }
