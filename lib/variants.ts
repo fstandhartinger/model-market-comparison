@@ -28,7 +28,9 @@ export function preferredVariantIds(models: ClientModel[], score?: ScoreKey): Ma
     // When a score is selected, prefer a measured variant. Exact Coding-Agent
     // attachment must not make a family disappear merely because its generic
     // display representative is an unmeasured sibling effort.
-    const measured = score ? rows.filter((row) => row.scores[score] != null) : [];
+    const measured = score ? rows.filter((row) => score === "composite"
+      ? row.composite_coverage > 0
+      : row.scores[score] != null) : [];
     const candidates = measured.length ? measured : rows;
     const byVar = (v: string) => candidates.find((r) => r.variant === v);
     const pick = (order: string[]) => (order.map(byVar).find(Boolean) as ClientModel | undefined) || candidates[0];

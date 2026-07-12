@@ -4,7 +4,7 @@ import { useRouter } from "next/navigation";
 import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
 } from "recharts";
-import type { ClientData } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
 import { modelCost, createOfferScope, isHiddenModel } from "../lib/cost";
@@ -54,8 +54,8 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
     if (s.featured) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     return pool
-      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score] }))
-      .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
+      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
+      .filter((x) => x.hasEvidence && x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
       .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
   }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
 

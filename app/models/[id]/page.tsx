@@ -18,6 +18,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
     .filter((m) => m.family_key === model.family_key)
     .sort((a, b) => (b.benchmarks?.aa_coding_index ?? -1) - (a.benchmarks?.aa_coding_index ?? -1));
   const offers = data.offersByModel[model.id] || [];
+  const clientModel = data.models.find((candidate) => candidate.id === model.id);
   const b = model.benchmarks;
   const da = model.designarena;
 
@@ -43,6 +44,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         <section className="card min-w-0 p-4">
           <h2 className="mb-3 font-semibold">Benchmarks</h2>
           <div className="grid grid-cols-1 gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2">
+            <Metric label="Composite" value={num(clientModel?.scores.composite)} hi />
+            <Metric label="Composite evidence" value={`${clientModel?.composite_coverage ?? 0}/5`} />
             <Metric label="AA Coding Index" value={num(b.aa_coding_index)} hi />
             <Metric label="AA Coding Agent Index" value={num(b.aa_coding_agent_index)} hi />
             <Metric label="AA Intelligence Index" value={num(b.aa_intelligence_index)} hi />

@@ -1,6 +1,6 @@
 "use client";
 import { useMemo, useState } from "react";
-import type { ClientData } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
@@ -31,7 +31,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const [modelId, setModelId] = useState<string>("");
   const [modelQ, setModelQ] = useState("");
 
-  const eligible = (m: { id: string; family_key: string; open_weights: boolean; featured: boolean; scores: Record<string, number | null> }) => {
+  const eligible = (m: ClientData["models"][number]) => {
     if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
     if (s.openOnly && !m.open_weights) return false;
     if (s.featured && !m.featured) return false;
@@ -44,7 +44,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const peerModels = useMemo(() => {
     const collapsed = s.collapse ? collapseModels(candidates, preferredId) : candidates;
     const filtered = collapsed.filter((m) => {
-      if (scorePeersOnly && m.scores[score] == null) return false;
+      if (scorePeersOnly && !hasScoreEvidence(m, score)) return false;
       if (!eligible(m)) return false;
       return rankedOffers(data.offersByModel[m.id], offerScope).length > 0;
     });
@@ -211,7 +211,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
             <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
             <button onClick={() => setScorePeersOnly(!scorePeersOnly)}
               className={`rounded-md border px-3 py-1.5 text-sm ${scorePeersOnly ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
-              {scorePeersOnly ? "✓ " : ""}Only models with this score
+              {scorePeersOnly ? "✓ " : ""}{score === "composite" ? "Only models with benchmark evidence" : "Only models with this score"}
             </button>
           </>
         )}
@@ -231,7 +231,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
           {providersTable}
           <p className="mt-3 text-xs text-gray-500">
             Avg price rank = the provider&apos;s average position (1 = cheapest) across every model it offers
-            {scorePeersOnly ? " that has the selected score." : "."} Lower is cheaper.
+            {scorePeersOnly ? (score === "composite" ? " that has benchmark evidence." : " that has the selected score.") : "."} Lower is cheaper.
           </p>
         </>
       )}

@@ -65,12 +65,13 @@ export default async function AboutPage() {
         The &ldquo;10:1 blended&rdquo; cost is <code className="text-accent2">(10·input + 1·output) / 11</code> per 1M tokens,
         approximating a read-heavy workload. The cheapest such cost across all providers is used for the
         cost axis. Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
-        The Composite score averages five equally weighted, fixed slots: AA Coding, source-matched AA Coding Agent,
+        The Composite score uses five slots: AA Coding, source-matched AA Coding Agent,
         AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. A DesignArena
         board qualifies with at least 500 battles; its Elo is converted to the expected score against a fixed Elo 1000
         opponent. Each observed slot is converted to its percentile among the current catalog&apos;s unique observed values.
-        A missing slot contributes the median-neutral percentile 50 while the denominator remains five, and a model with
-        no observed slot has no Composite. There is no catalog-chain or dominance adjustment. Coding Agent results are
+        Every missing slot inherits that model&apos;s mean observed percentile, so the Composite is exactly the mean of its
+        available percentiles. A model with no reliable observed slot receives the neutral fallback 50; its zero evidence
+        coverage remains distinct from a measured score and is excluded from capability charts. There is no catalog-chain or dominance adjustment. Coding Agent results are
         attached to an exact or explicitly audited model/reasoning identity; every harness
         result is retained and their median is used. DesignArena results are attached once rather than copied to effort
         siblings. Raw DesignArena score views continue to show Elo. Stable model ids and repositories are preferred over

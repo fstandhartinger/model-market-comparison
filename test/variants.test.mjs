@@ -9,11 +9,12 @@ const compiled = ts.transpileModule(source, {
 }).outputText;
 const variants = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 
-const model = (family_key, variant, agent) => ({
+const model = (family_key, variant, agent, { composite = 50, coverage = agent == null ? 0 : 1 } = {}) => ({
   id: `${family_key}::${variant}`,
   family_key,
   variant,
-  scores: { composite: 50, aa_coding_agent: agent },
+  scores: { composite, aa_coding_agent: agent },
+  composite_coverage: coverage,
 });
 
 test("collapse prefers a measured GPT effort for the selected score", () => {
@@ -37,10 +38,22 @@ test("collapse keeps DeepSeek Coding-Agent evidence instead of an unmeasured max
 test("collapse prefers an explicit GLM max result over a generic default alias", () => {
   const models = [
     model("glm-5.2", "default", 57.9),
-    model("glm-5.2", "max", null),
+    model("glm-5.2", "max", null, { composite: 78.6, coverage: 5 }),
     model("glm-5.2", "non-reasoning", null),
   ];
   assert.equal(variants.preferredVariantIds(models, "composite").get("glm-5.2"), "glm-5.2::max");
+});
+
+test("neutral Composite fallback cannot replace a measured family representative", () => {
+  const models = [
+    model("claude-sonnet-5", "high", null, { composite: 50, coverage: 0 }),
+    model("claude-sonnet-5", "max", null, { composite: 94.9, coverage: 2 }),
+    model("claude-sonnet-5", "designarena", null, { composite: 100, coverage: 1 }),
+  ];
+  assert.equal(
+    variants.preferredVariantIds(models, "composite").get("claude-sonnet-5"),
+    "claude-sonnet-5::max",
+  );
 });
 
 test("deprecated rows are removed before choosing a collapsed representative", () => {

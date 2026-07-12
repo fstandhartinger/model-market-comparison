@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList,
 } from "recharts";
-import type { ClientData } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
 import { modelCost, scopedCatalogOffers, createOfferScope, isHiddenModel } from "../lib/cost";
@@ -33,14 +33,14 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     if (s.featured) base = base.filter((m) => m.featured);
     if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
     return base
-      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], offerCount: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length }))
+      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score), offerCount: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length }))
       .filter((x) => !offerScope.restricted || x.offerCount > 0)
       .filter((x) => (Number.isFinite(maxC) ? x.cost != null && x.cost <= maxC : true))
       .filter((x) => (s.minScore > 0 ? x.sc != null && x.sc >= s.minScore : true));
   }, [data, candidates, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, offerScope, preferredId]);
 
   const leaderboard = useMemo(() =>
-    pool.filter((x) => x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
+    pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
       .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.sc as number, org: x.m.org })),
     [pool, s.collapse, preferredId]);
 
@@ -52,7 +52,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   const openVsClosed = useMemo(() => {
     const groups = { Open: pool.filter((x) => x.m.open_weights), Closed: pool.filter((x) => !x.m.open_weights) };
     return Object.entries(groups).map(([k, arr]) => {
-      const sc = arr.map((x) => x.sc).filter((v): v is number => v != null);
+      const sc = arr.filter((x) => x.hasEvidence).map((x) => x.sc).filter((v): v is number => v != null);
       const co = arr.map((x) => x.cost).filter((v): v is number => v != null);
       return { name: k, avgScore: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : 0, avgCost: co.length ? co.reduce((a, b) => a + b, 0) / co.length : 0 };
     });

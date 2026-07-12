@@ -11,7 +11,11 @@ export interface CompositeInput {
 }
 
 export const DEFAULT_MIN_DA_BATTLES: number;
+export function compositeEvidenceCount(
+  row: CompositeInput,
+  options?: { minDesignArenaBattles?: number },
+): number;
 export function computeCompositeScores(
   rows: CompositeInput[],
   options?: { minDesignArenaBattles?: number },
-): Map<string, number | null>;
+): Map<string, number>;

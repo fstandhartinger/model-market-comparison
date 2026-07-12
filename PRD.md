@@ -35,7 +35,7 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
 ## 4. Functional requirements
 
 1. **Model overview** — table of models with a **selectable score** (AA Coding,
-   coverage-neutral percentile Composite, AA Coding, AA Coding Agent, AA Intelligence,
+   model-mean-imputed percentile Composite, AA Coding, AA Coding Agent, AA Intelligence,
    DesignArena Frontend, DesignArena Full-Stack), the cheapest
    10:1 blended cost, and the top providers. Filter by featured / open-weights /
    org / search; hide deprecated model rows by default; sort by score, cost, name, org.
@@ -68,14 +68,15 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   model's cheapest such offer across all providers.
 - EU residency is determined per model offer and serving location. Provider capability,
   resource/billing region, or a global endpoint is not sufficient evidence of EU hosting.
-- The Composite averages five equally weighted, fixed slots: AA Coding, source-matched
+- The Composite uses five capability slots: AA Coding, source-matched
   AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack.
   AA values are clamped to 0–100. DesignArena boards require at least 500 battles and
   their Elo is converted to the expected score against a fixed Elo 1000 opponent.
   Every observed slot is percentile-normalized across the current catalog's unique
-  observed values. Missing contributes the median-neutral percentile 50 while the
-  denominator remains five; all five missing yields no Composite. There is no
-  catalog-chain or dominance adjustment.
+  observed values. Every missing slot inherits that model's mean observed percentile;
+  equivalently, the Composite is the arithmetic mean of its available percentiles.
+  With no reliable observed slot the fallback is 50, while evidence coverage remains
+  zero and is tracked separately. There is no catalog-chain or dominance adjustment.
   DesignArena results with a bare product identity attach to the sole benchmark-bearing
   configuration in an unambiguous family and carry family-scope provenance; ambiguous
   multi-effort families retain a separate DesignArena row.

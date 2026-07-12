@@ -1,5 +1,5 @@
-import type { Dataset, ModelRow } from "./types";
-import { computeCompositeScores } from "./composite.mjs";
+import type { Dataset, ModelRow, ScoreKey } from "./types";
+import { compositeEvidenceCount, computeCompositeScores } from "./composite.mjs";
 
 export interface ClientOffer {
   key: string; // `${platform}::${provider}`
@@ -44,6 +44,7 @@ export interface ClientModel {
     designarena_frontend: number | null;
     designarena_fullstack: number | null;
   };
+  composite_coverage: number;
   offer_count: number;
   aa_ref_input: number | null;
   aa_ref_output: number | null;
@@ -74,6 +75,12 @@ export interface ClientData {
   offersByModel: Record<string, ClientOffer[]>;
   providers: ProviderInfo[];
   families: FamilyOption[];
+}
+
+/** Whether a displayed score is backed by at least one source result. Composite
+ * may be the neutral 50 fallback even when this returns false. */
+export function hasScoreEvidence(model: ClientModel, score: ScoreKey): boolean {
+  return score === "composite" ? model.composite_coverage > 0 : model.scores[score] != null;
 }
 
 function offerKey(platform: string, provider: string) {
@@ -126,13 +133,14 @@ export function clientData(ds: Dataset): ClientData {
       release_date: m.release_date,
       deprecated: m.deprecated,
       scores: {
-        composite: null, // filled below from the five fixed benchmark slots
+        composite: null, // filled below from the five benchmark slots
         aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
         aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
         aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
         designarena_frontend: m.designarena?.frontend?.elo ?? null,
         designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
       },
+      composite_coverage: 0,
       offer_count: (offersByModel[m.id] || []).length,
       aa_ref_input: m.aa_reference_price?.input_per_1m ?? null,
       aa_ref_output: m.aa_reference_price?.output_per_1m ?? null,
@@ -141,11 +149,13 @@ export function clientData(ds: Dataset): ClientData {
     };
   });
 
-  // Five equally weighted fixed slots: three AA indices plus separate, reliability-
-  // gated DesignArena Frontend and Full-Stack values. Each observed source value is
-  // percentile-normalized; missing slots contribute the source-neutral percentile 50.
+  // Five conceptual slots: three AA indices plus separate, reliability-gated
+  // DesignArena Frontend and Full-Stack values. Each observed source value is
+  // percentile-normalized; every missing slot inherits the model's mean observed
+  // percentile. An evidence-free row receives 50 but keeps coverage 0 so it cannot
+  // masquerade as a measured family representative.
   const rawById = new Map(ds.models.map((m) => [m.id, m]));
-  const composites = computeCompositeScores(models.map((m) => {
+  const compositeInputs = models.map((m) => {
     const raw = rawById.get(m.id);
     return {
       id: m.id,
@@ -155,8 +165,13 @@ export function clientData(ds: Dataset): ClientData {
         fullstack: raw?.designarena?.fullstack?.battles ?? null,
       },
     };
-  }));
-  for (const m of models) m.scores.composite = composites.get(m.id) ?? null;
+  });
+  const composites = computeCompositeScores(compositeInputs);
+  const coverage = new Map(compositeInputs.map((row) => [row.id, compositeEvidenceCount(row)]));
+  for (const m of models) {
+    m.scores.composite = composites.get(m.id) ?? 50;
+    m.composite_coverage = coverage.get(m.id) ?? 0;
+  }
 
   const providers: ProviderInfo[] = ds.providers.map((p) => ({
     key: offerKey(p.platform, p.provider), platform: p.platform, provider: p.provider, model_count: p.model_count,

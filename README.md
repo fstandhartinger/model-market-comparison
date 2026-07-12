@@ -22,10 +22,11 @@ USD per 1M tokens.
   **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted only**, **Non-US provider only**,
   **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
   provider- and model-checklist filters.
-- **Selectable scores**: **Composite** (five fixed coverage-neutral percentile slots, 0–100, default), ArtificialAnalysis
+- **Selectable scores**: **Composite** (five percentile slots with model-mean imputation, 0–100, default), ArtificialAnalysis
   **Coding Index**, **Coding Agent Index** (median across published harnesses for the exact model/effort variant), **Intelligence Index**,
   and DesignArena **Frontend** / **Full-Stack** Elo.
-- **Overview** — fully sortable table with per-column filters, **Has score** / **Has provider**
+- **Overview** — fully sortable table with per-column filters, **Has benchmark evidence**
+  for Composite (or **Has score** for a direct metric) / **Has provider**
   toggles, and Excel-style **data bars** on score & cost.
 - **Compare** — pick two models (A/B) head-to-head; scores & cheapest price shown big with
   the winner highlighted, plus each model's cheapest providers side by side.
@@ -94,15 +95,18 @@ A [`render.yaml`](render.yaml) Blueprint and a [`Dockerfile`](Dockerfile) are in
 
 10:1 blended cost = `(10·input + 1·output) / 11` per 1M tokens. EU residency is
 audited per offer/model/region; an EU-capable provider does not make its US or global
-routes EU-hosted. The Composite averages five equally weighted, fixed slots: AA Coding,
+routes EU-hosted. The Composite uses five capability slots: AA Coding,
 source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena
 Full-Stack. AA values are clamped to 0–100. A DesignArena board qualifies with at least
 500 battles and its Elo is converted to the expected score against a fixed Elo 1000
 opponent: `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is then converted
-to its empirical percentile among the current catalog&apos;s unique observed values. A
-missing slot contributes percentile 50 while the denominator always remains five; a
-model with no observed slot has no Composite. This makes missing evidence median-neutral
-within each source despite their very different raw scales. GitHub Copilot&apos;s
+to its empirical percentile among the current catalog&apos;s unique observed values. Every
+missing slot is assigned that model&apos;s mean percentile across its observed slots. The
+result is therefore exactly the mean of its available percentiles, so missing slots cannot
+move it; a model with no reliable observed slot receives the neutral fallback 50. Coverage
+is tracked separately so this fallback is not mistaken for benchmark evidence when choosing
+a family representative, applying **Has benchmark evidence**, or building capability charts and the
+Pareto frontier. GitHub Copilot&apos;s
 current token/AI-Credit rates and legacy annual-plan
 request multipliers are kept separate from provider API offers.
 Model identities are joined conservatively across sources; modes, releases, pricing tiers

@@ -78,6 +78,6 @@ export function scoreOf(model: ModelRow, key: ScoreKey): number | null {
     case "aa_intelligence_index": return model.benchmarks?.aa_intelligence_index ?? null;
     case "designarena_frontend": return model.designarena?.frontend?.elo ?? null;
     case "designarena_fullstack": return model.designarena?.fullstack?.elo ?? null;
-    case "composite": return null; // computed client-side from all five benchmark slots and DA battle counts
+    case "composite": return null; // computed client-side from five potential slots, model-mean imputation, and DA battle counts
   }
 }

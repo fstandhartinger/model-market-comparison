@@ -1,4 +1,4 @@
-// Diagnose the production fixed-slot, coverage-neutral percentile Composite for
+// Diagnose the production model-mean-imputed percentile Composite for
 // models whose ordering is sensitive to missing results.
 import { readFileSync } from "node:fs";
 import { computeCompositeScores, DEFAULT_MIN_DA_BATTLES } from "../lib/composite.mjs";
@@ -58,11 +58,15 @@ const distributions = Object.fromEntries(SLOTS.map((key) => [
 const percentile = (value, values) => values.length <= 1 ? 50 : (values.indexOf(value) / (values.length - 1)) * 100;
 const slotRows = effectiveRows.map((row) => {
   const observed = SLOTS.filter((key) => row.slots[key] != null);
+  const observedPercentiles = observed.map((key) => percentile(row.slots[key], distributions[key]));
+  const assumed = observedPercentiles.length
+    ? observedPercentiles.reduce((sum, value) => sum + value, 0) / observedPercentiles.length
+    : 50;
   const normalized = Object.fromEntries(SLOTS.map((key) => [
     key,
-    row.slots[key] == null ? 50 : percentile(row.slots[key], distributions[key]),
+    row.slots[key] == null ? assumed : percentile(row.slots[key], distributions[key]),
   ]));
-  return { ...row, observed, normalized, composite: composites.get(row.id) };
+  return { ...row, observed, assumed, normalized, composite: composites.get(row.id) };
 });
 
 function show(id) {
@@ -72,7 +76,7 @@ function show(id) {
   for (const key of SLOTS) {
     const value = row.slots[key];
     if (value == null) {
-      console.log(`  ${key}: missing -> percentile 50.0 neutral`);
+      console.log(`  ${key}: missing -> assumed model mean percentile ${row.assumed.toFixed(1)}`);
       continue;
     }
     if (key === "designarena_frontend") {
@@ -91,6 +95,8 @@ show("deepseek-v4-pro::high");
 show("deepseek-v4-pro::max");
 show("deepseek-v4-flash::max");
 show("glm-5.2::max");
+show("gpt-5.6-sol::high");
+show("claude-fable-5::max");
 show("minimax-m3::default");
 show("gpt-5.5::medium");
 show("gpt-5.5::xhigh");

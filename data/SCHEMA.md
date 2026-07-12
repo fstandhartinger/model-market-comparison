@@ -87,7 +87,8 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
 
 ## Score keys (`ScoreKey`)
 
-`composite` (coverage-neutral 0–100 percentile average of five fixed capability slots),
+`composite` (0–100 mean of available capability percentiles, expressed as five slots
+with model-mean imputation),
 `aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, median harness result per exact model),
 `aa_intelligence_index`, `designarena_frontend`, `designarena_fullstack`.
 
@@ -115,14 +116,16 @@ publishes only a bare product identity and that family has exactly one benchmark
 configuration, the result attaches there at family scope and carries
 `designarena_attachment_note`; ambiguous multi-effort families remain separate. Results
 are never copied to every reasoning-effort sibling.
-The Composite averages five equally weighted, fixed slots: AA Coding, source-matched
+The Composite uses five capability slots: AA Coding, source-matched
 Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA
 values are clamped to 0–100. Each DesignArena board qualifies with at least 500 battles
 and its Elo is converted to the expected score against a fixed Elo 1000 opponent:
 `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is converted to its empirical
-percentile among the current catalog's unique observed values. Missing contributes the
-median-neutral percentile 50 while the denominator remains five; all five missing yields
-`null`. There is no catalog-chain or dominance adjustment. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
+percentile among the current catalog's unique observed values. Every missing slot inherits
+that model's mean observed percentile, so the five-slot result equals the mean of the
+available percentiles. A row with no reliable observed slot receives 50; its evidence
+coverage remains zero so the fallback is not treated as a measurement. There is no
+catalog-chain or dominance adjustment. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
 `claude-fable-5`).
 
 ## In Postgres

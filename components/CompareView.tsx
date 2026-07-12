@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import Link from "next/link";
-import type { ClientData, ClientModel } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelCost, rankedOffers, scopedCatalogOffers, createOfferScope, isHiddenModel, type OfferScope } from "../lib/cost";
@@ -29,7 +29,7 @@ export function CompareView({ data }: { data: ClientData }) {
   const models = useMemo(() => {
     let r = candidates.filter((m) => {
       const hasOffer = scopedCatalogOffers(data.offersByModel[m.id], offerScope).length > 0;
-      return offerScope.restricted ? hasOffer : hasOffer || m.scores[s.score] != null;
+      return offerScope.restricted ? hasOffer : hasOffer || hasScoreEvidence(m, s.score);
     });
     if (s.collapse) r = collapseModels(r, preferredId);
     r = r.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));

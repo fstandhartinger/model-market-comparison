@@ -1,7 +1,7 @@
 "use client";
 import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
-import type { ClientData } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { blend, modelCost, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, isHiddenModel } from "../lib/cost";
@@ -46,7 +46,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   const rows = useMemo(() => {
     const maxC = parseFloat(maxCost);
     let r = candidates.map((m) => ({
-      m, sc: m.scores[score], cost: modelCost(m, data, offerScope),
+      m, sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score), cost: modelCost(m, data, offerScope),
       cheap: rankedOffers(data.offersByModel[m.id], offerScope).slice(0, 3),
       ncheap: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length,
     }));
@@ -57,7 +57,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
-    if (withScoreOnly) r = r.filter((x) => x.sc != null);
+    if (withScoreOnly) r = r.filter((x) => x.hasEvidence);
     if (s.minScore > 0) r = r.filter((x) => x.sc != null && x.sc >= s.minScore);
     if (Number.isFinite(maxC)) r = r.filter((x) => x.cost != null && x.cost <= maxC);
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
@@ -93,7 +93,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
         <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
-        <Toggle label="Has score" on={withScoreOnly} set={setWithScoreOnly} />
+        <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
         <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
         <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
@@ -169,6 +169,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                                 </tr>
                               );
                             })}
+                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage}/5</td></tr>
                             <tr><td className="py-0.5 text-gray-400">Weights</td><td className="py-0.5 text-right">{m.open_weights ? "open" : "closed"}</td></tr>
                           </tbody>
                         </table>

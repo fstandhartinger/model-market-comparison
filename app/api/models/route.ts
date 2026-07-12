@@ -11,9 +11,7 @@ export async function GET(req: Request) {
   const hasBenchmark = searchParams.get("hasBenchmark") === "1";
   const score = (searchParams.get("score") as ScoreKey) || "aa_coding_index";
   const ds = await getDataset();
-  const compositeById = score === "composite"
-    ? new Map(clientData(ds).models.map((model) => [model.id, model.scores.composite]))
-    : null;
+  const clientById = new Map(clientData(ds).models.map((model) => [model.id, model]));
 
   let models = ds.models;
   if (featured) models = models.filter((m) => m.featured);
@@ -28,7 +26,8 @@ export async function GET(req: Request) {
     variant: m.variant,
     open_weights: m.open_weights,
     featured: m.featured,
-    score: compositeById ? (compositeById.get(m.id) ?? null) : scoreOf(m, score),
+    score: score === "composite" ? (clientById.get(m.id)?.scores.composite ?? 50) : scoreOf(m, score),
+    composite_coverage: clientById.get(m.id)?.composite_coverage ?? 0,
     benchmarks: m.benchmarks,
     designarena: m.designarena,
     cost_blended_10to1: modelCost(m),
