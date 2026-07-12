@@ -308,6 +308,17 @@ const AA_HF_URL_CORRECTIONS = {
   },
 };
 
+// These source feeds publish a bare product identity even though AA's model
+// leaderboard names the same default-thinking configuration explicitly. Keep
+// the mapping fail-closed and source-auditable: GLM-5.2 thinking is enabled by
+// default, Z.ai's official quickstart uses reasoning_effort=max, and both the
+// Coding Agent and DesignArena feeds identify the tested products only by their
+// bare GLM-5.x names. The non-reasoning AA rows remain separate configurations.
+const BARE_BENCHMARK_VARIANT_TARGETS = new Map([
+  ["glm-5.1", "reasoning"],
+  ["glm-5.2", "max"],
+]);
+
 // ---------------------------------------------------------------------------
 // Build
 // ---------------------------------------------------------------------------
@@ -749,7 +760,10 @@ async function build() {
     const familyKey = codingAgentFamilyAliases[normalizedAgent.familyKey] || normalizedAgent.familyKey;
     const org = normalizedAgent.org;
     // AA calls the no-reasoning GPT-5.6 setting "none" in the Coding-Agent feed.
-    const variant = /\(\s*none\s*\)/i.test(r.model_name) ? "non-reasoning" : detectVariant(r.model_name);
+    const sourceVariant = /\(\s*none\s*\)/i.test(r.model_name) ? "non-reasoning" : detectVariant(r.model_name);
+    const variant = sourceVariant === "default"
+      ? (BARE_BENCHMARK_VARIANT_TARGETS.get(familyKey) || sourceVariant)
+      : sourceVariant;
     const modelId = `${familyKey}::${variant}`;
     const fam = family(familyKey, org);
     if (!models.has(modelId)) {
@@ -880,15 +894,20 @@ async function build() {
     }
   }
 
-  // DesignArena publishes one exact result per board/model id, not a family-wide
-  // result for every AA effort setting. A multi-variant family therefore gets a
-  // dedicated DesignArena row instead of fictitious clones on all siblings.
+  // DesignArena publishes one result per board/model id. Attach a bare id to an
+  // existing default row when one exists, or to a narrowly audited source alias
+  // such as GLM-5.2::max. Otherwise keep a dedicated DesignArena row rather than
+  // cloning an effort-unspecified result across every reasoning sibling.
   for (const [familyKey, entries] of designArenaByFamily) {
     const fam = families.get(familyKey) || family(familyKey, guessOrg(familyKey));
-    const rows = [...models.values()].filter((row) => row.family_key === familyKey);
-    let target = rows.length === 1 && rows[0].variant === "default"
-      ? rows[0]
-      : models.get(`${familyKey}::designarena`);
+    const auditedVariant = BARE_BENCHMARK_VARIANT_TARGETS.get(familyKey);
+    let target = auditedVariant
+      ? models.get(`${familyKey}::${auditedVariant}`)
+      : models.get(`${familyKey}::default`);
+    if (auditedVariant && !target) {
+      throw new Error(`Missing audited benchmark target: ${familyKey}::${auditedVariant}`);
+    }
+    if (!target) target = models.get(`${familyKey}::designarena`);
     if (!target) {
       target = emptyModel({
         familyKey, fam, id: `${familyKey}::designarena`,

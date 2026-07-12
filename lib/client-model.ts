@@ -142,8 +142,8 @@ export function clientData(ds: Dataset): ClientData {
   });
 
   // Five equally weighted fixed slots: three AA indices plus separate, reliability-
-  // gated DesignArena Frontend and Full-Stack values. Missing slots contribute the
-  // neutral value 50; a coverage-safe dominance adjustment can only raise a leader.
+  // gated DesignArena Frontend and Full-Stack values. Each observed source value is
+  // percentile-normalized; missing slots contribute the source-neutral percentile 50.
   const rawById = new Map(ds.models.map((m) => [m.id, m]));
   const composites = computeCompositeScores(models.map((m) => {
     const raw = rawById.get(m.id);

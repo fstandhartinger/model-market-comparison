@@ -1,10 +1,10 @@
 {
   "source": "Manual supplements",
-  "collected_at": "2026-06-16",
+  "collected_at": "2026-07-12",
   "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
-  "notes": "GLM 5.2 is now live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) so the earlier estimated offer was removed — it is sourced from openrouter.json. GLM 5.2 ships MIT open-weights (HuggingFace zai-org/GLM-5.2). As of 2026-06-16 it has no ArtificialAnalysis or DesignArena benchmark yet. Kimi K2.7 Coding has a DesignArena Full-Stack Elo but is not yet on ArtificialAnalysis. | GPT-5.6 Sol/Terra/Luna hand-curated offers removed 2026-07-10 — now sourced live from OpenRouter + AA (ArtificialAnalysis added GPT-5.6 scores; OpenRouter added real per-token prices incl. Pro tiers).",
+  "notes": "GLM 5.2 is live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) and ships MIT open weights (HuggingFace zai-org/GLM-5.2). Its current benchmark evidence is sourced from Artificial Analysis (Coding and Intelligence), the AA Coding Agent Index, and both DesignArena boards; no manual score is used. GPT-5.6 Sol/Terra/Luna hand-curated offers were removed 2026-07-10 and are sourced live from OpenRouter plus AA.",
   "models": [],
   "offers": [],
-  "_benchmark_overrides_doc": "Optional list of documented corrections that override a benchmark value from a live source (each: {family_key, variant?, field, value, reason}). Use ONLY for confirmed source errors. Currently empty — GLM 5.2's Coding Index of 67 was verified against ArtificialAnalysis's own leaderboard (ranked #4, above Opus 4.8) and is correct.",
+  "_benchmark_overrides_doc": "Optional list of documented corrections that override a benchmark value from a live source (each: {family_key, variant?, field, value, reason}). Use ONLY for confirmed source errors. Currently empty; GLM 5.2's live AA values are imported without override.",
   "benchmark_overrides": []
 }

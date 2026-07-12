@@ -86,7 +86,7 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
 
 ## Score keys (`ScoreKey`)
 
-`composite` (missing-neutral 0–100 average of five fixed capability slots),
+`composite` (coverage-neutral 0–100 percentile average of five fixed capability slots),
 `aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, median harness result per exact model),
 `aa_intelligence_index`, `designarena_frontend`, `designarena_fullstack`.
 
@@ -99,25 +99,26 @@ Only benchmark configuration / serving annotations are removed from the identity
 Reasoning effort is captured separately as `variant`; product names such as MiniMax,
 Mistral Medium and Qwen Max remain part of the family. AA rows are preserved 1:1 and use
 the leaderboard's authoritative open-weight, license, lifecycle, context and exact-source
-metadata. Coding Agent results are matched to the exact `(family, variant)`, every harness
-row is retained, and the summary is the median across those harnesses.
+metadata. Coding Agent results are matched to the exact `(family, variant)` or a narrowly
+audited bare-source identity (currently GLM-5.1/5.2 default-thinking); every harness row
+is retained, and the summary is the median across those harnesses.
 Two confirmed AA repository-link errors are corrected in the generated metadata while
 the original source URL and correction reason remain alongside them for auditability.
 
 Offers are model/SKU-specific. An AA row with an exact OpenRouter id receives only that
 route (with repository identity as a guarded fallback for stale aliases); distinct
 Instruct/Thinking, context-price tiers, endpoint tiers and managed-hosting routes remain
-separate. DesignArena results attach once to the exact/default row or a dedicated
-`::designarena` row, never to every reasoning-effort sibling.
-The Composite averages five equally weighted, fixed slots: AA Coding, exact-variant
+separate. DesignArena results attach once to the exact/default row, an explicitly audited
+source identity such as `glm-5.2::max`, or a dedicated `::designarena` row; they are never
+copied to every reasoning-effort sibling.
+The Composite averages five equally weighted, fixed slots: AA Coding, source-matched
 Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA
 values are clamped to 0–100. Each DesignArena board qualifies with at least 500 battles
 and its Elo is converted to the expected score against a fixed Elo 1000 opponent:
-`100 / (1 + 10^((1000 − Elo) / 400))`. A missing slot contributes the neutral value 50
-while the denominator remains five; all five missing yields `null`. A coverage-safe
-dominance adjustment may only raise a model to at least 0.1 above another model when it
-covers every observed slot of that model, is no worse on any and is strictly better on
-at least one. It never lowers the covered model. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
+`100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is converted to its empirical
+percentile among the current catalog's unique observed values. Missing contributes the
+median-neutral percentile 50 while the denominator remains five; all five missing yields
+`null`. There is no catalog-chain or dominance adjustment. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
 `claude-fable-5`).
 
 ## In Postgres

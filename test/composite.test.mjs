@@ -3,18 +3,19 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { computeCompositeScores } from "../lib/composite.mjs";
 
-const expectedEloScore = (elo) => 100 / (1 + 10 ** ((1000 - elo) / 400));
-
-test("five fixed slots use 50 for missing values and clamp AA values", () => {
+test("five fixed slots use per-source percentiles and clamp AA values", () => {
   const scores = computeCompositeScores([
-    { id: "neutral", scores: { aa_coding_index: 50 } },
     { id: "below-range", scores: { aa_coding_index: -20 } },
+    { id: "middle", scores: { aa_coding_index: 50 } },
     { id: "above-range", scores: { aa_coding_agent: 250 } },
+    { id: "coding-high", scores: { aa_coding_index: 250 } },
   ]);
 
-  assert.equal(scores.get("neutral"), 50);
   assert.equal(scores.get("below-range"), 40);
-  assert.equal(scores.get("above-range"), 60);
+  assert.equal(scores.get("middle"), 50);
+  assert.equal(scores.get("coding-high"), 60);
+  // A source with only one unique observed value contains no relative signal.
+  assert.equal(scores.get("above-range"), 50);
 });
 
 test("all-missing and non-finite rows remain unscored", () => {
@@ -36,7 +37,7 @@ test("all-missing and non-finite rows remain unscored", () => {
   assert.deepEqual(computeCompositeScores([]), new Map());
 });
 
-test("unreliable DesignArena boards are missing-neutral", () => {
+test("unreliable DesignArena boards are coverage-neutral", () => {
   const scores = computeCompositeScores([
     {
       id: "low-elo",
@@ -54,63 +55,66 @@ test("unreliable DesignArena boards are missing-neutral", () => {
   assert.equal(scores.get("high-elo"), 50);
 });
 
-test("DesignArena boards are independent fixed slots instead of a variable average", () => {
+test("DesignArena boards are independent percentile slots instead of a variable average", () => {
   const scores = computeCompositeScores([
     {
-      id: "frontend-only",
+      id: "frontend-low",
+      scores: { designarena_frontend: 1000 },
+      designarenaBattles: { frontend: 500 },
+    },
+    {
+      id: "frontend-high",
       scores: { designarena_frontend: 1400 },
       designarenaBattles: { frontend: 500 },
     },
     {
-      id: "fullstack-only",
+      id: "fullstack-low",
       scores: { designarena_fullstack: 600 },
       designarenaBattles: { fullstack: 500 },
     },
     {
-      id: "both",
+      id: "fullstack-high",
+      scores: { designarena_fullstack: 1000 },
+      designarenaBattles: { fullstack: 500 },
+    },
+    {
+      id: "opposite-extremes",
       scores: { designarena_frontend: 1400, designarena_fullstack: 600 },
       designarenaBattles: { frontend: 500, fullstack: 500 },
     },
   ]);
 
-  const frontendOnly = Math.round(((expectedEloScore(1400) + 4 * 50) / 5) * 10) / 10;
-  const fullstackOnly = Math.round(((expectedEloScore(600) + 4 * 50) / 5) * 10) / 10;
-  const both = Math.round(((expectedEloScore(1400) + expectedEloScore(600) + 3 * 50) / 5) * 10) / 10;
-
-  assert.equal(scores.get("frontend-only"), frontendOnly);
-  assert.equal(scores.get("fullstack-only"), fullstackOnly);
-  assert.equal(scores.get("both"), both);
-  assert.equal(scores.get("frontend-only"), 58.2);
-  assert.equal(scores.get("fullstack-only"), 41.8);
-  assert.equal(scores.get("both"), 50);
+  assert.equal(scores.get("frontend-low"), 40);
+  assert.equal(scores.get("frontend-high"), 60);
+  assert.equal(scores.get("fullstack-low"), 40);
+  assert.equal(scores.get("fullstack-high"), 60);
+  assert.equal(scores.get("opposite-extremes"), 50);
 });
 
-test("coverage-safe dominance raises leaders only and preserves a 0.1 margin", () => {
+test("missing evidence equals the source-median percentile while real low evidence counts", () => {
   const scores = computeCompositeScores([
-    { id: "sparse", scores: { aa_coding_index: 80 } },
-    { id: "leader", scores: { aa_coding_index: 90, aa_intelligence_index: 0 } },
-    {
-      id: "chain-leader",
-      scores: { aa_coding_index: 95, aa_coding_agent: 0, aa_intelligence_index: 0 },
-    },
+    { id: "missing", scores: { aa_coding_index: 50 } },
+    { id: "explicit-median", scores: { aa_coding_index: 50, aa_intelligence_index: 50 } },
+    { id: "real-low", scores: { aa_coding_index: 50, aa_intelligence_index: 0 } },
+    { id: "calibration-high", scores: { aa_intelligence_index: 100 } },
   ]);
 
-  // Raw fixed-slot means are sparse=56, leader=48 and chain-leader=39.
-  // Constraints raise only the two leaders; the dominated row is untouched.
-  assert.equal(scores.get("sparse"), 56);
-  assert.equal(scores.get("leader"), 56.1);
-  assert.equal(scores.get("chain-leader"), 56.2);
+  assert.equal(scores.get("missing"), 50);
+  assert.equal(scores.get("explicit-median"), 50);
+  assert.equal(scores.get("real-low"), 40);
 });
 
-test("a row cannot dominate another row whose coverage it does not contain", () => {
-  const scores = computeCompositeScores([
-    { id: "partial", scores: { aa_coding_index: 90 } },
-    { id: "not-covered", scores: { aa_coding_index: 80, aa_intelligence_index: 100 } },
-  ]);
-  // Winning the only shared slot is insufficient when the would-be leader does
-  // not cover every slot observed for the other model.
-  assert.equal(scores.get("partial"), 58);
-  assert.equal(scores.get("not-covered"), 66);
+test("long dominance-like catalogs cannot add recursive score margins", () => {
+  const rows = Array.from({ length: 228 }, (_, index) => ({
+    id: `m${index}`,
+    scores: { aa_intelligence_index: 100 - index / 3 },
+  }));
+  const scores = computeCompositeScores(rows);
+
+  // The best one-slot row gets exactly top percentile + four neutral slots.
+  // It cannot accumulate 0.1 for every lower catalog row.
+  assert.equal(scores.get("m0"), 60);
+  assert.ok(scores.get("m227") < 50);
 });
 
 test("an exact clone cannot move any existing score", () => {
@@ -253,4 +257,28 @@ test("DeepSeek V4 Pro ranks above Flash on the fixed-slot composite", async () =
     scores.get("deepseek-v4-pro::max") > scores.get("deepseek-v4-flash::max"),
     `expected Pro (${scores.get("deepseek-v4-pro::max")}) > Flash (${scores.get("deepseek-v4-flash::max")})`,
   );
+});
+
+test("GLM-5.2's complete evidence ranks it well above MiniMax M3", async () => {
+  const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
+  const inputs = dataset.models.map((m) => ({
+    id: m.id,
+    scores: {
+      aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
+      aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
+      aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
+      designarena_frontend: m.designarena?.frontend?.elo ?? null,
+      designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
+    },
+    designarenaBattles: {
+      frontend: m.designarena?.frontend?.battles ?? null,
+      fullstack: m.designarena?.fullstack?.battles ?? null,
+    },
+  }));
+  const scores = computeCompositeScores(inputs);
+  const glm = scores.get("glm-5.2::max");
+  const miniMax = scores.get("minimax-m3::default");
+
+  assert.ok(glm >= 75, `expected complete GLM-5.2 evidence near the open-weight frontier, got ${glm}`);
+  assert.ok(glm > miniMax + 10, `expected GLM-5.2 (${glm}) well above MiniMax M3 (${miniMax})`);
 });

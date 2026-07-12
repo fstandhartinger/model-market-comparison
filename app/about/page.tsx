@@ -65,13 +65,13 @@ export default async function AboutPage() {
         The &ldquo;10:1 blended&rdquo; cost is <code className="text-accent2">(10·input + 1·output) / 11</code> per 1M tokens,
         approximating a read-heavy workload. The cheapest such cost across all providers is used for the
         cost axis. Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
-        The Composite score averages five equally weighted, fixed slots: AA Coding, exact-variant AA Coding Agent,
+        The Composite score averages five equally weighted, fixed slots: AA Coding, source-matched AA Coding Agent,
         AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. A DesignArena
         board qualifies with at least 500 battles; its Elo is converted to the expected score against a fixed Elo 1000
-        opponent. A missing slot contributes the neutral value 50 while the denominator remains five, and a model with
-        no observed slot has no Composite. A coverage-safe dominance adjustment may only raise a model that covers every
-        observed slot of another model, is no worse on any and is strictly better on at least one; it never lowers the
-        covered model. Coding Agent results are attached to the exact model and reasoning-effort variant; every harness
+        opponent. Each observed slot is converted to its percentile among the current catalog&apos;s unique observed values.
+        A missing slot contributes the median-neutral percentile 50 while the denominator remains five, and a model with
+        no observed slot has no Composite. There is no catalog-chain or dominance adjustment. Coding Agent results are
+        attached to an exact or explicitly audited model/reasoning identity; every harness
         result is retained and their median is used. DesignArena results are attached once rather than copied to effort
         siblings. Raw DesignArena score views continue to show Elo. Stable model ids and repositories are preferred over
         fuzzy names so distinct releases, modes, context tiers and serving routes do not share the wrong price.

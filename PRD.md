@@ -35,7 +35,7 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
 ## 4. Functional requirements
 
 1. **Model overview** — table of models with a **selectable score** (AA Coding,
-   missing-neutral Composite, AA Coding, AA Coding Agent, AA Intelligence,
+   coverage-neutral percentile Composite, AA Coding, AA Coding Agent, AA Intelligence,
    DesignArena Frontend, DesignArena Full-Stack), the cheapest
    10:1 blended cost, and the top providers. Filter by featured / open-weights /
    org / search; sort by score, cost, name, org.
@@ -68,15 +68,14 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   model's cheapest such offer across all providers.
 - EU residency is determined per model offer and serving location. Provider capability,
   resource/billing region, or a global endpoint is not sufficient evidence of EU hosting.
-- The Composite averages five equally weighted, fixed slots: AA Coding, exact-variant
+- The Composite averages five equally weighted, fixed slots: AA Coding, source-matched
   AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack.
   AA values are clamped to 0–100. DesignArena boards require at least 500 battles and
   their Elo is converted to the expected score against a fixed Elo 1000 opponent.
-  Every missing slot contributes the neutral value 50 while the denominator remains
-  five; all five missing yields no Composite. A coverage-safe dominance adjustment
-  may raise only a leader that covers every observed slot of another model, is no
-  worse on any of them and is strictly better on at least one; it never lowers the
-  covered model.
+  Every observed slot is percentile-normalized across the current catalog's unique
+  observed values. Missing contributes the median-neutral percentile 50 while the
+  denominator remains five; all five missing yields no Composite. There is no
+  catalog-chain or dominance adjustment.
 - Current GitHub Copilot billing uses published model token rates converted to AI
   Credits at $0.01/credit. The old `multiplier × $0.04` request calculation is shown
   separately and labeled legacy annual Pro/Pro+ only; neither is mixed into API-provider cost rankings.

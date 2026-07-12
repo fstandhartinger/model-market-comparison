@@ -31,7 +31,10 @@ export function preferredVariantIds(models: ClientModel[], score?: ScoreKey): Ma
     } else if (k.startsWith("claude-")) {
       chosen = pick(["reasoning", "high", "max", "adaptive", "default", "non-reasoning"]);
     } else {
-      chosen = pick(["reasoning", "default", "max", "high", "adaptive", "xhigh", "medium", "low", "non-reasoning"]);
+      // Prefer an explicit reasoning/effort configuration over a generic source
+      // row. In particular, a bare benchmark alias must never hide a measured
+      // max row such as GLM-5.2 (max).
+      chosen = pick(["reasoning", "max", "high", "adaptive", "xhigh", "medium", "low", "default", "non-reasoning"]);
     }
     ids.set(k, chosen.id);
   }

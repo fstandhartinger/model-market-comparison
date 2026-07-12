@@ -328,12 +328,32 @@ test("freshly built dataset attaches Coding Agent scores only to exact variants"
     for (const [variant, expected] of Object.entries(values)) assert.equal(score(`${family}::${variant}`), expected, `${family} ${variant}`);
   }
 
-  // Bare source labels remain exact default rows instead of leaking to an AA sibling.
-  assert.equal(score("glm-5.2::default"), 57.9);
-  assert.equal(score("glm-5.2::max"), null);
-  assert.equal(score("glm-5.1::default"), 52.3);
-  assert.equal(score("glm-5.1::reasoning"), null);
+  // AA's bare GLM-5.2 Coding-Agent identity is the documented default-thinking
+  // max configuration; it must join the AA max row, never a source-only ghost.
+  assert.equal(score("glm-5.2::max"), 57.9);
+  assert.equal(ds.models.some((model) => model.id === "glm-5.2::default"), false);
+  assert.equal(score("glm-5.1::reasoning"), 52.3);
+  assert.equal(ds.models.some((model) => model.id === "glm-5.1::default"), false);
   assert.equal(score("glm-5.1::non-reasoning"), null);
+});
+
+test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () => {
+  const glm = ds.models.find((model) => model.id === "glm-5.2::max");
+  assert.ok(glm);
+  assert.equal(glm.benchmarks.aa_coding_index, 68.8);
+  assert.equal(glm.benchmarks.aa_coding_agent_index, 57.9);
+  assert.equal(glm.benchmarks.aa_intelligence_index, 51.1);
+  assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
+  assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
+  assert.ok(glm.designarena.frontend?.battles >= 500);
+  assert.ok(glm.designarena.fullstack?.battles >= 500);
+  assert.equal(ds.models.some((model) => model.id === "glm-5.2::designarena"), false);
+
+  const nonReasoning = ds.models.find((model) => model.id === "glm-5.2::non-reasoning");
+  assert.equal(nonReasoning?.benchmarks.aa_coding_index, 46.5);
+  assert.equal(nonReasoning?.benchmarks.aa_intelligence_index, 34.1);
+  assert.equal(nonReasoning?.benchmarks.aa_coding_agent_index ?? null, null);
+  assert.deepEqual(nonReasoning?.designarena || {}, {});
 });
 
 test("all 572 Artificial Analysis rows and official weight flags survive exactly once", () => {

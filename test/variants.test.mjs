@@ -33,3 +33,12 @@ test("collapse keeps DeepSeek Coding-Agent evidence instead of an unmeasured max
   ];
   assert.equal(variants.preferredVariantIds(models, "aa_coding_agent").get("deepseek-v4-pro"), "deepseek-v4-pro::high");
 });
+
+test("collapse prefers an explicit GLM max result over a generic default alias", () => {
+  const models = [
+    model("glm-5.2", "default", 57.9),
+    model("glm-5.2", "max", null),
+    model("glm-5.2", "non-reasoning", null),
+  ];
+  assert.equal(variants.preferredVariantIds(models, "composite").get("glm-5.2"), "glm-5.2::max");
+});
