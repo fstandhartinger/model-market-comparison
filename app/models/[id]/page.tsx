@@ -60,6 +60,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           {model.benchmark_override_note && (
             <p className="mt-3 border-t border-line/50 pt-2 text-xs text-warn/90">⚠ {model.benchmark_override_note}</p>
           )}
+          {model.designarena_attachment_note && (
+            <p className="mt-3 border-t border-line/50 pt-2 text-xs text-gray-500">ⓘ {model.designarena_attachment_note}</p>
+          )}
         </section>
       </div>
 

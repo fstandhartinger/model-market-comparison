@@ -7,6 +7,7 @@ interface SettingsState {
   score: ScoreKey;
   collapse: boolean;       // one variant per GPT/Claude family
   featured: boolean;
+  hideDeprecated: boolean; // hide benchmark-source rows marked deprecated (on by default)
   excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
   euHostedOnly: boolean;    // only providers that serve from EU data centers
   nonUsOnly: boolean;       // only providers whose company is not US-based
@@ -23,6 +24,7 @@ interface SettingsCtx extends SettingsState {
   setScore: (s: ScoreKey) => void;
   setCollapse: (b: boolean) => void;
   setFeatured: (b: boolean) => void;
+  setHideDeprecated: (b: boolean) => void;
   setExcludeChinese: (b: boolean) => void;
   setEuHostedOnly: (b: boolean) => void;
   setNonUsOnly: (b: boolean) => void;
@@ -37,7 +39,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
@@ -68,6 +70,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setScore: (score) => setState((s) => ({ ...s, score, minScore: defaultMinFor(score) })),
     setCollapse: (collapse) => setState((s) => ({ ...s, collapse })),
     setFeatured: (featured) => setState((s) => ({ ...s, featured })),
+    setHideDeprecated: (hideDeprecated) => setState((s) => ({ ...s, hideDeprecated })),
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
     setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
     setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),

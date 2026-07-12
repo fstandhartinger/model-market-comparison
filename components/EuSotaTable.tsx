@@ -10,7 +10,7 @@ import {
   scopedCatalogOffers,
 } from "../lib/cost";
 import { usdPerM } from "../lib/format";
-import { preferredVariantIds } from "../lib/variants";
+import { preferredVariantIds, selectableModels } from "../lib/variants";
 import { useSettings } from "./SettingsContext";
 
 interface SotaEntry { key: string; name: string }
@@ -18,15 +18,16 @@ interface SotaRow { entry: SotaEntry; model: ClientModel | null; offers: ClientO
 
 export function EuSotaTable({ data, entries }: { data: ClientData; entries: SotaEntry[] }) {
   const s = useSettings();
-  const preferredIds = useMemo(() => preferredVariantIds(data.models, s.score), [data.models, s.score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const preferredIds = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
   const modelByFamily = useMemo(() => {
     const result = new Map<string, (typeof data.models)[number]>();
-    for (const model of data.models) {
+    for (const model of candidates) {
       if (preferredIds.get(model.family_key) === model.id) result.set(model.family_key, model);
     }
-    for (const model of data.models) if (!result.has(model.family_key)) result.set(model.family_key, model);
+    for (const model of candidates) if (!result.has(model.family_key)) result.set(model.family_key, model);
     return result;
-  }, [data.models, preferredIds]);
+  }, [candidates, preferredIds]);
 
   // This page is EU-specific even when the global EU toggle is off. Every other
   // provider/model restriction still composes with that mandatory exact-offer
@@ -46,7 +47,9 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
   const rows = entries.reduce<SotaRow[]>((result, entry) => {
     const model = modelByFamily.get(entry.key);
     if (!model) {
-      result.push({ entry, model: null, offers: [] });
+      const hiddenAsDeprecated = s.hideDeprecated
+        && data.models.some((candidate) => candidate.family_key === entry.key && candidate.deprecated);
+      if (!hiddenAsDeprecated) result.push({ entry, model: null, offers: [] });
       return result;
     }
     if (isHiddenModel(model.family_key, s.hideGptOpus, s.hideFable)) return result;

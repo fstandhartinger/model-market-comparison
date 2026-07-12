@@ -7,7 +7,7 @@ import { usdPerM, num, orgColor } from "../lib/format";
 import { blend, modelCost, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, isHiddenModel } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapsedName } from "../lib/variants";
+import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers";
 const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: string; dp: number }[] = [
@@ -37,14 +37,15 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   const [org, setOrg] = useState("");
   const [maxCost, setMaxCost] = useState("");
 
-  const orgs = useMemo(() => Array.from(new Set(data.models.map((m) => m.org))).sort(), [data.models]);
-  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const orgs = useMemo(() => Array.from(new Set(candidates.map((m) => m.org))).sort(), [candidates]);
+  const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
   const provByKey = useMemo(() => new Map(data.providers.map((p) => [p.key, p])), [data.providers]);
   const [expanded, setExpanded] = useState<string | null>(null);
 
   const rows = useMemo(() => {
     const maxC = parseFloat(maxCost);
-    let r = data.models.map((m) => ({
+    let r = candidates.map((m) => ({
       m, sc: m.scores[score], cost: modelCost(m, data, offerScope),
       cheap: rankedOffers(data.offersByModel[m.id], offerScope).slice(0, 3),
       ncheap: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length,
@@ -71,7 +72,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, score, offerScope, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);

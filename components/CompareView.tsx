@@ -7,7 +7,7 @@ import { usdPerM, num, orgColor } from "../lib/format";
 import { modelCost, rankedOffers, scopedCatalogOffers, createOfferScope, isHiddenModel, type OfferScope } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapseModels } from "../lib/variants";
+import { preferredVariantIds, collapseModels, selectableModels } from "../lib/variants";
 
 const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; digits?: number }[] = [
   { key: "designarena_fullstack", label: "DesignArena Full-Stack Elo", digits: 0 },
@@ -23,10 +23,11 @@ export function CompareView({ data }: { data: ClientData }) {
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
-  const preferredId = useMemo(() => preferredVariantIds(data.models, s.score), [data.models, s.score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const preferredId = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
 
   const models = useMemo(() => {
-    let r = data.models.filter((m) => {
+    let r = candidates.filter((m) => {
       const hasOffer = scopedCatalogOffers(data.offersByModel[m.id], offerScope).length > 0;
       return offerScope.restricted ? hasOffer : hasOffer || m.scores[s.score] != null;
     });
@@ -37,7 +38,7 @@ export function CompareView({ data }: { data: ClientData }) {
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
     if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScore);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, offerScope, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
+  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
 
   const visibleModels = useMemo(() => {
     if (!q.trim()) return models;

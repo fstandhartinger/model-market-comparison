@@ -4,7 +4,7 @@ import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model"
 import { SCORE_LABELS } from "../lib/types";
 import { useSettings } from "./SettingsContext";
 import { createOfferScope, isHiddenModel, rankedOffers, scopedCatalogOffers, scoreOf } from "../lib/cost";
-import { collapseModels, preferredVariantIds } from "../lib/variants";
+import { collapseModels, preferredVariantIds, selectableModels } from "../lib/variants";
 
 const blended = (o: { input_per_1m: number | null; output_per_1m: number | null }) =>
   o.input_per_1m != null && o.output_per_1m != null ? (10 * o.input_per_1m + o.output_per_1m) / 11 : null;
@@ -16,7 +16,8 @@ const Badge = ({ children, cls }: { children: React.ReactNode; cls: string }) =>
 
 export function ProviderExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
-  const preferredId = useMemo(() => preferredVariantIds(data.models, s.score), [data.models, s.score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const preferredId = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
   const [euOnly, setEuOnly] = useState(false);
   const [showEmpty, setShowEmpty] = useState(false);
   const effectiveEuOnly = s.euHostedOnly || euOnly;
@@ -28,8 +29,8 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   // Match the global collapse switch exactly: either one score-preferred variant
   // per family or every concrete model/SKU row.
   const allowedModels = useMemo(() => {
-    const candidates = s.collapse ? collapseModels(data.models, preferredId) : data.models;
-    return candidates.filter((model) => {
+    const collapsed = s.collapse ? collapseModels(candidates, preferredId) : candidates;
+    return collapsed.filter((model) => {
       if (isHiddenModel(model.family_key, s.hideGptOpus, s.hideFable)) return false;
       if (s.openOnly && !model.open_weights) return false;
       if (s.featured && !model.featured) return false;
@@ -37,7 +38,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       const score = scoreOf(model, s.score);
       return !(s.minScore > 0 && (score == null || score < s.minScore));
     });
-  }, [data.models, preferredId, s.collapse, s.hideGptOpus, s.hideFable, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
+  }, [candidates, preferredId, s.collapse, s.hideGptOpus, s.hideFable, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
 
   // Per-provider model count over the FILTERED model rows (so the directory count matches the
   // list you actually see when you click through).

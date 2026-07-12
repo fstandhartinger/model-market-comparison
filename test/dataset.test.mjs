@@ -356,6 +356,31 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.deepEqual(nonReasoning?.designarena || {}, {});
 });
 
+test("bare DesignArena evidence joins a sole benchmark configuration but stays split when ambiguous", () => {
+  const fable = ds.models.find((model) => model.id === "claude-fable-5::max");
+  assert.ok(fable);
+  assert.equal(fable.designarena.frontend?.modelId, "claude-fable-5");
+  assert.equal(fable.designarena.fullstack?.modelId, "claude-fable-5");
+  assert.ok(fable.designarena.frontend?.battles >= 500);
+  assert.ok(fable.designarena.fullstack?.battles >= 500);
+  assert.match(fable.designarena_attachment_note || "", /product\/family scope without an effort setting/i);
+  assert.equal(ds.models.some((model) => model.id === "claude-fable-5::designarena"), false);
+
+  for (const attached of ds.models.filter((model) => model.designarena_attachment_note)) {
+    const benchmarkConfigurations = ds.models.filter((model) => model.family_key === attached.family_key
+      && (model.aa_model_id || model.coding_agent_results?.length));
+    assert.deepEqual(
+      benchmarkConfigurations.map((model) => model.id),
+      [attached.id],
+      `${attached.family_key} family-scoped DesignArena evidence is not unambiguous`,
+    );
+  }
+
+  const sonnet = ds.models.find((model) => model.id === "claude-sonnet-5::designarena");
+  assert.ok(sonnet, "multi-effort Claude Sonnet 5 DesignArena evidence must remain source-scoped");
+  assert.equal(sonnet.designarena.frontend?.modelId, "claude-sonnet-5");
+});
+
 test("all 572 Artificial Analysis rows and official weight flags survive exactly once", () => {
   const output = ds.models.filter((model) => model.aa_model_id);
   assert.equal(output.length, aa.models.length);

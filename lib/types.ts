@@ -118,6 +118,7 @@ export interface ModelRow {
   offers: Offer[];
   manual_notes?: string;
   benchmark_override_note?: string;
+  designarena_attachment_note?: string;
 }
 
 export interface Dataset {

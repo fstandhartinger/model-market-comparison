@@ -42,3 +42,24 @@ test("collapse prefers an explicit GLM max result over a generic default alias",
   ];
   assert.equal(variants.preferredVariantIds(models, "composite").get("glm-5.2"), "glm-5.2::max");
 });
+
+test("deprecated rows are removed before choosing a collapsed representative", () => {
+  const deprecatedReasoning = { ...model("mixed", "reasoning", 90), deprecated: true };
+  const activeDefault = { ...model("mixed", "default", 70), deprecated: false };
+  const hidden = variants.selectableModels([deprecatedReasoning, activeDefault], true);
+
+  assert.deepEqual(hidden.map((row) => row.id), ["mixed::default"]);
+  assert.equal(variants.preferredVariantIds(hidden, "aa_coding_agent").has("mixed"), false);
+
+  const shown = variants.selectableModels([deprecatedReasoning, activeDefault], false);
+  assert.equal(variants.preferredVariantIds(shown, "aa_coding_agent").get("mixed"), "mixed::reasoning");
+});
+
+test("a fully deprecated family has no selectable model while hiding is active", () => {
+  const models = [
+    { ...model("retired", "reasoning", 80), deprecated: true },
+    { ...model("retired", "non-reasoning", 60), deprecated: true },
+  ];
+  assert.deepEqual(variants.selectableModels(models, true), []);
+  assert.equal(variants.selectableModels(models, false).length, 2);
+});

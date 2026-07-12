@@ -19,7 +19,7 @@ USD per 1M tokens.
 - **Global filter bar** (applies across every interactive comparison and linked model
   detail, persisted): selectable **score**,
   min-score, **One variant for Reasoning models** (collapse GPT/Claude/GLM/Kimi to one),
-  **Featured**, **Exclude Chinese providers**, **EU-hosted only**, **Non-US provider only**,
+  **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted only**, **Non-US provider only**,
   **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
   provider- and model-checklist filters.
 - **Selectable scores**: **Composite** (five fixed coverage-neutral percentile slots, 0–100, default), ArtificialAnalysis
@@ -107,5 +107,9 @@ current token/AI-Credit rates and legacy annual-plan
 request multipliers are kept separate from provider API offers.
 Model identities are joined conservatively across sources; modes, releases, pricing tiers
 and hosting routes remain separate unless a stable source id/repository proves equivalence.
+When DesignArena publishes only a bare product identity and a family has exactly one
+benchmark-bearing configuration, that family-scoped result contributes to the
+family-representative composite with an explicit provenance note; ambiguous multi-effort
+families stay separate.
 Figures may still change upstream —
 **verify before relying on them**. Not affiliated with any provider.

@@ -38,10 +38,11 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
       ],
       "aa_reference_price": { "input_per_1m": 0, "output_per_1m": 0, "blended_3to1": 0 },
       "aa_speed": { "output_tps": 0, "ttft_s": 0 },
-      "designarena": {                 // exact DA model id; never copied to effort siblings
+      "designarena": {                 // exact DA source id; attached once, sometimes at family scope
         "frontend": { "elo": 0, "winRate": 0, "battles": 0, "modelId": "…" },
         "fullstack": { "elo": 0, "winRate": 0, "battles": 0, "modelId": "…" }
       },
+      "designarena_attachment_note": "…", // present when bare product evidence is family-scoped
       "copilot": {
         "current": {                  // current AI-Credit/token billing
           "input_per_1m": 0, "cached_input_per_1m": 0,
@@ -109,8 +110,11 @@ Offers are model/SKU-specific. An AA row with an exact OpenRouter id receives on
 route (with repository identity as a guarded fallback for stale aliases); distinct
 Instruct/Thinking, context-price tiers, endpoint tiers and managed-hosting routes remain
 separate. DesignArena results attach once to the exact/default row, an explicitly audited
-source identity such as `glm-5.2::max`, or a dedicated `::designarena` row; they are never
-copied to every reasoning-effort sibling.
+source identity such as `glm-5.2::max`, or a dedicated `::designarena` row. If DesignArena
+publishes only a bare product identity and that family has exactly one benchmark-bearing
+configuration, the result attaches there at family scope and carries
+`designarena_attachment_note`; ambiguous multi-effort families remain separate. Results
+are never copied to every reasoning-effort sibling.
 The Composite averages five equally weighted, fixed slots: AA Coding, source-matched
 Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA
 values are clamped to 0–100. Each DesignArena board qualifies with at least 500 battles

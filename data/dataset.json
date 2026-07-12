@@ -1,10 +1,10 @@
 {
-  "generated_at": "2026-07-12T12:38:50.269Z",
+  "generated_at": "2026-07-12T13:39:45.925Z",
   "counts": {
-    "models": 784,
+    "models": 779,
     "families": 603,
     "providers": 85,
-    "offers": 2577
+    "offers": 2553
   },
   "sources": {
     "openrouter": "2026-07-12",
@@ -7938,7 +7938,20 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1109,
+          "winRate": 39.1,
+          "battles": 2824,
+          "modelId": "gpt-5.3-codex"
+        },
+        "fullstack": {
+          "elo": 1047,
+          "winRate": 36.4,
+          "battles": 1117,
+          "modelId": "gpt-5.3-codex"
+        }
+      },
       "copilot": {
         "multiplier": 6,
         "usd_per_request": 0.24,
@@ -7960,6 +7973,7 @@
         },
         "notes": "Legacy annual-plan multiplier."
       },
+      "designarena_attachment_note": "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.",
       "featured": false,
       "has_benchmark": true,
       "has_pricing": true
@@ -15914,7 +15928,20 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1332,
+          "winRate": 62,
+          "battles": 873,
+          "modelId": "claude-fable-5"
+        },
+        "fullstack": {
+          "elo": 1302,
+          "winRate": 62.6,
+          "battles": 513,
+          "modelId": "claude-fable-5"
+        }
+      },
       "copilot": {
         "multiplier": null,
         "usd_per_request": null,
@@ -15942,6 +15969,7 @@
           "source_model_name": "Fable 5 (max) (with fallback)"
         }
       ],
+      "designarena_attachment_note": "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.",
       "featured": true,
       "has_benchmark": true,
       "has_pricing": true
@@ -34838,8 +34866,22 @@
           "non_us": true
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1182,
+          "winRate": 46.3,
+          "battles": 4234,
+          "modelId": "glm-5v-turbo"
+        },
+        "fullstack": {
+          "elo": 1209,
+          "winRate": 53.9,
+          "battles": 2611,
+          "modelId": "glm-5v-turbo"
+        }
+      },
       "copilot": null,
+      "designarena_attachment_note": "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.",
       "featured": false,
       "has_benchmark": true,
       "has_pricing": true
@@ -42940,12 +42982,26 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1079,
+          "winRate": 44.1,
+          "battles": 526,
+          "modelId": "gpt-5.1-codex"
+        },
+        "fullstack": {
+          "elo": 1088,
+          "winRate": 44.5,
+          "battles": 155,
+          "modelId": "gpt-5.1-codex"
+        }
+      },
       "copilot": {
         "multiplier": 3,
         "usd_per_request": 0.12,
         "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
       },
+      "designarena_attachment_note": "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.",
       "featured": false,
       "has_benchmark": true,
       "has_pricing": true
@@ -43006,8 +43062,22 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "frontend": {
+          "elo": 1118,
+          "winRate": 40.5,
+          "battles": 3782,
+          "modelId": "gpt-5.2-codex"
+        },
+        "fullstack": {
+          "elo": 1056,
+          "winRate": 37,
+          "battles": 2169,
+          "modelId": "gpt-5.2-codex"
+        }
+      },
       "copilot": null,
+      "designarena_attachment_note": "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.",
       "featured": false,
       "has_benchmark": true,
       "has_pricing": true
@@ -82053,251 +82123,6 @@
       "has_pricing": true
     },
     {
-      "id": "claude-fable-5::designarena",
-      "family_key": "claude-fable-5",
-      "family_name": "Claude Fable 5",
-      "display_name": "claude-fable-5",
-      "org": "Anthropic",
-      "variant": "designarena",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-fable-5",
-          "or_canonical_slug": "anthropic/claude-5-fable-20260609",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "google-vertex/global",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-fable-5",
-          "or_canonical_slug": "anthropic/claude-5-fable-20260609",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-fable-5",
-          "or_canonical_slug": "anthropic/claude-5-fable-20260609",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "amazon-bedrock/us",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Anthropic",
-          "platform": "OpenRouter",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-fable-5",
-          "or_canonical_slug": "anthropic/claude-5-fable-20260609",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "anthropic",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Amazon Bedrock",
-          "platform": "OpenRouter",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-fable-5",
-          "or_canonical_slug": "anthropic/claude-5-fable-20260609",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "amazon-bedrock/claude-on-aws",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Google",
-          "platform": "OpenRouter",
-          "input_per_1m": 11,
-          "output_per_1m": 55,
-          "cache_read_per_1m": 1.1,
-          "cache_write_per_1m": 13.75,
-          "internal_reasoning_per_1m": null,
-          "region": "eu",
-          "unit": "per_1m_token",
-          "or_model_id": "anthropic/claude-fable-5",
-          "or_canonical_slug": "anthropic/claude-5-fable-20260609",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "google-vertex/europe",
-          "quantization": "unknown",
-          "context_length": 1000000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": true,
-          "non_us": false
-        },
-        {
-          "source": "AWS Bedrock",
-          "provider": "AWS Bedrock",
-          "platform": "AWS Bedrock",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Active on Bedrock since 2026-06-09. Standard on-demand price. The model card exposes US Geo and Global inference IDs but no EU Geo ID; requests through the Global profile have no EU processing guarantee.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Google Vertex AI",
-          "provider": "Google Vertex AI",
-          "platform": "Google Vertex AI",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $1; batch $5/$25.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Google Vertex AI",
-          "provider": "Google Vertex AI",
-          "platform": "Google Vertex AI",
-          "input_per_1m": 11,
-          "output_per_1m": 55,
-          "region": "eu",
-          "unit": "per_1m_token",
-          "notes": "EU Multi-Region Model Garden rate. Cache hit $1.10; batch $5.50/$27.50.",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": true,
-          "non_us": false
-        },
-        {
-          "source": "Anthropic API / Claude Code",
-          "provider": "Anthropic",
-          "platform": "Anthropic",
-          "input_per_1m": 10,
-          "output_per_1m": 50,
-          "cache_read_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Generally available since June 9, 2026. 1M context at standard pricing. Adaptive thinking is always on. Requires 30-day data retention and is not eligible for zero data retention. Anthropic restored access after a temporary interruption.",
-          "eu_hosted": false,
-          "non_us": false
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1332,
-          "winRate": 62,
-          "battles": 873,
-          "modelId": "claude-fable-5"
-        },
-        "fullstack": {
-          "elo": 1302,
-          "winRate": 62.6,
-          "battles": 513,
-          "modelId": "claude-fable-5"
-        }
-      },
-      "copilot": {
-        "multiplier": null,
-        "usd_per_request": null,
-        "current": {
-          "input_per_1m": 10,
-          "cached_input_per_1m": 1,
-          "cache_write_per_1m": 12.5,
-          "output_per_1m": 50,
-          "release_status": "GA",
-          "category": "Powerful",
-          "long_context": null,
-          "promotion_ends_at": null,
-          "standard_pricing_from": null,
-          "standard_input_per_1m": null,
-          "standard_cached_input_per_1m": null,
-          "standard_cache_write_per_1m": null,
-          "standard_output_per_1m": null,
-          "notes": "Business and Enterprise administrators must explicitly enable this model; Anthropic retention requirements differ from other Claude models."
-        }
-      },
-      "featured": true,
-      "has_benchmark": {
-        "elo": 1332,
-        "winRate": 62,
-        "battles": 873,
-        "modelId": "claude-fable-5"
-      },
-      "has_pricing": true
-    },
-    {
       "id": "claude-opus-4.8::designarena",
       "family_key": "claude-opus-4.8",
       "family_name": "Claude Opus 4.8",
@@ -84155,89 +83980,6 @@
       "has_pricing": true
     },
     {
-      "id": "glm-5v-turbo::designarena",
-      "family_key": "glm-5v-turbo",
-      "family_name": "GLM 5V Turbo",
-      "display_name": "glm-5v-turbo",
-      "org": "Z.ai",
-      "variant": "designarena",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Z.AI",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.2,
-          "output_per_1m": 4,
-          "cache_read_per_1m": 0.24,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5v-turbo",
-          "or_canonical_slug": "z-ai/glm-5v-turbo-20260401",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "z-ai/fp8",
-          "quantization": "fp8",
-          "context_length": 202752,
-          "max_completion_tokens": 131072,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": true
-        },
-        {
-          "source": "TensorX",
-          "provider": "TensorX",
-          "platform": "TensorX",
-          "input_per_1m": 1.2,
-          "output_per_1m": 4,
-          "cache_read_per_1m": 0.3,
-          "cache_write_per_1m": null,
-          "input_per_1m_eur": null,
-          "output_per_1m_eur": null,
-          "currency": "USD",
-          "region": "eu",
-          "unit": "per_1m_token",
-          "notes": "vision; 198K ctx; cache-read $0.30/1M",
-          "provider_model_id": null,
-          "context_length": null,
-          "catalog_status": null,
-          "hosting_class": null,
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": true,
-          "non_us": true
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1182,
-          "winRate": 46.3,
-          "battles": 4234,
-          "modelId": "glm-5v-turbo"
-        },
-        "fullstack": {
-          "elo": 1209,
-          "winRate": 53.9,
-          "battles": 2611,
-          "modelId": "glm-5v-turbo"
-        }
-      },
-      "copilot": null,
-      "featured": false,
-      "has_benchmark": {
-        "elo": 1182,
-        "winRate": 46.3,
-        "battles": 4234,
-        "modelId": "glm-5v-turbo"
-      },
-      "has_pricing": true
-    },
-    {
       "id": "gemini-3-pro-preview::designarena",
       "family_key": "gemini-3-pro-preview",
       "family_name": "Gemini 3 Pro Preview",
@@ -85398,384 +85140,6 @@
         "winRate": 43.1,
         "battles": 1781,
         "modelId": "claude-sonnet-4-5-20250929"
-      },
-      "has_pricing": true
-    },
-    {
-      "id": "gpt-5.2-codex::designarena",
-      "family_key": "gpt-5.2-codex",
-      "family_name": "GPT 5.2 Codex",
-      "display_name": "gpt-5.2-codex",
-      "org": "OpenAI",
-      "variant": "designarena",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.75,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.175,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.2-codex",
-          "or_canonical_slug": "openai/gpt-5.2-codex-20260114",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 3.5,
-          "output_per_1m": 28,
-          "cache_read_per_1m": 0.35,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.2-codex",
-          "or_canonical_slug": "openai/gpt-5.2-codex-20260114",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai/priority",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.75,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.175,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.2-codex",
-          "or_canonical_slug": "openai/gpt-5.2-codex-20260114",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 1.75,
-          "output_per_1m": 14,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Global; coding",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1118,
-          "winRate": 40.5,
-          "battles": 3782,
-          "modelId": "gpt-5.2-codex"
-        },
-        "fullstack": {
-          "elo": 1056,
-          "winRate": 37,
-          "battles": 2169,
-          "modelId": "gpt-5.2-codex"
-        }
-      },
-      "copilot": null,
-      "featured": false,
-      "has_benchmark": {
-        "elo": 1118,
-        "winRate": 40.5,
-        "battles": 3782,
-        "modelId": "gpt-5.2-codex"
-      },
-      "has_pricing": true
-    },
-    {
-      "id": "gpt-5.3-codex::designarena",
-      "family_key": "gpt-5.3-codex",
-      "family_name": "GPT 5.3 Codex",
-      "display_name": "gpt-5.3-codex",
-      "org": "OpenAI",
-      "variant": "designarena",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.75,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.175,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.3-codex",
-          "or_canonical_slug": "openai/gpt-5.3-codex-20260224",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 3.5,
-          "output_per_1m": 28,
-          "cache_read_per_1m": 0.35,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.3-codex",
-          "or_canonical_slug": "openai/gpt-5.3-codex-20260224",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai/priority",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.75,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.175,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.3-codex",
-          "or_canonical_slug": "openai/gpt-5.3-codex-20260224",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 1.75,
-          "output_per_1m": 14,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Global; coding",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1109,
-          "winRate": 39.1,
-          "battles": 2824,
-          "modelId": "gpt-5.3-codex"
-        },
-        "fullstack": {
-          "elo": 1047,
-          "winRate": 36.4,
-          "battles": 1117,
-          "modelId": "gpt-5.3-codex"
-        }
-      },
-      "copilot": {
-        "multiplier": 6,
-        "usd_per_request": 0.24,
-        "current": {
-          "input_per_1m": 1.75,
-          "cached_input_per_1m": 0.175,
-          "cache_write_per_1m": null,
-          "output_per_1m": 14,
-          "release_status": "GA",
-          "category": "Powerful",
-          "long_context": null,
-          "promotion_ends_at": null,
-          "standard_pricing_from": null,
-          "standard_input_per_1m": null,
-          "standard_cached_input_per_1m": null,
-          "standard_cache_write_per_1m": null,
-          "standard_output_per_1m": null,
-          "notes": ""
-        },
-        "notes": "Legacy annual-plan multiplier."
-      },
-      "featured": false,
-      "has_benchmark": {
-        "elo": 1109,
-        "winRate": 39.1,
-        "battles": 2824,
-        "modelId": "gpt-5.3-codex"
-      },
-      "has_pricing": true
-    },
-    {
-      "id": "gpt-5.1-codex::designarena",
-      "family_key": "gpt-5.1-codex",
-      "family_name": "GPT 5.1 Codex",
-      "display_name": "gpt-5.1-codex",
-      "org": "OpenAI",
-      "variant": "designarena",
-      "open_weights": false,
-      "release_date": null,
-      "benchmarks": {},
-      "aa_reference_price": {},
-      "aa_speed": {},
-      "offers": [
-        {
-          "source": "OpenRouter",
-          "provider": "Azure",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "cache_read_per_1m": 0.13,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.1-codex",
-          "or_canonical_slug": "openai/gpt-5.1-codex-20251113",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "azure",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "cache_read_per_1m": 0.125,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.1-codex",
-          "or_canonical_slug": "openai/gpt-5.1-codex-20251113",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "OpenAI",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.5,
-          "output_per_1m": 20,
-          "cache_read_per_1m": 0.25,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "openai/gpt-5.1-codex",
-          "or_canonical_slug": "openai/gpt-5.1-codex-20251113",
-          "or_hugging_face_id": null,
-          "endpoint_tag": "openai/priority",
-          "quantization": "unknown",
-          "context_length": 400000,
-          "max_completion_tokens": 128000,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "Azure AI Foundry",
-          "provider": "Azure AI Foundry",
-          "platform": "Azure AI Foundry",
-          "input_per_1m": 1.25,
-          "output_per_1m": 10,
-          "region": "global",
-          "unit": "per_1m_token",
-          "notes": "Global; coding",
-          "pricing_tier": null,
-          "route_type": null,
-          "eu_hosted": false,
-          "non_us": false
-        }
-      ],
-      "designarena": {
-        "frontend": {
-          "elo": 1079,
-          "winRate": 44.1,
-          "battles": 526,
-          "modelId": "gpt-5.1-codex"
-        },
-        "fullstack": {
-          "elo": 1088,
-          "winRate": 44.5,
-          "battles": 155,
-          "modelId": "gpt-5.1-codex"
-        }
-      },
-      "copilot": {
-        "multiplier": 3,
-        "usd_per_request": 0.12,
-        "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
-      },
-      "featured": false,
-      "has_benchmark": {
-        "elo": 1079,
-        "winRate": 44.1,
-        "battles": 526,
-        "modelId": "gpt-5.1-codex"
       },
       "has_pricing": true
     },

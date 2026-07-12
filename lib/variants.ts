@@ -1,6 +1,13 @@
 import type { ClientModel } from "./client-model";
 import type { ScoreKey } from "./types";
 
+/** Remove lifecycle-deprecated rows before choosing a family representative.
+ * Filtering after collapse can erase an otherwise active family when the
+ * score-preferred effort happens to be deprecated. */
+export function selectableModels<T extends ClientModel>(models: T[], hideDeprecated: boolean): T[] {
+  return hideDeprecated ? models.filter((model) => !model.deprecated) : models;
+}
+
 /** For families that expose MULTIPLE variants (reasoning effort / thinking settings),
  *  choose one representative per family. Data-driven: any family_key with >1 variant is
  *  collapsible — no hardcoded lab list — so DeepSeek / MiniMax / Qwen collapse the same

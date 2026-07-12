@@ -6,7 +6,7 @@ import { usdPerM, num, orgColor } from "../lib/format";
 import { rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
+import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 
 type Mode = "all" | "model";
 
@@ -24,7 +24,8 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
-  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
   const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
@@ -41,8 +42,8 @@ export function ProvidersView({ data }: { data: ClientData }) {
 
   // models eligible for the peer set
   const peerModels = useMemo(() => {
-    const candidates = s.collapse ? collapseModels(data.models, preferredId) : data.models;
-    const filtered = candidates.filter((m) => {
+    const collapsed = s.collapse ? collapseModels(candidates, preferredId) : candidates;
+    const filtered = collapsed.filter((m) => {
       if (scorePeersOnly && m.scores[score] == null) return false;
       if (!eligible(m)) return false;
       return rankedOffers(data.offersByModel[m.id], offerScope).length > 0;
@@ -55,14 +56,14 @@ export function ProvidersView({ data }: { data: ClientData }) {
       if (!previous || (m.scores[score] ?? -Infinity) > (previous.scores[score] ?? -Infinity)) fams.set(m.family_key, m);
     }
     return [...fams.values()];
-  }, [data, score, scorePeersOnly, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
+  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
 
   const modelOptions = useMemo(
-    () => (s.collapse ? collapseModels(data.models, preferredId) : data.models)
+    () => (s.collapse ? collapseModels(candidates, preferredId) : candidates)
       .filter((m) => rankedOffers(data.offersByModel[m.id], offerScope).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, score, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
+    [data, candidates, score, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];

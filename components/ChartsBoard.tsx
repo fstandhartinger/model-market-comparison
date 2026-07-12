@@ -9,7 +9,7 @@ import { usdPerM, orgColor } from "../lib/format";
 import { modelCost, scopedCatalogOffers, createOfferScope, isHiddenModel } from "../lib/cost";
 import { NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
+import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 
 function truncTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
   const t = payload.value.length > 26 ? payload.value.slice(0, 25) + "…" : payload.value;
@@ -21,11 +21,12 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   const score = s.score;
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [maxCost, setMaxCost] = useState("");
-  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
   const pool = useMemo(() => {
     const maxC = parseFloat(maxCost);
-    let base = data.models;
+    let base = candidates;
     if (s.collapse) base = collapseModels(base, preferredId);
     base = base.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) base = base.filter((m) => m.open_weights);
@@ -36,7 +37,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       .filter((x) => !offerScope.restricted || x.offerCount > 0)
       .filter((x) => (Number.isFinite(maxC) ? x.cost != null && x.cost <= maxC : true))
       .filter((x) => (s.minScore > 0 ? x.sc != null && x.sc >= s.minScore : true));
-  }, [data, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, offerScope, preferredId]);
+  }, [data, candidates, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, offerScope, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)

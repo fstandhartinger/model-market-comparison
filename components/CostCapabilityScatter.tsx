@@ -10,7 +10,8 @@ import { usdPerM, orgColor } from "../lib/format";
 import { modelCost, createOfferScope, isHiddenModel } from "../lib/cost";
 import { Toggle } from "./ui";
 import { useSettings } from "./SettingsContext";
-import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
+import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
+import { paretoFrontier } from "../lib/pareto.mjs";
 
 function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: { open?: boolean } }) {
   const { cx, cy, fill, payload } = props;
@@ -42,10 +43,11 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
-  const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
+  const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
+  const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
   const points = useMemo(() => {
-    let pool = data.models;
+    let pool = candidates;
     if (s.collapse) pool = collapseModels(pool, preferredId);
     pool = pool.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) pool = pool.filter((m) => m.open_weights);
@@ -55,7 +57,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
       .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score] }))
       .filter((x) => x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
       .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, score, offerScope, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
+  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();
@@ -64,14 +66,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   }, [points]);
 
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
-  // Sort by cost ascending; keep a point when its capability beats all cheaper points.
-  const pareto = useMemo(() => {
-    const sorted = [...points].sort((a, b) => a.x - b.x || b.y - a.y);
-    const front: typeof points = [];
-    let bestY = -Infinity;
-    for (const p of sorted) { if (p.y > bestY) { front.push(p); bestY = p.y; } }
-    return front;
-  }, [points]);
+  const pareto = useMemo(() => paretoFrontier(points), [points]);
 
   const xs = points.map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;
@@ -104,8 +99,8 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
-            {showPareto && pareto.length > 1 && (
-              <Scatter data={pareto} line={{ stroke: "#7ee0c0", strokeWidth: 2 }} lineType="joint"
+            {showPareto && pareto.length > 0 && (
+              <Scatter data={pareto} line={pareto.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint"
                 shape={ParetoHalo} legendType="none" isAnimationActive={false} />
             )}
             {byOrg.map(([org, pts]) => (
@@ -126,7 +121,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
       </div>
       <p className="mt-3 text-xs text-gray-500">
         Up &amp; to the <b>right</b> is better: more capability for less money. The
-        <span className="text-accent2"> green Pareto line</span> connects the best-value models —
+        <span className="text-accent2"> green Pareto frontier</span> marks and connects the best-value models —
         those no other model beats on both price and capability. Click any point to open the model detail.
       </p>
     </div>

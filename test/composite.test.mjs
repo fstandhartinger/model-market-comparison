@@ -282,3 +282,44 @@ test("GLM-5.2's complete evidence ranks it well above MiniMax M3", async () => {
   assert.ok(glm >= 75, `expected complete GLM-5.2 evidence near the open-weight frontier, got ${glm}`);
   assert.ok(glm > miniMax + 10, `expected GLM-5.2 (${glm}) well above MiniMax M3 (${miniMax})`);
 });
+
+test("Fable 5's family-scoped evidence preserves its five-slot dominance over GLM-5.2", async () => {
+  const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
+  const fable = dataset.models.find((model) => model.id === "claude-fable-5::max");
+  const glm = dataset.models.find((model) => model.id === "glm-5.2::max");
+  assert.ok(fable && glm);
+
+  const rawSlots = (model) => [
+    model.benchmarks.aa_coding_index,
+    model.benchmarks.aa_coding_agent_index,
+    model.benchmarks.aa_intelligence_index,
+    model.designarena.frontend?.elo,
+    model.designarena.fullstack?.elo,
+  ];
+  const fableSlots = rawSlots(fable);
+  const glmSlots = rawSlots(glm);
+  fableSlots.forEach((value, index) => {
+    assert.equal(typeof value, "number", `Fable slot ${index} missing`);
+    assert.ok(value > glmSlots[index], `expected Fable slot ${index} (${value}) > GLM (${glmSlots[index]})`);
+  });
+
+  const inputs = dataset.models.map((model) => ({
+    id: model.id,
+    scores: {
+      aa_coding_index: model.benchmarks?.aa_coding_index ?? null,
+      aa_coding_agent: model.benchmarks?.aa_coding_agent_index ?? null,
+      aa_intelligence_index: model.benchmarks?.aa_intelligence_index ?? null,
+      designarena_frontend: model.designarena?.frontend?.elo ?? null,
+      designarena_fullstack: model.designarena?.fullstack?.elo ?? null,
+    },
+    designarenaBattles: {
+      frontend: model.designarena?.frontend?.battles ?? null,
+      fullstack: model.designarena?.fullstack?.battles ?? null,
+    },
+  }));
+  const scores = computeCompositeScores(inputs);
+  assert.ok(
+    scores.get(fable.id) > scores.get(glm.id),
+    `expected Fable (${scores.get(fable.id)}) > GLM-5.2 (${scores.get(glm.id)})`,
+  );
+});

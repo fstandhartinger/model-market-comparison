@@ -895,9 +895,12 @@ async function build() {
   }
 
   // DesignArena publishes one result per board/model id. Attach a bare id to an
-  // existing default row when one exists, or to a narrowly audited source alias
-  // such as GLM-5.2::max. Otherwise keep a dedicated DesignArena row rather than
-  // cloning an effort-unspecified result across every reasoning sibling.
+  // existing default row when one exists, to a narrowly audited source alias
+  // such as GLM-5.2::max, or to the sole benchmark-bearing configuration when
+  // the family is unambiguous. The latter prevents one product's evidence from
+  // being split across an AA row and a source-only DesignArena row (for example
+  // Claude Fable 5). Multi-configuration families remain split rather than
+  // cloning an effort-unspecified result across reasoning siblings.
   for (const [familyKey, entries] of designArenaByFamily) {
     const fam = families.get(familyKey) || family(familyKey, guessOrg(familyKey));
     const auditedVariant = BARE_BENCHMARK_VARIANT_TARGETS.get(familyKey);
@@ -906,6 +909,15 @@ async function build() {
       : models.get(`${familyKey}::default`);
     if (auditedVariant && !target) {
       throw new Error(`Missing audited benchmark target: ${familyKey}::${auditedVariant}`);
+    }
+    let familyScopedAttachment = false;
+    if (!target) {
+      const benchmarkConfigurations = [...models.values()].filter((row) =>
+        row.family_key === familyKey && (row.aa_model_id || row.coding_agent_results?.length));
+      if (benchmarkConfigurations.length === 1) {
+        target = benchmarkConfigurations[0];
+        familyScopedAttachment = true;
+      }
     }
     if (!target) target = models.get(`${familyKey}::designarena`);
     if (!target) {
@@ -919,6 +931,9 @@ async function build() {
       models.set(target.id, target);
     }
     target.designarena = entries;
+    if (familyScopedAttachment) {
+      target.designarena_attachment_note = "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.";
+    }
   }
 
   let modelRows = [...models.values()];

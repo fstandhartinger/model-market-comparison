@@ -38,12 +38,12 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
    coverage-neutral percentile Composite, AA Coding, AA Coding Agent, AA Intelligence,
    DesignArena Frontend, DesignArena Full-Stack), the cheapest
    10:1 blended cost, and the top providers. Filter by featured / open-weights /
-   org / search; sort by score, cost, name, org.
+   org / search; hide deprecated model rows by default; sort by score, cost, name, org.
 2. **Cheapest providers per model** — model detail lists the **top-5 cheapest
    providers** (10:1 blended) plus all token offers grouped by platform.
 3. **Cost vs Capability scatter** — x = cost (cheapest 10:1 blended $/1M), y =
    selected capability score; colored by org; log-cost toggle; click → detail.
-   *Best value = upper-left.*
+   *Best value = upper-right* because the displayed cost axis is inverted.
 4. **Charts** — capability leaderboard, cheapest-model ranking, open-vs-closed
    comparisons (avg capability and avg cost).
 5. **Providers** — every provider/platform and how many model families it prices.
@@ -76,6 +76,9 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   observed values. Missing contributes the median-neutral percentile 50 while the
   denominator remains five; all five missing yields no Composite. There is no
   catalog-chain or dominance adjustment.
+  DesignArena results with a bare product identity attach to the sole benchmark-bearing
+  configuration in an unambiguous family and carry family-scope provenance; ambiguous
+  multi-effort families retain a separate DesignArena row.
 - Current GitHub Copilot billing uses published model token rates converted to AI
   Credits at $0.01/credit. The old `multiplier × $0.04` request calculation is shown
   separately and labeled legacy annual Pro/Pro+ only; neither is mixed into API-provider cost rankings.
