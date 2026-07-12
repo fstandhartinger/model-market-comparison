@@ -601,6 +601,12 @@ async function build() {
       const inP = num(e.pricing?.prompt);
       const outP = num(e.pricing?.completion);
       const tag = String(e.tag || "");
+      // Skip non-standard service meters. OpenRouter lists OpenAI/xAI/Google "flex"
+      // (async/derated, 50% price) and "priority" (2-2.5x price) meters as separate
+      // endpoints of the same model. They are service tiers, not competing offers —
+      // ingesting them made the flex meter win "cheapest OpenAI price" and display
+      // half the real standard API price (e.g. GPT-5.6 Sol $2.50/$15 instead of $5/$30).
+      if (/(?:^|\/)(?:flex|priority|batch)(?:\/|$)/i.test(tag)) continue;
       const euRoute = /(?:^|\/)(?:eu(?:rope)?|eu-[a-z0-9-]+|europe(?:-[a-z0-9-]+)?|swedencentral)(?:\/|$)/i.test(tag);
       fam.offers.push({
         source: "OpenRouter",

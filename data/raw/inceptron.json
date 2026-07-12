@@ -8,11 +8,11 @@
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.95,
-      "output_per_1m_usd": 3.04,
+      "input_per_1m_usd": 0.85,
+      "output_per_1m_usd": 2.5,
       "cache_read_per_1m_usd": 0.18,
       "region": "eu",
-      "notes": "fp4 quant, 1,048,576 context. Cache read $0.18/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12."
+      "notes": "fp4 quant, 1,048,576 context. Cache read $0.18/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50."
     },
     {
       "model_name": "Kimi K2.7 Code",

@@ -242,9 +242,10 @@ test("context-price tiers and distinct managed routes survive dataset deduplicat
 
 test("audited July provider prices survive the merged dataset", () => {
   const find = (family, provider) => ds.models.find((model) => model.family_key === family)?.offers.find((offer) => offer.provider === provider);
+  // Inceptron re-prices frequently; re-verified 2026-07-13 against api.inceptron.io.
   assert.deepEqual(
     [find("glm-5.2", "Inceptron")?.input_per_1m, find("glm-5.2", "Inceptron")?.output_per_1m],
-    [0.95, 3.04],
+    [0.85, 2.5],
   );
   assert.deepEqual(
     [find("deepseek-v3.1", "AWS Bedrock")?.input_per_1m, find("deepseek-v3.1", "AWS Bedrock")?.output_per_1m],
