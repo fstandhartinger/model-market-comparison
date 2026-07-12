@@ -2,7 +2,7 @@
 
 Compare **open-source and frontier LLMs** by capability and price in one place.
 Capability comes from [ArtificialAnalysis](https://artificialanalysis.ai) (Coding,
-Coding Agent & Intelligence indices) and [DesignArena](https://www.designarena.ai)
+Coding Agent & Intelligence indices) and [Intelligence.ai / DesignArena](https://intelligence.ai)
 (Agentic Web Dev Frontend & Full-Stack Elo). Prices are aggregated across **OpenRouter**
 inference providers, **AWS Bedrock**, **Azure AI Foundry**, **Google Vertex AI**,
 **Nebius**, **Inceptron**, **TensorX**, **Scaleway**, **IONOS**, **Mistral**, **Chutes**,
@@ -22,7 +22,7 @@ USD per 1M tokens.
   **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted / approved equivalent only**, **Non-US provider only**,
   **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
   provider- and model-checklist filters.
-- **Selectable scores**: **Composite** (five percentile slots with model-mean imputation, 0–100, default), ArtificialAnalysis
+- **Selectable scores**: **Composite** (five percentile slots with model-mean imputation plus a dominance-safe projection, 0–100, default), ArtificialAnalysis
   **Coding Index**, **Coding Agent Index** (median across published harnesses for the exact model/effort variant), **Intelligence Index**,
   and DesignArena **Frontend** / **Full-Stack** Elo.
 - **Overview** — fully sortable table with per-column filters, **Has benchmark evidence**
@@ -103,12 +103,17 @@ classification; inference may occur outside the EU and the flag is not a technic
 guarantee. The Composite uses five capability slots: AA Coding,
 source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena
 Full-Stack. AA values are clamped to 0–100. A DesignArena board qualifies with at least
-500 battles and its Elo is converted to the expected score against a fixed Elo 1000
+200 battles (an app minimum aligned with the source&apos;s typical preliminary/reliability threshold) and its Elo is converted to the expected score against a fixed Elo 1000
 opponent: `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is then converted
 to its empirical percentile among the current catalog&apos;s unique observed values. Every
 missing slot is assigned that model&apos;s mean percentile across its observed slots. The
-result is therefore exactly the mean of its available percentiles, so missing slots cannot
-move it; a model with no reliable observed slot receives the neutral fallback 50. Coverage
+base is therefore exactly the mean of its available percentiles, so missing slots cannot
+move it. A deterministic least-squares projection then enforces shared-evidence dominance:
+if one model covers every reliable slot of another measured model and is
+no worse in any shared slot (strictly better in at least one), it remains at least 0.1 points
+ahead. This is the smallest symmetric catalog-wide adjustment satisfying those constraints;
+the base and adjustment are exposed separately in model details and the models API. A model
+with no reliable observed slot receives the neutral fallback 50. Coverage
 is tracked separately so this fallback is not mistaken for benchmark evidence when choosing
 a family representative, applying **Has benchmark evidence**, or building capability charts and the
 Pareto frontier. GitHub Copilot&apos;s
@@ -116,9 +121,8 @@ current token/AI-Credit rates and legacy annual-plan
 request multipliers are kept separate from provider API offers.
 Model identities are joined conservatively across sources; modes, releases, pricing tiers
 and hosting routes remain separate unless a stable source id/repository proves equivalence.
-When DesignArena publishes only a bare product identity and a family has exactly one
-benchmark-bearing configuration, that family-scoped result contributes to the
-family-representative composite with an explicit provenance note; ambiguous multi-effort
-families stay separate.
+When Intelligence.ai publishes only a bare product identity, that family-scoped result is
+attached exactly once to the deterministic active representative used by collapsed views,
+with an explicit provenance note that it does not identify the tested effort setting.
 Figures may still change upstream —
 **verify before relying on them**. Not affiliated with any provider.

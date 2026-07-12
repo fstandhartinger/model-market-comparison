@@ -27,6 +27,7 @@ export async function GET(req: Request) {
     open_weights: m.open_weights,
     featured: m.featured,
     score: score === "composite" ? (clientById.get(m.id)?.scores.composite ?? 50) : scoreOf(m, score),
+    composite_base: clientById.get(m.id)?.composite_base ?? 50,
     composite_coverage: clientById.get(m.id)?.composite_coverage ?? 0,
     benchmarks: m.benchmarks,
     designarena: m.designarena,

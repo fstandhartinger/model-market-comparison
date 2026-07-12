@@ -24,7 +24,7 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
 |---|---|---|
 | OpenRouter | Model catalog + per-provider token prices | Live API |
 | ArtificialAnalysis | Coding, Coding Agent and Intelligence indices, sub-benchmarks | Live API + public leaderboard payload |
-| DesignArena | Agentic Web Dev Frontend & Full-Stack Elo | Live API (POST) |
+| Intelligence.ai / DesignArena | Agentic Web Dev Frontend & Full-Stack Elo | Live API (POST) |
 | AWS Bedrock | On-demand token prices, EU regions | Price List API + page |
 | Azure AI Foundry | Token prices and per-model serving scope | Retail Prices API + model docs |
 | Google Vertex AI | Gemini and Model Garden partner-model prices/locations | Pricing + location docs |
@@ -73,16 +73,17 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   may occur outside the EU.
 - The Composite uses five capability slots: AA Coding, source-matched
   AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack.
-  AA values are clamped to 0–100. DesignArena boards require at least 500 battles and
+  AA values are clamped to 0–100. DesignArena boards require at least 200 battles and
   their Elo is converted to the expected score against a fixed Elo 1000 opponent.
   Every observed slot is percentile-normalized across the current catalog's unique
   observed values. Every missing slot inherits that model's mean observed percentile;
-  equivalently, the Composite is the arithmetic mean of its available percentiles.
+  equivalently, the base Composite is the arithmetic mean of its available percentiles.
   With no reliable observed slot the fallback is 50, while evidence coverage remains
-  zero and is tracked separately. There is no catalog-chain or dominance adjustment.
-  DesignArena results with a bare product identity attach to the sole benchmark-bearing
-  configuration in an unambiguous family and carry family-scope provenance; ambiguous
-  multi-effort families retain a separate DesignArena row.
+  zero and is tracked separately. A deterministic least-squares projection then makes the
+  smallest symmetric adjustment required to preserve strict evidence-superset dominance
+  (at least one observed slot, 0.1-point visible margin). Base and adjustment remain visible.
+  Family-scoped Intelligence.ai / DesignArena results attach exactly once to the deterministic
+  active representative used by collapsed views and carry explicit effort-scope provenance.
 - Current GitHub Copilot billing uses published model token rates converted to AI
   Credits at $0.01/credit. The old `multiplier × $0.04` request calculation is shown
   separately and labeled legacy annual Pro/Pro+ only; neither is mixed into API-provider cost rankings.

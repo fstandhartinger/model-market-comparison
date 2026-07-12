@@ -17,7 +17,7 @@ export default async function AboutPage() {
       <ul className="space-y-2 text-sm text-gray-300">
         <li><b>OpenRouter</b> — model catalog and per-provider endpoint pricing (live API).</li>
         <li><b>ArtificialAnalysis</b> — Intelligence &amp; Coding indices plus sub-benchmarks (LiveCodeBench, SciCode, Terminal-Bench Hard, τ²-Bench, GPQA, MMLU-Pro) via the v2 API.</li>
-        <li><b>DesignArena</b> — Agentic Web Dev Frontend &amp; Full-Stack Elo leaderboards.</li>
+        <li><b>Intelligence.ai / DesignArena</b> — Agentic Web Dev Frontend &amp; Full-Stack Elo leaderboards.</li>
         <li><b>AWS Bedrock</b> — on-demand token pricing, European regions (eu-central-1 where available).</li>
         <li><b>Azure AI Foundry</b> — retail token meters plus model-card serving-region checks. A billing/resource region alone is not treated as proof that inference stays in the EU. By company policy, only Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code are additionally eligible as EU-hosted equivalents; they remain marked Global because inference may occur outside the EU.</li>
         <li><b>Google Vertex AI</b> — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); offers are marked EU-hosted only where the model supports a documented European serving location.</li>
@@ -67,14 +67,17 @@ export default async function AboutPage() {
         cost axis. Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
         The Composite score uses five slots: AA Coding, source-matched AA Coding Agent,
         AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. A DesignArena
-        board qualifies with at least 500 battles; its Elo is converted to the expected score against a fixed Elo 1000
+        board qualifies at an app-selected minimum of 200 battles, aligned with the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the expected score against a fixed Elo 1000
         opponent. Each observed slot is converted to its percentile among the current catalog&apos;s unique observed values.
-        Every missing slot inherits that model&apos;s mean observed percentile, so the Composite is exactly the mean of its
-        available percentiles. A model with no reliable observed slot receives the neutral fallback 50; its zero evidence
-        coverage remains distinct from a measured score and is excluded from capability charts. There is no catalog-chain or dominance adjustment. Coding Agent results are
+        Every missing slot inherits that model&apos;s mean observed percentile, producing a base score exactly equal to the mean of its
+        available percentiles. A final dominance-safe projection prevents missing data from reversing an otherwise unambiguous comparison:
+        when one model covers every reliable slot of another measured model and is no worse in any shared slot,
+        the catalog scores are adjusted by the smallest symmetric amount needed to keep the dominating model at least 0.1 points ahead.
+        The unadjusted base and any adjustment are shown separately in model details. A model with no reliable observed slot receives the neutral fallback 50; its zero evidence
+        coverage remains distinct from a measured score and is excluded from capability charts. Coding Agent results are
         attached to an exact or explicitly audited model/reasoning identity; every harness
-        result is retained and their median is used. DesignArena results are attached once rather than copied to effort
-        siblings. Raw DesignArena score views continue to show Elo. Stable model ids and repositories are preferred over
+        result is retained and their median is used. Family-scoped Intelligence.ai / DesignArena results are attached exactly once to the deterministic collapsed-family representative rather than copied to effort
+        siblings. The provenance note explicitly states that this does not identify the tested effort setting. Raw DesignArena score views continue to show Elo. Stable model ids and repositories are preferred over
         fuzzy names so distinct releases, modes, context tiers and serving routes do not share the wrong price.
         See the repository README and <code>data/SCRAPING.md</code> for how each source is collected and refreshed.
       </p>

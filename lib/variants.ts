@@ -32,13 +32,18 @@ export function preferredVariantIds(models: ClientModel[], score?: ScoreKey): Ma
       ? row.composite_coverage > 0
       : row.scores[score] != null) : [];
     const candidates = measured.length ? measured : rows;
-    const byVar = (v: string) => candidates.find((r) => r.variant === v);
-    const pick = (order: string[]) => (order.map(byVar).find(Boolean) as ClientModel | undefined) || candidates[0];
+    const pick = (order: string[]) => [...candidates].sort((a, b) => {
+      const aRank = order.indexOf(a.variant);
+      const bRank = order.indexOf(b.variant);
+      const normalizedARank = aRank < 0 ? order.length : aRank;
+      const normalizedBRank = bRank < 0 ? order.length : bRank;
+      return normalizedARank - normalizedBRank || a.id.localeCompare(b.id);
+    })[0];
     let chosen: ClientModel;
     if (k.startsWith("gpt-")) {
       chosen = pick(["high", "medium", "xhigh", "low", "minimal", "non-reasoning", "default"]);
     } else if (k.startsWith("claude-")) {
-      chosen = pick(["reasoning", "high", "max", "adaptive", "default", "non-reasoning"]);
+      chosen = pick(["reasoning", "high", "max", "adaptive", "xhigh", "medium", "low", "default", "non-reasoning"]);
     } else {
       // Prefer an explicit reasoning/effort configuration over a generic source
       // row. In particular, a bare benchmark alias must never hide a measured

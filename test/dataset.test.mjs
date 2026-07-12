@@ -94,9 +94,10 @@ test("open-weights filter metadata excludes audited proprietary families", () =>
   assert.equal(isOpen("sonar"), false);
   assert.equal(isOpen("sonar-pro"), false);
   assert.equal(isOpen("palmyra-x5"), false);
-  for (const family of ["composer-2", "composer-2.5", "composer-2.5-fast", "raptor-mini", "yoda"]) {
+  for (const family of ["composer-2", "composer-2.5", "composer-2.5-fast", "raptor-mini", "grok-4.5"]) {
     assert.equal(isOpen(family), false, family);
   }
+  assert.equal(ds.models.some((model) => model.family_key === "yoda"), false, "registry alias yoda must join Grok 4.5");
 
   const grok = ds.models.filter((model) => model.family_key.startsWith("grok"));
   assert.ok(grok.length > 0);
@@ -388,7 +389,7 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.deepEqual(nonReasoning?.designarena || {}, {});
 });
 
-test("bare DesignArena evidence joins a sole benchmark configuration but stays split when ambiguous", () => {
+test("family-scoped Intelligence.ai evidence attaches once to deterministic Overview representatives", () => {
   const fable = ds.models.find((model) => model.id === "claude-fable-5::max");
   assert.ok(fable);
   assert.equal(fable.designarena.frontend?.modelId, "claude-fable-5");
@@ -399,18 +400,49 @@ test("bare DesignArena evidence joins a sole benchmark configuration but stays s
   assert.equal(ds.models.some((model) => model.id === "claude-fable-5::designarena"), false);
 
   for (const attached of ds.models.filter((model) => model.designarena_attachment_note)) {
-    const benchmarkConfigurations = ds.models.filter((model) => model.family_key === attached.family_key
-      && (model.aa_model_id || model.coding_agent_results?.length));
-    assert.deepEqual(
-      benchmarkConfigurations.map((model) => model.id),
-      [attached.id],
-      `${attached.family_key} family-scoped DesignArena evidence is not unambiguous`,
-    );
+    assert.match(attached.designarena_attachment_note, /attached exactly once/i, attached.id);
+    assert.match(attached.designarena_attachment_note, /does not assert.*specific effort setting/i, attached.id);
   }
 
-  const sonnet = ds.models.find((model) => model.id === "claude-sonnet-5::designarena");
-  assert.ok(sonnet, "multi-effort Claude Sonnet 5 DesignArena evidence must remain source-scoped");
-  assert.equal(sonnet.designarena.frontend?.modelId, "claude-sonnet-5");
+  assert.equal(ds.models.some((model) => model.variant === "designarena"), false);
+  assert.equal(ds.models.find((model) => model.id === "claude-sonnet-5::max")?.designarena.frontend?.modelId, "claude-sonnet-5");
+  assert.equal(ds.models.find((model) => model.id === "gpt-5.5::high")?.designarena.frontend?.modelId, "gpt-5.5");
+});
+
+test("DeepSeek V4 Pro keeps its Webapps/Frontend Elo on the collapsed max representative only", () => {
+  const sourceFrontend = designArena.leaderboards.frontend.data.find((row) => row.modelId === "deepseek-v4-pro");
+  const sourceFullstack = designArena.leaderboards.fullstack.data.find((row) => row.modelId === "deepseek-v4-pro");
+  assert.ok(sourceFrontend);
+  assert.equal(sourceFullstack, undefined, "Intelligence.ai does not publish a DeepSeek V4 Pro Fullstack row");
+
+  const max = ds.models.find((model) => model.id === "deepseek-v4-pro::max");
+  assert.equal(max?.designarena.frontend?.elo, sourceFrontend.elo);
+  assert.equal(max?.designarena.frontend?.battles, sourceFrontend.battles);
+  assert.equal(max?.designarena.fullstack, undefined);
+  assert.match(max?.designarena_attachment_note || "", /product\/family scope without an effort setting/i);
+
+  const siblings = ds.models.filter((model) => model.family_key === "deepseek-v4-pro" && model.id !== max?.id);
+  assert.ok(siblings.every((model) => Object.keys(model.designarena || {}).length === 0));
+  assert.equal(ds.models.some((model) => model.id === "deepseek-v4-pro::designarena"), false);
+});
+
+test("Intelligence.ai registry display names resolve opaque and revisioned leaderboard ids", () => {
+  assert.match(designArena.endpoint, /^POST https:\/\/intelligence\.ai\/api\/leaderboard$/);
+  assert.match(designArena.registry_endpoint, /^GET https:\/\/intelligence\.ai\/api\/registry$/);
+  const sourceIds = new Set(Object.values(designArena.leaderboards).flatMap((board) => board.data.map((row) => row.modelId)));
+  assert.ok([...sourceIds].every((id) => designArena.model_registry[id]), "every leaderboard id needs registry metadata");
+
+  const grok = ds.models.find((model) => model.id === "grok-4.5::high");
+  assert.equal(grok?.designarena.frontend?.modelId, "yoda");
+  assert.equal(ds.models.some((model) => model.family_key === "yoda"), false);
+
+  const opus = ds.models.find((model) => model.id === "claude-opus-4.7::max");
+  assert.equal(opus?.designarena.frontend?.modelId, "claude-opus-4-7-thinking");
+  assert.equal(ds.models.some((model) => model.family_key === "claude-opus-4.7-thinking"), false);
+
+  const grok420 = ds.models.find((model) => model.id === "grok-4.20-reasoning::default");
+  assert.equal(grok420?.designarena.frontend?.modelId, "grok-4.20-0309-reasoning");
+  assert.equal(ds.models.some((model) => model.family_key === "grok-4.20-0309-reasoning"), false);
 });
 
 test("all 572 Artificial Analysis rows and official weight flags survive exactly once", () => {

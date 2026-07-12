@@ -1,5 +1,5 @@
 import type { Dataset, ModelRow, ScoreKey } from "./types";
-import { compositeEvidenceCount, computeCompositeScores } from "./composite.mjs";
+import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
 
 export interface ClientOffer {
   key: string; // `${platform}::${provider}`
@@ -45,6 +45,7 @@ export interface ClientModel {
     designarena_frontend: number | null;
     designarena_fullstack: number | null;
   };
+  composite_base: number | null;
   composite_coverage: number;
   offer_count: number;
   aa_ref_input: number | null;
@@ -142,6 +143,7 @@ export function clientData(ds: Dataset): ClientData {
         designarena_frontend: m.designarena?.frontend?.elo ?? null,
         designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
       },
+      composite_base: null,
       composite_coverage: 0,
       offer_count: (offersByModel[m.id] || []).length,
       aa_ref_input: m.aa_reference_price?.input_per_1m ?? null,
@@ -168,10 +170,11 @@ export function clientData(ds: Dataset): ClientData {
       },
     };
   });
-  const composites = computeCompositeScores(compositeInputs);
+  const { scores: composites, baseScores } = computeCompositeScoreDetails(compositeInputs);
   const coverage = new Map(compositeInputs.map((row) => [row.id, compositeEvidenceCount(row)]));
   for (const m of models) {
     m.scores.composite = composites.get(m.id) ?? 50;
+    m.composite_base = baseScores.get(m.id) ?? 50;
     m.composite_coverage = coverage.get(m.id) ?? 0;
   }
 

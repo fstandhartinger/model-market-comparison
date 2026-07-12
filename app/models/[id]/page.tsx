@@ -45,6 +45,11 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           <h2 className="mb-3 font-semibold">Benchmarks</h2>
           <div className="grid grid-cols-1 gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2">
             <Metric label="Composite" value={num(clientModel?.scores.composite)} hi />
+            {clientModel?.composite_base != null && clientModel.scores.composite != null
+              && Math.abs(clientModel.scores.composite - clientModel.composite_base) >= 0.05 && <>
+              <Metric label="Mean-imputed base" value={num(clientModel.composite_base)} />
+              <Metric label="Dominance adjustment" value={`${clientModel.scores.composite > clientModel.composite_base ? "+" : ""}${num(clientModel.scores.composite - clientModel.composite_base)}`} />
+            </>}
             <Metric label="Composite evidence" value={`${clientModel?.composite_coverage ?? 0}/5`} />
             <Metric label="AA Coding Index" value={num(b.aa_coding_index)} hi />
             <Metric label="AA Coding Agent Index" value={num(b.aa_coding_agent_index)} hi />

@@ -1,7 +1,7 @@
-// Diagnose the production model-mean-imputed percentile Composite for
-// models whose ordering is sensitive to missing results.
+// Diagnose the production model-mean-imputed percentile base and the final
+// dominance-safe Composite for models whose ordering is sensitive to missing results.
 import { readFileSync } from "node:fs";
-import { computeCompositeScores, DEFAULT_MIN_DA_BATTLES } from "../lib/composite.mjs";
+import { computeCompositeScoreDetails, DEFAULT_MIN_DA_BATTLES } from "../lib/composite.mjs";
 
 const ds = JSON.parse(readFileSync(new URL("../data/dataset.json", import.meta.url)));
 const SLOTS = [
@@ -32,7 +32,7 @@ const rows = ds.models.map((m) => ({
   },
 }));
 
-const composites = computeCompositeScores(rows);
+const { scores: composites, baseScores } = computeCompositeScoreDetails(rows);
 const effectiveRows = rows.map((row) => {
   const aaCoding = finiteOrNull(row.scores.aa_coding_index);
   const aaCodingAgent = finiteOrNull(row.scores.aa_coding_agent);
@@ -66,7 +66,14 @@ const slotRows = effectiveRows.map((row) => {
     key,
     row.slots[key] == null ? assumed : percentile(row.slots[key], distributions[key]),
   ]));
-  return { ...row, observed, assumed, normalized, composite: composites.get(row.id) };
+  return {
+    ...row,
+    observed,
+    assumed,
+    normalized,
+    compositeBase: baseScores.get(row.id),
+    composite: composites.get(row.id),
+  };
 });
 
 function show(id) {
@@ -88,6 +95,10 @@ function show(id) {
     }
   }
   console.log(`  coverage: ${row.observed.length}/${SLOTS.length}`);
+  console.log(`  mean-imputed base: ${row.compositeBase?.toFixed(1) ?? "—"}`);
+  if (row.composite != null && row.compositeBase != null && Math.abs(row.composite - row.compositeBase) >= 0.05) {
+    console.log(`  dominance adjustment: ${(row.composite - row.compositeBase) >= 0 ? "+" : ""}${(row.composite - row.compositeBase).toFixed(1)}`);
+  }
   console.log(`  composite: ${row.composite?.toFixed(1) ?? "—"}`);
 }
 

@@ -8,7 +8,7 @@ EU-provider research lives in `data/research/` (e.g. `llm-tracker-eu.md`).
 Full rebuild:
 
 ```bash
-npm run data:refresh   # fetch-live.mjs (OpenRouter + AA + DesignArena) then build-dataset.mjs
+npm run data:refresh   # fetch-live.mjs (OpenRouter + AA + Intelligence.ai/DesignArena) then build-dataset.mjs
 # or step by step:
 npm run data:fetch     # only the live APIs → data/raw/{openrouter,artificialanalysis,designarena}.json
 npm run data:build     # merge all raw/*.json → data/dataset.json
@@ -34,11 +34,13 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
   sub-benchmarks (livecodebench, scicode, terminalbench_hard, tau2, gpqa, mmlu_pro),
   plus `pricing` and speed. One entry per reasoning setting (e.g. `GPT-5.5 (high)`).
 
-### DesignArena — Agentic Web Dev leaderboards
-- `POST https://www.designarena.ai/api/leaderboard` (JSON body). We pull two boards:
+### Intelligence.ai / DesignArena — Agentic Web Dev leaderboards
+- `POST https://intelligence.ai/api/leaderboard` (JSON body). We pull two distinct boards:
   - Frontend: `{"arenaType":"agents","category":"agon_webapps","variationName":"public","inputModality":"text"}`
   - Full-Stack: `{"arenaType":"agents","category":"fullstack","variationName":"public"}`
   - Response: `data[].{modelId,elo,winRate,battles}`.
+- `GET https://intelligence.ai/api/registry` supplies source-owned display names and open-weight metadata for opaque/revisioned leaderboard ids. A refresh fails closed if any board id is missing from the registry.
+- Board results are product/family scoped, not effort scoped. The build attaches each result exactly once to the deterministic active family representative used by collapsed views and records that limitation in `designarena_attachment_note`.
 
 ## Scraped / curated snapshots (manual — see each `*.method.md`)
 

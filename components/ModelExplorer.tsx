@@ -169,6 +169,17 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                                 </tr>
                               );
                             })}
+                            {m.composite_base != null && m.scores.composite != null
+                              && Math.abs(m.scores.composite - m.composite_base) >= 0.05 && <>
+                              <tr title="Mean of observed per-slot percentiles after the model's own mean is used for missing slots">
+                                <td className="py-0.5 text-gray-400">Mean-imputed base</td>
+                                <td className="py-0.5 text-right tabular">{num(m.composite_base, 1)}</td>
+                              </tr>
+                              <tr title="Smallest catalog-wide adjustment that prevents missing benchmark slots from reversing a shared-score dominance relationship">
+                                <td className="py-0.5 text-gray-400">Dominance adjustment</td>
+                                <td className="py-0.5 text-right tabular">{m.scores.composite > m.composite_base ? "+" : ""}{num(m.scores.composite - m.composite_base, 1)}</td>
+                              </tr>
+                            </>}
                             <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage}/5</td></tr>
                             <tr><td className="py-0.5 text-gray-400">Weights</td><td className="py-0.5 text-right">{m.open_weights ? "open" : "closed"}</td></tr>
                           </tbody>

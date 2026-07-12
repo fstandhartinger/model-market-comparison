@@ -319,6 +319,44 @@ const BARE_BENCHMARK_VARIANT_TARGETS = new Map([
   ["glm-5.2", "max"],
 ]);
 
+// Keep this in lock-step with the collapsed Overview's deterministic display
+// policy. Intelligence.ai publishes product/family ids rather than effort ids,
+// so one family representative must own that evidence exactly once. Selecting
+// by variant priority (instead of whichever source row happened to be inserted
+// first) keeps refreshes stable and makes the attached evidence visible on the
+// same row used by the default Overview.
+function familyRepresentativeVariantOrder(familyKey) {
+  if (familyKey.startsWith("gpt-")) {
+    return ["high", "medium", "xhigh", "low", "minimal", "non-reasoning", "default"];
+  }
+  if (familyKey.startsWith("claude-")) {
+    return ["reasoning", "high", "max", "adaptive", "xhigh", "medium", "low", "default", "non-reasoning"];
+  }
+  return ["reasoning", "max", "high", "adaptive", "xhigh", "medium", "low", "default", "non-reasoning"];
+}
+
+function hasCompositeBenchmarkEvidence(row) {
+  const benchmarks = row.benchmarks || {};
+  return benchmarks.aa_coding_index != null
+    || benchmarks.aa_coding_agent_index != null
+    || benchmarks.aa_intelligence_index != null;
+}
+
+function deterministicFamilyRepresentative(familyKey, familyRows) {
+  const active = familyRows.filter((row) => row.deprecated !== true);
+  const lifecycleCandidates = active.length ? active : familyRows;
+  const measured = lifecycleCandidates.filter(hasCompositeBenchmarkEvidence);
+  const candidates = measured.length ? measured : lifecycleCandidates;
+  const order = familyRepresentativeVariantOrder(familyKey);
+  return [...candidates].sort((a, b) => {
+    const aRank = order.indexOf(a.variant);
+    const bRank = order.indexOf(b.variant);
+    const normalizedARank = aRank < 0 ? order.length : aRank;
+    const normalizedBRank = bRank < 0 ? order.length : bRank;
+    return normalizedARank - normalizedBRank || a.id.localeCompare(b.id);
+  })[0];
+}
+
 // ---------------------------------------------------------------------------
 // Build
 // ---------------------------------------------------------------------------
@@ -494,17 +532,23 @@ async function build() {
     else ambiguousAaHfIds.push({ hfId, families: [...keys].sort() });
   }
 
-  // --- DesignArena: preserve each exact board/model identity for later attach ---
+  // --- Intelligence.ai / DesignArena: preserve each board/model identity ---
   const designArenaByFamily = new Map();
   const designArenaAliases = {
+    // Backward-compatible fallback for snapshots created before registry
+    // metadata was captured alongside the leaderboard rows.
     "claude-opus-4.5-20251101": "claude-opus-4.5",
     "claude-sonnet-4.5-20250929": "claude-sonnet-4.5",
   };
   for (const [board, payload] of Object.entries(da.leaderboards)) {
     for (const row of payload.data) {
-      const normalized = normalizeFamily(row.modelId).familyKey;
+      const registryMeta = da.model_registry?.[row.modelId] || null;
+      const sourceDisplayName = registryMeta?.display_name || row.modelId;
+      const normalized = normalizeFamily(sourceDisplayName).familyKey;
       const familyKey = designArenaAliases[normalized] || normalized;
-      family(familyKey, guessOrg(familyKey));
+      family(familyKey, guessOrg(familyKey), {
+        openWeights: typeof registryMeta?.open_source === "boolean" ? registryMeta.open_source : undefined,
+      });
       if (!designArenaByFamily.has(familyKey)) designArenaByFamily.set(familyKey, {});
       const entries = designArenaByFamily.get(familyKey);
       // Keep the highest-battle entry if a board happens to publish aliases.
@@ -895,46 +939,23 @@ async function build() {
     }
   }
 
-  // DesignArena publishes one result per board/model id. Attach a bare id to an
-  // existing default row when one exists, to a narrowly audited source alias
-  // such as GLM-5.2::max, or to the sole benchmark-bearing configuration when
-  // the family is unambiguous. The latter prevents one product's evidence from
-  // being split across an AA row and a source-only DesignArena row (for example
-  // Claude Fable 5). Multi-configuration families remain split rather than
-  // cloning an effort-unspecified result across reasoning siblings.
+  // Intelligence.ai publishes one result per board/model id at product/family
+  // scope, without an AA-style effort setting. Attach it exactly once to the
+  // deterministic family representative used by collapsed comparisons. Never
+  // clone it across effort siblings and never create a hidden `::designarena`
+  // row: either behavior makes the default Overview omit real source evidence.
   for (const [familyKey, entries] of designArenaByFamily) {
     const fam = families.get(familyKey) || family(familyKey, guessOrg(familyKey));
     const auditedVariant = BARE_BENCHMARK_VARIANT_TARGETS.get(familyKey);
-    let target = auditedVariant
-      ? models.get(`${familyKey}::${auditedVariant}`)
-      : models.get(`${familyKey}::default`);
+    const familyRows = [...models.values()].filter((row) => row.family_key === familyKey);
+    let target = auditedVariant ? models.get(`${familyKey}::${auditedVariant}`) : null;
     if (auditedVariant && !target) {
       throw new Error(`Missing audited benchmark target: ${familyKey}::${auditedVariant}`);
     }
-    let familyScopedAttachment = false;
-    if (!target) {
-      const benchmarkConfigurations = [...models.values()].filter((row) =>
-        row.family_key === familyKey && (row.aa_model_id || row.coding_agent_results?.length));
-      if (benchmarkConfigurations.length === 1) {
-        target = benchmarkConfigurations[0];
-        familyScopedAttachment = true;
-      }
-    }
-    if (!target) target = models.get(`${familyKey}::designarena`);
-    if (!target) {
-      target = emptyModel({
-        familyKey, fam, id: `${familyKey}::designarena`,
-        displayName: Object.values(entries)[0]?.modelId || fam.familyName,
-        variant: "designarena",
-      });
-      target.offers = fam.offers;
-      target.copilot = fam.copilot;
-      models.set(target.id, target);
-    }
+    if (!target) target = deterministicFamilyRepresentative(familyKey, familyRows);
+    if (!target) throw new Error(`Missing family representative for Intelligence.ai evidence: ${familyKey}`);
     target.designarena = entries;
-    if (familyScopedAttachment) {
-      target.designarena_attachment_note = "DesignArena publishes this result at product/family scope without an effort setting; it is combined with the family's sole benchmark configuration for the family-representative composite.";
-    }
+    target.designarena_attachment_note = `Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.`;
   }
 
   let modelRows = [...models.values()];

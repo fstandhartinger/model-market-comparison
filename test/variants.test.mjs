@@ -56,6 +56,17 @@ test("neutral Composite fallback cannot replace a measured family representative
   );
 });
 
+test("collapsed representative fallback is deterministic and prefers a measured Claude effort", () => {
+  const medium = model("claude-sonnet-4.6", "medium", 54.2, { composite: 70, coverage: 1 });
+  const nonReasoningLow = model("claude-sonnet-4.6", "non-reasoning-low", null, { composite: 60, coverage: 1 });
+  for (const rows of [[medium, nonReasoningLow], [nonReasoningLow, medium]]) {
+    assert.equal(
+      variants.preferredVariantIds(rows, "composite").get("claude-sonnet-4.6"),
+      "claude-sonnet-4.6::medium",
+    );
+  }
+});
+
 test("deprecated rows are removed before choosing a collapsed representative", () => {
   const deprecatedReasoning = { ...model("mixed", "reasoning", 90), deprecated: true };
   const activeDefault = { ...model("mixed", "default", 70), deprecated: false };

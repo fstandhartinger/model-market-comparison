@@ -129,14 +129,15 @@ async function fetchArtificialAnalysis() {
 }
 
 async function fetchDesignArena() {
-  console.log("→ DesignArena leaderboards …");
+  console.log("→ Intelligence.ai leaderboards …");
+  const baseUrl = "https://intelligence.ai";
   const queries = [
     { key: "frontend", body: { arenaType: "agents", category: "agon_webapps", variationName: "public", inputModality: "text" } },
     { key: "fullstack", body: { arenaType: "agents", category: "fullstack", variationName: "public" } },
   ];
   const out = {};
   for (const q of queries) {
-    const data = await getJSON("https://www.designarena.ai/api/leaderboard", {
+    const data = await getJSON(`${baseUrl}/api/leaderboard`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(q.body),
@@ -144,10 +145,30 @@ async function fetchDesignArena() {
     out[q.key] = { request: q.body, data: data.data || [] };
     console.log(`  ${q.key}: ${out[q.key].data.length} models`);
   }
+  // Leaderboard ids are serving identifiers, not always public product names
+  // (for example `yoda` is displayed as Grok 4.5). Snapshot the source-owned
+  // registry metadata used by the leaderboard UI so dataset joins do not depend
+  // on a growing local alias list. Fail closed if the registry and boards drift.
+  const registry = await getJSON(`${baseUrl}/api/registry`);
+  const modelIds = [...new Set(Object.values(out).flatMap((board) => board.data.map((row) => row.modelId)))].sort();
+  const missingRegistryIds = modelIds.filter((id) => !registry.models?.[id]);
+  if (missingRegistryIds.length) {
+    throw new Error(`Intelligence.ai registry missing ${missingRegistryIds.length} leaderboard ids: ${missingRegistryIds.join(", ")}`);
+  }
+  const modelRegistry = Object.fromEntries(modelIds.map((id) => {
+    const model = registry.models[id];
+    return [id, {
+      display_name: model.displayName || id,
+      provider: model.provider || null,
+      open_source: typeof model.openSource === "boolean" ? model.openSource : null,
+    }];
+  }));
   await writeFile(join(RAW, "designarena.json"), JSON.stringify({
-    source: "DesignArena leaderboard API",
-    endpoint: "POST https://www.designarena.ai/api/leaderboard",
+    source: "Intelligence.ai leaderboard API (formerly DesignArena)",
+    endpoint: `POST ${baseUrl}/api/leaderboard`,
+    registry_endpoint: `GET ${baseUrl}/api/registry`,
     collected_at: new Date().toISOString().slice(0, 10),
+    model_registry: modelRegistry,
     leaderboards: out,
   }, null, 2));
 }

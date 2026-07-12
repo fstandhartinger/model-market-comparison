@@ -88,8 +88,8 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
 
 ## Score keys (`ScoreKey`)
 
-`composite` (0–100 mean of available capability percentiles, expressed as five slots
-with model-mean imputation),
+`composite` (0–100 dominance-safe projection of five model-mean-imputed percentile slots;
+the unadjusted mean is exposed as `composite_base` by `/api/models`),
 `aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, median harness result per exact model),
 `aa_intelligence_index`, `designarena_frontend`, `designarena_fullstack`.
 
@@ -111,22 +111,23 @@ the original source URL and correction reason remain alongside them for auditabi
 Offers are model/SKU-specific. An AA row with an exact OpenRouter id receives only that
 route (with repository identity as a guarded fallback for stale aliases); distinct
 Instruct/Thinking, context-price tiers, endpoint tiers and managed-hosting routes remain
-separate. DesignArena results attach once to the exact/default row, an explicitly audited
-source identity such as `glm-5.2::max`, or a dedicated `::designarena` row. If DesignArena
-publishes only a bare product identity and that family has exactly one benchmark-bearing
-configuration, the result attaches there at family scope and carries
-`designarena_attachment_note`; ambiguous multi-effort families remain separate. Results
-are never copied to every reasoning-effort sibling.
+separate. Intelligence.ai / DesignArena results are product/family scoped and attach exactly
+once to the deterministic active representative also used by collapsed comparisons. The
+`designarena_attachment_note` records that this does not establish the tested effort setting.
+Results are never copied to every reasoning-effort sibling and no hidden `::designarena`
+duplicate row is created.
 The Composite uses five capability slots: AA Coding, source-matched
 Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA
-values are clamped to 0–100. Each DesignArena board qualifies with at least 500 battles
+values are clamped to 0–100. Each DesignArena board qualifies with at least 200 battles
 and its Elo is converted to the expected score against a fixed Elo 1000 opponent:
 `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is converted to its empirical
 percentile among the current catalog's unique observed values. Every missing slot inherits
-that model's mean observed percentile, so the five-slot result equals the mean of the
-available percentiles. A row with no reliable observed slot receives 50; its evidence
-coverage remains zero so the fallback is not treated as a measurement. There is no
-catalog-chain or dominance adjustment. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
+that model's mean observed percentile, so `composite_base` equals the mean of the
+available percentiles. A deterministic least-squares projection makes the smallest symmetric
+catalog-wide adjustment needed to preserve strict evidence-superset dominance for every measured
+model, using a 0.1-point display margin. A row with no reliable
+observed slot receives 50; its evidence coverage remains zero so the fallback is not treated
+as a measurement. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
 `claude-fable-5`).
 
 ## In Postgres

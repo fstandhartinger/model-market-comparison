@@ -1,7 +1,11 @@
 import { test } from "node:test";
 import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
-import { compositeEvidenceCount, computeCompositeScores } from "../lib/composite.mjs";
+import {
+  compositeEvidenceCount,
+  computeCompositeScoreDetails,
+  computeCompositeScores,
+} from "../lib/composite.mjs";
 
 const inputsFromDataset = (dataset) => dataset.models.map((model) => ({
   id: model.id,
@@ -51,6 +55,7 @@ test("all-missing and non-finite rows receive the neutral fallback", () => {
   assert.equal(scores.get("non-finite"), 50);
   assert.equal(compositeEvidenceCount({ id: "missing", scores: {} }), 0);
   assert.deepEqual(computeCompositeScores([]), new Map());
+  assert.deepEqual(computeCompositeScoreDetails([]), { scores: new Map(), baseScores: new Map() });
 });
 
 test("unreliable DesignArena boards are omitted before model-mean imputation", () => {
@@ -58,12 +63,12 @@ test("unreliable DesignArena boards are omitted before model-mean imputation", (
     {
       id: "low-elo",
       scores: { aa_coding_index: 50, designarena_frontend: 600 },
-      designarenaBattles: { frontend: 499 },
+      designarenaBattles: { frontend: 199 },
     },
     {
       id: "high-elo",
       scores: { aa_coding_index: 50, designarena_frontend: 1400 },
-      designarenaBattles: { frontend: 499 },
+      designarenaBattles: { frontend: 199 },
     },
   ]);
 
@@ -72,17 +77,17 @@ test("unreliable DesignArena boards are omitted before model-mean imputation", (
   assert.equal(compositeEvidenceCount({
     id: "low-elo",
     scores: { aa_coding_index: 50, designarena_frontend: 600 },
-    designarenaBattles: { frontend: 499 },
+    designarenaBattles: { frontend: 199 },
   }), 1);
   assert.equal(compositeEvidenceCount({
     id: "da-boundary-low",
     scores: { designarena_frontend: 1200 },
-    designarenaBattles: { frontend: 499 },
+    designarenaBattles: { frontend: 199 },
   }), 0);
   assert.equal(compositeEvidenceCount({
     id: "da-boundary-high",
     scores: { designarena_frontend: 1200 },
-    designarenaBattles: { frontend: 500 },
+    designarenaBattles: { frontend: 200 },
   }), 1);
 });
 
@@ -152,6 +157,70 @@ test("missing slots inherit the model's mean observed percentile", () => {
   // Target's observed percentiles are 100 and 50. Its other three slots inherit
   // their mean 75, leaving the five-slot Composite at exactly 75.
   assert.equal(scores.get("target"), 75);
+});
+
+test("the mean-imputed base stays exact while the symmetric projection fixes a coverage inversion", () => {
+  const rows = [
+    { id: "common-low", scores: { aa_coding_index: 0, aa_intelligence_index: 0 } },
+    { id: "sparse", scores: { aa_coding_index: 10, aa_intelligence_index: 10 } },
+    {
+      id: "dominant",
+      scores: {
+        aa_coding_index: 20,
+        aa_coding_agent: 0,
+        aa_intelligence_index: 20,
+        designarena_frontend: 600,
+        designarena_fullstack: 600,
+      },
+      designarenaBattles: { frontend: 200, fullstack: 200 },
+    },
+    {
+      id: "other-source-high",
+      scores: {
+        aa_coding_agent: 100,
+        designarena_frontend: 1400,
+        designarena_fullstack: 1400,
+      },
+      designarenaBattles: { frontend: 200, fullstack: 200 },
+    },
+  ];
+  const { scores, baseScores } = computeCompositeScoreDetails(rows);
+
+  assert.equal(baseScores.get("sparse"), 50);
+  assert.equal(baseScores.get("dominant"), 40);
+  assert.ok(baseScores.get("sparse") > baseScores.get("dominant"));
+  assert.ok(
+    scores.get("dominant") >= scores.get("sparse") + 0.1 - 1e-8,
+    `expected dominance-safe order, got ${scores.get("dominant")} <= ${scores.get("sparse")}`,
+  );
+
+  const reversed = computeCompositeScoreDetails([...rows].reverse());
+  for (const row of rows) {
+    assert.ok(Math.abs(reversed.baseScores.get(row.id) - baseScores.get(row.id)) < 1e-12, row.id);
+    assert.ok(Math.abs(reversed.scores.get(row.id) - scores.get(row.id)) < 1e-8, row.id);
+  }
+
+  const withClone = computeCompositeScoreDetails([
+    ...rows,
+    { id: "sparse-clone", scores: { ...rows[1].scores } },
+  ]);
+  for (const row of rows) {
+    assert.ok(Math.abs(withClone.scores.get(row.id) - scores.get(row.id)) < 1e-8, row.id);
+  }
+  assert.ok(Math.abs(withClone.scores.get("sparse-clone") - scores.get("sparse")) < 1e-8);
+});
+
+test("the dominance guard also covers a model with exactly one reliable result", () => {
+  const { scores, baseScores } = computeCompositeScoreDetails([
+    { id: "coding-low", scores: { aa_coding_index: 0 } },
+    { id: "sparse-one", scores: { aa_coding_index: 10 } },
+    { id: "dominant-two", scores: { aa_coding_index: 20, aa_intelligence_index: 0 } },
+    { id: "intelligence-high", scores: { aa_intelligence_index: 100 } },
+  ]);
+
+  assert.equal(baseScores.get("sparse-one"), 50);
+  assert.equal(baseScores.get("dominant-two"), 50);
+  assert.ok(scores.get("dominant-two") >= scores.get("sparse-one") + 0.1 - 1e-8);
 });
 
 test("long dominance-like catalogs cannot add recursive score margins", () => {
@@ -300,7 +369,7 @@ test("every catalog row receives a finite bounded Composite", async () => {
   }
 });
 
-test("DeepSeek V4 Pro ranks above Flash on the model-mean-imputed composite", async () => {
+test("DeepSeek V4 Pro's attached Frontend evidence and stronger shared AA scores keep it above Flash", async () => {
   const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
   const inputs = inputsFromDataset(dataset);
   const scores = computeCompositeScores(inputs);
@@ -308,6 +377,30 @@ test("DeepSeek V4 Pro ranks above Flash on the model-mean-imputed composite", as
     scores.get("deepseek-v4-pro::max") > scores.get("deepseek-v4-flash::max"),
     `expected Pro (${scores.get("deepseek-v4-pro::max")}) > Flash (${scores.get("deepseek-v4-flash::max")})`,
   );
+});
+
+test("GLM-5.2 remains the leading featured open model when sparse contenders have higher bases", async () => {
+  const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
+  const inputs = inputsFromDataset(dataset);
+  const { scores, baseScores } = computeCompositeScoreDetails(inputs);
+  const glm = "glm-5.2::max";
+  const contenders = [
+    "minimax-m3::default",
+    "deepseek-v4-pro::max",
+    "kimi-k2.7-code::default",
+    "mimo-v2.5-pro::default",
+  ];
+
+  assert.ok(
+    baseScores.get("minimax-m3::default") > baseScores.get(glm),
+    "fixture must retain the missing-data base inversion this regression covers",
+  );
+  for (const id of contenders) {
+    assert.ok(
+      scores.get(glm) >= scores.get(id) + 0.1 - 1e-8,
+      `expected GLM-5.2 (${scores.get(glm)}) at least 0.1 above ${id} (${scores.get(id)})`,
+    );
+  }
 });
 
 test("GPT-5.6 Sol's observed-percentile mean ranks above GLM-5.2", async () => {

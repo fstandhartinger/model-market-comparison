@@ -143,7 +143,7 @@ export type ScoreKey =
   | "designarena_fullstack";
 
 export const SCORE_LABELS: Record<ScoreKey, string> = {
-  composite: "Composite (mean observed percentiles, 0–100)",
+  composite: "Composite (coverage-neutral, dominance-safe percentiles, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
   aa_coding_agent: "ArtificialAnalysis — Coding Agent Index (median harness)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",

@@ -19,3 +19,7 @@ export function computeCompositeScores(
   rows: CompositeInput[],
   options?: { minDesignArenaBattles?: number },
 ): Map<string, number>;
+export function computeCompositeScoreDetails(
+  rows: CompositeInput[],
+  options?: { minDesignArenaBattles?: number },
+): { scores: Map<string, number>; baseScores: Map<string, number> };
