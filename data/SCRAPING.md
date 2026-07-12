@@ -45,7 +45,7 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 | Source | Snapshot | How to refresh |
 |---|---|---|
 | AWS Bedrock (regional on-demand token prices) | `data/raw/aws-bedrock.json` | [aws-bedrock.method.md](raw/aws-bedrock.method.md) — AWS Price List Bulk API per region + model cards; EU and non-EU offers stay distinct |
-| Azure AI Foundry (retail token meters + serving scope) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API plus model-card/partner-region checks; a billing region is not assumed to be the inference region |
+| Azure AI Foundry (retail token meters + serving scope) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API plus model-card/partner-region checks; a billing region is not assumed to be the inference region; the two company-policy equivalents are stored separately from technical residency |
 | Google Vertex AI (Gemini + Model Garden partner models) | `data/raw/google-vertex.json` | [google-vertex.method.md](raw/google-vertex.method.md) — Vertex pricing and model-location docs; `global` is never marked EU-hosted |
 | Nebius Token Factory (mixed-region serverless catalog) | `data/raw/nebius.json` | [nebius.method.md](raw/nebius.method.md) — public models-info API; serving region is audited per model |
 | Inceptron (EU serverless catalog) | `data/raw/inceptron.json` | [inceptron.method.md](raw/inceptron.method.md) — public `api.inceptron.io/v1/models` + OpenRouter cross-check |

@@ -70,6 +70,7 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
           "estimated": false,            // true = hand-estimated price
           "tee": false,                  // true = runs in a Trusted Execution Environment
           "eu_hosted": true,             // this exact model offer runs in an audited EU location
+          "eu_policy_equivalent": false, // company-approved EU-filter equivalent; not technical residency
           "non_us": true,                // serving company is headquartered outside the US
           "notes": ""
         }

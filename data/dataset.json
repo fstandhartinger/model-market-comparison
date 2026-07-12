@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-12T13:39:45.925Z",
+  "generated_at": "2026-07-12T14:36:42.620Z",
   "counts": {
     "models": 779,
     "families": 603,
@@ -18398,10 +18398,11 @@
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Global",
+          "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee.",
           "pricing_tier": null,
-          "route_type": null,
+          "route_type": "azure_direct",
           "eu_hosted": false,
+          "eu_policy_equivalent": true,
           "non_us": false
         },
         {
@@ -19797,10 +19798,11 @@
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Global",
+          "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee.",
           "pricing_tier": null,
-          "route_type": null,
+          "route_type": "azure_direct",
           "eu_hosted": false,
+          "eu_policy_equivalent": true,
           "non_us": false
         },
         {
@@ -20730,10 +20732,11 @@
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Global",
+          "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee.",
           "pricing_tier": null,
-          "route_type": null,
+          "route_type": "azure_direct",
           "eu_hosted": false,
+          "eu_policy_equivalent": true,
           "non_us": false
         },
         {
@@ -27185,10 +27188,11 @@
           "output_per_1m": 4,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M.",
+          "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M.",
           "pricing_tier": null,
           "route_type": "azure_direct",
           "eu_hosted": false,
+          "eu_policy_equivalent": true,
           "non_us": false
         },
         {
@@ -85516,10 +85520,11 @@
           "output_per_1m": 3.48,
           "region": "global",
           "unit": "per_1m_token",
-          "notes": "Global",
+          "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee.",
           "pricing_tier": null,
-          "route_type": null,
+          "route_type": "azure_direct",
           "eu_hosted": false,
+          "eu_policy_equivalent": true,
           "non_us": false
         },
         {
@@ -86456,7 +86461,7 @@
       "eu_dedicated": false,
       "hyperscaler": true,
       "country": "US",
-      "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served)."
+      "note": "EU Data Boundary / EU Data Zone. Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code are company-approved EU-filter equivalents, not technical residency guarantees; inference may occur outside the EU. Fireworks-hosted alternatives remain excluded from the EU boundary (US-served)."
     },
     {
       "platform": "OpenRouter",

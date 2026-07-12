@@ -68,6 +68,9 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   model's cheapest such offer across all providers.
 - EU residency is determined per model offer and serving location. Provider capability,
   resource/billing region, or a global endpoint is not sufficient evidence of EU hosting.
+  A separate company-policy overlay treats only Azure Direct Global DeepSeek V4 Pro and
+  Kimi K2.7 Code as EU-filter equivalents; their technical region remains Global and inference
+  may occur outside the EU.
 - The Composite uses five capability slots: AA Coding, source-matched
   AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack.
   AA values are clamped to 0–100. DesignArena boards require at least 500 battles and

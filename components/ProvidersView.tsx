@@ -16,8 +16,10 @@ interface Row {
   avg_rank: number | null;       // avg price rank across those models (1 = cheapest)
   best_rank: number | null;
   avg_price: number | null;      // avg blended $/1M
+  policy_equivalent_models: number;
   model_price: number | null;    // blended price for the selected single model
   model_rank: number | null;
+  model_policy_equivalent: boolean;
 }
 
 export function ProvidersView({ data }: { data: ClientData }) {
@@ -78,9 +80,9 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const pickerMaxComposite = Math.max(1, ...pickerRows.map((m) => m.scores.composite ?? 0));
 
   const rows = useMemo<Row[]>(() => {
-    const agg = new Map<string, { ranks: number[]; prices: number[]; platform: string; provider: string }>();
+    const agg = new Map<string, { ranks: number[]; prices: number[]; policyEquivalentModels: number; platform: string; provider: string }>();
     const ensure = (key: string, platform: string, provider: string) => {
-      if (!agg.has(key)) agg.set(key, { ranks: [], prices: [], platform, provider });
+      if (!agg.has(key)) agg.set(key, { ranks: [], prices: [], policyEquivalentModels: 0, platform, provider });
       return agg.get(key)!;
     };
     // aggregate across peer-set families
@@ -90,12 +92,13 @@ export function ProvidersView({ data }: { data: ClientData }) {
         const a = ensure(o.key, o.platform, o.provider);
         a.ranks.push(idx + 1);
         a.prices.push(o.blended);
+        if (o.eu_policy_equivalent) a.policyEquivalentModels += 1;
       });
     }
     // single-model ranking
     const modelRanked = selectedModel ? rankedOffers(data.offersByModel[selectedModel.id], offerScope) : [];
-    const modelRankByKey = new Map<string, { rank: number; price: number }>();
-    modelRanked.forEach((o, i) => modelRankByKey.set(o.key, { rank: i + 1, price: o.blended }));
+    const modelRankByKey = new Map<string, { rank: number; price: number; policyEquivalent: boolean }>();
+    modelRanked.forEach((o, i) => modelRankByKey.set(o.key, { rank: i + 1, price: o.blended, policyEquivalent: !!o.eu_policy_equivalent }));
 
     const out: Row[] = [];
     for (const p of data.providers) {
@@ -108,8 +111,10 @@ export function ProvidersView({ data }: { data: ClientData }) {
         avg_rank: avgRank,
         best_rank: a && a.ranks.length ? Math.min(...a.ranks) : null,
         avg_price: a && a.prices.length ? a.prices.reduce((x, y) => x + y, 0) / a.prices.length : null,
+        policy_equivalent_models: a?.policyEquivalentModels ?? 0,
         model_price: mr ? mr.price : null,
         model_rank: mr ? mr.rank : null,
+        model_policy_equivalent: mr?.policyEquivalent ?? false,
       });
     }
     // sort by the active metric
@@ -137,7 +142,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
           <tbody>
             {shown.map((r) => (
               <tr key={r.key}>
-                <td className="px-3 py-2 truncate font-medium">{r.provider}</td>
+                <td className="px-3 py-2 truncate font-medium">{r.provider}{((mode === "model" && r.model_policy_equivalent) || (mode === "all" && r.policy_equivalent_models > 0)) && <span title="Includes a company-approved equivalent whose Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] font-normal text-sky-300">{mode === "model" ? "EU equivalent" : `EU≈ ${r.policy_equivalent_models}`}</span>}</td>
                 <td className="px-3 py-2 truncate text-gray-400">{r.platform}</td>
                 <td className="px-3 py-2 text-right tabular">{mode === "model" ? `#${r.model_rank}` : r.models_offered}</td>
                 <td className="px-3 py-2">

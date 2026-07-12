@@ -4,6 +4,10 @@
 **Scope:** OpenRouter's inference-provider roster, audited for European data residency / GDPR-compliant inference of top open-weight LLMs, for the model-price-comparison app.
 **Method:** WebSearch + WebFetch across provider websites, docs, trust/security/compliance pages, and OpenRouter provider pages (`openrouter.ai/provider/<slug>`). Unverifiable items are marked **unknown** — not fabricated.
 
+> **Application policy overlay (2026-07-12):** The physical-residency audit below is unchanged. This
+> company separately treats Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code as EU-hosted
+> equivalents for its product filter. Global inference may occur outside the EU; Fireworks alternatives remain excluded.
+
 > **Verdict legend:** `EU-HQ` = EU/EEA-headquartered · `EU-region` = EU residency/region pinning available (may be enterprise/dedicated only) · `NON-EU` = no EU option (exclude for residency) · `strong-conf` = strong confidentiality (ZDR / no-train / TEE) even if not EU.
 
 > **Caveat that applies broadly:** for many US-HQ providers, EU residency requires a *dedicated/enterprise* deployment (not the cheap self-serve serverless API), and US-parent companies remain exposed to the US CLOUD Act even when servers sit in the EU. "EU AI Act readiness" was claimed by almost none and is `unknown` for nearly all. Confirm any "EU-residency guaranteed" label contractually (DPA / sales) before relying on it.
@@ -20,7 +24,7 @@
 | **NextBit** (NEXTBIT 256, S.L.) | 🇪🇸 Spain | **Owns EU DC**; EU-resident endpoints | unknown (confirm) | Explicit no-training | DeepSeek V4 Pro, Qwen3.5, gpt-oss, Mistral, Gemma (no GLM/Kimi/MiniMax) | gpt-oss-20b ~0.029→0.14 | **EU-HQ** (verify per-endpoint EU marking) |
 | **Inceptron** (Inceptron AB) | 🇸🇪 Sweden | likely (EU company; DC unconfirmed) | unknown | no ZDR statement found | Kimi K2.6, GLM 5.1, MiniMax M2.5 | unknown | **EU-HQ** (best small-EU candidate; confirm DC+ZDR) |
 | **Amazon Bedrock** | 🇺🇸 US | **EU regions + EU CRIS pinning**; ESC (Nova-only) | AWS DPA+SCC, ISO 27001, SOC 1/2/3, C5 | ZDR (`data_retention_mode: none`, IAM-enforced), no-train | GLM, Kimi, DeepSeek V3.x/R1, MiniMax, Qwen3, Llama 4 M/S, Mistral Large 3, gpt-oss | DeepSeek V3.2 0.62→1.85 | **EU-region + strong-conf — best self-serve hyperscaler EU pin** |
-| **Azure AI Foundry** | 🇺🇸 US | **Data Zone (EU)** deploy type + EUDB | ISO 27001/42001, SOC 1/2/3, C5, MS DPA+SCC | No-train; ZDR via Limited Access only | EU Data Zone: **Mistral-Large-3** only; others (DeepSeek/Kimi/Llama4) Global-only | Mistral-Large-3 0.50→1.50 | **EU-region** (most top open models are Global-only — residency gap) |
+| **Azure AI Foundry** | 🇺🇸 US | **Data Zone (EU)** deploy type + EUDB; two Direct Global offers are company-policy equivalents only | ISO 27001/42001, SOC 1/2/3, C5, MS DPA+SCC | No-train; ZDR via Limited Access only | EU Data Zone: **Mistral-Large-3**; Direct Global DeepSeek V4 Pro/Kimi K2.7 Code remain technically Global | Mistral-Large-3 0.50→1.50 | **EU-region** plus a non-residency policy overlay |
 | **Cloudflare** (Workers AI) | 🇺🇸 US | EU via **Custom Regions** (Enterprise; GPU-pin needs sales confirm) | ISO 27001/27701/27018, SOC 2 II, C5, EU CoC, DPA+SCC+DPF | No-train; zero default retention | GLM 5.2, Kimi K2.x, DeepSeek V4 Flash/R1-distill, Qwen3-30B, Llama 4 Scout, Mistral Small, gpt-oss | DeepSeek V4 Flash ~0.10→0.20 | **EU-region** (verify compute pinning, not just TLS/L7) |
 | **Together AI** | 🇺🇸 US | EU via **dedicated/cluster** (not serverless) | ISO 27001, SOC 2 II, DPA+SCC+UK | ZDR/no-train not stated for serverless | GLM 5.1/5.2, Kimi K2.6/7, DeepSeek V4 Pro, MiniMax M2.7/M3, gpt-oss | DeepSeek V4 Pro ~2.10→4.40 | **EU-region (dedicated only)** |
 | **Fireworks AI** | 🇺🇸 US | EU via **dedicated `eu-west-1`** (Ireland) only | ISO 27001/27701/42001, SOC 2 II, HIPAA | **ZDR default for open models**, no-train | GLM 5.1/5.2, Kimi K2.6/7, DeepSeek V4 Pro/R1, MiniMax M2.7/M3, Qwen3 Coder-480B/235B, gpt-oss, Mistral Large 3 | GLM 5.1/5.2 1.40→4.40 | **EU-region (dedicated only) + strong-conf** |
@@ -143,6 +147,7 @@
 #### Azure AI Foundry — `EU-region` (residency gap on top open models)
 - **EU pinning:** Deployment-type dependent. **Global Standard/Provisioned = NO EU residency.** **Data Zone (EU)** = inference stays within EU/EFTA (Sweden Central + Germany West Central anchors). **Microsoft EU Data Boundary (EUDB)** in force. Enforce via Azure Policy.
 - **Critical caveat:** Most top open models (DeepSeek, Kimi, Llama 4 Maverick) are **Global-Standard-only** → no EU-pinned inference. **Mistral-Large-3 is the standout open model offered with EU Data Zone.**
+- **Company-policy exception:** The application admits only Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code to its EU filter as legal/business equivalents. Their region remains Global and inference may occur outside the EU; this is not EUDB coverage. Fireworks alternatives remain US/non-EU.
 - **GDPR/certs:** ISO 27001/27017/27018, ISO 42001, SOC 1/2/3, C5, HIPAA, FedRAMP; MS DPA + EU SCCs.
 - **Confidentiality:** No-train by default; **ZDR only via Modified Abuse Monitoring (Limited Access program)** — application required. Azure Confidential Computing exists but applies to your own managed compute, not shared serverless MaaS.
 - **API:** OpenAI-compatible, `https://<resource>.services.ai.azure.com/...`.
@@ -275,7 +280,7 @@
 
 **EU residency available but with a catch:**
 - **Together / Fireworks / Parasail / Baseten / Groq / SambaNova(Infercom)** — EU residency only via *dedicated/enterprise* endpoints (not the cheap serverless API). Fireworks/Parasail also have strong default ZDR.
-- **Azure AI Foundry** — formal EU framework (Data Zone + EUDB) but most top open models are Global-only; **Mistral-Large-3** is the one open model with EU Data Zone.
+- **Azure AI Foundry** — formal EU framework (Data Zone + EUDB) but most top open models are Global-only; the product separately admits Direct Global DeepSeek V4 Pro and Kimi K2.7 Code as company-policy equivalents without claiming residency.
 - **Cloudflare** — EU via Enterprise Custom Regions; verify GPU compute (not just network) is EU-pinned.
 - **NVIDIA NIM** — full EU residency if self-hosted on EU infra (+ TEE on H100/H200).
 - **Alibaba** — real Frankfurt EU mode, but only Qwen-Plus/Flash/VL (not the open-weight flagships).

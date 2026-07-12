@@ -22,6 +22,7 @@ export interface ClientOffer {
   notes?: string;
   tee?: boolean;
   eu_hosted?: boolean;
+  eu_policy_equivalent?: boolean;
   non_us?: boolean;
 }
 
@@ -102,7 +103,7 @@ export function clientData(ds: Dataset): ClientData {
     status: o.status, endpoint_tag: o.endpoint_tag,
     pricing_tier: o.pricing_tier, route_type: o.route_type,
     region: o.region, estimated: o.estimated, notes: o.notes, tee: o.tee,
-    eu_hosted: o.eu_hosted, non_us: o.non_us,
+    eu_hosted: o.eu_hosted, eu_policy_equivalent: o.eu_policy_equivalent, non_us: o.non_us,
   });
   for (const m of ds.models) {
     const exact = (m.offers || []).filter((offer) => offer.unit === "per_1m_token").map(toClientOffer);
@@ -112,6 +113,7 @@ export function clientData(ds: Dataset): ClientData {
     const seen = familyOfferKeys.get(m.family_key)!;
     for (const offer of exact) {
       const signature = [offer.key, offer.region, offer.tee ? 1 : 0, offer.eu_hosted ? 1 : 0,
+        offer.eu_policy_equivalent ? 1 : 0,
         offer.input_per_1m, offer.output_per_1m, offer.cache_read_per_1m, offer.cache_write_per_1m,
         offer.or_model_id || "", offer.or_canonical_slug || "", offer.or_hugging_face_id || "", offer.endpoint_tag || "",
         offer.pricing_tier || "", offer.route_type || ""].join("::");

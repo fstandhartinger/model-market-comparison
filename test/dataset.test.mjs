@@ -158,7 +158,39 @@ test("EU residency is specific to the model offer, not inherited from the provid
   assert.equal(offer("deepseek-v4-pro", "TensorX")?.eu_hosted, true);
   assert.equal(offer("deepseek-v4-pro", "Nebius")?.eu_hosted, false, "Nebius serves V4 Pro from the UK");
   assert.equal(offer("deepseek-v4-flash", "NextBit")?.eu_hosted, true);
-  assert.equal(offer("kimi-k2.7-code", "Azure AI Foundry")?.eu_hosted, false);
+  assert.equal(offer("kimi-k2.7-code", "Azure AI Foundry")?.eu_hosted, false, "policy equivalence must not falsify technical residency");
+});
+
+test("only the two approved Azure Direct Global offers receive the EU policy equivalence", () => {
+  const azure = ds.models.flatMap((model) => model.offers
+    .filter((offer) => offer.provider === "Azure AI Foundry")
+    .map((offer) => ({ family: model.family_key, offer })));
+  const equivalent = azure.filter(({ offer }) => offer.eu_policy_equivalent === true);
+
+  assert.deepEqual(
+    [...new Set(equivalent.map(({ family }) => family))].sort(),
+    ["deepseek-v4-pro", "kimi-k2.7-code"],
+  );
+  assert.ok(equivalent.length > 0);
+  for (const { offer } of equivalent) {
+    assert.equal(offer.region, "global");
+    assert.equal(offer.eu_hosted, false);
+    assert.equal(offer.route_type, "azure_direct");
+    assert.match(offer.notes, /inference may occur outside the EU/i);
+    assert.match(offer.notes, /not a technical EU data-residency guarantee/i);
+  }
+
+  const fireworks = azure.filter(({ offer }) => offer.route_type === "fireworks");
+  assert.ok(fireworks.length > 0);
+  assert.ok(fireworks.every(({ offer }) => offer.region === "us"));
+  assert.ok(fireworks.every(({ offer }) => offer.eu_hosted === false));
+  assert.ok(fireworks.every(({ offer }) => offer.eu_policy_equivalent !== true));
+
+  for (const family of ["glm-5.2", "minimax-m2.7", "kimi-k2.5-thinking", "kimi-k2.6-thinking"]) {
+    const rows = azure.filter((row) => row.family === family);
+    assert.ok(rows.length > 0, `${family} has an Azure control route`);
+    assert.ok(rows.every(({ offer }) => offer.eu_policy_equivalent !== true), family);
+  }
 });
 
 test("global and EU routes from one provider are both retained", () => {
@@ -200,7 +232,7 @@ test("context-price tiers and distinct managed routes survive dataset deduplicat
 
   const deepSeek = ds.models.find((model) => model.family_key === "deepseek-v4-pro")?.offers
     .filter((offer) => offer.provider === "Azure AI Foundry") || [];
-  assert.ok(deepSeek.some((offer) => offer.route_type == null && offer.region === "global"));
+  assert.ok(deepSeek.some((offer) => offer.route_type === "azure_direct" && offer.region === "global"));
   assert.ok(deepSeek.some((offer) => offer.route_type === "fireworks" && offer.region === "us"));
 });
 

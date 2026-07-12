@@ -49,6 +49,7 @@ export interface Offer {
   route_type?: string | null;
   tee?: boolean; // runs in a Trusted Execution Environment (confidential compute)
   eu_hosted?: boolean; // this specific offer/model is served from an EU region
+  eu_policy_equivalent?: boolean; // company-approved EU-filter equivalent; not a technical residency guarantee
   non_us?: boolean; // provider company is not US-based (copied from provider metadata)
 }
 

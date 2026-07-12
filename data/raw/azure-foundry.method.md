@@ -42,6 +42,16 @@ Fireworks documents only US deployment regions and explicitly excludes its infer
 EU Data Boundary, so every Fireworks row is stored as `region=us, eu_hosted=false`. Only verified
 Europe Data Zone or regional deployments are represented as EU-hosted offer rows.
 
+### Company policy overlay (2026-07-12)
+
+The application applies one narrowly scoped legal/business classification on top of those technical
+hosting facts. The native Azure Direct Global offers for **DeepSeek V4 Pro** and **Kimi K2.7 Code**
+carry `eu_policy_equivalent=true`, so they pass the product&apos;s EU filter. They deliberately remain
+`region=global` and `eu_hosted=false`: Global inference may occur outside the EU, and this policy flag
+is not an EU Data Boundary or technical data-residency guarantee. It must not be copied to other Azure
+Global offers. The separate Fireworks routes for both families remain `region=us`, `eu_hosted=false`,
+and have no policy-equivalence flag.
+
 GPT-5.6 Sol, Terra, and Luna are visible in the current Azure availability documentation, but the
 Retail Prices API still exposes no standard token meters for them. They are intentionally retained
 as unpriced Global and EU Data Zone rows (`null` input/output) rather than populated with
@@ -133,7 +143,8 @@ Unit is in `unitOfMeasure`: `1M` (already per-million) or `1K` (multiply by 1000
 
 ### Tier choice for this dataset
 Deployment tiers are separate offers. Global list-price rows use `region=global` and do
-not qualify as EU-hosted. A Data Zone meter becomes an `region=eu` row only when the
+not qualify as technically EU-hosted. The two company-policy equivalents documented above qualify
+only for the application filter via their separate flag. A Data Zone meter becomes an `region=eu` row only when the
 current model availability documentation confirms Europe Data Zone deployment. Regional
 meters retain their real Azure region. Fireworks rows always use `region=us` and
 `eu_hosted=false`. Cached (`cd`/`cchd`), batch, and PP/priority meters are excluded from
@@ -164,7 +175,8 @@ the primary input/output values; useful cache prices may be retained in notes.
   EU inference.
 - Native Azure Kimi has DZ Retail meters, but the current Europe Data Zone availability
   table does not yet list those Kimi deployments. The prices are documented in notes,
-  while the offers remain non-EU until Microsoft documents deployment availability.
+  while the offers remain technically non-EU until Microsoft documents deployment availability.
+  Kimi K2.7 Code&apos;s Azure Direct Global row is nevertheless eligible under the separate company-policy overlay.
 - The same conservative rule applies to current Grok, DeepSeek, and Cohere Command A Plus
   DZ meters: the Europe Data Zone table does not list these deployments as of 2026-07-12.
   They remain Global rows; a billing meter alone is not evidence of EU processing.
@@ -194,7 +206,8 @@ Things to watch for on the next refresh:
 
 ## 6. EU versus Global versus Fireworks
 Azure **Global** list prices can be replicated across EU resource regions without gaining
-data residency; these rows remain `global`. Verified **Europe Data Zone** offers carry a
+data residency; these rows remain `global`. DeepSeek V4 Pro and Kimi K2.7 Code Azure Direct
+are the only company-approved EU-filter equivalents, but remain technically Global. Verified **Europe Data Zone** offers carry a
 residency premium and are separate `eu` rows. **Fireworks** is a partner backend with US-only
 deployment and an explicit EU Data Boundary exclusion, so its `DZ`-named Retail meters are
 never treated as EU-hosted. Phi remains a genuine regional `swedencentral` offer.

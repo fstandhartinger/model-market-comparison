@@ -46,7 +46,7 @@ export function ModelDetailOffers({
               {top.map((offer, index) => (
                 <tr key={offer.key}>
                   <td className="px-2 py-1 text-gray-500">{index + 1}</td>
-                  <td className="px-2 py-1">{offer.provider}{offer.estimated && <span className="ml-1 text-[10px] text-warn">est.</span>}</td>
+                  <td className="px-2 py-1">{offer.provider}{offer.estimated && <span className="ml-1 text-[10px] text-warn">est.</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; this Global deployment may process inference outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}</td>
                   <td className="px-2 py-1 text-gray-400">{offer.platform}</td>
                   <td className="px-2 py-1 text-right tabular">{usdPerM(offer.input_per_1m)}</td>
                   <td className="px-2 py-1 text-right tabular">{usdPerM(offer.output_per_1m)}</td>
@@ -77,7 +77,7 @@ export function ModelDetailOffers({
               {platformOffers.map((offer) => (
                 <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")}>
                   <td className="px-2 py-1">{offer.provider}</td>
-                  <td className="px-2 py-1 text-xs text-gray-500">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
+                  <td className="px-2 py-1 text-xs text-gray-500">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="px-2 py-1 text-right tabular">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> in</span></td>
                   <td className="px-2 py-1 text-right tabular">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> out</span></td>
                   <td className="px-2 py-1 text-right tabular font-semibold">{usdPerM(offer.blended)}</td>

@@ -65,7 +65,7 @@ export default async function EuPage() {
         </p>
       </section>
 
-      <h2 className="mt-6 mb-2 text-lg font-semibold">✅ EU-hosted providers that serve the SOTA models</h2>
+      <h2 className="mt-6 mb-2 text-lg font-semibold">✅ EU-hosted and company-approved equivalent offers for SOTA models</h2>
       <EuSotaTable data={data} entries={SOTA} />
       <p className="mt-2 text-xs text-gray-500">
         <b className="text-accent2">TensorX</b> (Ireland; 3 EU data-centre regions, 100% EU-sovereign / isolated from US
@@ -75,13 +75,15 @@ export default async function EuPage() {
         Kimi K2.6/K2.7 Code and MiniMax M2.5 from the EU. <b className="text-accent2">Scaleway</b> now also serves GLM 5.2
         from Paris. <b className="text-accent2">Nebius</b> (Netherlands; Finland/France; ZDR + no-training) lists GLM 5.1/5.2,
         Kimi K2.6/K2.7 Code, DeepSeek V4 Pro and MiniMax M2.5/M3 — but <b>serves several of them from
-        US/UK regions</b>, so its only SOTA model currently running in an EU region is <b>GLM 5.1</b>. The table lists a
-        provider for a model <b>only where that specific model runs in-EU</b> — a provider being EU-capable in general
-        isn&apos;t enough. ⚠️ Azure&apos;s GLM/MiniMax are <b>Fireworks-hosted and excluded from the EU Data Boundary</b>
-        {" "}(US-served), so Azure is not a true EU route for those. Azure&apos;s direct Kimi catalog currently documents
-        global/Data-Zone availability but not a model-specific EU inference location clearly enough to count it as
-        EU-hosted here. Thanks to TensorX, <b>Kimi K2.7 Code and MiniMax M3 now have a
-        managed EU host</b>; <b>NextBit</b> additionally serves DeepSeek V4 Flash from Spain. MiniMax M2.7 and Xiaomi
+        US/UK regions</b>, so its only SOTA model currently running in an EU region is <b>GLM 5.1</b>. The table normally
+        lists a provider only where that specific model runs in-EU — a provider being EU-capable in general isn&apos;t
+        enough. There are exactly two deliberate company-policy exceptions: the native <b>Azure Direct Global</b>
+        offers for <b>DeepSeek V4 Pro</b> and <b>Kimi K2.7 Code</b> are included as company-approved EU-hosted
+        equivalents. This is a legal/business classification for this application, <b>not a technical EU-residency
+        guarantee</b>; those Global deployments may process inference outside the EU. ⚠️ Azure&apos;s Fireworks-hosted
+        alternatives, including GLM/MiniMax, remain <b>US-served and excluded from the EU Data Boundary</b>. Thanks to
+        TensorX, <b>Kimi K2.7 Code and MiniMax M3 also have a genuinely EU-hosted
+        managed route</b>; <b>NextBit</b> additionally serves DeepSeek V4 Flash from Spain. MiniMax M2.7 and Xiaomi
         MiMo-V2.5-Pro still have no managed EU route.
       </p>
 
@@ -151,14 +153,14 @@ export default async function EuPage() {
       <h2 className="mt-6 mb-2 text-lg font-semibold">Hyperscaler EU regions &amp; confidentiality</h2>
       <ul className="space-y-1.5 text-sm text-gray-300">
         <li>• <b>AWS Bedrock</b> (EU Geo profile) — strongest turnkey EU posture: EU cross-region inference + zero-data-retention by default. Western open models only (Llama/Mistral/DeepSeek V3.2/Nova/gpt-oss).</li>
-        <li>• <b>Azure AI Foundry</b> EU Data Zone — use only model offers that explicitly document EU inference residency; Fireworks-hosted GLM/MiniMax are <b>outside</b> the EU boundary, and the direct Kimi catalog is treated conservatively until model-specific EU serving is confirmed.</li>
+        <li>• <b>Azure AI Foundry</b> EU Data Zone — documented EU routes remain the technical residency standard. Separately, this company treats only the native Azure Direct Global offers for <b>DeepSeek V4 Pro</b> and <b>Kimi K2.7 Code</b> as EU-hosted equivalents for filtering; inference may still occur outside the EU. Fireworks-hosted alternatives remain <b>outside</b> the EU boundary.</li>
         <li>• <b>Google Vertex AI</b> europe-west / EU multi-region — Model-Garden open models (Llama/Gemma/DeepSeek V3.2); never use the global endpoint.</li>
         <li>• <b>Confidentiality (TEE)</b> for GLM/Kimi/MiniMax: <b>Chutes</b> (Intel TDX + NVIDIA CC, 13 TEE models) gives confidentiality but no EU pinning; <b>Privatemode</b> (Edgeless Systems, Germany) is EU-pinned + confidential but narrow.</li>
         <li>• <b>&ldquo;EU available&rdquo; but dedicated/enterprise only — not self-serve serverless</b> (so excluded as price sources): <b>Together AI</b> (Sweden GPU clusters / dedicated endpoints, Sep 2025), <b>Fireworks</b> (Frankfurt/Iceland dedicated/BYOC), <b>Cloudflare</b> (Data Localization Suite, Enterprise add-on), <b>AtlasCloud</b> (eu-west dedicated). Their public per-token APIs have no EU region selector and run from US capacity. <b>DigitalOcean</b> has EU serverless on its roadmap only. All are US-HQ (CLOUD Act).</li>
       </ul>
 
       <p className="mt-6 text-xs text-gray-500">
-        Use the global <b>&ldquo;EU-hosted only&rdquo;</b> and <b>&ldquo;Non-US provider only&rdquo;</b> filters (top bar) to
+        Use the global <b>&ldquo;EU-hosted / approved equivalent only&rdquo;</b> and <b>&ldquo;Non-US provider only&rdquo;</b> filters (top bar) to
         restrict the interactive comparison views and linked model details to matching offers. Full research with sources lives in
         {" "}<code>data/research/</code> in the repository.
       </p>

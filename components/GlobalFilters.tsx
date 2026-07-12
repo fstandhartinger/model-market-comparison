@@ -18,7 +18,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
         <Toggle label="Featured" on={s.featured} set={s.setFeatured} />
         <Toggle label="Hide deprecated" on={s.hideDeprecated} set={s.setHideDeprecated} />
         <Toggle label="Exclude Chinese providers" on={s.excludeChinese} set={s.setExcludeChinese} />
-        <Toggle label="EU-hosted only" on={s.euHostedOnly} set={s.setEuHostedOnly} />
+        <Toggle label="EU-hosted / approved equivalent only" on={s.euHostedOnly} set={s.setEuHostedOnly} />
         <Toggle label="Non-US provider only" on={s.nonUsOnly} set={s.setNonUsOnly} />
         <Toggle label="Open-weights only" on={s.openOnly} set={s.setOpenOnly} />
         <Toggle label="TEE / confidential only" on={s.teeOnly} set={s.setTeeOnly} />

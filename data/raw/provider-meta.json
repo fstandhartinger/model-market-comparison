@@ -1,7 +1,7 @@
 {
   "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata (refreshed 2026-07-12)",
   "collected_at": "2026-07-12",
-  "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global 'EU hosted' and 'Non-US provider' filters. Keyed by exact provider NAME. OpenRouter aliases do not inherit region guarantees from similarly named first-party catalogs: for example Amazon Bedrock and Azure remain non-EU unless their route itself proves an EU region. hyperscaler=true marks the big-cloud managed catalogs/routes.",
+  "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). Offer-level eu_policy_equivalent is a separate company-specific filter classification and is not technical residency. non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global EU and Non-US filters. Keyed by exact provider NAME. OpenRouter aliases do not inherit region guarantees from similarly named first-party catalogs. hyperscaler=true marks the big-cloud managed catalogs/routes.",
   "providers": {
     "AWS Bedrock": {
       "country": "US",
@@ -16,7 +16,7 @@
       "eu_hosted": true,
       "non_us": false,
       "url": "https://azure.microsoft.com/en-us/products/ai-foundry",
-      "note": "EU Data Boundary / EU Data Zone. NOTE: Fireworks-hosted models (Kimi/GLM/MiniMax) are excluded from the EU boundary (US-served).",
+      "note": "EU Data Boundary / EU Data Zone. Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code are company-approved EU-filter equivalents, not technical residency guarantees; inference may occur outside the EU. Fireworks-hosted alternatives remain excluded from the EU boundary (US-served).",
       "hyperscaler": true
     },
     "Google Vertex AI": {

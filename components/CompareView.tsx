@@ -176,7 +176,7 @@ function ProviderMini({ slot, model, data, offerScope }: { slot: string; model?:
             <tbody>
               {offers.map((o, idx) => (
                 <tr key={o.key + idx}>
-                  <td className="px-2 py-1 truncate text-xs">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform}</span></td>
+                  <td className="px-2 py-1 truncate text-xs">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform}</span>{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU equivalent</span>}</td>
                   <td className="px-2 py-1"><DataBar frac={o.blended / max} color={idx === 0 ? "#7ee0c0" : "#8a93a3"} align="right"><span className="block text-right font-semibold">{usdPerM(o.blended)}</span></DataBar></td>
                 </tr>
               ))}

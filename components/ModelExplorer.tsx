@@ -143,7 +143,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                 <td className="px-3 py-2">{cost != null ? <DataBar frac={cost / maxCostVal} color="#7ee0c0" align="right"><span className="block text-right">{usdPerM(cost)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2 text-right tabular text-gray-400">{ncheap || "—"}</td>
                 <td className="px-3 py-2 truncate text-xs text-gray-400">
-                  {cheap.map((o, i) => <span key={i} className="mr-2 whitespace-nowrap">{o.provider}{o.platform !== o.provider ? <span className="text-gray-600">/{o.platform}</span> : null} <span className="text-gray-500">{usdPerM(o.blended)}</span></span>)}
+                  {cheap.map((o, i) => <span key={i} className="mr-2 whitespace-nowrap">{o.provider}{o.platform !== o.provider ? <span className="text-gray-600">/{o.platform}</span> : null} <span className="text-gray-500">{usdPerM(o.blended)}</span>{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}</span>)}
                   {ncheap > 0 && cheap.length === 0 && <span className="text-gray-600">price not public</span>}
                   {ncheap === 0 && <span className="text-gray-600">no catalog offer</span>}
                 </td>
@@ -191,6 +191,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                                   <td className="py-1 pr-2 font-medium">{o.provider}
                                     {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
                                     {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
+                                    {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}
                                     {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
                                     <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
                                   </td>

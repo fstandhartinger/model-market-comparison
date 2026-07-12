@@ -2,7 +2,7 @@
   "source": "Azure AI Foundry",
   "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
   "collected_at": "2026-07-12",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the 2026-07-09 model-retirement schedule plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not EU-resident; only documented Europe Data Zone or regional offers use an EU region. Retired models are excluded even when stale Retail meters remain. Active GPT-5.6 Luna/Sol/Terra Global and EU routes are retained with null prices because no public Azure standard token meters exist yet. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded.",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the 2026-07-09 model-retirement schedule plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. Active GPT-5.6 Luna/Sol/Terra Global and EU routes are retained with null prices because no public Azure standard token meters exist yet. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded.",
   "models": [
     {
       "model_name": "GPT-5",
@@ -309,7 +309,10 @@
       "input_per_1m_usd": 1.74,
       "output_per_1m_usd": 3.48,
       "region": "global",
-      "notes": "Global"
+      "route_type": "azure_direct",
+      "eu_hosted": false,
+      "eu_policy_equivalent": true,
+      "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee."
     },
     {
       "model_name": "DeepSeek-V4 Flash",
@@ -730,7 +733,8 @@
       "output_per_1m_usd": 4.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M."
+      "eu_policy_equivalent": true,
+      "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M."
     },
     {
       "model_name": "Kimi K2.6 Thinking (Fireworks)",

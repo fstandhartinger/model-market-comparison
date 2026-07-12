@@ -19,7 +19,7 @@ USD per 1M tokens.
 - **Global filter bar** (applies across every interactive comparison and linked model
   detail, persisted): selectable **score**,
   min-score, **One variant for Reasoning models** (collapse GPT/Claude/GLM/Kimi to one),
-  **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted only**, **Non-US provider only**,
+  **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted / approved equivalent only**, **Non-US provider only**,
   **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
   provider- and model-checklist filters.
 - **Selectable scores**: **Composite** (five percentile slots with model-mean imputation, 0–100, default), ArtificialAnalysis
@@ -45,7 +45,9 @@ USD per 1M tokens.
 - **EU & Sovereign** — which providers are EU-hosted/sovereign and which SOTA models they
   actually serve (incl. TEE/confidentiality notes + a separate dedicated/BYOC-only list).
   Interactive EU filtering requires evidence on the exact model offer; provider-level
-  dedicated/BYOC capability alone never turns a global route into an EU-hosted one.
+  dedicated/BYOC capability alone never turns a global route into an EU-hosted one. The
+  only policy exceptions are Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code:
+  they qualify as company-approved equivalents without being relabeled as technically EU-resident.
 - **Public read-only JSON API** (CORS-enabled) — `/api/dataset` (full export),
   `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`. See [API.md](API.md).
 
@@ -95,7 +97,10 @@ A [`render.yaml`](render.yaml) Blueprint and a [`Dockerfile`](Dockerfile) are in
 
 10:1 blended cost = `(10·input + 1·output) / 11` per 1M tokens. EU residency is
 audited per offer/model/region; an EU-capable provider does not make its US or global
-routes EU-hosted. The Composite uses five capability slots: AA Coding,
+routes EU-hosted. Separately, `eu_policy_equivalent` admits only Azure Direct Global
+DeepSeek V4 Pro and Kimi K2.7 Code to the EU filter under this company&apos;s legal/business
+classification; inference may occur outside the EU and the flag is not a technical residency
+guarantee. The Composite uses five capability slots: AA Coding,
 source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena
 Full-Stack. AA values are clamped to 0–100. A DesignArena board qualifies with at least
 500 battles and its Elo is converted to the expected score against a fixed Elo 1000

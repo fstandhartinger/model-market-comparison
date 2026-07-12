@@ -9,7 +9,7 @@ interface SettingsState {
   featured: boolean;
   hideDeprecated: boolean; // hide benchmark-source rows marked deprecated (on by default)
   excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
-  euHostedOnly: boolean;    // only providers that serve from EU data centers
+  euHostedOnly: boolean;    // only exact offers hosted in the EU or explicitly policy-equivalent
   nonUsOnly: boolean;       // only providers whose company is not US-based
   hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
   hideFable: boolean;       // hide Claude Fable (on by default)
@@ -43,7 +43,7 @@ const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
-// silently excluded — and with "EU-hosted only" on, models whose only EU route is a new
+// silently excluded — and with the EU eligibility filter on, models whose only matching route is a new
 // provider vanished. A blocklist includes future providers by default. Bumping v2→v3
 // discards the old (inclusion-shaped) persisted `providers` array.
 const KEY = "mmc.settings.v4";

@@ -147,7 +147,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
           <label className="flex cursor-pointer items-center gap-1 text-gray-400">
             <input type="checkbox" checked={effectiveEuOnly} disabled={s.euHostedOnly} onChange={(e) => setEuOnly(e.target.checked)} className="accent-emerald-500" />
-            EU-hosted only
+            EU-hosted / approved equivalent only
           </label>
           <label className="flex cursor-pointer items-center gap-1 text-gray-400">
             <input type="checkbox" checked={showEmpty} onChange={(e) => setShowEmpty(e.target.checked)} className="accent-accent" />
@@ -215,7 +215,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                     <tr className="cursor-pointer hover:bg-white/5" onClick={() => toggle(r.modelId)}>
                       <td className="px-3 py-2"><span className="font-medium">{r.name}</span> <span className="text-[11px] text-gray-500">{r.org}</span></td>
                       <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(s.score.startsWith("designarena") ? 0 : 1) ?? "—"}</td>
-                      <td className="px-3 py-2 tabular">{fmt(r.mine.input_per_1m)} / {fmt(r.mine.output_per_1m)} / <b>{fmt(blended(r.mine))}</b>{r.mine.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}</td>
+                      <td className="px-3 py-2 tabular">{fmt(r.mine.input_per_1m)} / {fmt(r.mine.output_per_1m)} / <b>{fmt(blended(r.mine))}</b>{r.mine.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}{r.mine.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}</td>
                       <td className="px-3 py-2 text-xs">{r.rank >= 0 ? <span className={cheapest ? "text-emerald-300" : "text-gray-300"}>#{r.rank + 1}{cheapest ? " · cheapest" : ""}</span> : "—"}</td>
                       <td className="px-3 py-2 text-xs text-gray-500">{isOpen ? "▾ hide" : `▸ compare ${r.ranked.length}`}</td>
                     </tr>
@@ -233,7 +233,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                                   <td className="px-2 py-1 tabular text-right">{fmt(o.input_per_1m)} in</td>
                                   <td className="px-2 py-1 tabular text-right">{fmt(o.output_per_1m)} out</td>
                                   <td className="px-2 py-1 tabular text-right font-semibold">{fmt(blended(o))} blended</td>
-                                  <td className="px-2 py-1">{o.tee && <span className="rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}{o.key === activeKey && <span className="ml-1 text-[10px] text-accent">← selected</span>}</td>
+                                  <td className="px-2 py-1">{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}{o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}{o.key === activeKey && <span className="ml-1 text-[10px] text-accent">← selected</span>}</td>
                                 </tr>
                               ))}
                             </tbody>

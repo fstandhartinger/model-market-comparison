@@ -605,8 +605,9 @@ async function build() {
       source: "Azure AI Foundry", provider: "Azure AI Foundry", platform: "Azure AI Foundry",
       input_per_1m: num(m.input_per_1m_usd), output_per_1m: num(m.output_per_1m_usd),
       region: m.region || "swedencentral", unit: "per_1m_token", notes: m.notes || "",
-      pricing_tier: pricingTier(m.model_name), route_type: routeType(m.model_name),
+      pricing_tier: pricingTier(m.model_name), route_type: m.route_type || routeType(m.model_name),
       eu_hosted: typeof m.eu_hosted === "boolean" ? m.eu_hosted : undefined,
+      eu_policy_equivalent: m.eu_policy_equivalent === true || undefined,
     });
   }
 
@@ -862,7 +863,7 @@ async function build() {
       // e.g. Qwen Instruct and Thinking have different prices under one family.
       const route = offer.or_model_id ? `::or=${stableOpenRouterId(offer.or_model_id)}` : "";
       const sku = [offer.endpoint_tag, offer.pricing_tier, offer.route_type].filter(Boolean).join("/");
-      const scope = `${offer.platform}::${offer.provider}::eu=${offer.eu_hosted ? 1 : 0}::tee=${offer.tee ? 1 : 0}${route}::sku=${sku}`;
+      const scope = `${offer.platform}::${offer.provider}::eu=${offer.eu_hosted ? 1 : 0}::eu-policy=${offer.eu_policy_equivalent ? 1 : 0}::tee=${offer.tee ? 1 : 0}${route}::sku=${sku}`;
       const previous = bestByProviderScope.get(scope);
       if (!previous || endpointHealth(offer) < endpointHealth(previous)
           || (endpointHealth(offer) === endpointHealth(previous) && blendOf(offer) < blendOf(previous))) {

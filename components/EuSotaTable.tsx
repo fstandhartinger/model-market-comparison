@@ -30,8 +30,8 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
   }, [candidates, preferredIds]);
 
   // This page is EU-specific even when the global EU toggle is off. Every other
-  // provider/model restriction still composes with that mandatory exact-offer
-  // residency check.
+  // provider/model restriction still composes with the mandatory exact-offer
+  // residency or explicit company-policy equivalence check.
   const offerScope = useMemo(
     () => createOfferScope(
       s.excludedSet,
@@ -78,7 +78,7 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
         <table className="dtable w-full min-w-[720px] text-sm">
           <thead><tr>
             <th className="px-3 py-2 text-left text-xs text-gray-400">Model</th>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">EU-hosted offers (10:1 blended $/1M)</th>
+            <th className="px-3 py-2 text-left text-xs text-gray-400">EU-hosted / approved-equivalent offers (10:1 blended $/1M)</th>
           </tr></thead>
           <tbody>
             {rows.map(({ entry, model, offers }) => (
@@ -94,10 +94,11 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
                         <b>{offer.provider}</b>
                         {offer.platform !== offer.provider && <span className="text-[10px] text-gray-500">/{offer.platform}</span>}
                         {" "}<span className="text-gray-400">{price == null ? "price not public" : usdPerM(price)}</span>
+                        {offer.eu_policy_equivalent && <span title="Company-approved equivalent; this Global deployment may process inference outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}
                         {offer.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}
                       </span>
                     );
-                  }) : <span className="text-warn/90">no EU-hosted route within the active global filters — self-host the open weights in an EU region</span>}
+                  }) : <span className="text-warn/90">no EU-hosted or approved-equivalent route within the active global filters — self-host the open weights in an EU region</span>}
                 </td>
               </tr>
             ))}

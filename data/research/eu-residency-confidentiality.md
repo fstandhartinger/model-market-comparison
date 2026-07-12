@@ -126,21 +126,25 @@ Beyond the hyperscalers and TEE providers, an **EU-native provider layer** matte
 
 ### Per-model-family EU-options summary
 
-Legend: **Hyperscaler-EU** = AWS Bedrock EU Geo / Azure EUDB / Vertex EU (residency guaranteed). **EU-native** = OVHcloud / Scaleway / EUrouter (GDPR + EU DC, often ZDR). **TEE** = confidential compute (Chutes/Phala/Tinfoil/Privatemode etc.; EU-pinning only where noted). **Self-deploy** = open weights on your own EU GPU endpoint (always possible if weights are open).
+Legend: **Hyperscaler-EU** = AWS Bedrock EU Geo / Azure EUDB / Vertex EU (residency guaranteed). **EU-native** = TensorX / Inceptron / OVHcloud / Scaleway / EUrouter (GDPR + EU DC, often ZDR). **TEE** = confidential compute (Chutes/Phala/Tinfoil/Privatemode etc.; EU-pinning only where noted). **Self-deploy** = open weights on your own EU GPU endpoint (always possible if weights are open).
+
+> **Application policy overlay (2026-07-12):** Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code
+> are included in this company&apos;s EU filter as legal/business equivalents. Both remain technically Global,
+> may process inference outside the EU, and are not residency-guaranteed. Fireworks alternatives remain excluded.
 
 | Model family | Hyperscaler-EU (residency-guaranteed) | EU-native providers | Confidential / TEE | Realistic EU verdict |
 |---|---|---|---|---|
 | **Llama 4 / Llama 3.x** | Azure (EUDB, incl. Llama 4), Bedrock EU, Vertex EU MaaS | OVHcloud (3.3 70B), Scaleway | Tinfoil, Atoma, NEAR, Chutes (3.x via Nemo), Privatemode (3.3) | **Many EU options** — easiest family |
 | **Mistral / Mixtral** | Azure (EUDB), Bedrock EU, Vertex EU (europe-west4) | OVHcloud, Scaleway | Chutes (Mistral-Nemo-TEE), Opaque | **Many EU options** (Mistral is EU-origin) |
 | **Qwen3 / Qwen3.5 / Qwen3.6** | Vertex Model Garden (self-deploy; EU MaaS UNKNOWN) | **OVHcloud, Scaleway** (broad Qwen) | Chutes (multiple Qwen-TEE), Phala, NEAR | **Many EU options** — strong via OVH/Scaleway |
-| **DeepSeek V4 / V3.2 / R1** | Azure (EUDB: R1/V3), Bedrock (R1, EU UNKNOWN), Vertex (Model Garden) | Scaleway (DeepSeek) | Chutes (V3.2-TEE), Tinfoil (R1/V4), Atoma (R1 671B) | **Several EU options** (Azure EUDB strongest) |
+| **DeepSeek V4 / V3.2 / R1** | Azure EUDB for documented R1/V3 routes; V4 Pro Azure Direct Global is a company-policy equivalent, not residency-guaranteed. Bedrock (R1, EU UNKNOWN), Vertex (Model Garden) | **TensorX (V4 Pro)**, Scaleway (other DeepSeek) | Chutes (V3.2-TEE), Tinfoil (R1/V4), Atoma (R1 671B) | **Several EU options**; V4 Pro has a genuine TensorX EU route, while Azure Global is policy-only |
 | **gpt-oss-120b / 20b** | **Azure (EUDB)**, Vertex (open) | **OVHcloud, Scaleway** | Tinfoil, Privatemode, Phala, Secret | **Many EU options** |
-| **GLM 5.1 / 5.2 / 5** | Azure **only via Fireworks → EXCLUDED from EU**; not on Bedrock/Vertex EU | Not in OVH/Scaleway catalog yet | **Chutes (GLM-5/5.1/5.2-TEE)**, Phala (4.7/5/5.1), Privatemode (no), Tinfoil (5.1) | **Limited** — TEE (Chutes/Phala/Tinfoil) or self-deploy; no hyperscaler-EU. MIT license → self-host friendly |
-| **Kimi K2.5 / K2.6 / K2.7** | Azure **only via Fireworks → EXCLUDED from EU** | Not yet (OVH roadmap request for K2.5) | **Chutes (K2.5/K2.6-TEE)**, Phala, Tinfoil, Privatemode (K2.6) | **Limited** — TEE or self-deploy; **Privatemode (DE) is the EU-pinned TEE route for K2.6**. K2.7 not yet seen in TEE catalogs |
-| **MiniMax M2.5 / M2.7 / M3** | Azure Fireworks (marketing only, unconfirmed) → EXCLUDED | Not found | **Chutes (M2.5-TEE)**, Phala (M2.5) | **Very limited** — TEE only (M2.5); M2.7/M3 not found in EU/TEE routes; self-deploy |
+| **GLM 5.1 / 5.2 / 5** | Azure Fireworks → excluded; not on Bedrock/Vertex EU | **TensorX (5.1/5.2), Inceptron/Scaleway/T-Systems (5.2), Nebius (5.1)** | **Chutes (GLM-5/5.1/5.2-TEE)**, Phala (4.7/5/5.1), Tinfoil (5.1) | **Several managed EU routes**; Azure Fireworks still does not qualify |
+| **Kimi K2.5 / K2.6 / K2.7** | Azure Fireworks is excluded. K2.7 also has an Azure Direct Global route that is a company-policy equivalent, not residency-guaranteed | **TensorX and Inceptron (K2.6/K2.7 Code)** | **Chutes (K2.5/K2.6-TEE)**, Phala, Tinfoil, Privatemode (K2.6) | **Managed EU routes exist** for K2.6/K2.7; K2.7 Azure eligibility remains policy-only |
+| **MiniMax M2.5 / M2.7 / M3** | AWS Bedrock EU carries M2.5; Azure Fireworks alternatives are excluded | **TensorX (M2.5/M3), Inceptron (M2.5)** | **Chutes (M2.5-TEE)**, Phala (M2.5) | M2.5/M3 have managed EU routes; M2.7 still requires self-deploy |
 | **MiMo-V2.5-Pro (Xiaomi)** | None found | None found | None found | **None found** — only Xiaomi's own platform + OpenRouter routing (non-EU). Self-deploy open weights is the only EU path |
 
-**Reading the table.** Western-origin open families (**Llama, Mistral, Qwen, gpt-oss, DeepSeek**) have genuine, residency-guaranteed EU routes via hyperscalers and/or EU-native sovereign clouds. The three Chinese "flagship-coder" families (**GLM, Kimi, MiniMax**) have **no hyperscaler-EU residency** — Azure carries them only through Fireworks, which Microsoft explicitly excludes from the EU Data Boundary — so the realistic EU paths are **confidential-compute TEE providers** (Chutes, Phala, Tinfoil, and the EU-pinned Privatemode for Kimi K2.6 / gpt-oss) or **self-hosting the open weights** in an EU region. **MiMo-V2.5-Pro** has no managed EU option at all today; self-deploy is the only EU-residency path.
+**Reading the table.** Western-origin open families (**Llama, Mistral, Qwen, gpt-oss, DeepSeek**) have genuine, residency-guaranteed EU routes via hyperscalers and/or EU-native sovereign clouds. Current GLM, Kimi and MiniMax releases now also have genuine managed EU routes through TensorX and Inceptron, with narrower coverage from Scaleway, T-Systems, Nebius and AWS. Fireworks-on-Azure remains excluded from the EU Data Boundary; the native Kimi K2.7 Direct Global offer is only a company-policy equivalent and does not change that geographic fact. **MiMo-V2.5-Pro** and MiniMax M2.7 still require self-deployment for EU residency.
 
 ---
 
@@ -148,15 +152,17 @@ Legend: **Hyperscaler-EU** = AWS Bedrock EU Geo / Azure EUDB / Vertex EU (reside
 
 - **Strongest EU-residency-guaranteed routes for Western open models (Llama/Mistral/Qwen/gpt-oss/DeepSeek):** AWS Bedrock EU Geo profile (default ZDR — best retention posture), Azure EU DataZone (EUDB, incl. Llama 4 / DeepSeek / gpt-oss), Google Vertex EU multi-region, and the SecNumCloud-certified **OVHcloud** + GDPR-ZDR **Scaleway** sovereign clouds.
 - **Strongest confidentiality routes for Chinese open models (GLM/Kimi/MiniMax):** TEE providers — our own **Chutes** (Intel TDX + NVIDIA CC, `…-TEE` models incl. GLM 5/5.1/5.2, Kimi K2.5/K2.6, MiniMax M2.5, DeepSeek V3.2, plus opt-in post-quantum E2EE), **Phala** (on OpenRouter), **Tinfoil**, and the **EU-pinned Privatemode** (Germany, GDPR+NIS2) which carries Kimi K2.6 + gpt-oss.
+- **Broadest managed EU residency for current Chinese frontier models:** **TensorX**, complemented by **Inceptron**. This is separate from TEE/confidentiality guarantees.
 - **The single cleanest EU-sovereign-and-confidential combo** for Chinese models is **Privatemode (Edgeless Systems, Germany)** — but its catalog is narrow.
 
 ## Key caveats
 
 1. **The "global routing" trap** breaks EU residency on every hyperscaler: AWS Global cross-region profile, Azure Global deployment type, Vertex global endpoint. Always select the explicit EU-bounded alternative.
 2. **Fireworks-on-Azure is a hard NO for EU residency** — explicitly excluded from the EU Data Boundary, serverless US-only. Kimi/GLM/MiniMax via Azure-Fireworks branding do **not** give EU residency.
+   The Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code company-policy equivalents are separate routes and likewise are not technical residency guarantees.
 3. **TEE-blindness ≠ EU residency.** Chutes and Phala give strong confidentiality but have **no documented EU data-center pinning** (UNKNOWN) — their miners/nodes can be anywhere. For *both* EU residency *and* confidentiality, use Privatemode (DE), Azure West Europe Confidential Inferencing, Vertex europe-west4 confidential GPU, or self-deploy in an EU TEE.
 4. **No retention vs no training vs TEE-blindness are independent.** Only AWS Bedrock offers ZDR *by default*; Azure needs Limited Access approval; TEE providers vary (Tinfoil/Privatemode/Atoma assert both, Chutes/NEAR are primarily TEE-blindness).
-5. **MiMo-V2.5-Pro** and **MiniMax M2.7/M3** currently have no managed EU/TEE route found — self-deploy only.
+5. **MiMo-V2.5-Pro** and **MiniMax M2.7** currently have no managed EU route in the app — self-deploy for EU residency. MiniMax M3 is served in-EU by TensorX.
 
 ## Sources
 

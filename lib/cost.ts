@@ -35,8 +35,11 @@ function isOfferScope(value: OfferSelection): value is OfferScope {
   return value != null && !(value instanceof Set);
 }
 
-/** Fallback for snapshots created before per-offer `eu_hosted` was added. */
+/** Whether an offer is eligible for the product's EU filter. Physical EU
+ * residency remains represented by `eu_hosted`; narrowly approved company
+ * policy equivalents use a separate flag so Global routes are not mislabeled. */
 export function isEuOffer(offer: ClientOffer): boolean {
+  if (offer.eu_policy_equivalent) return true;
   if (offer.eu_hosted != null) return offer.eu_hosted;
   if (/outside the eu data boundary|excluded from the eu data boundary|us-served|served region:\s*(us|uk)/i.test(offer.notes || "")) return false;
   const region = (offer.region || "").toLowerCase();

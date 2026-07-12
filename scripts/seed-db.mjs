@@ -81,6 +81,7 @@ async function main() {
     for (const m of ds.models) {
       for (const o of m.offers || []) {
         const signature = [m.family_key, o.platform, o.provider, o.region, o.eu_hosted,
+          o.eu_policy_equivalent,
           o.tee, o.input_per_1m, o.output_per_1m, o.or_model_id || "",
           o.endpoint_tag || "", o.pricing_tier || "", o.route_type || ""].join("::");
         if (seen.has(signature)) continue;
