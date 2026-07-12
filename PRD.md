@@ -28,7 +28,7 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
 | AWS Bedrock | On-demand token prices, EU regions | Price List API + page |
 | Azure AI Foundry | Token prices and per-model serving scope | Retail Prices API + model docs |
 | Google Vertex AI | Gemini and Model Garden partner-model prices/locations | Pricing + location docs |
-| Direct APIs | Nebius, Inceptron, TensorX, Scaleway, IONOS, Mistral, Chutes | Catalog/pricing APIs and docs |
+| Direct APIs | Nebius, Inceptron, TensorX, Scaleway, IONOS, Mistral, Chutes, OVHcloud, STACKIT, T-Systems LLM Hub | Catalog/pricing APIs and docs |
 | GitHub Copilot | Current AI-Credit token catalog + legacy Pro/Pro+ request multipliers | Billing/model docs |
 | Anthropic / Claude Code | All currently callable API models, promotions and Enterprise terms | Official pricing/lifecycle docs |
 
@@ -68,12 +68,15 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   model's cheapest such offer across all providers.
 - EU residency is determined per model offer and serving location. Provider capability,
   resource/billing region, or a global endpoint is not sufficient evidence of EU hosting.
-- The Composite normalizes four capability slots and fits pairwise shared-slot
-  differences into a least-squares rating graph with a fixed four-slot denominator.
-  Pairs without shared evidence create no edge; a missing slot contributes zero
-  difference and therefore cannot amplify the remaining scores. Coverage-subset
-  profiles that are identical on all shared slots are hard-tied before fitting.
-  DesignArena boards require at least 500 battles.
+- The Composite averages five equally weighted, fixed slots: AA Coding, exact-variant
+  AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack.
+  AA values are clamped to 0–100. DesignArena boards require at least 500 battles and
+  their Elo is converted to the expected score against a fixed Elo 1000 opponent.
+  Every missing slot contributes the neutral value 50 while the denominator remains
+  five; all five missing yields no Composite. A coverage-safe dominance adjustment
+  may raise only a leader that covers every observed slot of another model, is no
+  worse on any of them and is strictly better on at least one; it never lowers the
+  covered model.
 - Current GitHub Copilot billing uses published model token rates converted to AI
   Credits at $0.01/credit. The old `multiplier × $0.04` request calculation is shown
   separately and labeled legacy annual Pro/Pro+ only; neither is mixed into API-provider cost rankings.

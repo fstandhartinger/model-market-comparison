@@ -16,20 +16,29 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
       "org": "OpenAI",
       "variant": "high",               // reasoning effort / thinking setting (or "default")
       "open_weights": false,
+      "deprecated": false,             // authoritative AA lifecycle flag when present
       "release_date": "2026-…" | null,
+      "aa_metadata": {
+        "huggingface_url": "https://huggingface.co/…", // corrected identity used for joins
+        "source_huggingface_url": "https://huggingface.co/…", // only if upstream was wrong
+        "metadata_correction": "…"     // documented reason for that correction
+      },
       "featured": true,                // one of the brief's required models
       "has_benchmark": true,
       "has_pricing": true,
       "benchmarks": {                  // ArtificialAnalysis; null where unpublished
         "aa_intelligence_index": 0, "aa_coding_index": 0,
-        "aa_coding_agent_index": 0,    // exact model+variant MAX across its published harnesses
+        "aa_coding_agent_index": 0,    // exact model+variant median across published harnesses
         "aa_math_index": 0,
         "aa_livecodebench": 0, "aa_scicode": 0, "aa_terminalbench_hard": 0,
         "aa_tau2": 0, "aa_gpqa": 0, "aa_mmlu_pro": 0
       },
+      "coding_agent_results": [        // every exact harness result, never only the winner
+        { "harness": "Claude Code", "score": 57.9, "source_model_name": "GLM 5.2" }
+      ],
       "aa_reference_price": { "input_per_1m": 0, "output_per_1m": 0, "blended_3to1": 0 },
       "aa_speed": { "output_tps": 0, "ttft_s": 0 },
-      "designarena": {                 // family-level Elo, both leaderboards
+      "designarena": {                 // exact DA model id; never copied to effort siblings
         "frontend": { "elo": 0, "winRate": 0, "battles": 0, "modelId": "…" },
         "fullstack": { "elo": 0, "winRate": 0, "battles": 0, "modelId": "…" }
       },
@@ -45,13 +54,16 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
         "multiplier": 0,              // legacy annual Pro/Pro+ only
         "usd_per_request": 0, "notes": ""
       } | null,
-      "offers": [                      // family-level; shared by all variants
+      "offers": [                      // exact model/SKU; modes may have different routes
         {
           "source": "OpenRouter" | "AWS Bedrock" | "Azure AI Foundry" | "Google Vertex AI"
                   | "Nebius" | "Inceptron" | "Anthropic API / Claude Code",
           "provider": "Novita", "platform": "OpenRouter",
           "input_per_1m": 0.57, "output_per_1m": 2.3,
           "cache_read_per_1m": null, "cache_write_per_1m": null,
+          "pricing_tier": "short_context" | "long_context" | null,
+          "route_type": "azure_direct" | "fireworks" | null,
+          "endpoint_tag": "provider/tier" | null,
           "region": "global" | "eu-central-1" | "eu" | …,
           "unit": "per_1m_token",
           "estimated": false,            // true = hand-estimated price
@@ -74,32 +86,46 @@ Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
 
 ## Score keys (`ScoreKey`)
 
-`composite` (missing-neutral 0–100 graph rating fitted from shared normalized capability slots),
-`aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, best harness per model),
+`composite` (missing-neutral 0–100 average of five fixed capability slots),
+`aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, median harness result per exact model),
 `aa_intelligence_index`, `designarena_frontend`, `designarena_fullstack`.
 
 ## Normalization
 
 `build-dataset.mjs` reduces every source's model label to a canonical `family_key`
-(strip vendor prefix, drop parentheticals/dates/`-fast`/`-latest`, unify version
-dashes like `4-8`→`4.8`). Reasoning effort / thinking is captured separately as
-`variant`; effort detection is restricted to AA&apos;s parenthetical qualifiers so product
-names such as MiniMax, Mistral Medium and Qwen Max remain part of the family. Benchmarks are per-variant (ArtificialAnalysis publishes per setting);
-prices and DesignArena Elo are family-level and attached to every variant of the
-family. Coding Agent scores are matched to the exact `(family, variant)` and use the
-maximum only across that variant's harnesses; ambiguous effort labels stay unmatched.
-The Composite uses AA Coding, Coding Agent, Intelligence and a combined DesignArena
-slot (only boards with at least 500 battles). It fits pairwise differences from only
-the slots both models possess into a least-squares rating graph. The denominator is
-always the fixed four-slot budget, so a missing slot contributes zero difference;
-no-shared-evidence pairs create no edge. Identical coverage-subset profiles are
-hard-tied before fitting, preventing a sparse row from dodging an edge that affects
-its otherwise identical peer. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
+(strip the source vendor prefix and unify separators/version punctuation). Identity-bearing
+tokens such as release dates, Preview, Fast, Instruct, Thinking and Vision are retained.
+Only benchmark configuration / serving annotations are removed from the identity.
+Reasoning effort is captured separately as `variant`; product names such as MiniMax,
+Mistral Medium and Qwen Max remain part of the family. AA rows are preserved 1:1 and use
+the leaderboard's authoritative open-weight, license, lifecycle, context and exact-source
+metadata. Coding Agent results are matched to the exact `(family, variant)`, every harness
+row is retained, and the summary is the median across those harnesses.
+Two confirmed AA repository-link errors are corrected in the generated metadata while
+the original source URL and correction reason remain alongside them for auditability.
+
+Offers are model/SKU-specific. An AA row with an exact OpenRouter id receives only that
+route (with repository identity as a guarded fallback for stale aliases); distinct
+Instruct/Thinking, context-price tiers, endpoint tiers and managed-hosting routes remain
+separate. DesignArena results attach once to the exact/default row or a dedicated
+`::designarena` row, never to every reasoning-effort sibling.
+The Composite averages five equally weighted, fixed slots: AA Coding, exact-variant
+Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA
+values are clamped to 0–100. Each DesignArena board qualifies with at least 500 battles
+and its Elo is converted to the expected score against a fixed Elo 1000 opponent:
+`100 / (1 + 10^((1000 − Elo) / 400))`. A missing slot contributes the neutral value 50
+while the denominator remains five; all five missing yields `null`. A coverage-safe
+dominance adjustment may only raise a model to at least 0.1 above another model when it
+covers every observed slot of that model, is no worse on any and is strictly better on
+at least one. It never lowers the covered model. `FAMILY_ALIASES` merges split keys (e.g. `claude-fable` →
 `claude-fable-5`).
 
 ## In Postgres
 
 `scripts/seed-db.mjs` loads this file into three tables: `models` (one row per
-variant, full row JSON in `data`), `offers` (one row per family-level offer), and
+variant, including its authoritative model-specific offers in `data`), `offers` (a
+deduplicated family union retained for backward compatibility), and
 `dataset_meta` (counts/sources/providers). The app reads Postgres when
-`DATABASE_URL` is set and falls back to this bundled JSON otherwise.
+`DATABASE_URL` is set and falls back to this bundled JSON otherwise. A legacy DB
+seed without model-scoped offers also falls back to the bundled snapshot instead
+of reintroducing a family-union provider/SKU leak; the next normal seed upgrades it.

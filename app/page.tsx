@@ -24,7 +24,7 @@ export default async function Home() {
           <Stat label="Featured" value={featured} />
           <Stat label="Model families" value={ds.counts.families} />
           <Stat label="Provider offers" value={ds.counts.offers} />
-          <Stat label="Distinct providers" value={ds.counts.providers} />
+          <Stat label="Provider channels" value={ds.counts.providers} />
         </div>
       </section>
 

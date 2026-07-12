@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import type { ClientOffer, ProviderInfo } from "../lib/client-model";
-import { createOfferScope, rankedOffers } from "../lib/cost";
+import { blend, createOfferScope, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
 import { usdPerM } from "../lib/format";
 import { useSettings } from "./SettingsContext";
 
@@ -17,10 +17,14 @@ export function ModelDetailOffers({
 }) {
   const s = useSettings();
   const scope = useMemo(
-    () => createOfferScope(s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly),
-    [s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly],
+    () => createOfferScope(s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly),
+    [s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly],
   );
   const ranked = useMemo(() => rankedOffers(offers, scope), [offers, scope]);
+  const catalog = useMemo(() => scopedCatalogRoutes(offers, scope).map((offer) => ({
+    ...offer,
+    blended: blend(offer.input_per_1m, offer.output_per_1m),
+  })), [offers, scope]);
 
   if (view === "top") {
     const top = ranked.slice(0, 5);
@@ -56,24 +60,24 @@ export function ModelDetailOffers({
     );
   }
 
-  const byPlatform = new Map<string, typeof ranked>();
-  for (const offer of ranked) {
+  const byPlatform = new Map<string, typeof catalog>();
+  for (const offer of catalog) {
     if (!byPlatform.has(offer.platform)) byPlatform.set(offer.platform, []);
     byPlatform.get(offer.platform)!.push(offer);
   }
   return (
     <section className="card mt-6 min-w-0 overflow-x-auto p-4">
       <h2 className="mb-1 font-semibold">Token offers by platform</h2>
-      <p className="mb-3 text-[11px] text-gray-500">{ranked.length} offers within the active global filters.</p>
+      <p className="mb-3 text-[11px] text-gray-500">{catalog.length} offers within the active global filters; “—” means the catalog is active but no public token price is available.</p>
       {[...byPlatform.entries()].map(([platform, platformOffers]) => (
         <div key={platform} className="mb-4">
           <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({platformOffers.length})</span></h3>
           <table className="dtable w-full text-sm">
             <tbody>
               {platformOffers.map((offer) => (
-                <tr key={offer.key}>
+                <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")}>
                   <td className="px-2 py-1">{offer.provider}</td>
-                  <td className="px-2 py-1 text-xs text-gray-500">{offer.region}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
+                  <td className="px-2 py-1 text-xs text-gray-500">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="px-2 py-1 text-right tabular">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> in</span></td>
                   <td className="px-2 py-1 text-right tabular">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> out</span></td>
                   <td className="px-2 py-1 text-right tabular font-semibold">{usdPerM(offer.blended)}</td>
@@ -83,7 +87,7 @@ export function ModelDetailOffers({
           </table>
         </div>
       ))}
-      {ranked.length === 0 && <p className="text-sm text-gray-500">No token offers match the active global filters.</p>}
+      {catalog.length === 0 && <p className="text-sm text-gray-500">No token offers match the active global filters.</p>}
     </section>
   );
 }

@@ -1,13 +1,34 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-07-12 (90 offer rows; comprehensive Retail API and deployment-scope re-check)
+**Last collected:** 2026-07-12 (93 offer rows; Retail API, lifecycle, roster, and deployment-scope re-check)
 **Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
 
-**2026-07-12 result:** The Retail API now contains pay-per-token Fireworks meters for **GLM 5.2**
-(`$1.54/$4.84`, cached input `$0.15`, effective 2026-07-01), **Kimi K2.7 Code**
-(`$1.05/$4.40`, cached input `$0.21`, effective 2026-07-01), and **MiniMax 2.7**
-(`$0.33/$1.32`, cached input `$0.066`, effective 2026-06-01). The previous absence/BYO-only
-conclusions were stale and have been removed from the JSON.
+**Authoritative cross-checks:**
+- https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule
+- https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/retired-models
+- https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure
+- https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability
+- https://learn.microsoft.com/en-us/azure/foundry/how-to/fireworks/enable-fireworks-models
+
+**2026-07-12 result:** All non-null stored prices were rechecked against live Retail meters, then
+availability was independently checked against Microsoft's model-retirement schedule (updated
+2026-07-09) and current model/region catalogs. Retail meters are billing records and can outlive a
+deployable model, so lifecycle wins over a lingering meter.
+
+Removed as retired: GPT-5/5.1/5.2/5.3 Chat, GPT-4.5, DeepSeek-V3, MAI-DS-R1, Grok 3,
+Grok 3 Mini, and Azure Direct Kimi K2 Thinking. GPT-5.2 Pro was also removed: a Retail meter
+exists, but it is absent from both the current GPT-5.2 model catalog and lifecycle roster.
+The newer lifecycle schedule gives 2026-07-01 as the retirement date for Fireworks Kimi K2.5,
+GLM 5, MiniMax M2.5, DeepSeek V3.2, and gpt-oss-120B, so those stale Fireworks rows were removed.
+Current Fireworks rows such as GLM 5.2, Kimi K2.7 Code, MiniMax M2.7, and DeepSeek V4 Pro remain
+US-hosted/non-EU routes.
+
+Thirteen documented Europe Data Zone price routes were added separately from their Global routes:
+both GPT-5.5 context tiers, GPT-4.1/Mini/Nano, GPT-4o 2024-11-20, GPT-4o mini, o1, o3,
+o3-mini, o4-mini, Mistral Large 3, and Mistral Medium 3.5. GPT-5.6 Luna/Sol/Terra are active
+GA versions dated 2026-07-09 with both Global and Europe Data Zone availability. The Retail API
+still has no standard uncached token meters for them, so all six route rows are present with
+`null` input/output prices. Do not substitute OpenAI-direct prices.
 
 The current fetch must also query the separate product **`Azure Kimi`**. It is not matched by the
 old OpenAI/Models/AI Foundry filters. Azure Kimi is a native/direct product with separate Global
@@ -22,8 +43,9 @@ EU Data Boundary, so every Fireworks row is stored as `region=us, eu_hosted=fals
 Europe Data Zone or regional deployments are represented as EU-hosted offer rows.
 
 GPT-5.6 Sol, Terra, and Luna are visible in the current Azure availability documentation, but the
-Retail Prices API still exposes no standard token meters for them. They are intentionally omitted
-rather than populated with OpenAI-direct prices that have not been confirmed as Azure prices.
+Retail Prices API still exposes no standard token meters for them. They are intentionally retained
+as unpriced Global and EU Data Zone rows (`null` input/output) rather than populated with
+OpenAI-direct prices that have not been confirmed as Azure prices.
 
 ## TL;DR refresh recipe (2026-06-17)
 Four paginated query families (USD), looping `NextPageLink`, over the six EU resource regions
@@ -49,8 +71,9 @@ items to `/tmp/azure_raw.json`).
   The `DZ` text in those billing meter names must not be interpreted as EU residency: Microsoft's
   Fireworks deployment guide lists only US regions and excludes the service from the EU Data Boundary.
 - Native Kimi rows come from `productName = Azure Kimi`; never pair these meters with Fireworks
-  input/output meters. Native Global prices are K2 Thinking `$0.60/$2.50`, K2.5 `$0.60/$3.00`,
-  K2.6 `$0.95/$4.00`, and K2.7 Code `$0.95/$4.00`.
+  input/output meters. K2 Thinking retired on 2026-03-29 and is excluded despite its lingering
+  meter. Current native Global prices are K2.5 `$0.60/$3.00`, K2.6 `$0.95/$4.00`, and K2.7 Code
+  `$0.95/$4.00`.
 - DeepSeek V4 Pro and V3.2 likewise exist as Azure Direct Global offers and as distinct Fireworks
   partner alternatives. Keep the `(Fireworks)` suffix and US hosting metadata on the latter.
 
@@ -159,9 +182,10 @@ within the same product and deployment tier, converts to per-1M, and writes
 `NextPageLink`).
 
 Things to watch for on the next refresh:
-- New GPT version prefixes (`5.6`, etc.) in `Azure OpenAI GPT5`. As of 2026-06-23 the GPT5
-  product spans 5 / 5.1 / 5.2 / 5.3 / 5.4 / 5.5 (incl. codex/chat/mini/nano/pro variants) plus
-  `chat-latest` rolling meters dated 05052026 and 05282026 (both 5.0/30.0 Global).
+- Published standard token meters for GPT-5.6 Luna/Sol/Terra. Until Azure publishes them, keep
+  the documented Global and Europe Data Zone routes unpriced; never infer them from OpenAI rates.
+- New GPT version prefixes in `Azure OpenAI GPT5`; always cross-check meter-derived rows against
+  the lifecycle schedule because Chat/preview meters can remain after retirement.
 - New rows under `Azure Fireworks Models` (MiniMax M3, MiMo, Qwen). Kimi K2.7 and GLM 5.2
   are already present as of 2026-07-01 meters.
 - Any new `Azure <Vendor> Models` productName (e.g. an Anthropic product — none today).

@@ -26,12 +26,27 @@ export interface Offer {
   output_per_1m: number | null;
   cache_read_per_1m?: number | null;
   cache_write_per_1m?: number | null;
+  internal_reasoning_per_1m?: number | null;
+  input_per_1m_eur?: number | null;
+  output_per_1m_eur?: number | null;
+  currency?: string;
   region: string;
   unit: string; // "per_1m_token" | "per_request"
   estimated?: boolean;
   notes?: string;
   or_model_id?: string;
+  or_canonical_slug?: string | null;
+  or_hugging_face_id?: string | null;
   status?: number | null;
+  endpoint_tag?: string | null;
+  quantization?: string | null;
+  context_length?: number | null;
+  max_completion_tokens?: number | null;
+  provider_model_id?: string | null;
+  catalog_status?: string | null;
+  hosting_class?: string | null;
+  pricing_tier?: string | null;
+  route_type?: string | null;
   tee?: boolean; // runs in a Trusted Execution Environment (confidential compute)
   eu_hosted?: boolean; // this specific offer/model is served from an EU region
   non_us?: boolean; // provider company is not US-based (copied from provider metadata)
@@ -72,6 +87,26 @@ export interface ModelRow {
   variant: string;
   open_weights: boolean;
   release_date: string | null;
+  deprecated?: boolean;
+  aa_model_id?: string | null;
+  aa_metadata?: {
+    is_reasoning?: boolean | null;
+    commercial_allowed?: boolean | null;
+    license_name?: string | null;
+    license_url?: string | null;
+    huggingface_url?: string | null;
+    source_huggingface_url?: string | null;
+    metadata_correction?: string;
+    openrouter_api_id?: string | null;
+    context_window_tokens?: number | null;
+  };
+  openrouter_metadata?: {
+    id?: string | null;
+    canonical_slug?: string | null;
+    hugging_face_id?: string | null;
+    context_window_tokens?: number | null;
+  };
+  coding_agent_results?: { harness: string; score: number; source_model_name?: string }[];
   featured: boolean;
   has_benchmark: boolean;
   has_pricing: boolean;
@@ -108,7 +143,7 @@ export type ScoreKey =
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (missing-neutral, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
-  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index (best harness)",
+  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index (median harness)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
   designarena_fullstack: "DesignArena — Agentic Web Dev (Full-Stack) Elo",

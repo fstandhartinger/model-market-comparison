@@ -2,7 +2,7 @@
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
   "collected_at": "2026-07-12",
-  "method": "AWS Price List bulk API EU region indexes (current version 20260707080509) for standard on-demand text-token meters; official Bedrock pricing and model-card/region pages for current models absent from the EU bulk feed. Flex, priority, batch, cache and non-text modalities are excluded. EU rows use the actual regional price (not the lower US price). Claude Sonnet 5 stores the stable standard price and documents the active launch promotion in notes. Legacy Cohere Command/Command Light are excluded because the current pricing page exposes them as Provisioned Throughput rather than comparable on-demand token offers.",
+  "method": "AWS Price List bulk API EU region indexes (current version 20260707080509) for standard on-demand text-token meters; official Bedrock pricing, lifecycle, model-card, and regional-availability pages for current models absent from the EU bulk feed. Flex, priority, batch, cache, legacy/EOL models, and non-text modalities are excluded. EU rows use the actual regional or EU Geo price, not a lower unrelated US route. Claude Sonnet 5 stores the active $2/$10 launch-promotion price through 2026-08-31; its $3/$15 standard price begins 2026-09-01.",
   "models": [
     {
       "model_name": "Nova 2.0 Lite",
@@ -61,6 +61,31 @@
       "notes": "Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API). Served in EU via EU cross-region inference profile (eu.anthropic.*)."
     },
     {
+      "model_name": "Claude Fable 5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 10.0,
+      "output_per_1m_usd": 50.0,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Active on Bedrock since 2026-06-09. Standard on-demand price. The model card exposes US Geo and Global inference IDs but no EU Geo ID; requests through the Global profile have no EU processing guarantee."
+    },
+    {
+      "model_name": "Claude Opus 4.5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 25.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer served through the documented EU Geo inference profile."
+    },
+    {
+      "model_name": "Claude Opus 4.6",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 25.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer served through the documented EU Geo inference profile."
+    },
+    {
       "model_name": "Claude Opus 4.7",
       "provider_org": "Anthropic",
       "input_per_1m_usd": 5.0,
@@ -77,6 +102,14 @@
       "notes": "On Bedrock since ~2026-05-28 (DevelopersIO). Not in Price List bulk API EU data; current public on-demand price (Bedrock matches Anthropic direct API). Served in EU via EU cross-region inference profile (eu.anthropic.*). Fast Mode ($10/$50) not captured."
     },
     {
+      "model_name": "Claude Sonnet 4.5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 3.0,
+      "output_per_1m_usd": 15.0,
+      "region": "eu-central-1 (EU cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer served through the documented EU Geo inference profile."
+    },
+    {
       "model_name": "Claude Sonnet 4.6",
       "provider_org": "Anthropic",
       "input_per_1m_usd": 3.0,
@@ -87,10 +120,10 @@
     {
       "model_name": "Claude Sonnet 5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 3.0,
-      "output_per_1m_usd": 15.0,
+      "input_per_1m_usd": 2.0,
+      "output_per_1m_usd": 10.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Released 2026-06-30; live on Bedrock (AWS blog 'Introducing Claude Sonnet 5 on AWS'). Not in Price List bulk API EU data; served in EU via EU cross-region inference profile (eu.anthropic.claude-sonnet-5). Listed price is the STANDARD on-demand rate; Anthropic introductory promo of $2 in / $10 out per 1M applies through 2026-08-31."
+      "notes": "Active launch-promotion price from the 2026-06-30 release through 2026-08-31. The standard on-demand price becomes $3 input / $15 output per 1M on 2026-09-01. Served in EU through eu.anthropic.claude-sonnet-5."
     },
     {
       "model_name": "DeepSeek V3.1",
@@ -181,20 +214,44 @@
       "notes": "not in eu-central-1; eu-west-2 price"
     },
     {
-      "model_name": "Llama 3.2 1B",
+      "model_name": "Llama 3.1 8B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 0.13,
-      "output_per_1m_usd": 0.13,
-      "region": "eu-central-1",
-      "notes": ""
+      "input_per_1m_usd": 0.22,
+      "output_per_1m_usd": 0.22,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer through the documented US Geo inference profile; no EU inference route."
     },
     {
-      "model_name": "Llama 3.2 3B",
+      "model_name": "Llama 3.1 70B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 0.19,
-      "output_per_1m_usd": 0.19,
-      "region": "eu-central-1",
-      "notes": ""
+      "input_per_1m_usd": 0.72,
+      "output_per_1m_usd": 0.72,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer through the documented US Geo inference profile; no EU inference route."
+    },
+    {
+      "model_name": "Llama 3.3 70B",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 0.72,
+      "output_per_1m_usd": 0.72,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer through the documented US Geo inference profile; no EU inference route."
+    },
+    {
+      "model_name": "Llama 4 Maverick 17B",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 0.24,
+      "output_per_1m_usd": 0.97,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer through the documented US Geo inference profile; no EU inference route."
+    },
+    {
+      "model_name": "Llama 4 Scout 17B",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.66,
+      "region": "us (US cross-region inference profile)",
+      "notes": "Active standard on-demand Bedrock offer through the documented US Geo inference profile; no EU inference route."
     },
     {
       "model_name": "MiniMax M2",
@@ -269,6 +326,14 @@
       "notes": "not in eu-central-1; eu-west-3 price"
     },
     {
+      "model_name": "Mistral Small (24.02)",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 1.0,
+      "output_per_1m_usd": 3.0,
+      "region": "us-east-1",
+      "notes": "Active standard on-demand Bedrock offer; no documented EU inference route."
+    },
+    {
       "model_name": "Mistral Large",
       "provider_org": "Mistral",
       "input_per_1m_usd": 5.2,
@@ -283,6 +348,14 @@
       "output_per_1m_usd": 1.8,
       "region": "eu-central-1",
       "notes": ""
+    },
+    {
+      "model_name": "Mistral Large 2 (24.07)",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 2.0,
+      "output_per_1m_usd": 6.0,
+      "region": "us-west-2",
+      "notes": "Active standard on-demand Bedrock offer; distinct from the older Mistral Large (24.02) row and without a documented EU inference route."
     },
     {
       "model_name": "Mixtral 8x7B",

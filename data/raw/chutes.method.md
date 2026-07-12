@@ -8,7 +8,7 @@ against the corresponding public Chute pricing metadata on **2026-07-12**.
 ```bash
 curl -s https://llm.chutes.ai/v1/models \
   -H "Authorization: Bearer $CHUTES_API_KEY" \
-  | jq '.data[] | {id, chute_id, root, in: .price.input.usd, out: .price.output.usd, ctx: .context_length, tee: .confidential_compute}'
+  | jq '.data[] | {id, chute_id, root, in: .price.input.usd, out: .price.output.usd, cache_read: .price.input_cache_read.usd, ctx: .context_length, tee: .confidential_compute}'
 ```
 
 - The 2026-07-12 response contained 13 models. The IDs in `chutes.json` are the complete
@@ -19,20 +19,22 @@ curl -s https://llm.chutes.ai/v1/models \
   `confidential_compute: true` and an `-TEE` suffix in its `id`; retain both facts as
   `confidential_compute: true` and `tee_model_id` rather than inferring TEE status from the
   base model name.
-- `price.input.usd` / `price.output.usd` were copied into `input_per_1m_usd` /
-  `output_per_1m_usd`. To verify both the values and their unit, fetch the corresponding
+- `price.input.usd` / `price.output.usd` / `price.input_cache_read.usd` were copied into
+  `input_per_1m_usd` / `output_per_1m_usd` / `cache_read_per_1m_usd`. To verify both the
+  values and their unit, fetch the corresponding
   first-party metadata using the returned `chute_id`:
 
   ```bash
   curl -s "https://api.chutes.ai/chutes/$CHUTE_ID" \
     -H "Authorization: Bearer $CHUTES_API_KEY" \
-    | jq '.current_estimated_price.per_million_tokens | {input: .input.usd, output: .output.usd}'
+    | jq '.current_estimated_price.per_million_tokens | {input: .input.usd, output: .output.usd, cache_read: .input_cache_read.usd}'
   ```
 
   On 2026-07-12 all 13 catalog values matched
   `current_estimated_price.per_million_tokens` exactly. The stored prices are therefore USD
-  per 1 million input/output tokens. Cache-read prices are intentionally not represented by
-  the comparison schema.
+  per 1 million input/output/cache-read tokens. On this snapshot every cache-read price is
+  exactly 50% of the corresponding input price; the values are still stored explicitly so a
+  future pricing change is not hidden by an inference rule.
 - `model_name` is the base model with the vendor prefix and the `-TEE` / `-FP8` quant
   suffix removed (e.g. `zai-org/GLM-5.1-TEE` → `GLM-5.1`) so the offer attaches to the
   existing model family in the comparison. Serving labels that are not the benchmark family

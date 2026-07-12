@@ -69,19 +69,22 @@ async function main() {
     );
 
     for (const m of ds.models) {
-      const { offers, ...rest } = m;
       await client.query(
         "INSERT INTO models (id, family_key, org, featured, has_benchmark, has_pricing, data) VALUES ($1,$2,$3,$4,$5,$6,$7)",
-        [m.id, m.family_key, m.org, !!m.featured, !!m.has_benchmark, !!m.has_pricing, { ...rest, offers: [] }]
+        [m.id, m.family_key, m.org, !!m.featured, !!m.has_benchmark, !!m.has_pricing, { ...m, offers_scope: "model" }]
       );
     }
 
-    // offers are family-level — store one set per family
+    // Retain a deduplicated family union for backward-compatible readers. Exact
+    // model rows above remain authoritative because some modes have distinct SKUs.
     const seen = new Set();
     for (const m of ds.models) {
-      if (seen.has(m.family_key)) continue;
-      seen.add(m.family_key);
       for (const o of m.offers || []) {
+        const signature = [m.family_key, o.platform, o.provider, o.region, o.eu_hosted,
+          o.tee, o.input_per_1m, o.output_per_1m, o.or_model_id || "",
+          o.endpoint_tag || "", o.pricing_tier || "", o.route_type || ""].join("::");
+        if (seen.has(signature)) continue;
+        seen.add(signature);
         await client.query(
           "INSERT INTO offers (family_key, platform, provider, data) VALUES ($1,$2,$3,$4)",
           [m.family_key, o.platform, o.provider, o]
@@ -90,7 +93,7 @@ async function main() {
     }
 
     await client.query("COMMIT");
-    console.log(`✓ seeded ${ds.models.length} models, ${seen.size} families`);
+    console.log(`✓ seeded ${ds.models.length} models, ${seen.size} unique family offers`);
   } catch (e) {
     await client.query("ROLLBACK");
     throw e;

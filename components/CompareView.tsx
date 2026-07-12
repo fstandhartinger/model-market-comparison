@@ -4,7 +4,7 @@ import Link from "next/link";
 import type { ClientData, ClientModel } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, createOfferScope, isHiddenModel, type OfferScope } from "../lib/cost";
+import { modelCost, rankedOffers, scopedCatalogOffers, createOfferScope, isHiddenModel, type OfferScope } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels } from "../lib/variants";
@@ -19,14 +19,14 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
 
 export function CompareView({ data }: { data: ClientData }) {
   const s = useSettings();
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
   const preferredId = useMemo(() => preferredVariantIds(data.models, s.score), [data.models, s.score]);
 
   const models = useMemo(() => {
     let r = data.models.filter((m) => {
-      const hasOffer = rankedOffers(data.offersByFamily[m.family_key], offerScope).length > 0;
+      const hasOffer = scopedCatalogOffers(data.offersByModel[m.id], offerScope).length > 0;
       return offerScope.restricted ? hasOffer : hasOffer || m.scores[s.score] != null;
     });
     if (s.collapse) r = collapseModels(r, preferredId);
@@ -83,7 +83,7 @@ export function CompareView({ data }: { data: ClientData }) {
                 return (
                   <tr key={m.id} onClick={() => pick(m.id)} className={`cursor-pointer ${slot ? "bg-accent/15" : ""}`}>
                     <td className="px-2 py-2">{slot && <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${slot === "A" ? "bg-accent text-black" : "bg-accent2 text-black"}`}>{slot}</span>}</td>
-                    <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{m.display_name}</span>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}</td>
+                    <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{m.display_name}</span>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}{m.deprecated && <span className="ml-1 text-[10px] text-amber-300">deprecated</span>}</td>
                     <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScore} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, s.score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                   </tr>
                 );
@@ -162,7 +162,7 @@ export function CompareView({ data }: { data: ClientData }) {
 }
 
 function ProviderMini({ slot, model, data, offerScope }: { slot: string; model?: ClientModel; data: ClientData; offerScope: OfferScope }) {
-  const offers = model ? rankedOffers(data.offersByFamily[model.family_key], offerScope).slice(0, 8) : [];
+  const offers = model ? rankedOffers(data.offersByModel[model.id], offerScope).slice(0, 8) : [];
   const max = Math.max(1, ...offers.map((o) => o.blended));
   return (
     <div className="card p-3">

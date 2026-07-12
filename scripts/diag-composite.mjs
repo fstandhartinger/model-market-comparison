@@ -1,11 +1,19 @@
-// Diagnose the production composite implementation and print normalized evidence
-// coverage for models whose ordering is sensitive to missing benchmark results.
+// Diagnose the production fixed-slot composite and its coverage-safe dominance
+// constraints for models whose ordering is sensitive to missing results.
 import { readFileSync } from "node:fs";
 import { computeCompositeScores, DEFAULT_MIN_DA_BATTLES } from "../lib/composite.mjs";
 
 const ds = JSON.parse(readFileSync(new URL("../data/dataset.json", import.meta.url)));
-const ATOMIC = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "designarena_frontend", "designarena_fullstack"];
-const SLOTS = ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index", "da"];
+const SLOTS = [
+  "aa_coding_index",
+  "aa_coding_agent",
+  "aa_intelligence_index",
+  "designarena_frontend",
+  "designarena_fullstack",
+];
+const clamp100 = (value) => Math.max(0, Math.min(100, value));
+const finiteOrNull = (value) => typeof value === "number" && Number.isFinite(value) ? value : null;
+const eloExpectedScore = (elo) => 100 / (1 + 10 ** ((1000 - elo) / 400));
 
 const rows = ds.models.map((m) => ({
   id: m.id,
@@ -25,50 +33,49 @@ const rows = ds.models.map((m) => ({
 }));
 
 const composites = computeCompositeScores(rows);
-const effective = rows.map((r) => ({
-  ...r,
-  values: {
-    ...r.scores,
-    designarena_frontend: (r.designarenaBattles.frontend ?? 0) >= DEFAULT_MIN_DA_BATTLES ? r.scores.designarena_frontend : null,
-    designarena_fullstack: (r.designarenaBattles.fullstack ?? 0) >= DEFAULT_MIN_DA_BATTLES ? r.scores.designarena_fullstack : null,
-  },
-}));
-
-const ranges = {};
-for (const key of ATOMIC) {
-  const values = effective.map((r) => r.values[key]).filter((v) => v != null);
-  ranges[key] = values.length ? { min: Math.min(...values), max: Math.max(...values) } : null;
-}
-const norm = (key, value) => {
-  const range = ranges[key];
-  if (value == null || !range) return null;
-  return range.max === range.min ? 50 : ((value - range.min) / (range.max - range.min)) * 100;
-};
-const slotRows = effective.map((r) => {
-  const da = [norm("designarena_frontend", r.values.designarena_frontend), norm("designarena_fullstack", r.values.designarena_fullstack)]
-    .filter((v) => v != null);
-  return {
-    ...r,
-    slots: {
-      aa_coding_index: norm("aa_coding_index", r.values.aa_coding_index),
-      aa_coding_agent: norm("aa_coding_agent", r.values.aa_coding_agent),
-      aa_intelligence_index: norm("aa_intelligence_index", r.values.aa_intelligence_index),
-      da: da.length ? da.reduce((a, b) => a + b, 0) / da.length : null,
-    },
-    composite: composites.get(r.id),
+const slotRows = rows.map((row) => {
+  const aaCoding = finiteOrNull(row.scores.aa_coding_index);
+  const aaCodingAgent = finiteOrNull(row.scores.aa_coding_agent);
+  const aaIntelligence = finiteOrNull(row.scores.aa_intelligence_index);
+  const frontend = finiteOrNull(row.scores.designarena_frontend);
+  const fullstack = finiteOrNull(row.scores.designarena_fullstack);
+  const slots = {
+    aa_coding_index: aaCoding == null ? null : clamp100(aaCoding),
+    aa_coding_agent: aaCodingAgent == null ? null : clamp100(aaCodingAgent),
+    aa_intelligence_index: aaIntelligence == null ? null : clamp100(aaIntelligence),
+    designarena_frontend: frontend == null || (row.designarenaBattles.frontend ?? 0) < DEFAULT_MIN_DA_BATTLES
+      ? null : eloExpectedScore(frontend),
+    designarena_fullstack: fullstack == null || (row.designarenaBattles.fullstack ?? 0) < DEFAULT_MIN_DA_BATTLES
+      ? null : eloExpectedScore(fullstack),
   };
+  const observed = SLOTS.filter((key) => slots[key] != null);
+  const base = observed.length
+    ? Math.round((SLOTS.reduce((sum, key) => sum + (slots[key] ?? 50), 0) / SLOTS.length) * 10) / 10
+    : null;
+  return { ...row, slots, observed, base, composite: composites.get(row.id) };
 });
 
 function show(id) {
-  const r = slotRows.find((x) => x.id === id);
-  if (!r) return console.log(`NOT FOUND: ${id}`);
-  console.log(`\n${r.name} [${r.id}]`);
+  const row = slotRows.find((candidate) => candidate.id === id);
+  if (!row) return console.log(`NOT FOUND: ${id}`);
+  console.log(`\n${row.name} [${row.id}]`);
   for (const key of SLOTS) {
-    const v = r.slots[key];
-    console.log(`  ${key}: ${v == null ? "missing (neutral)" : v.toFixed(1)}`);
+    const value = row.slots[key];
+    if (value == null) {
+      console.log(`  ${key}: missing -> 50.0 neutral`);
+      continue;
+    }
+    if (key === "designarena_frontend") {
+      console.log(`  ${key}: ${value.toFixed(1)} (Elo ${row.scores[key]}, ${row.designarenaBattles.frontend} battles)`);
+    } else if (key === "designarena_fullstack") {
+      console.log(`  ${key}: ${value.toFixed(1)} (Elo ${row.scores[key]}, ${row.designarenaBattles.fullstack} battles)`);
+    } else {
+      console.log(`  ${key}: ${value.toFixed(1)}`);
+    }
   }
-  console.log(`  coverage: ${SLOTS.filter((key) => r.slots[key] != null).length}/${SLOTS.length}`);
-  console.log(`  composite: ${r.composite?.toFixed(1) ?? "—"}`);
+  console.log(`  coverage: ${row.observed.length}/${SLOTS.length}`);
+  console.log(`  fixed-slot base: ${row.base?.toFixed(1) ?? "—"}`);
+  console.log(`  composite: ${row.composite?.toFixed(1) ?? "—"}`);
 }
 
 show("deepseek-v4-pro::high");
@@ -77,17 +84,34 @@ show("deepseek-v4-flash::max");
 show("gpt-5.5::medium");
 show("gpt-5.5::xhigh");
 
-const shared = (a, b) => SLOTS.filter((key) => a.slots[key] != null && b.slots[key] != null);
-const dominatesShared = (a, b) => {
-  const keys = shared(a, b);
-  return keys.length >= 2 && keys.every((key) => a.slots[key] >= b.slots[key]) && keys.some((key) => a.slots[key] > b.slots[key]);
+const dominatesCoverageSafely = (leader, dominated) => {
+  let strictlyBetter = false;
+  for (const key of SLOTS) {
+    const otherValue = dominated.slots[key];
+    if (otherValue == null) continue;
+    const leaderValue = leader.slots[key];
+    if (leaderValue == null || leaderValue < otherValue) return false;
+    if (leaderValue > otherValue) strictlyBetter = true;
+  }
+  return strictlyBetter;
 };
-const featured = slotRows.filter((r) => r.featured && r.composite != null);
-const violations = [];
-for (const a of featured) for (const b of featured) {
-  if (a !== b && dominatesShared(a, b) && a.composite < b.composite) violations.push({ a, b });
-}
-console.log(`\nFeatured shared-dominance violations: ${violations.length}`);
-for (const { a, b } of violations.slice(0, 10)) {
-  console.log(`  ${a.name} (${a.composite.toFixed(1)}) < ${b.name} (${b.composite.toFixed(1)})`);
+
+const checkDominance = (candidates) => {
+  const violations = [];
+  for (const leader of candidates) {
+    for (const dominated of candidates) {
+      if (leader === dominated || !dominatesCoverageSafely(leader, dominated)) continue;
+      if (leader.composite + 1e-9 < dominated.composite + 0.1) violations.push({ leader, dominated });
+    }
+  }
+  return violations;
+};
+
+const scored = slotRows.filter((row) => row.composite != null);
+const featured = scored.filter((row) => row.featured);
+const allViolations = checkDominance(scored);
+const featuredViolations = checkDominance(featured);
+console.log(`\nCoverage-safe dominance violations: ${allViolations.length} all / ${featuredViolations.length} featured`);
+for (const { leader, dominated } of allViolations.slice(0, 10)) {
+  console.log(`  ${leader.name} (${leader.composite.toFixed(1)}) !> ${dominated.name} (${dominated.composite.toFixed(1)})`);
 }

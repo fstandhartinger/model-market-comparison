@@ -9,7 +9,6 @@ interface SettingsState {
   featured: boolean;
   excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
   euHostedOnly: boolean;    // only providers that serve from EU data centers
-  euDedicated: boolean;     // widen EU-hosted filter to also include EU-via-dedicated/BYOC providers
   nonUsOnly: boolean;       // only providers whose company is not US-based
   hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
   hideFable: boolean;       // hide Claude Fable (on by default)
@@ -26,7 +25,6 @@ interface SettingsCtx extends SettingsState {
   setFeatured: (b: boolean) => void;
   setExcludeChinese: (b: boolean) => void;
   setEuHostedOnly: (b: boolean) => void;
-  setEuDedicated: (b: boolean) => void;
   setNonUsOnly: (b: boolean) => void;
   setHideGptOpus: (b: boolean) => void;
   setHideFable: (b: boolean) => void;
@@ -39,14 +37,14 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, euDedicated: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
 // silently excluded — and with "EU-hosted only" on, models whose only EU route is a new
 // provider vanished. A blocklist includes future providers by default. Bumping v2→v3
 // discards the old (inclusion-shaped) persisted `providers` array.
-const KEY = "mmc.settings.v3";
+const KEY = "mmc.settings.v4";
 
 const Ctx = createContext<SettingsCtx | null>(null);
 
@@ -72,7 +70,6 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setFeatured: (featured) => setState((s) => ({ ...s, featured })),
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
     setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
-    setEuDedicated: (euDedicated) => setState((s) => ({ ...s, euDedicated })),
     setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
     setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
     setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),

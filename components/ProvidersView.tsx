@@ -23,14 +23,14 @@ interface Row {
 export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
   const [mode, setMode] = useState<Mode>("model");
   const [scorePeersOnly, setScorePeersOnly] = useState(true);
   const [modelId, setModelId] = useState<string>("");
   const [modelQ, setModelQ] = useState("");
 
-  const eligible = (m: { family_key: string; open_weights: boolean; featured: boolean; scores: Record<string, number | null> }) => {
+  const eligible = (m: { id: string; family_key: string; open_weights: boolean; featured: boolean; scores: Record<string, number | null> }) => {
     if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
     if (s.openOnly && !m.open_weights) return false;
     if (s.featured && !m.featured) return false;
@@ -41,20 +41,25 @@ export function ProvidersView({ data }: { data: ClientData }) {
 
   // models eligible for the peer set
   const peerModels = useMemo(() => {
-    const fams = new Map<string, { family_key: string }>();
     const candidates = s.collapse ? collapseModels(data.models, preferredId) : data.models;
-    for (const m of candidates) {
-      if (scorePeersOnly && m.scores[score] == null) continue;
-      if (!eligible(m)) continue;
-      if (!rankedOffers(data.offersByFamily[m.family_key], offerScope).length) continue;
-      if (!fams.has(m.family_key)) fams.set(m.family_key, { family_key: m.family_key });
+    const filtered = candidates.filter((m) => {
+      if (scorePeersOnly && m.scores[score] == null) return false;
+      if (!eligible(m)) return false;
+      return rankedOffers(data.offersByModel[m.id], offerScope).length > 0;
+    });
+    if (!s.collapse) return filtered;
+
+    const fams = new Map<string, (typeof data.models)[number]>();
+    for (const m of filtered) {
+      const previous = fams.get(m.family_key);
+      if (!previous || (m.scores[score] ?? -Infinity) > (previous.scores[score] ?? -Infinity)) fams.set(m.family_key, m);
     }
     return [...fams.values()];
   }, [data, score, scorePeersOnly, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
 
   const modelOptions = useMemo(
     () => (s.collapse ? collapseModels(data.models, preferredId) : data.models)
-      .filter((m) => rankedOffers(data.offersByFamily[m.family_key], offerScope).length)
+      .filter((m) => rankedOffers(data.offersByModel[m.id], offerScope).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
     [data, score, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
@@ -79,7 +84,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
     };
     // aggregate across peer-set families
     for (const fam of peerModels) {
-      const ranked = rankedOffers(data.offersByFamily[fam.family_key], offerScope);
+      const ranked = rankedOffers(data.offersByModel[fam.id], offerScope);
       ranked.forEach((o, idx) => {
         const a = ensure(o.key, o.platform, o.provider);
         a.ranks.push(idx + 1);
@@ -87,7 +92,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
       });
     }
     // single-model ranking
-    const modelRanked = selectedModel ? rankedOffers(data.offersByFamily[selectedModel.family_key], offerScope) : [];
+    const modelRanked = selectedModel ? rankedOffers(data.offersByModel[selectedModel.id], offerScope) : [];
     const modelRankByKey = new Map<string, { rank: number; price: number }>();
     modelRanked.forEach((o, i) => modelRankByKey.set(o.key, { rank: i + 1, price: o.blended }));
 

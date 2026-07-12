@@ -24,9 +24,7 @@ export interface RankedOffer extends ClientOffer { blended: number }
 
 export interface OfferScope {
   allowed: Set<string> | null;
-  providerByKey: Map<string, ProviderFlag>;
   euHostedOnly: boolean;
-  euDedicated: boolean;
   teeOnly: boolean;
   restricted: boolean;
 }
@@ -50,11 +48,50 @@ export function offerMatchesScope(offer: ClientOffer, selection: OfferSelection)
   if (!isOfferScope(selection)) return !selection || selection.has(offer.key);
   if (selection.allowed && !selection.allowed.has(offer.key)) return false;
   if (selection.teeOnly && !offer.tee) return false;
-  if (selection.euHostedOnly) {
-    const provider = selection.providerByKey.get(offer.key);
-    if (!(selection.euDedicated && provider?.eu_dedicated) && !isEuOffer(offer)) return false;
-  }
+  if (selection.euHostedOnly && !isEuOffer(offer)) return false;
   return true;
+}
+
+function endpointHealth(offer: ClientOffer): number {
+  if (offer.platform !== "OpenRouter") return 0;
+  if (offer.status === 0) return 0;
+  if (offer.status === -2) return 1;
+  if (offer.status === -5) return 2;
+  if (offer.status == null) return 3;
+  return 4;
+}
+
+/** Every matching catalog SKU, including context tiers and serving routes. */
+export function scopedCatalogRoutes(
+  offers: ClientOffer[] | undefined,
+  selection: OfferSelection,
+  inputWeight = 10,
+): ClientOffer[] {
+  if (!offers) return [];
+  return offers.filter((offer) => offerMatchesScope(offer, selection)).sort((a, b) => {
+    const health = endpointHealth(a) - endpointHealth(b);
+    if (health) return health;
+    const aPrice = blend(a.input_per_1m, a.output_per_1m, inputWeight);
+    const bPrice = blend(b.input_per_1m, b.output_per_1m, inputWeight);
+    return (aPrice ?? Infinity) - (bPrice ?? Infinity);
+  });
+}
+
+/** Catalog offers that match the active scope, including active listings whose
+ * public token price is not published yet. One healthy route per provider
+ * survives, with a priced route preferred over an unpriced one. */
+export function scopedCatalogOffers(
+  offers: ClientOffer[] | undefined,
+  selection: OfferSelection,
+  inputWeight = 10,
+): ClientOffer[] {
+  const sorted = scopedCatalogRoutes(offers, selection, inputWeight);
+  const seen = new Set<string>();
+  return sorted.filter((offer) => {
+    if (seen.has(offer.key)) return false;
+    seen.add(offer.key);
+    return true;
+  });
 }
 
 /** Offers for a family, filtered to allowed provider keys (empty/null = all),
@@ -65,20 +102,11 @@ export function rankedOffers(
   inputWeight = 10
 ): RankedOffer[] {
   if (!offers) return [];
-  const ranked = offers
-    .filter((o) => offerMatchesScope(o, selection))
+  const ranked = scopedCatalogOffers(offers, selection, inputWeight)
     .map((o) => ({ ...o, blended: blend(o.input_per_1m, o.output_per_1m, inputWeight) ?? Infinity }))
     .filter((o) => Number.isFinite(o.blended))
     .sort((a, b) => a.blended - b.blended);
-  // A provider can have several retained routes (e.g. Global + DataZone-EU or
-  // standard + TEE). Once the scope is applied, show/rank that provider exactly
-  // once at its cheapest matching route.
-  const seen = new Set<string>();
-  return ranked.filter((offer) => {
-    if (seen.has(offer.key)) return false;
-    seen.add(offer.key);
-    return true;
-  });
+  return ranked;
 }
 
 /** Cheapest blended cost for a model given a provider filter, falling back to
@@ -89,7 +117,7 @@ export function modelCost(
   selection: OfferSelection,
   inputWeight = 10
 ): number | null {
-  const r = rankedOffers(data.offersByFamily[m.family_key], selection, inputWeight);
+  const r = rankedOffers(data.offersByModel[m.id], selection, inputWeight);
   if (r.length) return r[0].blended;
   if (!selection || (isOfferScope(selection) && !selection.restricted)) {
     return blend(m.aa_ref_input, m.aa_ref_output, inputWeight);
@@ -129,8 +157,7 @@ type ProviderFlag = { key: string; provider: string; eu_hosted?: boolean; non_us
  *  set (null = all providers, no restriction). EU hosting is intentionally evaluated
  *  on each offer later; a provider-wide flag is not residency evidence. Starting from ALL
  *  providers and subtracting `excluded` means providers added later are included by
- *  default (no stale inclusion snapshot). Dedicated/BYOC widening is evaluated later
- *  against the exact offer and provider metadata. */
+ *  default (no stale inclusion snapshot). */
 export function effectiveAllowed(
   excluded: Set<string> | null,
   excludeChinese: boolean,
@@ -156,14 +183,11 @@ export function createOfferScope(
   providers: ProviderFlag[],
   euHostedOnly = false,
   nonUsOnly = false,
-  euDedicated = false,
   teeOnly = false,
 ): OfferScope {
   return {
     allowed: effectiveAllowed(excluded, excludeChinese, providers, euHostedOnly, nonUsOnly),
-    providerByKey: new Map(providers.map((provider) => [provider.key, provider])),
     euHostedOnly,
-    euDedicated,
     teeOnly,
     restricted: !!(excluded?.size || excludeChinese || euHostedOnly || nonUsOnly || teeOnly),
   };

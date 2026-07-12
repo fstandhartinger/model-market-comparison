@@ -1,6 +1,6 @@
-import Link from "next/link";
-import { getDataset, cheapestOffers } from "../../lib/data";
-import { usdPerM } from "../../lib/format";
+import { getDataset } from "../../lib/data";
+import { clientData } from "../../lib/client-model";
+import { EuSotaTable } from "../../components/EuSotaTable";
 
 export const dynamic = "force-dynamic";
 
@@ -42,7 +42,7 @@ const PROPRIETARY = [
 
 export default async function EuPage() {
   const ds = await getDataset();
-  const find = (k: string) => ds.models.find((m) => m.family_key === k);
+  const data = clientData(ds);
 
   return (
     <div className="max-w-4xl">
@@ -66,33 +66,7 @@ export default async function EuPage() {
       </section>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">✅ EU-hosted providers that serve the SOTA models</h2>
-      <div className="card overflow-x-auto">
-        <table className="dtable w-full text-sm">
-          <thead><tr>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">Model</th>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">EU-hosted offers (10:1 blended $/1M)</th>
-          </tr></thead>
-          <tbody>
-            {SOTA.map((s) => {
-              const m = find(s.key);
-              // EU residency is audited per model offer during the dataset build. A provider
-              // being EU-capable overall is deliberately not enough (Nebius and the
-              // hyperscalers can serve different models from different regions).
-              const euOffers = m ? cheapestOffers(m, 100, 10, (offer) => offer.eu_hosted === true) : [];
-              return (
-                <tr key={s.key}>
-                  <td className="px-3 py-2 font-medium">{m ? <Link href={`/models/${encodeURIComponent(m.id)}`} className="hover:text-accent">{s.name}</Link> : s.name}</td>
-                  <td className="px-3 py-2 text-sm">
-                    {euOffers.length
-                      ? euOffers.map((o, i) => <span key={i} className="mr-3 whitespace-nowrap"><b>{o.provider}</b> <span className="text-gray-400">{usdPerM(o.blended)}</span></span>)
-                      : <span className="text-warn/90">no EU-hosted route — self-host the open weights in an EU region</span>}
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </table>
-      </div>
+      <EuSotaTable data={data} entries={SOTA} />
       <p className="mt-2 text-xs text-gray-500">
         <b className="text-accent2">TensorX</b> (Ireland; 3 EU data-centre regions, 100% EU-sovereign / isolated from US
         hyperscalers, zero data retention) is now the <b>broadest</b> EU-sovereign option — a self-serve per-token API

@@ -23,18 +23,17 @@ export async function loadFromDb(): Promise<Dataset | null> {
   if (!p) return null;
   const meta = await p.query("SELECT generated_at, counts, sources, providers FROM dataset_meta ORDER BY id DESC LIMIT 1");
   if (!meta.rows.length) return null;
-  const offers = await p.query("SELECT family_key, data FROM offers");
-  const offersByFamily = new Map<string, ModelRow["offers"]>();
-  for (const r of offers.rows) {
-    if (!offersByFamily.has(r.family_key)) offersByFamily.set(r.family_key, []);
-    offersByFamily.get(r.family_key)!.push(r.data);
-  }
   const models = await p.query("SELECT data FROM models");
-  const modelRows: ModelRow[] = models.rows.map((r) => {
-    const m = r.data as ModelRow;
-    m.offers = offersByFamily.get(m.family_key) || [];
-    return m;
-  });
+  const storedModels = models.rows.map((r) => r.data as ModelRow & { offers_scope?: string });
+  // Legacy seeds stored only a family-wide offer union. Reattaching that union
+  // here would leak a sibling model's provider/region/SKU into every variant.
+  // Return null so getDataset() safely uses the bundled exact-model snapshot
+  // until the normal deployment seed upgrades the database.
+  if (storedModels.some((model) => model.offers_scope !== "model")) {
+    console.warn("[data] Legacy DB seed has family-scoped offers; using bundled exact-model snapshot until reseeded");
+    return null;
+  }
+  const modelRows: ModelRow[] = storedModels.map(({ offers_scope: _scope, ...model }) => model);
   const m0 = meta.rows[0];
   return {
     generated_at: m0.generated_at,

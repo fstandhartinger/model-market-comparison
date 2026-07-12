@@ -1,7 +1,7 @@
 # Google Vertex AI pricing — collection method
 
 **Collected:** 2026-07-12 (comprehensive live re-scrape plus endpoint-location audit)
-**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 43 models
+**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 56 offer rows / 42 current model families
 
 ## Sources
 
@@ -9,6 +9,9 @@ Primary (authoritative), the official Vertex AI / "Agent Platform" pricing page:
 
 - https://cloud.google.com/vertex-ai/generative-ai/pricing
   (redirects to `cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing`)
+- https://docs.cloud.google.com/gemini-enterprise-agent-platform/models/model-versions
+- https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/locations
+- https://docs.cloud.google.com/gemini-enterprise-agent-platform/resources/data-residency
 
 This single page contains both Google's Gemini pricing and the **Partner models**
 section (Anthropic Claude, xAI Grok, DeepSeek, MiniMax, Moonshot/Kimi, GLM, Qwen,
@@ -17,18 +20,27 @@ tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
 
-## 2026-07-12 comprehensive re-scrape (still 43, no price deltas)
+## 2026-07-12 comprehensive price, lifecycle, and route audit
 
-The live pricing DOM is price- and roster-identical to 2026-07-07: 43 captured text
-LLMs, with no GLM-5.2, Kimi K2.7, MiniMax-M3, DeepSeek-V4, or GPT-5.6 row. The
-important correction is deployment scope, not price. Google's current endpoint-location
-documentation says the Global endpoint provides no processing-location guarantee.
-Consequently, `global` open/partner rows remain global and must not pass an EU-hosted filter.
+All 43 input-row token pairs matched the live pricing page, but two rows were no longer
+deployable: Gemini 2.0 Flash and Gemini 2.0 Flash-Lite retired on 2026-06-01 and were
+removed. Gemini Omni Flash Preview is a current multimodal text-in/text-out PayGo model
+at `$1.50/$9.00`; it was added as a Global-only route. The result is 42 current model
+families represented by 56 separate offer rows.
 
-The official Mistral model pages document `europe-west4` availability and EU multi-region
-ML processing for Mistral Medium 3, Mistral Small 3.1 (25.03), and Codestral 2. These
-three rows now use `region=europe-west4` with the unchanged prices. Claude EU/europe-west1
-and the two non-global Gemini rows were already correctly region-scoped.
+The prior snapshot conflated model families with deployment offers. It kept only the
+more expensive EU price for nine Claude families and for Gemini 3.5 Flash / Gemini 3.1
+Flash-Lite, so non-EU comparisons could not select the cheaper Global route. All eleven
+Global routes are now explicit. Conversely, Gemini 2.5 Pro, Flash, and Flash-Lite had
+only Global rows despite Google's data-residency matrix documenting EU ML processing;
+same-price EU routes were added for those three families.
+
+Gemini 3.5 Flash and Gemini 3.1 Flash-Lite Standard PayGo residency uses the `eu`
+multi-region endpoint, not `europe-west4`; both EU rows were corrected. Gemini 3.5's
+`europe-west2` location is Single-Zone Provisioned Throughput, not the PayGo route stored
+here. Global endpoints remain non-EU because Google provides no processing-location
+guarantee. The official Mistral pages still support the existing EU-hosted
+`europe-west4` rows for Mistral Medium 3, Mistral Small 3.1, and Codestral 2.
 
 ## 2026-07-07 comprehensive re-scrape (historical; still 43, no price deltas)
 
@@ -190,26 +202,26 @@ NOT** present. (For the record: Kimi=Moonshot, GLM=Zhipu, MiniMax=MiniMax.)
 - **Mistral Medium 3, Mistral Small 3.1 (25.03), and Codestral 2** have documented
   `europe-west4` endpoints with EU multi-region ML processing. Their token rates do not
   change, but their rows use `"region": "europe-west4"` and are valid EU-hosted offers.
-- **Anthropic Claude** DOES have per-region pricing now (a region selector:
+- **Anthropic Claude** has per-region pricing (a region selector:
   Global / US Multi-Region / EU Multi-Region (eu) / us-east5 / europe-west1 /
   asia-southeast1 / asia-east1). **There is no europe-west4 tab.** The EU regions
   carry a **~10% surcharge** over Global. Crucially, the two EU regions list
   **different model subsets**:
-  - **EU Multi-Region (eu)**: only Fable 5 ($11/$55), Opus 4.8 ($5.50/$27.50),
-    Opus 4.7 ($5.50/$27.50).
+  - **EU Multi-Region (eu)**: Sonnet 5 promotional ($2.20/$11), Fable 5
+    ($11/$55), Opus 4.8 ($5.50/$27.50), and Opus 4.7 ($5.50/$27.50).
   - **europe-west1**: Opus 4.6 & 4.5 ($5.50/$27.50), Sonnet 4.6 & 4.5
     ($3.30/$16.50), Haiku 4.5 ($1.10/$5.50).
-  The JSON records each Claude model at its EU rate, tagging `region` as `eu` or
-  `europe-west1` accordingly (with the Global rate noted). Claude Opus 4.1 has
-  uniform pricing across all regions → `global`.
-- **Gemini** Global rows remain global offers even when the same family may be reachable
-  from other endpoints. The **Gemini 3+ family** has a **non-global
-  surcharge** (Gemini 3.5 Flash $1.50/$9.00 Global vs **$1.65/$9.90 Non-global**;
-  Gemini 3.1 Flash-Lite $0.25/$1.50 vs **$0.275/$1.65**). Those two use the
-  non-global numbers tagged `europe-west4`. **Caveat:** Google states non-global
-  pricing for GA Gemini 3+ takes effect **2026-07-01**; before that date Global
-  pricing applies even to europe-west4. Gemini 3.1 Pro and Gemini 3 Flash show no
-  non-global surcharge → `global`.
+  The JSON records both the cheaper `global` route and the EU `eu`/`europe-west1`
+  route for each of these nine models. Claude Opus 4.1 remains Global because its
+  current model page does not document an EU-resident inference route.
+- **Gemini 3.5 Flash / Gemini 3.1 Flash-Lite:** both Global and EU Standard PayGo
+  routes are explicit. Global is `$1.50/$9.00` and `$0.25/$1.50`; EU is
+  `$1.65/$9.90` and `$0.275/$1.65`. The EU rows use `region=eu`, as documented.
+- **Gemini 2.5 Pro / Flash / Flash-Lite:** Global and EU-resident online-prediction
+  routes are separate rows but have identical token prices. Google's data-residency
+  matrix, not merely endpoint presence, is the basis for `eu_hosted=true`.
+- Gemini 3.1 Pro and Gemini 3 Flash remain Global-only because current Standard PayGo
+  documentation does not establish an EU-resident route for them.
 
 ## Gemini context-tier caveat
 
@@ -228,8 +240,9 @@ tier ($2.50/$5.00) noted in its rows.
   standard pay-go captured; some cache-hit values noted).
 - **Deprecated Claude** rows (Opus 4, Sonnet 4, Claude 3.x) omitted.
 - **DeepSeek-OCR** and **Mistral OCR** omitted (per-page pricing, not general LLMs).
-- **Gemini image/video-only** models (3 Pro Image, 3.1 Flash Image, 2.5 Flash
-  Image, Deep Research Agent, Live API) omitted — not text-LLM pay-go rows.
+- **Gemini Omni Flash Preview** is included because it has general text input/output.
+  Specialized image models (3 Pro Image, 3.1 Flash Image, 2.5 Flash Image), Deep
+  Research Agent, and Live API variants remain omitted from the general text-LLM scope.
 
 ## How to refresh
 
@@ -247,8 +260,8 @@ tier ($2.50/$5.00) noted in its rows.
    `agent-browser eval '(() => { const ds=[...document.querySelectorAll("devsite-selector")].find(d=>/EU Multi-Region/.test(d.textContent)); const s=[...ds.querySelectorAll("section")]; return s.find(x=>x.getAttribute("data-tab")==="eu-multi-region-eu").innerText; })()'`
    Region data-tabs: `global`, `us-multi-region-us`, `eu-multi-region-eu`,
    `us-east5`, `europe-west1`, `asia-southeast1`, `asia-east1`. The two EU regions
-   list different model subsets (eu: Fable 5 + Opus 4.8/4.7; europe-west1: Opus
-   4.6/4.5 + Sonnet 4.6/4.5 + Haiku 4.5).
+   list different model subsets (eu: Sonnet 5 + Fable 5 + Opus 4.8/4.7;
+   europe-west1: Opus 4.6/4.5 + Sonnet 4.6/4.5 + Haiku 4.5).
    NOTE: use a dedicated `agent-browser --session vertex ...` — the shared `default`
    session can be hijacked by other concurrent agent-browser users and drift to a
    different URL mid-scrape.

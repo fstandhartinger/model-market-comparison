@@ -6,7 +6,7 @@ import {
 import type { ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
+import { modelCost, scopedCatalogOffers, createOfferScope, isHiddenModel } from "../lib/cost";
 import { NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName } from "../lib/variants";
@@ -19,7 +19,7 @@ function truncTick({ x, y, payload }: { x: number; y: number; payload: { value: 
 export function ChartsBoard({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.euDedicated, s.teeOnly]);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [maxCost, setMaxCost] = useState("");
   const preferredId = useMemo(() => preferredVariantIds(data.models, score), [data.models, score]);
 
@@ -32,7 +32,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     if (s.featured) base = base.filter((m) => m.featured);
     if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
     return base
-      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], offerCount: rankedOffers(data.offersByFamily[m.family_key], offerScope).length }))
+      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], offerCount: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length }))
       .filter((x) => !offerScope.restricted || x.offerCount > 0)
       .filter((x) => (Number.isFinite(maxC) ? x.cost != null && x.cost <= maxC : true))
       .filter((x) => (s.minScore > 0 ? x.sc != null && x.sc >= s.minScore : true));

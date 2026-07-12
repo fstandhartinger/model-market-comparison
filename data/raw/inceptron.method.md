@@ -90,8 +90,9 @@ endpoints as of 2026-06-23.
      python3 -c "import sys,json;[print(m['name'], m['owned_by'], float(m['pricing']['prompt'])*1e6, float(m['pricing']['completion'])*1e6, m['quantization']) for m in json.load(sys.stdin)['data']]"
    ```
    This is public (no auth needed) and returns name, owned_by, pricing.prompt,
-   pricing.completion (USD/token -> x1e6 for per-1M), quantization, context_length,
-   modalities.
+   pricing.completion and `input_cache_reads` (USD/token -> x1e6 for per-1M),
+   quantization, context_length, modalities. Persist the cache tier as
+   `cache_read_per_1m_usd`, not only in `notes`.
 2. **Cross-source (OpenRouter):** for each candidate slug, GET
    `https://openrouter.ai/api/v1/models/{author}/{slug}/endpoints` and filter
    `data.endpoints[].provider_name == "Inceptron"`; `pricing.prompt` /

@@ -6,6 +6,7 @@ Coding Agent & Intelligence indices) and [DesignArena](https://www.designarena.a
 (Agentic Web Dev Frontend & Full-Stack Elo). Prices are aggregated across **OpenRouter**
 inference providers, **AWS Bedrock**, **Azure AI Foundry**, **Google Vertex AI**,
 **Nebius**, **Inceptron**, **TensorX**, **Scaleway**, **IONOS**, **Mistral**, **Chutes**,
+**OVHcloud**, **STACKIT**, **T-Systems LLM Hub**,
 **GitHub Copilot**, and the **Anthropic / Claude Code** list price — normalized to
 USD per 1M tokens.
 
@@ -21,8 +22,8 @@ USD per 1M tokens.
   **Featured**, **Exclude Chinese providers**, **EU-hosted only**, **Non-US provider only**,
   **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
   provider- and model-checklist filters.
-- **Selectable scores**: **Composite** (missing-neutral 0–100, default), ArtificialAnalysis
-  **Coding Index**, **Coding Agent Index** (best harness for the exact model/effort variant), **Intelligence Index**,
+- **Selectable scores**: **Composite** (five fixed missing-neutral slots, 0–100, default), ArtificialAnalysis
+  **Coding Index**, **Coding Agent Index** (median across published harnesses for the exact model/effort variant), **Intelligence Index**,
   and DesignArena **Frontend** / **Full-Stack** Elo.
 - **Overview** — fully sortable table with per-column filters, **Has score** / **Has provider**
   toggles, and Excel-style **data bars** on score & cost.
@@ -41,8 +42,9 @@ USD per 1M tokens.
 - **Gateways** — 35+ LLM gateways/routers/aggregators compared on EU routing capability,
   self-host/local, open-source license, HQ and pricing.
 - **EU & Sovereign** — which providers are EU-hosted/sovereign and which SOTA models they
-  actually serve (incl. TEE/confidentiality notes + a dedicated/BYOC-only list). The global
-  **EU-hosted only** filter has a **＋ incl. EU via dedicated/BYOC** modifier.
+  actually serve (incl. TEE/confidentiality notes + a separate dedicated/BYOC-only list).
+  Interactive EU filtering requires evidence on the exact model offer; provider-level
+  dedicated/BYOC capability alone never turns a global route into an EU-hosted one.
 - **Public read-only JSON API** (CORS-enabled) — `/api/dataset` (full export),
   `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`. See [API.md](API.md).
 
@@ -92,14 +94,18 @@ A [`render.yaml`](render.yaml) Blueprint and a [`Dockerfile`](Dockerfile) are in
 
 10:1 blended cost = `(10·input + 1·output) / 11` per 1M tokens. EU residency is
 audited per offer/model/region; an EU-capable provider does not make its US or global
-routes EU-hosted. The Composite normalizes four capability slots, derives pairwise
-differences only from shared slots, and fits those observed edges into one relative
-rating graph. Every edge retains a fixed four-slot denominator; a missing slot adds
-zero difference instead of amplifying the remaining scores. Pairs without common
-evidence create no edge. If one model has a strict subset of another model's
-scores and every shared value is identical, both are hard-tied before fitting so
-missing coverage cannot dodge an otherwise applicable comparison. DesignArena boards need at least 500 battles to enter
-the Composite. GitHub Copilot&apos;s current token/AI-Credit rates and legacy annual-plan
+routes EU-hosted. The Composite averages five equally weighted, fixed slots: AA Coding,
+exact-variant AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena
+Full-Stack. AA values are clamped to 0–100. A DesignArena board qualifies with at least
+500 battles and its Elo is converted to the expected score against a fixed Elo 1000
+opponent: `100 / (1 + 10^((1000 − Elo) / 400))`. Each missing slot contributes the
+neutral value 50 and the denominator always remains five; a model with no observed
+slot has no Composite. A coverage-safe dominance adjustment may raise a leader to at
+least 0.1 above a model whose every observed slot it covers and matches or exceeds
+(with one strict improvement); it never lowers the covered model. GitHub Copilot&apos;s
+current token/AI-Credit rates and legacy annual-plan
 request multipliers are kept separate from provider API offers.
-Model names are normalized heuristically across sources; figures may be stale —
+Model identities are joined conservatively across sources; modes, releases, pricing tiers
+and hosting routes remain separate unless a stable source id/repository proves equivalence.
+Figures may still change upstream —
 **verify before relying on them**. Not affiliated with any provider.

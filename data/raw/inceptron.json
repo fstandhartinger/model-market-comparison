@@ -10,6 +10,7 @@
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.95,
       "output_per_1m_usd": 3.04,
+      "cache_read_per_1m_usd": 0.18,
       "region": "eu",
       "notes": "fp4 quant, 1,048,576 context. Cache read $0.18/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12."
     },
@@ -18,6 +19,7 @@
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.72,
       "output_per_1m_usd": 3.5,
+      "cache_read_per_1m_usd": 0.15,
       "region": "eu",
       "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12."
     },
@@ -26,6 +28,7 @@
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.66,
       "output_per_1m_usd": 3.41,
+      "cache_read_per_1m_usd": 0.15,
       "region": "eu",
       "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12."
     },
@@ -34,6 +37,7 @@
       "provider_org": "MiniMax",
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.9,
+      "cache_read_per_1m_usd": 0.05,
       "region": "eu",
       "notes": "fp8 quant, 196,608 context. Cache read $0.05/1M. Inceptron model id MiniMaxAI/MiniMax-M2.5. Native API is authoritative; $0.15/$0.90 on 2026-07-12."
     }

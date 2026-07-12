@@ -17,7 +17,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const variants = ds.models
     .filter((m) => m.family_key === model.family_key)
     .sort((a, b) => (b.benchmarks?.aa_coding_index ?? -1) - (a.benchmarks?.aa_coding_index ?? -1));
-  const offers = data.offersByFamily[model.family_key] || [];
+  const offers = data.offersByModel[model.id] || [];
   const b = model.benchmarks;
   const da = model.designarena;
 
@@ -28,6 +28,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         <span className="inline-block h-3 w-3 rounded-full" style={{ background: orgColor(model.org) }} />
         <h1 className="text-2xl font-bold">{model.family_name}</h1>
         {model.open_weights && <span className="rounded bg-accent2/15 px-2 py-0.5 text-xs text-accent2">open weights</span>}
+        {model.deprecated && <span className="rounded bg-amber-500/15 px-2 py-0.5 text-xs text-amber-300">deprecated by benchmark source</span>}
         {model.featured && <span className="rounded bg-warn/15 px-2 py-0.5 text-xs text-warn">★ featured</span>}
       </div>
       <div className="mt-1 text-sm text-gray-400">

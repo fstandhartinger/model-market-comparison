@@ -1,7 +1,7 @@
 {
   "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata (refreshed 2026-07-12)",
   "collected_at": "2026-07-12",
-  "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global 'EU hosted' and 'Non-US provider' filters. Keyed by provider NAME (applies whether reached directly or via OpenRouter). hyperscaler=true for AWS Bedrock / Azure AI Foundry / Google Vertex AI (the big-cloud managed catalogs).",
+  "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global 'EU hosted' and 'Non-US provider' filters. Keyed by exact provider NAME. OpenRouter aliases do not inherit region guarantees from similarly named first-party catalogs: for example Amazon Bedrock and Azure remain non-EU unless their route itself proves an EU region. hyperscaler=true marks the big-cloud managed catalogs/routes.",
   "providers": {
     "AWS Bedrock": {
       "country": "US",
@@ -30,6 +30,7 @@
     "Nebius": {
       "country": "Netherlands",
       "eu_hosted": true,
+      "openrouter_eu_hosted": false,
       "non_us": true,
       "url": "https://nebius.com/",
       "note": "EU-capable Netherlands provider with Finland/France infrastructure, opt-in ZDR + no-training, ISO 27001/27701 and SOC 2 II. The serverless catalog is mixed-region: every offer's eu-north1/us-central1/uk-south1 region must be checked separately."
@@ -37,6 +38,7 @@
     "Inceptron": {
       "country": "Sweden",
       "eu_hosted": true,
+      "openrouter_eu_hosted": true,
       "non_us": true,
       "url": "https://www.inceptron.io/models",
       "note": "Sweden-based; OpenRouter metadata reports its serving datacenter in Finland (FI). Zero-retention; current catalog serves GLM 5.2, Kimi K2.6/K2.7 Code, and MiniMax M2.5."
@@ -44,6 +46,7 @@
     "Scaleway": {
       "country": "France",
       "eu_hosted": true,
+      "openrouter_eu_hosted": true,
       "non_us": true,
       "url": "https://www.scaleway.com/en/generative-apis/",
       "note": "FR-sovereign Generative APIs, current serverless pricing region Paris; ZDR by default. Serves GLM 5.2 plus Llama/Qwen/Mistral/Gemma/gpt-oss/Holo open models; no current DeepSeek or MiniMax endpoint."
@@ -51,6 +54,7 @@
     "IONOS": {
       "country": "Germany",
       "eu_hosted": true,
+      "openrouter_eu_hosted": true,
       "non_us": true,
       "url": "https://cloud.ionos.de/managed/ai-model-hub",
       "note": "DE-sovereign OpenAI-compatible AI Model Hub. Serves Llama/Mistral/gpt-oss and Qwen3-Coder-Next 80B (open models only)."
@@ -58,13 +62,36 @@
     "TensorX": {
       "country": "Ireland",
       "eu_hosted": true,
+      "openrouter_eu_hosted": true,
       "non_us": true,
       "url": "https://tensorx.ai/models/",
       "note": "EU-sovereign serverless per-token API (Dublin HQ, 3 EU data-centre regions, isolated from US hyperscalers). Zero data retention; GDPR/EU AI Act, ISO 27001-ready. Serves GLM/Kimi/DeepSeek/MiniMax/Qwen/gpt-oss — incl. the SOTA Chinese coding models, in-EU."
     },
+    "OVHcloud": {
+      "country": "France",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/",
+      "note": "French sovereign-cloud provider. First-party AI Endpoints material states that inference data is hosted in Europe, the service runs on OVHcloud infrastructure, and prompts use zero retention apart from billing data. The 2026-07-12 catalog has 9 priced text-generating LLM/VLM offers."
+    },
+    "STACKIT": {
+      "country": "Germany",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/",
+      "note": "German sovereign cloud. All current Shared Chat models use the eu01 OpenAI-compatible endpoint; the official price list identifies EU01 as Germany South. Six chat models were supported on 2026-07-12."
+    },
+    "T-Systems LLM Hub": {
+      "country": "Germany",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://docs.llmhub.t-systems.net/models/",
+      "note": "AI Foundation Services catalog is mixed hosting: open models marked T-Cloud are sovereign Germany inference, while proprietary models are routed to Azure or GCP EU regions and retain upstream-provider terms. Inspect each offer's hosting_class; preview rows are not generally priced production offers."
+    },
     "NextBit": {
       "country": "Spain",
       "eu_hosted": true,
+      "openrouter_eu_hosted": true,
       "non_us": true,
       "url": "https://www.nextbit256.com/",
       "note": "OpenRouter metadata reports headquarters ES and datacenters ES; EU-hosted OpenRouter endpoints, including DeepSeek V4 Flash."
@@ -76,6 +103,107 @@
       "url": "https://api.trustedrouter.eu/",
       "coming_soon": true,
       "note": "EU-based, security-focused router — still being launched, not production-ready yet."
+    },
+    "Amazon Bedrock": {
+      "country": "US",
+      "eu_hosted": true,
+      "openrouter_eu_hosted": false,
+      "non_us": false,
+      "url": "https://aws.amazon.com/bedrock/",
+      "note": "Exact OpenRouter provider name. EU-capable only on endpoints explicitly tagged amazon-bedrock/eu-west-1; global routes do not inherit EU residency.",
+      "hyperscaler": true
+    },
+    "Ambient": {
+      "country": null,
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "OpenRouter's provider API currently publishes neither headquarters nor datacenters. Conservatively excluded from EU-hosted and non-US filters pending first-party evidence."
+    },
+    "Azure": {
+      "country": "US",
+      "eu_hosted": true,
+      "openrouter_eu_hosted": false,
+      "non_us": false,
+      "url": "https://azure.microsoft.com/",
+      "note": "Exact OpenRouter provider name. EU-capable only on endpoints explicitly tagged azure/eu or azure/swedencentral; global routes do not inherit EU residency.",
+      "hyperscaler": true
+    },
+    "Darkbloom": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.darkbloom.dev/terms.html",
+      "note": "Operated by Eigen Labs, Inc. under California law. Public-alpha Apple-hardware attestation is not evidence of EU residency or confidential inference equivalent to the app's TEE flag; current terms also state the absence of end-to-end encryption."
+    },
+    "Decart": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://cogito.decart.ai/legal/privacy",
+      "note": "OpenRouter provider metadata reports headquarters US and datacenters US."
+    },
+    "Inflection": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://inflection.ai/privacy-policy",
+      "note": "US company; OpenRouter exposes no guaranteed EU serving datacenter for this route."
+    },
+    "Mancer 2": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://mancer.tech/privacy",
+      "note": "Mancer's first-party privacy policy identifies Sunlit Software Inc. and states that the platform is hosted in the United States."
+    },
+    "ModelRun": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://modelrun.org/privacy-policy.html",
+      "note": "OpenRouter provider metadata reports headquarters US and datacenters US."
+    },
+    "Morph": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://morphllm.com/privacy",
+      "note": "OpenRouter provider metadata reports headquarters US and datacenters US."
+    },
+    "OpenInference": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.openinference.xyz/terms",
+      "note": "OpenRouter provider metadata reports headquarters US and no guaranteed EU datacenter."
+    },
+    "Perceptron": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.perceptron.inc/privacy-policy",
+      "note": "OpenRouter provider metadata reports headquarters US and no guaranteed EU datacenter."
+    },
+    "Poolside": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://poolside.ai/legal/privacy",
+      "note": "Poolside, Inc. is US-founded/US-headquartered. Its privacy material permits variable infrastructure locations; the OpenRouter route provides no EU residency guarantee."
+    },
+    "Relace": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.relace.ai/privacy-policy",
+      "note": "Relace's first-party privacy policy identifies Squack Inc. at 130 Bush Street, San Francisco. No EU serving guarantee is published for the OpenRouter route."
+    },
+    "xAI": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://x.ai/legal/privacy-policy",
+      "note": "OpenRouter provider metadata reports headquarters US and no guaranteed EU datacenter."
     },
     "Anthropic": {
       "country": "US",
@@ -89,8 +217,12 @@
     },
     "Google": {
       "country": "US",
-      "eu_hosted": false,
-      "non_us": false
+      "eu_hosted": true,
+      "openrouter_eu_hosted": false,
+      "non_us": false,
+      "url": "https://cloud.google.com/vertex-ai",
+      "note": "Exact OpenRouter provider name. EU-capable only on endpoints explicitly tagged google-vertex/eu or google-vertex/europe; global routes do not inherit EU residency.",
+      "hyperscaler": true
     },
     "Google AI Studio": {
       "country": "US",
@@ -268,10 +400,11 @@
       "non_us": false
     },
     "Friendli": {
-      "country": "South Korea",
+      "country": "US",
       "eu_hosted": false,
-      "non_us": true,
-      "note": "ZDR by default; Korea-based."
+      "non_us": false,
+      "url": "https://friendli.ai/privacypolicy",
+      "note": "FriendliAI is headquartered at 303 Twin Dolphin Drive, Redwood City, California; Seoul is an additional hub, not company HQ. OpenRouter likewise reports headquarters US. ZDR by default."
     },
     "Upstage": {
       "country": "South Korea",
@@ -303,6 +436,7 @@
     "Mistral": {
       "country": "France",
       "eu_hosted": true,
+      "openrouter_eu_hosted": true,
       "non_us": true,
       "url": "https://mistral.ai/pricing/api",
       "note": "French first-party API; data is hosted in the EU by default unless the explicit US endpoint is selected. Serves Mistral's own Open, Premier, and Labs models."

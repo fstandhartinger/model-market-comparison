@@ -6,6 +6,10 @@ import { dirname, join } from "node:path";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(await readFile(join(__dirname, "..", "data", "dataset.json"), "utf8"));
+const aa = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "artificialanalysis.json"), "utf8"));
+const designArena = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "designarena.json"), "utf8"));
+const openRouter = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "openrouter.json"), "utf8"));
+const providerMeta = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "provider-meta.json"), "utf8"));
 const codingAgents = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "aa-coding-agents.json"), "utf8"));
 const copilot = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "github-copilot.json"), "utf8"));
 const claude = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "claude-code.json"), "utf8"));
@@ -84,15 +88,20 @@ test("open-weights filter metadata excludes audited proprietary families", () =>
   assert.equal(isOpen("mistral-medium-3"), false);
   assert.equal(isOpen("mistral-medium-3.5"), true);
   assert.equal(isOpen("mistral-large-3"), true);
-  assert.equal(isOpen("command-a"), false);
-  assert.equal(isOpen("command-a+"), false);
+  // AA now publishes official open-weight releases for Command A / A+.
+  assert.equal(isOpen("command-a"), true);
+  assert.equal(isOpen("command-a+"), true);
   assert.equal(isOpen("sonar"), false);
   assert.equal(isOpen("sonar-pro"), false);
   assert.equal(isOpen("palmyra-x5"), false);
+  for (const family of ["composer-2", "composer-2.5", "composer-2.5-fast", "raptor-mini", "yoda"]) {
+    assert.equal(isOpen(family), false, family);
+  }
 
   const grok = ds.models.filter((model) => model.family_key.startsWith("grok"));
   assert.ok(grok.length > 0);
-  assert.ok(grok.every((model) => model.org === "xAI" && model.open_weights === false));
+  assert.ok(grok.every((model) => model.org === "xAI"));
+  assert.deepEqual(grok.filter((model) => model.open_weights).map((model) => model.family_key).sort(), ["grok-1", "grok-2-dec-24"]);
   assert.equal(ds.models.some((model) => model.org === "SpaceXAI"), false);
 });
 
@@ -159,6 +168,42 @@ test("global and EU routes from one provider are both retained", () => {
   assert.ok(azure.some((offer) => offer.eu_hosted === true && offer.region === "eu"));
 });
 
+test("mixed-region OpenRouter providers never inherit an EU flag from company metadata", () => {
+  const routedNebius = ds.models.flatMap((model) => model.offers)
+    .filter((offer) => offer.platform === "OpenRouter" && offer.provider === "Nebius");
+  assert.ok(routedNebius.length > 0);
+  assert.ok(routedNebius.every((offer) => offer.eu_hosted === false));
+});
+
+test("EU-capable gateway providers mark only their explicitly European OpenRouter routes", () => {
+  const offers = ds.models.flatMap((model) => model.offers).filter((offer) => offer.platform === "OpenRouter");
+  for (const provider of ["Amazon Bedrock", "Azure", "Google"]) {
+    assert.equal(providerMeta.providers[provider]?.eu_hosted, true, `${provider} directory capability`);
+    assert.equal(providerMeta.providers[provider]?.openrouter_eu_hosted, false, `${provider} blanket routing`);
+    const rows = offers.filter((offer) => offer.provider === provider);
+    assert.ok(rows.some((offer) => offer.region === "eu" && offer.eu_hosted), `${provider} explicit EU route`);
+    assert.ok(rows.some((offer) => offer.region === "global" && !offer.eu_hosted), `${provider} global route`);
+  }
+});
+
+test("context-price tiers and distinct managed routes survive dataset deduplication", () => {
+  const offers = ds.models.flatMap((model) => model.offers);
+  const azure55 = offers.filter((offer) => offer.provider === "Azure AI Foundry" && ["short_context", "long_context"].includes(offer.pricing_tier));
+  assert.ok(azure55.some((offer) => offer.region === "global" && offer.pricing_tier === "short_context" && offer.input_per_1m === 5));
+  assert.ok(azure55.some((offer) => offer.region === "global" && offer.pricing_tier === "long_context" && offer.input_per_1m === 10));
+  assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "short_context" && offer.input_per_1m === 5.5));
+  assert.ok(azure55.some((offer) => offer.region === "eu" && offer.pricing_tier === "long_context" && offer.input_per_1m === 11));
+
+  const tSystems = offers.filter((offer) => offer.provider === "T-Systems LLM Hub" && offer.pricing_tier);
+  assert.ok(tSystems.some((offer) => offer.pricing_tier === "up_to_200k_input"));
+  assert.ok(tSystems.some((offer) => offer.pricing_tier === "above_200k_input"));
+
+  const deepSeek = ds.models.find((model) => model.family_key === "deepseek-v4-pro")?.offers
+    .filter((offer) => offer.provider === "Azure AI Foundry") || [];
+  assert.ok(deepSeek.some((offer) => offer.route_type == null && offer.region === "global"));
+  assert.ok(deepSeek.some((offer) => offer.route_type === "fireworks" && offer.region === "us"));
+});
+
 test("audited July provider prices survive the merged dataset", () => {
   const find = (family, provider) => ds.models.find((model) => model.family_key === family)?.offers.find((offer) => offer.provider === provider);
   assert.deepEqual(
@@ -179,9 +224,12 @@ test("privacy routing is not mislabeled as trusted execution", () => {
   const venice = ds.models.flatMap((model) => model.offers).filter((offer) => offer.provider === "Venice");
   assert.ok(venice.length > 0);
   assert.ok(venice.every((offer) => !offer.tee));
-  const chutes = ds.models.flatMap((model) => model.offers).filter((offer) => offer.provider === "Chutes");
+  const chutes = ds.models.flatMap((model) => model.offers).filter((offer) => offer.platform === "Chutes");
   assert.equal(chutes.length > 0, true);
   assert.ok(chutes.every((offer) => offer.tee && !offer.eu_hosted));
+  const routedChutes = ds.models.flatMap((model) => model.offers).filter((offer) => offer.platform === "OpenRouter" && offer.provider === "Chutes");
+  assert.ok(routedChutes.length > 0);
+  assert.ok(routedChutes.every((offer) => !offer.tee));
 });
 
 test("current Copilot token catalog and legacy request table stay distinct", () => {
@@ -268,7 +316,7 @@ test("freshly built dataset attaches Coding Agent scores only to exact variants"
   assert.equal(score("deepseek-v4-pro::max"), null);
   assert.equal(score("deepseek-v4-pro::non-reasoning"), null);
 
-  assert.equal(score("gpt-5.5::medium"), 70.5);
+  assert.equal(score("gpt-5.5::medium"), 66.2);
   assert.equal(score("gpt-5.5::xhigh"), 76.4);
   assert.equal(score("gpt-5.5::low"), null);
 
@@ -280,8 +328,138 @@ test("freshly built dataset attaches Coding Agent scores only to exact variants"
     for (const [variant, expected] of Object.entries(values)) assert.equal(score(`${family}::${variant}`), expected, `${family} ${variant}`);
   }
 
-  // Explicit audited alias; ambiguous bare/medium labels remain unattached.
-  assert.equal(score("glm-5.2::max"), 57.9);
+  // Bare source labels remain exact default rows instead of leaking to an AA sibling.
+  assert.equal(score("glm-5.2::default"), 57.9);
+  assert.equal(score("glm-5.2::max"), null);
+  assert.equal(score("glm-5.1::default"), 52.3);
   assert.equal(score("glm-5.1::reasoning"), null);
   assert.equal(score("glm-5.1::non-reasoning"), null);
+});
+
+test("all 572 Artificial Analysis rows and official weight flags survive exactly once", () => {
+  const output = ds.models.filter((model) => model.aa_model_id);
+  assert.equal(output.length, aa.models.length);
+  assert.equal(new Set(output.map((model) => model.aa_model_id)).size, aa.models.length);
+  const rawById = new Map(aa.models.map((model) => [model.id, model]));
+  for (const model of output) {
+    const raw = rawById.get(model.aa_model_id);
+    assert.ok(raw, model.aa_model_id);
+    assert.equal(model.display_name, raw.name, model.id);
+    assert.equal(model.open_weights, raw.metadata.is_open_weights, model.id);
+    assert.equal(model.deprecated, raw.metadata.deprecated, model.id);
+  }
+});
+
+test("audited upstream repository corrections preserve source provenance", () => {
+  const expected = new Map([
+    ["aa83359a-d804-4f0b-b5bf-dc637711c26f", {
+      corrected: "https://huggingface.co/meta-llama/Meta-Llama-3-70B-Instruct",
+      source: "https://huggingface.co/meta-llama/Meta-Llama-3-8B-Instruct",
+    }],
+    ["222fb320-6e55-4672-846a-b6d5a24a45f4", {
+      corrected: "https://huggingface.co/google/gemma-3-4b-it",
+      source: "https://huggingface.co/google/gemma-3-12b-it",
+    }],
+  ]);
+  for (const [id, urls] of expected) {
+    const model = ds.models.find((row) => row.aa_model_id === id);
+    assert.equal(model?.aa_metadata?.huggingface_url, urls.corrected, id);
+    assert.equal(model?.aa_metadata?.source_huggingface_url, urls.source, id);
+    assert.ok(model?.aa_metadata?.metadata_correction, id);
+  }
+});
+
+test("audited provider checkpoint aliases join their benchmark families", () => {
+  const providers = (family) => new Set(ds.models
+    .filter((model) => model.family_key === family)
+    .flatMap((model) => model.offers)
+    .map((offer) => offer.provider));
+  const families = new Set(ds.models.map((model) => model.family_key));
+
+  assert.ok(providers("llama-3.3-70b-instruct").has("OVHcloud"));
+  for (const provider of ["AWS Bedrock", "Nebius", "Scaleway", "STACKIT"]) {
+    assert.ok(providers("gemma-3-27b-instruct").has(provider), provider);
+  }
+  for (const provider of ["Scaleway", "OVHcloud", "IONOS"]) {
+    assert.ok(providers("mistral-small-3.2-24b-instruct").has(provider), provider);
+  }
+  assert.ok(providers("devstral-2-123b").has("Scaleway"));
+  assert.ok(providers("mistral-nemo").has("OVHcloud"));
+  assert.ok(providers("mistral-nemo").has("Chutes"));
+  assert.ok(providers("mistral-medium-3.5").has("Scaleway"));
+  assert.ok(providers("gemma-4-31b-it").has("Chutes"));
+
+  for (const orphan of [
+    "meta-llama-3.3-70b-instruct", "gemma-3-27b-it", "mistral-small-3.2-24b",
+    "mistral-small-3.2-24b-instruct-2506", "devstral-2-123b-instruct-2512",
+    "mistral-nemo-instruct-2407", "mistral-medium-3.5-128b", "gemma-4-31b-turbo",
+  ]) assert.equal(families.has(orphan), false, orphan);
+});
+
+test("canonical organizations are consistent across source aliases", () => {
+  assert.ok(ds.models.filter((model) => model.family_key.startsWith("hermes-")).every((model) => model.org === "Nous Research"));
+  assert.ok(ds.models.filter((model) => model.family_key.startsWith("ui-tars-")).every((model) => model.org === "ByteDance Seed"));
+});
+
+test("every Coding Agent harness result is retained and the summary is its median", () => {
+  const rows = ds.models.filter((model) => model.coding_agent_results?.length);
+  assert.equal(rows.reduce((sum, model) => sum + model.coding_agent_results.length, 0), codingAgents.rows.length);
+  for (const model of rows) {
+    const tenths = model.coding_agent_results.map((result) => Math.round(result.score * 10)).sort((a, b) => a - b);
+    const middle = Math.floor(tenths.length / 2);
+    const expectedTenths = tenths.length % 2 ? tenths[middle] : Math.round((tenths[middle - 1] + tenths[middle]) / 2);
+    assert.equal(model.benchmarks.aa_coding_agent_index, expectedTenths / 10, model.id);
+  }
+});
+
+test("DesignArena board rows attach once and never clone across effort siblings", () => {
+  const source = [];
+  for (const [board, payload] of Object.entries(designArena.leaderboards)) {
+    for (const row of payload.data) source.push(`${board}::${row.modelId}`);
+  }
+  const output = [];
+  for (const model of ds.models) {
+    for (const [board, row] of Object.entries(model.designarena || {})) output.push(`${board}::${row.modelId}`);
+  }
+  assert.deepEqual(output.sort(), source.sort());
+});
+
+test("every current OpenRouter text SKU remains represented after free-tier deduplication", () => {
+  const stable = (id) => String(id || "").replace(/^~/, "").replace(/:free$/i, "");
+  const excluded = /(vision-only|embed|rerank|moderation|ocr|guard|^openrouter\/(?:free|auto|fusion|bodybuilder|pareto-code)$)/i;
+  const moving = /^~?[^/]+\/[^/]*latest$/i;
+  const expected = new Set(openRouter.models.filter((model) => {
+    const outputs = model.architecture?.output_modalities || [];
+    return outputs.includes("text") && !outputs.some((mode) => mode !== "text")
+      && !excluded.test(model.id) && !excluded.test(model.name || "") && !moving.test(model.id)
+      && !(model.expiration_date && String(model.expiration_date) < String(openRouter.collected_at))
+      && (model.endpoints || []).some((endpoint) => endpoint.pricing?.prompt != null || endpoint.pricing?.completion != null);
+  }).map((model) => stable(model.id)));
+  const actual = new Set(ds.models.flatMap((model) => model.offers).map((offer) => offer.or_model_id).filter(Boolean).map(stable));
+  assert.deepEqual([...actual].filter((id) => expected.has(id)).sort(), [...expected].sort());
+});
+
+test("AA rows receive only their exact OpenRouter SKU or a repository-verified replacement for a stale alias", () => {
+  const stable = (id) => String(id || "").replace(/^~/, "").replace(/:free$/i, "");
+  const stableHf = (id) => String(id || "").replace(/^https?:\/\/(?:www\.)?huggingface\.co\//i, "").replace(/\/$/, "").toLowerCase();
+  for (const model of ds.models.filter((row) => row.aa_metadata?.openrouter_api_id)) {
+    const expected = stable(model.aa_metadata.openrouter_api_id);
+    for (const offer of model.offers.filter((row) => row.or_model_id)) {
+      assert.ok(
+        stable(offer.or_model_id) === expected || stable(offer.or_canonical_slug) === expected
+          || (stableHf(model.aa_metadata.huggingface_url) && stableHf(offer.or_hugging_face_id) === stableHf(model.aa_metadata.huggingface_url)),
+        `${model.id}: ${offer.or_model_id} is not ${model.aa_metadata.openrouter_api_id}`,
+      );
+    }
+  }
+});
+
+test("all published providers have metadata and no generated normalization ghosts remain", () => {
+  for (const provider of ds.providers.filter((row) => !row.coming_soon)) {
+    assert.ok(providerMeta.providers[provider.provider], provider.provider);
+  }
+  const ghosts = ds.models.filter((model) => !model.aa_model_id && !model.coding_agent_results?.length
+    && !Object.values(model.benchmarks || {}).some((value) => value != null)
+    && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot);
+  assert.deepEqual(ghosts, []);
 });
