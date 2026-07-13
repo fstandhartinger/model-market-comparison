@@ -29,8 +29,12 @@ test("dataset has models, families and offers", () => {
 });
 
 test("every published source snapshot is current for this refresh", () => {
+  // Sources refresh independently (a DesignArena-only refetch must not require
+  // re-scraping every catalog), so assert a minimum freshness instead of one
+  // pinned date. Bump the floor on each full refresh cycle.
+  const FLOOR = "2026-07-12";
   for (const [source, collectedAt] of Object.entries(ds.sources)) {
-    assert.equal(collectedAt, "2026-07-12", source);
+    assert.ok(String(collectedAt) >= FLOOR, `${source} snapshot ${collectedAt} predates ${FLOOR}`);
   }
 });
 

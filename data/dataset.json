@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-07-12T22:09:07.819Z",
+  "generated_at": "2026-07-13T14:31:15.048Z",
   "counts": {
     "models": 755,
     "families": 599,
@@ -9,7 +9,7 @@
   "sources": {
     "openrouter": "2026-07-12",
     "artificialanalysis": "2026-07-12",
-    "designarena": "2026-07-12",
+    "designarena": "2026-07-13",
     "aws_bedrock": "2026-07-12",
     "azure_foundry": "2026-07-12",
     "google_vertex": "2026-07-12",
@@ -3122,15 +3122,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1176,
+          "elo": 1178,
           "winRate": 44.4,
-          "battles": 4630,
+          "battles": 4641,
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1150,
-          "winRate": 44.2,
-          "battles": 2774,
+          "elo": 1149,
+          "winRate": 44.1,
+          "battles": 2794,
           "modelId": "gpt-5.5"
         }
       },
@@ -5960,7 +5960,14 @@
           "non_us": false
         }
       ],
-      "designarena": {},
+      "designarena": {
+        "fullstack": {
+          "elo": 1198,
+          "winRate": 44.4,
+          "battles": 153,
+          "modelId": "gpt-5.6-sol"
+        }
+      },
       "copilot": {
         "multiplier": null,
         "usd_per_request": null,
@@ -5993,6 +6000,7 @@
           "source_model_name": "GPT-5.6 Sol (high)"
         }
       ],
+      "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to gpt-5.6-sol::high, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
       "featured": true,
       "has_benchmark": true,
       "has_pricing": true
@@ -6920,13 +6928,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1111,
+          "elo": 1112,
           "winRate": 39.1,
           "battles": 2824,
           "modelId": "gpt-5.3-codex"
         },
         "fullstack": {
-          "elo": 1047,
+          "elo": 1045,
           "winRate": 36.4,
           "battles": 1117,
           "modelId": "gpt-5.3-codex"
@@ -10730,15 +10738,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1189,
+          "elo": 1191,
           "winRate": 48,
-          "battles": 5424,
+          "battles": 5430,
           "modelId": "gemini-3.1-pro-preview"
         },
         "fullstack": {
-          "elo": 1135,
-          "winRate": 44.3,
-          "battles": 3621,
+          "elo": 1133,
+          "winRate": 44.2,
+          "battles": 3634,
           "modelId": "gemini-3.1-pro-preview"
         }
       },
@@ -11664,15 +11672,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1257,
+          "elo": 1259,
           "winRate": 54.1,
-          "battles": 4416,
+          "battles": 4426,
           "modelId": "gemini-3.5-flash"
         },
         "fullstack": {
-          "elo": 1261,
+          "elo": 1260,
           "winRate": 57.5,
-          "battles": 3355,
+          "battles": 3368,
           "modelId": "gemini-3.5-flash"
         }
       },
@@ -13343,14 +13351,14 @@
       "designarena": {
         "frontend": {
           "elo": 1345,
-          "winRate": 62.6,
-          "battles": 768,
+          "winRate": 62.5,
+          "battles": 801,
           "modelId": "claude-sonnet-5"
         },
         "fullstack": {
-          "elo": 1300,
-          "winRate": 60.8,
-          "battles": 426,
+          "elo": 1301,
+          "winRate": 61.1,
+          "battles": 481,
           "modelId": "claude-sonnet-5"
         }
       },
@@ -13634,15 +13642,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1285,
-          "winRate": 53.9,
-          "battles": 1220,
+          "elo": 1287,
+          "winRate": 54,
+          "battles": 1230,
           "modelId": "claude-opus-4-8"
         },
         "fullstack": {
-          "elo": 1322,
-          "winRate": 64.8,
-          "battles": 979,
+          "elo": 1319,
+          "winRate": 64.5,
+          "battles": 993,
           "modelId": "claude-opus-4-8"
         }
       },
@@ -14205,15 +14213,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1332,
-          "winRate": 61.9,
-          "battles": 882,
+          "elo": 1335,
+          "winRate": 62.1,
+          "battles": 913,
           "modelId": "claude-fable-5"
         },
         "fullstack": {
-          "elo": 1308,
-          "winRate": 63.3,
-          "battles": 526,
+          "elo": 1306,
+          "winRate": 63.1,
+          "battles": 580,
           "modelId": "claude-fable-5"
         }
       },
@@ -14504,7 +14512,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1323,
+          "elo": 1325,
           "winRate": 63.4,
           "battles": 1577,
           "modelId": "claude-opus-4-7-thinking"
@@ -18503,7 +18511,7 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1010,
+          "elo": 1012,
           "winRate": 26.6,
           "battles": 969,
           "modelId": "deepseek-v4-pro"
@@ -19807,15 +19815,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1186,
+          "elo": 1188,
           "winRate": 46.3,
-          "battles": 5272,
+          "battles": 5278,
           "modelId": "grok-4.3"
         },
         "fullstack": {
-          "elo": 1076,
+          "elo": 1075,
           "winRate": 31.8,
-          "battles": 1972,
+          "battles": 1988,
           "modelId": "grok-4.3"
         }
       },
@@ -20048,9 +20056,9 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1267,
-          "winRate": 52.1,
-          "battles": 616,
+          "elo": 1270,
+          "winRate": 52.3,
+          "battles": 640,
           "modelId": "yoda"
         }
       },
@@ -22274,9 +22282,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1253,
-          "winRate": 53.7,
-          "battles": 201,
+          "elo": 1254,
+          "winRate": 53.6,
+          "battles": 207,
           "modelId": "minimax-m3"
         }
       },
@@ -24612,15 +24620,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1250,
+          "elo": 1252,
           "winRate": 57.4,
-          "battles": 5811,
+          "battles": 5824,
           "modelId": "kimi-k2.6"
         },
         "fullstack": {
-          "elo": 1219,
+          "elo": 1218,
           "winRate": 55.9,
-          "battles": 3294,
+          "battles": 3304,
           "modelId": "kimi-k2.6"
         }
       },
@@ -25684,15 +25692,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1235,
+          "elo": 1237,
           "winRate": 49.4,
-          "battles": 2614,
+          "battles": 2621,
           "modelId": "kimi-k2.7-code"
         },
         "fullstack": {
-          "elo": 1241,
-          "winRate": 55.1,
-          "battles": 1732,
+          "elo": 1240,
+          "winRate": 55.2,
+          "battles": 1749,
           "modelId": "kimi-k2.7-code"
         }
       },
@@ -31001,15 +31009,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1277,
-          "winRate": 57.2,
-          "battles": 4925,
+          "elo": 1278,
+          "winRate": 57.1,
+          "battles": 4930,
           "modelId": "glm-5.2"
         },
         "fullstack": {
-          "elo": 1296,
+          "elo": 1294,
           "winRate": 64,
-          "battles": 1848,
+          "battles": 1850,
           "modelId": "glm-5.2"
         }
       },
@@ -31545,15 +31553,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1237,
+          "elo": 1240,
           "winRate": 54.5,
-          "battles": 5631,
+          "battles": 5641,
           "modelId": "glm-5.1"
         },
         "fullstack": {
-          "elo": 1230,
-          "winRate": 56.4,
-          "battles": 2907,
+          "elo": 1228,
+          "winRate": 56.3,
+          "battles": 2918,
           "modelId": "glm-5.1"
         }
       },
@@ -32970,15 +32978,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1183,
-          "winRate": 46.3,
-          "battles": 4235,
+          "elo": 1185,
+          "winRate": 46.2,
+          "battles": 4252,
           "modelId": "glm-5v-turbo"
         },
         "fullstack": {
-          "elo": 1209,
+          "elo": 1208,
           "winRate": 53.9,
-          "battles": 2612,
+          "battles": 2627,
           "modelId": "glm-5v-turbo"
         }
       },
@@ -34200,15 +34208,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1262,
-          "winRate": 50.3,
-          "battles": 1337,
+          "elo": 1264,
+          "winRate": 50.2,
+          "battles": 1347,
           "modelId": "qwen3.7-max"
         },
         "fullstack": {
-          "elo": 1230,
-          "winRate": 49.3,
-          "battles": 532,
+          "elo": 1227,
+          "winRate": 49,
+          "battles": 539,
           "modelId": "qwen3.7-max"
         }
       },
@@ -40520,13 +40528,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1150,
+          "elo": 1152,
           "winRate": 45.7,
-          "battles": 3950,
+          "battles": 3951,
           "modelId": "gpt-5.2"
         },
         "fullstack": {
-          "elo": 1106,
+          "elo": 1105,
           "winRate": 44,
           "battles": 2180,
           "modelId": "gpt-5.2"
@@ -40903,13 +40911,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1080,
+          "elo": 1082,
           "winRate": 44.1,
           "battles": 526,
           "modelId": "gpt-5.1-codex"
         },
         "fullstack": {
-          "elo": 1088,
+          "elo": 1086,
           "winRate": 44.5,
           "battles": 155,
           "modelId": "gpt-5.1-codex"
@@ -41446,13 +41454,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1131,
+          "elo": 1133,
           "winRate": 41.7,
           "battles": 3819,
           "modelId": "gpt-5.4"
         },
         "fullstack": {
-          "elo": 1082,
+          "elo": 1080,
           "winRate": 40.8,
           "battles": 2166,
           "modelId": "gpt-5.4"
@@ -45283,13 +45291,13 @@
       "offers": [],
       "designarena": {
         "frontend": {
-          "elo": 1181,
+          "elo": 1183,
           "winRate": 50.3,
           "battles": 4538,
           "modelId": "gemini-3-pro-preview"
         },
         "fullstack": {
-          "elo": 1138,
+          "elo": 1136,
           "winRate": 48.6,
           "battles": 2272,
           "modelId": "gemini-3-pro-preview"
@@ -45765,13 +45773,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1178,
+          "elo": 1180,
           "winRate": 49.5,
           "battles": 4369,
           "modelId": "gemini-3-flash-preview"
         },
         "fullstack": {
-          "elo": 1126,
+          "elo": 1125,
           "winRate": 47.1,
           "battles": 2377,
           "modelId": "gemini-3-flash-preview"
@@ -48257,13 +48265,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1214,
+          "elo": 1216,
           "winRate": 54.2,
           "battles": 2991,
           "modelId": "claude-opus-4-5-20251101"
         },
         "fullstack": {
-          "elo": 1220,
+          "elo": 1218,
           "winRate": 59.9,
           "battles": 1410,
           "modelId": "claude-opus-4-5-20251101"
@@ -48963,13 +48971,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1123,
+          "elo": 1125,
           "winRate": 43.1,
           "battles": 1781,
           "modelId": "claude-sonnet-4-5-20250929"
         },
         "fullstack": {
-          "elo": 1116,
+          "elo": 1115,
           "winRate": 43.5,
           "battles": 644,
           "modelId": "claude-sonnet-4-5-20250929"
@@ -49326,13 +49334,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1260,
+          "elo": 1262,
           "winRate": 60.9,
           "battles": 3097,
           "modelId": "claude-opus-4-6"
         },
         "fullstack": {
-          "elo": 1284,
+          "elo": 1283,
           "winRate": 68.6,
           "battles": 1529,
           "modelId": "claude-opus-4-6"
@@ -55974,7 +55982,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1073,
+          "elo": 1072,
           "winRate": 39.7,
           "battles": 2005,
           "modelId": "grok-code-fast-1"
@@ -58651,13 +58659,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1187,
+          "elo": 1189,
           "winRate": 50.3,
           "battles": 3934,
           "modelId": "kimi-k2.5"
         },
         "fullstack": {
-          "elo": 1178,
+          "elo": 1177,
           "winRate": 54.2,
           "battles": 1810,
           "modelId": "kimi-k2.5"
@@ -60461,7 +60469,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1114,
+          "elo": 1112,
           "winRate": 44.9,
           "battles": 1650,
           "modelId": "glm-4.7"
@@ -60894,9 +60902,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1186,
+          "elo": 1184,
           "winRate": 52.3,
-          "battles": 4408,
+          "battles": 4419,
           "modelId": "glm-5"
         }
       },
@@ -61218,7 +61226,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1095,
+          "elo": 1093,
           "winRate": 42.3,
           "battles": 1909,
           "modelId": "glm-4.6"
@@ -68633,13 +68641,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1239,
+          "elo": 1241,
           "winRate": 55.8,
           "battles": 3023,
           "modelId": "claude-sonnet-4-6"
         },
         "fullstack": {
-          "elo": 1269,
+          "elo": 1268,
           "winRate": 63.1,
           "battles": 2032,
           "modelId": "claude-sonnet-4-6"
@@ -69890,13 +69898,13 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1119,
+          "elo": 1121,
           "winRate": 40.5,
           "battles": 3782,
           "modelId": "gpt-5.2-codex"
         },
         "fullstack": {
-          "elo": 1056,
+          "elo": 1055,
           "winRate": 37,
           "battles": 2169,
           "modelId": "gpt-5.2-codex"
@@ -69912,7 +69920,7 @@
       "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to gpt-5.2-codex::openrouter, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
       "featured": false,
       "has_benchmark": {
-        "elo": 1119,
+        "elo": 1121,
         "winRate": 40.5,
         "battles": 3782,
         "modelId": "gpt-5.2-codex"
@@ -70336,15 +70344,15 @@
       ],
       "designarena": {
         "frontend": {
-          "elo": 1205,
+          "elo": 1207,
           "winRate": 50,
-          "battles": 3705,
+          "battles": 3706,
           "modelId": "grok-4.20-0309-reasoning"
         },
         "fullstack": {
-          "elo": 1117,
+          "elo": 1116,
           "winRate": 41.1,
-          "battles": 2428,
+          "battles": 2430,
           "modelId": "grok-4.20-0309-reasoning"
         }
       },
@@ -70352,9 +70360,9 @@
       "designarena_attachment_note": "Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to grok-4.20-reasoning::default, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.",
       "featured": false,
       "has_benchmark": {
-        "elo": 1205,
+        "elo": 1207,
         "winRate": 50,
-        "battles": 3705,
+        "battles": 3706,
         "modelId": "grok-4.20-0309-reasoning"
       },
       "has_pricing": true
