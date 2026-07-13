@@ -7,11 +7,24 @@ import type { ScoreKey } from "./types";
  * the strongest measured config) with an active alias row that only carries
  * Coding-Agent/DesignArena values. Dropping variants individually made such a
  * family be represented by its weakest-measured row (GPT-5.4 scoring below its
- * own mini/nano). A family disappears only when EVERY variant is deprecated. */
+ * own mini/nano).
+ *
+ * A family stays visible when EITHER
+ *   (a) any variant is not AA-deprecated, OR
+ *   (b) the family is present on a current DesignArena agentic board — the
+ *       arena actively runs battles, so the model is measurably current even
+ *       when AA has rotated every effort config out of its own active set.
+ *       Without (b), Claude Opus 4.6 and GPT-5.4 — sold and actively ranked on
+ *       both DA boards — vanished from the default view. True legacy models
+ *       (Claude 3, GPT-4o, …) are on no DA board and stay hidden. */
 export function selectableModels<T extends ClientModel>(models: T[], hideDeprecated: boolean): T[] {
   if (!hideDeprecated) return models;
   const familyAlive = new Set<string>();
-  for (const m of models) if (!m.deprecated) familyAlive.add(m.family_key);
+  for (const m of models) {
+    if (!m.deprecated
+      || m.scores.designarena_frontend != null
+      || m.scores.designarena_fullstack != null) familyAlive.add(m.family_key);
+  }
   return models.filter((m) => familyAlive.has(m.family_key));
 }
 
