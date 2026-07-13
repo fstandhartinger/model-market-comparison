@@ -181,21 +181,39 @@ export function clientData(ds: Dataset): ClientData {
     if (dsv != null && (fb.ds == null || dsv > fb.ds.elo)) fb.ds = { elo: dsv, battles: raw?.designarena?.fullstack?.battles ?? null };
     famBest.set(m.family_key, fb);
   }
+  // Coverage counts a row's OWN measurements only (pre-backfill): backfilled slots make
+  // every sibling inherit the family maxima, so counting them would let a never-measured
+  // catalog row (e.g. a bare OpenRouter listing) pose as the family's measured
+  // representative and win the collapse pick. Evaluated BEFORE the display backfill below.
+  const coverage = new Map(models.map((m) => {
+    const raw = rawById.get(m.id);
+    return [m.id, compositeEvidenceCount({
+      id: m.id,
+      scores: m.scores,
+      designarenaBattles: {
+        frontend: raw?.designarena?.frontend?.battles ?? null,
+        fullstack: raw?.designarena?.fullstack?.battles ?? null,
+      },
+    })];
+  }));
+  // DISPLAY BACKFILL (user policy): a variant that lacks a metric inherits the family's
+  // best measured value of that metric — shown everywhere (Compare, model detail, metric
+  // sorting), not only inside the composite. A metric no variant of the family was ever
+  // measured on stays empty (e.g. Opus 4.6 has no complete AA Coding / Coding-Agent
+  // measurement at the source at all).
   const compositeInputs = models.map((m) => {
     const raw = rawById.get(m.id);
     const fb = famBest.get(m.family_key)!;
     const ownDf = m.scores.designarena_frontend;
     const ownDs = m.scores.designarena_fullstack;
+    m.scores.aa_coding_index = m.scores.aa_coding_index ?? fb.c;
+    m.scores.aa_coding_agent = m.scores.aa_coding_agent ?? fb.ca;
+    m.scores.aa_intelligence_index = m.scores.aa_intelligence_index ?? fb.i;
+    m.scores.designarena_frontend = ownDf ?? fb.df?.elo ?? null;
+    m.scores.designarena_fullstack = ownDs ?? fb.ds?.elo ?? null;
     return {
       id: m.id,
-      scores: {
-        ...m.scores,
-        aa_coding_index: m.scores.aa_coding_index ?? fb.c,
-        aa_coding_agent: m.scores.aa_coding_agent ?? fb.ca,
-        aa_intelligence_index: m.scores.aa_intelligence_index ?? fb.i,
-        designarena_frontend: ownDf ?? fb.df?.elo ?? null,
-        designarena_fullstack: ownDs ?? fb.ds?.elo ?? null,
-      },
+      scores: m.scores,
       designarenaBattles: {
         frontend: ownDf != null ? raw?.designarena?.frontend?.battles ?? null : fb.df?.battles ?? null,
         fullstack: ownDs != null ? raw?.designarena?.fullstack?.battles ?? null : fb.ds?.battles ?? null,
@@ -203,22 +221,6 @@ export function clientData(ds: Dataset): ClientData {
     };
   });
   const { scores: composites, baseScores } = computeCompositeScoreDetails(compositeInputs);
-  // Coverage counts a row's OWN measurements only (pre-backfill): backfilled slots make
-  // every sibling inherit the family maxima, so counting them would let a never-measured
-  // catalog row (e.g. a bare OpenRouter listing) pose as the family's measured
-  // representative and win the collapse pick.
-  const ownEvidenceInputs = models.map((m) => {
-    const raw = rawById.get(m.id);
-    return {
-      id: m.id,
-      scores: m.scores,
-      designarenaBattles: {
-        frontend: raw?.designarena?.frontend?.battles ?? null,
-        fullstack: raw?.designarena?.fullstack?.battles ?? null,
-      },
-    };
-  });
-  const coverage = new Map(ownEvidenceInputs.map((row) => [row.id, compositeEvidenceCount(row)]));
   for (const m of models) {
     m.scores.composite = composites.get(m.id) ?? 50;
     m.composite_base = baseScores.get(m.id) ?? 50;
