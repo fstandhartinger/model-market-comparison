@@ -1,18 +1,18 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-14",
   "listing_url": "https://www.inceptron.io/models",
   "method": "Prices from Inceptron's unauthenticated OpenAI-compatible catalog API https://api.inceptron.io/v1/models (pricing.prompt / pricing.completion in USD per token x 1e6; input_cache_reads is the cache-read tier), cross-checked against OpenRouter endpoint data where provider_name=='Inceptron'. On 2026-07-12 the API lists 4 priced text LLMs: GLM 5.2 $0.95/$3.04, Kimi K2.7 Code $0.72/$3.50, Kimi K2.6 $0.66/$3.41, and MiniMax M2.5 $0.15/$0.90. GLM 5.1 has not returned. OpenRouter confirms the first three live routes. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 0.85,
-      "output_per_1m_usd": 2.5,
+      "input_per_1m_usd": 0.94,
+      "output_per_1m_usd": 2.9,
       "cache_read_per_1m_usd": 0.18,
       "region": "eu",
-      "notes": "fp4 quant, 1,048,576 context. Cache read $0.18/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50."
+      "notes": "fp4 quant, 1,048,576 context. Cache read $0.18/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing)."
     },
     {
       "model_name": "Kimi K2.7 Code",
