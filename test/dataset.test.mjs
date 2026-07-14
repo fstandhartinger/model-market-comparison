@@ -313,10 +313,13 @@ test("Claude first-party snapshot contains every currently callable model", () =
   assert.ok(claude.models.some((model) => model.model_name === "Claude Opus 4.1" && model.lifecycle_status === "deprecated"));
 });
 
-test("Coding Agent snapshot contains the complete 2026-07-12 homepage RSC rows", () => {
-  assert.equal(codingAgents.collected_at, "2026-07-12");
-  assert.equal(codingAgents.count, 43);
-  assert.equal(codingAgents.rows.length, 43);
+test("Coding Agent snapshot is fresh and internally consistent", () => {
+  // Minimum-freshness floor (bumped on full refresh cycles) — a pinned date broke
+  // every incremental rescrape. Count must match rows and stay plausible (AA's board
+  // grows over time; a sudden collapse would signal a broken scrape).
+  assert.ok(String(codingAgents.collected_at) >= "2026-07-12", String(codingAgents.collected_at));
+  assert.equal(codingAgents.rows.length, codingAgents.count);
+  assert.ok(codingAgents.rows.length >= 40, `only ${codingAgents.rows.length} rows — scrape likely broken`);
 });
 
 test("Coding Agent source rows retain their exact effort variants", () => {

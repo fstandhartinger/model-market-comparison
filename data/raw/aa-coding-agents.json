@@ -1,10 +1,10 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-14",
   "endpoint": "https://artificialanalysis.ai/ (homepage) — data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. Not in the v2 API.",
   "method": "curl the homepage HTML, locate the escaped JSON rows array after the 'Coding Agent Index' block, unescape, bracket-match, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1), evalCount/indexComponentCount=completeness.",
   "score_scale": "0-1",
-  "completeness_note": "Rows with evalCount < indexComponentCount are PARTIAL indices (model not yet run on every component benchmark). AA's visible chart omits them; they are kept here for transparency but MUST NOT be consumed as a comparable Coding-Agent Index value (build-dataset filters them). As of 2026-07-12 the partial rows are: Opus 4.6 (medium) [2/3], GPT-5.4 (medium) Codex + Cursor CLI [2/3], Composer 2 [2/3].",
+  "completeness_note": "Rows with evalCount < indexComponentCount are PARTIAL indices (model not yet run on every component benchmark). AA's visible chart omits them; kept here for transparency but MUST NOT be consumed (build-dataset filters them). Partial as of 2026-07-14: [('Opus 4.6 (medium)', 'Claude Code'), ('GPT-5.4 (medium)', 'Codex'), ('Composer 2', 'Cursor CLI'), ('GPT-5.4 (medium)', 'Cursor CLI')]",
   "count": 43,
   "rows": [
     {
