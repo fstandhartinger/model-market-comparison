@@ -1,7 +1,17 @@
 # Nebius (Token Factory) pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/nebius.json`
-**Last collected:** 2026-07-12 (prior: 2026-07-06, 2026-07-01)
+**Last collected:** 2026-07-22 (prior: 2026-07-12, 2026-07-06, 2026-07-01)
+
+## Update 2026-07-22
+Refreshed via the same unauthenticated structured endpoint
+(`curl -s https://tokenfactory.nebius.com/api/public/models_info`) — still works,
+still 26 public models (all `status:"active"`), 25 after omitting the embedding-only
+Qwen3-Embedding-8B. **No models added or removed and no price changes** vs
+2026-07-12. Only change: **GLM-5.2 moved from `us-central1` to `uk-south1`**
+(GLM-5.2 has now been on three regions across snapshots: eu-north1 → us-central1 →
+uk-south1) → re-flagged `region:"uk"` in the JSON. All catalog prices are native
+USD; no EUR conversion applies to this source.
 
 ## Update 2026-07-12
 The unauthenticated structured catalog now exposes **26** public models. The

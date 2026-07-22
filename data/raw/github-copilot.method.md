@@ -1,6 +1,6 @@
 # GitHub Copilot pricing — collection method and caveats
 
-Collected: 2026-07-12
+Collected: 2026-07-22 (previous: 2026-07-12)
 
 Output: `data/raw/github-copilot.json`
 
@@ -50,12 +50,18 @@ the collection date:
 - the supported-model catalog determines which models are currently offered;
 - the models-and-pricing table supplies USD prices per 1M tokens.
 
-Result: **26 current models** across OpenAI, Anthropic, Google, Microsoft,
-GitHub, and Moonshot AI. New entries relative to the prior snapshot include
-Claude Fable 5, Claude Sonnet 5, GPT-5.4 nano, GPT-5.6 Luna/Sol/Terra, and Kimi
-K2.7 Code. Claude Sonnet 4 remains in one pricing table and in parts of the plans
-page, but it is absent from the current supported-model reference, so it is not
-treated as a current supported model here.
+Result: **27 current models** across OpenAI, Anthropic, Google, Microsoft,
+GitHub, and Moonshot AI. The only new entry relative to the 2026-07-12 snapshot
+is **Gemini 3.6 Flash** (GA, categorized Versatile in the pricing table, $1.50
+input / $0.15 cached input / $7.50 output per 1M tokens — note the output price
+is lower than Gemini 3.5 Flash's $9.00). Gemini 3.6 Flash appears in the
+supported-model catalog and pricing table but not yet in the legacy multiplier
+table, so it has no `models[]` row. All other prices, plans, credits, the
+June-August 2026 commercial promotion, and the Claude Sonnet 5 introductory
+pricing (through 2026-08-31) were re-verified unchanged on 2026-07-22. Claude
+Sonnet 4 remains in one pricing table and in parts of the plans page, but it is
+absent from the current supported-model reference, so it is not treated as a
+current supported model here.
 
 For models with a long-context tier, the normal price is stored in the main
 fields and the threshold and higher price are stored in `long_context`.
@@ -113,4 +119,14 @@ No secondary source supplies a value in this snapshot.
    for new models that are absent from that page.
 5. Recompute every legacy `effective_usd_per_request` from the published
    multiplier and `$0.04` base price.
-6. Validate JSON and assert 26 current rows and 25 legacy rows for this snapshot.
+6. Validate JSON and assert 27 current rows and 25 legacy rows for this snapshot.
+
+## Collection notes 2026-07-22
+
+All seven documented URLs still work with plain `curl -sL` (HTTP 200, no
+anti-bot). Tables were extracted from the raw HTML with a small Python
+`html.parser` script. Legacy multiplier table re-fetched independently: still
+exactly 25 rows with unchanged multipliers, $0.04 overage, 10% auto-selection
+discount, and the subject-to-change / promotional flags on Claude Sonnet 4.6,
+GPT-5.4 mini, and MAI-Code-1-Flash. All prices in this source are USD; no EUR
+conversion applies.

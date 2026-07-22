@@ -1,18 +1,18 @@
 {
   "source": "Inceptron",
   "region": "eu (Finland; HQ Sweden)",
-  "collected_at": "2026-07-14",
+  "collected_at": "2026-07-22",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "Prices from Inceptron's unauthenticated OpenAI-compatible catalog API https://api.inceptron.io/v1/models (pricing.prompt / pricing.completion in USD per token x 1e6; input_cache_reads is the cache-read tier), cross-checked against OpenRouter endpoint data where provider_name=='Inceptron'. On 2026-07-12 the API lists 4 priced text LLMs: GLM 5.2 $0.95/$3.04, Kimi K2.7 Code $0.72/$3.50, Kimi K2.6 $0.66/$3.41, and MiniMax M2.5 $0.15/$0.90. GLM 5.1 has not returned. OpenRouter confirms the first three live routes. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata.",
+  "method": "Prices from Inceptron's unauthenticated OpenAI-compatible catalog API https://api.inceptron.io/v1/models (pricing.prompt / pricing.completion in USD per token x 1e6; input_cache_reads is the cache-read tier), cross-checked against OpenRouter endpoint data where provider_name=='Inceptron'. On 2026-07-22 the API lists 4 priced text LLMs: GLM 5.2 $0.94/$2.90, Kimi K2.7 Code $0.72/$3.50, Kimi K2.6 $0.66/$3.41, and MiniMax M2.5 $0.15/$0.90. GLM 5.1 has not returned. OpenRouter now confirms all four live routes (MiniMax M2.5 gained an OpenRouter Inceptron endpoint, slug minimax/minimax-m2.5). HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.94,
       "output_per_1m_usd": 2.9,
-      "cache_read_per_1m_usd": 0.18,
+      "cache_read_per_1m_usd": 0.17,
       "region": "eu",
-      "notes": "fp4 quant, 1,048,576 context. Cache read $0.18/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing)."
+      "notes": "fp4 quant, 1,048,576 context. Cache read $0.17/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing). | 2026-07-22: 0.94/2.90 unchanged, cache read dropped 0.18 -> 0.17 (native API + OpenRouter agree)."
     },
     {
       "model_name": "Kimi K2.7 Code",
@@ -21,7 +21,7 @@
       "output_per_1m_usd": 3.5,
       "cache_read_per_1m_usd": 0.15,
       "region": "eu",
-      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12."
+      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12; unchanged 2026-07-22."
     },
     {
       "model_name": "Kimi K2.6",
@@ -30,7 +30,7 @@
       "output_per_1m_usd": 3.41,
       "cache_read_per_1m_usd": 0.15,
       "region": "eu",
-      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12."
+      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12; unchanged 2026-07-22."
     },
     {
       "model_name": "MiniMax M2.5",
@@ -39,7 +39,7 @@
       "output_per_1m_usd": 0.9,
       "cache_read_per_1m_usd": 0.05,
       "region": "eu",
-      "notes": "fp8 quant, 196,608 context. Cache read $0.05/1M. Inceptron model id MiniMaxAI/MiniMax-M2.5. Native API is authoritative; $0.15/$0.90 on 2026-07-12."
+      "notes": "fp8 quant, 196,608 context. Cache read $0.05/1M. Inceptron model id MiniMaxAI/MiniMax-M2.5. Native API is authoritative; $0.15/$0.90 on 2026-07-12; unchanged 2026-07-22. Now also confirmed on OpenRouter (slug minimax/minimax-m2.5, Inceptron endpoint, same prices) — no longer native-catalog-only."
     }
   ]
 }

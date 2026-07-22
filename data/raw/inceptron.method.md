@@ -1,19 +1,24 @@
 # Inceptron — data collection method
 
-**Date collected:** 2026-07-12 (prior: 2026-07-06, 2026-07-01)
+**Date collected:** 2026-07-22 (prior: 2026-07-14, 2026-07-13, 2026-07-12, 2026-07-06, 2026-07-01)
 **Output:** `data/raw/inceptron.json`
 
-## Live catalog on 2026-07-12
+## Live catalog on 2026-07-22
 The unauthenticated native API currently exposes **4 priced text LLMs**. The native
-prices and current OpenRouter Inceptron routes agree for GLM 5.2, Kimi K2.7 Code,
-and Kimi K2.6:
+prices and current OpenRouter Inceptron routes agree for ALL FOUR models — MiniMax
+M2.5 now has an OpenRouter Inceptron endpoint too (slug `minimax/minimax-m2.5`),
+so it is no longer native-catalog-only:
 
 | Model | in $/1M | out $/1M | cache read $/1M |
 |-------|----------|-----------|------------------|
-| GLM 5.2 | 0.95 | 3.04 | 0.18 |
+| GLM 5.2 | 0.94 | 2.90 | 0.17 |
 | Kimi K2.7 Code | 0.72 | 3.50 | 0.15 |
 | Kimi K2.6 | 0.66 | 3.41 | 0.15 |
 | MiniMax M2.5 | 0.15 | 0.90 | 0.05 |
+
+Only change vs 2026-07-14: GLM 5.2 cache read dropped $0.18 -> $0.17/1M
+(in/out unchanged at $0.94/$2.90). GLM 5.2 pricing remains volatile
+(0.95/3.04 on 07-12, 0.85/2.50 on 07-13, 0.94/2.90 on 07-14 and 07-22).
 
 GLM 5.1 and Kimi K2.6 Fast are no longer in the public native catalog. Do not infer
 availability from older snapshots or marketing examples. OpenRouter provider metadata
@@ -96,9 +101,12 @@ endpoints as of 2026-06-23.
 2. **Cross-source (OpenRouter):** for each candidate slug, GET
    `https://openrouter.ai/api/v1/models/{author}/{slug}/endpoints` and filter
    `data.endpoints[].provider_name == "Inceptron"`; `pricing.prompt` /
-   `pricing.completion` are USD/token. Live slugs on 2026-07-12:
-   `z-ai/glm-5.2`, `moonshotai/kimi-k2.7-code`, and
-   `moonshotai/kimi-k2.6`. MiniMax M2.5 is currently native-catalog-only.
+   `pricing.completion` are USD/token. Live slugs on 2026-07-22:
+   `z-ai/glm-5.2`, `moonshotai/kimi-k2.7-code`, `moonshotai/kimi-k2.6`, and
+   `minimax/minimax-m2.5` (MiniMax gained an OpenRouter Inceptron route
+   between 07-12 and 07-22; previously native-catalog-only). OpenRouter
+   cache-read field on endpoints is `input_cache_read`; the native API's is
+   `input_cache_reads`.
 3. **Website (visual confirmation):** render `https://www.inceptron.io/models`
    with agent-browser (Framer SPA — static `curl` returns only the shell, must
    render JS). HQ/compliance claims live on `https://www.inceptron.io/`.

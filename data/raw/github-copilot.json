@@ -1,6 +1,6 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-22",
   "method": "Official GitHub Docs only: supported AI models, current models-and-pricing table, organization/enterprise and individual usage-based billing, plans, and the annual-plan legacy multiplier table. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
@@ -318,6 +318,15 @@
       "input_per_1m_usd": 1.50,
       "cached_input_per_1m_usd": 0.15,
       "output_per_1m_usd": 9.00
+    },
+    {
+      "model_name": "Gemini 3.6 Flash",
+      "provider_org": "Google",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 1.50,
+      "cached_input_per_1m_usd": 0.15,
+      "output_per_1m_usd": 7.50
     },
     {
       "model_name": "MAI-Code-1-Flash",

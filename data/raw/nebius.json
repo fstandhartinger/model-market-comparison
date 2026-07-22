@@ -1,9 +1,9 @@
 {
   "source": "Nebius",
   "region": "mixed (eu-north1 / us-central1 / uk-south1)",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-22",
   "listing_url": "https://tokenfactory.nebius.com/models",
-  "method": "Nebius' unauthenticated structured catalog API https://tokenfactory.nebius.com/api/public/models_info (cross-checked against its Markdown view at /api/public/models_info.md). Parsed flavors[].input_price_per_million_tokens / output_price_per_million_tokens and flavors[].regions. The 2026-07-12 catalog has 26 public models; embedding-only Qwen3-Embedding-8B ($0.01/1M input, no text output price) is omitted, leaving 25 text/vision models. region:'eu' is used only for eu-north1; us-central1 is 'us' and uk-south1 is 'uk'. New since 2026-07-06: MiniMax-M3 at $0.30/$1.20 in us-central1. All previously tracked prices and regions are unchanged.",
+  "method": "Nebius' unauthenticated structured catalog API https://tokenfactory.nebius.com/api/public/models_info (cross-checked against its Markdown view at /api/public/models_info.md). Parsed flavors[].input_price_per_million_tokens / output_price_per_million_tokens and flavors[].regions. The 2026-07-22 catalog has 26 public models (all status:active); embedding-only Qwen3-Embedding-8B ($0.01/1M input, no text output price) is omitted, leaving 25 text/vision models. region:'eu' is used only for eu-north1; us-central1 is 'us' and uk-south1 is 'uk'. No models added or removed vs 2026-07-12 and all prices unchanged; only change: GLM-5.2 now serves from uk-south1 (was us-central1), re-flagged region 'uk'. All prices are native USD (no EUR conversion needed).",
   "models": [
     {
       "model_name": "Kimi K2.7 Code",
@@ -18,8 +18,8 @@
       "provider_org": "Z.ai",
       "input_per_1m_usd": 1.4,
       "output_per_1m_usd": 4.4,
-      "region": "us",
-      "notes": "tier: Base; served region: us-central1; tag: New; id GLM-5.2; flagship multimodal"
+      "region": "uk",
+      "notes": "tier: Base; served region: uk-south1 (moved from us-central1 between 2026-07-12 and 2026-07-22); id GLM-5.2; flagship multimodal; 1024K context"
     },
     {
       "model_name": "Nemotron 3 Ultra 550B",

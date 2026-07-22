@@ -420,7 +420,9 @@ test("GPT-5.6 Sol's observed-percentile mean ranks above GLM-5.2", async () => {
   const sol = scores.get("gpt-5.6-sol::high");
   const glm = scores.get("glm-5.2::max");
 
-  assert.ok(sol > 95 && sol < 96, `expected GPT-5.6 Sol near 95.4, got ${sol}`);
+  // 2026-07-22: AA rescaled the Coding Agent Index (all models shifted down),
+  // moving Sol's observed-percentile mean from ~95.4 to ~90.0.
+  assert.ok(sol > 89 && sol < 91, `expected GPT-5.6 Sol near 90.0, got ${sol}`);
   assert.ok(sol > glm, `expected GPT-5.6 Sol (${sol}) above GLM-5.2 (${glm})`);
 });
 

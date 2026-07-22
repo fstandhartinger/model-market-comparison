@@ -1,14 +1,18 @@
 # STACKIT AI Model Serving — data collection method
 
-**Date collected:** 2026-07-12
+**Date collected:** 2026-07-22
 **Output:** `data/raw/stackit.json`
 
 ## Catalog scope
 
 Use the first-party page
 `https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/`.
-It was last updated on 2026-07-10 and lists 6 **Type Chat** models plus 2 embedding
-models. Include the 6 chat rows and exclude the embedding-only rows.
+It was last updated on 2026-07-16 and lists 7 **Type Chat** models plus 2 embedding
+models. Include the 7 chat rows and exclude the embedding-only rows.
+
+Parsing tip: the per-model HTML tables have empty header cells and do NOT contain the
+model id; the canonical `model_id` is in each section's "Full Name: …" line under the
+`<h3>` model heading (only the two gpt-oss ids also appear in `<code>` tags).
 
 For every included model the docs state:
 
@@ -31,13 +35,14 @@ Pricing authorities:
 - Price page: `https://www.stackit.de/de/preise/cloud-services/stackit-ai-model-serving/`
 
 If prices are added later, store the original EUR values and price-list date before applying
-any documented FX normalization.
+any documented FX normalization. (2026-07-22 refresh: still no token prices in the catalog,
+so no FX rate was applied or recorded — all price fields remain null.)
 
 ## Refresh checks
 
 ```bash
 jq '.models | length' data/raw/stackit.json
-# expected for the 2026-07-12 snapshot: 6
+# expected for the 2026-07-22 snapshot: 7
 
 jq '[.models[] | select(
   .status == "supported" and
@@ -46,5 +51,12 @@ jq '[.models[] | select(
   .input_per_1m_eur == null and
   .output_per_1m_eur == null
 )] | length' data/raw/stackit.json
-# expected: 6
+# expected: 7
 ```
+
+## Changelog
+
+- 2026-07-22: docs page (updated 2026-07-16) added **Gemma 4 31B**
+  (`google/gemma-4-31B-it`, LLM-Plus, 256K context, text+image, tool calling +
+  reasoning, BF16); Qwen3-VL 235B context label changed 218K -> 200K; Qwen3.6 27B
+  now lists "Tool calling & Reasoning enabled" plus an 8192-token thinking budget.

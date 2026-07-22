@@ -1,8 +1,8 @@
 {
   "source": "Azure AI Foundry",
   "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
-  "collected_at": "2026-07-12",
-  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the 2026-07-09 model-retirement schedule plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. Active GPT-5.6 Luna/Sol/Terra Global and EU routes are retained with null prices because no public Azure standard token meters exist yet. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded.",
+  "collected_at": "2026-07-22",
+  "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the model-retirement schedule (updated 2026-07-21) plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. GPT-5.6 Luna/Sol/Terra standard token meters were published (effective 2026-07-01), so those rows now carry the default short-context Standard prices; long-context prices are documented in notes. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded. All prices are native USD from the API (currencyCode=USD); no currency conversion is applied.",
   "models": [
     {
       "model_name": "GPT-5",
@@ -151,29 +151,29 @@
     {
       "model_name": "GPT-5.6 Luna",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 1.0,
+      "output_per_1m_usd": 6.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Active GA model version 2026-07-09. Global Standard deployment is documented, but the public Azure Retail Prices API exposes no standard uncached token meters as of 2026-07-12; prices are intentionally null."
+      "notes": "Active GA model version 2026-07-09. Standard token meters published effective 2026-07-01 ('5.6 luna ShortCo Inp/Opt Std Gl'). Default short-context tier; long-context Global in/out 2.00/9.00; cached short-context input 0.10."
     },
     {
       "model_name": "GPT-5.6 Sol",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 30.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Active GA model version 2026-07-09. Global Standard deployment is documented, but the public Azure Retail Prices API exposes no standard uncached token meters as of 2026-07-12; prices are intentionally null."
+      "notes": "Active GA model version 2026-07-09. Standard token meters published effective 2026-07-01 ('5.6 sol ShortCo Inp/Opt Std Gl'). Default short-context tier; long-context Global in/out 10.00/45.00; cached short-context input 0.50."
     },
     {
       "model_name": "GPT-5.6 Terra",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 2.5,
+      "output_per_1m_usd": 15.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Active GA model version 2026-07-09. Global Standard deployment is documented, but the public Azure Retail Prices API exposes no standard uncached token meters as of 2026-07-12; prices are intentionally null."
+      "notes": "Active GA model version 2026-07-09. Standard token meters published effective 2026-07-01 ('5.6 terra ShortCo Inp/Opt Std Gl'). Default short-context tier; long-context Global in/out 5.00/22.50; cached short-context input 0.25."
     },
     {
       "model_name": "GPT-chat-latest",
@@ -339,28 +339,12 @@
       "notes": "Azure Direct Global standard token meter. A $0.64/$1.85 DZ meter exists, but the current Europe Data Zone table does not list this model; no EU-hosted offer is inferred from the meter alone."
     },
     {
-      "model_name": "DeepSeek-V3.1",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 1.23,
-      "output_per_1m_usd": 4.94,
-      "region": "global",
-      "notes": "Global; Legacy with documented retirement on 2026-07-13."
-    },
-    {
-      "model_name": "DeepSeek-V3-0324",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 1.14,
-      "output_per_1m_usd": 4.56,
-      "region": "global",
-      "notes": "Global; Legacy with documented retirement on 2026-07-13."
-    },
-    {
       "model_name": "DeepSeek-R1",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 1.35,
       "output_per_1m_usd": 5.4,
       "region": "global",
-      "notes": "Global; reasoning"
+      "notes": "Global; reasoning. Legacy with documented retirement on 2026-08-13 (DeepSeek-R1-0528 already retired 2026-07-13)."
     },
     {
       "model_name": "Grok 4.3",
@@ -639,29 +623,29 @@
     {
       "model_name": "GPT-5.6 Luna (EU Data Zone)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 1.1,
+      "output_per_1m_usd": 6.6,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Active GA model version 2026-07-09 with documented Europe Data Zone availability. Public Azure Retail Prices API has no standard uncached token meters as of 2026-07-12; prices are intentionally null."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Standard token meters published effective 2026-07-01. Default short-context tier; long-context DZ in/out 2.20/9.90."
     },
     {
       "model_name": "GPT-5.6 Sol (EU Data Zone)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 5.5,
+      "output_per_1m_usd": 33.0,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Active GA model version 2026-07-09 with documented Europe Data Zone availability. Public Azure Retail Prices API has no standard uncached token meters as of 2026-07-12; prices are intentionally null."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Standard token meters published effective 2026-07-01. Default short-context tier; long-context DZ in/out 11.00/49.50."
     },
     {
       "model_name": "GPT-5.6 Terra (EU Data Zone)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 2.75,
+      "output_per_1m_usd": 16.5,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Active GA model version 2026-07-09 with documented Europe Data Zone availability. Public Azure Retail Prices API has no standard uncached token meters as of 2026-07-12; prices are intentionally null."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Standard token meters published effective 2026-07-01. Default short-context tier; long-context DZ in/out 5.50/24.75. Note: the Retail API labels for the terra ShortCo DZ meters are swapped ('Inp Std DZ'=16.5, 'Opt Std DZ'=2.75); values here follow the Global 2.5/15.0 prices and the uniform 1.1x DZ multiplier."
     },
     {
       "model_name": "Phi-4",
@@ -780,6 +764,15 @@
       "region": "us",
       "eu_hosted": false,
       "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-06-01; cached input is $0.066/1M. US deployment only and excluded from the Azure EU Data Boundary."
+    },
+    {
+      "model_name": "MiniMax M2.5 (Fireworks)",
+      "provider_org": "MiniMax",
+      "input_per_1m_usd": 0.33,
+      "output_per_1m_usd": 1.32,
+      "region": "us",
+      "eu_hosted": false,
+      "notes": "Azure Fireworks Models pay-per-token offer; cached input is $0.033/1M. Re-added: the retirement schedule (updated 2026-07-21) now lists FW-MiniMax-M2.5 as Preview with retirement 2026-08-07, superseding the 2026-07-01 date that caused its removal on the 2026-07-12 refresh. US deployment only and excluded from the Azure EU Data Boundary."
     },
     {
       "model_name": "DeepSeek-V4 Pro (Fireworks)",

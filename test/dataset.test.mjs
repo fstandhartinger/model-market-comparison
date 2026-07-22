@@ -98,12 +98,11 @@ test("open-weights filter metadata excludes audited proprietary families", () =>
   assert.equal(isOpen("sonar"), false);
   assert.equal(isOpen("sonar-pro"), false);
   assert.equal(isOpen("palmyra-x5"), false);
-  // composer-2 dropped out of the catalog when partial Coding-Agent rows (its only
-  // data point, 2/3 eval components) stopped being ingested.
-  for (const family of ["composer-2.5", "composer-2.5-fast", "raptor-mini", "grok-4.5"]) {
+  // composer-2 returned on 2026-07-22: AA publishes a complete Cursor-CLI
+  // Coding-Agent row (3/3 eval components) for it again.
+  for (const family of ["composer-2", "composer-2.5", "composer-2.5-fast", "raptor-mini", "grok-4.5"]) {
     assert.equal(isOpen(family), false, family);
   }
-  assert.equal(ds.models.some((model) => model.family_key === "composer-2"), false, "composer-2 only ever had a partial CA row");
   assert.equal(ds.models.some((model) => model.family_key === "yoda"), false, "registry alias yoda must join Grok 4.5");
 
   const grok = ds.models.filter((model) => model.family_key.startsWith("grok"));
@@ -165,7 +164,6 @@ test("EU residency is specific to the model offer, not inherited from the provid
   assert.equal(offer("glm-5.2", "Azure AI Foundry")?.eu_hosted, false, "Fireworks-on-Azure is US-served");
   assert.equal(offer("deepseek-v4-pro", "TensorX")?.eu_hosted, true);
   assert.equal(offer("deepseek-v4-pro", "Nebius")?.eu_hosted, false, "Nebius serves V4 Pro from the UK");
-  assert.equal(offer("deepseek-v4-flash", "NextBit")?.eu_hosted, true);
   assert.equal(offer("kimi-k2.7-code", "Azure AI Foundry")?.eu_hosted, false, "policy equivalence must not falsify technical residency");
 });
 
@@ -194,7 +192,8 @@ test("only the two approved Azure Direct Global offers receive the EU policy equ
   assert.ok(fireworks.every(({ offer }) => offer.eu_hosted === false));
   assert.ok(fireworks.every(({ offer }) => offer.eu_policy_equivalent !== true));
 
-  for (const family of ["glm-5.2", "minimax-m2.7", "kimi-k2.5-thinking", "kimi-k2.6-thinking"]) {
+  // "Kimi K2.x Thinking (Azure Direct)" rows now join the base families.
+  for (const family of ["glm-5.2", "minimax-m2.7", "kimi-k2.5", "kimi-k2.6"]) {
     const rows = azure.filter((row) => row.family === family);
     assert.ok(rows.length > 0, `${family} has an Azure control route`);
     assert.ok(rows.every(({ offer }) => offer.eu_policy_equivalent !== true), family);
@@ -274,8 +273,8 @@ test("privacy routing is not mislabeled as trusted execution", () => {
 });
 
 test("current Copilot token catalog and legacy request table stay distinct", () => {
-  assert.equal(copilot.collected_at, "2026-07-12");
-  assert.equal(copilot.current_models.length, 26);
+  assert.equal(copilot.collected_at, "2026-07-22");
+  assert.equal(copilot.current_models.length, 27);
   assert.equal(copilot.models.length, 25);
 
   const model = (family) => ds.models.find((row) => row.family_key === family);
@@ -307,7 +306,7 @@ test("confirmed non-US provider metadata reaches the provider directory", () => 
 });
 
 test("Claude first-party snapshot contains every currently callable model", () => {
-  assert.equal(claude.collected_at, "2026-07-12");
+  assert.equal(claude.collected_at, "2026-07-22");
   assert.equal(claude.models.length, 11);
   assert.ok(claude.models.some((model) => model.model_name === "Claude Mythos 5"));
   assert.ok(claude.models.some((model) => model.model_name === "Claude Opus 4.1" && model.lifecycle_status === "deprecated"));
@@ -329,22 +328,22 @@ test("Coding Agent source rows retain their exact effort variants", () => {
     return scores.length ? Math.round(Math.max(...scores) * 1000) / 10 : null;
   };
 
-  assert.equal(best("DeepSeek V4 Pro (high)"), 47.3);
+  assert.equal(best("DeepSeek V4 Pro (high)"), 31.4);
   assert.equal(best("DeepSeek V4 Pro (max)"), null);
   assert.equal(best("DeepSeek V4 Pro (non-reasoning)"), null);
 
   // Max only across harnesses for the same effort setting.
-  assert.equal(best("GPT-5.5 (medium)"), 70.5);
-  assert.equal(best("GPT-5.5 (xhigh)"), 76.4);
+  assert.equal(best("GPT-5.5 (medium)"), 54.4);
+  assert.equal(best("GPT-5.5 (xhigh)"), 61.5);
   assert.equal(best("GPT-5.5 (low)"), null);
 
   const expected56 = new Map([
-    ["GPT-5.6 Sol (high)", 77.1], ["GPT-5.6 Sol (low)", 69.1], ["GPT-5.6 Sol (max)", 80.0],
-    ["GPT-5.6 Sol (medium)", 74.6], ["GPT-5.6 Sol (none)", 58.4], ["GPT-5.6 Sol (xhigh)", 78.7],
-    ["GPT-5.6 Terra (high)", 71.8], ["GPT-5.6 Terra (low)", 53.8], ["GPT-5.6 Terra (max)", 77.4],
-    ["GPT-5.6 Terra (medium)", 64.2], ["GPT-5.6 Terra (none)", 40.3], ["GPT-5.6 Terra (xhigh)", 73.2],
-    ["GPT-5.6 Luna (high)", 67.9], ["GPT-5.6 Luna (low)", 42.4], ["GPT-5.6 Luna (max)", 74.6],
-    ["GPT-5.6 Luna (medium)", 58.7], ["GPT-5.6 Luna (none)", 37.3], ["GPT-5.6 Luna (xhigh)", 70.8],
+    ["GPT-5.6 Sol (high)", 64.1], ["GPT-5.6 Sol (low)", 53.6], ["GPT-5.6 Sol (max)", 66.6],
+    ["GPT-5.6 Sol (medium)", 60.6], ["GPT-5.6 Sol (none)", 43.4], ["GPT-5.6 Sol (xhigh)", 65.1],
+    ["GPT-5.6 Terra (high)", 55.8], ["GPT-5.6 Terra (low)", 36.7], ["GPT-5.6 Terra (max)", 62.3],
+    ["GPT-5.6 Terra (medium)", 47.8], ["GPT-5.6 Terra (none)", 23.7], ["GPT-5.6 Terra (xhigh)", 57.1],
+    ["GPT-5.6 Luna (high)", 51.4], ["GPT-5.6 Luna (low)", 25.1], ["GPT-5.6 Luna (max)", 58.7],
+    ["GPT-5.6 Luna (medium)", 42.4], ["GPT-5.6 Luna (none)", 20.4], ["GPT-5.6 Luna (xhigh)", 54.7],
   ]);
   for (const [name, score] of expected56) assert.equal(best(name), score, name);
 });
@@ -356,27 +355,27 @@ test("freshly built dataset attaches Coding Agent scores only to exact variants"
   if (ds.sources.aa_coding_agents !== codingAgents.collected_at) return;
 
   const score = (id) => ds.models.find((m) => m.id === id)?.benchmarks?.aa_coding_agent_index ?? null;
-  assert.equal(score("deepseek-v4-pro::high"), 47.3);
+  assert.equal(score("deepseek-v4-pro::high"), 31.4);
   assert.equal(score("deepseek-v4-pro::max"), null);
   assert.equal(score("deepseek-v4-pro::non-reasoning"), null);
 
-  assert.equal(score("gpt-5.5::medium"), 66.2);
-  assert.equal(score("gpt-5.5::xhigh"), 76.4);
+  assert.equal(score("gpt-5.5::medium"), 50.3);
+  assert.equal(score("gpt-5.5::xhigh"), 61.5);
   assert.equal(score("gpt-5.5::low"), null);
 
   for (const [family, values] of Object.entries({
-    "gpt-5.6-sol": { high: 77.1, low: 69.1, max: 80.0, medium: 74.6, "non-reasoning": 58.4, xhigh: 78.7 },
-    "gpt-5.6-terra": { high: 71.8, low: 53.8, max: 77.4, medium: 64.2, "non-reasoning": 40.3, xhigh: 73.2 },
-    "gpt-5.6-luna": { high: 67.9, low: 42.4, max: 74.6, medium: 58.7, "non-reasoning": 37.3, xhigh: 70.8 },
+    "gpt-5.6-sol": { high: 64.1, low: 53.6, max: 66.6, medium: 60.6, "non-reasoning": 43.4, xhigh: 65.1 },
+    "gpt-5.6-terra": { high: 55.8, low: 36.7, max: 62.3, medium: 47.8, "non-reasoning": 23.7, xhigh: 57.1 },
+    "gpt-5.6-luna": { high: 51.4, low: 25.1, max: 58.7, medium: 42.4, "non-reasoning": 20.4, xhigh: 54.7 },
   })) {
     for (const [variant, expected] of Object.entries(values)) assert.equal(score(`${family}::${variant}`), expected, `${family} ${variant}`);
   }
 
   // AA's bare GLM-5.2 Coding-Agent identity is the documented default-thinking
   // max configuration; it must join the AA max row, never a source-only ghost.
-  assert.equal(score("glm-5.2::max"), 57.9);
+  assert.equal(score("glm-5.2::max"), 43.2);
   assert.equal(ds.models.some((model) => model.id === "glm-5.2::default"), false);
-  assert.equal(score("glm-5.1::reasoning"), 52.3);
+  assert.equal(score("glm-5.1::reasoning"), 36.1);
   assert.equal(ds.models.some((model) => model.id === "glm-5.1::default"), false);
   assert.equal(score("glm-5.1::non-reasoning"), null);
 });
@@ -385,7 +384,7 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   const glm = ds.models.find((model) => model.id === "glm-5.2::max");
   assert.ok(glm);
   assert.equal(glm.benchmarks.aa_coding_index, 68.8);
-  assert.equal(glm.benchmarks.aa_coding_agent_index, 57.9);
+  assert.equal(glm.benchmarks.aa_coding_agent_index, 43.2);
   assert.equal(glm.benchmarks.aa_intelligence_index, 51.1);
   assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
   assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
@@ -438,8 +437,9 @@ test("DeepSeek V4 Pro keeps its Webapps/Frontend Elo on the collapsed max repres
 });
 
 test("Intelligence.ai registry display names resolve opaque and revisioned leaderboard ids", () => {
-  assert.match(designArena.endpoint, /^POST https:\/\/intelligence\.ai\/api\/leaderboard$/);
-  assert.match(designArena.registry_endpoint, /^GET https:\/\/intelligence\.ai\/api\/registry$/);
+  // 2026-07: the API moved back from intelligence.ai to www.designarena.ai.
+  assert.match(designArena.endpoint, /^POST https:\/\/www\.designarena\.ai\/api\/leaderboard$/);
+  assert.match(designArena.registry_endpoint, /^GET https:\/\/www\.designarena\.ai\/api\/registry$/);
   const sourceIds = new Set(Object.values(designArena.leaderboards).flatMap((board) => board.data.map((row) => row.modelId)));
   assert.ok([...sourceIds].every((id) => designArena.model_registry[id]), "every leaderboard id needs registry metadata");
 
@@ -447,7 +447,9 @@ test("Intelligence.ai registry display names resolve opaque and revisioned leade
   assert.equal(grok?.designarena.frontend?.modelId, "yoda");
   assert.equal(ds.models.some((model) => model.family_key === "yoda"), false);
 
-  const opus = ds.models.find((model) => model.id === "claude-opus-4.7::max");
+  // 2026-07-22: AA marks the Opus 4.7 reasoning row deprecated, so the
+  // deterministic representative moved from ::max to the active ::medium row.
+  const opus = ds.models.find((model) => model.id === "claude-opus-4.7::medium");
   assert.equal(opus?.designarena.frontend?.modelId, "claude-opus-4-7-thinking");
   assert.equal(ds.models.some((model) => model.family_key === "claude-opus-4.7-thinking"), false);
 

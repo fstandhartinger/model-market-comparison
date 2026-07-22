@@ -1,7 +1,27 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
-**Last collected:** 2026-07-12 (93 offer rows; Retail API, lifecycle, roster, and deployment-scope re-check)
-**Method:** Azure Retail Prices API (no auth). Output written to `azure-foundry.json`.
+**Last collected:** 2026-07-22 (92 offer rows; Retail API + lifecycle re-check against the retirement schedule updated 2026-07-21)
+**Method:** Azure Retail Prices API (no auth, native USD — no currency conversion). Output written to `azure-foundry.json`.
+
+**2026-07-22 result:** All stored prices re-verified against live Retail meters (both anchors OK).
+Changes this run:
+- **GPT-5.6 Luna/Sol/Terra now have standard token meters** (effective 2026-07-01):
+  ShortCo Std Global in/out Luna 1.00/6.00, Sol 5.00/30.00, Terra 2.50/15.00; DZ = 1.1x.
+  LongCo Std Global Luna 2.00/9.00, Sol 10.00/45.00, Terra 5.00/22.50 (kept in notes; the rows
+  carry the default short-context tier, matching the GPT-5.4 precedent of one row + longco note).
+  **Gotcha:** the `5.6 terra ShortCo Inp Std DZ` / `Opt Std DZ` meters have swapped values in the
+  Retail API (Inp=16.5, Opt=2.75). The snapshot stores input 2.75 / output 16.5, consistent with
+  Global 2.5/15.0 and the uniform 1.1x DZ multiplier.
+- **Removed DeepSeek-V3.1 and DeepSeek-V3-0324** — Legacy retirement 2026-07-13 has passed
+  (meters linger; lifecycle wins). DeepSeek-R1 remains: its retirement is 2026-08-13
+  (DeepSeek-R1-0528 retired 2026-07-13, but the priced row is plain R1).
+- **Re-added MiniMax M2.5 (Fireworks)** 0.33/1.32 — the current schedule lists FW-MiniMax-M2.5 as
+  Preview retiring 2026-08-07, superseding the 2026-07-01 date that removed it on 2026-07-12.
+- FW-Qwen3.5-122B-A10B / 397B-A17B are Preview (retire 2026-08-01) but have **no Retail meters**
+  yet — not added. `MAI Models` productName now carries obfuscated meters (`MAI o`…`MAI z`,
+  effective 2026-06-01) that cannot be mapped to model names — ignored.
+- Everything else unchanged (all Global, EU Data Zone, Phi regional, Kimi Azure Direct, and
+  Fireworks prices identical to 2026-07-12).
 
 **Authoritative cross-checks:**
 - https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule
@@ -52,10 +72,9 @@ is not an EU Data Boundary or technical data-residency guarantee. It must not be
 Global offers. The separate Fireworks routes for both families remain `region=us`, `eu_hosted=false`,
 and have no policy-equivalence flag.
 
-GPT-5.6 Sol, Terra, and Luna are visible in the current Azure availability documentation, but the
-Retail Prices API still exposes no standard token meters for them. They are intentionally retained
-as unpriced Global and EU Data Zone rows (`null` input/output) rather than populated with
-OpenAI-direct prices that have not been confirmed as Azure prices.
+GPT-5.6 Sol, Terra, and Luna were retained as unpriced rows until 2026-07-22, when the Retail
+Prices API published their standard token meters (effective 2026-07-01); the rows now carry the
+default short-context Standard prices with long-context prices in notes.
 
 ## TL;DR refresh recipe (2026-06-17)
 Four paginated query families (USD), looping `NextPageLink`, over the six EU resource regions
@@ -194,12 +213,15 @@ within the same product and deployment tier, converts to per-1M, and writes
 `NextPageLink`).
 
 Things to watch for on the next refresh:
-- Published standard token meters for GPT-5.6 Luna/Sol/Terra. Until Azure publishes them, keep
-  the documented Global and Europe Data Zone routes unpriced; never infer them from OpenAI rates.
+- DeepSeek-R1 retires 2026-08-13 and FW-MiniMax-M2.5 2026-08-07 — drop those rows once passed.
+- Whether Microsoft fixes the swapped `5.6 terra ShortCo Inp/Opt Std DZ` meter labels.
 - New GPT version prefixes in `Azure OpenAI GPT5`; always cross-check meter-derived rows against
   the lifecycle schedule because Chat/preview meters can remain after retirement.
-- New rows under `Azure Fireworks Models` (MiniMax M3, MiMo, Qwen). Kimi K2.7 and GLM 5.2
-  are already present as of 2026-07-01 meters.
+- New rows under `Azure Fireworks Models` (MiniMax M3, MiMo, Qwen — FW-Qwen3.5-122B/397B are in
+  the lifecycle roster but still have no Retail meters). Kimi K2.7 and GLM 5.2 are already
+  present as of 2026-07-01 meters.
+- `MAI Models` obfuscated meters (`MAI o`…`MAI z`) — watch for these being renamed to real
+  MAI model names with decodable input/output pairs.
 - Any new `Azure <Vendor> Models` productName (e.g. an Anthropic product — none today).
 - Verify a known anchor after each run: `GPT 5 Inpt Glbl 1M Tokens` must be 1.25 /1M and
   `V4 Pro Inp glbl Tokens` must be 0.00174 /1K (= 1.74 /1M).

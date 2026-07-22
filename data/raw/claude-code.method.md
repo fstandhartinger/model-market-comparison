@@ -1,6 +1,6 @@
 # Claude API / Claude Code Enterprise — collection method
 
-Collected: 2026-07-12
+Collected: 2026-07-22 (previous snapshot: 2026-07-12; re-verified against all primary sources, no price or lifecycle changes)
 
 Output: `data/raw/claude-code.json`
 
@@ -28,8 +28,9 @@ The file contains **11 callable models**:
 
 Newly captured relative to the prior incomplete snapshot are Claude Mythos 5,
 Claude Opus 4.5, Claude Opus 4.1, Claude Sonnet 4.5, and Claude Haiku 4.5.
-Mythos Preview is not included because it retired June 30, 2026 in favor of
-Mythos 5.
+Mythos Preview is not included because it retired in favor of Mythos 5; the
+deprecations page (checked 2026-07-22) states its retirement date as
+July 21, 2026.
 
 For older dated model IDs, the pinned ID is stored in `model_id` and the
 convenience alias separately in `model_alias`. Starting with the 4.6 generation,
@@ -138,6 +139,12 @@ contracts, and transition to the single Enterprise seat at renewal.
    <https://support.claude.com/en/articles/13393991-purchase-and-manage-seats-on-enterprise-plans>
 
 No local cached skill and no secondary source supplies a value in this snapshot.
+
+Fetch tip: the platform.claude.com docs pages serve clean Markdown when the
+`.md` suffix is appended (e.g. `.../about-claude/pricing.md`), which avoids
+HTML scraping. `claude.com/pricing` and the support.claude.com articles are
+plain HTML but fetch fine with curl and a browser User-Agent (verified
+2026-07-22).
 
 ## Update procedure
 

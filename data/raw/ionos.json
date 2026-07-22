@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-22",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "IONOS AI Model Hub official USD pricing at https://cloud.ionos.com/prices, cross-checked against the EUR table at https://cloud.ionos.de/managed/ai-model-hub and the official model documentation. OpenAI-compatible pay-per-use, EU-sovereign (DE). The 2026-07-12 text/code catalog has 7 models, including Qwen3-Coder-Next 80B.",
+  "method": "IONOS AI Model Hub official USD pricing at https://cloud.ionos.com/prices, cross-checked against the EUR tables at https://cloud.ionos.de/preise and https://cloud.ionos.de/managed/ai-model-hub, plus the model catalog at https://docs.ionos.com/cloud/ai/ai-model-hub. OpenAI-compatible pay-per-use, EU-sovereign (DE). The 2026-07-22 text/code catalog has 9 models, incl. new Qwen3.5-397B-A17B and Qwen3.5-9B.",
   "models": [
     {
       "model_name": "gpt-oss-120b",
@@ -27,7 +27,7 @@
       "input_per_1m_usd": 1.93,
       "output_per_1m_usd": 1.93,
       "region": "eu",
-      "notes": "€1.75/€1.75"
+      "notes": "€1.75/€1.75; still listed on the EUR price table and in the current docs catalog, but missing from the USD table as of 2026-07-22 — USD values retained from 2026-07-12 snapshot (EUR unchanged)."
     },
     {
       "model_name": "Llama 3.1 8B",
@@ -35,7 +35,7 @@
       "input_per_1m_usd": 0.17,
       "output_per_1m_usd": 0.17,
       "region": "eu",
-      "notes": "€0.15/€0.15; Llama 3.1 8B Instruct; new vs prior snapshot"
+      "notes": "€0.15/€0.15; Llama 3.1 8B Instruct"
     },
     {
       "model_name": "Mistral Small 3.2",
@@ -51,7 +51,23 @@
       "input_per_1m_usd": 0.17,
       "output_per_1m_usd": 0.17,
       "region": "eu",
-      "notes": "€0.15/€0.15; Mistral Nemo Instruct; new vs prior snapshot"
+      "notes": "€0.15/€0.15; Mistral Nemo Instruct"
+    },
+    {
+      "model_name": "Qwen3.5 9B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.11,
+      "output_per_1m_usd": 0.17,
+      "region": "eu",
+      "notes": "EUR not yet listed on the DE price page as of 2026-07-22; qwen3-5-9b; new vs prior snapshot"
+    },
+    {
+      "model_name": "Qwen3.5 397B A17B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.67,
+      "output_per_1m_usd": 4.0,
+      "region": "eu",
+      "notes": "€0.60/€3.60; Qwen3.5-397B-A17B (MoE, 17B active); marked 'New' upstream; new vs prior snapshot"
     },
     {
       "model_name": "Qwen3 Coder Next",
@@ -59,7 +75,7 @@
       "input_per_1m_usd": 0.17,
       "output_per_1m_usd": 0.89,
       "region": "eu",
-      "notes": "€0.15/€0.80; Qwen/Qwen3-Coder-Next; 80B int4 coding specialist; 256k context; launched 2026-03-30."
+      "notes": "€0.15/€0.80; Qwen/Qwen3-Coder-Next; 80B coding specialist; listed under Code Models."
     }
   ]
 }

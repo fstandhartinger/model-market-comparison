@@ -1,15 +1,17 @@
 # TensorX — data collection method
 
-**Date collected:** 2026-07-12
+**Date collected:** 2026-07-22
 **Output:** `data/raw/tensorx.json`
 
 ## Authoritative source
 
 Use the server-rendered first-party table at `https://tensorx.ai/pricing/`. It explicitly
 labels prices as USD per 1 million tokens and supplies separate **Input Price**, **Cache
-Read**, and **Output Price** columns. On 2026-07-12 it displayed 25 of 25 models: 24
+Read**, and **Output Price** columns. On 2026-07-22 the table contained 26 model rows: 25
 text/vision models plus `qwen3-embedding-8b`. The embedding-only row is excluded from the
-LLM comparison.
+LLM comparison. Note: the "N of N models" counter string is no longer present in the
+server-rendered HTML (it appears to be client-rendered now); count the `<tr>` rows in the
+table instead (a plain `curl` with a browser User-Agent still returns the full table).
 
 Persist all three token tiers as `input_per_1m_usd`, `cache_read_per_1m_usd`, and
 `output_per_1m_usd`. Do not leave cache pricing only in prose. In particular, the live row

@@ -1,10 +1,10 @@
 {
   "source": "STACKIT AI Model Serving",
   "region": "eu01 (Germany South)",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-22",
   "listing_url": "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/",
   "pricing_url": "https://calculator.stackit.cloud/ai?addService=model-serving",
-  "method": "First-party Available Shared Models documentation, last updated 2026-07-10. Exactly 6 current rows are Type Chat; the 2 embedding rows are excluded. Every chat row uses the OpenAI-compatible eu01 endpoint and has Status Supported. Per instruction, token prices remain null in this snapshot and the official STACKIT calculator/pricing page is retained as the pricing authority instead of inferring a model price from an unverified mapping.",
+  "method": "First-party Available Shared Models documentation, last updated 2026-07-16. Exactly 7 current rows are Type Chat; the 2 embedding rows are excluded. Every chat row uses the OpenAI-compatible eu01 endpoint and has Status Supported. Per instruction, token prices remain null in this snapshot and the official STACKIT calculator/pricing page is retained as the pricing authority instead of inferring a model price from an unverified mapping. No EUR->USD FX conversion applied because no EUR prices are stored.",
   "models": [
     {
       "model_name": "Qwen3 VL 235B A22B Instruct",
@@ -19,8 +19,8 @@
       "server_location": "Germany South",
       "eu_hosted": true,
       "status": "supported",
-      "context_length_label": "218K",
-      "notes": "Text+image input, text output; tool calling; FP8."
+      "context_length_label": "200K",
+      "notes": "Text+image input, text output; tool calling; FP8. Context length reduced from 218K to 200K in the 2026-07-16 docs update."
     },
     {
       "model_name": "Qwen3.6 27B",
@@ -36,7 +36,7 @@
       "eu_hosted": true,
       "status": "supported",
       "context_length_label": "262K",
-      "notes": "Text input/output; tool calling; BF16."
+      "notes": "Text input/output; tool calling and reasoning; BF16; thinking budget 8192 tokens."
     },
     {
       "model_name": "Llama 3.3 70B",
@@ -85,6 +85,22 @@
       "status": "supported",
       "context_length_label": "131K",
       "notes": "Text+image input, text output; BF16."
+    },
+    {
+      "model_name": "Gemma 4 31B",
+      "model_id": "google/gemma-4-31B-it",
+      "provider_org": "Google",
+      "billing_category": "LLM-Plus",
+      "input_per_1m_eur": null,
+      "output_per_1m_eur": null,
+      "input_per_1m_usd": null,
+      "output_per_1m_usd": null,
+      "region": "eu01",
+      "server_location": "Germany South",
+      "eu_hosted": true,
+      "status": "supported",
+      "context_length_label": "256K",
+      "notes": "Text+image input, text output; tool calling and reasoning; BF16; max 3 images per request. New in the 2026-07-16 docs update."
     },
     {
       "model_name": "gpt-oss-20b",

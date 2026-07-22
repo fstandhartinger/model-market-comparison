@@ -1,7 +1,7 @@
 # Chutes (chutes.json)
 
 First-party Chutes inference offers, refreshed from the live model catalog and verified
-against the corresponding public Chute pricing metadata on **2026-07-12**.
+against the corresponding public Chute pricing metadata on **2026-07-22**.
 
 ## Refresh
 
@@ -11,7 +11,9 @@ curl -s https://llm.chutes.ai/v1/models \
   | jq '.data[] | {id, chute_id, root, in: .price.input.usd, out: .price.output.usd, cache_read: .price.input_cache_read.usd, ctx: .context_length, tee: .confidential_compute}'
 ```
 
-- The 2026-07-12 response contained 13 models. The IDs in `chutes.json` are the complete
+- The 2026-07-22 response contained 13 models — identical IDs, prices, and context lengths
+  to the 2026-07-12 snapshot (no additions, removals, or price changes). The IDs in
+  `chutes.json` are the complete
   response: no locally retained model is absent from the live catalog, and no live model is
   omitted. The endpoint currently also responds without authentication, but the refresh uses
   the documented bearer-token form. Never print or commit the token.
@@ -30,7 +32,7 @@ curl -s https://llm.chutes.ai/v1/models \
     | jq '.current_estimated_price.per_million_tokens | {input: .input.usd, output: .output.usd, cache_read: .input_cache_read.usd}'
   ```
 
-  On 2026-07-12 all 13 catalog values matched
+  On 2026-07-22 all 13 catalog values matched
   `current_estimated_price.per_million_tokens` exactly. The stored prices are therefore USD
   per 1 million input/output/cache-read tokens. On this snapshot every cache-read price is
   exactly 50% of the corresponding input price; the values are still stored explicitly so a
@@ -40,6 +42,11 @@ curl -s https://llm.chutes.ai/v1/models \
   existing model family in the comparison. Serving labels that are not the benchmark family
   name are normalized as well (for example `google/gemma-4-31B-turbo-TEE` →
   `gemma-4-31B`). Keep the exact live id in `tee_model_id`.
+- To check whether a specific model is hosted anywhere on Chutes (beyond the TEE LLM
+  catalog), query the full chute registry with a name filter:
+  `curl -s "https://api.chutes.ai/chutes/?include_public=true&limit=500&name=Kimi" -H "Authorization: Bearer $CHUTES_API_KEY"`.
+  Note: the `search=` parameter is ignored; use `name=`. On 2026-07-22 the only Moonshot
+  chutes were Kimi-K2.6-TEE and Kimi-K2.5-TEE — `moonshotai/Kimi-K3` is NOT hosted.
 - All Chutes offers are flagged `tee: true` by the build script; Chutes is added to
   `DIRECT_PLATFORM_PROVIDERS` so its OpenRouter-routed (non-TEE) duplicate is suppressed.
 

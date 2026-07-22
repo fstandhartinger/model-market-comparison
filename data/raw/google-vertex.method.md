@@ -1,7 +1,7 @@
 # Google Vertex AI pricing — collection method
 
-**Collected:** 2026-07-12 (comprehensive live re-scrape plus endpoint-location audit)
-**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 56 offer rows / 42 current model families
+**Collected:** 2026-07-22 (comprehensive live re-scrape)
+**Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 59 offer rows / 44 current model families
 
 ## Sources
 
@@ -19,6 +19,31 @@ OpenAI gpt-oss, Meta Llama, Mistral). The partner tables and the per-region Clau
 tables are rendered client-side, so a plain HTTP fetch returns only the Gemini
 section — the page was loaded in a **headless browser (`agent-browser`)** and
 `document.body.innerText` scraped to read the partner tables.
+
+## 2026-07-22 re-scrape (was 56 rows/42 families, now 59/44)
+
+Full re-scrape in the dedicated `--session vertex` headless browser (agent-browser
+0.8.5), per the "How to refresh" steps below (unchanged; technique still works,
+incl. reading the Claude `<devsite-selector>` `data-tab` panes without clicking).
+Two net-new Gemini models, both **GA released 2026-07-21** (confirmed on their
+docs pages at `docs.cloud.google.com/gemini-enterprise-agent-platform/models/gemini/
+3-6-flash` and `.../3-5-flash-lite`):
+- **Gemini 3.6 Flash** — $1.50 in / $7.50 out (cached $0.15), flat across context
+  tiers, no Global/Non-global split on the pricing table and Standard PayGo is
+  Global-only per its model page → one `global` row.
+- **Gemini 3.5 Flash-Lite** — $0.30/$2.50 Global (cached $0.03) and $0.33/$2.75
+  Non-global (cached $0.033). Its model page documents Standard PayGo
+  Multi-region `us`/`eu` with EU ML processing → `global` + `eu` rows, matching
+  the 3.5 Flash / 3.1 Flash-Lite pattern. Retirement 2027-07-21 or later.
+Everything else byte-identical to the 2026-07-12 snapshot: all Gemini 3.x/2.5
+rates, Gemini Omni Flash ($1.50/$9 — pricing page now labels it just "Gemini Omni
+Flash" under a "Gemini Omni" header, but its docs page still says Launch stage:
+Preview, so the row keeps the Preview name), all Claude panes (Global + eu +
+europe-west1, +10% EU surcharge, Sonnet 5 promo $2.20/$11 eu), Grok, DeepSeek,
+MiniMax, Kimi, GLM, Qwen, gpt-oss, Llama, Mistral. New-model watch: **GLM-5.2,
+Kimi K2.7, MiniMax-M3, DeepSeek-V4 all still NOT present** (grep of full page
+text = 0 hits). All prices remain USD; no currency conversion applies to this
+source.
 
 ## 2026-07-12 comprehensive price, lifecycle, and route audit
 

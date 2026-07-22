@@ -147,6 +147,11 @@ const FAMILY_ALIASES = {
   "nemotron-3-nano-30b": "nemotron-3-nano-30b-a3b",
   "devstral-2": "devstral-2-123b",
   "mistral-small-3.2": "mistral-small-3.2-24b",
+  // Managed-cloud catalogs write "Kimi K2.5 Thinking" without parentheses, so the
+  // reasoning mode leaks into the family key and creates a benchmark-less twin
+  // family. K2 Thinking stays its own family (distinct OpenRouter model).
+  "kimi-k2.5-thinking": "kimi-k2.5",
+  "kimi-k2.6-thinking": "kimi-k2.6",
 };
 const canonFamily = (k) => {
   const exact = FAMILY_ALIASES[k];
@@ -169,7 +174,7 @@ const EXCLUDE_RE = /(vision-only|embed|rerank|moderation|ocr|guard|^openrouter\/
 const AMBIGUOUS_MODEL_RE = /^~?[^/]+\/[^/]*latest$/i;
 
 // The models the product brief explicitly asks us to feature.
-const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
+const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|kimi-k3|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
 
 // Canonicalize vendor names that arrive spelled differently across sources.
 const ORG_ALIASES = {
@@ -492,6 +497,12 @@ async function build() {
         aa_tau2: num(ev.tau2),
         aa_gpqa: num(ev.gpqa),
         aa_mmlu_pro: num(ev.mmlu_pro),
+        // Newer AA evaluation suites (2026-07): kept alongside the legacy fields
+        // so recent models (e.g. Kimi K3) don't lose their only measured values.
+        aa_terminalbench_v2_1: num(ev.terminalbench_v2_1),
+        aa_hle: num(ev.hle),
+        aa_lcr: num(ev.lcr),
+        aa_tau_banking: num(ev.tau_banking),
       },
       aa_reference_price: {
         input_per_1m: num(pr.price_1m_input_tokens),
@@ -635,6 +646,8 @@ async function build() {
 
   // --- AWS Bedrock ---
   for (const m of aws.models || []) {
+    if (EXCLUDE_RE.test(m.model_name || "")) continue; // e.g. GPT OSS Safeguard: moderation models are excluded platform-wide
+
     const { familyKey } = normalizeCatalogFamily(m, "AWS Bedrock");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
@@ -648,6 +661,8 @@ async function build() {
 
   // --- Azure AI Foundry ---
   for (const m of azure.models || []) {
+    if (EXCLUDE_RE.test(m.model_name || "")) continue;
+
     if (AMBIGUOUS_MODEL_RE.test(m.model_name || "")) continue;
     const { familyKey } = normalizeCatalogFamily(m, "Azure AI Foundry");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
@@ -663,6 +678,8 @@ async function build() {
 
   // --- Google Vertex AI ---
   for (const m of vertex.models || []) {
+    if (EXCLUDE_RE.test(m.model_name || "")) continue;
+
     const { familyKey } = normalizeCatalogFamily(m, "Google Vertex AI");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
@@ -681,6 +698,8 @@ async function build() {
     ["OVHcloud", ovhcloud], ["STACKIT", stackit], ["T-Systems LLM Hub", tSystems],
   ]) {
     for (const m of src.models || []) {
+      if (EXCLUDE_RE.test(m.model_name || "")) continue;
+
       const { familyKey, catalogIdentity } = normalizeCatalogFamily(m, plat);
       const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
       fam.offers.push({
@@ -702,6 +721,8 @@ async function build() {
 
   // --- Chutes (first-party, all confidential-compute / TEE) ---
   for (const m of chutes.models || []) {
+    if (EXCLUDE_RE.test(m.model_name || "")) continue;
+
     const { familyKey } = normalizeCatalogFamily(m, "Chutes");
     const fam = family(familyKey, m.provider_org || guessOrg(familyKey));
     fam.offers.push({
@@ -873,7 +894,13 @@ async function build() {
     const exact = rows.some((row) => aliasesOverlap(aliases, sourceAliasesForRow(row))
       || (routeHf && huggingFaceForRow(row) === routeHf));
     const generic = rows.some((row) => !row.aa_model_id && !row.openrouter_metadata);
-    if (exact || generic || rows.length === 0) continue;
+    // When no row in the family carries any OpenRouter/HuggingFace linkage at
+    // all (AA hasn't linked the model yet — common right after a release), the
+    // route unambiguously belongs to this family; a separate "::openrouter" row
+    // would only duplicate the family with empty benchmarks.
+    const unlinked = rows.length > 0
+      && rows.every((row) => sourceAliasesForRow(row).size === 0 && !huggingFaceForRow(row));
+    if (exact || generic || unlinked || rows.length === 0) continue;
     let suffix = "openrouter";
     let serial = 2;
     while (models.has(`${route.familyKey}::${suffix}`)) suffix = `openrouter-${serial++}`;
@@ -917,7 +944,11 @@ async function build() {
       offer.non_us = !!meta.non_us;
       // Keep separate OpenRouter model SKUs until attaching to an exact AA row;
       // e.g. Qwen Instruct and Thinking have different prices under one family.
-      const route = offer.or_model_id ? `::or=${stableOpenRouterId(offer.or_model_id)}` : "";
+      // Keep the raw id here (":free" included): OpenRouter lists free and paid
+      // SKUs of the same model as separate catalog entries from the same
+      // provider, and stripping ":free" would collapse them into one scope where
+      // the $0 tier always wins and the paid endpoint is silently dropped.
+      const route = offer.or_model_id ? `::or=${String(offer.or_model_id).replace(/^~/, "")}` : "";
       const sku = [offer.endpoint_tag, offer.pricing_tier, offer.route_type].filter(Boolean).join("/");
       const scope = `${offer.platform}::${offer.provider}::eu=${offer.eu_hosted ? 1 : 0}::eu-policy=${offer.eu_policy_equivalent ? 1 : 0}::tee=${offer.tee ? 1 : 0}${route}::sku=${sku}`;
       const previous = bestByProviderScope.get(scope);

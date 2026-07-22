@@ -1,8 +1,8 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-07-12",
-  "method": "AWS Price List bulk API EU region indexes (current version 20260707080509) for standard on-demand text-token meters; official Bedrock pricing, lifecycle, model-card, and regional-availability pages for current models absent from the EU bulk feed. Flex, priority, batch, cache, legacy/EOL models, and non-text modalities are excluded. EU rows use the actual regional or EU Geo price, not a lower unrelated US route. Claude Sonnet 5 stores the active $2/$10 launch-promotion price through 2026-08-31; its $3/$15 standard price begins 2026-09-01.",
+  "collected_at": "2026-07-22",
+  "method": "AWS Price List bulk API EU region indexes (current version 20260720215247) for standard on-demand text-token meters; official Bedrock pricing, lifecycle, model-card, and regional-availability pages for current models absent from the EU bulk feed. Flex, priority, batch, cache, legacy/EOL models, and non-text modalities are excluded. EU rows use the actual regional or EU Geo price, not a lower unrelated US route. Claude Sonnet 5 stores the active $2/$10 launch-promotion price through 2026-08-31; its $3/$15 standard price begins 2026-09-01.",
   "models": [
     {
       "model_name": "Nova 2.0 Lite",
@@ -484,6 +484,30 @@
       "output_per_1m_usd": 33.0,
       "region": "us-east-1",
       "notes": "Official Bedrock Mantle standard in-region price. Also available in us-east-2; no EU region, Geo or Global inference profile. Cached input is $0.55/1M."
+    },
+    {
+      "model_name": "GPT-5.6 Luna",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 1.0,
+      "output_per_1m_usd": 6.0,
+      "region": "us-east-1",
+      "notes": "GA on Bedrock 2026-07-13. Standard on-demand Bedrock Mantle price; AWS states Bedrock pricing matches OpenAI first-party rates. Also available in us-east-2 and us-west-2; no EU region, Geo or Global inference profile. Cached input is $0.10/1M (90% discount)."
+    },
+    {
+      "model_name": "GPT-5.6 Sol",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 30.0,
+      "region": "us-east-1",
+      "notes": "GA on Bedrock 2026-07-13. Standard on-demand Bedrock Mantle price; AWS states Bedrock pricing matches OpenAI first-party rates. Also available in us-east-2; no EU region, Geo or Global inference profile. Cached input is $0.50/1M (90% discount)."
+    },
+    {
+      "model_name": "GPT-5.6 Terra",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 2.5,
+      "output_per_1m_usd": 15.0,
+      "region": "us-east-1",
+      "notes": "GA on Bedrock 2026-07-13. Standard on-demand Bedrock Mantle price; AWS states Bedrock pricing matches OpenAI first-party rates (confirmed $2.50/$15 via OpenAI/OpenRouter). Also available in us-east-2 and us-west-2; no EU region, Geo or Global inference profile. Cached input is $0.25/1M (90% discount)."
     },
     {
       "model_name": "Qwen3 235B A22B 2507",

@@ -1,14 +1,16 @@
 # OVHcloud AI Endpoints — data collection method
 
-**Date collected:** 2026-07-12
+**Date collected:** 2026-07-22 (previous: 2026-07-12)
 **Output:** `data/raw/ovhcloud.json`
 
 ## Scope and authoritative sources
 
 The first-party catalog is `https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/`.
-It is server-rendered and, on the collection date, displayed **21 results**. Include only
-models that return generated text and expose both input- and output-token prices. This leaves
-9 LLM/VLM rows. Exclude embeddings, guard/moderation models, speech-to-text, text-to-speech,
+It is server-rendered and, on the collection date, displayed **21 results** (confirmed again
+on 2026-07-22 — plain `curl` with a browser User-Agent works; card markup uses
+`Models_modelTitle__*` / `Models_priceMain__*` CSS classes with `<!-- -->` comment separators
+around values). Include only models that return generated text and expose both input- and
+output-token prices. This leaves 9 LLM/VLM rows. Exclude embeddings, guard/moderation models, speech-to-text, text-to-speech,
 and image generation.
 
 OVHcloud's launch statement says AI Endpoints runs on its sovereign infrastructure and that
@@ -22,10 +24,13 @@ These offers can therefore be stored with `region: "eu"` and `eu_hosted: true`.
 The catalog publishes **EUR per 1 million tokens**. Preserve the original values in
 `input_per_1m_eur` and `output_per_1m_eur`.
 
-The collection date was a Sunday, so use the official ECB reference rate from the latest
-preceding business day, **2026-07-10: 1 EUR = 1.1430 USD**. Preserve the EUR values and
-calculate `USD = EUR * 1.1430`, rounded to the nearest USD cent. The raw snapshot records
-the rate and date under `usd_normalization`.
+Use the official ECB reference rate from the latest published business day. For the
+2026-07-22 refresh that was **2026-07-21: 1 EUR = 1.1418 USD** (the same-day rate was not
+yet published at collection time; ECB publishes ~16:00 CET). Previous snapshot
+(2026-07-12, a Sunday) used 2026-07-10: 1.1430. Preserve the EUR values and calculate
+`USD = EUR * rate`, rounded to the nearest USD cent. The raw snapshot records the rate and
+date under `usd_normalization`. Machine-readable rate feed:
+`https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml`.
 
 On future refreshes:
 
@@ -40,7 +45,7 @@ ECB reference rates: `https://www.ecb.europa.eu/stats/policy_and_exchange_rates/
 
 ```bash
 jq '.models | length' data/raw/ovhcloud.json
-# expected for the 2026-07-12 snapshot: 9
+# expected for the 2026-07-22 snapshot: 9
 
 jq '[.models[] | select(
   (.input_per_1m_eur | type) == "number" and

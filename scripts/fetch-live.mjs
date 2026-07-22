@@ -129,8 +129,10 @@ async function fetchArtificialAnalysis() {
 }
 
 async function fetchDesignArena() {
-  console.log("→ Intelligence.ai leaderboards …");
-  const baseUrl = "https://intelligence.ai";
+  console.log("→ DesignArena leaderboards …");
+  // 2026-07: the leaderboard API moved back from intelligence.ai (now a plain
+  // marketing site returning 404s for /api/*) to www.designarena.ai.
+  const baseUrl = "https://www.designarena.ai";
   const queries = [
     { key: "frontend", body: { arenaType: "agents", category: "agon_webapps", variationName: "public", inputModality: "text" } },
     { key: "fullstack", body: { arenaType: "agents", category: "fullstack", variationName: "public" } },

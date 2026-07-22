@@ -1,8 +1,8 @@
 {
   "source": "Mistral AI (La Plateforme)",
   "region": "eu (France)",
-  "collected_at": "2026-07-12",
-  "method": "Mistral first-party API pricing at https://mistral.ai/pricing/api, parsed from the server-rendered page on 2026-07-12; prices are native USD. Mistral hosts data in the EU by default unless the explicit US API endpoint is selected. This file includes all 15 currently priced chat/text models (including Voxtral Small's text-token axis), while excluding embeddings, classifiers, OCR-only, transcription-only, TTS, and temporary free Labs endpoints.",
+  "collected_at": "2026-07-22",
+  "method": "Mistral first-party API pricing at https://mistral.ai/pricing/api, parsed from the server-rendered page on 2026-07-22; prices are native USD. Mistral hosts data in the EU by default unless the explicit US API endpoint is selected. This file includes all 15 currently priced chat/text models (including Voxtral Small's text-token axis), while excluding embeddings, classifiers, OCR-only, transcription-only, TTS, and temporary free Labs endpoints (e.g. Leanstral, free for a limited period as of 2026-07-22). Verified 2026-07-22: all 15 models and prices unchanged vs 2026-07-12.",
   "models": [
     { "model_name": "Mistral Large 3", "provider_org": "Mistral", "input_per_1m_usd": 0.50, "output_per_1m_usd": 1.50, "region": "eu", "notes": "open-weight" },
     { "model_name": "Mistral Medium 3.5", "provider_org": "Mistral", "input_per_1m_usd": 1.50, "output_per_1m_usd": 7.50, "region": "eu", "notes": "open-weight, Modified MIT; 256k context" },

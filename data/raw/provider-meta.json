@@ -507,6 +507,26 @@
       "country": "China",
       "eu_hosted": false,
       "non_us": true
+    },
+    "Crusoe": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "note": "US GPU-cloud (Crusoe Energy); serverless inference endpoint via OpenRouter, no EU region selector. Also operates an Iceland DC, but no EU residency guarantee for the per-token API."
+    },
+    "Meta": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.meta.ai/",
+      "note": "First-party Meta API endpoint (Muse/Llama family) routed via OpenRouter; US-served."
+    },
+    "Tencent": {
+      "country": "China",
+      "eu_hosted": false,
+      "non_us": true,
+      "url": "https://cloud.tencent.com/",
+      "note": "First-party Tencent Hunyuan endpoint via OpenRouter; China parent."
     }
   }
 }

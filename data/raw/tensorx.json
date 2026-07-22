@@ -1,9 +1,9 @@
 {
   "source": "TensorX",
   "region": "eu (Ireland)",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-07-22",
   "listing_url": "https://tensorx.ai/pricing/",
-  "method": "TensorX public pricing page https://tensorx.ai/pricing/ (server-rendered table), native USD per 1M tokens and OpenAI-compatible api.tensorx.ai/v1. The 2026-07-12 page shows '25 of 25 models'. Embedding-only qwen3-embedding-8b (output '-') is excluded, leaving 24 text/vision LLMs. EU-sovereign: TensorX Ltd (Company No. 796387, formerly Tensorix), Dublin HQ, EU regions Dublin/Helsinki/Paris, zero data retention, ISO 27001-ready and GDPR Art.44. Input, cache-read and output prices are stored as structured USD-per-1M fields. All 24 text/vision model prices match the live table.",
+  "method": "TensorX public pricing page https://tensorx.ai/pricing/ (server-rendered table), native USD per 1M tokens and OpenAI-compatible api.tensorx.ai/v1. On 2026-07-22 the server-rendered table has 26 model rows (the 'N of N models' counter is no longer in the server HTML, it appears to be client-rendered now). Embedding-only qwen3-embedding-8b (output '-') is excluded, leaving 25 text/vision LLMs. EU-sovereign: TensorX Ltd (Company No. 796387, formerly Tensorix), Dublin HQ, EU regions Dublin/Helsinki/Paris, zero data retention, ISO 27001-ready and GDPR Art.44. Input, cache-read and output prices are stored as structured USD-per-1M fields. All 25 text/vision model prices match the live table.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -220,6 +220,15 @@
       "cache_read_per_1m_usd": 0.1,
       "region": "eu",
       "notes": "Xiaomi omni model (text/image, tool-calling), 1M ctx; cache-read $0.10/1M. Added 2026-07-09 from tensorx.ai/pricing."
+    },
+    {
+      "model_name": "HY3",
+      "provider_org": "Tencent",
+      "input_per_1m_usd": 0.4,
+      "output_per_1m_usd": 1.0,
+      "cache_read_per_1m_usd": 0.1,
+      "region": "eu",
+      "notes": "tencent/hy3, Tencent's open 295B flagship MoE with standout agentic reasoning; 256K ctx; cache-read $0.10/1M. Added 2026-07-22 from tensorx.ai/pricing."
     }
   ]
 }
