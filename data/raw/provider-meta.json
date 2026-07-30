@@ -527,6 +527,34 @@
       "non_us": true,
       "url": "https://cloud.tencent.com/",
       "note": "First-party Tencent Hunyuan endpoint via OpenRouter; China parent."
+    },
+    "Modal": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://modal.com/",
+      "note": "US serverless GPU cloud (New York); serves open-weight models (e.g. Kimi K3) via OpenRouter at list price."
+    },
+    "CoreWeave": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.coreweave.com/",
+      "note": "US GPU cloud (New Jersey); serverless inference endpoints routed via OpenRouter."
+    },
+    "Claude Platform on AWS": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://www.anthropic.com/",
+      "note": "Anthropic's Claude platform capacity running on AWS infrastructure, surfaced as a distinct OpenRouter route for Claude models (e.g. Opus 5). US-served."
+    },
+    "Sail Research": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://openrouter.ai/",
+      "note": "Small OpenRouter-routed host (Kimi K2.6, GLM-5.2); little public info — treated as US/global until verified."
     }
   }
 }

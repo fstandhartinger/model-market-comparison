@@ -1,7 +1,7 @@
 {
   "source": "Azure AI Foundry",
   "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
-  "collected_at": "2026-07-22",
+  "collected_at": "2026-07-30",
   "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the model-retirement schedule (updated 2026-07-21) plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. GPT-5.6 Luna/Sol/Terra standard token meters were published (effective 2026-07-01), so those rows now carry the default short-context Standard prices; long-context prices are documented in notes. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded. All prices are native USD from the API (currencyCode=USD); no currency conversion is applied.",
   "models": [
     {
@@ -352,7 +352,7 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Global. A $1.375/$2.75 DZ meter exists, but the current Europe Data Zone table does not list Grok; no EU-hosted offer is inferred from the meter alone."
+      "notes": "Global. A $1.375/$2.75 DZ meter exists, but the current Europe Data Zone table does not list Grok; no EU-hosted offer is inferred from the meter alone. | 2026-07-30: Retail API meter is labeled \"Grok 4.2\" at identical price; catalog/blog call the product Grok 4.3. Kept as 4.3 (meter labels lag product names)."
     },
     {
       "model_name": "Grok 4.20 Reasoning",
@@ -782,6 +782,30 @@
       "region": "us",
       "eu_hosted": false,
       "notes": "Fireworks partner alternative to the Azure Direct Global offer. US deployment only and excluded from the Azure EU Data Boundary."
+    },
+    {
+      "model_name": "Claude Opus 5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5.0,
+      "output_per_1m_usd": 25.0,
+      "region": "us",
+      "notes": "GA on Microsoft Foundry (Global Standard / DZ-US only, NO EU deployment). Billed via Azure Marketplace Claude Consumption Units (100 CCU = $1), ~$5/$25 — not in the Retail Prices API."
+    },
+    {
+      "model_name": "Kimi K3",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 3.3,
+      "output_per_1m_usd": 16.5,
+      "region": "us",
+      "notes": "Via Fireworks on Foundry (US-served, outside EU Data Boundary). Price from the MS Foundry launch blog (cached $0.33); Retail API meters not yet published 2026-07-30."
+    },
+    {
+      "model_name": "GPT-5.2 Pro",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 21.0,
+      "output_per_1m_usd": 168.0,
+      "region": "swedencentral",
+      "notes": "Global $21/$168; DZ $23.10/$184.80. Retail API meters since 2025-12."
     }
   ]
 }

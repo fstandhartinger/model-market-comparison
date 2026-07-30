@@ -160,10 +160,11 @@ test("EU residency is specific to the model offer, not inherited from the provid
   assert.equal(offer("glm-5.2", "Inceptron")?.eu_hosted, true);
   assert.equal(offer("glm-5.2", "TensorX")?.eu_hosted, true);
   assert.equal(offer("glm-5.2", "Scaleway")?.eu_hosted, true);
-  assert.equal(offer("glm-5.2", "Nebius")?.eu_hosted, false, "Nebius serves GLM 5.2 from the US");
+  // Nebius retired the uk-south1 region on 2026-07-30 and dropped its GLM-5.2 and
+  // DeepSeek V4 Pro listings with it; Kimi K3 launched in the new eu-west2 (FR) region.
   assert.equal(offer("glm-5.2", "Azure AI Foundry")?.eu_hosted, false, "Fireworks-on-Azure is US-served");
   assert.equal(offer("deepseek-v4-pro", "TensorX")?.eu_hosted, true);
-  assert.equal(offer("deepseek-v4-pro", "Nebius")?.eu_hosted, false, "Nebius serves V4 Pro from the UK");
+  assert.equal(offer("kimi-k3", "Nebius")?.eu_hosted, true, "Nebius serves Kimi K3 from eu-west2 (France)");
   assert.equal(offer("kimi-k2.7-code", "Azure AI Foundry")?.eu_hosted, false, "policy equivalence must not falsify technical residency");
 });
 
@@ -552,7 +553,7 @@ test("DesignArena board rows attach once and never clone across effort siblings"
 
 test("every current OpenRouter text SKU remains represented after free-tier deduplication", () => {
   const stable = (id) => String(id || "").replace(/^~/, "").replace(/:free$/i, "");
-  const excluded = /(vision-only|embed|rerank|moderation|ocr|guard|^openrouter\/(?:free|auto|fusion|bodybuilder|pareto-code)$)/i;
+  const excluded = /(vision-only|embed|rerank|moderation|ocr|guard|:batch$|^openrouter\/(?:free|auto|fusion|bodybuilder|pareto-code)$)/i;
   const moving = /^~?[^/]+\/[^/]*latest$/i;
   const expected = new Set(openRouter.models.filter((model) => {
     const outputs = model.architecture?.output_modalities || [];

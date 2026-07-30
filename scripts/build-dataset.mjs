@@ -174,7 +174,7 @@ const EXCLUDE_RE = /(vision-only|embed|rerank|moderation|ocr|guard|^openrouter\/
 const AMBIGUOUS_MODEL_RE = /^~?[^/]+\/[^/]*latest$/i;
 
 // The models the product brief explicitly asks us to feature.
-const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|kimi-k3|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro)/;
+const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-5|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|kimi-k3|glm-5\.[12]|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro|grok-4\.5|qwen3\.7-max)/;
 
 // Canonicalize vendor names that arrive spelled differently across sources.
 const ORG_ALIASES = {
@@ -580,6 +580,11 @@ async function build() {
     if (!outputs.includes("text") || outputs.some((mode) => mode !== "text")) continue;
     if (EXCLUDE_RE.test(m.id) || EXCLUDE_RE.test(m.name || "") || AMBIGUOUS_MODEL_RE.test(m.id)) continue;
     if (m.expiration_date && String(m.expiration_date) < String(or.collected_at)) continue;
+    // OpenRouter now lists ":batch" SKUs as separate pseudo-models (async batch service
+    // tier at ~50% price). Like the flex/priority endpoint meters they are service tiers,
+    // not competing models — without this skip 26 phantom "-batch" families entered the
+    // catalog (gpt-5.5-batch, claude-fable-5-batch, …).
+    if (/:batch$/i.test(m.id)) continue;
 
     const stableOrId = stableOpenRouterId(m.id);
     const stableCanonicalSlug = stableOpenRouterId(m.canonical_slug);
