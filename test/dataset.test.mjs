@@ -194,7 +194,9 @@ test("only the two approved Azure Direct Global offers receive the EU policy equ
   assert.ok(fireworks.every(({ offer }) => offer.eu_policy_equivalent !== true));
 
   // "Kimi K2.x Thinking (Azure Direct)" rows now join the base families.
-  for (const family of ["glm-5.2", "minimax-m2.7", "kimi-k2.5", "kimi-k2.6"]) {
+  // minimax-m2.7 -> minimax-m3 (2026-07-31): the Retail API never had an M2.7 meter;
+  // the $0.33/$1.32 Fireworks meters are "FW MiniMax 3", so the offer moved to M3.
+  for (const family of ["glm-5.2", "minimax-m3", "kimi-k2.5", "kimi-k2.6"]) {
     const rows = azure.filter((row) => row.family === family);
     assert.ok(rows.length > 0, `${family} has an Azure control route`);
     assert.ok(rows.every(({ offer }) => offer.eu_policy_equivalent !== true), family);

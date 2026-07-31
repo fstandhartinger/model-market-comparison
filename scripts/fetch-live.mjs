@@ -97,8 +97,14 @@ async function fetchArtificialAnalysis() {
   const metadata = parseArtificialAnalysisMetadata(leaderboardHtml);
   const apiModels = data.data || [];
   const missingMetadata = apiModels.filter((model) => !metadata.has(model.id));
-  if (metadata.size !== apiModels.length || missingMetadata.length) {
-    throw new Error(`AA metadata mismatch: API=${apiModels.length}, leaderboard=${metadata.size}, missing=${missingMetadata.length}`);
+  // Every API model must have leaderboard metadata. The reverse is fine: the leaderboard
+  // HTML occasionally carries an extra row the v2 API hasn't picked up yet (e.g. a model
+  // published mid-rollout) — that surplus is harmless and must not block the refresh.
+  if (missingMetadata.length) {
+    throw new Error(`AA metadata mismatch: API=${apiModels.length}, leaderboard=${metadata.size}, missing=${missingMetadata.length} (${missingMetadata.slice(0, 3).map((m) => m.name).join(", ")})`);
+  }
+  if (metadata.size !== apiModels.length) {
+    console.log(`  note: leaderboard carries ${metadata.size - apiModels.length} extra metadata row(s) not in the v2 API yet`);
   }
   const models = apiModels.map((model) => {
     const meta = metadata.get(model.id);
