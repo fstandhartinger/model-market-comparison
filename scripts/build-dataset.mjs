@@ -571,6 +571,15 @@ async function build() {
   }
 
   // --- OpenRouter: per-provider token offers ---
+  // Targeted offer corrections for verifiably mislabeled upstream meters (manual.json
+  // offer_overrides; each carries a documented primary source). Keyed or_model_id::tag.
+  const offerOverrides = new Map();
+  try {
+    const manualForOverrides = await readJSON("manual.json");
+    for (const o of manualForOverrides.offer_overrides || []) {
+      offerOverrides.set(`${o.or_model_id}::${o.endpoint_tag}`, o);
+    }
+  } catch { /* no manual file */ }
   const orIdsByFamily = new Map();
   const openRouterRoutes = [];
   for (const m of or.models) {
@@ -624,12 +633,14 @@ async function build() {
       // half the real standard API price (e.g. GPT-5.6 Sol $2.50/$15 instead of $5/$30).
       if (/(?:^|\/)(?:flex|priority|batch)(?:\/|$)/i.test(tag)) continue;
       const euRoute = /(?:^|\/)(?:eu(?:rope)?|eu-[a-z0-9-]+|europe(?:-[a-z0-9-]+)?|swedencentral)(?:\/|$)/i.test(tag);
+      const override = offerOverrides.get(`${m.id}::${tag}`);
       fam.offers.push({
         source: "OpenRouter",
         provider: e.provider_name || "Unknown",
         platform: "OpenRouter",
-        input_per_1m: inP != null ? inP * 1e6 : null,
-        output_per_1m: outP != null ? outP * 1e6 : null,
+        input_per_1m: override ? override.input_per_1m : (inP != null ? inP * 1e6 : null),
+        output_per_1m: override ? override.output_per_1m : (outP != null ? outP * 1e6 : null),
+        ...(override ? { notes: `Price override: ${override.reason}` } : {}),
         cache_read_per_1m: num(e.pricing?.input_cache_read) != null ? num(e.pricing.input_cache_read) * 1e6 : null,
         cache_write_per_1m: num(e.pricing?.input_cache_write) != null ? num(e.pricing.input_cache_write) * 1e6 : null,
         internal_reasoning_per_1m: num(e.pricing?.internal_reasoning) != null ? num(e.pricing.internal_reasoning) * 1e6 : null,
