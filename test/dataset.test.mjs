@@ -422,17 +422,26 @@ test("family-scoped Intelligence.ai evidence attaches once to deterministic Over
   assert.equal(ds.models.find((model) => model.id === "gpt-5.5::high")?.designarena.frontend?.modelId, "gpt-5.5");
 });
 
-test("DeepSeek V4 Pro keeps its Webapps/Frontend Elo on the collapsed max representative only", () => {
+test("DeepSeek V4 Pro DesignArena rows mirror the source and sit on the max representative only", () => {
+  // 2026-08-05: DesignArena DELISTED deepseek-v4-pro from the frontend board (it had
+  // been the board's lowest Elo at ~1000). The dataset must mirror the source either
+  // way: rows only when the source has them, always attached to ::max, never cloned.
   const sourceFrontend = designArena.leaderboards.frontend.data.find((row) => row.modelId === "deepseek-v4-pro");
   const sourceFullstack = designArena.leaderboards.fullstack.data.find((row) => row.modelId === "deepseek-v4-pro");
-  assert.ok(sourceFrontend);
-  assert.equal(sourceFullstack, undefined, "Intelligence.ai does not publish a DeepSeek V4 Pro Fullstack row");
 
   const max = ds.models.find((model) => model.id === "deepseek-v4-pro::max");
-  assert.equal(max?.designarena.frontend?.elo, sourceFrontend.elo);
-  assert.equal(max?.designarena.frontend?.battles, sourceFrontend.battles);
-  assert.equal(max?.designarena.fullstack, undefined);
-  assert.match(max?.designarena_attachment_note || "", /product\/family scope without an effort setting/i);
+  if (sourceFrontend) {
+    assert.equal(max?.designarena.frontend?.elo, sourceFrontend.elo);
+    assert.equal(max?.designarena.frontend?.battles, sourceFrontend.battles);
+    assert.match(max?.designarena_attachment_note || "", /product\/family scope without an effort setting/i);
+  } else {
+    assert.equal(max?.designarena.frontend, undefined, "no phantom frontend row when the source has none");
+  }
+  if (sourceFullstack) {
+    assert.equal(max?.designarena.fullstack?.elo, sourceFullstack.elo);
+  } else {
+    assert.equal(max?.designarena.fullstack, undefined);
+  }
 
   const siblings = ds.models.filter((model) => model.family_key === "deepseek-v4-pro" && model.id !== max?.id);
   assert.ok(siblings.every((model) => Object.keys(model.designarena || {}).length === 0));
