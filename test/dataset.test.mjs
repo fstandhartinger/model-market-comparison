@@ -388,7 +388,8 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.ok(glm);
   assert.equal(glm.benchmarks.aa_coding_index, 68.8);
   assert.equal(glm.benchmarks.aa_coding_agent_index, 43.2);
-  assert.equal(glm.benchmarks.aa_intelligence_index, 51.1);
+  // 2026-08-07: AA re-scored GLM-5.2 intelligence 51.1 -> 52.6 (live v2 API verified).
+  assert.equal(glm.benchmarks.aa_intelligence_index, 52.6);
   assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
   assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
   assert.ok(glm.designarena.frontend?.battles >= 500);
@@ -397,7 +398,8 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
 
   const nonReasoning = ds.models.find((model) => model.id === "glm-5.2::non-reasoning");
   assert.equal(nonReasoning?.benchmarks.aa_coding_index, 46.5);
-  assert.equal(nonReasoning?.benchmarks.aa_intelligence_index, 34.1);
+  // 2026-08-07: AA re-scored the non-reasoning row 34.1 -> 34.8 alongside the max row.
+  assert.equal(nonReasoning?.benchmarks.aa_intelligence_index, 34.8);
   assert.equal(nonReasoning?.benchmarks.aa_coding_agent_index ?? null, null);
   assert.deepEqual(nonReasoning?.designarena || {}, {});
 });
