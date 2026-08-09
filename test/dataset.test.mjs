@@ -561,7 +561,20 @@ test("DesignArena board rows attach once and never clone across effort siblings"
   for (const model of ds.models) {
     for (const [board, row] of Object.entries(model.designarena || {})) output.push(`${board}::${row.modelId}`);
   }
-  assert.deepEqual(output.sort(), source.sort());
+  // Never clone or invent: every attached row must exist in the source.
+  const sourceSet = new Set(source);
+  for (const key of output) assert.ok(sourceSet.has(key), `invented row: ${key}`);
+  // A source row may be superseded ONLY by the build's documented alias dedup:
+  // when the registry reveals a stealth codename as another product (e.g.
+  // "magnesium" -> "GPT 5.6 Sol (xHigh)", 2026-08-09), the family keeps just its
+  // highest-battle row per board. Unrevealed rows must never go missing.
+  const outputSet = new Set(output);
+  for (const key of source.filter((k) => !outputSet.has(k))) {
+    const modelId = key.split("::")[1];
+    const display = designArena.model_registry?.[modelId]?.display_name;
+    assert.ok(display && display !== modelId,
+      `source row ${key} missing from dataset without a registry alias to justify dedup`);
+  }
 });
 
 test("every current OpenRouter text SKU remains represented after free-tier deduplication", () => {
