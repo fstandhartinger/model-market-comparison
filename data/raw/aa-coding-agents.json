@@ -4,7 +4,7 @@
   "endpoint": "https://artificialanalysis.ai/ (homepage) — data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. Not in the v2 API.",
   "method": "curl the homepage HTML, locate the escaped JSON rows array after the 'Coding Agent Index' block, unescape, bracket-match, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1), evalCount/indexComponentCount=completeness.",
   "score_scale": "0-1",
-  "completeness_note": "Rows with evalCount < indexComponentCount are PARTIAL indices; AA's visible chart omits them and build-dataset filters them. Partial as of 2026-08-10: [('Opus 4.6 (medium)', 'Claude Code')]",
+  "completeness_note": "Rows with evalCount < indexComponentCount are PARTIAL indices; AA's visible chart omits them and build-dataset filters them. Partial as of 2026-08-10 (evening refresh): [('Opus 4.6 (medium)', 'Claude Code')]",
   "count": 53,
   "rows": [
     {
