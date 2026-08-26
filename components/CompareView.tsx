@@ -4,7 +4,7 @@ import Link from "next/link";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, scopedCatalogOffers, createOfferScope, isHiddenModel, type OfferScope } from "../lib/cost";
+import { modelCost, rankedOffers, scopedCatalogOffers, createOfferScope, type OfferScope } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, selectableModels } from "../lib/variants";
@@ -32,13 +32,12 @@ export function CompareView({ data }: { data: ClientData }) {
       return offerScope.restricted ? hasOffer : hasOffer || hasScoreEvidence(m, s.score);
     });
     if (s.collapse) r = collapseModels(r, preferredId);
-    r = r.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) r = r.filter((m) => m.open_weights);
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
     if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScore);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
+  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
 
   const visibleModels = useMemo(() => {
     if (!q.trim()) return models;

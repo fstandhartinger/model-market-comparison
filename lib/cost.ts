@@ -196,18 +196,6 @@ export function createOfferScope(
   };
 }
 
-// Two independent "hide" toggles, matched on family_key (covers all variants):
-//  - GPT-5.5* and Claude Opus 4.8  (off by default)
-//  - Claude Fable                  (ON by default). Fable 5 tops the capability
-//    benchmarks but Anthropic states it falls back to Opus 4.8 for "routine tasks like
-//    coding and debugging" — so it isn't usable as a standalone coding model and would
-//    just sit misleadingly at #1. Hidden by default; users can opt in via the toggle.
-export const HIDE_GPT_OPUS_RE = /^(gpt-5\.5|claude-opus-4\.8)/;
-export const HIDE_FABLE_RE = /^claude-fable/;
-export function isHiddenModel(familyKey: string, hideGptOpus: boolean, hideFable: boolean): boolean {
-  return (hideGptOpus && HIDE_GPT_OPUS_RE.test(familyKey)) || (hideFable && HIDE_FABLE_RE.test(familyKey));
-}
-
 // Provider-filter presets (point 5).
 export const PROVIDER_PRESETS: { label: string; match: (p: { platform: string; provider: string }) => boolean }[] = [
   { label: "Hyperscalers + 1st-party", match: (p) => ["AWS Bedrock", "Azure AI Foundry", "Anthropic API / Claude Code"].includes(p.platform) },

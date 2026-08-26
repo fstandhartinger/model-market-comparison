@@ -4,7 +4,7 @@ import Link from "next/link";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { blend, modelCost, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, isHiddenModel } from "../lib/cost";
+import { blend, modelCost, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
@@ -51,7 +51,6 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       ncheap: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length,
     }));
     if (s.collapse) r = r.filter((x) => !preferredId.has(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
-    r = r.filter((x) => !isHiddenModel(x.m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) r = r.filter((x) => x.m.open_weights);
     if (s.featured) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
@@ -72,7 +71,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.minScore, s.hideGptOpus, s.hideFable, s.openOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);

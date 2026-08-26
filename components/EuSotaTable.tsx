@@ -6,7 +6,6 @@ import type { ClientData, ClientModel, ClientOffer } from "../lib/client-model";
 import {
   blend,
   createOfferScope,
-  isHiddenModel,
   scopedCatalogOffers,
 } from "../lib/cost";
 import { usdPerM } from "../lib/format";
@@ -52,7 +51,6 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
       if (!hiddenAsDeprecated) result.push({ entry, model: null, offers: [] });
       return result;
     }
-    if (isHiddenModel(model.family_key, s.hideGptOpus, s.hideFable)) return result;
     if (s.openOnly && !model.open_weights) return result;
     if (s.featured && !model.featured) return result;
     if (s.familySet && !s.familySet.has(model.family_key)) return result;

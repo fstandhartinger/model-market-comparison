@@ -6,7 +6,7 @@ import {
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { modelCost, scopedCatalogOffers, createOfferScope, isHiddenModel } from "../lib/cost";
+import { modelCost, scopedCatalogOffers, createOfferScope } from "../lib/cost";
 import { NumFilter } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
@@ -28,7 +28,6 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     const maxC = parseFloat(maxCost);
     let base = candidates;
     if (s.collapse) base = collapseModels(base, preferredId);
-    base = base.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) base = base.filter((m) => m.open_weights);
     if (s.featured) base = base.filter((m) => m.featured);
     if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
@@ -37,7 +36,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       .filter((x) => !offerScope.restricted || x.offerCount > 0)
       .filter((x) => (Number.isFinite(maxC) ? x.cost != null && x.cost <= maxC : true))
       .filter((x) => (s.minScore > 0 ? x.sc != null && x.sc >= s.minScore : true));
-  }, [data, candidates, score, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, maxCost, offerScope, preferredId]);
+  }, [data, candidates, score, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, maxCost, offerScope, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)

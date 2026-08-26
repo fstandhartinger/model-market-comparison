@@ -11,8 +11,6 @@ interface SettingsState {
   excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
   euHostedOnly: boolean;    // only exact offers hosted in the EU or explicitly policy-equivalent
   nonUsOnly: boolean;       // only providers whose company is not US-based
-  hideGptOpus: boolean;     // hide GPT-5.5 / Claude Opus 4.8 (off by default)
-  hideFable: boolean;       // hide Claude Fable (on by default)
   openOnly: boolean;        // only open-weights models (off by default)
   minScore: number;         // hide models scoring below this (score-aware default)
   teeOnly: boolean;         // only models with a TEE / confidential-compute offer
@@ -28,8 +26,6 @@ interface SettingsCtx extends SettingsState {
   setExcludeChinese: (b: boolean) => void;
   setEuHostedOnly: (b: boolean) => void;
   setNonUsOnly: (b: boolean) => void;
-  setHideGptOpus: (b: boolean) => void;
-  setHideFable: (b: boolean) => void;
   setOpenOnly: (b: boolean) => void;
   setMinScore: (n: number) => void;
   setTeeOnly: (b: boolean) => void;
@@ -39,14 +35,15 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, hideGptOpus: false, hideFable: true, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [] };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
 // silently excluded — and with the EU eligibility filter on, models whose only matching route is a new
 // provider vanished. A blocklist includes future providers by default. Bumping v2→v3
 // discards the old (inclusion-shaped) persisted `providers` array.
-const KEY = "mmc.settings.v4";
+// v5: dropped hideGptOpus/hideFable (toggles removed; nothing is hidden by them anymore).
+const KEY = "mmc.settings.v5";
 
 const Ctx = createContext<SettingsCtx | null>(null);
 
@@ -74,8 +71,6 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
     setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
     setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
-    setHideGptOpus: (hideGptOpus) => setState((s) => ({ ...s, hideGptOpus })),
-    setHideFable: (hideFable) => setState((s) => ({ ...s, hideFable })),
     setOpenOnly: (openOnly) => setState((s) => ({ ...s, openOnly })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),

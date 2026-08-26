@@ -20,7 +20,7 @@ USD per 1M tokens.
   detail, persisted): selectable **score**,
   min-score, **One variant for Reasoning models** (collapse GPT/Claude/GLM/Kimi to one),
   **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted / approved equivalent only**, **Non-US provider only**,
-  **TEE / confidential only**, **Hide GPT-5.5 / Opus 4.8**, **Hide Fable**, plus
+  **TEE / confidential only**, plus
   provider- and model-checklist filters.
 - **Selectable scores**: **Composite** (five percentile slots with model-mean imputation plus a dominance-safe projection, 0–100, default), ArtificialAnalysis
   **Coding Index**, **Coding Agent Index** (median across published harnesses for the exact model/effort variant), **Intelligence Index**,

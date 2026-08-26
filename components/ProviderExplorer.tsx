@@ -3,7 +3,7 @@ import { Fragment, useMemo, useState } from "react";
 import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { useSettings } from "./SettingsContext";
-import { createOfferScope, isHiddenModel, rankedOffers, scopedCatalogOffers, scoreOf } from "../lib/cost";
+import { createOfferScope, rankedOffers, scopedCatalogOffers, scoreOf } from "../lib/cost";
 import { collapseModels, preferredVariantIds, selectableModels } from "../lib/variants";
 
 const blended = (o: { input_per_1m: number | null; output_per_1m: number | null }) =>
@@ -31,14 +31,13 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   const allowedModels = useMemo(() => {
     const collapsed = s.collapse ? collapseModels(candidates, preferredId) : candidates;
     return collapsed.filter((model) => {
-      if (isHiddenModel(model.family_key, s.hideGptOpus, s.hideFable)) return false;
       if (s.openOnly && !model.open_weights) return false;
       if (s.featured && !model.featured) return false;
       if (s.familySet && !s.familySet.has(model.family_key)) return false;
       const score = scoreOf(model, s.score);
       return !(s.minScore > 0 && (score == null || score < s.minScore));
     });
-  }, [candidates, preferredId, s.collapse, s.hideGptOpus, s.hideFable, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
+  }, [candidates, preferredId, s.collapse, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
 
   // Per-provider model count over the FILTERED model rows (so the directory count matches the
   // list you actually see when you click through).

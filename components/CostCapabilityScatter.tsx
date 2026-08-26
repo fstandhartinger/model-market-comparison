@@ -7,7 +7,7 @@ import {
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, orgColor } from "../lib/format";
-import { modelCost, createOfferScope, isHiddenModel } from "../lib/cost";
+import { modelCost, createOfferScope } from "../lib/cost";
 import { Toggle } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
@@ -49,7 +49,6 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const points = useMemo(() => {
     let pool = candidates;
     if (s.collapse) pool = collapseModels(pool, preferredId);
-    pool = pool.filter((m) => !isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable));
     if (s.openOnly) pool = pool.filter((m) => m.open_weights);
     if (s.featured) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
@@ -57,7 +56,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
       .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
       .filter((x) => x.hasEvidence && x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
       .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore, preferredId]);
+  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();

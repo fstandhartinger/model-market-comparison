@@ -3,7 +3,7 @@ import { useMemo, useState } from "react";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { rankedOffers, createOfferScope, isHiddenModel } from "../lib/cost";
+import { rankedOffers, createOfferScope } from "../lib/cost";
 import { DataBar } from "./ui";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
@@ -34,7 +34,6 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const [modelQ, setModelQ] = useState("");
 
   const eligible = (m: ClientData["models"][number]) => {
-    if (isHiddenModel(m.family_key, s.hideGptOpus, s.hideFable)) return false;
     if (s.openOnly && !m.open_weights) return false;
     if (s.featured && !m.featured) return false;
     if (s.familySet && !s.familySet.has(m.family_key)) return false;
@@ -58,14 +57,14 @@ export function ProvidersView({ data }: { data: ClientData }) {
       if (!previous || (m.scores[score] ?? -Infinity) > (previous.scores[score] ?? -Infinity)) fams.set(m.family_key, m);
     }
     return [...fams.values()];
-  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]);
+  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore]);
 
   const modelOptions = useMemo(
     () => (s.collapse ? collapseModels(candidates, preferredId) : candidates)
       .filter((m) => rankedOffers(data.offersByModel[m.id], offerScope).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, candidates, score, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.hideGptOpus, s.hideFable, s.openOnly, s.minScore]
+    [data, candidates, score, offerScope, preferredId, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];
