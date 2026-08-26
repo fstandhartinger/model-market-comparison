@@ -1,6 +1,6 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models and api.chutes.ai/chutes/{chute_id} (first-party)",
-  "collected_at": "2026-07-22",
+  "collected_at": "2026-08-26",
   "method": "GET https://llm.chutes.ai/v1/models on 2026-07-22 returned 13 live models. Each catalog price.input.usd / price.output.usd / price.input_cache_read.usd value was cross-checked against the corresponding first-party Chute metadata at GET https://api.chutes.ai/chutes/{chute_id}, current_estimated_price.per_million_tokens. All values matched exactly and are USD per 1M tokens. Every live entry carries confidential_compute:true and an -TEE model id. model_name is the base model (vendor prefix and serving/quantization suffixes such as -TEE, -FP8, and -turbo stripped where needed) so offers attach to the existing model families.",
   "models": [
     {
@@ -133,6 +133,39 @@
       "context_length": null,
       "confidential_compute": true,
       "tee_model_id": "unsloth/Mistral-Nemo-Instruct-2407-TEE"
+    },
+    {
+      "model_name": "DeepSeek V4 Flash 0731",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.44,
+      "output_per_1m_usd": 1.32,
+      "cache_read_per_1m_usd": null,
+      "confidential_compute": true,
+      "context_length": 1048576,
+      "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai"
+    },
+    {
+      "model_name": "Qwen3.8 27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.35,
+      "output_per_1m_usd": 2.75,
+      "cache_read_per_1m_usd": null,
+      "confidential_compute": true,
+      "context_length": null,
+      "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai"
+    },
+    {
+      "model_name": "Kimi K3",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 3.0,
+      "output_per_1m_usd": 15.0,
+      "cache_read_per_1m_usd": 0.3,
+      "confidential_compute": true,
+      "context_length": 1048576,
+      "tee_model_id": "moonshotai/Kimi-K3-TEE",
+      "notes": "Added 2026-08-26 from llm.chutes.ai"
     }
   ]
 }

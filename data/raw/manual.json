@@ -9,18 +9,11 @@
   "benchmark_overrides": [],
   "offer_overrides": [
     {
-      "or_model_id": "openai/gpt-5.6-luna",
+      "or_model_id": "openai/gpt-5.6-sol",
       "endpoint_tag": "openai",
-      "input_per_1m": 0.2,
-      "output_per_1m": 1.2,
-      "reason": "OpenAI cut Luna 80% on 2026-07-30 (official: standard $0.20/$1.20, flex $0.10/$0.60). OpenRouter's meters shifted one tier: the 'openai' tag carries the flex price ($0.10/$0.60) and 'openai/priority' carries the standard. Corrected to the official standard price (verified via OpenAI announcement coverage + aipricing.guru 2026-07-31 + Bedrock's 1.1x $0.22/$1.32). Remove once OpenRouter relabels."
-    },
-    {
-      "or_model_id": "openai/gpt-5.6-terra",
-      "endpoint_tag": "openai",
-      "input_per_1m": 2.0,
-      "output_per_1m": 12.0,
-      "reason": "OpenAI cut Terra 20% on 2026-07-30 (official standard $2/$12). OpenRouter's 'openai' tag carries the flex price ($1/$6). Corrected to the official standard price. Remove once OpenRouter relabels."
+      "input_per_1m": 4.0,
+      "output_per_1m": 20.0,
+      "reason": "OpenAI cut Sol to $4/$20 on 2026-08-21 (promo through 2026-11-21). OpenRouter's 'openai' endpoint shows an OpenRouter-exclusive 50% discount ($2/$10) which is not the first-party list price. Luna/Terra overrides removed 2026-08-26 — OR now labels their standard meters correctly ($0.20/$1.20, $2/$12)."
     }
   ],
   "_offer_overrides_doc": "Targeted corrections applied to specific OpenRouter endpoint offers when the upstream meter labeling is verifiably wrong. Match: or_model_id + endpoint_tag. Each override replaces input/output_per_1m and appends its reason to the offer notes. Use ONLY with a documented primary source."
