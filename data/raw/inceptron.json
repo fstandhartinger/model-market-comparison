@@ -3,7 +3,7 @@
   "region": "eu (Finland; HQ Sweden)",
   "collected_at": "2026-08-26",
   "listing_url": "https://www.inceptron.io/models",
-  "method": "Prices from Inceptron's unauthenticated OpenAI-compatible catalog API https://api.inceptron.io/v1/models (pricing.prompt / pricing.completion in USD per token x 1e6; input_cache_reads is the cache-read tier), cross-checked against OpenRouter endpoint data where provider_name=='Inceptron'. On 2026-07-22 the API lists 4 priced text LLMs: GLM 5.2 $0.94/$2.90, Kimi K2.7 Code $0.72/$3.50, Kimi K2.6 $0.66/$3.41, and MiniMax M2.5 $0.15/$0.90. GLM 5.1 has not returned. OpenRouter now confirms all four live routes (MiniMax M2.5 gained an OpenRouter Inceptron endpoint, slug minimax/minimax-m2.5). HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata.",
+  "method": "Prices from Inceptron's unauthenticated OpenAI-compatible catalog API https://api.inceptron.io/v1/models (pricing.prompt / pricing.completion in USD per token x 1e6; input_cache_reads is the cache-read tier), which is the live billing meter, cross-checked against the marketing page https://www.inceptron.io/models and OpenRouter endpoint data where provider_name=='Inceptron'. 2026-08-26: API lists 4 text LLMs: GLM 5.2 $0.75/$2.40 (cache 0.17), Kimi K2.7 Code $0.67/$3.40 (cache 0.19), Kimi K2.6 $0.56/$3.39 (cache 0.17), DeepSeek V4 Flash 0731 $0.13/$0.28 (cache 0.03). The www.inceptron.io/models page shows higher/stale list prices (GLM 5.2 $1.20/$4.20, Kimi K2.7 Code $0.75/$3.50, Kimi K2.6 $0.73/$3.50, DeepSeek V4 Flash $0.13/$0.28) and still lists MiniMax M2.5 $0.15/$0.90 (196K), which is absent from the API catalog and therefore not billable/callable -> kept out. HQ Sweden (SE), datacenter Finland (FI) per OpenRouter provider metadata.",
   "models": [
     {
       "model_name": "GLM 5.2",
@@ -12,25 +12,25 @@
       "output_per_1m_usd": 2.4,
       "cache_read_per_1m_usd": 0.17,
       "region": "eu",
-      "notes": "fp4 quant, 1,048,576 context. Cache read $0.17/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing). | 2026-07-22: 0.94/2.90 unchanged, cache read dropped 0.18 -> 0.17 (native API + OpenRouter agree). | 2026-08-26: native API 0.75/2.40 (cache 0.17)"
+      "notes": "fp4 quant, 1,048,576 context. Cache read $0.17/1M. Inceptron model id zai-org/GLM-5.2. Native API and OpenRouter Inceptron endpoint agree at $0.95/$3.04 on 2026-07-12. | Re-verified 2026-07-13 vs native API: 0.85/2.50. | 2026-07-14: 0.94/2.90 (native API; volatile pricing). | 2026-07-22: 0.94/2.90 unchanged, cache read dropped 0.18 -> 0.17 (native API + OpenRouter agree). | 2026-08-26: native API 0.75/2.40 (cache 0.17); web page lists 1.20/4.20"
     },
     {
       "model_name": "Kimi K2.7 Code",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.67,
       "output_per_1m_usd": 3.4,
-      "cache_read_per_1m_usd": 0.15,
+      "cache_read_per_1m_usd": 0.19,
       "region": "eu",
-      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12; unchanged 2026-07-22. | 2026-08-26: native API 0.67/3.40"
+      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.19/1M (web page lists $0.20). Inceptron model id moonshotai/Kimi-K2.7-Code. Native API and OpenRouter Inceptron endpoint agree at $0.72/$3.50 on 2026-07-12; unchanged 2026-07-22. | 2026-08-26: native API 0.67/3.40 (cache 0.15->0.19); web page lists 0.75/3.50"
     },
     {
       "model_name": "Kimi K2.6",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.56,
       "output_per_1m_usd": 3.39,
-      "cache_read_per_1m_usd": 0.15,
+      "cache_read_per_1m_usd": 0.17,
       "region": "eu",
-      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.15/1M. Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12; unchanged 2026-07-22. | 2026-07-30: input 0.66->0.60, cache-read 0.20 (native API). | 2026-08-26: native API 0.56/3.39"
+      "notes": "int4 quant, 262,144 context, multimodal (text+image input). Cache read $0.17/1M (web page lists $0.25). Inceptron model id moonshotai/Kimi-K2.6. Native API and OpenRouter Inceptron endpoint agree at $0.66/$3.41 on 2026-07-12; unchanged 2026-07-22. | 2026-07-30: input 0.66->0.60, cache-read 0.20 (native API). | 2026-08-26: native API 0.56/3.39 (cache 0.20->0.17); web page lists 0.73/3.50"
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -38,7 +38,8 @@
       "input_per_1m_usd": 0.13,
       "output_per_1m_usd": 0.28,
       "region": "eu",
-      "notes": "Added 2026-08-26: api.inceptron.io deepseek-ai/DeepSeek-V4-Flash-0731, cache 0.03, 1M ctx"
+      "notes": "Added 2026-08-26: api.inceptron.io deepseek-ai/DeepSeek-V4-Flash-0731, cache 0.03, 1M ctx; web page agrees 0.13/0.28",
+      "cache_read_per_1m_usd": 0.03
     }
   ]
 }

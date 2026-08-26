@@ -46,7 +46,16 @@ npm run db:seed        # (if using Postgres) reload it
 ```
 Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) and the AA Coding Agent Index are scraped semi-manually — see [data/SCRAPING.md](data/SCRAPING.md).
 
-## Reference deployment (Render)
+## Current deployment (Sandy / Coolify)
+
+Since 2026-08-26 the reference instance runs on Florian's private Sandy PaaS (Coolify on the Hetzner server) at
+`https://model-market-comparison.app.mintapis.com`, built from this repo's `Dockerfile` in snapshot mode (no `DATABASE_URL`).
+The Coolify health check is disabled because `node:20-slim` ships neither `curl` nor `wget`. There is no GitHub webhook:
+pushes do **not** auto-deploy — the daily refresh cron on the server (`/opt/mmc-daily/run.sh`, Codex CLI, 05:17 UTC)
+pulls, refreshes the data, pushes, and triggers the redeploy via the Coolify API (`/opt/mmc-daily/redeploy.sh`).
+The former Render instance (`model-market-comparison.onrender.com`) was suspended by Render on 2026-08-25 (free-tier usage exceeded).
+
+## Alternative: Render Blueprint
 
 `render.yaml` provisions a Node web service + managed Postgres:
 - Build: `npm install && npm run build`

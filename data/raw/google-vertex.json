@@ -2,7 +2,7 @@
   "source": "Google Vertex AI",
   "region": "offer-specific (global, EU multi-region, or European regional endpoint)",
   "collected_at": "2026-08-26",
-  "method": "Live scrape of the official Vertex AI / Gemini Enterprise Agent Platform pricing page, cross-checked against the current model, endpoint, data-residency, and lifecycle documentation (2026-07-22). This file contains 59 current text-LLM offer rows: Global and EU routes are separate whenever price or residency differs. Retired Gemini 2.0 Flash variants are excluded. Gemini 3.5 Flash and 3.1 Flash-Lite use documented eu Standard PayGo routes plus cheaper Global routes; Gemini 2.5 Pro/Flash/Flash-Lite retain Global routes and add same-price EU-resident routes. Claude models with EU pricing also retain their cheaper Global offers. Global endpoints have no processing-location guarantee. Gemini Omni Flash Preview is included as a current text-in/text-out multimodal model. Mistral Medium 3, Mistral Small 3.1 and Codestral 2 use documented EU-hosted europe-west4 routes.",
+  "method": "Live scrape of the official Vertex AI / Gemini Enterprise Agent Platform pricing page, cross-checked against the current model, endpoint, data-residency, and lifecycle documentation (2026-08-26, source: https://cloud.google.com/vertex-ai/generative-ai/pricing; model list cross-checked against https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models and https://docs.cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-claude). This file contains 62 current text-LLM offer rows: Global and EU routes are separate whenever price or residency differs. Retired Gemini 2.0 Flash variants are excluded. Gemini 3.5 Flash and 3.1 Flash-Lite use documented eu Standard PayGo routes plus cheaper Global routes; Gemini 2.5 Pro/Flash/Flash-Lite retain Global routes and add same-price EU-resident routes. Claude models with EU pricing also retain their cheaper Global offers. Global endpoints have no processing-location guarantee. Gemini Omni Flash (formerly listed as Gemini Omni Flash Preview; renamed on the pricing page by 2026-08-26) is included as a current text-in/text-out multimodal model. Mistral Medium 3, Mistral Small 3.1 and Codestral 2 use documented EU-hosted europe-west4 routes. 2026-08-26 re-check: all listed prices verified against the live pricing page; Gemini 3.6/3.7 Flash now also show a Non-global route (+10%) which is noted in-row rather than split out; DeepSeek-OCR (new, $0.30/$1.20) is excluded as a non-text OCR model; Claude Opus 4 / Sonnet 4 appear in the model docs but have no price table on the pricing page and are not included.",
   "models": [
     {
       "model_name": "Gemini 3.1 Pro",
@@ -37,7 +37,7 @@
       "output_per_1m_usd": 3.75,
       "region": "global",
       "eu_hosted": false,
-      "notes": "GA (released 2026-07-21). Flat pricing across context tiers; no Global/Non-global split shown on the pricing page and model docs list Standard PayGo as Global-only, so no EU-resident route. Cached input $0.15. | 2026-08-26: intro 0.75/3.75 through 2026-12-31 via 50% credits (list 1.50/7.50)"
+      "notes": "GA (released 2026-07-21). Flat pricing across context tiers. Intro price $0.75/$3.75 through 2026-12-31 via 50% promotional credits; list $1.50/$7.50 from 2027-01-01. Pricing page (2026-08-26) now also lists a Non-global route at $0.825/$4.125 (list $1.65/$8.25), kept in-row rather than as a separate EU offer. Cached input $0.075 (intro) / $0.15 (list). Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     },
     {
       "model_name": "Gemini 3.5 Flash-Lite",
@@ -84,13 +84,13 @@
       "notes": "EU multi-region Standard PayGo price, in effect from 2026-07-01; ML processing remains in the EU. Global is $0.25/$1.50. Audio input $0.55; cached input $0.0275."
     },
     {
-      "model_name": "Gemini Omni Flash Preview",
+      "model_name": "Gemini Omni Flash",
       "provider_org": "Google",
       "input_per_1m_usd": 1.5,
       "output_per_1m_usd": 9.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Current Preview multimodal model with text/image/video/audio input and text output. Only the Global Standard PayGo route is documented; no EU processing guarantee. Video output is separately priced and not represented here."
+      "notes": "Renamed 2026-08-26 from 'Gemini Omni Flash Preview': pricing page and model docs now list it as 'Gemini Omni Flash'. Multimodal text/image/video/audio input, text output at $1.50/$9.00; video output $17.50/1M tokens is not represented. Only a single (Global) route is priced; no EU processing guarantee. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     },
     {
       "model_name": "Gemini 2.5 Pro",
@@ -99,7 +99,7 @@
       "output_per_1m_usd": 10.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global standard tier <=200K input tokens; >200K is $2.50/$15. Global processing location is uncontrolled. Cached input $0.13 (<=200K) / $0.25 (>200K)."
+      "notes": "Global standard tier <=200K input tokens; >200K is $2.50/$15. Global processing location is uncontrolled. Cached input $0.125 (<=200K) / $0.25 (>200K)."
     },
     {
       "model_name": "Gemini 2.5 Pro",
@@ -153,7 +153,7 @@
       "output_per_1m_usd": 10.0,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global promotional rate through 2026-08-31; standard becomes $3/$15 on 2026-09-01. Global processing location is uncontrolled. Cache hit $0.20; batch $1/$5."
+      "notes": "Global rate $2/$10 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3/$15 standard afterwards - re-verify in September). Global processing location is uncontrolled. Cache hit $0.20; batch $1/$5. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     },
     {
       "model_name": "Claude Sonnet 5",
@@ -162,7 +162,7 @@
       "output_per_1m_usd": 11.0,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU Multi-Region promotional rate through 2026-08-31; standard becomes $3.30/$16.50 on 2026-09-01. Cache hit $0.22; batch $1.10/$5.50."
+      "notes": "EU Multi-Region rate $2.20/$11 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3.30/$16.50 standard afterwards - re-verify in September). Cache hit $0.22; batch $1.10/$5.50. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     },
     {
       "model_name": "Claude Fable 5",
@@ -362,7 +362,7 @@
       "input_per_1m_usd": 0.56,
       "output_per_1m_usd": 1.68,
       "region": "global",
-      "notes": "Model Garden partner model. Cache hit $0.056. Batch $0.28 in / $0.84 out. NOTE: no DeepSeek-V4 is offered on Vertex as of 2026-07-22."
+      "notes": "Model Garden partner model. Cache hit $0.056. Batch $0.28 in / $0.84 out. NOTE: no DeepSeek-V4 is offered on Vertex as of 2026-08-26 (DeepSeek-OCR was added but is not a text LLM)."
     },
     {
       "model_name": "DeepSeek-V3.1",
@@ -386,7 +386,7 @@
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 1.2,
       "region": "global",
-      "notes": "Model Garden partner model. Cache hit $0.03. NOTE: no MiniMax-M3 is offered on Vertex as of 2026-07-22."
+      "notes": "Model Garden partner model. Cache hit $0.03. NOTE: no MiniMax-M3 is offered on Vertex as of 2026-08-26."
     },
     {
       "model_name": "Kimi-K2-Thinking",
@@ -394,7 +394,7 @@
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Model Garden partner model (Moonshot section). Cache hit $0.06. NOTE: no Kimi K2.7 is offered on Vertex as of 2026-07-22."
+      "notes": "Model Garden partner model (Moonshot section). Cache hit $0.06. NOTE: no Kimi K2.7 is offered on Vertex as of 2026-08-26."
     },
     {
       "model_name": "GLM-5",
@@ -402,7 +402,7 @@
       "input_per_1m_usd": 1.0,
       "output_per_1m_usd": 3.2,
       "region": "global",
-      "notes": "Model Garden partner model (GLM section). Listed as 'GLM-5 *'. Cache hit $0.10. NOTE: no GLM-5.2 is offered on Vertex as of 2026-07-22 - GLM-5 is the newest GLM on the page (alongside GLM-4.7)."
+      "notes": "Model Garden partner model (GLM section). Listed as 'GLM-5 *'. Cache hit $0.10. NOTE: no GLM-5.2 is offered on Vertex as of 2026-08-26 - GLM-5 is the newest GLM on the page (alongside GLM-4.7)."
     },
     {
       "model_name": "GLM-4.7",
@@ -517,7 +517,7 @@
       "input_per_1m_usd": 5.5,
       "output_per_1m_usd": 27.5,
       "region": "eu",
-      "notes": "Day-one Vertex GA 2026-07-24. Global endpoint $5/$25; regional/EU endpoints +10% = $5.50/$27.50, consistent with the other Claude rows."
+      "notes": "Verified 2026-08-26 on the pricing page: EU Multi-Region $5.50/$27.50 (Global $5/$25). Cache hit $0.55; batch $2.75/$13.75. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     },
     {
       "model_name": "Gemini 3.7 Flash",
@@ -525,7 +525,7 @@
       "input_per_1m_usd": 0.75,
       "output_per_1m_usd": 3.75,
       "region": "global",
-      "notes": "Added 2026-08-26: intro price through 2026-12-31 (list 1.50/7.50 from 2027-01-01; non-global +10%)"
+      "notes": "Verified 2026-08-26: Global intro price $0.75/$3.75 through 2026-12-31 via 50% promotional credits; list $1.50/$7.50 from 2027-01-01. Non-global route $0.825/$4.125 (list $1.65/$8.25). Cached input $0.075 (intro) / $0.15 (list). Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     },
     {
       "model_name": "Gemma 4 26B",
@@ -533,7 +533,7 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "global",
-      "notes": "Added 2026-08-26: partner model, cache 0.015"
+      "notes": "Verified 2026-08-26: Google open model served as MaaS (Gemma-4-26B-A4B-IT), $0.15/$0.60, cache hit $0.015. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
     }
   ]
 }

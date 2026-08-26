@@ -59,7 +59,7 @@ DeepSeek V4 Pro.
 
 ## Stack
 
-Next.js (App Router, TypeScript) · Recharts · PostgreSQL · deployed on Render.
+Next.js (App Router, TypeScript) · Recharts · PostgreSQL · live at [model-market-comparison.app.mintapis.com](https://model-market-comparison.app.mintapis.com) (Sandy/Coolify, snapshot mode).
 
 The app reads from Postgres when `DATABASE_URL` is set (seeded from
 `data/dataset.json`) and otherwise serves the committed snapshot, so it always

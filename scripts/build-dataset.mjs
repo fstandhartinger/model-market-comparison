@@ -174,7 +174,13 @@ const EXCLUDE_RE = /(vision-only|embed|rerank|moderation|ocr|guard|^openrouter\/
 const AMBIGUOUS_MODEL_RE = /^~?[^/]+\/[^/]*latest$/i;
 
 // The models the product brief explicitly asks us to feature.
-const FEATURED_RE = /^(gpt-5\.[45]|gpt-5\.6-(sol|terra|luna)(?!-pro)|claude-opus-5(?!-)|claude-opus-4\.[678]|claude-sonnet-(4\.6|5)|claude-fable-5|kimi-k2\.[567]|kimi-k3|glm-5\.[123](?!-)|minimax-(m2\.5|m2\.7|m3)|mimo-v2\.5-pro|deepseek-v4-pro|grok-4\.[56]|qwen3\.[78]-max|muse-spark-1\.2(?!-contributor))/;
+// Audited 2026-08-26 against vendor announcements since 2026-07-15. Every alternative
+// ends in (?!-) so service-tier / size variants (-fast, -pro, -mini, -nano, -instant,
+// -flash, -contributor …) do not spill into the featured set. Explicit exceptions:
+// kimi-k2.7-code (the only K2.7 SKU) and deepseek-v4-pro-0813 (the 2026-08-12 GA
+// release, a distinct OpenRouter model from the April deepseek-v4-pro).
+// Gemini is intentionally NOT featured (house policy).
+const FEATURED_RE = /^(gpt-5\.[45](?!-)|gpt-5\.6-(sol|terra|luna)(?!-)|claude-opus-5(?!-)|claude-opus-4\.[678](?!-)|claude-sonnet-(4\.6|5)(?!-)|claude-fable-5(?!-)|kimi-k2\.[56](?!-)|kimi-k2\.7(-code)?(?!-)|kimi-k3(?!-)|glm-5\.[123](?!-)|minimax-(m2\.5|m2\.7|m3)(?!-)|mimo-v2\.5-pro(?!-)|deepseek-v4-pro(-0813)?(?!-)|grok-4\.[56](?!-)|qwen3\.[78]-max(?!-)|muse-spark-1\.2(?!-))/;
 
 // Canonicalize vendor names that arrive spelled differently across sources.
 const ORG_ALIASES = {

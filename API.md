@@ -2,7 +2,7 @@
 
 All endpoints are **read-only**, return JSON, and are **CORS-enabled** (`Access-Control-Allow-Origin: *`), so they can be called from any site or tool — including directly from a browser.
 
-Base URL (reference deployment): `https://model-market-comparison.onrender.com`
+Base URL (reference deployment): `https://model-market-comparison.app.mintapis.com`
 
 The data is served from Postgres when `DATABASE_URL` is configured, otherwise from the committed `data/dataset.json` snapshot — the API shape is identical either way.
 

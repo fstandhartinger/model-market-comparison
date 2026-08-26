@@ -1,6 +1,6 @@
 {
   "source": "Manual supplements",
-  "collected_at": "2026-07-12",
+  "collected_at": "2026-08-26",
   "method": "Hand-curated entries for models that are required but not yet present in the live APIs (or whose pricing/benchmarks are not yet published). Update as upstream data becomes available.",
   "notes": "GLM 5.2 is live on OpenRouter (z-ai/glm-5.2, real Z.AI pricing) and ships MIT open weights (HuggingFace zai-org/GLM-5.2). Its current benchmark evidence is sourced from Artificial Analysis (Coding and Intelligence), the AA Coding Agent Index, and both DesignArena boards; no manual score is used. GPT-5.6 Sol/Terra/Luna hand-curated offers were removed 2026-07-10 and are sourced live from OpenRouter plus AA.",
   "models": [],
@@ -14,6 +14,13 @@
       "input_per_1m": 4.0,
       "output_per_1m": 20.0,
       "reason": "OpenAI cut Sol to $4/$20 on 2026-08-21 (promo through 2026-11-21). OpenRouter's 'openai' endpoint shows an OpenRouter-exclusive 50% discount ($2/$10) which is not the first-party list price. Luna/Terra overrides removed 2026-08-26 — OR now labels their standard meters correctly ($0.20/$1.20, $2/$12)."
+    },
+    {
+      "or_model_id": "deepseek/deepseek-v4-pro-0813",
+      "endpoint_tag": "deepseek",
+      "input_per_1m": 1.32,
+      "output_per_1m": 3.96,
+      "reason": "DeepSeek's first-party 'deepseek' endpoint on OpenRouter carries the OFF-PEAK meter as its base price ($0.66/$1.98; peak tiers only in time-window overrides). DeepSeek's official list price for deepseek-v4-pro is $1.32 input / $3.96 output per 1M (peak, Mon-Fri 01:00-04:00 and 06:00-10:00 UTC; off-peak = 50% of list). Source: https://api-docs.deepseek.com/quick_start/pricing (checked 2026-08-26). Third-party OR providers and AA both list $1.32/$3.96."
     }
   ],
   "_offer_overrides_doc": "Targeted corrections applied to specific OpenRouter endpoint offers when the upstream meter labeling is verifiably wrong. Match: or_model_id + endpoint_tag. Each override replaces input/output_per_1m and appends its reason to the offer notes. Use ONLY with a documented primary source."

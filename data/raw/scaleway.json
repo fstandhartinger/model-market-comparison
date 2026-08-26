@@ -2,38 +2,38 @@
   "source": "Scaleway Generative APIs",
   "region": "eu (Paris)",
   "collected_at": "2026-08-26",
-  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1418 published 2026-07-21 (latest business-day rate available on 2026-07-22).",
-  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), parsed directly from the server-rendered table on 2026-07-22. EU-sovereign Paris region, ZDR by default. Catalog and native EUR prices are unchanged: 15 priced text/vision LLMs; GLM 5.2 remains EUR1.80/EUR5.50. USD fields were refreshed at ECB EUR/USD 1.1418 (2026-07-21) and rounded to two decimals.",
+  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1669 published 2026-08-26.",
+  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), re-checked 2026-08-26. EU-sovereign Paris region, ZDR by default. Catalog and native EUR prices unchanged: 12 priced text/vision LLMs (embeddings qwen3-embedding-8b, bge-multilingual-gemma2 and whisper-large-v3 audio excluded). USD fields refreshed at ECB EUR/USD 1.1669 (2026-08-26) and rounded to two decimals.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 2.06,
-      "output_per_1m_usd": 6.28,
+      "input_per_1m_usd": 2.1,
+      "output_per_1m_usd": 6.42,
       "region": "eu",
       "notes": "€1.80/€5.50; glm-5.2"
     },
     {
       "model_name": "Llama 3.3 70B",
       "provider_org": "Meta",
-      "input_per_1m_usd": 1.03,
-      "output_per_1m_usd": 1.03,
+      "input_per_1m_usd": 1.05,
+      "output_per_1m_usd": 1.05,
       "region": "eu",
       "notes": "€0.90/€0.90; llama-3.3-70b-instruct"
     },
     {
       "model_name": "Qwen3 235B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.86,
-      "output_per_1m_usd": 2.57,
+      "input_per_1m_usd": 0.88,
+      "output_per_1m_usd": 2.63,
       "region": "eu",
       "notes": "€0.75/€2.25; qwen3-235b-a22b-instruct-2507"
     },
     {
       "model_name": "Qwen 3.5 397B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.69,
-      "output_per_1m_usd": 4.11,
+      "input_per_1m_usd": 0.7,
+      "output_per_1m_usd": 4.2,
       "region": "eu",
       "notes": "€0.60/€3.60; qwen3.5-397b-a17b"
     },
@@ -41,7 +41,7 @@
       "model_name": "Qwen 3.6 35B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.29,
-      "output_per_1m_usd": 1.71,
+      "output_per_1m_usd": 1.75,
       "region": "eu",
       "notes": "€0.25/€1.50; qwen3.6-35b-a3b"
     },
@@ -49,23 +49,23 @@
       "model_name": "Qwen3 Coder 30B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.23,
-      "output_per_1m_usd": 0.91,
+      "output_per_1m_usd": 0.93,
       "region": "eu",
       "notes": "€0.20/€0.80; qwen3-coder-30b-a3b-instruct"
     },
     {
       "model_name": "Mistral Small 3.2",
       "provider_org": "Mistral",
-      "input_per_1m_usd": 0.17,
-      "output_per_1m_usd": 0.4,
+      "input_per_1m_usd": 0.18,
+      "output_per_1m_usd": 0.41,
       "region": "eu",
       "notes": "€0.15/€0.35; mistral-small-3.2-24b-instruct-2506"
     },
     {
       "model_name": "Mistral Medium 3.5",
       "provider_org": "Mistral",
-      "input_per_1m_usd": 1.71,
-      "output_per_1m_usd": 8.56,
+      "input_per_1m_usd": 1.75,
+      "output_per_1m_usd": 8.75,
       "region": "eu",
       "notes": "€1.50/€7.50; mistral-medium-3.5-128b"
     },
@@ -80,8 +80,8 @@
     {
       "model_name": "gpt-oss-120b",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.17,
-      "output_per_1m_usd": 0.69,
+      "input_per_1m_usd": 0.18,
+      "output_per_1m_usd": 0.7,
       "region": "eu",
       "notes": "€0.15/€0.60; gpt-oss-120b"
     },
@@ -89,7 +89,7 @@
       "model_name": "Gemma 4 26B",
       "provider_org": "Google",
       "input_per_1m_usd": 0.29,
-      "output_per_1m_usd": 0.57,
+      "output_per_1m_usd": 0.58,
       "region": "eu",
       "notes": "€0.25/€0.50; gemma-4-26b-a4b-it"
     },

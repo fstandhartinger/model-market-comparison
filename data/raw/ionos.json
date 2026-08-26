@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-07-22",
+  "collected_at": "2026-08-26",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "IONOS AI Model Hub official USD pricing at https://cloud.ionos.com/prices, cross-checked against the EUR tables at https://cloud.ionos.de/preise and https://cloud.ionos.de/managed/ai-model-hub, plus the model catalog at https://docs.ionos.com/cloud/ai/ai-model-hub. OpenAI-compatible pay-per-use, EU-sovereign (DE). The 2026-07-22 text/code catalog has 9 models, incl. new Qwen3.5-397B-A17B and Qwen3.5-9B.",
+  "method": "IONOS AI Model Hub official USD pricing at https://cloud.ionos.com/prices, cross-checked against the EUR tables at https://cloud.ionos.de/preise and https://cloud.ionos.de/managed/ai-model-hub, plus the model catalog at https://docs.ionos.com/cloud/ai/ai-model-hub/models. OpenAI-compatible pay-per-use, EU-sovereign (DE). 2026-08-26: Llama 3.1 405B is gone from both the USD and EUR price tables (docs list it as retiring 2026-09-15, successor Qwen3.5-397B-A17B) and was removed; LightOnOCR 2 (vision-language, token-priced) added. 7 LLMs + 1 VLM + 1 code model.",
   "models": [
     {
       "model_name": "gpt-oss-120b",
@@ -20,14 +20,6 @@
       "output_per_1m_usd": 0.71,
       "region": "eu",
       "notes": "€0.65/€0.65"
-    },
-    {
-      "model_name": "Llama 3.1 405B",
-      "provider_org": "Meta",
-      "input_per_1m_usd": 1.93,
-      "output_per_1m_usd": 1.93,
-      "region": "eu",
-      "notes": "€1.75/€1.75; still listed on the EUR price table and in the current docs catalog, but missing from the USD table as of 2026-07-22 — USD values retained from 2026-07-12 snapshot (EUR unchanged)."
     },
     {
       "model_name": "Llama 3.1 8B",
@@ -59,7 +51,7 @@
       "input_per_1m_usd": 0.11,
       "output_per_1m_usd": 0.17,
       "region": "eu",
-      "notes": "EUR not yet listed on the DE price page as of 2026-07-22; qwen3-5-9b; new vs prior snapshot"
+      "notes": "€0.10/€0.15; qwen3-5-9b; marked New on the DE price page"
     },
     {
       "model_name": "Qwen3.5 397B A17B",
@@ -76,6 +68,14 @@
       "output_per_1m_usd": 0.89,
       "region": "eu",
       "notes": "€0.15/€0.80; Qwen/Qwen3-Coder-Next; 80B coding specialist; listed under Code Models."
+    },
+    {
+      "model_name": "LightOnOCR 2",
+      "provider_org": "LightOn",
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.33,
+      "region": "eu",
+      "notes": "€0.15/€0.30; vision-language OCR model, listed under Vision-Language Models; new vs prior snapshot"
     }
   ]
 }

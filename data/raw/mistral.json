@@ -2,7 +2,7 @@
   "source": "Mistral AI (La Plateforme)",
   "region": "eu (France)",
   "collected_at": "2026-08-26",
-  "method": "Mistral first-party API pricing at https://mistral.ai/pricing/api, parsed from the server-rendered page on 2026-07-22; prices are native USD. Mistral hosts data in the EU by default unless the explicit US API endpoint is selected. This file includes all 15 currently priced chat/text models (including Voxtral Small's text-token axis), while excluding embeddings, classifiers, OCR-only, transcription-only, TTS, and temporary free Labs endpoints (e.g. Leanstral, free for a limited period as of 2026-07-22). Verified 2026-07-22: all 15 models and prices unchanged vs 2026-07-12.",
+  "method": "Mistral first-party API pricing at https://mistral.ai/pricing/api, parsed from the server-rendered page on 2026-07-22; prices are native USD. Mistral hosts data in the EU by default unless the explicit US API endpoint is selected. This file includes all 15 currently priced chat/text models (including Voxtral Small's text-token axis), while excluding embeddings, classifiers, OCR-only, transcription-only, TTS, and temporary free Labs endpoints (e.g. Leanstral, free for a limited period as of 2026-07-22). Verified 2026-07-22: all 15 models and prices unchanged vs 2026-07-12. Re-verified 2026-08-26 against https://mistral.ai/pricing/api and https://docs.mistral.ai/getting-started/models: all 9 rows (8 Mistral chat/text models + third-party GLM 5.2) unchanged; no new chat models launched Jul-Aug 2026; Leanstral 1.5 still a free Labs endpoint (excluded).",
   "models": [
     {
       "model_name": "Mistral Large 3",

@@ -517,10 +517,10 @@ test("audited provider checkpoint aliases join their benchmark families", () => 
   for (const provider of ["AWS Bedrock", "Nebius", "STACKIT"]) {
     assert.ok(providers("gemma-3-27b-instruct").has(provider), provider);
   }
-  for (const provider of ["Scaleway", "OVHcloud", "IONOS"]) {
+  // 2026-08-26: OVHcloud delisted Mistral Small 3.2 and Mistral Nemo from its AI Endpoints catalog.
+  for (const provider of ["Scaleway", "IONOS"]) {
     assert.ok(providers("mistral-small-3.2-24b-instruct").has(provider), provider);
   }
-  assert.ok(providers("mistral-nemo").has("OVHcloud"));
   assert.ok(providers("mistral-nemo").has("Chutes"));
   assert.ok(providers("mistral-medium-3.5").has("Scaleway"));
   assert.ok(providers("gemma-4-31b-it").has("Chutes"));

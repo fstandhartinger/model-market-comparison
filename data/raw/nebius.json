@@ -3,7 +3,7 @@
   "region": "mixed (eu-north1 / us-central1 / uk-south1)",
   "collected_at": "2026-08-26",
   "listing_url": "https://tokenfactory.nebius.com/models",
-  "method": "Nebius' unauthenticated structured catalog API https://tokenfactory.nebius.com/api/public/models_info (cross-checked against its Markdown view at /api/public/models_info.md). Parsed flavors[].input_price_per_million_tokens / output_price_per_million_tokens and flavors[].regions. The 2026-07-22 catalog has 26 public models (all status:active); embedding-only Qwen3-Embedding-8B ($0.01/1M input, no text output price) is omitted, leaving 25 text/vision models. region:'eu' is used only for eu-north1; us-central1 is 'us' and uk-south1 is 'uk'. No models added or removed vs 2026-07-12 and all prices unchanged; only change: GLM-5.2 now serves from uk-south1 (was us-central1), re-flagged region 'uk'. All prices are native USD (no EUR conversion needed).",
+  "method": "Nebius' unauthenticated structured catalog API https://tokenfactory.nebius.com/api/public/models_info (listing https://tokenfactory.nebius.com/models). Parsed flavors[].input_price_per_million_tokens / output_price_per_million_tokens and flavors[].regions. The 2026-08-26 catalog has 30 public models (all status:active); embedding-only Qwen3-Embedding-8B ($0.01/1M input, no text output price) is omitted, leaving 29 text/vision models. region 'eu' = eu-north1 (FI) / eu-west2 (FR); 'us' = us-central1; 'uk' = uk-south1. 2026-08-26 re-verification: all 29 prices unchanged; only fix: Nemotron 3.5 Lightning is served from us-central1 (not eu-north1), region re-flagged 'us'. The marketing pricing page https://nebius.com/prices-ai-studio now returns 404 (Token Factory replaced AI Studio). All prices are native USD (no EUR conversion needed).",
   "models": [
     {
       "model_name": "Kimi K2.7 Code",
@@ -234,8 +234,8 @@
       "provider_org": "NVIDIA",
       "input_per_1m_usd": 0.06,
       "output_per_1m_usd": 0.24,
-      "region": "eu",
-      "notes": "Added 2026-08-26: tokenfactory eu-north1 (FI)"
+      "region": "us",
+      "notes": "tier: Base; served region: us-central1 (catalog API 2026-08-26; earlier note said eu-north1 — corrected); id Nemotron-3.5-Lightning; added 2026-08-26"
     }
   ]
 }
