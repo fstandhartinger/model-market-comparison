@@ -405,7 +405,9 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
 });
 
 test("family-scoped Intelligence.ai evidence attaches once to deterministic Overview representatives", () => {
-  const fable = ds.models.find((model) => model.id === "claude-fable-5::max");
+  // 2026-09-01: AA added exact Fable effort rows; ::high became the deterministic
+  // collapsed representative for family-scoped Intelligence.ai evidence.
+  const fable = ds.models.find((model) => model.id === "claude-fable-5::high");
   assert.ok(fable);
   assert.equal(fable.designarena.frontend?.modelId, "claude-fable-5");
   assert.equal(fable.designarena.fullstack?.modelId, "claude-fable-5");

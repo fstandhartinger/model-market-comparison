@@ -427,34 +427,27 @@ test("GPT-5.6 Sol's observed-percentile mean ranks above GLM-5.2", async () => {
   assert.ok(sol > glm, `expected GPT-5.6 Sol (${sol}) above GLM-5.2 (${glm})`);
 });
 
-test("Fable 5's family-scoped evidence preserves its five-slot dominance over GLM-5.2", async () => {
+test("Fable 5's exact max evidence and family-scoped high evidence both stay above GLM-5.2", async () => {
   const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
-  const fable = dataset.models.find((model) => model.id === "claude-fable-5::max");
+  const fableMax = dataset.models.find((model) => model.id === "claude-fable-5::max");
+  const fableHigh = dataset.models.find((model) => model.id === "claude-fable-5::high");
   const glm = dataset.models.find((model) => model.id === "glm-5.2::max");
-  assert.ok(fable && glm);
+  assert.ok(fableMax && fableHigh && glm);
 
-  const rawSlots = (model) => [
-    model.benchmarks.aa_coding_index,
-    model.benchmarks.aa_coding_agent_index,
-    model.benchmarks.aa_intelligence_index,
-    model.designarena.frontend?.elo,
-    model.designarena.fullstack?.elo,
-  ];
-  const fableSlots = rawSlots(fable);
-  const glmSlots = rawSlots(glm);
-  fableSlots.forEach((value, index) => {
-    assert.equal(typeof value, "number", `Fable slot ${index} missing`);
-    assert.ok(value > glmSlots[index], `expected Fable slot ${index} (${value}) > GLM (${glmSlots[index]})`);
-  });
+  // 2026-09-01: AA added exact Fable effort rows, so the family-scoped DesignArena
+  // evidence now belongs to the deterministic ::high representative, not ::max.
+  assert.equal(fableMax.designarena.frontend, undefined);
+  assert.equal(fableHigh.designarena.frontend?.modelId, "claude-fable-5");
+  assert.equal(fableHigh.designarena.fullstack?.modelId, "claude-fable-5");
 
   const inputs = inputsFromDataset(dataset);
   const scores = computeCompositeScores(inputs);
   assert.ok(
-    scores.get(fable.id) > scores.get("gpt-5.6-sol::high"),
-    `expected Fable (${scores.get(fable.id)}) > GPT-5.6 Sol (${scores.get("gpt-5.6-sol::high")})`,
+    scores.get(fableMax.id) > scores.get("gpt-5.6-sol::high"),
+    `expected Fable max (${scores.get(fableMax.id)}) > GPT-5.6 Sol (${scores.get("gpt-5.6-sol::high")})`,
   );
   assert.ok(
-    scores.get(fable.id) > scores.get(glm.id),
-    `expected Fable (${scores.get(fable.id)}) > GLM-5.2 (${scores.get(glm.id)})`,
+    scores.get(fableHigh.id) > scores.get(glm.id),
+    `expected Fable high (${scores.get(fableHigh.id)}) > GLM-5.2 (${scores.get(glm.id)})`,
   );
 });
