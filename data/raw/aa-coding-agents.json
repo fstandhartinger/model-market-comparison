@@ -1,104 +1,16 @@
 {
   "source": "ArtificialAnalysis Coding Agent Index",
-  "collected_at": "2026-09-02",
+  "collected_at": "2026-09-03",
   "endpoint": "https://artificialanalysis.ai/ (homepage) — data embedded in the Next.js RSC stream (self.__next_f.push) under the 'Artificial Analysis Coding Agent Index' block as a `rows` array. Not in the v2 API.",
   "method": "curl the homepage HTML, locate the escaped JSON rows array after the 'Coding Agent Index' block, unescape, bracket-match, json.loads. Each row: agentName=harness, display.model=model_name, indexScore=score (0-1), evalCount/indexComponentCount=completeness.",
   "score_scale": "0-1",
-  "completeness_note": "Rows with evalCount < indexComponentCount are PARTIAL indices; AA visible chart omits them and build-dataset filters them. Partial as of 2026-09-02: []",
-  "count": 62,
+  "completeness_note": "Rows with evalCount < indexComponentCount are PARTIAL indices; AA visible chart omits them and build-dataset filters them. Partial as of 2026-09-03: []",
+  "count": 66,
   "rows": [
     {
-      "model_name": "Muse Spark 1.1 (xhigh)",
-      "harness": "Opencode",
-      "score": 0.5492139250715363,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "Sonnet 4.6 (medium)",
+      "model_name": "Fable 5 (low) (with fallback)",
       "harness": "Claude Code",
-      "score": 0.3864931360777617,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "Gemini 3.7 Flash (high)",
-      "harness": "Opencode",
-      "score": 0.5962784529614886,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GPT-5.5 (medium)",
-      "harness": "Cursor CLI",
-      "score": 0.4708693600598457,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GPT-5.5 (medium)",
-      "harness": "Codex",
-      "score": 0.5531133827505798,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "Opus 5 (low)",
-      "harness": "Claude Code",
-      "score": 0.5940064571013326,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GLM-5.2",
-      "harness": "Claude Code",
-      "score": 0.43310157193602167,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GPT-5.6 Terra (low)",
-      "harness": "Codex",
-      "score": 0.3864628427996264,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "DeepSeek V4 Flash 0731 (max)",
-      "harness": "Codex",
-      "score": 0.49757600316190537,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GPT-5.6 Terra (none)",
-      "harness": "Codex",
-      "score": 0.23091968966853066,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GPT-5.6 Luna (high)",
-      "harness": "Codex",
-      "score": 0.516945881593198,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "Opus 5 (xhigh)",
-      "harness": "Claude Code",
-      "score": 0.6814975428587517,
+      "score": 0.58556576973616,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -130,7 +42,7 @@
     {
       "model_name": "SWE-1.7 Lightning Max",
       "harness": "Devin CLI",
-      "score": 0.5221389513465007,
+      "score": 0.5221389513465003,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -160,9 +72,9 @@
       "complete": true
     },
     {
-      "model_name": "Fable 5 (low) (with fallback)",
-      "harness": "Claude Code",
-      "score": 0.58556576973616,
+      "model_name": "Gemini 3.8 Flash (high)",
+      "harness": "Antigravity SDK v0.1.12",
+      "score": 0.590851412183529,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -178,7 +90,15 @@
     {
       "model_name": "Opus 4.8 (low)",
       "harness": "Claude Code",
-      "score": 0.4904379267565557,
+      "score": 0.490437926756556,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Gemini 3.8 Flash (high)",
+      "harness": "Opencode",
+      "score": 0.6115009143224124,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -210,7 +130,7 @@
     {
       "model_name": "GPT-5.6 Sol (xhigh)",
       "harness": "Codex",
-      "score": 0.6333883423625124,
+      "score": 0.633388342362512,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -219,6 +139,14 @@
       "model_name": "Qwen3.8 Max",
       "harness": "Claude Code",
       "score": 0.6131027159527611,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.6 Luna (low)",
+      "harness": "Codex",
+      "score": 0.250636604330228,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -234,7 +162,7 @@
     {
       "model_name": "Fable 5 (medium) (with fallback)",
       "harness": "Claude Code",
-      "score": 0.631955648502461,
+      "score": 0.6319556485024607,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -242,7 +170,7 @@
     {
       "model_name": "GPT-5.6 Terra (xhigh)",
       "harness": "Codex",
-      "score": 0.5602917313962744,
+      "score": 0.5602917313962741,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -250,7 +178,7 @@
     {
       "model_name": "GPT-5.6 Sol (high)",
       "harness": "Codex",
-      "score": 0.6411644486641197,
+      "score": 0.6411644486641199,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -274,7 +202,7 @@
     {
       "model_name": "Opus 5 (none)",
       "harness": "Claude Code",
-      "score": 0.591695436371108,
+      "score": 0.5916954363711078,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -290,7 +218,7 @@
     {
       "model_name": "Opus 4.7 (medium)",
       "harness": "Claude Code",
-      "score": 0.4238927717743627,
+      "score": 0.423892771774363,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -307,14 +235,6 @@
       "model_name": "GLM-5.1",
       "harness": "Claude Code",
       "score": 0.36910327976412566,
-      "eval_count": 3,
-      "index_component_count": 3,
-      "complete": true
-    },
-    {
-      "model_name": "GPT-5.6 Luna (low)",
-      "harness": "Codex",
-      "score": 0.250636604330228,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -338,7 +258,7 @@
     {
       "model_name": "GPT-5.6 Luna (medium)",
       "harness": "Codex",
-      "score": 0.4196699779001627,
+      "score": 0.41966997790016236,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -360,9 +280,17 @@
       "complete": true
     },
     {
-      "model_name": "GPT-5.6 Sol (medium)",
-      "harness": "Codex",
-      "score": 0.616195748748264,
+      "model_name": "Muse Spark 1.3 (xhigh)",
+      "harness": "Muse Code 1.0.2 RC",
+      "score": 0.6417750364143022,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Opus 5 (xhigh)",
+      "harness": "Claude Code",
+      "score": 0.6814975428587517,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -371,6 +299,110 @@
       "model_name": "GPT-5.6 Luna (xhigh)",
       "harness": "Codex",
       "score": 0.529584326329171,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.6 Luna (high)",
+      "harness": "Codex",
+      "score": 0.516945881593198,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.6 Terra (none)",
+      "harness": "Codex",
+      "score": 0.23091968966853066,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "DeepSeek V4 Flash 0731 (max)",
+      "harness": "Codex",
+      "score": 0.4975760031619057,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.6 Terra (low)",
+      "harness": "Codex",
+      "score": 0.3864628427996264,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Muse Spark 1.3 (max)",
+      "harness": "Muse Code 1.0.2 RC",
+      "score": 0.6797281481220127,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GLM-5.2",
+      "harness": "Claude Code",
+      "score": 0.433101571936022,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Opus 5 (low)",
+      "harness": "Claude Code",
+      "score": 0.5940064571013324,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.5 (medium)",
+      "harness": "Codex",
+      "score": 0.5531133827505798,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.5 (medium)",
+      "harness": "Cursor CLI",
+      "score": 0.47086936005984537,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Gemini 3.7 Flash (high)",
+      "harness": "Opencode",
+      "score": 0.5962784529614886,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Sonnet 4.6 (medium)",
+      "harness": "Claude Code",
+      "score": 0.3864931360777617,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "Muse Spark 1.1 (xhigh)",
+      "harness": "Opencode",
+      "score": 0.5492139250715363,
+      "eval_count": 3,
+      "index_component_count": 3,
+      "complete": true
+    },
+    {
+      "model_name": "GPT-5.6 Sol (medium)",
+      "harness": "Codex",
+      "score": 0.616195748748264,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -386,7 +418,7 @@
     {
       "model_name": "Kimi K3",
       "harness": "Kimi Code CLI",
-      "score": 0.6263880112748017,
+      "score": 0.6263880112748013,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -394,7 +426,7 @@
     {
       "model_name": "GPT-5.5 (xhigh)",
       "harness": "Codex",
-      "score": 0.6103327520587847,
+      "score": 0.6103327520587843,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -410,7 +442,7 @@
     {
       "model_name": "GPT-5.6 Terra (max)",
       "harness": "Codex",
-      "score": 0.6042010361726691,
+      "score": 0.6042010361726687,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -466,7 +498,7 @@
     {
       "model_name": "DeepSeek V4 Pro 0813 (max)",
       "harness": "Codex",
-      "score": 0.42779695164088033,
+      "score": 0.42779695164088,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
@@ -490,7 +522,7 @@
     {
       "model_name": "Opus 5 (medium)",
       "harness": "Claude Code",
-      "score": 0.640684745695058,
+      "score": 0.6406847456950576,
       "eval_count": 3,
       "index_component_count": 3,
       "complete": true
