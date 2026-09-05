@@ -10,7 +10,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const DATASET = join(__dirname, "..", "data", "dataset.json");
 
 const url = process.env.DATABASE_URL;
-if (!url) { console.error("DATABASE_URL is required"); process.exit(1); }
+if (!url) { console.log("DATABASE_URL not set — skipping seed (app uses committed dataset)"); process.exit(0); }
 
 const pool = new pg.Pool({
   connectionString: url,
