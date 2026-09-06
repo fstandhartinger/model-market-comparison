@@ -1,5 +1,5 @@
 {
-  "generated_at": "2026-09-05T05:17:35.913Z",
+  "generated_at": "2026-09-06T05:17:34.742Z",
   "counts": {
     "models": 833,
     "families": 648,
@@ -7,9 +7,9 @@
     "offers": 2752
   },
   "sources": {
-    "openrouter": "2026-09-05",
-    "artificialanalysis": "2026-09-05",
-    "designarena": "2026-09-05",
+    "openrouter": "2026-09-06",
+    "artificialanalysis": "2026-09-06",
+    "designarena": "2026-09-06",
     "aws_bedrock": "2026-08-26",
     "azure_foundry": "2026-08-26",
     "google_vertex": "2026-08-26",
@@ -23,7 +23,7 @@
     "ovhcloud": "2026-08-26",
     "stackit": "2026-08-26",
     "t_systems_llm_hub": "2026-08-26",
-    "aa_coding_agents": "2026-09-05",
+    "aa_coding_agents": "2026-09-06",
     "github_copilot": "2026-07-22",
     "claude_code": "2026-07-22",
     "provider_meta": "2026-07-12"
@@ -212,7 +212,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -286,8 +286,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 0,
-        "ttft_s": 0
+        "output_tps": 57.255,
+        "ttft_s": 21.249
       },
       "offers": [
         {
@@ -352,7 +352,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -426,8 +426,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 0,
-        "ttft_s": 0
+        "output_tps": 56.636,
+        "ttft_s": 1.203
       },
       "offers": [
         {
@@ -492,7 +492,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -567,8 +567,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 0,
-        "ttft_s": 0
+        "output_tps": 61.33,
+        "ttft_s": 184.627
       },
       "offers": [
         {
@@ -633,7 +633,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -714,8 +714,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 0,
-        "ttft_s": 0
+        "output_tps": 58.36,
+        "ttft_s": 3.06
       },
       "offers": [
         {
@@ -780,7 +780,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -854,8 +854,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 0,
-        "ttft_s": 0
+        "output_tps": 57.452,
+        "ttft_s": 61.929
       },
       "offers": [
         {
@@ -920,7 +920,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -994,8 +994,8 @@
         "blended_3to1": 0.237
       },
       "aa_speed": {
-        "output_tps": 45.28,
-        "ttft_s": 1.273
+        "output_tps": 43.823,
+        "ttft_s": 1.209
       },
       "offers": [
         {
@@ -1102,28 +1102,6 @@
           "or_hugging_face_id": "zai-org/GLM-5.3-Flash",
           "endpoint_tag": "wafer",
           "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Morph",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.13,
-          "output_per_1m": 0.44999999999999996,
-          "cache_read_per_1m": 0.02,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.3-flash",
-          "or_canonical_slug": "z-ai/glm-5.3-flash-20260826",
-          "or_hugging_face_id": "zai-org/GLM-5.3-Flash",
-          "endpoint_tag": "morph/fp8",
-          "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
           "status": 0,
@@ -1286,29 +1264,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Phala",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.15,
-          "output_per_1m": 0.5,
-          "cache_read_per_1m": 0.03,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.3-flash",
-          "or_canonical_slug": "z-ai/glm-5.3-flash-20260826",
-          "or_hugging_face_id": "zai-org/GLM-5.3-Flash",
-          "endpoint_tag": "phala/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 131072,
-          "status": 0,
-          "eu_hosted": false,
-          "tee": true,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Friendli",
           "platform": "OpenRouter",
           "input_per_1m": 0.15,
@@ -1435,7 +1390,7 @@
           "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -1501,7 +1456,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 131072,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -1524,6 +1479,28 @@
           "context_length": 1310720,
           "max_completion_tokens": 1179648,
           "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Morph",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.19399999999999998,
+          "output_per_1m": 0.6789999999999999,
+          "cache_read_per_1m": 0.038799999999999994,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.3-flash",
+          "or_canonical_slug": "z-ai/glm-5.3-flash-20260826",
+          "or_hugging_face_id": "zai-org/GLM-5.3-Flash",
+          "endpoint_tag": "morph/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         }
@@ -1576,8 +1553,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 429.221,
-        "ttft_s": 19.74
+        "output_tps": 339.975,
+        "ttft_s": 8.147
       },
       "offers": [
         {
@@ -1684,8 +1661,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 361.072,
-        "ttft_s": 0.523
+        "output_tps": 288.457,
+        "ttft_s": 0.688
       },
       "offers": [
         {
@@ -1780,8 +1757,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 296.25,
-        "ttft_s": 7.688
+        "output_tps": 391.997,
+        "ttft_s": 5.045
       },
       "offers": [
         {
@@ -1876,8 +1853,8 @@
         "blended_3to1": 0.23
       },
       "aa_speed": {
-        "output_tps": 80.372,
-        "ttft_s": 1.322
+        "output_tps": 73.944,
+        "ttft_s": 1.302
       },
       "offers": [
         {
@@ -2001,8 +1978,8 @@
         "blended_3to1": 0.9
       },
       "aa_speed": {
-        "output_tps": 188.601,
-        "ttft_s": 0.356
+        "output_tps": 188.12,
+        "ttft_s": 0.357
       },
       "offers": [],
       "designarena": {},
@@ -2052,8 +2029,8 @@
         "blended_3to1": 0.092
       },
       "aa_speed": {
-        "output_tps": 152.543,
-        "ttft_s": 0.462
+        "output_tps": 184.302,
+        "ttft_s": 0.418
       },
       "offers": [
         {
@@ -2487,8 +2464,8 @@
         "blended_3to1": 0.103
       },
       "aa_speed": {
-        "output_tps": 200.247,
-        "ttft_s": 0.566
+        "output_tps": 232.436,
+        "ttft_s": 0.553
       },
       "offers": [
         {
@@ -2923,8 +2900,8 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 92.375,
-        "ttft_s": 1.862
+        "output_tps": 90.644,
+        "ttft_s": 1.837
       },
       "offers": [
         {
@@ -3180,8 +3157,8 @@
         "blended_3to1": 0.261
       },
       "aa_speed": {
-        "output_tps": 167.061,
-        "ttft_s": 0.499
+        "output_tps": 180.858,
+        "ttft_s": 0.463
       },
       "offers": [
         {
@@ -3536,7 +3513,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -3602,7 +3579,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -3668,7 +3645,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -3785,6 +3762,28 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.19999999999999998,
+          "output_per_1m": 0.95,
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-120b",
+          "or_canonical_slug": "openai/gpt-oss-120b",
+          "or_hugging_face_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "deepinfra/fp8",
+          "quantization": "fp8",
+          "context_length": 131072,
+          "max_completion_tokens": 117964,
+          "status": -5,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Cerebras",
           "platform": "OpenRouter",
           "input_per_1m": 0.35,
@@ -3853,8 +3852,8 @@
         "blended_3to1": 3.5
       },
       "aa_speed": {
-        "output_tps": 123.285,
-        "ttft_s": 5.165
+        "output_tps": 122.51,
+        "ttft_s": 4.411
       },
       "offers": [
         {
@@ -3956,8 +3955,8 @@
         "blended_3to1": 8
       },
       "aa_speed": {
-        "output_tps": 75.812,
-        "ttft_s": 2.163
+        "output_tps": 75.824,
+        "ttft_s": 2.098
       },
       "offers": [
         {
@@ -4238,8 +4237,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 108.679,
-        "ttft_s": 1.624
+        "output_tps": 103.837,
+        "ttft_s": 1.514
       },
       "offers": [
         {
@@ -4302,7 +4301,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -4495,8 +4494,8 @@
         "blended_3to1": 0.249
       },
       "aa_speed": {
-        "output_tps": 171.733,
-        "ttft_s": 0.507
+        "output_tps": 211.773,
+        "ttft_s": 0.456
       },
       "offers": [
         {
@@ -4851,7 +4850,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -4917,7 +4916,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -4983,7 +4982,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -5100,6 +5099,28 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "DeepInfra",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.19999999999999998,
+          "output_per_1m": 0.95,
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "openai/gpt-oss-120b",
+          "or_canonical_slug": "openai/gpt-oss-120b",
+          "or_hugging_face_id": "openai/gpt-oss-120b",
+          "endpoint_tag": "deepinfra/fp8",
+          "quantization": "fp8",
+          "context_length": 131072,
+          "max_completion_tokens": 117964,
+          "status": -5,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Cerebras",
           "platform": "OpenRouter",
           "input_per_1m": 0.35,
@@ -5170,7 +5191,7 @@
       },
       "aa_speed": {
         "output_tps": 104.085,
-        "ttft_s": 116.648
+        "ttft_s": 104.021
       },
       "offers": [
         {
@@ -5478,8 +5499,8 @@
         "blended_3to1": 8
       },
       "aa_speed": {
-        "output_tps": 79.411,
-        "ttft_s": 51.274
+        "output_tps": 79.307,
+        "ttft_s": 50.228
       },
       "offers": [
         {
@@ -5760,8 +5781,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 110.171,
-        "ttft_s": 109.238
+        "output_tps": 110.498,
+        "ttft_s": 104.276
       },
       "offers": [
         {
@@ -5824,7 +5845,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -6018,8 +6039,8 @@
         "blended_3to1": 8
       },
       "aa_speed": {
-        "output_tps": 81.54,
-        "ttft_s": 0.893
+        "output_tps": 72.124,
+        "ttft_s": 0.927
       },
       "offers": [
         {
@@ -6300,8 +6321,8 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 86.221,
-        "ttft_s": 0.846
+        "output_tps": 83.692,
+        "ttft_s": 0.889
       },
       "offers": [
         {
@@ -6558,8 +6579,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 108.047,
-        "ttft_s": 0.802
+        "output_tps": 110.362,
+        "ttft_s": 0.817
       },
       "offers": [
         {
@@ -6622,7 +6643,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -6816,7 +6837,7 @@
         "blended_3to1": 8
       },
       "aa_speed": {
-        "output_tps": 74.48,
+        "output_tps": 75.205,
         "ttft_s": 4.469
       },
       "offers": [
@@ -7171,8 +7192,8 @@
         "blended_3to1": 8
       },
       "aa_speed": {
-        "output_tps": 78.338,
-        "ttft_s": 21.252
+        "output_tps": 78.487,
+        "ttft_s": 18.362
       },
       "offers": [
         {
@@ -7453,8 +7474,8 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 87.401,
-        "ttft_s": 1.708
+        "output_tps": 86.952,
+        "ttft_s": 1.559
       },
       "offers": [
         {
@@ -7710,8 +7731,8 @@
         "blended_3to1": 11.25
       },
       "aa_speed": {
-        "output_tps": 144.738,
-        "ttft_s": 0.901
+        "output_tps": 138.144,
+        "ttft_s": 0.905
       },
       "offers": [],
       "designarena": {},
@@ -7762,8 +7783,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 104.047,
-        "ttft_s": 12.127
+        "output_tps": 103.961,
+        "ttft_s": 8.265
       },
       "offers": [
         {
@@ -7826,7 +7847,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -8020,8 +8041,8 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 95.187,
-        "ttft_s": 9.12
+        "output_tps": 92.133,
+        "ttft_s": 9.548
       },
       "offers": [
         {
@@ -8278,7 +8299,7 @@
         "blended_3to1": 8
       },
       "aa_speed": {
-        "output_tps": 75.588,
+        "output_tps": 73.533,
         "ttft_s": 6.906
       },
       "offers": [
@@ -8489,7 +8510,7 @@
           "modelId": "gpt-5.6-sol"
         },
         "fullstack": {
-          "elo": 1173,
+          "elo": 1165,
           "winRate": 49.8,
           "battles": 1611,
           "modelId": "gpt-5.6-sol"
@@ -8574,8 +8595,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 113.9,
-        "ttft_s": 41.773
+        "output_tps": 109.554,
+        "ttft_s": 34.591
       },
       "offers": [
         {
@@ -8638,7 +8659,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -8832,8 +8853,8 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 87.116,
-        "ttft_s": 3.054
+        "output_tps": 86.946,
+        "ttft_s": 2.706
       },
       "offers": [
         {
@@ -9015,13 +9036,13 @@
         "frontend": {
           "elo": 1148,
           "winRate": 38.1,
-          "battles": 3023,
+          "battles": 3025,
           "modelId": "gpt-5.6-terra"
         },
         "fullstack": {
-          "elo": 1076,
-          "winRate": 31.7,
-          "battles": 2315,
+          "elo": 1068,
+          "winRate": 31.6,
+          "battles": 2324,
           "modelId": "gpt-5.6-terra"
         }
       },
@@ -9103,8 +9124,8 @@
         "blended_3to1": 4.813
       },
       "aa_speed": {
-        "output_tps": 126.18,
-        "ttft_s": 41.779
+        "output_tps": 120.125,
+        "ttft_s": 31.505
       },
       "offers": [
         {
@@ -9196,7 +9217,7 @@
           "modelId": "gpt-5.3-codex"
         },
         "fullstack": {
-          "elo": 997,
+          "elo": 989,
           "winRate": 36.5,
           "battles": 1108,
           "modelId": "gpt-5.3-codex"
@@ -9270,8 +9291,8 @@
         "blended_3to1": 0.45
       },
       "aa_speed": {
-        "output_tps": 110.496,
-        "ttft_s": 2.603
+        "output_tps": 102.38,
+        "ttft_s": 2.18
       },
       "offers": [
         {
@@ -9334,7 +9355,7 @@
           "quantization": "unknown",
           "context_length": 1050000,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -9527,8 +9548,8 @@
         "blended_3to1": 0.671
       },
       "aa_speed": {
-        "output_tps": 86.862,
-        "ttft_s": 0.618
+        "output_tps": 90.363,
+        "ttft_s": 0.617
       },
       "offers": [
         {
@@ -9663,7 +9684,7 @@
           "quantization": "fp8",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -5,
           "eu_hosted": false,
           "non_us": true
         },
@@ -10059,8 +10080,8 @@
         "blended_3to1": 0.345
       },
       "aa_speed": {
-        "output_tps": 30.439,
-        "ttft_s": 0.574
+        "output_tps": 26.83,
+        "ttft_s": 0.583
       },
       "offers": [],
       "designarena": {},
@@ -10111,8 +10132,8 @@
         "blended_3to1": 2
       },
       "aa_speed": {
-        "output_tps": 225.782,
-        "ttft_s": 11.209
+        "output_tps": 223.575,
+        "ttft_s": 7.366
       },
       "offers": [
         {
@@ -10142,13 +10163,13 @@
         "frontend": {
           "elo": 1256,
           "winRate": 52.4,
-          "battles": 1429,
+          "battles": 1431,
           "modelId": "muse-spark-1.2"
         },
         "fullstack": {
-          "elo": 1226,
+          "elo": 1218,
           "winRate": 49.6,
-          "battles": 1532,
+          "battles": 1543,
           "modelId": "muse-spark-1.2"
         }
       },
@@ -10211,8 +10232,8 @@
         "blended_3to1": 0.313
       },
       "aa_speed": {
-        "output_tps": 86.595,
-        "ttft_s": 0.617
+        "output_tps": 85.219,
+        "ttft_s": 0.611
       },
       "offers": [
         {
@@ -10343,7 +10364,7 @@
         "blended_3to1": 0.422
       },
       "aa_speed": {
-        "output_tps": 85.17,
+        "output_tps": 84.533,
         "ttft_s": 0.582
       },
       "offers": [
@@ -10519,8 +10540,8 @@
         "blended_3to1": 0.637
       },
       "aa_speed": {
-        "output_tps": 97.445,
-        "ttft_s": 0.358
+        "output_tps": 95.494,
+        "ttft_s": 0.354
       },
       "offers": [
         {
@@ -10640,7 +10661,7 @@
         "context_window_tokens": 1000000
       },
       "benchmarks": {
-        "aa_intelligence_index": 52.7,
+        "aa_intelligence_index": 53,
         "aa_coding_index": 76.3,
         "aa_math_index": null,
         "aa_livecodebench": null,
@@ -10743,8 +10764,8 @@
         "blended_3to1": 2
       },
       "aa_speed": {
-        "output_tps": 110.754,
-        "ttft_s": 45.384
+        "output_tps": 107.866,
+        "ttft_s": 45.194
       },
       "offers": [
         {
@@ -11147,8 +11168,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 132.281,
-        "ttft_s": 1.344
+        "output_tps": 129.767,
+        "ttft_s": 1.345
       },
       "offers": [],
       "designarena": {},
@@ -11198,8 +11219,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 34.864,
-        "ttft_s": 0.986
+        "output_tps": 35.058,
+        "ttft_s": 0.969
       },
       "offers": [
         {
@@ -11340,7 +11361,7 @@
           "quantization": "fp4",
           "context_length": 131072,
           "max_completion_tokens": 65536,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -11538,7 +11559,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -11656,8 +11677,8 @@
         "blended_3to1": 3.375
       },
       "aa_speed": {
-        "output_tps": 250.568,
-        "ttft_s": 9.509
+        "output_tps": 236.241,
+        "ttft_s": 9.32
       },
       "offers": [
         {
@@ -11782,13 +11803,13 @@
         "frontend": {
           "elo": 1233,
           "winRate": 53.3,
-          "battles": 5282,
+          "battles": 5283,
           "modelId": "gemini-3.5-flash"
         },
         "fullstack": {
-          "elo": 1213,
+          "elo": 1205,
           "winRate": 57.6,
-          "battles": 3747,
+          "battles": 3756,
           "modelId": "gemini-3.5-flash"
         }
       },
@@ -11859,8 +11880,8 @@
         "blended_3to1": 0.198
       },
       "aa_speed": {
-        "output_tps": 71.356,
-        "ttft_s": 0.707
+        "output_tps": 88.01,
+        "ttft_s": 0.683
       },
       "offers": [
         {
@@ -12248,8 +12269,8 @@
         "blended_3to1": 0.205
       },
       "aa_speed": {
-        "output_tps": 69.611,
-        "ttft_s": 0.598
+        "output_tps": 66.794,
+        "ttft_s": 0.614
       },
       "offers": [
         {
@@ -12390,7 +12411,7 @@
           "quantization": "fp4",
           "context_length": 131072,
           "max_completion_tokens": 65536,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -12588,7 +12609,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -12707,8 +12728,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 206.851,
-        "ttft_s": 13.812
+        "output_tps": 185.655,
+        "ttft_s": 11.511
       },
       "offers": [
         {
@@ -12796,13 +12817,13 @@
         "frontend": {
           "elo": 1226,
           "winRate": 46.9,
-          "battles": 2070,
+          "battles": 2073,
           "modelId": "gemini-3.6-flash"
         },
         "fullstack": {
-          "elo": 1201,
-          "winRate": 46.8,
-          "battles": 2028,
+          "elo": 1193,
+          "winRate": 46.7,
+          "battles": 2042,
           "modelId": "gemini-3.6-flash"
         }
       },
@@ -12879,8 +12900,8 @@
         "blended_3to1": 0.04
       },
       "aa_speed": {
-        "output_tps": 42.405,
-        "ttft_s": 0.276
+        "output_tps": 40.336,
+        "ttft_s": 0.281
       },
       "offers": [],
       "designarena": {},
@@ -12930,8 +12951,8 @@
         "blended_3to1": 0.04
       },
       "aa_speed": {
-        "output_tps": 35.944,
-        "ttft_s": 0.362
+        "output_tps": 37.229,
+        "ttft_s": 0.37
       },
       "offers": [],
       "designarena": {},
@@ -12981,8 +13002,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 352.127,
-        "ttft_s": 6.531
+        "output_tps": 315.484,
+        "ttft_s": 6.75
       },
       "offers": [
         {
@@ -13200,8 +13221,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 132.704,
-        "ttft_s": 1.353
+        "output_tps": 127.991,
+        "ttft_s": 1.389
       },
       "offers": [],
       "designarena": {},
@@ -13353,8 +13374,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 294.823,
-        "ttft_s": 7.136
+        "output_tps": 284.382,
+        "ttft_s": 6.267
       },
       "offers": [
         {
@@ -13420,13 +13441,13 @@
         "frontend": {
           "elo": 1245,
           "winRate": 48.7,
-          "battles": 649,
+          "battles": 651,
           "modelId": "gemini-3.7-flash"
         },
         "fullstack": {
-          "elo": 1210,
-          "winRate": 44.7,
-          "battles": 351,
+          "elo": 1204,
+          "winRate": 45,
+          "battles": 360,
           "modelId": "gemini-3.7-flash"
         }
       },
@@ -13469,11 +13490,11 @@
         "context_window_tokens": 1000000
       },
       "benchmarks": {
-        "aa_intelligence_index": 38.3,
-        "aa_coding_index": 68.7,
+        "aa_intelligence_index": 36.7,
+        "aa_coding_index": 68.8,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.587,
         "aa_terminalbench_hard": 0.537878787878788,
         "aa_tau2": 0.956140350877193,
         "aa_gpqa": 0.941,
@@ -13489,8 +13510,8 @@
         "blended_3to1": 4.5
       },
       "aa_speed": {
-        "output_tps": 117.529,
-        "ttft_s": 24.692
+        "output_tps": 117.358,
+        "ttft_s": 20.28
       },
       "offers": [
         {
@@ -13511,7 +13532,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 65536,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -13542,13 +13563,13 @@
         "frontend": {
           "elo": 1155,
           "winRate": 45,
-          "battles": 6281,
+          "battles": 6282,
           "modelId": "gemini-3.1-pro-preview"
         },
         "fullstack": {
-          "elo": 1084,
+          "elo": 1076,
           "winRate": 42,
-          "battles": 4524,
+          "battles": 4534,
           "modelId": "gemini-3.1-pro-preview"
         }
       },
@@ -13599,8 +13620,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 288.48,
-        "ttft_s": 0.885
+        "output_tps": 286.335,
+        "ttft_s": 0.585
       },
       "offers": [
         {
@@ -13709,8 +13730,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 302.844,
-        "ttft_s": 4.605
+        "output_tps": 294.255,
+        "ttft_s": 4.37
       },
       "offers": [
         {
@@ -13885,8 +13906,8 @@
         "blended_3to1": 3.375
       },
       "aa_speed": {
-        "output_tps": 238.12,
-        "ttft_s": 0.73
+        "output_tps": 219.063,
+        "ttft_s": 0.699
       },
       "offers": [
         {
@@ -14074,8 +14095,8 @@
         "blended_3to1": 4
       },
       "aa_speed": {
-        "output_tps": 80.803,
-        "ttft_s": 100.647
+        "output_tps": 78.606,
+        "ttft_s": 125.116
       },
       "offers": [
         {
@@ -14360,13 +14381,13 @@
         "frontend": {
           "elo": 1277,
           "winRate": 56.3,
-          "battles": 3079,
+          "battles": 3080,
           "modelId": "claude-sonnet-5"
         },
         "fullstack": {
-          "elo": 1260,
+          "elo": 1253,
           "winRate": 56.4,
-          "battles": 2284,
+          "battles": 2289,
           "modelId": "claude-sonnet-5"
         }
       },
@@ -14436,8 +14457,8 @@
         "blended_3to1": 2
       },
       "aa_speed": {
-        "output_tps": 100.723,
-        "ttft_s": 15.421
+        "output_tps": 94.003,
+        "ttft_s": 13.005
       },
       "offers": [
         {
@@ -14763,8 +14784,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 51.886,
-        "ttft_s": 36.6
+        "output_tps": 49.339,
+        "ttft_s": 38.197
       },
       "offers": [
         {
@@ -15101,8 +15122,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 65.874,
-        "ttft_s": 63.816
+        "output_tps": 59.418,
+        "ttft_s": 53.361
       },
       "offers": [
         {
@@ -15376,8 +15397,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 52.716,
-        "ttft_s": 20.201
+        "output_tps": 48.3,
+        "ttft_s": 20.962
       },
       "offers": [
         {
@@ -15713,8 +15734,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 49.142,
-        "ttft_s": 2.981
+        "output_tps": 48.254,
+        "ttft_s": 2.37
       },
       "offers": [
         {
@@ -16050,8 +16071,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 49.672,
-        "ttft_s": 10.348
+        "output_tps": 48.082,
+        "ttft_s": 10.119
       },
       "offers": [
         {
@@ -16348,7 +16369,7 @@
           "modelId": "claude-opus-5"
         },
         "fullstack": {
-          "elo": 1353,
+          "elo": 1345,
           "winRate": 70.3,
           "battles": 431,
           "modelId": "claude-opus-5"
@@ -16401,7 +16422,7 @@
         "blended_3to1": 2
       },
       "aa_speed": {
-        "output_tps": 88.455,
+        "output_tps": 82.132,
         "ttft_s": 0.598
       },
       "offers": [
@@ -16728,8 +16749,8 @@
         "blended_3to1": 4
       },
       "aa_speed": {
-        "output_tps": 63.652,
-        "ttft_s": 1.31
+        "output_tps": 57.829,
+        "ttft_s": 1.186
       },
       "offers": [
         {
@@ -17076,8 +17097,8 @@
         "blended_3to1": 10
       },
       "aa_speed": {
-        "output_tps": 49.781,
-        "ttft_s": 7.251
+        "output_tps": 49.059,
+        "ttft_s": 9.066
       },
       "offers": [
         {
@@ -17413,8 +17434,8 @@
         "blended_3to1": 4
       },
       "aa_speed": {
-        "output_tps": 64.989,
-        "ttft_s": 1.869
+        "output_tps": 61.518,
+        "ttft_s": 1.737
       },
       "offers": [
         {
@@ -17760,8 +17781,8 @@
         "blended_3to1": 4
       },
       "aa_speed": {
-        "output_tps": 66.409,
-        "ttft_s": 6.148
+        "output_tps": 66.255,
+        "ttft_s": 6.555
       },
       "offers": [
         {
@@ -18107,8 +18128,8 @@
         "blended_3to1": 4
       },
       "aa_speed": {
-        "output_tps": 71.199,
-        "ttft_s": 18.023
+        "output_tps": 66.266,
+        "ttft_s": 15.056
       },
       "offers": [
         {
@@ -18454,8 +18475,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 51.674,
-        "ttft_s": 9.432
+        "output_tps": 49.804,
+        "ttft_s": 11.92
       },
       "offers": [
         {
@@ -18594,8 +18615,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 52.2,
-        "ttft_s": 6.189
+        "output_tps": 47.885,
+        "ttft_s": 4.318
       },
       "offers": [
         {
@@ -18734,8 +18755,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 71.383,
-        "ttft_s": 130.77
+        "output_tps": 69.766,
+        "ttft_s": 170.417
       },
       "offers": [
         {
@@ -18874,8 +18895,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 53.226,
-        "ttft_s": 7.635
+        "output_tps": 49.988,
+        "ttft_s": 8.321
       },
       "offers": [
         {
@@ -19014,8 +19035,8 @@
         "blended_3to1": 20
       },
       "aa_speed": {
-        "output_tps": 62.761,
-        "ttft_s": 44.641
+        "output_tps": 51.736,
+        "ttft_s": 34.809
       },
       "offers": [
         {
@@ -19154,8 +19175,8 @@
         "blended_3to1": 4
       },
       "aa_speed": {
-        "output_tps": 63.231,
-        "ttft_s": 1.459
+        "output_tps": 60.01,
+        "ttft_s": 1.245
       },
       "offers": [
         {
@@ -19501,8 +19522,8 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 47.442,
-        "ttft_s": 1.213
+        "output_tps": 46.699,
+        "ttft_s": 1.249
       },
       "offers": [
         {
@@ -19851,7 +19872,7 @@
       },
       "aa_speed": {
         "output_tps": 93.246,
-        "ttft_s": 0.475
+        "ttft_s": 0.441
       },
       "offers": [
         {
@@ -20042,8 +20063,8 @@
         "blended_3to1": 0.15
       },
       "aa_speed": {
-        "output_tps": 107.949,
-        "ttft_s": 0.513
+        "output_tps": 100.593,
+        "ttft_s": 0.51
       },
       "offers": [
         {
@@ -20183,8 +20204,8 @@
         "blended_3to1": 0.1
       },
       "aa_speed": {
-        "output_tps": 223.64,
-        "ttft_s": 0.494
+        "output_tps": 211.743,
+        "ttft_s": 0.478
       },
       "offers": [
         {
@@ -20304,11 +20325,11 @@
         "context_window_tokens": 256000
       },
       "benchmarks": {
-        "aa_intelligence_index": 9.7,
-        "aa_coding_index": 20.2,
+        "aa_intelligence_index": 11.1,
+        "aa_coding_index": 20.1,
         "aa_math_index": 38,
         "aa_livecodebench": 0.465,
-        "aa_scicode": null,
+        "aa_scicode": 0.366,
         "aa_terminalbench_hard": 0.159090909090909,
         "aa_tau2": 0.245614035087719,
         "aa_gpqa": 0.68,
@@ -20324,8 +20345,8 @@
         "blended_3to1": 0.75
       },
       "aa_speed": {
-        "output_tps": 76.597,
-        "ttft_s": 1.291
+        "output_tps": 78.349,
+        "ttft_s": 0.758
       },
       "offers": [
         {
@@ -20573,8 +20594,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 121.971,
-        "ttft_s": 0.691
+        "output_tps": 134.405,
+        "ttft_s": 0.71
       },
       "offers": [],
       "designarena": {},
@@ -20624,8 +20645,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 125.243,
-        "ttft_s": 0.668
+        "output_tps": 139.298,
+        "ttft_s": 0.71
       },
       "offers": [
         {
@@ -20816,8 +20837,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 164.319,
-        "ttft_s": 0.598
+        "output_tps": 173.535,
+        "ttft_s": 0.632
       },
       "offers": [
         {
@@ -21002,8 +21023,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 123.978,
-        "ttft_s": 0.678
+        "output_tps": 134.894,
+        "ttft_s": 0.629
       },
       "offers": [
         {
@@ -21090,8 +21111,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 147.401,
-        "ttft_s": 0.562
+        "output_tps": 152.305,
+        "ttft_s": 0.554
       },
       "offers": [
         {
@@ -21277,8 +21298,8 @@
         "blended_3to1": 1.98
       },
       "aa_speed": {
-        "output_tps": 66.866,
-        "ttft_s": 1.075
+        "output_tps": 59.459,
+        "ttft_s": 1.108
       },
       "offers": [
         {
@@ -21608,7 +21629,7 @@
           "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 393216,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": true
         },
@@ -21735,8 +21756,8 @@
         "blended_3to1": 0.66
       },
       "aa_speed": {
-        "output_tps": 129.749,
-        "ttft_s": 0.778
+        "output_tps": 118.418,
+        "ttft_s": 0.619
       },
       "offers": [
         {
@@ -21952,28 +21973,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "AkashML",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.065,
-          "output_per_1m": 0.18,
-          "cache_read_per_1m": 0.016,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-flash-0731",
-          "or_canonical_slug": "deepseek/deepseek-v4-flash-20260731",
-          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-          "endpoint_tag": "akashml/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "DigitalOcean",
           "platform": "OpenRouter",
           "input_per_1m": 0.079996,
@@ -22122,7 +22121,7 @@
           "quantization": "bf16",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": -5,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -22144,7 +22143,7 @@
           "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -22238,6 +22237,28 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Mancer 2",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.16,
+          "output_per_1m": 0.5,
+          "cache_read_per_1m": null,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-flash-0731",
+          "or_canonical_slug": "deepseek/deepseek-v4-flash-20260731",
+          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
+          "endpoint_tag": "mancer/fp8",
+          "quantization": "fp8",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Venice",
           "platform": "OpenRouter",
           "input_per_1m": 0.175,
@@ -22254,28 +22275,6 @@
           "quantization": "unknown",
           "context_length": 1000000,
           "max_completion_tokens": 32768,
-          "status": -2,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Mancer 2",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.175,
-          "output_per_1m": 0.5,
-          "cache_read_per_1m": null,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-flash-0731",
-          "or_canonical_slug": "deepseek/deepseek-v4-flash-20260731",
-          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-          "endpoint_tag": "mancer/fp8",
-          "quantization": "fp8",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -22298,7 +22297,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -22540,7 +22539,7 @@
         "aa_coding_index": 59.4,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.508,
         "aa_terminalbench_hard": 0.462121212121212,
         "aa_tau2": 0.961988304093567,
         "aa_gpqa": 0.888,
@@ -22556,8 +22555,8 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 67.766,
-        "ttft_s": 1.201
+        "output_tps": 61.264,
+        "ttft_s": 1.182
       },
       "offers": [
         {
@@ -22637,33 +22636,11 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DigitalOcean",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.87,
-          "output_per_1m": 1.74,
-          "cache_read_per_1m": 0.174,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-pro",
-          "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
-          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
-          "endpoint_tag": "digitalocean",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "StreamLake",
           "platform": "OpenRouter",
-          "input_per_1m": 0.951258,
-          "output_per_1m": 1.902516,
-          "cache_read_per_1m": 0.0792715,
+          "input_per_1m": 0.748374,
+          "output_per_1m": 1.496748,
+          "cache_read_per_1m": 0.0623645,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -22683,9 +22660,9 @@
           "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.95992,
-          "output_per_1m": 1.91984,
-          "cache_read_per_1m": 0.07952,
+          "input_per_1m": 0.75712,
+          "output_per_1m": 1.51424,
+          "cache_read_per_1m": 0.06272,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -22700,6 +22677,28 @@
           "status": 0,
           "eu_hosted": false,
           "non_us": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "DigitalOcean",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.87,
+          "output_per_1m": 1.74,
+          "cache_read_per_1m": 0.174,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-pro",
+          "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
+          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
+          "endpoint_tag": "digitalocean",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
         },
         {
           "source": "OpenRouter",
@@ -23116,9 +23115,9 @@
           "source": "OpenRouter",
           "provider": "StreamLake",
           "platform": "OpenRouter",
-          "input_per_1m": 0.08638,
-          "output_per_1m": 0.17276,
-          "cache_read_per_1m": 0.017276,
+          "input_per_1m": 0.0819,
+          "output_per_1m": 0.1638,
+          "cache_read_per_1m": 0.01638,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -23138,9 +23137,9 @@
           "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.08652,
-          "output_per_1m": 0.17304,
-          "cache_read_per_1m": 0.017304,
+          "input_per_1m": 0.08204,
+          "output_per_1m": 0.16408,
+          "cache_read_per_1m": 0.016408,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -23469,7 +23468,7 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 67.381,
+        "output_tps": 59.136,
         "ttft_s": 1.065
       },
       "offers": [
@@ -23550,33 +23549,11 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DigitalOcean",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.87,
-          "output_per_1m": 1.74,
-          "cache_read_per_1m": 0.174,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-pro",
-          "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
-          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
-          "endpoint_tag": "digitalocean",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "StreamLake",
           "platform": "OpenRouter",
-          "input_per_1m": 0.951258,
-          "output_per_1m": 1.902516,
-          "cache_read_per_1m": 0.0792715,
+          "input_per_1m": 0.748374,
+          "output_per_1m": 1.496748,
+          "cache_read_per_1m": 0.0623645,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -23596,9 +23573,9 @@
           "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.95992,
-          "output_per_1m": 1.91984,
-          "cache_read_per_1m": 0.07952,
+          "input_per_1m": 0.75712,
+          "output_per_1m": 1.51424,
+          "cache_read_per_1m": 0.06272,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -23613,6 +23590,28 @@
           "status": 0,
           "eu_hosted": false,
           "non_us": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "DigitalOcean",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.87,
+          "output_per_1m": 1.74,
+          "cache_read_per_1m": 0.174,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-pro",
+          "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
+          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
+          "endpoint_tag": "digitalocean",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
         },
         {
           "source": "OpenRouter",
@@ -23949,8 +23948,8 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 66.534,
-        "ttft_s": 1.155
+        "output_tps": 62.907,
+        "ttft_s": 1.047
       },
       "offers": [
         {
@@ -24030,33 +24029,11 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "DigitalOcean",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.87,
-          "output_per_1m": 1.74,
-          "cache_read_per_1m": 0.174,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "deepseek/deepseek-v4-pro",
-          "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
-          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
-          "endpoint_tag": "digitalocean",
-          "quantization": "unknown",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "StreamLake",
           "platform": "OpenRouter",
-          "input_per_1m": 0.951258,
-          "output_per_1m": 1.902516,
-          "cache_read_per_1m": 0.0792715,
+          "input_per_1m": 0.748374,
+          "output_per_1m": 1.496748,
+          "cache_read_per_1m": 0.0623645,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -24076,9 +24053,9 @@
           "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.95992,
-          "output_per_1m": 1.91984,
-          "cache_read_per_1m": 0.07952,
+          "input_per_1m": 0.75712,
+          "output_per_1m": 1.51424,
+          "cache_read_per_1m": 0.06272,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -24093,6 +24070,28 @@
           "status": 0,
           "eu_hosted": false,
           "non_us": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "DigitalOcean",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.87,
+          "output_per_1m": 1.74,
+          "cache_read_per_1m": 0.174,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "deepseek/deepseek-v4-pro",
+          "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
+          "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
+          "endpoint_tag": "digitalocean",
+          "quantization": "unknown",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
         },
         {
           "source": "OpenRouter",
@@ -24486,8 +24485,8 @@
         "blended_3to1": 0.66
       },
       "aa_speed": {
-        "output_tps": 117.958,
-        "ttft_s": 0.746
+        "output_tps": 121.308,
+        "ttft_s": 0.652
       },
       "offers": [],
       "designarena": {},
@@ -24639,8 +24638,8 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 134.54,
-        "ttft_s": 15.848
+        "output_tps": 120.464,
+        "ttft_s": 14.384
       },
       "offers": [
         {
@@ -24734,13 +24733,13 @@
         "frontend": {
           "elo": 1160,
           "winRate": 44.3,
-          "battles": 6002,
+          "battles": 6003,
           "modelId": "grok-4.3"
         },
         "fullstack": {
-          "elo": 1020,
-          "winRate": 28.8,
-          "battles": 3130,
+          "elo": 1011,
+          "winRate": 28.7,
+          "battles": 3142,
           "modelId": "grok-4.3"
         }
       },
@@ -24791,8 +24790,8 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 112.087,
-        "ttft_s": 0.825
+        "output_tps": 108.333,
+        "ttft_s": 0.952
       },
       "offers": [
         {
@@ -24929,8 +24928,8 @@
         "blended_3to1": 1.563
       },
       "aa_speed": {
-        "output_tps": 127.924,
-        "ttft_s": 5.828
+        "output_tps": 122.413,
+        "ttft_s": 6.071
       },
       "offers": [
         {
@@ -25067,8 +25066,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 58.48,
-        "ttft_s": 37.721
+        "output_tps": 56.706,
+        "ttft_s": 28.947
       },
       "offers": [
         {
@@ -25199,8 +25198,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 60.398,
-        "ttft_s": 39.849
+        "output_tps": 56.884,
+        "ttft_s": 35.311
       },
       "offers": [
         {
@@ -25288,13 +25287,13 @@
         "frontend": {
           "elo": 1276,
           "winRate": 57.3,
-          "battles": 4935,
+          "battles": 4936,
           "modelId": "grogu"
         },
         "fullstack": {
-          "elo": 1275,
+          "elo": 1268,
           "winRate": 55.8,
-          "battles": 4034,
+          "battles": 4041,
           "modelId": "grogu"
         }
       },
@@ -25345,8 +25344,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 54.516,
-        "ttft_s": 4.895
+        "output_tps": 52.552,
+        "ttft_s": 4.936
       },
       "offers": [
         {
@@ -25478,8 +25477,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 50.201,
-        "ttft_s": 11.88
+        "output_tps": 48.376,
+        "ttft_s": 11.129
       },
       "offers": [
         {
@@ -25535,9 +25534,9 @@
           "modelId": "yoda"
         },
         "fullstack": {
-          "elo": 1263,
+          "elo": 1256,
           "winRate": 62.4,
-          "battles": 2423,
+          "battles": 2431,
           "modelId": "yoda"
         }
       },
@@ -25595,8 +25594,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 66.14,
-        "ttft_s": 36.149
+        "output_tps": 55.39,
+        "ttft_s": 35.794
       },
       "offers": [
         {
@@ -25727,8 +25726,8 @@
         "blended_3to1": 0.061
       },
       "aa_speed": {
-        "output_tps": 266.579,
-        "ttft_s": 0.566
+        "output_tps": 271.355,
+        "ttft_s": 0.599
       },
       "offers": [
         {
@@ -25785,7 +25784,7 @@
           "quantization": "unknown",
           "context_length": 128000,
           "max_completion_tokens": 5120,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         }
@@ -25903,8 +25902,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 124.299,
-        "ttft_s": 17.399
+        "output_tps": 124.111,
+        "ttft_s": 15.561
       },
       "offers": [],
       "designarena": {},
@@ -26071,8 +26070,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 190.503,
-        "ttft_s": 15.563
+        "output_tps": 196.464,
+        "ttft_s": 13.596
       },
       "offers": [
         {
@@ -26181,8 +26180,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 188.846,
-        "ttft_s": 4.53
+        "output_tps": 187.448,
+        "ttft_s": 4.627
       },
       "offers": [
         {
@@ -26291,8 +26290,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 208.887,
-        "ttft_s": 0.776
+        "output_tps": 202.39,
+        "ttft_s": 0.836
       },
       "offers": [
         {
@@ -26402,7 +26401,7 @@
       },
       "aa_speed": {
         "output_tps": 124.518,
-        "ttft_s": 0.675
+        "ttft_s": 0.683
       },
       "offers": [],
       "designarena": {},
@@ -26518,8 +26517,8 @@
         "blended_3to1": 5
       },
       "aa_speed": {
-        "output_tps": 58.626,
-        "ttft_s": 1.056
+        "output_tps": 62.209,
+        "ttft_s": 1.036
       },
       "offers": [
         {
@@ -26592,8 +26591,8 @@
         "blended_3to1": 3.438
       },
       "aa_speed": {
-        "output_tps": 122.239,
-        "ttft_s": 4.779
+        "output_tps": 121.811,
+        "ttft_s": 4.193
       },
       "offers": [],
       "designarena": {},
@@ -26643,8 +26642,8 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 196.596,
-        "ttft_s": 19.059
+        "output_tps": 188.996,
+        "ttft_s": 11.86
       },
       "offers": [
         {
@@ -26753,8 +26752,8 @@
         "blended_3to1": 0.219
       },
       "aa_speed": {
-        "output_tps": 40.768,
-        "ttft_s": 1.171
+        "output_tps": 43.264,
+        "ttft_s": 1.057
       },
       "offers": [
         {
@@ -26841,8 +26840,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 24.609,
-        "ttft_s": 0.403
+        "output_tps": 17.476,
+        "ttft_s": 0.386
       },
       "offers": [],
       "designarena": {},
@@ -26892,8 +26891,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 46.603,
-        "ttft_s": 0.365
+        "output_tps": 46.765,
+        "ttft_s": 0.351
       },
       "offers": [],
       "designarena": {},
@@ -26943,8 +26942,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 1564.52,
-        "ttft_s": 6.057
+        "output_tps": 206.793,
+        "ttft_s": 2.703
       },
       "offers": [
         {
@@ -27017,8 +27016,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 338.577,
-        "ttft_s": 0.97
+        "output_tps": 328.187,
+        "ttft_s": 0.735
       },
       "offers": [],
       "designarena": {},
@@ -27221,8 +27220,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 433.953,
-        "ttft_s": 1.115
+        "output_tps": 440.878,
+        "ttft_s": 0.83
       },
       "offers": [],
       "designarena": {},
@@ -27374,8 +27373,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 55.167,
-        "ttft_s": 1.859
+        "output_tps": 59.084,
+        "ttft_s": 1.224
       },
       "offers": [],
       "designarena": {},
@@ -27476,8 +27475,8 @@
         "blended_3to1": 0.262
       },
       "aa_speed": {
-        "output_tps": 140.857,
-        "ttft_s": 1.141
+        "output_tps": 139.432,
+        "ttft_s": 1.165
       },
       "offers": [
         {
@@ -27601,8 +27600,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 84.642,
-        "ttft_s": 1.166
+        "output_tps": 84.624,
+        "ttft_s": 1.121
       },
       "offers": [
         {
@@ -27956,13 +27955,13 @@
         "frontend": {
           "elo": 1230,
           "winRate": 48.9,
-          "battles": 2518,
+          "battles": 2520,
           "modelId": "minimax-m3"
         },
         "fullstack": {
-          "elo": 1213,
-          "winRate": 49.5,
-          "battles": 2162,
+          "elo": 1205,
+          "winRate": 49.4,
+          "battles": 2179,
           "modelId": "minimax-m3"
         }
       },
@@ -28013,8 +28012,8 @@
         "blended_3to1": 1.2
       },
       "aa_speed": {
-        "output_tps": 20.159,
-        "ttft_s": 19.583
+        "output_tps": 19.298,
+        "ttft_s": 17.253
       },
       "offers": [],
       "designarena": {},
@@ -28064,8 +28063,8 @@
         "blended_3to1": 0.086
       },
       "aa_speed": {
-        "output_tps": 145.156,
-        "ttft_s": 1.357
+        "output_tps": 136.939,
+        "ttft_s": 1.159
       },
       "offers": [],
       "designarena": {},
@@ -28115,8 +28114,8 @@
         "blended_3to1": 1.1
       },
       "aa_speed": {
-        "output_tps": 163.385,
-        "ttft_s": 1.234
+        "output_tps": 156.367,
+        "ttft_s": 1.211
       },
       "offers": [
         {
@@ -28278,8 +28277,8 @@
         "blended_3to1": 0.088
       },
       "aa_speed": {
-        "output_tps": 214.776,
-        "ttft_s": 0.668
+        "output_tps": 142.767,
+        "ttft_s": 0.825
       },
       "offers": [
         {
@@ -28403,7 +28402,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         }
@@ -28455,8 +28454,8 @@
         "blended_3to1": 0.131
       },
       "aa_speed": {
-        "output_tps": 327.801,
-        "ttft_s": 0.565
+        "output_tps": 321.434,
+        "ttft_s": 0.56
       },
       "offers": [
         {
@@ -28529,8 +28528,8 @@
         "blended_3to1": 0.3
       },
       "aa_speed": {
-        "output_tps": 129.074,
-        "ttft_s": 1.696
+        "output_tps": 72.097,
+        "ttft_s": 2.035
       },
       "offers": [],
       "designarena": {},
@@ -28580,7 +28579,7 @@
         "blended_3to1": 0.9
       },
       "aa_speed": {
-        "output_tps": 52.823,
+        "output_tps": 52.821,
         "ttft_s": 0.685
       },
       "offers": [
@@ -28655,8 +28654,8 @@
         "blended_3to1": 0.095
       },
       "aa_speed": {
-        "output_tps": 294.364,
-        "ttft_s": 0.518
+        "output_tps": 295.608,
+        "ttft_s": 0.461
       },
       "offers": [
         {
@@ -28810,8 +28809,8 @@
         "blended_3to1": 0.07
       },
       "aa_speed": {
-        "output_tps": 95.378,
-        "ttft_s": 5.67
+        "output_tps": 94.506,
+        "ttft_s": 4.366
       },
       "offers": [],
       "designarena": {},
@@ -28861,8 +28860,8 @@
         "blended_3to1": 0.3
       },
       "aa_speed": {
-        "output_tps": 20.487,
-        "ttft_s": 21.695
+        "output_tps": 25.47,
+        "ttft_s": 10.099
       },
       "offers": [],
       "designarena": {},
@@ -28912,8 +28911,8 @@
         "blended_3to1": 0.35
       },
       "aa_speed": {
-        "output_tps": 141.877,
-        "ttft_s": 1.133
+        "output_tps": 141.927,
+        "ttft_s": 1.117
       },
       "offers": [
         {
@@ -29001,8 +29000,8 @@
         "blended_3to1": 0.4
       },
       "aa_speed": {
-        "output_tps": 22.897,
-        "ttft_s": 16.24
+        "output_tps": 23.094,
+        "ttft_s": 12.648
       },
       "offers": [],
       "designarena": {},
@@ -29052,8 +29051,8 @@
         "blended_3to1": 0.4
       },
       "aa_speed": {
-        "output_tps": 19.801,
-        "ttft_s": 23.744
+        "output_tps": 18.646,
+        "ttft_s": 18.866
       },
       "offers": [],
       "designarena": {},
@@ -29104,7 +29103,7 @@
       },
       "aa_speed": {
         "output_tps": 165.785,
-        "ttft_s": 0.425
+        "ttft_s": 0.4
       },
       "offers": [
         {
@@ -29228,7 +29227,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         }
@@ -29366,7 +29365,7 @@
         "aa_coding_index": 60.8,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.478,
         "aa_terminalbench_hard": 0.446969696969697,
         "aa_tau2": 0.900584795321637,
         "aa_gpqa": 0.896,
@@ -29382,8 +29381,8 @@
         "blended_3to1": 1.712
       },
       "aa_speed": {
-        "output_tps": 41.531,
-        "ttft_s": 1.267
+        "output_tps": 46.905,
+        "ttft_s": 1.263
       },
       "offers": [
         {
@@ -29841,13 +29840,13 @@
         "frontend": {
           "elo": 1205,
           "winRate": 47.6,
-          "battles": 4092,
+          "battles": 4093,
           "modelId": "kimi-k2.7-code"
         },
         "fullstack": {
-          "elo": 1188,
+          "elo": 1181,
           "winRate": 52.1,
-          "battles": 2493,
+          "battles": 2506,
           "modelId": "kimi-k2.7-code"
         }
       },
@@ -29917,8 +29916,8 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 37.887,
-        "ttft_s": 3.133
+        "output_tps": 38.891,
+        "ttft_s": 2.986
       },
       "offers": [
         {
@@ -30000,28 +29999,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Morph",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.5,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.29,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k3",
-          "or_canonical_slug": "moonshotai/kimi-k3-20260715",
-          "or_hugging_face_id": "moonshotai/Kimi-K3",
-          "endpoint_tag": "morph/fp4",
-          "quantization": "fp4",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Makora",
           "platform": "OpenRouter",
           "input_per_1m": 2.5500000000000003,
@@ -30057,6 +30034,28 @@
           "or_canonical_slug": "moonshotai/kimi-k3-20260715",
           "or_hugging_face_id": "moonshotai/Kimi-K3",
           "endpoint_tag": "sail-research/fp4",
+          "quantization": "fp4",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Morph",
+          "platform": "OpenRouter",
+          "input_per_1m": 2.6,
+          "output_per_1m": 14,
+          "cache_read_per_1m": 0.29,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k3",
+          "or_canonical_slug": "moonshotai/kimi-k3-20260715",
+          "or_hugging_face_id": "moonshotai/Kimi-K3",
+          "endpoint_tag": "morph/fp4",
           "quantization": "fp4",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
@@ -30148,7 +30147,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -30400,13 +30399,13 @@
         "frontend": {
           "elo": 1335,
           "winRate": 64.3,
-          "battles": 1167,
+          "battles": 1168,
           "modelId": "kimi-k3"
         },
         "fullstack": {
-          "elo": 1346,
-          "winRate": 67.5,
-          "battles": 851,
+          "elo": 1339,
+          "winRate": 67.4,
+          "battles": 864,
           "modelId": "kimi-k3"
         }
       },
@@ -30508,8 +30507,8 @@
         "blended_3to1": 6
       },
       "aa_speed": {
-        "output_tps": 35.952,
-        "ttft_s": 2.903
+        "output_tps": 35.892,
+        "ttft_s": 2.651
       },
       "offers": [
         {
@@ -30591,28 +30590,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Morph",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.5,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.29,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k3",
-          "or_canonical_slug": "moonshotai/kimi-k3-20260715",
-          "or_hugging_face_id": "moonshotai/Kimi-K3",
-          "endpoint_tag": "morph/fp4",
-          "quantization": "fp4",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Makora",
           "platform": "OpenRouter",
           "input_per_1m": 2.5500000000000003,
@@ -30648,6 +30625,28 @@
           "or_canonical_slug": "moonshotai/kimi-k3-20260715",
           "or_hugging_face_id": "moonshotai/Kimi-K3",
           "endpoint_tag": "sail-research/fp4",
+          "quantization": "fp4",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Morph",
+          "platform": "OpenRouter",
+          "input_per_1m": 2.6,
+          "output_per_1m": 14,
+          "cache_read_per_1m": 0.29,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k3",
+          "or_canonical_slug": "moonshotai/kimi-k3-20260715",
+          "or_hugging_face_id": "moonshotai/Kimi-K3",
+          "endpoint_tag": "morph/fp4",
           "quantization": "fp4",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
@@ -30739,7 +30738,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -31018,7 +31017,7 @@
         "aa_coding_index": 39.6,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.439,
         "aa_terminalbench_hard": 0.356060606060606,
         "aa_tau2": 0.985380116959064,
         "aa_gpqa": 0.809,
@@ -31034,8 +31033,8 @@
         "blended_3to1": 0.438
       },
       "aa_speed": {
-        "output_tps": 91.388,
-        "ttft_s": 2.326
+        "output_tps": 77.634,
+        "ttft_s": 2.229
       },
       "offers": [
         {
@@ -31612,7 +31611,7 @@
       },
       "aa_speed": {
         "output_tps": 222.909,
-        "ttft_s": 0.195
+        "ttft_s": 0.192
       },
       "offers": [],
       "designarena": {},
@@ -31662,8 +31661,8 @@
         "blended_3to1": 0.282
       },
       "aa_speed": {
-        "output_tps": 76.419,
-        "ttft_s": 0.231
+        "output_tps": 72.979,
+        "ttft_s": 0.272
       },
       "offers": [],
       "designarena": {},
@@ -31713,8 +31712,8 @@
         "blended_3to1": 0.107
       },
       "aa_speed": {
-        "output_tps": 38.338,
-        "ttft_s": 11.503
+        "output_tps": 18.799,
+        "ttft_s": 27.662
       },
       "offers": [],
       "designarena": {},
@@ -31764,8 +31763,8 @@
         "blended_3to1": 0.063
       },
       "aa_speed": {
-        "output_tps": 117.919,
-        "ttft_s": 0.44
+        "output_tps": 120.235,
+        "ttft_s": 0.46
       },
       "offers": [],
       "designarena": {},
@@ -31917,8 +31916,8 @@
         "blended_3to1": 0.107
       },
       "aa_speed": {
-        "output_tps": 143.586,
-        "ttft_s": 0.224
+        "output_tps": 139.518,
+        "ttft_s": 0.241
       },
       "offers": [
         {
@@ -32189,8 +32188,8 @@
         "blended_3to1": 0.375
       },
       "aa_speed": {
-        "output_tps": 906.967,
-        "ttft_s": 4.153
+        "output_tps": 794.899,
+        "ttft_s": 3.93
       },
       "offers": [
         {
@@ -32263,8 +32262,8 @@
         "blended_3to1": 0.35
       },
       "aa_speed": {
-        "output_tps": 89.242,
-        "ttft_s": 0.925
+        "output_tps": 89.571,
+        "ttft_s": 0.933
       },
       "offers": [
         {
@@ -32337,8 +32336,8 @@
         "blended_3to1": 0.198
       },
       "aa_speed": {
-        "output_tps": 93.069,
-        "ttft_s": 0.579
+        "output_tps": 94.715,
+        "ttft_s": 0.572
       },
       "offers": [
         {
@@ -32382,7 +32381,7 @@
           "quantization": "fp8",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -5,
           "eu_hosted": false,
           "non_us": true
         }
@@ -32536,8 +32535,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 42.388,
-        "ttft_s": 0.747
+        "output_tps": 42.726,
+        "ttft_s": 0.756
       },
       "offers": [
         {
@@ -32633,7 +32632,7 @@
         "blended_3to1": 0.198
       },
       "aa_speed": {
-        "output_tps": 91.949,
+        "output_tps": 84.623,
         "ttft_s": 0.632
       },
       "offers": [
@@ -32678,7 +32677,7 @@
           "quantization": "fp8",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -5,
           "eu_hosted": false,
           "non_us": true
         }
@@ -32730,8 +32729,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 42.352,
-        "ttft_s": 0.759
+        "output_tps": 42.141,
+        "ttft_s": 0.754
       },
       "offers": [
         {
@@ -33285,8 +33284,8 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 29.726,
-        "ttft_s": 3.991
+        "output_tps": 31.335,
+        "ttft_s": 4.463
       },
       "offers": [
         {
@@ -33307,7 +33306,7 @@
           "quantization": "bf16",
           "context_length": 1050000,
           "max_completion_tokens": 945000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -33373,7 +33372,7 @@
           "quantization": "fp8",
           "context_length": 1024000,
           "max_completion_tokens": 131072,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -33439,7 +33438,7 @@
           "quantization": "unknown",
           "context_length": 1000000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": true
         }
@@ -33526,7 +33525,7 @@
         "aa_coding_index": 56.8,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.439,
         "aa_terminalbench_hard": 0.416666666666667,
         "aa_tau2": 0.906432748538012,
         "aa_gpqa": 0.849,
@@ -33542,8 +33541,8 @@
         "blended_3to1": 0.175
       },
       "aa_speed": {
-        "output_tps": 60.277,
-        "ttft_s": 3.165
+        "output_tps": 53.59,
+        "ttft_s": 2.493
       },
       "offers": [
         {
@@ -33630,7 +33629,7 @@
           "quantization": "unknown",
           "context_length": 1000000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": true
         },
@@ -33704,8 +33703,8 @@
         "blended_3to1": 0.544
       },
       "aa_speed": {
-        "output_tps": 35.835,
-        "ttft_s": 3.702
+        "output_tps": 34.263,
+        "ttft_s": 4.022
       },
       "offers": [
         {
@@ -33726,7 +33725,7 @@
           "quantization": "bf16",
           "context_length": 1050000,
           "max_completion_tokens": 945000,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -33792,7 +33791,7 @@
           "quantization": "fp8",
           "context_length": 1024000,
           "max_completion_tokens": 131072,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -33858,7 +33857,7 @@
           "quantization": "unknown",
           "context_length": 1000000,
           "max_completion_tokens": 128000,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": true
         }
@@ -34267,8 +34266,8 @@
         "blended_3to1": 0.065
       },
       "aa_speed": {
-        "output_tps": 345.026,
-        "ttft_s": 0.503
+        "output_tps": 342.285,
+        "ttft_s": 0.491
       },
       "offers": [],
       "designarena": {},
@@ -34352,7 +34351,7 @@
         "aa_coding_index": 58.8,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.486,
         "aa_terminalbench_hard": null,
         "aa_tau2": null,
         "aa_gpqa": 0.897,
@@ -34368,8 +34367,8 @@
         "blended_3to1": 0.241
       },
       "aa_speed": {
-        "output_tps": 96.028,
-        "ttft_s": 1.639
+        "output_tps": 98.087,
+        "ttft_s": 1.62
       },
       "offers": [
         {
@@ -35098,7 +35097,7 @@
         "aa_coding_index": 45.3,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.363,
         "aa_terminalbench_hard": null,
         "aa_tau2": null,
         "aa_gpqa": 0.78,
@@ -35114,8 +35113,8 @@
         "blended_3to1": 1.3
       },
       "aa_speed": {
-        "output_tps": 46.402,
-        "ttft_s": 2.183
+        "output_tps": 46.387,
+        "ttft_s": 2.726
       },
       "offers": [
         {
@@ -35596,8 +35595,8 @@
         "blended_3to1": 0.412
       },
       "aa_speed": {
-        "output_tps": 327.824,
-        "ttft_s": 1.166
+        "output_tps": 328.262,
+        "ttft_s": 1.158
       },
       "offers": [
         {
@@ -35858,7 +35857,7 @@
         "aa_coding_index": 59.1,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.433,
         "aa_terminalbench_hard": null,
         "aa_tau2": 0.815789473684211,
         "aa_gpqa": 0.892,
@@ -35874,8 +35873,8 @@
         "blended_3to1": 1
       },
       "aa_speed": {
-        "output_tps": 126.271,
-        "ttft_s": 0.908
+        "output_tps": 125.635,
+        "ttft_s": 0.931
       },
       "offers": [
         {
@@ -35970,8 +35969,8 @@
         "blended_3to1": 1.762
       },
       "aa_speed": {
-        "output_tps": 67.187,
-        "ttft_s": 2.495
+        "output_tps": 64.57,
+        "ttft_s": 2.511
       },
       "offers": [
         {
@@ -36116,7 +36115,7 @@
         "aa_coding_index": 52.9,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.497,
         "aa_terminalbench_hard": null,
         "aa_tau2": null,
         "aa_gpqa": 0.895,
@@ -36132,8 +36131,8 @@
         "blended_3to1": 0.525
       },
       "aa_speed": {
-        "output_tps": 97.843,
-        "ttft_s": 2.217
+        "output_tps": 117.21,
+        "ttft_s": 2.192
       },
       "offers": [
         {
@@ -36426,8 +36425,8 @@
         "blended_3to1": 2.15
       },
       "aa_speed": {
-        "output_tps": 71.915,
-        "ttft_s": 1.341
+        "output_tps": 70.351,
+        "ttft_s": 1.427
       },
       "offers": [
         {
@@ -36639,7 +36638,7 @@
           "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 131072,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": true
         },
@@ -37313,7 +37312,7 @@
           "modelId": "glm-5.2"
         },
         "fullstack": {
-          "elo": 1252,
+          "elo": 1245,
           "winRate": 61.4,
           "battles": 2502,
           "modelId": "glm-5.2"
@@ -37373,8 +37372,8 @@
         "blended_3to1": 2.15
       },
       "aa_speed": {
-        "output_tps": 99.399,
-        "ttft_s": 1.49
+        "output_tps": 102.495,
+        "ttft_s": 1.19
       },
       "offers": [
         {
@@ -37586,7 +37585,7 @@
           "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 131072,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": true
         },
@@ -38299,17 +38298,17 @@
         "blended_3to1": 2.15
       },
       "aa_speed": {
-        "output_tps": 78.367,
-        "ttft_s": 1.432
+        "output_tps": 77.374,
+        "ttft_s": 1.248
       },
       "offers": [
         {
           "source": "OpenRouter",
           "provider": "Reka",
           "platform": "OpenRouter",
-          "input_per_1m": 1.15,
-          "output_per_1m": 3.5,
-          "cache_read_per_1m": 0.09999999999999999,
+          "input_per_1m": 1.17,
+          "output_per_1m": 3.9600000000000004,
+          "cache_read_per_1m": 0.234,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -38349,6 +38348,28 @@
         },
         {
           "source": "OpenRouter",
+          "provider": "Io Net",
+          "platform": "OpenRouter",
+          "input_per_1m": 1.1875,
+          "output_per_1m": 4.18,
+          "cache_read_per_1m": 0.24699999999999997,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "z-ai/glm-5.3",
+          "or_canonical_slug": "z-ai/glm-5.3-20260816",
+          "or_hugging_face_id": "zai-org/GLM-5.3",
+          "endpoint_tag": "io-net/fp8",
+          "quantization": "fp8",
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
           "provider": "Decart",
           "platform": "OpenRouter",
           "input_per_1m": 1.19,
@@ -38365,7 +38386,7 @@
           "quantization": "fp4",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": 0,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -38431,7 +38452,7 @@
           "quantization": "fp4",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": 0,
+          "status": -2,
           "eu_hosted": true,
           "non_us": true
         },
@@ -38453,28 +38474,6 @@
           "quantization": "fp4",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Io Net",
-          "platform": "OpenRouter",
-          "input_per_1m": 1.25,
-          "output_per_1m": 4.4,
-          "cache_read_per_1m": 0.26,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "z-ai/glm-5.3",
-          "or_canonical_slug": "z-ai/glm-5.3-20260816",
-          "or_hugging_face_id": "zai-org/GLM-5.3",
-          "endpoint_tag": "io-net/fp8",
-          "quantization": "fp8",
-          "context_length": 262144,
-          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -38674,7 +38673,7 @@
           "quantization": "fp8",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -38924,8 +38923,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 69.395,
-        "ttft_s": 0.239
+        "output_tps": 55.565,
+        "ttft_s": 0.21
       },
       "offers": [
         {
@@ -38998,8 +38997,8 @@
         "blended_3to1": 4.375
       },
       "aa_speed": {
-        "output_tps": 54.915,
-        "ttft_s": 0.353
+        "output_tps": 58.801,
+        "ttft_s": 0.323
       },
       "offers": [
         {
@@ -39086,8 +39085,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 247.911,
-        "ttft_s": 0.167
+        "output_tps": 231.654,
+        "ttft_s": 0.162
       },
       "offers": [],
       "designarena": {},
@@ -39137,8 +39136,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 130.704,
-        "ttft_s": 0.25
+        "output_tps": 130.075,
+        "ttft_s": 0.269
       },
       "offers": [],
       "designarena": {},
@@ -39392,8 +39391,8 @@
         "blended_3to1": 1.5
       },
       "aa_speed": {
-        "output_tps": 121.459,
-        "ttft_s": 1.213
+        "output_tps": 116.563,
+        "ttft_s": 1.197
       },
       "offers": [],
       "designarena": {},
@@ -39443,8 +39442,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 57.556,
-        "ttft_s": 1.402
+        "output_tps": 55.842,
+        "ttft_s": 1.38
       },
       "offers": [
         {
@@ -39691,8 +39690,8 @@
         "blended_3to1": 0.844
       },
       "aa_speed": {
-        "output_tps": 146.087,
-        "ttft_s": 1.171
+        "output_tps": 138.127,
+        "ttft_s": 1.091
       },
       "offers": [
         {
@@ -39780,7 +39779,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 16384,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -39987,8 +39986,8 @@
         "blended_3to1": 1.125
       },
       "aa_speed": {
-        "output_tps": 47.104,
-        "ttft_s": 1.248
+        "output_tps": 46.683,
+        "ttft_s": 1.23
       },
       "offers": [
         {
@@ -40035,8 +40034,8 @@
           "source": "OpenRouter",
           "provider": "Darkbloom",
           "platform": "OpenRouter",
-          "input_per_1m": 0.22,
-          "output_per_1m": 2.42,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.19999999999999998,
           "cache_read_per_1m": null,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
@@ -40049,6 +40048,28 @@
           "quantization": "fp4",
           "context_length": 262144,
           "max_completion_tokens": 32768,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Reka",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.21400000000000002,
+          "output_per_1m": 2.5500000000000003,
+          "cache_read_per_1m": 0.15,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.8-27b",
+          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
+          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
+          "endpoint_tag": "reka/fp8",
+          "quantization": "fp8",
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -40071,28 +40092,6 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Reka",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.24,
-          "output_per_1m": 2.5500000000000003,
-          "cache_read_per_1m": 0.15,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.8-27b",
-          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
-          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
-          "endpoint_tag": "reka/fp8",
-          "quantization": "fp8",
-          "context_length": 262144,
-          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -40292,7 +40291,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -40366,8 +40365,8 @@
         "blended_3to1": 0.844
       },
       "aa_speed": {
-        "output_tps": 141.472,
-        "ttft_s": 1.087
+        "output_tps": 130.541,
+        "ttft_s": 1.055
       },
       "offers": [
         {
@@ -40455,7 +40454,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 16384,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -40662,8 +40661,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 52.774,
-        "ttft_s": 1.451
+        "output_tps": 54.327,
+        "ttft_s": 1.371
       },
       "offers": [
         {
@@ -40910,8 +40909,8 @@
         "blended_3to1": 0.412
       },
       "aa_speed": {
-        "output_tps": 183.976,
-        "ttft_s": 1.059
+        "output_tps": 182.255,
+        "ttft_s": 1.028
       },
       "offers": [
         {
@@ -41086,7 +41085,7 @@
         "blended_3to1": 1.1
       },
       "aa_speed": {
-        "output_tps": 136.671,
+        "output_tps": 135.654,
         "ttft_s": 1.014
       },
       "offers": [
@@ -41271,8 +41270,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 90.914,
-        "ttft_s": 1.621
+        "output_tps": 89.184,
+        "ttft_s": 1.568
       },
       "offers": [
         {
@@ -41704,8 +41703,8 @@
         "blended_3to1": 0.563
       },
       "aa_speed": {
-        "output_tps": 112.347,
-        "ttft_s": 0.928
+        "output_tps": 115.622,
+        "ttft_s": 0.91
       },
       "offers": [
         {
@@ -41881,8 +41880,8 @@
         "blended_3to1": 0.412
       },
       "aa_speed": {
-        "output_tps": 190.202,
-        "ttft_s": 1.218
+        "output_tps": 182.6,
+        "ttft_s": 1.229
       },
       "offers": [
         {
@@ -42014,8 +42013,8 @@
         "blended_3to1": 0.151
       },
       "aa_speed": {
-        "output_tps": 84.498,
-        "ttft_s": 1.183
+        "output_tps": 84.734,
+        "ttft_s": 1.142
       },
       "offers": [
         {
@@ -42105,7 +42104,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         },
@@ -42171,7 +42170,7 @@
           "quantization": "bf16",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -42245,8 +42244,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 39.787,
-        "ttft_s": 1.747
+        "output_tps": 39.975,
+        "ttft_s": 1.748
       },
       "offers": [
         {
@@ -42474,8 +42473,8 @@
         "blended_3to1": 1.35
       },
       "aa_speed": {
-        "output_tps": 89.715,
-        "ttft_s": 1.803
+        "output_tps": 87.4,
+        "ttft_s": 1.843
       },
       "offers": [
         {
@@ -42840,7 +42839,7 @@
         "aa_coding_index": 55.9,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.461,
         "aa_terminalbench_hard": 0.46969696969697,
         "aa_tau2": 0.929824561403509,
         "aa_gpqa": 0.9,
@@ -42856,8 +42855,8 @@
         "blended_3to1": 0.7
       },
       "aa_speed": {
-        "output_tps": 55.808,
-        "ttft_s": 1.518
+        "output_tps": 55.55,
+        "ttft_s": 1.551
       },
       "offers": [
         {
@@ -42910,7 +42909,7 @@
         "context_window_tokens": 256000
       },
       "benchmarks": {
-        "aa_intelligence_index": 41.6,
+        "aa_intelligence_index": 41.4,
         "aa_coding_index": 68.1,
         "aa_math_index": null,
         "aa_livecodebench": null,
@@ -42930,8 +42929,8 @@
         "blended_3to1": 1.125
       },
       "aa_speed": {
-        "output_tps": 42.416,
-        "ttft_s": 1.238
+        "output_tps": 43.624,
+        "ttft_s": 1.237
       },
       "offers": [
         {
@@ -42978,8 +42977,8 @@
           "source": "OpenRouter",
           "provider": "Darkbloom",
           "platform": "OpenRouter",
-          "input_per_1m": 0.22,
-          "output_per_1m": 2.42,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.19999999999999998,
           "cache_read_per_1m": null,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
@@ -42992,6 +42991,28 @@
           "quantization": "fp4",
           "context_length": 262144,
           "max_completion_tokens": 32768,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Reka",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.21400000000000002,
+          "output_per_1m": 2.5500000000000003,
+          "cache_read_per_1m": 0.15,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.8-27b",
+          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
+          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
+          "endpoint_tag": "reka/fp8",
+          "quantization": "fp8",
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -43014,28 +43035,6 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Reka",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.24,
-          "output_per_1m": 2.5500000000000003,
-          "cache_read_per_1m": 0.15,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.8-27b",
-          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
-          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
-          "endpoint_tag": "reka/fp8",
-          "quantization": "fp8",
-          "context_length": 262144,
-          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -43235,7 +43234,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -43309,8 +43308,8 @@
         "blended_3to1": 0.43
       },
       "aa_speed": {
-        "output_tps": 108.61,
-        "ttft_s": 0.986
+        "output_tps": 109.377,
+        "ttft_s": 1.079
       },
       "offers": [],
       "designarena": {},
@@ -43360,8 +43359,8 @@
         "blended_3to1": 0.688
       },
       "aa_speed": {
-        "output_tps": 163.015,
-        "ttft_s": 1.191
+        "output_tps": 157.34,
+        "ttft_s": 1.195
       },
       "offers": [
         {
@@ -43566,8 +43565,8 @@
         "blended_3to1": 1.1
       },
       "aa_speed": {
-        "output_tps": 151.816,
-        "ttft_s": 1.004
+        "output_tps": 147.872,
+        "ttft_s": 1.01
       },
       "offers": [
         {
@@ -43752,7 +43751,7 @@
       },
       "aa_speed": {
         "output_tps": 105.658,
-        "ttft_s": 0.876
+        "ttft_s": 0.878
       },
       "offers": [],
       "designarena": {},
@@ -43802,8 +43801,8 @@
         "blended_3to1": 0.06
       },
       "aa_speed": {
-        "output_tps": 19.851,
-        "ttft_s": 0.446
+        "output_tps": 17.353,
+        "ttft_s": 0.476
       },
       "offers": [],
       "designarena": {},
@@ -43853,8 +43852,8 @@
         "blended_3to1": 1.125
       },
       "aa_speed": {
-        "output_tps": 49.245,
-        "ttft_s": 1.27
+        "output_tps": 49.653,
+        "ttft_s": 1.219
       },
       "offers": [
         {
@@ -43901,8 +43900,8 @@
           "source": "OpenRouter",
           "provider": "Darkbloom",
           "platform": "OpenRouter",
-          "input_per_1m": 0.22,
-          "output_per_1m": 2.42,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.19999999999999998,
           "cache_read_per_1m": null,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
@@ -43915,6 +43914,28 @@
           "quantization": "fp4",
           "context_length": 262144,
           "max_completion_tokens": 32768,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Reka",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.21400000000000002,
+          "output_per_1m": 2.5500000000000003,
+          "cache_read_per_1m": 0.15,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.8-27b",
+          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
+          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
+          "endpoint_tag": "reka/fp8",
+          "quantization": "fp8",
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -43937,28 +43958,6 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Reka",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.24,
-          "output_per_1m": 2.5500000000000003,
-          "cache_read_per_1m": 0.15,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.8-27b",
-          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
-          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
-          "endpoint_tag": "reka/fp8",
-          "quantization": "fp8",
-          "context_length": 262144,
-          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -44158,7 +44157,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -44232,7 +44231,7 @@
         "blended_3to1": 0.19
       },
       "aa_speed": {
-        "output_tps": 92.19,
+        "output_tps": 91.194,
         "ttft_s": 0.457
       },
       "offers": [
@@ -44323,7 +44322,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         },
@@ -44389,7 +44388,7 @@
           "quantization": "bf16",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -44565,8 +44564,8 @@
         "blended_3to1": 0.06
       },
       "aa_speed": {
-        "output_tps": 14.748,
-        "ttft_s": 0.538
+        "output_tps": 16.222,
+        "ttft_s": 0.5
       },
       "offers": [],
       "designarena": {},
@@ -44617,8 +44616,8 @@
         "blended_3to1": 3
       },
       "aa_speed": {
-        "output_tps": 39.094,
-        "ttft_s": 1.731
+        "output_tps": 38.418,
+        "ttft_s": 1.732
       },
       "offers": [],
       "designarena": {
@@ -44629,9 +44628,9 @@
           "modelId": "qwen3.8-max"
         },
         "fullstack": {
-          "elo": 1321,
-          "winRate": 65.2,
-          "battles": 1009,
+          "elo": 1314,
+          "winRate": 65.3,
+          "battles": 1010,
           "modelId": "qwen3.8-max"
         }
       },
@@ -44690,7 +44689,7 @@
       },
       "aa_speed": {
         "output_tps": 45.95,
-        "ttft_s": 1.237
+        "ttft_s": 1.244
       },
       "offers": [
         {
@@ -44737,8 +44736,8 @@
           "source": "OpenRouter",
           "provider": "Darkbloom",
           "platform": "OpenRouter",
-          "input_per_1m": 0.22,
-          "output_per_1m": 2.42,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.19999999999999998,
           "cache_read_per_1m": null,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
@@ -44751,6 +44750,28 @@
           "quantization": "fp4",
           "context_length": 262144,
           "max_completion_tokens": 32768,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Reka",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.21400000000000002,
+          "output_per_1m": 2.5500000000000003,
+          "cache_read_per_1m": 0.15,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "qwen/qwen3.8-27b",
+          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
+          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
+          "endpoint_tag": "reka/fp8",
+          "quantization": "fp8",
+          "context_length": 262144,
+          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -44773,28 +44794,6 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
-          "provider": "Reka",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.24,
-          "output_per_1m": 2.5500000000000003,
-          "cache_read_per_1m": 0.15,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "qwen/qwen3.8-27b",
-          "or_canonical_slug": "qwen/qwen3.8-27b-20260814",
-          "or_hugging_face_id": "Qwen/Qwen3.8-27B",
-          "endpoint_tag": "reka/fp8",
-          "quantization": "fp8",
-          "context_length": 262144,
-          "max_completion_tokens": 131072,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -44994,7 +44993,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         },
@@ -45119,7 +45118,7 @@
         "blended_3to1": 0.275
       },
       "aa_speed": {
-        "output_tps": 230.769,
+        "output_tps": 224.279,
         "ttft_s": 0.961
       },
       "offers": [],
@@ -45221,8 +45220,8 @@
         "blended_3to1": 0.111
       },
       "aa_speed": {
-        "output_tps": 336.019,
-        "ttft_s": 1.711
+        "output_tps": 347.195,
+        "ttft_s": 1.596
       },
       "offers": [
         {
@@ -45265,7 +45264,7 @@
           "quantization": "bf16",
           "context_length": 131072,
           "max_completion_tokens": 32768,
-          "status": -5,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         }
@@ -45317,8 +45316,8 @@
         "blended_3to1": 0
       },
       "aa_speed": {
-        "output_tps": 206.241,
-        "ttft_s": 1.902
+        "output_tps": 143.798,
+        "ttft_s": 1.811
       },
       "offers": [],
       "designarena": {},
@@ -45368,7 +45367,7 @@
         "blended_3to1": 0.85
       },
       "aa_speed": {
-        "output_tps": 126.616,
+        "output_tps": 121.769,
         "ttft_s": 2.055
       },
       "offers": [],
@@ -45470,8 +45469,8 @@
         "blended_3to1": 0.563
       },
       "aa_speed": {
-        "output_tps": 201.859,
-        "ttft_s": 1.577
+        "output_tps": 179.61,
+        "ttft_s": 1.528
       },
       "offers": [],
       "designarena": {},
@@ -45572,7 +45571,7 @@
         "blended_3to1": 0.325
       },
       "aa_speed": {
-        "output_tps": 2110.056,
+        "output_tps": 2172.372,
         "ttft_s": 0.461
       },
       "offers": [],
@@ -46970,7 +46969,7 @@
         "aa_coding_index": 71.5,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.545,
         "aa_terminalbench_hard": 0.575757575757576,
         "aa_tau2": 0.91812865497076,
         "aa_gpqa": 0.926,
@@ -48025,7 +48024,7 @@
           "modelId": "gpt-5.4"
         },
         "fullstack": {
-          "elo": 1031,
+          "elo": 1024,
           "winRate": 40.8,
           "battles": 2150,
           "modelId": "gpt-5.4"
@@ -51174,7 +51173,7 @@
           "modelId": "gpt-5.2"
         },
         "fullstack": {
-          "elo": 1057,
+          "elo": 1049,
           "winRate": 44.3,
           "battles": 2165,
           "modelId": "gpt-5.2"
@@ -53813,7 +53812,7 @@
           "modelId": "gpt-5.5"
         },
         "fullstack": {
-          "elo": 1104,
+          "elo": 1096,
           "winRate": 43,
           "battles": 3536,
           "modelId": "gpt-5.5"
@@ -54188,7 +54187,7 @@
           "quantization": "fp8",
           "context_length": 131072,
           "max_completion_tokens": 16384,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -54468,7 +54467,7 @@
           "quantization": "unknown",
           "context_length": 80000,
           "max_completion_tokens": 72000,
-          "status": -5,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         }
@@ -54733,7 +54732,7 @@
         "aa_coding_index": 71.3,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.588,
         "aa_terminalbench_hard": null,
         "aa_tau2": null,
         "aa_gpqa": 0.898,
@@ -54781,13 +54780,13 @@
         "frontend": {
           "elo": 1234,
           "winRate": 50.1,
-          "battles": 3266,
+          "battles": 3267,
           "modelId": "evergreen"
         },
         "fullstack": {
-          "elo": 1220,
-          "winRate": 48.2,
-          "battles": 1105,
+          "elo": 1213,
+          "winRate": 48.3,
+          "battles": 1118,
           "modelId": "evergreen"
         }
       },
@@ -55471,7 +55470,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 65535,
-          "status": -2,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         }
@@ -55860,7 +55859,7 @@
         "aa_coding_index": 34.7,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.434,
         "aa_terminalbench_hard": 0.242424242424242,
         "aa_tau2": 0.312865497076023,
         "aa_gpqa": 0.822,
@@ -56217,7 +56216,7 @@
           "modelId": "gemini-3-pro-preview"
         },
         "fullstack": {
-          "elo": 1088,
+          "elo": 1081,
           "winRate": 48.7,
           "battles": 2259,
           "modelId": "gemini-3-pro-preview"
@@ -56607,7 +56606,7 @@
           "modelId": "gemini-3-flash-preview"
         },
         "fullstack": {
-          "elo": 1077,
+          "elo": 1070,
           "winRate": 47.4,
           "battles": 2358,
           "modelId": "gemini-3-flash-preview"
@@ -57385,11 +57384,11 @@
         "context_window_tokens": 1000000
       },
       "benchmarks": {
-        "aa_intelligence_index": 41.9,
+        "aa_intelligence_index": 39.7,
         "aa_coding_index": 70.1,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.539,
         "aa_terminalbench_hard": 0.409090909090909,
         "aa_tau2": 0.953216374269006,
         "aa_gpqa": 0.922,
@@ -57870,7 +57869,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 65536,
-          "status": 0,
+          "status": -2,
           "eu_hosted": true,
           "non_us": false
         },
@@ -58641,7 +58640,7 @@
           "modelId": "claude-opus-4-5-20251101"
         },
         "fullstack": {
-          "elo": 1171,
+          "elo": 1163,
           "winRate": 60.2,
           "battles": 1395,
           "modelId": "claude-opus-4-5-20251101"
@@ -59197,7 +59196,7 @@
         "aa_coding_index": 74.3,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.544,
         "aa_terminalbench_hard": 0.583333333333333,
         "aa_tau2": 0.944444444444445,
         "aa_gpqa": 0.92,
@@ -60228,7 +60227,7 @@
           "modelId": "claude-sonnet-4-5-20250929"
         },
         "fullstack": {
-          "elo": 1064,
+          "elo": 1057,
           "winRate": 43.7,
           "battles": 629,
           "modelId": "claude-sonnet-4-5-20250929"
@@ -61380,13 +61379,13 @@
         "frontend": {
           "elo": 1233,
           "winRate": 57.7,
-          "battles": 3738,
+          "battles": 3741,
           "modelId": "claude-opus-4-6"
         },
         "fullstack": {
-          "elo": 1233,
+          "elo": 1226,
           "winRate": 62,
-          "battles": 2234,
+          "battles": 2235,
           "modelId": "claude-opus-4-6"
         }
       },
@@ -63643,7 +63642,7 @@
           "quantization": "unknown",
           "context_length": 131072,
           "max_completion_tokens": 104857,
-          "status": -2,
+          "status": 0,
           "eu_hosted": true,
           "non_us": true
         },
@@ -64630,7 +64629,7 @@
           "quantization": "fp4",
           "context_length": 163840,
           "max_completion_tokens": 16384,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         }
@@ -65069,9 +65068,9 @@
           "source": "OpenRouter",
           "provider": "StreamLake",
           "platform": "OpenRouter",
-          "input_per_1m": 0.08638,
-          "output_per_1m": 0.17276,
-          "cache_read_per_1m": 0.017276,
+          "input_per_1m": 0.0819,
+          "output_per_1m": 0.1638,
+          "cache_read_per_1m": 0.01638,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -65091,9 +65090,9 @@
           "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.08652,
-          "output_per_1m": 0.17304,
-          "cache_read_per_1m": 0.017304,
+          "input_per_1m": 0.08204,
+          "output_per_1m": 0.16408,
+          "cache_read_per_1m": 0.016408,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -65406,7 +65405,7 @@
         "aa_coding_index": 56.2,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.453,
         "aa_terminalbench_hard": 0.356060606060606,
         "aa_tau2": 0.950292397660819,
         "aa_gpqa": 0.894,
@@ -65503,9 +65502,9 @@
           "source": "OpenRouter",
           "provider": "StreamLake",
           "platform": "OpenRouter",
-          "input_per_1m": 0.08638,
-          "output_per_1m": 0.17276,
-          "cache_read_per_1m": 0.017276,
+          "input_per_1m": 0.0819,
+          "output_per_1m": 0.1638,
+          "cache_read_per_1m": 0.01638,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -65525,9 +65524,9 @@
           "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.08652,
-          "output_per_1m": 0.17304,
-          "cache_read_per_1m": 0.017304,
+          "input_per_1m": 0.08204,
+          "output_per_1m": 0.16408,
+          "cache_read_per_1m": 0.016408,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -65960,7 +65959,7 @@
           "quantization": "fp8",
           "context_length": 163840,
           "max_completion_tokens": 147456,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -67629,7 +67628,7 @@
           "quantization": "fp8",
           "context_length": 163840,
           "max_completion_tokens": 147456,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -69052,7 +69051,7 @@
         "aa_coding_index": 42.2,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.483,
         "aa_terminalbench_hard": 0.378787878787879,
         "aa_tau2": 0.976608187134503,
         "aa_gpqa": 0.901,
@@ -69644,7 +69643,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1023,
+          "elo": 1016,
           "winRate": 39.7,
           "battles": 2003,
           "modelId": "grok-code-fast-1"
@@ -71184,7 +71183,7 @@
           "quantization": "unknown",
           "context_length": 196608,
           "max_completion_tokens": 176947,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -71781,33 +71780,11 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Decart",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.5484,
-          "output_per_1m": 2.3089,
-          "cache_read_per_1m": 0.0924,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2.6",
-          "or_canonical_slug": "moonshotai/kimi-k2.6-20260420",
-          "or_hugging_face_id": "moonshotai/Kimi-K2.6",
-          "endpoint_tag": "decart/fp4",
-          "quantization": "fp4",
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.55955,
-          "output_per_1m": 2.356,
-          "cache_read_per_1m": 0.09424,
+          "input_per_1m": 0.53675,
+          "output_per_1m": 2.26,
+          "cache_read_per_1m": 0.09040000000000001,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -71822,6 +71799,28 @@
           "status": 0,
           "eu_hosted": false,
           "non_us": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Decart",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.5372,
+          "output_per_1m": 2.2618,
+          "cache_read_per_1m": 0.0905,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2.6",
+          "or_canonical_slug": "moonshotai/kimi-k2.6-20260420",
+          "or_hugging_face_id": "moonshotai/Kimi-K2.6",
+          "endpoint_tag": "decart/fp4",
+          "quantization": "fp4",
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
         },
         {
           "source": "OpenRouter",
@@ -72223,9 +72222,9 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1170,
+          "elo": 1163,
           "winRate": 51.8,
-          "battles": 4940,
+          "battles": 4953,
           "modelId": "kimi-k2.6"
         }
       },
@@ -72510,7 +72509,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -72524,7 +72523,7 @@
           "modelId": "kimi-k2.5"
         },
         "fullstack": {
-          "elo": 1128,
+          "elo": 1120,
           "winRate": 54.5,
           "battles": 1787,
           "modelId": "kimi-k2.5"
@@ -72804,7 +72803,7 @@
           "quantization": "unknown",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -73101,33 +73100,11 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Decart",
-          "platform": "OpenRouter",
-          "input_per_1m": 0.5484,
-          "output_per_1m": 2.3089,
-          "cache_read_per_1m": 0.0924,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k2.6",
-          "or_canonical_slug": "moonshotai/kimi-k2.6-20260420",
-          "or_hugging_face_id": "moonshotai/Kimi-K2.6",
-          "endpoint_tag": "decart/fp4",
-          "quantization": "fp4",
-          "context_length": 262144,
-          "max_completion_tokens": 235929,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Baidu",
           "platform": "OpenRouter",
-          "input_per_1m": 0.55955,
-          "output_per_1m": 2.356,
-          "cache_read_per_1m": 0.09424,
+          "input_per_1m": 0.53675,
+          "output_per_1m": 2.26,
+          "cache_read_per_1m": 0.09040000000000001,
           "cache_write_per_1m": null,
           "internal_reasoning_per_1m": null,
           "region": "global",
@@ -73142,6 +73119,28 @@
           "status": 0,
           "eu_hosted": false,
           "non_us": true
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Decart",
+          "platform": "OpenRouter",
+          "input_per_1m": 0.5372,
+          "output_per_1m": 2.2618,
+          "cache_read_per_1m": 0.0905,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k2.6",
+          "or_canonical_slug": "moonshotai/kimi-k2.6-20260420",
+          "or_hugging_face_id": "moonshotai/Kimi-K2.6",
+          "endpoint_tag": "decart/fp4",
+          "quantization": "fp4",
+          "context_length": 262144,
+          "max_completion_tokens": 235929,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
         },
         {
           "source": "OpenRouter",
@@ -75162,7 +75161,7 @@
           "quantization": "unknown",
           "context_length": 202752,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -75352,9 +75351,9 @@
           "modelId": "glm-5.1"
         },
         "fullstack": {
-          "elo": 1179,
+          "elo": 1171,
           "winRate": 53.6,
-          "battles": 3700,
+          "battles": 3706,
           "modelId": "glm-5.1"
         }
       },
@@ -75462,7 +75461,7 @@
           "quantization": "fp4",
           "context_length": 202752,
           "max_completion_tokens": 131072,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -75528,7 +75527,7 @@
           "quantization": "fp4",
           "context_length": 198000,
           "max_completion_tokens": 16384,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -75594,14 +75593,14 @@
           "quantization": "fp4",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         }
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1064,
+          "elo": 1056,
           "winRate": 45.1,
           "battles": 1638,
           "modelId": "glm-4.7"
@@ -75932,7 +75931,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1137,
+          "elo": 1129,
           "winRate": 51.7,
           "battles": 4758,
           "modelId": "glm-5"
@@ -76029,7 +76028,7 @@
           "quantization": "fp8",
           "context_length": 131072,
           "max_completion_tokens": 32768,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         }
@@ -76320,7 +76319,7 @@
           "quantization": "unknown",
           "context_length": 202752,
           "max_completion_tokens": 128000,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -76637,7 +76636,7 @@
           "quantization": "fp8",
           "context_length": 202752,
           "max_completion_tokens": 182476,
-          "status": 0,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -76666,7 +76665,7 @@
       ],
       "designarena": {
         "fullstack": {
-          "elo": 1043,
+          "elo": 1036,
           "winRate": 42.3,
           "battles": 1885,
           "modelId": "glm-4.6"
@@ -76769,7 +76768,7 @@
           "quantization": "fp4",
           "context_length": 202752,
           "max_completion_tokens": 131072,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -76835,7 +76834,7 @@
           "quantization": "fp4",
           "context_length": 198000,
           "max_completion_tokens": 16384,
-          "status": -5,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -76901,7 +76900,7 @@
           "quantization": "fp4",
           "context_length": 131072,
           "max_completion_tokens": 117964,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         }
@@ -77137,7 +77136,7 @@
           "quantization": "fp8",
           "context_length": 202752,
           "max_completion_tokens": 182476,
-          "status": 0,
+          "status": -5,
           "eu_hosted": false,
           "non_us": false
         },
@@ -77269,7 +77268,7 @@
           "modelId": "glm-5v-turbo"
         },
         "fullstack": {
-          "elo": 1163,
+          "elo": 1156,
           "winRate": 52.1,
           "battles": 3936,
           "modelId": "glm-5v-turbo"
@@ -77366,7 +77365,7 @@
           "quantization": "fp8",
           "context_length": 131072,
           "max_completion_tokens": 32768,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         }
@@ -79307,7 +79306,7 @@
           "quantization": "bf16",
           "context_length": 131072,
           "max_completion_tokens": 32768,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": false
         }
@@ -79490,7 +79489,7 @@
         "aa_coding_index": 66,
         "aa_math_index": null,
         "aa_livecodebench": null,
-        "aa_scicode": null,
+        "aa_scicode": 0.495,
         "aa_terminalbench_hard": 0.507575757575758,
         "aa_tau2": 0.947368421052632,
         "aa_gpqa": 0.923,
@@ -79541,7 +79540,7 @@
           "modelId": "qwen3.7-max"
         },
         "fullstack": {
-          "elo": 1205,
+          "elo": 1197,
           "winRate": 50.4,
           "battles": 1097,
           "modelId": "qwen3.7-max"
@@ -81186,7 +81185,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 235929,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         },
@@ -81340,7 +81339,7 @@
           "quantization": "fp8",
           "context_length": 256000,
           "max_completion_tokens": 65536,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -81362,7 +81361,7 @@
           "quantization": "fp8",
           "context_length": 262144,
           "max_completion_tokens": 65536,
-          "status": 0,
+          "status": -2,
           "eu_hosted": false,
           "non_us": false
         },
@@ -84192,28 +84191,6 @@
         },
         {
           "source": "OpenRouter",
-          "provider": "Morph",
-          "platform": "OpenRouter",
-          "input_per_1m": 2.5,
-          "output_per_1m": 14,
-          "cache_read_per_1m": 0.29,
-          "cache_write_per_1m": null,
-          "internal_reasoning_per_1m": null,
-          "region": "global",
-          "unit": "per_1m_token",
-          "or_model_id": "moonshotai/kimi-k3",
-          "or_canonical_slug": "moonshotai/kimi-k3-20260715",
-          "or_hugging_face_id": "moonshotai/Kimi-K3",
-          "endpoint_tag": "morph/fp4",
-          "quantization": "fp4",
-          "context_length": 1048576,
-          "max_completion_tokens": 943718,
-          "status": 0,
-          "eu_hosted": false,
-          "non_us": false
-        },
-        {
-          "source": "OpenRouter",
           "provider": "Makora",
           "platform": "OpenRouter",
           "input_per_1m": 2.5500000000000003,
@@ -84249,6 +84226,28 @@
           "or_canonical_slug": "moonshotai/kimi-k3-20260715",
           "or_hugging_face_id": "moonshotai/Kimi-K3",
           "endpoint_tag": "sail-research/fp4",
+          "quantization": "fp4",
+          "context_length": 1048576,
+          "max_completion_tokens": 943718,
+          "status": 0,
+          "eu_hosted": false,
+          "non_us": false
+        },
+        {
+          "source": "OpenRouter",
+          "provider": "Morph",
+          "platform": "OpenRouter",
+          "input_per_1m": 2.6,
+          "output_per_1m": 14,
+          "cache_read_per_1m": 0.29,
+          "cache_write_per_1m": null,
+          "internal_reasoning_per_1m": null,
+          "region": "global",
+          "unit": "per_1m_token",
+          "or_model_id": "moonshotai/kimi-k3",
+          "or_canonical_slug": "moonshotai/kimi-k3-20260715",
+          "or_hugging_face_id": "moonshotai/Kimi-K3",
+          "endpoint_tag": "morph/fp4",
           "quantization": "fp4",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
@@ -84340,7 +84339,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 943718,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "tee": true,
           "non_us": false
@@ -85289,7 +85288,7 @@
           "modelId": "claude-sonnet-4-6"
         },
         "fullstack": {
-          "elo": 1227,
+          "elo": 1220,
           "winRate": 64.3,
           "battles": 2030,
           "modelId": "claude-sonnet-4-6"
@@ -85776,13 +85775,13 @@
         "frontend": {
           "elo": 1257,
           "winRate": 53.4,
-          "battles": 2622,
+          "battles": 2624,
           "modelId": "claude-opus-4-8"
         },
         "fullstack": {
-          "elo": 1262,
+          "elo": 1255,
           "winRate": 59,
-          "battles": 1973,
+          "battles": 1980,
           "modelId": "claude-opus-4-8"
         }
       },
@@ -86116,7 +86115,7 @@
         "frontend": {
           "elo": 1279,
           "winRate": 60.4,
-          "battles": 1998,
+          "battles": 1999,
           "modelId": "claude-opus-4-7-thinking"
         }
       },
@@ -88120,13 +88119,13 @@
         "frontend": {
           "elo": 1288,
           "winRate": 58.9,
-          "battles": 2130,
+          "battles": 2133,
           "modelId": "claude-fable-5"
         },
         "fullstack": {
-          "elo": 1284,
+          "elo": 1277,
           "winRate": 61.6,
-          "battles": 1445,
+          "battles": 1452,
           "modelId": "claude-fable-5"
         }
       },
@@ -88564,7 +88563,7 @@
           "modelId": "gpt-5.2-codex"
         },
         "fullstack": {
-          "elo": 1006,
+          "elo": 999,
           "winRate": 37.1,
           "battles": 2156,
           "modelId": "gpt-5.2-codex"
@@ -88668,7 +88667,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 65536,
-          "status": 0,
+          "status": -2,
           "eu_hosted": true,
           "non_us": false
         },
@@ -88798,7 +88797,7 @@
           "modelId": "grok-4.20-0309-reasoning"
         },
         "fullstack": {
-          "elo": 1067,
+          "elo": 1060,
           "winRate": 41,
           "battles": 2424,
           "modelId": "grok-4.20-0309-reasoning"
@@ -89261,7 +89260,7 @@
           "endpoint_tag": "deepinfra/fp8",
           "quantization": "fp8",
           "context_length": 1048576,
-          "max_completion_tokens": 131072,
+          "max_completion_tokens": 262144,
           "status": 0,
           "eu_hosted": false,
           "non_us": false
@@ -91492,7 +91491,7 @@
           "quantization": "unknown",
           "context_length": 32000,
           "max_completion_tokens": 25600,
-          "status": -2,
+          "status": 0,
           "eu_hosted": true,
           "non_us": true
         },
@@ -92146,7 +92145,7 @@
           "quantization": "unknown",
           "context_length": 1048576,
           "max_completion_tokens": 65536,
-          "status": 0,
+          "status": -2,
           "eu_hosted": true,
           "non_us": false
         },
@@ -92918,7 +92917,7 @@
           "quantization": "unknown",
           "context_length": 128000,
           "max_completion_tokens": 4000,
-          "status": -2,
+          "status": 0,
           "eu_hosted": false,
           "non_us": true
         }
@@ -96618,7 +96617,7 @@
     {
       "platform": "OpenRouter",
       "provider": "Phala",
-      "model_count": 21,
+      "model_count": 20,
       "eu_hosted": false,
       "non_us": false,
       "eu_dedicated": false,
@@ -96914,17 +96913,6 @@
     },
     {
       "platform": "OpenRouter",
-      "provider": "AkashML",
-      "model_count": 7,
-      "eu_hosted": false,
-      "non_us": false,
-      "eu_dedicated": false,
-      "hyperscaler": false,
-      "country": "US",
-      "note": "DePIN."
-    },
-    {
-      "platform": "OpenRouter",
       "provider": "SambaNova",
       "model_count": 7,
       "eu_hosted": false,
@@ -96955,6 +96943,17 @@
       "hyperscaler": false,
       "country": "US",
       "note": "OpenRouter provider metadata reports headquarters US and datacenters US."
+    },
+    {
+      "platform": "OpenRouter",
+      "provider": "AkashML",
+      "model_count": 6,
+      "eu_hosted": false,
+      "non_us": false,
+      "eu_dedicated": false,
+      "hyperscaler": false,
+      "country": "US",
+      "note": "DePIN."
     },
     {
       "platform": "OpenRouter",
