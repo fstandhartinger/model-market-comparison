@@ -463,10 +463,9 @@ test("Intelligence.ai registry display names resolve opaque and revisioned leade
   assert.equal(grok?.designarena.frontend?.modelId, "yoda");
   assert.equal(ds.models.some((model) => model.family_key === "yoda"), false);
 
-  // 2026-07-22: AA marks the Opus 4.7 reasoning row deprecated, so the
-  // deterministic representative moved from ::max to the active ::medium row.
+  // 2026-09-07: DesignArena removed Opus 4.7 from both current boards.
   const opus = ds.models.find((model) => model.id === "claude-opus-4.7::medium");
-  assert.equal(opus?.designarena.frontend?.modelId, "claude-opus-4-7-thinking");
+  assert.equal(opus?.designarena.frontend, undefined);
   assert.equal(ds.models.some((model) => model.family_key === "claude-opus-4.7-thinking"), false);
 
   const grok420 = ds.models.find((model) => model.id === "grok-4.20-reasoning::default");
