@@ -2,7 +2,6 @@ import { getDataset } from "../lib/data";
 import { clientData } from "../lib/client-model";
 import { ModelExplorer } from "../components/ModelExplorer";
 
-export const dynamic = "force-dynamic";
 
 export default async function Home() {
   const ds = await getDataset();

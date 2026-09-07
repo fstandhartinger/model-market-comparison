@@ -2,7 +2,6 @@ import { getDataset } from "../../lib/data";
 import { clientData } from "../../lib/client-model";
 import { ProviderExplorer } from "../../components/ProviderExplorer";
 
-export const dynamic = "force-dynamic";
 export const metadata = { title: "Provider explorer — Model Market Comparison" };
 
 export default async function ProviderExplorerPage() {

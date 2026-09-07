@@ -2,7 +2,6 @@ import { getDataset } from "../../lib/data";
 import { clientData } from "../../lib/client-model";
 import { EuSotaTable } from "../../components/EuSotaTable";
 
-export const dynamic = "force-dynamic";
 
 // The SOTA open models that are genuinely competitive with the leading US closed
 // labs on coding — the only ones worth seeking an EU host for.

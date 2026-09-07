@@ -2,7 +2,6 @@ import { getDataset } from "../../lib/data";
 import { clientData } from "../../lib/client-model";
 import { ChartsBoard } from "../../components/ChartsBoard";
 
-export const dynamic = "force-dynamic";
 
 export default async function ChartsPage() {
   const ds = await getDataset();

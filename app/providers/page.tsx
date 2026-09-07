@@ -2,7 +2,6 @@ import { getDataset } from "../../lib/data";
 import { clientData } from "../../lib/client-model";
 import { ProvidersView } from "../../components/ProvidersView";
 
-export const dynamic = "force-dynamic";
 
 export default async function ProvidersPage() {
   const ds = await getDataset();

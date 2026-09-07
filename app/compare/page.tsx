@@ -2,7 +2,6 @@ import { getDataset } from "../../lib/data";
 import { clientData } from "../../lib/client-model";
 import { CompareView } from "../../components/CompareView";
 
-export const dynamic = "force-dynamic";
 
 export default async function ComparePage() {
   const ds = await getDataset();

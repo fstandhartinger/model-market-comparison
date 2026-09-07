@@ -1,6 +1,5 @@
 import { getDataset } from "../../lib/data";
 
-export const dynamic = "force-dynamic";
 
 export default async function AboutPage() {
   const ds = await getDataset();

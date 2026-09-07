@@ -1,6 +1,7 @@
 import type { Dataset, ModelRow, Offer, ScoreKey } from "./types";
 import bundled from "../data/dataset.json";
 import { loadFromDb } from "./db";
+import { unstable_noStore as noStore } from "next/cache";
 
 let cache: { at: number; data: Dataset } | null = null;
 const TTL = 5 * 60 * 1000;
@@ -8,6 +9,9 @@ const TTL = 5 * 60 * 1000;
 /** The dataset, sourced from Postgres when DATABASE_URL is set & seeded,
  *  otherwise from the committed data/dataset.json snapshot. */
 export async function getDataset(): Promise<Dataset> {
+  // The imported snapshot is immutable for this deployment and can be prerendered.
+  // A configured DB remains request-rendered, including on our process-cache hits.
+  if (process.env.DATABASE_URL) noStore();
   if (cache && Date.now() - cache.at < TTL) return cache.data;
   let data = bundled as unknown as Dataset;
   let from = "bundled";
