@@ -61,3 +61,32 @@ Dataset `generated_at`, `counts`, per-source collection dates, and whether the d
 - Score scales: `composite` and the AA indices are 0–100; raw DesignArena score keys return Elo (~1000–1400). The **Coding Agent Index** is the median across all published harnesses for the exact model/reasoning-effort variant (Claude Code / Codex / Cursor CLI / …); every harness result is retained and results are never copied to sibling variants.
 - `composite` uses five slots: AA Coding, source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. Each DesignArena board needs at least 200 battles and is converted from Elo to its expected score against a fixed Elo 1000 opponent: `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is percentile-normalized over the current catalog's unique observed values. Every missing slot is assigned that model's mean observed percentile, making `composite_base` exactly the arithmetic mean of its available percentiles. With no reliable observed slot the fallback is 50; this fallback is not treated as benchmark evidence for family-representative selection. The returned `composite` adds a deterministic least-squares projection: if a model covers all reliable slots of another measured model and is no worse in each, the final scores preserve that dominance with a 0.1-point margin. `composite_base` exposes the pre-projection value. Family-scoped Intelligence.ai results attach exactly once to the deterministic collapsed-view representative and are labeled with `designarena_attachment_note`.
 - Offer-level `eu_hosted` says that this specific model offer is served from an audited EU location. `eu_policy_equivalent` is a separate company-specific classification that makes an offer eligible for the product&apos;s EU filter without asserting technical EU residency; it is currently set only on Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code, whose inference may occur outside the EU. Provider-level `eu_hosted` only says the provider has at least some EU-hosted capacity; it must not be used by itself to infer residency for every offer.
+
+## Consumer update — 2026-09-08
+
+The canonical host is `https://model-market-comparison.app.mintapis.com`;
+the former Render host is suspended. All route paths remain unchanged.
+The reference deployment serves **bundled JSON**, with no runtime database.
+No database migration or credentials are needed to consume the public feed.
+
+Prefer `GET /api/dataset` or the Git-tracked `data/dataset.json` for ingestion.
+Use `GET /api/models?score=composite` for computed scores (Composite is computed
+by app code, not stored as a scalar in the raw dataset). Check **each** date in
+`sources`; `generated_at` only proves that a build ran, not that every source refreshed.
+The daily job refreshes AA, AA Coding Agents, OpenRouter and DesignArena; curated
+provider snapshots have separate audit dates. Do not assume every source refreshes daily.
+
+Additive fields under each AA-backed model's `aa_metadata`:
+`available` (boolean), `is_open_weights` and `deprecated` (boolean or null).
+During a small upstream publication lag, benchmark rows are retained with null
+metadata. Existing top-level booleans remain compatible: `open_weights:false`
+means open weights are not established, and `deprecated:false` means not known
+retired. Inspect the nullable fields to distinguish unknown from confirmed false.
+Do not infer an open license from a lab name.
+
+Exact model IDs and effort variants remain distinct. In particular, scores for
+`qwen3.8-max` must not be copied to `qwen3.8-max-0902`, whose current evidence
+is pricing only. Nullable direct Azure Astra prices are not zero; OpenRouter's
+Azure offers are separate priced routes.
+
+See [CHANGELOG.md](CHANGELOG.md) and [September audit](data/research/refresh-2026-09-08.md).

@@ -1,5 +1,9 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
+> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
+> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
+> Earlier dated collection notes below are historical, not current prices.
+
 **Last collected:** 2026-07-22 (92 offer rows; Retail API + lifecycle re-check against the retirement schedule updated 2026-07-21)
 **Method:** Azure Retail Prices API (no auth, native USD — no currency conversion). Output written to `azure-foundry.json`.
 

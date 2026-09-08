@@ -180,7 +180,10 @@ const AMBIGUOUS_MODEL_RE = /^~?[^/]+\/[^/]*latest$/i;
 // kimi-k2.7-code (the only K2.7 SKU) and deepseek-v4-pro-0813 (the 2026-08-12 GA
 // release, a distinct OpenRouter model from the April deepseek-v4-pro).
 // Gemini is intentionally NOT featured (house policy).
-const FEATURED_RE = /^(gpt-5\.[45](?!-)|gpt-5\.6-(sol|terra|luna)(?!-)|claude-opus-5(?!-)|claude-opus-4\.[678](?!-)|claude-sonnet-(4\.6|5)(?!-)|claude-fable-5(?!-)|kimi-k2\.[56](?!-)|kimi-k2\.7(-code)?(?!-)|kimi-k3(?!-)|glm-5\.[123](?!-)|minimax-(m2\.5|m2\.7|m3)(?!-)|mimo-v2\.5-pro(?!-)|deepseek-v4-pro(-0813)?(?!-)|grok-4\.[56](?!-)|qwen3\.[78]-max(?!-)|muse-spark-1\.2(?!-))/;
+// 2026-09-08 (Florian): GPT-6 Astra, GLM-5.3 Flash and Muse Spark 1.3 join the featured
+// set; Qwen3.8 Max additionally matches its dated 0902 refresh. -pro/-flash spill stays
+// blocked elsewhere (glm-5.3-flash is an explicit, deliberate exception).
+const FEATURED_RE = /^(gpt-6-astra(?!-)|gpt-5\.[45](?!-)|gpt-5\.6-(sol|terra|luna)(?!-)|claude-opus-5(?!-)|claude-opus-4\.[678](?!-)|claude-sonnet-(4\.6|5)(?!-)|claude-fable-5(?!-)|kimi-k2\.[56](?!-)|kimi-k2\.7(-code)?(?!-)|kimi-k3(?!-)|glm-5\.[123](?!-)|glm-5\.3-flash(?!-)|minimax-(m2\.5|m2\.7|m3)(?!-)|mimo-v2\.5-pro(?!-)|deepseek-v4-pro(-0813)?(?!-)|grok-4\.[56](?!-)|qwen3\.[78]-max(-0902)?(?!-)|muse-spark-1\.[23](?!-))/;
 
 // Canonicalize vendor names that arrive spelled differently across sources.
 const ORG_ALIASES = {
@@ -467,7 +470,7 @@ async function build() {
     const rowId = `${familyKey}::${variant}`;
     const ev = m.evaluations || {};
     const pr = m.pricing || {};
-    const fam = family(familyKey, org, { openWeights: meta.is_open_weights });
+    const fam = family(familyKey, org, { openWeights: meta.is_open_weights === true });
     if (models.has(rowId)) {
       throw new Error(`Artificial Analysis normalization collision: ${rowId} (${models.get(rowId).display_name} / ${m.name})`);
     }
@@ -478,11 +481,14 @@ async function build() {
       display_name: m.name,
       org,
       variant,
-      open_weights: typeof meta.is_open_weights === "boolean" ? meta.is_open_weights : isOpenWeights(org, familyKey),
+      open_weights: meta.is_open_weights === true,
       release_date: m.release_date || null,
       deprecated: meta.deprecated === true,
       aa_model_id: m.id || null,
       aa_metadata: {
+        available: typeof meta.is_open_weights === "boolean",
+        is_open_weights: meta.is_open_weights ?? null,
+        deprecated: meta.deprecated ?? null,
         is_reasoning: typeof meta.is_reasoning === "boolean" ? meta.is_reasoning : null,
         commercial_allowed: typeof meta.commercial_allowed === "boolean" ? meta.commercial_allowed : null,
         license_name: meta.license_name || null,

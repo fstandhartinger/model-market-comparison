@@ -1,5 +1,9 @@
 # T-Systems AI Foundation Services / LLM Hub — data collection method
 
+> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
+> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
+> Earlier dated collection notes below are historical, not current prices.
+
 **Date collected:** 2026-07-22 (previous: 2026-07-12)
 **Output:** `data/raw/t-systems-llm-hub.json`
 

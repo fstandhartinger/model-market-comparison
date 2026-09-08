@@ -1,5 +1,9 @@
 # Google Vertex AI pricing — collection method
 
+> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
+> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
+> Earlier dated collection notes below are historical, not current prices.
+
 **Collected:** 2026-07-22 (comprehensive live re-scrape)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 59 offer rows / 44 current model families
 

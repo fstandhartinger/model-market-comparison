@@ -1,8 +1,8 @@
 {
   "source": "Google Vertex AI",
   "region": "offer-specific (global, EU multi-region, or European regional endpoint)",
-  "collected_at": "2026-08-26",
-  "method": "Live scrape of the official Vertex AI / Gemini Enterprise Agent Platform pricing page, cross-checked against the current model, endpoint, data-residency, and lifecycle documentation (2026-08-26, source: https://cloud.google.com/vertex-ai/generative-ai/pricing; model list cross-checked against https://docs.cloud.google.com/vertex-ai/generative-ai/docs/models and https://docs.cloud.google.com/vertex-ai/generative-ai/docs/partner-models/use-claude). This file contains 62 current text-LLM offer rows: Global and EU routes are separate whenever price or residency differs. Retired Gemini 2.0 Flash variants are excluded. Gemini 3.5 Flash and 3.1 Flash-Lite use documented eu Standard PayGo routes plus cheaper Global routes; Gemini 2.5 Pro/Flash/Flash-Lite retain Global routes and add same-price EU-resident routes. Claude models with EU pricing also retain their cheaper Global offers. Global endpoints have no processing-location guarantee. Gemini Omni Flash (formerly listed as Gemini Omni Flash Preview; renamed on the pricing page by 2026-08-26) is included as a current text-in/text-out multimodal model. Mistral Medium 3, Mistral Small 3.1 and Codestral 2 use documented EU-hosted europe-west4 routes. 2026-08-26 re-check: all listed prices verified against the live pricing page; Gemini 3.6/3.7 Flash now also show a Non-global route (+10%) which is noted in-row rather than split out; DeepSeek-OCR (new, $0.30/$1.20) is excluded as a non-text OCR model; Claude Opus 4 / Sonnet 4 appear in the model docs but have no price table on the pricing page and are not included.",
+  "collected_at": "2026-09-08",
+  "method": "2026-09-08: checked current official pricing tables at https://cloud.google.com/vertex-ai/generative-ai/pricing. Added Gemini 3.8 Flash, Gemini Omni 1.1 Flash, Claude Fable 5.1 Global/EU, and cheaper Opus 5 Global route. Existing native USD prices unchanged. Gemini Flash 3.6/3.7/3.8 promotion ends 2026-12-31; Sonnet 5 $2/$10 remains standard. EU Claude rows follow the explicit EU Multi-Region pricing selector; no non-global Gemini row is assumed EU-resident. Existing model identity and modality exclusions retained.",
   "models": [
     {
       "model_name": "Gemini 3.1 Pro",
@@ -534,6 +534,52 @@
       "output_per_1m_usd": 0.6,
       "region": "global",
       "notes": "Verified 2026-08-26: Google open model served as MaaS (Gemma-4-26B-A4B-IT), $0.15/$0.60, cache hit $0.015. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+    },
+    {
+      "model_name": "Gemini 3.8 Flash",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.75,
+      "output_per_1m_usd": 3.75,
+      "region": "global",
+      "notes": "2026-09-08: explicit current pricing-page model; Global route. Promotional $0.75/$3.75 through 2026-12-31; standard $1.50/$7.50 from 2027-01-01. Non-global price is 10% higher; no EU residency inferred."
+    },
+    {
+      "model_name": "Gemini Omni 1.1 Flash",
+      "provider_org": "Google",
+      "input_per_1m_usd": 1.5,
+      "output_per_1m_usd": 9.0,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "2026-09-08: explicit current pricing-page model; Global route. Text input/output $1.50/$9.00; video output separate."
+    },
+    {
+      "model_name": "Claude Fable 5.1",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 10,
+      "output_per_1m_usd": 50,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "2026-09-08: official Claude pricing selector, Global; 1M context, standard input/output tier. 5.1 cache hit $0.25 global / $0.275 EU.",
+      "cache_read_per_1m_usd": 0.25
+    },
+    {
+      "model_name": "Claude Fable 5.1",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 11,
+      "output_per_1m_usd": 55,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "2026-09-08: official Claude pricing selector, EU Multi-Region (eu); 1M context, standard input/output tier. 5.1 cache hit $0.25 global / $0.275 EU.",
+      "cache_read_per_1m_usd": 0.275
+    },
+    {
+      "model_name": "Claude Opus 5",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 25,
+      "region": "global",
+      "notes": "2026-09-08: official Global selector $5/$25, no EU residency guarantee.",
+      "eu_hosted": false
     }
   ]
 }

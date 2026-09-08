@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-07-22",
-  "method": "Official GitHub Docs only: supported AI models, current models-and-pricing table, organization/enterprise and individual usage-based billing, plans, and the annual-plan legacy multiplier table. See github-copilot.method.md.",
+  "collected_at": "2026-09-08",
+  "method": "2026-09-08: parsed official models-and-pricing HTML tables; intersected with current supported-model catalog, retained separate long-context/fast-mode tiers and Gemini Flash promotion through 2026-12-31. Sonnet 5 $2/$10 is now permanent; obsolete September increase removed. Legacy request table is independently checked, never synthesized for new models. Legacy official table now has 19 rows; removed delisted entries and added MAI-Code-1.1-Flash 0.25x. No legacy multiplier invented for Astra/Fable 5.1.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -64,7 +64,7 @@
       "category": "Lightweight",
       "input_per_1m_usd": 0.25,
       "cached_input_per_1m_usd": 0.025,
-      "output_per_1m_usd": 2.00
+      "output_per_1m_usd": 2.0
     },
     {
       "model_name": "GPT-5.3-Codex",
@@ -73,21 +73,21 @@
       "category": "Powerful",
       "input_per_1m_usd": 1.75,
       "cached_input_per_1m_usd": 0.175,
-      "output_per_1m_usd": 14.00
+      "output_per_1m_usd": 14.0
     },
     {
       "model_name": "GPT-5.4",
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 2.50,
+      "input_per_1m_usd": 2.5,
       "cached_input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 15.00,
+      "output_per_1m_usd": 15.0,
       "long_context": {
-        "threshold_input_tokens_gt": 272000,
-        "input_per_1m_usd": 5.00,
-        "cached_input_per_1m_usd": 0.50,
-        "output_per_1m_usd": 22.50
+        "input_per_1m_usd": 5.0,
+        "cached_input_per_1m_usd": 0.5,
+        "output_per_1m_usd": 22.5,
+        "threshold_input_tokens_gt": 272000
       }
     },
     {
@@ -97,14 +97,14 @@
       "category": "Lightweight",
       "input_per_1m_usd": 0.75,
       "cached_input_per_1m_usd": 0.075,
-      "output_per_1m_usd": 4.50
+      "output_per_1m_usd": 4.5
     },
     {
       "model_name": "GPT-5.4 nano",
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Lightweight",
-      "input_per_1m_usd": 0.20,
+      "input_per_1m_usd": 0.2,
       "cached_input_per_1m_usd": 0.02,
       "output_per_1m_usd": 1.25
     },
@@ -113,14 +113,14 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 5.00,
-      "cached_input_per_1m_usd": 0.50,
-      "output_per_1m_usd": 30.00,
+      "input_per_1m_usd": 5.0,
+      "cached_input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 30.0,
       "long_context": {
-        "threshold_input_tokens_gt": 272000,
-        "input_per_1m_usd": 10.00,
-        "cached_input_per_1m_usd": 1.00,
-        "output_per_1m_usd": 45.00
+        "input_per_1m_usd": 10.0,
+        "cached_input_per_1m_usd": 1.0,
+        "output_per_1m_usd": 45.0,
+        "threshold_input_tokens_gt": 272000
       }
     },
     {
@@ -128,14 +128,16 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Lightweight",
-      "input_per_1m_usd": 1.00,
-      "cached_input_per_1m_usd": 0.10,
-      "output_per_1m_usd": 6.00,
+      "input_per_1m_usd": 0.2,
+      "cached_input_per_1m_usd": 0.02,
+      "cache_write_per_1m_usd": 0.25,
+      "output_per_1m_usd": 1.2,
       "long_context": {
-        "threshold_input_tokens_gt": 200000,
-        "input_per_1m_usd": 2.00,
-        "cached_input_per_1m_usd": 0.20,
-        "output_per_1m_usd": 9.00
+        "input_per_1m_usd": 0.4,
+        "cached_input_per_1m_usd": 0.04,
+        "cache_write_per_1m_usd": 0.5,
+        "output_per_1m_usd": 1.8,
+        "threshold_input_tokens_gt": 200000
       }
     },
     {
@@ -143,14 +145,16 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 5.00,
-      "cached_input_per_1m_usd": 0.50,
-      "output_per_1m_usd": 30.00,
+      "input_per_1m_usd": 4.0,
+      "cached_input_per_1m_usd": 0.4,
+      "cache_write_per_1m_usd": 5.0,
+      "output_per_1m_usd": 20.0,
       "long_context": {
-        "threshold_input_tokens_gt": 272000,
-        "input_per_1m_usd": 10.00,
-        "cached_input_per_1m_usd": 1.00,
-        "output_per_1m_usd": 45.00
+        "input_per_1m_usd": 8.0,
+        "cached_input_per_1m_usd": 0.8,
+        "cache_write_per_1m_usd": 10.0,
+        "output_per_1m_usd": 30.0,
+        "threshold_input_tokens_gt": 272000
       }
     },
     {
@@ -158,175 +162,167 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 2.50,
-      "cached_input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 15.00,
+      "input_per_1m_usd": 2.0,
+      "cached_input_per_1m_usd": 0.2,
+      "cache_write_per_1m_usd": 2.5,
+      "output_per_1m_usd": 12.0,
       "long_context": {
-        "threshold_input_tokens_gt": 272000,
-        "input_per_1m_usd": 5.00,
-        "cached_input_per_1m_usd": 0.50,
-        "output_per_1m_usd": 22.50
+        "input_per_1m_usd": 4.0,
+        "cached_input_per_1m_usd": 0.4,
+        "cache_write_per_1m_usd": 5.0,
+        "output_per_1m_usd": 18.0,
+        "threshold_input_tokens_gt": 272000
       }
     },
     {
-      "model_name": "Claude Fable 5",
-      "provider_org": "Anthropic",
+      "model_name": "GPT-6 Astra",
+      "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 10.00,
-      "cached_input_per_1m_usd": 1.00,
-      "cache_write_per_1m_usd": 12.50,
-      "output_per_1m_usd": 50.00,
-      "notes": "Business and Enterprise administrators must explicitly enable this model; Anthropic retention requirements differ from other Claude models."
+      "input_per_1m_usd": 10.0,
+      "cached_input_per_1m_usd": 1.0,
+      "cache_write_per_1m_usd": 12.5,
+      "output_per_1m_usd": 50.0,
+      "long_context": {
+        "input_per_1m_usd": 20.0,
+        "cached_input_per_1m_usd": 2.0,
+        "cache_write_per_1m_usd": 25.0,
+        "output_per_1m_usd": 75.0,
+        "threshold_input_tokens_gt": 272000
+      }
     },
     {
       "model_name": "Claude Haiku 4.5",
       "provider_org": "Anthropic",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 1.00,
-      "cached_input_per_1m_usd": 0.10,
+      "input_per_1m_usd": 1.0,
+      "cached_input_per_1m_usd": 0.1,
       "cache_write_per_1m_usd": 1.25,
-      "output_per_1m_usd": 5.00
-    },
-    {
-      "model_name": "Claude Opus 4.5",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.00,
-      "cached_input_per_1m_usd": 0.50,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.00
-    },
-    {
-      "model_name": "Claude Opus 4.6",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.00,
-      "cached_input_per_1m_usd": 0.50,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.00
-    },
-    {
-      "model_name": "Claude Opus 4.7",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.00,
-      "cached_input_per_1m_usd": 0.50,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.00
-    },
-    {
-      "model_name": "Claude Opus 4.8",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.00,
-      "cached_input_per_1m_usd": 0.50,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.00
-    },
-    {
-      "model_name": "Claude Opus 4.8 (fast mode) (preview)",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "feature_status": "research preview",
-      "category": "Powerful",
-      "input_per_1m_usd": 10.00,
-      "cached_input_per_1m_usd": 1.00,
-      "cache_write_per_1m_usd": 12.50,
-      "output_per_1m_usd": 50.00
-    },
-    {
-      "model_name": "Claude Sonnet 4.5",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 3.00,
-      "cached_input_per_1m_usd": 0.30,
-      "cache_write_per_1m_usd": 3.75,
-      "output_per_1m_usd": 15.00
+      "output_per_1m_usd": 5.0
     },
     {
       "model_name": "Claude Sonnet 4.6",
       "provider_org": "Anthropic",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 3.00,
-      "cached_input_per_1m_usd": 0.30,
+      "input_per_1m_usd": 3.0,
+      "cached_input_per_1m_usd": 0.3,
       "cache_write_per_1m_usd": 3.75,
-      "output_per_1m_usd": 15.00
+      "output_per_1m_usd": 15.0
+    },
+    {
+      "model_name": "Claude Opus 4.7",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.0,
+      "cached_input_per_1m_usd": 0.5,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.0
+    },
+    {
+      "model_name": "Claude Opus 4.8",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.0,
+      "cached_input_per_1m_usd": 0.5,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.0
+    },
+    {
+      "model_name": "Claude Opus 5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5.0,
+      "cached_input_per_1m_usd": 0.5,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25.0
     },
     {
       "model_name": "Claude Sonnet 5",
       "provider_org": "Anthropic",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 2.00,
-      "cached_input_per_1m_usd": 0.20,
-      "cache_write_per_1m_usd": 2.50,
-      "output_per_1m_usd": 10.00,
-      "promotion_ends_at": "2026-08-31",
-      "standard_pricing_from": "2026-09-01",
-      "standard_input_per_1m_usd": 3.00,
-      "standard_cached_input_per_1m_usd": 0.30,
-      "standard_cache_write_per_1m_usd": 3.75,
-      "standard_output_per_1m_usd": 15.00,
-      "notes": "Stored token prices are the active introductory promotion through August 31, 2026."
+      "input_per_1m_usd": 2.0,
+      "cached_input_per_1m_usd": 0.2,
+      "cache_write_per_1m_usd": 2.5,
+      "output_per_1m_usd": 10.0
     },
     {
-      "model_name": "Gemini 2.5 Pro",
-      "provider_org": "Google",
+      "model_name": "Claude Opus 4.8 (fast mode) (preview)",
+      "provider_org": "Anthropic",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 1.25,
-      "cached_input_per_1m_usd": 0.125,
-      "output_per_1m_usd": 10.00
+      "input_per_1m_usd": 10.0,
+      "cached_input_per_1m_usd": 1.0,
+      "cache_write_per_1m_usd": 12.5,
+      "output_per_1m_usd": 50.0,
+      "feature_status": "research preview"
     },
     {
-      "model_name": "Gemini 3 Flash",
-      "provider_org": "Google",
-      "release_status": "Public preview",
-      "category": "Lightweight",
-      "input_per_1m_usd": 0.50,
-      "cached_input_per_1m_usd": 0.05,
-      "output_per_1m_usd": 3.00
-    },
-    {
-      "model_name": "Gemini 3.1 Pro",
-      "provider_org": "Google",
-      "release_status": "Public preview",
+      "model_name": "Claude Fable 5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 2.00,
-      "cached_input_per_1m_usd": 0.20,
-      "output_per_1m_usd": 12.00,
-      "long_context": {
-        "threshold_input_tokens_gt": 200000,
-        "input_per_1m_usd": 4.00,
-        "cached_input_per_1m_usd": 0.40,
-        "output_per_1m_usd": 18.00
-      }
+      "input_per_1m_usd": 10.0,
+      "cached_input_per_1m_usd": 1.0,
+      "cache_write_per_1m_usd": 12.5,
+      "output_per_1m_usd": 50.0
+    },
+    {
+      "model_name": "Claude Fable 5.1",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 10.0,
+      "cached_input_per_1m_usd": 0.25,
+      "cache_write_per_1m_usd": 12.5,
+      "output_per_1m_usd": 50.0
     },
     {
       "model_name": "Gemini 3.5 Flash",
       "provider_org": "Google",
       "release_status": "GA",
       "category": "Lightweight",
-      "input_per_1m_usd": 1.50,
+      "input_per_1m_usd": 1.5,
       "cached_input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 9.00
+      "output_per_1m_usd": 9.0
     },
     {
       "model_name": "Gemini 3.6 Flash",
       "provider_org": "Google",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 1.50,
-      "cached_input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 7.50
+      "input_per_1m_usd": 0.75,
+      "cached_input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 3.75,
+      "promotion_ends_at": "2026-12-31",
+      "notes": "Official promotional token rates through December 31, 2026; no post-promotion rate inferred."
+    },
+    {
+      "model_name": "Gemini 3.7 Flash",
+      "provider_org": "Google",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 0.75,
+      "cached_input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 3.75,
+      "promotion_ends_at": "2026-12-31",
+      "notes": "Official promotional token rates through December 31, 2026; no post-promotion rate inferred."
+    },
+    {
+      "model_name": "Gemini 3.8 Flash",
+      "provider_org": "Google",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 0.75,
+      "cached_input_per_1m_usd": 0.075,
+      "output_per_1m_usd": 3.75,
+      "promotion_ends_at": "2026-12-31",
+      "notes": "Official promotional token rates through December 31, 2026; no post-promotion rate inferred."
     },
     {
       "model_name": "MAI-Code-1-Flash",
@@ -335,17 +331,46 @@
       "category": "Lightweight",
       "input_per_1m_usd": 0.75,
       "cached_input_per_1m_usd": 0.075,
-      "output_per_1m_usd": 4.50
+      "output_per_1m_usd": 4.5
     },
     {
-      "model_name": "Raptor mini",
-      "provider_org": "GitHub",
+      "model_name": "MAI-Code-1.1-Flash",
+      "provider_org": "Microsoft",
+      "release_status": "GA",
+      "category": "Lightweight",
+      "input_per_1m_usd": 0.2,
+      "cached_input_per_1m_usd": 0.02,
+      "output_per_1m_usd": 1.2
+    },
+    {
+      "model_name": "Grok 4.5",
+      "provider_org": "xAI",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 0.25,
-      "cached_input_per_1m_usd": 0.025,
-      "output_per_1m_usd": 2.00,
-      "notes": "GitHub fine-tuned GPT-5 mini."
+      "input_per_1m_usd": 2.0,
+      "cached_input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 6.0,
+      "long_context": {
+        "input_per_1m_usd": 4.0,
+        "cached_input_per_1m_usd": 1.0,
+        "output_per_1m_usd": 12.0,
+        "threshold_input_tokens_gt": 200000
+      }
+    },
+    {
+      "model_name": "Grok 4.6",
+      "provider_org": "xAI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 2.0,
+      "cached_input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 6.0,
+      "long_context": {
+        "input_per_1m_usd": 4.0,
+        "cached_input_per_1m_usd": 1.0,
+        "output_per_1m_usd": 12.0,
+        "threshold_input_tokens_gt": 200000
+      }
     },
     {
       "model_name": "Kimi K2.7 Code",
@@ -354,37 +379,154 @@
       "category": "Versatile",
       "input_per_1m_usd": 0.95,
       "cached_input_per_1m_usd": 0.19,
-      "output_per_1m_usd": 4.00
+      "output_per_1m_usd": 4.0
+    },
+    {
+      "model_name": "Kimi K3",
+      "provider_org": "Moonshot AI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 3.0,
+      "cached_input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 15.0
     }
   ],
   "legacy_scope": "Existing annual Copilot Pro and Copilot Pro+ subscribers who explicitly remained on request-based billing after June 1, 2026.",
   "legacy_auto_selection_discount_pct": 10,
   "models": [
-    {"model_name": "Claude Haiku 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Claude Opus 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 15, "effective_usd_per_request": 0.60, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Claude Opus 4.6", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Claude Opus 4.7", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Claude Opus 4.8", "provider_org": "Anthropic", "premium_request_multiplier": 27, "effective_usd_per_request": 1.08, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Claude Sonnet 4.5", "provider_org": "Anthropic", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Claude Sonnet 4.6", "provider_org": "Anthropic", "premium_request_multiplier": 9, "effective_usd_per_request": 0.36, "notes": "GitHub marks this multiplier as subject to change."},
-    {"model_name": "Gemini 2.5 Pro", "provider_org": "Google", "premium_request_multiplier": 1, "effective_usd_per_request": 0.04, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Gemini 3 Flash", "provider_org": "Google", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Gemini 3 Pro", "provider_org": "Google", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "Gemini 3.1 Pro", "provider_org": "Google", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Gemini 3.5 Flash", "provider_org": "Google", "premium_request_multiplier": 14, "effective_usd_per_request": 0.56, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "GPT-4o", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "GPT-4o mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "GPT-5.1", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "GPT-5.1-Codex", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "GPT-5.1-Codex-Mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "GPT-5.1-Codex-Max", "provider_org": "OpenAI", "premium_request_multiplier": 3, "effective_usd_per_request": 0.12, "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."},
-    {"model_name": "GPT-5.3-Codex", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "GPT-5.4", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "GPT-5.4 mini", "provider_org": "OpenAI", "premium_request_multiplier": 6, "effective_usd_per_request": 0.24, "notes": "GitHub marks this multiplier as subject to change."},
-    {"model_name": "GPT-5.5", "provider_org": "OpenAI", "premium_request_multiplier": 57, "effective_usd_per_request": 2.28, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "GPT-5 mini", "provider_org": "OpenAI", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "Raptor mini", "provider_org": "GitHub", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "Legacy annual-plan multiplier."},
-    {"model_name": "MAI-Code-1-Flash", "provider_org": "Microsoft", "premium_request_multiplier": 0.33, "effective_usd_per_request": 0.0132, "notes": "GitHub identifies this as a promotional multiplier and publishes no end date."}
+    {
+      "model_name": "Claude Haiku 4.5",
+      "provider_org": "Anthropic",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "Claude Opus 4.7",
+      "provider_org": "Anthropic",
+      "premium_request_multiplier": 27.0,
+      "effective_usd_per_request": 1.08,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "Claude Opus 4.8",
+      "provider_org": "Anthropic",
+      "premium_request_multiplier": 27.0,
+      "effective_usd_per_request": 1.08,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "Claude Sonnet 4.6",
+      "provider_org": "Anthropic",
+      "premium_request_multiplier": 9.0,
+      "effective_usd_per_request": 0.36,
+      "notes": "GitHub marks this multiplier as subject to change."
+    },
+    {
+      "model_name": "Gemini 3 Pro",
+      "provider_org": "Google",
+      "premium_request_multiplier": 6.0,
+      "effective_usd_per_request": 0.24,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "Gemini 3.5 Flash",
+      "provider_org": "Google",
+      "premium_request_multiplier": 14.0,
+      "effective_usd_per_request": 0.56,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "GPT-4o",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "GPT-4o mini",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "GPT-5.1",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 3.0,
+      "effective_usd_per_request": 0.12,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "GPT-5.1-Codex",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 3.0,
+      "effective_usd_per_request": 0.12,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "GPT-5.1-Codex-Mini",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "GPT-5.1-Codex-Max",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 3.0,
+      "effective_usd_per_request": 0.12,
+      "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
+    },
+    {
+      "model_name": "GPT-5.3-Codex",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 6.0,
+      "effective_usd_per_request": 0.24,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "GPT-5.4",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 6.0,
+      "effective_usd_per_request": 0.24,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "GPT-5.4 mini",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 6.0,
+      "effective_usd_per_request": 0.24,
+      "notes": "GitHub marks this multiplier as subject to change."
+    },
+    {
+      "model_name": "GPT-5.5",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 57.0,
+      "effective_usd_per_request": 2.28,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "GPT-5 mini",
+      "provider_org": "OpenAI",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "Legacy annual-plan multiplier."
+    },
+    {
+      "model_name": "MAI-Code-1-Flash",
+      "provider_org": "Microsoft",
+      "premium_request_multiplier": 0.33,
+      "effective_usd_per_request": 0.0132,
+      "notes": "GitHub identifies this as a promotional multiplier and publishes no end date."
+    },
+    {
+      "model_name": "MAI-Code-1.1-Flash",
+      "provider_org": "Microsoft",
+      "notes": "Official legacy annual-plan multiplier; not current token pricing.",
+      "premium_request_multiplier": 0.25,
+      "effective_usd_per_request": 0.01
+    }
   ],
   "feature_multipliers": [
     {

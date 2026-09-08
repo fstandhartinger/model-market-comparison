@@ -12,7 +12,7 @@ USD per 1M tokens.
 
 > 📋 Product spec: [PRD.md](PRD.md) · 🗂️ Data schema: [data/SCHEMA.md](data/SCHEMA.md) ·
 > 🔄 Data collection & refresh: [data/SCRAPING.md](data/SCRAPING.md) ·
-> 🔌 Public API: [API.md](API.md) · 🚀 Deploy / migrate / env vars: [DEPLOYMENT.md](DEPLOYMENT.md)
+> 🔌 Public API: [API.md](API.md) · 🚀 Deploy / migrate / env vars: [DEPLOYMENT.md](DEPLOYMENT.md) · 📜 Data/URL changes for consumers: [CHANGELOG.md](CHANGELOG.md)
 
 ## Features
 
@@ -51,7 +51,7 @@ USD per 1M tokens.
 - **Public read-only JSON API** (CORS-enabled) — `/api/dataset` (full export),
   `/api/models`, `/api/models/[id]`, `/api/providers`, `/api/meta`, `/api/health`. See [API.md](API.md).
 
-Featured models include GPT-5.6 Sol/Terra/Luna, GPT-5.5 / GPT-5.4 (with Mini and
+Featured models include **GPT-6 Astra**, **GLM-5.3 Flash**, **Qwen3.8 Max** (including the separately priced 0902 release), Muse Spark 1.3, and GPT-5.6 Sol/Terra/Luna, GPT-5.5 / GPT-5.4 (with Mini and
 low/medium/high/xhigh settings), Claude Opus 4.8 / 4.7 / 4.6, Sonnet 4.6 / 5,
 **Fable 5**, Kimi K2.5 / K2.6 /
 K2.7-Coding, GLM 5.1 / 5.2, MiniMax M2.5 / M2.7 / M3, Xiaomi MiMo-V2.5-Pro and

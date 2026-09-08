@@ -35,11 +35,11 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
   plus `pricing` and speed. One entry per reasoning setting (e.g. `GPT-5.5 (high)`).
 
 ### Intelligence.ai / DesignArena — Agentic Web Dev leaderboards
-- `POST https://intelligence.ai/api/leaderboard` (JSON body). We pull two distinct boards:
+- `POST https://www.designarena.ai/api/leaderboard` (JSON body). We pull two distinct boards:
   - Frontend: `{"arenaType":"agents","category":"agon_webapps","variationName":"public","inputModality":"text"}`
   - Full-Stack: `{"arenaType":"agents","category":"fullstack","variationName":"public"}`
   - Response: `data[].{modelId,elo,winRate,battles}`.
-- `GET https://intelligence.ai/api/registry` supplies source-owned display names and open-weight metadata for opaque/revisioned leaderboard ids. A refresh fails closed if any board id is missing from the registry.
+- `GET https://www.designarena.ai/api/registry` supplies source-owned display names and open-weight metadata for opaque/revisioned leaderboard ids. A refresh fails closed if any board id is missing from the registry.
 - Board results are product/family scoped, not effort scoped. The build attaches each result exactly once to the deterministic active family representative used by collapsed views and records that limitation in `designarena_attachment_note`.
 
 ## Scraped / curated snapshots (manual — see each `*.method.md`)
@@ -69,3 +69,17 @@ When you refresh a snapshot, also bump its `collected_at` and re-run `npm run da
 (and `npm run db:seed` if a DB is attached). The build merges everything and recomputes
 `data/dataset.json`. See [SCHEMA.md](SCHEMA.md) for the output shape and the
 normalization rules that line up a model's benchmarks with its provider prices.
+
+## September 8, 2026 operations
+
+The live DesignArena APIs use `www.designarena.ai`, not the former `intelligence.ai`
+API host. The fetcher already uses the current host. AA publication lag tolerates
+at most three API rows missing leaderboard metadata, retaining null provenance;
+an empty leaderboard/API or more widespread mismatch still fails before writing.
+
+The Sandy cron (`17 5 * * *`, UTC) is active. Its September 8 run failed on Muse
+Spark 1.3's missing leaderboard metadata. The repaired fetcher and rebuilt dataset
+are deployed by this refresh. Curated provider catalogs are re-audited separately;
+this cron refreshes the four benchmark/router sources, not all manual provider files.
+Run `npm run build` before `npm test` to refresh the production prerender manifest.
+See [refresh audit](research/refresh-2026-09-08.md) for source checks and limitations.

@@ -91,6 +91,9 @@ export interface ModelRow {
   deprecated?: boolean;
   aa_model_id?: string | null;
   aa_metadata?: {
+    available?: boolean;
+    is_open_weights?: boolean | null;
+    deprecated?: boolean | null;
     is_reasoning?: boolean | null;
     commercial_allowed?: boolean | null;
     license_name?: string | null;

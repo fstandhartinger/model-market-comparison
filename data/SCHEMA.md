@@ -139,3 +139,11 @@ deduplicated family union retained for backward compatibility), and
 `DATABASE_URL` is set and falls back to this bundled JSON otherwise. A legacy DB
 seed without model-scoped offers also falls back to the bundled snapshot instead
 of reintroducing a family-union provider/SKU leak; the next normal seed upgrades it.
+
+### Additive AA provenance fields (2026-09-08)
+
+`models[].aa_metadata.available` records whether AA leaderboard metadata was found.
+`aa_metadata.is_open_weights` and `aa_metadata.deprecated` preserve nullable source
+values. The existing top-level `open_weights` / `deprecated` remain booleans, using
+false for an unknown value. Scores remain attached to the exact AA model ID and
+are not dropped merely because its metadata publication lags. No DB schema change.

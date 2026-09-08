@@ -1,7 +1,7 @@
 {
   "source": "Chutes \u2014 llm.chutes.ai/v1/models and api.chutes.ai/chutes/{chute_id} (first-party)",
-  "collected_at": "2026-08-26",
-  "method": "GET https://llm.chutes.ai/v1/models on 2026-08-26 returned 14 live models. Each catalog price.input.usd / price.output.usd / price.input_cache_read.usd value is USD per 1M tokens; spot-checked against first-party Chute metadata at GET https://api.chutes.ai/chutes/{chute_id}, current_estimated_price.per_million_tokens (matched). Cache-read is now 10% of input price (was 50% in July). Every live entry carries confidential_compute:true and an -TEE model id. model_name is the base model (vendor prefix and serving/quantization suffixes such as -TEE, -FP8, and -turbo stripped where needed) so offers attach to the existing model families. Delisted since 2026-07-22: Kimi-K2.5, GLM-5, MiniMax-M2.5.",
+  "collected_at": "2026-09-08",
+  "method": "GET https://llm.chutes.ai/v1/models on 2026-09-08 returned 14 live models (same set as 2026-08-26; only change: Qwen3.8-27B price cut). Each catalog price.input.usd / price.output.usd / price.input_cache_read.usd value is USD per 1M tokens; spot-checked against first-party Chute metadata at GET https://api.chutes.ai/chutes/{chute_id}, current_estimated_price.per_million_tokens (matched). Cache-read is now 10% of input price (was 50% in July). Every live entry carries confidential_compute:true and an -TEE model id. model_name is the base model (vendor prefix and serving/quantization suffixes such as -TEE, -FP8, and -turbo stripped where needed) so offers attach to the existing model families. Delisted since 2026-07-22: Kimi-K2.5, GLM-5, MiniMax-M2.5.",
   "models": [
     {
       "model_name": "Qwen3-32B",
@@ -119,13 +119,13 @@
     {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.35,
-      "output_per_1m_usd": 2.75,
-      "cache_read_per_1m_usd": 0.035,
+      "input_per_1m_usd": 0.32,
+      "output_per_1m_usd": 2.5,
+      "cache_read_per_1m_usd": 0.032,
       "confidential_compute": true,
       "context_length": 262144,
       "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
-      "notes": "Added 2026-08-26 from llm.chutes.ai"
+      "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
     },
     {
       "model_name": "Kimi K3",

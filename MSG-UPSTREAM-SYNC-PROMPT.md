@@ -13,11 +13,18 @@ original ("upstream") lives at **https://github.com/fstandhartinger/model-market
 fork **without losing our msg branding** (colours, logo, product name, fonts, footer, repo,
 Azure hosting).
 
-Recent upstream changes to bring in include: the new **TensorX** EU-sovereign provider,
-**Claude Sonnet 5** (priced + featured), refreshed prices/benchmark scores across all
-providers (AWS/Azure/Vertex/Nebius/Inceptron/Scaleway/IONOS/Mistral), the **Gateways** tab,
-the **Provider explorer** tab, the **EU dedicated/BYOC** filter, and the **blocklist
-provider-filter** fix (storage key `mmc.settings.v3`).
+Recent upstream changes to bring in include (2026-09-08): a **CHANGELOG.md** now exists
+at the repo root summarising exactly this kind of change — read it first on every sync.
+Highlights since your last sync: the reference deployment moved from Render to
+**https://model-market-comparison.app.mintapis.com** (all `/api/*` routes and JSON shapes
+unchanged — update any hardcoded onrender.com base URL); the "Hide GPT-5.5 / Opus 4.8"
+and "Hide Fable" toggles were **removed** (`isHiddenModel` is gone, settings storage key
+is now `mmc.settings.v5`); new featured frontier models (GPT-6 Astra, Claude Opus 5 /
+Fable 5, Kimi K3, GLM-5.3 + Flash, Grok 4.6, Qwen3.8 Max, Muse Spark 1.2/1.3, MiniMax M3,
+DeepSeek V4 Pro); all provider catalogs re-audited (AWS Bedrock EU-Geo Claude prices
+corrected, FX refreshes, delistings); `scripts/top5.mjs` added; the AA fetch in
+`scripts/fetch-live.mjs` tolerates mid-rollout metadata gaps. Data still lives in
+`data/dataset.json` + `data/raw/*.json`, refreshed by a daily automated commit to `main`.
 
 Do this:
 

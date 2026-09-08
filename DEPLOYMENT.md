@@ -35,7 +35,7 @@ export DATABASE_URL=postgres://user:pass@host/db
 npm run db:seed       # creates tables + loads the snapshot (idempotent)
 ```
 
-The app reads Postgres when `DATABASE_URL` is set and falls back to the bundled snapshot otherwise. On the reference Render deployment `npm run db:seed` runs as the pre-deploy command, followed by `npm start`, so the new snapshot is loaded before traffic moves to the release.
+The app reads Postgres when `DATABASE_URL` is set and falls back to the bundled snapshot otherwise. On the former Render deployment `npm run db:seed` runs as the pre-deploy command, followed by `npm start`, so the new snapshot is loaded before traffic moves to the release.
 
 ## Refreshing the data
 
@@ -75,3 +75,17 @@ The same artifact maps cleanly onto Azure:
 ## Public read-only API
 
 All `/api/*` routes are CORS-enabled read-only JSON (incl. `/api/dataset` for the full export). See [API.md](API.md). This means a deployment can also serve as a **public data API** for this dataset.
+
+## Daily refresh recovery (2026-09-08)
+
+The server cron is enabled at `17 5 * * *` (05:17 UTC; 07:17 Berlin during summer).
+Its run on September 8 stopped at an AA metadata mismatch; see the source-fetch
+fix in `lib/aa-metadata.mjs`. Before pulling a recovery commit, preserve any failed
+run's uncommitted snapshots (`git stash push` or an external backup), then use
+`git pull --ff-only`. Do not discard or force-push them. Build before testing:
+`npm run data:build && npm run build && npm test`. Deploy only a passing revision.
+The server prompt must include the production build because prerender tests inspect
+`.next/prerender-manifest.json`. Logs and summary: `/opt/mmc-daily/cron.log`,
+`/opt/mmc-daily/last-summary.txt`. Neither a healthy cron daemon nor a fresh
+`generated_at` proves the update reached production: verify `/api/meta` source dates
+and compare `/api/dataset` with the committed snapshot after deployment.

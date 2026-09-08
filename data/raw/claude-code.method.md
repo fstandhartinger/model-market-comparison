@@ -1,5 +1,9 @@
 # Claude API / Claude Code Enterprise — collection method
 
+> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
+> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
+> Earlier dated collection notes below are historical, not current prices.
+
 Collected: 2026-07-22 (previous snapshot: 2026-07-12; re-verified against all primary sources, no price or lifecycle changes)
 
 Output: `data/raw/claude-code.json`

@@ -1,8 +1,8 @@
 {
   "source": "AWS Bedrock",
   "region": "eu-central-1 (Frankfurt) unless noted per-model",
-  "collected_at": "2026-08-26",
-  "method": "AWS Price List bulk API EU region index (current version 20260826161754) for standard on-demand text-token meters; official Bedrock pricing page (Anthropic 'Geo and In-region Cross-region Inference' table resolved via the awsstatic meteredUnitMaps feed for EU (Frankfurt)), model cards, and regional-availability pages for current models absent from the EU bulk feed. Flex, priority, batch, cache, legacy/EOL, gated non-GA models (Claude Mythos 5 / Mythos Preview, OpenAI Daybreak Red/Blue) and non-text modalities are excluded. EU rows use the actual regional or EU Geo cross-region price, not a lower unrelated US or Global route: for Claude, Geo/in-region profiles (eu.anthropic.*) are billed 1.1x the Global profile (global.anthropic.*), which matches Anthropic's direct-API list price. Claude Sonnet 5 stores the active launch-promotion price through 2026-08-31; its standard price (Geo $3.30/$16.50, Global $3/$15) begins 2026-09-01. Sources: https://aws.amazon.com/bedrock/pricing/ , https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html , https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html , https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-central-1/index.json",
+  "collected_at": "2026-09-08",
+  "method": "AWS Price List bulk API EU region index (current version 20260901205051) for standard on-demand text-token meters; official Bedrock pricing page (Anthropic 'Geo and In-region Cross-region Inference' table resolved via the awsstatic meteredUnitMaps feed for EU (Frankfurt)), model cards, and regional-availability pages for current models absent from the EU bulk feed. Flex, priority, batch, cache, legacy/EOL, gated non-GA models (Claude Mythos 5 / Mythos Preview, OpenAI Daybreak Red/Blue) and non-text modalities are excluded. EU rows use the actual regional or EU Geo cross-region price, not a lower unrelated US or Global route: for Claude, Geo/in-region profiles (eu.anthropic.*) are billed 1.1x the Global profile (global.anthropic.*), which matches Anthropic's direct-API list price. Sonnet 5 remains $2/$10 Global and $2.20/$11 EU Geo; the announced September increase was cancelled. Sources: https://aws.amazon.com/bedrock/pricing/ , https://docs.aws.amazon.com/bedrock/latest/userguide/cross-region-inference.html , https://docs.aws.amazon.com/bedrock/latest/userguide/model-cards.html , https://pricing.us-east-1.amazonaws.com/offers/v1.0/aws/AmazonBedrock/current/eu-central-1/index.json 2026-09-08: rechecked eight EU bulk indexes plus us-east-1 and official pricing markup resolved through https://b0.p.awsstatic.com/pricing/2.0/meteredUnitMaps/bedrockfoundationmodels/USD/current/bedrockfoundationmodels.json (publication 2026-09-01). No change to matched standard bulk rates. Added Fable 5.1 Global only ($10/$50), consistent with model card exposing US Geo/Global but no EU Geo profile. GPT-6 Astra has no public Bedrock pricing/model card in the checked sources; no inferred offer.",
   "models": [
     {
       "model_name": "Nova 2.0 Lite",
@@ -123,7 +123,7 @@
       "input_per_1m_usd": 2.2,
       "output_per_1m_usd": 11.0,
       "region": "eu-central-1 (EU cross-region inference profile)",
-      "notes": "Active launch-promotion price from the 2026-06-30 release through 2026-08-31. The standard on-demand price becomes $3 input / $15 output per 1M on 2026-09-01. Served in EU through eu.anthropic.claude-sonnet-5. | 2026-08-26: corrected to the official EU Geo cross-region price (pricing page 'Geo and In-region Cross-region Inference' table, EU Frankfurt selector = 1.1x Global). Global profile (no EU residency) is $2/$10 promo through 2026-08-31, $3/$15 from 2026-09-01. Source: https://aws.amazon.com/bedrock/pricing/ EU Geo standard price from 2026-09-01: $3.30/$16.50."
+      "notes": "2026-09-08: EU Geo rate reverified $2.20/$11; announced September increase cancelled. Global pricing remains $2/$10."
     },
     {
       "model_name": "DeepSeek V3.1",
@@ -636,6 +636,16 @@
       "output_per_1m_usd": 6.6,
       "region": "us-west-2",
       "notes": "Launched on Bedrock 2026-08-18 (whats-new 2026-08-19). Standard in-region (us-west-2 via bedrock-mantle) and US Geo (us.xai.grok-4.6) price $2.20/$6.60, cache read $0.55; Global CRIS (global.xai.grok-4.6) $2.00/$6.00, callable from eu-central-1 without EU residency. Priority 1.75x, Flex 0.5x not captured. Sources: https://docs.aws.amazon.com/bedrock/latest/userguide/model-card-xai-grok-4-6.md , https://aws.amazon.com/about-aws/whats-new/2026/08/amazon-bedrock-grok-4-6/"
+    },
+    {
+      "model_name": "Claude Fable 5.1",
+      "provider_org": "Anthropic",
+      "input_per_1m_usd": 10,
+      "output_per_1m_usd": 50,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "2026-09-08 official pricing Global table and model-card-anthropic-claude-fable-5-1.html: Active, Global/US Geo only, no EU Geo.",
+      "cache_read_per_1m_usd": 0.25
     }
   ]
 }

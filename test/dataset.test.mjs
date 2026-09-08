@@ -101,9 +101,11 @@ test("open-weights filter metadata excludes audited proprietary families", () =>
   // composer-2 returned on 2026-07-22: AA publishes a complete Cursor-CLI
   // Coding-Agent row (3/3 eval components) for it again.
   // composer-2 comes and goes with AA's Cursor-CLI board rows; assert only when present.
-  for (const family of ["composer-2.5", "composer-2.5-fast", "raptor-mini", "grok-4.5"]) {
+  for (const family of ["composer-2.5", "composer-2.5-fast", "grok-4.5"]) {
     assert.equal(isOpen(family), false, family);
   }
+  // 2026-09-08: Raptor Mini retired from Copilot and no longer has a catalog source.
+  assert.equal(isOpen("raptor-mini"), undefined);
   if (isOpen("composer-2") !== undefined) assert.equal(isOpen("composer-2"), false, "composer-2");
   assert.equal(ds.models.some((model) => model.family_key === "yoda"), false, "registry alias yoda must join Grok 4.5");
 
@@ -165,7 +167,7 @@ test("EU residency is specific to the model offer, not inherited from the provid
   // Nebius retired the uk-south1 region on 2026-07-30 and dropped its GLM-5.2 and
   // DeepSeek V4 Pro listings with it; Kimi K3 launched in the new eu-west2 (FR) region.
   assert.equal(offer("glm-5.2", "Azure AI Foundry")?.eu_hosted, false, "Fireworks-on-Azure is US-served");
-  assert.equal(offer("deepseek-v4-pro", "TensorX")?.eu_hosted, true);
+  assert.equal(offer("deepseek-v4-pro-0813", "TensorX")?.eu_hosted, true);
   assert.equal(offer("kimi-k3", "Nebius")?.eu_hosted, true, "Nebius serves Kimi K3 from eu-west2 (France)");
   assert.equal(offer("kimi-k2.7-code", "Azure AI Foundry")?.eu_hosted, false, "policy equivalence must not falsify technical residency");
 });
@@ -253,7 +255,7 @@ test("audited July provider prices survive the merged dataset", () => {
   // Inceptron re-prices frequently; re-verified 2026-07-14 against api.inceptron.io.
   assert.deepEqual(
     [find("glm-5.2", "Inceptron")?.input_per_1m, find("glm-5.2", "Inceptron")?.output_per_1m],
-    [0.75, 2.4], // 2026-08-26: Inceptron re-priced (native API)
+    [1.25, 2.99], // 2026-09-08: Inceptron native API re-priced GLM 5.2
   );
   assert.deepEqual(
     [find("deepseek-v3.1", "AWS Bedrock")?.input_per_1m, find("deepseek-v3.1", "AWS Bedrock")?.output_per_1m],
@@ -278,20 +280,20 @@ test("privacy routing is not mislabeled as trusted execution", () => {
 });
 
 test("current Copilot token catalog and legacy request table stay distinct", () => {
-  assert.equal(copilot.collected_at, "2026-07-22");
-  assert.equal(copilot.current_models.length, 27);
-  assert.equal(copilot.models.length, 25);
+  assert.ok(copilot.collected_at >= "2026-09-08");
+  assert.equal(copilot.current_models.length, 29);
+  assert.equal(copilot.models.length, 19);
 
   const model = (family) => ds.models.find((row) => row.family_key === family);
   assert.deepEqual(
     [model("gpt-5.6-sol")?.copilot?.current?.input_per_1m, model("gpt-5.6-sol")?.copilot?.current?.output_per_1m],
-    [5, 30],
+    [4, 20], // 2026-09-08: official Copilot token pricing
   );
   assert.deepEqual(
     [model("claude-sonnet-5")?.copilot?.current?.input_per_1m, model("claude-sonnet-5")?.copilot?.current?.output_per_1m],
     [2, 10],
   );
-  assert.equal(model("claude-sonnet-5")?.copilot?.current?.standard_pricing_from, "2026-09-01");
+  assert.equal(model("claude-sonnet-5")?.copilot?.current?.standard_pricing_from, null);
   assert.equal(model("gpt-5.4")?.copilot?.multiplier, 6);
   assert.deepEqual(
     [model("claude-opus-4.8")?.copilot?.current?.input_per_1m, model("claude-opus-4.8")?.copilot?.current?.output_per_1m],
@@ -311,10 +313,12 @@ test("confirmed non-US provider metadata reaches the provider directory", () => 
 });
 
 test("Claude first-party snapshot contains every currently callable model", () => {
-  assert.equal(claude.collected_at, "2026-07-22");
-  assert.equal(claude.models.length, 11);
+  assert.ok(claude.collected_at >= "2026-09-08");
+  assert.equal(claude.models.length, 13);
   assert.ok(claude.models.some((model) => model.model_name === "Claude Mythos 5"));
-  assert.ok(claude.models.some((model) => model.model_name === "Claude Opus 4.1" && model.lifecycle_status === "deprecated"));
+  // 2026-09-08: official lifecycle confirms retirement on August 5.
+  assert.equal(claude.models.some((model) => model.model_name === "Claude Opus 4.1"), false);
+  assert.ok(claude.models.some((model) => model.model_name === "Claude Fable 5.1" && model.cache_read_per_1m_usd === 0.25));
 });
 
 test("Coding Agent snapshot is fresh and internally consistent", () => {
@@ -388,8 +392,8 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.ok(glm);
   assert.equal(glm.benchmarks.aa_coding_index, 68.8);
   assert.equal(glm.benchmarks.aa_coding_agent_index, 43.3); // 2026-08-26: AA re-scored
-  // 2026-09-05: AA re-scored GLM-5.2 intelligence 52.6 -> 42.5.
-  assert.equal(glm.benchmarks.aa_intelligence_index, 42.5);
+  // 2026-09-08: AA re-scored GLM-5.2 intelligence 42.5 -> 42.1.
+  assert.equal(glm.benchmarks.aa_intelligence_index, 42.1);
   assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
   assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
   assert.ok(glm.designarena.frontend?.battles >= 500);
@@ -473,7 +477,7 @@ test("Intelligence.ai registry display names resolve opaque and revisioned leade
   assert.equal(ds.models.some((model) => model.family_key === "grok-4.20-0309-reasoning"), false);
 });
 
-test("all 572 Artificial Analysis rows and official weight flags survive exactly once", () => {
+test("all Artificial Analysis rows and official weight flags survive exactly once", () => {
   const output = ds.models.filter((model) => model.aa_model_id);
   assert.equal(output.length, aa.models.length);
   assert.equal(new Set(output.map((model) => model.aa_model_id)).size, aa.models.length);
@@ -482,8 +486,8 @@ test("all 572 Artificial Analysis rows and official weight flags survive exactly
     const raw = rawById.get(model.aa_model_id);
     assert.ok(raw, model.aa_model_id);
     assert.equal(model.display_name, raw.name, model.id);
-    assert.equal(model.open_weights, raw.metadata.is_open_weights, model.id);
-    assert.equal(model.deprecated, raw.metadata.deprecated, model.id);
+    assert.equal(model.open_weights, raw.metadata.is_open_weights === true, model.id);
+    assert.equal(model.deprecated, raw.metadata.deprecated === true, model.id);
   }
 });
 
@@ -616,4 +620,22 @@ test("all published providers have metadata and no generated normalization ghost
     && !Object.values(model.benchmarks || {}).some((value) => value != null)
     && !Object.keys(model.designarena || {}).length && !model.offers.length && !model.copilot);
   assert.deepEqual(ghosts, []);
+});
+
+test("September frontier additions retain prices, exact efforts and conservative metadata", () => {
+  for (const family of ["gpt-6-astra", "glm-5.3-flash", "qwen3.8-max-0902"]) {
+    const rows = ds.models.filter((m) => m.family_key === family);
+    assert.ok(rows.length, family);
+    assert.ok(rows.every((m) => m.featured), family);
+    if (family !== "qwen3.8-max-0902") assert.ok(rows.some((m) => m.has_benchmark), family);
+    // The dated Qwen release has pricing only; bare-family scores must not be copied.
+    assert.ok(rows.some((m) => m.offers.some((o) => o.input_per_1m != null)), family);
+  }
+  for (const model of ds.models.filter((m) => m.aa_metadata?.available === false)) {
+    assert.equal(model.open_weights, false, "unknown weights must not become open from the lab name");
+    assert.equal(model.aa_metadata.is_open_weights, null);
+  }
+  const astra = ds.models.find((m) => m.family_key === "gpt-6-astra");
+  assert.equal(astra.copilot.current.input_per_1m, 10);
+  assert.equal(astra.copilot.multiplier, null, "current models must not acquire an invented legacy multiplier");
 });

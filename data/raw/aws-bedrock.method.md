@@ -1,5 +1,9 @@
 # AWS Bedrock pricing — how to (re)fetch & update
 
+> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
+> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
+> Earlier dated collection notes below are historical, not current prices.
+
 **Output file:** `data/raw/aws-bedrock.json`
 **Last collected:** 2026-07-22 (bulk API version `20260720215247`, published 2026-07-20; model cards, lifecycle, and public pricing re-checked)
 **Primary method:** AWS Price List Bulk API (no auth) for regional standard on-demand meters. The official Bedrock pricing page plus official model-card and regional-availability pages fill current-model gaps that are not represented in the EU bulk indexes.
