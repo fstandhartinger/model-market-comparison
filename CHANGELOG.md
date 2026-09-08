@@ -28,6 +28,8 @@ some app internals — details per release below.
   expose missing metadata; existing top-level booleans stay compatible.
 - Cron was active at 05:17 UTC daily; today's failed fetch was the blocker. Its server
   prompt now builds before testing, so production prerender checks use current output.
+- **Auto-deploy verified:** GitHub pushes now trigger Coolify via webhook; older
+  documentation saying pushes do not deploy was stale. Explicit redeploy is a fallback.
 - **No DB/schema migration**: production serves bundled JSON without `DATABASE_URL`.
   Routes and repo file paths are unchanged. Check individual `sources` dates, not
   just `generated_at`. The daily cron refreshes the four live benchmark/router sources;

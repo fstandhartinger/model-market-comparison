@@ -50,9 +50,11 @@ Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) and the AA Coding Agent In
 
 Since 2026-08-26 the reference instance runs on Florian's private Sandy PaaS (Coolify on the Hetzner server) at
 `https://model-market-comparison.app.mintapis.com`, built from this repo's `Dockerfile` in snapshot mode (no `DATABASE_URL`).
-The Coolify health check is disabled because `node:20-slim` ships neither `curl` nor `wget`. There is no GitHub webhook:
-pushes do **not** auto-deploy — the daily refresh cron on the server (`/opt/mmc-daily/run.sh`, Codex CLI, 05:17 UTC)
-pulls, refreshes the data, pushes, and triggers the redeploy via the Coolify API (`/opt/mmc-daily/redeploy.sh`).
+The Coolify health check is disabled because `node:20-slim` ships neither `curl` nor `wget`. A GitHub webhook is now active (verified from Coolify deployment history on 2026-09-08):
+pushes to `main` auto-deploy. The daily refresh cron on the server (`/opt/mmc-daily/run.sh`,
+Codex CLI, 05:17 UTC) pulls, refreshes the data and pushes. Its explicit redeploy helper
+(`/opt/mmc-daily/redeploy.sh`) remains a fallback if the pushed snapshot does not become live;
+do not queue a second build while a webhook deployment is already progressing.
 The former Render instance (`model-market-comparison.onrender.com`) was suspended by Render on 2026-08-25 (free-tier usage exceeded).
 
 ## Alternative: Render Blueprint
