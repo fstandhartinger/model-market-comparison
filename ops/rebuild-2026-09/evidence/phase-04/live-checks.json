@@ -1,0 +1,41 @@
+{
+  "checked_at": "2026-09-10T22:37:22.596672+00:00",
+  "routes": [
+    {
+      "url": "https://model-market-comparison.app.mintapis.com/",
+      "status": 200,
+      "content_type": "text/html; charset=utf-8",
+      "cors": null,
+      "bytes": 5730665,
+      "sha256": "f7d638cf58d06b5afcfbb7b2628bd67161f2ec11b81e191aea5c966229904ab1"
+    },
+    {
+      "url": "https://model-market-comparison.app.mintapis.com/api/health",
+      "status": 200,
+      "content_type": "application/json",
+      "cors": "*",
+      "bytes": 22,
+      "sha256": "5864b6e202bb365cf4e7444148306466ce3c78dd4a420742fe93f5fc0cf56096",
+      "body": {
+        "ok": true,
+        "db": false
+      }
+    },
+    {
+      "url": "https://model-market-comparison.app.mintapis.com/api/dataset",
+      "status": 200,
+      "content_type": "application/json",
+      "cors": "*",
+      "bytes": 5223822,
+      "sha256": "6d54a120015f392415da11aebfe5bcd4c7e17dead39264f264e876dedc460be3"
+    }
+  ],
+  "full_dataset_equal_except_runtime_source": true,
+  "counts": {
+    "models": 835,
+    "families": 650,
+    "providers": 89,
+    "offers": 2786
+  },
+  "generated_at": "2026-09-10T22:28:44.064Z"
+}

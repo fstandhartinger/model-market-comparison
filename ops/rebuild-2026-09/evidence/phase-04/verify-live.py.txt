@@ -1,0 +1,14 @@
+from pathlib import Path
+import urllib.request,json,hashlib,datetime
+base='https://model-market-comparison.app.mintapis.com';receipts=[];live=None
+for path in ['/','/api/health','/api/dataset']:
+ u=base+path+'?phase04='+datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S')
+ req=urllib.request.Request(u,headers={'User-Agent':'BenchmarkHeavenReleaseCheck/1.0','Cache-Control':'no-cache'})
+ with urllib.request.urlopen(req,timeout=45) as r:
+  b=r.read();rec={'url':base+path,'status':r.status,'content_type':r.headers.get('Content-Type'),'cors':r.headers.get('Access-Control-Allow-Origin'),'bytes':len(b),'sha256':hashlib.sha256(b).hexdigest()};assert r.status==200
+  if path=='/api/health':rec['body']=json.loads(b);assert rec['body'].get('ok') is True
+  if path=='/api/dataset':live=json.loads(b);assert rec['cors']=='*'
+  receipts.append(rec)
+local=json.loads(Path('data/dataset.json').read_text());live.pop('_source',None);assert live==local
+out={'checked_at':datetime.datetime.now(datetime.timezone.utc).isoformat(),'routes':receipts,'full_dataset_equal_except_runtime_source':True,'counts':local['counts'],'generated_at':local['generated_at']}
+Path('ops/rebuild-2026-09/evidence/phase-04/live-checks.json').write_text(json.dumps(out,indent=2)+'\n');print(json.dumps(out))
