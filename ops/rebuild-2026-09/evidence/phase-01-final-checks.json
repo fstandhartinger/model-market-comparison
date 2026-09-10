@@ -1,0 +1,49 @@
+{
+  "verified_at": "2026-09-10T19:26:37.154900+00:00",
+  "commands": [
+    {
+      "command": "node scripts/build-dataset.mjs",
+      "exit_code": 0
+    },
+    {
+      "command": "npm test",
+      "exit_code": 0,
+      "passed": 90,
+      "failed": 0
+    },
+    {
+      "command": "npx tsc --noEmit -p .",
+      "exit_code": 0
+    },
+    {
+      "command": "npm run build",
+      "exit_code": 0
+    },
+    {
+      "command": "node --test test/production/prerender.mjs",
+      "exit_code": 0,
+      "passed": 9,
+      "failed": 0
+    },
+    {
+      "command": "git diff --check",
+      "exit_code": 0
+    },
+    {
+      "command": "node scripts/fetch-aa-coding-agents.mjs",
+      "exit_code": 0,
+      "count": 13,
+      "version": "1.5"
+    }
+  ],
+  "artifact_sha256": {
+    "data/dataset.json": "569ce8f737e76bfab6dd2c5a4a5eb8673e2341b27e5d8659c42f4539b57ce996",
+    "lib/aa-coding-agents.mjs": "8d5559220f2d156f96324b7ac560bc11476f277d4ceb8330482d53f7e6761b33",
+    "test/aa-coding-agents.test.mjs": "c6a720a47ff09c19d46e61eabd7795be8215703786676a9f37aa53dd687cea84",
+    "test/worker-qualification.test.mjs": "4f872859856a3d91d0f9231a08f4080b6c072412058c41fe2916481f2faa8fe6",
+    "test/worker-runner.test.mjs": "1e9f88df7f083fd16496ddefc55d4ec0c937a896e6650797654d99c083e281f5",
+    "ops/rebuild-2026-09/bin/worker-runner.mjs": "badfda52cba652d4dfd1e53050007b90d99b2955e7806de53d7394b7d12082e6",
+    "ops/rebuild-2026-09/bin/worker-policy.mjs": "c5a0c79701d2259858dd4435df2cb8847609c8c4490b248e81d70eb0e965ca37"
+  },
+  "daily_installed_files_equal_repository": true
+}

@@ -21,6 +21,12 @@
    names, the parsing snippet, the failure modes, and how to verify a fetch was complete.
 
 
+## Phase 01 coverage amendments (binding)
+
+Follow §11 source priority: first attempt OpenRouter per-model empirical input/output usage; if unavailable, obtain typical LLM usage from Chutes as the documented global fallback. AA canonical benchmark token ratios are cross-checks or explicitly labelled benchmark proxies if actual usage is unavailable, never claimed as observed user workloads. Record failed attempts and basis per model. Keep AA tokens-per-task collection independent of that priority. Store provider name alongside exact OpenRouter model ID and endpoint tag; identical provider labels do not establish endpoint equivalence.
+
+Phase 01 restored historical OpenRouter/HF metadata with per-field provenance in `metadata.retained_fields` and `aa_metadata.retained_fields`; preserve dates and do not relabel retained fields as newly measured. AA Coding Agent v1.5 exposes per-agent token/caching telemetry, useful supplementary evidence but not a claim about typical user workloads.
+
 ## How to work this phase
 
 1. `cd /opt/model-market-comparison`. Read `ops/rebuild-2026-09/00-MASTER-BRIEF.md` and
@@ -30,7 +36,7 @@
    `bash ops/rebuild-2026-09/bin/worker.sh "<task>"` (see `--help`). You review everything.
 3. Run a **gauntlet round** on this phase's artifacts before finishing: a critic model that
    did not produce the artifact checks it against primary sources
-   (`bash ops/rebuild-2026-09/bin/worker.sh --critic "<what to verify>"`). Fix findings.
+   (`bash ops/rebuild-2026-09/bin/worker.sh --critic --producer "<all producer model IDs, comma-separated>" --file <frozen evidence packet> "<what to verify>"`). Follow `GAUNTLET.md`; supply actual sources and record review coverage. Fix findings.
    Repeat until a round is clean or you have done 3 rounds; write the residue down.
 4. Finish with: `node scripts/build-dataset.mjs`, `npm test`, `npx tsc --noEmit -p .`,
    then commit and push. Keep `main` green at all times.

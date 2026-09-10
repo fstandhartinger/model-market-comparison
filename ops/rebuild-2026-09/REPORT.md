@@ -1,0 +1,84 @@
+# Benchmark Heaven rebuild report
+
+## Phase 01 — foundations (2026-09-10)
+
+Owner: Codex GPT-6 Astra on Sandy, `flori`, ChatGPT subscription authentication verified. Budget advice favored Codex (Claude usage 90%); bulk document drafts and tooling/test tasks were delegated through the project worker wrapper; only reviewed, complete artifacts were accepted.
+
+### Inherited state and data repair
+
+- Reconciled with `origin/main` after `git fetch`: both were `02519e5`; no merge/rebase or force push needed. Preserved the inherited patch under `/tmp/bh-phase01/inherited.patch` before editing.
+- Baseline: **68/78 tests passed, 10 failed**. No existing test pins or Composite calculations were changed to get green.
+- `data/raw/openrouter.json`: kept the legitimate September 10 refresh (431 → 435 catalog rows). A later live catalog already contained two additional IDs; the committed source is a dated snapshot, not an assertion that the catalog stopped changing.
+- `data/raw/designarena.json`: kept the legitimate September 10 refresh. Live board ID checks matched all 41 frontend and 43 fullstack rows.
+- `data/raw/artificialanalysis.json`: re-fetched 644 API models with repaired Flight/slug parsing. Ten evaluation rows differed from the previous committed snapshot. The source had removed license/HF/OpenRouter metadata fields; preserve prior source values only for the same UUID and slug, with original dates per field. Retained fields: 359 license names, 357 license URLs, 357 HF URLs, 337 OpenRouter IDs. Explicit current nulls clear previous values.
+- `data/raw/aa-coding-agents.json`: rejected the inherited 13-row overwrite of the 68-row snapshot. Restored all 68 previous rows exactly, preserved collection date **2026-09-09**, and labelled the version **1.4** and retained status.
+- `lib/aa-metadata.mjs` / `scripts/fetch-live.mjs`: retained the legitimate slug-join idea, replaced first-key-dependent extraction and metadata loss with reusable Flight JSON parsing and dated per-field retention. No source JavaScript is evaluated.
+- `data/dataset.json`: rebuilt from accepted raw sources. Catalog: **835 models, 650 families, 89 providers, 2,786 offers**, versus 2,784 offers in the prior committed snapshot. Stable model coverage was restored instead of accepting the broken intermediate catalog.
+
+### The Coding Agent finding and daily repair
+
+The 13 rows were not merely a failed extraction. [AA's current methodology](https://artificialanalysis.ai/methodology/coding-agents-benchmarking) documents **v1.5**, with DeepSWE v1.1, Terminal-Bench 4.0 and SWE-Atlas-QnA. It is a different benchmark from the retained v1.4 source. The [full current board](https://artificialanalysis.ai/agents/coding-agents) supplies 13 complete `benchmarkRows`, including Flight references. The previous homepage recipe silently treated these as the same index.
+
+`node scripts/fetch-aa-coding-agents.mjs` now fetches the full board into `data/raw/aa-coding-agents-v1.5.json`. It checks the version, full-array identity, minimum/prior counts, unique source IDs, model/harness names, component set, completeness, score range and equal-weight arithmetic. It validates before atomic replacement. Network/parse/partial/version failures preserve the prior file and exit nonzero.
+
+Manual live run succeeded with **13 complete v1.5 rows**. An independent Python extraction from the homepage matched all 13 exact identities, harnesses and scores against the dedicated-board collector. Versioned v1.5 data is staged for phases 04–06; it does not enter the current Composite. `/about`, API source dates and `source_status` explain the retained source. Do not label v1.4 as freshly collected.
+
+The daily wrapper/prompt now live in `ops/daily/` and are installed identically under `/opt/mmc-daily/`. The prompt calls the tested collector, checks current v1.5 freshness separately from retained v1.4, and requires build/tests/typecheck before pushing. The runner removes API-key overrides, checks ChatGPT auth, and delegates a root invocation to `flori`. No cron interval changed. The full redesigned gauntlet daily run remains phase 08; the collector itself was actually run in this phase.
+
+### Delegation and method
+
+- DeepSeek V4 Flash 0731 supplied first drafts of `COVERAGE.md` and `GAUNTLET.md`; owner corrected the I/O priority, removed an invented runner from the method draft, and made the templates specific to real data/code/UI checks.
+- Actual `deepseek/deepseek-v4.1-flash` and `nex-agi/nex-n2.5-pro:free` both returned the expected JSON in known-answer smoke tests: `{ "sum": 42, "missing": null, "versions_equal": false }`. Transport success does not imply AA qualification.
+- Opencode was already installed at `/home/flori/.opencode/bin/opencode`; Kimi K3 was confirmed in the Chutes live catalog. An initial audit was stopped by opencode's external-directory permission gate. No permission was weakened; the subsequent tooling task was scoped to repository files. That long task ended naturally with exit 0 but no final artifact or implementation. It was not accepted and no manual stop was performed. Astra implemented the wrapper repairs. The bounded end-to-end Kimi run then read the requested repository file and returned correct JSON in about 19 seconds; the opencode export confirmed the actual Chutes/Kimi model. Installed opencode version: 1.18.18.
+- `GAUNTLET.md` cites the original method and research, distinguishes the project's three-round cap from the original open-ended approach, requires different producer/critic families and actual source evidence, and includes defensive prompts for rows, code and rendered UI. Text-only completion cannot certify screenshots.
+- `COVERAGE.md` maps all original wishes and the binding xplainervideo follow-up. Phase instructions now explicitly preserve OpenRouter → Chutes I/O priority, existing blends, version isolation, provider identity, all-runtime installation on both machines, and actual explainer-video delivery.
+
+### Verification before final review
+
+- Repaired existing suite: **78/78 pass**; new parser/retention regressions bring it to **83/83 pass** before worker tests.
+- `npm run build` passed; `npx tsc --noEmit -p .` passed; **9/9 production prerender checks** passed.
+- Built `/about` contains both benchmark versions, the actual retained date, and the metadata provenance notice.
+- No benchmark score was created by a worker. New Coding Agent values are extracted from the source and independently cross-checked.
+
+### Remaining scope and uncertainty
+
+- v1.4 cannot honestly receive new collection dates after upstream moves to v1.5. The historical snapshot remains the unchanged Composite input; new versioned UI ingestion belongs to phases 04–06.
+- Retained AA metadata is explicitly historical. Phase 02 can add efficient re-verification, but must preserve field-level dates rather than relabel old observations.
+- Model catalogs/prices and AA scores change; smoke-tested unscored models remain unsuitable for unattended data-bearing jobs until qualification evidence exists.
+- No redesign, rebrand, new domain, full daily gauntlet automation, cross-machine skill rollout or final video is claimed delivered in phase 01.
+
+This phase receives DONE only after the final critic round, deterministic gates and the final pushed deployment are verified.
+
+### Critic round 1
+
+Reviewer: `z-ai/glm-5.3-flash`, different from code owner OpenAI and documentation draft producer DeepSeek. [Full review](evidence/phase-01-critic-round1.json). It checked all 13 new rows and all 39 component scores/weights against supplied primary-source extracts, recomputed index arithmetic, checked metadata retention, version separation and coverage/method docs. It reported two minor findings: direct writes in the existing DA/OR collectors, and missing fixtures for several implemented failure guards.
+
+Owner fixes: all four raw-source writers now share `writeJSONAtomic`; added ambiguity, component identity, component weight/range and serialization-failure preservation cases. All seven targeted parser/metadata tests pass. The next packet will include the literal Flight version marker, current webhook receipt and the complete current artifact rather than imply missing evidence was verified.
+
+### Worker qualification and execution receipts
+
+[All three backend receipts](evidence/phase-01-worker-smokes.json) include returned content, actual model identity, source qualification, input/output hashes and usage where returned. The final wrapper successfully exercised opencode/Kimi K3 on Chutes, `nex-agi/nex-n2.5-pro:free` on OpenRouter, and actual `deepseek/deepseek-v4.1-flash` on OpenRouter. The reported V4.1 smoke charge was **$0.00013662**; the free-model charge was **$0**. Chutes usage/cost is not returned by this wrapper; OpenRouter catalog prices in the Kimi qualification record are reference prices, not Chutes charges.
+
+The picker uses the minimum AA index across all matched reasoning variants, not the best variant. Explicit OpenRouter IDs take priority; a fallback needs an exact family/version slug and matching organization. Unknown scores, unsupported `:batch` variants, absent prices and known scores below 34 cannot become ordinary workers. At verification there were **no qualified free OpenRouter candidates**. DeepSeek V4 Flash 0731 was qualified at **34.5**; Kimi K3's low/max variants yielded a conservative **34.5**. Actual V4.1 and the requested free model were unscored in this snapshot: they can run only the fixed, bounded known-answer transport test until qualification evidence exists. They did not perform data work or reviews.
+
+Critic pinning cannot bypass the different-family rule, including aliases. The default critic excludes every explicit producer family; missing producer identity fails closed. Calls have time/token limits and reject empty, truncated, error or wrong-model responses; opencode must return a final artifact and a matching execution export. Large completion packets are read directly from a file, avoiding shell argument limits. Successful output receives a hash-bound metadata sidecar. Failed calls preserve the previous artifact. Synthetic transport tests cover these failure cases and a >160 KB embedded packet; policy tests cover version/organization identity, weak or missing variants, malformed prices and smoke isolation. Latest suite before round 2: **89/89 pass**.
+
+### Deployment evidence
+
+The repaired core commit `c635ffbf8e1a02cc64acf4924393761a2b258aeb` triggered webhook deployment `dthkqo8rdum9s7rqfz0dmxnl`, which finished successfully. [Live receipt](evidence/phase-01-core-deployment.json): HTTPS 200, the complete `/api/dataset` response equals the committed snapshot after removing only the runtime `_source` field, and live `/about` shows both versions and the true retained date. Counts: 835 models / 650 families / 89 providers / 2,786 offers. Final tooling/docs deployment verification follows the last green push.
+
+### Review transport failure and additional owner checks
+
+Round 2 used `z-ai/glm-5.3-flash` with the complete packet and a 16,384-token bound. It ended with `finish_reason: length`; the wrapper rejected it without writing a review artifact. This is a failed review, never a zero-findings round. Two delegated test-draft requests also failed (truncated response, then the explicit 300-second timeout); no partial test code landed.
+
+While waiting, owner inspection tightened version detection to the current Performance section rather than any historical version mention. A new fixture proves that an old v1.5 string cannot qualify a current v1.6 board. The final live collector succeeded again and produced the identical 13 rows. Added a critic-family regression covering explicit pins and vendor aliases. Clarified that model execution, catalog requests and opencode export have separate bounded timeouts. Round 3 includes these exact changes and the current primary-source section. It uses a different eligible reviewer family after the truncated GLM attempt.
+
+### Critic round 3 — clean
+
+Actual reviewer: **google/gemini-3.7-flash**, conservative AA index **36.9**, from a different family than every producer. [Review](evidence/phase-01-critic-round3.json), [execution receipt](evidence/phase-01-critic-round3.meta.json), [frozen artifact manifest](evidence/phase-01-critic-round3-manifest.json). Verdict: **pass**, **0 findings**, **no missing evidence**; F1 and F2 verified fixed. It checked all 13 rows/components, version isolation, metadata provenance, every raw writer, worker policy/receipts, original-request coverage and primary research. The returned charge was $0.0529602975. Owner checked the JSON contract and output hash and independently verified the reported fixes. No unresolved phase-01 blocker remains.
+
+Accepted residue: upstream Flight structures can change and will require an explicit parser update if the collector rejects them; unscored worker models remain restricted; the full daily gauntlet orchestration is phase 08. These limits are visible and do not silently weaken validation. The failed round-2 completion is recorded above, not counted as a clean review.
+
+### Final release checks
+
+[Final deterministic receipt](evidence/phase-01-final-checks.json): dataset build, **90/90 tests**, TypeScript typecheck, production build, **9/9 prerender checks**, and whitespace validation all passed after the final code changes. The live collector succeeded after the stronger current-section version gate. Installed daily files still match the tracked copies. The next push contains the reviewed worker tooling, coverage/method/report, evidence and the additional version guard; live verification of that release is required before writing DONE.

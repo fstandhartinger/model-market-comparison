@@ -20,6 +20,10 @@
    overwrite a good snapshot.
 
 
+## Phase 01 coverage amendments (binding)
+
+Replace the now-tracked daily scripts under `ops/daily/` and synchronize `/opt/mmc-daily/` in the same change. Use `node scripts/fetch-aa-coding-agents.mjs` for v1.5; the legacy v1.4 source remains dated and preserved until an explicit version-aware product decision. No first-array homepage extraction. Unscored free-model smoke tests never qualify the model for unattended data work; the AA >=34 gate still applies. Keep Codex on ChatGPT subscription auth if it is used for escalation; unset API-key overrides.
+
 ## How to work this phase
 
 1. `cd /opt/model-market-comparison`. Read `ops/rebuild-2026-09/00-MASTER-BRIEF.md` and
@@ -29,7 +33,7 @@
    `bash ops/rebuild-2026-09/bin/worker.sh "<task>"` (see `--help`). You review everything.
 3. Run a **gauntlet round** on this phase's artifacts before finishing: a critic model that
    did not produce the artifact checks it against primary sources
-   (`bash ops/rebuild-2026-09/bin/worker.sh --critic "<what to verify>"`). Fix findings.
+   (`bash ops/rebuild-2026-09/bin/worker.sh --critic --producer "<all producer model IDs, comma-separated>" --file <frozen evidence packet> "<what to verify>"`). Follow `GAUNTLET.md`; supply actual sources and record review coverage. Fix findings.
    Repeat until a round is clean or you have done 3 rounds; write the residue down.
 4. Finish with: `node scripts/build-dataset.mjs`, `npm test`, `npx tsc --noEmit -p .`,
    then commit and push. Keep `main` green at all times.

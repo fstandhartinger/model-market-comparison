@@ -1,0 +1,29 @@
+{
+  "verified_at": "2026-09-10",
+  "method": "Owner reviewed primary pages through web open; direct urllib fetch of somethingbig.ai returned HTTP 403 and was not retried. Public web-tool retrieval returned the article text.",
+  "sources": [
+    {
+      "url": "https://somethingbig.ai/gauntlet-loop",
+      "author": "Matt Shumer",
+      "title": "How to Run a Gauntlet Loop",
+      "published_at": "2026-07-27",
+      "verified_sections": [
+        "The whole idea: builder and fresh-context critic compare an inspectable artifact to a reference.",
+        "Never let the builder grade itself: give the reviewer the goal, criteria and actual artifact, without builder history.",
+        "Let it keep going: original is open-ended; quality, diminishing returns and compute budget are operator stop conditions."
+      ],
+      "short_direct_excerpt": "You can stop when you like the result, when improvements become too small to matter,",
+      "project_difference": "The three-round cap is explicitly our project adaptation."
+    },
+    {
+      "url": "https://arxiv.org/abs/2305.11738",
+      "title": "CRITIC: Large Language Models Can Self-Correct with Tool-Interactive Critiquing",
+      "verified_claim": "External tool feedback supports validation and revision; no assertion that cross-vendor critics guarantee correctness."
+    },
+    {
+      "url": "https://arxiv.org/abs/2303.17651",
+      "title": "Self-Refine: Iterative Refinement with Self-Feedback",
+      "verified_claim": "One model can provide generation, feedback and refinement; our separate-family rule is an additional engineering precaution."
+    }
+  ]
+}

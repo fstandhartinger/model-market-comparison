@@ -17,6 +17,10 @@
    whether it is a bug or an insight before shipping it. Document the five checks.
 
 
+## Phase 01 coverage amendments (binding)
+
+Keep all previously selectable fixed input/output blends available alongside the adjusted default and raw list-price toggle. Test calculation and fallback behavior; verify the options in the rendered UI.
+
 ## How to work this phase
 
 1. `cd /opt/model-market-comparison`. Read `ops/rebuild-2026-09/00-MASTER-BRIEF.md` and
@@ -26,7 +30,7 @@
    `bash ops/rebuild-2026-09/bin/worker.sh "<task>"` (see `--help`). You review everything.
 3. Run a **gauntlet round** on this phase's artifacts before finishing: a critic model that
    did not produce the artifact checks it against primary sources
-   (`bash ops/rebuild-2026-09/bin/worker.sh --critic "<what to verify>"`). Fix findings.
+   (`bash ops/rebuild-2026-09/bin/worker.sh --critic --producer "<all producer model IDs, comma-separated>" --file <frozen evidence packet> "<what to verify>"`). Follow `GAUNTLET.md`; supply actual sources and record review coverage. Fix findings.
    Repeat until a round is clean or you have done 3 rounds; write the residue down.
 4. Finish with: `node scripts/build-dataset.mjs`, `npm test`, `npx tsc --noEmit -p .`,
    then commit and push. Keep `main` green at all times.

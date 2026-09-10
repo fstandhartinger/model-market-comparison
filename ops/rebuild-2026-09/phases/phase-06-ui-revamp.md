@@ -21,6 +21,10 @@
    against your description of it.
 
 
+## Phase 01 coverage amendments (binding)
+
+Display benchmark versions on every ranking, model comparison and radar axis. Comparisons stay within one version. Explain the retained v1.4 Composite source date and expose current v1.5 separately; do not silently replace the Composite input. UI critics require actual rendered screenshots plus keyboard/accessibility evidence; a text-only completion cannot certify visual quality.
+
 ## How to work this phase
 
 1. `cd /opt/model-market-comparison`. Read `ops/rebuild-2026-09/00-MASTER-BRIEF.md` and
@@ -30,7 +34,7 @@
    `bash ops/rebuild-2026-09/bin/worker.sh "<task>"` (see `--help`). You review everything.
 3. Run a **gauntlet round** on this phase's artifacts before finishing: a critic model that
    did not produce the artifact checks it against primary sources
-   (`bash ops/rebuild-2026-09/bin/worker.sh --critic "<what to verify>"`). Fix findings.
+   (`bash ops/rebuild-2026-09/bin/worker.sh --critic --producer "<all producer model IDs, comma-separated>" --file <frozen evidence packet> "<what to verify>"`). Follow `GAUNTLET.md`; supply actual sources and record review coverage. Fix findings.
    Repeat until a round is clean or you have done 3 rounds; write the residue down.
 4. Finish with: `node scripts/build-dataset.mjs`, `npm test`, `npx tsc --noEmit -p .`,
    then commit and push. Keep `main` green at all times.

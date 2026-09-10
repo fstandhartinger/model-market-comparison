@@ -27,6 +27,12 @@
    what to look at first, and anything that needs his hand (e.g. DNS).
 
 
+## Phase 01 coverage amendments (binding)
+
+Repository skill files and a handoff alone do not satisfy installation everywhere. Obtain discovery/installation evidence for all three runtimes on BOTH Sandy and Florian's machine. Keep any unavailable installation explicitly incomplete.
+
+Write `EXPLAINER-VIDEO-BRIEF.md` with before/after, source-backed numbers, and screenshot moments, hand it to the local Claude session designated in the master brief, and verify the narrated explainer video was delivered to Florian. Do not count a brief or a proposed delivery date as a delivered video. If the handoff is blocked, report exactly what remains and do not claim the whole rebuild is complete.
+
 ## How to work this phase
 
 1. `cd /opt/model-market-comparison`. Read `ops/rebuild-2026-09/00-MASTER-BRIEF.md` and
@@ -36,7 +42,7 @@
    `bash ops/rebuild-2026-09/bin/worker.sh "<task>"` (see `--help`). You review everything.
 3. Run a **gauntlet round** on this phase's artifacts before finishing: a critic model that
    did not produce the artifact checks it against primary sources
-   (`bash ops/rebuild-2026-09/bin/worker.sh --critic "<what to verify>"`). Fix findings.
+   (`bash ops/rebuild-2026-09/bin/worker.sh --critic --producer "<all producer model IDs, comma-separated>" --file <frozen evidence packet> "<what to verify>"`). Follow `GAUNTLET.md`; supply actual sources and record review coverage. Fix findings.
    Repeat until a round is clean or you have done 3 rounds; write the residue down.
 4. Finish with: `node scripts/build-dataset.mjs`, `npm test`, `npx tsc --noEmit -p .`,
    then commit and push. Keep `main` green at all times.

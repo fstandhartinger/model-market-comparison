@@ -1,0 +1,50 @@
+{
+  "artifact_id": "phase01-round1-aa-scraper-metadata-daily",
+  "artifact_sha256": "no single artifact digest supplied; packet gives per-file SHA256s (lib/aa-rsc.mjs 890e96fe…, lib/aa-metadata.mjs aa9370e7…, lib/aa-coding-agents.mjs b82dbb8d…, scripts/fetch-aa-coding-agents.mjs 0ddb53b3…, scripts/fetch-live.mjs 86df46fb…, test/aa-coding-agents.test.mjs 83b25343…, test/aa-metadata.test.mjs 56f3287a…, ops/daily/run.sh 3a9ed24e…, ops/daily/prompt.md b681f8e8…, GAUNTLET.md 22502115…, COVERAGE.md 96a2210b…)",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "Row transcription: all 13 candidate rows match the 13 supplied Flight source objects on source_id, model_name (display.model), harness (agentName), score (indexScore) — 13/13 present, 0 dropped, 0 duplicated, 0 invented",
+    "Component transcription: all 39 component scores and 39 weights digit-exact vs source evals; component ids deep-swe-v1.1 / swe-atlas-qna / terminal-bench-v4 in every row; weights all 0.333333333333333",
+    "Equal-weight index arithmetic independently recomputed for all 13 rows; e.g. Antigravity 1.255894658834996/3 = 0.4186315529449987; Codex GPT-6 Astra 1.849351349636819/3 = 0.6164504498789397; Opencode GLM-5.3 1.606645242029198/3 = 0.5355484140097326; Muse Spark (xhigh) 1.448979518277264/3 = 0.482993172759088; Kimi K3 1.557777316412772/3 = 0.519259105470924 — all within parser tolerance 1e-9",
+    "Snapshot header fields match code constants and receipts: version 1.5, count 13, endpoint, methodology_url, score_scale 0-1 (all indexScore within [0,1]), basis measured, completeness_note consistent with separate dated v1.4 snapshot",
+    "Version isolation: separate aa-coding-agents-v1.5.json target; parser rejects previous.version !== 1.5; ops/daily/prompt.md steps 3 and 9 retain the dated v1.4 file (receipt: 2026-09-09, 68 rows, legacy_rows_identical_to_head true)",
+    "Fail-closed AA collector: parse-before-write, wx-flag pid-suffixed tmp, rename; owner receipt test 'failed live fetch or partial parse never overwrites the previous snapshot' passed",
+    "Historical field dates: retained_fields keeps original collected_at across refreshes (test receipt passed); v1.4 snapshot date and row count unchanged per owner receipt",
+    "Metadata honesty: <=3 missing leaderboard rows tolerated with explicitly null metadata plus warning; conflicting isOpenWeights rejected; slug/uuid join with no cross-identity carryover (test receipt passed)",
+    "Daily integration: ops/daily/run.sh alias ARTIF_ANALYSIS_API_KEY -> ARTIFICIAL_ANALYSIS_API_KEY, ChatGPT-subscription guard, quiet-by-default Telegram policy (a) and (b); prompt.md steps 2-4 and 9 match implemented file paths and behavior",
+    "Coverage: COVERAGE.md maps W1-W27 plus binding follow-up F1 (xplainervideo) with phases and evidence requirements; corrections 1-7 present; file claims no completions",
+    "Gauntlet method doc fidelity to all three supplied research excerpts, including explicit disclosure that the 3-round cap is a project adaptation of an open-ended original",
+    "Owner test receipt: 83/83 pass; fixtures labelled synthetic, no benchmark observations in fixtures"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor",
+      "location": "scripts/fetch-live.mjs — fetchDesignArena() and fetchOpenRouter() snapshot writes",
+      "evidence": "Supplied file content: fetchDesignArena ends with `await writeFile(join(RAW, \"designarena.json\"), JSON.stringify({...}, null, 2))` and fetchOpenRouter with `await writeFile(join(RAW, \"openrouter.json\"), JSON.stringify({...}, null, 2))` — direct writes with no temp-file+rename, unlike fetchArtificialAnalysis() in the same file (writeFile to `${target}.tmp` then rename) and scripts/fetch-aa-coding-agents.mjs (`${target}.${process.pid}.tmp`, flag \"wx\", rename). A crash mid-write (e.g. timeout SIGTERM during the daily run) can leave a truncated snapshot for these two sources; build-dataset/tests would then fail closed and abort the refresh.",
+      "repair": "Route both writes through the same atomic pattern (pid-suffixed .tmp, flag \"wx\", rename) used in scripts/fetch-aa-coding-agents.mjs; optionally extend the overwrite-preservation test to cover these two writers."
+    },
+    {
+      "id": "F2",
+      "severity": "minor",
+      "location": "test/aa-coding-agents.test.mjs — fail-closed guards implemented in lib/aa-coding-agents.mjs but not exercised by any fixture",
+      "evidence": "Supplied test cases cover: missing payload, partial rows, previous-count floor, previous-version mismatch, changed version marker, invalid indexScore (null/2/\"0.5\"/0.6), evalCount 2, evals [], missing display, duplicate id, unresolved reference. Not exercised: (a) two records each carrying benchmarkRows -> guard 'AA expected one full benchmarkRows array, got N' (ambiguity is claimed in the test name but no fixture produces it); (b) changed datasetIndexName set -> 'invalid/incomplete row or changed components'; (c) weight deviating from 1/3 -> 'invalid component'; (d) component mean.reward outside [0,1] -> 'invalid component'.",
+      "repair": "Add synthetic fixtures: a second record carrying benchmarkRows (assert /expected one full benchmarkRows/), a renamed component id, weight 0.5, and mean.reward 1.5; assert each throws."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Read-only packet review: this critic executed nothing; all evidence is supplied file content, packet extracts, and owner receipts.",
+    "The literal version marker 'Coding Agent Index v1.5:' inside the coding-agents page Flight payload is not part of the supplied extracts; acceptance of that gate rests on the execution receipts and the independent 13-row homepage/board cross-check, not on supplied page contents.",
+    "Whether the designarena/openrouter direct-write pattern predates phase 01 is not determinable from the packet (affects attribution, not the defect itself).",
+    "ops/daily/prompt.md step 5 price constants (Luna $0.20/$1.20, Terra $2/$12, flex $0.10/$0.60) are unverifiable from supplied evidence; they are standing instructions, not claims of current values.",
+    "ops/daily/prompt.md note '(verified 2026-09-08)' for webhook-triggered deployment has no supplied receipt in this packet.",
+    "prompt.md step 3 abort semantics rely on the daily agent's compliance with the prompt; deterministic enforcement is deferred to phase 08 orchestration per GAUNTLET.md."
+  ],
+  "missing_evidence": [
+    "Flight extract of https://artificialanalysis.ai/agents/coding-agents showing the literal string 'Coding Agent Index v1.5:' used by the version gate in lib/aa-coding-agents.mjs (only the methodology-page excerpt, per-file sha256 of aa-coding.html, and reduced source objects were supplied)"
+  ],
+  "verdict": "revise"
+}

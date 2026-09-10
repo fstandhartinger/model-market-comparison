@@ -1,0 +1,159 @@
+{
+  "scope": "Actual end-to-end calls through worker.sh. Smoke success does not supply an AA qualification.",
+  "receipts": [
+    {
+      "execution": {
+        "started_at": "2026-09-10T19:09:13.200Z",
+        "mode": "agent",
+        "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producers": [],
+        "qualification": {
+          "id": "moonshotai/kimi-k3",
+          "family": "moonshotai",
+          "free": false,
+          "input_per_1m": 3,
+          "output_per_1m": 15,
+          "context": 1048576,
+          "aa_intelligence_index": 34.5,
+          "aa_source": "exact_id_and_variants",
+          "matched_model_ids": [
+            "kimi-k3::low",
+            "kimi-k3::max"
+          ],
+          "aa_variant_scores": [
+            {
+              "id": "kimi-k3::max",
+              "index": 43.8
+            },
+            {
+              "id": "kimi-k3::low",
+              "index": 34.5
+            }
+          ]
+        },
+        "input_sha256": "69b7633e5f56fe71daae36062941b5ae92f221aa2b7a2848b9aa51bf3a82a3c6",
+        "actual_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "usage": null,
+        "provider": null,
+        "session_id": "ses_f73469cb6ffeDfmm3OxbvCYw07",
+        "finished_at": "2026-09-10T19:09:32.083Z",
+        "output_sha256": "167c34f181509f64218ebabafcfdcf4672ada8aa46e3fa21260c6d11558ac73e"
+      },
+      "result": {
+        "name": "model-market-comparison",
+        "scripts.test": "node --test test/",
+        "sum": 42
+      }
+    },
+    {
+      "execution": {
+        "started_at": "2026-09-10T19:11:07.597Z",
+        "mode": "smoke_test",
+        "requested_model": "deepseek/deepseek-v4.1-flash",
+        "producers": [],
+        "qualification": {
+          "id": "deepseek/deepseek-v4.1-flash",
+          "family": "deepseek",
+          "free": false,
+          "input_per_1m": 0.15,
+          "output_per_1m": 0.6,
+          "context": 1048576,
+          "aa_intelligence_index": null,
+          "aa_source": "unknown",
+          "matched_model_ids": [],
+          "aa_variant_scores": []
+        },
+        "input_sha256": "592804b8a7918ead57c4b2b881af1fd201ae647cf0ca995615e2ad5a53d5d7dc",
+        "actual_model": "deepseek/deepseek-v4.1-flash",
+        "usage": {
+          "prompt_tokens": 140,
+          "completion_tokens": 80,
+          "total_tokens": 220,
+          "cost": 0.00013662,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0.000138,
+            "upstream_inference_prompt_cost": 4.2e-05,
+            "upstream_inference_completions_cost": 9.6e-05
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 65,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+        "provider": "GMICloud",
+        "session_id": null,
+        "finished_at": "2026-09-10T19:11:10.087Z",
+        "output_sha256": "98970bd2cf88f2ae4f414f258165f967428480a36ee7a629f9d3c97bb046fb5f"
+      },
+      "result": {
+        "sum": 42,
+        "missing": null,
+        "versions_equal": false
+      }
+    },
+    {
+      "execution": {
+        "started_at": "2026-09-10T19:11:08.803Z",
+        "mode": "smoke_test",
+        "requested_model": "nex-agi/nex-n2.5-pro:free",
+        "producers": [],
+        "qualification": {
+          "id": "nex-agi/nex-n2.5-pro:free",
+          "family": "nex-agi",
+          "free": true,
+          "input_per_1m": 0,
+          "output_per_1m": 0,
+          "context": 262144,
+          "aa_intelligence_index": null,
+          "aa_source": "unknown",
+          "matched_model_ids": [],
+          "aa_variant_scores": []
+        },
+        "input_sha256": "592804b8a7918ead57c4b2b881af1fd201ae647cf0ca995615e2ad5a53d5d7dc",
+        "actual_model": "nex-agi/nex-n2.5-pro:free",
+        "usage": {
+          "prompt_tokens": 126,
+          "completion_tokens": 256,
+          "total_tokens": 382,
+          "cost": 0,
+          "is_byok": false,
+          "prompt_tokens_details": {
+            "cached_tokens": 0,
+            "cache_write_tokens": 0,
+            "audio_tokens": 0,
+            "video_tokens": 0
+          },
+          "cost_details": {
+            "upstream_inference_cost": 0,
+            "upstream_inference_prompt_cost": 0,
+            "upstream_inference_completions_cost": 0
+          },
+          "completion_tokens_details": {
+            "reasoning_tokens": 275,
+            "image_tokens": 0,
+            "audio_tokens": 0
+          }
+        },
+        "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+        "provider": "Nex AGI",
+        "session_id": null,
+        "finished_at": "2026-09-10T19:11:18.434Z",
+        "output_sha256": "98970bd2cf88f2ae4f414f258165f967428480a36ee7a629f9d3c97bb046fb5f"
+      },
+      "result": {
+        "sum": 42,
+        "missing": null,
+        "versions_equal": false
+      }
+    }
+  ]
+}

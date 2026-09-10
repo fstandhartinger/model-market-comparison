@@ -182,3 +182,11 @@ AA Intelligence Index. Result at handover:
   approximate. **Restoring a real OpenRouter id on each model is a cheap, high-value fix**
   — do it in phase 2 while you are in the ingest code; it makes this picker exact and helps
   the caching-statistics join in §3 as well.
+
+
+## Phase 01 corrections verified on 2026-09-10
+
+- **Coding Agent scrape is a version transition:** current AA methodology identifies v1.5 (DeepSWE v1.1, Terminal-Bench 4.0, SWE-Atlas-QnA). The full `benchmarkRows` array at `/agents/coding-agents` has 13 complete results, some serialized as Flight property references. Use `scripts/fetch-aa-coding-agents.mjs`; do not look for 68 v1.4 rows on the homepage. Keep v1.4 and its September 9 date for the unchanged Composite. v1.5 raw scores are collected separately for the registry phases.
+- **Metadata schema changed more than its key:** `/leaderboards/models` now supplies slug-based rows with missing license/HF/OpenRouter fields. `lib/aa-rsc.mjs` parses Flight JSON without relying on key order. Enrichment retains earlier verified fields for the same UUID/slug and records their original dates in `retained_fields`. These OpenRouter IDs already survive into the built dataset; the statement above that build code drops them was incorrect (the source fields had disappeared). Reuse them, with provenance, in phase 02.
+- **Do not infer typical user I/O from an AA benchmark run:** the original request asks for OpenRouter usage first and Chutes typical usage otherwise. The coverage audit restores that order. AA benchmark ratios remain explicitly labelled proxies/cross-checks.
+- **Live model catalog changes:** actual `deepseek/deepseek-v4.1-flash` is now listed by OpenRouter, distinct from `deepseek/deepseek-v4-flash-0731`. Both the actual V4.1 endpoint and `nex-agi/nex-n2.5-pro:free` passed a known-answer transport test. That does not establish an AA score or qualify an unscored worker for daily data work. See phase report for current picker evidence.

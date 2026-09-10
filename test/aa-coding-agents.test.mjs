@@ -15,7 +15,7 @@ const rows = () => Array.from({ length: 13 }, (_, i) => ({
   evals: ["deep-swe-v1.1", "swe-atlas-qna", "terminal-bench-v4"].map((datasetIndexName) => ({ datasetIndexName, mean: { reward: 0.5 }, weight: 1 / 3 })),
 }));
 const html = (items = rows(), options = {}) => {
-  const records = `a:${JSON.stringify(["$", "div", null, { rows: items }])}\nb:${JSON.stringify({ change: `Coding Agent Index v${options.version || "1.5"}:`, benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
+  const records = `a:${JSON.stringify(["$", "div", null, { rows: items }])}\nb:${JSON.stringify({ title: "Performance", description: "Performance across the Artificial Analysis Coding Agent Index.", change: { description: `Coding Agent Index v${options.version || "1.5"}:` }, benchmarkRows: items.map((_, i) => `$a:props:rows:${i}`) })}\n`;
   // A Flight chunk can end in the middle of a string escape.
   return [records.slice(0, 133), records.slice(133)].map((part) => `<script>self.__next_f.push(${JSON.stringify([1, part])})</script>`).join("");
 };
@@ -34,6 +34,8 @@ test("Coding Agent rejects partial, malformed, ambiguous, changed-version and in
   assert.throws(() => parseCodingAgents(html(), { version: "1.5", count: 14 }), /incomplete scrape/);
   assert.throws(() => parseCodingAgents(html(), { version: "1.4", count: 68 }), /version mismatch/);
   assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6" })), /version absent or changed/);
+  const history = `<script>self.__next_f.push(${JSON.stringify([1, 'c:{"history":"Coding Agent Index v1.5:"}\n'])})</script>`;
+  assert.throws(() => parseCodingAgents(html(rows(), { version: "1.6" }) + history), /version absent or changed/);
   for (const change of [
     { indexScore: null }, { indexScore: 2 }, { indexScore: "0.5" },
     { evalCount: 2 }, { evals: [] }, { display: {} }, { indexScore: 0.6 },

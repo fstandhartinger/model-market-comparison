@@ -1,0 +1,58 @@
+# Original-request coverage — Benchmark Heaven
+
+> Phase 01 audit: DeepSeek first draft, corrected and reviewed by Astra.
+> Status convention: **Planned** = not yet completed. **Phase 1 verified** = the foundations documented in `REPORT.md`; later product work is still planned.
+> “Completion evidence required” is an acceptance criterion, not an observation.
+> Phase 1 execution and deployment evidence is in `REPORT.md`; future evidence requirements below are not completion claims.
+
+Phase 1 status: **foundations verified; final release gate tracked in REPORT.md**. All later phases: **planned**.
+
+---
+
+## Every wish in §11 and its binding follow-up
+
+| ID | Original wish (abbreviated) | Phase(s) | Completion evidence required | Status |
+|---|---|---|---|---|
+| W1 | Token & caching-efficiency adjusted costs, **default ON** | 2, 3, 8 | `data/dataset.json` contains I/O ratio, tokens/task, cache-hit/cache-price fields with provenance; effective-cost formula per §2-A4 implemented with unit tests; UI default shows adjusted price with toggle; daily refresh updates the inputs; deploy verified | Planned |
+| W2 | Realistic input:output ratio; base case = agentic coding (Claude Code/Codex/opencode); try OpenRouter per-model first, Chutes API otherwise | 2, 3 | Per-model ratio with explicit basis (OpenRouter observation, Chutes global fallback, or explicitly labelled AA benchmark proxy); OpenRouter attempt documented; Chutes fallback flagged; existing fixed blends remain selectable; UI explains which basis was used | Planned |
+| W3 | Tokens-per-task verbosity from AA “Output Tokens per Intelligence Index Task”; collect per model during collection and updates | 2, 8 | AA `intelligenceIndexOutputTokensPerTask` captured for the maximum politely reachable model set; coverage caveat recorded; daily refresh re-collects; parser tests cover missing/malformed payloads | Planned |
+| W4 | Caching efficiency per **model × provider**; cache-hit rate scraped from OpenRouter pricing pages; cache read/write prices stored | 2, 8 | Store keyed by `(or_model_id, provider/endpoint)` with `cache_hit_rate`, `cache_read_price`, `cache_write_price`, provenance; partial coverage designed; tests | Planned |
+| W5 | All new data integrated into the Model Market Comparison dataset and refreshed on every regular update | 2, 8 | Schema/API/CHANGELOG updated; daily job refreshes these fields; end-to-end dry run output is shown in the phase report | Planned |
+| W6 | Default UI shows adjusted prices; user can answer “cheapest model at min benchmark score” | 3, 6 | Adjusted price is default; toggle to raw list price exists; one-screen min-score filter with adjusted cost; per-row explainer of assumptions; five-model sanity check documented | Planned |
+| W7 | Complete rebuild task handed to Codex GPT-6 Astra xHigh on Sandy Hetzner, with re-test and deploy at end | 1, 9 | Phase statuses in `/opt/benchmarkheaven/state/`; final verification checklist in `REPORT.md`; live deploy on benchmarkheaven.com verified | Phase 1 verified; rest planned |
+| W8 | Astra may delegate token-heavy work to free/cheap workers; Astra stays quality gate | 1, 8 | `bin/worker.sh` verified end-to-end against all three backends; `bin/pick-worker-models.mjs` returns AA-index-filtered list; daily job uses dynamic worker selection; critic rounds documented | Phase 1 verified; rest planned |
+| W9 | Final update via `/notify-telegram` | 8, 9 | Telegram notification sent at completion; daily quiet policy implemented | Planned |
+| W10 | Claude Code near weekly limit → task goes as completely as possible to Codex | 1, 9 | Execution logs show Codex drives all rebuild phases; Claude is only used for the explainer-video handoff; no main rebuild work assigned to Claude | Phase 1 verified; rest planned |
+| W11 | Radar charts on `/compare` and as own tab; up to 4 models; axes = collected benchmarks (AA, DesignArena, registry) | 6 | Radar implemented and rendered in both places; axis selection; normalization method documented; missing axes handled honestly; keyboard accessible | Planned |
+| W12 | Collect further benchmarks from Twitter; start with `https://x.com/search?q=benchmark&src=typed_query`; use logged-in Chrome | 4, 9 | Registry entries from sweep; “where results appear” captured; logs show **xplainervideo**, never airesearch12 | Planned |
+| W13 | Goal: most complete benchmark collection of the AI Twitter universe; exclusions documented | 4, 5, 8 | Broad registry populated; saturated/superseded and excluded benchmarks recorded with reasons; coverage visible in UI | Planned |
+| W14 | Composite may stay as-is; current Composite sources are reliable; new benchmarks additive | 4, 5, 6 | Existing Composite definition unchanged; regression guard added; new benchmarks only in new views/columns, not in Composite | Planned |
+| W15 | Use Grok in X UI with the specified prompt; run more prompts/subagents to prune, detect saturation, and check versions | 4 | Grok session records; excluded-benchmark list with reasons; version-currency notes | Planned |
+| W16 | Research gauntlet-loop technique online; use it for data, UI, design, docs; aim for world-best overview | 1–9 | `ops/rebuild-2026-09/GAUNTLET.md`; critic rounds per phase; residue documented; bounded rounds per artifact | Phase 1 verified; rest planned |
+| W17 | Daily updates via Sandy cron with gauntlet loops; continuously discover free OpenRouter models; never use models below AA Intelligence Index 34 | 8 | Daily job rebuilt and dry-run end-to-end; dynamic picker filters AA ≥ 34; worker/cost log; Telegram quiet policy | Planned |
+| W18 | For every benchmark, record where results actually appear (Tweets, websites, HF, GitHub) | 4, 8 | Registry `how_to_collect` / `primary_url` fields populated; recipes executed by daily refresh | Planned |
+| W19 | One-sentence English summary + category per benchmark | 4 | Registry `one_sentence_description` and `category` fields populated | Planned |
+| W20 | New UI sections: per-model full score list, model-vs-model comparison, inverse per-benchmark view listing models | 6 | Pages/routes implemented; scores shown with version, source, date, self-reported flag, links; sparse coverage handled | Planned |
+| W21 | Handle missing scores elegantly; never mix benchmark versions (Terminal-Bench 4.0 ≠ 3.0) | 4, 5, 6 | Sparse-data states distinguished; version identity enforced; version shown in UI; version-isolation tests | Planned |
+| W22 | General app revamp to “absolutely perfect standards” | 6 | Usability/accessibility checklist; critic review against rendered output/screenshots; performance checks | Planned |
+| W23 | Anomaly/outlier highlighting per model; explainable; guard against noise | 6 | Anomaly view implemented; method described (e.g. z-score vs own profile and peer distribution); small-sample guard | Planned |
+| W24 | Rebrand to Benchmark Heaven; domain benchmarkheaven.com; hosting stays on Sandy PaaS; real branding | 7, 9 | DNS A record; Coolify domain/TLS; old host still works; brand assets; metadata/README updated | Planned |
+| W25 | Collect self-reported benchmark scores; mark them as such; critic verifies; flag divergence vs measured later | 5, 6 | `basis: self_reported` rows with source URL; critic verification log; divergence surfaced in UI | Planned |
+| W26 | Pass structured brief + verbatim original prompt to Codex; re-verify completeness | 1, 9 | `COVERAGE.md` maintained; Phase 9 re-reads §11 line by line; discrepancies reported in `REPORT.md` | Phase 1 verified; rest planned |
+| W27 | At the end: update via `/notify-telegram` **and** an `/explainer-video` about the end result | 9 + handoff to local Claude session | Telegram sent; explainer-video brief handed to Claude session; actual video delivery confirmed; a blocked handoff remains incomplete | Planned |
+| W28 | Efficient collection recipes saved as user-level skills everywhere: local machine and Sandy, Claude Code, Codex and opencode | 2, 8, 9 | Token/I/O/cache collection skills written; installed in each of the six runtime/machine combinations; discovery and successful invocation receipts; repository copies alone do not count | Planned |
+| F1 | Binding follow-up: use **xplainervideo** for all X/Grok interactions, **NOT airesearch12** | 4, 9 | Operational logs and final audit show only xplainervideo; no airesearch12 usage in any phase artifact | Planned |
+
+---
+
+## Corrections applied to the phase instructions
+
+1. **I/O source priority (phase 02):** §11 explicitly asks for OpenRouter per-model empirical usage, then Chutes typical LLM usage. The structured brief promoted AA benchmark token ratios to the default. Restore the original priority. AA ratios remain useful cross-checks or clearly labelled benchmark proxies if actual usage is unavailable; never describe them as observed user workloads. The worker draft also put AA ahead of Chutes; owner corrected that error.
+2. **Selectable blends (phase 03):** preserve existing fixed blends as alternative scenarios, in addition to the adjusted default and raw-price toggle.
+3. **Provider identity (phase 02):** retain provider name along with model ID and endpoint tag; do not join unrelated endpoints just because their provider labels match.
+4. **Composite/version protection (phases 04–06, 08):** the 2026-09-10 source moved Coding Agent Index from v1.4 to v1.5. Keep v1.4 dated and separate for the unchanged Composite. Collect v1.5 separately and ingest into versioned new views. No implicit score migration. Every radar axis, ranking and comparison displays its benchmark version.
+5. **Skills on both machines (phase 09):** repository copies/handoff are intermediate artifacts. Completion requires installation and discovery evidence for Claude Code, Codex and opencode on Sandy AND Florian's machine. If a machine is unavailable, mark the installation incomplete with the specific blocker.
+6. **Explainer video delivery (phase 09):** the master brief assigns production to Florian's local Claude session, while the original asks for a delivered video. Prepare an explicit video brief, deliver that handoff, and verify the video reaches Florian. A prepared brief alone is not completion. Record an outstanding blocker honestly rather than mark the entire rebuild complete.
+7. **Unknown AA worker scores (phase 01/08):** the fixed known-answer smoke test verifies transport, not AA qualification, including the requested free and near-free backends. It has a price/token cap and accepts no custom task. Models with no AA score remain excluded from unattended data-bearing work. Known scores below 34 are excluded even from pinned and smoke paths.
+
+All original wishes have phase owners. No new product features are claimed complete by this phase-01 mapping. Phase 09 must re-check every row against the actual deployed product and delivery receipts. The binding xplainervideo correction supersedes the original airesearch12 account reference everywhere, including vendor-release searches in phase 05.
