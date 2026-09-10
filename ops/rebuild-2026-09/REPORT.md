@@ -133,3 +133,9 @@ Owner verified the JSON contract, execution identity, output hash and frozen cod
 ### Final release checks
 
 [Final receipt](evidence/phase-02-final-checks.json): dataset rebuild, **111/111 tests**, TypeScript typecheck, production build, **9/9 prerender checks**, whitespace validation, three skill validations and installed daily-prompt comparison all passed. The final dataset rebuild advanced `generated_at`; all frozen source and artifact projections were independently rechecked and are identical. All code, raw-source and documentation hashes were unchanged from the clean critic when checked. The legacy dataset remains deeply equal after removing only the additive fields and build timestamp. Release outcome is recorded after deployment below.
+
+### Phase 02 released
+
+Implementation commit **3decc0b39d70dcfb0eed4f88c29b8d72dec6371d** is pushed to `main`. Webhook deployment **rq14jttgoox9xavg4qfjpxsv** finished successfully. [Live receipt](evidence/phase-02-release-deployment.json): public root and dataset return HTTPS 200, health is OK, CORS is `*`, and the **complete live dataset equals the committed snapshot** apart from runtime `_source`. The Kimi model-detail API also returns exactly the committed efficiency object. Counts remain 835 models / 650 families / 89 providers / 2,786 offers.
+
+A closing documentation-only commit records that receipt and this report; it changes no tested application/data artifact. Its webhook completion is checked before the external phase-02 status receives `DONE`. The next phase may implement costs/UI using the explicit provenance, missing-data and workload-scope distinctions above. No phase-02 blocker remains. Cross-runtime skill installation, the full daily gauntlet and the final project Telegram/video remain in their assigned later phases.
