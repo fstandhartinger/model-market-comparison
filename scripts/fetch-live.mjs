@@ -8,6 +8,9 @@ import { dirname, join } from "node:path";
 import { enrichArtificialAnalysis } from "../lib/aa-metadata.mjs";
 import { parseArtificialAnalysisMetadata } from "../lib/aa-rsc.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
+import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
+import { execFile } from "node:child_process";
+import { promisify } from "node:util";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -71,6 +74,8 @@ async function fetchArtificialAnalysis() {
     models,
   };
   await writeJSONAtomic(target, snapshot);
+  const efficiency = await refreshAaEfficiency({ target: join(RAW, "aa-efficiency.json") });
+  console.log(`  ${efficiency.count} AA token-efficiency benchmark rows`);
 }
 
 async function fetchDesignArena() {
@@ -192,6 +197,13 @@ async function fetchOpenRouter() {
     models: enriched,
   });
   console.log(`  wrote ${enriched.length} OpenRouter models with provider endpoints`);
+  // Four model pages in rotation, then the global fallback. New observations
+  // retain their own dates and never imply a fresh full-population scrape.
+  for (const script of ["fetch-openrouter-efficiency.mjs", "fetch-chutes-efficiency.mjs"]) {
+    const { stdout, stderr } = await promisify(execFile)(process.execPath, [join(__dirname, script)], { timeout: 600000, maxBuffer: 2000000 });
+    process.stdout.write(stdout);
+    process.stderr.write(stderr);
+  }
 }
 
 async function main() {

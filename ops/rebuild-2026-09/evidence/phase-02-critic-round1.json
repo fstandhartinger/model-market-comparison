@@ -1,0 +1,32 @@
+```json
+{
+  "artifact_id": "phase02",
+  "artifact_sha256": "5b8cf8ed28141223a7ffe753f805078e7c92e2edb6b780eba1f04d82a6f721da",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "aa_efficiency_pipeline_138_rows_and_arithmetic_validation",
+    "aa_unmatched_rows_preservation_deepseek_v4_1_flash_and_ling_3_0_flash_vl",
+    "openrouter_model_page_appstats_and_weekly_rankings_workload_hierarchy",
+    "openrouter_cache_effective_pricing_endpoint_id_to_routing_tag_join",
+    "openrouter_cache_rate_and_price_conversion_units_usd_per_1m",
+    "chutes_seven_day_window_positive_token_summation_112_included_rows",
+    "chutes_zero_token_exclusions_444_rows_and_private_aggregate_handling",
+    "catalog_endpoint_registry_1275_pairs_104_cache_hit_rates_10_ambiguous_tags",
+    "dataset_model_assignments_835_models_52_empirical_783_chutes_fallback",
+    "legacy_dataset_field_and_composite_score_preservation",
+    "postgres_db_extensions_schema_and_legacy_offers_scope_guard",
+    "daily_refresh_prompt_and_three_phase02_skills_accuracy",
+    "test_suite_111_tests_typecheck_and_next_build_prerender_manifest_receipts",
+    "worker_timeout_receipt_provenance_and_owner_independent_audit"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "OpenRouter effective-pricing payload reports cacheHitRate as a fraction without publishing underlying token numerator, denominator, or exact aggregation interval (preserved as summary_window: null).",
+    "Chutes LLM invocation statistics provide complete array responses over requested dates but lack independent total-count guarantees to prove internal telemetry exhaustiveness upstream."
+  ],
+  "missing_evidence": []
+}
+```

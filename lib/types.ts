@@ -11,6 +11,87 @@ export interface Benchmarks {
   aa_mmlu_pro?: number | null;
 }
 
+export interface EfficiencyProvenance {
+  source: string;
+  url: string;
+  collected_at: string;
+  basis: "measured" | "self_reported" | "derived" | "assumed";
+  source_basis?: "measured" | "self_reported" | "derived" | "assumed";
+  scope?: string;
+  formula?: string;
+}
+
+export interface EfficiencyObservation<T = number> extends EfficiencyProvenance {
+  value: T;
+  window?: { start_date: string; end_date: string };
+  stale?: boolean;
+}
+
+export interface EfficiencyAttempt {
+  source: string;
+  url: string | null;
+  collected_at: string | null;
+  status: string;
+  reason?: string;
+  or_model_id?: string | null;
+  dimension?: string;
+  http_status?: number;
+}
+
+export interface TokenEfficiency {
+  aa: {
+    status: "available" | "not_published_in_collected_payload" | "not_in_aa";
+    source_model_id: string | null;
+    source_slug: string | null;
+    source_variant: string | null;
+    tokens_per_task: EfficiencyObservation<{ reasoning: number; answer: number; output: number }> | null;
+    canonical_token_counts: EfficiencyObservation<{ input: number; output: number; answer: number; reasoning: number }> | null;
+    benchmark_input_output_ratio: (EfficiencyObservation & { interpretation: "benchmark_proxy" }) | null;
+  };
+  input_output_ratio: EfficiencyObservation & {
+    fallback: boolean;
+    or_model_id?: string;
+    fallback_reason?: string;
+    evidence_ref?: string;
+    configuration_scope?: string;
+    source_updated_at?: string | null;
+  };
+  attempts: EfficiencyAttempt[];
+}
+
+export interface EndpointEfficiency {
+  or_model_id: string;
+  endpoint_tag: string;
+  provider: string;
+  endpoint_id: string | null;
+  cache_hit_rate: (EfficiencyObservation & {
+    total_tokens: number;
+    source_provider_name: string;
+    source_provider_slug: string;
+    summary_window: null;
+    chart_date_range: { first: string; last: string } | null;
+    definition: string;
+  }) | null;
+  cache_read_per_1m: EfficiencyObservation | null;
+  cache_write_per_1m: EfficiencyObservation | null;
+  status: string;
+  attempts: EfficiencyAttempt[];
+}
+
+export interface EfficiencyDataset {
+  schema_version: 1;
+  global_io_ratio: EfficiencyObservation & {
+    totals: { total_input_tokens: number; total_output_tokens: number; total_requests: number };
+    coverage: { returned_rows: number; included_rows: number; excluded_rows: number; included_chutes: number; days: number; selection: string; completeness: string };
+  };
+  openrouter_endpoints: Record<string, Record<string, EndpointEfficiency>>;
+  aa_unmatched: EfficiencyObservation<Array<{ source_id: string; slug: string; name: string; variant: string | null;
+    tokens_per_task: { reasoning: number; answer: number; output: number };
+    canonical_token_counts: { input: number; output: number; answer: number; reasoning: number };
+    derived: { basis: "derived"; input_output_ratio: number; reasoning_output_share: number | null } }>> & { reason: string };
+  coverage: Record<string, number>;
+}
+
 export interface DesignArenaEntry {
   elo?: number | null;
   winRate?: number | null;
@@ -124,12 +205,14 @@ export interface ModelRow {
   manual_notes?: string;
   benchmark_override_note?: string;
   designarena_attachment_note?: string;
+  token_efficiency?: TokenEfficiency;
 }
 
 export interface Dataset {
   generated_at: string;
   counts: { models: number; families: number; providers: number; offers: number };
   sources: Record<string, string>;
+  efficiency?: EfficiencyDataset;
   source_status?: Record<string, { version: string; status: string; collected_at?: string; note?: string; count?: number; path?: string; url?: string }>;
   models: ModelRow[];
   providers: {

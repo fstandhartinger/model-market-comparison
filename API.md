@@ -102,3 +102,86 @@ provenance; they will enter versioned benchmark views in phases 04–06.
 `models[].aa_metadata.retained_fields` records `source`, `collected_at` and `reason`
 for each metadata field retained from an older AA publication after the current
 leaderboard stopped providing it. A snapshot refresh does not advance those field dates.
+
+### Phase 02 additions — token and caching evidence (2026-09-10)
+
+**All existing URLs, files, fields, prices and Composite inputs retain their meanings.**
+Read the additions from `GET /api/dataset` or `data/dataset.json`. The full model
+returned by `/api/models/{id}` includes `token_efficiency`; the compact `/api/models`
+listing keeps its existing shape. Adjusted-cost computation/UI is a later phase.
+
+An observation has `{ value, source, url, collected_at, basis }`. `value` can be a
+number or the documented token-count object. `basis` is `measured` (AA benchmarks
+or OpenRouter workload telemetry), `self_reported` (Chutes' own counters or catalog
+prices), `derived` (explicit arithmetic), or `assumed` (applying a global workload
+ratio to a different model). `source_basis` records the input classification for
+derived/assumed values. Missing observations are **null**, never zero.
+
+| JSON path | Meaning |
+|---|---|
+| `models[].token_efficiency.aa.tokens_per_task.value` | AA `intelligenceIndexOutputTokensPerTask`: `{ reasoning, answer, output }`, output tokens per Intelligence Index task for the exact AA UUID/effort. |
+| `models[].token_efficiency.aa.canonical_token_counts.value` | AA `canonicalIntelligenceIndexTokenCount`: `{ input, output, answer, reasoning }`, totals over its canonical benchmark run. |
+| `models[].token_efficiency.aa.benchmark_input_output_ratio` | Canonical input/output quotient, explicitly `interpretation: benchmark_proxy`. It is not observed user usage and is not the workload fallback. |
+| `models[].token_efficiency.input_output_ratio` | Preferred empirical OpenRouter workload ratio, otherwise the Chutes global fallback. Includes `fallback`, `scope`, `window`, and a `fallback_reason`/`evidence_ref` when assumed. |
+| `models[].token_efficiency.attempts` | Source attempts/outcomes, including missing API usage fields, exact-ID gaps, uncollected pages, incomplete windows and fallback evidence. Null attempt dates mean no fetch occurred. |
+| `efficiency.global_io_ratio` | Chutes ratio plus source totals, seven completed UTC dates, cohort selection and returned/included/excluded-row coverage. |
+| `efficiency.openrouter_endpoints[or_model_id][endpoint_tag]` | Exact pair registry: provider name, endpoint UUID when verified, cache-hit observation and cache read/write price observations. |
+| `efficiency.aa_unmatched.value` | Collected AA rows whose UUID is not yet in the model catalog. Kept with provenance; never attached to a similarly named model. |
+| `efficiency.coverage` | Explicit model/pair denominators and coverage counts. `schema_version` is 1. |
+
+Workload selection uses exact published OpenRouter IDs or an unambiguous sole
+offered SKU. Model pages provide `appStats.state.data.model_chart`; weekly rankings
+extend coverage through an **exact canonical-slug join**, with `:free` kept separate.
+Both use `sum(total_prompt_tokens) / sum(total_completion_tokens)`. The seven-day
+page window excludes today; incomplete windows remain unavailable. These statistics
+cover all apps/effort configurations on that SKU, not an isolated coding-agent cohort.
+No family-name join or AA benchmark ratio substitutes for workload observations.
+
+The Chutes ratio uses token-positive chute/day rows from `/invocations/stats/llm`
+over the previous seven completed UTC days, including published anonymized aggregates.
+It sums input and output independently, rather than averaging ratios. Raw counters
+are self-reported; the global quotient is derived; its assignment to another model
+is assumed. This is general Chutes traffic, not a coding-agent-only sample.
+
+An endpoint entry's `cache_hit_rate.value` is a fraction from 0 to 1, taken from
+OpenRouter `providerSummaries[].cacheHitRate`. The source `endpointId` is joined to
+the model page's endpoint `id`, then to its exact `provider_slug` routing tag. The
+effective-pricing API's **base** `providerSlug` is not an endpoint tag. Display names
+such as Fireworks, Fireworks US and Fireworks Fast cannot establish equivalence.
+Duplicate tags or identity conflicts get null cache observations and an explicit
+status. Missing statistics are sparse coverage, not a zero hit rate.
+
+OpenRouter does not publish the underlying cache-rate numerator/denominator or
+the exact summary interval in this response. `summary_window` is null;
+`chart_date_range` describes the accompanying chart only. Do not assume it defines
+the summary interval. Cache read/write observations use **USD per million tokens**,
+converted from the dated public endpoint catalog. Existing offer prices remain
+unchanged; page-scraped price observations also remain in the raw snapshot.
+
+New sources: `aa_efficiency`, `openrouter_efficiency`, `chutes_efficiency`.
+The OpenRouter source date is the collector run, **not** a claim that every page
+was refreshed. Individual dates survive rotation and failed fetches. Workload
+observations older than 30 days fall back to Chutes; retained cache observations
+and a stale Chutes fallback expose `stale: true` after 30 days. Consumers should
+inspect observation dates/status, not just `generated_at`.
+
+```js
+const ds = await (await fetch('/api/dataset')).json();
+const model = ds.models.find(m => m.id === selectedModelId);
+const io = model.token_efficiency.input_output_ratio;
+const offer = model.offers.find(o => o.or_model_id && o.endpoint_tag);
+const cache = offer && ds.efficiency.openrouter_endpoints[offer.or_model_id]?.[offer.endpoint_tag];
+// io.value = input tokens per output token; io.fallback says whether it is assumed.
+// cache?.cache_hit_rate?.value is null/absent when unknown, with status explaining why.
+```
+
+Raw files: `data/raw/aa-efficiency.json`, `openrouter-efficiency.json`,
+`chutes-efficiency.json`. Run `npm run data:efficiency` for independent refreshes.
+`fetch-live.mjs aa` also refreshes AA efficiency; `fetch-live.mjs or` refreshes the
+weekly ranking, four model pages in rotation and the Chutes fallback. The three
+recipes are under `ops/rebuild-2026-09/skills/` for phase-09 installation.
+
+Production continues to use bundled JSON. Optional Postgres installations should
+run `node scripts/seed-db.mjs`: its idempotent `dataset_meta.extensions` JSONB
+addition preserves the new top-level fields (and existing source-status metadata).
+An old seed falls back to the bundled snapshot until reseeded.

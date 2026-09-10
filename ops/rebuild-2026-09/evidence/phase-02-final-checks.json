@@ -1,0 +1,69 @@
+{
+  "checked_at": "2026-09-10T20:21:52.987758+00:00",
+  "baseline_commit": "85f8572ee5313cf0822ce7b4098579be7fd03150",
+  "dataset_sha256": "b7cf24d3659a8a33c2c88cb17f5f373cdf69ab72e22b0808d881b71e3577596b",
+  "commands": {
+    "node scripts/build-dataset.mjs": "passed",
+    "npm test": "111/111 passed",
+    "npx tsc --noEmit -p .": "passed",
+    "npm run build": "passed",
+    "node --test test/production/prerender.mjs": "9/9 passed",
+    "git diff --check": "passed",
+    "skill validator": "all three passed",
+    "daily prompt installed copy comparison": "identical"
+  },
+  "critic_source_and_artifact_projections_unchanged_after_final_rebuild": true,
+  "raw_source_code_docs_hashes_unchanged_since_clean_critic": true,
+  "legacy_dataset_deep_comparison": "identical except generated_at and additive phase02 fields",
+  "logs": {
+    "tests": {
+      "log_sha256": "90ebce62ba2fced2f4c33310fb052f6df1565b299fe2de6449f3f9ea38ce5b70",
+      "tail": [
+        "\u2714 worker CLI preserves output on provider failures and accepts a large embedded packet (2357.977704ms)",
+        "\u2714 transport smoke cannot accept arbitrary data work or a reference file (110.031834ms)",
+        "\u2139 tests 111",
+        "\u2139 suites 0",
+        "\u2139 pass 111",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 7846.953688"
+      ]
+    },
+    "typecheck": {
+      "log_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "tail": []
+    },
+    "build": {
+      "log_sha256": "60c4ba4e13af39adf620e535a7de8d22361a2c98cf8ceef6a737b8bbe7cfd723",
+      "tail": [
+        "  \u251c chunks/255-69a4a78fac9becef.js         46 kB",
+        "  \u251c chunks/4bd1b696-409494caf8c83275.js  54.2 kB",
+        "  \u2514 other shared chunks (total)          1.98 kB",
+        "",
+        "",
+        "\u0192 Middleware                             34.2 kB",
+        "",
+        "\u25cb  (Static)   prerendered as static content",
+        "\u0192  (Dynamic)  server-rendered on demand",
+        ""
+      ]
+    },
+    "prerender": {
+      "log_sha256": "45716770cbec221d1c508d268b72c0301d6d3eded85f2f44350259282b05e233",
+      "tail": [
+        "\u2714 bundled catalog /providers is rendered once at build time (0.118737ms)",
+        "\u2714 bundled catalog /scatter is rendered once at build time (0.190796ms)",
+        "\u2139 tests 9",
+        "\u2139 suites 0",
+        "\u2139 pass 9",
+        "\u2139 fail 0",
+        "\u2139 cancelled 0",
+        "\u2139 skipped 0",
+        "\u2139 todo 0",
+        "\u2139 duration_ms 95.97366"
+      ]
+    }
+  }
+}

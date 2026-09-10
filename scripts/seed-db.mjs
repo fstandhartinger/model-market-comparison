@@ -26,6 +26,7 @@ CREATE TABLE IF NOT EXISTS dataset_meta (
   providers JSONB NOT NULL,
   loaded_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
+ALTER TABLE dataset_meta ADD COLUMN IF NOT EXISTS extensions JSONB NOT NULL DEFAULT '{}'::jsonb;
 CREATE TABLE IF NOT EXISTS models (
   id TEXT PRIMARY KEY,
   family_key TEXT NOT NULL,
@@ -54,8 +55,8 @@ async function main() {
     await client.query(SCHEMA);
     // Skip if already seeded with this exact snapshot (keeps cold starts fast).
     if (process.env.FORCE_SEED !== "1") {
-      const existing = await client.query("SELECT generated_at FROM dataset_meta ORDER BY id DESC LIMIT 1");
-      if (existing.rows.length && new Date(existing.rows[0].generated_at).getTime() === new Date(ds.generated_at).getTime()) {
+      const existing = await client.query("SELECT generated_at, extensions FROM dataset_meta ORDER BY id DESC LIMIT 1");
+      if (existing.rows.length && existing.rows[0].extensions?.efficiency?.schema_version === 1 && new Date(existing.rows[0].generated_at).getTime() === new Date(ds.generated_at).getTime()) {
         console.log("✓ already seeded with current snapshot — skipping");
         return;
       }
@@ -64,8 +65,8 @@ async function main() {
     await client.query("TRUNCATE models, offers, dataset_meta RESTART IDENTITY");
 
     await client.query(
-      "INSERT INTO dataset_meta (generated_at, counts, sources, providers) VALUES ($1,$2,$3,$4)",
-      [ds.generated_at, ds.counts, ds.sources, JSON.stringify(ds.providers)]
+      "INSERT INTO dataset_meta (generated_at, counts, sources, providers, extensions) VALUES ($1,$2,$3,$4,$5)",
+      [ds.generated_at, ds.counts, ds.sources, JSON.stringify(ds.providers), Object.fromEntries(Object.entries(ds).filter(([key]) => !["generated_at", "counts", "sources", "providers", "models"].includes(key)))]
     );
 
     for (const m of ds.models) {

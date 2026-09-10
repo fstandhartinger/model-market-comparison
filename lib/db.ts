@@ -21,7 +21,7 @@ export function getPool(): Pool | null {
 export async function loadFromDb(): Promise<Dataset | null> {
   const p = getPool();
   if (!p) return null;
-  const meta = await p.query("SELECT generated_at, counts, sources, providers FROM dataset_meta ORDER BY id DESC LIMIT 1");
+  const meta = await p.query("SELECT generated_at, counts, sources, providers, extensions FROM dataset_meta ORDER BY id DESC LIMIT 1");
   if (!meta.rows.length) return null;
   const models = await p.query("SELECT data FROM models");
   const storedModels = models.rows.map((r) => r.data as ModelRow & { offers_scope?: string });
@@ -35,7 +35,9 @@ export async function loadFromDb(): Promise<Dataset | null> {
   }
   const modelRows: ModelRow[] = storedModels.map(({ offers_scope: _scope, ...model }) => model);
   const m0 = meta.rows[0];
+  if (m0.extensions?.efficiency?.schema_version !== 1) return null;
   return {
+    ...m0.extensions,
     generated_at: m0.generated_at,
     counts: m0.counts,
     sources: m0.sources,

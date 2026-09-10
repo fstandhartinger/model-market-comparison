@@ -431,6 +431,9 @@ async function build() {
   const aa = await readJSON("artificialanalysis.json");
   const da = await readJSON("designarena.json");
   const or = await readJSON("openrouter.json");
+  const aaEfficiency = await readJSON("aa-efficiency.json");
+  const openrouterEfficiency = await readJSON("openrouter-efficiency.json");
+  const chutesEfficiency = await readJSON("chutes-efficiency.json");
   const aws = await readJSON("aws-bedrock.json");
   const azure = await readJSON("azure-foundry.json");
   const vertex = await readJSON("google-vertex.json").catch(() => ({ models: [] }));
@@ -1101,8 +1104,12 @@ async function build() {
     providers.push({ platform: name, provider: name, model_count: 0, eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, eu_dedicated: !!m.eu_dedicated, hyperscaler: !!m.hyperscaler, country: m.country || null, note: m.note || "", coming_soon: true });
   }
 
+  const generated_at = new Date().toISOString();
+  const { attachEfficiency } = await import("../lib/efficiency.mjs");
+  const efficiency = attachEfficiency(modelRows, { aa, aaEfficiency, openrouter: or, openrouterEfficiency, chutesEfficiency, now: generated_at });
   const dataset = {
-    generated_at: new Date().toISOString(),
+    generated_at,
+    efficiency,
     counts: { models: modelRows.length, families: new Set(modelRows.map((row) => row.family_key)).size, providers: providers.length,
               offers: modelRows.reduce((s, r) => s + r.offers.length, 0) },
     sources: {
@@ -1115,6 +1122,9 @@ async function build() {
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
       aa_coding_agents_v1_5: currentCodingAgents.collected_at,
       provider_meta: providerMeta.collected_at,
+      aa_efficiency: aaEfficiency.collected_at,
+      openrouter_efficiency: openrouterEfficiency.collected_at,
+      chutes_efficiency: chutesEfficiency.collected_at,
     },
     source_status: {
       aa_coding_agents: {

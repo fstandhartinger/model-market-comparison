@@ -14,6 +14,14 @@ some app internals — details per release below.
   - Base URL: **`https://model-market-comparison.app.mintapis.com`**
   - `GET /api/dataset` · `GET /api/models` · `GET /api/providers` · `GET /api/meta` · `GET /api/health`
 
+## 2026-09-10 — rebuild phase 02
+
+- Add `models[].token_efficiency` with dated AA output-tokens-per-task/canonical benchmark counts and workload I/O evidence. Exact OpenRouter usage takes priority; the Chutes global fallback is explicitly assumed. AA ratios remain benchmark proxies.
+- Add `efficiency.openrouter_endpoints[or_model_id][endpoint_tag]` with provider names, exact endpoint identities, cache-hit statistics, dated cache read/write prices and sparse-coverage statuses. Base provider labels never join endpoint telemetry.
+- Add explicit coverage, unmatched AA rows, provenance and failed/uncollected-attempt records. Preserve all historical metadata field dates, existing prices, score meanings, URLs and file locations.
+- Add three atomic collectors, parser/identity/failure tests and reusable collection skills. Daily refresh gains AA efficiency, one weekly OpenRouter ranking plus four model pages in rotation, and seven completed days of Chutes aggregate usage.
+- Optional Postgres seeding adds `dataset_meta.extensions` to retain additive metadata; production continues to serve bundled JSON. See [API.md](API.md#phase-02-additions--token-and-caching-evidence-2026-09-10) for the full schema. Adjusted costs and UI follow in subsequent phases.
+
 ## 2026-09-10 — rebuild phase 01
 
 - Repair AA metadata parsing for slug-based Flight records and retain historical identifiers/licensing with their original per-field source dates. Refresh AA, OpenRouter and DesignArena; restore all 68 v1.4 Coding Agent rows.
