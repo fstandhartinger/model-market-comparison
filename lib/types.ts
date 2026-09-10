@@ -103,6 +103,7 @@ export interface ModelRow {
     metadata_correction?: string;
     openrouter_api_id?: string | null;
     context_window_tokens?: number | null;
+    retained_fields?: Record<string, { source: string; collected_at: string; reason: string }>;
   };
   openrouter_metadata?: {
     id?: string | null;
@@ -129,6 +130,7 @@ export interface Dataset {
   generated_at: string;
   counts: { models: number; families: number; providers: number; offers: number };
   sources: Record<string, string>;
+  source_status?: Record<string, { version: string; status: string; collected_at?: string; note?: string; count?: number; path?: string; url?: string }>;
   models: ModelRow[];
   providers: {
     platform: string; provider: string; model_count: number;

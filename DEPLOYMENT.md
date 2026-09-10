@@ -44,7 +44,7 @@ export ARTIFICIAL_ANALYSIS_API_KEY=aa_…
 npm run data:refresh   # fetch live (AA + DesignArena + OpenRouter) → rebuild dataset.json
 npm run db:seed        # (if using Postgres) reload it
 ```
-Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) and the AA Coding Agent Index are scraped semi-manually — see [data/SCRAPING.md](data/SCRAPING.md).
+Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) remain curated — see [data/SCRAPING.md](data/SCRAPING.md). Collect AA Coding Agent v1.5 with `node scripts/fetch-aa-coding-agents.mjs`; v1.4 stays dated and separate for Composite. The daily wrapper and prompt are tracked in `ops/daily/` and installed at `/opt/mmc-daily/`.
 
 ## Current deployment (Sandy / Coolify)
 

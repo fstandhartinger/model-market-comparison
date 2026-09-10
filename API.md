@@ -58,7 +58,7 @@ Dataset `generated_at`, `counts`, per-source collection dates, and whether the d
 ## Pricing / score conventions
 - Token prices are **USD per 1M tokens**, input and output separately. EUR-native snapshots retain the original EUR fields and store the audited ECB conversion rate/date used for USD normalization. An active catalog row may have `null` prices when the provider publishes no per-model rate. Context tiers, OpenRouter endpoint tiers, and managed routes such as Azure Direct versus Fireworks remain separate offers. Current GitHub Copilot usage is token-metered and converted to AI Credits at $0.01/credit; its `current` rates stay on the separate Copilot product axis. `multiplier` / `usd_per_request` apply only to eligible legacy annual Pro/Pro+ request billing.
 - **10:1 blended cost** = `(10·input + 1·output) / 11`.
-- Score scales: `composite` and the AA indices are 0–100; raw DesignArena score keys return Elo (~1000–1400). The **Coding Agent Index** is the median across all published harnesses for the exact model/reasoning-effort variant (Claude Code / Codex / Cursor CLI / …); every harness result is retained and results are never copied to sibling variants.
+- Score scales: `composite` and the AA indices are 0–100; raw DesignArena score keys return Elo (~1000–1400). The **Coding Agent Index** is the median across all published harnesses for the exact model/reasoning-effort variant (Claude Code / Codex / Cursor CLI / …); every harness result is retained and results are never copied to sibling variants. This existing field retains the dated **v1.4** snapshot. AA's current **v1.5** has different benchmark components and is collected separately at `data/raw/aa-coding-agents-v1.5.json`; it does not replace the Composite input.
 - `composite` uses five slots: AA Coding, source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. Each DesignArena board needs at least 200 battles and is converted from Elo to its expected score against a fixed Elo 1000 opponent: `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is percentile-normalized over the current catalog's unique observed values. Every missing slot is assigned that model's mean observed percentile, making `composite_base` exactly the arithmetic mean of its available percentiles. With no reliable observed slot the fallback is 50; this fallback is not treated as benchmark evidence for family-representative selection. The returned `composite` adds a deterministic least-squares projection: if a model covers all reliable slots of another measured model and is no worse in each, the final scores preserve that dominance with a 0.1-point margin. `composite_base` exposes the pre-projection value. Family-scoped Intelligence.ai results attach exactly once to the deterministic collapsed-view representative and are labeled with `designarena_attachment_note`.
 - Offer-level `eu_hosted` says that this specific model offer is served from an audited EU location. `eu_policy_equivalent` is a separate company-specific classification that makes an offer eligible for the product&apos;s EU filter without asserting technical EU residency; it is currently set only on Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code, whose inference may occur outside the EU. Provider-level `eu_hosted` only says the provider has at least some EU-hosted capacity; it must not be used by itself to infer residency for every offer.
 
@@ -90,3 +90,15 @@ is pricing only. Nullable direct Azure Astra prices are not zero; OpenRouter's
 Azure offers are separate priced routes.
 
 See [CHANGELOG.md](CHANGELOG.md) and [September audit](data/research/refresh-2026-09-08.md).
+
+### Phase 01 additions (2026-09-10)
+
+Existing URLs, file paths and score meanings remain unchanged. `sources.aa_coding_agents`
+is the actual last collection date of the retained v1.4 snapshot, not today's date.
+`sources.aa_coding_agents_v1_5` tracks the newly collected version. `source_status`
+explains this separation. The v1.5 raw rows carry exact source IDs, components and
+provenance; they will enter versioned benchmark views in phases 04–06.
+
+`models[].aa_metadata.retained_fields` records `source`, `collected_at` and `reason`
+for each metadata field retained from an older AA publication after the current
+leaderboard stopped providing it. A snapshot refresh does not advance those field dates.

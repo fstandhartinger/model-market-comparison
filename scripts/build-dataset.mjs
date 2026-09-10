@@ -446,6 +446,11 @@ async function build() {
   const tSystems = await readJSON("t-systems-llm-hub.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
   const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
+  const currentCodingAgents = await readJSON("aa-coding-agents-v1.5.json");
+  if (codingAgents.version !== "1.4" || currentCodingAgents.version !== "1.5"
+    || currentCodingAgents.rows.length !== currentCodingAgents.count) {
+    throw new Error("Coding Agent snapshot versions/counts are invalid; Composite requires the retained v1.4 snapshot");
+  }
   const copilot = await readJSON("github-copilot.json");
   const claude = await readJSON("claude-code.json");
 
@@ -498,6 +503,7 @@ async function build() {
         metadata_correction: hfCorrection?.reason,
         openrouter_api_id: meta.openrouter_api_id || null,
         context_window_tokens: num(meta.context_window_tokens),
+        ...(meta.retained_fields ? { retained_fields: meta.retained_fields } : {}),
       },
       benchmarks: {
         aa_intelligence_index: num(ev.artificial_analysis_intelligence_index),
@@ -1107,7 +1113,18 @@ async function build() {
       chutes: chutes.collected_at, ovhcloud: ovhcloud.collected_at, stackit: stackit.collected_at,
       t_systems_llm_hub: tSystems.collected_at,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
+      aa_coding_agents_v1_5: currentCodingAgents.collected_at,
       provider_meta: providerMeta.collected_at,
+    },
+    source_status: {
+      aa_coding_agents: {
+        version: "1.4", status: "retained", collected_at: codingAgents.collected_at,
+        note: "AA now publishes v1.5. This dated v1.4 snapshot preserves the existing Composite definition; current v1.5 is collected separately and never mixed into it.",
+      },
+      aa_coding_agents_v1_5: {
+        version: currentCodingAgents.version, status: "collected_separately", count: currentCodingAgents.count,
+        path: "data/raw/aa-coding-agents-v1.5.json", url: currentCodingAgents.endpoint,
+      },
     },
     build_diagnostics: {
       artificialanalysis_rows_input: aa.models.length,

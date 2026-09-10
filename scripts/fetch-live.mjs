@@ -2,10 +2,12 @@
 // Fetch live data from OpenRouter, ArtificialAnalysis, and DesignArena.
 // Writes raw JSON snapshots into data/raw/. These snapshots are committed so the
 // app has a deterministic seed even when the upstream APIs are unreachable.
-import { writeFile, mkdir } from "node:fs/promises";
+import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { enrichArtificialAnalysis } from "../lib/aa-metadata.mjs";
+import { parseArtificialAnalysisMetadata } from "../lib/aa-rsc.mjs";
+import { writeJSONAtomic } from "../lib/snapshot.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -18,7 +20,7 @@ const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 async function getJSON(url, opts = {}, tries = 3) {
   for (let i = 0; i < tries; i++) {
     try {
-      const res = await fetch(url, { ...opts, headers: { "User-Agent": UA, ...(opts.headers || {}) } });
+      const res = await fetch(url, { signal: AbortSignal.timeout(60_000), ...opts, headers: { "User-Agent": UA, ...(opts.headers || {}) } });
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
       return await res.json();
     } catch (e) {
@@ -31,7 +33,7 @@ async function getJSON(url, opts = {}, tries = 3) {
 async function getText(url, opts = {}, tries = 3) {
   for (let i = 0; i < tries; i++) {
     try {
-      const res = await fetch(url, { ...opts, headers: { "User-Agent": UA, ...(opts.headers || {}) } });
+      const res = await fetch(url, { signal: AbortSignal.timeout(60_000), ...opts, headers: { "User-Agent": UA, ...(opts.headers || {}) } });
       if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
       return await res.text();
     } catch (e) {
@@ -39,53 +41,6 @@ async function getText(url, opts = {}, tries = 3) {
       await sleep(800 * (i + 1));
     }
   }
-}
-
-// The authenticated AA data endpoint intentionally contains only benchmark,
-// price and speed fields. The public leaderboard's RSC payload adds the model
-// identity metadata the comparison also needs (open-weights/license,
-// deprecation, reasoning mode and exact OpenRouter id). Parse the public payload
-// by balanced JSON object boundaries; fail closed if it ever stops matching the
-// API ids instead of silently falling back to organization-name heuristics.
-function parseArtificialAnalysisMetadata(html) {
-  const scriptRe = /<script>self\.__next_f\.push\((\[.*?\])\)<\/script>/gs;
-  let match;
-  let payload = "";
-  while ((match = scriptRe.exec(html))) {
-    try {
-      const part = JSON.parse(match[1]);
-      if (typeof part[1] === "string") payload += `${part[1]}\n`;
-    } catch { /* unrelated/non-JSON script */ }
-  }
-  payload = payload.replace(/\\\"/g, '"');
-
-  const metadata = new Map();
-  let position = 0;
-  while ((position = payload.indexOf('{"id":"', position)) >= 0) {
-    let depth = 0;
-    let inString = false;
-    let escaped = false;
-    let end = -1;
-    for (let index = position; index < payload.length; index += 1) {
-      const character = payload[index];
-      if (inString) {
-        if (escaped) escaped = false;
-        else if (character === "\\") escaped = true;
-        else if (character === '"') inString = false;
-        continue;
-      }
-      if (character === '"') inString = true;
-      else if (character === "{") depth += 1;
-      else if (character === "}" && --depth === 0) { end = index + 1; break; }
-    }
-    if (end < 0) break;
-    try {
-      const row = JSON.parse(payload.slice(position, end));
-      if (typeof row.isOpenWeights === "boolean") metadata.set(row.id, row);
-    } catch { /* nested objects and unrelated payload entries are ignored */ }
-    position = end;
-  }
-  return metadata;
 }
 
 async function fetchArtificialAnalysis() {
@@ -97,20 +52,25 @@ async function fetchArtificialAnalysis() {
   const leaderboardHtml = await getText("https://artificialanalysis.ai/leaderboards/models");
   const metadata = parseArtificialAnalysisMetadata(leaderboardHtml);
   const apiModels = data.data || [];
-  const { models, missing, extraCount } = enrichArtificialAnalysis(apiModels, metadata);
+  let previous = {};
+  try { previous = JSON.parse(await readFile(join(RAW, "artificialanalysis.json"), "utf8")); }
+  catch (error) { if (error.code !== "ENOENT") throw error; }
+  const { models, missing, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous);
   if (missing.length) {
     console.log(`  warn: ${missing.length} API model(s) lack leaderboard metadata (mid-rollout), shipping with null metadata: ${missing.map((m) => m.name).join(", ")}`);
   }
   if (extraCount) console.log(`  note: leaderboard carries ${extraCount} extra metadata row(s) not in the v2 API yet`);
   console.log(`  ${models.length} models`);
-  await writeFile(join(RAW, "artificialanalysis.json"), JSON.stringify({
+  const target = join(RAW, "artificialanalysis.json");
+  const snapshot = {
     source: "ArtificialAnalysis API v2",
     endpoint: "https://artificialanalysis.ai/api/v2/data/llms/models",
     metadata_endpoint: "https://artificialanalysis.ai/leaderboards/models",
     collected_at: new Date().toISOString().slice(0, 10),
     count: models.length,
     models,
-  }, null, 2));
+  };
+  await writeJSONAtomic(target, snapshot);
 }
 
 async function fetchDesignArena() {
@@ -150,14 +110,14 @@ async function fetchDesignArena() {
       open_source: typeof model.openSource === "boolean" ? model.openSource : null,
     }];
   }));
-  await writeFile(join(RAW, "designarena.json"), JSON.stringify({
+  await writeJSONAtomic(join(RAW, "designarena.json"), {
     source: "Intelligence.ai leaderboard API (formerly DesignArena)",
     endpoint: `POST ${baseUrl}/api/leaderboard`,
     registry_endpoint: `GET ${baseUrl}/api/registry`,
     collected_at: new Date().toISOString().slice(0, 10),
     model_registry: modelRegistry,
     leaderboards: out,
-  }, null, 2));
+  });
 }
 
 // Concurrency-limited map.
@@ -221,7 +181,7 @@ async function fetchOpenRouter() {
     };
   });
 
-  await writeFile(join(RAW, "openrouter.json"), JSON.stringify({
+  await writeJSONAtomic(join(RAW, "openrouter.json"), {
     source: "OpenRouter public API",
     endpoints: {
       catalog: "https://openrouter.ai/api/v1/models",
@@ -230,7 +190,7 @@ async function fetchOpenRouter() {
     collected_at: new Date().toISOString().slice(0, 10),
     count: enriched.length,
     models: enriched,
-  }, null, 2));
+  });
   console.log(`  wrote ${enriched.length} OpenRouter models with provider endpoints`);
 }
 

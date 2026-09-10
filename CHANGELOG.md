@@ -14,6 +14,12 @@ some app internals — details per release below.
   - Base URL: **`https://model-market-comparison.app.mintapis.com`**
   - `GET /api/dataset` · `GET /api/models` · `GET /api/providers` · `GET /api/meta` · `GET /api/health`
 
+## 2026-09-10 — rebuild phase 01
+
+- Repair AA metadata parsing for slug-based Flight records and retain historical identifiers/licensing with their original per-field source dates. Refresh AA, OpenRouter and DesignArena; restore all 68 v1.4 Coding Agent rows.
+- AA changed the Coding Agent benchmark to v1.5. Collect it into `data/raw/aa-coding-agents-v1.5.json` with strict validation and atomic writes. Preserve the existing Composite and v1.4 collection date; explain the separation in `/about` and `source_status`.
+- Track daily runner/prompt in `ops/daily/`; use the tested collector and subscription-only Codex auth. No data URLs or existing score fields moved.
+
 ## 2026-09-08
 
 - **New featured models:** GPT-6 Astra, GLM-5.3 Flash, Muse Spark 1.3, Qwen3.8 Max 0902

@@ -58,7 +58,7 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 | OVHcloud AI Endpoints (FR, EUR→USD) | `data/raw/ovhcloud.json` | [ovhcloud.method.md](raw/ovhcloud.method.md) — official model/pricing catalog; original EUR rates and audited ECB conversion retained |
 | STACKIT Model Serving (DE/EU) | `data/raw/stackit.json` | [stackit.method.md](raw/stackit.method.md) — official active-model catalog; rows remain explicitly unpriced where no public per-model rate exists |
 | T-Systems LLM Hub (DE/EU) | `data/raw/t-systems-llm-hub.json` | [t-systems-llm-hub.method.md](raw/t-systems-llm-hub.method.md) — official catalog and context-tier prices; preview rows without public prices remain null |
-| ArtificialAnalysis Coding Agent Index (model/effort × harness; source-matched median) | `data/raw/aa-coding-agents.json` | parsed from the AA homepage RSC payload (`self.__next_f` `rows` array); every harness row is retained, explicit efforts remain separate, and bare identities join only through audited source mappings |
+| ArtificialAnalysis Coding Agent Index (model/effort × harness; source-matched median) | `data/raw/aa-coding-agents.json` | retained v1.4 snapshot dated 2026-09-09 for the unchanged Composite; never replace with v1.5 or advance its historical date |
 | Chutes (live models, token prices and TEE flags) | `data/raw/chutes.json` | [chutes.method.md](raw/chutes.method.md) — first-party models endpoint plus per-chute `current_estimated_price` verification |
 | GitHub Copilot (current AI-Credit token catalog + legacy request multipliers) | `data/raw/github-copilot.json` | [github-copilot.method.md](raw/github-copilot.method.md) — GitHub supported-model, pricing and billing docs; the two billing systems remain separate |
 | Anthropic / Claude Code (all callable first-party models + Enterprise terms) | `data/raw/claude-code.json` | [claude-code.method.md](raw/claude-code.method.md) — official pricing, model lifecycle, retention and Enterprise billing docs |
@@ -83,3 +83,23 @@ are deployed by this refresh. Curated provider catalogs are re-audited separatel
 this cron refreshes the four benchmark/router sources, not all manual provider files.
 Run `npm run build` before `npm test` to refresh the production prerender manifest.
 See [refresh audit](research/refresh-2026-09-08.md) for source checks and limitations.
+
+## AA Coding Agent version change (2026-09-10)
+
+Run `node scripts/fetch-aa-coding-agents.mjs`. It collects the full `benchmarkRows`
+array from https://artificialanalysis.ai/agents/coding-agents, resolves Flight references,
+and validates v1.5, exact identities, complete component coverage and score arithmetic
+before atomically replacing `data/raw/aa-coding-agents-v1.5.json`. Network, parse, version
+or count failures exit nonzero without overwriting the last good file. The minimum of
+13 is the verified v1.5 baseline; future snapshots may grow but cannot silently shrink.
+
+AA's [version history](https://artificialanalysis.ai/methodology/coding-agents-benchmarking)
+confirms v1.5 uses DeepSWE v1.1, Terminal-Bench 4.0 and SWE-Atlas-QnA. Its 13 complete
+rows are not a replacement for the 68-row v1.4 snapshot. New versioned views will ingest
+v1.5 in phases 04–06. Homepage-first-array extraction is retired. The tracked cron
+prompt is `ops/daily/prompt.md`; synchronize it to `/opt/mmc-daily/prompt.md` after changes.
+
+AA metadata parsing now keys source records by slug (UUID fallback). Fields no longer
+provided by the source retain previous values only for the same UUID and slug, with
+original per-field provenance in `metadata.retained_fields`. Explicit current nulls
+clear values; absent fields do not acquire a new observation date.
