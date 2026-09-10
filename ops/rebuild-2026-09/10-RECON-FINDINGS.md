@@ -169,3 +169,11 @@ AA Intelligence Index. Result at handover:
   agentic file work through opencode (`worker.sh --agent`).
 - Gauntlet rule in practice: the critic must come from a *different vendor family* than the
   producer — DeepSeek → GLM → GPT-Luna rotate nicely.
+
+- Caveat on the picker: the 2026-09-08 `lib/aa-metadata.mjs` refactor **dropped
+  `aa_metadata.openrouter_api_id`** from the dataset, so nothing in `data/dataset.json`
+  now carries an explicit OpenRouter identifier (`offers` have no `or_model_id` either).
+  `pick-worker-models.mjs` therefore joins by normalized slug/family name, which is
+  approximate. **Restoring a real OpenRouter id on each model is a cheap, high-value fix**
+  — do it in phase 2 while you are in the ingest code; it makes this picker exact and helps
+  the caching-statistics join in §3 as well.

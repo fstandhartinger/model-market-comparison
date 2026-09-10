@@ -16,22 +16,34 @@ const LIMIT = Number(argv("--limit", 10));
 const AS_JSON = args.includes("--json");
 const DATASET = new URL("../../../data/dataset.json", import.meta.url);
 
-// AA intelligence index by OpenRouter model id, from our own dataset.
+// AA Intelligence Index, keyed every way we can, because the dataset's OpenRouter
+// identifier has moved between shapes (aa_metadata.openrouter_api_id existed before the
+// 2026-09-08 aa-metadata refactor and may come back). Keys tried, in order:
+//   1. an explicit OpenRouter id on the model, if the dataset carries one
+//   2. the model's family_key, matched against the slug part of the OpenRouter id
+//   3. a normalized family/display name
 const ds = JSON.parse(readFileSync(DATASET));
-const byOrId = new Map();
+const norm = (s) => String(s).toLowerCase()
+  .replace(/[:@].*$/, "")                       // drop :free / :batch / @preset
+  .replace(/-(instruct|chat|it|hf)$/g, "")
+  .replace(/[^a-z0-9.]+/g, "-").replace(/^-|-$/g, "");
+const byKey = new Map();
+const put = (k, v) => { if (!k || typeof v !== "number") return; const p = byKey.get(k); if (p == null || v > p) byKey.set(k, v); };
 for (const m of ds.models) {
-  const orId = m.aa_metadata?.openrouter_api_id;
   const idx = m.benchmarks?.aa_intelligence_index;
-  if (!orId || typeof idx !== "number") continue;
-  const prev = byOrId.get(orId);
-  if (prev == null || idx > prev) byOrId.set(orId, idx); // best variant of the model
+  if (typeof idx !== "number") continue;
+  put(norm(m.aa_metadata?.openrouter_api_id?.split("/").pop() ?? ""), idx);
+  put(norm(m.family_key), idx);
+  put(norm(m.family_name), idx);
 }
-// Family-level fallback: strip the ":free"/":nitro" style suffix and the vendor prefix.
-const familyIndex = new Map();
-for (const [orId, idx] of byOrId) {
-  const slug = orId.split("/").pop().replace(/[:@].*$/, "");
-  familyIndex.set(slug, Math.max(familyIndex.get(slug) ?? 0, idx));
-}
+const lookupIndex = (orId) => {
+  const slug = norm(orId.split("/").pop());
+  if (byKey.has(slug)) return [byKey.get(slug), "slug"];
+  // a dated SKU such as deepseek-v4-flash-0731 falls back to its undated family
+  const undated = slug.replace(/-\d{4,8}$/, "");
+  if (byKey.has(undated)) return [byKey.get(undated), "family"];
+  return [null, "unknown"];
+};
 
 const res = await fetch("https://openrouter.ai/api/v1/models", {
   headers: { "User-Agent": "benchmarkheaven/1.0 (+https://benchmarkheaven.com)" },
@@ -41,9 +53,7 @@ const catalog = (await res.json()).data || [];
 
 const price = (m) => Number(m.pricing?.prompt ?? "1") + Number(m.pricing?.completion ?? "1");
 const candidates = catalog.map((m) => {
-  const base = m.id.replace(/:free$/, "");
-  const slug = base.split("/").pop().replace(/[:@].*$/, "");
-  const aa = byOrId.get(base) ?? byOrId.get(m.id) ?? familyIndex.get(slug) ?? null;
+  const [aa, aaSource] = lookupIndex(m.id);
   return {
     id: m.id,
     free: m.id.endsWith(":free") || price(m) === 0,
@@ -51,7 +61,7 @@ const candidates = catalog.map((m) => {
     output_per_1m: Number(m.pricing?.completion ?? 0) * 1e6,
     context: m.context_length ?? null,
     aa_intelligence_index: aa,
-    aa_source: byOrId.has(base) ? "exact" : familyIndex.has(slug) ? "family" : "unknown",
+    aa_source: aaSource,
   };
 });
 
