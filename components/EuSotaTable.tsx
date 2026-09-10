@@ -2,13 +2,13 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
-import type { ClientData, ClientModel, ClientOffer } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData, type ClientModel, type ClientOffer } from "../lib/client-model";
 import {
-  blend,
+  offerPrice, priceContext, priceLabel,
   createOfferScope,
   scopedCatalogOffers,
 } from "../lib/cost";
-import { usdPerM } from "../lib/format";
+import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { preferredVariantIds, selectableModels } from "../lib/variants";
 import { useSettings } from "./SettingsContext";
 
@@ -48,15 +48,16 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
     if (!model) {
       const hiddenAsDeprecated = s.hideDeprecated
         && data.models.some((candidate) => candidate.family_key === entry.key && candidate.deprecated);
-      if (!hiddenAsDeprecated) result.push({ entry, model: null, offers: [] });
+      if (!hiddenAsDeprecated && s.minScore <= 0) result.push({ entry, model: null, offers: [] });
       return result;
     }
     if (s.openOnly && !model.open_weights) return result;
     if (s.featured && !model.featured) return result;
     if (s.familySet && !s.familySet.has(model.family_key)) return result;
     const score = model.scores[s.score];
-    if (s.minScore > 0 && (score == null || score < s.minScore)) return result;
-    const offers = scopedCatalogOffers(data.offersByModel[model.id], offerScope);
+    if (s.minScore > 0 && (!hasScoreEvidence(model, s.score) || score == null || score < s.minScore)) return result;
+    const ctx = priceContext(model, data, s);
+    const offers = scopedCatalogOffers(data.offersByModel[model.id], offerScope, ctx).sort((a,b) => (offerPrice(a, ctx).value ?? Infinity) - (offerPrice(b, ctx).value ?? Infinity));
     // Unlike the page's built-in EU baseline (which intentionally keeps a row
     // to explain that no EU route exists), explicit global provider/TEE/Non-US
     // restrictions behave like the other comparison views and remove a model
@@ -72,11 +73,12 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
 
   return (
     <>
+      <PriceAssumptions />
       <div className="card overflow-x-auto">
         <table className="dtable w-full min-w-[720px] text-sm">
           <thead><tr>
             <th className="px-3 py-2 text-left text-xs text-gray-400">Model</th>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">EU-hosted / approved-equivalent offers (10:1 blended $/1M)</th>
+            <th className="px-3 py-2 text-left text-xs text-gray-400">EU-hosted / approved-equivalent offers ({priceLabel(s)})</th>
           </tr></thead>
           <tbody>
             {rows.map(({ entry, model, offers }) => (
@@ -86,12 +88,12 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
                 </td>
                 <td className="px-3 py-2 text-sm">
                   {offers.length ? offers.map((offer) => {
-                    const price = blend(offer.input_per_1m, offer.output_per_1m);
+                    const price = offerPrice(offer, priceContext(model!, data, s));
                     return (
                       <span key={offer.key} className="mr-3 whitespace-nowrap">
                         <b>{offer.provider}</b>
                         {offer.platform !== offer.provider && <span className="text-[10px] text-gray-500">/{offer.platform}</span>}
-                        {" "}<span className="text-gray-400">{price == null ? "price not public" : usdPerM(price)}</span>
+                        {" "}<span className="text-gray-400">{price.value == null ? "price not public" : <PriceValue price={price} />}</span>
                         {offer.eu_policy_equivalent && <span title="Company-approved equivalent; this Global deployment may process inference outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}
                         {offer.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}
                       </span>

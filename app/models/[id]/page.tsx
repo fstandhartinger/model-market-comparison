@@ -19,6 +19,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
     .sort((a, b) => (b.benchmarks?.aa_coding_index ?? -1) - (a.benchmarks?.aa_coding_index ?? -1));
   const offers = data.offersByModel[model.id] || [];
   const clientModel = data.models.find((candidate) => candidate.id === model.id);
+  if (!clientModel) notFound();
+  const pricingData = { efficiency: data.efficiency, sourceDates: data.sourceDates, generated_at: data.generated_at };
   const b = model.benchmarks;
   const da = model.designarena;
 
@@ -38,7 +40,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {model.manual_notes && <p className="mt-2 max-w-3xl text-xs text-warn/90">{model.manual_notes}</p>}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <ModelDetailOffers offers={offers} providers={data.providers} view="top" />
+        <ModelDetailOffers offers={offers} providers={data.providers} model={clientModel} pricingData={pricingData} view="top" />
 
         {/* Benchmarks */}
         <section className="card min-w-0 p-4">
@@ -149,7 +151,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         </section>
       )}
 
-      <ModelDetailOffers offers={offers} providers={data.providers} view="all" />
+      <ModelDetailOffers offers={offers} providers={data.providers} model={clientModel} pricingData={pricingData} view="all" />
     </div>
   );
 }

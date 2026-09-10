@@ -1,0 +1,1013 @@
+{
+  "checked_at": "2026-09-10T20:45:53.025604+00:00",
+  "artifact": "phase03 five model arithmetic and source sanity",
+  "source_archive_sha256": "d887729f3f4266489a648dc13e3f6b9e1627a83bb74dc9cc6030e7597f2a6953",
+  "scope": "exclude Chinese providers; all regions; exact specified reasoning variants",
+  "checks": [
+    {
+      "id": "gpt-5.6-sol::max",
+      "score": 47.1,
+      "aa_source": {
+        "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+        "collected_at": "2026-09-10T20:13:54.198Z",
+        "sha256": "345d1486b26aa539c43da9f6bc0736e057ca3249753c54c82a324d1cec3b2847",
+        "row": {
+          "id": "d93edfe8-bf35-49ad-b56e-b18116142a1c",
+          "slug": "gpt-5-6-sol",
+          "name": "GPT-5.6 Sol (max)",
+          "intelligenceIndexOutputTokensPerTask": {
+            "reasoning": 17280.445013860917,
+            "answer": 12028.929221184391,
+            "output": 29309.37423504531
+          },
+          "canonicalIntelligenceIndexTokenCount": {
+            "input": 2729472126,
+            "output": 89979207,
+            "answer": 17377727,
+            "reasoning": 72601480
+          }
+        }
+      },
+      "ratio_source": {
+        "url": "https://openrouter.ai/rankings?view=week",
+        "sha256": "fdce034aa90e86450ac2ccf7ebe3567ea5d82182e8359c313b5c4bae5d2ace0e",
+        "row": {
+          "date": "2026-09-09 00:00:00",
+          "model_permaslug": "openai/gpt-5.6-sol-20260709",
+          "variant": "standard",
+          "total_completion_tokens": 22342889482,
+          "total_prompt_tokens": 1811927117501,
+          "total_native_tokens_reasoning": 0,
+          "count": 34180888,
+          "num_media_prompt": 0,
+          "num_media_completion": 0,
+          "image_output_requests": 0,
+          "num_video_prompt": 0,
+          "video_output_seconds": 0,
+          "rerank_documents": 0,
+          "stt_transcript_characters": 0,
+          "num_audio_prompt": 0,
+          "total_native_tokens_cached": 0,
+          "total_tool_calls": 0,
+          "requests_with_tool_call_errors": 0,
+          "variant_permaslug": "openai/gpt-5.6-sol-20260709",
+          "change": 0.02945068247757245
+        }
+      },
+      "price_source": {
+        "url": "https://openrouter.ai/api/v1/models/openai/gpt-5.6-sol/endpoints",
+        "fetched_at": "2026-09-10T20:41:38.700873+00:00",
+        "body_sha256": "67fdad829f81d92430a4f658a9e6ffeb82eec696b21b0938d0d800ef7568f1a8",
+        "endpoint": {
+          "name": "OpenAI | openai/gpt-5.6-sol-20260709",
+          "model_id": "openai/gpt-5.6-sol",
+          "model_name": "OpenAI: GPT-5.6 Sol",
+          "context_length": 1050000,
+          "pricing": {
+            "prompt": "0.000002",
+            "completion": "0.00001",
+            "web_search": "0.01",
+            "input_cache_read": "0.0000002",
+            "input_cache_write": "0.0000025",
+            "discount": 0.5,
+            "overrides": [
+              {
+                "min_prompt_tokens": 272000,
+                "prompt": "0.000004",
+                "completion": "0.000015",
+                "input_cache_read": "0.0000004",
+                "input_cache_write": "0.000005"
+              }
+            ]
+          },
+          "provider_name": "OpenAI",
+          "tag": "openai",
+          "quantization": "unknown",
+          "max_completion_tokens": 128000,
+          "max_prompt_tokens": 922000,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "seed",
+            "max_tokens",
+            "response_format",
+            "structured_outputs",
+            "tools",
+            "tool_choice",
+            "reasoning_effort"
+          ],
+          "supports_tool_choice": {
+            "none": true,
+            "auto": true,
+            "required": true,
+            "function": true
+          },
+          "status": 0,
+          "uptime_last_30m": 99.21993475817978,
+          "uptime_last_5m": null,
+          "uptime_last_1d": null,
+          "supports_implicit_caching": false,
+          "supports_voice_cloning": false,
+          "latency_last_30m": null,
+          "throughput_last_30m": null
+        }
+      },
+      "cache_source": {
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-5.6-sol-20260709&variant=standard&shape=v7",
+        "sha256": "f0fe7b2270bc5bfeccb9d8a15552d77424fb72bbe14f339144ecb0b1f3e51e36",
+        "summary": {
+          "endpointId": "a54c5de0-89bf-4ad7-a212-cf977eed918a",
+          "providerName": "OpenAI (3)",
+          "providerSlug": "openai",
+          "effectiveInputPrice": 0.5309239248816225,
+          "effectiveOutputPrice": 10.686801867908073,
+          "cacheHitRate": 0.898399104222447,
+          "totalTokens": 191769904131
+        },
+        "endpoint_identity": {
+          "id": "a54c5de0-89bf-4ad7-a212-cf977eed918a",
+          "provider_slug": "openai",
+          "provider_name": "OpenAI"
+        },
+        "definition": "Denominator and precise interval unpublished; applying to input tokens is an assumption."
+      },
+      "selected_offer": {
+        "key": "OpenRouter::OpenAI",
+        "source": "OpenRouter",
+        "provider": "OpenAI",
+        "platform": "OpenRouter",
+        "input_per_1m": 2,
+        "output_per_1m": 10,
+        "cache_read_per_1m": 0.19999999999999998,
+        "cache_write_per_1m": 2.5,
+        "or_model_id": "openai/gpt-5.6-sol",
+        "or_canonical_slug": "openai/gpt-5.6-sol-20260709",
+        "or_hugging_face_id": null,
+        "status": 0,
+        "endpoint_tag": "openai",
+        "region": "global",
+        "eu_hosted": false,
+        "non_us": false,
+        "price": {
+          "label": "Adjusted $/task",
+          "sources": [
+            {
+              "label": "List prices",
+              "source": "OpenRouter",
+              "url": "https://openrouter.ai/api/v1/models/openai/gpt-5.6-sol/endpoints",
+              "date": "2026-09-10",
+              "basis": "self_reported",
+              "note": "OpenRouter / OpenAI; global; endpoint openai"
+            },
+            {
+              "label": "Input/output ratio",
+              "source": "OpenRouter model-page usage",
+              "url": "https://openrouter.ai/openai/gpt-5.6-sol",
+              "date": "2026-09-10T19:53:59.381Z",
+              "basis": "derived",
+              "note": "openrouter_model_workload_all_apps; All reasoning configurations routed to this exact OpenRouter SKU; not effort-specific or coding-agent-only.; 2026-09-03 to 2026-09-09"
+            },
+            {
+              "label": "Output tokens/task",
+              "source": "Artificial Analysis Intelligence Index token efficiency (website Flight payload)",
+              "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+              "date": "2026-09-10T20:13:54.198Z",
+              "basis": "measured",
+              "note": "AA Intelligence Index task; exact configuration gpt-5-6-sol (max). Includes answer and reasoning tokens."
+            },
+            {
+              "label": "Cache-hit rate",
+              "source": "OpenRouter effective pricing statistics",
+              "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=openai%2Fgpt-5.6-sol-20260709&variant=standard&shape=v7",
+              "date": "2026-09-10T19:54:01.434Z",
+              "basis": "measured",
+              "note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response."
+            }
+          ],
+          "model": "GPT-5.6 Sol (max)",
+          "provider": "OpenAI / OpenRouter",
+          "value": 1.2031588085111848,
+          "unit": "$/task",
+          "assumptions": [
+            "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+            "Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.",
+            "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+            "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+          ],
+          "effective": {
+            "effective_cost_per_task": 1.2031588085111848,
+            "effective_cost_per_1m_tokens": 0.5000258782118518,
+            "inputs": {
+              "input_tokens_per_task": 2376883.7068387074,
+              "output_tokens_per_task": 29309.37423504531,
+              "input_output_ratio": 81.096364861883,
+              "cache_hit_rate": 0.898399104222447,
+              "cache_write_tokens": 0,
+              "input_per_1m": 2,
+              "output_per_1m": 10,
+              "cache_read_per_1m": 0.19999999999999998,
+              "cache_write_per_1m": 2.5
+            },
+            "terms": {
+              "uncached_input": 0.4829870275477669,
+              "cached_input": 0.4270780386129647,
+              "cache_write": 0,
+              "output": 0.2930937423504531
+            },
+            "assumptions": [
+              "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+              "Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.",
+              "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+              "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+            ],
+            "estimated": true
+          }
+        },
+        "blended": 1.2031588085111848
+      },
+      "resolved_inputs": {
+        "input_tokens_per_task": 2376883.7068387074,
+        "output_tokens_per_task": 29309.37423504531,
+        "input_output_ratio": 81.096364861883,
+        "cache_hit_rate": 0.898399104222447,
+        "cache_write_tokens": 0,
+        "input_per_1m": 2,
+        "output_per_1m": 10,
+        "cache_read_per_1m": 0.19999999999999998,
+        "cache_write_per_1m": 2.5
+      },
+      "independent_terms_usd": [
+        0.4829870275477669,
+        0.4270780386129647,
+        0.0,
+        0.2930937423504531
+      ],
+      "independent_total_usd": 1.2031588085111848,
+      "no_cache_same_route_scenario_usd": 5.046861156027869,
+      "result_matches": true
+    },
+    {
+      "id": "claude-sonnet-5::max",
+      "score": 38.4,
+      "aa_source": {
+        "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+        "collected_at": "2026-09-10T20:13:54.198Z",
+        "sha256": "345d1486b26aa539c43da9f6bc0736e057ca3249753c54c82a324d1cec3b2847",
+        "row": {
+          "id": "23c86e4a-c769-43c0-a056-79e3cd15834f",
+          "slug": "claude-sonnet-5",
+          "name": "Claude Sonnet 5 (Adaptive Reasoning, Max Effort)",
+          "intelligenceIndexOutputTokensPerTask": {
+            "reasoning": 88392.29202190228,
+            "answer": 29395.02883974881,
+            "output": 117787.3208616511
+          },
+          "canonicalIntelligenceIndexTokenCount": {
+            "input": 12859330968,
+            "output": 366709180,
+            "answer": 39209026,
+            "reasoning": 327500154
+          }
+        }
+      },
+      "ratio_source": {
+        "url": "https://openrouter.ai/rankings?view=week",
+        "sha256": "fdce034aa90e86450ac2ccf7ebe3567ea5d82182e8359c313b5c4bae5d2ace0e",
+        "row": {
+          "date": "2026-09-09 00:00:00",
+          "model_permaslug": "anthropic/claude-sonnet-5-20260630",
+          "variant": "standard",
+          "total_completion_tokens": 23731769324,
+          "total_prompt_tokens": 1303786109405,
+          "total_native_tokens_reasoning": 0,
+          "count": 27015036,
+          "num_media_prompt": 0,
+          "num_media_completion": 0,
+          "image_output_requests": 0,
+          "num_video_prompt": 0,
+          "video_output_seconds": 0,
+          "rerank_documents": 0,
+          "stt_transcript_characters": 0,
+          "num_audio_prompt": 0,
+          "total_native_tokens_cached": 0,
+          "total_tool_calls": 0,
+          "requests_with_tool_call_errors": 0,
+          "variant_permaslug": "anthropic/claude-sonnet-5-20260630",
+          "change": 0.04665015259572142
+        }
+      },
+      "price_source": {
+        "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+        "verified_at": "2026-09-10",
+        "verification": "Owner opened official pricing page via web tool; global Standard table. Exact numerical rows transcribed below; source title now Agent Platform pricing.",
+        "model": "Claude Sonnet 5",
+        "input_usd_million": 2,
+        "output_usd_million": 10,
+        "cache_read_usd_million": 0.2
+      },
+      "cache_source": null,
+      "selected_offer": {
+        "key": "Google Vertex AI::Google Vertex AI",
+        "source": "Google Vertex AI",
+        "provider": "Google Vertex AI",
+        "platform": "Google Vertex AI",
+        "input_per_1m": 2,
+        "output_per_1m": 10,
+        "pricing_tier": null,
+        "route_type": null,
+        "region": "global",
+        "notes": "Global rate $2/$10 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3/$15 standard afterwards - re-verify in September). Global processing location is uncontrolled. Cache hit $0.20; batch $1/$5. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+        "eu_hosted": false,
+        "non_us": false,
+        "price": {
+          "label": "Adjusted $/task",
+          "sources": [
+            {
+              "label": "List prices",
+              "source": "Google Vertex AI",
+              "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+              "date": "2026-09-08",
+              "basis": "self_reported",
+              "note": "Google Vertex AI / Google Vertex AI; global. Global rate $2/$10 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3/$15 standard afterwards - re-verify in September). Global processing location is uncontrolled. Cache hit $0.20; batch $1/$5. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+            },
+            {
+              "label": "Input/output ratio",
+              "source": "OpenRouter weekly model rankings",
+              "url": "https://openrouter.ai/rankings?view=week",
+              "date": "2026-09-10T20:13:54.742Z",
+              "basis": "derived",
+              "note": "openrouter_model_workload_all_apps; All reasoning configurations routed to this exact OpenRouter SKU; not effort-specific or coding-agent-only.; 2026-09-03 to 2026-09-09"
+            },
+            {
+              "label": "Output tokens/task",
+              "source": "Artificial Analysis Intelligence Index token efficiency (website Flight payload)",
+              "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+              "date": "2026-09-10T20:13:54.198Z",
+              "basis": "measured",
+              "note": "AA Intelligence Index task; exact configuration claude-sonnet-5 (max). Includes answer and reasoning tokens."
+            }
+          ],
+          "model": "Claude Sonnet 5 (Adaptive Reasoning, Max Effort)",
+          "provider": "Google Vertex AI / Google Vertex AI",
+          "value": 14.119973791748782,
+          "unit": "$/task",
+          "assumptions": [
+            "Cache-hit rate missing/invalid: 0% assumed; no cache discount credited.",
+            "Cache-read price missing/invalid: regular input price assumed; no read discount.",
+            "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+            "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+            "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+            "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+          ],
+          "effective": {
+            "effective_cost_per_task": 14.119973791748782,
+            "effective_cost_per_1m_tokens": 2.143014386197022,
+            "inputs": {
+              "input_tokens_per_task": 6471050.291566135,
+              "output_tokens_per_task": 117787.3208616511,
+              "input_output_ratio": 54.93842838285461,
+              "cache_hit_rate": 0,
+              "cache_write_tokens": 0,
+              "input_per_1m": 2,
+              "output_per_1m": 10,
+              "cache_read_per_1m": 2,
+              "cache_write_per_1m": 2
+            },
+            "terms": {
+              "uncached_input": 12.942100583132271,
+              "cached_input": 0,
+              "cache_write": 0,
+              "output": 1.177873208616511
+            },
+            "assumptions": [
+              "Cache-hit rate missing/invalid: 0% assumed; no cache discount credited.",
+              "Cache-read price missing/invalid: regular input price assumed; no read discount.",
+              "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+              "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+              "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+              "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+            ],
+            "estimated": true
+          }
+        },
+        "blended": 14.119973791748782
+      },
+      "resolved_inputs": {
+        "input_tokens_per_task": 6471050.291566135,
+        "output_tokens_per_task": 117787.3208616511,
+        "input_output_ratio": 54.93842838285461,
+        "cache_hit_rate": 0,
+        "cache_write_tokens": 0,
+        "input_per_1m": 2,
+        "output_per_1m": 10,
+        "cache_read_per_1m": 2,
+        "cache_write_per_1m": 2
+      },
+      "independent_terms_usd": [
+        12.942100583132271,
+        0.0,
+        0.0,
+        1.177873208616511
+      ],
+      "independent_total_usd": 14.119973791748782,
+      "no_cache_same_route_scenario_usd": 14.11997379174878,
+      "result_matches": true
+    },
+    {
+      "id": "gemini-3.5-flash::high",
+      "score": 33,
+      "aa_source": {
+        "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+        "collected_at": "2026-09-10T20:13:54.198Z",
+        "sha256": "345d1486b26aa539c43da9f6bc0736e057ca3249753c54c82a324d1cec3b2847",
+        "row": {
+          "id": "0097ebf5-124f-42f6-9463-33b00e711f03",
+          "slug": "gemini-3-5-flash",
+          "name": "Gemini 3.5 Flash (high)",
+          "intelligenceIndexOutputTokensPerTask": {
+            "reasoning": 36312.349377173494,
+            "answer": 18330.42235118367,
+            "output": 54642.77172835717
+          },
+          "canonicalIntelligenceIndexTokenCount": {
+            "input": 3194203816,
+            "output": 119761387,
+            "answer": 24071258,
+            "reasoning": 95690129
+          }
+        }
+      },
+      "ratio_source": {
+        "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-03&end_date=2026-09-09",
+        "raw_response_sha256": "bb8bb5f26f5145d5937a759f72f5fc2156d7f76a638b0dbc8b1e17b7d7c06d0a",
+        "sum_input": 233959387464,
+        "sum_output": 11242712650,
+        "included_rows": 112,
+        "window": {
+          "start_date": "2026-09-03",
+          "end_date": "2026-09-09"
+        }
+      },
+      "price_source": {
+        "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+        "verified_at": "2026-09-10",
+        "verification": "Owner opened official pricing page via web tool; global Standard table. Exact numerical rows transcribed below; source title now Agent Platform pricing.",
+        "model": "Gemini 3.5 Flash",
+        "input_usd_million": 1.5,
+        "output_usd_million": 9,
+        "cache_read_usd_million": 0.15
+      },
+      "cache_source": null,
+      "selected_offer": {
+        "key": "Google Vertex AI::Google Vertex AI",
+        "source": "Google Vertex AI",
+        "provider": "Google Vertex AI",
+        "platform": "Google Vertex AI",
+        "input_per_1m": 1.5,
+        "output_per_1m": 9,
+        "pricing_tier": null,
+        "route_type": null,
+        "region": "global",
+        "notes": "Global Standard PayGo price. Global processing location is uncontrolled. The separate EU route is $1.65/$9.90. Cached input $0.15.",
+        "eu_hosted": false,
+        "non_us": false,
+        "price": {
+          "label": "Adjusted $/task",
+          "sources": [
+            {
+              "label": "List prices",
+              "source": "Google Vertex AI",
+              "url": "https://cloud.google.com/vertex-ai/generative-ai/pricing",
+              "date": "2026-09-08",
+              "basis": "self_reported",
+              "note": "Google Vertex AI / Google Vertex AI; global. Global Standard PayGo price. Global processing location is uncontrolled. The separate EU route is $1.65/$9.90. Cached input $0.15."
+            },
+            {
+              "label": "Input/output ratio",
+              "source": "Chutes LLM usage statistics",
+              "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-03&end_date=2026-09-09",
+              "date": "2026-09-10T19:44:35.632Z",
+              "basis": "assumed",
+              "note": "chutes_global_workload_fallback; 2026-09-03 to 2026-09-09"
+            },
+            {
+              "label": "Output tokens/task",
+              "source": "Artificial Analysis Intelligence Index token efficiency (website Flight payload)",
+              "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+              "date": "2026-09-10T20:13:54.198Z",
+              "basis": "measured",
+              "note": "AA Intelligence Index task; exact configuration gemini-3-5-flash (high). Includes answer and reasoning tokens."
+            }
+          ],
+          "model": "Gemini 3.5 Flash (high)",
+          "provider": "Google Vertex AI / Google Vertex AI",
+          "value": 2.1974484007492268,
+          "unit": "$/task",
+          "assumptions": [
+            "Cache-hit rate missing/invalid: 0% assumed; no cache discount credited.",
+            "Cache-read price missing/invalid: regular input price assumed; no read discount.",
+            "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+            "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+            "I/O ratio assigned from fallback evidence; assumed for this model and task.",
+            "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+            "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+          ],
+          "effective": {
+            "effective_cost_per_task": 2.1974484007492268,
+            "effective_cost_per_1m_tokens": 1.8438810060590736,
+            "inputs": {
+              "input_tokens_per_task": 1137108.9701293416,
+              "output_tokens_per_task": 54642.77172835717,
+              "input_output_ratio": 20.809869890608653,
+              "cache_hit_rate": 0,
+              "cache_write_tokens": 0,
+              "input_per_1m": 1.5,
+              "output_per_1m": 9,
+              "cache_read_per_1m": 1.5,
+              "cache_write_per_1m": 1.5
+            },
+            "terms": {
+              "uncached_input": 1.7056634551940122,
+              "cached_input": 0,
+              "cache_write": 0,
+              "output": 0.4917849455552145
+            },
+            "assumptions": [
+              "Cache-hit rate missing/invalid: 0% assumed; no cache discount credited.",
+              "Cache-read price missing/invalid: regular input price assumed; no read discount.",
+              "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+              "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+              "I/O ratio assigned from fallback evidence; assumed for this model and task.",
+              "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+              "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+            ],
+            "estimated": true
+          }
+        },
+        "blended": 2.1974484007492268
+      },
+      "resolved_inputs": {
+        "input_tokens_per_task": 1137108.9701293416,
+        "output_tokens_per_task": 54642.77172835717,
+        "input_output_ratio": 20.809869890608653,
+        "cache_hit_rate": 0,
+        "cache_write_tokens": 0,
+        "input_per_1m": 1.5,
+        "output_per_1m": 9,
+        "cache_read_per_1m": 1.5,
+        "cache_write_per_1m": 1.5
+      },
+      "independent_terms_usd": [
+        1.7056634551940122,
+        0.0,
+        0.0,
+        0.4917849455552145
+      ],
+      "independent_total_usd": 2.1974484007492268,
+      "no_cache_same_route_scenario_usd": 2.197448400749227,
+      "result_matches": true
+    },
+    {
+      "id": "kimi-k3::max",
+      "score": 43.8,
+      "aa_source": {
+        "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+        "collected_at": "2026-09-10T20:13:54.198Z",
+        "sha256": "345d1486b26aa539c43da9f6bc0736e057ca3249753c54c82a324d1cec3b2847",
+        "row": {
+          "id": "f7d2fc3e-1f7b-405f-818c-07952a4af78f",
+          "slug": "kimi-k3",
+          "name": "Kimi K3 (max)",
+          "intelligenceIndexOutputTokensPerTask": {
+            "reasoning": 32453.12751268007,
+            "answer": 16002.10458876525,
+            "output": 48455.23210144532
+          },
+          "canonicalIntelligenceIndexTokenCount": {
+            "input": 2563041687,
+            "output": 160780069,
+            "answer": 21477754,
+            "reasoning": 139302315
+          }
+        }
+      },
+      "ratio_source": {
+        "url": "https://openrouter.ai/rankings?view=week",
+        "sha256": "fdce034aa90e86450ac2ccf7ebe3567ea5d82182e8359c313b5c4bae5d2ace0e",
+        "row": {
+          "date": "2026-09-09 00:00:00",
+          "model_permaslug": "moonshotai/kimi-k3-20260715",
+          "variant": "standard",
+          "total_completion_tokens": 27212591997,
+          "total_prompt_tokens": 1848001948586,
+          "total_native_tokens_reasoning": 0,
+          "count": 30526579,
+          "num_media_prompt": 0,
+          "num_media_completion": 0,
+          "image_output_requests": 0,
+          "num_video_prompt": 0,
+          "video_output_seconds": 0,
+          "rerank_documents": 0,
+          "stt_transcript_characters": 0,
+          "num_audio_prompt": 0,
+          "total_native_tokens_cached": 0,
+          "total_tool_calls": 0,
+          "requests_with_tool_call_errors": 0,
+          "variant_permaslug": "moonshotai/kimi-k3-20260715",
+          "change": 0.09301838912026814
+        }
+      },
+      "price_source": {
+        "url": "https://openrouter.ai/api/v1/models/moonshotai/kimi-k3/endpoints",
+        "fetched_at": "2026-09-10T20:41:41.323434+00:00",
+        "body_sha256": "cb0ebd5ec9594a5d368b121ffaa5202f7a5477f3b017b30ffbf6026cb96e86e5",
+        "endpoint": {
+          "name": "Sail Research | moonshotai/kimi-k3-20260715",
+          "model_id": "moonshotai/kimi-k3",
+          "model_name": "MoonshotAI: Kimi K3",
+          "context_length": 1048576,
+          "pricing": {
+            "prompt": "0.0000026",
+            "completion": "0.000013",
+            "input_cache_read": "0.00000029",
+            "discount": 0
+          },
+          "provider_name": "Sail Research",
+          "tag": "sail-research/fp4",
+          "quantization": "fp4",
+          "max_completion_tokens": 943718,
+          "max_prompt_tokens": null,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "temperature",
+            "top_p",
+            "top_k",
+            "frequency_penalty",
+            "presence_penalty",
+            "stop",
+            "seed",
+            "max_tokens",
+            "tools",
+            "tool_choice",
+            "response_format",
+            "structured_outputs",
+            "reasoning_effort"
+          ],
+          "supports_tool_choice": {
+            "none": true,
+            "auto": true,
+            "required": true,
+            "function": true
+          },
+          "status": 0,
+          "uptime_last_30m": 99.92910943730617,
+          "uptime_last_5m": null,
+          "uptime_last_1d": null,
+          "supports_implicit_caching": false,
+          "supports_voice_cloning": false,
+          "latency_last_30m": null,
+          "throughput_last_30m": null
+        }
+      },
+      "cache_source": {
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=moonshotai%2Fkimi-k3-20260715&variant=standard&shape=v7",
+        "sha256": "99b4248508ff16bb9b8f9a228184be7de8ffb13189a32b26fd883fc25bdf5bc4",
+        "summary": {
+          "endpointId": "57615dec-899a-41e7-8cab-1e2914497f0c",
+          "providerName": "Sail Research",
+          "providerSlug": "sail-research",
+          "effectiveInputPrice": 0.42527058544092255,
+          "effectiveOutputPrice": 13.000000000000002,
+          "cacheHitRate": 0.9414380690202762,
+          "totalTokens": 35699634523
+        },
+        "endpoint_identity": {
+          "id": "57615dec-899a-41e7-8cab-1e2914497f0c",
+          "provider_slug": "sail-research/fp4",
+          "provider_name": "Sail Research"
+        },
+        "definition": "Denominator and precise interval unpublished; applying to input tokens is an assumption."
+      },
+      "selected_offer": {
+        "key": "OpenRouter::Sail Research",
+        "source": "OpenRouter",
+        "provider": "Sail Research",
+        "platform": "OpenRouter",
+        "input_per_1m": 2.6,
+        "output_per_1m": 13,
+        "cache_read_per_1m": 0.29,
+        "cache_write_per_1m": null,
+        "or_model_id": "moonshotai/kimi-k3",
+        "or_canonical_slug": "moonshotai/kimi-k3-20260715",
+        "or_hugging_face_id": "moonshotai/Kimi-K3",
+        "status": 0,
+        "endpoint_tag": "sail-research/fp4",
+        "region": "global",
+        "eu_hosted": false,
+        "non_us": false,
+        "price": {
+          "label": "Adjusted $/task",
+          "sources": [
+            {
+              "label": "List prices",
+              "source": "OpenRouter",
+              "url": "https://openrouter.ai/api/v1/models/moonshotai/kimi-k3/endpoints",
+              "date": "2026-09-10",
+              "basis": "self_reported",
+              "note": "OpenRouter / Sail Research; global; endpoint sail-research/fp4"
+            },
+            {
+              "label": "Input/output ratio",
+              "source": "OpenRouter model-page usage",
+              "url": "https://openrouter.ai/moonshotai/kimi-k3",
+              "date": "2026-09-10T20:13:56.756Z",
+              "basis": "derived",
+              "note": "openrouter_model_workload_all_apps; All reasoning configurations routed to this exact OpenRouter SKU; not effort-specific or coding-agent-only.; 2026-09-03 to 2026-09-09"
+            },
+            {
+              "label": "Output tokens/task",
+              "source": "Artificial Analysis Intelligence Index token efficiency (website Flight payload)",
+              "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+              "date": "2026-09-10T20:13:54.198Z",
+              "basis": "measured",
+              "note": "AA Intelligence Index task; exact configuration kimi-k3 (max). Includes answer and reasoning tokens."
+            },
+            {
+              "label": "Cache-hit rate",
+              "source": "OpenRouter effective pricing statistics",
+              "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=moonshotai%2Fkimi-k3-20260715&variant=standard&shape=v7",
+              "date": "2026-09-10T20:13:59.145Z",
+              "basis": "measured",
+              "note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response."
+            }
+          ],
+          "model": "Kimi K3 (max)",
+          "provider": "Sail Research / OpenRouter",
+          "value": 2.0293318790702695,
+          "unit": "$/task",
+          "assumptions": [
+            "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+            "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+            "Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.",
+            "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+            "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+          ],
+          "effective": {
+            "effective_cost_per_task": 2.0293318790702695,
+            "effective_cost_per_1m_tokens": 0.607758928862761,
+            "inputs": {
+              "input_tokens_per_task": 3290585.599215599,
+              "output_tokens_per_task": 48455.23210144532,
+              "input_output_ratio": 67.90980986999436,
+              "cache_hit_rate": 0.9414380690202762,
+              "cache_write_tokens": 0,
+              "input_per_1m": 2.6,
+              "output_per_1m": 13,
+              "cache_read_per_1m": 0.29,
+              "cache_write_per_1m": 2.6
+            },
+            "terms": {
+              "uncached_input": 0.5010279215347565,
+              "cached_input": 0.8983859402167238,
+              "cache_write": 0,
+              "output": 0.6299180173187892
+            },
+            "assumptions": [
+              "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+              "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+              "Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.",
+              "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+              "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+            ],
+            "estimated": true
+          }
+        },
+        "blended": 2.0293318790702695
+      },
+      "resolved_inputs": {
+        "input_tokens_per_task": 3290585.599215599,
+        "output_tokens_per_task": 48455.23210144532,
+        "input_output_ratio": 67.90980986999436,
+        "cache_hit_rate": 0.9414380690202762,
+        "cache_write_tokens": 0,
+        "input_per_1m": 2.6,
+        "output_per_1m": 13,
+        "cache_read_per_1m": 0.29,
+        "cache_write_per_1m": 2.6
+      },
+      "independent_terms_usd": [
+        0.5010279215347565,
+        0.8983859402167238,
+        0.0,
+        0.6299180173187892
+      ],
+      "independent_total_usd": 2.0293318790702695,
+      "no_cache_same_route_scenario_usd": 9.185440575279346,
+      "result_matches": true
+    },
+    {
+      "id": "deepseek-v4-pro::max",
+      "score": 30.9,
+      "aa_source": {
+        "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+        "collected_at": "2026-09-10T20:13:54.198Z",
+        "sha256": "345d1486b26aa539c43da9f6bc0736e057ca3249753c54c82a324d1cec3b2847",
+        "row": {
+          "id": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
+          "slug": "deepseek-v4-pro-0424",
+          "name": "DeepSeek V4 Pro (Reasoning, Max Effort)",
+          "intelligenceIndexOutputTokensPerTask": {
+            "reasoning": 32731.610839445308,
+            "answer": 16164.721681998606,
+            "output": 48896.33252144391
+          },
+          "canonicalIntelligenceIndexTokenCount": {
+            "input": 4619889522,
+            "output": 212022865,
+            "answer": 23607563,
+            "reasoning": 188415302
+          }
+        }
+      },
+      "ratio_source": {
+        "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-03&end_date=2026-09-09",
+        "raw_response_sha256": "bb8bb5f26f5145d5937a759f72f5fc2156d7f76a638b0dbc8b1e17b7d7c06d0a",
+        "sum_input": 233959387464,
+        "sum_output": 11242712650,
+        "included_rows": 112,
+        "window": {
+          "start_date": "2026-09-03",
+          "end_date": "2026-09-09"
+        }
+      },
+      "price_source": {
+        "url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4-pro/endpoints",
+        "fetched_at": "2026-09-10T20:41:43.918259+00:00",
+        "body_sha256": "e674219b04a4571ececf67de26e830b78a72b46242a05c63f8816d5b88ba2a36",
+        "endpoint": {
+          "name": "DigitalOcean | deepseek/deepseek-v4-pro-20260423",
+          "model_id": "deepseek/deepseek-v4-pro",
+          "model_name": "DeepSeek: DeepSeek V4 Pro 0423",
+          "context_length": 1048576,
+          "pricing": {
+            "prompt": "0.00000087",
+            "completion": "0.00000174",
+            "input_cache_read": "0.000000174",
+            "discount": 0
+          },
+          "provider_name": "DigitalOcean",
+          "tag": "digitalocean",
+          "quantization": "unknown",
+          "max_completion_tokens": 943718,
+          "max_prompt_tokens": null,
+          "supported_parameters": [
+            "reasoning",
+            "include_reasoning",
+            "temperature",
+            "top_p",
+            "max_tokens",
+            "response_format",
+            "tool_choice",
+            "tools",
+            "logprobs",
+            "top_logprobs",
+            "reasoning_effort"
+          ],
+          "supports_tool_choice": {
+            "none": false,
+            "auto": true,
+            "required": false,
+            "function": false
+          },
+          "status": 0,
+          "uptime_last_30m": 99.96904982977406,
+          "uptime_last_5m": null,
+          "uptime_last_1d": null,
+          "supports_implicit_caching": false,
+          "supports_voice_cloning": false,
+          "latency_last_30m": null,
+          "throughput_last_30m": null
+        }
+      },
+      "cache_source": null,
+      "selected_offer": {
+        "key": "OpenRouter::DigitalOcean",
+        "source": "OpenRouter",
+        "provider": "DigitalOcean",
+        "platform": "OpenRouter",
+        "input_per_1m": 0.87,
+        "output_per_1m": 1.74,
+        "cache_read_per_1m": 0.174,
+        "cache_write_per_1m": null,
+        "or_model_id": "deepseek/deepseek-v4-pro",
+        "or_canonical_slug": "deepseek/deepseek-v4-pro-20260423",
+        "or_hugging_face_id": "deepseek-ai/DeepSeek-V4-Pro",
+        "status": 0,
+        "endpoint_tag": "digitalocean",
+        "region": "global",
+        "eu_hosted": false,
+        "non_us": false,
+        "price": {
+          "label": "Adjusted $/task",
+          "sources": [
+            {
+              "label": "List prices",
+              "source": "OpenRouter",
+              "url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4-pro/endpoints",
+              "date": "2026-09-10",
+              "basis": "self_reported",
+              "note": "OpenRouter / DigitalOcean; global; endpoint digitalocean"
+            },
+            {
+              "label": "Input/output ratio",
+              "source": "Chutes LLM usage statistics",
+              "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-03&end_date=2026-09-09",
+              "date": "2026-09-10T19:44:35.632Z",
+              "basis": "assumed",
+              "note": "chutes_global_workload_fallback; 2026-09-03 to 2026-09-09"
+            },
+            {
+              "label": "Output tokens/task",
+              "source": "Artificial Analysis Intelligence Index token efficiency (website Flight payload)",
+              "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+              "date": "2026-09-10T20:13:54.198Z",
+              "basis": "measured",
+              "note": "AA Intelligence Index task; exact configuration deepseek-v4-pro-0424 (max). Includes answer and reasoning tokens."
+            }
+          ],
+          "model": "DeepSeek V4 Pro (Reasoning, Max Effort)",
+          "provider": "DigitalOcean / OpenRouter",
+          "value": 0.9703275151596027,
+          "unit": "$/task",
+          "assumptions": [
+            "Cache-hit rate missing/invalid: 0% assumed; no cache discount credited.",
+            "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+            "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+            "I/O ratio assigned from fallback evidence; assumed for this model and task.",
+            "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+            "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+          ],
+          "effective": {
+            "effective_cost_per_task": 0.9703275151596027,
+            "effective_cost_per_1m_tokens": 0.9098901967028524,
+            "inputs": {
+              "input_tokens_per_task": 1017526.3178991843,
+              "output_tokens_per_task": 48896.33252144391,
+              "input_output_ratio": 20.809869890608653,
+              "cache_hit_rate": 0,
+              "cache_write_tokens": 0,
+              "input_per_1m": 0.87,
+              "output_per_1m": 1.74,
+              "cache_read_per_1m": 0.174,
+              "cache_write_per_1m": 0.87
+            },
+            "terms": {
+              "uncached_input": 0.8852478965722903,
+              "cached_input": 0,
+              "cache_write": 0,
+              "output": 0.0850796185873124
+            },
+            "assumptions": [
+              "Cache-hit rate missing/invalid: 0% assumed; no cache discount credited.",
+              "Cache-write volume unmeasured: 0 additional billed write tokens assumed; write charges are excluded.",
+              "Cache-write price missing/invalid: regular input price assumed (only charged if write tokens > 0).",
+              "I/O ratio assigned from fallback evidence; assumed for this model and task.",
+              "AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.",
+              "Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled."
+            ],
+            "estimated": true
+          }
+        },
+        "blended": 0.9703275151596027
+      },
+      "resolved_inputs": {
+        "input_tokens_per_task": 1017526.3178991843,
+        "output_tokens_per_task": 48896.33252144391,
+        "input_output_ratio": 20.809869890608653,
+        "cache_hit_rate": 0,
+        "cache_write_tokens": 0,
+        "input_per_1m": 0.87,
+        "output_per_1m": 1.74,
+        "cache_read_per_1m": 0.174,
+        "cache_write_per_1m": 0.87
+      },
+      "independent_terms_usd": [
+        0.8852478965722903,
+        0.0,
+        0.0,
+        0.0850796185873124
+      ],
+      "independent_total_usd": 0.9703275151596027,
+      "no_cache_same_route_scenario_usd": 0.9703275151596027,
+      "result_matches": true
+    }
+  ],
+  "adjusted_order": [
+    "deepseek-v4-pro::max",
+    "gpt-5.6-sol::max",
+    "kimi-k3::max",
+    "gemini-3.5-flash::high",
+    "claude-sonnet-5::max"
+  ]
+}

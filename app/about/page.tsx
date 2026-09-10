@@ -63,9 +63,9 @@ export default async function AboutPage() {
 
       <h2 className="mt-6 mb-2 font-semibold">Methodology</h2>
       <p className="text-sm text-gray-400">
-        The &ldquo;10:1 blended&rdquo; cost is <code className="text-accent2">(10·input + 1·output) / 11</code> per 1M tokens,
-        approximating a read-heavy workload. The cheapest such cost across all providers is used for the
-        cost axis. Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
+        Costs default to modeled USD/task, using exact-variant AA output tokens, OpenRouter usage I/O (Chutes global fallback), and exact-endpoint cache-hit rates.
+        Missing values are assumed and flagged: 1,000 output tokens/task, no cache discount, and zero additional cache writes. General traffic and benchmark tasks are proxies for coding-agent usage.
+        Click an underlined price to inspect the full formula, inputs, dates and assumptions. Raw list-price mode uses your chosen fixed blend per million tokens (including 1:1, 3:1, 10:1, 100:1, input-only and output-only). Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
         The Composite score uses five slots: AA Coding, source-matched AA Coding Agent,
         AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. A DesignArena
         board qualifies at an app-selected minimum of 200 battles, aligned with the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the expected score against a fixed Elo 1000

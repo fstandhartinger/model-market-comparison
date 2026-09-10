@@ -4,8 +4,9 @@ import Link from "next/link";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { blend, modelCost, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope } from "../lib/cost";
+import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
+import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 
@@ -28,12 +29,16 @@ const routeSignature = (offer: ClientData["offersByModel"][string][number]) => [
 export function ModelExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
-  const [sort, setSort] = useState<SortKey>("score");
-  const [asc, setAsc] = useState(false);
+  // Cost ascending is the default sort: with the global min-score filter and the
+  // assumptions below the table, "cheapest model with score ≥ X" is one screen.
+  const [sort, setSort] = useState<SortKey>("cost");
+  const [asc, setAsc] = useState(true);
   const [q, setQ] = useState("");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
   const [hasProviderOnly, setHasProviderOnly] = useState(true);
+  const [measuredTasksOnly, setMeasuredTasksOnly] = useState(true);
   const [org, setOrg] = useState("");
   const [maxCost, setMaxCost] = useState("");
 
@@ -45,11 +50,14 @@ export function ModelExplorer({ data }: { data: ClientData }) {
 
   const rows = useMemo(() => {
     const maxC = parseFloat(maxCost);
-    let r = candidates.map((m) => ({
-      m, sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score), cost: modelCost(m, data, offerScope),
-      cheap: rankedOffers(data.offersByModel[m.id], offerScope).slice(0, 3),
-      ncheap: scopedCatalogOffers(data.offersByModel[m.id], offerScope).length,
-    }));
+    let r = candidates.map((m) => {
+      const ctx = priceContext(m, data, priceSettings);
+      return {
+        m, sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score), price: modelPrice(m, data, offerScope, priceSettings),
+        cheap: rankedOffers(data.offersByModel[m.id], offerScope, ctx).slice(0, 3),
+        ncheap: scopedCatalogOffers(data.offersByModel[m.id], offerScope, ctx).length,
+      };
+    });
     if (s.collapse) r = r.filter((x) => !preferredId.has(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
     if (s.openOnly) r = r.filter((x) => x.m.open_weights);
     if (s.featured) r = r.filter((x) => x.m.featured);
@@ -57,8 +65,15 @@ export function ModelExplorer({ data }: { data: ClientData }) {
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
     if (withScoreOnly) r = r.filter((x) => x.hasEvidence);
-    if (s.minScore > 0) r = r.filter((x) => x.sc != null && x.sc >= s.minScore);
-    if (Number.isFinite(maxC)) r = r.filter((x) => x.cost != null && x.cost <= maxC);
+    if (s.priceMode === "adjusted" && measuredTasksOnly) r = r.filter((x) => {
+      const tokens = x.m.token_efficiency?.aa.tokens_per_task;
+      return tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
+    });
+    // A composite with zero evidence is the neutral fallback 50, not a measured
+    // score — it must not satisfy a positive min-score filter. For the other
+    // scores hasEvidence === score != null, so existing policy is unchanged.
+    if (s.minScore > 0) r = r.filter((x) => x.hasEvidence && x.sc != null && x.sc >= s.minScore);
+    if (Number.isFinite(maxC)) r = r.filter((x) => x.price.value != null && x.price.value <= maxC);
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
     if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
 
@@ -67,19 +82,19 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       if (sort === "name") return dir * a.m.display_name.localeCompare(b.m.display_name);
       if (sort === "org") return dir * a.m.org.localeCompare(b.m.org);
       if (sort === "providers") return dir * (a.ncheap - b.ncheap);
-      if (sort === "cost") return dir * ((a.cost ?? Infinity) - (b.cost ?? Infinity));
+      if (sort === "cost") return dir * ((a.price.value ?? Infinity) - (b.price.value ?? Infinity));
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return r;
-  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, maxCost, sort, asc, preferredId]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, maxCost, sort, asc, preferredId]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
-  const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.cost ?? 0)), [rows]);
+  const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.price.value ?? 0)), [rows]);
 
-  const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org"); } };
+  const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
   const Th = ({ label, k, right }: { label: string; k: SortKey; right?: boolean }) => (
-    <th onClick={() => onSort(k)} className={`px-3 py-2 text-xs font-semibold uppercase tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
-      {label}{sort === k ? (asc ? " ▲" : " ▼") : ""}
+    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`px-3 py-2 text-xs font-semibold uppercase tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
+      <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
     </th>
   );
 
@@ -91,11 +106,15 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           <option value="">All orgs</option>
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
-        <NumFilter label="Max $/1M" value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
+        <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
         <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
         <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
+        {s.priceMode === "adjusted" && <Toggle label="Measured task tokens only" on={measuredTasksOnly} set={setMeasuredTasksOnly} />}
         <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
+
+      <PriceAssumptions />
+      {s.priceMode === "adjusted" && measuredTasksOnly && <p className="mb-3 text-xs text-amber-200">Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</p>}
 
       <div className="card overflow-x-auto">
         <table className="dtable w-full min-w-[900px] table-fixed text-sm">
@@ -107,25 +126,26 @@ export function ModelExplorer({ data }: { data: ClientData }) {
             <Th label="Model" k="name" />
             <Th label="Org" k="org" />
             <Th label={SCORE_LABELS[score].split("—")[1]?.trim().replace(/\s*\(.*\)/, "") || "Score"} k="score" right />
-            <Th label="Cheapest 10:1 $/1M" k="cost" right />
+            <Th label={`Cheapest ${priceLabel(priceSettings)}`} k="cost" right />
             <Th label="# Channels" k="providers" right />
             <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">Top provider channels</th>
           </tr></thead>
           <tbody>
-            {rows.map(({ m, sc, cost, cheap, ncheap }) => {
+            {rows.map(({ m, sc, price, cheap, ncheap }) => {
               const isOpen = expanded === m.id;
-              const channelRanking = rankedOffers(data.offersByModel[m.id], offerScope);
+              const ctx = priceContext(m, data, priceSettings);
+              const channelRanking = rankedOffers(data.offersByModel[m.id], offerScope, ctx);
               const channelRankByKey = new Map(channelRanking.map((offer, index) => [offer.key, index + 1]));
               const representativeByKey = new Map(channelRanking.map((offer) => [offer.key, routeSignature(offer)]));
-              const allOffers = scopedCatalogRoutes(data.offersByModel[m.id], offerScope).map((offer) => ({
-                ...offer, blended: blend(offer.input_per_1m, offer.output_per_1m),
+              const allOffers = scopedCatalogRoutes(data.offersByModel[m.id], offerScope, ctx).map((offer) => ({
+                ...offer, price: offerPrice(offer, ctx),
               })).sort((a, b) => {
                 const channel = (channelRankByKey.get(a.key) ?? Infinity) - (channelRankByKey.get(b.key) ?? Infinity);
                 if (channel) return channel;
                 const representative = Number(routeSignature(b) === representativeByKey.get(b.key))
                   - Number(routeSignature(a) === representativeByKey.get(a.key));
                 if (representative) return representative;
-                return (a.blended ?? Infinity) - (b.blended ?? Infinity);
+                return (a.price.value ?? Infinity) - (b.price.value ?? Infinity);
               });
               return (
               <Fragment key={m.id}>
@@ -139,10 +159,10 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                 </td>
                 <td className="px-3 py-2 truncate"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
                 <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScoreVal} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{cost != null ? <DataBar frac={cost / maxCostVal} color="#7ee0c0" align="right"><span className="block text-right">{usdPerM(cost)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2">{price.value != null ? <DataBar frac={price.value / maxCostVal} color="#7ee0c0" align="right"><span className="block text-right"><PriceValue price={price} compact /></span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2 text-right tabular text-gray-400">{ncheap || "—"}</td>
                 <td className="px-3 py-2 truncate text-xs text-gray-400">
-                  {cheap.map((o, i) => <span key={i} className="mr-2 whitespace-nowrap">{o.provider}{o.platform !== o.provider ? <span className="text-gray-600">/{o.platform}</span> : null} <span className="text-gray-500">{usdPerM(o.blended)}</span>{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}</span>)}
+                  {cheap.map((o, i) => <span key={i} className="mr-2 whitespace-nowrap">{o.provider}{o.platform !== o.provider ? <span className="text-gray-600">/{o.platform}</span> : null} <PriceValue price={o.price} compact />{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}</span>)}
                   {ncheap > 0 && cheap.length === 0 && <span className="text-gray-600">price not public</span>}
                   {ncheap === 0 && <span className="text-gray-600">no catalog offer</span>}
                 </td>
@@ -186,10 +206,17 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                       </div>
                       {/* provider list for this model */}
                       <div>
-                        <div className="mb-1.5 text-[11px] uppercase tracking-wide text-gray-500">Providers within global filters — {allOffers.length} exact route{allOffers.length === 1 ? "" : "s"} (provider-channel price rank; alternate routes marked “alt”)</div>
+                        <div className="mb-1.5 text-[11px] uppercase tracking-wide text-gray-500">Providers within global filters — {allOffers.length} exact route{allOffers.length === 1 ? "" : "s"} (provider-channel price rank; alternate routes marked “alt”; prices: {priceLabel(priceSettings)})</div>
                         {allOffers.length === 0 ? <span className="text-xs text-gray-600">no token pricing</span> : (
                         <div className="max-h-64 overflow-y-auto">
                         <table className="w-full text-xs">
+                          <thead><tr>
+                            <th className="py-1 pr-1 text-left text-[10px] font-normal text-gray-500">rank</th>
+                            <th className="py-1 pr-2 text-left text-[10px] font-normal text-gray-500">provider</th>
+                            <th className="py-1 text-right text-[10px] font-normal text-gray-500">raw in $/1M</th>
+                            <th className="py-1 text-right text-[10px] font-normal text-gray-500">raw out $/1M</th>
+                            <th className="py-1 text-right text-[10px] font-normal text-gray-500">{price.unit === "$/task" ? "adjusted $/task" : "raw blend $/1M"}</th>
+                          </tr></thead>
                           <tbody>
                             {allOffers.map((o, i) => {
                               const p = provByKey.get(o.key);
@@ -197,7 +224,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                               const priceRank = isRepresentative ? channelRankByKey.get(o.key) : null;
                               return (
                                 <tr key={o.key + i} className="border-b border-line/40">
-                                  <td className="py-1 pr-1 text-gray-500">{priceRank != null ? `#${priceRank}` : o.blended == null ? "—" : "alt"}</td>
+                                  <td className="py-1 pr-1 text-gray-500">{priceRank != null ? `#${priceRank}` : o.price.value == null ? "—" : "alt"}</td>
                                   <td className="py-1 pr-2 font-medium">{o.provider}
                                     {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
                                     {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
@@ -205,9 +232,9 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                                     {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
                                     <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
                                   </td>
-                                  <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)} in</td>
-                                  <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.output_per_1m)} out</td>
-                                  <td className="py-1 tabular text-right font-semibold">{usdPerM(o.blended)}</td>
+                                  <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)}</td>
+                                  <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.output_per_1m)}</td>
+                                  <td className="py-1 tabular text-right font-semibold"><PriceValue price={o.price} compact /></td>
                                 </tr>
                               );
                             })}

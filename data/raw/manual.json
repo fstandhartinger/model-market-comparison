@@ -9,13 +9,6 @@
   "benchmark_overrides": [],
   "offer_overrides": [
     {
-      "or_model_id": "openai/gpt-5.6-sol",
-      "endpoint_tag": "openai",
-      "input_per_1m": 4.0,
-      "output_per_1m": 20.0,
-      "reason": "OpenAI cut Sol to $4/$20 on 2026-08-21 (promo through 2026-11-21). OpenRouter's 'openai' endpoint shows an OpenRouter-exclusive 50% discount ($2/$10) which is not the first-party list price. Luna/Terra overrides removed 2026-08-26 — OR now labels their standard meters correctly ($0.20/$1.20, $2/$12)."
-    },
-    {
       "or_model_id": "deepseek/deepseek-v4-pro-0813",
       "endpoint_tag": "deepseek",
       "input_per_1m": 1.32,
@@ -23,5 +16,17 @@
       "reason": "DeepSeek's first-party 'deepseek' endpoint on OpenRouter carries the OFF-PEAK meter as its base price ($0.66/$1.98; peak tiers only in time-window overrides). DeepSeek's official list price for deepseek-v4-pro is $1.32 input / $3.96 output per 1M (peak, Mon-Fri 01:00-04:00 and 06:00-10:00 UTC; off-peak = 50% of list). Source: https://api-docs.deepseek.com/quick_start/pricing (checked 2026-08-26). Third-party OR providers and AA both list $1.32/$3.96."
     }
   ],
-  "_offer_overrides_doc": "Targeted corrections applied to specific OpenRouter endpoint offers when the upstream meter labeling is verifiably wrong. Match: or_model_id + endpoint_tag. Each override replaces input/output_per_1m and appends its reason to the offer notes. Use ONLY with a documented primary source."
+  "_offer_overrides_doc": "Targeted corrections applied to specific OpenRouter endpoint offers when the upstream meter labeling is verifiably wrong. Match: or_model_id + endpoint_tag. Each override replaces input/output_per_1m and appends its reason to the offer notes. Use ONLY with a documented primary source.",
+  "retired_offer_overrides": [
+    {
+      "or_model_id": "openai/gpt-5.6-sol",
+      "endpoint_tag": "openai",
+      "input_per_1m": 4.0,
+      "output_per_1m": 20.0,
+      "reason": "OpenAI cut Sol to $4/$20 on 2026-08-21 (promo through 2026-11-21). OpenRouter's 'openai' endpoint shows an OpenRouter-exclusive 50% discount ($2/$10) which is not the first-party list price. Luna/Terra overrides removed 2026-08-26 \u2014 OR now labels their standard meters correctly ($0.20/$1.20, $2/$12).",
+      "retired_at": "2026-09-10",
+      "retirement_reason": "This is an OpenRouter route, not the first-party API. The current endpoint publishes $2/$10 and $0.20 cache read; substituting first-party input/output prices mixed tariffs. Use the exact published endpoint rates together.",
+      "verified_source": "https://openrouter.ai/api/v1/models/openai/gpt-5.6-sol/endpoints"
+    }
+  ]
 }

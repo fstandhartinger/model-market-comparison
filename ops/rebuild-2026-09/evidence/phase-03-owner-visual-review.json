@@ -1,0 +1,24 @@
+{
+  "reviewer": "openai/gpt-6-astra",
+  "reviewed_at": "2026-09-10T21:17:09.298002+00:00",
+  "method": "Actual PNG images inspected with image-capable view_image tool; separate from text critic. Browser interaction and aria tree receipts supplied separately.",
+  "images": {
+    "ops/rebuild-2026-09/evidence/phase-03-before.png": "156d43eaa0d291058167ee1442c1d0144cfda42415d8bc51f1e55c743b6fb761",
+    "ops/rebuild-2026-09/evidence/phase-03-min-score-screen.png": "309dc071fda11b618bb748e8764655bbfff965ba8373b1b6c54630857b09264a",
+    "ops/rebuild-2026-09/evidence/phase-03-final-explainer.png": "6c6eaeb980a8ba3cdd52456cf6a36562d738385636453fd4c8707d8b99ce8d73",
+    "ops/rebuild-2026-09/evidence/phase-03-compare.png": "c643be2730cd1a9c8970a02b43740fa70b68e04471011a201c3fb89216ca9e21",
+    "ops/rebuild-2026-09/evidence/phase-03-mobile.png": "7f9799750e448705796441c93fc00d34a89619b41bdd0412b508076ca4e32ab7",
+    "ops/rebuild-2026-09/evidence/phase-03-providers.png": "4e334663675543be81fef7f0530c69e07126b8671e20a50d123fa1b5bd04b14a"
+  },
+  "coverage": [
+    "1440x1000 overview: AA Intelligence >=40, cost ascending and explicit population/fallback assumptions visible together; first nine results shown",
+    "Inputs dialog: units, measured versus assumed input data and assumptions legible, keyboard focus/close tested separately",
+    "Compare model labels clip within their clickable buttons after fix; adjacent score column stays aligned; two-model selection remains visible",
+    "Provider cost breakdown shows individual constituent price explainers",
+    "390x844 mobile: controls wrap; document has no horizontal overflow, table scroll is contained"
+  ],
+  "findings": [],
+  "residue": [
+    "Existing expanded mobile navigation takes substantial vertical space. Broad navigation redesign belongs to phase 06."
+  ]
+}

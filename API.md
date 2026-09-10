@@ -185,3 +185,7 @@ Production continues to use bundled JSON. Optional Postgres installations should
 run `node scripts/seed-db.mjs`: its idempotent `dataset_meta.extensions` JSONB
 addition preserves the new top-level fields (and existing source-status metadata).
 An old seed falls back to the bundled snapshot until reseeded.
+
+### Effective-cost UI (phase 03)
+
+The UI now defaults to modeled **USD/task**. Raw API `input_per_1m`, `output_per_1m` and cache fields retain their existing USD/million units and paths; no raw field was renamed or silently converted. Consumers can import the pure `effectiveCost` / `fixedCost` functions from `lib/effective-cost.mjs`. `effective_cost_per_task` and `effective_cost_per_1m_tokens` are separate return fields, with resolved inputs, dollar terms and explicit assumptions. See [effective-cost policy](docs/effective-cost.md) for all fallbacks and workload limitations. The UI settings key is now `mmc.settings.v6`; adjusted costs and the retained fixed-blend alternatives are global and persisted.

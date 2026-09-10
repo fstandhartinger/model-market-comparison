@@ -16,7 +16,7 @@ export default async function Home() {
           Open-source and frontier LLMs ranked by capability and priced across providers —
           OpenRouter inference providers, hyperscalers, EU-native APIs, Chutes, GitHub Copilot and
           the Anthropic / Claude Code list price. Capability is measured with ArtificialAnalysis indices
-          and Intelligence.ai / DesignArena Elo. Pick a score, then sort by cheapest 10:1 blended cost.
+          and Intelligence.ai / DesignArena Elo. Pick a benchmark and minimum score to find the cheapest modeled task cost. Adjusted prices are on by default; raw list prices and fixed input/output blends remain selectable.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Stat label="Models" value={ds.counts.models} />

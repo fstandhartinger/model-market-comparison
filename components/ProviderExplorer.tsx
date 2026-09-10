@@ -3,12 +3,12 @@ import { Fragment, useMemo, useState } from "react";
 import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
 import { useSettings } from "./SettingsContext";
-import { createOfferScope, rankedOffers, scopedCatalogOffers, scoreOf } from "../lib/cost";
+import { createOfferScope, rankedOffers, scopedCatalogOffers, scoreOf, offerPrice, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
+import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { collapseModels, preferredVariantIds, selectableModels } from "../lib/variants";
 
-const blended = (o: { input_per_1m: number | null; output_per_1m: number | null }) =>
-  o.input_per_1m != null && o.output_per_1m != null ? (10 * o.input_per_1m + o.output_per_1m) / 11 : null;
 const fmt = (n: number | null) => (n == null ? "—" : `$${n.toFixed(n < 1 ? 3 : 2)}`);
+type PricedOffer = ClientOffer & { price: PriceResult };
 
 const Badge = ({ children, cls }: { children: React.ReactNode; cls: string }) => (
   <span className={`rounded px-1.5 py-0.5 text-[10px] ${cls}`}>{children}</span>
@@ -16,6 +16,7 @@ const Badge = ({ children, cls }: { children: React.ReactNode; cls: string }) =>
 
 export function ProviderExplorer({ data }: { data: ClientData }) {
   const s = useSettings();
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
   const [euOnly, setEuOnly] = useState(false);
@@ -35,7 +36,9 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       if (s.featured && !model.featured) return false;
       if (s.familySet && !s.familySet.has(model.family_key)) return false;
       const score = scoreOf(model, s.score);
-      return !(s.minScore > 0 && (score == null || score < s.minScore));
+      // A composite without benchmark evidence is the neutral fallback 50, not
+      // a measured score — it must not satisfy a positive min-score filter.
+      return !(s.minScore > 0 && (score == null || score < s.minScore || (s.score === "composite" && model.composite_coverage <= 0)));
     });
   }, [candidates, preferredId, s.collapse, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
 
@@ -44,23 +47,25 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   const provCounts = useMemo(() => {
     const c = new Map<string, number>();
     for (const model of allowedModels) {
+      const ctx = priceContext(model, data, priceSettings);
       const offers = data.offersByModel[model.id] || [];
-      const scoped = scopedCatalogOffers(offers, offerScope);
+      const scoped = scopedCatalogOffers(offers, offerScope, ctx);
       for (const k of new Set(scoped.map((o) => o.key))) c.set(k, (c.get(k) ?? 0) + 1);
     }
     return c;
-  }, [data.offersByModel, allowedModels, offerScope]);
+  }, [data, allowedModels, offerScope, priceSettings]);
 
   // Providers that have at least one offer matching the provider/residency/TEE
   // scope anywhere in the catalog. This keeps "show 0" useful for model/score
   // filters without reintroducing providers that cannot satisfy EU/TEE at all.
   const scopeCapableKeys = useMemo(() => {
     const keys = new Set<string>();
-    for (const offers of Object.values(data.offersByModel)) {
-      for (const offer of scopedCatalogOffers(offers, offerScope)) keys.add(offer.key);
+    for (const model of data.models) {
+      const ctx = priceContext(model, data, priceSettings);
+      for (const offer of scopedCatalogOffers(data.offersByModel[model.id], offerScope, ctx)) keys.add(offer.key);
     }
     return keys;
-  }, [data.offersByModel, offerScope]);
+  }, [data, offerScope, priceSettings]);
 
   // Directory rows: recompute per-provider model_count over the filtered models,
   // then apply the exact EU/TEE scope and the "keep 0" toggle.
@@ -96,15 +101,17 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   // Models the selected provider offers (within the global filter) + the full cross-provider field.
   const rows = useMemo(() => {
     if (!activeKey) return [];
-    const out: { modelId: string; name: string; org: string; score: number | null; mine: ClientOffer; ranked: ClientOffer[]; rank: number }[] = [];
+    const out: { modelId: string; name: string; org: string; score: number | null; mine: PricedOffer; ranked: PricedOffer[]; rank: number }[] = [];
     for (const model of allowedModels) {
+      const ctx = priceContext(model, data, priceSettings);
       const offers = data.offersByModel[model.id] || [];
-      const scoped = scopedCatalogOffers(offers, offerScope);
-      const mine = scoped.find((o) => o.key === activeKey);
-      if (!mine) continue;
-      const priceRanked = rankedOffers(offers, offerScope);
+      const scoped = scopedCatalogOffers(offers, offerScope, ctx);
+      const mine0 = scoped.find((o) => o.key === activeKey);
+      if (!mine0) continue;
+      const mine: PricedOffer = { ...mine0, price: offerPrice(mine0, ctx) };
+      const priceRanked = rankedOffers(offers, offerScope, ctx);
       const pricedKeys = new Set(priceRanked.map((offer) => offer.key));
-      const ordered = [...priceRanked, ...scoped.filter((offer) => !pricedKeys.has(offer.key))];
+      const ordered: PricedOffer[] = [...priceRanked, ...scoped.filter((offer) => !pricedKeys.has(offer.key)).map((offer) => ({ ...offer, price: offerPrice(offer, ctx) }))];
       out.push({
         modelId: model.id,
         name: s.collapse ? model.family_name : model.display_name,
@@ -115,9 +122,9 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         rank: priceRanked.findIndex((o) => o.key === activeKey),
       });
     }
-    out.sort((a, b) => sort === "price" ? (blended(a.mine) ?? Infinity) - (blended(b.mine) ?? Infinity) : (b.score ?? -1) - (a.score ?? -1));
+    out.sort((a, b) => sort === "price" ? (a.mine.price.value ?? Infinity) - (b.mine.price.value ?? Infinity) : (b.score ?? -1) - (a.score ?? -1));
     return out;
-  }, [activeKey, data.offersByModel, allowedModels, offerScope, sort, s.score, s.collapse]);
+  }, [activeKey, data, allowedModels, offerScope, sort, s.score, s.collapse, priceSettings]);
 
   const toggle = (modelId: string) => setOpen((s) => { const n = new Set(s); n.has(modelId) ? n.delete(modelId) : n.add(modelId); return n; });
   const flags = (p: ProviderInfo) => (
@@ -195,33 +202,37 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         )}
         {provider?.note && <p className="mb-3 max-w-3xl text-[11px] text-gray-500">{provider.note}</p>}
 
+        <PriceAssumptions />
+
         <div className="card overflow-x-auto">
           <table className="dtable w-full text-sm">
             <thead><tr>
-              {["Model", SCORE_LABELS[s.score], `in / out / blended ($/1M)`, "Price rank", ""].map((h) => (
+              {["Model", SCORE_LABELS[s.score], "Raw in $/1M", "Raw out $/1M", priceLabel(priceSettings), "Price rank", ""].map((h) => (
                 <th key={h} className="px-3 py-2 text-left text-xs text-gray-400">{h}</th>
               ))}
             </tr></thead>
             <tbody>
               {rows.map((r) => {
                 const isOpen = open.has(r.modelId);
-                const cheapest = blended(r.mine) != null && r.rank === 0;
+                const cheapest = r.mine.price.value != null && r.rank === 0;
                 const priceRankByKey = new Map(
-                  r.ranked.filter((offer) => blended(offer) != null).map((offer, index) => [offer.key, index + 1]),
+                  r.ranked.filter((offer) => offer.price.value != null).map((offer, index) => [offer.key, index + 1]),
                 );
                 return (
                   <Fragment key={r.modelId}>
                     <tr className="cursor-pointer hover:bg-white/5" onClick={() => toggle(r.modelId)}>
                       <td className="px-3 py-2"><span className="font-medium">{r.name}</span> <span className="text-[11px] text-gray-500">{r.org}</span></td>
                       <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(s.score.startsWith("designarena") ? 0 : 1) ?? "—"}</td>
-                      <td className="px-3 py-2 tabular">{fmt(r.mine.input_per_1m)} / {fmt(r.mine.output_per_1m)} / <b>{fmt(blended(r.mine))}</b>{r.mine.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}{r.mine.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}</td>
+                      <td className="px-3 py-2 tabular text-gray-400">{fmt(r.mine.input_per_1m)}</td>
+                      <td className="px-3 py-2 tabular text-gray-400">{fmt(r.mine.output_per_1m)}</td>
+                      <td className="px-3 py-2 tabular"><b><PriceValue price={r.mine.price} /></b>{r.mine.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}{r.mine.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}</td>
                       <td className="px-3 py-2 text-xs">{r.rank >= 0 ? <span className={cheapest ? "text-emerald-300" : "text-gray-300"}>#{r.rank + 1}{cheapest ? " · cheapest" : ""}</span> : "—"}</td>
                       <td className="px-3 py-2 text-xs text-gray-500">{isOpen ? "▾ hide" : `▸ compare ${r.ranked.length}`}</td>
                     </tr>
                     {isOpen && (
                       <tr>
-                        <td colSpan={5} className="bg-[#0c0f14] px-3 py-2">
-                          <div className="mb-1 text-[11px] uppercase tracking-wide text-gray-500">All providers for {r.name} (cheapest first, 10:1 blended)</div>
+                        <td colSpan={7} className="bg-[#0c0f14] px-3 py-2">
+                          <div className="mb-1 text-[11px] uppercase tracking-wide text-gray-500">All providers for {r.name} (cheapest first, {priceLabel(priceSettings)})</div>
                           <table className="w-full text-xs">
                             <tbody>
                               {r.ranked.map((o) => (
@@ -229,9 +240,9 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                                   <td className="px-2 py-1 text-gray-500">{priceRankByKey.has(o.key) ? `#${priceRankByKey.get(o.key)}` : "—"}</td>
                                   <td className="px-2 py-1 font-medium">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""}</span></td>
                                   <td className="px-2 py-1 text-gray-500">{o.region}</td>
-                                  <td className="px-2 py-1 tabular text-right">{fmt(o.input_per_1m)} in</td>
-                                  <td className="px-2 py-1 tabular text-right">{fmt(o.output_per_1m)} out</td>
-                                  <td className="px-2 py-1 tabular text-right font-semibold">{fmt(blended(o))} blended</td>
+                                  <td className="px-2 py-1 tabular text-right">{fmt(o.input_per_1m)} raw in</td>
+                                  <td className="px-2 py-1 tabular text-right">{fmt(o.output_per_1m)} raw out</td>
+                                  <td className="px-2 py-1 tabular text-right font-semibold"><PriceValue price={o.price} compact /></td>
                                   <td className="px-2 py-1">{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="rounded bg-sky-500/20 px-1 text-[10px] text-sky-300">EU equivalent</span>}{o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[10px] text-purple-300">TEE</span>}{o.key === activeKey && <span className="ml-1 text-[10px] text-accent">← selected</span>}</td>
                                 </tr>
                               ))}
@@ -246,7 +257,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
             </tbody>
           </table>
         </div>
-        <p className="mt-3 text-xs text-gray-500">Blended = (10·input + 1·output) / 11 per 1M tokens. Click a model row to compare its price across every provider.</p>
+        <p className="mt-3 text-xs text-gray-500">Raw in/out are unchanged list prices per 1M tokens. The price column follows the active price mode ({priceLabel(priceSettings)}); click any underlined price for exact inputs, sources and assumptions. Click a model row to compare its price across every provider.</p>
       </div>
     </div>
   );

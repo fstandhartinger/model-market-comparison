@@ -1,0 +1,37 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';
+import {writeFile} from 'node:fs/promises';
+const require=createRequire('/home/flori/n8n-local/package.json'),{chromium}=require('playwright');
+const browser=await chromium.connectOverCDP('http://127.0.0.1:34567'),ctx=await browser.newContext({viewport:{width:1440,height:1000}}),page=await ctx.newPage();
+page.setDefaultTimeout(20000);
+const base=process.env.BH_BROWSER_URL||'http://127.0.0.1:3103';
+const receipt={base,checked_at:new Date().toISOString(),console_errors:[],checks:[]};page.on('pageerror',e=>receipt.console_errors.push(e.message));
+const ready=async()=>{await page.waitForFunction(()=>{const s=JSON.parse(localStorage.getItem('mmc.settings.v6')||'null');return s&&['raw','adjusted'].includes(s.priceMode)&&s.inputWeight>=0;});await page.waitForTimeout(500);};
+const state=()=>page.evaluate(()=>JSON.parse(localStorage.getItem('mmc.settings.v6')));
+await page.goto(base);await ready();
+assert.equal((await state()).priceMode,'adjusted');assert.equal(await page.getByRole('button',{name:/Adjusted costs/}).getAttribute('aria-pressed'),'true');
+assert.equal(await page.locator('th[aria-sort="ascending"]').innerText(),'CHEAPEST ADJUSTED $/TASK ▲');
+receipt.checks.push('Fresh default adjusted, measured tasks only, cheapest ascending');
+const options=await page.getByRole('combobox',{name:'Fixed I/O blend'}).locator('option').evaluateAll(os=>os.map(o=>({value:o.value,text:o.textContent})));
+assert.deepEqual(options.map(o=>Number(o.value)),[0,1,3,10,100,1000000]);receipt.options=options;
+await page.getByPlaceholder('Search model / org…').fill('GPT-5.6 Sol');
+receipt.blends=[];
+for(const v of [0,1,3,10,100,1000000]) {
+ await page.getByRole('combobox',{name:'Fixed I/O blend'}).selectOption(String(v));await page.waitForFunction(v=>{let s=JSON.parse(localStorage.getItem('mmc.settings.v6'));return s.priceMode==='raw'&&s.inputWeight===v},v);
+ const text=await page.locator('main table tbody tr').first().innerText();
+ receipt.blends.push({inputWeight:v,text});assert.ok(text.includes('GPT-5.6 Sol'));
+}
+await page.reload();await ready();assert.equal((await state()).inputWeight,1000000);assert.equal((await state()).priceMode,'raw');
+await page.getByRole('button',{name:/Raw list prices/}).click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('mmc.settings.v6')).priceMode==='adjusted');
+await page.reload();await ready();assert.equal((await state()).priceMode,'adjusted');assert.equal((await state()).inputWeight,1000000);receipt.checks.push('Every fixed blend rendered and selected; raw/adjusted mode and chosen blend survive reloads');
+await page.getByRole('combobox',{name:'Score',exact:true}).selectOption('aa_intelligence_index');await page.getByRole('textbox',{name:'Min score',exact:true}).fill('40');
+await page.waitForTimeout(500);const rows=await page.locator('main table tbody tr').evaluateAll(rs=>rs.map(r=>({text:r.innerText,score:Number(r.cells[2]?.innerText),cost:Number((r.cells[3]?.innerText.match(/\$([\d,.]+)/)?.[1]||'').replaceAll(',',''))})));
+assert.ok(rows.length>2);assert.ok(rows.every(r=>r.score>=40));assert.ok(rows.every((r,i)=>i===0||r.cost>=rows[i-1].cost));receipt.min_score_rows=rows;receipt.checks.push('Minimum AA Intelligence 40 filters actual score rows and leaves adjusted cost ascending');
+const first=page.getByRole('button',{name:/show cost inputs/}).first();await first.focus();await page.keyboard.press('Enter');const dialog=page.getByRole('dialog');await dialog.waitFor();
+const text=await dialog.innerText();for(const label of ['Input tokens/task','Output tokens/task','Input:output ratio','Cache-hit rate','Assumptions and limitations','Source inputs'])assert.ok(text.includes(label));receipt.dialog=text;await page.screenshot({path:'/tmp/phase03/final-explainer.png'});
+await page.keyboard.press('Escape');assert.equal(await page.getByRole('dialog').count(),0);assert.equal(await first.evaluate(e=>e===document.activeElement),true);receipt.checks.push('Keyboard Enter opens inputs dialog; Escape closes; focus returns to trigger');
+await page.screenshot({path:'/tmp/phase03/min-score-screen.png'});receipt.desktop_tree=await page.locator('body').ariaSnapshot();
+await page.setViewportSize({width:390,height:844});await page.screenshot({path:'/tmp/phase03/mobile.png'});receipt.mobile_width=await page.evaluate(()=>({viewport:innerWidth,body:document.documentElement.scrollWidth}));assert.ok(receipt.mobile_width.body<=receipt.mobile_width.viewport+1);receipt.checks.push('390px mobile viewport: no document overflow; table scroll stays contained');
+await page.evaluate(()=>{localStorage.removeItem('mmc.settings.v6');localStorage.setItem('mmc.settings.v5',JSON.stringify({priceMode:'raw',inputWeight:3}));});await page.reload();await ready();assert.equal((await state()).priceMode,'adjusted');receipt.checks.push('v5 settings discarded; v6 adjusted default restored');
+await page.evaluate(()=>localStorage.setItem('mmc.settings.v6',JSON.stringify({priceMode:'bad',inputWeight:-1,families:null,providersExcluded:'oops',score:'bad'})));await page.reload();await ready();assert.equal((await state()).priceMode,'adjusted');assert.equal((await state()).inputWeight,10);receipt.checks.push('Invalid v6 price/filter payload falls back safely');
+assert.deepEqual(receipt.console_errors,[]);await writeFile('/tmp/phase03/controls-receipt.json',JSON.stringify(receipt,null,2));console.log(JSON.stringify({checks:receipt.checks,rows:rows.length,console_errors:receipt.console_errors},null,2));await ctx.close();await browser.close();

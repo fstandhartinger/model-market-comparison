@@ -1,0 +1,26 @@
+import assert from 'node:assert/strict';
+import {createRequire} from 'node:module';import {writeFile}from'node:fs/promises';
+const {chromium}=createRequire('/home/flori/n8n-local/package.json')('playwright');
+const browser=await chromium.connectOverCDP('http://127.0.0.1:34567'),ctx=await browser.newContext({viewport:{width:1440,height:1000}}),page=await ctx.newPage();page.setDefaultTimeout(20000);
+const base=process.env.BH_BROWSER_URL||'http://127.0.0.1:3103',receipt={base,checked_at:new Date().toISOString(),pages:[],console_errors:[]};page.on('pageerror',e=>receipt.console_errors.push(e.message));
+const setup=async path=>{await page.goto(base+path);await page.waitForFunction(()=>localStorage.getItem('mmc.settings.v6'));await page.waitForTimeout(400);if(path==='/compare'){await page.getByRole('button',{name:/^Select .* for comparison/}).nth(0).click();await page.getByRole('button',{name:/^Select .* for comparison/}).nth(1).click();}if(path==='/scatter')await page.locator('summary').filter({hasText:'Model prices and scores'}).click();if(path==='/charts')await page.locator('summary').filter({hasText:'Plotted model costs'}).click();};
+for(const path of ['/','/compare','/scatter','/charts','/providers','/provider-explorer','/eu','/models/gpt-5.6-sol%3A%3Amax']){
+ await setup(path);const buttons=page.getByRole('button',{name:/show cost inputs/});await buttons.first().waitFor();const initial=await buttons.first().getAttribute('aria-label');assert.ok(initial.includes('$/task'));
+ await buttons.first().click();const dialog=page.getByRole('dialog');await dialog.waitFor();const detail=await dialog.innerText();assert.ok(detail.includes('Input:output ratio'));assert.ok(detail.includes('Cache-hit rate'));await page.keyboard.press('Escape');
+ const p={path,adjusted_label:initial,adjusted_dialog:detail,visible_price_buttons:await buttons.count()};
+ await page.getByRole('combobox',{name:'Fixed I/O blend'}).selectOption('3');await page.waitForFunction(()=>JSON.parse(localStorage.getItem('mmc.settings.v6')).priceMode==='raw');await page.waitForTimeout(100);
+ const raw=await page.getByRole('button',{name:/show cost inputs/}).first().getAttribute('aria-label');assert.ok(raw.includes('$/1M tokens'));assert.notEqual(initial,raw);p.raw_label=raw;
+ await page.getByRole('button',{name:/Raw list prices/}).click();await page.waitForFunction(()=>JSON.parse(localStorage.getItem('mmc.settings.v6')).priceMode==='adjusted');await page.waitForTimeout(100);
+ p.tree=await page.locator('main').ariaSnapshot();receipt.pages.push(p);
+ if(path==='/compare')await page.screenshot({path:'/tmp/phase03/compare.png'});
+ if(path==='/providers'){
+  await page.locator('select').filter({has:page.locator('option[value="all"]')}).selectOption('all');await page.getByRole('button',{name:/Show the .* model prices behind/}).first().click();
+  assert.ok((await page.locator('main').innerText()).includes('average = sum(costs)/count'));receipt.provider_average_tree=await page.locator('main').ariaSnapshot();await page.screenshot({path:'/tmp/phase03/providers.png'});
+ }
+ if(path==='/charts'){
+  await page.locator('summary').filter({hasText:'Constituent models behind each average'}).click();assert.ok((await page.locator('main').innerText()).includes('arithmetic mean'));receipt.chart_average_tree=await page.locator('main').ariaSnapshot();
+  await page.getByRole('textbox',{name:'Min score',exact:true}).fill('100000');await page.waitForTimeout(150);const empty=await page.locator('main').innerText();assert.ok(empty.includes('average unavailable'));assert.ok(!empty.includes('÷ 0 = $0'));receipt.empty_chart_text=empty;await page.getByRole('textbox',{name:'Min score',exact:true}).fill('0');
+ }
+ console.log(path,'ok',p.visible_price_buttons);
+}
+assert.deepEqual(receipt.console_errors,[]);await writeFile('/tmp/phase03/views-receipt.json',JSON.stringify(receipt,null,2));await ctx.close();await browser.close();

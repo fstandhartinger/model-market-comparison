@@ -11,7 +11,7 @@ export default async function ComparePage() {
       <h1 className="text-2xl font-bold">Compare models head-to-head</h1>
       <p className="mt-1 mb-5 max-w-3xl text-sm text-gray-400">
         Pick one or two models (A and B) on the left. The panel compares their benchmark scores and
-        cheapest 10:1 price prominently — the better value in each row is highlighted — and lists the
+        cheapest price in the selected scenario prominently — the better value in each row is highlighted — and lists the
         cheapest providers for each, side by side. Filters at the top (score, providers, models) apply here too.
       </p>
       <CompareView data={data} />

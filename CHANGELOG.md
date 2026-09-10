@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-10 — Phase 03: effective task costs
+
+- Comparisons default to modeled USD/task, combining exact-variant task tokens, usage I/O and exact-endpoint cache statistics, with every fallback explained.
+- Raw list prices and six fixed I/O scenarios remain selectable; settings move to `mmc.settings.v6`.
+- The explorer starts at cheapest adjusted cost and measured task-token data; minimum benchmark scores make the cost/capability question directly filterable.
+- Every selected price has a keyboard/touch explainer; charts and averages expose their constituent prices.
+- Retired a Sol override that mixed first-party list rates with OpenRouter cached rates. Raw API units and data paths remain unchanged. See [cost policy and five-model checks](docs/effective-cost.md).
+
 ## Where to find the data (canonical, stable)
 
 - **In the repo** (updated ~daily by an automated refresh commit to `main`):

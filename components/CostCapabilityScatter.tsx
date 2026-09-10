@@ -4,11 +4,12 @@ import { useRouter } from "next/navigation";
 import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
 } from "recharts";
-import { hasScoreEvidence, type ClientData } from "../lib/client-model";
+import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
-import { usdPerM, orgColor } from "../lib/format";
-import { modelCost, createOfferScope } from "../lib/cost";
+import { orgColor } from "../lib/format";
+import { modelPrice, createOfferScope, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { Toggle } from "./ui";
+import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { paretoFrontier } from "../lib/pareto.mjs";
@@ -29,7 +30,7 @@ function ParetoHalo(props: { cx?: number; cy?: number }) {
 
 function logTicks(min: number, max: number): number[] {
   const ticks: number[] = [];
-  for (let e = -3; e <= 3; e++) for (const m of [1, 3]) {
+  for (let e = Math.floor(Math.log10(min)); e <= Math.ceil(Math.log10(max)); e++) for (const m of [1, 3]) {
     const v = m * 10 ** e;
     if (v >= min * 0.9 && v <= max * 1.1) ticks.push(v);
   }
@@ -40,23 +41,27 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
-  const points = useMemo(() => {
+  const allPoints = useMemo(() => {
     let pool = candidates;
     if (s.collapse) pool = collapseModels(pool, preferredId);
     if (s.openOnly) pool = pool.filter((m) => m.open_weights);
     if (s.featured) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     return pool
-      .map((m) => ({ m, cost: modelCost(m, data, offerScope), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
-      .filter((x) => x.hasEvidence && x.sc != null && x.cost != null && (x.cost as number) > 0 && (x.sc as number) >= s.minScore)
-      .map((x) => ({ x: x.cost as number, y: x.sc as number, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, candidates, score, offerScope, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
+      .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
+      .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0 && (x.sc as number) >= s.minScore)
+      .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
+
+  const points = useMemo(() => allPoints.filter((p) => !logX || p.x > 0), [allPoints, logX]);
+  const zeroCount = allPoints.filter((p) => p.x === 0).length;
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();
@@ -65,7 +70,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   }, [points]);
 
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
-  const pareto = useMemo(() => paretoFrontier(points), [points]);
+  const pareto = useMemo(() => paretoFrontier(allPoints).filter((p: { x: number }) => !logX || p.x > 0), [allPoints, logX]);
 
   const xs = points.map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;
@@ -81,17 +86,18 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
         <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
+      {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
       <div className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
             <CartesianGrid stroke="#222932" />
             <XAxis type="number" dataKey="x" name="Cost" reversed
               scale={logX ? "log" : "linear"}
-              domain={logX ? [xMin * 0.85, xMax * 1.15] : [0, xMax * 1.1]}
+              domain={logX ? [xMin * 0.85, xMax * 1.15] : [0, Math.max(1, xMax * 1.1)]}
               ticks={logX ? logTicks(xMin, xMax) : undefined}
               allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
-              tickFormatter={(v) => usdPerM(v)} stroke="#8a93a3" fontSize={12}>
-              <Label value="← more expensive    ·    cheaper → (cheapest blended $/1M, 10:1)" position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
+              tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={12}>
+              <Label value={`← more expensive    ·    cheaper → (cheapest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : [0, "auto"]}>
               <Label value={SCORE_LABELS[score]} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
@@ -123,11 +129,37 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
         <span className="text-accent2"> green Pareto frontier</span> marks and connects the best-value models —
         those no other model beats on both price and capability. Click any point to open the model detail.
       </p>
+      <PriceAssumptions />
+
+      {/* Keyboard/screen-reader equivalent of the scatter: the chart itself is
+          mouse-only, so every plotted price is listed below with its exact
+          inputs reachable through the same PriceValue expansion. */}
+      <details className="card mt-4 p-3">
+        <summary className="cursor-pointer text-sm text-gray-300">Model prices and scores (accessible table, {allPoints.length} rows)</summary>
+        <div className="mt-2 max-h-96 overflow-y-auto">
+          <table className="dtable w-full text-sm">
+            <thead><tr>
+              <th className="px-3 py-1 text-left text-xs text-gray-400">Model</th>
+              <th className="px-3 py-1 text-right text-xs text-gray-400">Score</th>
+              <th className="px-3 py-1 text-right text-xs text-gray-400">{priceLabel(priceSettings)}</th>
+            </tr></thead>
+            <tbody>
+              {[...allPoints].sort((a, b) => a.x - b.x).map((p) => (
+                <tr key={p.id}>
+                  <td className="px-3 py-1">{p.name} <span className="text-gray-500">{p.org}{p.open ? " · open" : ""}</span></td>
+                  <td className="px-3 py-1 text-right tabular">{p.y.toFixed(isElo ? 0 : 1)}</td>
+                  <td className="px-3 py-1 text-right"><PriceValue price={p.price} compact /></td>
+                </tr>
+              ))}
+            </tbody>
+          </table>
+        </div>
+      </details>
     </div>
   );
 }
 
-function Dot({ active, payload }: { active?: boolean; payload?: { payload: { name: string; x: number; y: number; org: string; open: boolean } }[] }) {
+function Dot({ active, payload }: { active?: boolean; payload?: { payload: { name: string; x: number; y: number; org: string; open: boolean; price: PriceResult } }[] }) {
   if (!active || !payload?.length) return null;
   const p = payload[0].payload;
   return (
@@ -135,7 +167,7 @@ function Dot({ active, payload }: { active?: boolean; payload?: { payload: { nam
       <div className="font-semibold">{p.name}</div>
       <div className="text-gray-400">{p.org}{p.open ? " · open weights" : " · closed"}</div>
       <div className="mt-1">Capability: <span className="font-semibold">{p.y.toFixed(1)}</span></div>
-      <div>Cheapest 10:1 cost: <span className="font-semibold">{usdPerM(p.x)}</span> / 1M</div>
+      <div>Cheapest price: <PriceValue price={p.price} compact /></div>
     </div>
   );
 }

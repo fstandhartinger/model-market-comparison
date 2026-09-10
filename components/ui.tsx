@@ -9,7 +9,7 @@ export function ScoreSelect({ value, onChange, label = "Score" }: { value: Score
   return (
     <span className="inline-flex max-w-full items-center gap-2">
       <label className="text-sm text-gray-400">{label}</label>
-      <select value={value} onChange={(e) => onChange(e.target.value as ScoreKey)}
+      <select aria-label={label} value={value} onChange={(e) => onChange(e.target.value as ScoreKey)}
         className="min-w-0 max-w-[240px] rounded-md border border-line bg-ink px-3 py-1.5 text-sm sm:max-w-none">
         {SCORE_OPTIONS.map((s) => <option key={s} value={s}>{SCORE_LABELS[s]}</option>)}
       </select>
@@ -19,7 +19,7 @@ export function ScoreSelect({ value, onChange, label = "Score" }: { value: Score
 
 export function Toggle({ label, on, set }: { label: string; on: boolean; set: (b: boolean) => void }) {
   return (
-    <button onClick={() => set(!on)}
+    <button type="button" aria-pressed={on} onClick={() => set(!on)}
       className={`rounded-md border px-3 py-1.5 text-sm ${on ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
       {on ? "✓ " : ""}{label}
     </button>
@@ -150,7 +150,7 @@ export function NumFilter({ label, value, onChange, placeholder }: { label: stri
   return (
     <span className="inline-flex items-center gap-1.5">
       <label className="text-xs text-gray-400">{label}</label>
-      <input value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} inputMode="decimal"
+      <input aria-label={label} value={value} onChange={(e) => onChange(e.target.value)} placeholder={placeholder} inputMode="decimal"
         className="w-20 rounded-md border border-line bg-ink px-2 py-1 text-sm" />
     </span>
   );

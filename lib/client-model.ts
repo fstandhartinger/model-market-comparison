@@ -1,4 +1,4 @@
-import type { Dataset, ModelRow, ScoreKey } from "./types";
+import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
 import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
 
 export interface ClientOffer {
@@ -27,6 +27,7 @@ export interface ClientOffer {
 }
 
 export interface ClientModel {
+  token_efficiency?: TokenEfficiency;
   id: string;
   family_key: string;
   family_name: string;
@@ -71,6 +72,8 @@ export interface ProviderInfo {
 export interface FamilyOption { key: string; name: string; org: string }
 
 export interface ClientData {
+  efficiency?: EfficiencyDataset;
+  sourceDates?: Record<string, string>;
   generated_at: string;
   models: ClientModel[];
   offersByFamily: Record<string, ClientOffer[]>;
@@ -126,6 +129,7 @@ export function clientData(ds: Dataset): ClientData {
   const models: ClientModel[] = ds.models.map((m: ModelRow) => {
     return {
       id: m.id,
+      token_efficiency: m.token_efficiency,
       family_key: m.family_key,
       family_name: m.family_name,
       display_name: m.display_name,
@@ -237,5 +241,5 @@ export function clientData(ds: Dataset): ClientData {
   for (const m of models) if (!famMap.has(m.family_key)) famMap.set(m.family_key, { key: m.family_key, name: m.family_name, org: m.org });
   const families = [...famMap.values()].sort((a, b) => a.name.localeCompare(b.name));
 
-  return { generated_at: ds.generated_at, models, offersByFamily, offersByModel, providers, families };
+  return { generated_at: ds.generated_at, efficiency: ds.efficiency, sourceDates: ds.sources, models, offersByFamily, offersByModel, providers, families };
 }

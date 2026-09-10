@@ -1,0 +1,25 @@
+```json
+{
+  "artifact_id": "phase03-cost-core",
+  "artifact_sha256": "d887729f3f4266489a648dc13e3f6b9e1627a83bb74dc9cc6030e7597f2a6953",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "lib/effective-cost.mjs: core arithmetic, four terms, fixed blend scenarios, zero/null handling, overflow protection, degradation assumptions",
+    "lib/effective-cost.d.mts: type definitions and exports matching implementation",
+    "lib/cost.ts: model and offer price adapters, telemetry precedence (OR model -> Chutes global -> AA benchmark proxy -> 10:1 fallback), exact endpoint cache matching, EU/TEE/Chinese scope filters, route ranking and tie-breaking",
+    "lib/client-model.ts: client projection mapping, multi-metric family backfill and display assignment",
+    "docs/effective-cost.md: formula specification, unit definitions, assumptions documentation, degradation policy, limitations",
+    "data/raw/manual.json: retired OpenRouter gpt-5.6-sol override verification against public endpoint rates",
+    "Five-model sanity checks: gpt-5.6-sol::max ($1.203159), claude-sonnet-5::max ($14.119974), gemini-3.5-flash::high ($2.197448), kimi-k3::max ($2.029332), deepseek-v4-pro::max ($0.970328)",
+    "Test suite: 23/23 tests passing across unit arithmetic, telemetry precedence, fallback isolation, scope composition, and exact identity joins"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "OpenRouter cache-hit statistics do not publish underlying token denominators or time intervals; as documented in docs/effective-cost.md, applying the hit fraction to input tokens is an explicit model assumption."
+  ],
+  "missing_evidence": []
+}
+```

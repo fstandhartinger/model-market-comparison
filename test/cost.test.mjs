@@ -8,7 +8,7 @@ import ts from "typescript";
 const source = await readFile(new URL("../lib/cost.ts", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
-}).outputText;
+}).outputText.replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`);
 const cost = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 
 // Exercise the real Dataset -> client projection -> shared offer scope as one
@@ -105,4 +105,64 @@ test("provider-level dedicated capability never turns a non-EU offer into an EU 
   const scope = cost.createOfferScope(null, false, providers, true, false, false);
   const azure = cost.scopedCatalogRoutes(offers, scope).filter((offer) => offer.key === "Azure::Azure");
   assert.deepEqual(azure.map((offer) => offer.region), ["eu"]);
+});
+
+const observation = (value, more={}) => ({value,source:'Synthetic test evidence',url:'https://example.test/source',collected_at:'2026-09-10',basis:'measured',...more});
+const model = {id:'synthetic::high', display_name:'Synthetic high', variant:'high',aa_ref_input:2,aa_ref_output:10,
+  token_efficiency:{aa:{source_slug:'synthetic-high',source_variant:'high',tokens_per_task:observation({output:1000,answer:500,reasoning:500}),benchmark_input_output_ratio:observation(5)},input_output_ratio:observation(20,{fallback:false})}};
+const route = {key:'OpenRouter::Test',source:'synthetic',provider:'Test',platform:'OpenRouter',region:'eu',eu_hosted:true,or_model_id:'test/model',endpoint_tag:'test/fast',input_per_1m:2,output_per_1m:10,cache_read_per_1m:0.2,cache_write_per_1m:2.5};
+const telemetryData = {models:[model],providers:[],offersByModel:{[model.id]:[route]},efficiency:{global_io_ratio:observation(30),openrouter_endpoints:{'test/model':{'test/fast':{or_model_id:'test/model',endpoint_tag:'test/fast',provider:'Test',status:'available',cache_hit_rate:observation(0.75,{definition:'Synthetic known input-token denominator'})}}}}};
+const adjusted={priceMode:'adjusted',inputWeight:10};
+
+test('client projection includes exact effort tokens and shared endpoint observations',()=>{
+  const projected=client.clientData(dataset);
+  assert.deepEqual(projected.efficiency,dataset.efficiency);
+  for(const raw of dataset.models) assert.deepEqual(projected.models.find(m=>m.id===raw.id).token_efficiency,raw.token_efficiency);
+});
+test('adjusted is modelCost default and uses per-model OR ratio before global or AA proxy',()=>{
+  assert.equal(cost.modelCost(model,telemetryData,null),0.023);
+  const p=cost.modelPrice(model,telemetryData,null,adjusted);
+  assert.equal(p.unit,'$/task');assert.equal(p.effective.inputs.input_output_ratio,20);
+  assert.equal(p.effective.inputs.output_tokens_per_task,1000);
+  assert.equal(p.effective.inputs.cache_hit_rate,0.75);
+});
+test('model I/O fallback selects global Chutes before benchmark proxy, rejects stale measurements',()=>{
+  const m=structuredClone(model);m.token_efficiency.input_output_ratio=observation(90,{stale:true});
+  assert.equal(cost.modelPrice(m,telemetryData,null).effective.inputs.input_output_ratio,30);
+  const d=structuredClone(telemetryData);d.efficiency.global_io_ratio.stale=true;
+  const p=cost.modelPrice(m,d,null);assert.equal(p.effective.inputs.input_output_ratio,5);
+  assert.match(p.assumptions.join(' '),/benchmark I\/O ratio used as a proxy/);
+  m.token_efficiency.aa.benchmark_input_output_ratio=null;
+  assert.equal(cost.modelPrice(m,d,null).effective.inputs.input_output_ratio,10);
+});
+test('cache rates require platform + exact SKU + exact endpoint + same provider, with no stale borrowing',()=>{
+  for(const change of [{platform:'Direct'},{or_model_id:'test/other'},{endpoint_tag:'test/other'},{provider:'Other'}]) {
+    const p=cost.offerPrice({...route,...change},cost.priceContext(model,telemetryData,adjusted));
+    assert.equal(p.effective.inputs.cache_hit_rate,0);
+    assert.equal(p.value,0.05);
+  }
+  for(const status of ['ambiguous_endpoint_tag','provider_identity_conflict']) {
+    const d=structuredClone(telemetryData);d.efficiency.openrouter_endpoints['test/model']['test/fast'].status=status;
+    assert.equal(cost.offerPrice(route,cost.priceContext(model,d)).effective.inputs.cache_hit_rate,0);
+  }
+  const d=structuredClone(telemetryData);d.efficiency.openrouter_endpoints['test/model']['test/fast'].cache_hit_rate.stale=true;
+  assert.equal(cost.offerPrice(route,cost.priceContext(model,d)).effective.inputs.cache_hit_rate,0);
+});
+test('alternate route representative changes with actual adjusted price, retaining EU scope',()=>{
+  const cheapList={...route,endpoint_tag:'test/no-cache',input_per_1m:1.5,cache_read_per_1m:null};
+  const ctx=cost.priceContext(model,telemetryData);
+  assert.equal(cost.rankedOffers([cheapList,route],null,10)[0].endpoint_tag,'test/no-cache');
+  assert.equal(cost.rankedOffers([cheapList,route],null,ctx)[0].endpoint_tag,'test/fast');
+  const eu=cost.createOfferScope(null,false,[route],true,false,false);
+  assert.equal(cost.rankedOffers([{...route,region:'us',eu_hosted:false},cheapList],eu,ctx)[0].endpoint_tag,'test/no-cache');
+});
+test('no efficiency copying across effort variants; raw mode ignores telemetry; scoped reference does not leak',()=>{
+  const other={...model,id:'synthetic::low',token_efficiency:undefined};
+  const d={...telemetryData,offersByModel:{[other.id]:[route]}};
+  const p=cost.modelPrice(other,d,null);
+  assert.equal(p.effective.inputs.output_tokens_per_task,1000);
+  assert.match(p.assumptions.join(' '),/AA tokens\/task missing/);
+  assert.equal(cost.modelPrice(model,telemetryData,null,{priceMode:'raw',inputWeight:1}).value,6);
+  assert.equal(cost.modelPrice(model,telemetryData,new Set()).value,null);
+  assert.ok(cost.modelPrice(model,{...telemetryData,offersByModel:{}},null).assumptions.some(x=>x.startsWith('No priced provider route')));
 });

@@ -3,9 +3,10 @@ import { useMemo, useState } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import type { ScoreKey } from "../lib/types";
-import { usdPerM, num, orgColor } from "../lib/format";
-import { modelCost, rankedOffers, scopedCatalogOffers, createOfferScope, type OfferScope } from "../lib/cost";
+import { num, orgColor } from "../lib/format";
+import { modelPrice, rankedOffers, scopedCatalogOffers, createOfferScope, priceContext, priceLabel, type OfferScope, type PriceResult, type PriceSettings } from "../lib/cost";
 import { DataBar } from "./ui";
+import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, selectableModels } from "../lib/variants";
 
@@ -15,11 +16,12 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
   { key: "aa_coding_index", label: "AA Coding Index", digits: 1 },
   { key: "aa_coding_agent", label: "AA Coding Agent Index", digits: 1 },
   { key: "aa_intelligence_index", label: "AA Intelligence Index", digits: 1 },
-  { key: "cost", label: "Cheapest 10:1 $/1M", lowerBetter: true },
+  { key: "cost", label: "Cheapest price", lowerBetter: true },
 ];
 
 export function CompareView({ data }: { data: ClientData }) {
   const s = useSettings();
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
@@ -35,7 +37,9 @@ export function CompareView({ data }: { data: ClientData }) {
     if (s.openOnly) r = r.filter((m) => m.open_weights);
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
-    if (s.minScore > 0) r = r.filter((m) => m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScore);
+    // Composite without evidence is the neutral fallback 50 and must not meet a
+    // positive minimum; other scores keep the existing null/value policy.
+    if (s.minScore > 0) r = r.filter((m) => hasScoreEvidence(m, s.score) && m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScore);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
   }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
 
@@ -59,7 +63,10 @@ export function CompareView({ data }: { data: ClientData }) {
 
   const metricVal = (m: ClientModel | undefined, key: ScoreKey | "cost"): number | null => {
     if (!m) return null;
-    return key === "cost" ? modelCost(m, data, offerScope) : m.scores[key];
+    return key === "cost" ? metricPrice(m)?.value ?? null : m.scores[key];
+  };
+  const metricPrice = (m: ClientModel | undefined): PriceResult | undefined => {
+    return m ? modelPrice(m, data, offerScope, priceSettings) : undefined;
   };
 
   return (
@@ -84,7 +91,7 @@ export function CompareView({ data }: { data: ClientData }) {
                 return (
                   <tr key={m.id} onClick={() => pick(m.id)} className={`cursor-pointer ${slot ? "bg-accent/15" : ""}`}>
                     <td className="px-2 py-2">{slot && <span className={`rounded px-1.5 py-0.5 text-[10px] font-bold ${slot === "A" ? "bg-accent text-black" : "bg-accent2 text-black"}`}>{slot}</span>}</td>
-                    <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{m.display_name}</span>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}{m.deprecated && <span className="ml-1 text-[10px] text-amber-300">deprecated</span>}</td>
+                    <td className="px-3 py-2 truncate"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <button type="button" aria-pressed={!!slot} aria-label={`Select ${m.display_name} for comparison`} className="inline-block max-w-[85%] truncate align-middle text-left font-medium focus-visible:outline focus-visible:outline-accent" onClick={(event) => { event.stopPropagation(); pick(m.id); }}>{m.display_name}</button>{m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}{m.deprecated && <span className="ml-1 text-[10px] text-amber-300">deprecated</span>}</td>
                     <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScore} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, s.score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                   </tr>
                 );
@@ -120,21 +127,25 @@ export function CompareView({ data }: { data: ClientData }) {
             {/* Plakative metric comparison */}
             <div className="card mb-4 divide-y divide-line">
               {METRICS.map((mt) => {
-                const a = metricVal(A, mt.key), b = metricVal(B, mt.key);
-                const fmt = (v: number | null) => mt.key === "cost" ? usdPerM(v) : (v == null ? "—" : num(v, mt.digits ?? 1));
+                const priceA = mt.key === "cost" ? metricPrice(A) : undefined;
+                const priceB = mt.key === "cost" ? metricPrice(B) : undefined;
+                const a = mt.key === "cost" ? priceA?.value ?? null : metricVal(A, mt.key), b = mt.key === "cost" ? priceB?.value ?? null : metricVal(B, mt.key);
                 const max = Math.max(a ?? 0, b ?? 0, 1);
                 const better = a != null && b != null ? (mt.lowerBetter ? (a < b ? "A" : b < a ? "B" : null) : (a > b ? "A" : b > a ? "B" : null)) : null;
                 return (
                   <div key={mt.key} className="px-4 py-3">
-                    <div className="mb-1 text-xs text-gray-400">{mt.label}{mt.lowerBetter && <span className="ml-1 text-gray-600">(lower is better)</span>}</div>
+                    <div className="mb-1 text-xs text-gray-400">{mt.key === "cost" ? `Cheapest ${priceLabel(priceSettings)}` : mt.label}{mt.lowerBetter && <span className="ml-1 text-gray-600">(lower is better)</span>}</div>
                     <div className="grid grid-cols-2 gap-3">
                       {(["A", "B"] as const).map((slot) => {
                         const v = slot === "A" ? a : b;
+                        const price = slot === "A" ? priceA : priceB;
                         const win = better === slot;
                         return (
                           <div key={slot} className={`rounded-md border px-3 py-2 ${win ? "border-accent2/60 bg-accent2/10" : "border-line"}`}>
                             <div className="flex items-baseline justify-between">
-                              <span className={`text-2xl font-bold tabular ${win ? "text-accent2" : "text-gray-200"}`}>{fmt(v)}</span>
+                              <span className={`text-2xl font-bold tabular ${win ? "text-accent2" : "text-gray-200"}`}>
+                                {mt.key === "cost" ? (price ? <PriceValue price={price} /> : "—") : (v == null ? "—" : num(v, mt.digits ?? 1))}
+                              </span>
                               {win && <span className="text-[10px] font-bold text-accent2">★ better</span>}
                             </div>
                             <div className="mt-1.5 h-1.5 w-full rounded bg-ink">
@@ -150,9 +161,10 @@ export function CompareView({ data }: { data: ClientData }) {
             </div>
 
             {/* Provider price tables side by side */}
+            <PriceAssumptions />
             <div className="grid grid-cols-1 gap-4 xl:grid-cols-2">
               {[A, B].map((m, i) => (
-                <ProviderMini key={i} slot={i === 0 ? "A" : "B"} model={m} data={data} offerScope={offerScope} />
+                <ProviderMini key={i} slot={i === 0 ? "A" : "B"} model={m} data={data} offerScope={offerScope} priceSettings={priceSettings} />
               ))}
             </div>
           </>
@@ -162,12 +174,12 @@ export function CompareView({ data }: { data: ClientData }) {
   );
 }
 
-function ProviderMini({ slot, model, data, offerScope }: { slot: string; model?: ClientModel; data: ClientData; offerScope: OfferScope }) {
-  const offers = model ? rankedOffers(data.offersByModel[model.id], offerScope).slice(0, 8) : [];
-  const max = Math.max(1, ...offers.map((o) => o.blended));
+function ProviderMini({ slot, model, data, offerScope, priceSettings }: { slot: string; model?: ClientModel; data: ClientData; offerScope: OfferScope; priceSettings: PriceSettings }) {
+  const offers = model ? rankedOffers(data.offersByModel[model.id], offerScope, priceContext(model, data, priceSettings)).slice(0, 8) : [];
+  const max = Math.max(1, ...offers.map((o) => o.price.value ?? 0));
   return (
     <div className="card p-3">
-      <div className="mb-2 text-xs font-semibold text-gray-300">{slot} · {model ? model.family_name : "—"} <span className="font-normal text-gray-500">cheapest providers</span></div>
+      <div className="mb-2 text-xs font-semibold text-gray-300">{slot} · {model ? model.family_name : "—"} <span className="font-normal text-gray-500">cheapest providers — {priceLabel(priceSettings)}</span></div>
       {model ? (
         offers.length ? (
           <table className="dtable w-full table-fixed text-sm">
@@ -176,7 +188,7 @@ function ProviderMini({ slot, model, data, offerScope }: { slot: string; model?:
               {offers.map((o, idx) => (
                 <tr key={o.key + idx}>
                   <td className="px-2 py-1 truncate text-xs">{o.provider}<span className="ml-1 text-[10px] text-gray-500">{o.platform}</span>{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU equivalent</span>}</td>
-                  <td className="px-2 py-1"><DataBar frac={o.blended / max} color={idx === 0 ? "#7ee0c0" : "#8a93a3"} align="right"><span className="block text-right font-semibold">{usdPerM(o.blended)}</span></DataBar></td>
+                  <td className="px-2 py-1"><DataBar frac={(o.price.value ?? 0) / max} color={idx === 0 ? "#7ee0c0" : "#8a93a3"} align="right"><span className="block text-right font-semibold"><PriceValue price={o.price} compact /></span></DataBar></td>
                 </tr>
               ))}
             </tbody>

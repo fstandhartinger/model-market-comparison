@@ -1,5 +1,114 @@
 import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
+import { effectiveCost, fixedCost, FIXED_BLENDS, type EffectiveCostResult } from "./effective-cost.mjs";
+export { FIXED_BLENDS };
+
+export type PriceMode = "adjusted" | "raw";
+export interface PriceSettings { priceMode: PriceMode; inputWeight: number }
+export const DEFAULT_PRICE_SETTINGS: PriceSettings = { priceMode: "adjusted", inputWeight: 10 };
+export interface PriceContext extends PriceSettings { model: ClientModel; data: ClientData }
+export interface PriceSource { label: string; source: string; url?: string; date?: string; basis?: string; note?: string }
+export interface PriceResult {
+  value: number | null;
+  unit: "$/task" | "$/1M tokens";
+  label: string;
+  assumptions: string[];
+  effective: EffectiveCostResult | null;
+  sources: PriceSource[];
+  model?: string;
+  provider?: string;
+}
+export function priceContext(model: ClientModel, data: ClientData, settings: PriceSettings = DEFAULT_PRICE_SETTINGS): PriceContext {
+  return { priceMode: settings.priceMode, inputWeight: settings.inputWeight, model, data };
+}
+export function priceLabel(settings: PriceSettings): string {
+  return settings.priceMode === "adjusted" ? "Adjusted $/task"
+    : `Raw ${settings.inputWeight === 1000000 ? "input only" : `${settings.inputWeight}:1`} $/1M tokens`;
+}
+type Pricing = PriceContext | number;
+const valid = (x: unknown): x is number => typeof x === "number" && Number.isFinite(x) && x >= 0;
+const usable = (o: { value: unknown; stale?: boolean } | null | undefined) => o && !o.stale && valid(o.value);
+// Usage observations expire relative to the dataset build, not wall-clock time
+// during rendering. Benchmark task measurements describe an immutable variant.
+const freshUsage = (o: { value: unknown; stale?: boolean; collected_at: string } | null | undefined, data: ClientData) => {
+  if (!usable(o)) return false;
+  const age = Date.parse(data.generated_at) - Date.parse(o!.collected_at);
+  return !Number.isFinite(age) || age <= 30 * 86400000;
+};
+const SOURCE_KEYS: Record<string, string> = {
+  OpenRouter: "openrouter", "Artificial Analysis": "artificialanalysis", "AWS Bedrock": "aws_bedrock",
+  "Azure AI Foundry": "azure_foundry", "Google Vertex AI": "google_vertex", Anthropic: "claude_code",
+  "Anthropic API / Claude Code": "claude_code", "GitHub Copilot": "github_copilot",
+  Nebius: "nebius", Inceptron: "inceptron", Scaleway: "scaleway", IONOS: "ionos", Mistral: "mistral",
+  TensorX: "tensorx", Chutes: "chutes", OVHcloud: "ovhcloud", STACKIT: "stackit", "T-Systems LLM Hub": "t_systems_llm_hub",
+};
+
+/** Source selection is separate from pure arithmetic. Exact model + endpoint
+ * identity is mandatory for cache statistics; direct routes never borrow OR data. */
+export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResult {
+  const settings = typeof context === "number" ? { priceMode: "raw" as const, inputWeight: context } : context;
+  const priceUrl = offer.platform === "OpenRouter" && offer.or_model_id ? `https://openrouter.ai/api/v1/models/${offer.or_model_id}/endpoints`
+    : offer.platform === "Google Vertex AI" ? "https://cloud.google.com/vertex-ai/generative-ai/pricing"
+    : offer.platform === "Artificial Analysis" ? "https://artificialanalysis.ai/leaderboards/models"
+    : offer.notes?.match(/https:\/\/[^\s,)]+/)?.[0];
+  const sources: PriceSource[] = [{ label: "List prices", source: offer.source, url: priceUrl,
+    date: typeof context === "number" ? undefined : context.data.sourceDates?.[SOURCE_KEYS[offer.platform]], basis: offer.estimated ? "assumed" : "self_reported",
+    note: `${offer.platform} / ${offer.provider}; ${offer.region}${offer.endpoint_tag ? `; endpoint ${offer.endpoint_tag}` : ""}${offer.pricing_tier ? `; ${offer.pricing_tier}` : ""}${offer.notes ? `. ${offer.notes}` : ""}` }];
+  const base = { label: priceLabel(settings), sources, model: typeof context === "number" ? undefined : context.model.display_name, provider: `${offer.provider} / ${offer.platform}` };
+  if (settings.priceMode === "raw" || typeof context === "number") {
+    const result = fixedCost(offer.input_per_1m, offer.output_per_1m, settings.inputWeight);
+    if (offer.estimated) result.assumptions.push("Catalog price is marked estimated by its source.");
+    return { ...base, value: result.value, unit: "$/1M tokens", assumptions: result.assumptions, effective: null };
+  }
+  const { model, data } = context;
+  const extra: string[] = [];
+  const telemetry = model.token_efficiency;
+  let ratio = telemetry?.input_output_ratio;
+  if (!freshUsage(ratio, data)) {
+    const global = data.efficiency?.global_io_ratio;
+    const benchmark = telemetry?.aa?.benchmark_input_output_ratio;
+    if (freshUsage(global, data)) {
+      ratio = { ...global!, fallback: true, basis: "assumed" };
+    } else if (usable(benchmark)) {
+      ratio = { ...benchmark!, fallback: true, basis: "assumed" };
+      extra.push("User usage unavailable: AA benchmark I/O ratio used as a proxy, not typical coding-agent traffic.");
+    } else ratio = undefined;
+    if (telemetry?.input_output_ratio) extra.push("Unavailable, invalid or stale model I/O observation ignored.");
+  }
+  if (ratio) {
+    sources.push({ label: "Input/output ratio", source: ratio.source, url: ratio.url, date: ratio.collected_at, basis: ratio.basis,
+      note: [ratio.scope, ratio.configuration_scope, ratio.window ? `${ratio.window.start_date} to ${ratio.window.end_date}` : ""].filter(Boolean).join("; ") });
+    if (ratio.fallback || ratio.basis === "assumed") extra.push("I/O ratio assigned from fallback evidence; assumed for this model and task.");
+  }
+  const tokens = telemetry?.aa?.tokens_per_task;
+  if (tokens && !tokens.stale) sources.push({ label: "Output tokens/task", source: tokens.source, url: tokens.url, date: tokens.collected_at, basis: tokens.basis,
+    note: `AA Intelligence Index task; exact configuration ${telemetry?.aa.source_slug} (${telemetry?.aa.source_variant || model.variant || "source default"}). Includes answer and reasoning tokens.` });
+  if (tokens?.stale) extra.push("Stale AA task-token observation ignored.");
+  const endpoint = offer.platform === "OpenRouter" && offer.or_model_id && offer.endpoint_tag
+    ? data.efficiency?.openrouter_endpoints[offer.or_model_id]?.[offer.endpoint_tag] : undefined;
+  const exactEndpoint = endpoint?.or_model_id === offer.or_model_id && endpoint?.endpoint_tag === offer.endpoint_tag
+    && endpoint?.provider === offer.provider && !["ambiguous_endpoint_tag", "provider_identity_conflict"].includes(endpoint?.status || "") ? endpoint : undefined;
+  const hit = exactEndpoint?.cache_hit_rate;
+  if (freshUsage(hit, data) && hit!.value <= 1) {
+    sources.push({ label: "Cache-hit rate", source: hit!.source, url: hit!.url, date: hit!.collected_at, basis: hit!.basis, note: hit!.definition });
+    extra.push("Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.");
+  } else if (hit) extra.push("Unavailable, invalid or stale endpoint cache-hit observation ignored; no cache discount credited.");
+  if (endpoint && !exactEndpoint) extra.push("Conflicting/ambiguous endpoint identity ignored; no cache statistics borrowed.");
+  const result = effectiveCost({
+    input_per_1m: offer.input_per_1m, output_per_1m: offer.output_per_1m,
+    cache_read_per_1m: offer.cache_read_per_1m,
+    cache_write_per_1m: offer.cache_write_per_1m,
+    output_tokens_per_task: tokens && !tokens.stale ? tokens.value.output : null,
+    input_output_ratio: ratio?.value,
+    cache_hit_rate: freshUsage(hit, data) ? hit!.value : null,
+  });
+  extra.push("AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.");
+  extra.push("Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled.");
+  if (offer.estimated) extra.push("Catalog price is marked estimated by its source.");
+  result.assumptions.push(...extra);
+  result.estimated = true;
+  return { ...base, value: result.effective_cost_per_task, unit: "$/task", assumptions: result.assumptions, effective: result };
+}
 
 export const SCORE_OPTIONS: ScoreKey[] = [
   "composite",
@@ -14,13 +123,10 @@ export const SCORE_OPTIONS: ScoreKey[] = [
 export const DEFAULT_SCORE: ScoreKey = "composite";
 
 export function blend(input: number | null, output: number | null, inputWeight = 10): number | null {
-  if (input == null && output == null) return null;
-  const i = input ?? output ?? 0;
-  const o = output ?? input ?? 0;
-  return (inputWeight * i + o) / (inputWeight + 1);
+  return fixedCost(input, output, inputWeight).value;
 }
 
-export interface RankedOffer extends ClientOffer { blended: number }
+export interface RankedOffer extends ClientOffer { blended: number; price: PriceResult }
 
 export interface OfferScope {
   allowed: Set<string> | null;
@@ -68,14 +174,14 @@ function endpointHealth(offer: ClientOffer): number {
 export function scopedCatalogRoutes(
   offers: ClientOffer[] | undefined,
   selection: OfferSelection,
-  inputWeight = 10,
+  inputWeight: Pricing = 10,
 ): ClientOffer[] {
   if (!offers) return [];
   return offers.filter((offer) => offerMatchesScope(offer, selection)).sort((a, b) => {
     const health = endpointHealth(a) - endpointHealth(b);
     if (health) return health;
-    const aPrice = blend(a.input_per_1m, a.output_per_1m, inputWeight);
-    const bPrice = blend(b.input_per_1m, b.output_per_1m, inputWeight);
+    const aPrice = offerPrice(a, inputWeight).value;
+    const bPrice = offerPrice(b, inputWeight).value;
     return (aPrice ?? Infinity) - (bPrice ?? Infinity);
   });
 }
@@ -86,7 +192,7 @@ export function scopedCatalogRoutes(
 export function scopedCatalogOffers(
   offers: ClientOffer[] | undefined,
   selection: OfferSelection,
-  inputWeight = 10,
+  inputWeight: Pricing = 10,
 ): ClientOffer[] {
   const sorted = scopedCatalogRoutes(offers, selection, inputWeight);
   const seen = new Set<string>();
@@ -102,11 +208,11 @@ export function scopedCatalogOffers(
 export function rankedOffers(
   offers: ClientOffer[] | undefined,
   selection: OfferSelection,
-  inputWeight = 10
+  inputWeight: Pricing = 10
 ): RankedOffer[] {
   if (!offers) return [];
   const ranked = scopedCatalogOffers(offers, selection, inputWeight)
-    .map((o) => ({ ...o, blended: blend(o.input_per_1m, o.output_per_1m, inputWeight) ?? Infinity }))
+    .map((o) => { const price = offerPrice(o, inputWeight); return { ...o, price, blended: price.value ?? Infinity }; })
     .filter((o) => Number.isFinite(o.blended))
     .sort((a, b) => a.blended - b.blended);
   return ranked;
@@ -118,14 +224,23 @@ export function modelCost(
   m: ClientModel,
   data: ClientData,
   selection: OfferSelection,
-  inputWeight = 10
+  settings: PriceSettings | number = DEFAULT_PRICE_SETTINGS
 ): number | null {
-  const r = rankedOffers(data.offersByModel[m.id], selection, inputWeight);
-  if (r.length) return r[0].blended;
+  return modelPrice(m, data, selection, settings).value;
+}
+
+export function modelPrice(m: ClientModel, data: ClientData, selection: OfferSelection, settings: PriceSettings | number = DEFAULT_PRICE_SETTINGS): PriceResult {
+  const context = typeof settings === "number" ? settings : priceContext(m, data, settings);
+  const r = rankedOffers(data.offersByModel[m.id], selection, context);
+  if (r.length) return r[0].price;
+  const reference: ClientOffer = { key: "AA reference", source: "Artificial Analysis reference list price", provider: "AA reference (no matching priced endpoint)", platform: "Artificial Analysis", region: "unspecified", input_per_1m: null, output_per_1m: null };
   if (!selection || (isOfferScope(selection) && !selection.restricted)) {
-    return blend(m.aa_ref_input, m.aa_ref_output, inputWeight);
+    reference.input_per_1m = m.aa_ref_input;
+    reference.output_per_1m = m.aa_ref_output;
   }
-  return null;
+  const price = offerPrice(reference, context);
+  if (price.value != null) price.assumptions.push("No priced provider route: AA reference list prices used; availability and cache behavior are unverified.");
+  return price;
 }
 
 export function scoreOf(m: ClientModel, key: ScoreKey): number | null {
