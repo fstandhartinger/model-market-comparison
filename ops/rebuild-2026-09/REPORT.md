@@ -53,7 +53,7 @@ This phase receives DONE only after the final critic round, deterministic gates 
 
 Reviewer: `z-ai/glm-5.3-flash`, different from code owner OpenAI and documentation draft producer DeepSeek. [Full review](evidence/phase-01-critic-round1.json). It checked all 13 new rows and all 39 component scores/weights against supplied primary-source extracts, recomputed index arithmetic, checked metadata retention, version separation and coverage/method docs. It reported two minor findings: direct writes in the existing DA/OR collectors, and missing fixtures for several implemented failure guards.
 
-Owner fixes: all four raw-source writers now share `writeJSONAtomic`; added ambiguity, component identity, component weight/range and serialization-failure preservation cases. All seven targeted parser/metadata tests pass. The next packet will include the literal Flight version marker, current webhook receipt and the complete current artifact rather than imply missing evidence was verified.
+Owner fixes: all four raw-source writers now share `writeJSONAtomic`; added ambiguity, component identity, component weight/range and serialization-failure preservation cases. All seven targeted parser/metadata tests pass. Later packets included the literal Flight version marker, current webhook receipt and the complete current artifact.
 
 ### Worker qualification and execution receipts
 
@@ -65,7 +65,7 @@ Critic pinning cannot bypass the different-family rule, including aliases. The d
 
 ### Deployment evidence
 
-The repaired core commit `c635ffbf8e1a02cc64acf4924393761a2b258aeb` triggered webhook deployment `dthkqo8rdum9s7rqfz0dmxnl`, which finished successfully. [Live receipt](evidence/phase-01-core-deployment.json): HTTPS 200, the complete `/api/dataset` response equals the committed snapshot after removing only the runtime `_source` field, and live `/about` shows both versions and the true retained date. Counts: 835 models / 650 families / 89 providers / 2,786 offers. Final tooling/docs deployment verification follows the last green push.
+The repaired core commit `c635ffbf8e1a02cc64acf4924393761a2b258aeb` triggered webhook deployment `dthkqo8rdum9s7rqfz0dmxnl`, which finished successfully. [Live receipt](evidence/phase-01-core-deployment.json): HTTPS 200, the complete `/api/dataset` response equals the committed snapshot after removing only the runtime `_source` field, and live `/about` shows both versions and the true retained date. Counts: 835 models / 650 families / 89 providers / 2,786 offers. The final tooling/docs release is verified below.
 
 ### Review transport failure and additional owner checks
 
@@ -81,4 +81,10 @@ Accepted residue: upstream Flight structures can change and will require an expl
 
 ### Final release checks
 
-[Final deterministic receipt](evidence/phase-01-final-checks.json): dataset build, **90/90 tests**, TypeScript typecheck, production build, **9/9 prerender checks**, and whitespace validation all passed after the final code changes. The live collector succeeded after the stronger current-section version gate. Installed daily files still match the tracked copies. The next push contains the reviewed worker tooling, coverage/method/report, evidence and the additional version guard; live verification of that release is required before writing DONE.
+[Final deterministic receipt](evidence/phase-01-final-checks.json): dataset build, **90/90 tests**, TypeScript typecheck, production build, **9/9 prerender checks**, and whitespace validation all passed after the final code changes. The live collector succeeded after the stronger current-section version gate. Installed daily files still match the tracked copies. Release `9571976` contains the reviewed worker tooling, coverage/method/report, evidence and the additional version guard. Its deployment was verified as recorded below.
+
+### Phase 01 released
+
+Committed and pushed `c635ffb` (data/daily repair) and `9571976` (worker tooling, method, coverage, review evidence and final guard). [Final implementation deployment receipt](evidence/phase-01-release-deployment.json): webhook deployment `dmyzkzc21deldsmrtob0jggd` finished; HTTPS root/API return 200; live dataset equals the complete committed snapshot apart from `_source`; live About retains both versions and the original date. `HEAD` and `origin/main` agree. A final documentation-only commit records this receipt; it does not change the tested application or dataset. The phase status is marked DONE only after that closing push/deployment is verified as well.
+
+Phase-01 deliverables are complete. Phases 02–09 remain planned; see [coverage](COVERAGE.md). No Telegram completion announcement or final video is claimed for this foundations phase.

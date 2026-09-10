@@ -5,7 +5,7 @@
 > “Completion evidence required” is an acceptance criterion, not an observation.
 > Phase 1 execution and deployment evidence is in `REPORT.md`; future evidence requirements below are not completion claims.
 
-Phase 1 status: **foundations verified; final release gate tracked in REPORT.md**. All later phases: **planned**.
+Phase 1 status: **foundations complete; release evidence in REPORT.md**. All later phases: **planned**.
 
 ---
 
