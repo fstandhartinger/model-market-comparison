@@ -18,7 +18,9 @@ REPO="$(cd "$HERE/../../.." && pwd)"
 STATE="${BH_STATE:-/opt/benchmarkheaven/state}"
 [ -w "$(dirname "$STATE")" ] 2>/dev/null || STATE="${TMPDIR:-/tmp}/benchmarkheaven-state"
 mkdir -p "$STATE"
-[ -f /root/.config/dev-secrets.env ] && . /root/.config/dev-secrets.env
+for f in "$HOME/.config/dev-secrets.env" /root/.config/dev-secrets.env; do
+  [ -r "$f" ] && . "$f" && break
+done
 OR_KEY="${OPEN_ROUTER_API_KEY:-${OPENROUTER_API_KEY:-}}"
 
 MODE=oneshot; MODEL=""; FILE=""; OUT=""

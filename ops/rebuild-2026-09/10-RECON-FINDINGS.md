@@ -125,8 +125,13 @@ if per-model data is unavailable — §1 should make that unnecessary for most m
 
 - **Sandy**: `codex-cli 0.147.0`; `codex exec -m gpt-6-astra -c model_reasoning_effort="xhigh"`
   works (it prints a harmless "Model metadata … not found. Defaulting to fallback metadata"
-  warning). Codex is authenticated **with an API key**, so your tokens are billed — hence
-  the delegation rules. Node v20.19.4, npm 11.12.0. Disk `/` is at **90 % (46 G free)** —
+  warning). **Run everything as the `flori` user**, whose `~/.codex/auth.json` is
+  `auth_mode: chatgpt` (ChatGPT Pro subscription). The `root` user's codex on Sandy is
+  configured with an API key (`auth_mode: apikey`) — that would bill per token and must not
+  be used; a first attempt on 2026-09-10 started under root, was caught within minutes and
+  stopped. Note that `OPENAI_API_KEY` is present in both users' `dev-secrets.env` and can
+  flip codex into API mode even when auth.json says chatgpt, so `run-phase.sh` unsets it
+  and hard-aborts unless `codex login status` says ChatGPT. Node v20.19.4, npm 11.12.0. Disk `/` is at **90 % (46 G free)** —
   do not leave large artifacts around, and check before any big download.
 - **Secrets on Sandy** (`/root/.config/dev-secrets.env` unless noted): `OPEN_ROUTER_API_KEY`
   (underscore between OPEN and ROUTER), `ARTIF_ANALYSIS_API_KEY`, `ELEVENLABS_API_KEY`,

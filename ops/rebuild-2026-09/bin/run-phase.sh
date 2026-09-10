@@ -11,12 +11,27 @@ NN="${1:?usage: run-phase.sh <NN>}"
 PHASE_FILE=$(ls "$REPO"/ops/rebuild-2026-09/phases/phase-"$NN"-*.md 2>/dev/null | head -1)
 [ -f "$PHASE_FILE" ] || { echo "no phase file for $NN"; exit 2; }
 
-[ -f /root/.config/dev-secrets.env ] && . /root/.config/dev-secrets.env
+for f in "$HOME/.config/dev-secrets.env" /root/.config/dev-secrets.env; do
+  [ -r "$f" ] && . "$f" && break
+done
 [ -f /etc/profile.d/telegram.sh ] && . /etc/profile.d/telegram.sh
 export ARTIFICIAL_ANALYSIS_API_KEY="${ARTIFICIAL_ANALYSIS_API_KEY:-${ARTIF_ANALYSIS_API_KEY:-}}"
 export OPENROUTER_API_KEY="${OPENROUTER_API_KEY:-${OPEN_ROUTER_API_KEY:-}}"
 export OPEN_ROUTER_API_KEY CHUTES_API_KEY TG_BOT_TOKEN TG_CHAT_ID ELEVENLABS_API_KEY
-export PATH=/usr/local/bin:/usr/bin:/bin:/root/.opencode/bin:/root/.local/bin
+export PATH="$HOME/.local/bin:$HOME/.opencode/bin:/usr/local/bin:/usr/bin:/bin"
+
+# Codex MUST run on Florian's ChatGPT Pro subscription, never on API-key billing.
+# A stray OPENAI_API_KEY in the environment is enough to flip codex to API mode, and the
+# dev-secrets file sets one, so it is removed here before codex is ever invoked.
+unset OPENAI_API_KEY OPENAI_BASE_URL
+AUTH="$(codex login status 2>&1 | head -1)"
+case "$AUTH" in
+  *ChatGPT*) echo "auth ok: $AUTH" ;;
+  *) echo "ABORT: codex is not on the ChatGPT subscription ($AUTH)"
+     echo "BLOCKED: codex auth is '$AUTH', expected ChatGPT subscription" > "$STATE/phase-$NN.status"
+     bash "$(dirname "${BASH_SOURCE[0]}")/notify.sh" "⛔ Benchmark Heaven Phase $NN nicht gestartet: Codex läuft nicht über die ChatGPT-Subscription ($AUTH). Kein API-Key-Verbrauch."
+     exit 1 ;;
+esac
 
 LOG="$LOGS/phase-$NN-$(date -u +%Y%m%dT%H%M%SZ).log"
 echo "$NN" > "$STATE/current-phase"

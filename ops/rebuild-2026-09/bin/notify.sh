@@ -3,7 +3,9 @@
 # when something is genuinely worth his attention (see master brief §6).
 set -u
 [ -f /etc/profile.d/telegram.sh ] && . /etc/profile.d/telegram.sh
-[ -f /root/.config/dev-secrets.env ] && . /root/.config/dev-secrets.env
+for f in "$HOME/.config/dev-secrets.env" /root/.config/dev-secrets.env; do
+  [ -r "$f" ] && . "$f" && break
+done
 python3 - "$1" << 'PY'
 import json, os, sys, urllib.request
 t, c = os.environ.get("TG_BOT_TOKEN"), os.environ.get("TG_CHAT_ID")

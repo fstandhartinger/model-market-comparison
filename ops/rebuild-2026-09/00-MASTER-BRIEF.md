@@ -40,7 +40,14 @@ Work through the phases in `phases/`, one at a time, in order. `bin/tick.sh` (cr
    `ARTIF_ANALYSIS_API_KEY` (the fetch script expects `ARTIFICIAL_ANALYSIS_API_KEY` — the
    run scripts already alias it), `TG_BOT_TOKEN`/`TG_CHAT_ID`, `ELEVENLABS_API_KEY`.
    Never echo a secret value into a log, a commit or a Telegram message.
-8. **Budget discipline.** You are billed per token via an API key. Your job is judgement,
+8. **You run on Florian's ChatGPT Pro subscription, never on API-key billing.** The
+   rebuild runs as the `flori` user on Sandy, whose `~/.codex/auth.json` is
+   `auth_mode: chatgpt`. `run-phase.sh` unsets `OPENAI_API_KEY` before invoking codex and
+   refuses to start unless `codex login status` reports ChatGPT. If you ever see codex
+   report API-key auth, stop and report it — do not work around it.
+9. **Budget discipline.** Subscription capacity is finite and shared with everything else
+   Florian runs, and `model_reasoning_effort="xhigh"` across many parallel agents exhausts
+   it. Your job is judgement,
    architecture, review and the tricky code. Scraping, bulk extraction, repetitive
    transformation, first drafts of long documents and mechanical refactors go to the free
    workers in §7. If a phase is burning tokens on something mechanical, stop and delegate.
