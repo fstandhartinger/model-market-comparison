@@ -1,0 +1,42 @@
+```json
+{
+  "artifact_id": "phase05-code-and-daily-recipes",
+  "artifact_sha256": "7a3e533ce2613bf3a5c20358476b2b7372b296ea5ced3d3bc71ad01219cefe79",
+  "round": 1,
+  "verdict": "pass",
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "coverage_checked": [
+    "lib/benchmark-scores.mjs",
+    "lib/benchmark-score-evidence.mjs",
+    "lib/benchmark-scores.d.mts",
+    "scripts/ingest-benchmark-scores.mjs",
+    "scripts/collect-public-benchmarks.py",
+    "scripts/capture-benchmark-sources.py",
+    "scripts/validate-benchmark-scores.mjs",
+    "scripts/build-dataset.mjs",
+    "lib/db.ts",
+    "lib/types.ts",
+    "app/api/benchmark-scores/route.ts",
+    "app/api/benchmarks/route.ts",
+    "app/api/models/[id]/route.ts",
+    "package.json",
+    "test/benchmark-scores.test.mjs",
+    "test/public-benchmarks.test.mjs",
+    "test/data-cache.test.mjs",
+    "docs/benchmark-ingestion.md",
+    "data/raw/benchmarks/README.md",
+    "API.md",
+    "data/SCHEMA.md",
+    "ops/rebuild-2026-09/daily-refresh-prompt.md",
+    "data/raw/benchmarks/collection-plan.json",
+    "data/raw/benchmarks/ingestion-lock.json",
+    "Five manual collection recipes (HELMET, HLE, IFBench, OTIS Mock AIME, Towards AI Editorial Writing)",
+    "Composite 5-slot isolation and v1.4 frozen bytehash invariants",
+    "Sparse cell status semantics and coverage denominator invariants"
+  ],
+  "missing_evidence": []
+}
+```

@@ -1,0 +1,62 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/build-dataset.mjs"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 1.02,
+    "log": "ops/rebuild-2026-09/evidence/phase-05/final-dataset.log"
+  },
+  {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 7.97,
+    "log": "ops/rebuild-2026-09/evidence/phase-05/final-tests.log"
+  },
+  {
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit",
+      "-p",
+      "."
+    ],
+    "exit_code": 0,
+    "duration_seconds": 14.29,
+    "log": "ops/rebuild-2026-09/evidence/phase-05/final-typecheck.log"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 45.54,
+    "log": "ops/rebuild-2026-09/evidence/phase-05/final-production-build.log"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "test/production/prerender.mjs"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 0.17,
+    "log": "ops/rebuild-2026-09/evidence/phase-05/final-prerender.log"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "exit_code": 0,
+    "duration_seconds": 0.27,
+    "log": "ops/rebuild-2026-09/evidence/phase-05/final-whitespace.log"
+  }
+]

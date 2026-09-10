@@ -1,3 +1,4 @@
+import type { BenchmarkResults } from "./benchmark-scores.mjs";
 export interface Benchmarks {
   aa_intelligence_index?: number | null;
   aa_coding_index?: number | null;
@@ -209,6 +210,7 @@ export interface ModelRow {
 }
 
 export interface Dataset {
+  benchmark_results: BenchmarkResults;
   generated_at: string;
   counts: { models: number; families: number; providers: number; offers: number };
   sources: Record<string, string>;

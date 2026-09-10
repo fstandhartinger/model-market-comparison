@@ -1,0 +1,28 @@
+```json
+{
+  "artifact_id": "ruler--snapshot-2026-09-10-0",
+  "artifact_sha256": "84d6350c6b6845e0ec24d4f64776bddbc020a9f6e2e334ab6ffb83bf48aece92",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "public:f3c5bfbb5f94877b4b4b5119",
+      "severity": "error",
+      "location": "numbered_candidates[row=2].subject",
+      "evidence": "Source table cell contains '[Gemini-1.5-pro](https://ai.google.dev/gemini-api/docs/models/gemini#:~:text=Gemini-,Gemini%201.5%20Pro%20(Preview%20only),-Text%20and%20images)'. Link parsing unescaped nested parentheses in the URL fragment into the model name, resulting in 'Gemini-1.5-pro,-Text%20and%20images)'.",
+      "repair": "Set subject.source_id and subject.name to 'Gemini-1.5-pro'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

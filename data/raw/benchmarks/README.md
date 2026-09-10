@@ -2,8 +2,7 @@
 
 Phase 04 records identities and publication routes. `registry.json` is the accepted
 catalog; `exclusions.json` records rejected, superseded and non-benchmark candidates.
-`aa-observed-fields.json` preserves raw AA observations for phase 05. These files do
-not change the Composite or add normalized scores to the public API.
+`aa-observed-fields.json` preserves raw AA observations for phase 05. Phase 05 adds sourced versioned scores through `scores.json`; these files never change the Composite.
 
 ## Identity and evidence
 
@@ -70,3 +69,17 @@ Primary receipts, compressed responses, readable extracts, X captures, worker id
 and frozen critic packets are in `ops/rebuild-2026-09/evidence/phase-04/`. The phase
 report records final coverage and checks. Dataset builds validate the registry and source
 hashes without fetching websites or executing recipes.
+
+## Score ingestion (phase 05)
+
+`collection-plan.json` defines executable parsers for supported public sources and
+precise recipes for the remainder. `public-observations.json` and `vendor-candidates.json`
+feed `scripts/ingest-benchmark-scores.mjs`; `ingestion-lock.json` binds the AA captures.
+`scores.json` is the accepted combined snapshot. Every self-report is fingerprinted
+in `score-approvals.json` against a different-family critic receipt. Dataset and
+production builds verify source completeness and hashes.
+
+Use [the daily workflow](../../../docs/benchmark-ingestion.md), including exact adapters,
+manual recipes, missing-state semantics and compatibility requirements for divergences.
+Unverified LiveCodeBench task windows, HLE README sample output and OTIS historical
+grading are withheld. Current model coverage never counts unmatched source identities.

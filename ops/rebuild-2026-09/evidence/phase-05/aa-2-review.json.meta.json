@@ -1,0 +1,67 @@
+{
+  "started_at": "2026-09-10T23:03:33.133Z",
+  "mode": "critic",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [
+    "openai/gpt-6-astra"
+  ],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "ce9ed2bf1583e94e28532536281f4df6c03f220380a3e6d4d05678f3d499eb44",
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 133595,
+    "completion_tokens": 3708,
+    "total_tokens": 137303,
+    "cost": 0.1129602375,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.11410125,
+      "upstream_inference_prompt_cost": 0.10019625,
+      "upstream_inference_completions_cost": 0.013905
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 3182,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google",
+  "session_id": null,
+  "finished_at": "2026-09-10T23:03:57.459Z",
+  "output_sha256": "d757a44b60afcfb99c8775e8c381a63e203dfc90e90546c4fa9fe0c01e03bc2f"
+}

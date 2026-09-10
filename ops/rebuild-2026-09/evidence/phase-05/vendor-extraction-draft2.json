@@ -1,0 +1,228 @@
+```json
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507",
+        "name": "Qwen3-235B-A22B-Thinking-2507",
+        "model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507",
+        "variant": "reasoning",
+        "harness": null
+      },
+      "collection": {
+        "registry_id": "tau2-bench::2",
+        "domain": "TAU2-Retail",
+        "settings": "Own-column self-reported vendor evaluation; output length 32,768 tokens (81,920 for highly challenging tasks); temperature 0.6, TopP 0.95, TopK 20, MinP 0",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 71.9},
+      "comparison_key": null,
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+        "retrieved_at": "2026-09-10T23:04:12.114540+00:00",
+        "published_at": null,
+        "sha256": "9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/qwen-card.raw.gz",
+        "locator": "Performance table, Agent section, row TAU2-Retail, column Qwen3-235B-A22B-Thinking-2507"
+      }
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507",
+        "name": "Qwen3-235B-A22B-Thinking-2507",
+        "model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507",
+        "variant": "reasoning",
+        "harness": null
+      },
+      "collection": {
+        "registry_id": "tau2-bench::2",
+        "domain": "TAU2-Airline",
+        "settings": "Own-column self-reported vendor evaluation; output length 32,768 tokens (81,920 for highly challenging tasks); temperature 0.6, TopP 0.95, TopK 20, MinP 0",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 58.0},
+      "comparison_key": null,
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+        "retrieved_at": "2026-09-10T23:04:12.114540+00:00",
+        "published_at": null,
+        "sha256": "9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/qwen-card.raw.gz",
+        "locator": "Performance table, Agent section, row TAU2-Airline, column Qwen3-235B-A22B-Thinking-2507"
+      }
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507",
+        "name": "Qwen3-235B-A22B-Thinking-2507",
+        "model_id": "Qwen/Qwen3-235B-A22B-Thinking-2507",
+        "variant": "reasoning",
+        "harness": null
+      },
+      "collection": {
+        "registry_id": "tau2-bench::2",
+        "domain": "TAU2-Telecom",
+        "settings": "Own-column self-reported vendor evaluation; output length 32,768 tokens (81,920 for highly challenging tasks); temperature 0.6, TopP 0.95, TopK 20, MinP 0",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 45.6},
+      "comparison_key": null,
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+        "retrieved_at": "2026-09-10T23:04:12.114540+00:00",
+        "published_at": null,
+        "sha256": "9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/qwen-card.raw.gz",
+        "locator": "Performance table, Agent section, row TAU2-Telecom, column Qwen3-235B-A22B-Thinking-2507"
+      }
+    },
+    {
+      "id": "vendor:mistralai/Devstral-2-123B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "mistralai/Devstral-2-123B-Instruct-2512",
+        "name": "Devstral 2",
+        "model_id": "mistralai/Devstral-2-123B-Instruct-2512",
+        "variant": "default",
+        "harness": null
+      },
+      "collection": {
+        "registry_id": "swe-bench-verified::snapshot-2026-09-10",
+        "domain": null,
+        "settings": "Self-reported vendor headline figure; evaluation harness for the SWE-bench Verified number not specified in source (Cline scaffolding used only for separate human evaluations)",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 72.2},
+      "comparison_key": null,
+      "source": {
+        "url": "https://mistral.ai/news/devstral-2-vibe-cli/",
+        "retrieved_at": "2026-09-10T23:04:16.815554+00:00",
+        "published_at": "2025-12-09T12:00:00.000Z",
+        "sha256": "8b767ed6d44fd100e56f9c4bb9838584a7d0b6f0cebf4bf3bbf39ad46394fbb1",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/mistral-release.raw.gz",
+        "locator": "Devstral: the next generation of SOTA coding — 'It reaches 72.2% on SWE-bench Verified'"
+      }
+    },
+    {
+      "id": "vendor:mistralai/Devstral-Small-2-24B-Instruct-2512:swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+        "name": "Devstral Small 2",
+        "model_id": "mistralai/Devstral-Small-2-24B-Instruct-2512",
+        "variant": "default",
+        "harness": null
+      },
+      "collection": {
+        "registry_id": "swe-bench-verified::snapshot-2026-09-10",
+        "domain": null,
+        "settings": "Self-reported vendor headline figure; evaluation harness not specified in source",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 68.0},
+      "comparison_key": null,
+      "source": {
+        "url": "https://mistral.ai/news/devstral-2-vibe-cli/",
+        "retrieved_at": "2026-09-10T23:04:16.815554+00:00",
+        "published_at": "2025-12-09T12:00:00.000Z",
+        "sha256": "8b767ed6d44fd100e56f9c4bb9838584a7d0b6f0cebf4bf3bbf39ad46394fbb1",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/mistral-release.raw.gz",
+        "locator": "Devstral Small 2, a 24B-parameter model — 'Devstral Small 2 scores 68.0% on SWE-bench Verified'"
+      }
+    },
+    {
+      "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "deepseek-ai/DeepSeek-V3 (chat model, December 2024 update per arXiv 2412.19437v2 Table 6)",
+        "name": "DeepSeek V3 (Dec '24)",
+        "model_id": "deepseek-ai/DeepSeek-V3",
+        "variant": "default",
+        "harness": "agentless framework (Xia et al., 2024)"
+      },
+      "collection": {
+        "registry_id": "swe-bench-verified::snapshot-2026-09-10",
+        "domain": null,
+        "settings": "Table 6 chat-model evaluation; SWE-bench Verified evaluated using the agentless framework; output limited to 8K tokens; benchmarks with <1000 samples tested multiple times with varying temperature",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 42.0},
+      "comparison_key": null,
+      "source": {
+        "url": "https://arxiv.org/pdf/2412.19437v2",
+        "retrieved_at": "2026-09-10T23:07:52.965322+00:00",
+        "published_at": null,
+        "sha256": "812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/deepseek-report-v2.pdf",
+        "locator": "Table 6, row 'SWE Verified (Resolved)', column DeepSeek V3"
+      }
+    },
+    {
+      "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "deepseek-ai/DeepSeek-V3 (chat model, December 2024 update per arXiv 2412.19437v2 Table 6)",
+        "name": "DeepSeek V3 (Dec '24)",
+        "model_id": "deepseek-ai/DeepSeek-V3",
+        "variant": "default",
+        "harness": "aider, 'diff' edit format"
+      },
+      "collection": {
+        "registry_id": "aider-polyglot::snapshot-2026-09-10",
+        "domain": null,
+        "settings": "Table 6 chat-model evaluation; Aider-related benchmarks evaluated with the 'diff' format; output limited to 8K tokens",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 49.6},
+      "comparison_key": null,
+      "source": {
+        "url": "https://arxiv.org/pdf/2412.19437v2",
+        "retrieved_at": "2026-09-10T23:07:52.965322+00:00",
+        "published_at": null,
+        "sha256": "812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/deepseek-report-v2.pdf",
+        "locator": "Table 6, row 'Aider-Polyglot (Acc.)', column DeepSeek V3"
+      }
+    },
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "subject": {
+        "source_id": "deepseek-ai/DeepSeek-V3 (chat model, December 2024 update per arXiv 2412.19437v2 Table 6)",
+        "name": "DeepSeek V3 (Dec '24)",
+        "model_id": "deepseek-ai/DeepSeek-V3",
+        "variant": "default",
+        "harness": null
+      },
+      "collection": {
+        "registry_id": "longbench::2",
+        "domain": null,
+        "settings": "Table 6 chat-model evaluation; original evaluation protocols with default prompts from dataset creators; output limited to 8K tokens; benchmarks with <1000 samples tested multiple times with varying temperature",
+        "basis": "self_reported"
+      },
+      "value": {"unit": "percent", "raw": 48.7},
+      "comparison_key": null,
+      "source": {
+        "url": "https://arxiv.org/pdf/2412.19437v2",
+        "retrieved_at": "2026-09-10T23:07:52.965322+00:00",
+        "published_at": null,
+        "sha256": "812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/deepseek-report-v2.pdf",
+        "locator": "Table 6, row 'LongBench v2 (Acc.)', column DeepSeek V3"
+      }
+    }
+  ],
+  "collections": [],
+  "rejected": [
+    {
+      "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+      "claim": "GPQA row values (81.1 for Qwen3-235B-A22B-Thinking-2507 and other columns)",
+      "reason": "Omitted: 'GPQA' benchmark identity is vague in source — the card does not specify GPQA vs GPQA-Diamond or subset/protocol, so it cannot be mapped to a registry scoring definition; not one of the eight specified claims."
+    },
+    {
+      "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+      "claim": "HLE row values (18.2# for Qwen3-235B-A22B-Thinking-2507 and other columns)",
+      "reason": "Omitted: 'HLE' benchmark identity is vague in source — footnoted # indicates text-only subset for non-multi-modal models with unspecified subset details; no registry mapping; not one of the eight specified claims."
+    }
+  ]
+}
+```

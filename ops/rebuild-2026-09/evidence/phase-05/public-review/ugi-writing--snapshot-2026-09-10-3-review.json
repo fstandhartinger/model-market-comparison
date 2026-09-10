@@ -1,0 +1,146 @@
+```json
+{
+  "artifact_id": "ugi-writing--snapshot-2026-09-10-3",
+  "artifact_sha256": "6b59ec7e6af0275b55d9d9ce13cf1526fb19f22f7ffda3567caf682b54d0a552",
+  "round": 1,
+  "verdict": "revise",
+  "errors_found": 15,
+  "findings": [
+    {
+      "id": "FINDING-ROW-020",
+      "severity": "critical",
+      "location": "numbered_candidates[19] (row 20)",
+      "evidence": "Candidate row 20 specifies subject 'coder3101/Magidonia-24B-v4.3-heretic-v2 ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 20 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-022",
+      "severity": "critical",
+      "location": "numbered_candidates[21] (row 22)",
+      "evidence": "Candidate row 22 specifies subject 'coder3101/Magidonia-24B-v4.3-heretic ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 22 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-098",
+      "severity": "critical",
+      "location": "numbered_candidates[97] (row 98)",
+      "evidence": "Candidate row 98 specifies subject 'TheDrummer/Valkyrie-49B-v2.1 ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 98 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-110",
+      "severity": "critical",
+      "location": "numbered_candidates[109] (row 110)",
+      "evidence": "Candidate row 110 specifies subject 'TheDrummer/Rocinante-X-12B-v1 ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 110 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-144",
+      "severity": "critical",
+      "location": "numbered_candidates[143] (row 144)",
+      "evidence": "Candidate row 144 specifies subject 'zai-org/GLM-4.7-Flash ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 144 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-147",
+      "severity": "critical",
+      "location": "numbered_candidates[146] (row 147)",
+      "evidence": "Candidate row 147 specifies subject 'huihui-ai/Huihui-GLM-4.7-Flash-abliterated ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 147 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-149",
+      "severity": "critical",
+      "location": "numbered_candidates[148] (row 149)",
+      "evidence": "Candidate row 149 specifies subject 'MuXodious/GLM-4.7-Flash-impotent-heresy ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 149 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-151",
+      "severity": "critical",
+      "location": "numbered_candidates[150] (row 151)",
+      "evidence": "Candidate row 151 specifies subject 'Olafangensan/GLM-4.7-Flash-heretic ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 151 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-153",
+      "severity": "critical",
+      "location": "numbered_candidates[152] (row 153)",
+      "evidence": "Candidate row 153 specifies subject 'jtl11/GLM-4.7-Flash-heretic ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 153 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-155",
+      "severity": "critical",
+      "location": "numbered_candidates[154] (row 155)",
+      "evidence": "Candidate row 155 specifies subject 'koute/GLM-4.7-Flash-Derestricted ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 155 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-157",
+      "severity": "critical",
+      "location": "numbered_candidates[156] (row 157)",
+      "evidence": "Candidate row 157 specifies subject 'darkc0de/GLM-4.7-Flash-abliterated ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 157 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-165",
+      "severity": "critical",
+      "location": "numbered_candidates[164] (row 165)",
+      "evidence": "Candidate row 165 specifies subject 'MuXodious/Magidonia-24B-v4.3-absolute-heresy ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 165 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-174",
+      "severity": "critical",
+      "location": "numbered_candidates[173] (row 174)",
+      "evidence": "Candidate row 174 specifies subject 'DarkArtsForge/Morax-24B-v1 ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 174 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-208",
+      "severity": "critical",
+      "location": "numbered_candidates[207] (row 208)",
+      "evidence": "Candidate row 208 specifies subject 'MuXodious/GLM-4.7-Flash-absolute-heresy ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 208 from candidates."
+    },
+    {
+      "id": "FINDING-ROW-240",
+      "severity": "critical",
+      "location": "numbered_candidates[239] (row 240)",
+      "evidence": "Candidate row 240 specifies subject 'darkc0de/GLM-4.7-Flash-heretic-1.2.0 ( prefill)', but this entry does not exist in the raw source CSV content.",
+      "repair": "Remove fabricated row 240 from candidates."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": [],
+  "coverage_checked": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+    61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+    71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+    81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+    91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+    101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+    111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+    121, 122, 123, 124, 125, 126, 127, 128, 129, 130,
+    131, 132, 133, 134, 135, 136, 137, 138, 139, 140,
+    141, 142, 143, 144, 145, 146, 147, 148, 149, 150,
+    151, 152, 153, 154, 155, 156, 157, 158, 159, 160,
+    161, 162, 163, 164, 165, 166, 167, 168, 169, 170,
+    171, 172, 173, 174, 175, 176, 177, 178, 179, 180,
+    181, 182, 183, 184, 185, 186, 187, 188, 189, 190,
+    191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
+    201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
+    211, 212, 213, 214, 215, 216, 217, 218, 219, 220,
+    221, 222, 223, 224, 225, 226, 227, 228, 229, 230,
+    231, 232, 233, 234, 235, 236, 237, 238, 239, 240,
+    241, 242, 243, 244, 245, 246, 247, 248, 249, 250
+  ]
+}
+```

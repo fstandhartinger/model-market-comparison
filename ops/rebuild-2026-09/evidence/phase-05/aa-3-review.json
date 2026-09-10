@@ -1,0 +1,20 @@
+```json
+{
+  "artifact_id": "phase05-aa-3",
+  "artifact_sha256": "62b945ecfa3f470398a866c64a1ec92a6ae19814001dc3a3a5681fe036f47d01",
+  "round": 1,
+  "verdict": "PASS",
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": [],
+  "coverage_checked": {
+    "total_rows_reviewed": 57,
+    "total_benchmark_fields_mapped": 24,
+    "total_methodology_evidence_entries": 24,
+    "livecodebench_withheld_verified": true,
+    "batch_coverage_statement": "Complete review of all 57 model subject rows and all 518 observation cells in batch phase05-aa-3 across 24 distinct benchmark fields. All candidate values match independently decoded actual values exactly with no rounding, valid units (fraction, Elo, points), correct version identities, and proper handling of zero and negative values."
+  }
+}
+```

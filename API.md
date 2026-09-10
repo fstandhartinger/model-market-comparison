@@ -8,10 +8,26 @@ The data is served from Postgres when `DATABASE_URL` is configured, otherwise fr
 
 ## Endpoints
 
-The phase-04 discovery registry at `data/raw/benchmarks/registry.json` and raw AA
-observations are repository artifacts, not additional API scores. Their normalization,
-model joins and public score exposure belong to phase 05. Existing endpoints and the
-Composite definition remain unchanged. See [registry contract](data/raw/benchmarks/README.md).
+### `GET /api/benchmarks`
+
+All exact versioned registry entries, source/metric definitions, collection status and
+per-benchmark coverage. No family-only version aliases are accepted.
+
+### `GET /api/benchmark-scores`
+
+Filters: `benchmark_id`, `model_id`, `basis` (`measured`, `self_reported`, `derived`),
+`offset` (default 0), `limit` (default 100, maximum 500). Returns observations, total,
+stored divergences, coverage and collection status. Both identity filters also return
+the sparse cell status. Unknown exact versions/models return 404; bad parameters 400.
+Derived observations include `source_basis` and formula/inputs. Every score includes
+its source URL, dates, immutable hash and locator. Unmatched source subjects have null
+catalog model IDs and remain queryable by benchmark.
+
+The full dataset now includes `benchmark_results` with the registry, observations,
+missing cells, collection attempts, rejections, divergences and coverage. Model detail
+also returns `benchmark_observations`, `benchmark_divergences`, `benchmark_coverage`.
+See [ingestion and missing-value contract](docs/benchmark-ingestion.md). Composite
+scores and their five existing slots retain their previous API behavior.
 
 ### `GET /api/dataset`
 The **full dataset** in one response — the canonical machine-readable feed: every model (with benchmarks, scores, all provider offers), the provider directory, source collection dates and counts. Cached 5 min (`Cache-Control: public, max-age=300`).

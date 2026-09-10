@@ -1,0 +1,21 @@
+```json
+{
+  "artifact_id": "phase05-aa-2",
+  "artifact_sha256": "568c6330dd7cbf6878cf65c3036f53a0a3f7ffd54f097f58227573a9c26512ee",
+  "round": 1,
+  "verdict": "FAIL",
+  "errors_found": 1,
+  "findings": [
+    {
+      "location": "rows[source_uuid='dbe7c625-3100-4463-b479-a228c41f75dd'].candidate_subject.model_id",
+      "severity": "BLOCKER",
+      "evidence": "Row for source_uuid 'dbe7c625-3100-4463-b479-a228c41f75dd' (source_name: 'DeepSeek V4.1 Flash (Reasoning, Max Effort)') defines candidate_subject with 'model_id': null.",
+      "repair": "Populate candidate_subject.model_id with canonical identity 'deepseek-v4.1-flash::reasoning-max' (or equivalent canonical schema key) prior to phase-05 ingestion."
+    }
+  ],
+  "fixed": 0,
+  "uncertainties": [],
+  "missing_evidence": [],
+  "coverage_checked": "Verified complete batch of 153 subject rows across 24 benchmark mapping fields (aime25, analystAgent, apexAgents, automationBenchPartialScore, briefcaseBreakdown.overall.elo, critpt, enterpriseOpsGym, gdpPdfAllPass, gdpval, gpqa, harveyLab, hle, ifbench, itBenchSre, lcr, mlcrOverall, mmmuPro, omniscience, scicode, tau2, tauBanking, terminalbenchHard, terminalbenchV21, terminalbenchV40). Confirmed all 1,596 score candidate values match decoded actual primary values without rounding, verified measurement units against benchmark methodologies, verified withholding of 343 LiveCodeBench scores, checked zero and negative score handling, and validated subject UUID mappings."
+}
+```

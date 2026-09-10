@@ -2491,7 +2491,7 @@
       "how_to_collect": {
         "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md --output /tmp/benchmark-source.txt",
         "format": "Markdown",
-        "locator": "README 'Simple Evaluation' > 'Sample output' metrics block: parse '*** Metrics *** Accuracy: 3.07% +/- 0.65% | n = 2700' and 'Calibration Error: 92.3' from run_judge_results.py output; extract the Accuracy percentage (report the +/- stderr alongside).",
+        "locator": "README links to the primary benchmark site and reports. Require named model, dataset revision/modality/tool setting and attributable accuracy; the README Sample output (3.07%, n=2700) is not a model result and must not be ingested. See docs/benchmark-ingestion.md.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -3099,7 +3099,7 @@
       "how_to_collect": {
         "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://epoch.ai/benchmarks/otis-mock-aime-2024-2025 --output /tmp/benchmark-source.txt",
         "format": "HTML/embedded data",
-        "locator": "Per-model results table on the benchmark page with columns 'Benchmark', 'Accuracy', 'Samples with API errors', 'Run ID'; read the Accuracy cell for the model row.",
+        "locator": "Locate exact model section, OTIS row, run ID and linked logs. Require the September-2025-or-later answer-extractor/exact-match grading protocol. The captured July-2025 Grok table is historical and withheld; adjacent GPQA/FrontierMath rows are unrelated. See docs/benchmark-ingestion.md.",
         "version_guard": "Verify the published version 2024-2025 before reading results.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },

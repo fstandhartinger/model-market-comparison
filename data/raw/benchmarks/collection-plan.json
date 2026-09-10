@@ -1,0 +1,1651 @@
+{
+  "schema_version": 1,
+  "entries": [
+    {
+      "benchmark_id": "aider-polyglot::snapshot-2026-09-10",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 7,
+        "header_contains": [
+          "Percent correct"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Aider polyglot coding leaderboard' table on the leaderboards page: extract the 'Percent correct' column per model (Cost and edit-format columns are auxiliary)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "'Aider polyglot coding leaderboard' table on the leaderboards page: extract the 'Percent correct' column per model (Cost and edit-format columns are auxiliary)",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://aider.chat/docs/leaderboards/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-5b92e98d55fe.html.gz",
+        "sha256": "cea6cab3ac65e4d41cce072fcac5540497d757b3a6f72d997b7c3607b44c470e",
+        "fetched_at": "2026-09-10T21:45:25.463000+00:00"
+      },
+      "protocol": "225-exercise Polyglot benchmark; percent correct after edits; edit format and command retained per row; not a single-model run when an editor model is specified.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://aider.chat/docs/leaderboards/"
+      ]
+    },
+    {
+      "benchmark_id": "arc-agi::1",
+      "parser": {
+        "kind": "json",
+        "row_path": "evaluations",
+        "name_field": "modelDisplayName",
+        "id_field": "modelId",
+        "value_field": "score",
+        "scale": 100,
+        "filter_field": "datasetId",
+        "filter_value": "v1_Semi_Private",
+        "skip_field": "modelGroup",
+        "skip_values": [
+          "Human"
+        ],
+        "display_only": true,
+        "context_fields": [
+          "modelType",
+          "modelGroup",
+          "providerId",
+          "display",
+          "resultsUrl",
+          "costPerTask",
+          "cost",
+          "modelReleaseDate"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard version v1_Semi_Private; data.js loads /media/data/leaderboard/v1.json evaluations. Keep verified and community submissions and every split separate.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard version v1_Semi_Private; data.js loads /media/data/leaderboard/v1.json evaluations. Keep verified and community submissions and every split separate.",
+        "version_guard": "Verify the published version 1 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 1 before reading results.",
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v1.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/2aa739d957fc2ca6f531.gz",
+        "sha256": "2aa739d957fc2ca6f531763ab1818c804f583fee0ed4169cea46a6dbe314d277",
+        "retrieved_at": "2026-09-10T23:12:34.479721+00:00"
+      },
+      "protocol": "ARC-AGI 1; v1_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://arcprize.org/media/data/leaderboard/v1.json"
+      ]
+    },
+    {
+      "benchmark_id": "arc-agi::2",
+      "parser": {
+        "kind": "json",
+        "row_path": "evaluations",
+        "name_field": "modelDisplayName",
+        "id_field": "modelId",
+        "value_field": "score",
+        "scale": 100,
+        "filter_field": "datasetId",
+        "filter_value": "v2_Semi_Private",
+        "skip_field": "modelGroup",
+        "skip_values": [
+          "Human"
+        ],
+        "display_only": true,
+        "context_fields": [
+          "modelType",
+          "modelGroup",
+          "providerId",
+          "display",
+          "resultsUrl",
+          "costPerTask",
+          "cost",
+          "modelReleaseDate"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard version v2_Semi_Private; data.js loads /media/data/leaderboard/v2.json evaluations. Keep verified and community submissions and every split separate.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard version v2_Semi_Private; data.js loads /media/data/leaderboard/v2.json evaluations. Keep verified and community submissions and every split separate.",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/b5cb5ec6e8c7547c4f11.gz",
+        "sha256": "b5cb5ec6e8c7547c4f11a4e61e5ed7e0f28a26208f87bd16c83d1703777a2627",
+        "retrieved_at": "2026-09-10T23:12:37.919569+00:00"
+      },
+      "protocol": "ARC-AGI 2; v2_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://arcprize.org/media/data/leaderboard/v2.json"
+      ]
+    },
+    {
+      "benchmark_id": "arc-agi::3",
+      "parser": {
+        "kind": "json",
+        "row_path": "evaluations",
+        "name_field": "modelDisplayName",
+        "id_field": "modelId",
+        "value_field": "score",
+        "scale": 100,
+        "filter_field": "datasetId",
+        "filter_value": "v3_Semi_Private",
+        "skip_field": "modelGroup",
+        "skip_values": [
+          "Human"
+        ],
+        "display_only": true,
+        "context_fields": [
+          "modelType",
+          "modelGroup",
+          "providerId",
+          "display",
+          "resultsUrl",
+          "costPerTask",
+          "cost",
+          "modelReleaseDate"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard version v3_Semi_Private; data.js loads /media/data/leaderboard/v3.json evaluations. Keep verified and community submissions and every split separate.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard version v3_Semi_Private; data.js loads /media/data/leaderboard/v3.json evaluations. Keep verified and community submissions and every split separate.",
+        "version_guard": "Verify the published version 3 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 3 before reading results.",
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/d743d7a731ba6b9f102d.gz",
+        "sha256": "d743d7a731ba6b9f102d3624d5fe82011630b90da4200ceb34bd56cf2b221e1c",
+        "retrieved_at": "2026-09-10T23:12:40.710323+00:00"
+      },
+      "protocol": "ARC-AGI 3; v3_Semi_Private; source system/configuration retained. Evaluation independence not assumed for board submissions.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://arcprize.org/media/data/leaderboard/v3.json"
+      ]
+    },
+    {
+      "benchmark_id": "buzzbench::snapshot-2026-09-10",
+      "parser": {
+        "kind": "template_csv",
+        "variable": "leaderboardDataBuzzbench",
+        "name_field": "model",
+        "value_field": "score",
+        "scale": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard table with columns 'Model | Length | Score': read the 'Score' value per model row",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard table with columns 'Model | Length | Score': read the 'Score' value per model row",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://eqbench.com/buzzbench.js",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/4d0f19f1f87e08772b74.gz",
+        "sha256": "4d0f19f1f87e08772b741a28b1ac39111587b832035dd1a783af3de67d51be1c",
+        "retrieved_at": "2026-09-10T23:12:22.372709+00:00"
+      },
+      "protocol": "LLM judge score against human-authored gold responses; headline Score column",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/buzzbench.js"
+      ]
+    },
+    {
+      "benchmark_id": "critpt::snapshot-2026-09-10",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "Challenge Accuracy",
+        "name_column": 0,
+        "value_column": 1,
+        "name_field": "name",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3d1f4f8c7690.md.gz",
+        "sha256": "416d4b506040d37d2d53e6c3b2edb3acea38e432d06d9651e134a3d87560d5bb",
+        "fetched_at": "2026-09-10T21:49:10Z"
+      },
+      "protocol": "Average accuracy over 5 runs x 70 test challenges (headline Challenge Accuracy)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "eq-bench::4",
+      "parser": {
+        "kind": "json_assignment",
+        "variable": "EQBENCH4_DATA",
+        "row_path": "models",
+        "name_field": "display",
+        "id_field": "model",
+        "value_field": "elo"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. EQ-Bench 4 leaderboard table on eqbench.com ('Leaderboard' view): extract each model's ranked Elo score from the main score column",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "EQ-Bench 4 leaderboard table on eqbench.com ('Leaderboard' view): extract each model's ranked Elo score from the main score column",
+        "version_guard": "Verify the published version 4 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 4 before reading results.",
+      "source": {
+        "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/188d8ea4a393978063a6.gz",
+        "sha256": "188d8ea4a393978063a6c24dff6c92ce185169827038bfa558091212a68c29d8",
+        "retrieved_at": "2026-09-10T23:12:08.627024+00:00"
+      },
+      "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours"
+      ]
+    },
+    {
+      "benchmark_id": "eqbench-creative-writing::3",
+      "parser": {
+        "kind": "template_csv",
+        "variable": "leaderboardDataCreativeWritingV3",
+        "name_field": "model_name",
+        "value_field": "elo_score",
+        "scale": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Elo Score column in the leaderboard table",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Elo Score column in the leaderboard table",
+        "version_guard": "Verify the published version 3 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 3 before reading results.",
+      "source": {
+        "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/28cad62a817f8e52162f.gz",
+        "sha256": "28cad62a817f8e52162fef5e77e0312631d20f8808c379daff707619b83e5c23",
+        "retrieved_at": "2026-09-10T23:12:11.615707+00:00"
+      },
+      "protocol": "Elo Score column in the leaderboard",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/creative_writing.js?v=1.0.91"
+      ]
+    },
+    {
+      "benchmark_id": "eqbench-judgemark::4",
+      "parser": {
+        "kind": "template_csv",
+        "variable": "leaderboardDataJudgemarkV4",
+        "name_field": "model",
+        "value_field": "score",
+        "scale": 100
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard table, column 'Judgemark Score / 95% CI': extract the numeric point score per model (the accompanying 95% CI is a prompt-bootstrap interval)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard table, column 'Judgemark Score / 95% CI': extract the numeric point score per model (the accompanying 95% CI is a prompt-bootstrap interval)",
+        "version_guard": "Verify the published version 4 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 4 before reading results.",
+      "source": {
+        "url": "https://eqbench.com/judgemark-v4.js?v=1.1",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/2b0d42aef4f614dd199d.gz",
+        "sha256": "2b0d42aef4f614dd199dc38399be7b88075a919db52020c3759f190defc92a4d",
+        "retrieved_at": "2026-09-10T23:12:19.771669+00:00"
+      },
+      "protocol": "Composite judge-separation score on the reported 100-point scale (unclamped bounds not verified)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/judgemark-v4.js?v=1.1"
+      ]
+    },
+    {
+      "benchmark_id": "eqbench-longform-writing::v1.11",
+      "parser": {
+        "kind": "template_csv",
+        "variable": "leaderboardDataLongformV3",
+        "name_field": "model_name",
+        "value_field": "overall_score_100",
+        "scale": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Longform leaderboard table: extract the 'Score' column; metric defined under 'Main Metrics -> Score (0-100)'",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Longform leaderboard table: extract the 'Score' column; metric defined under 'Main Metrics -> Score (0-100)'",
+        "version_guard": "Verify the published version v1.11 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version v1.11 before reading results.",
+      "source": {
+        "url": "https://eqbench.com/creative_writing_longform.js?v=1.0.9",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/d5abd451059e489715ec.gz",
+        "sha256": "d5abd451059e489715ec255c3346c2abd0d9a6899ae290070d550f17695fa916",
+        "retrieved_at": "2026-09-10T23:12:14.293224+00:00"
+      },
+      "protocol": "Score (0-100): average of all chapter scores plus the final scored piece across 14 rubric dimensions, with the forced poetry/metaphor criterion weighted 5x and a long-context degradation penalty applied",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/creative_writing_longform.js?v=1.0.9"
+      ]
+    },
+    {
+      "benchmark_id": "eqbench-slop-score::snapshot-2026-09-10",
+      "parser": {
+        "kind": "slop_composite",
+        "name_field": "name",
+        "value_field": "value",
+        "method_source": {
+          "url": "https://eqbench.com/slop-score.html",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-d7571288888b.html.gz",
+          "sha256": "73ae51e46c0890288a7d07c029fd0d30cb0e64c088627f95fa2fb51718fe054e",
+          "fetched_at": "2026-09-10T21:46:58.828000+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Slop Score leaderboard ('View Leaderboard' on slop-score.html): extract each model's Slop Score computed from outputs on the standardized set of prompts",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Slop Score leaderboard ('View Leaderboard' on slop-score.html): extract each model's Slop Score computed from outputs on the standardized set of prompts",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://eqbench.com/data/leaderboard_results.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/16925b79d955a1cacef4.gz",
+        "sha256": "16925b79d955a1cacef4d2ac91b696e73f976a4a3ceb45122544a9cf661b04de",
+        "retrieved_at": "2026-09-10T23:12:17.011947+00:00"
+      },
+      "protocol": "Published Slop Score composite reconstructed from the three measured metrics and published source formula; raw precision retained, not source display rounding.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/data/leaderboard_results.json"
+      ]
+    },
+    {
+      "benchmark_id": "helmet::snapshot-2026-09-10",
+      "parser": null,
+      "status": "manual_required",
+      "reason": "Suite uses heterogeneous task/context metrics; no universal headline is published.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://princeton-nlp.github.io/HELMET/ --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "README Results & Analysis links the public Google Sheet of all results; preserve task, context length, prompting and native metric, and do not invent an aggregate.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05.",
+        "phase05_recipe": "docs/benchmark-ingestion.md#five-sources-requiring-a-collection-recipe"
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source_urls": [
+        "https://princeton-nlp.github.io/HELMET/"
+      ]
+    },
+    {
+      "benchmark_id": "hle::snapshot-2026-09-10",
+      "parser": null,
+      "status": "manual_required",
+      "reason": "README sample output is not attributable to a model and is not a current result.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md --output /tmp/benchmark-source.txt",
+        "format": "Markdown",
+        "locator": "README links to the primary benchmark site and reports. Require named model, dataset revision/modality/tool setting and attributable accuracy; the README Sample output (3.07%, n=2700) is not a model result and must not be ingested. See docs/benchmark-ingestion.md.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05.",
+        "phase05_recipe": "docs/benchmark-ingestion.md#five-sources-requiring-a-collection-recipe"
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source_urls": [
+        "https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "ifbench::snapshot-2026-09-10",
+      "parser": null,
+      "status": "manual_required",
+      "reason": "Captured README specifies evaluation, not a named-model result.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/allenai/IFBench/main/README.md --output /tmp/benchmark-source.txt",
+        "format": "Markdown",
+        "locator": "README 'How to run the evaluation' section: run_eval with IFBench_test.jsonl (allenai/IFBench_test on Hugging Face); extract the prompt-level loose accuracy over the test prompts.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05.",
+        "phase05_recipe": "docs/benchmark-ingestion.md#five-sources-requiring-a-collection-recipe"
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source_urls": [
+        "https://raw.githubusercontent.com/allenai/IFBench/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "japanese-rp-bench-aratako::snapshot-2026-09-10",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "Overall Average",
+        "name_column": 0,
+        "value_column": 1,
+        "name_field": "name",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-112aabfb1ba3.md.gz",
+        "sha256": "2e584f47344e95dffbb01bbe78caba85f5906c98f11c34df34ad3371dacff8ec",
+        "fetched_at": "2026-09-10T21:53:16Z"
+      },
+      "protocol": "Overall Average = mean evaluation value across the 8 criteria, averaged over 4 judge models (gpt-4o-2024-08-06, o1-mini-2024-09-12, Claude 3.5 Sonnet, Gemini 1.5 Pro)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "japanese-rp-bench-tegnike::2",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "RP Summary (95% CI)",
+        "name_column": 1,
+        "value_column": 4,
+        "name_field": "name",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-bbefcb28c4b0.md.gz",
+        "sha256": "765fb30f9f7a955242c8558f0995417d5b3ab1cf783381adb9eba1ae0dad98a2",
+        "fetched_at": "2026-09-10T21:53:18Z"
+      },
+      "protocol": "Challenge RP Summary: macro-average of five criteria; leaderboard first sorts Major-free rate descending, then Major rate ascending",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "livebench::2026-06-25",
+      "parser": {
+        "kind": "livebench",
+        "name_field": "model",
+        "value_field": "value",
+        "categories_source": {
+          "url": "https://livebench.ai/categories_2026_06_25.json",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-8fb1bd6bc30b.gz",
+          "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+          "fetched_at": "2026-09-10T22:23:16Z"
+        },
+        "frontend_source": {
+          "url": "https://livebench.ai/static/js/main.ac6b12ef.js",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-4efcf9b59965.gz",
+          "sha256": "31e3792c378b20b9a0e3d309eb94fef26e49b61b890e20e348f601b209a1c888",
+          "fetched_at": "2026-09-10T22:22:25Z"
+        }
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Read the latest release selector from the linked static JS and require 2026-06-25; fetch table_2026_06_25.csv and categories_2026_06_25.json. Preserve task/category and release identifiers. The JS Pe function defines the displayed category mean and explicit Grok-3 overrides; do not silently recompute overrides.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "CSV with JSON category map",
+        "locator": "Read the latest release selector from the linked static JS and require 2026-06-25; fetch table_2026_06_25.csv and categories_2026_06_25.json. Preserve task/category and release identifiers. The JS Pe function defines the displayed category mean and explicit Grok-3 overrides; do not silently recompute overrides.",
+        "version_guard": "Verify the published version 2026-06-25 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2026-06-25 before reading results.",
+      "source": {
+        "url": "https://livebench.ai/table_2026_06_25.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-e70f40005b36.gz",
+        "sha256": "186ca65e7bb3a07aa26875eb3c45bfbe4e22d1ef36165cdaa11ad1a58087817c",
+        "fetched_at": "2026-09-10T22:23:14Z"
+      },
+      "protocol": "Release 2026-06-25; seven category means with equal category weights, published 2-decimal overall and explicit Grok-3 exceptions. Complete task scores required.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://livebench.ai/table_2026_06_25.csv"
+      ]
+    },
+    {
+      "benchmark_id": "longbench::2",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 6,
+        "width": 17,
+        "header_contains": [
+          "Overall (%)"
+        ],
+        "header_rows": 2,
+        "value_columns": [
+          [
+            5,
+            "without CoT"
+          ],
+          [
+            6,
+            "with CoT"
+          ]
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard at https://longbench2.github.io/#leaderboard; README reports aggregate accuracy percentages per model (e.g., o1-preview 57.7%)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard at https://longbench2.github.io/#leaderboard; README reports aggregate accuracy percentages per model (e.g., o1-preview 57.7%)",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://longbench2.github.io/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-d27ff487cf66.gz",
+        "sha256": "b16f4683a0970694a1aa4fc74155bc61024fa57f98f257b90cc67d54d48d2d35",
+        "fetched_at": "2026-09-10T22:08:35Z"
+      },
+      "protocol": "LongBench 2; 503 questions; overall without CoT (column 5) and with CoT (column 6) are separate observations, never merged.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://longbench2.github.io/"
+      ]
+    },
+    {
+      "benchmark_id": "mazur-creative-story-writing::snapshot-2026-09-10",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "Comparison score",
+        "name_column": 1,
+        "value_column": 2,
+        "name_field": "name",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard table, 'Comparison score' column; also machine-readable leaderboard linked under 'Public benchmark data' (data/README.md)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "Leaderboard table, 'Comparison score' column; also machine-readable leaderboard linked under 'Public benchmark data' (data/README.md)",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-f541ae13bc5c.md.gz",
+        "sha256": "4f4312b52154d55e1b507d0c9a31a43dfa74c077a6ce71fc869c5cb2e6795366",
+        "fetched_at": "2026-09-10T21:53:00Z"
+      },
+      "protocol": "Relative comparison score from pairwise evaluator-v2/evaluator-v3 judgments (Thurstone-style rating; zero is near the middle of the comparison set)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/lechmazur/writing/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "mazur-divergent-thinking::snapshot-2026-09-10",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "| Score |",
+        "name_column": 0,
+        "value_column": 1,
+        "name_field": "name",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Results table, 'Score' column (per model)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "Results table, 'Score' column (per model)",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-3f8241812739.md.gz",
+        "sha256": "21c9bee0018f719d56c19a47abe11749b7d8b1f8629188920832500ee719b917",
+        "fetched_at": "2026-09-10T21:53:02Z"
+      },
+      "protocol": "Average LLM-judged score of minimum divergences between each generated word and other words, on a 0 to 10 scale (percentage of repeated words also reported)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "mazur-elimination-game::snapshot-2026-09-10",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "Exposed (&mu;)",
+        "name_column": 1,
+        "value_column": 4,
+        "name_field": "name",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Elimination Game Leaderboard table, mu (Exposed) column",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "Elimination Game Leaderboard table, mu (Exposed) column",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-2817d61f576e.md.gz",
+        "sha256": "788ec3eb6fa034a82b22760f95eb04a514aa0c15e1c15d134fc350a59d1696f0",
+        "fetched_at": "2026-09-10T21:53:04Z"
+      },
+      "protocol": "TrueSkill mean (μ), with σ uncertainty reported separately",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "mmmu::snapshot-2026-09-10",
+      "parser": {
+        "kind": "mmmu",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Leaderboard section ('Last updated: 09/05/2025'): expand the 'MMMU (Val)' or 'MMMU (Test)' table and read the 'Overall' accuracy column per model.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Leaderboard section ('Last updated: 09/05/2025'): expand the 'MMMU (Val)' or 'MMMU (Test)' table and read the 'Overall' accuracy column per model.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://mmmu-benchmark.github.io/leaderboard_data.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-final/2ec354bc9eab734c1ba6.gz",
+        "sha256": "2ec354bc9eab734c1ba6a78f604d2ad7e5581a30257f50ead26523ab630978fb",
+        "retrieved_at": "2026-09-10T23:24:42.627436+00:00"
+      },
+      "protocol": "MMMU validation/test splits stay separate per observation; MMMU-Pro and human baselines excluded. Submission scores do not imply independent measurement.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://mmmu-benchmark.github.io/leaderboard_data.json"
+      ]
+    },
+    {
+      "benchmark_id": "otis-mock-aime::2024-2025",
+      "parser": null,
+      "status": "contested",
+      "reason": "Captured July-2025 result predates the registered exact-match grading protocol; withheld.",
+      "recipe": {
+        "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://epoch.ai/benchmarks/otis-mock-aime-2024-2025 --output /tmp/benchmark-source.txt",
+        "format": "HTML/embedded data",
+        "locator": "Locate exact model section, OTIS row, run ID and linked logs. Require the September-2025-or-later answer-extractor/exact-match grading protocol. The captured July-2025 Grok table is historical and withheld; adjacent GPQA/FrontierMath rows are unrelated. See docs/benchmark-ingestion.md.",
+        "version_guard": "Verify the published version 2024-2025 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05.",
+        "phase05_recipe": "docs/benchmark-ingestion.md#five-sources-requiring-a-collection-recipe"
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2024-2025 before reading results.",
+      "source_urls": [
+        "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025"
+      ]
+    },
+    {
+      "benchmark_id": "pingpong-english::2",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 6,
+        "width": 16,
+        "header_contains": [
+          "Model name",
+          "Avg score"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. English v2 table, unadjusted Avg score with 1:1:1 weights, not Length norm score or alternative weight presets; average in-character, entertaining and fluency ratings. Preserve language, interrogator and both judge identities; do not mix legacy v1 or Russian results.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "English v2 table, unadjusted Avg score with 1:1:1 weights, not Length norm score or alternative weight presets; average in-character, entertaining and fluency ratings. Preserve language, interrogator and both judge identities; do not mix legacy v1 or Russian results.",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://ilyagusev.github.io/ping_pong_bench/en_v2",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-027465e4c485.gz",
+        "sha256": "061c8c3d82764dbd02c67e9b5bb54bacd9727ec98698082f118192f162cb3eff",
+        "fetched_at": "2026-09-10T22:22:23Z"
+      },
+      "protocol": "English v2, unadjusted Avg score; data-weight=0.333_0.333_0.333, column 6. Source header and per-row components/uncertainty retained. Judge and interrogator protocol from the versioned publication.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://ilyagusev.github.io/ping_pong_bench/en_v2"
+      ]
+    },
+    {
+      "benchmark_id": "rp-bench-community::snapshot-2026-09-10",
+      "parser": {
+        "kind": "json",
+        "row_path": "leaderboard",
+        "name_field": "model",
+        "value_field": "elo_mean"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Read the Bayesian community ELO board; Space loads lazyweasel/roleplay-bench on startup. Do not replace community Elo with a judge score.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Read the Bayesian community ELO board; Space loads lazyweasel/roleplay-bench on startup. Do not replace community Elo with a judge score.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://huggingface.co/datasets/lazyweasel/roleplay-bench/raw/main/analysis/community_arena_bayesian.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-final/39dd732fe1ba03464b4f.gz",
+        "sha256": "39dd732fe1ba03464b4fa16b27598246b21ed904fa107e385c05904d145e6e5c",
+        "retrieved_at": "2026-09-10T23:24:45.330918+00:00"
+      },
+      "protocol": "Bayesian community arena Elo mean, raw precision; not multi-turn arena, frequentist Elo or model-judge likelihood.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://huggingface.co/datasets/lazyweasel/roleplay-bench/raw/main/analysis/community_arena_bayesian.json"
+      ]
+    },
+    {
+      "benchmark_id": "ruler::snapshot-2026-09-10",
+      "parser": {
+        "kind": "markdown_table",
+        "header_contains": "|Models|",
+        "name_column": 0,
+        "value_column": 9,
+        "name_field": "name",
+        "value_field": "value",
+        "allow_ragged": true
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. README main results markdown table (|Models|Claimed Length|Effective Length|4K|8K|16K|32K|64K|128K|Avg.|wAvg. (inc)|wAvg. (dec)|); extract each model row's Avg. column (percent across 13 tasks)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Markdown",
+        "locator": "README main results markdown table (|Models|Claimed Length|Effective Length|4K|8K|16K|32K|64K|128K|Avg.|wAvg. (inc)|wAvg. (dec)|); extract each model row's Avg. column (percent across 13 tasks)",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-8809dc275fe0.md.gz",
+        "sha256": "f3aae5bbd58fcd7de32aab099c455dd2bbc1da23a2efee9db3071eb9fbf894a3",
+        "fetched_at": "2026-09-10T21:53:13Z"
+      },
+      "protocol": "Published Avg across 13 tasks and context lengths. Source asterisk/length annotations retained; ragged missing Avg is not inferred.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md"
+      ]
+    },
+    {
+      "benchmark_id": "scicode::snapshot-2026-09-10",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 0,
+        "value_column": 1,
+        "width": 3,
+        "header_contains": [
+          "Models",
+          "Main Problem Resolve Rate"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Experiment Results' section and linked Leaderboard page (leaderboard/): per-model solve rate over the 80 main problems for the 'standard' and 'with background' setups (e.g. 4.6% for the best model in the most realistic setting).",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "'Experiment Results' section and linked Leaderboard page (leaderboard/): per-model solve rate over the 80 main problems for the 'standard' and 'with background' setups (e.g. 4.6% for the best model in the most realistic setting).",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://scicode-bench.github.io/leaderboard/",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-extra/1b5ec4be1ec3dea8c48d.gz",
+        "sha256": "1b5ec4be1ec3dea8c48d1ace04c148e9b54da558270c74a64384ec871d6a1cba",
+        "retrieved_at": "2026-09-10T23:23:38.086844+00:00"
+      },
+      "protocol": "Official SciCode leaderboard Main Problem Resolve Rate; background setting is not stated on this table, so no cross-source equivalence or delta is asserted.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://scicode-bench.github.io/leaderboard/"
+      ]
+    },
+    {
+      "benchmark_id": "simple-bench::snapshot-2026-09-10",
+      "parser": {
+        "kind": "simplebench",
+        "name_field": "model",
+        "value_field": "score"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Homepage 'Leaderboard' section, MCQ tab: read the 'Score (AVG@5)' column per model row; settings stated as 'temperature: 0.7, top-p: 0.95 (except o1 series)'.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Homepage 'Leaderboard' section, MCQ tab: read the 'Score (AVG@5)' column per model row; settings stated as 'temperature: 0.7, top-p: 0.95 (except o1 series)'.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://simple-bench.com/static/js/leaderboard-data.js",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/ec6cf7a7a30476d08570.gz",
+        "sha256": "ec6cf7a7a30476d08570a7c00e2c4b07c1b865bb3c1db09419a14b96ef66d298",
+        "retrieved_at": "2026-09-10T23:12:27.715001+00:00"
+      },
+      "protocol": "SimpleBench MCQ AVG@5 board only; human baselines and open-ended board excluded.",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://simple-bench.com/static/js/leaderboard-data.js"
+      ]
+    },
+    {
+      "benchmark_id": "slop-index::snapshot-2026-09-10",
+      "parser": {
+        "kind": "json",
+        "row_path": "models",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "overall"
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Full table; 'slop score' column ranked sloppiest first (0-100), with component columns arena 40%, concise, templating, rhythm, tells",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Full table; 'slop score' column ranked sloppiest first (0-100), with component columns arena 40%, concise, templating, rhythm, tells",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://theslopindex.com/bench.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/2dbe8fc878fd39bcb4fb.gz",
+        "sha256": "2dbe8fc878fd39bcb4fb68f896a52b6f63cba94dd34bd1c035537ff0ea6414b1",
+        "retrieved_at": "2026-09-10T23:12:30.991903+00:00"
+      },
+      "protocol": "Slop Score 0-100 = 40% live arena Elo votes + 15% each for concise, templating, rhythm, and tells measured against pre-AI human writing; higher = sloppier",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://theslopindex.com/bench.json"
+      ]
+    },
+    {
+      "benchmark_id": "slopbench::snapshot-2026-09-10",
+      "parser": {
+        "kind": "json",
+        "row_path": "value",
+        "name_field": "model",
+        "id_field": "_id",
+        "value_field": "pure_slop_rate",
+        "filter_field": "status",
+        "filter_value": "complete",
+        "context_fields": [
+          "run_date"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Slop Rate as defined in 'How scoring works'; detection logic in scripts/scoring.ts and pattern list in data/sloplist.json; published results at slop-bench.vercel.app",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Slop Rate as defined in 'How scoring works'; detection logic in scripts/scoring.ts and pattern list in data/sloplist.json; published results at slop-bench.vercel.app",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://uncommon-sandpiper-321.convex.cloud/api/query",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-final/141bc10ec679aa4194a6.gz",
+        "sha256": "141bc10ec679aa4194a6ca72d46f241ddbfeef41e4401cc3a94686113e65abe9",
+        "retrieved_at": "2026-09-10T23:27:44.627944+00:00"
+      },
+      "protocol": "53-prompt SlopBench complete runs; pure_slop_rate as displayed Slop Rate (not slop_score).",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://uncommon-sandpiper-321.convex.cloud/api/query"
+      ]
+    },
+    {
+      "benchmark_id": "spiral-bench::1.2",
+      "parser": {
+        "kind": "template_csv",
+        "variable": "leaderboardDataDelusion",
+        "name_field": "model_name",
+        "value_field": "score_0_100",
+        "scale": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Safety Score column; calculation described under 'How the Safety Score is Calculated'",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Safety Score column; calculation described under 'How the Safety Score is Calculated'",
+        "version_guard": "Verify the published version 1.2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 1.2 before reading results.",
+      "source": {
+        "url": "https://eqbench.com/spiral-bench.js?v=1.0.1",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/2f0402654b01e7363c0d.gz",
+        "sha256": "2f0402654b01e7363c0d02bbc708afd7849e669dc5da63d9f85c995ed8f0a97f",
+        "retrieved_at": "2026-09-10T23:12:25.037510+00:00"
+      },
+      "protocol": "Safety Score: weighted average of protective vs risky behaviours, scaled 0-100",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://eqbench.com/spiral-bench.js?v=1.0.1"
+      ]
+    },
+    {
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "parser": {
+        "kind": "swebench",
+        "board": "Multilingual",
+        "name_field": "name",
+        "id_field": "folder",
+        "value_field": "resolved",
+        "harness_field": "agent",
+        "context_fields": [
+          "agent_org",
+          "model_display",
+          "date",
+          "reasoning_effort",
+          "checked",
+          "warning",
+          "mini-swe-agent_version"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Official Leaderboards' > 'Multilingual' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "'Official Leaderboards' > 'Multilingual' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://www.swebench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.html.gz",
+        "sha256": "c862011a4ee1d1a7199fad6ca0905fa5c64f58216f7217ac1eddf37f28788433",
+        "fetched_at": "2026-09-10T21:49:10Z"
+      },
+      "protocol": "SWE-bench Multilingual official submission board; preserved system/model/harness identity. checked is submission verification, not an assertion of independent measurement.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://www.swebench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "swe-bench-multimodal::snapshot-2026-09-10",
+      "parser": {
+        "kind": "swebench",
+        "board": "Multimodal",
+        "name_field": "name",
+        "id_field": "folder",
+        "value_field": "resolved",
+        "harness_field": "agent",
+        "context_fields": [
+          "agent_org",
+          "model_display",
+          "date",
+          "reasoning_effort",
+          "checked",
+          "warning",
+          "mini-swe-agent_version"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Official Leaderboards' > 'Multimodal' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "'Official Leaderboards' > 'Multimodal' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://www.swebench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.html.gz",
+        "sha256": "c862011a4ee1d1a7199fad6ca0905fa5c64f58216f7217ac1eddf37f28788433",
+        "fetched_at": "2026-09-10T21:49:10Z"
+      },
+      "protocol": "SWE-bench Multimodal official submission board; preserved system/model/harness identity. checked is submission verification, not an assertion of independent measurement.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://www.swebench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "parser": {
+        "kind": "scale_swepro",
+        "name_field": "model",
+        "value_field": "score",
+        "context_fields": [
+          "version",
+          "contaminationMessage"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Performance Comparison table, public set only. Preserve the asterisk identifying mini-swe-agent and the 50 versus 250 turn/cost-limit annotations; private and held-out sets are separate.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Performance Comparison table, public set only. Preserve the asterisk identifying mini-swe-agent and the 50 versus 250 turn/cost-limit annotations; private and held-out sets are separate.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-bc0d7082af2a.gz",
+        "sha256": "a1fa0af2e20dc5e539c7c909865765aaeb380c0f99cdae737fe3946823463fca",
+        "fetched_at": "2026-09-10T22:19:34Z"
+      },
+      "protocol": "SWE-bench Pro Public; source model asterisks identify mini-swe-agent. Preserve source turn/cost annotations; private/held-out boards are excluded.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/swe_bench_pro_public"
+      ]
+    },
+    {
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "parser": {
+        "kind": "swebench",
+        "board": "Verified",
+        "name_field": "name",
+        "id_field": "folder",
+        "value_field": "resolved",
+        "harness_field": "agent",
+        "context_fields": [
+          "agent_org",
+          "model_display",
+          "date",
+          "reasoning_effort",
+          "checked",
+          "warning",
+          "mini-swe-agent_version"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Official Leaderboards' > 'Verified' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "'Official Leaderboards' > 'Verified' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://www.swebench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.html.gz",
+        "sha256": "c862011a4ee1d1a7199fad6ca0905fa5c64f58216f7217ac1eddf37f28788433",
+        "fetched_at": "2026-09-10T21:49:10Z"
+      },
+      "protocol": "SWE-bench Verified official submission board; preserved system/model/harness identity. checked is submission verification, not an assertion of independent measurement.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://www.swebench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "tau2-bench::2",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 2,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 3,
+        "header_contains": [
+          "Model",
+          "Pass^1"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://taubench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-9a145eb8c66c.gz",
+        "sha256": "bc034a3d6c732d6e0ebb099a802ab5d19ddb3801d81feb1b79b97741234fc2ef",
+        "fetched_at": "2026-09-10T22:19:36Z"
+      },
+      "protocol": "Separate tau2-bench headline board only; no mixing text, banking or voice protocols.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://taubench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "tau3-banking::1.0.1",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 3,
+        "header_contains": [
+          "Model",
+          "Pass^1"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "version_guard": "Require tau2-bench package >=1.0.1 with the verified 1.0.1 banking task corrections; a later grading/task change needs a new identity. Do not import pre-fix scores.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require tau2-bench package >=1.0.1 with the verified 1.0.1 banking task corrections; a later grading/task change needs a new identity. Do not import pre-fix scores.",
+      "source": {
+        "url": "https://taubench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-9a145eb8c66c.gz",
+        "sha256": "bc034a3d6c732d6e0ebb099a802ab5d19ddb3801d81feb1b79b97741234fc2ef",
+        "fetched_at": "2026-09-10T22:19:36Z"
+      },
+      "protocol": "Separate tau3-banking headline board only; no mixing text, banking or voice protocols.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://taubench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "tau3-voice::snapshot-2026-09-10",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 1,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 3,
+        "header_contains": [
+          "Model",
+          "Pass^1"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://taubench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-9a145eb8c66c.gz",
+        "sha256": "bc034a3d6c732d6e0ebb099a802ab5d19ddb3801d81feb1b79b97741234fc2ef",
+        "fetched_at": "2026-09-10T22:19:36Z"
+      },
+      "protocol": "Separate tau3-voice headline board only; no mixing text, banking or voice protocols.",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://taubench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "terminal-bench::4.0",
+      "parser": {
+        "kind": "terminalbench",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "value",
+        "harness_field": "harness",
+        "context_fields": [
+          "effort",
+          "trials"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Homepage leaderboard under 'TERMINAL-BENCH 4.0': columns RANK, MODEL, AGENT, RESOLUTION RATE, COST, TOKENS; read RESOLUTION RATE per model/agent row.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Homepage leaderboard under 'TERMINAL-BENCH 4.0': columns RANK, MODEL, AGENT, RESOLUTION RATE, COST, TOKENS; read RESOLUTION RATE per model/agent row.",
+        "version_guard": "Verify the published version 4.0 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 4.0 before reading results.",
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.html.gz",
+        "sha256": "007ff6fcb4f14f5433fa87d78896788bf62f89467d59fd3467ceb189eb99da02",
+        "fetched_at": "2026-09-10T21:49:10Z"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run",
+      "basis": "self_reported",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://www.tbench.ai/"
+      ]
+    },
+    {
+      "benchmark_id": "towards-ai-editorial-writing::snapshot-2026-09-10",
+      "parser": null,
+      "status": "manual_required",
+      "reason": "Private protocol and visually reported X values require xplainervideo capture and primary evidence review.",
+      "recipe": {
+        "command": "cat ops/rebuild-2026-09/evidence/phase-04/x-writing-post.txt",
+        "format": "Captured primary X post",
+        "locator": "Exact post and follow-up posts from @Whats_AI; retain the model variant and stated Elo. The private task/judge protocol is not publicly specified.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "The command reads this dated source snapshot. Future collection is manual desktop Chrome using xplainervideo only, after the shared browser and display locks and source cooldown. Verify the account, open the exact post/account, capture text and screenshot at modest pace; never use airesearch12. No automated X scraping recipe.",
+        "phase05_recipe": "docs/benchmark-ingestion.md#five-sources-requiring-a-collection-recipe"
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source_urls": [
+        "https://x.com/Whats_AI/status/2098085178786615560"
+      ]
+    },
+    {
+      "benchmark_id": "ugi-natint::snapshot-2026-09-10",
+      "parser": {
+        "kind": "csv",
+        "name_field": "author/model_name",
+        "plain_text_names": true,
+        "value_field": "NatInt 💡",
+        "context_fields": [
+          "Prompt Template",
+          "Test Date",
+          "Model Link",
+          "Is Thinking Model"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "CSV",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z"
+      },
+      "protocol": "NatInt 💡 published composite",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      ]
+    },
+    {
+      "benchmark_id": "ugi-willingness::snapshot-2026-09-10",
+      "parser": {
+        "kind": "csv",
+        "name_field": "author/model_name",
+        "plain_text_names": true,
+        "value_field": "W/10 👍",
+        "context_fields": [
+          "Prompt Template",
+          "Test Date",
+          "Model Link",
+          "Is Thinking Model"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "CSV",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z"
+      },
+      "protocol": "W/10 👍 published composite",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      ]
+    },
+    {
+      "benchmark_id": "ugi-writing::snapshot-2026-09-10",
+      "parser": {
+        "kind": "csv",
+        "name_field": "author/model_name",
+        "plain_text_names": true,
+        "value_field": "Writing ✍️",
+        "context_fields": [
+          "Prompt Template",
+          "Test Date",
+          "Model Link",
+          "Is Thinking Model"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "CSV",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z"
+      },
+      "protocol": "Writing ✍️ published composite",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      ]
+    },
+    {
+      "benchmark_id": "ugi::snapshot-2026-09-10",
+      "parser": {
+        "kind": "csv",
+        "name_field": "author/model_name",
+        "plain_text_names": true,
+        "value_field": "UGI 🏆",
+        "context_fields": [
+          "Prompt Template",
+          "Test Date",
+          "Model Link",
+          "Is Thinking Model"
+        ]
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "CSV",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z"
+      },
+      "protocol": "UGI 🏆 published composite",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      ]
+    },
+    {
+      "benchmark_id": "vending-bench::2",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 3,
+        "header_contains": [
+          "Model",
+          "Money Balance"
+        ],
+        "header_rows": 1
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. 'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-ebcec333cce2.html.gz",
+        "sha256": "258ecda4e5b8cc000fb6c05ce4aec68e67fc937ffab5decc461e9497c87f4eb3",
+        "fetched_at": "2026-09-10T21:45:53.851000+00:00"
+      },
+      "protocol": "Final bank account balance in USD after one simulated year of operation (average across 5 runs)",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://andonlabs.com/evals/vending-bench-2"
+      ]
+    },
+    {
+      "benchmark_id": "weirdml::2",
+      "parser": {
+        "kind": "csv",
+        "name_field": "display_name",
+        "id_field": "internal_model_name",
+        "value_field": "avg_acc",
+        "scale": 100
+      },
+      "status": "collected",
+      "reason": "No safely attributable current result parsed from captured evidence. Model summary figure/table, 'Average Accuracy Across Tasks' column (bold overall mean); raw datapoints also in /data/weirdml_data.csv",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "HTML/embedded data",
+        "locator": "Model summary figure/table, 'Average Accuracy Across Tasks' column (bold overall mean); raw datapoints also in /data/weirdml_data.csv",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "source": {
+        "url": "https://htihle.github.io/data/weirdml_data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-05/public-sources/6be5173dba184a4a006f.gz",
+        "sha256": "6be5173dba184a4a006fdbbabbef4acaae6e3ec86a5349df4e58d35189f85bd0",
+        "retrieved_at": "2026-09-10T23:12:49.174522+00:00"
+      },
+      "protocol": "Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks",
+      "basis": "measured",
+      "minimum_rows": 1,
+      "source_urls": [
+        "https://htihle.github.io/data/weirdml_data.csv"
+      ]
+    }
+  ]
+}

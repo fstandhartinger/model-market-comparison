@@ -1,0 +1,50 @@
+```json
+{
+  "artifact_id": "ugi--snapshot-2026-09-10-5",
+  "artifact_sha256": "13722c9126d90ada0cbc687411cdcff2f43433d88fa5ed05ed9cd99e08b7fc64",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "ERR-ROW-8",
+      "severity": "high",
+      "location": "numbered_candidates[7] (row 8)",
+      "evidence": "Candidate model 'DavidAU/gemma-4-31B-it-The-DECKARD-HERETIC-UNCENSORED-Thinking ( thought prefill)' with value 59.89 is not present in the provided raw CSV content.",
+      "repair": "Remove row 8 or update the raw source data snapshot to include this record."
+    },
+    {
+      "id": "ERR-ROW-16",
+      "severity": "high",
+      "location": "numbered_candidates[15] (row 16)",
+      "evidence": "Candidate model 'coder3101/gemma-4-E4B-it-heretic ( thought prefill)' with value 36.39 is not present in the provided raw CSV content.",
+      "repair": "Remove row 16 or update the raw source data snapshot to include this record."
+    },
+    {
+      "id": "ERR-ROW-18",
+      "severity": "high",
+      "location": "numbered_candidates[17] (row 18)",
+      "evidence": "Candidate model 'llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic ( thought prefill)' with value 38.54 is not present in the provided raw CSV content.",
+      "repair": "Remove row 18 or update the raw source data snapshot to include this record."
+    },
+    {
+      "id": "ERR-ROW-20",
+      "severity": "high",
+      "location": "numbered_candidates[19] (row 20)",
+      "evidence": "Candidate model 'Naphula/Goetia-26B-A4B-v1.3-Absolute-Heretic-ARA ( thought prefill)' with value 44.06 is not present in the provided raw CSV content.",
+      "repair": "Remove row 20 or update the raw source data snapshot to include this record."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

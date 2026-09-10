@@ -1,0 +1,50 @@
+```json
+{
+  "artifact_id": "ugi-willingness--snapshot-2026-09-10-5",
+  "artifact_sha256": "03fb9a536d0502ad8d8dbb409fb5b4d916f94f69cf229795835e4c828186531f",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "missing-source-row-8",
+      "severity": "critical",
+      "location": "numbered_candidates[7]",
+      "evidence": "Candidate row 8 subject 'DavidAU/gemma-4-31B-it-The-DECKARD-HERETIC-UNCENSORED-Thinking ( thought prefill)' is absent from raw_primary_content CSV.",
+      "repair": "Remove row 8 or provide the corresponding source data."
+    },
+    {
+      "id": "missing-source-row-16",
+      "severity": "critical",
+      "location": "numbered_candidates[15]",
+      "evidence": "Candidate row 16 subject 'coder3101/gemma-4-E4B-it-heretic ( thought prefill)' is absent from raw_primary_content CSV.",
+      "repair": "Remove row 16 or provide the corresponding source data."
+    },
+    {
+      "id": "missing-source-row-18",
+      "severity": "critical",
+      "location": "numbered_candidates[17]",
+      "evidence": "Candidate row 18 subject 'llmfan46/gemma-4-E4B-it-ultra-uncensored-heretic ( thought prefill)' is absent from raw_primary_content CSV.",
+      "repair": "Remove row 18 or provide the corresponding source data."
+    },
+    {
+      "id": "missing-source-row-20",
+      "severity": "critical",
+      "location": "numbered_candidates[19]",
+      "evidence": "Candidate row 20 subject 'Naphula/Goetia-26B-A4B-v1.3-Absolute-Heretic-ARA ( thought prefill)' is absent from raw_primary_content CSV.",
+      "repair": "Remove row 20 or provide the corresponding source data."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

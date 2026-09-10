@@ -1,0 +1,153 @@
+```json
+{
+  "artifact_id": "ugi--snapshot-2026-09-10-3",
+  "artifact_sha256": "c5856140793973a36029de5df5ffcda95753a16bb510eece8aee787a8b0d9700",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    1, 2, 3, 4, 5, 6, 7, 8, 9, 10,
+    11, 12, 13, 14, 15, 16, 17, 18, 19, 20,
+    21, 22, 23, 24, 25, 26, 27, 28, 29, 30,
+    31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+    41, 42, 43, 44, 45, 46, 47, 48, 49, 50,
+    51, 52, 53, 54, 55, 56, 57, 58, 59, 60,
+    61, 62, 63, 64, 65, 66, 67, 68, 69, 70,
+    71, 72, 73, 74, 75, 76, 77, 78, 79, 80,
+    81, 82, 83, 84, 85, 86, 87, 88, 89, 90,
+    91, 92, 93, 94, 95, 96, 97, 98, 99, 100,
+    101, 102, 103, 104, 105, 106, 107, 108, 109, 110,
+    111, 112, 113, 114, 115, 116, 117, 118, 119, 120,
+    121, 122, 123, 124, 125, 126, 127, 128, 129, 130,
+    131, 132, 133, 134, 135, 136, 137, 138, 139, 140,
+    141, 142, 143, 144, 145, 146, 147, 148, 149, 150,
+    151, 152, 153, 154, 155, 156, 157, 158, 159, 160,
+    161, 162, 163, 164, 165, 166, 167, 168, 169, 170,
+    171, 172, 173, 174, 175, 176, 177, 178, 179, 180,
+    181, 182, 183, 184, 185, 186, 187, 188, 189, 190,
+    191, 192, 193, 194, 195, 196, 197, 198, 199, 200,
+    201, 202, 203, 204, 205, 206, 207, 208, 209, 210,
+    211, 212, 213, 214, 215, 216, 217, 218, 219, 220,
+    221, 222, 223, 224, 225, 226, 227, 228, 229, 230,
+    231, 232, 233, 234, 235, 236, 237, 238, 239, 240,
+    241, 242, 243, 244, 245, 246, 247, 248, 249, 250
+  ],
+  "errors_found": 16,
+  "findings": [
+    {
+      "id": "public:0ce1ed466722f2e754a4497e",
+      "severity": "fatal",
+      "location": "numbered_candidates[15]",
+      "evidence": "Candidate row 16 specifies 'nvidia/NVIDIA-Nemotron-3-Nano-30B-A3B-BF16 ( prefill)' with source locator 'csv; source row 765', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 16."
+    },
+    {
+      "id": "public:4937725f606aaf32733670a6",
+      "severity": "fatal",
+      "location": "numbered_candidates[26]",
+      "evidence": "Candidate row 27 specifies 'TheDrummer/Magidonia-24B-v4.3 ( prefill)' with source locator 'csv; source row 776', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 27."
+    },
+    {
+      "id": "public:e574350795b8172f1009687a",
+      "severity": "fatal",
+      "location": "numbered_candidates[52]",
+      "evidence": "Candidate row 53 specifies 'coder3101/Magidonia-24B-v4.3-heretic-v2 ( prefill)' with source locator 'csv; source row 802', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 53."
+    },
+    {
+      "id": "public:f0f4329a11182a64938aeb15",
+      "severity": "fatal",
+      "location": "numbered_candidates[54]",
+      "evidence": "Candidate row 55 specifies 'coder3101/Magidonia-24B-v4.3-heretic ( prefill)' with source locator 'csv; source row 804', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 55."
+    },
+    {
+      "id": "public:3b73379eeb8bb1a24e735d65",
+      "severity": "fatal",
+      "location": "numbered_candidates[136]",
+      "evidence": "Candidate row 137 specifies 'TheDrummer/Valkyrie-49B-v2.1 ( prefill)' with source locator 'csv; source row 886', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 137."
+    },
+    {
+      "id": "public:517a23024b62b9e643f31ff1",
+      "severity": "fatal",
+      "location": "numbered_candidates[148]",
+      "evidence": "Candidate row 149 specifies 'TheDrummer/Rocinante-X-12B-v1 ( prefill)' with source locator 'csv; source row 898', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 149."
+    },
+    {
+      "id": "public:8c13366183bb3271308ae58e",
+      "severity": "fatal",
+      "location": "numbered_candidates[183]",
+      "evidence": "Candidate row 184 specifies 'zai-org/GLM-4.7-Flash ( prefill)' with source locator 'csv; source row 933', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 184."
+    },
+    {
+      "id": "public:6fe561e906bd2b70dc551a9c",
+      "severity": "fatal",
+      "location": "numbered_candidates[186]",
+      "evidence": "Candidate row 187 specifies 'huihui-ai/Huihui-GLM-4.7-Flash-abliterated ( prefill)' with source locator 'csv; source row 936', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 187."
+    },
+    {
+      "id": "public:14a5c40424ac3918a388755c",
+      "severity": "fatal",
+      "location": "numbered_candidates[188]",
+      "evidence": "Candidate row 189 specifies 'MuXodious/GLM-4.7-Flash-impotent-heresy ( prefill)' with source locator 'csv; source row 938', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 189."
+    },
+    {
+      "id": "public:3f60b9fded9cf4e5e686c409",
+      "severity": "fatal",
+      "location": "numbered_candidates[190]",
+      "evidence": "Candidate row 191 specifies 'Olafangensan/GLM-4.7-Flash-heretic ( prefill)' with source locator 'csv; source row 940', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 191."
+    },
+    {
+      "id": "public:92ce2d9fe74e35c2cfaf5abe",
+      "severity": "fatal",
+      "location": "numbered_candidates[192]",
+      "evidence": "Candidate row 193 specifies 'jtl11/GLM-4.7-Flash-heretic ( prefill)' with source locator 'csv; source row 942', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 193."
+    },
+    {
+      "id": "public:7d9b0294918dedd283fa87a5",
+      "severity": "fatal",
+      "location": "numbered_candidates[194]",
+      "evidence": "Candidate row 195 specifies 'koute/GLM-4.7-Flash-Derestricted ( prefill)' with source locator 'csv; source row 944', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 195."
+    },
+    {
+      "id": "public:afc8512d39e77afe8b212ffc",
+      "severity": "fatal",
+      "location": "numbered_candidates[196]",
+      "evidence": "Candidate row 197 specifies 'darkc0de/GLM-4.7-Flash-abliterated ( prefill)' with source locator 'csv; source row 946', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 197."
+    },
+    {
+      "id": "public:f7013ecc3ce7c2fbced85a82",
+      "severity": "fatal",
+      "location": "numbered_candidates[204]",
+      "evidence": "Candidate row 205 specifies 'MuXodious/Magidonia-24B-v4.3-absolute-heresy ( prefill)' with source locator 'csv; source row 954', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 205."
+    },
+    {
+      "id": "public:6516e860e20ecab8968f312c",
+      "severity": "fatal",
+      "location": "numbered_candidates[213]",
+      "evidence": "Candidate row 214 specifies 'DarkArtsForge/Morax-24B-v1 ( prefill)' with source locator 'csv; source row 963', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 214."
+    },
+    {
+      "id": "public:739adbeb8afda540715957d8",
+      "severity": "fatal",
+      "location": "numbered_candidates[247]",
+      "evidence": "Candidate row 248 specifies 'MuXodious/GLM-4.7-Flash-absolute-heresy ( prefill)' with source locator 'csv; source row 997', but no such row exists in the raw source CSV content.",
+      "repair": "Remove candidate row 248."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

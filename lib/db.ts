@@ -35,7 +35,7 @@ export async function loadFromDb(): Promise<Dataset | null> {
   }
   const modelRows: ModelRow[] = storedModels.map(({ offers_scope: _scope, ...model }) => model);
   const m0 = meta.rows[0];
-  if (m0.extensions?.efficiency?.schema_version !== 1) return null;
+  if (m0.extensions?.efficiency?.schema_version !== 1 || m0.extensions?.benchmark_results?.schema_version !== 1) return null;
   return {
     ...m0.extensions,
     generated_at: m0.generated_at,

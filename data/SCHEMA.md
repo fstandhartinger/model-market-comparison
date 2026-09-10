@@ -153,3 +153,19 @@ of reintroducing a family-union provider/SKU leak; the next normal seed upgrades
 values. The existing top-level `open_weights` / `deprecated` remain booleans, using
 false for an unknown value. Scores remain attached to the exact AA model ID and
 are not dropped merely because its metadata publication lags. No DB schema change.
+
+## Versioned benchmark results (phase 05)
+
+`benchmark_results` has `schema_version: 1`, `registry`, `observations`, `missing`,
+`collections`, `rejected`, `divergences`, and `coverage.by_model/by_benchmark`.
+Observations use exact `benchmark_id` and a source subject with nullable catalog
+`model_id`, effort and harness. Native numeric value/unit, measured/self_reported/derived
+basis, protocol and complete source provenance are mandatory. Derived rows retain
+source_basis, formula, inputs and supporting source hashes. Full types are in
+`lib/benchmark-scores.d.mts`; runtime checks in `lib/benchmark-scores.mjs`.
+
+Absent cells are unknown; not_tested, not_published, source_unreachable and contested
+remain distinct. Explicit missing cells need source evidence. Coverage counts catalog
+configurations once, excluding unmatched source subjects. Divergences require an
+audited exact protocol key as well as identical model/version/unit/configuration.
+See `docs/benchmark-ingestion.md` for formulas, daily staging and critic approvals.

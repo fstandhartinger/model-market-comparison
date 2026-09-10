@@ -12,6 +12,9 @@ export async function GET(_req: Request, { params }: { params: Promise<{ id: str
   const variants = ds.models.filter((m) => m.family_key === model.family_key);
   return NextResponse.json({
     model,
+    benchmark_coverage: ds.benchmark_results.coverage.by_model[model.id],
+    benchmark_observations: ds.benchmark_results.observations.filter((o) => o.subject.model_id === model.id),
+    benchmark_divergences: ds.benchmark_results.divergences.filter((d) => d.model_id === model.id),
     variants: variants.map((v) => ({ id: v.id, variant: v.variant, display_name: v.display_name, benchmarks: v.benchmarks })),
     cheapest: cheapestOffers(model, 5),
   });

@@ -1,0 +1,50 @@
+```json
+{
+  "artifact_id": "phase05-aa-0",
+  "artifact_sha256": "e80fc9dd1b69164ed300fe0d8a80eebb92b97c0e71445aa553104032b7941ece",
+  "round": 1,
+  "verdict": "REJECT",
+  "errors_found": 1,
+  "findings": [
+    {
+      "location": "rows[source_uuid=\"433d5c5d-3092-4026-9727-1587ca07915d\"].candidate_subject.model_id",
+      "severity": "HIGH",
+      "evidence": "candidate_subject.model_id is null for source_name 'Ling-3.0-flash-VL' (UUID 433d5c5d-3092-4026-9727-1587ca07915d), while canonical model identity mapping is required for candidate subject resolution.",
+      "repair": "Assign the canonical model identity identifier (e.g., 'ling-3.0-flash-vl::default') to candidate_subject.model_id prior to batch ingestion."
+    }
+  ],
+  "fixed": false,
+  "uncertainties": [],
+  "missing_evidence": [],
+  "coverage_checked": {
+    "batch_statement": "Complete-batch review of all 145 supplied candidate subject rows and their respective score cells against methodology specifications and field mappings.",
+    "models_reviewed_count": 145,
+    "fields_verified": [
+      "aime25",
+      "analystAgent",
+      "apexAgents",
+      "automationBenchPartialScore",
+      "briefcaseBreakdown.overall.elo",
+      "critpt",
+      "enterpriseOpsGym",
+      "gdpPdfAllPass",
+      "gdpval",
+      "gpqa",
+      "harveyLab",
+      "hle",
+      "ifbench",
+      "itBenchSre",
+      "lcr",
+      "mlcrOverall",
+      "mmmuPro",
+      "omniscience",
+      "scicode",
+      "tau2",
+      "tauBanking",
+      "terminalbenchHard",
+      "terminalbenchV21",
+      "terminalbenchV40"
+    ]
+  }
+}
+```

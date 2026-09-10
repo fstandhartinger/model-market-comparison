@@ -1110,7 +1110,14 @@ async function build() {
   const generated_at = new Date().toISOString();
   const { attachEfficiency } = await import("../lib/efficiency.mjs");
   const efficiency = attachEfficiency(modelRows, { aa, aaEfficiency, openrouter: or, openrouterEfficiency, chutesEfficiency, now: generated_at });
+  const benchmarkRegistry = await readJSON("benchmarks/registry.json");
+  const benchmarkScores = await readJSON("benchmarks/scores.json");
+  const { verifyScoreEvidence } = await import("../lib/benchmark-score-evidence.mjs");
+  const { buildBenchmarkResults } = await import("../lib/benchmark-scores.mjs");
+  await verifyScoreEvidence(benchmarkScores, benchmarkRegistry, { approvals: await readJSON("benchmarks/score-approvals.json") });
+  const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows);
   const dataset = {
+    benchmark_results,
     generated_at,
     efficiency,
     counts: { models: modelRows.length, families: new Set(modelRows.map((row) => row.family_key)).size, providers: providers.length,
