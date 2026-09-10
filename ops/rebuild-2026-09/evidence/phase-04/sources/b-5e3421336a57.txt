@@ -1,0 +1,313 @@
+Medical Long Context Reasoning (MLCR-AA) | Artificial Analysis
+Artificial Analysis
+K
+Artificial Analysis
+Models
+Coding Agents
+Speech, Image, Video
+Inference
+Leaderboards
+About
+AI Trends
+Arenas
+K
+All evaluations
+Medical Long Context Reasoning (MLCR-AA)
+Private Dataset
+Long Context
+Reasoning
+Faithfulness
+Medical
+An open benchmark from Wisedocs measuring how well models reason over long, fragmented medical records, performing the multi-document synthesis claims professionals rely on when reviewing insurance and healthcare cases.
+See example tasks
+Background
+MLCR (Medical Long Context Reasoning) is an open benchmark from
+Wisedocs
+that tests whether AI models can reason over long, fragmented medical records, performing the kind of multi-document synthesis claims professionals do when reviewing insurance and healthcare cases. This requires the model to reason through chronology, causality, treatment patterns, and relevance while working through a record spanning hundreds of visits, just like a human reviewer.
+The benchmark is built around realistic, synthetic medical cases of roughly 25,000 to 64,000 tokens.
+Responses that stay concise (within five times the length of the reference answer) and contain an answer are graded by a panel of three LLM judges against expert-annotated ground truth. Accuracy and completeness are reported among those judged responses. The headline score still counts overlong and empty responses as failures, and credits a response only when it is concise and judged both accurate and complete by majority vote.
+MLCR questions are graded across six tiers of difficulty. The MLCR-AA implementation evaluates a private held-out set of the hardest cases (expert-tier clinical synthesis and compound, multi-part reasoning), which is separate from the publicly released dataset.
+Methodology
+All evaluations are conducted independently by Artificial Analysis. More information can be found on our
+Intelligence Benchmarking Methodology
+page.
+Related Links
+MLCR-AA Methodology
+MLCR Announcement
+Wisedocs-AI/medical-long-context-reasoning
+Wisedocs/mlcr-dataset (public)
+Wisedocs
+MLCR-AA Score
+Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)
+scores the
+highest
+on
+MLCR-AA Score
+with a score of
+71.1%
+, followed by
+Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)
+with a score of
+64.4%
+, and
+Claude Opus 5 (Adaptive Reasoning, High Effort)
+with a score of
+59.4%
+MLCR-AA Accuracy (Judged Responses)
+GPT-6 Astra (max)
+scores the
+highest
+on
+MLCR-AA Accuracy (Judged Responses)
+with a score of
+98.3%
+, followed by
+Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)
+with a score of
+94.8%
+, and
+GPT-5.6 Terra (max)
+with a score of
+93.7%
+MLCR-AA Completeness (Judged Responses)
+Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)
+scores the
+highest
+on
+MLCR-AA Completeness (Judged Responses)
+with a score of
+89.0%
+, followed by
+Claude Opus 5 (Adaptive Reasoning, Max Effort)
+with a score of
+86.1%
+, and
+Claude Opus 5 (Adaptive Reasoning, Xhigh Effort)
+with a score of
+81.8%
+MLCR-AA Conciseness
+Nova Lite
+scores the
+highest
+on
+MLCR-AA Conciseness
+with a score of
+100.0%
+, followed by
+Grok 4.6 (high)
+with a score of
+99.4%
+, and
+Gemini 3.1 Pro Preview
+with a score of
+99.4%
+Score
+Token Usage
+Cost
+Speed
+Score vs. Release Date
+Example Tasks
+Score
+MLCR-AA: Score
+Share of tasks judged accurate, complete, and concise · Expert + compound (hard) sets · Benchmark developed by Wisedocs · Independently benchmarked by Artificial Analysis
+28 of 84 models
+MLCR-AA Overall Pass Rate
+The share of responses that stay concise (within five times the length of the reference answer) and that an LLM judge panel rates as both accurate and complete against expert-annotated ground truth. A response past the conciseness limit scores zero without judging; otherwise three LLM judges decide accuracy and completeness by majority vote. Reported over a private held-out set of the hardest cases (expert-tier clinical synthesis and compound, multi-part reasoning) with 3 repeats per question; pass@1.
+Accuracy vs. Completeness
+Accuracy
+Completeness
+Medical Long Context Reasoning (MLCR-AA) Accuracy vs. Completeness Among Judged Responses
+Accuracy pass rate among judged responses · Completeness pass rate among judged responses · Expert + compound (hard) sets · Benchmark developed by Wisedocs
+28 of 84 models
+Most attractive quadrant
+Anthropic
+OpenAI
+Meta
+Z AI
+SpaceXAI
+Kimi
+Google
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Mistral
+MLCR-AA Accuracy
+Among responses sent to the judge panel, the share where every stated fact is correct. Three LLM judges check for hallucinated or incorrect details; accuracy passes when a majority (2 of 3) find no factual errors. Overlong and empty responses are excluded from this metric and remain failures in the overall pass rate. Reported over the expert and compound (hard) question sets with 3 repeats per question; pass@1.
+MLCR-AA Completeness
+Among responses sent to the judge panel, the share that include all key facts from the expert-annotated ground truth. Three LLM judges check for omitted information; completeness passes when a majority (2 of 3) find nothing missing. Overlong and empty responses are excluded from this metric and remain failures in the overall pass rate. Reported over the expert and compound (hard) question sets with 3 repeats per question; pass@1.
+Token Usage
+Output Tokens per Task
+Score vs. Output Tokens per Task
+Token Breakdown
+Score vs. Output Tokens
+MLCR-AA: Output Tokens per Task
+Output tokens used to run one task, broken down by reasoning and answer tokens
+28 of 84 models
+Answer
+Reasoning
+Evaluation Output Tokens per Task
+The average number of answer and reasoning tokens produced per benchmark task in this evaluation.
+Cost
+Cost per Task
+Score vs. Cost per Task
+Total Cost to Run
+MLCR-AA: Cost per Task
+Average cost per task (USD), broken down by input, cache hit, cache write, reasoning, and answer tokens
+28 of 84 models
+Answer
+Reasoning
+Cache Write
+Cache Hit
+Input
+Evaluation Cost per Task
+Average cost per task in the evaluation. Costs are split by input, cache hit, cache write, reasoning, and answer token pricing where canonical token counts are available.
+Speed
+Time per Task
+Score vs. Time per Task
+MLCR-AA: Time per Task
+Weighted average decode time (minutes) per task; excludes TTFT and overhead time · Lower is better
+28 of 84 models
+Evaluation Time per Task
+The weighted average time (seconds) per evaluation task. This is calculated by dividing output tokens per task by output speed, weighted by the relative weights of each benchmark in the evaluation.
+Score vs. Release Date
+MLCR-AA: Score vs. Release Date
+28 of 84 models
+Most attractive region
+Anthropic
+OpenAI
+Meta
+Z AI
+SpaceXAI
+Kimi
+Google
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Mistral
+Example Tasks
+Fact retrieval
+Reasoning tier:
+Single-fact retrieval
+On what date was the lumbar spine MRI performed, and which provider ordered it? Cite the page of the record where this appears.
+Click to expand
+Chronology
+Reasoning tier:
+Multi-document synthesis
+Reconstruct the treatment timeline for the right knee injury across the orthopedic, physical therapy, and imaging notes. List each encounter in date order with the treatment provided.
+Click to expand
+Clinical reasoning
+Reasoning tier:
+Expert, compound reasoning
+Based on the documented mechanism of injury, prior conditions, and the sequence of care, is the lumbar disc herniation more likely causally related to the workplace incident or to pre-existing degenerative disease? Explain which records support your conclusion.
+Click to expand
+Frequently Asked Questions
+What is MLCR-AA (Medical Long Context Reasoning)?
+MLCR-AA is Artificial Analysis' evaluation of MLCR, an open benchmark from Wisedocs that tests whether AI models can reason over long, fragmented medical records, performing the kind of multi-document synthesis claims professionals do when reviewing insurance and healthcare cases. Cases are synthetic medical files of roughly 25,000 to 64,000 tokens, with questions graded across six tiers of difficulty, from locating a single fact to expert-level clinical synthesis and compound, multi-part reasoning.
+How is MLCR-AA scored?
+Each model response must first pass a conciseness gate: an answer longer than five times the reference answer scores zero. Concise responses are then graded by a panel of three LLM judges, with accuracy and completeness decided by majority vote, and the headline overall pass rate credits a response only when it is concise and judged both complete and accurate. On this page the primary score is the overall pass rate, evaluated over the expert and compound multi-part (hard) question sets.
+Which AI model has the highest MLCR-AA score?
+Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback) has the highest MLCR-AA score, with an overall pass rate of 71.1% among models with published MLCR-AA results.
+View model
+Why is MLCR-AA important?
+A claims professional reviewing a record spanning hundreds of visits is not just searching for a single fact; they are reconstructing chronology, causality, treatment patterns, and claim relevance across fragmented documents. MLCR-AA measures exactly this capability, which matters for any organization evaluating off-the-shelf AI for medical record review, insurance claims, and other long-document healthcare workflows.
+Is MLCR-AA part of the Artificial Analysis Intelligence Index?
+No. MLCR-AA is reported as a standalone evaluation and does not contribute to the Artificial Analysis Intelligence Index. It is benchmarked independently by Artificial Analysis.
+Explore Evaluations
+Artificial Analysis Intelligence Index v4.3
+A composite benchmark aggregating ten challenging evaluations to provide a holistic measure of AI capabilities across mathematics, science, coding, and reasoning.
+Artificial Analysis Openness Index
+A composite measure providing an industry standard to communicate model openness for users and developers.
+AA-Briefcase: Agentic Knowledge Work Benchmark
+A private evaluation developed by Artificial Analysis for frontier agentic capability in long-horizon knowledge work, testing agents on realistic business workflows that require deliverables such as spreadsheets, presentations, and memos.
+GDPval-AA v2 Leaderboard
+GDPval-AA v2 is Artificial Analysis' evaluation framework for OpenAI's GDPval dataset. It tests AI models on real-world tasks across 44 occupations and 9 major industries. Models are given shell access and web browsing capabilities in an agentic loop via Stirrup to solve tasks, with Elo ratings derived from blind pairwise comparisons.
+APEX-Agents-AA Benchmark Leaderboard
+Artificial Analysis' implementation of the APEX-Agents benchmark, testing AI agents on long-horizon, cross-application tasks in professional-services environments with realistic application tooling.
+AA-AnalystAgent Benchmark Leaderboard
+Artificial Analysis' data analysis benchmark, testing AI agents on their ability to work with spreadsheets and documents to answer quantitative questions a Business Analyst or Data Analyst would face day-to-day.
+AutomationBench-AA: Agentic SaaS Workflow Benchmark
+A benchmark measuring agentic task completion across simulated SaaS application environments, scoring the share of each task's objectives completed without guardrail violations.
+Harvey LAB-AA Benchmark Leaderboard
+Artificial Analysis' implementation of Harvey's Legal Agent Benchmark (LAB), testing AI agents on real-world legal work from Harvey's dataset of 120 private tasks spanning 24 legal practice areas. The agent reads case documents in a sandbox and produces legal deliverables (e.g., memos, disclosure schedules, deposition summaries), graded criterion-by-criterion by a single LLM rubric judge.
+GDP.pdf Benchmark Leaderboard
+Artificial Analysis' implementation of Surge AI's GDP.pdf benchmark, testing whether language models can reason over long, real-world professional documents and satisfy detailed task-specific criteria.
+EnterpriseOps-Gym-AA Benchmark Leaderboard
+Artificial Analysis' independent implementation of ServiceNow's EnterpriseOps-Gym, an agentic benchmark testing whether LLM agents can complete stateful, multi-step enterprise workflows across eight business domains via live tool use, graded on the final state of the underlying databases.
+𝜏³-Banking Benchmark Leaderboard
+A fintech customer-support benchmark from the 𝜏-Knowledge framework that tests whether agents can navigate a large unstructured knowledge base and execute multi-step tool calls to resolve realistic banking workflows.
+Terminal-Bench v2.1 Benchmark Leaderboard
+A verified refresh of Terminal-Bench v2.0 — 89 curated tasks across software engineering, system administration, data processing, model training, and security, with environment and instruction fixes so scores reflect agent capability rather than environment gaps.
+Terminal-Bench v4.0 Benchmark Leaderboard
+A harder 66-task benchmark of complex terminal work across software, machine learning, science, operations, security, hardware, and media, with recalibrated compute and time allowances and improved instructions, environments, and verifiers.
+Artificial Analysis Long Context Reasoning Benchmark Leaderboard
+A challenging benchmark measuring language models' ability to extract, reason about, and synthesize information from long-form documents ranging from 10k to 100k tokens (measured using the cl100k_base tokenizer).
+AA-Omniscience: Knowledge and Hallucination Benchmark
+A benchmark measuring factual recall and hallucination across various economically relevant domains.
+SciCode Benchmark Leaderboard
+A scientist-curated coding benchmark featuring 288 test set subproblems from 80 laboratory problems across 16 scientific disciplines.
+Humanity's Last Exam Benchmark Leaderboard
+A frontier-level benchmark with 2,500 expert-vetted questions across mathematics, sciences, and humanities, designed to be the final closed-ended academic evaluation.
+CritPt Benchmark Leaderboard
+A benchmark designed to test LLMs on research-level physics reasoning tasks, featuring 71 composite research challenges.
+GPQA Diamond Benchmark Leaderboard
+The most challenging 198 questions from GPQA, where PhD experts achieve 65% accuracy but skilled non-experts only reach 34% despite web access.
+ITBench-AA Benchmark Leaderboard
+Artificial Analysis' implementation of IBM's ITBench benchmark, testing AI agents on Kubernetes incident root-cause analysis from offline incident snapshots. The agent inspects alerts, events, traces, and topology and identifies the contributing-factor entities (deployments, pods, namespaces, network policies, etc.) responsible for the failure.
+MMMU-Pro Benchmark Leaderboard
+An enhanced MMMU benchmark that eliminates shortcuts and guessing strategies to more rigorously test multimodal models across 30 academic disciplines.
+IFBench Benchmark Leaderboard
+A benchmark evaluating precise instruction-following generalization on 58 diverse, verifiable out-of-domain constraints that test models' ability to follow specific output requirements.
+Terminal-Bench Hard Benchmark Leaderboard
+An agentic benchmark evaluating AI capabilities in terminal environments through software engineering, system administration, and data processing tasks.
+𝜏²-Bench Telecom Benchmark Leaderboard
+A dual-control conversational AI benchmark simulating technical support scenarios where both agent and user must coordinate actions to resolve telecom service issues.
+MMLU-Pro Benchmark Leaderboard
+An enhanced version of MMLU with 12,000 graduate-level questions across 14 subject areas, featuring ten answer options and deeper reasoning requirements.
+LiveCodeBench Benchmark Leaderboard
+A contamination-free coding benchmark that continuously harvests fresh competitive programming problems from LeetCode, AtCoder, and CodeForces, evaluating code generation, self-repair, and execution.
+MATH-500 Benchmark Leaderboard
+A 500-problem subset from the MATH dataset, featuring competition-level mathematics across six domains including algebra, geometry, and number theory.
+AIME 2025 Benchmark Leaderboard
+All 30 problems from the 2025 American Invitational Mathematics Examination, testing olympiad-level mathematical reasoning with integer answers from 000-999.
+Global-MMLU-Lite Benchmark Leaderboard
+A lightweight, multilingual version of MMLU, designed to evaluate knowledge and reasoning skills across a diverse range of languages and cultural contexts.
+Medical Long Context Reasoning (MLCR-AA)
+An open benchmark from Wisedocs measuring how well models reason over long, fragmented medical records, performing the multi-document synthesis claims professionals rely on when reviewing insurance and healthcare cases.
+Artificial Analysis
+Get notified about new articles
+Email address
+Subscribe
+Artificial Analysis
+Explore
+LLM Leaderboard
+Image Arena
+Video Arena
+AI Agents
+Evaluations
+Products
+Optima
+MicroEvals
+Model Recommender
+Data Playground
+Image Lab
+Company
+About
+Methodology
+Services
+Contact
+Articles
+X
+LinkedIn
+YouTube
+Rednote
+Discord
+©
+2026
+Artificial Analysis
+Terms of Use
+Data Platform Terms
+Privacy Policy

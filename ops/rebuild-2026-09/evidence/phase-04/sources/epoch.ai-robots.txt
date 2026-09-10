@@ -1,0 +1,11 @@
+User-agent: *
+Allow: /assets/images
+Allow: /assets/docs
+Disallow: /assets/
+Disallow: /inspect-viewer/
+
+# Prevent crawling of sample benchmark problems
+# to avoid contaminating training datasets
+Disallow: /frontiermath/tiers-1-4/benchmark-problems
+
+Sitemap: https://epoch.ai/sitemap-index.xml

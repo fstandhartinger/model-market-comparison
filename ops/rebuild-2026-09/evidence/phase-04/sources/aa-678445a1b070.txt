@@ -1,0 +1,193 @@
+Capability Indices Methodology | Artificial Analysis
+Artificial Analysis
+K
+Artificial Analysis
+Models
+Coding Agents
+Speech, Image, Video
+Inference
+Leaderboards
+About
+AI Trends
+Arenas
+K
+Benchmarking Methodology
+On this page
+Overview
+Index Breakdowns
+Artificial Analysis Capability Indices Methodology
+Overview
+Artificial Analysis Capability Indices measure how well models perform on specific professional use cases, such as legal, healthcare, or finance work.
+We run every component benchmark independently before combining its scores into the index. Like all evaluation metrics, capability indices have limitations and may not apply directly to every use case, but they provide a useful synthesis for comparing models on the work that matters to a given domain.
+The underlying benchmarks, including how each one is run and scored, are documented in the
+Intelligence Benchmarking methodology
+.
+Index Breakdowns
+Each index targets a single profession or field, such as Legal, Healthcare & Medical, or Finance & Accounting, and weights a set of capabilities by how often each appears in real-world tasks for that field.
+Our task weightings draw on an O*NET-style taxonomy of work activities. The table below shows the components and weights for each index.
+Index
+Weight
+Capability
+Evaluations
+Description
+Finance & Accounting Index
+30%
+Business Knowledge
+AA-Omniscience
+Domain recall in accounting, corporate finance, economics, and investments
+30%
+Agentic Knowledge Work
+GDPval-AA v2
+Tool use, planning, and multi-step task execution, such as running spreadsheets, querying ERPs, or coordinating a workflow
+20%
+Reasoning
+HLE
+Multi-step quantitative and analytic reasoning, used for sensitivity analysis, valuation, and structured problem solving
+10%
+Agentic Customer Interaction
+𝜏³-Banking
+Multi-turn, tool-using customer workflows over an unstructured knowledge base
+5%
+Long-Context
+LCR
+Reading and reasoning across long financial filings, deal documents, and research notes
+5%
+Non-Hallucination
+AA-Omniscience
+Avoiding fabricated figures or citations
+Strategy & Ops Index
+30%
+Business Knowledge
+AA-Omniscience
+Working knowledge of business processes, accounting basics, and operational concepts
+35%
+Agentic Knowledge Work
+GDPval-AA v2
+Tool use, planning, and orchestrating multi-step office workflows end-to-end
+30%
+Agentic Customer Interaction
+𝜏³-Banking
+Multi-turn dialogue and tool use to resolve customer and stakeholder requests
+5%
+Long-Context
+LCR
+Holding context across long threads, policies, and records
+Legal Index
+35%
+Legal Knowledge
+AA-Omniscience
+Recall of statutes, doctrines, and procedure across jurisdictions
+25%
+Agentic Knowledge Work
+GDPval-AA v2
+Running matter-management workflows, drafting pipelines, and tool-augmented research
+10%
+Long-Context
+LCR
+Reading and synthesizing across contracts, discovery productions, and case-law packets
+10%
+Non-Hallucination
+AA-Omniscience
+Avoiding fabricated case cites or invented statutes
+5%
+Agentic Customer Interaction
+𝜏³-Banking
+Multi-turn, tool-using client intake and support workflows
+15%
+Reasoning
+HLE
+Multi-step argumentation, statutory interpretation, and weighing conflicting authorities
+Healthcare & Medical Index
+30%
+Medical & Health Knowledge
+AA-Omniscience
+Clinical knowledge across diagnosis, pharmacology, and care pathways
+25%
+Agentic Knowledge Work
+GDPval-AA v2
+Tool use, planning, and orchestrating EHR/pharmacy workflows end-to-end
+15%
+Long-Context Reasoning
+MLCR-AA
+Synthesising findings across long, fragmented patient records and claims files
+10%
+Non-Hallucination
+AA-Omniscience
+Avoiding fabricated drug interactions, doses, or guidelines
+10%
+Reasoning
+HLE
+Multi-step clinical reasoning across biology and medicine
+10%
+Agentic Customer Interaction
+𝜏³-Banking
+Multi-turn, tool-using patient and member support workflows
+Engineering Index
+35%
+Engineering Knowledge
+AA-Omniscience
+Domain recall across civil, electrical, mechanical, and other engineering disciplines
+35%
+Reasoning
+HLE, GPQA Diamond, CritPt
+Multi-step quantitative reasoning for derivations, sizing calculations, and design trade-offs
+25%
+Agentic Knowledge Work
+GDPval-AA v2
+Tool use, planning, and multi-step execution of engineering deliverables
+5%
+Agentic Terminal Use
+Terminal-Bench v2.1
+Operating real terminal environments for builds, scripts, system administration, and debugging
+Economics Index
+35%
+Economics Knowledge
+AA-Omniscience
+Recall across micro and macroeconomics, public finance, and markets
+35%
+Reasoning
+HLE
+Multi-step quantitative and analytic reasoning for modeling, estimation, and inference
+15%
+Agentic Knowledge Work
+GDPval-AA v2
+Tool use, planning, and multi-step execution of analytical deliverables
+15%
+Long-Context
+LCR
+Reading and reasoning across long reports, datasets, and research notes
+Artificial Analysis
+Get notified about new articles
+Email address
+Subscribe
+Artificial Analysis
+Explore
+LLM Leaderboard
+Image Arena
+Video Arena
+AI Agents
+Evaluations
+Products
+Optima
+MicroEvals
+Model Recommender
+Data Playground
+Image Lab
+Company
+About
+Methodology
+Services
+Contact
+Articles
+X
+LinkedIn
+YouTube
+Rednote
+Discord
+©
+2026
+Artificial Analysis
+Terms of Use
+Data Platform Terms
+Privacy Policy
+English

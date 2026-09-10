@@ -1,0 +1,17 @@
+{
+  "account": "xplainervideo",
+  "transport": "Existing Sandy desktop Chrome on DISPLAY=:10; window 0x00600151 / PID 1355829; account + shared desktop flock held",
+  "date": "2026-09-10",
+  "identity_evidence": "x-initial.png (own profile + Edit profile + handle)",
+  "search_urls": [
+    "https://x.com/search?q=benchmark&src=typed_query",
+    "https://x.com/search?q=benchmark%20%28writing%20OR%20roleplay%20OR%20slop%29&src=typed_query"
+  ],
+  "grok_url": "https://x.com/i/grok?conversation=2098166129885954448",
+  "grok_status": "Two completed prompts; discovery leads only, not evidence for benchmark definitions",
+  "primary_post": "https://x.com/Whats_AI/status/2098085178786615560",
+  "source_text": "x-writing-post.txt",
+  "source_sha256": "8637a1c17a88f235d48b0a018232333025a378bea9986e6c88358bb1360e0187",
+  "scope": "Read-only discovery; no publication; own temporary tab closed and locks released. Account cooldown was checked and expired. No airesearch12 interaction.",
+  "input_issue": "An initial unscaled screenshot coordinate missed the Grok input and typing opened a post composer through keyboard shortcuts. The unsent text was cleared and the composer closed; no Post control was clicked. Retried with scaled coordinates and inspected the Grok input before submitting."
+}

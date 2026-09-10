@@ -1,0 +1,108 @@
+HELMET
+HELMET
+: How to Evaluate Long-Context Language Models Effectively and Thoroughly
+Howard Yen
+♠
+,
+Tianyu Gao
+♠
+,
+Minmin Hou
+♣
+,
+Ke Ding
+♣
+,
+Daniel Fleischer
+♣
+,
+Peter Izsak
+♣
+,
+Moshe Wasserblat
+♣
+,
+Danqi Chen
+♠
+♠
+Princeton Language and Intelligence (PLI), Princeton University
+♣
+Intel
+ICLR 2025
+arXiv
+Code
+Data
+Leaderboard
+Examples
+Overview of the HELMET datasets, which consists of seven categories derived from realistic applications.
+Introduction
+There have been many benchmarks for evaluating long-context language
+            models (LCLMs), but developers often rely on synthetic tasks like needle-in-a-haystack (NIAH) or arbitrary subsets of tasks.
+We present HELMET (How to Evaluate Long-context Models Effectively and Thoroughly), a comprehensive benchmark encompassing seven diverse, application-centric categories. We also address many issues in previous benchmarks by adding controllable lengths up to 128K tokens, model-based evaluation for reliable metrics, and few-shot prompting for robustly evaluating base models.
+Through a comprehensive study of 59 LCLMs, we find that (1) synthetic tasks like NIAH are not good predictors of downstream performance; (2) the diverse categories in HELMET exhibit distinct trends and low correlation with each other; and (3) while most LCLMs achieve perfect NIAH scores, open-source models significantly lag behind closed ones when the task requires full-context reasoning or following complex instructions—the gap widens with increased lengths.
+Leaderboard: Overall Performance
+Table: Average performance across seven categories
+on HELMET.
+            The context window is the training or claimed context length of the model.
+            For MoE models, we show the number of active parameters.
+            Instruction-tuned models are highlighted in
+light blue
+, and base models are highlighted in
+yellow
+.
+            Frontier models struggle significantly more at more complex tasks, such as generation-with-citations and passage re-ranking. 
+            For details on the models and more results, please refer to the paper.
+            You may also find the results for each dataset on
+this spreadsheet
+.
+Select input length:
+128k
+64k
+32k
+16k
+8k
+Data Examples
+Click on a category to explore the data. Note that we only show one demonstration in the examples in this viewer, while the actual data contains two in-context learning examples. We also truncate most of the text for brevity.
+RAG
+Recall
+Long-document QA
+Passage Re-ranking
+Citation
+Summarization
+ICL
+NQ
+TriviaQA
+HotpotQA
+PopQA
+JSON KV
+RULER MV
+RULER MK UUID
+RULER MK NEEDLE
+NarrativeQA
+InfBench QA
+InfBench MC
+MS MARCO
+ALCE ASQA
+ALCE Qampari
+InfBench Summarization
+Multi-LexSum
+TREC Coarse
+TREC Fine
+NLU
+BANKING77
+CLINC150
+Example:
+Citation
+@inproceedings{yen2025helmet,
+  title={HELMET: How to Evaluate Long-Context Language Models Effectively and Thoroughly}, 
+  author={Howard Yen and Tianyu Gao and Minmin Hou and Ke Ding and Daniel Fleischer and Peter Izsak and Moshe Wasserblat and Danqi Chen},
+  year={2025},
+  booktitle={International Conference on Learning Representations (ICLR)},
+}
+Contact
+For any questions or feedback, please reach out to hyen [@] cs.princeton.edu
+Website based on
+TokenCompose
+, and
+MathVista
+.

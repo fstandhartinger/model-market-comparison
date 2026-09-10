@@ -1,0 +1,117 @@
+Introducing Fiction.LiveBench: The First Real-World Long Context Benchmark for Writers
+Fiction.live has AI tools that help writers save time by making summaries, timelines, character bibles, and iterate on those documents in insightful ways. To do that effectively, the LLM needs to truly understand the story, each character and their motivations on a deep and profound level. However, in practice, today’s AI models frequently lose track of plots, fail to grasp character motivations, and produce slop that’s completely misaligned with an author’s intent.
+The root problem is that long context comprehension is still broken.
+Fiction.live happens to be a huge repository of complex long story content and so we're well positioned to clarify the situation for the public.
+Most LLMs claim to support tens or even hundreds of thousands of tokens of context, but real-world experience tells us otherwise.
+To really understand a story the LLM needs to do things like:
+track changes over time - e.g. they hate each other, now they love each other, now they hate each other again, oh now their hatred has morphed into obsession
+logical predictions based on established hints
+ability to understand secrets told in confidence to readers versus those that are known to characters
+and so on
+It's a specific long context real world test that we find more reflective of writing use than LongBench or RULER, which test search rather than comprehension.
+From our experience, most LLMs CAN handle these tasks, but not over long context. That's why we're launching a new benchmark called Fiction.LiveBench to demonstrate the case and to show our users which LLM they should choose in their writing tasks.
+The Fiction.LiveBench Methodology
+Based on a selection of a dozen very long complex stories and many verified quizzes, we generated tests based on select cut down versions of those stories. For every test, we start with a cut down version that has only relevant information. This we call the "0"-token test. Then we cut down less and less for longer tests where the relevant information is only part of the longer story overall.
+We then evaluated leading LLMs across different context lengths.
+Here is an 8k example
+of the type of question that would be part of this benchmark. This question is considered hard and would be failed by most models.
+Here is the 1k variant
+of the same question that is passed by more models. Grok 3 for example, fails the 8k variant but passes the 1k variant. The actual dataset comes from our users and will remain private.
+o1 and o3-mini uses default (medium) settings. Claude sonnet 3.7-thinking uses 8k thinking tokens.
+Results
+Older results: https://cdn6.fiction.live/file/fictionlive/5aa21fca-ff97-4483-9dd6-ae141dfe0a9e.png
+What’s Next?
+These results confirm what writers have been telling us: LLMs today struggle with real-world long-context writing tasks.
+Stay tuned for updates in the coming weeks! In the meantime, check out Fiction.LiveBench and see which model works best for your writing needs.
+Let us know your thoughts on our results. We're also open to sponsorship offers that will help us improve this eval. There is a lot of potential to improve both the difficulty and realworldness of testing. Reach out in DMs on here or on twitter https://x.com/ficlive.
+Why These Benchmark Scores May Seem Low
+Typically, LLMs advertise higher context windows, and sometimes they do seem to work at those context windows. Other tests like the popular "Needle in the haystack" style tests, show LLMs passing with flying colors across a large context.
+To explain the difference, this benchmark is harder than other tests you may have seen and is asking more complex questions than the typical LLM experience.
+We deliberately designed hard questions that test understanding of subtext rather than information that can be searched for. This requires actually reading and understanding the full context rather than just searching for and focusing on the relevant bits (which many LLMs optimize for and do well). Our tests deliberately test cases where this search strategy does not work, as is typical in fiction writing.
+Changelog
+2/21/2025
+- To reflect common usage we increased the number of easy questions in our benchmark set. We added gemini-2.0-pro-exp-02-05:free, deepseek-chat:free (v3), and dolphin3.0-r1-mistral-24b:free to the benchmark results.
+2/25/2025
+- Added Claude Sonnet 3.7
+2/28/2025
+- Added gpt-4.5-preview
+3/14/2025
+- Added qwq-32b and gemma-3-27b
+3/25/2025
+- Added deepseek-v3-0324 and gemini-2.5-pro-exp-03-25
+4/3/2025
+- Added quasar-alpha
+4/6/2025
+- Added Llama 4
+4/10/2025
+- Added Grok 3 and updated Llama 4 after inference provider updated with vllm fixes. Thanks @jon_durbin.
+4/14/2025
+- Added GPT 4.1 family.
+4/17/2025
+- Added o3 and o4-mini. Both are done on default settings, so medium.
+4/17/2025
+- Added Gemini 2.5 Flash and Thinking.
+4/29/2025
+- Added Qwen3 up to 16k for now.
+5/06/2025
+- Added Gemini Pro 2.5 03-25 and 05-06.
+5/22/2025
+- Added Gemini Pro 2.5 Flash Preview 05-20. Expanded certain models up to 192k length. Added Claude-4 non-thinking.
+5/28/2025
+- Added New Deepseek R1-0528.
+6/05/2025
+- Added Gemini 2.5 Pro 06-05.
+6/10/2025
+- Added o3-pro (medium).
+6/19/2025
+- Added Gemini 2.5-Flash and Flash Lite Preview. Added Claude 4 Sonnet and Opus thinking versions.
+6/21/2025
+- Added Minimax-m1 (40k).
+7/10/2025
+- Added Grok 4 and cypher-alpha.
+7/17/2025
+- Added Kimi K2.
+7/21/2025
+- Added Qwen3-235b-a22b-07-25.
+7/25/2025
+- Added qwen3-235b-a22b-thinking-2507 [chutes].
+7/29/2025
+- Added glm-4.5 [chutes/fp8].
+8/08/2025
+- Added gpt-5, mini, nano, chat and horizon-alpha.
+8/19/2025
+- Added gpt-oss and high reasoning variant.
+8/21/2025
+- Added deepseek-3.1 and thinking variant.
+9/05/2025
+- Added
+kimi-k2-0905
+and
+qwen3-30b-a3b-thinking-2507
+.
+9/06/2025
+- Added
+sonoma-sky-alpha
+and
+sonoma-dusk-alpha
+.
+9/12/2025
+- Added
+qwen3-next-80b-a3b-thinking
+.
+9/29/2025
+- Added
+deepseek-v3.2-exp [reasoning: high], deepseek-v3.2-exp, nemotron-nano-9b-v2:free, qwen-max, qwen3-next-80b-a3b-instruct
+01/30/2026
+- Added
+deepseek-v3.2 [reasoning: high], claude-opus-4-5, claude-sonnet-4-5, gemini-3-pro-preview, gemini-3-flash-preview, gpt-5.2, gpt-5.2-pro, minimax-m2.1 [reasoning: high] [minimax], kimi-k2.5 [reasoning: high] [moonshotai], nemotron-3-nano-30b-a3b:free, glm-4.7 [reasoning: high] [z-ai], glm-4.7-flash [reasoning: high] [z-ai]
+02/12/2026
+- Added
+minimax-m2.5 [reasoning: high] [minimax], glm-5 [reasoning: high] [z-ai]
+02/16/2026
+- Added
+qwen3.5-plus-02-15 [reasoning: high] [alibaba], qwen3-max-thinking [reasoning: high] [alibaba], claude-opus-4-6
+04/04/2026
+- Added
+qwen3.6-plus [reasoning: high] [alibaba]
+Did these results surprise you?

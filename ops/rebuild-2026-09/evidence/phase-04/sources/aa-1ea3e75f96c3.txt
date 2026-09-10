@@ -1,0 +1,3004 @@
+Intelligence Benchmarking | Artificial Analysis
+Artificial Analysis
+K
+Artificial Analysis
+Models
+Coding Agents
+Speech, Image, Video
+Inference
+Leaderboards
+About
+AI Trends
+Arenas
+K
+Benchmarking Methodology
+On this page
+Artificial Analysis Intelligence Index
+Additional Evaluations
+Intelligence Evaluation Principles
+General Testing Parameters
+Artificial Analysis Intelligence Index Evaluations
+Agents
+AA-Briefcase
+GDPval-AA v2
+AutomationBench-AA
+Coding
+Terminal-Bench v4.0
+SciCode
+General
+AA-Omniscience
+GDP.pdf
+AA-LCR v1.1
+Scientific Reasoning
+HLE (Humanity's Last Exam)
+CritPt
+Additional Evaluation Details
+Agents
+Harvey LAB-AA
+APEX-Agents-AA
+AA-AnalystAgent
+EnterpriseOps-Gym-AA
+ITBench-AA
+General
+IFBench
+MLCR-AA (Medical Long Context Reasoning)
+Other
+Global-MMLU-Lite
+MMMU Pro
+Legacy Evaluations
+GPQA Diamond (Graduate-Level Google-Proof Q&A Benchmark)
+𝜏³-Banking
+Terminal-Bench v2.1
+Terminal-Bench Hard
+𝜏²-Bench Telecom
+MATH-500
+AIME 2025 (American Invitational Mathematics Examination)
+MMLU-Pro (Multi-Task Language Understanding Benchmark, Pro version)
+LiveCodeBench
+Prompt Templates, Answer Extraction and Evaluation
+Multiple Choice Questions (GPQA, MMLU-Pro)
+Multiple Choice Extraction Regex
+Equality Checker LLM
+HLE (Humanity's Last Exam)
+HLE Equality Checker Prompt
+LCR Equality Checker Prompt
+Mathematical Questions (AIME 2025)
+Mathematical Equality Checker Prompt
+Code Generation Tasks
+SciCode
+LiveCodeBench
+Code Extraction Regex
+Version History
+Artificial Analysis Intelligence Benchmarking Methodology
+Artificial Analysis Intelligence Index v4.3
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index combines a comprehensive suite of evaluation datasets to assess language model capabilities across reasoning, knowledge, maths and programming.
+It is a helpful synthesis of overall language model intelligence and can be used to compare language models. Like all evaluation metrics, it has limitations and may not apply directly to every use case. However, we are confident that it is a more useful synthesis comparison between language models than any other metric in existence today.
+Artificial Analysis Intelligence Index v4.3
+incorporates 10 evaluations: AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, AA-LCR v1.1, AA-Omniscience, Humanity's Last Exam, GDP.pdf, CritPt. Our methodology emphasizes fairness and real-world applicability.
+We estimate a 95% confidence interval for Artificial Analysis Intelligence Index of less than ±1% - based on experiments with >10 repeats on certain models for all evaluation datasets included in
+Artificial Analysis Intelligence Index v4.3
+. Individual evaluation results may have wider than ±1% confidence intervals. We look forward to disclosing further detail from our statistical analysis in the future.
+Artificial Analysis Intelligence Index is a primarily text-based, English-language evaluation suite. We benchmark models for image inputs, speech inputs and multilingual performance separately to the Intelligence Index evaluation suite.
+Intelligence Index evaluation suite
+Intelligence Index is calculated as a weighted average across four categories: Agents (30%), Coding (20%), Scientific Reasoning (20%) and General (30%). The weighting emphasizes agentic tasks. Category membership and per-evaluation weights are shown below.
+Category
+Evaluation
+Questions
+Repeats
+Response Type
+Scoring
+Intelligence
+Index Weighting
+Tool
+Usage
+Agents (30%)
+AA-Briefcase
+91 tasks across 4 scenarios
+1
+Agentic task completion with file outputs
+Combined Elo from pairwise comparisons on rubric-graded task success, analytical quality and presentation quality
+15%
+✓
+GDPval-AA v2
+220 tasks
+1
+Agentic task completion with file outputs
+Pairwise comparison (Elo) by judge panel, anchored to human experts at 1000, frozen & scaled
+10%
+✓
+AutomationBench-AA
+657 tasks
+1
+SaaS workflow automation with REST API tools
+Objective completion, with zero credit for tasks that trigger a guardrail violation
+5%
+✓
+Coding (20%)
+Terminal-Bench v4.0
+66
+3
+Terminal-based task execution
+Test suite pass/fail, pass@1
+10%
+✓
+SciCode
+288 subproblems (test set)
+3
+Python Code (must pass all unit tests)
+Code execution, pass@1, sub-problem scoring with scientist-annotated background prompting
+10%
+✗
+General (30%)
+AA-Omniscience
+6,000
+1
+Open Answer
+Accuracy (10%) and 1 - Hallucination Rate (5%) as separate components
+15%
+✗
+GDP.pdf
+100 tasks across 10 domains
+5
+Free-form answer grounded in a long PDF
+All-pass headline and task-macro Mean Pass
+10%
+✗
+AA-LCR v1.1
+100
+3
+Open Answer
+Equality Checker LLM, pass@1
+5%
+✗
+Scientific Reasoning (20%)
+HLE (Humanity's Last Exam)
+2,158
+1
+Open Answer
+Equality Checker LLM, pass@1
+10%
+✗
+CritPt
+70
+5
+Python Functions, Symbolic Expressions, Numerical Answers
+Official grading server, pass@1
+10%
+✗
+Additional Evaluations
+Beyond the Intelligence Index suite, we run a range of additional evaluations covering multilingual, visual, mathematical and other capabilities. These are reported separately and are not included in the Intelligence Index score.
+Artificial Analysis Multilingual Index:
+Represents the multilingual ability of models. This is based on the Global-MMLU-Lite evaluation across supported languages. We support the following languages:
+🇬🇧
+English
+🇨🇳
+Chinese
+🇮🇳
+Hindi
+🇪🇸
+Spanish
+🇫🇷
+French
+🇸🇦
+Arabic
+🇧🇩
+Bangla
+🇵🇹
+Portuguese
+🇮🇩
+Indonesian
+🇯🇵
+Japanese
+🇰🇪
+Swahili
+🇩🇪
+German
+🇰🇷
+Korean
+🇮🇹
+Italian
+🇳🇬
+Yoruba
+🇲🇲
+Burmese
+Category
+Evaluation
+Questions
+Repeats
+Response Type
+Scoring
+Tool
+Usage
+Agents
+𝜏³-Banking
+97
+5
+Dual control agent-user simulation with knowledge retrieval
+Backend database state evaluation, pass@1
+✓
+Harvey LAB-AA
+120 tasks
+1
+Agentic legal deliverable production with file outputs
+Rubric-based criterion grading by a single LLM judge, pass@1
+✓
+APEX-Agents-AA
+452 tasks
+3
+Agentic professional-service task completion
+Rubric-based local file grading, pass@1
+✓
+AA-AnalystAgent
+80 across 14 domains
+5
+Agentic Python code execution with free-form final answer
+LLM judge binary correctness with numeric pre-check override, pass^5
+✓
+ITBench-AA
+59 scenarios (public + private)
+3
+Structured JSON root-cause diagnosis from offline Kubernetes incident snapshot
+LLM-normalized entity matching, average precision at full recall
+✓
+EnterpriseOps-Gym-AA
+1,117 oracle tasks (8 domains)
+3
+Multi-turn MCP tool use against resettable enterprise gym servers
+Outcome-based SQL state verifiers, strict pass@1 success rate
+✓
+General
+IFBench
+294
+5
+Open Answer
+Extraction and rule-driven assessment, pass@1
+✗
+MLCR-AA
+60 questions (expert + compound tiers)
+3
+Open Answer
+Conciseness gate + LLM judge panel (3-judge majority vote on completeness & accuracy), pass@1
+✗
+Other
+Global-MMLU-Lite
+~6,000 (~400 per language)
+1
+Multiple Choice (4 options)
+Regex extraction, pass@1
+✗
+MMMU Pro
+1,730
+1
+Multiple Choice (10 options)
+Regex extraction, pass@1
+✗
+Intelligence Evaluation Principles
+Our evaluation approach is guided by four core principles:
+Standardized:
+All models are evaluated under identical conditions with consistent prompting strategies, temperature settings, and evaluation criteria.
+Unbiased:
+We employ evaluation techniques that avoid unfairly penalizing models for answers that correctly follow the instructions in our prompts. This includes using clear prompts, robust answer extraction methods, and flexible answer validation to accommodate valid variations in model outputs.
+Zero-Shot Instruction Prompted:
+We evaluate using clear instructions without examples or demonstrations, testing models' ability to follow directions without few-shot learning. This approach aligns with modern instruction-tuned and chat style models.
+Transparent:
+We disclose our methodology, including prompt templates, evaluation criteria, and limitations.
+General Testing Parameters
+We test all evals with the following settings:
+Temperature:
+0 for non-reasoning models, 0.6 for reasoning models (unless another temperature is recommended by the model lab)
+Maximum output tokens:
+Non-reasoning models: 16,384 tokens (adjusted downward where models have a smaller context window, or lower maximum output tokens cap)
+Reasoning models: Maximum output tokens allowed, as disclosed by model creators (custom setting for each reasoning model)
+Error handling:
+Automatic retry on API failures (up to 30 attempts)
+All questions that failed all 30 retries are manually reviewed. Results where persistent API failures have caused issues are not published. Errors where all available APIs for proprietary models block a certain question may lower scores (this effect is not material)
+Scoring methodology:
+We generally use pass@1 scoring across our evaluations, where a model must produce the correct answer on its first attempt. For evaluations with multiple repeats, pass@1 is calculated by aggregating results across all repeats. This is calculated as:
+where p
+i
+= 1 if attempt i is correct, 0 otherwise, and k is the total number of test instances across all repeats.
+We maintain internal copies of all evaluation datasets. The sources of our selected datasets are listed below.
+For the Artificial Analysis Intelligence Index evaluations, we use the token counts reported by each model's API provider where available, to accurately report the cost of running the Intelligence Index. In the rare cases where provider token counts are unavailable, we use a canonical-tokenizer fallback. This contrasts with the approach in performance benchmarking, where we use client-side token counts from the
+o200k_base
+tokenizer to standardize token counts for the same text across models. When reporting cache hit rates and cost, we combine these token counts with live measurements of the model's typical cache hit rate, rather than relying on the one-off measurement when the evaluation was run.
+We use
+e2b
+as our primary sandbox provider for agentic benchmarks.
+Artificial Analysis Intelligence Index Evaluations
+Evaluations that make up the current Artificial Analysis Intelligence Index, grouped by capability.
+Agents
+AA-Briefcase
+Status:
+Included in
+Artificial Analysis Intelligence Index v4.3
+at 15% weighting.
+Description:
+AA-Briefcase is a new benchmark for testing models on realistic knowledge work tasks in complex projects built by industry experts. Models are evaluated on multi-week knowledge work projects, each with many linked tasks and thousands of input source files. AA-Briefcase combines rubric and pairwise grading to evaluate verifiable task success, analytical quality, and presentation quality, giving a holistic view of overall agentic capability in knowledge work.
+Example dataset:
+https://huggingface.co/datasets/ArtificialAnalysis/AA-Briefcase-Lite
+Agent harness:
+https://github.com/ArtificialAnalysis/Stirrup
+Implementation:
+Each AA-Briefcase scenario is a realistic multi-week business problem, organized as a multi-week workflow that the agent works through in sequence, with 2-5 tasks per week. Although tasks within a scenario share files and context across weeks, models currently complete each task in an independent run, without carrying over their own prior submissions. The agent receives the task description and accessible source files, then produces final deliverable files without live interaction or iterative feedback during execution.
+Scenario source pools include shared files and week-specific files, mixing real, augmented, and synthetic materials. Source files are designed to include realistic professional artifacts such as Slack exports, spreadsheets, PDFs, interview transcripts, market research, standards documents, app-store pages, board materials, emails, and other business records. Later-week tasks may receive standardized base-case files (the same reference work products given to every model), so each task stays independently runnable while preserving continuity across the week.
+Model submissions are run with
+Stirrup
+in a week-scoped E2B sandbox.
+Turns:
+Agents run for up to 500 turns per task.
+Tools:
+The agent is given a single code-execution tool that runs shell commands and code inside the sandbox, plus the finish tools below (and a view-image tool when the model supports vision). The sandbox has no internet access, so the agent can only use the provided source files.
+Sandbox:
+Each scenario/week sandbox is built from that week's source files, with standard Python packages and system tools for document processing and scientific computing pre-installed.
+Finish tools:
+A finish tool, which the agent calls to submit a summary and the absolute paths of its deliverables (validated to be actual files, not directories or missing paths), and an abandon_task_finish (give-up) tool, which it calls with a reason only when it concludes the task is genuinely impossible.
+Prompts:
+The prompts used across generation and grading:
+Agent system prompt:
+You are an AI agent working on a specific task within a multi-week simulated workplace scenario. Each task is part of a longer workflow; your job is to complete the current task using the tools provided in up to 500 steps, then submit your deliverables.
+
+When you are done you must call the `finish` tool as your final step, passing a brief summary of what you accomplished and a list of absolute paths for every deliverable file.
+
+If you have genuinely concluded that the task cannot be completed — for example because required inputs are missing, a hard dependency is unavailable, or the request itself is incoherent — call the `abandon_task_finish` tool with a brief reason instead. Do not use it to escape difficulty.
+
+You cannot interact with the user during the task. Record any clarifying assumptions you made in your finish summary.
+Agent task prompt:
+<execution_context>
+## Sandbox
+
+You operate inside an isolated Linux container through the `code_exec` tool, which runs shell commands and lets you read, create, and edit files. Commands run as the unprivileged user `user` (UID 1000), starting from `/home/user`. Passwordless `sudo` exists but is rarely needed, since your home directory is fully writable.
+
+Every command runs independently: no working directory, environment variable, or other shell state carries over from one call to the next. Prefer absolute paths for both files and commands, and do not navigate with `cd` across calls — a `cd` in one command is gone by the next, so relying on it leaves you silently operating in the wrong place. When a step genuinely needs a different directory, chain it into the same command (e.g. `cd /home/user/work && python build.py`).
+
+## No network
+
+The container has no outbound connectivity, and there is no proxy, allowlist, or flag that can turn it on — treat the environment as permanently offline. Anything that reaches for the internet will fail, including package installs (`pip`, `npm`, `apt`), remote `git` operations, and any HTTP/HTTPS client request from any language.
+
+Identify a network block by its error signature rather than by guessing: failed name resolution (`Could not resolve host`, `Temporary failure in name resolution`), an unreachable route (`Network is unreachable`, a refused or timed-out connection to a public host), or a stalled TLS handshake. When you see these, the failure is structural — do not retry the same call and do not hunt for a workaround (mirrors, alternate hosts, cached copies). Re-plan using only what is already installed and what ships inside your workspace.
+
+## Filesystem
+
+- Writable: everything under `/home/user/` plus `/tmp`. Use these for deliverables, intermediate files, and caches.
+- Read-only inputs:
+  - `/home/user/shared/` — reference material shared across the whole scenario
+  - `/home/user/week/` — documents specific to this week's tasks
+  Copy these into a working folder before transforming them rather than editing them in place.
+
+## Runtime
+
+A broad scientific-computing and document-processing stack is already installed, so confirm what is present before assuming a gap:
+- Python 3.13 with the usual data stack (numpy, pandas, polars, scipy), plotting (matplotlib, plotly), the scikit-learn ML family, and document tooling (python-docx, python-pptx, openpyxl, PyMuPDF, pdfplumber, reportlab, weasyprint, Pillow, opencv), plus Playwright.
+- System tools include LibreOffice, Pandoc, Tesseract, FFmpeg, ImageMagick, Ghostscript, TeX Live, OpenJDK, Chromium, jq, and git.
+- Check availability with `pip show <pkg>` or `which <tool>` instead of installing — installs fail offline, but almost anything you would reach for is already here.
+- matplotlib runs headless (`MPLBACKEND=Agg`): write figures to files; never call `plt.show()`.
+- Commands are terminated after 20 minutes. Keep them bounded, persist intermediate results to disk, and split long jobs into smaller steps.
+
+## Submitting your work
+
+Finish by calling the `finish` tool — anything not submitted through it is not graded. Your call must include:
+1. A short summary of what you accomplished.
+2. Absolute paths to every deliverable (files only, not folders).
+
+Save each deliverable directly in `/home/user` under the exact filename the task asks for — not in a subdirectory.
+
+Save deliverables as ordinary, visible files. Do not leave the only copy of your work in a dot-prefixed file or directory (e.g. `.submission.txt`, `.outputs/report.md`), including inside an archive; a `.zip` is fine when the task explicitly asks for one. Assume your files will be opened and edited by others after submission, so write them to last.
+
+If the task genuinely cannot be completed, call the `abandon_task_finish` tool with a brief reason instead. Use it only when you have concluded the work is impossible — not to escape a difficult task.
+</execution_context>
+
+<scenario_overview>
+{scenario_overview}
+</scenario_overview>
+
+<week_overview>
+{week_overview}
+</week_overview>
+
+<task_description>
+{task}
+</task_description>
+
+<deliverables>
+Submit these files, by exact name, saved directly in `/home/user`:
+{expected_output_filenames}
+</deliverables>
+
+Please begin working on the task now.
+Binary rubric grading prompt:
+You are grading a submitted deliverable against one binary rubric check.
+
+The user message contains:
+- the task instructions,
+- the rubric item,
+- the submitted artifact content.
+
+Submitted artifacts may appear as text blocks, image blocks, or parser notes for unsupported content.
+
+Use only evidence from the submitted artifact content. Do not infer facts from filenames, task instructions, or rubric text unless the submitted artifact content supports them.
+
+Beyond the task instructions and rubric in the user message, you only ever receive the submitted artifact itself, never the external source files it cites. Do not fail an item merely because you cannot open or cross-check a cited source — judge citations on whether they are present, specific, and well-formed in the submission, not on whether the source's contents can be independently confirmed.
+
+Return a strict binary judgment:
+- passed=true only if the pass criteria are satisfied.
+- passed=false if any required element is missing, materially wrong, unsupported, or not evidenced.
+
+Write concise reasoning that cites submitted artifact evidence or the absence of evidence.
+Do not award partial credit.
+Each task is graded against two styles of checks.
+Rubric checks
+are binary pass/fail criteria scored against a single submission.
+Pairwise checks
+compare two submissions for the same task and return a preferred submission or tie. There are two kinds:
+Analytical Quality
+(which output has deeper, better-structured analysis) and
+Presentation
+(which output is more professionally presented).
+Rubric grading and the analytical-quality and presentation pairwise comparisons use a panel of three judges (Claude Opus 4.8 at max effort, GPT-5.5 at high reasoning, and Gemini 3.1 Pro Preview at high reasoning) rather than a single judge, reducing bias toward submissions from the same model or model family. Each rubric verdict and LLM-judged pairwise comparison is decided by one judge sampled from the panel, with sampling balanced across checks and matches. To keep results comparable, a given rubric check is always graded by the same judge. AA-Briefcase Elo is the headline metric of this evaluation: it aggregates analytical quality Elo, presentation Elo, and rubric pass rate, with rubric performance converted into Elo via synthetic head-to-head matches using a maximum-likelihood Elo aggregation.
+Intelligence Index Integration:
+For inclusion in the Intelligence Index, the combined AA-Briefcase Elo is frozen at the time of a model's addition and normalized as clamp((Elo - 500) / 2000), the same mapping applied to GDPval-AA v2. The Elo scale is anchored to GPT-5.5 (medium) at 1000, while the fixed normalization range preserves stable Intelligence Index contributions over time. Artificial Analysis may update the reference parameters as models progress against the evaluation, to maintain meaningful differentiation in the Intelligence Index.
+GDPval-AA v2
+Description:
+GDPval-AA v2 is Artificial Analysis' evaluation framework for OpenAI's GDPval dataset. It assesses language models' capabilities on economically valuable tasks, covering 44 occupations across key sectors contributing to GDP in the United States.
+Changes from GDPval-AA v1:
+GDPval-AA v2 is a minor upgrade to the original GDPval-AA methodology used in Intelligence Index v4.0. It incorporates:
+An upgraded sandbox with new and expanded dependencies, plus fixes to minor environment issues and to prompt clarity and consistency
+Elo scores re-baselined to human expert performance at 1000
+A panel of three frontier LLM judges from leading labs, replacing a single judge
+Turn limits expanded to 250 turns to allow for even longer-horizon agent trajectories, and the ability for models to exit early where they don't believe they can complete the task
+Paper:
+https://arxiv.org/abs/2510.04374
+Agent harness:
+https://github.com/ArtificialAnalysis/Stirrup
+Dataset:
+We base our evaluation on the public gold OpenAI GDPval dataset from
+https://huggingface.co/datasets/openai/gdpval
+Some Microsoft Office files in the dataset had missing metadata parts or malformed relationship entries that prevented LibreOffice from opening them. We added the minimal missing metadata and fixed the malformed entries to ensure compatibility. Document body, slide content, and layout were not changed.
+Implementation:
+This evaluation comprises two stages:
+Task Submission
+– Models are given a task and required to produce one or more files.
+Pairwise Grading
+– A judge sampled from a panel of three frontier LLM judges blindly ranks two submissions for the same task, each created by a different model.
+Elo Calculation:
+After collecting pairwise rankings, we fit them to a Bradley-Terry model via maximum likelihood estimation and compute confidence intervals using the sandwich estimator to establish our final Elo metric. The Elo scale is anchored to human expert deliverables at 1000.
+Intelligence Index Integration:
+For inclusion in the Intelligence Index, GDPval-AA v2 Elo scores are frozen at the time of a model's addition and normalized as clamp((Elo - 500) / 2000) for inclusion in the Intelligence Index. The v2 Elo scale is anchored to human expert deliverables at 1000, while the fixed normalization range preserves stable Intelligence Index contributions over time. Artificial Analysis may update the reference parameters as models progress against the evaluation, to maintain meaningful differentiation in the Intelligence Index.
+Task Submission Details:
+All models are run using our open source agentic harness,
+Stirrup
+. Within the harness, models are given a code execution environment (E2B sandbox), and the following six tools to call at their discretion:
+Web Fetch
+– Fetches and extracts main content from a web page as markdown.
+Web Search
+– Searches the web using Brave Search API; returns the top 5 results with title, URL, and description.
+View Image
+– Reads and displays image files (.png, .jpg, .jpeg) from the sandbox as native image tokens for LLM consumption. This tool is only exposed to models with vision support. Images are downscaled to a maximum of 1 megapixel before being sent to the model.
+Code Exec
+– Executes bash commands in the sandbox via the
+code_exec
+tool; returns exit code, stdout, and stderr.
+Finish
+– Signals task completion and specifies which files to submit.
+Abandon Task
+– Signals that the model does not believe it can complete the task, with a brief reason, instead of submitting files.
+For each task, a new E2B sandbox is initialized with the reference files associated with the given task and pre-installed with a range of relevant packages for the task set. We based the package collection on the disclosed environment from the original GDPval paper, expanded in v2 with additional dependencies (including a full TeX Live LaTeX toolchain and build tools).
+View all 419 Python packages
+Copy
+CairoSVG==2.9.0
+Deprecated==1.3.1
+Faker==40.13.0
+Hypercorn==0.18.0
+ImageIO==2.37.3
+Jinja2==3.1.6
+MarkupSafe==3.0.3
+PyJWT==2.12.1
+PyMuPDF==1.27.2.2
+PyYAML==6.0.3
+Pygments==2.20.0
+RapidFuzz==3.14.5
+Send2Trash==2.1.0
+SpeechRecognition==3.16.0
+affine==2.4.0
+aiofiles==24.1.0
+aiohappyeyeballs==2.6.1
+aiohttp==3.13.5
+aiosignal==1.4.0
+annotated-doc==0.0.4
+annotated-types==0.7.0
+anyio==4.13.0
+anytree==2.13.0
+argon2-cffi-bindings==25.1.0
+argon2-cffi==25.1.0
+arrow==1.4.0
+arviz==0.23.4
+asn1crypto==1.5.1
+aspose-words==26.3.0
+asttokens==3.0.1
+async-lru==2.3.0
+attrs==26.1.0
+audioop-lts==0.2.2
+audioread==3.1.0
+av==17.0.0
+azure-ai-documentintelligence==1.0.2
+azure-core==1.39.0
+azure-identity==1.25.3
+babel==2.18.0
+beautifulsoup4==4.14.3
+biopython==1.87
+bleach==4.1.0
+blis==1.3.3
+blosc2==4.1.2
+bokeh==3.9.0
+boto3==1.42.87
+botocore==1.42.87
+branca==0.8.2
+brotli==1.2.0
+bytecode==0.17.0
+cachetools==6.2.6
+cadquery-ocp==7.8.1.1.post1
+cadquery==2.7.0
+cadquery_vtk==9.3.1
+cairocffi==1.7.1
+camelot-py==1.0.9
+casadi==3.7.2
+catalogue==2.0.10
+catboost==1.2.10
+cattrs==26.1.0
+certifi==2026.2.25
+cffi==2.0.0
+chardet==7.4.1
+charset-normalizer==3.4.7
+click-plugins==1.1.1.2
+click==8.1.8
+cligj==0.7.2
+cloudpathlib==0.23.0
+cloudpickle==3.1.2
+cmudict==1.1.3
+cobble==0.1.4
+comm==0.2.3
+confection==1.3.3
+cons==0.4.7
+contextily==1.7.0
+contourpy==1.3.3
+countryinfo==1.0.1
+coverage==7.13.5
+cryptography==46.0.7
+cssselect2==0.9.0
+cycler==0.12.1
+cymem==2.0.13
+databricks-sql-connector==4.2.5
+datadog==0.52.1
+ddtrace==4.6.7
+debugpy==1.8.20
+decorator==5.2.1
+defusedxml==0.7.1
+distro==1.9.0
+dnspython==2.8.0
+docx2txt==0.9
+duckdb==1.5.2
+einops==0.8.2
+email-validator==2.3.0
+envier==0.6.1
+et_xmlfile==2.0.0
+etuples==0.3.10
+exchange_calendars==4.13.2
+executing==2.2.1
+ezdxf==1.4.3
+fastapi-cli==0.0.24
+fastapi-cloud-cli==0.16.1
+fastapi==0.135.3
+fastar==0.10.0
+fastjsonschema==2.21.2
+ffmpeg-python==0.2.0
+ffmpy==1.0.0
+filelock==3.25.2
+fiona==1.10.1
+flatbuffers==25.12.19
+folium==0.20.0
+fonttools==4.62.1
+fpdf2==2.8.7
+fqdn==1.5.1
+freetype-py==2.5.1
+frozenlist==1.8.0
+fsspec==2026.3.0
+future==1.0.0
+gTTS==2.5.4
+gensim==4.4.0
+geographiclib==2.1
+geopandas==1.1.3
+geopy==2.4.1
+gradio==6.11.0
+gradio_client==2.4.0
+graphviz==0.21
+greenlet==3.5.1
+groovy==0.1.2
+h11==0.16.0
+h2==4.3.0
+h5netcdf==1.8.1
+h5py==3.16.0
+hf-gradio==0.3.0
+hf-xet==1.4.3
+hpack==4.1.0
+httpcore==1.0.9
+httptools==0.7.1
+httpx==0.28.1
+huggingface_hub==1.10.1
+hyperframe==6.1.0
+idna==3.11
+imageio-ffmpeg==0.6.0
+imbalanced-learn==0.14.1
+importlib_metadata==8.7.1
+importlib_resources==6.5.2
+iniconfig==2.3.0
+ipykernel==7.2.0
+ipython==9.12.0
+ipython_pygments_lexers==1.1.1
+isodate==0.7.2
+isoduration==20.11.0
+itsdangerous==2.2.0
+jedi==0.19.2
+jmespath==1.1.0
+joblib==1.5.3
+json5==0.14.0
+jsonpointer==3.1.1
+jsonschema-specifications==2025.9.1
+jsonschema==4.26.0
+jupyter-events==0.12.0
+jupyter-lsp==2.3.1
+jupyter_client==8.8.0
+jupyter_core==5.9.1
+jupyter_server==2.17.0
+jupyter_server_terminals==0.5.4
+jupyterlab==4.5.6
+jupyterlab_pygments==0.3.0
+jupyterlab_server==2.28.0
+kerykeion==5.12.7
+kiwisolver==1.5.0
+korean-lunar-calendar==0.3.1
+lark==1.3.1
+lazy-loader==0.5
+librosa==0.11.0
+lightgbm==4.6.0
+llvmlite==0.47.0
+logical-unification==0.4.7
+loguru==0.7.3
+lxml==6.0.3
+lz4==4.4.5
+magika==0.6.3
+mammoth==1.11.0
+markdown-it-py==4.0.0
+markdownify==1.2.2
+markitdown==0.1.5
+matplotlib-inline==0.2.1
+matplotlib-venn==1.1.2
+matplotlib==3.10.8
+mdurl==0.1.2
+mercantile==1.2.1
+miniKanren==1.0.5
+mistune==3.2.0
+mizani==0.14.4
+mne==1.12.0
+more-itertools==11.0.2
+moviepy==2.2.1
+mpmath==1.3.0
+msal-extensions==1.3.1
+msal==1.36.0
+msgpack==1.1.2
+multidict==6.7.1
+multimethod==1.12
+multipledispatch==1.0.0
+murmurhash==1.0.15
+mutagen==1.47.0
+narwhals==2.19.0
+nashpy==0.0.43
+nbclient==0.10.4
+nbconvert==7.17.1
+nbformat==5.10.4
+ndindex==1.10.1
+nest-asyncio==1.6.0
+networkx==3.6.1
+nlopt==2.10.0
+nltk==3.9.4
+notebook==7.5.5
+notebook_shim==0.2.4
+numba==0.65.0
+numexpr==2.14.1
+numpy-financial==1.0.0
+numpy==2.4.4
+nvidia-nccl-cu12==2.29.7
+oauthlib==3.3.1
+odfpy==1.4.1
+olefile==0.47
+onnxruntime==1.24.4
+opencv-python-headless==4.13.0.92
+opencv-python==4.13.0.92
+openpyxl==3.1.5
+opentelemetry-api==1.41.0
+orjson==3.11.8
+packaging==26.0
+pandas==2.3.3
+pandocfilters==1.5.1
+parso==0.8.6
+path==17.1.1
+patsy==1.0.2
+pdf2image==1.17.0
+pdfminer.six==20251230
+pdfplumber==0.11.9
+pdfrw==0.4
+pedalboard==0.9.22
+pexpect==4.9.0
+pillow==11.3.0
+platformdirs==4.9.6
+playwright==1.59.0
+plotly==6.7.0
+plotnine==0.15.3
+pluggy==1.6.0
+polars-runtime-32==1.39.3
+polars==1.39.3
+pooch==1.9.0
+preshed==3.0.13
+priority==2.0.0
+proglog==0.1.12
+prometheus_client==0.25.0
+prompt_toolkit==3.0.52
+pronouncing==0.2.0
+propcache==0.4.1
+protobuf==7.34.1
+psutil==7.2.2
+ptyprocess==0.7.0
+pure_eval==0.2.3
+py-cpuinfo==9.0.0
+pyOpenSSL==26.0.0
+pyarrow==23.0.1
+pybreaker==1.4.1
+pycairo==1.29.0
+pycountry==26.2.16
+pycparser==3.0
+pydantic-extra-types==2.11.1
+pydantic-settings==2.13.1
+pydantic==2.12.5
+pydantic_core==2.41.5
+pydot==4.0.1
+pydub==0.25.1
+pydyf==0.12.1
+pyee==13.0.1
+pyloudnorm==0.2.0
+pyluach==2.3.0
+pymc==5.28.4
+pyogrio==0.12.1
+pypandoc==1.17
+pyparsing==3.3.2
+pypdf==5.9.0
+pypdfium2==5.7.0
+pyphen==0.17.2
+pyproj==3.7.2
+pyswisseph==2.10.3.2
+pytensor==2.38.2
+pytesseract==0.3.13
+pytest-asyncio==1.3.0
+pytest-cov==7.1.0
+pytest-json-report==1.5.0
+pytest-metadata==3.1.1
+pytest==9.0.3
+python-dateutil==2.9.0.post0
+python-docx==1.2.0
+python-dotenv==1.2.2
+python-json-logger==4.1.0
+python-multipart==0.0.24
+python-pptx==1.0.2
+pyttsx3==2.99
+pytz==2026.1.post1
+pyxlsb==1.0.10
+pyzbar==0.1.9
+pyzmq==27.1.0
+qrcode==8.2
+rarfile==4.2
+rasterio==1.5.0
+rdflib==7.6.0
+rdkit==2026.3.1
+referencing==0.37.0
+regex==2026.4.4
+reportlab==4.4.10
+requests-cache==1.3.1
+requests==2.33.1
+rfc3339-validator==0.1.4
+rfc3986-validator==0.1.1
+rfc3987-syntax==1.1.0
+rich-toolkit==0.19.7
+rich==14.3.3
+rignore==0.7.6
+rlPyCairo==0.4.0
+rpds-py==0.30.0
+runtype==0.5.3
+s3transfer==0.16.0
+safehttpx==0.1.7
+scikit-image==0.26.0
+scikit-learn==1.8.0
+scipy==1.17.1
+scour==0.38.2
+seaborn==0.13.2
+semantic-version==2.10.0
+sentry-sdk==2.57.0
+setuptools==80.10.2
+shap==0.51.0
+shapely==2.1.2
+shellingham==1.5.4
+simple-ascii-tables==1.0.1
+six==1.17.0
+sklearn-compat==0.1.5
+slicer==0.0.8
+smart_open==7.5.1
+snowflake-connector-python==4.4.0
+sortedcontainers==2.4.0
+soundfile==0.13.1
+soupsieve==2.8.3
+soxr==1.0.0
+spacy-legacy==3.0.12
+spacy-loggers==1.0.5
+spacy==3.8.14
+srsly==2.5.3
+srt==3.5.3
+stack-data==0.6.3
+standard-aifc==3.13.0
+standard-chunk==3.13.0
+standard-sunau==3.13.0
+starlette==1.0.0
+statsmodels==0.14.6
+svglib==1.6.0
+svgwrite==1.4.3
+sympy==1.14.0
+tables==3.11.1
+tabula-py==2.10.0
+tabulate==0.10.0
+terminado==0.18.1
+textblob==0.20.0
+thinc==8.3.13
+threadpoolctl==3.6.0
+thrift==0.20.0
+tifffile==2026.3.3
+tinycss2==1.5.1
+tinyhtml5==2.1.0
+tomlkit==0.13.3
+toolz==1.1.0
+tornado==6.5.5
+tqdm==4.67.3
+traitlets==5.14.3
+trame-client==3.11.4
+trame-common==1.1.3
+trame-components==2.5.0
+trame-server==3.10.0
+trame-vtk==2.11.6
+trame-vuetify==3.2.1
+trame==3.12.0
+trimesh==4.11.5
+typer==0.23.1
+typing-inspection==0.4.2
+typing_extensions==4.15.0
+tzdata==2026.1
+uri-template==1.3.0
+url-normalize==2.2.1
+urllib3==2.6.3
+uvicorn==0.44.0
+uvloop==0.22.1
+wasabi==1.1.3
+watchfiles==1.1.1
+wcwidth==0.6.0
+weasel==1.0.0
+weasyprint==68.1
+webcolors==25.10.0
+webencodings==0.5.1
+websocket-client==1.9.0
+websockets==16.0
+wordcloud==1.9.6
+wrapt==2.1.2
+wslink==2.5.6
+wsproto==1.3.2
+xarray-einstats==0.10.0
+xarray==2026.2.0
+xgboost==3.2.0
+xlrd==2.0.2
+xlsxwriter==3.2.9
+xyzservices==2026.3.0
+yarl==1.23.0
+youtube-transcript-api==1.0.3
+zipp==3.23.0
+zopfli==0.4.1
+View all 762 system packages
+Copy
+adduser=3.152
+adwaita-icon-theme=48.1-1
+apt=3.0.3
+at-spi2-common=2.56.2-1+deb13u1
+base-files=13.8+deb13u5
+base-passwd=3.6.7
+bash=5.2.37-2+b9
+biber=2.20-2
+bsdutils=1:2.41-5
+ca-certificates-java=20240118
+ca-certificates=20250419
+chromium-common=148.0.7778.178-1~deb13u1
+chromium=148.0.7778.178-1~deb13u1
+coinor-libcbc3.1=2.10.12+ds-1
+coinor-libcgl1=0.60.9+ds-1
+coinor-libclp1=1.17.10+ds-1
+coinor-libcoinmp0=1.8.4+dfsg-2
+coinor-libcoinutils3v5=2.11.11+ds-5
+coinor-libosi1v5=0.108.10+ds-2
+coreutils=9.7-3
+curl=8.14.1-2+deb13u3
+dash=0.5.12-12
+dbus-bin=1.16.2-2
+dbus-daemon=1.16.2-2
+dbus-session-bus-common=1.16.2-2
+dbus-system-bus-common=1.16.2-2
+dbus-user-session=1.16.2-2
+dbus=1.16.2-2
+dconf-gsettings-backend=0.40.0-5
+dconf-service=0.40.0-5
+debconf=1.5.91
+debian-archive-keyring=2025.1
+debianutils=5.23.2
+diffutils=1:3.10-4
+dirmngr=2.4.7-21+deb13u1+b3
+dpkg=1.22.22
+ffmpeg=7:7.1.4-0+deb13u1
+findutils=4.10.0-3
+fontconfig-config=2.15.0-2.3
+fontconfig=2.15.0-2.3
+fonts-crosextra-caladea=20200211-2
+fonts-crosextra-carlito=20230309-2
+fonts-dejavu-core=2.37-8
+fonts-dejavu-mono=2.37-8
+fonts-firacode=6.2-2
+fonts-gfs-baskerville=1.1-6
+fonts-gfs-porson=1.1-7
+fonts-liberation=1:2.1.5-3
+fonts-lmodern=2.005-1
+fonts-noto-cjk=1:20240730+repack1-1
+fonts-noto-color-emoji=2.051-0+deb13u1
+fonts-noto-core=20201225-2
+fonts-noto-extra=20201225-2
+fonts-noto-mono=20201225-2
+fonts-opensymbol=4:102.12+LibO25.2.3-2+deb13u4
+fonts-urw-base35=20200910-8
+gcc-14-base=14.2.0-19
+gdal-bin=3.10.3+dfsg-1
+gdal-data=3.10.3+dfsg-1
+gdal-plugins=3.10.3+dfsg-1
+ghostscript=10.05.1~dfsg-1+deb13u1
+git-man=1:2.47.3-0+deb13u1
+git=1:2.47.3-0+deb13u1
+gnupg-l10n=2.4.7-21+deb13u1
+gnupg=2.4.7-21+deb13u1
+gpg-agent=2.4.7-21+deb13u1+b3
+gpg=2.4.7-21+deb13u1+b3
+gpgconf=2.4.7-21+deb13u1+b3
+gpgsm=2.4.7-21+deb13u1+b3
+graphviz=2.42.4-3
+grep=3.11-4
+gtk-update-icon-cache=4.18.6+ds-2
+gzip=1.13-1
+hicolor-icon-theme=0.18-2
+hostname=3.25
+imagemagick-7-common=8:7.1.1.43+dfsg1-1+deb13u9
+imagemagick-7.q16=8:7.1.1.43+dfsg1-1+deb13u9
+imagemagick=8:7.1.1.43+dfsg1-1+deb13u9
+init-system-helpers=1.69~deb13u1
+iso-codes=4.18.0-1
+java-common=0.76
+jq=1.7.1-6+deb13u2
+latexmk=1:4.86~ds-1
+libabsl20240722=20240722.0-4
+libabw-0.1-1=0.1.3-1+b2
+libacl1=2.3.2-2+b1
+libaec0=1.1.3-1+b1
+libalgorithm-c3-perl=0.11-2
+libann0=1.1.2+doc-9+b1
+libaom3=3.12.1-1
+libapache-pom-java=33-2
+libapparmor1=4.1.0-1
+libapt-pkg7.0=3.0.3
+libarchive13t64=3.7.4-4+deb13u1
+libargon2-1=0~20190702+dfsg-4+b2
+libarmadillo14=1:14.2.3+dfsg-1+b1
+libarpack2t64=3.9.1-6
+libasound2-data=1.2.14-1
+libasound2t64=1.2.14-1
+libass9=1:0.17.3-1+b1
+libassuan9=3.0.2-2
+libasyncns0=0.8-6+b5
+libatk-bridge2.0-0t64=2.56.2-1+deb13u1
+libatk1.0-0t64=2.56.2-1+deb13u1
+libatomic1=14.2.0-19
+libatspi2.0-0t64=2.56.2-1+deb13u1
+libattr1=1:2.5.2-3
+libaudit-common=1:4.0.2-2
+libaudit1=1:4.0.2-2+b2
+libautovivification-perl=0.18-2+b4
+libavahi-client3=0.8-16
+libavahi-common-data=0.8-16
+libavahi-common3=0.8-16
+libavc1394-0=0.5.4-5+b2
+libavcodec61=7:7.1.4-0+deb13u1
+libavdevice61=7:7.1.4-0+deb13u1
+libavfilter10=7:7.1.4-0+deb13u1
+libavformat61=7:7.1.4-0+deb13u1
+libavif16=1.2.1-1.2
+libavutil59=7:7.1.4-0+deb13u1
+libb-hooks-endofscope-perl=0.28-2
+libb-hooks-op-check-perl=0.22-3+b2
+libblas3=3.12.1-6
+libblkid1=2.41-5
+libblosc1=1.21.5+ds-1+b2
+libbluray2=1:1.3.4-1+b2
+libboost-iostreams1.83.0=1.83.0-4.2
+libboost-locale1.83.0=1.83.0-4.2
+libboost-thread1.83.0=1.83.0-4.2
+libbox2d2=2.4.1-3+b3
+libbrotli1=1.1.0-2+b7
+libbs2b0=3.1.0+dfsg-8+b1
+libbsd0=0.12.2-2
+libbtparse2=0.91-1
+libbusiness-isbn-data-perl=20250418.001-1
+libbusiness-isbn-perl=3.012-1
+libbusiness-ismn-perl=1.205-1
+libbusiness-issn-perl=1.008-1
+libbz2-1.0=1.0.8-6
+libc-bin=2.41-12+deb13u3
+libc-l10n=2.41-12+deb13u3
+libc6=2.41-12+deb13u3
+libcaca0=0.99.beta20-5
+libcairo-gobject2=1.18.4-1+b1
+libcairo2=1.18.4-1+b1
+libcap-ng0=0.8.5-4+b1
+libcap2-bin=1:2.75-10+deb13u1+b1
+libcap2=1:2.75-10+deb13u1+b1
+libcdio-cdda2t64=10.2+2.0.2-1+b1
+libcdio-paranoia2t64=10.2+2.0.2-1+b1
+libcdio19t64=2.2.0-4.1~deb13u1
+libcdr-0.1-1=0.1.7-1+b3
+libcdt5=2.42.4-3
+libcfitsio10t64=4.6.2-2
+libcgraph6=2.42.4-3
+libchromaprint1=1.5.1-7
+libcjson1=1.7.18-3.1+deb13u1
+libclass-accessor-perl=0.51-2
+libclass-c3-perl=0.35-2
+libclass-data-inheritable-perl=0.10-1
+libclass-inspector-perl=1.36-3
+libclass-method-modifiers-perl=2.15-1
+libclass-singleton-perl=1.6-2
+libclone-perl=0.47-1+b1
+libcloudproviders0=0.3.6-2
+libclucene-contribs1t64=2.3.3.4+dfsg-1.2+b1
+libclucene-core1t64=2.3.3.4+dfsg-1.2+b1
+libcmis-0.6-6t64=0.6.2-2.1+b1
+libcodec2-1.2=1.2.0-3
+libcolamd3=1:7.10.1+dfsg-1
+libcolord2=1.4.7-3
+libcom-err2=1.47.2-3+b11
+libcommons-logging-java=1.3.0-2
+libcommons-parent-java=56-1
+libcrypt1=1:4.4.38-1
+libcups2t64=2.4.10-3+deb13u2
+libcurl3t64-gnutls=8.14.1-2+deb13u3
+libcurl4t64=8.14.1-2+deb13u3
+libdata-compare-perl=1.29-1
+libdata-dump-perl=1.25-1
+libdata-optlist-perl=0.114-1
+libdata-uniqid-perl=0.12-3
+libdate-simple-perl=3.0300-3+b7
+libdatetime-calendar-julian-perl=0.107-1
+libdatetime-format-builder-perl=0.8300-1
+libdatetime-format-strptime-perl=1.7900-1
+libdatetime-locale-perl=1:1.41-1
+libdatetime-perl=2:1.65-1+b2
+libdatetime-timezone-perl=1:2.65-1+2026b
+libdatrie1=0.2.13-3+b1
+libdav1d7=1.5.1-1
+libdb5.3t64=5.3.28+dfsg2-9
+libdbus-1-3=1.16.2-2
+libdc1394-25=2.2.6-5
+libdconf1=0.40.0-5
+libde265-0=1.0.15-1+b3
+libdebconfclient0=0.280
+libdecor-0-0=0.2.2-2
+libdeflate0=1.23-2
+libdevel-callchecker-perl=0.009-2
+libdevel-stacktrace-perl=2.0500-1
+libdouble-conversion3=3.3.1-1
+libdrm-amdgpu1=2.4.124-2
+libdrm-common=2.4.124-2
+libdrm-intel1=2.4.124-2
+libdrm2=2.4.124-2
+libdvdnav4=6.1.1-3+b1
+libdvdread8t64=6.1.3-2
+libdynaloader-functions-perl=0.004-2
+libe-book-0.1-1=0.1.3-2+b4
+libedit2=3.1-20250104-1
+libelf1t64=0.192-4
+libencode-eucjpascii-perl=0.03-1+b5
+libencode-eucjpms-perl=0.07-5
+libencode-hanextra-perl=0.23-6+b5
+libencode-jis2k-perl=0.05-1+b3
+libencode-locale-perl=1.05-3
+libeot0=0.01-5+b2
+libepoxy0=1.5.10-2
+libepubgen-0.1-1=0.1.1-1+b2
+liberror-perl=0.17030-1
+libetonyek-0.1-1=0.1.12-1
+libeval-closure-perl=0.14-3
+libexception-class-perl=1.45-1
+libexpat1=2.7.1-2
+libexporter-tiny-perl=1.006002-1
+libexttextcat-2.0-0=3.4.7-1+b1
+libexttextcat-data=3.4.7-1
+libffi8=3.4.8-2
+libfftw3-double3=3.3.10-2+b1
+libfile-find-rule-perl=0.34-4
+libfile-listing-perl=6.16-1
+libfile-sharedir-perl=1.118-3
+libfile-slurper-perl=0.014-1
+libflac14=1.5.0+ds-2
+libflite1=2.2-7
+libfontbox-java=1:1.8.16-5
+libfontconfig1=2.15.0-2.3
+libfontenc1=1:1.1.8-1+b2
+libfreehand-0.1-1=0.1.2-3
+libfreetype6=2.13.3+dfsg-1+deb13u1
+libfreexl1=2.0.0-1+b3
+libfribidi0=1.0.16-1
+libfyba0t64=4.1.1-11+b1
+libgav1-1=0.19.0-3+b1
+libgbm1=25.0.7-2
+libgcc-s1=14.2.0-19
+libgcrypt20=1.11.0-7+deb13u1
+libgd3=2.3.3-13
+libgdal36=3.10.3+dfsg-1
+libgdbm-compat4t64=1.24-2
+libgdbm6t64=1.24-2
+libgdk-pixbuf-2.0-0=2.42.12+dfsg-4+deb13u1
+libgdk-pixbuf2.0-common=2.42.12+dfsg-4+deb13u1
+libgeos-c1t64=3.13.1-1
+libgeos3.13.1=3.13.1-1
+libgeotiff5=1.7.4-1
+libgfortran5=14.2.0-19
+libgif7=5.2.2-1+b1
+libgl1-mesa-dri=25.0.7-2
+libgl1=1.7.0-1+b2
+libglib2.0-0t64=2.84.4-3~deb13u3
+libglvnd0=1.7.0-1+b2
+libglx-mesa0=25.0.7-2
+libglx0=1.7.0-1+b2
+libgme0=0.6.3-7+b2
+libgmp10=2:6.3.0+dfsg-3
+libgnutls30t64=3.8.9-3+deb13u4
+libgomp1=14.2.0-19
+libgpg-error0=1.51-4
+libgpgme11t64=1.24.2-3
+libgpgmepp6t64=1.24.2-3
+libgraphite2-3=1.3.14-2+b1
+libgs-common=10.05.1~dfsg-1+deb13u1
+libgs10-common=10.05.1~dfsg-1+deb13u1
+libgs10=10.05.1~dfsg-1+deb13u1
+libgsm1=1.0.22-1+b2
+libgssapi-krb5-2=1.21.3-5+deb13u1
+libgstreamer-plugins-base1.0-0=1.26.2-1+deb13u1
+libgstreamer1.0-0=1.26.2-2
+libgtk-3-0t64=3.24.49-3
+libgtk-3-common=3.24.49-3
+libgts-0.7-5t64=0.7.6+darcs121130-5.2+b1
+libgvc6=2.42.4-3
+libgvpr2=2.42.4-3
+libharfbuzz-icu0=10.2.0-1+deb13u1
+libharfbuzz-subset0=10.2.0-1+deb13u1
+libharfbuzz0b=10.2.0-1+deb13u1
+libhdf4-0-alt=4.3.0-1+b1
+libhdf5-310=1.14.5+repack-3
+libhdf5-hl-310=1.14.5+repack-3
+libheif-plugin-dav1d=1.19.8-1
+libheif-plugin-libde265=1.19.8-1
+libheif1=1.19.8-1
+libhogweed6t64=3.10.1-1
+libhtml-parser-perl=3.83-1+b2
+libhtml-tagset-perl=3.24-1
+libhtml-tree-perl=5.07-3
+libhttp-cookies-perl=6.11-1
+libhttp-date-perl=6.06-1
+libhttp-message-perl=7.00-2
+libhttp-negotiate-perl=6.01-2
+libhunspell-1.7-0=1.7.2+really1.7.2-10+b4
+libhwy1t64=1.2.0-2+b2
+libhyphen0=2.8.8-7+b2
+libice6=2:1.1.1-1
+libicu76=76.1-4
+libidn12=1.43-1
+libidn2-0=2.3.8-2
+libiec61883-0=1.2.0-7
+libijs-0.35=0.35-15.2
+libimagequant0=2.18.0-1+b2
+libio-html-perl=1.004-3
+libio-socket-ssl-perl=2.089-1
+libipc-run3-perl=0.049-1
+libjack-jackd2-0=1.9.22~dfsg-4
+libjbig0=2.1-6.1+b2
+libjbig2dec0=0.20-1+b3
+libjpeg62-turbo=1:2.1.5-4
+libjq1=1.7.1-6+deb13u2
+libjs-jquery=3.6.1+dfsg+~3.5.14-1
+libjson-c5=0.18+ds-1
+libjxl0.11=0.11.2-0.1~deb13u1
+libk5crypto3=1.21.3-5+deb13u1
+libkeyutils1=1.6.3-6
+libkmlbase1t64=1.3.0-12+b2
+libkmldom1t64=1.3.0-12+b2
+libkmlengine1t64=1.3.0-12+b2
+libkpathsea6=2024.20240313.70630+ds-6
+libkrb5-3=1.21.3-5+deb13u1
+libkrb5support0=1.21.3-5+deb13u1
+libksba8=1.6.7-2+b1
+liblab-gamut1=2.42.4-3
+liblangtag-common=0.6.7-1
+liblangtag1=0.6.7-1+b2
+liblapack3=3.12.1-6
+liblastlog2-2=2.41-5
+liblcms2-2=2.16-2+deb13u2
+libldap2=2.6.10+dfsg-1
+libleptonica6=1.84.1-4
+liblerc4=4.0.0+ds-5
+liblilv-0-0=0.24.26-1
+liblingua-translit-perl=0.29-2
+liblist-allutils-perl=0.19-1
+liblist-moreutils-perl=0.430-2
+liblist-moreutils-xs-perl=0.430-4+b2
+liblist-someutils-perl=0.59-1
+liblist-utilsby-perl=0.12-2
+libllvm19=1:19.1.7-3+b1
+liblog-log4perl-perl=1.57-1
+liblqr-1-0=0.4.2-2.1+b2
+libltdl7=2.5.4-4
+liblua5.4-0=5.4.7-1+b2
+liblwp-mediatypes-perl=6.04-2
+liblwp-protocol-https-perl=6.14-1
+liblz4-1=1.10.0-4
+liblzma5=5.8.1-1
+libmagickcore-7.q16-10=8:7.1.1.43+dfsg1-1+deb13u9
+libmagickwand-7.q16-10=8:7.1.1.43+dfsg1-1+deb13u9
+libmariadb3=1:11.8.6-0+deb13u1
+libmbedcrypto16=3.6.5-0.1~deb13u1
+libmd0=1.1.0-2+b1
+libmhash2=0.9.9.9-10
+libmime-charset-perl=1.013.1-2
+libminizip1t64=1:1.3.dfsg+really1.3.1-1+b1
+libmodule-implementation-perl=0.09-2
+libmodule-runtime-perl=0.018-1
+libmount1=2.41-5
+libmp3lame0=3.100-6+b3
+libmpfi0=1.5.4+ds-4
+libmpfr6=4.2.2-1
+libmpg123-0t64=1.32.10-1+deb13u1
+libmro-compat-perl=0.15-2
+libmspub-0.1-1=0.1.4-3+b5
+libmwaw-0.3-3=0.3.22-1+b2
+libmysofa1=1.3.3+dfsg-1
+libmythes-1.2-0=2:1.2.5-1+b2
+libnamespace-autoclean-perl=0.31-1
+libnamespace-clean-perl=0.27-2
+libncursesw6=6.5+20250216-2
+libnet-http-perl=6.23-1
+libnet-ssleay-perl=1.94-3
+libnetcdf22=1:4.9.3-1
+libnettle8t64=3.10.1-1
+libnghttp2-14=1.64.0-1.1+deb13u1
+libnghttp3-9=1.8.0-1
+libngtcp2-16=1.11.0-1+deb13u1
+libngtcp2-crypto-gnutls8=1.11.0-1+deb13u1
+libnorm1t64=1.5.9+dfsg-3.1+b2
+libnpth0t64=1.8-3
+libnspr4=2:4.36-1
+libnss3=2:3.110-1+deb13u2
+libnuma1=2.0.19-1
+libnumber-compare-perl=0.03-3
+libnumbertext-1.0-0=1.0.11-4+b2
+libnumbertext-data=1.0.11-4
+libodbc2=2.3.12-2
+libodbcinst2=2.3.12-2
+libodfgen-0.1-1=0.1.8-2+b2
+libogdi4.1=4.1.1+ds-5
+libogg0=1.3.5-3+b2
+libonig5=6.9.9-1+b1
+libopenal-data=1:1.24.2-1
+libopenal1=1:1.24.2-1
+libopenblas0-pthread=0.3.29+ds-3
+libopenblas0=0.3.29+ds-3
+libopenh264-8=2.6.0+dfsg-2
+libopenjp2-7=2.5.3-2.1~deb13u2
+libopenmpt0t64=0.7.13-1+b1
+libopus0=1.5.2-2
+liborc-0.4-0t64=1:0.4.41-1
+liborcus-0.18-0=0.19.2-6+b1
+liborcus-parser-0.18-0=0.19.2-6+b1
+libp11-kit0=0.25.5-3
+libpackage-stash-perl=0.40-1
+libpagemaker-0.0-0=0.0.4-1+b2
+libpam-modules-bin=1.7.0-5
+libpam-modules=1.7.0-5
+libpam-runtime=1.7.0-5
+libpam-systemd=257.13-1~deb13u1
+libpam0g=1.7.0-5
+libpango-1.0-0=1.56.3-1
+libpangocairo-1.0-0=1.56.3-1
+libpangoft2-1.0-0=1.56.3-1
+libpaper-utils=2.2.5-0.3+b2
+libpaper2=2.2.5-0.3+b2
+libparams-classify-perl=0.015-2+b4
+libparams-util-perl=1.102-3+b1
+libparams-validate-perl=1.31-2+b3
+libparams-validationcompiler-perl=0.31-1
+libparse-recdescent-perl=1.967015+dfsg-4
+libpathplan4=2.42.4-3
+libpciaccess0=0.17-3+b3
+libpcre2-8-0=10.46-1~deb13u1
+libpcsclite1=2.3.3-1
+libpdfbox-java=1:1.8.16-5
+libperl5.40=5.40.1-6
+libpgm-5.3-0t64=5.3.128~dfsg-2.1+b1
+libpixman-1-0=0.44.0-3
+libplacebo349=7.349.0-3
+libpng16-16t64=1.6.48-1+deb13u5
+libpocketsphinx3=0.8+5prealpha+1-15+b4
+libpoppler147=25.03.0-5+deb13u2
+libpostproc58=7:7.1.4-0+deb13u1
+libpotrace0=1.16-2+b2
+libpq5=17.10-0+deb13u1
+libproc2-0=2:4.0.4-9
+libproj25=9.6.0-1
+libpsl5t64=0.21.2-1.1+b1
+libptexenc1=2024.20240313.70630+ds-6
+libpulse0=17.0+dfsg1-2+b1
+libpython3-stdlib=3.13.5-1
+libpython3.13-minimal=3.13.5-2+deb13u2
+libpython3.13-stdlib=3.13.5-2+deb13u2
+libqhull-r8.0=2020.2-6+b2
+libqxp-0.0-0=0.0.2-1+b4
+librabbitmq4=0.15.0-1
+libraptor2-0=2.0.16-6
+librasqal3t64=0.9.33-2.1+b2
+librav1e0.7=0.7.1-9+b2
+libraw1394-11=2.1.2-2+b2
+libraw23t64=0.21.4-2
+librdf0t64=1.0.17-4+b1
+libreadline8t64=8.2-6
+libreadonly-perl=2.050-3
+libregexp-common-perl=2024080801-1
+libreoffice-base-core=4:25.2.3-2+deb13u4
+libreoffice-calc=4:25.2.3-2+deb13u4
+libreoffice-common=4:25.2.3-2+deb13u4
+libreoffice-core=4:25.2.3-2+deb13u4
+libreoffice-draw=4:25.2.3-2+deb13u4
+libreoffice-impress=4:25.2.3-2+deb13u4
+libreoffice-math=4:25.2.3-2+deb13u4
+libreoffice-style-colibre=4:25.2.3-2+deb13u4
+libreoffice-uiconfig-calc=4:25.2.3-2+deb13u4
+libreoffice-uiconfig-common=4:25.2.3-2+deb13u4
+libreoffice-uiconfig-draw=4:25.2.3-2+deb13u4
+libreoffice-uiconfig-impress=4:25.2.3-2+deb13u4
+libreoffice-uiconfig-math=4:25.2.3-2+deb13u4
+libreoffice-uiconfig-writer=4:25.2.3-2+deb13u4
+libreoffice-writer=4:25.2.3-2+deb13u4
+librevenge-0.0-0=0.0.5-3+b2
+librist4=0.2.11+dfsg-1
+librole-tiny-perl=2.002004-1
+librsvg2-2=2.60.0+dfsg-1
+librtmp1=2.4+20151223.gitfa8646d.1-2+b5
+librttopo1=1.1.0-4
+librubberband2=3.3.0+dfsg-2+b3
+libsamplerate0=0.2.2-4+b2
+libsasl2-2=2.1.28+dfsg1-9
+libsasl2-modules-db=2.1.28+dfsg1-9
+libsdl2-2.0-0=2.32.4+dfsg-1
+libseccomp2=2.6.0-2
+libselinux1=3.8.1-1
+libsemanage-common=3.8.1-1
+libsemanage2=3.8.1-1
+libsensors-config=1:3.6.2-2
+libsensors5=1:3.6.2-2
+libsepol2=3.8.1-1
+libserd-0-0=0.32.4-1
+libsharpyuv0=1.5.0-0.1
+libshine3=3.1.1-2+b2
+libslang2=2.3.3-5+b2
+libsm6=2:1.2.6-1
+libsmartcols1=2.41-5
+libsnappy1v5=1.2.2-1
+libsndfile1=1.2.2-2+deb13u1
+libsodium23=1.0.18-1+deb13u1
+libsombok3=2.4.0-2+b2
+libsord-0-0=0.16.18-1
+libsort-key-perl=1.33-3+b5
+libsoxr0=0.1.3-4+b2
+libspatialite8t64=5.1.0-3+b2
+libspecio-perl=0.50-1
+libspeex1=1.2.1-3
+libsphinxbase3t64=0.8+5prealpha+1-21+b1
+libsqlite3-0=3.46.1-7+deb13u1
+libsratom-0-0=0.6.18-1
+libsrt1.5-gnutls=1.5.4-1
+libssh-4=0.11.2-1+deb13u1
+libssh2-1t64=1.11.1-1
+libssl3t64=3.5.6-1~deb13u1
+libstaroffice-0.0-0=0.0.7-1+b2
+libstdc++6=14.2.0-19
+libsub-exporter-perl=0.990-1
+libsub-exporter-progressive-perl=0.001013-3
+libsub-identify-perl=0.14-3+b3
+libsub-install-perl=0.929-1
+libsub-name-perl=0.28-1
+libsub-quote-perl=2.006008-1
+libsuitesparseconfig7=1:7.10.1+dfsg-1
+libsvtav1enc2=2.3.0+dfsg-1
+libswresample5=7:7.1.4-0+deb13u1
+libswscale8=7:7.1.4-0+deb13u1
+libsynctex2=2024.20240313.70630+ds-6
+libsystemd-shared=257.13-1~deb13u1
+libsystemd0=257.13-1~deb13u1
+libsz2=1.1.3-1+b1
+libtasn1-6=4.20.0-2
+libteckit0=2.5.12+ds1-1+b1
+libtesseract5=5.5.0-1+b1
+libtexlua53-5=2024.20240313.70630+ds-6
+libtext-bibtex-perl=0.91-1
+libtext-charwidth-perl=0.04-11+b4
+libtext-csv-perl=2.06-1
+libtext-csv-xs-perl=1.60-1+deb13u1
+libtext-glob-perl=0.11-3
+libtext-roman-perl=3.5-4
+libtext-wrapi18n-perl=0.06-10
+libthai-data=0.1.29-2
+libthai0=0.1.29-2+b1
+libtheoradec1=1.2.0~alpha1+dfsg-6
+libtheoraenc1=1.2.0~alpha1+dfsg-6
+libtie-cycle-perl=1.231-1
+libtiff6=4.7.0-3+deb13u2
+libtimedate-perl=2.3300-2
+libtinfo6=6.5+20250216-2
+libtirpc-common=1.3.6+ds-1
+libtirpc3t64=1.3.6+ds-1
+libtry-tiny-perl=0.32-1
+libtwolame0=0.4.0-2+b2
+libudev1=257.13-1~deb13u1
+libudfread0=1.1.2-1+b2
+libunibreak6=6.1-3
+libunicode-linebreak-perl=0.0.20190101-1+b9
+libunistring5=1.3-2
+libuno-cppu3t64=4:25.2.3-2+deb13u4
+libuno-cppuhelpergcc3-3t64=4:25.2.3-2+deb13u4
+libuno-purpenvhelpergcc3-3t64=4:25.2.3-2+deb13u4
+libuno-sal3t64=4:25.2.3-2+deb13u4
+libuno-salhelpergcc3-3t64=4:25.2.3-2+deb13u4
+liburi-perl=5.30-1
+liburiparser1=0.9.8+dfsg-2
+libusb-1.0-0=2:1.0.28-1
+libuuid1=2.41-5
+libv4l-0t64=1.30.1-1
+libv4lconvert0t64=1.30.1-1
+libva-drm2=2.22.0-3
+libva-x11-2=2.22.0-3
+libva2=2.22.0-3
+libvariable-magic-perl=0.64-1+b1
+libvdpau1=1.5-3+b1
+libvidstab1.1=1.1.0-2+b2
+libvisio-0.1-1=0.1.7-1+b5
+libvorbis0a=1.3.7-3
+libvorbisenc2=1.3.7-3
+libvorbisfile3=1.3.7-3
+libvpl2=1:2.14.0-1+b1
+libvpx9=1.15.0-2.1+deb13u1
+libvulkan1=1.4.309.0-1
+libwayland-client0=1.23.1-3
+libwayland-cursor0=1.23.1-3
+libwayland-egl1=1.23.1-3
+libwayland-server0=1.23.1-3
+libwebp7=1.5.0-0.1
+libwebpdemux2=1.5.0-0.1
+libwebpmux3=1.5.0-0.1
+libwpd-0.10-10=0.10.3-2+b2
+libwpg-0.3-3=0.3.4-3+b2
+libwps-0.4-4=0.4.14-2+b2
+libwww-perl=6.78-1
+libwww-robotrules-perl=6.02-1
+libx11-6=2:1.8.12-1
+libx11-data=2:1.8.12-1
+libx11-xcb1=2:1.8.12-1
+libx264-164=2:0.164.3108+git31e19f9-2+b1
+libx265-215=4.1-2
+libxau6=1:1.0.11-1
+libxaw7=2:1.0.16-1
+libxcb-dri3-0=1.17.0-2+b1
+libxcb-glx0=1.17.0-2+b1
+libxcb-present0=1.17.0-2+b1
+libxcb-randr0=1.17.0-2+b1
+libxcb-render0=1.17.0-2+b1
+libxcb-shape0=1.17.0-2+b1
+libxcb-shm0=1.17.0-2+b1
+libxcb-sync1=1.17.0-2+b1
+libxcb-xfixes0=1.17.0-2+b1
+libxcb1=1.17.0-2+b1
+libxcomposite1=1:0.4.6-1
+libxcursor1=1:1.2.3-1
+libxdamage1=1:1.1.6-1+b2
+libxdmcp6=1:1.1.5-1
+libxerces-c3.2t64=3.2.4+debian-1.3+b2
+libxext6=2:1.3.4-1+b3
+libxfixes3=1:6.0.0-2+b4
+libxft2=2.3.6-1+b4
+libxi6=2:1.8.2-1
+libxinerama1=2:1.1.4-3+b4
+libxkbcommon0=1.7.0-2
+libxkbfile1=1:1.1.0-1+b4
+libxml-libxml-perl=2.0207+dfsg+really+2.0134-5+b2
+libxml-libxml-simple-perl=1.01-3
+libxml-libxslt-perl=2.003000-2+b1
+libxml-namespacesupport-perl=1.12-2
+libxml-sax-base-perl=1.09-3
+libxml-sax-perl=1.02+dfsg-4
+libxml-writer-perl=0.900-2
+libxml2=2.12.7+dfsg+really2.9.14-2.1+deb13u2
+libxmlsec1t64-nss=1.2.41-1+b1
+libxmlsec1t64=1.2.41-1+b1
+libxmu6=2:1.1.3-3+b4
+libxmuu1=2:1.1.3-3+b4
+libxnvctrl0=535.171.04-1+b2
+libxpm4=1:3.5.17-1+b3
+libxrandr2=2:1.5.4-1+b3
+libxrender1=1:0.9.12-1
+libxshmfence1=1.3.3-1
+libxslt1.1=1.1.35-1.2+deb13u3
+libxss1=1:1.2.3-1+b3
+libxstring-perl=0.005-2+b4
+libxt6t64=1:1.2.1-1.2+b2
+libxtst6=2:1.2.5-1
+libxv1=2:1.0.11-1.1+b3
+libxvidcore4=2:1.3.7-1+b2
+libxxf86dga1=2:1.1.5-1+b3
+libxxf86vm1=1:1.1.4-1+b4
+libxxhash0=0.8.3-2
+libyajl2=2.1.0-5+b2
+libyaml-0-2=0.2.5-2
+libyuv0=0.0.1904.20250204-1
+libz3-4=4.13.3-1
+libzbar0t64=0.23.93-8
+libzimg2=3.0.5+ds1-1+b2
+libzix-0-0=0.6.2-1
+libzmf-0.0-0=0.0.2-1+b9
+libzmq5=4.3.5-1+b3
+libzstd1=1.5.7+dfsg-1
+libzvbi-common=0.2.44-1
+libzvbi0t64=0.2.44-1
+libzxcvbn0=2.5+dfsg-2+b2
+libzxing3=2.3.0-4
+libzzip-0-13t64=0.13.78+dfsg.1-0.1
+lmodern=2.005-1
+locales=2.41-12+deb13u3
+login.defs=1:4.17.4-2
+login=1:4.16.0-2+really2.41-5
+mariadb-common=1:11.8.6-0+deb13u1
+mawk=1.3.4.20250131-1
+media-types=13.0.0
+mesa-libgallium=25.0.7-2
+miller=6.13.0-1
+mount=2.41-5
+mysql-common=5.8+1.1.1
+ncurses-base=6.5+20250216-2
+ncurses-bin=6.5+20250216-2
+netbase=6.5
+ocl-icd-libopencl1=2.3.3-1
+openjdk-21-jre-headless=21.0.11+10-1~deb13u2
+openssl-provider-legacy=3.5.6-1~deb13u1
+openssl=3.5.6-1~deb13u1
+pandoc-data=3.1.11.1-3
+pandoc=3.1.11.1+ds-2
+passwd=1:4.17.4-2
+perl-base=5.40.1-6
+perl-modules-5.40=5.40.1-6
+perl-openssl-defaults=7+b2
+perl=5.40.1-6
+pinentry-curses=1.3.1-2
+poppler-data=0.4.12-1
+poppler-utils=25.03.0-5+deb13u2
+preview-latex-style=13.2-1.1
+procps=2:4.0.4-9
+proj-bin=9.6.0-1
+proj-data=9.6.0-1
+python3-argcomplete=3.6.2-1
+python3-gdal=3.10.3+dfsg-1
+python3-minimal=3.13.5-1
+python3-numpy-dev=1:2.2.4+ds-1
+python3-numpy=1:2.2.4+ds-1
+python3-tomlkit=0.13.2-1
+python3-xmltodict=0.13.0-1
+python3-yaml=6.0.2-1+b2
+python3.13-minimal=3.13.5-2+deb13u2
+python3.13=3.13.5-2+deb13u2
+python3=3.13.5-1
+readline-common=8.2-6
+sed=4.9-2+deb13u1
+sensible-utils=0.0.25
+shared-mime-info=2.4-5+b2
+sqv=1.3.0-3+b2
+systemd-sysv=257.13-1~deb13u1
+systemd=257.13-1~deb13u1
+sysvinit-utils=3.14-4
+t1utils=1.41-4
+tar=1.35+dfsg-3.1
+teckit=2.5.12+ds1-1+b1
+tesseract-ocr-eng=1:4.1.0-2
+tesseract-ocr-osd=1:4.1.0-2
+tesseract-ocr=5.5.0-1+b1
+tex-common=6.19
+texlive-base=2024.20250309-1
+texlive-binaries=2024.20240313.70630+ds-6
+texlive-fonts-extra=2024.20250309-2
+texlive-fonts-recommended=2024.20250309-1
+texlive-lang-greek=2024.20250309-1
+texlive-latex-base=2024.20250309-1
+texlive-latex-extra=2024.20250309-2
+texlive-latex-recommended=2024.20250309-1
+texlive-luatex=2024.20250309-1
+texlive-pictures=2024.20250309-1
+texlive-plain-generic=2024.20250309-2
+texlive-pstricks=2024.20250309-2
+texlive-science=2024.20250309-2
+texlive-xetex=2024.20250309-1
+tipa=2:1.3-21
+tzdata=2026b-0+deb13u1
+ucf=3.0052
+unixodbc-common=2.3.12-2
+uno-libs-private=4:25.2.3-2+deb13u4
+unzip=6.0-29
+ure=4:25.2.3-2+deb13u4
+util-linux=2.41-5
+wget=1.25.0-2
+x11-common=1:7.7+24+deb13u1
+x11-utils=7.7+7
+xdg-utils=1.2.1-2
+xfonts-encodings=1:1.0.4-2.2
+xfonts-utils=1:7.7+7
+xkb-data=2.42-1
+yq=3.4.3-2
+zlib1g=1:1.3.dfsg+really1.3.1-1+b1
+System packages are the full pinned transitive closure resolved inside the Debian trixie base image, so most entries are dependencies of the packages we install directly
+We prompt the agent with an instruction interpolating the relevant task prompt, reference files, and finish tool details.
+Execution Limits:
+The LLM is given 250 turns to complete the task. A single turn is defined as an assistant message and its tool calls (if any). As the model approaches the limit, it is notified of its remaining turn budget.
+The model may end the run early via the Abandon Task tool where it does not believe it can complete the task, providing a brief reason instead of submitting files.
+If the model exceeds 70% of its context window after completing a given turn, the agent asks it to summarize task state, completed work, current files, remaining steps, and important context, then clears earlier turn history while retaining the task prompt and the summary for continuation.
+Task Submission System Prompt:
+You are an AI agent completing a standalone professional task. Your job is to use the provided tools to produce the requested deliverables within 250 steps, then submit your work.
+
+When you are done, call the `finish` tool as your final step with:
+1. A brief summary of what you accomplished.
+2. Absolute paths to every deliverable file.
+
+If you have genuinely concluded that the task cannot be completed because required inputs are missing, a hard dependency is unavailable, or the request is incoherent, call the `abandon_task_finish` tool with a brief reason instead. Do not use it to escape difficulty.
+
+You cannot interact with the user during the task. Make reasonable assumptions when needed and record them in your finish summary.
+Task Submission Prompt:
+## Runtime
+
+You are running in an isolated Linux sandbox. Use the `code_exec` tool to read, create, and modify files. Commands run as the non-root user `user` (UID 1000). Default working directory is `/home/user`.
+
+Every command runs independently: no working directory, environment variable, or other shell state carries over from one call to the next. Prefer absolute paths for both files and commands, and do not navigate with `cd` across calls — a `cd` in one command is gone by the next, so relying on it leaves you silently operating in the wrong place. When a step genuinely needs a different directory, chain it into the same command (e.g. `cd /home/user/work && python build.py`).
+
+A broad scientific-computing and document-processing stack is already installed, so confirm what is present before assuming a gap:
+- Python 3.13 with the usual data stack (numpy, pandas, polars, scipy), plotting (matplotlib, plotly), the scikit-learn ML family, and document tooling (python-docx, python-pptx, openpyxl, PyMuPDF, pdfplumber, reportlab, weasyprint, Pillow, opencv), plus Playwright.
+- System tools include LibreOffice, Pandoc, Tesseract, FFmpeg, ImageMagick, Ghostscript, TeX Live, OpenJDK, Chromium, jq, and git.
+- Commands are terminated after 10 minutes. Keep them bounded, persist intermediate results to disk, and split long jobs into smaller steps.
+
+## Reference Files Location
+
+(This section appears only when the task includes reference files.)
+
+The reference files for the task are available in your environment's file system.
+
+Here are their paths:
+
+- [absolute path to each reference file]
+
+## Completing Your Work
+
+In order to complete the task you must use the `finish` tool to submit your work. If you do not use the `finish` tool you will fail this task!
+
+As a last resort if you really cannot make any meaningful progress, use `abandon_task_finish` with a brief reason instead of submitting files.
+
+**Required in your finish call:**
+1. A brief summary of what you accomplished
+2. A list of **ABSOLUTE file paths** for the required output files (Do not submit folders).
+
+## Task
+
+Here is the task you need to complete:
+
+[task description]
+
+Please begin working on the task now.
+Context Overflow:
+If the next model call (or the summarization request itself) exceeds the context window, the agent keeps unwinding earlier turns until summarization succeeds.
+Task Completion:
+To complete the task, the LLM must call the finish tool, providing a summary of the work done and the paths of the files it intends to submit. This tool can be used at any turn.
+Grading:
+We sample pairwise matches between model submissions in two stages:
+Balanced sampling:
+We first sample each model diversely, balancing exposure across tasks, judges, and opponents, to seed initial ratings.
+Active sampling:
+After the initial phase, we transition to Elo-informed sampling that prioritizes pairings between models with similar ratings to derive the most information per comparison. We maintain balanced exposure of tasks within each model throughout the process.
+Submissions are randomly anonymized as Submission A and B to mitigate any model or position bias from the grader model.
+Matches are graded by a panel of three frontier LLM judges from leading labs, each run at its default reasoning settings: GPT-5.5 (medium reasoning), Gemini 3.1 Pro Preview (high reasoning), and Claude Opus 4.8 (high effort). We sample between the judges for each comparison. The initial task, all reference files, and all submission files are parsed and provided as context to the judge.
+Document-based files (.pdf, .docx, .pptx, .xlsx, etc.) are parsed as both text and as images. We extract .zip files and parse each individual file separately. For tasks containing audio or video files, the comparison is routed to Gemini 3.1 Pro Preview, which handles these modalities natively. This context is embedded in a grading prompt that asks the judge to determine which of Submission A and B better responds to the task.
+Final Scoring: Our final Elo score is a Bradley-Terry rating computed via maximum likelihood estimation from all pairwise comparisons (ties counted as half-wins for each side), anchored to human expert deliverables at 1,000 — re-baselining the scale to human performance. The 95% confidence intervals are computed using the sandwich estimator to quantify rating uncertainty.
+AutomationBench-AA
+Description:
+AutomationBench-AA is Artificial Analysis' run of Zapier's
+AutomationBench
+. It tests whether models can complete realistic SaaS workflows that span multiple simulated business apps, using REST APIs as the tool interface.
+Paper:
+https://arxiv.org/abs/2604.18934
+Leaderboard:
+https://zapier.com/benchmarks
+Repository:
+https://github.com/zapier/AutomationBench
+Dataset:
+We evaluate a private 657-task held-out split from AutomationBench dataset version 1.0.6
+The tasks cover six business domains: Finance, HR, Marketing, Operations, Sales, and Support
+They run in simulated app environments that include products such as Gmail, Google Sheets, Slack, Salesforce, Zendesk, Jira, and HubSpot
+Implementation:
+We run each task once in the AutomationBench multi-turn environment, with a 50-turn cap. Models use the API toolset, discovering and calling the REST endpoints they need through structured tool calls
+We classify each AutomationBench assertion as either an objective, which must be made true by the agent, or a guardrail, which initially passes and must not be broken by the agent
+Objectives and guardrails are graded using programmatic checks on the final environment state. AutomationBench-AA does not use a separate LLM judge for grading
+For the headline score, a task receives 0 if the model violates any guardrail. If no guardrails are violated, the task receives the percentage of objectives the model completed. Errored tasks also score 0
+Each task belongs to one business domain, so domain breakdowns are mutually exclusive subsets of the task set. App breakdowns are not mutually exclusive: a task can involve multiple apps, so its objective and guardrail assertions may contribute to more than one app
+Coding
+Terminal-Bench v4.0
+Description:
+The 4.0 release of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Covers software engineering, system administration, data processing, model training, and security, with each task graded by its own verification suite
+Leaderboard:
+https://www.tbench.ai/?version=4
+Dataset:
+https://github.com/harbor-framework/terminal-bench
+Implementation:
+We evaluate the full Terminal-Bench 4.0 dataset (66 tasks) using the mini-SWE-agent v2.4.6 harness, with pass@1 scoring averaged over 3 repeats per task
+Each task ships with a verification suite that the agent must satisfy by interacting with the terminal. We follow the Terminal-Bench methodology: a task passes only if every test passes, grading runs in each task's own separate verifier container isolated from the agent's environment, and a verifier that exceeds its timeout counts as a failure
+We apply the following constraints on evaluations for the agent:
+Maximum agent steps are limited to 500
+Each command runs under a 30 second timeout; a command that exceeds it returns its partial output and the agent continues
+The per-task run timeout is the task's own, up to eight hours
+All other agent configuration follows mini-SWE-agent defaults, including the interactive mini config and prompts, the native bash tool, and no context compaction or summarization: the agent always sees its full transcript
+SciCode
+Description:
+Python programming to solve scientific computing tasks
+Paper:
+https://arxiv.org/abs/2407.13168
+Dataset:
+https://scicode-bench.github.io/
+Implementation:
+We test with scientist-annotated background information included in the prompt
+We report sub-problem level scoring
+Pass@1 evaluation criteria
+SciCode step scripts are graded on isolated executors with a 300-second execution timeout (dataset v1.0.1)
+General
+AA-Omniscience
+Description:
+AA-Omniscience is a knowledge and hallucination benchmark that measures factual reliability, rewards precise knowledge, and penalizes incorrect guesses or hallucinations. It provides a detailed assessment of a model’s ability to distinguish known from unknowns across diverse knowledge domains.
+Paper:
+https://arxiv.org/abs/2511.13029
+Dataset:
+https://huggingface.co/datasets/ArtificialAnalysis/AA-Omniscience-Public
+Implementation:
+The benchmark consists of 6,000 questions covering 42 topics, including
+Business
+,
+Humanities and Social Sciences
+,
+Health
+,
+Law
+,
+Software Engineering
+, and
+Science, Engineering and Mathematics
+.
+Models are scored using the
+AA-Omniscience Index
+, which assigns points for correct answers, subtracts points for hallucinated responses, and keeps abstentions neutral, rewarding abstentions over incorrect guesses
+Each answer is graded as either
+CORRECT
+,
+INCORRECT
+,
+PARTIAL_ANSWER
+, or
+NOT_ATTEMPTED
+based on the model's response and the ground truth answer. GPT-5.6 Luna (medium) is used as the grading model
+Intelligence Index Integration:
+AA-Omniscience contributes two components to the Intelligence Index: (1)
+Accuracy
+- the proportion of correct answers, weighted at
+10% of the overall Index, and (2)
+Non-Hallucination Rate
+- calculated as 1 minus the hallucination rate, weighted at 5% of the overall Index (AA-Omniscience's 15% share).
+GDP.pdf
+Description:
+Artificial Analysis' implementation of
+Surge AI's GDP.pdf
+, a benchmark that tests whether models can reason over long, real-world professional documents and satisfy task-specific criteria.
+Paper:
+https://arxiv.org/abs/2607.11192
+Dataset:
+surgeai/GDP.pdf
+Evaluation set:
+100 tasks across ten professional domains, grounded in 4,592 PDF pages and graded against 1,275 criteria. We attempt every task five times, so each model has a fixed denominator of 500 attempts.
+Document preparation and delivery:
+We prepare each source PDF with
+LiteParse
+, including OCR where required. Every model receives the complete extracted text of every page. Models with image input also receive an ordered image of each page. We render page images at 150 DPI and reduce them, to a 72 DPI minimum, when model context or provider payload limits require it. We may also convert opaque pages from PNG to JPEG. Where an endpoint caps how many images one request may carry, we combine pages into composite images, two pages per image first and up to four where the cap is tighter, each cell labeled with its page number. Past four pages per image, images cover the leading pages only; the remaining pages remain in the extracted text. When either applies, the prompt tells the model that page images are composites and the page number where image coverage stops. Models answer in a single turn without browsing or tools.
+Unlike the Surge AI implementation, we do not use API document input features. These are opaque to the user and sit above the model layer, so they can introduce variation from API product decisions and hosts rather than comparing models apples-to-apples.
+Judging:
+GPT-5.6 Luna Medium judges each criterion independently. Each call receives the task prompt, contestant answer, and one criterion, but not the source PDF or contestant identity. We accept a task grading only when every criterion has a verdict. We score errors, missing attempts, and terminal input failures as zero.
+Reported metrics:
+All-pass
+is the headline metric: the share of all 500 attempts where every criterion passes.
+Mean Pass
+is the secondary metric: we compute each attempt's criterion pass rate, then average it with equal weight across tasks and repeats.
+Domain cuts use the same task-macro Mean Pass calculation. We do not report domain All-pass.
+Cost and speed scope:
+Published costs cover contestant model calls only and exclude judge calls, PDF preparation, and OCR. We estimate time per task from output-token usage and model output speed. It excludes judge calls, PDF preparation, and OCR, so it is not an end-to-end evaluation timing.
+Differences from the Surge AI implementation
+Artificial Analysis
+Surge AI
+Document input
+Text extracted with LiteParse and OCR, plus page images for image-capable models
+Raw PDF sent to the provider's document input
+Judge
+GPT-5.6 Luna Medium
+Gemini 3.5 Flash
+The task set is shared, but the document input and judge differ, so Artificial Analysis and Surge scores are not directly comparable.
+AA-LCR v1.1
+Description:
+Evaluate long context performance through testing reasoning capabilities across multiple long documents (~100k tokens measured using cl100k_base tokenizer)
+Changes from AA-LCR:
+Adds a system prompt to clarify grading instructions, corrects 16 answer keys, and grades with GPT-5.6 Luna (medium). Scores are not directly comparable with v1.0.
+Dataset:
+https://huggingface.co/datasets/ArtificialAnalysis/AA-LCR
+Implementation:
+100 hard text-based questions spanning 7 categories of documents (Company Reports, Industry Reports, Government Consultations, Academia, Legal, Marketing Materials, and Survey Reports)
+~100k tokens (measured using cl100k_base tokenizer) of input per question, requiring models to support a minimum 128K context window to score on this benchmark. ~3M total unique input tokens spanning ~230 documents to run the benchmark (output tokens typically vary by model)
+Model responses are evaluated using GPT-5.6 Luna (medium) as an equality checker with pass@1 scoring
+Scientific Reasoning
+HLE (Humanity's Last Exam)
+Description:
+Recent frontier academic benchmark from the Centre for AI Safety (led by Dan Hendrycks)
+Paper:
+https://arxiv.org/abs/2501.14249v2
+Dataset:
+https://huggingface.co/datasets/cais/hle
+Implementation:
+2,158
+text-only questions across mathematics, humanities and the natural sciences (from the May 2025 revision which contains 2,500 total questions — we use the text-only subset for maximum comparability across models)
+We note that the HLE authors disclose that their dataset curation process involved adversarial selection of questions based on tests with GPT-4o, Gemini 1.5 Pro, Claude 3.5 Sonnet, o1, o1-mini, and o1-preview (latter two for text-only questions only). We therefore discourage direct comparison of these models with models that were not used in the HLE curation process, as the dataset is potentially biased against the models used in the curation process.
+Evaluated with an equality checker LLM prompt adapted from the original HLE paper, using GPT-5.6 Luna (medium), with pass@1 scoring (find prompt below)
+CritPt
+Description:
+Research-level physics reasoning benchmark with unpublished, frontier physics problems spanning a wide range of subfields
+Paper:
+https://arxiv.org/abs/2509.26574
+Website:
+https://critpt.com/
+Repository:
+https://github.com/CritPt-Benchmark/CritPt
+Dataset:
+https://huggingface.co/datasets/CritPt-Benchmark/CritPt
+Implementation:
+We implement the 'challenge' level components for all 70 test-set challenges (the example challenge is excluded) in collaboration with the CritPt team
+We run 5 repeats for each question with pass@1 scoring
+The models are called with a two-step parsing approach, where the first step requests that the model complete the challenge with reasoning, and the second step formats the response into the expected code format for grading (see example prompt for parsing on the CritPt evaluation page)
+Token usage and cost estimates reflect both steps (reasoning and answer parsing)
+Answer formats include numerical values, symbolic expressions in SymPy, and Python functions (evaluated with test cases)
+The official CritPt grading server is used to assess all challenge responses for correctness. Grading API access is granted case by case to approved labs and researchers — email
+critpt@artificialanalysis.ai
+to request it, and see the
+Artificial Analysis API documentation
+for details
+Additional Evaluation Details
+Agents
+Harvey LAB-AA
+Description:
+Harvey LAB-AA is Artificial Analysis' implementation of Harvey's
+Legal Agent Benchmark (LAB)
+, run on Harvey's dataset of 120 private tasks spanning 24 legal practice areas. For each task the agent reads the case documents in a sandbox and produces legal deliverables - memos, disclosure schedules, deposition summaries, redlines, and similar work products. Deliverables are graded criterion-by-criterion against a task-specific rubric of atomic, binary pass/fail criteria by a single LLM judge, giving a holistic view of agentic capability on real-world legal work.
+Example dataset:
+The five public example tasks shown in the explorer are drawn from Harvey's public examples at
+https://github.com/harveyai/harvey-labs
+. The headline numbers are produced on Harvey's private 120-task dataset, which is not publicly released.
+Agent harness:
+https://github.com/ArtificialAnalysis/Stirrup
+Implementation:
+Each task is a self-contained legal-work assignment in one of 24 practice areas. The agent receives the task instructions, a set of read-only input documents, and the exact filenames of the deliverables it must produce, then works through the task in a single run without live interaction or iterative feedback during execution.
+Input documents are the task's case materials - contracts, agreements, memos, transcripts, and other legal records - staged read-only in the sandbox. The agent copies them into a working folder, reads them with the document-processing tools available in the sandbox, and writes its deliverables (typically .docx, .xlsx, or .md) directly into its home directory under the exact filenames the task specifies.
+All models are run using our open source agentic harness,
+Stirrup
+.
+Turns:
+Agents run for up to 200 turns per task.
+Tools:
+Within the harness, models are given a sandboxed code execution environment, and vision-capable models are additionally given an image viewer tool that reads image files from the sandbox as native image tokens for the model. The sandbox has no internet access, so the agent can only use the provided input documents and the software pre-installed in the image.
+Sandbox:
+Each task runs in an isolated Linux sandbox built from a shared agent-evals base image (Debian + Python 3.13), with document-processing tooling such as Pandoc, poppler/pdftotext, LibreOffice, python-docx, python-pptx, openpyxl, pdfplumber, PyMuPDF, and markitdown pre-installed. The task's input documents are staged read-only at runtime; individual shell commands are terminated after 20 minutes.
+Finish tools:
+A finish tool, which the agent calls to submit a summary and the absolute paths of its deliverables (validated to be actual files, not directories or missing paths), and an abandon_task_finish (give-up) tool, which it calls with a reason only when it concludes the task is genuinely impossible.
+Differences from Harvey's benchmark:
+Harvey LAB-AA is Artificial Analysis' independent reimplementation, so our numbers are not directly comparable to Harvey's own published results. The main differences:
+Submissions are required to match the exact filename specified in the task instructions. A near-miss filename counts as not produced, which is stricter than Harvey's best-effort matching and can lower our scores relative to theirs.
+A criterion fails outright, without being shown to the judge, only when none of its deliverables were produced. A partial submission - where some of the criterion's declared files are present - is still judged, with any missing file marked absent.
+Gemini 3.1 Pro is used as the grading model.
+We run on Stirrup's native shell tooling in an E2B sandbox with Artificial Analysis-authored agent and judge prompts, rather than Harvey's sandbox and custom tools.
+Harvey's original implementation equips the agent with custom tools and document-generation skill scripts (for example, for producing .docx, .xlsx, and .pptx files). We do not provide these, so our scores reflect raw model capability.
+Each task carries a rubric of equally-weighted, atomic, binary pass/fail criteria. Every criterion is graded against the text extracted from the criterion's declared deliverable files. Grading is text-only: the judge sees the extracted text of the deliverables, the task description, and the criterion's match criteria, and returns a strict pass or fail with no partial credit.
+Two headline metrics are reported:
+criterion pass rate
+, the share of atomic pass/fail rubric criteria the deliverables satisfy (mean over criteria), and
+all-pass rate
+, the share of tasks where every criterion passes with no partial credit. Criterion pass rate is the default metric shown across the site.
+Prompts:
+The prompts used across generation and grading:
+Agent system prompt:
+You are an AI agent completing a professional legal-work task. Use the tools provided to read the input documents, produce the requested deliverable files, and submit them within {max_turns} steps.
+
+When you are done you must call the `{finish_tool_name}` tool as your final step, passing a brief summary of what you accomplished and a list of absolute paths for every deliverable file.
+
+If you have genuinely concluded that the task cannot be completed - for example because required inputs are missing or a hard dependency is unavailable - call the `{abandon_task_finish}` tool with a brief reason instead. Do not use it to escape difficulty.
+
+You cannot interact with the user during the task. Make reasonable assumptions when needed and record them in your finish summary.
+Agent task prompt:
+<execution_context>
+## Sandbox
+
+You operate inside an isolated Linux sandbox through the `code_exec` tool, which runs shell commands and lets you read, create, and edit files. Commands run as the unprivileged user `user` (UID 1000).
+
+Files you write persist on disk across calls, but **shell state does not**: each command runs in a fresh shell, so no working directory, environment variable, or other shell state carries from one call to the next. Always use absolute paths for files, and do not navigate with `cd` across calls - a `cd` in one command is gone by the next. When a step genuinely needs a different directory, chain it into the same command (e.g. `cd /home/user && python build.py`).
+
+## No network
+
+The sandbox has no outbound connectivity, and there is no proxy, allowlist, or flag that turns it on - treat it as permanently offline. Anything that reaches the internet will fail: package installs (`pip`, `npm`, `apt`), remote `git`, and any HTTP/HTTPS request.
+
+Recognise a network block by its error signature - failed name resolution (`Could not resolve host`, `Temporary failure in name resolution`), an unreachable route (`Network is unreachable`), or a stalled connection - rather than guessing. When you see these the failure is structural: do not retry the same call or hunt for a workaround (mirrors, alternate hosts, cached copies). Re-plan using only what is already installed and the files in your workspace.
+
+## Filesystem
+
+- Writable: everything under `/home/user/` plus `/tmp`. Use these for deliverables, intermediate files, and caches.
+- Read-only inputs: `/home/user/documents` - the task's input documents. Copy these into a working folder before transforming them rather than editing them in place.
+
+## Runtime
+
+A document-processing stack is already installed - check what is present before assuming a gap:
+
+- **Reading inputs**: `pandoc` or `python3 -c "import docx; ..."` for Word; `pdftotext` or `python3 -c "import pdfplumber; ..."` for PDFs; `python3 -c "import openpyxl; ..."` for Excel; `markitdown <path>` as a general-purpose extractor for .docx, .xlsx, .pptx, and .pdf. `libreoffice` (the `soffice` binary) is also installed - use `soffice --headless --convert-to pdf <path>` to convert any Office format (.docx/.xlsx/.pptx, including legacy .doc/.xls) when the python parsers fall short.
+- **Producing deliverables**:
+  - `.docx`: `python3 -c "from docx import Document; ..."` or `pandoc -o out.docx`.
+  - `.xlsx`: `python3 -c "import openpyxl; ..."`.
+  - `.md` and other plain text: write directly with `cat`/`tee`/your script.
+- Check availability with `pip show <pkg>` or `which <tool>` rather than installing - installs fail offline, but the document stack above is already present.
+- Commands are terminated after {command_timeout_minutes} minutes. Keep them bounded, persist intermediate results to disk, and split long jobs into smaller steps.
+
+## Submitting your work
+
+Finish by calling the `{finish_tool_name}` tool - anything not submitted through it is not graded. Your call must include:
+1. A short summary of what you accomplished.
+2. Absolute paths to every deliverable (files only, not folders).
+
+Save each deliverable directly in `/home/user` under the exact filename the task asks for - not in a subdirectory. Save deliverables as ordinary, visible files - do not leave the only copy of your work in a dot-prefixed file or directory (e.g. `.report.docx`, `.output/report.docx`). Assume your files will be opened and edited by others after submission.
+
+If the task genuinely cannot be completed, call the `{abandon_task_finish}` tool with a brief reason instead. Use it only when you have concluded the work is impossible - not to escape a difficult task.
+</execution_context>
+
+<task>
+### {title}
+
+{instructions}
+</task>
+
+<deliverables>
+Submit these files, by exact name, saved directly in `/home/user`:
+{expected_deliverables}
+</deliverables>
+
+Please begin working on the task now.
+Judge system prompt (task context and work product):
+You are evaluating a legal AI agent's work product against one binary quality criterion.
+
+<task_context_for_work_product>
+The work product below was produced for this legal task. Use the task only as context for what the deliverables were meant to address - judge the work product, not the task.
+
+{task_title}
+
+{task_instructions}
+</task_context_for_work_product>
+
+<work_product>
+{agent_output}
+</work_product>
+Judge criterion prompt:
+<criterion>
+<title>
+{criterion_title}
+</title>
+<match_criteria>
+{match_criteria}
+</match_criteria>
+</criterion>
+
+Return `pass` only if the work product satisfies the criterion as described; otherwise `fail`.
+APEX-Agents-AA
+Description:
+APEX-Agents-AA is Artificial Analysis' independent implementation of Mercor's
+APEX-Agents
+benchmark. It evaluates long-horizon, cross-application agent work in professional services environments spanning investment banking, management consulting, and law
+Paper:
+https://arxiv.org/abs/2601.14242
+Dataset:
+We base our evaluation on the public APEX-Agents dataset from
+https://huggingface.co/datasets/mercor/apex-agents
+We evaluate 452 tasks from the public 480-task release (excluding Investment Banking Worlds 244 and 246, which have external runtime dependencies)
+Implementation:
+Each task is run with 3 repeats and scored using pass@1 - a repeat passes only if all rubric items are satisfied, and the leaderboard score is the average pass rate across repeats
+All models are run using our open source agentic harness,
+Stirrup
+, with a 200-turn cap per task
+Agents operate inside the
+Archipelago environment
+and access workplace tools through MCP servers exposed by its gateway
+The agent starts with a small meta-tool toolbelt and must explicitly manage MCP-backed tools using:
+List Tools
+– Shows which tools are currently available
+Inspect Tool
+– Inspects a tool before adding it
+Add Tool
+– Makes an MCP-backed tool available to the agent
+Remove Tool
+– Removes tools that are no longer needed
+The agent also receives:
+Todo Write
+- Creates or updates the agent's todo list. It can either replace the full list or merge updates by todo ID, and all todos must be completed or cancelled before final submission is accepted
+Finish
+- Submits the agent's final answer together with a completion status. It is the only way to submit a final answer, and only a completed Finish submission proceeds to grading
+MCP tool calls have a 60-second timeout. Tool outputs are truncated when needed to a 24k-token budget using a 20k-character head and 5k-character tail excerpt. Image inputs are compressed to approximately 1 MP before being returned to the model
+Grading is run locally with the
+Archipelago local file grader
+. Each repeat is graded against the task rubric using both the final answer submitted through Finish and the filesystem diff between initial and final world snapshots. A repeat passes only if every rubric item is satisfied. Gemini 3 Flash with 'low' reasoning is used as the LLM judge
+AA-AnalystAgent
+Description:
+AA-AnalystAgent is Artificial Analysis' end-to-end data analysis benchmark. An agent answers quantitative questions across business and scientific domains, working from the supplied source spreadsheets and documents as primary inputs and executing Python in a sandboxed code-execution environment. AA-AnalystAgent is reported as a standalone leaderboard and is not a component of the Artificial Analysis Intelligence Index.
+Agent harness:
+https://github.com/ArtificialAnalysis/Stirrup
+Dataset:
+AA-AnalystAgent is a privately held benchmark; the question set, reference answers, and source files are not publicly released, to limit contamination risk
+80 quantitative questions across 14 business and scientific domains, including environmental reporting, trade and commodity statistics, healthcare expenditure reports, hydrology and weather data, government appropriations, energy cost models, financial models, and project schedules
+Questions span five functional workflow archetypes covering the spread of real analyst work: source lookup and diagnosis, filter and total, ratios, trends and sensitivities, P&L modeling, and cash, balance-sheet and valuation modeling
+Each question is paired with a folder of reference spreadsheets and documents (xlsx, docx) that is uploaded into the agent's workspace. A human-authored reference answer is held out from the agent and used by the grader at scoring time
+Reference answers are independently validated by Artificial Analysis
+Implementation:
+Each question is run with 5 independent repeats. The leaderboard score is pass^5 — the share of questions answered correctly on every one of the 5 attempts:
+where p
+ji
+= 1 if attempt i on question j is correct, 0 otherwise, and n is the number of questions. This departs from the pass@1 scoring we use across our other evaluations: an analyst agent is only useful if its answers hold up without re-checking, so the headline metric rewards reproducing a correct answer over reaching it occasionally
+Alongside pass^5 we compute pass@1 (the mean pass rate per attempt, aggregated across all repeats) and pass@5 (the share of questions solved on at least one attempt), which separate a model's reliability from its ceiling
+All models are run as agents using our open source agentic harness,
+Stirrup
+, with a 100-turn cap per task
+The agent is provided a small toolset covering code execution in an isolated Linux sandbox (Python 3.12 with the question's reference files mounted and a pinned set of standard Python data analysis libraries preinstalled), URL fetching, image viewing for vision-capable models, and final-answer submission. Models are instructed to submit only the answer value (e.g. just the number or label), without explanation
+Each response is graded binary correct or incorrect against the held-out reference answer. Every cell is sent to an LLM judge so grading artifacts and judge-cost accounting stay uniform. A deterministic numeric equivalence pre-check then overrides the judge on unambiguous cases: an answer equal to the reference value, in the same unit convention, at the precision the question asks for, is a guaranteed pass. The pre-check is one-sided — it never fails an answer — so everything it cannot settle keeps the judge verdict. If the judge returns a malformed response on a cell the pre-check can settle, the pre-check still records a pass. Gemini 3 Flash (Reasoning) is used as the LLM judge
+Agent Prompt:
+The agent is prompted with the following template, interpolating the question's reference files, the task, and the finish tool name:
+You are tasked with answering a data analysis question.
+
+## Environment
+
+The `code_exec` tool provides access to a Linux-based execution environment with a full file system where you can create, read, and modify files.
+
+Python 3.12 is the default runtime. Use `python script.py` to run scripts.
+The following Python packages are preinstalled (pinned versions):
+
+- numpy 2.4.4, numpy-financial 1.0.0, pandas 3.0.2, scipy 1.17.1, polars 1.40.0
+- matplotlib 3.10.8, seaborn 0.13.2
+- scikit-learn 1.7.2, statsmodels 0.14.4
+- openpyxl 3.1.5, xlrd 2.0.2, python-docx 1.2.0, formulas 1.3.4
+- PyMuPDF 1.27.2.2, pdfplumber 0.11.9
+- Pillow 12.2.0, requests 2.33.1, beautifulsoup4 4.13.4
+- tqdm 4.67.3, tabulate 0.10.0, sympy 1.14.0
+
+## Reference Files
+
+The following reference files are available in your workspace:
+
+<reference_files>
+{reference_files}
+</reference_files>
+
+## Task
+
+<task>
+{task}
+</task>
+
+## Submitting Your Answer
+
+When you have determined the answer, use the `{finish_tool_name}` tool to submit it.
+Your answer should be a concise, direct response to the question.
+If the question asks for a number, provide just the number.
+If the question asks for a name or label, provide just that.
+Do NOT include explanations in your answer — only the final answer value.
+Grader Prompt:
+Every (model, question) response is sent to an LLM judge with the following prompt, interpolating the original question, the held-out reference answer, and the agent's submitted answer. The numeric pre-check may then override that verdict as described above:
+You are an expert evaluator grading a data analyst's response to a question.
+
+Decide whether the response is correct or incorrect, judged against the reference answer and the standard a professional data analyst working in this question's domain would be held to. Focus on the substance of the answer, not prose style. Be objective and consistent, and give a brief explanation for your verdict.
+
+First identify exactly what the reference requires — the specific value(s), item(s), or label(s) — and what the response actually commits to, then compare them directly before deciding.
+
+Apply these conventions:
+
+- Format directives are binding. If the question specifies a form or precision — a number of decimal places, "as a percentage", "to the nearest cent", a cell reference, particular units — the response must satisfy it. A right value in the wrong requested form is incorrect.
+- Equivalent representations of the same value are correct. Thousands separators, currency symbols, surrounding whitespace, and trailing zeros are immaterial; a percentage and its decimal fraction (e.g. 12.84% and 0.1284) are the same value; adding or omitting a "%" sign never changes correctness when the digits already match the value the reference states; a quantity stated in the dataset's native units (e.g. thousands) matches the same amount written in full.
+- Judge precision by value, to a sensible number of significant figures. When the question states a precision, require exactly that. When it does not, accept any answer that is a correct rounding of the reference value — reference answers often carry more decimal places than are meaningful (e.g. a dollar figure written as 64792.44714), and a competent analyst rounds sensibly, so do NOT reject an answer merely for having fewer decimals than the reference. Reject an answer only when its value genuinely differs from the reference (a wrong figure, not a coarser rounding of the same value) or when it discards so much precision that it misstates the quantity.
+- Match every required item. If the question asks for more than one item (e.g. "which two tasks"), the response is correct only if it identifies exactly the reference's items. Judge the single set the response commits to and ignore hedged alternatives phrased as "(or ...)"; a response naming different items than the reference — however plausible — is incorrect.
+- Honor explicit acceptance and rejection clauses in the reference answer. If the reference names specific values as acceptable or as not acceptable, follow it exactly.
+
+## Question
+
+{question_prompt}
+
+## Reference Answer
+
+{reference_answer}
+
+## Response to Evaluate
+
+{model_response}
+EnterpriseOps-Gym-AA
+Status:
+Standalone evaluation (not part of
+Artificial Analysis Intelligence Index v4.3
+)
+Description:
+EnterpriseOps-Gym-AA is Artificial Analysis' independent implementation of ServiceNow's
+EnterpriseOps-Gym
+benchmark, which evaluates AI agents on stateful, multi-step planning and tool use across realistic enterprise workflows. Agents operate live enterprise systems through tools and are graded on the final state of the underlying databases rather than on their exact sequence of actions.
+Paper:
+https://arxiv.org/abs/2603.13594
+Dataset:
+https://huggingface.co/datasets/ServiceNow-AI/EnterpriseOps-Gym
+Agent harness:
+https://github.com/ArtificialAnalysis/Stirrup
+Domains:
+We evaluate the benchmark's oracle-mode tasks across all eight enterprise domains: Customer Service Management (CSM), Human Resources (HR), IT Service Management (ITSM), Email, Calendar, Teams, and Drive, plus Hybrid tasks that require orchestrating actions across several of these systems in a single workflow.
+Implementation:
+Each task runs in an isolated, resettable sandbox: the relevant enterprise systems are brought up as standalone gym servers, each exposing its tools over a live Model Context Protocol (MCP) server and backed by a task-specific SQLite database seeded with synthetic data. Every task clones its own database so runs are isolated and reproducible.
+We run the benchmark in its
+oracle tool mode
+only: the agent is given the set of tools required for the task, isolating planning and execution from tool retrieval. The source dataset's distractor-tool modes are not run.
+All models are run using our open-source agentic harness,
+Stirrup
+, in a standard reason-and-act tool-use loop with a 100-turn cap per task. Each task is run with 3 repeats and the headline score is the mean across repeats.
+Grading is outcome-based. After the agent finishes, the final state of each task's database is snapshotted and checked with the benchmark's SQL verifiers, which test goal completion, state and integrity constraints, permission and process compliance, and the absence of unintended side effects.
+Two metrics are reported. The headline
+success rate
+is strict pass@1: a task counts as a success only when it passes every one of its verifiers. We also report the
+verifier pass rate
+, the share of individual verifier checks passed, as a finer-grained secondary metric.
+Differences from ServiceNow's benchmark:
+EnterpriseOps-Gym-AA is our independent implementation, run on our own Stirrup harness and agent prompts, so our numbers are not directly comparable to results reported in the paper.
+ITBench-AA
+Status:
+Standalone evaluation (not part of
+Artificial Analysis Intelligence Index v4.3
+)
+Description:
+ITBench-AA is Artificial Analysis' independent implementation of IBM's ITBench benchmark, evaluating AI agents on Site Reliability Engineering (SRE): Kubernetes incident root-cause analysis.
+Paper:
+https://arxiv.org/abs/2502.05352
+Repository:
+https://huggingface.co/datasets/ArtificialAnalysis/ITBench-AA
+Agent harness:
+https://github.com/ArtificialAnalysis/Stirrup
+Dataset:
+We evaluate 59 Kubernetes incident tasks: 40 from IBM's public ITBench SRE release and 19 private tasks shared with us by the ITBench team. The headline score is averaged across both splits
+Each task is an offline Kubernetes incident snapshot containing alerts, events, traces, metrics, logs, and application topology, baked into a scenario-specific sandbox and mounted under
+/home/user
+Implementation:
+Each task is run with 3 repeats. The primary score is precision at full recall a repeat receives 0.0 if it misses any ground-truth root-cause entity; otherwise it receives precision over the submitted entities.
+All models are run using our open-source agentic harness, Stirrup with a 100-turn cap per task. The agent loop informs the language model that its turn limit is approaching during the last 20 turns.
+The agent is given a single
+run_shell
+tool to inspect the snapshot, plus a
+finish
+tool to submit its final answer. It must write a structured JSON diagnosis to
+/home/user/agent_output.json
+containing the minimal set of independent root-cause Kubernetes entities responsible for the incident, with reasoning and evidence for each, while excluding downstream symptoms
+Grading uses an LLM judge only to normalize submitted
+contributing_factors
+onto the ground-truth canonical entities and alias groups.
+After normalization, ground-truth alias groups are merged into scoring groups, so equivalent entities such as a pod and its corresponding deployment/service count as the same prediction. If any member of an alias group is marked as a root cause, the merged group is scored as a root-cause target; predicting multiple entities in the same alias group only counts once.
+Precision at full recall is computed as
+0.0
+if any root-cause scoring group is missed. If no root-cause groups are missed, it is
+true_positives / (true_positives + false_positives)
+, where unmatched predictions and predictions mapped to non-root-cause groups count as false positives.
+GPT-5.5 with medium reasoning effort is used as the grader model for comparing the model’s output with the ground truth for each task
+Generation prompt:
+**Task**:
+
+You are an expert SRE (Site Reliability Engineer) and Kubernetes SRE Support Agent investigating a production incident from OFFLINE snapshot data.
+
+====================================================================
+# INCIDENT SNAPSHOT DATA LOCATION
+====================================================================
+Your incident data and working directory is located in
+- /home/user
+
+The final output must be written to /home/user/agent_output.json
+
+Available Python packages:
+- `drain3==0.9.11`
+- `numpy==2.4.5`
+- `pandas==3.0.3`
+
+Both `python` and `python3` are available and use the same environment.
+
+Your objective is to generate a **JSON diagnosis** identifying the root causes of the incident — the minimal set of independent Kubernetes entities whose failures directly explain the incident.
+
+Requirements:
+- Provide reasoning and evidence for every listed entity.
+- When the JSON file is ready, call the provided finish tool and submit `/home/user/agent_output.json`.
+
+All entities MUST use the format: `namespace/Kind/name`
+
+Examples:
+- `otel-demo/Deployment/ad` (Deployment named "ad" in namespace "otel-demo")
+- `otel-demo/Service/frontend` (Service named "frontend")
+- `cluster/Node/worker-node-1` (cluster-scoped resource)
+
+DO NOT include UIDs in the entity name.
+
+====================================================================
+## Output Format
+====================================================================
+Output must consist solely of the final diagnosis in the specified JSON format below — do **not** include any additional text, markdown, or comments:
+
+```json
+{
+  "contributing_factors": [
+    {
+      "name": "namespace/Kind/name",
+      "reasoning": "A short, clear, human-readable explanation for why this entity is a root cause. Reference evidence where possible.",
+      "evidence": "Concise summary of supporting facts — relevant alerts, events, logs, traces, or metrics. Plain string."
+    }
+  ]
+}
+```
+
+====================================================================
+# RULES FOR INCLUSION
+====================================================================
+
+**Only include an entity if both of the following are true:**
+
+1. **There is qualifying evidence** — it appears in at least one of: a firing alert, a Kubernetes event, an error/warning log line, a metric anomaly, or trace evidence directly tied to the incident window. A passing mention in an unrelated log is not sufficient.
+
+2. **It passes the irreducibility test** — you cannot fully explain its failure by pointing to another entity already in the list. Ask: *"If I remove this entity, does my explanation of the incident become incomplete?"* If yes, include it. If another entity already accounts for it, leave it out.
+
+**Do not include** downstream effects, symptoms, or intermediates — only the independent upstream causes.
+
+**Example (exhausted ResourceQuota blocking pod scheduling):**
+
+Causal chain: ResourceQuota exhausted → ReplicaSet cannot schedule pods → Deployment degraded
+
+- ✅ `otel-demo/ResourceQuota/otel-demo-mem-quota` — memory limit exhausted; directly blocks pod creation. Include.
+- ❌ `otel-demo/ReplicaSet/ad-7f9d4b` — failed only because the quota above was exhausted. Exclude.
+- ❌ `otel-demo/Deployment/ad` — degraded as a downstream consequence. Exclude.
+
+**Multiple entries are allowed only if they are truly independent** — two separate upstream causes that do not explain each other.
+
+When in doubt, prefer the most specific Kubernetes object that independently introduced the failure.
+
+====================================================================
+# INVESTIGATION WORKFLOW
+====================================================================
+
+### Phase 1 — Context Discovery
+List available files (alerts, logs, events, topology).
+
+### Phase 2 — Symptom Analysis
+Read all alert files. Compute:
+- Start time, End time, Duration, Frequency
+
+### Phase 3 — Hypothesis Generation
+- Create initial hypotheses (e.g. "checkout pods OOMKilled", "redis latency spike").
+- Create a validation plan for each hypothesis.
+
+### Phase 4 — Evidence Collection Loop
+- Use tools (and generated python code) to gather log, event, metrics, trace evidence.
+- Validate or refute each hypothesis using real data.
+- Explain firing alerts as soon as you find supporting evidence.
+
+### Phase 5 — Causal Chain Construction
+Build a causal chain like
+`[Config Error] → [CrashLoop] → [Service Down] → [Frontend 5xx]`
+
+### Phase 6 — Conclusion
+Ensure:
+- All alerts are explained in the reasoning/evidence for the root causes, but do not add downstream entities only to account for alerts
+- All included entities pass the irreducibility test
+- JSON is written to `/home/user/agent_output.json`
+- Call the finish tool and submit the file
+Grading prompt:
+You are an expert AI evaluator specializing in Root Cause Analysis (RCA) for complex software systems.
+
+You will be provided with:
+
+1. A **Ground Truth (GT)** JSON object containing entity definitions.
+2. A **Generated Response** JSON object containing predicted entities.
+
+Your job is only to normalize generated entities to ground-truth entities.
+
+Ground Truth fields such as `groups`, `aliases`, `filter`, and `kind` may appear either at the top level of `GT` or under `GT.spec`. Treat `GT.spec` as the ground-truth payload when present.
+
+-----
+
+### Normalization Rules
+
+Before any downstream scoring can occur, you must accurately normalize entities from the `Generated Response` to the `Ground Truth`.
+
+This process must be based on **explicit evidence** from the entity's metadata.
+You must not infer or guess mappings based on an entity's position in a causal chain.
+
+Only normalize entities from `Generated Response.contributing_factors`.
+
+An entity from the `Generated Response` can only be mapped to a `Ground Truth` entity if a **Confident Match** can be established.
+
+**Definition of a Confident Match:**
+A generated entity is a confident match to a ground-truth entity only if its `name` field, or other explicit identifying metadata, clearly corresponds to the `filter` and `kind` of a ground-truth entity.
+
+**Alias Handling:**
+The `GT.aliases` field contains arrays of equivalent entity IDs.
+If a generated entity clearly matches an entity in an alias group, you may normalize it to the matching GT entity ID from that alias group.
+
+**Workload Kind Equivalence:**
+Treat `Deployment` and `Pod` as equivalent for normalization when the namespace and workload name correspond. For example, `otel-demo/Deployment/checkout` is a confident match for a GT `Pod` entity whose filter matches checkout pods in the `otel-demo` namespace.
+
+**Entity Name Format:**
+Generated entities use the format `namespace/Kind/name`.
+
+Examples:
+- `otel-demo/Deployment/flagd`
+- `otel-demo/Service/frontend`
+- `otel-demo/Pod/checkout-8546fdc74d-d68cn`
+
+Confident match examples:
+- A generated entity with `name: "otel-demo/Service/adservice"` is a confident match for the GT entity with `id: "ad-service-1"` and `filter: [".*adservice\\\\b"]`.
+- A generated entity with `name: "otel-demo/Service/adservice"` can match `ad-pod-1` only if the GT alias set makes that link explicit, for example `["ad-pod-1", "ad-service-1"]`.
+- If `GT.aliases` contains `["load-generator-pod-1", "load-generator-service-1"]`, then normalizing a generated `load-generator-service-1` match to that alias group is valid.
+- A generated `chaos-mesh/Schedule/...` entity whose name matches a GT filter is a confident match for the spawned chaos resource of any kind, provided name and namespace correspond.
+- A generated entity with `name: "67cbd7fe98a0776a"` and no other identifying evidence is not a confident match.
+
+If a generated entity does not have a confident match, leave it unmatched and set its normalized GT entity ID to `null`.
+
+Preserve the original order of the generated `contributing_factors`.
+
+-----
+
+### Output Format
+
+Return only a single JSON object with this shape:
+
+```json
+{
+  "contributing_factor_entities": [
+    {
+      "submitted_entity_name": "namespace/Kind/name",
+      "normalized_gt_entity_id": "ground-truth-entity-id-or-null",
+      "reasoning": "brief explanation of why this is a confident match or why it is unmatched"
+    }
+  ]
+}
+```
+
+Rules:
+- Include one item for every generated entity in `contributing_factors`.
+- Preserve input order.
+- Use `normalized_gt_entity_id: null` when there is no confident match.
+- Return only valid JSON.
+
+Given the following Ground Truth (GT) and Generated Response, normalize the generated contributing-factor entities to the Ground Truth.
+
+## Ground Truth (GT):
+```json
+{ground_truth}
+```
+
+## Generated Response:
+```json
+{generated_response}
+```
+
+## Task:
+1. Look only at `Generated Response.contributing_factors`.
+2. For each such entity, determine whether there is a confident match in the Ground Truth.
+3. If there is a confident match, return the matched ground-truth entity ID.
+4. If there is not a confident match, return `normalized_gt_entity_id: null`.
+5. Do not score anything. Return only the normalization result JSON.
+General
+IFBench
+Status:
+Standalone evaluation (not part of
+Artificial Analysis Intelligence Index v4.3
+). IFBench was removed from the Intelligence Index in v4.1, but we continue to run it on new model releases.
+Description:
+A benchmark that evaluates a model's ability to follow precise instructions in a single turn. It tests a wide range of skills, including counting, formatting, and sentence manipulation.
+Paper:
+https://arxiv.org/abs/2507.02833
+Dataset:
+https://huggingface.co/datasets/allenai/IFBench_test
+Implementation:
+Uses the single-turn IFBench dataset, which contains 294 questions
+We run 5 repeats for each question with pass@1 scoring
+We evaluate responses using the official source code from
+allenai/IFBench
+We employ the loose evaluation mode to robustly assess instruction-following, which accounts for extraneous text or formatting by checking several variations of the model's output (e.g., with and without the first and last lines, and with asterisks removed)
+Our score represents the prompt level accuracy (average across all questions and repeats)
+We do not use the multi-turn version of IFBench, which uses a different dataset
+MLCR-AA (Medical Long Context Reasoning)
+Status:
+Standalone evaluation (not part of
+Artificial Analysis Intelligence Index v4.3
+); a component of the Artificial Analysis Healthcare & Medical Index
+Description:
+MLCR-AA is Artificial Analysis' evaluation of MLCR (Medical Long Context Reasoning), an open benchmark from Wisedocs that measures how well models reason over long, fragmented medical records, performing the kind of multi-document synthesis claims professionals do when reviewing insurance and healthcare cases, such as reconstructing chronology, causality, treatment patterns, and claim relevance
+Code:
+Wisedocs-AI/medical-long-context-reasoning
+Public dataset:
+Wisedocs/mlcr-dataset
+Key details:
+Realistic, synthetic medical cases of roughly 25,000–64,000 tokens
+Questions are graded across six tiers of difficulty, from locating a single fact to expert-level clinical synthesis and compound, multi-part reasoning
+Responses that pass the conciseness gate and contain an answer are graded by a panel of three LLM judges; accuracy and completeness are each decided by majority vote
+A response longer than five times the reference answer fails a conciseness gate and scores zero without judging; the overall pass rate credits a response only when it passes that gate and is judged both complete and accurate
+Artificial Analysis evaluates a private held-out set of the two hardest question types (expert-tier clinical synthesis and compound, multi-part reasoning): 60 questions, each run with 3 repeats. This private set is separate from the publicly released dataset
+Artificial Analysis reports the overall pass rate (credited only when a response is concise and judged both complete and accurate) as the primary score. Judge accuracy and completeness are conditional rates among judged responses; conciseness covers all responses. These breakdowns are shown alongside the primary score; pass@1
+Other
+Global-MMLU-Lite
+Status:
+Standalone evaluation (not part of
+Artificial Analysis Intelligence Index v4.3
+); powers the Artificial Analysis Multilingual Index
+Description:
+A lightweight, multilingual version of MMLU designed to evaluate knowledge and reasoning skills across a diverse range of languages and cultural contexts
+Dataset:
+CohereLabs/Global-MMLU-Lite
+Key details:
+~6,000 questions (~400 per supported language)
+Multiple Choice (4 options)
+Regex extraction, pass@1
+MMMU Pro
+Status:
+Standalone evaluation (not part of
+Artificial Analysis Intelligence Index v4.3
+); a multimodal (visual) reasoning benchmark
+Description:
+An enhanced MMMU benchmark that eliminates shortcuts and guessing strategies to more rigorously test multimodal models across 30 academic disciplines
+Dataset:
+MMMU/MMMU_Pro
+Key details:
+1,730 questions
+Multiple Choice (10 options)
+Regex extraction, pass@1
+Legacy Evaluations
+Evaluations we have retired or superseded. We keep their methodology here for reference and historical comparability; they are no longer part of the Artificial Analysis Intelligence Index or our active reporting.
+GPQA Diamond (Graduate-Level Google-Proof Q&A Benchmark)
+Status:
+Removed from the Artificial Analysis Intelligence Index in v4.2, having been a constituent up to and including v4.1.1. We still run it on new model releases and report it as a standalone evaluation.
+Description:
+Scientific knowledge and reasoning benchmark
+Subset:
+Diamond subset (198 questions) selected for maximum accuracy and discriminative power
+Paper:
+https://arxiv.org/abs/2311.12022
+Dataset:
+https://github.com/openai/simple-evals/blob/main/gpqa_eval.py
+Key Details:
+198 questions covering biology, physics and chemistry - we test the GPQA Diamond subset of the full GPQA dataset (448 questions total), which was defined by the original authors as the highest quality subset, where both experts answer correctly and the majority of non-experts answer incorrectly
+4 option multiple choice format
+Regex-based answer extraction with pass@1 scoring (prompt and regex below)
+𝜏³-Banking
+Status:
+Removed from the Artificial Analysis Intelligence Index in v4.3, having been a constituent up to and including v4.2. We still run it on new model releases and report it as a standalone evaluation.
+Description:
+Fintech customer-support domain of the 𝜏-Knowledge framework developed by Sierra, evaluating agents that must coordinate retrieval from a large unstructured knowledge base with multi-step tool-mediated account changes
+Paper:
+https://arxiv.org/abs/2603.04370
+Blog:
+sierra.ai/blog/bench-advancing-agent-benchmarking-to-knowledge-and-voice
+Dataset:
+https://github.com/sierra-research/tau2-bench
+Implementation:
+Agents handle ~700 interconnected policy documents (≈195K tokens, 21 product categories) and must locate the relevant policy, reason over it, and execute a multi-step sequence of tool calls — including tools referenced only in documentation rather than explicitly listed
+We evaluate the full 𝜏³-Banking task suite (97 tasks) with 5 repeats per task and report pass@1 averaged across the repeats, running the upstream tau2-bench v1.0.1 dataset and grader
+Outcomes are scored against actual backend database state — for example, whether a dispute was opened or a provisional credit issued — rather than conversational quality
+We use GPT-5.4 Mini (medium reasoning) for both the user simulator and the natural-language assertion judge
+For knowledge retrieval over the banking corpus we enable BM25 lexical search and grep (
+bm25_grep
+mode) inside the original 𝜏-Bench harness
+We apply a constraint on execution to limit steps to a maximum of 200 per task repeat (the 𝜏-Knowledge reference default for text-mode runs). A 'step' here is the 𝜏-Bench harness definition — every message passed within the simulation, including user simulator turns — rather than only the turns taken by the model under evaluation
+Terminal-Bench v2.1
+Status:
+Superseded by Terminal-Bench v4.0 in Intelligence Index v4.3, having been a constituent up to and including v4.2. It remains part of the Coding Index.
+Description:
+A verified refresh of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Keeps the same 89 curated tasks across software engineering, system administration, data processing, model training, and security, with environment and instruction fixes that make scores reflect agent capability rather than environment gaps
+Paper:
+https://arxiv.org/abs/2601.11868
+Leaderboard:
+tbench.ai/leaderboard/terminal-bench/2.1
+Implementation:
+We evaluate the full Terminal-Bench v2.1 dataset (89 tasks) using the Terminus 2 agent harness in an E2B sandbox environment, with pass@1 scoring averaged over 3 repeats per task
+Each task ships with a verification suite that the agent must satisfy by interacting with the terminal — tasks are considered successful only if every test passes
+We apply the following constraints on evaluations for the agent:
+Maximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 250
+Per-task agent timeout is set to two hours (7,200 seconds), or the task's own specified timeout where that is longer, well above typical task durations
+In our testing these constraints predominantly limit cases where models are stuck in an unsuccessful loop, and we see no consistent differences in performance due to these constraints
+Terminal-Bench Hard
+Note:
+Superseded by Terminal-Bench v2.1, which we use going forward. Terminal-Bench Hard was a constituent of the Artificial Analysis Intelligence Index prior to v4.1
+Description:
+An agentic benchmark developed by Stanford University researchers, the Laude Institute, and the open source community, released in 2025. Terminal-Bench evaluates the ability of agents and models to solve a wide variety of tasks (including software engineering, system administration, and game-playing scenarios) using a terminal interface
+Page:
+https://www.tbench.ai/
+Dataset registry:
+https://www.tbench.ai/registry
+Implementation:
+We implement the 'hard' subset of the terminal-bench-core dataset, with the latest dataset version as of 14 August 2025 (commit 74221fb); we evaluate 44 tasks from this subset (a small number of tasks are excluded due to external dependency issues in the original dataset)
+We evaluate this 'hard' subset using the Terminus 2 agent harness for consistency between models, and score models based on pass@1 scoring with the overall average over 3 repeats for each task
+In the Terminal-Bench framework, each task has a specific suite of tests applied, and are considered successful if all tests pass, or unsuccessful otherwise
+We apply the following constraints on evaluations for the agent:
+Maximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 100
+We set a global per-task timeout of two hours (7,200 seconds); in practice the 100-episode limit is the binding constraint
+Models are limited to a maximum of 1 million cumulative input tokens per repeat of each task
+In our testing these constraints predominantly limit cases where models are stuck in an unsuccessful loop, and we see no consistent differences in performance due to these constraints
+View all 44 evaluated tasks
+aimo-airline-departures
+blind-maze-explorer-5x5
+cartpole-rl-training
+chem-property-targeting
+chem-rf
+circuit-fibsqrt
+cobol-modernization
+configure-git-webserver
+cross-entropy-method
+extract-moves-from-video
+feal-differential-cryptanalysis
+feal-linear-cryptanalysis
+form-filling
+git-multibranch
+gpt2-codegolf
+install-windows-xp
+make-doom-for-mips
+make-mips-interpreter
+model-extraction-relu-logits
+movie-helper
+neuron-to-jaxley-conversion
+oom
+organization-json-generator
+parallel-particle-simulator
+parallelize-graph
+password-recovery
+path-tracing
+path-tracing-reverse
+play-zork
+play-zork-easy
+polyglot-rust-c
+prove-plus-comm
+pytorch-model-cli
+rare-mineral-allocation
+recover-obfuscated-files
+reverse-engineering
+run-pdp11-code
+stable-parallel-kmeans
+super-benchmark-upet
+swe-bench-astropy-1
+swe-bench-astropy-2
+train-fasttext
+word2vec-from-scratch
+write-compressor
+𝜏²-Bench Telecom
+Note:
+Superseded by 𝜏³-Banking, which we use going forward. 𝜏²-Bench Telecom was a constituent of the Artificial Analysis Intelligence Index prior to v4.1
+Description:
+Benchmark developed by Sierra for conversational AI agents in 'dual control' scenarios with language models simulating both agent and user roles to test planning, tool use, and guidance/communication
+Paper:
+https://arxiv.org/abs/2506.07982
+Blog:
+sierra.ai/resources/research/tau-squared-bench
+Dataset:
+https://github.com/sierra-research/tau2-bench
+Implementation:
+The 'telecom' domain introduced in 𝜏²-Bench contains 114 tasks (subsampled from a total 2,285 programmatically generated tasks), with varying 'intents' describing if the task is related to service, mobile data, or MMS issues. We evaluate the telecom domain in full with 3 repeats per task, and report the score using pass@1 scoring as the average of the 3 attempts
+In this benchmark, the outcome 'world state' decides whether the agent succeeded - for example, whether the user's cell phone data is functioning after the agent completes the task
+The full 𝜏²-Bench suite includes 3 execution modes with varying planning and communication levels in ablation studies; we implement the 'default' dual control mode with fully simulated and separate user and assistant agents
+We use Qwen3 235B A22B 2507 (Non-reasoning) for the user agent simulator to ensure consistent checkpoint availability and full control over inference settings alongside strong base intelligence
+We apply a constraint on execution to limit steps to a maximum of 100 per task repeat
+MATH-500
+Note:
+Retired from the Artificial Analysis Intelligence Index and our active reporting.
+Description:
+A 500-problem subset of the MATH benchmark spanning high-school competition mathematics across a range of subjects and difficulty levels.
+Dataset:
+huggingface.co/datasets/HuggingFaceH4/MATH-500
+AIME 2025 (American Invitational Mathematics Examination)
+Note:
+Retired from our active reporting; no longer part of
+Artificial Analysis Intelligence Index v4.3
+.
+Description:
+Advanced mathematical problem-solving dataset from the 2025 American Invitational Mathematics Examination.
+Dataset:
+2025 AIME I
+&
+2025 AIME II
+Key details:
+Strict numerical answer format (integer 1–999)
+Pass@1 scoring with 10 repeats per question
+Script-based grading with SymPy normalization + equality checker LLM as backup
+MMLU-Pro (Multi-Task Language Understanding Benchmark, Pro version)
+Note:
+Removed from the Intelligence Index in v4.0. Retired from our active reporting.
+Description:
+Comprehensive evaluation of advanced knowledge across domains, adapted from original MMLU
+Paper:
+https://arxiv.org/abs/2406.01574
+Dataset:
+https://huggingface.co/datasets/TIGER-Lab/MMLU-Pro
+Key details:
+10 option multiple choice format
+Regex-based answer extraction with pass@1 scoring (prompt and regex below)
+LiveCodeBench
+Note:
+Removed from the Intelligence Index in v4.0. Retired from our active reporting.
+Description:
+Python programming to solve programming scenarios derived from LeetCode, AtCoder, and Codeforces
+Paper:
+https://arxiv.org/abs/2403.07974
+Dataset:
+https://huggingface.co/datasets/livecodebench/code_generation_lite
+Key details:
+Pass@1 evaluation criteria
+We do not apply LiveCodeBench custom system prompts
+Prompt Templates, Answer Extraction and Evaluation
+Multiple Choice Questions (GPQA, MMLU-Pro)
+We prompt multi-choice evals with the following instruction prompt. This prompt was independently developed by Artificial Analysis, and carefully validated with various ablation studies. We assess that this prompt is a clearer, and therefore fairer, approach than traditional completion-style multi-choice evaluation methodologies or other instruction prompts we tested.
+GPQA uses four options (A–D). MMLU-Pro uses ten options (A–J); we use the same structure with additional choices.
+Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D' (e.g. 'Answer: A').
+
+{Question}
+
+A) {A}
+B) {B}
+C) {C}
+D) {D}
+Answer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: A').
+
+{Question}
+
+A) {A}
+B) {B}
+C) {C}
+D) {D}
+E) {E}
+F) {F}
+G) {G}
+H) {H}
+I) {I}
+J) {J}
+Multiple Choice Extraction Regex
+We extract multiple choice answers using a multi-stage approach to handle various answer formats. For single-letter responses, we use the letter directly. Otherwise, we first attempt to match our primary pattern that looks for formal "Answer: X" format (accounting for optional markdown formatting):
+Primary Pattern:
+(?i)[\*\_]{0,2}Answer[\*\_]{0,2}\s*:[\s\*\_]{0,2}\s*([A-Z])(?![a-zA-Z0-9])
+If the primary pattern fails, we attempt the following fallback patterns in sequence to catch various answer formats:
+LaTeX boxed notation (e.g., \boxed
+{A}
+or \boxed
+{The answer is A}
+)
+\boxed\{[^}]*([A-Z])[^}]*\}
+Natural language (e.g., "answer is B")
+answer is ([a-zA-Z])
+With parenthesis (e.g., "answer is (C")
+answer is \\(([a-zA-Z])
+Choice format (e.g., "D) some answer text")
+([A-Z])\)\s*[^A-Z]*
+Explicit statement (e.g., "E is the correct answer")
+([A-Z])\s+is\s+the\s+correct\s+answer
+Standalone letter at end of response
+([A-Z])\s*$
+Letter followed by period (e.g., "F.")
+([A-Z])\s*\.
+Letter followed by non-word character
+([A-Z])\s*[^\w]
+We always take the last match found to account for self-correction in responses.
+Equality Checker LLM
+For evaluations with open-ended answers (HLE, AA-LCR), we use an equality checker LLM to determine if a model's response is semantically equivalent to the correct answer. This approach uses a language model to assess whether two answers have the same meaning, even if phrased differently. The equality checker evaluates semantic equivalence rather than requiring exact string matches, which is particularly important for questions where multiple valid phrasings exist.
+HLE and AA-LCR share a single equality checker, GPT-5.6 Luna (medium), selected based on validation against human judgement. Specific equality checker prompts for each evaluation are detailed in the sections below.
+HLE (Humanity's Last Exam)
+We prompt HLE with the following text as a system prompt, with a difference between Exact Answer and Multiple Choice questions - these prompts are used with no changes from the original implementation by Hendrycks et al. For models that do not support a system prompt, we prepend the system prompt to the user prompt.
+System Prompt for Exact Answer Questions:
+
+"Your response should be in the following format:
+Explanation: {your explanation for your final answer}
+Exact Answer: {your succinct, final answer}
+Confidence: {your confidence score between 0% and 100% for your answer}"
+
+System Prompt for Multiple Choice Questions:
+
+"Your response should be in the following format:
+Explanation: {your explanation for your answer choice}
+Answer: {your chosen answer}
+Confidence: {your confidence score between 0% and 100% for your answer}"
+HLE Equality Checker Prompt
+We use the following prompt on GPT-5.6 Luna (medium) to check if the response answer is correct - this prompt is again used with no changes from the original implementation by Hendrycks et al.
+Judge whether the following [response] to [question] is correct or not based on the precise and unambiguous [correct_answer] below.
+
+[question]: {question}
+
+[response]: {response}
+
+Your judgement must be in the format and criteria specified below:
+
+extracted_final_answer: The final exact answer extracted from the [response]. Put the extracted answer as 'None' if there is no exact, final answer to extract from the response.
+
+[correct_answer]: {correct_answer}
+
+reasoning: Explain why the extracted_final_answer is correct or incorrect based on [correct_answer], focusing only on if there are meaningful differences between [correct_answer] and the extracted_final_answer. Do not comment on any background to the problem, do not attempt to solve the problem, do not argue for any answer different than [correct_answer], focus only on whether the answers match.
+
+correct: Answer 'yes' if extracted_final_answer matches the [correct_answer] given above, or is within a small margin of error for numerical problems. Answer 'no' otherwise, i.e. if there if there is any inconsistency, ambiguity, non-equivalency, or if the extracted answer is incorrect.
+
+
+confidence: The extracted confidence score between 0|\%| and 100|\%| from [response]. Put 100 if there is no confidence score available.
+LCR Equality Checker Prompt
+Assess whether the following CANDIDATE ANSWER is CORRECT or INCORRECT.
+For the CANDIDATE ANSWER to be correct, it must be consistent with the OFFICIAL ANSWER.
+
+The question, for reference only: {question}
+The OFFICIAL ANSWER: {official_answer}
+CANDIDATE ANSWER TO ASSESS: {candidate_answer}
+
+Reply only with CORRECT or INCORRECT.
+Mathematical Questions (AIME 2025)
+We prompt AIME with the following instruction prompt:
+Solve the following math problem step by step. Put your answer inside \\boxed{{}}.
+
+{Question}
+
+Remember to put your answer inside \\boxed{{}}.
+Mathematical Equality Checker Prompt
+As described above, we supplement our script-based grading with a language model equality checker. We use the following prompt with Llama 3.3 70B to check if two answers are equivalent. This prompt was developed by OpenAI and released in their simple-evals repository.
+Look at the following two expressions (answers to a math problem) and judge whether they are equivalent. Only perform trivial simplifications
+
+Examples:
+
+    Expression 1: $2x+3$
+    Expression 2: $3+2x$
+
+Yes
+
+    Expression 1: 3/2
+    Expression 2: 1.5
+
+Yes
+
+    Expression 1: $x^2+2x+1$
+    Expression 2: $y^2+2y+1$
+
+No
+
+    Expression 1: $x^2+2x+1$
+    Expression 2: $(x+1)^2$
+
+Yes
+
+    Expression 1: 3245/5
+    Expression 2: 649
+
+No
+(these are actually equal, don't mark them equivalent if you need to do nontrivial simplifications)
+
+    Expression 1: 2/(-3)
+    Expression 2: -2/3
+
+Yes
+(trivial simplifications are allowed)
+
+    Expression 1: 72 degrees
+    Expression 2: 72
+
+Yes
+(give benefit of the doubt to units)
+
+    Expression 1: 64
+    Expression 2: 64 square feet
+
+Yes
+(give benefit of the doubt to units)
+
+---
+
+YOUR TASK
+
+
+Respond with only "Yes" or "No" (without quotes). Do not include a rationale.
+
+    Expression 1: %(expression1)s
+    Expression 2: %(expression2)s
+Code Generation Tasks
+SciCode
+We prompt SciCode with the following prompt, used with no changes from the original implementation of the Scientist Annotated Background prompt by Tian et al.
+PROBLEM DESCRIPTION:
+You will be provided with problem steps along with background knowledge necessary for solving the problem. Your task will be to develop a Python solution focused on the next step of the problem-solving process.
+
+PROBLEM STEPS AND FUNCTION CODE:
+Here, you'll find the Python code for the initial steps of the problem-solving process. This code is integral to building the solution.
+
+{problem_steps_str}
+
+NEXT STEP - PROBLEM STEP AND FUNCTION HEADER:
+This part will describe the next step in the problem-solving process. A function header will be provided, and your task is to develop the Python code for this next step based on the provided description and function header.
+
+{next_step_str}
+
+DEPENDENCIES:
+Use only the following dependencies in your solution. Do not include these dependencies at the beginning of your code.
+
+{dependencies}
+
+RESPONSE GUIDELINES:
+Now, based on the instructions and information provided above, write the complete and executable Python program for the next step in a single block.
+Your response should focus exclusively on implementing the solution for the next step, adhering closely to the specified function header and the context provided by the initial steps.
+Your response should NOT include the dependencies and functions of all previous steps. If your next step function calls functions from previous steps, please make sure it uses the headers provided without modification.
+DO NOT generate EXAMPLE USAGE OR TEST CODE in your response. Please make sure your response python code in format of ```python```.
+LiveCodeBench
+We prompt LiveCodeBench with the following prompt, used with no changes from the original implementation of the LiveCodeBench prompt by the original team. We note, however, that we do not apply the custom system prompts that the LiveCodeBench team uses - we do not use their generic sytem prompt nor their custom system prompts for certain models.
+Questions with starter code:
+
+### Question:
+{question.question_content}
+
+### Format: You will use the following starter code to write the solution to the problem and enclose your code within delimiters.
+```python
+{question.starter_code}
+```
+
+### Answer: (use the provided format with backticks)
+
+
+Questions without starter code:
+
+### Question:
+{question.question_content}
+
+### Format: Read the inputs from stdin solve the problem and write the answer to stdout (do not directly test on the sample inputs). Enclose your code within delimiters as follows. Ensure that when the python program runs, it reads the inputs, runs the algorithm and writes output to STDOUT.
+```python
+# YOUR CODE HERE
+```
+
+### Answer: (use the provided format with backticks
+Code Extraction Regex
+We extract the code from the response using the following regex:
+(?<=```python\n)((?:\n|.)+?)(?=\n```)
+Version History
+Version 4.3
+September 2026 to current
+Replaced 𝜏³-Banking with AutomationBench-AA (5%) in the Agents category
+Replaced Terminal-Bench v2.1 with Terminal-Bench v4.0 (66 tasks, mini-SWE-agent harness)
+GDP.pdf image handling upgrade: Improved handling of images that exceed API constraints, with resizing now applied across a broader range of cases to ensure images can be passed to the model
+Weights: GDPval-AA v2 (10%), AA-Briefcase (15%), AutomationBench-AA (5%), Terminal-Bench v4.0 (10%), SciCode (10%), AA-LCR (5%), AA-Omniscience Accuracy (10%) and Non-Hallucination (5%), HLE (10%), GDP.pdf (10%), CritPt (10%)
+Version 4.2
+September 2026
+Added AA-Briefcase (15%) to the Agents category
+Added GDP.pdf (10%) to the General category
+Removed GPQA Diamond from the Intelligence Index
+Upgraded AA-LCR to v1.1
+Increased the SciCode grading timeout from 60s to 300s and isolated script execution, so slow-but-correct code is no longer scored as failed; regraded as v1.0.1
+Rebalanced weights: GDPval-AA v2 (10%), 𝜏³-Banking (5%), AA-Briefcase (15%), Terminal-Bench v2.1 (10%), SciCode (10%), AA-LCR (5%), AA-Omniscience Accuracy (10%) and Non-Hallucination (5%), HLE (10%), GDP.pdf (10%), CritPt (10%)
+Version 4.1.1
+August 2026—September 2026
+Moved 𝜏³-Banking to the upstream tau2-bench v1.0.1 dataset and grader
+Upgraded the grader model for HLE, AA-LCR and AA-Omniscience to GPT-5.6 Luna (medium), replacing GPT-4o (Aug '24), Qwen3 235B A22B 2507 Non-Reasoning and Gemini 3 Flash Preview (Reasoning) respectively
+Version 4.1
+June 2026—August 2026
+Upgraded GDPval-AA to GDPval-AA v2: upgraded sandbox with new and expanded dependencies, Elo scores re-baselined to human expert performance at 1000, panel of three frontier LLM judges, and turn limits expanded to 250 turns with the ability to exit early
+Replaced Terminal-Bench Hard with Terminal-Bench v2.1 (higher turn limits, no token limits)
+Replaced 𝜏²-Bench Telecom with 𝜏³-Banking
+Removed IFBench from the Intelligence Index (we continue to run it on new model releases)
+Adjusted category weights to further emphasize agentic tasks: Agents (34%), Coding (24%), Scientific Reasoning (24%), General (18%), with AA-Omniscience split into Accuracy (8%) and Non-Hallucination (4%) components
+Upgraded token and cost metrics to better reflect real costs, including cache hit rates and cache token pricing
+Version 4.0.4
+March 2026—June 2026
+Updated grader model for GDPval-AA to Gemini 3.1 Pro Preview after deprecation of previous grader model Gemini 3 Pro Preview
+Version 4.0.3
+February 2026—March 2026
+Updated grader model for Omniscience to Gemini 3 Flash Preview (Reasoning) after deprecation of previous grader model Gemini 2.5 Flash (09-2025) (Reasoning)
+Version 4.0.2
+January 2026—February 2026
+Re-anchored GDPval-AA Elo scores in the Intelligence Index to the latest values following a revision to improve robustness to rare code sandbox failures
+Version 4.0.1
+January 2026
+Refined Terminal-Bench Hard evaluation to 44 tasks, removing a small set of tasks due to external dependency issues in original dataset at the pinned commit
+Version 4.0
+January 2026
+Added GDPval-AA (real-world knowledge work)
+Added AA-Omniscience (knowledge and hallucination)
+Added CritPt (physics reasoning)
+Removed MMLU-Pro, LiveCodeBench, AIME 2025 from Intelligence Index
+New category-based weighting structure: Agents (25%), Coding (25%), General (25%), Scientific Reasoning (25%)
+Version 3.0
+2 September 2025—December 2025
+Added Terminal-Bench Hard (agentic workflows)
+Added 𝜏²-Bench Telecom (agentic workflows)
+Included MMLU-Pro and LiveCodeBench in Intelligence Index
+Updated weightings
+Version 2.2
+6 August 2025—1 September 2025
+Added Artificial Analysis Long Context Reasoning
+Updated weightings
+Version 2.1
+5 August 2025—6 August 2025
+Added IFBench
+Added AIME 2025
+Removed MATH-500
+Removed AIME 2024
+Updated weightings
+Version 2.0
+11 February 2025—4 August 2025
+Version 1.0—1.3
+January 2024—10 February 2025
+Artificial Analysis
+Get notified about new articles
+Email address
+Subscribe
+Artificial Analysis
+Explore
+LLM Leaderboard
+Image Arena
+Video Arena
+AI Agents
+Evaluations
+Products
+Optima
+MicroEvals
+Model Recommender
+Data Playground
+Image Lab
+Company
+About
+Methodology
+Services
+Contact
+Articles
+X
+LinkedIn
+YouTube
+Rednote
+Discord
+©
+2026
+Artificial Analysis
+Terms of Use
+Data Platform Terms
+Privacy Policy
+English

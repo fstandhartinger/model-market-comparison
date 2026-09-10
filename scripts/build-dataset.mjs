@@ -428,6 +428,9 @@ function offerRunsInEu(offer, meta = {}) {
 }
 
 async function build() {
+  // Discovery artifacts must retain valid version identities and source evidence
+  // even before phase 05 adds their scores to the consumer dataset.
+  await import('./validate-benchmark-registry.mjs');
   const aa = await readJSON("artificialanalysis.json");
   const da = await readJSON("designarena.json");
   const or = await readJSON("openrouter.json");

@@ -1,0 +1,935 @@
+[
+  {
+    "id": "aider-polyglot::snapshot-2026-09-10",
+    "name": "Aider Polyglot",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "aider-polyglot",
+    "category": "Coding",
+    "one_sentence_description": "Evaluates LLMs on 225 Exercism coding exercises across six languages, testing code editing without human intervention.",
+    "scoring": {
+      "metric": "Percent of the 225 Exercism exercises completed with a correct edit",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Paul Gauthier (aider)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://aider.chat/docs/leaderboards/",
+    "publication_urls": [
+      {
+        "url": "https://aider.chat/docs/leaderboards/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://aider.chat/docs/leaderboards/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "'Aider polyglot coding leaderboard' table on the leaderboards page: extract the 'Percent correct' column per model (Cost and edit-format columns are auxiliary)",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://aider.chat/docs/leaderboards/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-5b92e98d55fe.txt",
+        "sha256": "0705a263a3ede2065f49501d636deee6af7124918fc03095127853fc4b8c74c5",
+        "fetched_at": "2026-09-10T21:45:25.463000+00:00",
+        "excerpt": "Aider excels with LLMs skilled at writing and editing code, and uses benchmarks to evaluate an LLM's ability to follow instructions and edit code successfully without human intervention. Aider's polyglot benchmark tests LLMs on 225 challenging Exercism coding exercises across C++, Go, Java, JavaScript, Python, and Rust."
+      }
+    ]
+  },
+  {
+    "id": "arc-agi::1",
+    "name": "ARC-AGI-1",
+    "version": "1",
+    "version_status": "published",
+    "family": "arc-agi",
+    "category": "Reasoning",
+    "one_sentence_description": "The first-generation ARC-AGI benchmark measuring passive fluid intelligence, with leaderboard score plotted against cost-per-task.",
+    "scoring": {
+      "metric": "Semi-private exact grid task solution rate",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "ARC Prize, Inc.",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://arcprize.org/leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://arcprize.org/leaderboard",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard version v1_Semi_Private; data.js loads /media/data/leaderboard/v1.json evaluations. Keep verified and community submissions and every split separate.",
+      "version_guard": "Verify the published version 1 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://arcprize.org/leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-a27f2ad202a2.txt",
+        "sha256": "be8541901a2e2a6ddeb54b73e55c5abcc33a13561d6d17e57fe9f424d836165d",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "ARC-AGI has evolved from its first versions (ARC-AGI-1 and 2) which measured passive fluid intelligence, to ARC-AGI-3 which challenges AI agents to adapt on the fly to novel interactive environments. ... For models that were not able to produce full test out puts, remaining tasks were marked as incorrect."
+      }
+    ]
+  },
+  {
+    "id": "arc-agi::2",
+    "name": "ARC-AGI-2",
+    "version": "2",
+    "version_status": "published",
+    "family": "arc-agi",
+    "category": "Reasoning",
+    "one_sentence_description": "The second-generation ARC-AGI benchmark of passive fluid intelligence, with leaderboard score plotted against cost-per-task.",
+    "scoring": {
+      "metric": "Semi-private exact grid task solution rate",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "ARC Prize, Inc.",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://arcprize.org/leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://arcprize.org/leaderboard",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard version v2_Semi_Private; data.js loads /media/data/leaderboard/v2.json evaluations. Keep verified and community submissions and every split separate.",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://arcprize.org/leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-a27f2ad202a2.txt",
+        "sha256": "be8541901a2e2a6ddeb54b73e55c5abcc33a13561d6d17e57fe9f424d836165d",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "ARC-AGI has evolved from its first versions (ARC-AGI-1 and 2) which measured passive fluid intelligence, to ARC-AGI-3 which challenges AI agents to adapt on the fly to novel interactive environments. ... ARC-AGI-2 score estimate based on partial testing results and o1-pro pricing."
+      }
+    ]
+  },
+  {
+    "id": "arc-agi::3",
+    "name": "ARC-AGI-3",
+    "version": "3",
+    "version_status": "published",
+    "family": "arc-agi",
+    "category": "Agentic",
+    "one_sentence_description": "The interactive ARC-AGI benchmark challenging AI agents to adapt on the fly to novel interactive environments, run with the Standard or Provider Adapter harness and scored against cost-per-task.",
+    "scoring": {
+      "metric": "Semi-private interactive game action efficiency relative to the human baseline",
+      "unit": "percent",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Current scoring update uses median human actions and a 115% per-level cap. The final aggregate bound is not assumed from that cap. A scoring revision requires a new protocol identity; do not compare preview or earlier-baseline results."
+    },
+    "maintainer": "ARC Prize, Inc.",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://arcprize.org/leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://arcprize.org/leaderboard",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://arcprize.org/leaderboard --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard version v3_Semi_Private; data.js loads /media/data/leaderboard/v3.json evaluations. Keep verified and community submissions and every split separate.",
+      "version_guard": "Verify the published version 3 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://arcprize.org/blog/arc-agi-3-human-dataset",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-6f8be80fbd8b.txt",
+        "sha256": "0c7f21b6a2bbec07de066782a2a05325df43ba68be3f4693bbed1d9e9b441b3d",
+        "fetched_at": "2026-09-10T22:19:28Z",
+        "excerpt": "The human baseline which normalizes scores moves from 2nd-best player to median player per level. ... per-level score cap increases from 100% to 115%."
+      },
+      {
+        "url": "https://arcprize.org/leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-a27f2ad202a2.txt",
+        "sha256": "be8541901a2e2a6ddeb54b73e55c5abcc33a13561d6d17e57fe9f424d836165d",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "buzzbench::snapshot-2026-09-10",
+    "name": "BuzzBench",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "buzzbench",
+    "category": "Writing",
+    "one_sentence_description": "An LLM-judged evaluation of humour explanation and predicted audience response to Never Mind the Buzzcocks introductions.",
+    "scoring": {
+      "metric": "LLM judge score against human-authored gold responses; headline Score column",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "About page names Claude 3.5 Sonnet as judge, temperature 0.7 and typically 5–10 repetitions; no theoretical numeric bounds verified."
+    },
+    "maintainer": "Samuel Paech / EQ-Bench",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/buzzbench.html",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/buzzbench.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/buzzbench.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard table with columns 'Model | Length | Score': read the 'Score' value per model row",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/about.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-c37c7c421a60.txt",
+        "sha256": "a38adfa5de6577cf008749168373e36f9ed5efb6431e19e3e09bffce2310564d",
+        "fetched_at": "2026-09-10T22:19:21Z",
+        "excerpt": "The responses are scored by a LLM judge against a human-authored gold response."
+      },
+      {
+        "url": "https://eqbench.com/buzzbench.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-e16442e9e73f.txt",
+        "sha256": "d7d1575fef13d3da9b7dcff942004bac3c9815549264dccfeff6ce1640426470",
+        "fetched_at": "2026-09-10T21:46:58.828000+00:00",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "critpt::snapshot-2026-09-10",
+    "name": "CritPt",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "critpt",
+    "category": "Science",
+    "one_sentence_description": "A frontier physics research benchmark with 71 challenges and 190 checkpoints testing LLMs on unpublished, research-level physics reasoning.",
+    "scoring": {
+      "metric": "Average accuracy over 5 runs x 70 test challenges (headline Challenge Accuracy)",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "CritPt-Benchmark team",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3d1f4f8c7690.txt",
+        "sha256": "416d4b506040d37d2d53e6c3b2edb3acea38e432d06d9651e134a3d87560d5bb",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "It currently includes 71 challenges and 190 checkpoints, crafted by a team of 50+ active physics researchers from 30+ leading institutions worldwide ... ¹ We use average accuracy over 5 runs × 70 test challenges as our primary performance metric."
+      }
+    ]
+  },
+  {
+    "id": "eq-bench::4",
+    "name": "EQ-Bench 4",
+    "version": "4",
+    "version_status": "published",
+    "family": "eq-bench",
+    "category": "Roleplay",
+    "one_sentence_description": "Measures active emotional and social intelligence of LLMs in multi-turn roleplay chats with simulated personas, ranked by an LLM-judge panel Elo.",
+    "scoring": {
+      "metric": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "EQ-Bench (Sam Paech)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "EQ-Bench 4 leaderboard table on eqbench.com ('Leaderboard' view): extract each model's ranked Elo score from the main score column",
+      "version_guard": "Verify the published version 4 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-ced9a15757ca.txt",
+        "sha256": "4271e9814e81a7641bb4fc85317abdfcea9d4c2c676e7cb47f53f20a8fb5e613",
+        "fetched_at": "2026-09-10T21:45:25.463000+00:00",
+        "excerpt": "EQ-Bench 4 assesses active emotional and social intelligence abilities in multi-turn roleplay chats with a simulated \"persona\" user. [...] The persona is played by Gemini 3.1 Pro Preview. The chat transcripts are assessed by three judges: Gemini 3.1 Pro Preview, GPT-5.5, and Claude Opus 4.6 to produce a ranked Elo score."
+      }
+    ]
+  },
+  {
+    "id": "eqbench-creative-writing::3",
+    "name": "EQ-Bench Creative Writing v3",
+    "version": "3",
+    "version_status": "published",
+    "family": "eqbench-creative-writing",
+    "category": "Writing",
+    "one_sentence_description": "A LLM-judged creative writing benchmark with vocabulary and GPT-slop controls.",
+    "scoring": {
+      "metric": "Elo Score column in the leaderboard",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "EQ-bench (Sam Paech)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/creative_writing.html",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/creative_writing.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/creative_writing.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Elo Score column in the leaderboard table",
+      "version_guard": "Verify the published version 3 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/creative_writing.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-f47d00c8a033.txt",
+        "sha256": "9593955baa4d6eeff27e651423c3fb4c28783f009e664af491ff45b23b6d56ca",
+        "fetched_at": "2026-09-10T21:51:29.025000+00:00",
+        "excerpt": "A LLM-judged creative writing benchmark. ... Vocab Control: 0% GPT-Slop Control: 0%"
+      }
+    ]
+  },
+  {
+    "id": "eqbench-judgemark::4",
+    "name": "Judgemark v4",
+    "version": "4",
+    "version_status": "published",
+    "family": "eqbench-judgemark",
+    "category": "Writing",
+    "one_sentence_description": "Meta-evaluation that rates LLM judges on how discriminatively they score fixed creative-writing samples.",
+    "scoring": {
+      "metric": "Composite judge-separation score on the reported 100-point scale (unclamped bounds not verified)",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "EQ-Bench (sam_paech)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/judgemark-v4.html",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/judgemark-v4.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/judgemark-v4.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard table, column 'Judgemark Score / 95% CI': extract the numeric point score per model (the accompanying 95% CI is a prompt-bootstrap interval)",
+      "version_guard": "Verify the published version 4 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/judgemark-v4.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-58e04c75ed4d.txt",
+        "sha256": "e35da4d4d06e08771d6825ca6634c61297bcffcfac36cd2a56fd7c5c11cf649f",
+        "fetched_at": "2026-09-10T21:46:58.828000+00:00",
+        "excerpt": "Judgemark v4 rates LLM judges on how discriminative they are at scoring creative writing. The score is based on separability metrics. ... Judgemark computes combined_sep = 0.5 * omega_squared + 0.5 * mean_abs_paired_cliff_delta, then reports combined_sep / 0.75 on a 0-100 leaderboard scale."
+      }
+    ]
+  },
+  {
+    "id": "eqbench-longform-writing::v1.11",
+    "name": "EQ-Bench Longform Creative Writing",
+    "version": "v1.11",
+    "version_status": "published",
+    "family": "eqbench-longform-writing",
+    "category": "Writing",
+    "one_sentence_description": "LLM-judged benchmark in which models plan and write a short story/novella over 8x 1000-word turns, scored 0-100 across 14 rubric dimensions.",
+    "scoring": {
+      "metric": "Score (0-100): average of all chapter scores plus the final scored piece across 14 rubric dimensions, with the forced poetry/metaphor criterion weighted 5x and a long-context degradation penalty applied",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "EQ-Bench (Sam Paech)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/creative_writing_longform.html",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/creative_writing_longform.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/creative_writing_longform.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Longform leaderboard table: extract the 'Score' column; metric defined under 'Main Metrics -> Score (0-100)'",
+      "version_guard": "Verify the published version v1.11 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/creative_writing_longform.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-d8d48de1253a.txt",
+        "sha256": "44b3c7d3cb97d76e1143bce06b0acf4019ca6cd8c4e7612187d6a291d64bab30",
+        "fetched_at": "2026-09-10T21:46:58.828000+00:00",
+        "excerpt": "v1.11 2026-02-19 Updates [...] This benchmark evaluates several abilities: Brainstorming & planning out a short story/novella from a minimal prompt; Reflect on the plan & revise; Write a short story/novella over 8x 1000 word turns. [...] Score (0-100) The average of all chapter scores + final scored piece, based on the rubric criteria below."
+      }
+    ]
+  },
+  {
+    "id": "eqbench-slop-score::snapshot-2026-09-10",
+    "name": "Slop Score",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "eqbench-slop-score",
+    "category": "Writing",
+    "one_sentence_description": "Leaderboard and analysis tool scoring how much model writing resembles AI slop via overused words, contrast patterns, and trigrams.",
+    "scoring": {
+      "metric": "Weighted composite of slop-word frequency (60%), 'not-x-but-y' contrast patterns (25%), and slop trigram frequency (15%) on outputs from a standardized prompt set; lower is better",
+      "unit": "unknown",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": false,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Sam Paech (EQ-Bench)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/slop-score.html",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/slop-score.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/slop-score.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Slop Score leaderboard ('View Leaderboard' on slop-score.html): extract each model's Slop Score computed from outputs on the standardized set of prompts",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/slop-score.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-d7571288888b.txt",
+        "sha256": "8899b81f3c345b6d055770cedb2d2f552fd061b8714829d35240c53e1561f901",
+        "fetched_at": "2026-09-10T21:46:58.828000+00:00",
+        "excerpt": "Slop Score is a leaderboard and analysis tool for computing how much a given text looks/smells like AI \"slop\". It looks specifically at words and patterns that occur more frequently in AI text than in human text. [...] The Slop Score is a weighted composite metric designed to detect AI-generated text patterns: 60% - Slop Words [...] 25% - Not-x-but-y Patterns [...] 15% - Slop Trigrams [...] Lower scores indicate more human-like writing patterns."
+      }
+    ]
+  },
+  {
+    "id": "helmet::snapshot-2026-09-10",
+    "name": "HELMET",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "helmet",
+    "category": "Long-context",
+    "one_sentence_description": "Comprehensive long-context benchmark covering seven application-centric task categories (recall, RAG, reranking, citation, long QA, summarization, ICL) evaluated at varying lengths.",
+    "scoring": {
+      "metric": "Task-specific metrics across seven categories and context lengths; no universal headline score",
+      "unit": "task-specific",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": null,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Princeton NLP (princeton-nlp)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://princeton-nlp.github.io/HELMET/",
+    "publication_urls": [
+      {
+        "url": "https://princeton-nlp.github.io/HELMET/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://princeton-nlp.github.io/HELMET/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "README Results & Analysis links the public Google Sheet of all results; preserve task, context length, prompting and native metric, and do not invent an aggregate.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/princeton-nlp/HELMET/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-c103206dc79d.txt",
+        "sha256": "7f65d7f593f1cce2a24fb394298705c94ee5c2392bcbcd09a3a109ffd36bed1b",
+        "fetched_at": "2026-09-10T21:53:11Z",
+        "excerpt": "HELMET (How to Evaluate Long-context Models Effectively and Thoroughly) is a comprehensive benchmark for long-context language models covering seven diverse categories of tasks. The datasets are application-centric and are designed to evaluate models at different lengths and levels of complexity. ... `.json.score` only contain the aggregated metrics."
+      },
+      {
+        "url": "https://princeton-nlp.github.io/HELMET/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-970ee183b830.txt",
+        "sha256": "26c0deb63800a4f4a3ae839f98039d7f61c4d8d5b9647fbc54c976153b750a25",
+        "fetched_at": "2026-09-10T22:08:37Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "hle::snapshot-2026-09-10",
+    "name": "Humanity's Last Exam (HLE)",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "hle",
+    "category": "Knowledge",
+    "one_sentence_description": "A multi-modal, closed-ended academic benchmark of 2,500 expert-written questions at the frontier of human knowledge, gradeable automatically.",
+    "scoring": {
+      "metric": "Accuracy percentage over the 2,500 HLE test questions (with binomial standard error); Expected Calibration Error also reported",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Center for AI Safety (CAIS) & Scale AI",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "README 'Simple Evaluation' > 'Sample output' metrics block: parse '*** Metrics *** Accuracy: 3.07% +/- 0.65% | n = 2700' and 'Calibration Error: 92.3' from run_judge_results.py output; extract the Accuracy percentage (report the +/- stderr alongside).",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/centerforaisafety/hle/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3b311232e572.txt",
+        "sha256": "fd3bd0049e1a2b39244d8240a63d0ccfe037b0b6e5979d5826e1d1cf4203ee88",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "Humanity's Last Exam (HLE) is a multi-modal benchmark at the frontier of human knowledge, designed to be the final closed-ended academic benchmark of its kind with broad subject coverage. Humanity's Last Exam consists of 2,500 questions across dozens of subjects, including mathematics, humanities, and the natural sciences. HLE is developed globally by subject-matter experts and consists of multiple-choice and short-answer questions suitable for automated grading."
+      }
+    ]
+  },
+  {
+    "id": "ifbench::snapshot-2026-09-10",
+    "name": "IFBench",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "ifbench",
+    "category": "Instruction-following",
+    "one_sentence_description": "A challenging benchmark for precise instruction following using 58 new out-of-distribution verifiable constraints applied to held-out WildChat prompts.",
+    "scoring": {
+      "metric": "Prompt-level loose accuracy: fraction of test prompts judged by the verification functions as satisfying the constraints",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Allen Institute for AI (Ai2)",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/allenai/IFBench/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/allenai/IFBench/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/allenai/IFBench/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "README 'How to run the evaluation' section: run_eval with IFBench_test.jsonl (allenai/IFBench_test on Hugging Face); extract the prompt-level loose accuracy over the test prompts.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/allenai/IFBench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-d89ecd644857.txt",
+        "sha256": "3aeda5d9691ba92c2439a3ed881c51f342f3e609e997ee66f854f12138f73807",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "This repo contains IFBench, which is a new, challenging benchmark for precise instruction following. ... OOD Constraints: 58 new and challenging constraints, with corresponding verification functions. The constraint templates are combined with prompts from a held-out set of WildChat (Zhao et al. 2024). ... In the paper we generally report the prompt-level loose accuracy of IFBench."
+      }
+    ]
+  },
+  {
+    "id": "japanese-rp-bench-aratako::snapshot-2026-09-10",
+    "name": "Japanese-RP-Bench (Aratako)",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "japanese-rp-bench-aratako",
+    "category": "Roleplay",
+    "one_sentence_description": "Benchmark measuring LLM Japanese roleplay ability via 10-turn two-model dialogues scored by a four-judge ensemble across eight criteria.",
+    "scoring": {
+      "metric": "Overall Average = mean evaluation value across the 8 criteria, averaged over 4 judge models (gpt-4o-2024-08-06, o1-mini-2024-09-12, Claude 3.5 Sonnet, Gemini 1.5 Pro)",
+      "unit": "unknown",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Aratako",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-112aabfb1ba3.txt",
+        "sha256": "2e584f47344e95dffbb01bbe78caba85f5906c98f11c34df34ad3371dacff8ec",
+        "fetched_at": "2026-09-10T21:53:16Z",
+        "excerpt": "Japanese-RP-BenchはLLMの日本語ロールプレイ能力を測定するためのベンチマークです。 … 評価には`gpt-4o-2024-08-06`、`o1-mini-2024-09-12`、`anthropic.claude-3-5-sonnet-20240620-v1:0`、`gemini-1.5-pro-002`の4モデルによる評価値の平均を採用"
+      }
+    ]
+  },
+  {
+    "id": "japanese-rp-bench-tegnike::2",
+    "name": "Japanese-RP-Bench v2 (tegnike fork)",
+    "version": "2",
+    "version_status": "published",
+    "family": "japanese-rp-bench-tegnike",
+    "category": "Roleplay",
+    "one_sentence_description": "Fork of Japanese-RP-Bench adding v2 metrics for role fidelity, conversation quality, persona stability, robustness, and recovery in Japanese roleplay.",
+    "scoring": {
+      "metric": "Challenge RP Summary: macro-average of five criteria; leaderboard first sorts Major-free rate descending, then Major rate ascending",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Current repeated Challenge protocol uses judge rubric v2.1 and ten generations per scenario. RP Summary alone does not reproduce the safety-gated ranking. Keep the original Aratako protocol and earlier single-generation results separate."
+    },
+    "maintainer": "tegnike",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-bbefcb28c4b0.txt",
+        "sha256": "765fb30f9f7a955242c8558f0995417d5b3ab1cf783381adb9eba1ae0dad98a2",
+        "fetched_at": "2026-09-10T21:53:18Z",
+        "excerpt": "# Japanese-RP-Bench v2 日本語ロールプレイLLMの会話品質だけでなく、役柄への追従性、人格安定性、人格置換への耐性、誤誘導後の復帰まで測定するベンチマークです。 … `Challenge RP Summary`は5指標のシナリオマクロ平均です。"
+      }
+    ]
+  }
+]

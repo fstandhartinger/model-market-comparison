@@ -1,0 +1,326 @@
+o1 tops aider’s new polyglot leaderboard | aider
+Skip to main content
+Link
+Menu
+Expand
+(external link)
+Document
+Search
+Copy
+Copied
+aider
+Installation
+Optional steps
+Aider with docker
+GitHub Codespaces
+Replit
+Usage
+Tips
+In-chat commands
+Chat modes
+Tutorial videos
+Voice-to-code with aider
+Images & web pages
+Prompt caching
+Aider in your IDE
+Notifications
+Aider in your browser
+Specifying coding conventions
+Copy/paste with web chat
+Linting and testing
+Editing config & text files
+Connecting to LLMs
+OpenAI
+Anthropic
+Gemini
+GROQ
+LM Studio
+xAI
+Azure
+Cohere
+DeepSeek
+Ollama
+OpenAI compatible APIs
+OpenRouter
+GitHub Copilot
+Vertex AI
+Amazon Bedrock
+Other LLMs
+Model warnings
+Configuration
+API Keys
+Options reference
+YAML config file
+Config with .env
+Editor configuration
+Reasoning models
+Advanced model settings
+Model Aliases
+Troubleshooting
+File editing problems
+Model warnings
+Token limits
+Aider not found
+Dependency versions
+Models and API keys
+Using /help
+Screen recordings
+Add language support via tree-sitter-language-pack
+Add –auto-accept-architect feature
+Don’t /drop read-only files added at launch
+Warn when users apply unsupported reasoning settings
+Example chat transcripts
+Create a simple flask app with aider
+Modify an open source 2048 game with aider
+A complex multi-file change, with debugging
+Create a “black box” test case
+Automatically update docs with aider
+Build pong with aider and pygame.
+Complete a css exercise with aider
+Download, analyze and plot US Census data
+Editing an asciinema cast file with aider
+Hello aider!
+Honor the NO_COLOR environment variable
+Improve css styling of chat transcripts
+Semantic search & replace code with aider
+More info
+Git integration
+Supported languages
+Repository map
+Scripting aider
+Infinite output
+Edit formats
+Analytics
+Privacy policy
+FAQ
+Release history
+Aider LLM Leaderboards
+Code editing leaderboard
+Refactoring leaderboard
+Scores by release date
+Benchmark notes
+Contributing results
+Aider blog
+GitHub
+Discord
+Aider is AI pair programming in your terminal.
+    Aider is on
+GitHub
+and
+Discord
+.
+GitHub
+Discord
+Blog
+December 21, 2024
+o1 tops aider’s new polyglot leaderboard
+OpenAI’s new o1 model with “high” reasoning effort
+gets the top score on the
+new
+aider polyglot leaderboard
+, significantly ahead of
+other top LLMs.
+The new polyglot benchmark uses many popular coding languages
+and was designed to be
+much more challenging
+than aider’s original
+code editing benchmark
+.
+This more clearly distinguishes 
+the performance of
+today’s strongest coding models and
+leaves headroom for future LLMs.
+See the main
+aider leaderboard
+for benchmark results from more models.
+This article only contains a snapshot
+of results at the time of publication.
+The polyglot benchmark
+Like aider’s original code editing benchmark,
+the new polyglot benchmark is based on Exercism
+coding exercises.
+The new polyglot benchmark:
+Contains coding problems in C++, Go, Java, JavaScript, Python and Rust. 
+The old benchmark was solely based on Python exercises.
+Focuses on the
+most difficult
+225 exercises out of the 697 that
+Exercism provides for those languages.
+The old benchmark simply included all 133 Python exercises,
+regardless of difficulty.
+Motivation and goals
+Aider’s original code editing benchmark was 
+saturating as the top scores approached and then surpassed 80%.
+Sonnet’s score of 84.2% was based on solving 112 of the 133
+exercises, leaving only 21 unsolved exercises.
+New champions were advancing the top score by
+solving just 1-2 more problems than the previous record.
+This made it hard to clearly 
+measure the
+difference in code editing skill between these top models.
+Part of the problem is that many of the original
+133 Python problems are very easy 
+and provide
+little challenge to today’s frontier LLMs.
+Models as old as GPT 3.5 Turbo were able to solve half of the
+133 problems.
+Such easy problems simply inflate the benchmark scores 
+of modern LLMs without
+providing any data about which models are better or worse.
+The main goal for a new benchmark 
+was to re-calibrate the scale so that
+today’s top coding LLMs 
+would occupy a wide range of scores between about 5% and 50%.
+This should leave headroom for future LLMs and
+make it possible to
+more clearly compare the relative performance of top models.
+Designing the polyglot benchmark
+The new benchmark:
+Tests LLMs with more coding languages, to increase diversity and source a larger pool of problems.
+Includes just the most challenging coding problems and excludes easy problems that are solvable by most of today’s top coding LLMs.
+Includes more total coding problems, to enable more granularity of comparison.
+The new benchmark is based on Exercism coding problems
+from 6 of the most popular programming languages:
+C++
+Go
+Java
+JavaScript
+Python
+Rust
+Exercism provides a total of 697 coding problems in those 6 languages.
+A set of 7 of today’s top coding models each attempted all 697 of
+the Exercism problems:
+Sonnet
+Haiku
+o1 Mini
+DeepSeek
+GPT-4o
+Qwen 32B Coder Instruct
+GPT-4o Mini
+Depending on the difficulty of the problems,
+a different number of solutions were found by the collection of
+7 models:
+Solutions
+found
+Number of
+problems
+Cumulative number
+of problems
+0
+66
+66
+1
+61
+127
+2
+50
+177
+3
+48
+225
+4
+53
+278
+5
+71
+349
+6
+90
+439
+7
+258
+697
+In the table above, you can see that 258 of the problems were solved
+by all 7 LLMs.
+These problems are far too easy, and wouldn’t be good choices for the new benchmark.
+Instead, we need hard problems like the
+66 that none of the 7 models were able to solve.
+The new benchmark uses 
+the 225 problems that were solved by 3 or fewer models.
+This achieves a balance between hard and moderate problems,
+and provides a large but not excessive total pool of problems.
+It also represents a good diversity of coding languages:
+Language
+Problems
+C++
+26
+Go
+39
+Java
+47
+JavaScript
+49
+Python
+34
+Rust
+30
+Total
+225
+o1
+OpenAI’s new o1 model established a very strong
+top score of 62% on the new benchmark.
+This still leaves 86 problems of headroom for future models
+to solve.
+Given the incredible pace of recent advancements, it
+will be interesting to see
+how long it will take for this new benchmark to saturate.
+Benchmark problems
+The 225 coding problems are available in the
+aider polyglot benchmark repo
+on GitHub.
+Results
+Model
+Percent completed correctly
+Percent using correct edit format
+Command
+Edit format
+o1-2024-12-17 (high)
+61.7%
+91.5%
+aider --model openrouter/openai/o1
+diff
+claude-3-5-sonnet-20241022
+45.3%
+100.0%
+aider --model claude-3-5-sonnet-20241022
+diff
+gemini-exp-1206
+38.2%
+98.2%
+aider --model gemini/gemini-exp-1206
+whole
+o1-mini-2024-09-12
+32.9%
+96.9%
+aider --model o1-mini
+whole
+claude-3-5-haiku-20241022
+28.0%
+91.1%
+aider --model claude-3-5-haiku-20241022
+diff
+gemini-2.0-flash-exp
+22.2%
+100.0%
+aider --model gemini/gemini-2.0-flash-exp
+whole
+DeepSeek Chat V2.5
+17.8%
+92.9%
+aider --model deepseek/deepseek-chat
+diff
+gpt-4o-2024-11-20
+15.1%
+96.0%
+aider --model gpt-4o-2024-11-20
+diff
+Qwen2.5-Coder-32B-Instruct
+8.0%
+71.6%
+aider --model openai/Qwen/Qwen2.5-Coder-32B-Instruct # via hyperbolic
+diff
+gpt-4o-mini-2024-07-18
+3.6%
+100.0%
+aider --model gpt-4o-mini-2024-07-18
+whole

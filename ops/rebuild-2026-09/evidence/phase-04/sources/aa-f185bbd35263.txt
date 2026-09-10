@@ -1,0 +1,187 @@
+AA-AgentPerf Methodology | Artificial Analysis
+Artificial Analysis
+K
+Artificial Analysis
+Models
+Coding Agents
+Speech, Image, Video
+Inference
+Leaderboards
+About
+AI Trends
+Arenas
+K
+Benchmarking Methodology
+On this page
+Overview
+Dataset
+Service-Level Objectives
+Test Execution
+Metrics & Results
+Submissions
+AA-AgentPerf Methodology
+Overview
+AA-AgentPerf is a hardware benchmark that measures how many active agents an inference deployment can support under realistic agentic workloads while meeting per-agent speed targets.
+Real agentic trajectories
+— multi-turn coding sessions with interleaved reasoning, tool calls, and variable context lengths (not synthetic uniform prompts).
+Sustained concurrent load
+— simulated agents maintain continuous in-flight requests, stressing KV cache reuse, speculative decoding, and scheduler behavior.
+Market-derived SLO tiers
+— performance thresholds based on Artificial Analysis serverless API benchmarking data, reflecting quality-of-service levels observed across providers.
+Continuously updated
+— results are updated on an ongoing basis as new hardware, software stacks, and model versions become available.
+Production ready
+— models are tested with realistic optimizations enabled and production-scale deployment topologies.
+concurrent agents
+0
+/
+9
+INFERENCE
+SYSTEM
+AGENT
+1
+AGENT
+2
+AGENT
+3
+AGENT
+4
+AGENT
+5
+AGENT
+6
+AGENT
+7
+AGENT
+8
+AGENT
+9
+system throughput
+output speed per agent
+Each simulated agent works sequentially through agentic coding trajectories — reasoning, calling tools, and editing code — while the system scales to support increasing concurrency.
+Dataset
+The AA-AgentPerf dataset contains real agentic trajectories covering several use cases, programming languages, and models. Trajectories were generated in the OpenCode agentic harness using three top open-source models with reasoning enabled — DeepSeek V3.2, GLM 4.7, and Kimi K2.5 — prompted to resolve issues in real public code repositories. All trajectories include interleaved reasoning and tool calls.
+Input Sequence Length (ISL):
+Ranges from ~5K to ~131K tokens, with a mean of approximately 27K tokens. Trajectories are truncated to fit within the maximum recommended context length of the models under test.
+Output Sequence Length (OSL):
+Output lengths vary widely across turns — some turns produce short outputs such as simple tool calls, while others involve extended reasoning before the model responds or acts.
+Languages:
+12+ programming languages are represented, based on the primary language of the source repository. Python repositories are the most frequent source, followed by TypeScript and Go.
+Tool call delays:
+After each tool call, processing time is simulated with a fixed per-message delay sampled from a distribution of real tool call durations, partitioned by the tool being called. Delays range from under 0.1s up to 5s, with a median of approximately 1 second.
+A representative tuning subset — 500 unique trajectories comprising 18,997 prompts — is provided to test participants for configuration validation and performance tuning. The full test dataset is kept private to prevent benchmark-targeted optimizations.
+Service-Level Objectives
+Performance SLOs are determined based on Artificial Analysis serverless API benchmarking data. Currently available tiers of service in the market have been identified for each model being tested. Vendors target each tier separately, maximizing the number of concurrent agents they can support at that level of service.
+Speed and latency are both calculated at a per-request level. Due to the large number of small-OSL requests in agentic workloads, P25 output speed is used, with percentiles computed over all requests sent during a phase.
+Each model is tested with creator-recommended sampling parameters at the maximum thinking effort available: max reasoning effort for DeepSeek V4 Pro and Kimi K3, and high reasoning effort for gpt-oss-120b, with all other parameters set to defaults.
+We are currently transitioning from separate Output Speed and TTFT metrics to a combined E2E Speed metric. During this transition, some stats will be quoted in Speed/TTFT and some will be quoted in E2E Speed.
+Model
+SLO Tier
+P25 Output Speed (tokens/s)
+P95 TTFT (s)
+DeepSeek V4 Pro (max)
+SLO #1
+20
+10
+SLO #2
+60
+5
+SLO #3
+180
+3
+gpt-oss-120b (high)
+SLO #1
+100
+5
+SLO #2
+250
+3
+SLO #3
+500
+2
+SLO #4
+2,000
+1
+Kimi K3 (max)
+We are trialling a new full-pareto-focused, non-SLO setup for Kimi K3
+Performance SLOs
+Test Execution
+The number of supported agents for each SLO is determined via binary search after an initial exponential ramp. Metrics are calculated using steady-state token timing information. After a phase is completed and metrics have been calculated, the system determines whether SLOs have been violated, then proceeds to the next target concurrency level. Each phase runs until at least 30 trajectories have completed, every simulated agent has completed at least 3 trajectories, and at least 10 minutes of steady-state measurement time has elapsed. Agent trajectory assignments are deterministic across phases, with dynamically generated prefixes added at the start of each trajectory in each phase to break prefix caching between phases. A max_tokens value of 16K prevents individual requests where a model gets stuck in a repetition loop from skewing results.
+RAMP
+doubling the load until a target breaks
+0
+100
+200
+300
+400
+0
+4
+8
+12
+16
+20
+concurrent agents
+p25 output speed (t/s)
+SLO threshold (
+100
+t/s)
+max =
+11
+Phase
+Agents
+p25 Speed
+Result
+max agents =
+11
+As concurrent agents increase, per-request output speed degrades. Each SLO tier defines a minimum acceptable speed, determining the maximum agents that tier can support.
+Metrics & Results
+The following timing metrics are calculated during each test phase:
+Time to First Token (TTFT):
+Per-request latency from sending the request to receiving the first output token.
+Output Speed:
+Per-request output tokens per second, measured after the first token is received.
+E2E Speed:
+Per-request output tokens per second across the full request, including the wait for the first token. This single metric is replacing the two above.
+System Output Throughput:
+Aggregate output tokens per second across all concurrent agents.
+All metrics are filtered to steady-state periods where all agents have been active for at least 30 seconds at target concurrency. Speed metrics use server-side token counts from the usage metadata returned by the inference framework, verified against local tokenization with the candidate model's native tokenizer. Power draw is measured from each accelerator during the live test. The primary results — maximum concurrent agents and output throughput at each SLO tier — are normalized per accelerator and per MW to enable fair comparison across hardware configurations. Per-MW figures are based on measured accelerator power under load (GPU die + HBM) rather than rated TDP.
+Results are published on the Artificial Analysis leaderboard with full system configurations as disclosed by the provider. Providers may review their results for factual accuracy before publication.
+Submissions
+If you are a hardware vendor interested in submitting your system for AA-AgentPerf evaluation and are not already in touch, reach out to
+agentperf@artificialanalysis.ai
+.
+Artificial Analysis
+Get notified about new articles
+Email address
+Subscribe
+Artificial Analysis
+Explore
+LLM Leaderboard
+Image Arena
+Video Arena
+AI Agents
+Evaluations
+Products
+Optima
+MicroEvals
+Model Recommender
+Data Playground
+Image Lab
+Company
+About
+Methodology
+Services
+Contact
+Articles
+X
+LinkedIn
+YouTube
+Rednote
+Discord
+©
+2026
+Artificial Analysis
+Terms of Use
+Data Platform Terms
+Privacy Policy
+English

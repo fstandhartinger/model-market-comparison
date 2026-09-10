@@ -1,0 +1,88 @@
+The Leaderboard · The Slop Index
+The Slop Index
+Leaderboard
+Arena
+Method
+GitHub
+Play the arena
+The board · live
+Every model, ranked
+32 frontier models scored by
+Slop Score
+, how much each writes like a chatbot and not a
+      person. It blends the live arena vote (40%) with four mechanical axes against pre-AI writing. Higher is worse,
+      and #1 is the sloppiest model on the board.
+loading the crowd vote…
+The board
+Who writes the most slop?
+Slop Score, 0–100, sloppiest first. Switch domains to see who slips where -
+      the model that writes clean email is not always the one that writes clean essays. Every board blends the same way:
+      40% the arena votes cast on that domain’s pairs, 60% the machine measurement against the pre-AI baseline.
+more slop
+more human
+Full table
+Every model, every axis
+Ranked by Slop Score, sloppiest first. Every axis runs the same
+      direction on a 0–100 scale where 100 = sloppiest on the board, so you can see exactly where a model loses it.
+      Toward the middle the scores run close.
+#
+model
+slop score
+arena 40%
+concise
+templating
+rhythm
+tells
+$/M
+Arena
+= how often the crowd flagged it (live Elo, 40%) ·
+Conciseness
+= length inflation vs a human on the same task ·
+Templating
+= reused openers & skeletons across unrelated prompts ·
+Rhythm
+= flattened paragraph-length variance ·
+Tells
+= over-used AI words. Each 0–100; 100 = sloppiest on the board.
+Price vs quality
+Does paying more buy a more human writer?
+Blended price per million tokens against the Slop Score. If cost bought
+      a more human writer, this would trend down and to the right. It doesn't.
+The human axis · 40% of the score
+What the crowd thinks
+The single biggest input is people. This is the live Elo from the arena,
+      where players flag the sloppier of two blind samples. Most-flagged leads; it updates the board above as votes land.
+loading the crowd vote…
+How it works
+Open method, open data
+No LLM judges scoring other LLMs. Every mechanical number is measured
+      against writing that provably predates ChatGPT. The full harness, scenarios and all 35,578 raw generations are
+on GitHub →
+Human baselines, pre-Oct-2022
+Slop is measured as distance from genuine human writing
+        collected before generative AI existed: Enron email, a blog-authorship corpus and student essays, archived
+        tweets, and Discord chat.
+Five axes, one score
+The arena
+40%
+plus conciseness, templating, rhythm
+        and tells at
+15%
+each. Every axis is normalised to a 0–100 slop scale, higher = sloppier, before
+        blending.
+Same task, real output
+Every model got the identical 112 scenarios across four
+        domains, ten samples each, for
+35,578
+real, unedited generations. Default settings, no cherry-picking.
+Two independent lenses
+The mechanical index measures slop by rule; the arena measures
+        it by vote. Where they agree, the signal is strong.
+Full methodology →
+Think you can spot the slop?
+The board is the machine's verdict. The arena collects the crowd's, blind, one pair at a time. Play a round and
+        see if humans agree.
+Play “Spot the Slop”
+→
+View the code & data
+→

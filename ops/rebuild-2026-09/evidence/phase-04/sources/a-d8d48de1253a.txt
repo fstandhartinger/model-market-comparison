@@ -1,0 +1,128 @@
+EQ-Bench Longform Creative Writing Leaderboard
+Light
+Longform Creative Writing
+Emotional Intelligence Benchmarks for LLMs
+Github
+|
+Paper
+|
+|
+Twitter
+|
+About
+💜EQ-Bench 4
+|
+🌀Spiral-Bench v1.2
+|
+✍️Longform Writing
+|
+🎨Creative Writing v3
+|
+☢️Slop Score
+|
+⚖️Judgemark v4
+|
+🎤BuzzBench
+|
+🌍DiploBench
+|
+📚Legacy Leaderboards
+💠EQ-Bench 3
+🌀Spiral-Bench v1.0
+🎨Creative Writing v2
+💗EQ-Bench v2
+⚖️Judgemark v2.1
+An LLM-judged longform creative writing benchmark.
+✨Updated! Learn more
+Expand Details
+Model
+Length
+Slop
+Repetition
+Degradation
+Score
+Samples
+Longform Creative Writing Benchmark
+Find the source code here:
+https://github.com/EQ-bench/longform-writing-bench
+This benchmark evaluates several abilities:
+Brainstorming & planning out a short story/novella from a minimal prompt
+Reflect on the plan & revise
+Write a short story/novella over 8x 1000 word turns
+v1.11 2026-02-19 Updates
+Benchmark change log
+Judge upgraded:
+Evaluation now uses Claude Sonnet 4.6 (replacing Sonnet 4).
+v1.1 2025-08-08 Updates
+Benchmark change log
+Sharper judging and structural safeguards for more reliable longform evaluations.
+Judge upgraded:
+Evaluation now uses Claude Sonnet 4 (replacing Sonnet 3.7).
+Metaphor vigilance:
+Added targeted judge prompting to better detect and punish incoherent/forced metaphors.
+Degradation penalty:
+New automatic score scaling when outputs overuse very short single‑sentence paragraphs.
+Models are typically evaluated via openrouter, using temp=0.7 and min_p=0.1 as the generation settings.
+Outputs are evaluated with a scoring rubric by Claude Sonnet 4.6.
+📊 Main Metrics
+Length
+The average chapter length (chars). This doesn't contribute to the score.
+Slop Score
+Measures the frequency of words/phrases typically overused by LLMs ("GPT-isms") in each completed chapter. The lower, the better. Does not contribute to the score.
+Repetition
+Measures how strongly a model repeats n-grams across its outputs.
+Degradation
+A mini-sparkline of the 8 chapter scores (averages) to visually see if the model's chapter quality drops off as it continues writing. The degradation score represents how much the final chapter quality has dropped relative to the initial chapter.
+Score (0-100)
+The average of all chapter scores + final scored piece, based on the rubric criteria below.
+📝 Scoring Rubric Criteria
+Each output is evaluated across 14 dimensions that contribute to the final score:
+Positive Qualities (Higher is Better)
+Nuanced Characters
+- Complex, multi-dimensional character development
+Emotionally Engaging
+- Ability to evoke genuine emotional responses
+Compelling Plot
+- Engaging narrative structure and pacing
+Coherent
+- Logical consistency and clarity throughout
+Well-earned Lightness or Darkness
+- Appropriate tonal shifts that feel justified
+Characters Consistent with Profile
+- Maintaining character integrity across chapters
+Followed Chapter Plan
+- Adherence to the outlined story structure
+Faithful to Writing Prompt
+- Staying true to the original creative brief
+Writing Flaws (Lower is Better)
+Weak Dialogue
+- Unnatural or stilted character conversations
+Tell-Don't-Show
+- Over-reliance on exposition vs. demonstration
+Unsurprising or Uncreative
+- Predictable plot points and clichéd elements
+Amateurish
+- Basic writing errors or juvenile style
+Purple Prose
+- Overly ornate or pretentious language
+Forced Poetry or Metaphor
+- Unnatural use of figurative language
+⚖️ Score Weighting
+The rubric scoring is weighted to increase emphasis on incoherent metaphor, to compensate for the judge's difficulty in recognising this common failure mode:
+Final Score
+= (Σ other criteria) + (5 ×
+Forced Poetry/Metaphor
+1.7
+)
+where
+Forced Poetry/Metaphor
+is scaled 0-1
+📉 Long Context Degradation Penalty
+Some models exhibit a specific degradation pattern as output length increases, devolving into excessive use of single-sentence paragraphs. Since judges often fail to recognize this structural issue even with explicit instruction, we apply an automatic scaling penalty when this pattern is detected.
+Detection:
+The system identifies when outputs contain an abnormally high proportion of short single-sentence paragraphs (5 or fewer words).
+Penalty Application:
+When this degradation pattern is detected, the chapter scores are scaled down proportionally to the severity of the single-sentence paragraph overuse.
+Slop Profile
+Loading...
+Close

@@ -1,0 +1,70 @@
+EQ-Bench Creative Writing Leaderboard
+Light
+Creative Writing
+Emotional Intelligence Benchmarks for LLMs
+Github
+|
+Paper
+|
+|
+Twitter
+|
+About
+💜EQ-Bench 4
+|
+🌀Spiral-Bench v1.2
+|
+✍️Longform Writing
+|
+🎨Creative Writing v3
+|
+☢️Slop Score
+|
+⚖️Judgemark v4
+|
+🎤BuzzBench
+|
+🌍DiploBench
+|
+📚Legacy Leaderboards
+💠EQ-Bench 3
+🌀Spiral-Bench v1.0
+🎨Creative Writing v2
+💗EQ-Bench v2
+⚖️Judgemark v2.1
+* Vocab Control:
+50%
+GPT-Slop Control:
+50%
+A LLM-judged creative writing benchmark.
+Learn more
+Model
+Params
+Length
+Slop
+Vocab*
+Creative Writing
+* Vocab Complexity Metric
+The
+Vocab
+column measures the proportion of words with 3+ syllables in a model's output. Higher values indicate more complex vocabulary usage.
+Vocab Control Slider
+The
+Vocab Control
+slider applies a scaling penalty to models that use an unusually high proportion of complex words. This addresses an observed bias where the judge model is easily impressed by over-the-top vocabulary flexing, which can artificially inflate scores.
+0%
+: No penalty applied (raw scores)
+50%
+: Default moderate penalty for excessive vocabulary complexity
+100%
+: Maximum penalty for overly complex vocabulary
+While using complex vocabulary can enhance writing in some contexts, our view is that excessive use of complex, multisyllabic words is perceived negatively by humans. It's a kind of stylistic slop which tends to read unnaturally and sound amateurish.
+GPT-Slop Control
+The
+Slop
+column measures the frequency of words and phrases typically overused by language models (sometimes called "GPT-isms"). The
+GPT-Slop Control
+slider allows you to penalize models that use these slop words excessively.
+For more information on these metrics and how they're calculated, please see the
+About
+section.

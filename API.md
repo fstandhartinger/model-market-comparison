@@ -8,6 +8,11 @@ The data is served from Postgres when `DATABASE_URL` is configured, otherwise fr
 
 ## Endpoints
 
+The phase-04 discovery registry at `data/raw/benchmarks/registry.json` and raw AA
+observations are repository artifacts, not additional API scores. Their normalization,
+model joins and public score exposure belong to phase 05. Existing endpoints and the
+Composite definition remain unchanged. See [registry contract](data/raw/benchmarks/README.md).
+
 ### `GET /api/dataset`
 The **full dataset** in one response — the canonical machine-readable feed: every model (with benchmarks, scores, all provider offers), the provider directory, source collection dates and counts. Cached 5 min (`Cache-Control: public, max-age=300`).
 

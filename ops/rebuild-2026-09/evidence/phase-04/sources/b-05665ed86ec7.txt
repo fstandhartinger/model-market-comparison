@@ -1,0 +1,4477 @@
+Humanity's Last Exam
+Humanity's Last Exam
+Paper
+Nature
+Arxiv
+Dataset
+load_dataset("
+cais/hle
+")
+GitHub
+HLE-Rolling Live
+Submission Dashboard
+Latest News
+[01/28/2026]
+:
+HLE is published on
+Nature
+(Nature 649, 1139–1146).
+[10/08/2025]
+:
+We release a dynamic fork version
+HLE-Rolling
+(
+update logs
+).
+To contribute, please send us an email at
+agibenchmark@safe.ai
+See full notes
+[04/03/2025]
+:
+HLE has been finalized with 2,500 questions.
+Questions flagged in the bug bounty program and searchable questions have been removed and replaced with other questions.
+[03/21/2025]
+:
+Bug Bounty closed. Thank you all for participating, we're working on finalizing bounty decisions!
+[03/15/2025]
+:
+Late contributions closed. Thank you all for participating, we're working on reviewing!
+[02/11/2025]
+:
+HLE Community Feedback Expansion - Bug Bounty
+. Finalized Original Authors and we are working on later contributors for co-authorship soon
+&
+Organizing Team
+Dataset Contributors
+Long Phan
+*1
+,
+Alice Gatti
+*1
+,
+Ziwen Han
+*2
+,
+Nathaniel Li
+*1
+Josephina Hu
+2
+,
+Hugh Zhang
+2
+,
+Chen Bo Calvin Zhang
+2
+,
+Mohamed Shaaban
+2
+John Ling
+2
+,
+Sean Shi
+2
+,
+Michael Choi
+2
+,
+Anish Agrawal
+2
+,
+Arnav Chopra
+2
+,
+Ryan Kim
+1
+Adam Khoja
+1
+,
+Richard Ren
+1
+,
+Jason Hausenloy
+1
+,
+Oliver Zhang
+1
+,
+Mantas Mazeika
+1
+Summer Yue
+**2
+,
+Alexandr Wang
+**2
+,
+Dan Hendrycks
+**1
+1
+Center for AI Safety,
+2
+Scale AI
+Dataset Contributors
+View by institution
+Dmitry Dodonov
+,
+Tung Nguyen
+119
+,
+Jaeho Lee
+45
+,
+Daron Anderson
+,
+Mikhail Doroshenko
+,
+Alun Cennyth Stokes
+120
+,
+Mobeen Mahmood
+30
+,
+Oleksandr Pokutnyi
+121
+,
+122
+,
+Oleg Iskra
+9
+,
+Jessica P. Wang
+123
+,
+John-Clark Levin
+7
+,
+Mstyslav Kazakov
+124
+,
+Fiona Feng
+125
+,
+Steven Y. Feng
+3
+,
+Haoran Zhao
+21
+,
+Michael Yu
+,
+Varun Gangal
+,
+Chelsea Zou
+3
+,
+Zihan Wang
+31
+,
+Serguei Popov
+65
+,
+Robert Gerbicz
+126
+,
+Geoff Galgon
+127
+,
+Johannes Schmitt
+10
+,
+Will Yeadon
+46
+,
+Yongki Lee
+128
+,
+Scott Sauers
+129
+,
+Alvaro Sanchez
+,
+Fabian Giska
+,
+Marc Roth
+66
+,
+Søren Riis
+66
+,
+Saiteja Utpala
+47
+,
+Noah Burns
+3
+,
+Gashaw M. Goshu
+,
+Mohinder Maheshbhai Naiya
+130
+,
+Chidozie Agu
+131
+,
+Zachary Giboney
+132
+,
+Antrell Cheatom
+133
+,
+Francesco Fournier-Facio
+7
+,
+Sarah-Jane Crowson
+134
+,
+Lennart Finke
+10
+,
+Zerui Cheng
+8
+,
+Jennifer Zampese
+135
+,
+Ryan G. Hoerr
+136
+,
+Mark Nandor
+,
+Hyunwoo Park
+9
+,
+Tim Gehrunger
+10
+,
+Jiaqi Cai
+5
+,
+Ben McCarty
+137
+,
+Alexis C Garretson
+138
+,
+139
+,
+Edwin Taylor
+,
+Damien Sileo
+67
+,
+Qiuyu Ren
+4
+,
+Usman Qazi
+140
+,
+32
+,
+Lianghui Li
+14
+,
+Jungbae Nam
+141
+,
+John B. Wydallis
+,
+Pavel Arkhipov
+142
+,
+Jack Wei Lun Shi
+68
+,
+Aras Bacho
+36
+,
+Chris G. Willcocks
+46
+,
+Hangrui Cao
+9
+,
+Sumeet Motwani
+11
+,
+Emily de Oliveira Santos
+48
+,
+Johannes Veith
+143
+,
+49
+,
+Edward Vendrow
+5
+,
+Doru Cojoc
+22
+,
+Kengo Zenitani
+,
+Joshua Robinson
+37
+,
+Longke Tang
+8
+,
+Yuqi Li
+144
+,
+Joshua Vendrow
+5
+,
+Natanael Wildner Fraga
+,
+Vladyslav Kuchkin
+145
+,
+Andrey Pupasov Maksimov
+146
+,
+Pierre Marion
+14
+,
+Denis Efremov
+147
+,
+Jayson Lynch
+5
+,
+Kaiqu Liang
+8
+,
+Aleksandar Mikov
+14
+,
+Andrew Gritsevskiy
+148
+,
+Julien Guillod
+149
+,
+69
+,
+Gözdenur Demir
+,
+Dakotah Martinez
+,
+Ben Pageler
+,
+Kevin Zhou
+4
+,
+Saeed Soori
+15
+,
+Ori Press
+19
+,
+Henry Tang
+11
+,
+Paolo Rissone
+38
+,
+Sean R. Green
+,
+Lina Brüssel
+7
+,
+Moon Twayana
+70
+,
+Aymeric Dieuleveut
+150
+,
+Joseph Marvin Imperial
+71
+,
+151
+,
+Ameya Prabhu
+19
+,
+Jinzhou Yang
+152
+,
+Nick Crispino
+17
+,
+Arun Rao
+39
+,
+Dimitri Zvonkine
+72
+,
+73
+,
+Gabriel Loiseau
+67
+,
+Mikhail Kalinin
+153
+,
+Marco Lukas
+74
+,
+Ciprian Manolescu
+3
+,
+Nate Stambaugh
+154
+,
+Subrata Mishra
+155
+,
+Tad Hogg
+156
+,
+Carlo Bosio
+4
+,
+Brian P Coppola
+13
+,
+Julian Salazar
+50
+,
+Jaehyeok Jin
+22
+,
+Rafael Sayous
+73
+,
+Stefan Ivanov
+7
+,
+Philippe Schwaller
+14
+,
+Shaipranesh Senthilkuma
+14
+,
+Andres M Bran
+14
+,
+Andres Algaba
+33
+,
+Kelsey Van den Houte
+33
+,
+75
+,
+Lynn Van Der Sypt
+33
+,
+75
+,
+Brecht Verbeken
+33
+,
+David Noever
+157
+,
+Alexei Kopylov
+,
+Benjamin Myklebust
+158
+,
+Bikun Li
+12
+,
+Lisa Schut
+11
+,
+Evgenii Zheltonozhskii
+76
+,
+Qiaochu Yuan
+,
+Derek Lim
+5
+,
+Richard Stanley
+159
+,
+5
+,
+Tong Yang
+9
+,
+John Maar
+77
+,
+Julian Wykowski
+7
+,
+Martí Oller
+7
+,
+Anmol Sahu
+,
+Cesare Giulio Ardito
+78
+,
+Yuzheng Hu
+16
+,
+Ariel Ghislain Kemogne Kamdoum
+79
+,
+Alvin Jin
+5
+,
+Tobias Garcia Vilchis
+160
+,
+Yuexuan Zu
+5
+,
+Martin Lackner
+51
+,
+James Koppel
+,
+Gongbo Sun
+18
+,
+Daniil S. Antonenko
+80
+,
+Steffi Chern
+9
+,
+Bingchen Zhao
+26
+,
+Pierrot Arsene
+81
+,
+Joseph M Cavanagh
+4
+,
+Daofeng Li
+17
+,
+Jiawei Shen
+17
+,
+Donato Crisostomi
+38
+,
+Wenjin Zhang
+17
+,
+Ali Dehghan
+,
+Sergey Ivanov
+,
+David Perrella
+82
+,
+Nurdin Kaparov
+161
+,
+Allen Zang
+12
+,
+Ilia Sucholutsky
+27
+,
+Arina Kharlamova
+23
+,
+Daniil Orel
+23
+,
+Vladislav Poritski
+,
+Shalev Ben-David
+52
+,
+Zachary Berger
+5
+,
+Parker Whitfill
+5
+,
+Michael Foster
+,
+Daniel Munro
+31
+,
+Linh Ho
+,
+Shankar Sivarajan
+40
+,
+Dan Bar Hava
+162
+,
+Aleksey Kuchkin
+,
+David Holmes
+83
+,
+Alexandra Rodriguez-Romero
+,
+Frank Sommerhage
+163
+,
+Anji Zhang
+5
+,
+Richard Moat
+84
+,
+Keith Schneider
+,
+Zakayo Kazibwe
+164
+,
+Don Clarke
+165
+,
+Dae Hyun Kim
+166
+,
+Felipe Meneguitti Dias
+48
+,
+Sara Fish
+6
+,
+Veit Elser
+24
+,
+Tobias Kreiman
+4
+,
+Victor Efren Guadarrama Vilchis
+167
+,
+Immo Klose
+22
+,
+Ujjwala Anantheswaran
+41
+,
+Adam Zweiger
+5
+,
+Kaivalya Rawal
+11
+,
+Jeffery Li
+5
+,
+Jeremy Nguyen
+168
+,
+Nicolas Daans
+169
+,
+Haline Heidinger
+170
+,
+171
+,
+Maksim Radionov
+172
+,
+Václav Rozhoň
+85
+,
+Vincent Ginis
+33
+,
+6
+,
+Christian Stump
+173
+,
+Niv Cohen
+27
+,
+Rafał Poświata
+174
+,
+Josef Tkadlec
+53
+,
+Alan Goldfarb
+4
+,
+Chenguang Wang
+17
+,
+Piotr Padlewski
+,
+Stanislaw Barzowski
+,
+Kyle Montgomery
+17
+,
+Ryan Stendall
+175
+,
+Jamie Tucker-Foltz
+6
+,
+Jack Stade
+86
+,
+T. Ryan Rogers
+176
+,
+Tom Goertzen
+54
+,
+Declan Grabb
+3
+,
+Abhishek Shukla
+87
+,
+Alan Givré
+177
+,
+John Arnold Ambay
+178
+,
+Archan Sen
+4
+,
+Muhammad Fayez Aziz
+16
+,
+Mark H Inlow
+179
+,
+Hao He
+88
+,
+Ling Zhang
+88
+,
+Younesse Kaddar
+11
+,
+Ivar Ängquist
+55
+,
+Yanxu Chen
+56
+,
+Harrison K Wang
+6
+,
+Kalyan Ramakrishnan
+11
+,
+Elliott Thornley
+180
+,
+Antonio Terpin
+10
+,
+Hailey Schoelkopf
+,
+Eric Zheng
+9
+,
+Avishy Carmi
+181
+,
+Ethan D. L. Brown
+182
+,
+Kelin Zhu
+40
+,
+Max Bartolo
+183
+,
+Richard Wheeler
+26
+,
+Martin Stehberger
+,
+Peter Bradshaw
+16
+,
+JP Heimonen
+184
+,
+Kaustubh Sridhar
+34
+,
+Ido Akov
+185
+,
+Jennifer Sandlin
+41
+,
+Yury Makarychev
+186
+,
+Joanna Tam
+89
+,
+Hieu Hoang
+187
+,
+David M. Cunningham
+188
+,
+Vladimir Goryachev
+,
+Demosthenes Patramanis
+11
+,
+Michael Krause
+189
+,
+Andrew Redenti
+22
+,
+David Aldous
+4
+,
+Jesyin Lai
+190
+,
+Shannon Coleman
+32
+,
+Jiangnan Xu
+191
+,
+Sangwon Lee
+,
+Ilias Magoulas
+57
+,
+Sandy Zhao
+,
+Ning Tang
+4
+,
+Michael K. Cohen
+4
+,
+Orr Paradise
+4
+,
+Jan Hendrik Kirchner
+90
+,
+Maksym Ovchynnikov
+192
+,
+Jason O. Matos
+89
+,
+Adithya Shenoy
+,
+Michael Wang
+4
+,
+Yuzhou Nie
+35
+,
+Anna Sztyber-Betley
+193
+,
+Paolo Faraboschi
+194
+,
+Robin Riblet
+81
+,
+Jonathan Crozier
+91
+,
+Shiv Halasyamani
+195
+,
+Shreyas Verma
+196
+,
+Prashant Joshi
+197
+,
+Eli Meril
+198
+,
+Ziqiao Ma
+13
+,
+Jérémy Andréoletti
+69
+,
+Raghav Singhal
+23
+,
+Jacob Platnick
+28
+,
+Volodymyr Nevirkovets
+42
+,
+Luke Basler
+199
+,
+Alexander Ivanov
+200
+,
+Seri Khoury
+85
+,
+Nils Gustafsson
+55
+,
+Marco Piccardo
+201
+,
+Hamid Mostaghimi
+79
+,
+Qijia Chen
+6
+,
+Virendra Singh
+202
+,
+Trần Quốc Khánh
+203
+,
+Paul Rosu
+43
+,
+Hannah Szlyk
+17
+,
+Zachary Brown
+5
+,
+Himanshu Narayan
+,
+Aline Menezes
+,
+Jonathan Roberts
+7
+,
+William Alley
+,
+Kunyang Sun
+4
+,
+Arkil Patel
+30
+,
+92
+,
+Max Lamparth
+3
+,
+Anka Reuel
+3
+,
+Linwei Xin
+12
+,
+Hanmeng Xu
+80
+,
+Jacob Loader
+7
+,
+Freddie Martin
+,
+Zixuan Wang
+8
+,
+Andrea Achilleos
+44
+,
+Thomas Preu
+204
+,
+Tomek Korbak
+205
+,
+Ida Bosio
+206
+,
+Fereshteh Kazemi
+,
+Ziye Chen
+29
+,
+Biró Bálint
+,
+Eve J. Y. Lo
+207
+,
+Jiaqi Wang
+21
+,
+Maria Inês S. Nunes
+208
+,
+Jeremiah Milbauer
+9
+,
+M Saiful Bari
+209
+,
+Zihao Wang
+12
+,
+Behzad Ansarinejad
+,
+Yewen Sun
+93
+,
+Stephane Durand
+210
+,
+Hossam Elgnainy
+211
+,
+Guillaume Douville
+,
+Daniel Tordera
+212
+,
+George Balabanian
+34
+,
+Hew Wolff
+,
+Lynna Kvistad
+213
+,
+Hsiaoyun Milliron
+214
+,
+Ahmad Sakor
+74
+,
+Murat Eron
+215
+,
+Andrew Favre D.O.
+216
+,
+Shailesh Shah
+217
+,
+Xiaoxiang Zhou
+49
+,
+Firuz Kamalov
+218
+,
+Sherwin Abdoli
+,
+Tim Santens
+7
+,
+Shaul Barkan
+58
+,
+Allison Tee
+3
+,
+Robin Zhang
+5
+,
+Alessandro Tomasiello
+219
+,
+G. Bruno De Luca
+3
+,
+Shi-Zhuo Looi
+36
+,
+Vinh-Kha Le
+4
+,
+Noam Kolt
+58
+,
+Jiayi Pan
+4
+,
+Emma Rodman
+220
+,
+Jacob Drori
+,
+Carl J Fossum
+221
+,
+Niklas Muennighoff
+3
+,
+Milind Jagota
+4
+,
+Ronak Pradeep
+52
+,
+Honglu Fan
+222
+,
+Jonathan Eicher
+223
+,
+Michael Chen
+36
+,
+Kushal Thaman
+3
+,
+William Merrill
+27
+,
+Moritz Firsching
+224
+,
+Carter Harris
+225
+,
+Ștefan Ciobâcă
+226
+,
+Jason Gross
+,
+Rohan Pandey
+,
+Ilya Gusev
+,
+Adam Jones
+,
+Shashank Agnihotri
+95
+,
+Pavel Zhelnov
+15
+,
+Mohammadreza Mofayezi
+15
+,
+Alexander Piperski
+227
+,
+David K. Zhang
+3
+,
+Kostiantyn Dobarskyi
+,
+Roman Leventov
+228
+,
+Ignat Soroko
+70
+,
+Joshua Duersch
+229
+,
+Vage Taamazyan
+230
+,
+Andrew Ho
+231
+,
+Wenjie Ma
+4
+,
+William Held
+28
+,
+3
+,
+Ruicheng Xian
+16
+,
+Armel Randy Zebaze
+232
+,
+Mohanad Mohamed
+233
+,
+Julian Noah Leser
+51
+,
+Michelle X Yuan
+,
+Laila Yacar
+234
+,
+Johannes Lengler
+10
+,
+Katarzyna Olszewska
+,
+Claudio Di Fratta
+235
+,
+Edson Oliveira
+236
+,
+Joseph W. Jackson
+237
+,
+Andy Zou
+238
+,
+9
+,
+Muthu Chidambaram
+43
+,
+Timothy Manik
+,
+Hector Haffenden
+,
+Dashiell Stander
+239
+,
+Ali Dasouqi
+20
+,
+Alexander Shen
+240
+,
+Bita Golshani
+,
+David Stap
+56
+,
+Egor Kretov
+241
+,
+Mikalai Uzhou
+242
+,
+Alina Borisovna Zhidkovskaya
+96
+,
+Nick Winter
+,
+Miguel Orbegozo Rodriguez
+10
+,
+Robert Lauff
+77
+,
+Dustin Wehr
+,
+Colin Tang
+9
+,
+Zaki Hossain
+243
+,
+Shaun Phillips
+,
+Fortuna Samuele
+244
+,
+Fredrik Ekström
+,
+Angela Hammon
+,
+Oam Patel
+6
+,
+Faraz Farhidi
+245
+,
+George Medley
+,
+Forough Mohammadzadeh
+,
+Madellene Peñaflor
+246
+,
+Haile Kassahun
+30
+,
+Alena Friedrich
+247
+,
+Rayner Hernandez Perez
+97
+,
+Daniel Pyda
+248
+,
+Taom Sakal
+35
+,
+Omkar Dhamane
+249
+,
+Ali Khajegili Mirabadi
+32
+,
+Eric Hallman
+,
+Kenchi Okutsu
+250
+,
+Mike Battaglia
+,
+Mohammad Maghsoudimehrabani
+251
+,
+Alon Amit
+252
+,
+Dave Hulbert
+,
+Roberto Pereira
+253
+,
+Simon Weber
+10
+,
+Handoko
+,
+Anton Peristyy
+,
+Stephen Malina
+254
+,
+Mustafa Mehkary
+15
+,
+98
+,
+Rami Aly
+7
+,
+Frank Reidegeld
+,
+Anna-Katharina Dick
+19
+,
+Cary Friday
+255
+,
+Mukhwinder Singh
+256
+,
+Hassan Shapourian
+257
+,
+Wanyoung Kim
+258
+,
+Mariana Costa
+,
+Hubeyb Gurdogan
+39
+,
+Harsh Kumar
+259
+,
+Chiara Ceconello
+,
+Chao Zhuang
+,
+Haon Park
+260
+,
+261
+,
+Micah Carroll
+4
+,
+Andrew R. Tawfeek
+21
+,
+Stefan Steinerberger
+21
+,
+Daattavya Aggarwal
+7
+,
+Michael Kirchhof
+19
+,
+Linjie Dai
+5
+,
+Evan Kim
+5
+,
+Johan Ferret
+50
+,
+Jainam Shah
+262
+,
+Yuzhou Wang
+28
+,
+Minghao Yan
+18
+,
+Krzysztof Burdzy
+21
+,
+Lixin Zhang
+,
+Antonio Franca
+7
+,
+Diana T. Pham
+263
+,
+Kang Yong Loh
+3
+,
+Joshua Robinson
+264
+,
+Abram Jackson
+,
+Paolo Giordano
+99
+,
+Philipp Petersen
+99
+,
+Adrian Cosma
+265
+,
+Jesus Colino
+,
+Colin White
+266
+,
+Jacob Votava
+8
+,
+Vladimir Vinnikov
+,
+Ethan Delaney
+100
+,
+Petr Spelda
+53
+,
+Vit Stritecky
+53
+,
+Syed M. Shahid
+267
+,
+Jean-Christophe Mourrat
+72
+,
+268
+,
+Lavr Vetoshkin
+269
+,
+Koen Sponselee
+270
+,
+Renas Bacho
+271
+,
+Zheng-Xin Yong
+45
+,
+Florencia de la Rosa
+272
+,
+Nathan Cho
+3
+,
+Xiuyu Li
+4
+,
+Guillaume Malod
+273
+,
+Orion Weller
+20
+,
+Guglielmo Albani
+274
+,
+Leon Lang
+56
+,
+Julien Laurendeau
+14
+,
+Dmitry Kazakov
+6
+,
+Fatimah Adesanya
+275
+,
+Julien Portier
+7
+,
+Lawrence Hollom
+7
+,
+Victor Souza
+7
+,
+Yuchen Anna Zhou
+276
+,
+Julien Degorre
+277
+,
+Yiğit Yalın
+278
+,
+Gbenga Daniel Obikoya
+,
+Rai (Michael Pokorny)
+101
+,
+Filippo Bigi
+14
+,
+M.C. Boscá
+279
+,
+Oleg Shumar
+,
+Kaniuar Bacho
+26
+,
+Gabriel Recchia
+280
+,
+Mara Popescu
+102
+,
+Nikita Shulga
+281
+,
+Ngefor Mildred Tanwie
+282
+,
+Thomas C.H. Lux
+283
+,
+Ben Rank
+,
+Colin Ni
+39
+,
+Matthew Brooks
+,
+Alesia Yakimchyk
+284
+,
+Huanxu (Quinn) Liu
+285
+,
+Stefano Cavalleri
+286
+,
+Olle Häggström
+287
+,
+Emil Verkama
+55
+,
+Joshua Newbould
+46
+,
+Hans Gundlach
+5
+,
+Leonor Brito-Santana
+288
+,
+Brian Amaro
+3
+,
+Vivek Vajipey
+3
+,
+Rynaa Grover
+28
+,
+Ting Wang
+17
+,
+Yosi Kratish
+42
+,
+Wen-Ding Li
+24
+,
+Sivakanth Gopi
+47
+,
+Andrea Caciolai
+38
+,
+Christian Schroeder de Witt
+11
+,
+Pablo Hernández-Cámara
+289
+,
+Emanuele Rodolà
+38
+,
+Jules Robins
+,
+Dominic Williamson
+54
+,
+Vincent Cheng
+31
+,
+Brad Raynor
+290
+,
+Hao Qi
+29
+,
+Ben Segev
+22
+,
+Jingxuan Fan
+6
+,
+Sarah Martinson
+6
+,
+Erik Y. Wang
+6
+,
+Kaylie Hausknecht
+6
+,
+Michael P. Brenner
+6
+,
+Mao Mao
+29
+,
+Christoph Demian
+49
+,
+Peyman Kassani
+291
+,
+Xinyu Zhang
+29
+,
+David Avagian
+95
+,
+Eshawn Jessica Scipio
+292
+,
+Alon Ragoler
+293
+,
+Justin Tan
+7
+,
+Blake Sims
+,
+Rebeka Plecnik
+,
+Aaron Kirtland
+45
+,
+Omer Faruk Bodur
+,
+D.P. Shinde
+,
+Yan Carlos Leyva Labrador
+294
+,
+Zahra Adoul
+295
+,
+Mohamed Zekry
+296
+,
+Ali Karakoc
+297
+,
+Tania C. B. Santos
+,
+Samir Shamseldeen
+298
+,
+Loukmane Karim
+98
+,
+Anna Liakhovitskaia
+299
+,
+Nate Resman
+103
+,
+Nicholas Farina
+,
+Juan Carlos Gonzalez
+300
+,
+Gabe Maayan
+29
+,
+Earth Anderson
+71
+,
+Rodrigo De Oliveira Pena
+301
+,
+Elizabeth Kelley
+103
+,
+Hodjat Mariji
+,
+Rasoul Pouriamanesh
+,
+Wentao Wu
+32
+,
+Ross Finocchio
+,
+Ismail Alarab
+302
+,
+Joshua Cole
+303
+,
+Danyelle Ferreira
+,
+Bryan Johnson
+304
+,
+Mohammad Safdari
+305
+,
+Liangti Dai
+11
+,
+Siriphan Arthornthurasuk
+,
+Isaac C. McAlister
+,
+Alejandro José Moyano
+306
+,
+Alexey Pronin
+307
+,
+Jing Fan
+102
+,
+Angel Ramirez-Trinidad
+,
+Yana Malysheva
+17
+,
+Daphiny Pottmaier
+308
+,
+Omid Taheri
+96
+,
+Stanley Stepanic
+309
+,
+Samuel Perry
+,
+Luke Askew
+310
+,
+Raúl Adrián Huerta Rodríguez
+,
+Ali M. R. Minissi
+104
+,
+Ricardo Lorena
+105
+,
+Krishnamurthy Iyer
+106
+,
+Arshad Anil Fasiludeen
+7
+,
+Ronald Clark
+11
+,
+Josh Ducey
+311
+,
+Matheus Piza
+312
+,
+Maja Somrak
+,
+Eric Vergo
+,
+Juehang Qin
+313
+,
+Benjámin Borbás
+314
+,
+Eric Chu
+50
+,
+Jack Lindsey
+90
+,
+Antoine Jallon
+,
+I.M.J. McInnis
+,
+Evan Chen
+5
+,
+Avi Semler
+11
+,
+Luk Gloor
+,
+Tej Shah
+315
+,
+Marc Carauleanu
+316
+,
+Pascal Lauer
+317
+,
+318
+,
+Tran Đuc Huy
+319
+,
+Hossein Shahrtash
+320
+,
+Emilien Duc
+10
+,
+Lukas Lewark
+10
+,
+Assaf Brown
+58
+,
+Samuel Albanie
+,
+Brian Weber
+321
+,
+Warren S. Vaz
+,
+Pierre Clavier
+322
+,
+Yiyang Fan
+,
+Gabriel Poesia Reis e Silva
+3
+,
+Long (Tony) Lian
+4
+,
+Marcus Abramovitch
+,
+Xi Jiang
+12
+,
+Sandra Mendoza
+323
+,
+324
+,
+Murat Islam
+325
+,
+Juan Gonzalez
+,
+Vasilios Mavroudis
+107
+,
+Justin Xu
+11
+,
+Pawan Kumar
+326
+,
+Laxman Prasad Goswami
+87
+,
+Daniel Bugas
+,
+Nasser Heydari
+,
+Ferenc Jeanplong
+327
+,
+Thorben Jansen
+328
+,
+Antonella Pinto
+,
+Archimedes Apronti
+329
+,
+Abdallah Galal
+330
+,
+Ng Ze-An
+331
+,
+Ankit Singh
+332
+,
+Tong Jiang
+6
+,
+Joan of Arc Xavier
+,
+Kanu Priya Agarwal
+,
+Mohammed Berkani
+333
+,
+Gang Zhang
+,
+Zhehang Du
+34
+,
+Benedito Alves de Oliveira Junior
+48
+,
+Dmitry Malishev
+,
+Nicolas Remy
+334
+,
+Taylor D. Hartman
+335
+,
+Tim Tarver
+336
+,
+Stephen Mensah
+337
+,
+Gautier Abou Loume
+338
+,
+339
+,
+Wiktor Morak
+,
+Farzad Habibi
+59
+,
+Sarah Hoback
+6
+,
+Will Cai
+4
+,
+Javier Gimenez
+,
+Roselynn Grace Montecillo
+340
+,
+Jakub Łucki
+10
+,
+Russell Campbell
+341
+,
+Asankhaya Sharma
+342
+,
+Khalida Meer
+,
+Shreen Gul
+343
+,
+Daniel Espinosa Gonzalez
+35
+,
+Xavier Alapont
+,
+Alex Hoover
+12
+,
+Gunjan Chhablani
+28
+,
+Freddie Vargus
+344
+,
+Arunim Agarwal
+345
+,
+Yibo Jiang
+12
+,
+Deepakkumar Patil
+346
+,
+David Outevsky
+347
+,
+Kevin Joseph Scaria
+41
+,
+Rajat Maheshwari
+348
+,
+Abdelkader Dendane
+,
+Priti Shukla
+349
+,
+Ashley Cartwright
+350
+,
+Sergei Bogdanov
+351
+,
+Niels Mündler
+10
+,
+Sören Möller
+352
+,
+Luca Arnaboldi
+14
+,
+Kunvar Thaman
+353
+,
+Muhammad Rehan Siddiqi
+354
+,
+355
+,
+Prajvi Saxena
+356
+,
+Himanshu Gupta
+41
+,
+Tony Fruhauff
+,
+Glen Sherman
+,
+Mátyás Vincze
+357
+,
+108
+,
+Siranut Usawasutsakorn
+358
+,
+Dylan Ler
+,
+Anil Radhakrishnan
+91
+,
+Innocent Enyekwe
+,
+Sk Md Salauddin
+359
+,
+Jiang Muzhen
+,
+Aleksandr Maksapetyan
+,
+Vivien Rossbach
+,
+Chris Harjadi
+3
+,
+Mohsen Bahaloohoreh
+,
+Claire Sparrow
+12
+,
+Jasdeep Sidhu
+,
+Sam Ali
+37
+,
+Song Bian
+18
+,
+John Lai
+,
+Eric Singer
+360
+,
+Justine Leon Uro
+,
+Greg Bateman
+,
+Mohamed Sayed
+,
+Ahmed Menshawy
+361
+,
+Darling Duclosel
+362
+,
+Dario Bezzi
+363
+,
+Yashaswini Jain
+364
+,
+Ashley Aaron
+,
+Murat Tiryakioglu
+,
+Sheeshram Siddh
+,
+Keith Krenek
+,
+Imad Ali Shah
+100
+,
+Jun Jin
+,
+Scott Creighton
+,
+Denis Peskoff
+8
+,
+Zienab EL-Wasif
+104
+,
+Ragavendran P V
+,
+Michael Richmond
+,
+Joseph McGowan
+15
+,
+Tejal Patwardhan
+101
+Late Contributors
+Hao-Yu Sun
+365
+,
+Ting Sun
+16
+,
+Nikola Zubić
+60
+,
+Samuele Sala
+366
+,
+Stephen Ebert
+39
+,
+Jean Kaddour
+44
+,
+Manuel Schottdorf
+367
+,
+Dianzhuo Wang
+6
+,
+Gerol Petruzella
+368
+,
+Alex Meiburg
+369
+,
+52
+,
+Tilen Medved
+370
+,
+Ali ElSheikh
+42
+,
+S Ashwin Hebbar
+8
+,
+Lorenzo Vaquero
+108
+,
+Xianjun Yang
+35
+,
+Jason Poulos
+371
+,
+Vilém Zouhar
+10
+,
+Sergey Bogdanik
+,
+Mingfang Zhang
+372
+,
+Jorge Sanz-Ros
+3
+,
+David Anugraha
+15
+,
+Yinwei Dai
+8
+,
+Anh N. Nhu
+40
+,
+Xue Wang
+20
+,
+Ali Anil Demircali
+61
+,
+Zhibai Jia
+24
+,
+Yuyin Zhou
+62
+,
+Juncheng Wu
+62
+,
+Mike He
+8
+,
+Nitin Chandok
+,
+Aarush Sinha
+373
+,
+Gaoxiang Luo
+106
+,
+Long Le
+37
+,
+Mickaël Noyé
+374
+,
+Ioannis Pantidis
+375
+,
+Tianbo Qi
+109
+,
+Soham Sachin Purohit
+13
+,
+Letitia Parcalabescu
+110
+,
+Thai-Hoa Nguyen
+376
+,
+Genta Indra Winata
+,
+Edoardo M. Ponti
+26
+,
+Hanchen Li
+12
+,
+Kaustubh Dhole
+57
+,
+Jongee Park
+377
+,
+Dario Abbondanza
+378
+,
+Yuanli Wang
+29
+,
+Anupam Nayak
+9
+,
+Diogo M. Caetano
+105
+,
+Antonio A. W. L. Wong
+32
+,
+Maria del Rio-Chanona
+44
+,
+25
+,
+Dániel Kondor
+25
+,
+Pieter Francois
+11
+,
+107
+,
+Ed Chalstrey
+44
+,
+Jakob Zsambok
+25
+,
+Dan Hoyer
+25
+,
+Jenny Reddish
+25
+,
+Jakob Hauser
+25
+,
+Francisco-Javier Rodrigo-Ginés
+379
+,
+Suchandra Datta
+,
+Maxwell Shepherd
+20
+,
+Thom Kamphuis
+380
+,
+Qizheng Zhang
+3
+,
+Hyunjun Kim
+63
+,
+Ruiji Sun
+4
+,
+Jianzhu Yao
+8
+,
+Franck Dernoncourt
+381
+,
+Satyapriya Krishna
+6
+,
+Sina Rismanchian
+59
+,
+Bonan Pu
+,
+Francesco Pinto
+12
+,
+Yingheng Wang
+24
+,
+Kumar Shridhar
+10
+,
+Kalon J. Overholt
+5
+,
+Glib Briia
+382
+,
+Hieu Nguyen
+64
+,
+David (Quod) Soler Bartomeu
+383
+,
+Tony CY Pang
+384
+,
+54
+,
+Adam Wecker
+,
+Yifan Xiong
+47
+,
+Fanfei Li
+385
+,
+Lukas S. Huber
+111
+,
+19
+,
+Joshua Jaeger
+111
+,
+Romano De Maddalena
+386
+,
+Xing Han Lù
+30
+,
+Yuhui Zhang
+3
+,
+Claas Beger
+24
+,
+Patrick Tser Jern Kon
+13
+,
+Sean Li
+82
+,
+Vivek Sanker
+3
+,
+Ming Yin
+8
+,
+Yihao Liang
+8
+,
+Xinlu Zhang
+35
+,
+Ankit Agrawal
+387
+,
+Li S. Yifei
+34
+,
+Zechen Zhang
+6
+,
+Mu Cai
+18
+,
+Yasin Sonmez
+4
+,
+Costin Cozianu
+388
+,
+Changhao Li
+5
+,
+Alex Slen
+34
+,
+Shoubin Yu
+112
+,
+Hyun Kyu Park
+389
+,
+Gabriele Sarti
+390
+,
+Marcin Briański
+391
+,
+Alessandro Stolfo
+10
+,
+Truong An Nguyen
+392
+,
+Mike Zhang
+393
+,
+Yotam Perlitz
+394
+,
+Jose Hernandez-Orallo
+395
+,
+Runjia Li
+11
+,
+Amin Shabani
+396
+,
+Felix Juefei-Xu
+,
+Shikhar Dhingra
+397
+,
+Orr Zohar
+3
+,
+My Chiffon Nguyen
+,
+Alexander Pondaven
+11
+,
+Abdurrahim Yilmaz
+61
+,
+Xuandong Zhao
+4
+,
+Chuanyang Jin
+20
+,
+Muyan Jiang
+4
+,
+Stefan Todoran
+21
+,
+Xinyao Han
+5
+,
+Jules Kreuer
+19
+,
+Brian Rabern
+26
+,
+Anna Plassart
+84
+,
+Martino Maggetti
+398
+,
+Luther Yap
+8
+,
+Robert Geirhos
+19
+,
+Jonathon Kean
+399
+,
+Dingsu Wang
+,
+Sina Mollaei
+3
+,
+Chenkai Sun
+16
+,
+Yifan Yin
+20
+,
+Shiqi Wang
+109
+,
+Rui Li
+3
+,
+Yaowen Chang
+16
+,
+Anjiang Wei
+3
+,
+Alice Bizeul
+10
+,
+Xiaohan Wang
+3
+,
+Alexandre Oliveira Arrais
+400
+,
+Kushin Mukherjee
+3
+,
+Jorge Chamorro-Padial
+401
+,
+Jiachen Liu
+13
+,
+Xingyu Qu
+23
+,
+Junyi Guan
+23
+,
+Adam Bouyamourn
+4
+,
+Shuyu Wu
+13
+,
+Martyna Plomecka
+60
+,
+Junda Chen
+31
+,
+Mengze Tang
+18
+,
+Jiaqi Deng
+28
+,
+Shreyas Subramanian
+402
+,
+Haocheng Xi
+4
+,
+Haoxuan Chen
+3
+,
+Weizhi Zhang
+113
+,
+Yinuo Ren
+3
+,
+Haoqin Tu
+62
+,
+Sejong Kim
+63
+,
+Yushun Chen
+114
+,
+Sara Vera Marjanović
+86
+,
+Junwoo Ha
+403
+,
+Grzegorz Luczyna
+,
+Jeff J. Ma
+13
+,
+Zewen Shen
+15
+,
+Dawn Song
+4
+,
+Cedegao E. Zhang
+5
+,
+Zhun Wang
+4
+,
+Gaël Gendron
+404
+,
+Yunze Xiao
+9
+,
+Leo Smucker
+15
+,
+Erica Weng
+9
+,
+Kwok Hao Lee
+68
+,
+Zhe Ye
+4
+,
+Stefano Ermon
+3
+,
+Ignacio D. Lopez-Miguel
+51
+,
+Theo Knights
+97
+,
+Anthony Gitter
+18
+,
+405
+,
+Namkyu Park
+406
+,
+Boyi Wei
+8
+,
+Hongzheng Chen
+24
+,
+Kunal Pai
+115
+,
+Ahmed Elkhanany
+407
+,
+Han Lin
+408
+,
+Philipp D. Siedler
+110
+,
+Jichao Fang
+409
+,
+Ritwik Mishra
+410
+,
+Károly Zsolnai-Fehér
+411
+,
+Xilin Jiang
+22
+,
+Shadab Khan
+412
+,
+Jun Yuan
+413
+,
+Rishab Kumar Jain
+6
+,
+Xi Lin
+13
+,
+Mike Peterson
+,
+Zhe Wang
+414
+,
+Aditya Malusare
+116
+,
+Maosen Tang
+24
+,
+Isha Gupta
+57
+,
+Ivan Fosin
+,
+Timothy Kang
+,
+Barbara Dworakowska
+61
+,
+Kazuki Matsumoto
+415
+,
+Guangyao Zheng
+20
+,
+Gerben Sewuster
+416
+,
+Jorge Pretel Villanueva
+417
+,
+Ivan Rannev
+418
+,
+Igor Chernyavsky
+78
+,
+Jiale Chen
+83
+,
+Deepayan Banik
+15
+,
+Ben Racz
+9
+,
+Wenchao Dong
+419
+,
+Jianxin Wang
+20
+,
+Laila Bashmal
+,
+Duarte V. Gonçalves
+65
+,
+Wei Hu
+16
+,
+Kaushik Bar
+420
+,
+Ondrej Bohdal
+26
+,
+Atharv Singh Patlan
+8
+,
+Shehzaad Dhuliawala
+10
+,
+Caroline Geirhos
+421
+,
+Julien Wist
+422
+,
+Yuval Kansal
+8
+,
+Bingsen Chen
+27
+,
+Kutay Tire
+117
+,
+Atak Talay Yücel
+117
+,
+Brandon Christof
+423
+,
+Veerupaksh Singla
+116
+,
+Zijian Song
+115
+,
+Sanxing Chen
+43
+,
+Jiaxin Ge
+4
+,
+Kaustubh Ponkshe
+23
+,
+Isaac Park
+27
+,
+Tianneng Shi
+4
+,
+Martin Q. Ma
+9
+,
+Joshua Mak
+424
+,
+Sherwin Lai
+3
+,
+Antoine Moulin
+425
+,
+Zhuo Cheng
+9
+,
+Zhanda Zhu
+15
+,
+Ziyi Zhang
+12
+,
+Vaidehi Patil
+112
+,
+Ketan Jha
+426
+,
+Qiutong Men
+27
+,
+Jiaxuan Wu
+18
+,
+Tianchi Zhang
+12
+,
+Bruno Hebling Vieira
+60
+,
+Alham Fikri Aji
+23
+,
+Jae-Won Chung
+13
+,
+Mohammed Mahfoud
+92
+,
+Ha Thi Hoang
+427
+,
+Marc Sperzel
+,
+Wei Hao
+22
+,
+Kristof Meding
+19
+,
+Sihan Xu
+13
+,
+Vassilis Kostakos
+428
+,
+Davide Manini
+76
+,
+Yueying Liu
+16
+,
+Christopher Toukmaji
+59
+,
+Jay Paek
+31
+,
+Eunmi Yu
+429
+,
+Arif Engin Demircali
+430
+,
+Zhiyi Sun
+13
+,
+Ivan Dewerpe
+64
+,
+Hongsen Qin
+36
+,
+Roman Pflugfelder
+431
+,
+432
+,
+James Bailey
+433
+,
+Johnathan Morris
+9
+,
+Ville Heilala
+434
+,
+Sybille Rosset
+435
+,
+Zishun Yu
+113
+,
+Peter E. Chen
+30
+,
+Woongyeong Yeo
+63
+,
+Eeshaan Jain
+14
+,
+Ryan Yang
+5
+,
+Sreekar Chigurupati
+118
+,
+Julia Chernyavsky
+,
+Sai Prajwal Reddy
+118
+,
+Subhashini Venugopalan
+64
+,
+Hunar Batra
+11
+,
+Core Francisco Park
+6
+,
+Hieu Tran
+40
+,
+Guilherme Maximiano
+,
+Genghan Zhang
+3
+,
+Yizhuo Liang
+37
+,
+Hu Shiyu
+436
+,
+Rongwu Xu
+21
+,
+Rui Pan
+8
+,
+Siddharth Suresh
+18
+,
+Ziqi Liu
+18
+,
+Samaksh Gulati
+114
+,
+Songyang Zhang
+43
+,
+Peter Turchin
+25
+,
+Christopher W. Bartlett
+93
+,
+Christopher R. Scotese
+42
+,
+Phuong M. Cao
+16
+Affiliations
+3
+.
+Stanford University
+4
+.
+University of California, Berkeley
+5
+.
+Massachusetts Institute of Technology
+6
+.
+Harvard University
+7
+.
+University of Cambridge
+8
+.
+Princeton University
+9
+.
+Carnegie Mellon University
+10
+.
+ETH Zürich
+11
+.
+University of Oxford
+12
+.
+University of Chicago
+13
+.
+University of Michigan
+14
+.
+École Polytechnique Fédérale de Lausanne
+15
+.
+University of Toronto
+16
+.
+University of Illinois Urbana-Champaign
+17
+.
+Washington University
+18
+.
+University of Wisconsin-Madison
+19
+.
+University of Tübingen
+20
+.
+Johns Hopkins University
+21
+.
+University of Washington
+22
+.
+Columbia University
+23
+.
+Mohamed bin Zayed University of Artificial Intelligence
+24
+.
+Cornell University
+25
+.
+Complexity Science Hub
+26
+.
+University of Edinburgh
+27
+.
+New York University
+28
+.
+Georgia Institute of Technology
+29
+.
+Boston University
+30
+.
+McGill University
+31
+.
+University of California, San Diego
+32
+.
+University of British Columbia
+33
+.
+Vrije Universiteit Brussel
+34
+.
+University of Pennsylvania
+35
+.
+University of California, Santa Barbara
+36
+.
+California Institute of Technology
+37
+.
+University of Southern California
+38
+.
+Sapienza University of Rome
+39
+.
+University of California, Los Angeles
+40
+.
+University of Maryland
+41
+.
+Arizona State University
+42
+.
+Northwestern University
+43
+.
+Duke University
+44
+.
+University College London
+45
+.
+Brown University
+46
+.
+Durham University
+47
+.
+Microsoft Research
+48
+.
+University of Sao Paulo
+49
+.
+Humboldt-Universität zu Berlin
+50
+.
+Google DeepMind
+51
+.
+TU Wien
+52
+.
+University of Waterloo
+53
+.
+Charles University
+54
+.
+The University of Sydney
+55
+.
+KTH Royal Institute of Technology
+56
+.
+University of Amsterdam
+57
+.
+Emory University
+58
+.
+The Hebrew University of Jerusalem
+59
+.
+University of California, Irvine
+60
+.
+University of Zurich
+61
+.
+Imperial College London
+62
+.
+University of California, Santa Cruz
+63
+.
+Korea Advanced Institute of Science and Technology
+64
+.
+Google
+65
+.
+University of Porto
+66
+.
+Queen Mary University of London
+67
+.
+Inria
+68
+.
+National University of Singapore
+69
+.
+École Normale Supérieure
+70
+.
+University of North Texas
+71
+.
+University of Arkansas
+72
+.
+CNRS
+73
+.
+Université Paris-Saclay
+74
+.
+Leibniz University Hannover
+75
+.
+UZ Brussel
+76
+.
+Technion – Israel Institute of Technology
+77
+.
+Technische Universität Berlin
+78
+.
+University of Manchester
+79
+.
+University of Calgary
+80
+.
+Yale University
+81
+.
+École Normale Supérieure Paris-Saclay
+82
+.
+University of Western Australia
+83
+.
+Universiteit Leiden
+84
+.
+The Open University
+85
+.
+INSAIT
+86
+.
+University of Copenhagen
+87
+.
+Indian Institute of Technology Delhi
+88
+.
+The Australian National University
+89
+.
+Northeastern University
+90
+.
+Anthropic
+91
+.
+North Carolina State University
+92
+.
+Mila - Québec AI Institute
+93
+.
+The Ohio State University
+94
+.
+Independent researcher
+95
+.
+University of Mannheim
+96
+.
+Materials Platform for Data Science LLC
+97
+.
+The University of Chicago
+98
+.
+The Hospital for Sick Children
+99
+.
+University of Vienna
+100
+.
+University of Galway
+101
+.
+OpenAI
+102
+.
+Heidelberg University
+103
+.
+University of Oklahoma
+104
+.
+Cairo University
+105
+.
+INESC Microsistemas e Nanotecnologias
+106
+.
+University of Minnesota
+107
+.
+Alan Turing Institute
+108
+.
+Fondazione Bruno Kessler
+109
+.
+Scripps Research
+110
+.
+Aleph Alpha
+111
+.
+University of Bern
+112
+.
+University of North Carolina at Chapel Hill
+113
+.
+University of Illinois Chicago
+114
+.
+Dell Technologies
+115
+.
+University of California, Davis
+116
+.
+Purdue University
+117
+.
+Bilkent University
+118
+.
+Indiana University
+119
+.
+Texas A&M University
+120
+.
+Gift Horse Mouth Inspections
+121
+.
+Institute of Mathematics of NAS of Ukraine
+122
+.
+Kiev School of Economics
+123
+.
+RWTH Aachen University
+124
+.
+Kyiv Polytechnic Institute
+125
+.
+Queen's University
+126
+.
+ELTE
+127
+.
+Nimbus AI
+128
+.
+Georgia Southern University
+129
+.
+University of Minnesota Twin Cities
+130
+.
+Auckland University of Technology
+131
+.
+Alberta Health Services
+132
+.
+ZG Law
+133
+.
+University of Illinois
+134
+.
+Hereford College of Arts
+135
+.
+University of Canterbury
+136
+.
+Metropolitan State University of Denver
+137
+.
+Accenture Labs
+138
+.
+Tufts University
+139
+.
+The Jackson Laboratory
+140
+.
+RUSM
+141
+.
+CICMA
+142
+.
+Institute of Science and Technology Austria
+143
+.
+Charité – Universitätsmedizin
+144
+.
+C. N. Yang institute for Theoretical Physics
+145
+.
+University of Luxembourg
+146
+.
+Universidade Federal de Juiz de Fora
+147
+.
+Rockwell Automation
+148
+.
+Contramont Research
+149
+.
+Sorbonne Université
+150
+.
+Institut Polytechnique de Paris
+151
+.
+National University Philippines
+152
+.
+Maastricht University
+153
+.
+Martin-Luther-University Halle-Wittenberg
+154
+.
+Diverging Mathematics
+155
+.
+Indian Institute of Technology Bombay
+156
+.
+Institute for Molecular Manufacturing
+157
+.
+PeopleTec, Inc.
+158
+.
+Ecco IT
+159
+.
+University of Miami
+160
+.
+Universidad Iberoamericana
+161
+.
+Snorkel AI
+162
+.
+Manhattan School of Music
+163
+.
+Synbionix
+164
+.
+Corteva Agriscience
+165
+.
+Sanford Burnham Preybs
+166
+.
+Yonsei University
+167
+.
+University of Leeds
+168
+.
+Swinburne University of Technology
+169
+.
+KU Leuven
+170
+.
+St. Petersburg College
+171
+.
+La Molina National Agrarian University
+172
+.
+Brandenburg University of Technology
+173
+.
+Ruhr University Bochum
+174
+.
+National Information Processing Institute
+175
+.
+Cranfield University
+176
+.
+TRR Designs
+177
+.
+University of Buenos Aires
+178
+.
+University of Technology Sydney
+179
+.
+Indiana State University
+180
+.
+Oxford University
+181
+.
+Ben-Gurion University
+182
+.
+Donald and Barbara Zucker School of Medicine
+183
+.
+Cohere
+184
+.
+Siili Solutions Oyj
+185
+.
+Aalto University
+186
+.
+Toyota Technological Institute at Chicago
+187
+.
+Case Wester Reserve University
+188
+.
+EHC Investments LLC
+189
+.
+University of Windsor
+190
+.
+St. Jude Children’s Research Hospital
+191
+.
+Rochester Institute of Technology
+192
+.
+CERN
+193
+.
+Warsaw University of Technology
+194
+.
+Hewlett Packard Enterprise
+195
+.
+University of Houston
+196
+.
+Simplr AI, Asurion
+197
+.
+All India Institute of Medical Sciences
+198
+.
+Tel Aviv University
+199
+.
+University of Arizona
+200
+.
+Ruhr-Universität Bochum
+201
+.
+Universidade de Lisboa,
+202
+.
+Indian Institute of Technology Kharagpur
+203
+.
+Posts and Telecommunications Institute of Technology
+204
+.
+Universität Zürich
+205
+.
+UK AI Safety Institute
+206
+.
+University of Padua
+207
+.
+Royal Veterinary College
+208
+.
+Instituto Superior Técnico
+209
+.
+SDAIA
+210
+.
+University of Montreal
+211
+.
+Cairo University Specialized Pediatric Hospital
+212
+.
+Universidad de Valencia
+213
+.
+Monash University
+214
+.
+Van Andel Institute
+215
+.
+IEEE Life Member
+216
+.
+Larkin Community Hospital
+217
+.
+The University of Texas at Dallas
+218
+.
+Canadian University Dubai
+219
+.
+Università di Milano-Bicocca
+220
+.
+University of Massachusetts Lowell
+221
+.
+Virginia Tech
+222
+.
+University of Geneva
+223
+.
+MolMind
+224
+.
+Google Research
+225
+.
+Cal Poly San Luis Obispo
+226
+.
+Alexandru Ioan Cuza University
+227
+.
+Stockholm University
+228
+.
+Gaia Lab
+229
+.
+College of Eastern Idaho
+230
+.
+Intrinsic Innovation LLC
+231
+.
+Ivy Natal
+232
+.
+INRIA
+233
+.
+King Saud University
+234
+.
+Universidad de Buenos Aires
+235
+.
+SAMPE Switzerland
+236
+.
+CERo Therapeutics Holdings, Inc.
+237
+.
+The Univeirsty of Tennessee
+238
+.
+Gray Swan AI
+239
+.
+EleutherAI
+240
+.
+University of Montpellier
+241
+.
+Fraunhofer IMTE
+242
+.
+HomeEquity Bank
+243
+.
+Cambridge University
+244
+.
+University of Pisa
+245
+.
+Georgia State University
+246
+.
+Polytechnic University of the Philippines
+247
+.
+University of Oregon
+248
+.
+Drexel University
+249
+.
+University of Mumbai
+250
+.
+Gakushuin University
+251
+.
+University of Guelph
+252
+.
+Intuit
+253
+.
+CTTC / CERCA
+254
+.
+Dyno Therapeutics
+255
+.
+Lewis Katz School of Medicine
+256
+.
+Saint Mary's University
+257
+.
+Cisco
+258
+.
+Fyaora Labs
+259
+.
+Indian Institute of Technology (BHU)
+260
+.
+AIM Intelligence
+261
+.
+Seoul National University
+262
+.
+blurrylogic
+263
+.
+The University of Texas at Arlington
+264
+.
+The Hartree Centre
+265
+.
+POLITEHNICA Bucharest National University of Science and Technology
+266
+.
+Abacus.AI
+267
+.
+Eastern Institute of Technology (EIT)
+268
+.
+ENS Lyon
+269
+.
+Czech Technical University in Prague
+270
+.
+University of Hamburg
+271
+.
+CISPA Helmholtz Center for Information Security
+272
+.
+Universidad de Morón
+273
+.
+Université Paris Cité and Sorbonne Université
+274
+.
+Politecnico di Milano
+275
+.
+Sheffield Hallam University
+Outlier
+276
+.
+The New School
+277
+.
+Creative Choice LLC
+278
+.
+Max Planck Institute for Software Systems
+279
+.
+Universidad de Granada
+280
+.
+Modulo Research
+281
+.
+La Trobe University
+282
+.
+University of Yaoundé I
+283
+.
+Lux Labs
+284
+.
+University of Innsbruck
+285
+.
+Nabu Technologies Inc
+286
+.
+Clearhorse Ltd
+287
+.
+Chalmers University of Technology
+288
+.
+Unidade Local de Saúde de Lisboa Ocidental
+289
+.
+Image Processing Lab, Universitat de Valencia
+290
+.
+Bison Fellers LLC
+291
+.
+Children’s Hospital of Orange County
+292
+.
+The Future Paralegals of America
+293
+.
+Eastlake High School
+294
+.
+Center for Scientific Research and Higher Education at Ensenada (CICESE)
+295
+.
+University of Bradford
+296
+.
+Beni Suef University
+297
+.
+Bogazici University
+298
+.
+Mansoura University
+299
+.
+Univerisity of Bristol
+300
+.
+Jala University
+301
+.
+Florida Atlantic University
+302
+.
+Bournemouth University
+303
+.
+University of Warwick
+304
+.
+University of Alabama Huntsville
+305
+.
+University of Hertfordshire
+306
+.
+OncoPrecision
+307
+.
+Central College
+308
+.
+Nottingham Trent University
+309
+.
+University of Virginia
+310
+.
+Dartmouth College
+311
+.
+James Madison University
+312
+.
+Instituto Gonçalo Moniz
+313
+.
+Rice University
+314
+.
+HUN-REN
+315
+.
+Rutgers University
+316
+.
+AE Studio
+317
+.
+Australian National University
+318
+.
+Saarland University
+319
+.
+HUTECH
+320
+.
+Pennsylvania College of Technology
+321
+.
+Intelligent Geometries
+322
+.
+École Polytechnique
+323
+.
+CONICET
+324
+.
+Universidad Tecnológica Nacional
+325
+.
+John Crane UK Ltd
+326
+.
+Pondicherry Engineering College
+327
+.
+Mānuka Honey and Beekeeping Consultancy Ltd
+328
+.
+Leibniz Institute for Science and Mathematics Education
+329
+.
+Royal Holloway, University of London
+330
+.
+Tanta University
+331
+.
+University of Malaya
+332
+.
+Hemwati Nandan Bahuguna Garhwal University
+333
+.
+University Mohammed I
+334
+.
+LGM
+335
+.
+Northern Illinois University
+336
+.
+Bethune-Cookman University
+337
+.
+National University
+338
+.
+Université de Yaoundé I
+339
+.
+Ecole Nationale Supérieure Polytechnique de Yaoundé
+340
+.
+Central Mindanao University
+341
+.
+University of the Fraser Valley
+342
+.
+Patched Codes, Inc
+343
+.
+Missouri University of Science and Technology
+344
+.
+Quotient AI
+345
+.
+Center for AI Safety
+346
+.
+CSMSS Chh. Shahu College of Engineering
+347
+.
+Outevsky Bespoke Dance Education
+348
+.
+Genomia Diagnostics Research Pvt Ltd
+349
+.
+EF Polymers Pvt Ltd
+350
+.
+Sheffield Teaching Hospitals NHS Foundation Trust
+351
+.
+Ecole polytechnique
+352
+.
+Forschungszentrum Jülich
+353
+.
+Standard Intelligence
+354
+.
+RMIT University
+355
+.
+Universal Higher Education
+356
+.
+German Research Center for Artificial Intelligence
+357
+.
+University of Trento
+358
+.
+Chulalongkorn University
+359
+.
+Aligarh Muslim University
+360
+.
+Happy Technologies LLC
+361
+.
+Menoufia University
+362
+.
+Instituto Politécnico Nacional
+363
+.
+University of Bologna
+364
+.
+Manipal University Jaipur
+365
+.
+The University of Texas at Austin
+366
+.
+Murdoch University
+367
+.
+University of Delaware
+368
+.
+Williams College
+369
+.
+Perimeter Institute for Theoretical Physics
+370
+.
+University of Maribor
+371
+.
+Brigham and Women's Hospital
+372
+.
+The University of Tokyo
+373
+.
+Vellore Institute of Technology
+374
+.
+CHRU de Nancy
+375
+.
+Delft University of Technology
+376
+.
+George Mason University
+377
+.
+Atilim University
+378
+.
+Leonardo Labs
+379
+.
+Universidad Nacional de Educación a Distancia
+380
+.
+Saxion University
+381
+.
+Adobe Research
+382
+.
+National Aerospace University "Kharkiv Aviation Institute"
+383
+.
+Hexworks
+384
+.
+Westmead Hospital
+385
+.
+Max Planck Institute for Intelligent Systems
+386
+.
+Rheinland-Pfälzische Technische Universität Kaiserslautern-Landau
+387
+.
+SUMM AI GmbH
+388
+.
+Microsoft
+389
+.
+Konkuk University
+390
+.
+University of Groningen
+391
+.
+Jagiellonian University
+392
+.
+Minerva University
+393
+.
+Aalborg University
+394
+.
+IBM Research
+395
+.
+Universitat Politecnica de Valencia
+396
+.
+RBC Borealis
+397
+.
+Mayo Clinic
+398
+.
+University of Lausanne
+399
+.
+Dalhousie University
+400
+.
+United Faith Christian Academy
+401
+.
+Universitat de Lleida
+402
+.
+Amazon
+403
+.
+University of Seoul
+404
+.
+University of Auckland
+405
+.
+Morgridge Institute for Research
+406
+.
+Korea University of Technology and Education
+407
+.
+Baylor College of Medicine
+408
+.
+University of North Carolina
+409
+.
+Nothern Illinois Univeristy
+410
+.
+Indraprastha Institute of Information Technology Delhi
+411
+.
+Two Minute Papers
+412
+.
+ADIA Lab
+413
+.
+New Jersey Institute of Technology
+414
+.
+Novo Nordisk
+415
+.
+Gakugei Shuppan-sha
+416
+.
+Universiteit Utrecht
+417
+.
+T-Systems Iberia
+418
+.
+University of Klagenfurt
+419
+.
+Max Planck Institute for Security and Privacy
+420
+.
+InxiteOut
+421
+.
+Goethe Universität Frankfurt
+422
+.
+Universidad del Valle
+423
+.
+Queen’s University
+424
+.
+Trinity School
+425
+.
+Universitat Pompeu Fabra
+426
+.
+Brighton Law School
+427
+.
+Da Vinci Lab
+428
+.
+University of Melbourne
+429
+.
+Ankara University
+430
+.
+Cardiovascular, and Vascular Surgery Training and Research Hospital
+431
+.
+AIT Austrian Institute of Technology
+432
+.
+Technical University of Munich
+433
+.
+Providence College
+434
+.
+University of Jyväskylä
+435
+.
+Weizmann Institute of Science
+436
+.
+Nanyang Technological University
+HLE-Rolling Contributors
+Arxiv authors last updated: 20 Feb 2026
+HLE-Rolling Contributors
+Loading HLE results...
+Introduction
+Benchmarks are important tools for tracking the rapid advancements in large language model (LLM) capabilities. However, benchmarks are not keeping pace in difficulty: LLMs now achieve over 90% accuracy on popular benchmarks like MMLU, limiting informed measurement of state-of-the-art LLM capabilities. In response, we introduce
+Humanity's Last Exam
+, a multi-modal benchmark at the frontier of human knowledge, designed to be the final closed-ended academic benchmark of its kind with broad subject coverage. The dataset consists of
+2,500
+challenging questions across over a
+hundred
+subjects. We publicly release these questions, while maintaining a private test set of held out questions to assess model overfitting.
+Compared against the saturation of some existing benchmarks, Humanity's Last Exam accuracy remains low across several frontier models, demonstrating its effectiveness for measuring advanced, closed-ended, academic capabilities.
+Dataset
+Humanity's Last Exam (HLE)
+is a global collaborative effort, with questions from nearly
+1,000
+subject expert contributors affiliated with over
+500
+institutions across
+50
+countries – comprised mostly of professors, researchers, and graduate degree holders.
+Examples
+1
+-
+2
+/
+8
+Classics
+Question:
+Here is a representation of a Roman inscription, originally found on a tombstone. Provide a translation for the Palmyrene script.
+A transliteration of the text is provided: RGYNᵓ BT ḤRY BR ᶜTᵓ ḤBL
+Henry T
+Merton College, Oxford
+Ecology
+Question:
+Hummingbirds within Apodiformes uniquely have a bilaterally paired oval bone, a sesamoid embedded in the caudolateral portion of the expanded, cruciate aponeurosis of insertion of m. depressor caudae. How many paired tendons are supported by this sesamoid bone? Answer with a number.
+Edward V
+Massachusetts Institute of Technology
+Samples of the diverse and challenging questions submitted to Humanity's Last Exam.
+Quantitative Results
+Accuracy.
+All frontier models achieve low accuracy on Humanity's Last Exam, highlighting significant room for improvement in narrowing the gap between current LLMs and expert-level academic capabilities on closed-ended questions.
+Calibration Error.
+Miscalibration measures the extent to which AI systems are underconfident or overconfident. To measure calibration, we prompt models to provide both an answer and their confidence from 0% to 100%.
+Judge Model: o3-mini | Dataset Updated: April 3rd, 2025
+Model
+Accuracy (%) ↑
+Calibration
+Error (%) ↓
+Gemini 3 Pro
+38.3
+57.2
+GPT-5
+25.3
+50.0
+Grok 4
+24.5
+56.4
+Gemini 2.5 Pro
+21.6
+72.0
+GPT-5-mini
+19.4
+65.0
+Claude 4.5 Sonnet
+13.7
+65.0
+Gemini 2.5 Flash
+12.1
+80.0
+DeepSeek-R1*
+8.5
+73.0
+o1
+8.0
+83.0
+GPT-4o
+2.7
+89.0
+*Model is not multi-modal, evaluated on text-only subset.
+Also available at
+CAIS AI Dashboard
+and
+SEAL LLM Leaderboards
+Discussion
+Future Model Performance
+While current LLMs achieve very low accuracy on Humanity's Last Exam, recent history shows benchmarks are quickly saturated -- with models dramatically progressing from near-zero to near-perfect performance in a short timeframe. Given the rapid pace of AI development, it is plausible that models could exceed 50% accuracy on HLE by the end of 2025. High accuracy on HLE would demonstrate expert-level performance on closed-ended, verifiable questions and cutting-edge scientific knowledge, but it would not alone suggest autonomous research capabilities or "artificial general intelligence." HLE tests structured academic problems rather than open-ended research or creative problem-solving abilities, making it a focused measure of technical knowledge and reasoning. HLE may be the last academic exam we need to give to models, but it is far from the last benchmark for AI.
+Impact
+By providing a clear measure of AI progress, Humanity's Last Exam creates a common reference point for scientists and policymakers to assess AI capabilities. This enables more informed discussions about development trajectories, potential risks, and necessary governance measures.
+Related Articles
+The New York Times
+|
+When A.I. Passes This Test, Look Out
+The creators of a new test called 'Humanity's Last Exam' argue we may soon lose the ability to create tests hard enough for A.I. models.
+Reuters
+|
+AI experts ready 'Humanity's Last Exam' to stump powerful tech
+A team of technology experts issued a global call on Monday seeking the toughest questions to pose to artificial intelligence systems, which increasingly have handled popular benchmark tests like child's play.
+Citation
+@article{phan2025lastexam,
+      title = {A benchmark of expert-level academic questions to assess {AI} capabilities},
+      author = {{Center for AI Safety} and {Scale AI} and {HLE Contributors Consortium}},
+      journal = {Nature},
+      volume = {649},
+      pages = {1139--1146},
+      year = {2026},
+      doi = {10.1038/s41586-025-09962-4},
+      eprint = {2501.14249},
+      archivePrefix = {arXiv},
+      primaryClass = {cs.LG},
+      url = {https://arxiv.org/abs/2501.14249}
+}
+For any inquiries or feedback, please contact us at
+agibenchmark@safe.ai

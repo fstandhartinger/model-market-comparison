@@ -1,0 +1,196 @@
+{
+  "files": [
+    {
+      "file": "lib/aa-benchmark-fields.mjs",
+      "sha256": "a3d15573d1792acebfe279e39a7f6cd19111b6e3c64bc9842c2bb757325afc27"
+    },
+    {
+      "file": "lib/benchmark-registry.mjs",
+      "sha256": "dbd9f5b5c210a8dbd3ac3e113eb62f335a2958070759e2afba9ad0817768d2c6"
+    },
+    {
+      "file": "lib/aa-rsc.mjs",
+      "sha256": "890e96fe85f48c69767cbf1355b7dcb8f99f594704d37404cb1f843bae23f777"
+    },
+    {
+      "file": "lib/snapshot.mjs",
+      "sha256": "673aa0c9114b29c82f5b0fcef437cfccdf0759572ef95f3d9d8fafa2cd9cf111"
+    },
+    {
+      "file": "scripts/extract-aa-benchmark-fields.mjs",
+      "sha256": "42b8e13c6f94dcc04f7a79a0512281bac26e005077f09899439a5ea71edd903c"
+    },
+    {
+      "file": "scripts/validate-benchmark-registry.mjs",
+      "sha256": "5dd7f5544eb0a7d2c9bf0cbcee44731e7da6c0161f2457f662dc2b7f877ca5eb"
+    },
+    {
+      "file": "scripts/build-dataset.mjs",
+      "sha256": "f3a99e4739e5c12d3c04743a1cdbbf017d1765a9698e8a4474c909bf1c110bc2"
+    },
+    {
+      "file": "test/benchmark-registry.test.mjs",
+      "sha256": "119146f45e84147c6cf287fe8949dfba62e4f012b870ea89e44fe81e2192f583"
+    },
+    {
+      "file": "data/raw/benchmarks/README.md",
+      "sha256": "11ac7911cba6e7400ef7268d5dda13f3b4587a24ffb4a250036edec8cf5b5dae"
+    },
+    {
+      "file": "data/raw/benchmarks/exclusions.json",
+      "sha256": "4a66d90ad28c82f3fa2b5b4d83d75d988e29b13d0893262f1b438a33f35db03e"
+    },
+    {
+      "file": "API.md",
+      "sha256": "4076571d11afba0ff2e1e6d6aebedf5c0df54fb7e11f4ac0e9ae79cb62fbc044"
+    },
+    {
+      "file": "data/SCHEMA.md",
+      "sha256": "e6d5546f0f6ac155c4de13ce8472f864f4bc16cbd348a6ae7b1b4bdda72bc0d0"
+    },
+    {
+      "file": "CHANGELOG.md",
+      "sha256": "daa20ef1464fa9c6c7a08a4d9ae79a6c439d315db1faeebe17c67076c06298a3"
+    }
+  ],
+  "coding_entries": [
+    {
+      "id": "aa-coding-agent-index::1.4",
+      "name": "Artificial Analysis Coding Agent Index v1.4",
+      "version": "1.4",
+      "version_status": "retained",
+      "family": "aa-coding-agent-index",
+      "category": "Coding",
+      "one_sentence_description": "The retained AA Coding Agent Index measures coding-agent systems using the earlier three-component implementation.",
+      "scoring": {
+        "metric": "Equal-weighted mean of the three component scores for a complete model-and-harness result",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/agents/coding-agents",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "cat data/raw/aa-coding-agents.json",
+        "format": "Retained JSON snapshot",
+        "locator": "Read complete rows with exact model_name, harness and components; preserve every harness result and explicit model effort.",
+        "version_guard": "Never refresh this v1.4 file from the current page; its 2026-09-09 date and unchanged Composite role are binding.",
+        "notes": "Exact snapshot: data/raw/aa-coding-agents.json. Versions, harnesses and model efforts remain separate. The current collector does not modify the legacy Composite source."
+      },
+      "update_cadence": {
+        "source_schedule": "Retained historical snapshot; superseded by v1.5.",
+        "check_recommendation": "Never refresh the legacy file; verify its retained hash/date at build time."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": "aa-coding-agent-index::1.5",
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-038b413e6440.txt",
+          "sha256": "bf3b0f6048bb8d7278041ec17f95647e6bbc37253fe4b1766ac08e10c4fe8809",
+          "fetched_at": "2026-09-10T21:48:05.620Z",
+          "excerpt": "Coding Agent Index v1.5 Methodology | Artificial Analysis\nArtificial Analysis\nK\nArtificial Analysis\nModels\nCoding Agents\nSpeech, Image, Video\nInference\nLeaderboards\nAbout\nAI Trends\nArenas\nK\nBenchmarking Methodology\nOn this page\nOverview\nArtificial Analysis Coding Agent Index\nIndex Components\nEvaluated Tasks\nWhat The Index Aggregates\nScoring And Outcomes\npass@1 Results\nPer-Evaluation Scores\nReward Hacking\nEfficiency Metrics\nAgent Settings\nVersion History\nCoding Agent Index Methodology\nOverview\nArtificial Analysis benchmarks coding agents on end-to-end software engineering tasks. We measure how well agents complete realistic coding work, and how performance varies across outcome, reliability, token usage, cost, and execution time.\nPublic results on the Coding Agent Index page are built from task-level benchmark attempts and aggregated into per-evaluation scores, pooled efficiency metrics, and the Artificial Analysis Coding Agent Index.\nThis page focuses on how the public Artificial Analysis Coding Agent Index is constructed, what benchmark components are currently included, and how the public pass@1, cost, token-usage, and execution-time metrics are derived.\nArtificial Analysis Coding Agent Index\nThe current public Artificial Analysis Coding Agent Index is a composite benchmark score built from the configured benchmark components in the public coding-agents suite.\nDifferent coding agents can perform very differently on repository Q&A, implementation and bug-fix tasks, and terminal-heavy workflows. The index summarizes those benchmark families into one top-level performance vi"
+        },
+        {
+          "url": "https://github.com/fstandhartinger/model-market-comparison/blob/a7e8852/data/raw/aa-coding-agents.json",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/2026-09-10-aa-coding-agents.json",
+          "sha256": "e3b39c00dfff19717d8da6a875ff44e999b5255300da26f174c5bdcea843368b",
+          "fetched_at": "2026-09-09",
+          "excerpt": "Retained collected snapshot: 68 rows; score_scale 0-1; v1.4 identity is the binding phase-01 coverage amendment; no refreshed legacy observation."
+        }
+      ]
+    },
+    {
+      "id": "aa-coding-agent-index::1.5",
+      "name": "Artificial Analysis Coding Agent Index v1.5",
+      "version": "1.5",
+      "version_status": "published",
+      "family": "aa-coding-agent-index",
+      "category": "Coding",
+      "one_sentence_description": "Measures coding-agent systems on DeepSWE v1.1, Terminal-Bench 4.0 and SWE-Atlas-QnA.",
+      "scoring": {
+        "metric": "Equal-weighted mean of the three component scores for a complete model-and-harness result",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/agents/coding-agents",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/fetch-aa-coding-agents.mjs",
+        "format": "Next.js Flight JSON → validated separate JSON snapshot",
+        "locator": "Read complete rows with exact model_name, harness and components; preserve every harness result and explicit model effort.",
+        "version_guard": "The collector requires the current methodology to say v1.5 and validates all three components before atomic replacement; do not write aa-coding-agents.json.",
+        "notes": "Exact snapshot: data/raw/aa-coding-agents-v1.5.json. Versions, harnesses and model efforts remain separate. The current collector does not modify the legacy Composite source."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-038b413e6440.txt",
+          "sha256": "bf3b0f6048bb8d7278041ec17f95647e6bbc37253fe4b1766ac08e10c4fe8809",
+          "fetched_at": "2026-09-10T21:48:05.620Z",
+          "excerpt": "Coding Agent Index v1.5 Methodology | Artificial Analysis\nArtificial Analysis\nK\nArtificial Analysis\nModels\nCoding Agents\nSpeech, Image, Video\nInference\nLeaderboards\nAbout\nAI Trends\nArenas\nK\nBenchmarking Methodology\nOn this page\nOverview\nArtificial Analysis Coding Agent Index\nIndex Components\nEvaluated Tasks\nWhat The Index Aggregates\nScoring And Outcomes\npass@1 Results\nPer-Evaluation Scores\nReward Hacking\nEfficiency Metrics\nAgent Settings\nVersion History\nCoding Agent Index Methodology\nOverview\nArtificial Analysis benchmarks coding agents on end-to-end software engineering tasks. We measure how well agents complete realistic coding work, and how performance varies across outcome, reliability, token usage, cost, and execution time.\nPublic results on the Coding Agent Index page are built from task-level benchmark attempts and aggregated into per-evaluation scores, pooled efficiency metrics, and the Artificial Analysis Coding Agent Index.\nThis page focuses on how the public Artificial Analysis Coding Agent Index is constructed, what benchmark components are currently included, and how the public pass@1, cost, token-usage, and execution-time metrics are derived.\nArtificial Analysis Coding Agent Index\nThe current public Artificial Analysis Coding Agent Index is a composite benchmark score built from the configured benchmark components in the public coding-agents suite.\nDifferent coding agents can perform very differently on repository Q&A, implementation and bug-fix tasks, and terminal-heavy workflows. The index summarizes those benchmark families into one top-level performance vi"
+        },
+        {
+          "url": "https://github.com/fstandhartinger/model-market-comparison/blob/a7e8852/data/raw/aa-coding-agents-v1.5.json",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/2026-09-10-aa-coding-agents-v1.5.json",
+          "sha256": "f8895ccae31ddbc6e6b15de52ccb59f0cdfe3d0b10ca1f1c916f284ebf17ea89",
+          "fetched_at": "2026-09-10",
+          "excerpt": "Retained collected snapshot: 13 rows; score_scale 0-1; Explicit version 1.5 and component identities."
+        }
+      ]
+    }
+  ],
+  "criteria": [
+    "source parsing preserves identity, units, zero/null/missing and nested references",
+    "partial/malformed/conflicting source cannot replace good snapshot; atomic output",
+    "field-coverage shrink fails closed",
+    "registry version identity and evidence validation, no external fetch or command execution during build",
+    "daily existing coding-agent refresh unaffected by immutable dated evidence",
+    "excluded entries have honest evidence and B2 coverage; do not accept an unverified score definition",
+    "docs correctly scope phase04 discovery vs phase05 scores; Composite unchanged",
+    "binding AA 1.4 legacy date 2026-09-09 remains separate from 1.5"
+  ]
+}

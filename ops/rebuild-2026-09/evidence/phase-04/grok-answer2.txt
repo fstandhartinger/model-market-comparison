@@ -1,0 +1,410 @@
+To view keyboard shortcuts, press question mark
+View keyboard shortcuts
+Home 
+Explore 
+
+4
+
+Notifications 
+Follow 
+Chat 
+Grok 
+Premium 
+History 
+Creator Studio 
+Articles 
+Profile 
+More 
+Post
+Xplainer Videos
+@xplainervideo
+See new posts
+List a lot of LLM evals that show up in X/Discord/HF feeds when a new model drops. Include official launch-card benchmarks and especially indie/personal ones: EQ-Bench-style suites, SimpleBench, UGI, Fiction.liveBench, WeirdML, Vending-Bench, self-run Aider/OTIS harnesses, writing/slop/RP boards, long-context homebrew, uncensored willingness boards. Group by mainstream vs maintainer-owned. Note how each is scored and who runs it. Give the actual results publication URL for each and flag uncertain names or versions.
+Thought for 32s
+When a new model drops, the screenshots that actually circulate on X/Discord/HF are a mix of (a) launch-card numbers the lab already printed and (b) a small set of maintainer-owned boards that update within hours. Scores are not comparable across boards. Many names have 2–4 live versions; I flag those. 
+o-mega.ai
+
+Mainstream / institutional (what labs put on the launch card)These are the ones that appear in every system card, plus the aggregators that re-post them.Eval
+What it measures / how scored
+Who runs it
+Results URL
+Version notes
+Chatbot Arena (Arena / formerly LMSYS)
+Blind human pairwise votes → Elo
+Arena (independent co.; old LMSYS HF space is stale)
+arena.ai
+Text Elo is the screenshot people mean; WebDev / Vision / Document arenas exist separately. 
+llm-explorer.com
+SWE-bench Verified
+% of 500 human-checked GitHub issues whose patch passes tests
+SWE-bench org + OpenAI Preparedness subset
+swebench.com / github.com/SWE-bench/SWE-bench
+Score is harness-dependent. “97% Opus 5 (Vals.ai run)” ≠ a raw model-card number. 
+github.com
+Terminal-Bench
+% of real terminal tasks solved (container end-state)
+Laude Institute + Stanford
+tbench.ai
+Uncertain versions: 2.0, 2.1, 3.0, Hard, v4.0 all circulate. Always name the version + scaffold (Codex / Claude Code / Terminus). 
+devthrottle.com
+LiveBench
+Mean of category averages on objective, refreshed tasks (no LLM judge)
+LiveBench team (Abacus.AI / NYU et al.)
+livebench.ai / github.com/LiveBench/LiveBench
+Monthly/quarterly question dumps. Compare same date stamp only. 
+github.com
+Humanity’s Last Exam (HLE)
+Accuracy on expert multi-domain questions; often + calibration error
+CAIS + Scale / SEAL
+lastexam.ai · Scale: labs.scale.com/leaderboard/humanitys_last_exam_preview
+Official Scale board, agent-with-tools HF spaces, and AA re-runs disagree by a lot. Flag “text-only vs multimodal vs tools”. 
+labs.scale.com
+GPQA Diamond
+Accuracy on 198 PhD-level science items
+Rein et al. (dataset); labs + AA / Vals re-run it
+Dataset: huggingface.co/datasets/Idavidrein/gpqa
+Saturated at the top (~92–95%). Launch cards almost always report this.
+MMLU / MMLU-Pro
+Multi-choice academic accuracy
+Hendrycks et al. / MMLU-Pro authors
+Usually only on the model card or aggregators
+MMLU is widely called saturated. MMLU-Pro still appears.
+AIME 2024 / 2025, MATH-500, FrontierMath
+Contest / research math accuracy (often avg@k or cons@k)
+Contest sets; FrontierMath is Epoch/collaborators
+Model cards + epoch.ai
+Always check year and sampling (avg@32 vs pass@1).
+IFEval / IFBench
+Verifiable instruction-following constraint pass rate
+IFEval original authors; IFBench is the harder OOD follow-on
+Model cards, BenchLM mirrors
+IFBench is the one people now screenshot when IFEval is maxed.
+LiveCodeBench
+Fresh contest-style coding, contamination-aware
+LiveCodeBench team
+Usually livecodebench.github.io
+Date window matters.
+BigCodeBench
+Practical multi-lib coding tasks
+BigCode
+BigCode leaderboard / HF
+Still cited, less “day-one screenshot” than SWE/Aider.
+OSWorld / OSWorld-Verified / OSWorld 2.0
+Computer-use task completion
+OSWorld authors
+OSWorld site / papers
+1.x widely treated as superseded once agents beat the human baseline; 2.0 is the live one. 
+o-mega.ai
+BrowseComp
+Hard web-research questions
+OpenAI (often self-reported)
+Model cards / llm-stats mirrors
+Trust caveat: many top scores are lab-reported.
+BFCL v4
+Multi-turn / memory function-calling
+Gorilla / Berkeley Function Calling Lead.
+BFCL leaderboard
+v1–v3 scores are not comparable to v4.
+τ-bench / τ² / τ³-Bench
+Multi-turn tool agents in enterprise domains
+Sierra et al.
+Papers + AA re-runs
+Version soup. AA Intelligence Index currently weights a τ³-Banking slice.
+ARC-AGI-2
+Novel-grid abstraction accuracy
+ARC Prize / Chollet et al.
+arcprize.org
+Still used as a “not just memorization” slide.
+HELM / MedHELM / VHELM
+Multi-scenario standardized suite, not one headline number
+Stanford CRFM
+crfm.stanford.edu/helm
+Rarely a single viral number; more “responsible eval” citation.
+OpenCompass / CompassRank
+Broad academic + bilingual suite
+Shanghai AI Lab / OpenCompass
+OpenCompass leaderboard
+Common on Chinese-lab launch posts.
+Artificial Analysis Intelligence Index
+Weighted composite (GDPval-AA, Terminal-Bench, τ³, HLE, AA-LCR, etc.)
+Artificial Analysis (independent, paid-eval shop)
+artificialanalysis.ai
+v3 → v4.1 → v4.1.1 → v4.2. Treat the version as part of the name. 
+artificialanalysis.ai
+AA Agentic Index
+AA’s agentic composite
+Artificial Analysis
+AA site / BenchLM mirror
+Separate from the Intelligence Index.
+GDPval / GDPval-AA
+Professional knowledge-work tasks
+OpenAI GDPval; AA variant
+Model cards + AA
+Closer to “office output” than trivia.
+LM Evaluation Harness tasks (MMLU, GSM8K, BBH, HumanEval, …)
+Standard academic accuracy
+EleutherAI harness; anyone can run
+github.com/EleutherAI/lm-evaluation-harness
+The self-run version of the launch card. People post lm-eval dumps on HF when the lab didn’t.
+
+Aggregators that look official in feeds but are mirrors: benchlm.ai, epoch.ai/benchmarks, llm-stats, AnotherWrapper eval pages. Useful, not primary. 
+benchlm.ai
+
+Maintainer-owned / indie (the ones that actually spike in Discord)These are the boards a single person or tiny lab updates the night a model drops.EQ-Bench-style suite — Samuel J. PaechHub: eqbench.com · code: github.com/EQ-bench/EQ-BenchOne maintainer, many boards. People screenshot whichever tab is new.Board
+Scoring
+URL
+Flag
+EQ-Bench v2
+Emotional-intensity prediction; MAGI-Hard combo
+eqbench.com/eqbench-v2.html
+Old; v3/v4 replaced the headline.
+EQ-Bench 3
+Pairwise LLM-judge Elo on 8 EI dimensions in 3-turn roleplay
+eqbench.com/eqbench3.html
+Heatmap columns are not the Elo.
+EQ-Bench 4
+Multi-turn chats vs 120 synthetic personas; 3-judge pairwise Elo
+eqbench.com
+Current headline EI board. Persona model + judges change over time. 
+eqbench.com
+Creative Writing v2 / v3
+Rubric + Elo; slop / vocab / repetition side metrics
+eqbench.com/creative_writing.html (v3)
+v2 and v3 are different pipelines.
+Longform Writing
+8×~1k-word chapters from a plan; rubric + degradation sparkline
+eqbench.com/creative_writing_longform.html
+Code: github.com/EQ-bench/longform-writing-bench
+Slop Score
+Frequency of over-represented LLM-isms vs a slop list
+eqbench.com/slop-score.html
+Lower is better. Separate from writing Elo.
+Judgemark v2.1 / v4
+How well a model judges writing (stability, separability, human corr)
+eqbench.com/judgemark-v2.html
+Version jump is real.
+BuzzBench
+Humour-analysis score + length
+eqbench.com/buzzbench.html
+Niche but posted.
+Spiral-Bench, DiploBench
+Same site family
+tabs on eqbench.com
+Less universal than CW / EQ / Slop.
+
+SimpleBench — SimpleBench Team (Philip & Hemang)What: 200-ish 6-way MCQs on spatial/temporal/social “trick” questions. Human non-expert baseline ~84%.
+Score: accuracy, usually avg@5.
+Who: authors run the official eval.
+URL: simple-bench.com · report PDF circulates from their Drive · Epoch mirror: epoch.ai/benchmarks/simplebench
+Flag: question count drifted (204 → 213 in some writeups). Always say avg@5. 
+simple-bench.com
+UGI / OpenUGI — DontPlanToEndWhat: private question set on “uncensored general intelligence.”
+Score: UGI 0–100 (knowledge on sensitive topics) + W/10 (willingness to engage) + sometimes Writing / NatInt.
+Who: DontPlanToEnd; questions stay private on purpose.
+URLs: huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard · dontplantoend-ugi-leaderboard.hf.space · openugi.com
+Flag: three sites, slightly different snapshots. Not a safety eval; it rewards answering. 
+dontplantoend-ugi-leaderboard.hf.space
+Fiction.liveBench — kas / Fiction.liveWhat: long-context comprehension of real (privatized) fiction: theory of mind, chronology, reader-vs-character secrets. Not needle-in-haystack.
+Score: % correct, often broken out by context length (1k → 8k → 32k → 128k).
+Who: Fiction.live staff; dataset private.
+URLs: live posts on fiction.live (e.g. Fiction.liveBench story pages) · Epoch: epoch.ai/benchmarks/fictionlivebench
+Flag: name is Fiction.liveBench (one word after the dot). Community visualizers exist; official table is on Fiction.live. 
+fiction.live
+WeirdML — Håvard Tveit Ihle (@htihle
+)What: write + iterate PyTorch on weird small ML tasks (5 debug loops, test accuracy).
+Score: mean of per-task max accuracy (v2: public + hidden tasks; ~17–19 tasks depending on writeup).
+Who: Ihle; METR helped fund API; now on Epoch hub.
+URL: htihle.github.io/weirdml.html
+Flag: v1 vs v2. Config tags (xhigh, max) are part of the score. 
+htihle.github.io
+Vending-Bench — Andon Labs (Axel Backlund, Lukas Petersson)What: run a simulated vending business for a simulated year.
+Score: final bank balance in $ (mean ± spread over N runs). Arena variant adds competing agents.
+Who: Andon Labs.
+URLs: paper arxiv.org/abs/2502.15840 · product/board andonlabs.com (Vending-Bench 2 / Arena posts)
+Flag: v1 $ scale ≠ v2 $ scale. Arena is a different game. Ethics commentary is part of their writeups, not the dollar score. 
+share.google
+Aider polyglot (official + self-run)What: 225 hard Exercism tasks across C++/Go/Java/JS/Python/Rust inside Aider’s edit loop (2 tries, unit tests).
+Score: % problems solved + % correct edit format.
+Who: Paul Gauthier / Aider. Users also post unofficial runs.
+URL: aider.chat/docs/leaderboards
+Flag: old Python-only board ≠ polyglot. “Self-run Aider” in Discord means someone ran the harness themselves before the official row updated. 
+aider.chat
+OTIS harness — runotiss.comWhat: personal agent harness: N parallel sandboxed tries, real verifier, pass@k curve.
+Score: pass@k vs compute, not a public multi-model table.
+Who: OTIS author (otter-themed personal tool).
+URL: runotiss.com/about.html · method: runotiss.com/method.html
+Flag: this is a self-run protocol, not a standing leaderboard. When people say “OTIS harness” they mean they ran their tasks through it. 
+runotiss.com
+Writing boards beyond EQ-BenchBoard
+Scoring
+Who
+URL
+Flag
+Lech Mazur Creative Story-Writing
+Must include 10 mandated elements; pairwise LLM-judge comparison score (was 0–10, now relative Elo-like)
+Lech Mazur
+github.com/lechmazur/writing
+Do not mix v1 0–10 with current comparison scores. He runs ~16 other benches from the same GH org. 
+github.com
+EQ-Bench Slop / CW
+See above
+Paech
+eqbench.com
+Default “slop” screenshot.
+Caliper Bench
+CW / RP / ERP / DarkRP craft scores + refusal (C0–C3) + engagement
+Caliper maintainer
+caliperbench.com
+Explicitly not an IQ board. ERP columns are NSFW-adjacent; the site is the source.
+RP-Bench
+Community Bradley-Terry Elo from human pairwise RP votes; also multi-judge + “flaw hunter”
+lazyweasel / LeviTheWeasel
+lazyweasel-rp-bench-leaderboard.hf.space · data lazyweasel/roleplay-bench
+Authors report LLM judges anti-correlate with humans. Treat judge-only RP ranks as suspect.
+
+Long-context homebrew (what people run when RULER looks solved)Board
+Scoring
+Who
+URL
+Flag
+Fiction.liveBench
+Deep narrative QA vs length
+Fiction.live
+fiction.live / Epoch
+Best-known “writer’s long-context” board.
+LongBench v2
+Long-context task accuracy
+THUDM et al.
+LongBench repo / papers
+Still on some cards.
+MRCR / MRCR v2
+Find planted facts in long prompts
+Usually OpenAI / AA re-runs
+Model cards, AA
+Retrieval, not comprehension.
+AA-LCR
+AA’s long-context reasoning slice
+Artificial Analysis
+artificialanalysis.ai
+Component of the Intelligence Index.
+HELMET / RULER / ∞Bench
+Academic long-context suites
+Various labs
+papers + GitHub
+Less viral in 2026 than Fiction.live + AA-LCR.
+
+Uncensored / willingness boardsBoard
+Scoring
+Who
+URL
+Flag
+UGI + W/10
+Knowledge + refusal-push
+DontPlanToEnd
+HF Space above
+Main “will it answer?” screenshot.
+Caliper C0–C3 / EngD
+Refusal rate and harm-density on engaged refusable runs
+Caliper
+caliperbench.com
+RP-community facing.
+Abliterated / “heretic” HF cards
+Ad-hoc UGI or custom refusal sets
+Fine-tune authors
+individual model cards
+Not a single board; treat as anecdotal.
+KindBench
+Judge-scored psychological-safety multi-turn
+KindBench authors
+appearing on BenchLM mirrors
+Newer; name not yet as stable as UGI.
+
+How to read a “new model just dropped” screenshotName the version. EQ-Bench 3 ≠ 4. Vending-Bench ≠ Vending-Bench 2 ≠ Arena. Terminal-Bench 2.1 ≠ 4.0. Aider Python ≠ polyglot.
+Name the harness. SWE-bench and Terminal-Bench move 10–20 points with Codex vs Claude Code vs a custom scaffold.
+Self-run ≠ official. Aider, OTIS, lm-eval, WeirdML local loops, and homebrew 128k needle tests are posted the same hour as the launch card and often disagree later.
+Judge boards are taste boards. EQ-Bench CW, Lech Mazur, Caliper, RP-Bench, Arena Elo measure preference / style / slop, not GPQA.
+Willingness boards are policy boards. UGI W/10 and Caliper C-rates measure refusals, not intelligence.
+
+If you want a short “watch this tab” list for the next drop: Arena Elo, SWE-Verified, Terminal-Bench (named version), HLE, LiveBench, Aider polyglot, EQ-Bench 4 + Creative Writing v3 + Slop, SimpleBench, UGI, Fiction.liveBench, WeirdML v2, Vending-Bench 2, Caliper, Lech Mazur writing.
+17 web pages
+Explain SWE-bench harness differences
+
+Explore Caliper Bench refusal metrics
+Find 15 additional maintainer-owned evals, especially creative writing, roleplay, slop, personal coding harnesses and long-context comprehension. Give diect primary leaderboard or GitHub URLs and the maintainer X handles if known. Also clarify OTIS: is that an AIME math set or a coding harness? Exclude vague names without a primary URL.
+Thought for 5s
+I'll hunt for 15 extra maintainer-owned boards with primary URLs, and separately pin down whether OTIS is the AIME set or a coding harness.OTIS is two different things. In launch-card and Discord math threads it almost always means OTIS Mock AIME, Evan Chen’s olympiad-training mock exams packaged as otis_mock_aime_2024 / otis_mock_aime_2025 in openbench.dev/benchmarks/math. That is an AIME-style integer-answer math set, not a coding harness. 
+openbench.dev
+
+Separately, otis at runotiss.com is a small personal coding/agent harness: N parallel sandboxed tries, a real shell/Python verifier, pass@k curves, otter theming. It is not a public multi-model board and is easy to confuse with the math set. If someone posts “OTIS 94%” next to AIME, they mean the mock AIME. If they post a pass@k plot from an otter site, they mean the harness. 
+runotiss.com
+
+Below are 15 additional maintainer-owned evals that were not in the previous list (no EQ-Bench suite, SimpleBench, UGI, Fiction.liveBench, WeirdML, Vending-Bench, Aider official board, Caliper, RP-Bench, or Mazur writing). Only items with a primary board or GitHub.Creative writing / slopThe Slop Index — sloppiest-first 0–100 blend: 40% live blind human arena + 15% each conciseness / templating / rhythm / tells vs pre-ChatGPT human text. No LLM judge.
+Primary: theslopindex.com · board theslopindex.com/leaderboard · code github.com/hgaddipati1118/slop-index
+X: not confidently identified (do not guess).
+SlopBench — 53 chat prompts, deterministic pattern hits (delve, “Great question!”, reframe constructions). Score = % of replies with ≥1 slop hit; lower is better.
+Primary: slop-bench.vercel.app · github.com/Dan-Cleary/slopbench
+X: @DanJCleary
+
+slop-forensics / antislop-sampler — Paech’s slop-word forensics and sampling-time slop suppressor; used to build EQ-Bench’s slop list, also runnable standalone.
+Primary: github.com/sam-paech/slop-forensics · github.com/sam-paech/antislop-sampler
+X: @sam_paech
+
+AI Slop Bench — 12 models, bare prompts, no system prompt; four vendor-external judges pick which text “reads more like AI”; order-flip discards.
+Primary: github.com/phuryn/experiments/tree/main/ai-slop-bench
+X: not listed on the repo.
+STE anti-slop (ASD-STE100 lint) — same 6 writing tasks × 4 conditions; metric is STE violations per 100 words.
+Primary: github.com/Toastyst/ste-slop-multimodel (expansion) · upstream github.com/woosal1337/blog videos/ep01-the-cure-for-ai-slop
+X: @woosal1337
+ for the original experiment.
+Lech Mazur Divergent Thinking — generate 25 mutually unrelated words starting with a given letter, disconnected from 50 seed words. Creativity / anti-association, not prose quality.
+Primary: github.com/lechmazur/divergent
+X: @LechMazur
+RoleplayPingPong — LLM-emulated user + multi-model judges on multi-turn character chat; per-dialogue scores published.
+Primary board: ilyagusev.github.io/ping_pong_bench · code github.com/IlyaGusev/ping_pong_bench
+Maintainer: Ilya Gusev (email on the paper; X handle not verified here).
+RPBench-Auto — Boson automated character + scene RP pipeline (ArenaHard-style).
+Primary: github.com/boson-ai/RPBench-Auto · writeup boson.ai/rpbench-blog
+X: Boson account; treat as lab-small, not a nameless Discord gist.
+Japanese-RP-Bench (v1) — 30 JP roles × 10 turns, multi-judge conversation quality.
+Primary: github.com/Aratako/Japanese-RP-Bench
+X: @Aratako_LM
+
+Japanese-RP-Bench v2 — fork adding persona adherence, stability, identity-swap resistance, recovery after misdirection; 900 conversations + bootstrap CIs.
+Primary: github.com/tegnike/Japanese-RP-Bench
+X: @tegnike
+ (credits Aratako).
+
+Personal / small-lab coding harnessesmini-SWE-agent — ~100-line bash-only agent used as the default “self-run SWE” scaffold; SWE-bench (bash-only) rows are this harness, not Claude Code.
+Primary: github.com/SWE-agent/mini-swe-agent
+X: SWE-agent / Princeton group accounts (often posted by the SWE-agent org).
+Hermes Pairing Bench — how well a local model drives Nous Hermes Agent (CodeAct): codeact / multistep / instruction / long-ctx, then Phase B on the real Hermes harness.
+Primary: huggingface.co/datasets/witcheer/hermes-pairing-bench
+Agent: github.com/NousResearch/hermes-agent
+X: @NousResearch
+ for the agent; pairing-bench author is the HF witcheer account.
+Lech Mazur Elimination Game — multi-player social/strategy/deception tournament (alliances + vote-outs). Not coding, but it is the other Mazur board that hits feeds the same night as writing.
+Primary: github.com/lechmazur/elimination_game
+X: @LechMazur
+
+Related Mazur boards with primary URLs if you want more from the same person: confabulations, step_game, nyt-connections.
+
+Long-context comprehension (not just NIAH retrieval)HELMET — application-centric long-context suite (RAG, cite, long QA, summarization, etc.) built specifically because NIAH/RULER rankings flip. Includes LongProc as an add-on in the same repo.
+Primary: princeton-nlp.github.io/HELMET · github.com/princeton-nlp/HELMET
+Contact listed as hyen@cs.princeton.edu; academic group, still the board people screenshot for “real” long context.
+LongBench v2 — 8K–2M-word realistic multitask MCQ; deeper reasoning than v1.
+Primary: github.com/THUDM/LongBench · dataset THUDM/LongBench-v2 on HF
+Leaderboard link is in that README (“View our leaderboard here”).
+
+Honorable extras with primary URLs if you want 16–18:RULER (synthetic retrieval + multi-hop + aggregation vs length): github.com/NVIDIA/RULER — still maintainer-run, but more “lab card” than indie.  
+∞Bench / InfiniteBench (avg ~195k; books, dialogue, code, math): github.com/OpenBMB/InfiniteBench · data huggingface.co/datasets/xinrongzhang2022/InfiniteBench.  
+Needle-in-a-Haystack v2 (length × depth heatmaps, now with UUID-chain hops): github.com/gkamradt/LLMTest_NeedleInAHaystack · X: @gkamradt
+. This is retrieval, not Fiction.live-style comprehension; include it only if you want the classic heatmap.
+
+Handles I would not invent: Slop Index author, DontPlanToEnd / UGI, Caliper Bench webmaster, Fiction.live kas, Andon Labs individuals. Primary URLs above are enough to find them.
+2 web pages
+Explore HELMET application-centric metrics
+
+Investigate Slop Index methodology details
+Quick Answer
+Auto
+

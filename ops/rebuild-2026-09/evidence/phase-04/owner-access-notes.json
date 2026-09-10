@@ -1,0 +1,19 @@
+{
+  "observed_date": "2026-09-10",
+  "notes": [
+    {
+      "url": "https://cdn6.fiction.live/file/fictionlive/a7be0188-9a0a-4b19-a4b3-97e7deecf52e.png",
+      "status": 403,
+      "outcome": "No image body accepted; source host stopped. No retry or alternate transport."
+    },
+    {
+      "url": "https://caliperbench.com/methodology.html",
+      "status": 403,
+      "outcome": "Initial access returned 308, later header probe returned 403. An already-queued /methodology response completed 200 before the restriction was observed; its content was not accepted or included in the registry/source manifest. No further requests."
+    },
+    {
+      "scope": "initial Kimi fetches",
+      "outcome": "Owner found workers fetched before checking robots. Owner audited the sources after collection. MathArena was excluded because robots policy was unresolved (308); other initial source paths audited as allowed. Future collector guidance requires robots first."
+    }
+  ]
+}

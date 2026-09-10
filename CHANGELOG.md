@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-10 — Phase 04: benchmark discovery
+
+- Added a versioned benchmark registry with verified publication routes, scoring semantics,
+  provenance and an exclusion ledger, including public and independent writing/RP boards.
+- Retained AA's previously discarded benchmark fields as raw observations with a fail-closed
+  extractor. Coding Agent Index v1.4 and v1.5 remain separate; the legacy date is unchanged.
+- Dataset builds validate registry evidence. Public API scores and Composite inputs are unchanged.
+
 ## 2026-09-10 — Phase 03: effective task costs
 
 - Comparisons default to modeled USD/task, combining exact-variant task tokens, usage I/O and exact-endpoint cache statistics, with every fallback explained.

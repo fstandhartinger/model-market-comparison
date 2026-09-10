@@ -1,0 +1,55 @@
+{
+  "started_at": "2026-09-10T22:12:45.524Z",
+  "mode": "oneshot",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.5,
+    "context": 1310720,
+    "aa_intelligence_index": 41.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.9
+      }
+    ]
+  },
+  "input_sha256": "f89baf67fdd68443e14cb61682403fa8deab4fa6af0be57d7877c861f6db6db5",
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 11020,
+    "completion_tokens": 28557,
+    "total_tokens": 39577,
+    "cost": 0.009463311,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0095589,
+      "upstream_inference_prompt_cost": 0.0009918,
+      "upstream_inference_completions_cost": 0.0085671
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 25405,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Relace",
+  "session_id": null,
+  "finished_at": "2026-09-10T22:19:38.635Z",
+  "output_sha256": "d02ddab13cf47f4ecfc0abcff0bac9f533966993e3476262e11535be8436d180"
+}

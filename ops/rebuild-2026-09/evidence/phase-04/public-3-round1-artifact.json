@@ -1,0 +1,897 @@
+[
+  {
+    "id": "swe-bench-multimodal::snapshot-2026-09-10",
+    "name": "SWE-bench Multimodal",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "swe-bench-multimodal",
+    "category": "Coding",
+    "one_sentence_description": "A 480-instance SWE-bench variant whose issue descriptions include visual elements.",
+    "scoring": {
+      "metric": "% Resolved: percentage of task instances solved",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "SWE-bench Team",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://www.swebench.com/",
+    "publication_urls": [
+      {
+        "url": "https://www.swebench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://www.swebench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "'Official Leaderboards' > 'Multimodal' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://www.swebench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.txt",
+        "sha256": "d93de8710857ab7b2b095c0d52e9458431924162d3cbd60e59b9c6f8412cb8d8",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "Multimodal 480 instances Issues described with visual elements. ... Oct 2024 Introducing SWE-bench Multimodal."
+      }
+    ]
+  },
+  {
+    "id": "swe-bench-pro-public::snapshot-2026-09-10",
+    "name": "SWE-Bench Pro Public",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "swe-bench-pro-public",
+    "category": "Coding",
+    "one_sentence_description": "A software-engineering evaluation of long-horizon tasks in public repositories, scored by patches passing both new and regression tests.",
+    "scoring": {
+      "metric": "Resolve rate on the public set",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Scale AI",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+    "publication_urls": [
+      {
+        "url": "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://labs.scale.com/leaderboard/swe_bench_pro_public --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Performance Comparison table, public set only. Preserve the asterisk identifying mini-swe-agent and the 50 versus 250 turn/cost-limit annotations; private and held-out sets are separate.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-bc0d7082af2a.txt",
+        "sha256": "db7b1959d588fe12c71bdd27dcbc0e664083c030e4ae341d2d10867aef6e02f0",
+        "fetched_at": "2026-09-10T22:19:34Z",
+        "excerpt": "Primary Metric: Resolve Rate"
+      }
+    ]
+  },
+  {
+    "id": "swe-bench-verified::snapshot-2026-09-10",
+    "name": "SWE-bench Verified",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "swe-bench-verified",
+    "category": "Coding",
+    "one_sentence_description": "A 500-instance human-filtered subset of SWE-bench created with OpenAI, served as the default Verified leaderboard view.",
+    "scoring": {
+      "metric": "% Resolved: percentage of task instances solved",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "SWE-bench Team (with OpenAI)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://www.swebench.com/",
+    "publication_urls": [
+      {
+        "url": "https://www.swebench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://www.swebench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "'Official Leaderboards' > 'Verified' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://www.swebench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.txt",
+        "sha256": "d93de8710857ab7b2b095c0d52e9458431924162d3cbd60e59b9c6f8412cb8d8",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "Verified 500 instances A human-filtered subset of SWE-bench. ... Aug 2024 SWE-bench x OpenAI = SWE-bench Verified."
+      }
+    ]
+  },
+  {
+    "id": "tau2-bench::2",
+    "name": "τ²-bench",
+    "version": "2",
+    "version_status": "published",
+    "family": "tau2-bench",
+    "category": "Agentic",
+    "one_sentence_description": "A dual-control customer-service evaluation in which agents use tools and guide simulated users across retail, airline and telecom tasks.",
+    "scoring": {
+      "metric": "Pass^1 task success rate for this board",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Sierra",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://taubench.com/",
+    "publication_urls": [
+      {
+        "url": "https://taubench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://taubench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://taubench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-9a145eb8c66c.txt",
+        "sha256": "981675869918c039d6f00a5bed9802bef91474f017ddfa002c4ab83d20d8ae98",
+        "fetched_at": "2026-09-10T22:19:36Z",
+        "excerpt": "τ³-Banking ... Pass^1; τ³-Voice ... Pass^1; τ²-bench ... Pass^1"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/sierra-research/tau2-bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-25d2c4460ac0.txt",
+        "sha256": "ed39688aa5d40bd73007355df65f4e41a6c250960642e56764c3ad44da1df8d2",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "v1.0.1 changes banking_knowledge scores; older scores are not comparable."
+      }
+    ]
+  },
+  {
+    "id": "tau3-banking::1.0.1",
+    "name": "τ³-Banking",
+    "version": "1.0.1",
+    "version_status": "published",
+    "family": "tau3-banking",
+    "category": "Agentic",
+    "one_sentence_description": "A customer-service evaluation requiring knowledge retrieval and policy application over banking documents.",
+    "scoring": {
+      "metric": "Pass^1 task success rate for this board",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Sierra",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://taubench.com/",
+    "publication_urls": [
+      {
+        "url": "https://taubench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://taubench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "version_guard": "Require tau2-bench package >=1.0.1 with the verified 1.0.1 banking task corrections; a later grading/task change needs a new identity. Do not import pre-fix scores.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://taubench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-9a145eb8c66c.txt",
+        "sha256": "981675869918c039d6f00a5bed9802bef91474f017ddfa002c4ab83d20d8ae98",
+        "fetched_at": "2026-09-10T22:19:36Z",
+        "excerpt": "τ³-Banking ... Pass^1; τ³-Voice ... Pass^1; τ²-bench ... Pass^1"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/sierra-research/tau2-bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-25d2c4460ac0.txt",
+        "sha256": "ed39688aa5d40bd73007355df65f4e41a6c250960642e56764c3ad44da1df8d2",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "v1.0.1 changes banking_knowledge scores; older scores are not comparable."
+      }
+    ]
+  },
+  {
+    "id": "tau3-voice::snapshot-2026-09-10",
+    "name": "τ³-Voice",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "tau3-voice",
+    "category": "Agentic",
+    "one_sentence_description": "A full-duplex voice evaluation of customer-service agents across retail, airline, telecom and banking tasks.",
+    "scoring": {
+      "metric": "Pass^1 task success rate for this board",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Sierra",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://taubench.com/",
+    "publication_urls": [
+      {
+        "url": "https://taubench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://taubench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://taubench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-9a145eb8c66c.txt",
+        "sha256": "981675869918c039d6f00a5bed9802bef91474f017ddfa002c4ab83d20d8ae98",
+        "fetched_at": "2026-09-10T22:19:36Z",
+        "excerpt": "τ³-Banking ... Pass^1; τ³-Voice ... Pass^1; τ²-bench ... Pass^1"
+      },
+      {
+        "url": "https://raw.githubusercontent.com/sierra-research/tau2-bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-25d2c4460ac0.txt",
+        "sha256": "ed39688aa5d40bd73007355df65f4e41a6c250960642e56764c3ad44da1df8d2",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "v1.0.1 changes banking_knowledge scores; older scores are not comparable."
+      }
+    ]
+  },
+  {
+    "id": "terminal-bench::4.0",
+    "name": "Terminal-Bench",
+    "version": "4.0",
+    "version_status": "published",
+    "family": "terminal-bench",
+    "category": "Agentic",
+    "one_sentence_description": "A benchmark to measure and evolve with the frontier of agent work, whose homepage leaderboard reports resolution rate on Terminal-Bench 4.0 tasks.",
+    "scoring": {
+      "metric": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Stanford / Harbor / Laude Institute",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://www.tbench.ai/",
+    "publication_urls": [
+      {
+        "url": "https://www.tbench.ai/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://www.tbench.ai/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Homepage leaderboard under 'TERMINAL-BENCH 4.0': columns RANK, MODEL, AGENT, RESOLUTION RATE, COST, TOKENS; read RESOLUTION RATE per model/agent row.",
+      "version_guard": "Verify the published version 4.0 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://www.tbench.ai/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3be95230c580.txt",
+        "sha256": "c6923df921aa1da0ae251b8e1d88ce07426a117ec5b40e2ea80ab32ad163bbd8",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "TERMINAL-BENCH 4.0 A benchmark to measure and evolve with the frontier of agent work ... Resolution rate of Terminal-Bench 4.0 tasks. The whiskers span the 95% confidence interval. ... Hosted by Stanford / Harbor / Laude Institute"
+      }
+    ]
+  },
+  {
+    "id": "towards-ai-editorial-writing::snapshot-2026-09-10",
+    "name": "Towards AI Editorial Writing",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "towards-ai-editorial-writing",
+    "category": "Writing",
+    "one_sentence_description": "An internal writing benchmark comparing models on the maintainer’s editorial voice and publishing early Elo results on X.",
+    "scoring": {
+      "metric": "Reported editorial-writing Elo",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Maintainer-reported early results, not independent verification; no score values are imported in phase 04. Full private protocol unavailable."
+    },
+    "maintainer": "Louis-François Bouchard / Towards AI (@Whats_AI)",
+    "source_type": "x_account",
+    "primary_url": "https://x.com/Whats_AI/status/2098085178786615560",
+    "publication_urls": [
+      {
+        "url": "https://x.com/Whats_AI/status/2098085178786615560",
+        "type": "x_account",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "cat ops/rebuild-2026-09/evidence/phase-04/x-writing-post.txt",
+      "format": "Captured primary X post",
+      "locator": "Exact post and follow-up posts from @Whats_AI; retain the model variant and stated Elo. The private task/judge protocol is not publicly specified.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "The command reads this dated source snapshot. Future collection is manual desktop Chrome using xplainervideo only, after the shared browser and display locks and source cooldown. Verify the account, open the exact post/account, capture text and screenshot at modest pace; never use airesearch12. No automated X scraping recipe."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://x.com/Whats_AI/status/2098085178786615560",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/x-writing-post.txt",
+        "sha256": "8637a1c17a88f235d48b0a018232333025a378bea9986e6c88358bb1360e0187",
+        "fetched_at": "2026-09-10",
+        "excerpt": "our internal writing benchmark (early results) ... writing in our editorial voice ... Elo"
+      }
+    ]
+  },
+  {
+    "id": "ugi-natint::snapshot-2026-09-10",
+    "name": "UGI NatInt",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "ugi-natint",
+    "category": "Knowledge",
+    "one_sentence_description": "A private-question evaluation of general knowledge and reasoning across textbook, popular-culture and world-model topics.",
+    "scoring": {
+      "metric": "NatInt 💡 published composite",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Private questions; theoretical bounds and full weighting were not verified. Writing excludes broken/refusal outputs; absence is not zero."
+    },
+    "maintainer": "DontPlanToEnd",
+    "source_type": "huggingface",
+    "primary_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "type": "huggingface",
+        "role": "Primary results publication and collection entry point"
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "type": "huggingface",
+        "role": "Actual published score CSV"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 'https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv' --output /tmp/ugi.csv",
+      "format": "CSV",
+      "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
+        "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
+        "fetched_at": "2026-09-10T22:01:49Z",
+        "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
+        "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
+        "fetched_at": "2026-09-10T21:45:53.851000+00:00",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z",
+        "excerpt": "Exact score column NatInt 💡"
+      }
+    ]
+  },
+  {
+    "id": "ugi-willingness::snapshot-2026-09-10",
+    "name": "UGI Willingness",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "ugi-willingness",
+    "category": "Uncensored",
+    "one_sentence_description": "A private-question evaluation of how far a model follows challenging instructions before refusing or deviating.",
+    "scoring": {
+      "metric": "W/10 👍 published composite",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Private questions; theoretical bounds and full weighting were not verified. Writing excludes broken/refusal outputs; absence is not zero."
+    },
+    "maintainer": "DontPlanToEnd",
+    "source_type": "huggingface",
+    "primary_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "type": "huggingface",
+        "role": "Primary results publication and collection entry point"
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "type": "huggingface",
+        "role": "Actual published score CSV"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 'https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv' --output /tmp/ugi.csv",
+      "format": "CSV",
+      "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
+        "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
+        "fetched_at": "2026-09-10T22:01:49Z",
+        "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
+        "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
+        "fetched_at": "2026-09-10T21:45:53.851000+00:00",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z",
+        "excerpt": "Exact score column W/10 👍"
+      }
+    ]
+  },
+  {
+    "id": "ugi-writing::snapshot-2026-09-10",
+    "name": "UGI Writing",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "ugi-writing",
+    "category": "Writing",
+    "one_sentence_description": "A maintainer-owned writing evaluation considering intelligence, style, repetition and length adherence, informed by human preferences.",
+    "scoring": {
+      "metric": "Writing ✍️ published composite",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Private questions; theoretical bounds and full weighting were not verified. Writing excludes broken/refusal outputs; absence is not zero."
+    },
+    "maintainer": "DontPlanToEnd",
+    "source_type": "huggingface",
+    "primary_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "type": "huggingface",
+        "role": "Primary results publication and collection entry point"
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "type": "huggingface",
+        "role": "Actual published score CSV"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 'https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv' --output /tmp/ugi.csv",
+      "format": "CSV",
+      "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
+        "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
+        "fetched_at": "2026-09-10T22:01:49Z",
+        "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
+        "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
+        "fetched_at": "2026-09-10T21:45:53.851000+00:00",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z",
+        "excerpt": "Exact score column Writing ✍️"
+      }
+    ]
+  },
+  {
+    "id": "ugi::snapshot-2026-09-10",
+    "name": "UGI",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "ugi",
+    "category": "Uncensored",
+    "one_sentence_description": "A private-question suite combining sensitive-topic knowledge with willingness to follow controversial instructions.",
+    "scoring": {
+      "metric": "UGI 🏆 published composite",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Private questions; theoretical bounds and full weighting were not verified. Writing excludes broken/refusal outputs; absence is not zero."
+    },
+    "maintainer": "DontPlanToEnd",
+    "source_type": "huggingface",
+    "primary_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "type": "huggingface",
+        "role": "Primary results publication and collection entry point"
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "type": "huggingface",
+        "role": "Actual published score CSV"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 'https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv' --output /tmp/ugi.csv",
+      "format": "CSV",
+      "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
+        "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
+        "fetched_at": "2026-09-10T22:01:49Z",
+        "excerpt": "See About Benchmarks in app.py and the exact named column in the published CSV."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-aac3f162463d.txt",
+        "sha256": "48aeeb8e5b30d1557590f3a298e5b7d541cdc12dec533d121425efb89c52c0c4",
+        "fetched_at": "2026-09-10T21:45:53.851000+00:00",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      },
+      {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-6c45283c6461.txt",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-10T22:04:13Z",
+        "excerpt": "Exact score column UGI 🏆"
+      }
+    ]
+  },
+  {
+    "id": "vending-bench::2",
+    "name": "Vending-Bench 2",
+    "version": "2",
+    "version_status": "published",
+    "family": "vending-bench",
+    "category": "Agentic",
+    "one_sentence_description": "Long-horizon agentic benchmark where models run a simulated vending machine business for a year and are scored on their final bank account balance.",
+    "scoring": {
+      "metric": "Final bank account balance in USD after one simulated year of operation (average across 5 runs)",
+      "unit": "USD",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Andon Labs",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://andonlabs.com/evals/vending-bench-2",
+    "publication_urls": [
+      {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://andonlabs.com/evals/vending-bench-2 --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "'Current leaderboard' table on the Vending-Bench 2 page: extract the 'Money Balance' column (average across 5 runs)",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-ebcec333cce2.txt",
+        "sha256": "4a18d7da05f199bc51537baccb1735319c857cc08267372b2af35bddddcc0e01",
+        "fetched_at": "2026-09-10T21:45:53.851000+00:00",
+        "excerpt": "We're releasing Vending-Bench 2, a benchmark for measuring AI model performance on running a business over long time horizons. Models are tasked with running a simulated vending machine business over a year and scored on their bank account balance at the end. [...] You will be judged solely on your bank account balance at the end of one year of operation."
+      }
+    ]
+  },
+  {
+    "id": "weirdml::2",
+    "name": "WeirdML",
+    "version": "2",
+    "version_status": "published",
+    "family": "weirdml",
+    "category": "Coding",
+    "one_sentence_description": "Presents LLMs with unusual machine-learning tasks where they must write, run, and iteratively improve PyTorch code under fixed compute and time limits.",
+    "scoring": {
+      "metric": "Average Max Accuracy: per task, mean over runs of the maximum test accuracy across the 5 iterations per run, averaged over all 17 tasks",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Håvard Tveit Ihle",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://htihle.github.io/weirdml.html",
+    "publication_urls": [
+      {
+        "url": "https://htihle.github.io/weirdml.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://htihle.github.io/weirdml.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Model summary figure/table, 'Average Accuracy Across Tasks' column (bold overall mean); raw datapoints also in /data/weirdml_data.csv",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://htihle.github.io/weirdml.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-deb1f2c2bc9e.txt",
+        "sha256": "468ca5e9a0d157fa99dc480b575063d1981771daafcf29f337f3213877847c6d",
+        "fetched_at": "2026-09-10T21:46:58.828000+00:00",
+        "excerpt": "Version 2 of WeirdML is now out! ... The 'Average Accuracy Across Tasks' column shows the overall mean accuracy (bold number) calculated as the average of the mean max accuracy for each task. That is, for each model, we take the maximum accuracy of the 5 iterations per run, we average these values over all the runs for a given task (typically 5 runs/model/task), then we average these results over all the 17 tasks."
+      }
+    ]
+  }
+]

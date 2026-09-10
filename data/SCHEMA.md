@@ -2,6 +2,12 @@
 
 Built by `scripts/build-dataset.mjs` from the raw snapshots in `data/raw/`.
 
+Phase 04 adds `data/raw/benchmarks/registry.json` (schema version 1) and an independent
+raw AA field snapshot. Registry identities are `family::version`, with explicit dated
+identities for unversioned protocols. They are not yet attached to `models[].benchmarks`.
+Builds validate their structure and hashed evidence while leaving existing scores and
+Composite inputs unchanged. See [the registry contract](raw/benchmarks/README.md).
+
 ```jsonc
 {
   "generated_at": "ISO timestamp",

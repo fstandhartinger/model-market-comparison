@@ -1,0 +1,138 @@
+τ-bench — Benchmarking AI Agents on Real-World Tasks
+τ
+-bench
+from Sierra
+Overview
+Leaderboards
+τ³-Banking
+Text · knowledge retrieval
+τ³-Voice
+Real-time voice
+τ²-bench
+Text · retail, airline, telecom
+τ
+τ
+-bench
+New
+↗
+Agent-building agents
+Visualizer
+Blog
+GitHub
+Submit Results
+NEW
+τ
+τ
+-bench is here: can coding agents
+build
+the customer-service agents τ-bench evaluates?
+Explore the τ
+τ
+-bench leaderboard →
+τ
+-bench
+Can AI agents reliably complete real-world tasks? τ-bench measures how well agents converse with users, call tools, retrieve knowledge, and follow policy across enterprise domains — in text and voice.
+τ³-Banking
+Text
+Knowledge retrieval
+#
+Model
+Pass^1
+🥇
+Qwen 3.8 Max
+Qwen
+55.2%
+🥈
+Claude Opus 5
+Anthropic
+48.7%
+🥉
+Grok 4.5
+xAI
+47.9%
+⋯
+τ³-Voice
+Retail · Airline · Telecom · Banking
+#
+Model
+Pass^1
+🥇
+gpt-live-1
+OpenAI
+81.7%
+🥈
+Pine Voice Preview
+Pine AI
+75.4%
+🥉
+grok-voice-think-fast-1.0
+xAI
+67.3%
+⋯
+τ²-bench
+Text
+Retail · Airline · Telecom
+#
+Model
+Pass^1
+🥇
+Qwen3.5-397B-A17B
+Alibaba Cloud
+87.9%
+🥈
+Gemini 3.0 Pro
+Google
+85.4%
+🥉
+Claude Opus 4.5
+Anthropic
+85.3%
+⋯
+View Full Leaderboard →
+How τ-bench has evolved
+τ-voice
+τ³-bench
+March 2026
+Paper →
+Blog →
+Real-time voice: full-duplex conversations with interruptions, accents, and background noise — the same task rigor, now in speech.
+Voice mode:
+🛍️ Retail
+✈️ Airline
+📱 Telecom
+🏦 Banking
+τ-knowledge
+τ³-bench
+March 2026
+Paper →
+Blog →
+Knowledge-intensive tasks: agents retrieve and reason over a realistic knowledge base of ~700 documents, combining retrieval with policy application.
+Adds domain:
+🏦 Banking
+Task audit & fixes
+τ³-bench
+February 2026
+Blog →
+Audited and fixed 50+ tasks across the airline and retail domains — correcting expected actions, ambiguous instructions, and impossible constraints.
+Updates:
+🛍️ Retail
+✈️ Airline
+τ²-bench
+June 2025
+Paper →
+Blog →
+Dual control: the user can now act on the world too. Agents must guide users through steps only the user can perform, not just act on their behalf.
+Adds domain:
+📱 Telecom
+τ-bench
+June 2024
+Paper →
+Blog →
+The original benchmark for tool-agent-user interaction. Agents converse with a simulated user and call tools, scored against verifiable database outcomes with the pass
+k
+reliability metric.
+Domains:
+🛍️ Retail
+✈️ Airline
+For questions or feedback, contact
+[email protected]

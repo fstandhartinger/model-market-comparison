@@ -1,0 +1,410 @@
+AA-Omniscience: Knowledge and Hallucination Benchmark | Artificial Analysis
+Artificial Analysis
+K
+Artificial Analysis
+Models
+Coding Agents
+Speech, Image, Video
+Inference
+Leaderboards
+About
+AI Trends
+Arenas
+K
+All evaluations
+AA-Omniscience: Knowledge and Hallucination Benchmark
+Intelligence Index
+Private Dataset
+Faithfulness
+Reasoning
+Humanities
+Business
+Finance
+Legal
+Medical
+Science
+A benchmark measuring factual recall and hallucination across various economically relevant domains.
+See example tasks
+Background
+AA-Omniscience is a knowledge and hallucination benchmark that rewards accuracy, punishes bad guesses and provides a comprehensive view of which models produce factually reliable outputs across different domains.
+The benchmark contains 6,000 questions across 6 major domains, derived from authoritative academic and industry sources and generated automatically using an LLM-based question generation agent to ensure unambiguity, scalability and factual precision
+Methodology
+All evaluations are conducted independently by Artificial Analysis. More information can be found on our
+Intelligence Benchmarking Methodology
+page.
+Publication
+View on arXiv
+AA-Omniscience: Evaluating Cross-Domain Knowledge Reliability in Large Language Models
+Declan Jackson, William Keating, George Cameron, Micah Hill-Smith
+.
+Abstract
+Existing language model evaluations primarily measure general capabilities, yet reliable use of these models across a range of domains demands factual accuracy and recognition of knowledge gaps. We introduce AA-Omniscience, a benchmark designed to measure both factual recall and knowledge calibration across 6,000 questions. Questions are derived from authoritative academic and industry sources, and cover 42 economically relevant topics within six different domains. The evaluation measures a model's AA-Omniscience Index, a bounded metric (-100 to 100) measuring factual recall that jointly penalizes hallucinations and rewards abstention when uncertain, with 0 equating to a model that answers questions correctly as much as it does incorrectly. Among evaluated models, Claude 4.1 Opus attains the highest score (4.8), making it one of only three models to score above zero. These results reveal persistent factuality and calibration weaknesses across frontier models. Performance also varies by domain, with the models from three different research labs leading across the six domains. This performance variability suggests models should be chosen according to the demands of the use case rather than general performance for tasks where knowledge is important.
+Existing language model evaluations primarily measure general capabilities, yet reliable use of these models across a range of domains demands factual accuracy and recognition of knowledge gaps. We introduce AA-Omniscience, a benchmark designed to measure both factual recall and knowledge calibration across 6,000 questions. Questions are derived from authoritative academic and industry sources, and cover 42 economically relevant topics within six different domains. The evaluation measures a model's AA-Omniscience Index, a bounded metric (-100 to 100) measuring factual recall that jointly penalizes hallucinations and rewards abstention when uncertain, with 0 equating to a model that answers questions correctly as much as it does incorrectly. Among evaluated models, Claude 4.1 Opus attains the highest score (4.8), making it one of only three models to score above zero. These results reveal persistent factuality and calibration weaknesses across frontier models. Performance also varies by domain, with the models from three different research labs leading across the six domains. This performance variability suggests models should be chosen according to the demands of the use case rather than general performance for tasks where knowledge is important.
+Related Links
+AA-Omniscience Methodology
+ArtificialAnalysis/AA-Omniscience-Public
+2511.13029
+AA-Omniscience
+GPT-6 Astra (high)
+scores the
+highest
+on
+AA-Omniscience
+with a score of
+44
+, followed by
+Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)
+with a score of
+43
+, and
+GPT-6 Astra (xhigh)
+with a score of
+43
+AA-Omniscience Accuracy
+Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)
+scores the
+highest
+on
+AA-Omniscience Accuracy
+with a score of
+67%
+, followed by
+Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback)
+with a score of
+66%
+, and
+Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)
+with a score of
+65%
+AA-Omniscience Hallucination Rate
+MiniCPM5-1B (Non-reasoning)
+scores the
+lowest
+on
+AA-Omniscience Hallucination Rate
+with a score of
+1%
+, followed by
+G9v3-3B
+with a score of
+12%
+, and
+G9v3-39A5B
+with a score of
+13%
+Score
+AA-Omniscience Index
+AA-Omniscience Accuracy
+AA-Omniscience Hallucination Rate
+Detailed Domain Score
+Software Engineering Deep Dive
+Model Size (Open Weights Models Only)
+Token Usage
+Cost
+Score vs. Release Date
+Example Tasks
+Score
+AA-Omniscience Index: Score
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+29 of 521 models
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+AA-Omniscience Index
+AA-Omniscience Index vs. Intelligence Index
+AA-Omniscience Index vs. Attempt Rate
+AA-Omniscience Index vs. Output Tokens
+AA-Omniscience Index vs. Cost
+AA-Omniscience Index vs. Artificial Analysis Intelligence Index
+AA-Omniscience Index · Artificial Analysis Intelligence Index
+29 of 521 models
+Most attractive quadrant
+Anthropic
+OpenAI
+Meta
+Z AI
+SpaceXAI
+Kimi
+Google
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Mistral
+Artificial Analysis Intelligence Index
+Artificial Analysis Intelligence Index v4.3
+includes:
+AA-Briefcase, GDPval-AA v2, AutomationBench-AA, Terminal-Bench v4.0, SciCode, Humanity's Last Exam, GDP.pdf, CritPt, AA-Omniscience, AA-LCR v1.1
+. See
+Intelligence Index methodology
+for further details, including a breakdown of each evaluation and how we run them.
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+AA-Omniscience Accuracy
+AA-Omniscience Accuracy
+Accuracy vs. AA-Omniscience Index
+Accuracy vs. Attempt Rate
+Accuracy vs. Output Tokens
+Accuracy vs. Cost
+AA-Omniscience Accuracy
+AA-Omniscience Accuracy (higher is better) measures the proportion of correctly answered questions out of all questions, regardless of whether the model chooses to answer
+29 of 521 models
+AA-Omniscience Accuracy
+AA-Omniscience Accuracy (higher is better) measures the proportion of correctly answered questions out of all questions, regardless of whether the model chooses to answer
+AA-Omniscience Hallucination Rate
+Hallucination Rate
+Hallucination Rate vs. AA-Omniscience Index
+Hallucination Rate vs. Output Tokens
+Hallucination Rate vs. Cost
+AA-Omniscience Hallucination Rate
+AA-Omniscience Hallucination Rate (lower is better) measures how often the model answers incorrectly when it should have refused or admitted to not knowing the answer. It is defined as the proportion of incorrect answers out of all non-correct responses, i.e. incorrect / (incorrect + partial answers + not attempted)
+29 of 521 models
+AA-Omniscience Hallucination Rate
+AA-Omniscience Hallucination Rate (lower is better) measures how often the model answers incorrectly when it should have refused or admitted to not knowing the answer. It is defined as the proportion of incorrect answers out of all non-correct responses, i.e. incorrect / (incorrect + partial answers + not attempted)
+Detailed Domain Score
+AA-Omniscience Index Across Domains (Normalized)
+AA-Omniscience Index Across Domains
+AA-Omniscience Index by Domain
+AA-Omniscience Index Across Domains (Normalized)
+AA-Omniscience Index · Scores are normalized per domain across all models tested, where green represents the highest score for that domain and red represents the lowest score for that domain.
+29 of 521 models
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+Software Engineering Deep Dive
+AA-Omniscience Index Across Languages (Normalized)
+AA-Omniscience Index Across Languages
+AA-Omniscience Index by Language
+Software Engineering AA-Omniscience Index Across Languages (Normalized)
+Software Engineering AA-Omniscience Index · Scores are normalized per language across all models tested, where green represents the highest score for that language and red represents the lowest score for that language.
+29 of 521 models
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+AA-Omniscience Index Question Breakdown
+Distribution of questions across different domains and subdomains in the AA-Omniscience benchmark
+Business
+Humanities & Social Sciences
+Science, Engineering & Mathematics
+Health
+Law
+Software Engineering (SWE)
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+Model Size (Open Weights Models Only)
+AA-Omniscience Index vs. Total Parameters
+AA-Omniscience Index vs. Active Parameters
+AA-Omniscience Index vs. Total Parameters
+AA-Omniscience Index · Size in parameters (billions)
+29 of 521 models
+Most attractive quadrant
+Z AI
+Kimi
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Meta
+Mistral
+OpenAI
+AA-Omniscience Index
+AA-Omniscience Index (higher is better) measures knowledge reliability and hallucination. It rewards correct answers, penalizes hallucinations, and has no penalty for refusing to answer. Scores range from -100 to 100, where 0 means as many correct as incorrect answers, and negative scores mean more incorrect than correct.
+Total Parameters
+The total number of trainable weights and biases in the model, expressed in billions. These parameters are learned during training and determine the model's ability to process and generate responses.
+Accuracy vs. Total Parameters
+Accuracy vs. Active Parameters
+AA-Omniscience Accuracy vs. Total Parameters
+AA-Omniscience Accuracy · Size in parameters (billions)
+29 of 521 models
+Most attractive quadrant
+Z AI
+Kimi
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Meta
+Mistral
+OpenAI
+AA-Omniscience Accuracy
+AA-Omniscience Accuracy (higher is better) measures the proportion of correctly answered questions out of all questions, regardless of whether the model chooses to answer
+Total Parameters
+The total number of trainable weights and biases in the model, expressed in billions. These parameters are learned during training and determine the model's ability to process and generate responses.
+Hallucination Rate vs. Total Parameters
+Hallucination Rate vs. Active Parameters
+AA-Omniscience Hallucination Rate vs. Total Parameters
+AA-Omniscience Hallucination Rate · Size in parameters (billions)
+29 of 521 models
+Most attractive quadrant
+Z AI
+Kimi
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Meta
+Mistral
+OpenAI
+AA-Omniscience Hallucination Rate
+AA-Omniscience Hallucination Rate (lower is better) measures how often the model answers incorrectly when it should have refused or admitted to not knowing the answer. It is defined as the proportion of incorrect answers out of all non-correct responses, i.e. incorrect / (incorrect + partial answers + not attempted)
+Total Parameters
+The total number of trainable weights and biases in the model, expressed in billions. These parameters are learned during training and determine the model's ability to process and generate responses.
+Token Usage
+AA-Omniscience Index: Token Usage
+Tokens used to run the evaluation
+29 of 521 models
+Answer tokens
+Reasoning tokens
+Input tokens
+Evaluation Token Usage
+The total number of tokens used to run the evaluation, including input tokens (prompt), reasoning tokens (for reasoning models), and answer tokens (final response).
+Cost
+AA-Omniscience Index: Cost Breakdown
+Cost (USD) to run the evaluation
+29 of 521 models
+Answer cost
+Reasoning cost
+Input cost
+Evaluation Cost
+The cost to run the evaluation, calculated using the model's input and output token pricing and the number of tokens used.
+Score vs. Release Date
+AA-Omniscience Index: Score vs. Release Date
+29 of 521 models
+Most attractive region
+Anthropic
+OpenAI
+Meta
+Z AI
+SpaceXAI
+Kimi
+Google
+Alibaba
+DeepSeek
+MiniMax
+Thinking Machines
+NVIDIA
+Mistral
+Example Tasks
+1
+Domain:
+Software Engineering (SWE)  ·
+Topic:
+JavaScript  ·
+Subtopic:
+JavaScript frontend frameworks
+In React’s Canary Fragment refs API, which FragmentInstance method returns a flat array of DOMRect objects for all children?
+Click to expand
+2
+Domain:
+Health  ·
+Topic:
+Medicine  ·
+Subtopic:
+Pharmacy
+In what year was the Nobel Prize in Medicine awarded to Domagk for discovering prontosil’s chemotherapeutic value?
+Click to expand
+3
+Domain:
+Business  ·
+Topic:
+Economics  ·
+Subtopic:
+Macroeconomics
+Over what years did Roubini and Sachs examine 15 OECD countries when assessing trends in tax-to-GDP ratios?
+Click to expand
+Explore Evaluations
+Artificial Analysis Intelligence Index v4.3
+A composite benchmark aggregating ten challenging evaluations to provide a holistic measure of AI capabilities across mathematics, science, coding, and reasoning.
+Artificial Analysis Openness Index
+A composite measure providing an industry standard to communicate model openness for users and developers.
+AA-Briefcase: Agentic Knowledge Work Benchmark
+A private evaluation developed by Artificial Analysis for frontier agentic capability in long-horizon knowledge work, testing agents on realistic business workflows that require deliverables such as spreadsheets, presentations, and memos.
+GDPval-AA v2 Leaderboard
+GDPval-AA v2 is Artificial Analysis' evaluation framework for OpenAI's GDPval dataset. It tests AI models on real-world tasks across 44 occupations and 9 major industries. Models are given shell access and web browsing capabilities in an agentic loop via Stirrup to solve tasks, with Elo ratings derived from blind pairwise comparisons.
+APEX-Agents-AA Benchmark Leaderboard
+Artificial Analysis' implementation of the APEX-Agents benchmark, testing AI agents on long-horizon, cross-application tasks in professional-services environments with realistic application tooling.
+AA-AnalystAgent Benchmark Leaderboard
+Artificial Analysis' data analysis benchmark, testing AI agents on their ability to work with spreadsheets and documents to answer quantitative questions a Business Analyst or Data Analyst would face day-to-day.
+AutomationBench-AA: Agentic SaaS Workflow Benchmark
+A benchmark measuring agentic task completion across simulated SaaS application environments, scoring the share of each task's objectives completed without guardrail violations.
+Harvey LAB-AA Benchmark Leaderboard
+Artificial Analysis' implementation of Harvey's Legal Agent Benchmark (LAB), testing AI agents on real-world legal work from Harvey's dataset of 120 private tasks spanning 24 legal practice areas. The agent reads case documents in a sandbox and produces legal deliverables (e.g., memos, disclosure schedules, deposition summaries), graded criterion-by-criterion by a single LLM rubric judge.
+GDP.pdf Benchmark Leaderboard
+Artificial Analysis' implementation of Surge AI's GDP.pdf benchmark, testing whether language models can reason over long, real-world professional documents and satisfy detailed task-specific criteria.
+EnterpriseOps-Gym-AA Benchmark Leaderboard
+Artificial Analysis' independent implementation of ServiceNow's EnterpriseOps-Gym, an agentic benchmark testing whether LLM agents can complete stateful, multi-step enterprise workflows across eight business domains via live tool use, graded on the final state of the underlying databases.
+𝜏³-Banking Benchmark Leaderboard
+A fintech customer-support benchmark from the 𝜏-Knowledge framework that tests whether agents can navigate a large unstructured knowledge base and execute multi-step tool calls to resolve realistic banking workflows.
+Terminal-Bench v2.1 Benchmark Leaderboard
+A verified refresh of Terminal-Bench v2.0 — 89 curated tasks across software engineering, system administration, data processing, model training, and security, with environment and instruction fixes so scores reflect agent capability rather than environment gaps.
+Terminal-Bench v4.0 Benchmark Leaderboard
+A harder 66-task benchmark of complex terminal work across software, machine learning, science, operations, security, hardware, and media, with recalibrated compute and time allowances and improved instructions, environments, and verifiers.
+Artificial Analysis Long Context Reasoning Benchmark Leaderboard
+A challenging benchmark measuring language models' ability to extract, reason about, and synthesize information from long-form documents ranging from 10k to 100k tokens (measured using the cl100k_base tokenizer).
+AA-Omniscience: Knowledge and Hallucination Benchmark
+A benchmark measuring factual recall and hallucination across various economically relevant domains.
+SciCode Benchmark Leaderboard
+A scientist-curated coding benchmark featuring 288 test set subproblems from 80 laboratory problems across 16 scientific disciplines.
+Humanity's Last Exam Benchmark Leaderboard
+A frontier-level benchmark with 2,500 expert-vetted questions across mathematics, sciences, and humanities, designed to be the final closed-ended academic evaluation.
+CritPt Benchmark Leaderboard
+A benchmark designed to test LLMs on research-level physics reasoning tasks, featuring 71 composite research challenges.
+GPQA Diamond Benchmark Leaderboard
+The most challenging 198 questions from GPQA, where PhD experts achieve 65% accuracy but skilled non-experts only reach 34% despite web access.
+ITBench-AA Benchmark Leaderboard
+Artificial Analysis' implementation of IBM's ITBench benchmark, testing AI agents on Kubernetes incident root-cause analysis from offline incident snapshots. The agent inspects alerts, events, traces, and topology and identifies the contributing-factor entities (deployments, pods, namespaces, network policies, etc.) responsible for the failure.
+MMMU-Pro Benchmark Leaderboard
+An enhanced MMMU benchmark that eliminates shortcuts and guessing strategies to more rigorously test multimodal models across 30 academic disciplines.
+IFBench Benchmark Leaderboard
+A benchmark evaluating precise instruction-following generalization on 58 diverse, verifiable out-of-domain constraints that test models' ability to follow specific output requirements.
+Terminal-Bench Hard Benchmark Leaderboard
+An agentic benchmark evaluating AI capabilities in terminal environments through software engineering, system administration, and data processing tasks.
+𝜏²-Bench Telecom Benchmark Leaderboard
+A dual-control conversational AI benchmark simulating technical support scenarios where both agent and user must coordinate actions to resolve telecom service issues.
+MMLU-Pro Benchmark Leaderboard
+An enhanced version of MMLU with 12,000 graduate-level questions across 14 subject areas, featuring ten answer options and deeper reasoning requirements.
+LiveCodeBench Benchmark Leaderboard
+A contamination-free coding benchmark that continuously harvests fresh competitive programming problems from LeetCode, AtCoder, and CodeForces, evaluating code generation, self-repair, and execution.
+MATH-500 Benchmark Leaderboard
+A 500-problem subset from the MATH dataset, featuring competition-level mathematics across six domains including algebra, geometry, and number theory.
+AIME 2025 Benchmark Leaderboard
+All 30 problems from the 2025 American Invitational Mathematics Examination, testing olympiad-level mathematical reasoning with integer answers from 000-999.
+Global-MMLU-Lite Benchmark Leaderboard
+A lightweight, multilingual version of MMLU, designed to evaluate knowledge and reasoning skills across a diverse range of languages and cultural contexts.
+Medical Long Context Reasoning (MLCR-AA)
+An open benchmark from Wisedocs measuring how well models reason over long, fragmented medical records, performing the multi-document synthesis claims professionals rely on when reviewing insurance and healthcare cases.
+Artificial Analysis
+Get notified about new articles
+Email address
+Subscribe
+Artificial Analysis
+Explore
+LLM Leaderboard
+Image Arena
+Video Arena
+AI Agents
+Evaluations
+Products
+Optima
+MicroEvals
+Model Recommender
+Data Playground
+Image Lab
+Company
+About
+Methodology
+Services
+Contact
+Articles
+X
+LinkedIn
+YouTube
+Rednote
+Discord
+©
+2026
+Artificial Analysis
+Terms of Use
+Data Platform Terms
+Privacy Policy

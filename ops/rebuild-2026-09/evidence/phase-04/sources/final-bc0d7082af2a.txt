@@ -1,0 +1,229 @@
+SWE-Bench Pro Leaderboard AI Coding Benchmark (Public Dataset) | Scale
+[PAPERS]
+[BLOG]
+[LEADERBOARDS]
+⌘K
+⌘K
+Agentic
+DrugDiscoveryBench
+SWE Atlas - Refactoring
+SWE Atlas - Test Writing
+SWE Atlas - Codebase QnA
+HiL-Bench (Human-in-Loop Benchmark)
+MCP Atlas
+SWE-Bench Pro (Public Dataset)
+SWE-Bench Pro (Private Dataset)
+Remote Labor Index (RLI)
+Safety
+Frontier
+Legacy
+2025 Scale AI. All rights reserved.
+SWE-Bench Pro (Public Dataset)
+Evaluating challenging long-horizon software engineering tasks in public open source repositories
+GitHub Dataset
+SWE-Bench Pro is a benchmark designed to provide a rigorous and realistic evaluation of AI agents for software engineering. It was developed to address several limitations in existing benchmarks by tackling four key challenges:
+Data Contamination
+: Models have likely seen the evaluation code during training, making it hard to know if they are problem-solving or recalling a memorized solution.
+Limited Task Diversity
+: Many benchmarks fail to capture the full spectrum of real-world software challenges and instead focus on simple utility libraries.
+Oversimplified Problems
+: Ambiguous or underspecified issues are often removed from benchmarks, which doesn't reflect a real developer's workflow.
+Unreliable and Irreproducible Testing
+: Inconsistent setups make it difficult to know if a solution truly works or if the environment is just configured incorrectly.
+SWE-Bench Pro addresses these gaps by sourcing tasks from diverse and complex codebases, including consumer applications, B2B services, and developer tools. To reduce contamination risk, the public and held-out OSS subsets use strong copyleft licenses (e.g., GPL). The private subset consists of proprietary codebases from startup partners.
+The benchmark is significantly more challenging than its predecessors; top models score around 23% on the SWE-Bench Pro public set, compared to 70%+ on SWE-Bench Verified. This provides a more accurate measure of an agent’s true problem-solving capabilities in environments that mirror professional software development.
+Resources:
+Read the
+paper
+Check out the
+GitHub
+View
+trajectories
+Methodology
+Each problem in SWE-Bench Pro is created using a four-stage workflow:
+Sourcing
+: Repositories are selected from a curated set of public and private repositories
+Environment Creation
+: Professional engineers build reproducible Docker-based environments, integrating all dependencies and build tools to ensure the codebase and tests run out-of-the-box.
+Harvesting
+: Problems are extracted via commit scraping. Pairs of consecutive commits are retained if they (a) fix a bug or introduce a feature, (b) demonstrate a fail-to-pass transition for new tests, and (c) include pass-to-pass tests confirming unrelated functionality remains intact.
+Augmentation
+: Human experts organize unstructured commits and issue metadata into two artifacts: a problem statement and a requirements brief with an optional interface. These provide sufficient context to reproduce the gold patch without prescribing an implementation. We employ three human-in-the-loop checkpoints: (1) manual environment construction, (2) human augmentation of the issue description, requirements, and interface, and (3) human verification of tests (relevance and flakiness).
+Primary Metric: Resolve Rate
+The primary metric is Resolve Rate, which is the percentage of tasks an agent successfully resolves. A task is marked as "resolved" only if a submitted code patch satisfies two strict conditions within the evaluation environment:
+Issue Resolution:
+The patch must fix the specific bug or implement the feature. This is verified when the new "fail-to-pass" tests, which fail on the original code, now pass.
+No Regressions:
+The patch must not break any existing functionality. This is verified when all pre-existing "pass-to-pass" tests continue to pass after the patch is applied.
+Dataset Design
+The dataset is guided by four foundational principles:
+Non-Contamination by Design:
+The benchmark is constructed from GPL-style copyleft repositories and private proprietary codebases, creating legal and access barriers that reduce the likelihood of contamination.  This licensing model makes it improbable that the code was included in proprietary training corpora, reducing the risk of data leakage and enforcing true generalization.
+Diverse and Industrially-Relevant Tasks
+: Problems come from consumer-facing apps, B2B platforms, and developer tools, requiring reasoning across varied architectures and development patterns.
+Balanced and Challenging Construction
+: Each repository contributes 50–100+ problems, with reference solutions requiring medium-to-large modifications (averaging 107.4 lines of code across 4.1 files). This prevents overfitting and ensures non-trivial problem-solving.
+Human-Augmented Problem Specification:
+Instead of discarding under-specified issues, human experts refine them to add context and clarify requirements. This preserves the original technical challenge while ensuring solvability.
+Dataset Summary
+SWE-Bench Pro is a large-scale benchmark containing 1865 total tasks across 41 professional repositories. The benchmark is composed of three distinct subsets:
+The Public Set:
+This set contains 731 instances and serves as the main public-facing benchmark. It is sourced exclusively from publicly available, open-source repositories that use strong copyleft licenses such as GPL. This licensing strategy acts as a legal deterrent against the code's inclusion in model training data, ensuring the benchmark is contamination-resistant by design. Performance on this dataset is tracked on the Public Leaderboard.
+The Private Set:
+A first-of-its-kind collection, this set includes 276 instances sourced from 18 private, proprietary codebases from startups. These codebases were acquired through partnerships and are not publicly accessible. This set is designed as the ultimate test of generalization on complex, industrial-grade code that is not publicly accessible and is unlikely to have been included in model training data. Results from this challenging dataset are reported on a separate  Leaderboard.
+The Held-out Set:
+The largest of the three, this private set contains 858 instances. Similar to the public set, it is sourced from a separate group of public repositories with copyleft licenses. This entire dataset is held-out for future analysis and internal evaluations. Therefore, the results for this set will not be published on the public leaderboards.
+Distributions in the public set of SWE-Bench Pro. The benchmark contains complex, long-horizon tasks requiring edits across multiple files and repositories. (1) Lines of code changed per solution patch. (2) Distribution of tasks across source repositories. (3) Number of files modified per task. (4) Distribution of tasks across source repositories, including categories spanning bug fixes, feature requests, optimizations, security updates, and UI/UX changes.
+Results: SWE-Bench Verified vs. SWE-Bench Pro
+We ran frontier models on Pro using the SWE-Agent scaffold and here’s what we found (all charts reflect the public dataset):
+Massive Performance Drop on SWE-Bench Pro:
+A major finding is the significant drop in performance for all models when moving from the SWE-Bench Verified benchmark to the more challenging SWE-Bench Pro. While most top models score over 70% on the verified version, the best-performing models, OpenAI GPT-5 and Claude Opus 4.1, score only 23.3% and 23.1% respectively on SWE-Bench Pro. This highlights the increased difficulty and realism of the new benchmark.
+The Private Subset is Harder:
+The private subset of the SWE-Bench Pro leaderboard reveals a drop in performance. Claude Opus 4.1 decreases from 22.7% to 17.8% resolution, and OpenAI GPT-5 falls from 23.1% to 14.9%. This shows that evaluation on private, previously unseen codebases provides a more realistic measure of generalization.
+Significant Performance Gaps Between Models:
+There is a wide performance disparity among the tested AI models. Frontier models substantially outperform older models like OpenAI GPT-4o (4.9%) and Qwen-3 32B (3.4%). This suggests that the advanced capabilities of the latest models are critical for tackling these complex, real-world software engineering tasks.
+Performance Varies by Programming Language:
+Models show different success rates depending on the programming language. Go and Python tasks generally have higher resolution rates, with some models exceeding 30%. In contrast, performance on JavaScript (JS) and TypeScript (TS) is more varied and often lower, with rates ranging from almost 0% to over 30% depending on the specific model.
+Repository-Specific Difficulty:
+Model performance is heavily influenced by the specific repository the task comes from. Some repositories proved consistently difficult for all models, with resolve rates below 10%. On other repositories, certain models could achieve success rates higher than 50%. This indicates that factors like codebase complexity, problem type, or documentation quality significantly impact an agent's ability to succeed.
+Top Models are More Consistent:
+The highest-performing models, Claude Opus 4.1 and OpenAI GPT-5, not only achieve the highest scores but also demonstrate more stable performance across the different languages and repositories. Smaller models tend to have more "erratic" performance, succeeding moderately on some repositories while failing almost completely on others. This suggests that top models have more robust and generalizable problem-solving skills, a quality that average scores alone don't fully capture.
+Difficulty Increases as problems become complex:
+Model performance significantly degrades as solutions require more lines to be added and files to be edited.
+Acknowledgements
+Special thanks to the software engineers and annotators who contributed to environment construction, test verification, and human augmentation processes, ensuring the benchmark's rigor and reliability. We are also deeply appreciative of the early-stage startups that partnered with us to provide proprietary private codebases, enabling a more realistic evaluation of AI agents in enterprise settings. Finally, we acknowledge the open-source communities behind the GPL-licensed repositories for their foundational work in software engineering, which inspired this benchmark. This research would not have been possible without these collective efforts.
+Performance Comparison
+1
+Muse Spark 1.1*
+NEW
+61.50
+±
+3.10
+1
+gpt-5.4 (xHigh)*
+59.10
+±
+3.56
+3
+Muse Spark*
+55.00
+±
+3.60
+3
+claude-opus-4-6 (thinking)*
+51.90
+±
+3.61
+5
+gemini-3.1-pro (thinking)*
+46.10
+±
+3.60
+5
+claude-opus-4-5-20251101
+45.89
+±
+3.60
+5
+claude-4-5-Sonnet
+43.60
+±
+3.60
+5
+gemini-3-pro-preview
+43.30
+±
+3.60
+5
+claude-4-Sonnet
+42.70
+±
+3.59
+10
+gpt-5-2025-08-07 (High)
+41.78
+±
+3.49
+10
+gpt-5.2-codex
+41.04
+±
+3.57
+10
+claude-4-5-haiku
+39.45
+±
+3.55
+10
+qwen3-coder-480b-a35b
+38.70
+±
+3.55
+14
+minimax-2.1
+36.81
+±
+3.55
+14
+gemini-3-flash
+34.63
+±
+3.55
+16
+gpt-5.2
+29.94
+±
+2.15
+16
+kimi-k2-instruct
+27.67
+±
+3.25
+18
+qwen3-235b-a22b
+21.41
+±
+2.25
+19
+gpt-oss-120b
+16.20
+±
+2.67
+19
+deepseek-v3p2
+15.56
+±
+2.63
+21
+gemma-3-27b-it
+11.38
+±
+2.15
+21
+llama3-1-405b-instruct
+11.18
+±
+2.15
+21
+glm-4.6
+9.67
+±
+2.15
+24
+llama4-maverick-17b-instruct
+5.24
+±
+1.24
+25
+codestral-2405
+1.51
+±
+1.51
+Legend
+Rank (UB):
+1 + the number of models whose lower CI bound exceeds this model’s upper CI bound.
+Models and results
+that are grayed out were run with a capped cost limit and turn limit of 50. All other Models on this page
+were run with an uncapped cost and with a turn limit of 250.
+*Run with mini-swe-agent harness
+All leaderboards

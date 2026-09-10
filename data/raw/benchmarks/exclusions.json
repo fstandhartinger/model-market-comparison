@@ -1,0 +1,319 @@
+{
+  "schema_version": 1,
+  "checked_at": "2026-09-10",
+  "candidates": [
+    {
+      "candidate": "EQ-Bench 2 / 3, Creative Writing 2, Judgemark 2.1, Spiral-Bench 1.0",
+      "disposition": "excluded",
+      "reason": "The maintainer labels these legacy boards; register current EQ-Bench 4, Creative Writing 3, Judgemark 4 and Spiral-Bench 1.2. Old versions are not merged into their successors.",
+      "publication_urls": [
+        "https://eqbench.com/"
+      ],
+      "evidence": [
+        {
+          "url": "https://eqbench.com/",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-ced9a15757ca.txt",
+          "sha256": "4271e9814e81a7641bb4fc85317abdfcea9d4c2c676e7cb47f53f20a8fb5e613",
+          "fetched_at": "2026-09-10T21:45:25.463000+00:00",
+          "excerpt": "The maintainer labels these legacy boards; register current EQ-Bench 4, Creative Writing 3, Judgemark 4 and Spiral-Bench 1.2. Old versions are not merged into their successors."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Aider Python code-editing (133 exercises)",
+      "disposition": "excluded",
+      "reason": "Earlier Python-only suite; prefer the maintainer’s newer, harder 225-task polyglot board. This is a curation choice, not a claim of measured saturation.",
+      "publication_urls": [
+        "https://aider.chat/docs/benchmarks.html",
+        "https://aider.chat/2024/12/21/polyglot.html"
+      ],
+      "evidence": [
+        {
+          "url": "https://aider.chat/docs/benchmarks.html",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-870ec78d3d53.txt",
+          "sha256": "a80c55b0eb0b57334b606686e57ce69b0eb36f1fd76fe88b948e157ff5713e01",
+          "fetched_at": "2026-09-10T21:48:04.437000+00:00",
+          "excerpt": "Earlier Python-only suite; prefer the maintainer’s newer, harder 225-task polyglot board. This is a curation choice, not a claim of measured saturation."
+        },
+        {
+          "url": "https://aider.chat/2024/12/21/polyglot.html",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-203dd84af09e.txt",
+          "sha256": "0586783472add698999370159a484fdc0e5c6a9c4580baeec2b6de1675fec277",
+          "fetched_at": "2026-09-10T21:48:04.437000+00:00",
+          "excerpt": "Earlier Python-only suite; prefer the maintainer’s newer, harder 225-task polyglot board. This is a curation choice, not a claim of measured saturation."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Terminal-Bench 1.0 / 2.0 / 2.1 / 3.0 (public board)",
+      "disposition": "excluded",
+      "reason": "Family index verifies these releases but 4.0 is current. Legacy AA 2.1 and hard-subset observations are retained under their own AA identities for provenance. A ?version query returning the 4.0 page does not verify an older leaderboard.",
+      "publication_urls": [
+        "https://www.tbench.ai/benchmarks",
+        "https://www.tbench.ai/?version=3"
+      ],
+      "evidence": [
+        {
+          "url": "https://www.tbench.ai/benchmarks",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3ebff9336cff.txt",
+          "sha256": "c6cf2d404630d5ffac8424564f3a476113ba8f4e60a6f2005dc95441ebea1ad3",
+          "fetched_at": "2026-09-10T21:51:26Z",
+          "excerpt": "Family index verifies these releases but 4.0 is current. Legacy AA 2.1 and hard-subset observations are retained under their own AA identities for provenance. A ?version query returning the 4.0 page does not verify an older leaderboard."
+        },
+        {
+          "url": "https://www.tbench.ai/?version=3",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-100caf0eabea.txt",
+          "sha256": "c6923df921aa1da0ae251b8e1d88ce07426a117ec5b40e2ea80ab32ad163bbd8",
+          "fetched_at": "2026-09-10T22:01:56Z",
+          "excerpt": "Family index verifies these releases but 4.0 is current. Legacy AA 2.1 and hard-subset observations are retained under their own AA identities for provenance. A ?version query returning the 4.0 page does not verify an older leaderboard."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Terminal-Bench-Science 0.1; Terminal-Bench Challenges",
+      "disposition": "excluded",
+      "reason": "Family index establishes these candidates and links publication locations, but this sweep did not verify their score definitions or actual result boards; keep discovery leads outside the accepted registry.",
+      "publication_urls": [
+        "https://www.terminal-bench-science.ai/",
+        "https://www.tbench.ai/news/terminal-bench-challenges"
+      ],
+      "evidence": [
+        {
+          "url": "https://www.tbench.ai/benchmarks",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-3ebff9336cff.txt",
+          "sha256": "c6cf2d404630d5ffac8424564f3a476113ba8f4e60a6f2005dc95441ebea1ad3",
+          "fetched_at": "2026-09-10T21:51:26Z",
+          "excerpt": "Family index establishes these candidates and links publication locations, but this sweep did not verify their score definitions or actual result boards; keep discovery leads outside the accepted registry."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "SWE-bench full / Lite",
+      "disposition": "excluded",
+      "reason": "Prefer the newer human-filtered Verified variant plus Multilingual, Multimodal and Pro Public. Full and Lite remain separately named source variants; no score is transferred and no unsupported saturation claim is made.",
+      "publication_urls": [
+        "https://www.swebench.com/"
+      ],
+      "evidence": [
+        {
+          "url": "https://www.swebench.com/",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.txt",
+          "sha256": "d93de8710857ab7b2b095c0d52e9458431924162d3cbd60e59b9c6f8412cb8d8",
+          "fetched_at": "2026-09-10T21:49:10Z",
+          "excerpt": "Prefer the newer human-filtered Verified variant plus Multilingual, Multimodal and Pro Public. Full and Lite remain separately named source variants; no score is transferred and no unsupported saturation claim is made."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "AA MMLU-Pro",
+      "disposition": "excluded",
+      "reason": "AA explicitly says it was removed from Intelligence Index v4.0 and retired from active reporting.",
+      "publication_urls": [
+        "https://artificialanalysis.ai/methodology/intelligence-benchmarking"
+      ],
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AA explicitly says it was removed from Intelligence Index v4.0 and retired from active reporting."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "GDPval (OpenAI original)",
+      "disposition": "excluded",
+      "reason": "The HF card confirms the 220-task public dataset, but does not state a headline score; the original results article returned HTTP 403. AA GDPval v2 is registered separately and must never stand in for the original run.",
+      "publication_urls": [
+        "https://huggingface.co/datasets/openai/gdpval",
+        "https://openai.com/index/gdpval/"
+      ],
+      "evidence": [
+        {
+          "url": "https://huggingface.co/datasets/openai/gdpval",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-81081be5bdbe.txt",
+          "sha256": "7aa29fbdd471b8ec2eacc5472153e3d4dc6cd348db541caea3d7c15a553b2b27",
+          "fetched_at": "2026-09-10T21:51:26Z",
+          "excerpt": "The HF card confirms the 220-task public dataset, but does not state a headline score; the original results article returned HTTP 403. AA GDPval v2 is registered separately and must never stand in for the original run."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Fiction.liveBench",
+      "disposition": "excluded",
+      "reason": "The public story API resolves to Fiction.liveBench April 04 2026 by kas and contains methodology and a result-image link. The actual image returned HTTP 403; scoring-axis/unit verification is incomplete, so no registry entry or scores are accepted. The stable story id and publication account are retained for a future permitted check.",
+      "publication_urls": [
+        "https://fiction.live/stories/Fiction-liveBench-Feb-21-2025/oQdzQvKHw8JyXbN87",
+        "https://fiction.live/api/node/oQdzQvKHw8JyXbN87",
+        "https://fiction.live/api/anonkun/chapters/oQdzQvKHw8JyXbN87",
+        "https://x.com/ficlive"
+      ],
+      "evidence": [
+        {
+          "url": "https://fiction.live/api/node/oQdzQvKHw8JyXbN87",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-7c19f2297462.txt",
+          "sha256": "e20f870e31d5be5591a92e4bf3300dffd1b680544c3424a87bf61cecf0d3234f",
+          "fetched_at": "2026-09-10T22:04:09Z",
+          "excerpt": "The public story API resolves to Fiction.liveBench April 04 2026 by kas and contains methodology and a result-image link. The actual image returned HTTP 403; scoring-axis/unit verification is incomplete, so no registry entry or scores are accepted. The stable story id and publication account are retained for a future permitted check."
+        },
+        {
+          "url": "https://fiction.live/api/anonkun/chapters/oQdzQvKHw8JyXbN87",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-3a88d188d87f.txt",
+          "sha256": "a3c937859c6055a183de85ff6e18dc02d4d84e92ddf5f08e7b475141d7cadb1d",
+          "fetched_at": "2026-09-10T22:05:02Z",
+          "excerpt": "The public story API resolves to Fiction.liveBench April 04 2026 by kas and contains methodology and a result-image link. The actual image returned HTTP 403; scoring-axis/unit verification is incomplete, so no registry entry or scores are accepted. The stable story id and publication account are retained for a future permitted check."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Caliper Bench v2",
+      "disposition": "excluded",
+      "reason": "Root page establishes a writing/RP/refusal board, but methodology access was inconsistent (308/403). A queued alternate response is deliberately not used after the access restriction. Scoring verification remains incomplete.",
+      "publication_urls": [
+        "https://caliperbench.com/"
+      ],
+      "evidence": [
+        {
+          "url": "https://caliperbench.com/",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-5757824376dc.txt",
+          "sha256": "3afa76710216d1e9e340ec4c4593a72f7992a9bd9f63f0703698e8eab5eae8fa",
+          "fetched_at": "2026-09-10T21:53:20Z",
+          "excerpt": "Root page establishes a writing/RP/refusal board, but methodology access was inconsistent (308/403). A queued alternate response is deliberately not used after the access restriction. Scoring verification remains incomplete."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "RPBench-Auto (Boson)",
+      "disposition": "excluded",
+      "reason": "README establishes the harness and names leaderboard.csv and the public website. Both website URLs returned HTTP 308 and the proposed raw CSV returned 404; the actual publication and score definition were not verified.",
+      "publication_urls": [
+        "https://boson.ai/rpbench/",
+        "https://github.com/boson-ai/RPBench-Auto"
+      ],
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/boson-ai/RPBench-Auto/main/README.md",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-a6bb29106f1b.txt",
+          "sha256": "d31a815c5d885c1dbc3e251241f1bb46ea3681208ac2cd08171bf1c5e29af995",
+          "fetched_at": "2026-09-10T21:53:14Z",
+          "excerpt": "README establishes the harness and names leaderboard.csv and the public website. Both website URLs returned HTTP 308 and the proposed raw CSV returned 404; the actual publication and score definition were not verified."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "MathArena",
+      "disposition": "excluded",
+      "reason": "Source HTML was captured before the robots audit; robots.txt returned HTTP 308 and policy was not established. Excluded until a permitted source route is verified.",
+      "publication_urls": [
+        "https://matharena.ai/"
+      ],
+      "evidence": [
+        {
+          "url": "https://matharena.ai/",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-631abdcd0294.txt",
+          "sha256": "4c997a9c2eff578d6a09c5f2c27210c8e773762196f8758afe41b82dd9ce6761",
+          "fetched_at": "2026-09-10T21:49:10Z",
+          "excerpt": "Source HTML was captured before the robots audit; robots.txt returned HTTP 308 and policy was not established. Excluded until a permitted source route is verified."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "OTIS / OTISS coding harness",
+      "disposition": "excluded",
+      "reason": "Grok supplied a lead, not proof of a coding benchmark. runotiss.com/about.html and /method.html returned 503. Epoch’s OTIS Mock AIME 2024-2025 is a verified mathematical benchmark and is registered under its actual identity.",
+      "publication_urls": [
+        "https://runotiss.com/about.html",
+        "https://runotiss.com/method.html"
+      ],
+      "evidence": [],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Fabio Akita LLM Benchmark V4",
+      "disposition": "excluded",
+      "reason": "Observed as an X search lead, but the guessed repository returned 404. No scoring or publication recipe was verified; do not substitute Aider results.",
+      "publication_urls": [
+        "https://x.com/AkitaOnRails",
+        "https://github.com/akitaonrails/llm-benchmark"
+      ],
+      "evidence": [],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Grok-only generic boards and names",
+      "disposition": "excluded",
+      "reason": "Unspecified writing/slop/RP, long-context homebrew and uncensored-willingness leads without a verified maintainer publication were not promoted to registry entries. Grok answers are retained as discovery evidence, not as sources for existence or scoring.",
+      "publication_urls": [
+        "https://x.com/i/grok?conversation=2098166129885954448"
+      ],
+      "evidence": [],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "Duplicate AA / official implementations",
+      "disposition": "deduplicated",
+      "reason": "Omniscience, MLCR-AA and ITBench-AA worker drafts duplicated accepted AA entries; GPQA is represented by the verified AA Diamond implementation. Official HLE, SciCode and IFBench protocols that were verified are separately registered; no AA headline is copied to another harness.",
+      "publication_urls": [
+        "https://artificialanalysis.ai/methodology/intelligence-benchmarking"
+      ],
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "Omniscience, MLCR-AA and ITBench-AA worker drafts duplicated accepted AA entries; GPQA is represented by the verified AA Diamond implementation. Official HLE, SciCode and IFBench protocols that were verified are separately registered; no AA headline is copied to another harness."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "UGI political-lean and content-frequency columns",
+      "disposition": "non-benchmark",
+      "reason": "Political coordinates and keyword/content frequencies are descriptive outputs, not benchmark quality scores; the UGI, Willingness, NatInt and Writing headline columns are separately registered.",
+      "publication_urls": [
+        "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py"
+      ],
+      "evidence": [
+        {
+          "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/app.py",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-e399fbd15e57.txt",
+          "sha256": "dc6f43c6140c93d0479085681ed94f054c829db8f03f48808b362eee0d3678bd",
+          "fetched_at": "2026-09-10T22:01:49Z",
+          "excerpt": "Political coordinates and keyword/content frequencies are descriptive outputs, not benchmark quality scores; the UGI, Willingness, NatInt and Writing headline columns are separately registered."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    },
+    {
+      "candidate": "AA gdpvalNormalized / briefcaseTotalCost / indexCompute / timescaleData / auxiliary breakdowns",
+      "disposition": "non-benchmark",
+      "reason": "gdpvalNormalized is a derived index input; briefcaseTotalCost is cost; timescaleData is speed/latency telemetry; gdpvalBreakdown and indexCompute were absent. Raw values and nulls are preserved. Omniscience breakdown metrics remain subordinate; briefcaseBreakdown.overall.elo is the mapped headline. These are not additional benchmark entries.",
+      "publication_urls": [
+        "https://artificialanalysis.ai/models/gpt-5-6-sol"
+      ],
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.txt",
+          "sha256": "b0408dce73cec11404c3a66ec0b5e13acd162d16d22692cc99770788121b5ab4",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "gdpvalNormalized is a derived index input; briefcaseTotalCost is cost; timescaleData is speed/latency telemetry; gdpvalBreakdown and indexCompute were absent. Raw values and nulls are preserved. Omniscience breakdown metrics remain subordinate; briefcaseBreakdown.overall.elo is the mapped headline. These are not additional benchmark entries."
+        }
+      ],
+      "last_checked": "2026-09-10"
+    }
+  ]
+}

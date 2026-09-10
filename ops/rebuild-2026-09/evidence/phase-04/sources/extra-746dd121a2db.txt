@@ -1,0 +1,220 @@
+OTIS Mock AIME 2024-2025 | Epoch AI
+Latest
+Our work
+Featured
+Trends & statistics
+Data explorers
+Capabilities & Benchmarking
+Publications
+Papers & reports
+Data Insights
+Newsletter
+Podcast
+All Publications
+Data explorers
+Capabilities
+Models
+Data centers
+Chip owners
+Companies
+Polling on AI use
+All Data Explorers
+Our benchmarks
+Epoch Capabilities Index
+MirrorCode
+FrontierMath: Open problems
+EBR-bench
+Topics
+AI progress
+Scaling
+Software progress
+Open models
+Capabilities & benchmarks
+Math
+Industry
+Leading companies
+Finances
+Geopolitics
+Infrastructure
+Chips
+Data centers
+Energy
+Impacts
+Adoption & use
+Economic impact
+Future of AI
+About
+Who we are
+About
+Team
+Transparency
+Engage with us
+Careers
+Press
+Consultations
+Donate
+Contact
+Latest
+Our work
+Featured
+Trends & statistics
+Data explorers
+Capabilities & Benchmarking
+Publications
+Papers & reports
+Data Insights
+Newsletter
+Podcast
+All Publications
+Data explorers
+Capabilities
+Models
+Data centers
+Chip owners
+Companies
+Polling on AI use
+All Data Explorers
+Our benchmarks
+Epoch Capabilities Index
+MirrorCode
+FrontierMath: Open problems
+EBR-bench
+Navigate by topic
+AI progress
+Scaling
+Software progress
+Open models
+Capabilities & benchmarks
+Math
+Industry
+Leading companies
+Finances
+Geopolitics
+Infrastructure
+Chips
+Data centers
+Energy
+Impacts
+Adoption & use
+Economic impact
+Future of AI
+About
+Who we are
+About
+Team
+Transparency
+Engage with us
+Careers
+Press
+Consultations
+Donate
+Contact
+Overview
+Epoch Capabilities Index
+Models
+Benchmarks
+Data
+About
+Back to benchmarks
+OTIS Mock AIME 2024-2025
+45 competition-style math problems from OTIS, harder than MATH Level 5 but easier than FrontierMath.
+About
+Methodology
+OTIS Mock AIME 2024-2025
+Mock AIME 2024-2025 is a collection of problems from the
+OTIS Mock AIME
+exams from 2024 and 2025. The problems were written by students from the
+Olympiad Training for Individual Study (OTIS)
+program. The OTIS Mock AIME is an annual 3-hour exam consisting of 15 problems whose answers are integers between 0 and 999. As the name suggests, it is an unofficial exam intended to emulate the American Invitational Mathematics Exam.
+The dataset contains 45 problems from 3 exams:
+15 problems from
+Mock AIME 2024
+15 problems from
+Mock AIME 2025 (I)
+15 problems from
+Mock AIME 2025 (II)
+These problems are harder than problems in MATH Level 5, but easier than the problems in
+FrontierMath
+.
+Methodology
+For Mock AIME, we recommend using the log viewer as the best way to understand the evaluation settings (e.g.
+click here
+for
+o3-mini-2025-01-31
+).
+We use the following prompt:
+Please solve this AIME problem step by step. The answer is an integer ranging from
+000 to 999, inclusive.
+{question}
+Remember to show your work clearly and end with ‘ANSWER: X’ where X is your final numerical answer.
+For the 3 questions among 45 which contain an image, we did not include the image as part of the input (this way all models are exposed to the same input, including those who don’t support images). However, we do include the TikZ or Asymptote code that generates the image as part of the input.
+We initially used a model-based scorer that looked at the model’s submission and the true answer (which must be an integer between 0 and 999 inclusive), and returns whether the model’s final answer is correct. The model can still receive points for the question if its answer is not of the form “ANSWER: $ANSWER”, as long as the scorer model accepts it. While this worked in most cases, we noticed some idiosyncracies in the scorer model, such as a tendency to grade blank answers as correct. In September of 2025, we switched to a model-based answer extractor, which is not given the correct answer and is only tasked with extracting the model’s final answer. This is then compared for an exact match in the answer key.
+Grok 4
+For
+grok-4-0709
+, we experienced timeouts and network errors using the API in July 2025.
+As a result, as of July 2025, we evaluated Grok 4 using specific scoring rules:
+FrontierMath-2025-02-28-Private was evaluated using our standard settings. The record ID is gda5UeWrA8HcbDCRuLJ56H. We used the streaming API.  1/290 was not scored due to the server not sending any response. (We allow up to 1% of samples to fail without being scored).
+For OTIS Mock AIME 2024-2025, GPQA diamond, and FrontierMath-Tier-4-2025-07-01-Private, we used a maximum output length per request of 128,000 tokens (default is no maximum), as recommended by xAI. If any requests failed due to network errors or timeouts, we moved the corresponding sample directly to the scoring phase of the evaluation (which generally causes it be be marked as incorrect). This was due to the highly time-sensitive nature of the evaluations.
+Benchmark
+Accuracy
+Samples with API errors
+Run ID
+OTIS Mock AIME 2024-2025
+84% (±5%)
+4 out of 45*8=360 (1%)
+cvTPRDCM38zSTn9Y3MUb9d
+GPQA diamond
+87% (±2%)
+7 out of 198 × 8 = 1584 (0.4%)
+A85Zfq2qguE4X9xXBweBHP
+FrontierMath-Tier-4-2025-07-01-Private
+2% (±2%)
+8 out of 48 (16%)
+QxtNUmV2L34UyrySmBLTbv
+xAI compensated us for this evaluation and provided compute credits. We signed no NDA and maintained complete editorial independence: we publish all results regardless of performance.
+The code used in our implementation can be found
+here
+.
+Investigating the trajectory of AI for the benefit of society
+Get the latest from Epoch AI in your inbox
+Subscribe
+Our Work
+Latest
+AI Trends & Statistics
+Publications
+Data Insights
+Newsletter: Gradient Updates
+Podcast
+Data on AI
+Models
+AI Data Centers
+Hardware
+Companies
+Chip Sales
+Polling
+Benchmarking
+Capabilities & Benchmarking
+FrontierMath
+Company
+About
+Team
+Consultations
+Transparency
+Donate
+Careers
+© 2026 Epoch AI
+Privacy Policy
+Cookie Policy
+Designed by And—Now
+Feedback
+Feedback
+Have a question? Noticed something wrong? Let us know.
+Message
+If you would like a reply, please include your name and email address.
+Name
+Email address
+Cancel
+Submit
+OTIS Mock AIME 2024-2025
+45 competition-style math problems from OTIS, harder than MATH Level 5 but easier than FrontierMath.

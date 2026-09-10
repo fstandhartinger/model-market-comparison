@@ -1,0 +1,194 @@
+"use strict";
+// @ts-nocheck
+// Global variables for data
+const versions = ["v1_Semi_Private", "v2_Semi_Private", "v3_Semi_Private"];
+// let versions = ['v1_Public_Eval', 'v2_Public_Eval'];
+// let versions = ['v1_Private_Eval', 'v2_Private_Eval'];
+const modelGroups = {
+    v1_Semi_Private: [
+        "Claude_3_7_thinking",
+        "o1",
+        "o1-pro",
+        "o3-mini",
+        "o3",
+        "o4-mini",
+        "gpt-4.1",
+        "gemini-2-5-flash-preview-05-20-thinking",
+        "claude-sonnet-4-20250514-thinking",
+        "claude-opus-4-20250514-thinking",
+        "o3-pro",
+        "gemini-2-5-pro-2025-06-17-thinking",
+        "gemini-3",
+        "gpt-5-reasoning",
+        "gpt-5-1-reasoning",
+        "gpt-5-mini-reasoning",
+        "gpt-5-nano-reasoning",
+        "claude-sonnet-4-5-20250929",
+        "claude-haiku-4-5-20251001",
+        "opus-4-5-thinking",
+        "gpt-5-2-2025-12-11-thinking",
+        "gpt-5-2-pro-2025-12-11-thinking",
+        "gemini-3-flash-preview-thinking",
+        "claude-opus-4-6-thinking",
+        "claude-opus-4-8",
+        "claude-sonnet-4-6",
+        "gpt-5-4",
+        "gpt-5-4-mini-reasoning",
+        "gpt-5-4-nano-reasoning",
+        "grok-4.20-beta-0309b-reasoning",
+        "gemini-3-1-pro-preview",
+        "kimi-k2.5",
+        "claude-4-7",
+        "gpt-5-5-2026-04-22-thinking",
+        "gpt-5-5-pro-2026-04-23-thinking",
+        "gemini-3-5-flash",
+        "openai-gpt-5-6-sol",
+        "openai-gpt-5-6-terra",
+        "openai-gpt-5-6-luna",
+        "xai-grok-4-5",
+        "anthropic-claude-opus-5",
+        "thinky-inkling-small",
+        "moonshot-kimi-k3",
+        "anthropic-claude-fable-5",
+        "deepseek-v4-flash-0731",
+        "openai-gpt-5-6-luna-2026-07-30",
+        "gemini-3-5-flash-lite",
+        "gemini-3-6-flash",
+        "xai-grok-4-6",
+        "google-gemini-3-7-flash",
+        "deepseek-v4-pro-0813",
+        "anthropic-claude-fable-5-1",
+        "openai-gpt-6-astra"
+    ],
+    v2_Semi_Private: [
+        "Claude_3_7_thinking",
+        "o1",
+        "o1-pro",
+        "o3-mini",
+        "o3",
+        "o4-mini",
+        "gpt-4.1",
+        "gemini-2-5-flash-preview-05-20-thinking",
+        "claude-sonnet-4-20250514-thinking",
+        "claude-opus-4-20250514-thinking",
+        "o3-pro",
+        "gemini-2-5-pro-2025-06-17-thinking",
+        "gemini-3",
+        "gpt-5-reasoning",
+        "gpt-5-1-reasoning",
+        "gpt-5-mini-reasoning",
+        "gpt-5-nano-reasoning",
+        "claude-sonnet-4-5-20250929",
+        "claude-haiku-4-5-20251001",
+        "opus-4-5-thinking",
+        "gpt-5-2-2025-12-11-thinking",
+        "gpt-5-2-pro-2025-12-11-thinking",
+        "gemini-3-flash-preview-thinking",
+        "claude-opus-4-6-thinking",
+        "claude-opus-4-8",
+        "claude-sonnet-4-6",
+        "gpt-5-4",
+        "gpt-5-4-mini-reasoning",
+        "gpt-5-4-nano-reasoning",
+        "grok-4.20-beta-0309b-reasoning",
+        "gemini-3-1-pro-preview",
+        "kimi-k2.5",
+        "claude-4-7",
+        "gpt-5-5-2026-04-22-thinking",
+        "gpt-5-5-pro-2026-04-23-thinking",
+        "gemini-3-5-flash",
+        "openai-gpt-5-6-sol",
+        "openai-gpt-5-6-terra",
+        "openai-gpt-5-6-luna",
+        "xai-grok-4-5",
+        "anthropic-claude-opus-5",
+        "thinky-inkling-small",
+        "moonshot-kimi-k3",
+        "anthropic-claude-fable-5",
+        "deepseek-v4-flash-0731",
+        "openai-gpt-5-6-luna-2026-07-30",
+        "gemini-3-5-flash-lite",
+        "gemini-3-6-flash",
+        "xai-grok-4-6",
+        "google-gemini-3-7-flash",
+        "deepseek-v4-pro-0813",
+        "anthropic-claude-fable-5-1",
+        "openai-gpt-6-astra"
+    ],
+    v3_Semi_Private: [
+        "openai-gpt-5-6-sol",
+        "openai-gpt-5-6-terra",
+        "openai-gpt-5-6-luna",
+        "anthropic-claude-opus-5",
+        "openai-gpt-6-astra",
+        "openai-gpt-6-astra-provider-adapter"
+    ],
+};
+let datasets = [];
+let models = [];
+let providers = [];
+let evaluations = [];
+// Object versions with id as key
+let datasetsById = {};
+let modelsById = {};
+let providersById = {};
+const points_to_show_on_table = ["gemini-2.5-pro-exp-03-25"];
+// In-memory cache of per-version denormalized leaderboard files.
+// Keyed by major version ("v1" | "v2" | "v3"); value is the evaluations array.
+const versionDataCache = {};
+// Fetch a single version's pre-joined leaderboard data from
+// /media/data/leaderboard/{version}.json. Cached after first fetch.
+// Returns the evaluations array for that version.
+async function loadVersionData(majorVersion) {
+    if (versionDataCache[majorVersion]) {
+        return versionDataCache[majorVersion];
+    }
+    try {
+        const payload = await d3.json(`/media/data/leaderboard/${majorVersion}.json`);
+        const rows = payload && Array.isArray(payload.evaluations)
+            ? payload.evaluations
+            : [];
+        versionDataCache[majorVersion] = rows;
+        return rows;
+    }
+    catch (error) {
+        console.error(`Error loading ${majorVersion}.json:`, error);
+        return [];
+    }
+}
+// Load all JSON data files
+async function loadAllData() {
+    try {
+        // Load all data files in parallel
+        const [datasetsData, modelsData, providersData, evaluationsData] = await Promise.all([
+            d3.json("/media/data/datasets.json"),
+            d3.json("/media/data/models.json"),
+            d3.json("/media/data/providers.json"),
+            d3.json("/media/data/evaluations.json"),
+        ]);
+        // Assign to global variables
+        datasets = datasetsData;
+        models = modelsData;
+        providers = providersData;
+        evaluations = evaluationsData.filter((d) => {
+            return versions.includes(d.datasetId);
+        });
+        // Create object versions with id as key
+        datasetsById = createObjectById(datasets);
+        modelsById = createObjectById(models);
+        providersById = createObjectById(providers);
+        // Return the evaluations data directly as tidyData
+        return evaluations;
+    }
+    catch (error) {
+        console.error("Error loading data:", error);
+        return [];
+    }
+}
+// Helper function to convert array to object with id as key
+function createObjectById(array) {
+    return array.reduce((obj, item) => {
+        obj[item.id] = item;
+        return obj;
+    }, {});
+}

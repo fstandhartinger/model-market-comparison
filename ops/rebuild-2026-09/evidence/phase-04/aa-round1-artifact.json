@@ -1,0 +1,1886 @@
+{
+  "schema_version": 1,
+  "verified_at": "2026-09-10",
+  "entries": [
+    {
+      "id": "aa-aime::2025",
+      "name": "AIME 2025 (AA)",
+      "version": "2025",
+      "version_status": "published",
+      "family": "aa-aime",
+      "category": "Math",
+      "one_sentence_description": "Advanced mathematical problem solving on AIME I and II 2025.",
+      "scoring": {
+        "metric": "Pass@1 correctness averaged over ten repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: aime25. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field aime25; preserve source units and nulls.",
+        "version_guard": "Verify the published version 2025 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AIME 2025 (American Invitational Mathematics Examination)\nNote:\nRetired from our active reporting; no longer part of\nArtificial Analysis Intelligence Index v4.3\n.\nDescription:\nAdvanced mathematical problem-solving dataset from the 2025 American Invitational Mathematics Examination.\nDataset:\n2025 AIME I\n&\n2025 AIME II\nKey details:\nStrict numerical answer format (integer 1\u2013999)\nPass@1 scoring with 10 repeats per question\nScript-based grading with SymPy normalization + equality checker LLM as backup\nMMLU-Pro (Multi-Task Language Understanding Benchmark, Pro version)\nNote:\nRemoved from the Intelligence Index in v4.0. Retired from our active reporting.\nDescription:\nComprehensive evaluation of advanced knowledge across domains, adapted from original MMLU\nPaper:\nhttps://arxiv.org/abs/2406.01574\nDataset:\nhttps://huggingface.co/datasets/TIGER-Lab/MMLU-Pro\nKey details:\n10 option multiple choice format\nRegex-based answer extraction with pass@1 scoring (prompt and regex below)\nLiveCodeBench\nNote:\nRemoved from the Intelligence Index in v4.0. Retired from our active reporting.\nDescription:\nPython programming to solve programming scenarios derived from LeetCode, AtCoder, and Codeforces\nPaper:\nhttps://arxiv.org/abs/2403.07974\nDataset:\nhttps://huggingface.co/datasets/livecodebench/code_generation_lite\nKey details:\nPass@1 evaluation criteria\nWe do not apply LiveCodeBench custom system prompts\nPrompt Templates, Answer Extraction and Evaluation\nMultiple Choice Questions (GPQA, MMLU-Pro)\nWe prompt multi-choice evals with the following instruction prompt. This prompt was independently developed "
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"aime25\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-analystagent::snapshot-2026-09-10",
+      "name": "AA-AnalystAgent",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-analystagent",
+      "category": "Agentic",
+      "one_sentence_description": "Tests analyst tasks using agentic Python execution across fourteen domains.",
+      "scoring": {
+        "metric": "pass^5: task correct in all five runs, with numeric checks and LLM judging",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: analystAgent. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field analystAgent; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AA-AnalystAgent\nDescription:\nAA-AnalystAgent is Artificial Analysis' end-to-end data analysis benchmark. An agent answers quantitative questions across business and scientific domains, working from the supplied source spreadsheets and documents as primary inputs and executing Python in a sandboxed code-execution environment. AA-AnalystAgent is reported as a standalone leaderboard and is not a component of the Artificial Analysis Intelligence Index.\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nDataset:\nAA-AnalystAgent is a privately held benchmark; the question set, reference answers, and source files are not publicly released, to limit contamination risk\n80 quantitative questions across 14 business and scientific domains, including environmental reporting, trade and commodity statistics, healthcare expenditure reports, hydrology and weather data, government appropriations, energy cost models, financial models, and project schedules\nQuestions span five functional workflow archetypes covering the spread of real analyst work: source lookup and diagnosis, filter and total, ratios, trends and sensitivities, P&L modeling, and cash, balance-sheet and valuation modeling\nEach question is paired with a folder of reference spreadsheets and documents (xlsx, docx) that is uploaded into the agent's workspace. A human-authored reference answer is held out from the agent and used by the grader at scoring time\nReference answers are independently validated by Artificial Analysis\nImplementation:\nEach question is run with 5 independent repeats. The leaderboard score is pass^5 \u2014"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"analystAgent\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-apex-agents::snapshot-2026-09-10",
+      "name": "APEX-Agents-AA",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-apex-agents",
+      "category": "Agentic",
+      "one_sentence_description": "Tests professional-service tasks that require agents to produce locally graded deliverables.",
+      "scoring": {
+        "metric": "Rubric-based local file grading, pass@1 across three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: apexAgents. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field apexAgents; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "APEX-Agents-AA\nDescription:\nAPEX-Agents-AA is Artificial Analysis' independent implementation of Mercor's\nAPEX-Agents\nbenchmark. It evaluates long-horizon, cross-application agent work in professional services environments spanning investment banking, management consulting, and law\nPaper:\nhttps://arxiv.org/abs/2601.14242\nDataset:\nWe base our evaluation on the public APEX-Agents dataset from\nhttps://huggingface.co/datasets/mercor/apex-agents\nWe evaluate 452 tasks from the public 480-task release (excluding Investment Banking Worlds 244 and 246, which have external runtime dependencies)\nImplementation:\nEach task is run with 3 repeats and scored using pass@1 - a repeat passes only if all rubric items are satisfied, and the leaderboard score is the average pass rate across repeats\nAll models are run using our open source agentic harness,\nStirrup\n, with a 200-turn cap per task\nAgents operate inside the\nArchipelago environment\nand access workplace tools through MCP servers exposed by its gateway\nThe agent starts with a small meta-tool toolbelt and must explicitly manage MCP-backed tools using:\nList Tools\n\u2013 Shows which tools are currently available\nInspect Tool\n\u2013 Inspects a tool before adding it\nAdd Tool\n\u2013 Makes an MCP-backed tool available to the agent\nRemove Tool\n\u2013 Removes tools that are no longer needed\nThe agent also receives:\nTodo Write\n- Creates or updates the agent's todo list. It can either replace the full list or merge updates by todo ID, and all todos must be completed or cancelled before final submission is accepted\nFinish\n- Submits the agent's final answer together wi"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"apexAgents\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-automationbench::1.0.6",
+      "name": "AutomationBench-AA",
+      "version": "1.0.6",
+      "version_status": "published",
+      "family": "aa-automationbench",
+      "category": "Tool-use",
+      "one_sentence_description": "Tests multi-app SaaS workflows through REST tools on a held-out AutomationBench split.",
+      "scoring": {
+        "metric": "Mean fraction of objectives completed; any guardrail violation or task error gives zero",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: automationBenchPartialScore. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field automationBenchPartialScore; preserve source units and nulls.",
+        "version_guard": "Verify the published version 1.0.6 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AutomationBench-AA\nDescription:\nAutomationBench-AA is Artificial Analysis' run of Zapier's\nAutomationBench\n. It tests whether models can complete realistic SaaS workflows that span multiple simulated business apps, using REST APIs as the tool interface.\nPaper:\nhttps://arxiv.org/abs/2604.18934\nLeaderboard:\nhttps://zapier.com/benchmarks\nRepository:\nhttps://github.com/zapier/AutomationBench\nDataset:\nWe evaluate a private 657-task held-out split from AutomationBench dataset version 1.0.6\nThe tasks cover six business domains: Finance, HR, Marketing, Operations, Sales, and Support\nThey run in simulated app environments that include products such as Gmail, Google Sheets, Slack, Salesforce, Zendesk, Jira, and HubSpot\nImplementation:\nWe run each task once in the AutomationBench multi-turn environment, with a 50-turn cap. Models use the API toolset, discovering and calling the REST endpoints they need through structured tool calls\nWe classify each AutomationBench assertion as either an objective, which must be made true by the agent, or a guardrail, which initially passes and must not be broken by the agent\nObjectives and guardrails are graded using programmatic checks on the final environment state. AutomationBench-AA does not use a separate LLM judge for grading\nFor the headline score, a task receives 0 if the model violates any guardrail. If no guardrails are violated, the task receives the percentage of objectives the model completed. Errored tasks also score 0\nEach task belongs to one business domain, so domain breakdowns are mutually exclusive subsets of the task set. App break"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"automationBenchPartialScore\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-briefcase::snapshot-2026-09-10",
+      "name": "AA-Briefcase",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-briefcase",
+      "category": "Agentic",
+      "one_sentence_description": "Tests multi-week professional knowledge-work projects with linked tasks and large source collections.",
+      "scoring": {
+        "metric": "Combined Elo from rubric task success, analytical quality and presentation comparisons",
+        "unit": "Elo",
+        "range": [
+          null,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: briefcaseBreakdown.overall.elo. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field briefcaseBreakdown.overall.elo; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AA-Briefcase\nStatus:\nIncluded in\nArtificial Analysis Intelligence Index v4.3\nat 15% weighting.\nDescription:\nAA-Briefcase is a new benchmark for testing models on realistic knowledge work tasks in complex projects built by industry experts. Models are evaluated on multi-week knowledge work projects, each with many linked tasks and thousands of input source files. AA-Briefcase combines rubric and pairwise grading to evaluate verifiable task success, analytical quality, and presentation quality, giving a holistic view of overall agentic capability in knowledge work.\nExample dataset:\nhttps://huggingface.co/datasets/ArtificialAnalysis/AA-Briefcase-Lite\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nImplementation:\nEach AA-Briefcase scenario is a realistic multi-week business problem, organized as a multi-week workflow that the agent works through in sequence, with 2-5 tasks per week. Although tasks within a scenario share files and context across weeks, models currently complete each task in an independent run, without carrying over their own prior submissions. The agent receives the task description and accessible source files, then produces final deliverable files without live interaction or iterative feedback during execution.\nScenario source pools include shared files and week-specific files, mixing real, augmented, and synthetic materials. Source files are designed to include realistic professional artifacts such as Slack exports, spreadsheets, PDFs, interview transcripts, market research, standards documents, app-store pages, board materials, emails, and othe"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"briefcaseBreakdown\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-critpt::snapshot-2026-09-10",
+      "name": "CritPt (AA)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-critpt",
+      "category": "Science",
+      "one_sentence_description": "Tests research-level physics reasoning with Python, symbolic and numerical answers.",
+      "scoring": {
+        "metric": "Official grading server correctness, pass@1 averaged over five repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: critpt. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field critpt; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "CritPt\nDescription:\nResearch-level physics reasoning benchmark with unpublished, frontier physics problems spanning a wide range of subfields\nPaper:\nhttps://arxiv.org/abs/2509.26574\nWebsite:\nhttps://critpt.com/\nRepository:\nhttps://github.com/CritPt-Benchmark/CritPt\nDataset:\nhttps://huggingface.co/datasets/CritPt-Benchmark/CritPt\nImplementation:\nWe implement the 'challenge' level components for all 70 test-set challenges (the example challenge is excluded) in collaboration with the CritPt team\nWe run 5 repeats for each question with pass@1 scoring\nThe models are called with a two-step parsing approach, where the first step requests that the model complete the challenge with reasoning, and the second step formats the response into the expected code format for grading (see example prompt for parsing on the CritPt evaluation page)\nToken usage and cost estimates reflect both steps (reasoning and answer parsing)\nAnswer formats include numerical values, symbolic expressions in SymPy, and Python functions (evaluated with test cases)\nThe official CritPt grading server is used to assess all challenge responses for correctness. Grading API access is granted case by case to approved labs and researchers \u2014 email\ncritpt@artificialanalysis.ai\nto request it, and see the\nArtificial Analysis API documentation\nfor details\nAdditional Evaluation Details\nAgents\nHarvey LAB-AA\nDescription:\nHarvey LAB-AA is Artificial Analysis' implementation of Harvey's\nLegal Agent Benchmark (LAB)\n, run on Harvey's dataset of 120 private tasks spanning 24 legal practice areas. For each task the agent reads the cas"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"critpt\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-enterpriseops-gym::snapshot-2026-09-10",
+      "name": "EnterpriseOps-Gym-AA",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-enterpriseops-gym",
+      "category": "Tool-use",
+      "one_sentence_description": "Tests enterprise workflows through MCP tools against resettable application environments.",
+      "scoring": {
+        "metric": "Strict pass@1 success using outcome-based SQL state verifiers",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: enterpriseOpsGym. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field enterpriseOpsGym; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "EnterpriseOps-Gym-AA\nStatus:\nStandalone evaluation (not part of\nArtificial Analysis Intelligence Index v4.3\n)\nDescription:\nEnterpriseOps-Gym-AA is Artificial Analysis' independent implementation of ServiceNow's\nEnterpriseOps-Gym\nbenchmark, which evaluates AI agents on stateful, multi-step planning and tool use across realistic enterprise workflows. Agents operate live enterprise systems through tools and are graded on the final state of the underlying databases rather than on their exact sequence of actions.\nPaper:\nhttps://arxiv.org/abs/2603.13594\nDataset:\nhttps://huggingface.co/datasets/ServiceNow-AI/EnterpriseOps-Gym\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nDomains:\nWe evaluate the benchmark's oracle-mode tasks across all eight enterprise domains: Customer Service Management (CSM), Human Resources (HR), IT Service Management (ITSM), Email, Calendar, Teams, and Drive, plus Hybrid tasks that require orchestrating actions across several of these systems in a single workflow.\nImplementation:\nEach task runs in an isolated, resettable sandbox: the relevant enterprise systems are brought up as standalone gym servers, each exposing its tools over a live Model Context Protocol (MCP) server and backed by a task-specific SQLite database seeded with synthetic data. Every task clones its own database so runs are isolated and reproducible.\nWe run the benchmark in its\noracle tool mode\nonly: the agent is given the set of tools required for the task, isolating planning and execution from tool retrieval. The source dataset's distractor-tool modes are not run.\nAll models"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"enterpriseOpsGym\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-gdp-pdf::snapshot-2026-09-10",
+      "name": "GDP.pdf (AA)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-gdp-pdf",
+      "category": "Long-context",
+      "one_sentence_description": "Tests professional reasoning over long PDFs with AA document preparation and grading.",
+      "scoring": {
+        "metric": "All-pass fraction of attempts where every task criterion passes; five attempts per task",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: gdpPdfAllPass. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field gdpPdfAllPass; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "GDP.pdf\nDescription:\nArtificial Analysis' implementation of\nSurge AI's GDP.pdf\n, a benchmark that tests whether models can reason over long, real-world professional documents and satisfy task-specific criteria.\nPaper:\nhttps://arxiv.org/abs/2607.11192\nDataset:\nsurgeai/GDP.pdf\nEvaluation set:\n100 tasks across ten professional domains, grounded in 4,592 PDF pages and graded against 1,275 criteria. We attempt every task five times, so each model has a fixed denominator of 500 attempts.\nDocument preparation and delivery:\nWe prepare each source PDF with\nLiteParse\n, including OCR where required. Every model receives the complete extracted text of every page. Models with image input also receive an ordered image of each page. We render page images at 150 DPI and reduce them, to a 72 DPI minimum, when model context or provider payload limits require it. We may also convert opaque pages from PNG to JPEG. Where an endpoint caps how many images one request may carry, we combine pages into composite images, two pages per image first and up to four where the cap is tighter, each cell labeled with its page number. Past four pages per image, images cover the leading pages only; the remaining pages remain in the extracted text. When either applies, the prompt tells the model that page images are composites and the page number where image coverage stops. Models answer in a single turn without browsing or tools.\nUnlike the Surge AI implementation, we do not use API document input features. These are opaque to the user and sit above the model layer, so they can introduce variation from API pro"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"gdpPdfAllPass\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-gdpval::2",
+      "name": "GDPval-AA v2",
+      "version": "2",
+      "version_status": "published",
+      "family": "aa-gdpval",
+      "category": "Agentic",
+      "one_sentence_description": "Tests professional knowledge-work deliverables across occupations using AA's Stirrup harness.",
+      "scoring": {
+        "metric": "Bradley-Terry Elo from pairwise judge-panel comparisons, human experts anchored at 1000",
+        "unit": "Elo",
+        "range": [
+          null,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: gdpval. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field gdpval; preserve source units and nulls.",
+        "version_guard": "Verify the published version 2 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "GDPval-AA v2\nDescription:\nGDPval-AA v2 is Artificial Analysis' evaluation framework for OpenAI's GDPval dataset. It assesses language models' capabilities on economically valuable tasks, covering 44 occupations across key sectors contributing to GDP in the United States.\nChanges from GDPval-AA v1:\nGDPval-AA v2 is a minor upgrade to the original GDPval-AA methodology used in Intelligence Index v4.0. It incorporates:\nAn upgraded sandbox with new and expanded dependencies, plus fixes to minor environment issues and to prompt clarity and consistency\nElo scores re-baselined to human expert performance at 1000\nA panel of three frontier LLM judges from leading labs, replacing a single judge\nTurn limits expanded to 250 turns to allow for even longer-horizon agent trajectories, and the ability for models to exit early where they don't believe they can complete the task\nPaper:\nhttps://arxiv.org/abs/2510.04374\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nDataset:\nWe base our evaluation on the public gold OpenAI GDPval dataset from\nhttps://huggingface.co/datasets/openai/gdpval\nSome Microsoft Office files in the dataset had missing metadata parts or malformed relationship entries that prevented LibreOffice from opening them. We added the minimal missing metadata and fixed the malformed entries to ensure compatibility. Document body, slide content, and layout were not changed.\nImplementation:\nThis evaluation comprises two stages:\nTask Submission\n\u2013 Models are given a task and required to produce one or more files.\nPairwise Grading\n\u2013 A judge sampled from a panel of three fr"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"gdpval\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-gpqa-diamond::snapshot-2026-09-10",
+      "name": "GPQA Diamond (AA)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-gpqa-diamond",
+      "category": "Science",
+      "one_sentence_description": "Tests graduate-level biology, physics and chemistry knowledge on the Diamond subset.",
+      "scoring": {
+        "metric": "Multiple-choice pass@1 correctness on the 198-question Diamond subset",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: gpqa. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field gpqa; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "GPQA Diamond (Graduate-Level Google-Proof Q&A Benchmark)\nStatus:\nRemoved from the Artificial Analysis Intelligence Index in v4.2, having been a constituent up to and including v4.1.1. We still run it on new model releases and report it as a standalone evaluation.\nDescription:\nScientific knowledge and reasoning benchmark\nSubset:\nDiamond subset (198 questions) selected for maximum accuracy and discriminative power\nPaper:\nhttps://arxiv.org/abs/2311.12022\nDataset:\nhttps://github.com/openai/simple-evals/blob/main/gpqa_eval.py\nKey Details:\n198 questions covering biology, physics and chemistry - we test the GPQA Diamond subset of the full GPQA dataset (448 questions total), which was defined by the original authors as the highest quality subset, where both experts answer correctly and the majority of non-experts answer incorrectly\n4 option multiple choice format\nRegex-based answer extraction with pass@1 scoring (prompt and regex below)\n\ud835\udf0f\u00b3-Banking\nStatus:\nRemoved from the Artificial Analysis Intelligence Index in v4.3, having been a constituent up to and including v4.2. We still run it on new model releases and report it as a standalone evaluation.\nDescription:\nFintech customer-support domain of the \ud835\udf0f-Knowledge framework developed by Sierra, evaluating agents that must coordinate retrieval from a large unstructured knowledge base with multi-step tool-mediated account changes\nPaper:\nhttps://arxiv.org/abs/2603.04370\nBlog:\nsierra.ai/blog/bench-advancing-agent-benchmarking-to-knowledge-and-voice\nDataset:\nhttps://github.com/sierra-research/tau2-bench\nImplementation:\nAgents handle ~700 i"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"gpqa\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-harvey-lab::snapshot-2026-09-10",
+      "name": "Harvey LAB-AA",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-harvey-lab",
+      "category": "Agentic",
+      "one_sentence_description": "Tests legal-work deliverables across practice areas on Harvey's private task set.",
+      "scoring": {
+        "metric": "Rubric criterion grading by a single LLM judge, pass@1",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: harveyLab. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field harveyLab; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "Harvey LAB-AA\nDescription:\nHarvey LAB-AA is Artificial Analysis' implementation of Harvey's\nLegal Agent Benchmark (LAB)\n, run on Harvey's dataset of 120 private tasks spanning 24 legal practice areas. For each task the agent reads the case documents in a sandbox and produces legal deliverables - memos, disclosure schedules, deposition summaries, redlines, and similar work products. Deliverables are graded criterion-by-criterion against a task-specific rubric of atomic, binary pass/fail criteria by a single LLM judge, giving a holistic view of agentic capability on real-world legal work.\nExample dataset:\nThe five public example tasks shown in the explorer are drawn from Harvey's public examples at\nhttps://github.com/harveyai/harvey-labs\n. The headline numbers are produced on Harvey's private 120-task dataset, which is not publicly released.\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nImplementation:\nEach task is a self-contained legal-work assignment in one of 24 practice areas. The agent receives the task instructions, a set of read-only input documents, and the exact filenames of the deliverables it must produce, then works through the task in a single run without live interaction or iterative feedback during execution.\nInput documents are the task's case materials - contracts, agreements, memos, transcripts, and other legal records - staged read-only in the sandbox. The agent copies them into a working folder, reads them with the document-processing tools available in the sandbox, and writes its deliverables (typically .docx, .xlsx, or .md) directly into "
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"harveyLab\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-hle::snapshot-2026-09-10",
+      "name": "Humanity's Last Exam (AA text-only)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-hle",
+      "category": "Knowledge",
+      "one_sentence_description": "Tests expert-level knowledge on AA's text-only Humanity's Last Exam subset.",
+      "scoring": {
+        "metric": "Equality-checker correctness, pass@1; no tool use",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: hle. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field hle; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "HLE (Humanity's Last Exam)\nDescription:\nRecent frontier academic benchmark from the Centre for AI Safety (led by Dan Hendrycks)\nPaper:\nhttps://arxiv.org/abs/2501.14249v2\nDataset:\nhttps://huggingface.co/datasets/cais/hle\nImplementation:\n2,158\ntext-only questions across mathematics, humanities and the natural sciences (from the May 2025 revision which contains 2,500 total questions \u2014 we use the text-only subset for maximum comparability across models)\nWe note that the HLE authors disclose that their dataset curation process involved adversarial selection of questions based on tests with GPT-4o, Gemini 1.5 Pro, Claude 3.5 Sonnet, o1, o1-mini, and o1-preview (latter two for text-only questions only). We therefore discourage direct comparison of these models with models that were not used in the HLE curation process, as the dataset is potentially biased against the models used in the curation process.\nEvaluated with an equality checker LLM prompt adapted from the original HLE paper, using GPT-5.6 Luna (medium), with pass@1 scoring (find prompt below)\nCritPt\nDescription:\nResearch-level physics reasoning benchmark with unpublished, frontier physics problems spanning a wide range of subfields\nPaper:\nhttps://arxiv.org/abs/2509.26574\nWebsite:\nhttps://critpt.com/\nRepository:\nhttps://github.com/CritPt-Benchmark/CritPt\nDataset:\nhttps://huggingface.co/datasets/CritPt-Benchmark/CritPt\nImplementation:\nWe implement the 'challenge' level components for all 70 test-set challenges (the example challenge is excluded) in collaboration with the CritPt team\nWe run 5 repeats for each question with "
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"hle\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-ifbench::snapshot-2026-09-10",
+      "name": "IFBench (AA single-turn)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-ifbench",
+      "category": "Instruction-following",
+      "one_sentence_description": "Tests precise single-turn instructions with deterministic rule checks.",
+      "scoring": {
+        "metric": "Prompt-level loose accuracy averaged over five repeats; multi-turn IFBench excluded",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: ifbench. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field ifbench; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "IFBench\nStatus:\nStandalone evaluation (not part of\nArtificial Analysis Intelligence Index v4.3\n). IFBench was removed from the Intelligence Index in v4.1, but we continue to run it on new model releases.\nDescription:\nA benchmark that evaluates a model's ability to follow precise instructions in a single turn. It tests a wide range of skills, including counting, formatting, and sentence manipulation.\nPaper:\nhttps://arxiv.org/abs/2507.02833\nDataset:\nhttps://huggingface.co/datasets/allenai/IFBench_test\nImplementation:\nUses the single-turn IFBench dataset, which contains 294 questions\nWe run 5 repeats for each question with pass@1 scoring\nWe evaluate responses using the official source code from\nallenai/IFBench\nWe employ the loose evaluation mode to robustly assess instruction-following, which accounts for extraneous text or formatting by checking several variations of the model's output (e.g., with and without the first and last lines, and with asterisks removed)\nOur score represents the prompt level accuracy (average across all questions and repeats)\nWe do not use the multi-turn version of IFBench, which uses a different dataset\nMLCR-AA (Medical Long Context Reasoning)\nStatus:\nStandalone evaluation (not part of\nArtificial Analysis Intelligence Index v4.3\n); a component of the Artificial Analysis Healthcare & Medical Index\nDescription:\nMLCR-AA is Artificial Analysis' evaluation of MLCR (Medical Long Context Reasoning), an open benchmark from Wisedocs that measures how well models reason over long, fragmented medical records, performing the kind of multi-document synthesis clai"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"ifbench\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-itbench::snapshot-2026-09-10",
+      "name": "ITBench-AA",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-itbench",
+      "category": "Agentic",
+      "one_sentence_description": "Tests root-cause diagnosis from offline Kubernetes incident snapshots.",
+      "scoring": {
+        "metric": "LLM-normalized entity matching; average precision at full recall",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: itBenchSre. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field itBenchSre; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "ITBench-AA\nStatus:\nStandalone evaluation (not part of\nArtificial Analysis Intelligence Index v4.3\n)\nDescription:\nITBench-AA is Artificial Analysis' independent implementation of IBM's ITBench benchmark, evaluating AI agents on Site Reliability Engineering (SRE): Kubernetes incident root-cause analysis.\nPaper:\nhttps://arxiv.org/abs/2502.05352\nRepository:\nhttps://huggingface.co/datasets/ArtificialAnalysis/ITBench-AA\nAgent harness:\nhttps://github.com/ArtificialAnalysis/Stirrup\nDataset:\nWe evaluate 59 Kubernetes incident tasks: 40 from IBM's public ITBench SRE release and 19 private tasks shared with us by the ITBench team. The headline score is averaged across both splits\nEach task is an offline Kubernetes incident snapshot containing alerts, events, traces, metrics, logs, and application topology, baked into a scenario-specific sandbox and mounted under\n/home/user\nImplementation:\nEach task is run with 3 repeats. The primary score is precision at full recall a repeat receives 0.0 if it misses any ground-truth root-cause entity; otherwise it receives precision over the submitted entities.\nAll models are run using our open-source agentic harness, Stirrup with a 100-turn cap per task. The agent loop informs the language model that its turn limit is approaching during the last 20 turns.\nThe agent is given a single\nrun_shell\ntool to inspect the snapshot, plus a\nfinish\ntool to submit its final answer. It must write a structured JSON diagnosis to\n/home/user/agent_output.json\ncontaining the minimal set of independent root-cause Kubernetes entities responsible for the incident, with re"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"itBenchSre\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-lcr::1.1",
+      "name": "AA-LCR v1.1",
+      "version": "1.1",
+      "version_status": "published",
+      "family": "aa-lcr",
+      "category": "Long-context",
+      "one_sentence_description": "Tests reasoning across multiple long documents with corrected answer keys and grading.",
+      "scoring": {
+        "metric": "Equality-checker pass@1 correctness over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: lcr. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field lcr; preserve source units and nulls.",
+        "version_guard": "Verify the published version 1.1 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AA-LCR v1.1\nDescription:\nEvaluate long context performance through testing reasoning capabilities across multiple long documents (~100k tokens measured using cl100k_base tokenizer)\nChanges from AA-LCR:\nAdds a system prompt to clarify grading instructions, corrects 16 answer keys, and grades with GPT-5.6 Luna (medium). Scores are not directly comparable with v1.0.\nDataset:\nhttps://huggingface.co/datasets/ArtificialAnalysis/AA-LCR\nImplementation:\n100 hard text-based questions spanning 7 categories of documents (Company Reports, Industry Reports, Government Consultations, Academia, Legal, Marketing Materials, and Survey Reports)\n~100k tokens (measured using cl100k_base tokenizer) of input per question, requiring models to support a minimum 128K context window to score on this benchmark. ~3M total unique input tokens spanning ~230 documents to run the benchmark (output tokens typically vary by model)\nModel responses are evaluated using GPT-5.6 Luna (medium) as an equality checker with pass@1 scoring\nScientific Reasoning\nHLE (Humanity's Last Exam)\nDescription:\nRecent frontier academic benchmark from the Centre for AI Safety (led by Dan Hendrycks)\nPaper:\nhttps://arxiv.org/abs/2501.14249v2\nDataset:\nhttps://huggingface.co/datasets/cais/hle\nImplementation:\n2,158\ntext-only questions across mathematics, humanities and the natural sciences (from the May 2025 revision which contains 2,500 total questions \u2014 we use the text-only subset for maximum comparability across models)\nWe note that the HLE authors disclose that their dataset curation process involved adversarial selection of questi"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"lcr\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-livecodebench::snapshot-2026-09-10",
+      "name": "LiveCodeBench (AA historical field)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-livecodebench",
+      "category": "Coding",
+      "one_sentence_description": "Tests Python solutions to contest-programming tasks under AA's historical implementation.",
+      "scoring": {
+        "metric": "Pass@1 correctness; exact contest date window is not identified in the retained field",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: livecodebench. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field livecodebench; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity. Historical task window is not specified; do not publish a comparable score ranking until resolved.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "LiveCodeBench\nNote:\nRemoved from the Intelligence Index in v4.0. Retired from our active reporting.\nDescription:\nPython programming to solve programming scenarios derived from LeetCode, AtCoder, and Codeforces\nPaper:\nhttps://arxiv.org/abs/2403.07974\nDataset:\nhttps://huggingface.co/datasets/livecodebench/code_generation_lite\nKey details:\nPass@1 evaluation criteria\nWe do not apply LiveCodeBench custom system prompts\nPrompt Templates, Answer Extraction and Evaluation\nMultiple Choice Questions (GPQA, MMLU-Pro)\nWe prompt multi-choice evals with the following instruction prompt. This prompt was independently developed by Artificial Analysis, and carefully validated with various ablation studies. We assess that this prompt is a clearer, and therefore fairer, approach than traditional completion-style multi-choice evaluation methodologies or other instruction prompts we tested.\nGPQA uses four options (A\u2013D). MMLU-Pro uses ten options (A\u2013J); we use the same structure with additional choices.\nAnswer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D' (e.g. 'Answer: A').\n\n{Question}\n\nA) {A}\nB) {B}\nC) {C}\nD) {D}\nAnswer the following multiple choice question. The last line of your response should be in the following format: 'Answer: A/B/C/D/E/F/G/H/I/J' (e.g. 'Answer: A').\n\n{Question}\n\nA) {A}\nB) {B}\nC) {C}\nD) {D}\nE) {E}\nF) {F}\nG) {G}\nH) {H}\nI) {I}\nJ) {J}\nMultiple Choice Extraction Regex\nWe extract multiple choice answers using a multi-stage approach to handle various answer formats. For single-letter responses, we us"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"livecodebench\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-mlcr::snapshot-2026-09-10",
+      "name": "MLCR-AA",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-mlcr",
+      "category": "Long-context",
+      "one_sentence_description": "Tests medical-record synthesis and reasoning across long, fragmented case documents.",
+      "scoring": {
+        "metric": "Conciseness gate then three-judge majority-vote accuracy on expert and compound questions",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: mlcrOverall. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field mlcrOverall; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "MLCR-AA (Medical Long Context Reasoning)\nStatus:\nStandalone evaluation (not part of\nArtificial Analysis Intelligence Index v4.3\n); a component of the Artificial Analysis Healthcare & Medical Index\nDescription:\nMLCR-AA is Artificial Analysis' evaluation of MLCR (Medical Long Context Reasoning), an open benchmark from Wisedocs that measures how well models reason over long, fragmented medical records, performing the kind of multi-document synthesis claims professionals do when reviewing insurance and healthcare cases, such as reconstructing chronology, causality, treatment patterns, and claim relevance\nCode:\nWisedocs-AI/medical-long-context-reasoning\nPublic dataset:\nWisedocs/mlcr-dataset\nKey details:\nRealistic, synthetic medical cases of roughly 25,000\u201364,000 tokens\nQuestions are graded across six tiers of difficulty, from locating a single fact to expert-level clinical synthesis and compound, multi-part reasoning\nResponses that pass the conciseness gate and contain an answer are graded by a panel of three LLM judges; accuracy and completeness are each decided by majority vote\nA response longer than five times the reference answer fails a conciseness gate and scores zero without judging; the overall pass rate credits a response only when it passes that gate and is judged both complete and accurate\nArtificial Analysis evaluates a private held-out set of the two hardest question types (expert-tier clinical synthesis and compound, multi-part reasoning): 60 questions, each run with 3 repeats. This private set is separate from the publicly released dataset\nArtificial Analysis repo"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"mlcrOverall\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "name": "MMMU Pro (AA)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-mmmu-pro",
+      "category": "Vision",
+      "one_sentence_description": "Tests multimodal understanding using challenging ten-option questions.",
+      "scoring": {
+        "metric": "Multiple-choice regex extraction accuracy, pass@1 on 1730 questions",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: mmmuPro. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field mmmuPro; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "MMMU Pro\nStatus:\nStandalone evaluation (not part of\nArtificial Analysis Intelligence Index v4.3\n); a multimodal (visual) reasoning benchmark\nDescription:\nAn enhanced MMMU benchmark that eliminates shortcuts and guessing strategies to more rigorously test multimodal models across 30 academic disciplines\nDataset:\nMMMU/MMMU_Pro\nKey details:\n1,730 questions\nMultiple Choice (10 options)\nRegex extraction, pass@1\nLegacy Evaluations\nEvaluations we have retired or superseded. We keep their methodology here for reference and historical comparability; they are no longer part of the Artificial Analysis Intelligence Index or our active reporting.\nGPQA Diamond (Graduate-Level Google-Proof Q&A Benchmark)\nStatus:\nRemoved from the Artificial Analysis Intelligence Index in v4.2, having been a constituent up to and including v4.1.1. We still run it on new model releases and report it as a standalone evaluation.\nDescription:\nScientific knowledge and reasoning benchmark\nSubset:\nDiamond subset (198 questions) selected for maximum accuracy and discriminative power\nPaper:\nhttps://arxiv.org/abs/2311.12022\nDataset:\nhttps://github.com/openai/simple-evals/blob/main/gpqa_eval.py\nKey Details:\n198 questions covering biology, physics and chemistry - we test the GPQA Diamond subset of the full GPQA dataset (448 questions total), which was defined by the original authors as the highest quality subset, where both experts answer correctly and the majority of non-experts answer incorrectly\n4 option multiple choice format\nRegex-based answer extraction with pass@1 scoring (prompt and regex below)\n\ud835\udf0f\u00b3-Banking\nStat"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"mmmuPro\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-omniscience::snapshot-2026-09-10",
+      "name": "AA-Omniscience Index",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-omniscience",
+      "category": "Knowledge",
+      "one_sentence_description": "Tests factual reliability while rewarding correct answers and penalizing hallucinations.",
+      "scoring": {
+        "metric": "Headline Omniscience Index: rewards correct answers, penalizes incorrect guesses, neutral abstentions",
+        "unit": "points",
+        "range": [
+          null,
+          null
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: omniscience. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field omniscience; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "AA-Omniscience\nDescription:\nAA-Omniscience is a knowledge and hallucination benchmark that measures factual reliability, rewards precise knowledge, and penalizes incorrect guesses or hallucinations. It provides a detailed assessment of a model\u2019s ability to distinguish known from unknowns across diverse knowledge domains.\nPaper:\nhttps://arxiv.org/abs/2511.13029\nDataset:\nhttps://huggingface.co/datasets/ArtificialAnalysis/AA-Omniscience-Public\nImplementation:\nThe benchmark consists of 6,000 questions covering 42 topics, including\nBusiness\n,\nHumanities and Social Sciences\n,\nHealth\n,\nLaw\n,\nSoftware Engineering\n, and\nScience, Engineering and Mathematics\n.\nModels are scored using the\nAA-Omniscience Index\n, which assigns points for correct answers, subtracts points for hallucinated responses, and keeps abstentions neutral, rewarding abstentions over incorrect guesses\nEach answer is graded as either\nCORRECT\n,\nINCORRECT\n,\nPARTIAL_ANSWER\n, or\nNOT_ATTEMPTED\nbased on the model's response and the ground truth answer. GPT-5.6 Luna (medium) is used as the grading model\nIntelligence Index Integration:\nAA-Omniscience contributes two components to the Intelligence Index: (1)\nAccuracy\n- the proportion of correct answers, weighted at\n10% of the overall Index, and (2)\nNon-Hallucination Rate\n- calculated as 1 minus the hallucination rate, weighted at 5% of the overall Index (AA-Omniscience's 15% share).\nGDP.pdf\nDescription:\nArtificial Analysis' implementation of\nSurge AI's GDP.pdf\n, a benchmark that tests whether models can reason over long, real-world professional documents and satisfy task-spec"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"omniscience\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-scicode::1.0.1",
+      "name": "SciCode (AA subproblems)",
+      "version": "1.0.1",
+      "version_status": "published",
+      "family": "aa-scicode",
+      "category": "Coding",
+      "one_sentence_description": "Tests scientific Python programming with scientist-annotated background information.",
+      "scoring": {
+        "metric": "Subproblem-level unit-test pass@1 over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: scicode. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field scicode; preserve source units and nulls.",
+        "version_guard": "Verify the published version 1.0.1 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "SciCode\nDescription:\nPython programming to solve scientific computing tasks\nPaper:\nhttps://arxiv.org/abs/2407.13168\nDataset:\nhttps://scicode-bench.github.io/\nImplementation:\nWe test with scientist-annotated background information included in the prompt\nWe report sub-problem level scoring\nPass@1 evaluation criteria\nSciCode step scripts are graded on isolated executors with a 300-second execution timeout (dataset v1.0.1)\nGeneral\nAA-Omniscience\nDescription:\nAA-Omniscience is a knowledge and hallucination benchmark that measures factual reliability, rewards precise knowledge, and penalizes incorrect guesses or hallucinations. It provides a detailed assessment of a model\u2019s ability to distinguish known from unknowns across diverse knowledge domains.\nPaper:\nhttps://arxiv.org/abs/2511.13029\nDataset:\nhttps://huggingface.co/datasets/ArtificialAnalysis/AA-Omniscience-Public\nImplementation:\nThe benchmark consists of 6,000 questions covering 42 topics, including\nBusiness\n,\nHumanities and Social Sciences\n,\nHealth\n,\nLaw\n,\nSoftware Engineering\n, and\nScience, Engineering and Mathematics\n.\nModels are scored using the\nAA-Omniscience Index\n, which assigns points for correct answers, subtracts points for hallucinated responses, and keeps abstentions neutral, rewarding abstentions over incorrect guesses\nEach answer is graded as either\nCORRECT\n,\nINCORRECT\n,\nPARTIAL_ANSWER\n, or\nNOT_ATTEMPTED\nbased on the model's response and the ground truth answer. GPT-5.6 Luna (medium) is used as the grading model\nIntelligence Index Integration:\nAA-Omniscience contributes two components to the Intelligence Index"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"scicode\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-tau2-telecom::snapshot-2026-09-10",
+      "name": "\u03c4\u00b2-Bench Telecom (AA)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "aa-tau2-telecom",
+      "category": "Tool-use",
+      "one_sentence_description": "Tests dual-control telecom agents that coordinate tool use with a simulated user.",
+      "scoring": {
+        "metric": "Backend world-state success, pass@1 averaged over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: tau2. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field tau2; preserve source units and nulls.",
+        "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "\ud835\udf0f\u00b2-Bench Telecom\nNote:\nSuperseded by \ud835\udf0f\u00b3-Banking, which we use going forward. \ud835\udf0f\u00b2-Bench Telecom was a constituent of the Artificial Analysis Intelligence Index prior to v4.1\nDescription:\nBenchmark developed by Sierra for conversational AI agents in 'dual control' scenarios with language models simulating both agent and user roles to test planning, tool use, and guidance/communication\nPaper:\nhttps://arxiv.org/abs/2506.07982\nBlog:\nsierra.ai/resources/research/tau-squared-bench\nDataset:\nhttps://github.com/sierra-research/tau2-bench\nImplementation:\nThe 'telecom' domain introduced in \ud835\udf0f\u00b2-Bench contains 114 tasks (subsampled from a total 2,285 programmatically generated tasks), with varying 'intents' describing if the task is related to service, mobile data, or MMS issues. We evaluate the telecom domain in full with 3 repeats per task, and report the score using pass@1 scoring as the average of the 3 attempts\nIn this benchmark, the outcome 'world state' decides whether the agent succeeded - for example, whether the user's cell phone data is functioning after the agent completes the task\nThe full \ud835\udf0f\u00b2-Bench suite includes 3 execution modes with varying planning and communication levels in ablation studies; we implement the 'default' dual control mode with fully simulated and separate user and assistant agents\nWe use Qwen3 235B A22B 2507 (Non-reasoning) for the user agent simulator to ensure consistent checkpoint availability and full control over inference settings alongside strong base intelligence\nWe apply a constraint on execution to limit steps to a maximum of 100 per task repeat\nM"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"tau2\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-tau3-banking::1.0.1",
+      "name": "\u03c4\u00b3-Banking (AA)",
+      "version": "1.0.1",
+      "version_status": "published",
+      "family": "aa-tau3-banking",
+      "category": "Tool-use",
+      "one_sentence_description": "Tests banking support agents that retrieve policies and change account state through tools.",
+      "scoring": {
+        "metric": "Backend database success, pass@1 averaged over five repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: tauBanking. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field tauBanking; preserve source units and nulls.",
+        "version_guard": "Verify the published version 1.0.1 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "\ud835\udf0f\u00b3-Banking\nStatus:\nRemoved from the Artificial Analysis Intelligence Index in v4.3, having been a constituent up to and including v4.2. We still run it on new model releases and report it as a standalone evaluation.\nDescription:\nFintech customer-support domain of the \ud835\udf0f-Knowledge framework developed by Sierra, evaluating agents that must coordinate retrieval from a large unstructured knowledge base with multi-step tool-mediated account changes\nPaper:\nhttps://arxiv.org/abs/2603.04370\nBlog:\nsierra.ai/blog/bench-advancing-agent-benchmarking-to-knowledge-and-voice\nDataset:\nhttps://github.com/sierra-research/tau2-bench\nImplementation:\nAgents handle ~700 interconnected policy documents (\u2248195K tokens, 21 product categories) and must locate the relevant policy, reason over it, and execute a multi-step sequence of tool calls \u2014 including tools referenced only in documentation rather than explicitly listed\nWe evaluate the full \ud835\udf0f\u00b3-Banking task suite (97 tasks) with 5 repeats per task and report pass@1 averaged across the repeats, running the upstream tau2-bench v1.0.1 dataset and grader\nOutcomes are scored against actual backend database state \u2014 for example, whether a dispute was opened or a provisional credit issued \u2014 rather than conversational quality\nWe use GPT-5.4 Mini (medium reasoning) for both the user simulator and the natural-language assertion judge\nFor knowledge retrieval over the banking corpus we enable BM25 lexical search and grep (\nbm25_grep\nmode) inside the original \ud835\udf0f-Bench harness\nWe apply a constraint on execution to limit steps to a maximum of 200 per task repeat (the"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"tauBanking\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-terminal-bench-hard::74221fb",
+      "name": "Terminal-Bench Hard (AA)",
+      "version": "74221fb",
+      "version_status": "published",
+      "family": "aa-terminal-bench-hard",
+      "category": "Agentic",
+      "one_sentence_description": "Tests a pinned 44-task hard subset of terminal-based work using Terminus 2.",
+      "scoring": {
+        "metric": "All verifier tests must pass; pass@1 averaged over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: terminalbenchHard. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field terminalbenchHard; preserve source units and nulls.",
+        "version_guard": "Verify the published version 74221fb before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": "aa-terminal-bench::2.1",
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "Terminal-Bench Hard\nNote:\nSuperseded by Terminal-Bench v2.1, which we use going forward. Terminal-Bench Hard was a constituent of the Artificial Analysis Intelligence Index prior to v4.1\nDescription:\nAn agentic benchmark developed by Stanford University researchers, the Laude Institute, and the open source community, released in 2025. Terminal-Bench evaluates the ability of agents and models to solve a wide variety of tasks (including software engineering, system administration, and game-playing scenarios) using a terminal interface\nPage:\nhttps://www.tbench.ai/\nDataset registry:\nhttps://www.tbench.ai/registry\nImplementation:\nWe implement the 'hard' subset of the terminal-bench-core dataset, with the latest dataset version as of 14 August 2025 (commit 74221fb); we evaluate 44 tasks from this subset (a small number of tasks are excluded due to external dependency issues in the original dataset)\nWe evaluate this 'hard' subset using the Terminus 2 agent harness for consistency between models, and score models based on pass@1 scoring with the overall average over 3 repeats for each task\nIn the Terminal-Bench framework, each task has a specific suite of tests applied, and are considered successful if all tests pass, or unsuccessful otherwise\nWe apply the following constraints on evaluations for the agent:\nMaximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 100\nWe set a global per-task timeout of two hours (7,200 seconds); in practice the 100-episode limit is the binding constraint\nModels are limited to a max"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"terminalbenchHard\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-terminal-bench::2.1",
+      "name": "Terminal-Bench v2.1 (AA)",
+      "version": "2.1",
+      "version_status": "published",
+      "family": "aa-terminal-bench",
+      "category": "Agentic",
+      "one_sentence_description": "Tests terminal-based work on the 89-task verified refresh using Terminus 2.",
+      "scoring": {
+        "metric": "All verifier tests must pass; pass@1 averaged over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: terminalbenchV21. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field terminalbenchV21; preserve source units and nulls.",
+        "version_guard": "Verify the published version 2.1 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": "aa-terminal-bench::4.0",
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "Terminal-Bench v2.1\nStatus:\nSuperseded by Terminal-Bench v4.0 in Intelligence Index v4.3, having been a constituent up to and including v4.2. It remains part of the Coding Index.\nDescription:\nA verified refresh of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Keeps the same 89 curated tasks across software engineering, system administration, data processing, model training, and security, with environment and instruction fixes that make scores reflect agent capability rather than environment gaps\nPaper:\nhttps://arxiv.org/abs/2601.11868\nLeaderboard:\ntbench.ai/leaderboard/terminal-bench/2.1\nImplementation:\nWe evaluate the full Terminal-Bench v2.1 dataset (89 tasks) using the Terminus 2 agent harness in an E2B sandbox environment, with pass@1 scoring averaged over 3 repeats per task\nEach task ships with a verification suite that the agent must satisfy by interacting with the terminal \u2014 tasks are considered successful only if every test passes\nWe apply the following constraints on evaluations for the agent:\nMaximum 'episodes' (where the model reviews current state and plans a series of next actions at the terminal) are limited to 250\nPer-task agent timeout is set to two hours (7,200 seconds), or the task's own specified timeout where that is longer, well above typical task durations\nIn our testing these constraints predominantly limit cases where models are stuck in an unsuccessful loop, and we see no consistent differences in performance due to these constraints\nTerminal-Bench Hard\nNote:\nSuperseded by Terminal-"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"terminalbenchV21\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-terminal-bench::4.0",
+      "name": "Terminal-Bench v4.0 (AA)",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "aa-terminal-bench",
+      "category": "Agentic",
+      "one_sentence_description": "Tests terminal-based work on the 66-task release using mini-SWE-agent v2.4.6.",
+      "scoring": {
+        "metric": "All verifier tests must pass; pass@1 averaged over three repeats",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: terminalbenchV40. Keep raw units; do not normalize before phase-05 validation."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/extract-aa-benchmark-fields.mjs MODEL_PAGE.html SOURCE_RECEIPT.json",
+        "format": "Next.js Flight JSON",
+        "locator": "Decode model-page Flight JSON with lib/aa-rsc.mjs; exact model UUID/slug/effort, field terminalbenchV40; preserve source units and nulls.",
+        "version_guard": "Verify the published version 4.0 before reading results.",
+        "notes": "Reuse the same model-page response as the efficiency collector. SOURCE_RECEIPT.json must carry url, fetched_at, status=200 and the SHA256 of MODEL_PAGE.html. Raw discovery collection does not authorize score comparisons or change the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/intelligence-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-1ea3e75f96c3.txt",
+          "sha256": "767bce5f921c5987907766015e69fdc66bffd355e7096f9e002237ca252c0bee",
+          "fetched_at": "2026-09-10T21:47:46.639Z",
+          "excerpt": "Terminal-Bench v4.0\nDescription:\nThe 4.0 release of Terminal-Bench, developed by Stanford University researchers, the Laude Institute, and the open source community. Covers software engineering, system administration, data processing, model training, and security, with each task graded by its own verification suite\nLeaderboard:\nhttps://www.tbench.ai/?version=4\nDataset:\nhttps://github.com/harbor-framework/terminal-bench\nImplementation:\nWe evaluate the full Terminal-Bench 4.0 dataset (66 tasks) using the mini-SWE-agent v2.4.6 harness, with pass@1 scoring averaged over 3 repeats per task\nEach task ships with a verification suite that the agent must satisfy by interacting with the terminal. We follow the Terminal-Bench methodology: a task passes only if every test passes, grading runs in each task's own separate verifier container isolated from the agent's environment, and a verifier that exceeds its timeout counts as a failure\nWe apply the following constraints on evaluations for the agent:\nMaximum agent steps are limited to 500\nEach command runs under a 30 second timeout; a command that exceeds it returns its partial output and the agent continues\nThe per-task run timeout is the task's own, up to eight hours\nAll other agent configuration follows mini-SWE-agent defaults, including the interactive mini config and prompts, the native bash tool, and no context compaction or summarization: the agent always sees its full transcript\nSciCode\nDescription:\nPython programming to solve scientific computing tasks\nPaper:\nhttps://arxiv.org/abs/2407.13168\nDataset:\nhttps://scicode-bench.githu"
+        },
+        {
+          "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz",
+          "sha256": "0755b50e126d34a650236b552a8b8ebb2d6d7462bd97040b8c65295d9baa556d",
+          "source_sha256": "d921f7b255347b1091c5595adbbb5170ed6e9fe62250967a8586eb303ee99d2d",
+          "fetched_at": "2026-09-10T21:47:16.627Z",
+          "excerpt": "\"terminalbenchV40\" (literal field in the captured Flight model rows; gzip source retained)"
+        }
+      ]
+    },
+    {
+      "id": "aa-coding-agent-index::1.4",
+      "name": "Artificial Analysis Coding Agent Index v1.4",
+      "version": "1.4",
+      "version_status": "retained",
+      "family": "aa-coding-agent-index",
+      "category": "Coding",
+      "one_sentence_description": "The retained AA Coding Agent Index measures coding-agent systems using the earlier three-component implementation.",
+      "scoring": {
+        "metric": "Equal-weighted mean of the three component scores for a complete model-and-harness result",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/agents/coding-agents",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "cat data/raw/aa-coding-agents.json",
+        "format": "Retained JSON snapshot",
+        "locator": "Read complete rows with exact model_name, harness and components; preserve every harness result and explicit model effort.",
+        "version_guard": "Never refresh this v1.4 file from the current page; its 2026-09-09 date and unchanged Composite role are binding.",
+        "notes": "Exact snapshot: data/raw/aa-coding-agents.json. Versions, harnesses and model efforts remain separate. The current collector does not modify the legacy Composite source."
+      },
+      "update_cadence": {
+        "source_schedule": "Retained historical snapshot; superseded by v1.5.",
+        "check_recommendation": "Never refresh the legacy file; verify its retained hash/date at build time."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": "aa-coding-agent-index::1.5",
+      "status": "retained",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-038b413e6440.txt",
+          "sha256": "bf3b0f6048bb8d7278041ec17f95647e6bbc37253fe4b1766ac08e10c4fe8809",
+          "fetched_at": "2026-09-10T21:48:05.620Z",
+          "excerpt": "Coding Agent Index v1.5 Methodology | Artificial Analysis\nArtificial Analysis\nK\nArtificial Analysis\nModels\nCoding Agents\nSpeech, Image, Video\nInference\nLeaderboards\nAbout\nAI Trends\nArenas\nK\nBenchmarking Methodology\nOn this page\nOverview\nArtificial Analysis Coding Agent Index\nIndex Components\nEvaluated Tasks\nWhat The Index Aggregates\nScoring And Outcomes\npass@1 Results\nPer-Evaluation Scores\nReward Hacking\nEfficiency Metrics\nAgent Settings\nVersion History\nCoding Agent Index Methodology\nOverview\nArtificial Analysis benchmarks coding agents on end-to-end software engineering tasks. We measure how well agents complete realistic coding work, and how performance varies across outcome, reliability, token usage, cost, and execution time.\nPublic results on the Coding Agent Index page are built from task-level benchmark attempts and aggregated into per-evaluation scores, pooled efficiency metrics, and the Artificial Analysis Coding Agent Index.\nThis page focuses on how the public Artificial Analysis Coding Agent Index is constructed, what benchmark components are currently included, and how the public pass@1, cost, token-usage, and execution-time metrics are derived.\nArtificial Analysis Coding Agent Index\nThe current public Artificial Analysis Coding Agent Index is a composite benchmark score built from the configured benchmark components in the public coding-agents suite.\nDifferent coding agents can perform very differently on repository Q&A, implementation and bug-fix tasks, and terminal-heavy workflows. The index summarizes those benchmark families into one top-level performance vi"
+        },
+        {
+          "url": "https://github.com/fstandhartinger/model-market-comparison/blob/a7e8852/data/raw/aa-coding-agents.json",
+          "file": "data/raw/aa-coding-agents.json",
+          "sha256": "e3b39c00dfff19717d8da6a875ff44e999b5255300da26f174c5bdcea843368b",
+          "fetched_at": "2026-09-09",
+          "excerpt": "Retained collected snapshot: 68 rows; score_scale 0-1; v1.4 identity is the binding phase-01 coverage amendment; no refreshed legacy observation."
+        }
+      ]
+    },
+    {
+      "id": "aa-coding-agent-index::1.5",
+      "name": "Artificial Analysis Coding Agent Index v1.5",
+      "version": "1.5",
+      "version_status": "published",
+      "family": "aa-coding-agent-index",
+      "category": "Coding",
+      "one_sentence_description": "Measures coding-agent systems on DeepSWE v1.1, Terminal-Bench 4.0 and SWE-Atlas-QnA.",
+      "scoring": {
+        "metric": "Equal-weighted mean of the three component scores for a complete model-and-harness result",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+      },
+      "maintainer": "Artificial Analysis",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "publication_urls": [
+        {
+          "url": "https://artificialanalysis.ai/agents/coding-agents",
+          "type": "official_leaderboard",
+          "role": "Primary results publication and collection entry point"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/fetch-aa-coding-agents.mjs",
+        "format": "Next.js Flight JSON \u2192 validated separate JSON snapshot",
+        "locator": "Read complete rows with exact model_name, harness and components; preserve every harness result and explicit model effort.",
+        "version_guard": "The collector requires the current methodology to say v1.5 and validates all three components before atomic replacement; do not write aa-coding-agents.json.",
+        "notes": "Exact snapshot: data/raw/aa-coding-agents-v1.5.json. Versions, harnesses and model efforts remain separate. The current collector does not modify the legacy Composite source."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-10",
+      "last_verified": "2026-09-10",
+      "evidence": [
+        {
+          "url": "https://artificialanalysis.ai/methodology/coding-agents-benchmarking",
+          "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-038b413e6440.txt",
+          "sha256": "bf3b0f6048bb8d7278041ec17f95647e6bbc37253fe4b1766ac08e10c4fe8809",
+          "fetched_at": "2026-09-10T21:48:05.620Z",
+          "excerpt": "Coding Agent Index v1.5 Methodology | Artificial Analysis\nArtificial Analysis\nK\nArtificial Analysis\nModels\nCoding Agents\nSpeech, Image, Video\nInference\nLeaderboards\nAbout\nAI Trends\nArenas\nK\nBenchmarking Methodology\nOn this page\nOverview\nArtificial Analysis Coding Agent Index\nIndex Components\nEvaluated Tasks\nWhat The Index Aggregates\nScoring And Outcomes\npass@1 Results\nPer-Evaluation Scores\nReward Hacking\nEfficiency Metrics\nAgent Settings\nVersion History\nCoding Agent Index Methodology\nOverview\nArtificial Analysis benchmarks coding agents on end-to-end software engineering tasks. We measure how well agents complete realistic coding work, and how performance varies across outcome, reliability, token usage, cost, and execution time.\nPublic results on the Coding Agent Index page are built from task-level benchmark attempts and aggregated into per-evaluation scores, pooled efficiency metrics, and the Artificial Analysis Coding Agent Index.\nThis page focuses on how the public Artificial Analysis Coding Agent Index is constructed, what benchmark components are currently included, and how the public pass@1, cost, token-usage, and execution-time metrics are derived.\nArtificial Analysis Coding Agent Index\nThe current public Artificial Analysis Coding Agent Index is a composite benchmark score built from the configured benchmark components in the public coding-agents suite.\nDifferent coding agents can perform very differently on repository Q&A, implementation and bug-fix tasks, and terminal-heavy workflows. The index summarizes those benchmark families into one top-level performance vi"
+        },
+        {
+          "url": "https://github.com/fstandhartinger/model-market-comparison/blob/a7e8852/data/raw/aa-coding-agents-v1.5.json",
+          "file": "data/raw/aa-coding-agents-v1.5.json",
+          "sha256": "f8895ccae31ddbc6e6b15de52ccb59f0cdfe3d0b10ca1f1c916f284ebf17ea89",
+          "fetched_at": "2026-09-10",
+          "excerpt": "Retained collected snapshot: 13 rows; score_scale 0-1; Explicit version 1.5 and component identities."
+        }
+      ]
+    }
+  ],
+  "aa_field_map": [
+    {
+      "field": "aime25",
+      "benchmark_id": "aa-aime::2025",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "analystAgent",
+      "benchmark_id": "aa-analystagent::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "apexAgents",
+      "benchmark_id": "aa-apex-agents::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "automationBenchPartialScore",
+      "benchmark_id": "aa-automationbench::1.0.6",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "briefcaseBreakdown.overall.elo",
+      "benchmark_id": "aa-briefcase::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "critpt",
+      "benchmark_id": "aa-critpt::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "enterpriseOpsGym",
+      "benchmark_id": "aa-enterpriseops-gym::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "gdpPdfAllPass",
+      "benchmark_id": "aa-gdp-pdf::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "gdpval",
+      "benchmark_id": "aa-gdpval::2",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "gpqa",
+      "benchmark_id": "aa-gpqa-diamond::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "harveyLab",
+      "benchmark_id": "aa-harvey-lab::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "hle",
+      "benchmark_id": "aa-hle::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "ifbench",
+      "benchmark_id": "aa-ifbench::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "itBenchSre",
+      "benchmark_id": "aa-itbench::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "lcr",
+      "benchmark_id": "aa-lcr::1.1",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "livecodebench",
+      "benchmark_id": "aa-livecodebench::snapshot-2026-09-10",
+      "notes": "Historical source field; task date window is unspecified. Metadata/raw preservation only; phase 05 must withhold comparable rankings until the exact evaluation window is verified."
+    },
+    {
+      "field": "mlcrOverall",
+      "benchmark_id": "aa-mlcr::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "mmmuPro",
+      "benchmark_id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "omniscience",
+      "benchmark_id": "aa-omniscience::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "scicode",
+      "benchmark_id": "aa-scicode::1.0.1",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "tau2",
+      "benchmark_id": "aa-tau2-telecom::snapshot-2026-09-10",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "tauBanking",
+      "benchmark_id": "aa-tau3-banking::1.0.1",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "terminalbenchHard",
+      "benchmark_id": "aa-terminal-bench-hard::74221fb",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "terminalbenchV21",
+      "benchmark_id": "aa-terminal-bench::2.1",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    },
+    {
+      "field": "terminalbenchV40",
+      "benchmark_id": "aa-terminal-bench::4.0",
+      "notes": "Raw source field; metadata identity only. Confirm configuration and subset before phase-05 score ingestion."
+    }
+  ]
+}

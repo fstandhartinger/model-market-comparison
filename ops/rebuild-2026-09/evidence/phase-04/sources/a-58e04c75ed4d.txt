@@ -1,0 +1,67 @@
+EQ-Bench Judgemark v4 Leaderboard
+Light
+Creative-writing judge discrimination
+Judgemark v4
+Github
+|
+Paper
+|
+|
+Twitter
+|
+About
+💜EQ-Bench 4
+|
+🌀Spiral-Bench v1.2
+|
+✍️Longform Writing
+|
+🎨Creative Writing v3
+|
+☢️Slop Score
+|
+⚖️Judgemark v4
+|
+🎤BuzzBench
+|
+🌍DiploBench
+|
+📚Legacy Leaderboards
+💠EQ-Bench 3
+🌀Spiral-Bench v1.0
+🎨Creative Writing v2
+💗EQ-Bench v2
+⚖️Judgemark v2.1
+Judgemark v4 rates LLM judges on how discriminative they are at scoring creative writing. The score is based on separability metrics.
+Read more
+.
+Leaderboard
+Pareto Plot
+Model
+Judgemark Score / 95% CI
+Cost
+Chart
+Loading...
+What is Judgemark?
+Judgemark v4 is a meta-evaluation of LLM judging ability. The model being tested is the judge, not the writer. It is asked to score fixed creative-writing samples, and the benchmark measures whether those scores meaningfully separate stronger writing from weaker writing.
+Each test item contains the original writing prompt, a lower-anchor response scored as 2, an upper-anchor response scored as 9, and one unlabeled response to be judged. The judge responds with a reasoning section and a numeric score for the test response. Across the benchmark, those blind test responses come from writer models of different abilities. A good judge should assign score distributions that are meaningfully separated by writer model, rather than compressing everything into the same narrow band.
+The principle is similar to testing a sommelier's ability to distinguish wines in a blind tasting: If the judge can reliably pin a score to a range of unlabeled samples, we consider them a discriminative judge. This is easier said than done, and the evaluation encodes some deep abilities!
+Scoring math
+: Judgemark computes
+combined_sep = 0.5 * omega_squared + 0.5 * mean_abs_paired_cliff_delta
+, then reports
+combined_sep / 0.75
+on a 0-100 leaderboard scale.
+Omega-squared
+: estimates how much score variance is explained by writer-model identity.
+Mean absolute paired Cliff's delta
+: measures how strongly each pair of writer-model score distributions is separated.
+95% CI
+: the line on each score bar is a prompt-bootstrap confidence interval.
+Chart
+: run diagnostics, including raw mean scores, score distribution by writing model, and overall score-use histogram.
+Multichart
+−
+100%
++
+Close

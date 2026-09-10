@@ -1,0 +1,973 @@
+[
+  {
+    "id": "livebench::2026-06-25",
+    "name": "LiveBench",
+    "version": "2026-06-25",
+    "version_status": "published",
+    "family": "livebench",
+    "category": "Reasoning",
+    "one_sentence_description": "A periodically refreshed suite of objectively graded tasks with separate category scores and an overall category mean.",
+    "scoring": {
+      "metric": "Overall mean of category averages, with source-published exceptions retained",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "The website release selector is newer than the README (which still calls 2025-04-25 current). Register the verified website release. Do not combine dated releases; preserve source-published overall overrides with attribution."
+    },
+    "maintainer": "LiveBench team",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://livebench.ai/",
+    "publication_urls": [
+      {
+        "url": "https://livebench.ai/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      },
+      {
+        "url": "https://livebench.ai/table_2026_06_25.csv",
+        "type": "official_leaderboard",
+        "role": "Versioned source data"
+      },
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "type": "official_leaderboard",
+        "role": "Versioned source data"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 'https://livebench.ai/table_2026_06_25.csv' --output /tmp/livebench.csv",
+      "format": "CSV with JSON category map",
+      "locator": "Read the latest release selector from the linked static JS and require 2026-06-25; fetch table_2026_06_25.csv and categories_2026_06_25.json. Preserve task/category and release identifiers. The JS Pe function defines the displayed category mean and explicit Grok-3 overrides; do not silently recompute overrides.",
+      "version_guard": "Verify the published version 2026-06-25 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://livebench.ai/static/js/main.ac6b12ef.js",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-4efcf9b59965.txt",
+        "sha256": "31e3792c378b20b9a0e3d309eb94fef26e49b61b890e20e348f601b209a1c888",
+        "fetched_at": "2026-09-10T22:22:25Z",
+        "excerpt": "Release selector ends at 2026-06-25; Overall — mean of category averages."
+      },
+      {
+        "url": "https://livebench.ai/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-130364a0fc6e.txt",
+        "sha256": "78d0e286fd3ececf7151ce312a8b846d736571d95d7d381db14da7171db30889",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      },
+      {
+        "url": "https://livebench.ai/table_2026_06_25.csv",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-e70f40005b36.txt",
+        "sha256": "186ca65e7bb3a07aa26875eb3c45bfbe4e22d1ef36165cdaa11ad1a58087817c",
+        "fetched_at": "2026-09-10T22:23:14Z",
+        "excerpt": "Exact release-specific raw publication"
+      },
+      {
+        "url": "https://livebench.ai/categories_2026_06_25.json",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-8fb1bd6bc30b.txt",
+        "sha256": "dad300ad18655b69db720e1b88fc5a5eac06c5b2f0e52c2bf50f10ff057674f3",
+        "fetched_at": "2026-09-10T22:23:16Z",
+        "excerpt": "Exact release-specific raw publication"
+      }
+    ]
+  },
+  {
+    "id": "longbench::2",
+    "name": "LongBench v2",
+    "version": "2",
+    "version_status": "published",
+    "family": "longbench",
+    "category": "Long-context",
+    "one_sentence_description": "503 challenging multiple-choice questions with contexts from 8k to 2M words assessing deep understanding and reasoning on realistic long-context multitasks.",
+    "scoring": {
+      "metric": "Accuracy on 503 multiple-choice questions across six task categories",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "THUDM (Tsinghua University)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://longbench2.github.io/",
+    "publication_urls": [
+      {
+        "url": "https://longbench2.github.io/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://longbench2.github.io/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard at https://longbench2.github.io/#leaderboard; README reports aggregate accuracy percentages per model (e.g., o1-preview 57.7%)",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/THUDM/LongBench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-1a2eda0bd07b.txt",
+        "sha256": "7de8f5cec86e49b9a0f3f90bf112e797903bcf93bd458d78c854fec532b08ef1",
+        "fetched_at": "2026-09-10T21:53:09Z",
+        "excerpt": "LongBench v2 consists of 503 challenging multiple-choice questions, with contexts ranging from 8k to 2M words, across six major task categories ... Our evaluation reveals that the best-performing model, when directly answers the questions, achieves only 50.1% accuracy. In contrast, the o1-preview model, which includes longer reasoning, achieves 57.7%, surpassing the human baseline by 4%."
+      },
+      {
+        "url": "https://longbench2.github.io/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-d27ff487cf66.txt",
+        "sha256": "f993eee8a0c4e4a9a6d05df1c98599907168d5193cd71484420643e9010805f9",
+        "fetched_at": "2026-09-10T22:08:35Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "mazur-creative-story-writing::snapshot-2026-09-10",
+    "name": "LLM Creative Story-Writing Benchmark",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "mazur-creative-story-writing",
+    "category": "Writing",
+    "one_sentence_description": "Pairwise comparison of short stories written to the same constrained creative briefs, with LLM evaluator choices combined into a relative comparison score.",
+    "scoring": {
+      "metric": "Relative comparison score from pairwise evaluator-v2/evaluator-v3 judgments (Thurstone-style rating; zero is near the middle of the comparison set)",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Lech Mazur (lechmazur)",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/lechmazur/writing/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "Leaderboard table, 'Comparison score' column; also machine-readable leaderboard linked under 'Public benchmark data' (data/README.md)",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-f541ae13bc5c.txt",
+        "sha256": "4f4312b52154d55e1b507d0c9a31a43dfa74c077a6ce71fc869c5cb2e6795366",
+        "fetched_at": "2026-09-10T21:53:00Z",
+        "excerpt": "This benchmark compares short stories written to the same constrained creative briefs. Separate evaluator models read matched story pairs and choose which one is better. Those choices are combined into a relative comparison score. Higher scores mean stronger performance against the other models tested. Scores are relative, not grades: zero is near the middle of this comparison set"
+      }
+    ]
+  },
+  {
+    "id": "mazur-divergent-thinking::snapshot-2026-09-10",
+    "name": "LLM Divergent Thinking Creativity Benchmark",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "mazur-divergent-thinking",
+    "category": "Other",
+    "one_sentence_description": "Models generate 25 words maximally distinct from each other and from 50 seed words under starting-letter constraints, scored by LLM-judged word divergence.",
+    "scoring": {
+      "metric": "Average LLM-judged score of minimum divergences between each generated word and other words, on a 0 to 10 scale (percentage of repeated words also reported)",
+      "unit": "points",
+      "range": [
+        0,
+        10
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Lech Mazur (lechmazur)",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/lechmazur/divergent/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "Results table, 'Score' column (per model)",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-3f8241812739.txt",
+        "sha256": "21c9bee0018f719d56c19a47abe11749b7d8b1f8629188920832500ee719b917",
+        "fetched_at": "2026-09-10T21:53:02Z",
+        "excerpt": "Each pair of potentially related words (1,209,932 unique combinations) is evaluated by four LLMs: GPT-4o, Claude 3.5 Sonnet (2024-10-22), Grok 2 (12-12), and Gemini 1.5 Pro on a of scale 0 to 10. For each generated word, the average LLM score of minimum divergences between this word and other words was used. ... Higher scores indicate better performance."
+      }
+    ]
+  },
+  {
+    "id": "mazur-elimination-game::snapshot-2026-09-10",
+    "name": "Elimination Game Benchmark",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "mazur-elimination-game",
+    "category": "Agentic",
+    "one_sentence_description": "Multi-player tournament where 8 LLM players converse, form alliances, and vote to eliminate each other, with final rankings scored via TrueSkill.",
+    "scoring": {
+      "metric": "TrueSkill mean (μ), with σ uncertainty reported separately",
+      "unit": "TrueSkill points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Lech Mazur (lechmazur)",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "Elimination Game Leaderboard table, mu (Exposed) column",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-2817d61f576e.txt",
+        "sha256": "788ec3eb6fa034a82b22760f95eb04a514aa0c15e1c15d134fc350a59d1696f0",
+        "fetched_at": "2026-09-10T21:53:04Z",
+        "excerpt": "The **Elimination Game** is a multi-player tournament that tests LLMs in social reasoning, strategy, and deception. ... We use Microsoft's TrueSkill to measure skill in **multi-player** scenarios. After each game, partial points by rank feed into the TrueSkill environment. Multiple random \"passes\" through all game logs help remove order bias, yielding final μ±σ."
+      }
+    ]
+  },
+  {
+    "id": "mmmu::snapshot-2026-09-10",
+    "name": "MMMU",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "mmmu",
+    "category": "Vision",
+    "one_sentence_description": "A multimodal benchmark of 11.5K college-level questions across six disciplines and 30 subjects, with 30 heterogeneous image types.",
+    "scoring": {
+      "metric": "Zero-shot accuracy (percent) on multimodal college-level questions, reported overall and per discipline for the Val and Test splits",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "MMMU Team (Ohio State University et al.)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://mmmu-benchmark.github.io/",
+    "publication_urls": [
+      {
+        "url": "https://mmmu-benchmark.github.io/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://mmmu-benchmark.github.io/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Leaderboard section ('Last updated: 09/05/2025'): expand the 'MMMU (Val)' or 'MMMU (Test)' table and read the 'Overall' accuracy column per model.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://mmmu-benchmark.github.io/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-289800e50579.txt",
+        "sha256": "62f89c6d72435c77d3d9ee2551f5016a749fd5add433713be5027d5771c5694c",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "We introduce MMMU: a new benchmark designed to evaluate multimodal models on massive multi-discipline tasks demanding college-level subject knowledge and deliberate reasoning. MMMU includes 11.5K meticulously collected multimodal questions from college exams, quizzes, and textbooks, covering six core disciplines: Art & Design, Business, Science, Health & Medicine, Humanities & Social Science, and Tech & Engineering. ... Even the advanced GPT-4V only achieves a 56% accuracy"
+      }
+    ]
+  },
+  {
+    "id": "otis-mock-aime::2024-2025",
+    "name": "OTIS Mock AIME 2024-2025",
+    "version": "2024-2025",
+    "version_status": "published",
+    "family": "otis-mock-aime",
+    "category": "Math",
+    "one_sentence_description": "A 45-problem math benchmark of OTIS Mock AIME exam questions from 2024 and 2025, harder than MATH Level 5 but easier than FrontierMath, scored by exact match of the final integer answer.",
+    "scoring": {
+      "metric": "Accuracy: fraction of the 45 problems for which the model's extracted final answer exactly matches the answer key (integer 0-999)",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Epoch AI",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025",
+    "publication_urls": [
+      {
+        "url": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://epoch.ai/benchmarks/otis-mock-aime-2024-2025 --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Per-model results table on the benchmark page with columns 'Benchmark', 'Accuracy', 'Samples with API errors', 'Run ID'; read the Accuracy cell for the model row.",
+      "version_guard": "Verify the published version 2024-2025 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://epoch.ai/benchmarks/otis-mock-aime-2024-2025",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-746dd121a2db.txt",
+        "sha256": "166a3d1165890c618882d893cf90b495e8faa16540251fc6869ff3e93c0c494f",
+        "fetched_at": "2026-09-10T21:53:26Z",
+        "excerpt": "45 competition-style math problems from OTIS, harder than MATH Level 5 but easier than FrontierMath. […] Mock AIME 2024-2025 is a collection of problems from the OTIS Mock AIME exams from 2024 and 2025. […] The OTIS Mock AIME is an annual 3-hour exam consisting of 15 problems whose answers are integers between 0 and 999. […] In September of 2025, we switched to a model-based answer extractor […] This is then compared for an exact match in the answer key."
+      }
+    ]
+  },
+  {
+    "id": "pingpong-english::2",
+    "name": "PingPong English (unadjusted mean)",
+    "version": "2",
+    "version_status": "published",
+    "family": "pingpong-english",
+    "category": "Roleplay",
+    "one_sentence_description": "Role-playing benchmark where LLM interrogators emulate users in multi-turn character conversations, and LLM judges rate in-character, entertaining, and fluent qualities.",
+    "scoring": {
+      "metric": "Unadjusted Avg score with character:entertain:fluency weights 1:1:1",
+      "unit": "points",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Ilya Gusev (IlyaGusev)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://ilyagusev.github.io/ping_pong_bench/en_v2",
+    "publication_urls": [
+      {
+        "url": "https://ilyagusev.github.io/ping_pong_bench/en_v2",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://ilyagusev.github.io/ping_pong_bench/en_v2 --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "English v2 table, unadjusted Avg score with 1:1:1 weights, not Length norm score or alternative weight presets; average in-character, entertaining and fluency ratings. Preserve language, interrogator and both judge identities; do not mix legacy v1 or Russian results.",
+      "version_guard": "Verify the published version 2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/IlyaGusev/ping_pong_bench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-ec4a888e8a96.txt",
+        "sha256": "352ad231e3fd18a286ddc2d14d461b5f486854bf07d8329b469c10f5f2bb619d",
+        "fetched_at": "2026-09-10T21:53:07Z",
+        "excerpt": "For now, we use three criteria for evaluation: whether the bot was in character, entertaining, and fluent. We average numbers across criteria, characters, and situations to compose the final rating."
+      },
+      {
+        "url": "https://ilyagusev.github.io/ping_pong_bench/en_v2",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/final-027465e4c485.txt",
+        "sha256": "a1a983a8048acb0603213c28e5ab0ecfc71edcd6af43dec126735d5804cb9220",
+        "fetched_at": "2026-09-10T22:22:23Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "rp-bench-community::snapshot-2026-09-10",
+    "name": "RP-Bench Community Elo",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "rp-bench-community",
+    "category": "Roleplay",
+    "one_sentence_description": "A roleplay leaderboard reporting Bayesian community Elo alongside separate multi-turn judge and behavioural evaluations.",
+    "scoring": {
+      "metric": "Bayesian community Elo",
+      "unit": "Elo",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "LeviTheWeasel / lazyweasel",
+    "source_type": "huggingface",
+    "primary_url": "https://huggingface.co/spaces/lazyweasel/rp-bench-leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://huggingface.co/spaces/lazyweasel/rp-bench-leaderboard",
+        "type": "huggingface",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://huggingface.co/spaces/lazyweasel/rp-bench-leaderboard --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Read the Bayesian community ELO board; Space loads lazyweasel/roleplay-bench on startup. Do not replace community Elo with a judge score.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://huggingface.co/spaces/lazyweasel/rp-bench-leaderboard/raw/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-b1111ed980c9.txt",
+        "sha256": "80826b4bd9c7d5e4b8474804f5ea7cf11c57dc706b7122709f36535fefaddb4e",
+        "fetched_at": "2026-09-10T22:01:51Z",
+        "excerpt": "Bayesian community ELO, multi-turn judge scores, flaw hunter rankings"
+      },
+      {
+        "url": "https://huggingface.co/spaces/lazyweasel/rp-bench-leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-15f85e21286a.txt",
+        "sha256": "63067a45c305092e690412df9bf8ab97d6d0feefb124d88a051f93b0d6654f53",
+        "fetched_at": "2026-09-10T21:53:24Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "ruler::snapshot-2026-09-10",
+    "name": "RULER",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "ruler",
+    "category": "Long-context",
+    "one_sentence_description": "NVIDIA synthetic benchmark that evaluates long-context LLMs with configurable sequence length and task complexity across 13 tasks in 4 categories.",
+    "scoring": {
+      "metric": "Per-length scores at 4K-128K plus Avg. across the 13 RULER tasks (wAvg. inc/dec also reported); performance above the 4K Llama-2-7b threshold (85.6%) is underlined",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "NVIDIA",
+    "source_type": "github",
+    "primary_url": "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md",
+    "publication_urls": [
+      {
+        "url": "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md",
+        "type": "github",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md --output /tmp/benchmark-source.txt",
+      "format": "Markdown",
+      "locator": "README main results markdown table (|Models|Claimed Length|Effective Length|4K|8K|16K|32K|64K|128K|Avg.|wAvg. (inc)|wAvg. (dec)|); extract each model row's Avg. column (percent across 13 tasks)",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-8809dc275fe0.txt",
+        "sha256": "f3aae5bbd58fcd7de32aab099c455dd2bbc1da23a2efee9db3071eb9fbf894a3",
+        "fetched_at": "2026-09-10T21:53:13Z",
+        "excerpt": "RULER generates synthetic examples to evaluate long-context language models with configurable sequence length and task complexity. We benchmark 17 open-source models across 4 task categories (in total 13 tasks) in RULER, evaluating long-context capabilities beyond simple in-context recall."
+      }
+    ]
+  },
+  {
+    "id": "scicode::snapshot-2026-09-10",
+    "name": "SciCode",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "scicode",
+    "category": "Coding",
+    "one_sentence_description": "A research-level scientific coding benchmark of 80 main problems (338 subproblems) across six natural-science domains, converted from real research workflows.",
+    "scoring": {
+      "metric": "Percent of main research problems solved, i.e. generated code passing scientist-annotated gold test cases",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "SciCode team (University of Illinois Urbana-Champaign et al.)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://scicode-bench.github.io/",
+    "publication_urls": [
+      {
+        "url": "https://scicode-bench.github.io/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://scicode-bench.github.io/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "'Experiment Results' section and linked Leaderboard page (leaderboard/): per-model solve rate over the 80 main problems for the 'standard' and 'with background' setups (e.g. 4.6% for the best model in the most realistic setting).",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://scicode-bench.github.io/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-8b6335b2f45f.txt",
+        "sha256": "bc502f2e92dfc1c49d83901fbe0a832d7ec56f99d21258c944a55f6f815c1d3d",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "SciCode is a challenging benchmark designed to evaluate the capabilities of language models (LMs) in generating code for solving realistic scientific research problems. ... In total, SciCode contains 338 subproblems decomposed from 80 challenging main problems ... Claude3.5-Sonnet, the best-performing model among those tested, can solve only 4.6% of the problems in the most realistic setting."
+      }
+    ]
+  },
+  {
+    "id": "simple-bench::snapshot-2026-09-10",
+    "name": "SimpleBench",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "simple-bench",
+    "category": "Reasoning",
+    "one_sentence_description": "A multiple-choice text benchmark of over 200 questions covering spatio-temporal reasoning, social intelligence, and linguistic adversarial robustness, on which a non-specialized human baseline outperforms every tested LLM.",
+    "scoring": {
+      "metric": "MCQ leaderboard 'Score (AVG@5)': percent accuracy averaged over 5 runs (temperature 0.7, top-p 0.95 except o1 series)",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "SimpleBench Team (AI Explained)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://simple-bench.com/",
+    "publication_urls": [
+      {
+        "url": "https://simple-bench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://simple-bench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Homepage 'Leaderboard' section, MCQ tab: read the 'Score (AVG@5)' column per model row; settings stated as 'temperature: 0.7, top-p: 0.95 (except o1 series)'.",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://simple-bench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-74442715952b.txt",
+        "sha256": "d46479aee50fe5f44980e515b3e80046fbca03e69d90494a7a3b075355ca1a0b",
+        "fetched_at": "2026-09-10T21:51:26Z",
+        "excerpt": "SimpleBench includes over 200 questions covering spatio-temporal reasoning, social intelligence, and what we call linguistic adversarial robustness (or trick questions). ... a non-specialized human baseline is 83.7%, based on our small sample of nine participants, outperforming every tested LLM"
+      }
+    ]
+  },
+  {
+    "id": "slop-index::snapshot-2026-09-10",
+    "name": "The Slop Index",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "slop-index",
+    "category": "Writing",
+    "one_sentence_description": "Leaderboard scoring how much each model's writing reads like chatbot slop versus pre-AI human writing, blending live arena votes with four mechanical axes.",
+    "scoring": {
+      "metric": "Slop Score 0-100 = 40% live arena Elo votes + 15% each for concise, templating, rhythm, and tells measured against pre-AI human writing; higher = sloppier",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": false,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "The Slop Index (hgaddipati1118)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://theslopindex.com/leaderboard",
+    "publication_urls": [
+      {
+        "url": "https://theslopindex.com/leaderboard",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://theslopindex.com/leaderboard --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Full table; 'slop score' column ranked sloppiest first (0-100), with component columns arena 40%, concise, templating, rhythm, tells",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://theslopindex.com/leaderboard",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-aded4c9cef64.txt",
+        "sha256": "037dc6007142e16195c658413f9e8093604a10c9a6254d9281b87a148b8eecb9",
+        "fetched_at": "2026-09-10T21:53:22Z",
+        "excerpt": "Slop Score, 0–100, sloppiest first. … Every board blends the same way: 40% the arena votes cast on that domain’s pairs, 60% the machine measurement against the pre-AI baseline. … The arena 40% plus conciseness, templating, rhythm and tells at 15% each. Every axis is normalised to a 0–100 slop scale, higher = sloppier"
+      }
+    ]
+  },
+  {
+    "id": "slopbench::snapshot-2026-09-10",
+    "name": "SlopBench",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "slopbench",
+    "category": "Writing",
+    "one_sentence_description": "Runs 53 chat-style prompts and reports the percentage of model responses containing classic AI slop patterns, detected deterministically without an LLM judge.",
+    "scoring": {
+      "metric": "Slop Rate: percentage of responses with at least one slop-pattern hit (lower is better)",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": false,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "Dan Cleary (@DanJCleary)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://slop-bench.vercel.app/",
+    "publication_urls": [
+      {
+        "url": "https://slop-bench.vercel.app/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://slop-bench.vercel.app/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Slop Rate as defined in 'How scoring works'; detection logic in scripts/scoring.ts and pattern list in data/sloplist.json; published results at slop-bench.vercel.app",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://raw.githubusercontent.com/Dan-Cleary/slopbench/main/README.md",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/extra-1f5132ba5b53.txt",
+        "sha256": "d6494fbd6766d0880f9b5e39ba0155dffe0c140e3800d6226a385a2059bf8d35",
+        "fetched_at": "2026-09-10T21:53:06Z",
+        "excerpt": "SlopBench runs 53 chat-style prompts, scores each response for slop patterns, and reports the percentage of outputs containing classic AI slop. ... The **Slop Rate** is the percentage of responses that contained at least one hit. Lower is better. Scoring is deterministic and runs locally — no LLM-as-judge."
+      },
+      {
+        "url": "https://slop-bench.vercel.app/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/supp-b15e837d3c28.txt",
+        "sha256": "4bbba3fdc8453b60dc1eb77e27dd0c6a94156a4a0b9a073e3849295e9eedfb27",
+        "fetched_at": "2026-09-10T22:08:32Z",
+        "excerpt": "Results published in this source; use the exact locator and preserve the source field identity."
+      }
+    ]
+  },
+  {
+    "id": "spiral-bench::1.2",
+    "name": "Spiral-Bench",
+    "version": "1.2",
+    "version_status": "published",
+    "family": "spiral-bench",
+    "category": "Safety/Alignment",
+    "one_sentence_description": "A LLM-judged benchmark measuring sycophancy and delusion reinforcement in simulated multi-turn chats.",
+    "scoring": {
+      "metric": "Safety Score: weighted average of protective vs risky behaviours, scaled 0-100",
+      "unit": "points",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "sam-paech (https://github.com/sam-paech/spiral-bench)",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://eqbench.com/spiral-bench.html",
+    "publication_urls": [
+      {
+        "url": "https://eqbench.com/spiral-bench.html",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://eqbench.com/spiral-bench.html --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "Safety Score column; calculation described under 'How the Safety Score is Calculated'",
+      "version_guard": "Verify the published version 1.2 before reading results.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://eqbench.com/spiral-bench.html",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/a-9e8dbf053035.txt",
+        "sha256": "33a4726f0a977b0d6b00983c952342f86a466e12e96c94d6bfb6509b721c7248",
+        "fetched_at": "2026-09-10T21:48:04.437000+00:00",
+        "excerpt": "The final Safety Score is a weighted average of the contributing behaviours, scaled to 0–100. Higher is safer."
+      }
+    ]
+  },
+  {
+    "id": "swe-bench-multilingual::snapshot-2026-09-10",
+    "name": "SWE-bench Multilingual",
+    "version": "snapshot-2026-09-10",
+    "version_status": "snapshot",
+    "family": "swe-bench-multilingual",
+    "category": "Coding",
+    "one_sentence_description": "A 300-instance SWE-bench variant with tasks from 42 repositories across 9 programming languages.",
+    "scoring": {
+      "metric": "% Resolved: percentage of task instances solved",
+      "unit": "percent",
+      "range": [
+        null,
+        null
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate."
+    },
+    "maintainer": "SWE-bench Team",
+    "source_type": "official_leaderboard",
+    "primary_url": "https://www.swebench.com/",
+    "publication_urls": [
+      {
+        "url": "https://www.swebench.com/",
+        "type": "official_leaderboard",
+        "role": "Primary results publication and collection entry point"
+      }
+    ],
+    "how_to_collect": {
+      "command": "curl --fail --location --max-time 30 --user-agent 'BenchmarkHeavenResearch/1.0' https://www.swebench.com/ --output /tmp/benchmark-source.txt",
+      "format": "HTML/embedded data",
+      "locator": "'Official Leaderboards' > 'Multilingual' table: '% Resolved' column per model row ('Each entry reports % Resolved, the percentage of task instances solved.').",
+      "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+      "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
+    },
+    "update_cadence": {
+      "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+      "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+    },
+    "saturated": {
+      "value": false,
+      "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+    },
+    "superseded_by": null,
+    "status": "active",
+    "first_seen": "2026-09-10",
+    "last_verified": "2026-09-10",
+    "evidence": [
+      {
+        "url": "https://www.swebench.com/",
+        "file": "ops/rebuild-2026-09/evidence/phase-04/sources/b-433a37bad4e6.txt",
+        "sha256": "d93de8710857ab7b2b095c0d52e9458431924162d3cbd60e59b9c6f8412cb8d8",
+        "fetched_at": "2026-09-10T21:49:10Z",
+        "excerpt": "Multilingual 300 instances Tasks from 42 repositories across 9 programming languages."
+      }
+    ]
+  }
+]

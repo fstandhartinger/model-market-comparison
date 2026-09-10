@@ -1,0 +1,230 @@
+SciCode - SciCode Benchmark
+Skip to content
+SciCode Benchmark
+SciCode
+Initializing search
+scicode-bench/SciCode
+Overview
+Leaderboard
+Preprint
+SciCode Benchmark
+scicode-bench/SciCode
+Overview
+Overview
+Example problem
+FAQ
+Problem list
+Leaderboard
+Preprint
+Table of contents
+Introduction
+Overview
+Benchmark Statistics
+Experiment Results
+Citation
+SciCode: A Research Coding Benchmark Curated by Scientists
+Minyang Tian
+1,2*‡
+, Luyu Gao
+3*
+, Shizhuo Dylan Zhang
+1
+, Xinan Chen
+1†
+, Cunwei Fan
+1†
+, Xuefei Guo
+1†
+, Roland Haas
+1†
+, Pan Ji
+4†
+, Kittithat Krongchon
+1†
+, Yao Li
+1†
+, Shengyan Liu
+1†
+, Di Luo
+5,6,11†
+, Yutao Ma
+7†
+, Hao Tong
+1†
+, Kha Trinh
+7†
+, Chenyu Tian
+8†
+, Zihan Wang
+1†
+, Bohao Wu
+1†
+, Yanyu Xiong
+9†
+, Shengzhu Yin
+1†
+, Minhui Zhu
+1†
+, Kilian Lieret
+10
+, Yanxin Lu
+1
+, Genglin Liu
+1
+, Yufeng Du
+1
+, Tianhua Tao
+1
+, Ofir Press
+10
+, Jamie Callan
+3
+, Eliu Huerta
+1,2,7‡
+, Hao Peng
+1‡
+1
+University of Illinois Urbana-Champaign
+2
+Argonne National Laboratory
+3
+Carnegie Mellon University
+4
+University of North Carolina at Chapel Hill
+5
+Massachusetts Institute of Technology
+6
+Harvard University
+7
+University of Chicago
+8
+University of Texas at Austin
+9
+Stanford University
+10
+Princeton University
+11
+The NSF AI Institute for Artificial Intelligence and Fundamental Interactions
+* Equal contribution lead authors. † Data curation, alphabetical order.
+‡ Corresponding to: {mtian8, haopeng}@illinois.edu, elihu@{anl.gov, uchicago.edu}
+Paper
+Learn all the details
+Read the paper
+Dataset
+Browse all the problems
+Download Dataset
+Github Repo
+Learn how to evaluate your model
+Installation & usage
+FAQ
+Read the FAQ
+Leaderboard
+How good are LMs at science, really?
+Browse the results
+Introduction
+SciCode is a challenging benchmark designed to evaluate the capabilities of language models (LMs) in generating code for solving realistic scientific research problems. It has a diverse coverage of
+16
+subdomains from
+6
+domains: Physics, Math, Material Science, Biology, and Chemistry. Unlike previous benchmarks that consist of exam-like question-answer pairs, SciCode is converted from real research problems. SciCode problems naturally factorize into multiple subproblems, each involving knowledge recall, reasoning, and code synthesis. In total, SciCode contains
+338
+subproblems decomposed from
+80
+challenging main problems, and it offers optional descriptions specifying useful scientific background information and scientist-annotated gold-standard solutions and test cases for evaluation. Claude3.5-Sonnet, the best-performing model among those tested, can solve only
+4.6%
+of the problems in the most realistic setting. Broadly, SciCode demonstrates a realistic and scientists' everyday workflow of identifying critical science concepts and facts and then transforming them into computation and simulation code. We believe SciCode not only helps demonstrate contemporary LLMs' progress towards helpful assistant for scientists but also helps shed light on future building and evaluation of scientific AI.
+Overview
+SciCode sources challenging and realistic research-level coding problems across 6 natural science disciplines, covering a total of 16 subfields. This diverse selection ensures a comprehensive representation of the natural sciences, where extensive code development is essential. SciCode is mainly drawn from the scripts that scientists use in their everyday workflow. Many of these have been used in one or more publications, demonstrating their robustness and correctness.
+
+Among various coding necessities, Scicode mainly focuses on: 1. Numerical methods. 2. Simulation of systems. 3. Scientific calculation. These are the tasks we believe require intense scientific knowledge and reasoning to optimally test LM’s science capability. The below figure is an example of the combination of 1 and 3.
+
+In designing test cases for evaluation, we incorporate domain-specific test cases in addition to numerical cases. These tests are extracted from real scientific workflows: scientists must design domain-specific test cases to verify code accuracy by reproducing results published in papers or matching analytical solutions derived from theoretical models. Each problem goes through
+3
+rounds of validation (i.e. by in-domain scientists, out-of-domain scientists, GPT4) for quality control.
+Benchmark Statistics
+Fields
+Subfields
+Mathematics
+Numerical Linear Algebra
+(8),
+Computational Mechanics
+(5),
+Computational Finance
+(1)
+Physics
+Condensed Matter Physics
+(13),
+Optics
+(10),
+Quantum Information/Computing
+(6),
+Computational Physics
+(5),
+Astrophysics
+(2),
+Particle Physics
+(1)
+Chemistry
+Quantum Chemistry
+(5),
+Computational Chemistry
+(3)
+Biology
+Ecology
+(6),
+Biochemistry
+(1),
+Genetics
+(1)
+Material Science
+Semiconductor Materials
+(7),
+Molecular Modeling
+(6)
+Left: Distribution of Main Problems   Right: Distribution of Subproblems
+We include several research problems that are built upon or reproduce methods used in Nobel Prize-winning studies to highlight current trends in scientific research: the self-consistent field (SCF) method for density functional theory (DFT) calculations (
+The Nobel Prize in Chemistry 1998
+), the PMNS matrix for neutrino oscillation in matter (
+The Nobel Prize in Physics 2015
+), the Haldane model for the anomalous quantum Hall effect (
+The Nobel Prize in Physics 2016
+), optical tweezer simulations for microscopic thermodynamics (
+The Nobel Prize in Physics 2018
+), and the replica method for spin glasses (
+The Nobel Prize in Physics 2021
+).
+Experiment Results
+We evaluate our model using zero-shot prompts. We keep the prompts general and design different ones for different evaluation setups only to inform the model about the tasks. We keep prompts the same across models and fields, and they contain the model’s main and sub-problem instructions and code for previous subproblems. The standard setup means the model is tested without background knowledge and carrying over generated solutions to previous subproblems. The scientists' annotated background provides the necessary knowledge and reasoning steps to solve the problems, shifting the evaluation’s focus more towards the models’ coding and instruction-following capabilities.
+Citation
+@misc
+{
+tian2024scicode
+,
+title
+=
+{SciCode: A Research Coding Benchmark Curated by Scientists}
+,
+author
+=
+{Minyang Tian and Luyu Gao and Shizhuo Dylan Zhang and Xinan Chen and Cunwei Fan and Xuefei Guo and Roland Haas and Pan Ji and Kittithat Krongchon and Yao Li and Shengyan Liu and Di Luo and Yutao Ma and Hao Tong and Kha Trinh and Chenyu Tian and Zihan Wang and Bohao Wu and Yanyu Xiong and Shengzhu Yin and Minhui Zhu and Kilian Lieret and Yanxin Lu and Genglin Liu and Yufeng Du and Tianhua Tao and Ofir Press and Jamie Callan and Eliu Huerta and Hao Peng}
+,
+year
+=
+{2024}
+,
+eprint
+=
+{2407.13168}
+,
+archivePrefix
+=
+{arXiv}
+,
+primaryClass
+=
+{cs.AI}
+}
+Next
+Example problem
+Made with
+Material for MkDocs

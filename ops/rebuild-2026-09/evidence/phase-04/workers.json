@@ -1,0 +1,37 @@
+{
+  "agent_workers": [
+    {
+      "task": "a",
+      "session_id": "ses_f72b902d8ffeHwNB6577hg124A",
+      "actual_models_from_local_message_metadata": [
+        "chutes/moonshotai/Kimi-K3-TEE"
+      ],
+      "outcome": "exit 143; no final output",
+      "tool_receipt": "ops/rebuild-2026-09/evidence/phase-04/worker-a-tools.json.gz",
+      "sha256": "ec36df5970efa05be5afab99f787f0314edfb7a7b40fa05b0665db994936e314"
+    },
+    {
+      "task": "b",
+      "session_id": "ses_f72b92972ffe1SYg1LUY8tvHOC",
+      "actual_models_from_local_message_metadata": [
+        "chutes/moonshotai/Kimi-K3-TEE"
+      ],
+      "outcome": "timeout; no final output",
+      "tool_receipt": "ops/rebuild-2026-09/evidence/phase-04/worker-b-tools.json.gz",
+      "sha256": "8123504da34ac5fc878f8d06b6578ac6a5a8adb0b1c745592ce9a8e61ab7b2b4"
+    },
+    {
+      "task": "aa",
+      "session_id": "ses_f72b92954ffeysERVcowcqGMs3",
+      "actual_models_from_local_message_metadata": [
+        "chutes/moonshotai/Kimi-K3-TEE"
+      ],
+      "outcome": "timeout; no final output",
+      "tool_receipt": "ops/rebuild-2026-09/evidence/phase-04/worker-aa-tools.json.gz",
+      "sha256": "7ccd21c6ee0ab8f99641a9dd76e7952b90f433e84c978bc3340c24067452fe32"
+    }
+  ],
+  "initial_attempts": "Three opencode calls requested an external temporary directory and were denied. No permissions changed; subsequent tasks used the allowed repo workspace. No failed run is a clean review.",
+  "owner": "openai/gpt-6-astra",
+  "recovery": "Primary responses preserved with hashes. Bounded independent completions over those sources perform first-pass metadata extraction; owner validates before acceptance."
+}

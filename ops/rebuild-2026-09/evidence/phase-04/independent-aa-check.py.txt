@@ -1,0 +1,42 @@
+import re,json,hashlib
+from pathlib import Path
+html=Path('.phase04-work/aa/raw/model-gpt-5-6-sol.html').read_text();snap=json.loads(Path('data/raw/benchmarks/aa-observed-fields.json').read_text())
+chunks=[]
+for s in re.findall(r'<script[^>]*>self\.__next_f\.push\((\[.*?\])\)</script>',html,re.S):
+ x=json.loads(s)
+ if x[0]==1 and isinstance(x[1],str):chunks.append(x[1])
+records={}
+for line in ''.join(chunks).splitlines():
+ if ':' not in line:continue
+ k,v=line.split(':',1)
+ if not re.fullmatch('[a-f0-9]+',k):continue
+ try:records[k]=json.loads(v)
+ except json.JSONDecodeError:pass
+
+def visit(x):
+ if isinstance(x,dict):
+  yield x
+  for v in x.values():yield from visit(v)
+ elif isinstance(x,list):
+  for v in x:yield from visit(v)
+def deref(x):
+ if isinstance(x,str) and re.match(r'^\$[a-f0-9]+(?::|$)',x):
+  keys=x[1:].split(':');v=records[keys[0]]
+  for k in keys[1:]:
+   v=deref(v);v=v[3] if k=='props' and isinstance(v,list) else v[int(k)] if isinstance(v,list) else v[k]
+  return deref(v)
+ if isinstance(x,dict):return {k:deref(v) for k,v in x.items()}
+ if isinstance(x,list):return [deref(v) for v in x]
+ return x
+source={}
+for rec in records.values():
+ for o in visit(rec):
+  if isinstance(o.get('id'),str) and re.fullmatch(r'[a-f0-9]{8}-[a-f0-9-]{27,}',o['id']) and isinstance(o.get('slug'),str) and 'intelligenceIndex' in o:source[o['id']]=o
+fields=[i['field'] for i in snap['inventory']];count=0
+assert snap['source_sha256']==hashlib.sha256(html.encode()).hexdigest()
+assert len(source)==len(snap['rows'])==snap['count']
+for r in snap['rows']:
+ o=source[r['source_id']];assert r['slug']==o['slug'] and r['name']==o['name'];assert r['variant']==(deref(o.get('effort')) or {}).get('slug')
+ expected={k:deref(o[k]) for k in fields if k in o};assert expected==r['fields'],r['source_id'];count+=sum(isinstance(v,(float,int)) for v in expected.values())
+res={'method':'Independent Python standard-library Flight decode and recursive source-field comparison against JS output; no source execution.','source_sha256':snap['source_sha256'],'row_count':len(source),'numeric_scalar_observations_compared':count,'all_exact_rows_fields_units_nulls_and_nested_values_equal':True,'version_fields_kept_separate':['terminalbenchV21','terminalbenchV40'],'command':'python3 /tmp/bh-phase04/independent-aa-check.py'}
+Path('ops/rebuild-2026-09/evidence/phase-04/aa-independent-check.json').write_text(json.dumps(res,indent=2)+'\n');print(json.dumps(res))
