@@ -1,0 +1,110 @@
+{
+  "base_url": "https://model-market-comparison.app.mintapis.com",
+  "checked_at": "2026-09-11T00:02:29Z",
+  "dataset_equal_except_runtime_source": true,
+  "runtime_source": "bundled",
+  "generated_at": "2026-09-10T23:52:39.039Z",
+  "checks": [
+    {
+      "path": "/api/benchmarks",
+      "status": 200,
+      "bytes": 288961,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?benchmark_id=aa-coding-agent-index::1.4&limit=500",
+      "status": 200,
+      "bytes": 53289,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?benchmark_id=aa-coding-agent-index::1.5&limit=500",
+      "status": 200,
+      "bytes": 11602,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?benchmark_id=aa-coding-agent-index",
+      "status": 404,
+      "bytes": 65,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?model_id=imaginary",
+      "status": 404,
+      "bytes": 34,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?limit=501",
+      "status": 400,
+      "bytes": 62,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?basis=assumed",
+      "status": 400,
+      "bytes": 62,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?basis=self_reported&limit=500",
+      "status": 200,
+      "bytes": 502871,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?basis=derived&offset=1&limit=2",
+      "status": 200,
+      "bytes": 2495,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?model_id=deepseek-v3-dec-24::default&benchmark_id=longbench::2",
+      "status": 200,
+      "bytes": 2981,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?model_id=deepseek-v3-dec-24::default&benchmark_id=aa-livecodebench::unknown-window",
+      "status": 404,
+      "bytes": 65,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?model_id=deepseek-v3-dec-24::default&benchmark_id=aa-livecodebench::snapshot-2026-09-10",
+      "status": 200,
+      "bytes": 1523,
+      "cors": "*"
+    },
+    {
+      "path": "/api/benchmark-scores?model_id=deepseek-v3-dec-24::default&benchmark_id=helmet::snapshot-2026-09-10",
+      "status": 200,
+      "bytes": 1267,
+      "cors": "*"
+    },
+    {
+      "path": "/api/models/deepseek-v3-dec-24::default",
+      "status": 200,
+      "bytes": 30564,
+      "cors": "*"
+    },
+    {
+      "path": "/api/dataset?phase05_verify=1789084948473675715",
+      "status": 200,
+      "bytes": 18703100,
+      "cors": "*"
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "bytes": 22,
+      "cors": "*"
+    }
+  ],
+  "root": {
+    "status": 200,
+    "bytes": 5730665,
+    "https_verified": true
+  }
+}
