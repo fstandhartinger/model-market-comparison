@@ -15,14 +15,15 @@
     {
       "model_id": "z-ai/glm-5.3",
       "previous_identity_sha256": "32034bdc5d45fe156cb65a77951b9c4107d8b9b37a1cf23c697ea243be95617d",
-      "current_identity_sha256": "cab60139371dea3f28b32afc1c4e0b5a16a6abd869024f06086ae178c059c3ec",
+      "current_identity_sha256": "38c4b0fb717cbc2d70228bff651cb67b3c3a721038367905db546a603a2087d3",
       "removed": [
+        "Io Net/io-net/fp4/fp4",
         "Morph/morph/fp4/fp4"
       ],
       "expires_at": "2026-09-12T03:50:00Z",
-      "review_file": "ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json",
-      "review_sha256": "ecfd09a073d9c18b0bd1b659ffc9957f3a47218a67d210ef2ff2cac09a6cecf3",
-      "owner_acceptance": "Verified two complete successful primary responses, source hashes, exact prior-minus-current identity sets and full GLM review. Only current published-list absence is accepted. No permanent-retirement inference; all other shrink or HTTP/schema failure remains fatal."
+      "review_file": "ops/rebuild-2026-09/evidence/phase-08/glm-quantization-round1-review.json",
+      "review_sha256": "205054b1b60a7a9b0349ff24906ed55890870ac8d6f123c584cd35ab19111b75",
+      "owner_acceptance": "Verified both full HTTP-200 primary responses and exact complete identity sets. Morph and Io Net now publish fp8 identities instead of the prior fp4 identities. Only this current-list transition is accepted, not permanent provider retirement or physical precision assurance. All other shrink, schema, price and HTTP guards remain enforced."
     },
     {
       "model_id": "deepseek/deepseek-v4-pro-0813",

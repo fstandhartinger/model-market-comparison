@@ -1,0 +1,80 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/build-dataset.mjs"
+    ],
+    "started_at": "2026-09-11T06:28:05.024855+00:00",
+    "finished_at": "2026-09-11T06:28:06.121763+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/source-followup-checks/01.txt.gz",
+    "sha256": "8c4ddb2010ea226512f24517403a4295cf93729bb038a7a95d7351e39aeaa97b",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  },
+  {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "started_at": "2026-09-11T06:28:06.122030+00:00",
+    "finished_at": "2026-09-11T06:28:14.127048+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/source-followup-checks/02.txt.gz",
+    "sha256": "ecfeb0c0c96d51ee92ad867bab363c17884c28ff7639a716f00e20990c2fe51d",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  },
+  {
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit",
+      "-p",
+      "."
+    ],
+    "started_at": "2026-09-11T06:28:14.127388+00:00",
+    "finished_at": "2026-09-11T06:28:28.520162+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/source-followup-checks/03.txt.gz",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "started_at": "2026-09-11T06:28:28.520464+00:00",
+    "finished_at": "2026-09-11T06:29:11.078890+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/source-followup-checks/04.txt.gz",
+    "sha256": "0419229c926d5f7640b969158209f0b78861042022d8cfc3472599dd18de48a9",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "test/production/prerender.mjs"
+    ],
+    "started_at": "2026-09-11T06:29:11.079141+00:00",
+    "finished_at": "2026-09-11T06:29:11.190051+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/source-followup-checks/05.txt.gz",
+    "sha256": "2064ab521469f038eb5f2acd94134cdd3c504a4a0a8dbbf0fb13554f1440cbff",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "started_at": "2026-09-11T06:29:11.190488+00:00",
+    "finished_at": "2026-09-11T06:29:11.475245+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/source-followup-checks/06.txt.gz",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  }
+]
