@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-10T20:13:54.198Z",
+  "collected_at": "2026-09-11T06:32:14.403Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,19 +13,41 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-10T20:13:52.788Z",
+      "fetched_at": "2026-09-11T06:32:13.755Z",
       "http_status": 200,
-      "bytes": 3501900,
-      "sha256": "345d1486b26aa539c43da9f6bc0736e057ca3249753c54c82a324d1cec3b2847"
+      "bytes": 3508863,
+      "sha256": "baaa330c53e0fe1eb3a4c346bd2e43ae97444ad2b8f6b55a525440d7f3879b9b"
     }
   ],
   "coverage": {
-    "published_rows": 138,
-    "scored_denominator": 636,
+    "published_rows": 141,
+    "scored_denominator": 637,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 138,
+  "count": 141,
   "rows": [
+    {
+      "source_id": "8decf027-5114-4721-9ee1-81c0552980a0",
+      "slug": "agnes-2-5-pro-alpha",
+      "name": "Agnes 2.5 Pro Alpha",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 56648.74792419791,
+        "answer": 21442.26923258872,
+        "output": 78091.01715678663
+      },
+      "canonical_token_counts": {
+        "input": 3782275112,
+        "output": 163800947,
+        "answer": 26791839,
+        "reasoning": 137009108
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 23.090679152178527,
+        "reasoning_output_share": 0.7254195166962908
+      }
+    },
     {
       "source_id": "8014c311-fa23-4a4b-8485-8a864db8a113",
       "slug": "celeris-1",
@@ -1256,6 +1278,50 @@
         "basis": "derived",
         "input_output_ratio": 26.374421968018808,
         "reasoning_output_share": 0.5216701097888611
+      }
+    },
+    {
+      "source_id": "050c61cd-cddc-463a-a30a-a82aaa37be59",
+      "slug": "gpt-5-6-luna-low",
+      "name": "GPT-5.6 Luna (low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 558.7452576637828,
+        "answer": 1955.358913324883,
+        "output": 2514.104170988666
+      },
+      "canonical_token_counts": {
+        "input": 228143479,
+        "output": 10118765,
+        "answer": 4976669,
+        "reasoning": 5142096
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 22.546573519594535,
+        "reasoning_output_share": 0.2222442745656229
+      }
+    },
+    {
+      "source_id": "58b812bf-8498-46db-b834-f43ccc614b61",
+      "slug": "gpt-5-6-luna-medium",
+      "name": "GPT-5.6 Luna (medium)",
+      "variant": "medium",
+      "tokens_per_task": {
+        "reasoning": 1549.1132301487414,
+        "answer": 2937.209736835318,
+        "output": 4486.322966984059
+      },
+      "canonical_token_counts": {
+        "input": 456195832,
+        "output": 17919951,
+        "answer": 7188460,
+        "reasoning": 10731491
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 25.45742630657863,
+        "reasoning_output_share": 0.34529685926515813
       }
     },
     {

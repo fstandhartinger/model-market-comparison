@@ -1,0 +1,2369 @@
+{
+  "ok": true,
+  "checked_at": "2026-09-11T06:39:03.351Z",
+  "sources_attempted": 75,
+  "checks": [
+    {
+      "id": "aa-benchmark-fields",
+      "status": "retained_after_failure",
+      "reason": "aa-briefcase::snapshot-2026-09-10: protocol not approved: round 1: 1 disputed rows quarantined; producer uncertainty cannot be overruled by a critic pass; clean critic round but every row was flagged; nothing accept-eligible"
+    },
+    {
+      "id": "aa-coding-agent-index::1.5",
+      "status": "updated",
+      "rows": 13
+    },
+    {
+      "id": "aider-polyglot::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 69,
+      "source": {
+        "url": "https://aider.chat/docs/leaderboards/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/cea6cab3ac65e4d41cce.gz",
+        "sha256": "cea6cab3ac65e4d41cce072fcac5540497d757b3a6f72d997b7c3607b44c470e",
+        "fetched_at": "2026-09-11T06:39:16.092571+00:00",
+        "retrieved_at": "2026-09-11T06:39:16.092571+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 569855,
+        "final_url": "https://aider.chat/docs/leaderboards/"
+      }
+    },
+    {
+      "id": "arc-agi::1",
+      "status": "checked_unchanged",
+      "rows": 221,
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v1.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2aa739d957fc2ca6f531.gz",
+        "sha256": "2aa739d957fc2ca6f531763ab1818c804f583fee0ed4169cea46a6dbe314d277",
+        "retrieved_at": "2026-09-11T06:41:08.662655+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 121488,
+        "final_url": "https://arcprize.org/media/data/leaderboard/v1.json",
+        "fetched_at": "2026-09-11T06:41:08.662655+00:00"
+      }
+    },
+    {
+      "id": "arc-agi::2",
+      "status": "checked_unchanged",
+      "rows": 224,
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v2.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/b5cb5ec6e8c7547c4f11.gz",
+        "sha256": "b5cb5ec6e8c7547c4f11a4e61e5ed7e0f28a26208f87bd16c83d1703777a2627",
+        "retrieved_at": "2026-09-11T06:41:08.909064+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 122928,
+        "final_url": "https://arcprize.org/media/data/leaderboard/v2.json",
+        "fetched_at": "2026-09-11T06:41:08.909064+00:00"
+      }
+    },
+    {
+      "id": "arc-agi::3",
+      "status": "checked_unchanged",
+      "rows": 39,
+      "source": {
+        "url": "https://arcprize.org/media/data/leaderboard/v3.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/d743d7a731ba6b9f102d.gz",
+        "sha256": "d743d7a731ba6b9f102d3624d5fe82011630b90da4200ceb34bd56cf2b221e1c",
+        "retrieved_at": "2026-09-11T06:41:11.595830+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 21914,
+        "final_url": "https://arcprize.org/media/data/leaderboard/v3.json",
+        "fetched_at": "2026-09-11T06:41:11.595830+00:00"
+      }
+    },
+    {
+      "id": "buzzbench::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 26,
+      "source": {
+        "url": "https://eqbench.com/buzzbench.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4d0f19f1f87e08772b74.gz",
+        "sha256": "4d0f19f1f87e08772b741a28b1ac39111587b832035dd1a783af3de67d51be1c",
+        "retrieved_at": "2026-09-11T06:41:14.254888+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 6478,
+        "final_url": "https://eqbench.com/buzzbench.js",
+        "fetched_at": "2026-09-11T06:41:14.254888+00:00"
+      }
+    },
+    {
+      "id": "critpt::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 13,
+      "source": {
+        "url": "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/416d4b506040d37d2d53.gz",
+        "sha256": "416d4b506040d37d2d53e6c3b2edb3acea38e432d06d9651e134a3d87560d5bb",
+        "fetched_at": "2026-09-11T06:39:29.728869+00:00",
+        "retrieved_at": "2026-09-11T06:39:29.728869+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 5874,
+        "final_url": "https://raw.githubusercontent.com/CritPt-Benchmark/CritPt/main/README.md"
+      }
+    },
+    {
+      "id": "eq-bench::4",
+      "status": "checked_unchanged",
+      "rows": 28,
+      "source": {
+        "url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/188d8ea4a393978063a6.gz",
+        "sha256": "188d8ea4a393978063a6c24dff6c92ce185169827038bfa558091212a68c29d8",
+        "retrieved_at": "2026-09-11T06:41:14.428285+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 1055693,
+        "final_url": "https://eqbench.com/eqbench4/eqbench4_data.js?v=20260725-neighbours",
+        "fetched_at": "2026-09-11T06:41:14.428285+00:00"
+      }
+    },
+    {
+      "id": "eqbench-creative-writing::3",
+      "status": "checked_unchanged",
+      "rows": 133,
+      "source": {
+        "url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/28cad62a817f8e52162f.gz",
+        "sha256": "28cad62a817f8e52162fef5e77e0312631d20f8808c379daff707619b83e5c23",
+        "retrieved_at": "2026-09-11T06:41:17.235531+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 1171829,
+        "final_url": "https://eqbench.com/creative_writing.js?v=1.0.91",
+        "fetched_at": "2026-09-11T06:41:17.235531+00:00"
+      }
+    },
+    {
+      "id": "eqbench-judgemark::4",
+      "status": "checked_unchanged",
+      "rows": 42,
+      "source": {
+        "url": "https://eqbench.com/judgemark-v4.js?v=1.1",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2b0d42aef4f614dd199d.gz",
+        "sha256": "2b0d42aef4f614dd199dc38399be7b88075a919db52020c3759f190defc92a4d",
+        "retrieved_at": "2026-09-11T06:41:19.930566+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 23060,
+        "final_url": "https://eqbench.com/judgemark-v4.js?v=1.1",
+        "fetched_at": "2026-09-11T06:41:19.930566+00:00"
+      }
+    },
+    {
+      "id": "eqbench-longform-writing::v1.11",
+      "status": "checked_unchanged",
+      "rows": 134,
+      "source": {
+        "url": "https://eqbench.com/creative_writing_longform.js?v=1.0.9",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/d5abd451059e489715ec.gz",
+        "sha256": "d5abd451059e489715ec255c3346c2abd0d9a6899ae290070d550f17695fa916",
+        "retrieved_at": "2026-09-11T06:41:22.571719+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 1123910,
+        "final_url": "https://eqbench.com/creative_writing_longform.js?v=1.0.9",
+        "fetched_at": "2026-09-11T06:41:22.571719+00:00"
+      }
+    },
+    {
+      "id": "eqbench-slop-score::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 23,
+      "source": {
+        "url": "https://eqbench.com/data/leaderboard_results.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/16925b79d955a1cacef4.gz",
+        "sha256": "16925b79d955a1cacef4d2ac91b696e73f976a4a3ceb45122544a9cf661b04de",
+        "retrieved_at": "2026-09-11T06:41:25.333679+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 1410588,
+        "final_url": "https://eqbench.com/data/leaderboard_results.json",
+        "fetched_at": "2026-09-11T06:41:25.333679+00:00"
+      }
+    },
+    {
+      "id": "helmet::snapshot-2026-09-10",
+      "status": "manual_required",
+      "reason": "Suite uses heterogeneous task/context metrics; no universal headline is published."
+    },
+    {
+      "id": "hle::snapshot-2026-09-10",
+      "status": "manual_required",
+      "reason": "README sample output is not attributable to a model and is not a current result."
+    },
+    {
+      "id": "ifbench::snapshot-2026-09-10",
+      "status": "manual_required",
+      "reason": "Captured README specifies evaluation, not a named-model result."
+    },
+    {
+      "id": "japanese-rp-bench-aratako::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 32,
+      "source": {
+        "url": "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2e584f47344e95dffbb0.gz",
+        "sha256": "2e584f47344e95dffbb01bbe78caba85f5906c98f11c34df34ad3371dacff8ec",
+        "fetched_at": "2026-09-11T06:39:51.945416+00:00",
+        "retrieved_at": "2026-09-11T06:39:51.945416+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 26360,
+        "final_url": "https://raw.githubusercontent.com/Aratako/Japanese-RP-Bench/main/README.md"
+      }
+    },
+    {
+      "id": "japanese-rp-bench-tegnike::2",
+      "status": "checked_unchanged",
+      "rows": 15,
+      "source": {
+        "url": "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/765fb30f9f7a955242c8.gz",
+        "sha256": "765fb30f9f7a955242c8558f0995417d5b3ab1cf783381adb9eba1ae0dad98a2",
+        "fetched_at": "2026-09-11T06:39:54.648568+00:00",
+        "retrieved_at": "2026-09-11T06:39:54.648568+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 12454,
+        "final_url": "https://raw.githubusercontent.com/tegnike/Japanese-RP-Bench/main/README.md"
+      }
+    },
+    {
+      "id": "livebench::2026-06-25",
+      "status": "checked_unchanged",
+      "rows": 57,
+      "source": {
+        "url": "https://livebench.ai/table_2026_06_25.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/186ca65e7bb3a07aa268.gz",
+        "sha256": "186ca65e7bb3a07aa26875eb3c45bfbe4e22d1ef36165cdaa11ad1a58087817c",
+        "fetched_at": "2026-09-11T06:40:02.988093+00:00",
+        "retrieved_at": "2026-09-11T06:40:02.988093+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 9577,
+        "final_url": "https://livebench.ai/table_2026_06_25.csv"
+      }
+    },
+    {
+      "id": "longbench::2",
+      "status": "checked_unchanged",
+      "rows": 65,
+      "source": {
+        "url": "https://longbench2.github.io/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/b16f4683a0970694a1aa.gz",
+        "sha256": "b16f4683a0970694a1aa4fc74155bc61024fa57f98f257b90cc67d54d48d2d35",
+        "fetched_at": "2026-09-11T06:40:08.271428+00:00",
+        "retrieved_at": "2026-09-11T06:40:08.271428+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 75814,
+        "final_url": "https://longbench2.github.io/"
+      }
+    },
+    {
+      "id": "mazur-creative-story-writing::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 50,
+      "source": {
+        "url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4f4312b52154d55e1b50.gz",
+        "sha256": "4f4312b52154d55e1b507d0c9a31a43dfa74c077a6ce71fc869c5cb2e6795366",
+        "fetched_at": "2026-09-11T06:40:11.213782+00:00",
+        "retrieved_at": "2026-09-11T06:40:11.213782+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 11069,
+        "final_url": "https://raw.githubusercontent.com/lechmazur/writing/main/README.md"
+      }
+    },
+    {
+      "id": "mazur-divergent-thinking::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 19,
+      "source": {
+        "url": "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/21c9bee0018f719d56c1.gz",
+        "sha256": "21c9bee0018f719d56c19a47abe11749b7d8b1f8629188920832500ee719b917",
+        "fetched_at": "2026-09-11T06:40:13.911782+00:00",
+        "retrieved_at": "2026-09-11T06:40:13.911782+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 5003,
+        "final_url": "https://raw.githubusercontent.com/lechmazur/divergent/main/README.md"
+      }
+    },
+    {
+      "id": "mazur-elimination-game::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 61,
+      "source": {
+        "url": "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/788ec3eb6fa034a82b22.gz",
+        "sha256": "788ec3eb6fa034a82b22760f95eb04a514aa0c15e1c15d134fc350a59d1696f0",
+        "fetched_at": "2026-09-11T06:40:16.614518+00:00",
+        "retrieved_at": "2026-09-11T06:40:16.614518+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 58781,
+        "final_url": "https://raw.githubusercontent.com/lechmazur/elimination_game/main/README.md"
+      }
+    },
+    {
+      "id": "mmmu::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 244,
+      "source": {
+        "url": "https://mmmu-benchmark.github.io/leaderboard_data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2ec354bc9eab734c1ba6.gz",
+        "sha256": "2ec354bc9eab734c1ba6a78f604d2ad7e5581a30257f50ead26523ab630978fb",
+        "retrieved_at": "2026-09-11T06:41:28.081173+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 90895,
+        "final_url": "https://mmmu-benchmark.github.io/leaderboard_data.json",
+        "fetched_at": "2026-09-11T06:41:28.081173+00:00"
+      }
+    },
+    {
+      "id": "otis-mock-aime::2024-2025",
+      "status": "contested",
+      "reason": "Captured July-2025 result predates the registered exact-match grading protocol; withheld."
+    },
+    {
+      "id": "pingpong-english::2",
+      "status": "checked_unchanged",
+      "rows": 64,
+      "source": {
+        "url": "https://ilyagusev.github.io/ping_pong_bench/en_v2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/061c8c3d82764dbd02c6.gz",
+        "sha256": "061c8c3d82764dbd02c67e9b5bb54bacd9727ec98698082f118192f162cb3eff",
+        "fetched_at": "2026-09-11T06:40:24.679055+00:00",
+        "retrieved_at": "2026-09-11T06:40:24.679055+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 49136,
+        "final_url": "https://ilyagusev.github.io/ping_pong_bench/en_v2"
+      }
+    },
+    {
+      "id": "rp-bench-community::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 11,
+      "source": {
+        "url": "https://huggingface.co/datasets/lazyweasel/roleplay-bench/raw/main/analysis/community_arena_bayesian.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/39dd732fe1ba03464b4f.gz",
+        "sha256": "39dd732fe1ba03464b4fa16b27598246b21ed904fa107e385c05904d145e6e5c",
+        "retrieved_at": "2026-09-11T06:41:28.245789+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 2333,
+        "final_url": "https://huggingface.co/datasets/lazyweasel/roleplay-bench/raw/main/analysis/community_arena_bayesian.json",
+        "fetched_at": "2026-09-11T06:41:28.245789+00:00"
+      }
+    },
+    {
+      "id": "ruler::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 44,
+      "source": {
+        "url": "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/f3aae5bbd58fcd7de32a.gz",
+        "sha256": "f3aae5bbd58fcd7de32aab099c455dd2bbc1da23a2efee9db3071eb9fbf894a3",
+        "fetched_at": "2026-09-11T06:40:33.110810+00:00",
+        "retrieved_at": "2026-09-11T06:40:33.110810+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 18187,
+        "final_url": "https://raw.githubusercontent.com/NVIDIA/RULER/main/README.md"
+      }
+    },
+    {
+      "id": "scicode::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 20,
+      "source": {
+        "url": "https://scicode-bench.github.io/leaderboard/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/1b5ec4be1ec3dea8c48d.gz",
+        "sha256": "1b5ec4be1ec3dea8c48d1ace04c148e9b54da558270c74a64384ec871d6a1cba",
+        "retrieved_at": "2026-09-11T06:41:28.389938+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 26055,
+        "final_url": "https://scicode-bench.github.io/leaderboard/",
+        "fetched_at": "2026-09-11T06:41:28.389938+00:00"
+      }
+    },
+    {
+      "id": "simple-bench::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 101,
+      "source": {
+        "url": "https://simple-bench.com/static/js/leaderboard-data.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/ec6cf7a7a30476d08570.gz",
+        "sha256": "ec6cf7a7a30476d08570a7c00e2c4b07c1b865bb3c1db09419a14b96ef66d298",
+        "retrieved_at": "2026-09-11T06:41:28.539443+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 25843,
+        "final_url": "https://simple-bench.com/static/js/leaderboard-data.js",
+        "fetched_at": "2026-09-11T06:41:28.539443+00:00"
+      }
+    },
+    {
+      "id": "slop-index::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 39,
+      "source": {
+        "url": "https://theslopindex.com/bench.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2dbe8fc878fd39bcb4fb.gz",
+        "sha256": "2dbe8fc878fd39bcb4fb68f896a52b6f63cba94dd34bd1c035537ff0ea6414b1",
+        "retrieved_at": "2026-09-11T06:41:28.986842+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 16205,
+        "final_url": "https://theslopindex.com/bench.json",
+        "fetched_at": "2026-09-11T06:41:28.986842+00:00"
+      }
+    },
+    {
+      "id": "slopbench::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 25,
+      "source": {
+        "url": "https://uncommon-sandpiper-321.convex.cloud/api/query",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/141bc10ec679aa4194a6.gz",
+        "sha256": "141bc10ec679aa4194a6ca72d46f241ddbfeef41e4401cc3a94686113e65abe9",
+        "retrieved_at": "2026-09-11T06:41:29.105303+00:00",
+        "method": "POST",
+        "request_body": {
+          "path": "runs:getLeaderboard",
+          "args": {},
+          "format": "json"
+        },
+        "status": 200,
+        "bytes": 8962,
+        "final_url": "https://uncommon-sandpiper-321.convex.cloud/api/query",
+        "fetched_at": "2026-09-11T06:41:29.105303+00:00"
+      }
+    },
+    {
+      "id": "spiral-bench::1.2",
+      "status": "checked_unchanged",
+      "rows": 23,
+      "source": {
+        "url": "https://eqbench.com/spiral-bench.js?v=1.0.1",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2f0402654b01e7363c0d.gz",
+        "sha256": "2f0402654b01e7363c0d02bbc708afd7849e669dc5da63d9f85c995ed8f0a97f",
+        "retrieved_at": "2026-09-11T06:41:32.362582+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 39510,
+        "final_url": "https://eqbench.com/spiral-bench.js?v=1.0.1",
+        "fetched_at": "2026-09-11T06:41:32.362582+00:00"
+      }
+    },
+    {
+      "id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 13,
+      "source": {
+        "url": "https://www.swebench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/c862011a4ee1d1a7199f.gz",
+        "sha256": "c862011a4ee1d1a7199fad6ca0905fa5c64f58216f7217ac1eddf37f28788433",
+        "fetched_at": "2026-09-11T06:40:44.984609+00:00",
+        "retrieved_at": "2026-09-11T06:40:44.984609+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 2392125,
+        "final_url": "https://www.swebench.com/"
+      }
+    },
+    {
+      "id": "swe-bench-multimodal::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 22,
+      "source": {
+        "url": "https://www.swebench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/c862011a4ee1d1a7199f.gz",
+        "sha256": "c862011a4ee1d1a7199fad6ca0905fa5c64f58216f7217ac1eddf37f28788433",
+        "fetched_at": "2026-09-11T06:40:44.984609+00:00",
+        "retrieved_at": "2026-09-11T06:40:44.984609+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 2392125,
+        "final_url": "https://www.swebench.com/"
+      }
+    },
+    {
+      "id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 25,
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/swe_bench_pro_public",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/7e6d76685aa6c041bc8d.gz",
+        "sha256": "7e6d76685aa6c041bc8d5a7f1987925550324542a5482efe1a3fc8218be412db",
+        "fetched_at": "2026-09-11T06:40:47.923142+00:00",
+        "retrieved_at": "2026-09-11T06:40:47.923142+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 138806,
+        "final_url": "https://labs.scale.com/leaderboard/swe_bench_pro_public"
+      }
+    },
+    {
+      "id": "swe-bench-verified::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 180,
+      "source": {
+        "url": "https://www.swebench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/c862011a4ee1d1a7199f.gz",
+        "sha256": "c862011a4ee1d1a7199fad6ca0905fa5c64f58216f7217ac1eddf37f28788433",
+        "fetched_at": "2026-09-11T06:40:44.984609+00:00",
+        "retrieved_at": "2026-09-11T06:40:44.984609+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 2392125,
+        "final_url": "https://www.swebench.com/"
+      }
+    },
+    {
+      "id": "tau2-bench::2",
+      "status": "checked_unchanged",
+      "rows": 3,
+      "source": {
+        "url": "https://taubench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7d35da0c240af54d9d3.gz",
+        "sha256": "a7d35da0c240af54d9d382c36a59c2f5cb510a3389343f9ab28478c5baa70c08",
+        "fetched_at": "2026-09-11T06:40:50.852101+00:00",
+        "retrieved_at": "2026-09-11T06:40:50.852101+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 15619,
+        "final_url": "https://taubench.com/"
+      }
+    },
+    {
+      "id": "tau3-banking::1.0.1",
+      "status": "checked_unchanged",
+      "rows": 3,
+      "source": {
+        "url": "https://taubench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7d35da0c240af54d9d3.gz",
+        "sha256": "a7d35da0c240af54d9d382c36a59c2f5cb510a3389343f9ab28478c5baa70c08",
+        "fetched_at": "2026-09-11T06:40:50.852101+00:00",
+        "retrieved_at": "2026-09-11T06:40:50.852101+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 15619,
+        "final_url": "https://taubench.com/"
+      }
+    },
+    {
+      "id": "tau3-voice::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 3,
+      "source": {
+        "url": "https://taubench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7d35da0c240af54d9d3.gz",
+        "sha256": "a7d35da0c240af54d9d382c36a59c2f5cb510a3389343f9ab28478c5baa70c08",
+        "fetched_at": "2026-09-11T06:40:50.852101+00:00",
+        "retrieved_at": "2026-09-11T06:40:50.852101+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 15619,
+        "final_url": "https://taubench.com/"
+      }
+    },
+    {
+      "id": "terminal-bench::4.0",
+      "status": "checked_unchanged",
+      "rows": 18,
+      "source": {
+        "url": "https://www.tbench.ai/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7272da74acc90925b3f.gz",
+        "sha256": "a7272da74acc90925b3f68bb543713f47a300617d1eb2694bb6301acdca1eabf",
+        "fetched_at": "2026-09-11T06:40:53.951613+00:00",
+        "retrieved_at": "2026-09-11T06:40:53.951613+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 124263,
+        "final_url": "https://www.tbench.ai/"
+      }
+    },
+    {
+      "id": "towards-ai-editorial-writing::snapshot-2026-09-10",
+      "status": "manual_required",
+      "reason": "Private protocol and visually reported X values require xplainervideo capture and primary evidence review."
+    },
+    {
+      "id": "ugi-natint::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 1309,
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4154635c4557af4b4eeb.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-11T06:40:59.892098+00:00",
+        "retrieved_at": "2026-09-11T06:40:59.892098+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 661186,
+        "final_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      }
+    },
+    {
+      "id": "ugi-willingness::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 1309,
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4154635c4557af4b4eeb.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-11T06:40:59.892098+00:00",
+        "retrieved_at": "2026-09-11T06:40:59.892098+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 661186,
+        "final_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      }
+    },
+    {
+      "id": "ugi-writing::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 1252,
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4154635c4557af4b4eeb.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-11T06:40:59.892098+00:00",
+        "retrieved_at": "2026-09-11T06:40:59.892098+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 661186,
+        "final_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      }
+    },
+    {
+      "id": "ugi::snapshot-2026-09-10",
+      "status": "checked_unchanged",
+      "rows": 1309,
+      "source": {
+        "url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4154635c4557af4b4eeb.gz",
+        "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
+        "fetched_at": "2026-09-11T06:40:59.892098+00:00",
+        "retrieved_at": "2026-09-11T06:40:59.892098+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 661186,
+        "final_url": "https://huggingface.co/spaces/DontPlanToEnd/UGI-Leaderboard/raw/main/ugi-leaderboard-data.csv"
+      }
+    },
+    {
+      "id": "vending-bench::2",
+      "status": "checked_unchanged",
+      "rows": 10,
+      "source": {
+        "url": "https://andonlabs.com/evals/vending-bench-2",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/49e18d2425fb2a29672a.gz",
+        "sha256": "49e18d2425fb2a29672adeb42aa531454ef9fea54df8d16f98a9cd51a5db9242",
+        "fetched_at": "2026-09-11T06:41:02.843887+00:00",
+        "retrieved_at": "2026-09-11T06:41:02.843887+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 65518,
+        "final_url": "https://andonlabs.com/evals/vending-bench-2"
+      }
+    },
+    {
+      "id": "weirdml::2",
+      "status": "checked_unchanged",
+      "rows": 161,
+      "source": {
+        "url": "https://htihle.github.io/data/weirdml_data.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/6be5173dba184a4a006f.gz",
+        "sha256": "6be5173dba184a4a006fdbbabbef4acaae6e3ec86a5349df4e58d35189f85bd0",
+        "retrieved_at": "2026-09-11T06:41:32.525755+00:00",
+        "method": "GET",
+        "status": 200,
+        "bytes": 68952,
+        "final_url": "https://htihle.github.io/data/weirdml_data.csv",
+        "fetched_at": "2026-09-11T06:41:32.525755+00:00"
+      }
+    },
+    {
+      "id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+      "status": "vendor_candidate",
+      "rows": 3,
+      "producer": "z-ai/glm-5.3-flash"
+    },
+    {
+      "id": "https://mistral.ai/news/devstral-2-vibe-cli/",
+      "status": "retained_after_failure",
+      "reason": "z-ai/glm-5.3-flash: JSON mode returned malformed JSON"
+    },
+    {
+      "id": "https://arxiv.org/pdf/2412.19437v2",
+      "status": "vendor_candidate",
+      "rows": 3,
+      "producer": "google/gemini-3.7-flash"
+    },
+    {
+      "id": "score-batch-0",
+      "status": "retained_after_failure",
+      "reason": "3 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "score-batch-1",
+      "status": "retained_after_failure",
+      "reason": "1 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "score-batch-2",
+      "status": "retained_after_failure",
+      "reason": "1 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "score-batch-3",
+      "status": "retained_after_failure",
+      "reason": "1 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "aa-briefcase::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-coding-agent-index::1.4",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/agents/coding-agents",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-critpt::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-enterpriseops-gym::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-gdp-pdf::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-gdpval::2",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-gpqa-diamond::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-harvey-lab::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-hle::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-ifbench::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-itbench::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-lcr::1.1",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-livecodebench::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-mlcr::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-mmmu-pro::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-omniscience::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-scicode::1.0.1",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-tau2-telecom::snapshot-2026-09-10",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-tau3-banking::1.0.1",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-terminal-bench-hard::74221fb",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-terminal-bench::2.1",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    },
+    {
+      "id": "aa-terminal-bench::4.0",
+      "status": "source_reachable_protocol_date_retained",
+      "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+      "reason": "No newly accepted protocol change"
+    }
+  ],
+  "reviews": [
+    {
+      "scope": "aa-aime::2025",
+      "type": "protocol",
+      "artifact_id": "protocol-aa-aime-2025",
+      "rounds_used": 1,
+      "rows": {
+        "total": 1,
+        "accepted": [
+          "aa-aime::2025"
+        ],
+        "quarantined": []
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": {
+          "complete": true,
+          "model": "z-ai/glm-5.3-flash",
+          "rows_covered": 1
+        },
+        "critic": [
+          {
+            "round": 1,
+            "verdict": "pass",
+            "coverage_complete": true,
+            "missing_rows": [],
+            "missing_criteria": []
+          }
+        ],
+        "final": {
+          "rows_covered": 1,
+          "criteria_covered": 1,
+          "complete": true
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "z-ai/glm-5.3-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/producer-r1.json",
+          "output_sha256": "125ce524c94e6e30bbef7571ce251d976510caf35c7d294ce1e90c9425f3ebef",
+          "qualification": {
+            "id": "z-ai/glm-5.3-flash",
+            "family": "z-ai",
+            "free": false,
+            "input_per_1m": 0.15,
+            "output_per_1m": 0.5,
+            "context": 1310720,
+            "aa_intelligence_index": 41.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "glm-5.3-flash::default"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "glm-5.3-flash::default",
+                "index": 41.9
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1296,
+            "completion_tokens": 297,
+            "total_tokens": 1593,
+            "cost": 0.00029873448,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000301752,
+              "upstream_inference_prompt_cost": 0.000171072,
+              "upstream_inference_completions_cost": 0.00013068
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 201,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 1,
+          "role": "critic",
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/review-r1.json",
+          "output_sha256": "ab67875be55ef869a708320c1d1b0e18b1187ec0f97696cf41ca4486d0b7854d",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1756,
+            "completion_tokens": 176,
+            "total_tokens": 1932,
+            "cost": 0.00195723,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.001977,
+              "upstream_inference_prompt_cost": 0.001317,
+              "upstream_inference_completions_cost": 0.00066
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "aa-analystagent::snapshot-2026-09-10",
+      "type": "protocol",
+      "artifact_id": "protocol-aa-analystagent-snapshot-2026-09-10",
+      "rounds_used": 1,
+      "rows": {
+        "total": 1,
+        "accepted": [
+          "aa-analystagent::snapshot-2026-09-10"
+        ],
+        "quarantined": []
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": {
+          "complete": true,
+          "model": "z-ai/glm-5.3-flash",
+          "rows_covered": 1
+        },
+        "critic": [
+          {
+            "round": 1,
+            "verdict": "pass",
+            "coverage_complete": true,
+            "missing_rows": [],
+            "missing_criteria": []
+          }
+        ],
+        "final": {
+          "rows_covered": 1,
+          "criteria_covered": 1,
+          "complete": true
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "z-ai/glm-5.3-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-r1.json",
+          "output_sha256": "19bcf3bd3b9beea96a79fa7b0512b80188a3020c5b3d240847ae3eeaf4bff963",
+          "qualification": {
+            "id": "z-ai/glm-5.3-flash",
+            "family": "z-ai",
+            "free": false,
+            "input_per_1m": 0.15,
+            "output_per_1m": 0.5,
+            "context": 1310720,
+            "aa_intelligence_index": 41.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "glm-5.3-flash::default"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "glm-5.3-flash::default",
+                "index": 41.9
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1327,
+            "completion_tokens": 208,
+            "total_tokens": 1535,
+            "cost": 0.00026401716,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000266684,
+              "upstream_inference_prompt_cost": 0.000175164,
+              "upstream_inference_completions_cost": 0.00009152
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 81,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 1,
+          "role": "critic",
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/review-r1.json",
+          "output_sha256": "37704585cacfdd2ad5b9a5b39578436e0eb06a2a8db752d9596706d95b381c31",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1775,
+            "completion_tokens": 201,
+            "total_tokens": 1976,
+            "cost": 0.00206415,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.002085,
+              "upstream_inference_prompt_cost": 0.00133125,
+              "upstream_inference_completions_cost": 0.00075375
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "aa-apex-agents::snapshot-2026-09-10",
+      "type": "protocol",
+      "artifact_id": "protocol-aa-apex-agents-snapshot-2026-09-10",
+      "rounds_used": 1,
+      "rows": {
+        "total": 1,
+        "accepted": [
+          "aa-apex-agents::snapshot-2026-09-10"
+        ],
+        "quarantined": []
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": {
+          "complete": true,
+          "model": "z-ai/glm-5.3-flash",
+          "rows_covered": 1
+        },
+        "critic": [
+          {
+            "round": 1,
+            "verdict": "pass",
+            "coverage_complete": true,
+            "missing_rows": [],
+            "missing_criteria": []
+          }
+        ],
+        "final": {
+          "rows_covered": 1,
+          "criteria_covered": 1,
+          "complete": true
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "z-ai/glm-5.3-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/producer-r1.json",
+          "output_sha256": "fd0d32fd1d54c0ccba6b84b5add1ffb4e2a2b6a8d527dbafa8f1204aba1f19a3",
+          "qualification": {
+            "id": "z-ai/glm-5.3-flash",
+            "family": "z-ai",
+            "free": false,
+            "input_per_1m": 0.15,
+            "output_per_1m": 0.5,
+            "context": 1310720,
+            "aa_intelligence_index": 41.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "glm-5.3-flash::default"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "glm-5.3-flash::default",
+                "index": 41.9
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1375,
+            "completion_tokens": 228,
+            "total_tokens": 1603,
+            "cost": 0.000272310984,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002750616,
+              "upstream_inference_prompt_cost": 0.0001747416,
+              "upstream_inference_completions_cost": 0.00010032
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 138,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 1,
+          "role": "critic",
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/review-r1.json",
+          "output_sha256": "464c9eba160de12ad08c4c93a5684b1b74b91c88290903495a85173568f55131",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1818,
+            "completion_tokens": 200,
+            "total_tokens": 2018,
+            "cost": 0.002092365,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0021135,
+              "upstream_inference_prompt_cost": 0.0013635,
+              "upstream_inference_completions_cost": 0.00075
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "aa-automationbench::1.0.6",
+      "type": "protocol",
+      "artifact_id": "protocol-aa-automationbench-1.0.6",
+      "rounds_used": 1,
+      "rows": {
+        "total": 1,
+        "accepted": [
+          "aa-automationbench::1.0.6"
+        ],
+        "quarantined": []
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": {
+          "complete": true,
+          "model": "z-ai/glm-5.3-flash",
+          "rows_covered": 1
+        },
+        "critic": [
+          {
+            "round": 1,
+            "verdict": "pass",
+            "coverage_complete": true,
+            "missing_rows": [],
+            "missing_criteria": []
+          }
+        ],
+        "final": {
+          "rows_covered": 1,
+          "criteria_covered": 1,
+          "complete": true
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "z-ai/glm-5.3-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/producer-r1.json",
+          "output_sha256": "de86dd3355de23203e2875e4fbc2fa6b98f60f409e7256f5fa68dd6b6884eba9",
+          "qualification": {
+            "id": "z-ai/glm-5.3-flash",
+            "family": "z-ai",
+            "free": false,
+            "input_per_1m": 0.15,
+            "output_per_1m": 0.5,
+            "context": 1310720,
+            "aa_intelligence_index": 41.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "glm-5.3-flash::default"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "glm-5.3-flash::default",
+                "index": 41.9
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1319,
+            "completion_tokens": 143,
+            "total_tokens": 1462,
+            "cost": 0.000227966904,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 64,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0002302696,
+              "upstream_inference_prompt_cost": 0.0001673496,
+              "upstream_inference_completions_cost": 0.00006292
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 50,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 1,
+          "role": "critic",
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/review-r1.json",
+          "output_sha256": "5d8acd42a59a8024ee7b5482cc387bc9218d23a09c066832ac728dda247b3747",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1745,
+            "completion_tokens": 573,
+            "total_tokens": 2318,
+            "cost": 0.003422925,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0034575,
+              "upstream_inference_prompt_cost": 0.00130875,
+              "upstream_inference_completions_cost": 0.00214875
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 392,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "aa-briefcase::snapshot-2026-09-10",
+      "type": "protocol",
+      "artifact_id": "protocol-aa-briefcase-snapshot-2026-09-10",
+      "rounds_used": 1,
+      "rows": {
+        "total": 1,
+        "accepted": [],
+        "quarantined": [
+          "aa-briefcase::snapshot-2026-09-10"
+        ]
+      },
+      "producer_flagged": [
+        "aa-briefcase::snapshot-2026-09-10"
+      ],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": {
+          "complete": true,
+          "model": "z-ai/glm-5.3-flash",
+          "rows_covered": 1
+        },
+        "critic": [
+          {
+            "round": 1,
+            "verdict": "pass",
+            "coverage_complete": true,
+            "missing_rows": [],
+            "missing_criteria": []
+          }
+        ],
+        "final": {
+          "rows_covered": 1,
+          "criteria_covered": 1,
+          "complete": true
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "z-ai/glm-5.3-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/producer-r1.json",
+          "output_sha256": "d86b6e6fd37af8a43eaf22931a423893e4eb7b198520aba365f6af599f100a57",
+          "qualification": {
+            "id": "z-ai/glm-5.3-flash",
+            "family": "z-ai",
+            "free": false,
+            "input_per_1m": 0.15,
+            "output_per_1m": 0.5,
+            "context": 1310720,
+            "aa_intelligence_index": 41.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "glm-5.3-flash::default"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "glm-5.3-flash::default",
+                "index": 41.9
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1331,
+            "completion_tokens": 278,
+            "total_tokens": 1609,
+            "cost": 0.00029503188,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.000298012,
+              "upstream_inference_prompt_cost": 0.000175692,
+              "upstream_inference_completions_cost": 0.00012232
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 162,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 1,
+          "role": "critic",
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/review-r1.json",
+          "output_sha256": "fc9755c938ef7028458c39f4a3da54b76b032e3eafd61a2ff178edf8c146ef83",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 1781,
+            "completion_tokens": 198,
+            "total_tokens": 1979,
+            "cost": 0.0020574675,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00207825,
+              "upstream_inference_prompt_cost": 0.00133575,
+              "upstream_inference_completions_cost": 0.0007425
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "scores",
+      "artifact_id": "scores-0",
+      "rounds_used": 3,
+      "rows": {
+        "total": 3,
+        "accepted": [],
+        "quarantined": [
+          "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+          "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+          "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
+        ]
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": null,
+        "critic": [],
+        "final": {
+          "rows_covered": 0,
+          "criteria_covered": 0,
+          "complete": false
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-r1.json",
+          "output_sha256": "a79a23cc588beed2aaf3c25611ded20d2b09028b8802a5b768ce14980329e10f",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 22483,
+            "completion_tokens": 243,
+            "total_tokens": 22726,
+            "cost": 0.017595765,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.0177735,
+              "upstream_inference_prompt_cost": 0.01686225,
+              "upstream_inference_completions_cost": 0.00091125
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 2,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-r1.json",
+          "output_sha256": "a79a23cc588beed2aaf3c25611ded20d2b09028b8802a5b768ce14980329e10f",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 3,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-r1.json",
+          "output_sha256": "a79a23cc588beed2aaf3c25611ded20d2b09028b8802a5b768ce14980329e10f",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "scores",
+      "artifact_id": "scores-1",
+      "rounds_used": 3,
+      "rows": {
+        "total": 1,
+        "accepted": [],
+        "quarantined": [
+          "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10"
+        ]
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": null,
+        "critic": [],
+        "final": {
+          "rows_covered": 0,
+          "criteria_covered": 0,
+          "complete": false
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-r1.json",
+          "output_sha256": "45954825897424cdc7c688b5e04c537bdc630bd89630d26800f8c9ce27459649",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 4056,
+            "completion_tokens": 95,
+            "total_tokens": 4151,
+            "cost": 0.0033642675,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00339825,
+              "upstream_inference_prompt_cost": 0.003042,
+              "upstream_inference_completions_cost": 0.00035625
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 2,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-r1.json",
+          "output_sha256": "45954825897424cdc7c688b5e04c537bdc630bd89630d26800f8c9ce27459649",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 3,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-r1.json",
+          "output_sha256": "45954825897424cdc7c688b5e04c537bdc630bd89630d26800f8c9ce27459649",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "scores",
+      "artifact_id": "scores-2",
+      "rounds_used": 3,
+      "rows": {
+        "total": 1,
+        "accepted": [],
+        "quarantined": [
+          "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+        ]
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": null,
+        "critic": [],
+        "final": {
+          "rows_covered": 0,
+          "criteria_covered": 0,
+          "complete": false
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+          "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 4047,
+            "completion_tokens": 336,
+            "total_tokens": 4383,
+            "cost": 0.0042522975,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00429525,
+              "upstream_inference_prompt_cost": 0.00303525,
+              "upstream_inference_completions_cost": 0.00126
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 247,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 2,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+          "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 3,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+          "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    },
+    {
+      "scope": "scores",
+      "artifact_id": "scores-3",
+      "rounds_used": 3,
+      "rows": {
+        "total": 1,
+        "accepted": [],
+        "quarantined": [
+          "vendor:DeepSeek-V3:longbench::2"
+        ]
+      },
+      "producer_flagged": [],
+      "criteria": [
+        "c1"
+      ],
+      "coverage": {
+        "producer": null,
+        "critic": [],
+        "final": {
+          "rows_covered": 0,
+          "criteria_covered": 0,
+          "complete": false
+        }
+      },
+      "receipts": [
+        {
+          "round": 1,
+          "role": "producer",
+          "reused_from_round": null,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-r1.json",
+          "output_sha256": "f68b2be1223503560730800927293ba940667327dee5a0584945f9f7fa1396d0",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": {
+            "prompt_tokens": 3973,
+            "completion_tokens": 62,
+            "total_tokens": 4035,
+            "cost": 0.0031801275,
+            "is_byok": false,
+            "prompt_tokens_details": {
+              "cached_tokens": 0,
+              "cache_write_tokens": 0,
+              "audio_tokens": 0,
+              "video_tokens": 0
+            },
+            "cost_details": {
+              "upstream_inference_cost": 0.00321225,
+              "upstream_inference_prompt_cost": 0.00297975,
+              "upstream_inference_completions_cost": 0.0002325
+            },
+            "completion_tokens_details": {
+              "reasoning_tokens": 0,
+              "image_tokens": 0,
+              "audio_tokens": 0
+            }
+          },
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 2,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-r1.json",
+          "output_sha256": "f68b2be1223503560730800927293ba940667327dee5a0584945f9f7fa1396d0",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        },
+        {
+          "round": 3,
+          "role": "producer",
+          "reused_from_round": 1,
+          "model": "google/gemini-3.7-flash",
+          "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-r1.json",
+          "output_sha256": "f68b2be1223503560730800927293ba940667327dee5a0584945f9f7fa1396d0",
+          "qualification": {
+            "id": "google/gemini-3.7-flash",
+            "family": "google",
+            "free": false,
+            "input_per_1m": 0.75,
+            "output_per_1m": 3.75,
+            "context": 1048576,
+            "aa_intelligence_index": 36.9,
+            "aa_source": "exact_id_and_variants",
+            "matched_model_ids": [
+              "gemini-3.7-flash::high",
+              "gemini-3.7-flash::low",
+              "gemini-3.7-flash::medium"
+            ],
+            "aa_variant_scores": [
+              {
+                "id": "gemini-3.7-flash::high",
+                "index": 39.4
+              },
+              {
+                "id": "gemini-3.7-flash::low",
+                "index": 36.9
+              },
+              {
+                "id": "gemini-3.7-flash::medium",
+                "index": 39.6
+              }
+            ]
+          },
+          "usage": null,
+          "reasoning": {
+            "effort": "low",
+            "exclude": true
+          }
+        }
+      ]
+    }
+  ],
+  "score_candidates": 6,
+  "accepted_changed_scores": 0,
+  "retained_or_dropped": 6,
+  "retained_failures": 6,
+  "note": "Retained observations keep original dates and approvals. Unreachable/manual sources and incomplete or contested candidates are explicit; no claim of complete benchmark-universe freshness.",
+  "commitPaths": []
+}

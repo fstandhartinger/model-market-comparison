@@ -1,0 +1,73 @@
+{
+  "started_at": "2026-09-11T06:45:40.299Z",
+  "mode": "oneshot",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "b5756e0b558e058d00213f8b9a075296f7629007e4ade5e0d6987433ded6c9e4",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 4047,
+    "completion_tokens": 336,
+    "total_tokens": 4383,
+    "cost": 0.0042522975,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00429525,
+      "upstream_inference_prompt_cost": 0.00303525,
+      "upstream_inference_completions_cost": 0.00126
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 247,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google AI Studio",
+  "session_id": null,
+  "finished_at": "2026-09-11T06:45:42.129Z",
+  "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713"
+}

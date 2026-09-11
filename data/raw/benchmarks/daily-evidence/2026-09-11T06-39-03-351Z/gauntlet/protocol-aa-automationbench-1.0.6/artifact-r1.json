@@ -1,0 +1,19 @@
+[
+  {
+    "id": "aa-automationbench::1.0.6",
+    "version": "1.0.6",
+    "version_guard": "Verify the published version 1.0.6 before reading results.",
+    "scoring": {
+      "metric": "Mean fraction of objectives completed; any guardrail violation or task error gives zero",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: automationBenchPartialScore. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests multi-app SaaS workflows through REST tools on a held-out AutomationBench split.",
+    "maintainer": "Artificial Analysis"
+  }
+]

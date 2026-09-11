@@ -1,0 +1,19 @@
+[
+  {
+    "id": "aa-aime::2025",
+    "version": "2025",
+    "version_guard": "Verify the published version 2025 before reading results.",
+    "scoring": {
+      "metric": "Pass@1 correctness averaged over ten repeats",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: aime25. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Advanced mathematical problem solving on AIME I and II 2025.",
+    "maintainer": "Artificial Analysis"
+  }
+]

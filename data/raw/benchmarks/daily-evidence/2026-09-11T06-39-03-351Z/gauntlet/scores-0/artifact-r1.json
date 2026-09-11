@@ -1,0 +1,74 @@
+[
+  {
+    "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+    "benchmark_id": "tau2-bench::2",
+    "subject": {
+      "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507",
+      "name": "Qwen3-235B-A22B-Thinking-2507",
+      "model_id": "qwen3-235b-a22b-thinking-2507::reasoning",
+      "variant": "reasoning",
+      "harness": null
+    },
+    "value": 71.9,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/9aa7860622381d0ca3ea.gz",
+      "sha256": "9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3",
+      "retrieved_at": "2026-09-11T06:41:32.702509+00:00",
+      "published_at": null,
+      "locator": "Performance table, Agent section: \"| TAU2-Retail | 64.9 | 71.0 | **76.3** | 71.3 | - | 40.4 | 71.9 |\"; column header: \"Qwen3-235B-A22B-Thinking-2507\""
+    },
+    "protocol": "TAU2-Retail; Own-column self-reported vendor evaluation; output length 32,768 tokens (81,920 for highly challenging tasks); temperature 0.6, TopP 0.95, TopK 20, MinP 0",
+    "comparison_key": null
+  },
+  {
+    "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+    "benchmark_id": "tau2-bench::2",
+    "subject": {
+      "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507",
+      "name": "Qwen3-235B-A22B-Thinking-2507",
+      "model_id": "qwen3-235b-a22b-thinking-2507::reasoning",
+      "variant": "reasoning",
+      "harness": null
+    },
+    "value": 58,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/9aa7860622381d0ca3ea.gz",
+      "sha256": "9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3",
+      "retrieved_at": "2026-09-11T06:41:32.702509+00:00",
+      "published_at": null,
+      "locator": "Performance table, Agent section: \"| TAU2-Airline | 60.0 | 59.0 | **70.0** | 60.0 | - | 30.0 | 58.0 |\"; column header: \"Qwen3-235B-A22B-Thinking-2507\""
+    },
+    "protocol": "TAU2-Airline; Own-column self-reported vendor evaluation; output length 32,768 tokens (81,920 for highly challenging tasks); temperature 0.6, TopP 0.95, TopK 20, MinP 0",
+    "comparison_key": null
+  },
+  {
+    "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+    "benchmark_id": "tau2-bench::2",
+    "subject": {
+      "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507",
+      "name": "Qwen3-235B-A22B-Thinking-2507",
+      "model_id": "qwen3-235b-a22b-thinking-2507::reasoning",
+      "variant": "reasoning",
+      "harness": null
+    },
+    "value": 45.6,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/9aa7860622381d0ca3ea.gz",
+      "sha256": "9aa7860622381d0ca3ead2f16cc9ce52472b8effa3e9614ede6acdef008282d3",
+      "retrieved_at": "2026-09-11T06:41:32.702509+00:00",
+      "published_at": null,
+      "locator": "Performance table, Agent section: \"| TAU2-Telecom | 33.3 | 42.0 | **60.5** | 37.4 | - | 21.9 | 45.6 |\"; column header: \"Qwen3-235B-A22B-Thinking-2507\""
+    },
+    "protocol": "TAU2-Telecom; Own-column self-reported vendor evaluation; output length 32,768 tokens (81,920 for highly challenging tasks); temperature 0.6, TopP 0.95, TopK 20, MinP 0",
+    "comparison_key": null
+  }
+]

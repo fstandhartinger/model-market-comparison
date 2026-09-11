@@ -35,7 +35,7 @@
         "variant": "reasoning",
         "harness": null
       },
-      "value": 58.0,
+      "value": 58,
       "unit": "percent",
       "basis": "self_reported",
       "source": {
@@ -92,7 +92,7 @@
         "published_at": "2025-12-09T12:00:00.000Z",
         "sha256": "8b767ed6d44fd100e56f9c4bb9838584a7d0b6f0cebf4bf3bbf39ad46394fbb1",
         "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/mistral-release.raw.gz",
-        "locator": "Devstral: the next generation of SOTA coding \u2014 'It reaches 72.2% on SWE-bench Verified'"
+        "locator": "Devstral: the next generation of SOTA coding — 'It reaches 72.2% on SWE-bench Verified'"
       },
       "protocol": "overall; Self-reported vendor headline figure; evaluation harness for the SWE-bench Verified number not specified in source (Cline scaffolding used only for separate human evaluations)",
       "comparison_key": null
@@ -107,7 +107,7 @@
         "variant": "default",
         "harness": null
       },
-      "value": 68.0,
+      "value": 68,
       "unit": "percent",
       "basis": "self_reported",
       "source": {
@@ -116,7 +116,7 @@
         "published_at": "2025-12-09T12:00:00.000Z",
         "sha256": "8b767ed6d44fd100e56f9c4bb9838584a7d0b6f0cebf4bf3bbf39ad46394fbb1",
         "file": "ops/rebuild-2026-09/evidence/phase-05/vendor-owner/mistral-release.raw.gz",
-        "locator": "Devstral Small 2, a 24B-parameter model \u2014 'Devstral Small 2 scores 68.0% on SWE-bench Verified'"
+        "locator": "Devstral Small 2, a 24B-parameter model — 'Devstral Small 2 scores 68.0% on SWE-bench Verified'"
       },
       "protocol": "overall; Self-reported vendor headline figure; evaluation harness not specified in source",
       "comparison_key": null
@@ -131,7 +131,7 @@
         "variant": "default",
         "harness": "agentless framework (Xia et al., 2024)"
       },
-      "value": 42.0,
+      "value": 42,
       "unit": "percent",
       "basis": "self_reported",
       "source": {
@@ -199,12 +199,12 @@
     {
       "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
       "claim": "GPQA row values (81.1 for Qwen3-235B-A22B-Thinking-2507 and other columns)",
-      "reason": "Omitted: 'GPQA' benchmark identity is vague in source \u2014 the card does not specify GPQA vs GPQA-Diamond or subset/protocol, so it cannot be mapped to a registry scoring definition; not one of the eight specified claims."
+      "reason": "Omitted: 'GPQA' benchmark identity is vague in source — the card does not specify GPQA vs GPQA-Diamond or subset/protocol, so it cannot be mapped to a registry scoring definition; not one of the eight specified claims."
     },
     {
       "source_id": "https://huggingface.co/Qwen/Qwen3-235B-A22B-Thinking-2507/raw/main/README.md",
       "claim": "HLE row values (18.2# for Qwen3-235B-A22B-Thinking-2507 and other columns)",
-      "reason": "Omitted: 'HLE' benchmark identity is vague in source \u2014 footnoted # indicates text-only subset for non-multi-modal models with unspecified subset details; no registry mapping; not one of the eight specified claims."
+      "reason": "Omitted: 'HLE' benchmark identity is vague in source — footnoted # indicates text-only subset for non-multi-modal models with unspecified subset details; no registry mapping; not one of the eight specified claims."
     }
   ]
 }

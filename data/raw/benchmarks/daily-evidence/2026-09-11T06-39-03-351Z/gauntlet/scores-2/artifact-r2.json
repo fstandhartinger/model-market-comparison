@@ -1,0 +1,26 @@
+[
+  {
+    "id": "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10",
+    "benchmark_id": "aider-polyglot::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "deepseek-ai/DeepSeek-V3 (chat model, December 2024 update per arXiv 2412.19437v2 Table 6)",
+      "name": "DeepSeek V3 (Dec '24)",
+      "model_id": "deepseek-v3-dec-24::default",
+      "variant": "default",
+      "harness": "aider, 'diff' edit format"
+    },
+    "value": 49.6,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://arxiv.org/pdf/2412.19437v2",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/812a3fd645c80725354d.gz",
+      "sha256": "812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330",
+      "retrieved_at": "2026-09-11T06:41:35.722076+00:00",
+      "published_at": null,
+      "locator": "Table 6, row 'Aider-Polyglot (Acc.)', column DeepSeek V3"
+    },
+    "protocol": "overall; Table 6 chat-model evaluation; Aider-related benchmarks evaluated with the 'diff' format; output limited to 8K tokens",
+    "comparison_key": null
+  }
+]

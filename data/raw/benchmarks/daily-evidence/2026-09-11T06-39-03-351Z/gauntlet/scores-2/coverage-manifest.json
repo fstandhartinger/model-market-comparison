@@ -1,0 +1,174 @@
+{
+  "artifact_id": "scores-2",
+  "rounds_used": 3,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+    ]
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "model": "google/gemini-3.7-flash",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+      "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713",
+      "qualification": {
+        "id": "google/gemini-3.7-flash",
+        "family": "google",
+        "free": false,
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "context": 1048576,
+        "aa_intelligence_index": 36.9,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "gemini-3.7-flash::high",
+          "gemini-3.7-flash::low",
+          "gemini-3.7-flash::medium"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "gemini-3.7-flash::high",
+            "index": 39.4
+          },
+          {
+            "id": "gemini-3.7-flash::low",
+            "index": 36.9
+          },
+          {
+            "id": "gemini-3.7-flash::medium",
+            "index": 39.6
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 4047,
+        "completion_tokens": 336,
+        "total_tokens": 4383,
+        "cost": 0.0042522975,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 0,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00429525,
+          "upstream_inference_prompt_cost": 0.00303525,
+          "upstream_inference_completions_cost": 0.00126
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 247,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": 1,
+      "model": "google/gemini-3.7-flash",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+      "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713",
+      "qualification": {
+        "id": "google/gemini-3.7-flash",
+        "family": "google",
+        "free": false,
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "context": 1048576,
+        "aa_intelligence_index": 36.9,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "gemini-3.7-flash::high",
+          "gemini-3.7-flash::low",
+          "gemini-3.7-flash::medium"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "gemini-3.7-flash::high",
+            "index": 39.4
+          },
+          {
+            "id": "gemini-3.7-flash::low",
+            "index": 36.9
+          },
+          {
+            "id": "gemini-3.7-flash::medium",
+            "index": 39.6
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 3,
+      "role": "producer",
+      "reused_from_round": 1,
+      "model": "google/gemini-3.7-flash",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+      "output_sha256": "d90a77217eeec0ee2584f7a06eb4f04d1699964c82c451c789772e53027f4713",
+      "qualification": {
+        "id": "google/gemini-3.7-flash",
+        "family": "google",
+        "free": false,
+        "input_per_1m": 0.75,
+        "output_per_1m": 3.75,
+        "context": 1048576,
+        "aa_intelligence_index": 36.9,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "gemini-3.7-flash::high",
+          "gemini-3.7-flash::low",
+          "gemini-3.7-flash::medium"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "gemini-3.7-flash::high",
+            "index": 39.4
+          },
+          {
+            "id": "gemini-3.7-flash::low",
+            "index": 36.9
+          },
+          {
+            "id": "gemini-3.7-flash::medium",
+            "index": 39.6
+          }
+        ]
+      },
+      "usage": null,
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

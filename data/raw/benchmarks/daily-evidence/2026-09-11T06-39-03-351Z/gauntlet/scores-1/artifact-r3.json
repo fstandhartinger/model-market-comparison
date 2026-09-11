@@ -1,0 +1,26 @@
+[
+  {
+    "id": "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+    "subject": {
+      "source_id": "deepseek-ai/DeepSeek-V3 (chat model, December 2024 update per arXiv 2412.19437v2 Table 6)",
+      "name": "DeepSeek V3 (Dec '24)",
+      "model_id": "deepseek-v3-dec-24::default",
+      "variant": "default",
+      "harness": "agentless framework (Xia et al., 2024)"
+    },
+    "value": 42,
+    "unit": "percent",
+    "basis": "self_reported",
+    "source": {
+      "url": "https://arxiv.org/pdf/2412.19437v2",
+      "file": "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/812a3fd645c80725354d.gz",
+      "sha256": "812a3fd645c80725354de9d831a6785503007a60681461407f64e97305fa9330",
+      "retrieved_at": "2026-09-11T06:41:35.722076+00:00",
+      "published_at": null,
+      "locator": "Table 6, row 'SWE Verified (Resolved)', column DeepSeek V3"
+    },
+    "protocol": "overall; Table 6 chat-model evaluation; SWE-bench Verified evaluated using the agentless framework; output limited to 8K tokens; benchmarks with <1000 samples tested multiple times with varying temperature",
+    "comparison_key": null
+  }
+]
