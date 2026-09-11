@@ -1,0 +1,65 @@
+{
+  "at": "2026-09-11T01:36:37.479Z",
+  "base": "https://model-market-comparison.app.mintapis.com",
+  "results": [
+    {
+      "path": "/",
+      "status": 200,
+      "contains": "Model Market Comparison",
+      "bytes": 5732908
+    },
+    {
+      "path": "/compare",
+      "status": 200,
+      "contains": "Full benchmark comparison",
+      "bytes": 798363
+    },
+    {
+      "path": "/radar",
+      "status": 200,
+      "contains": "See the shape of a model.",
+      "bytes": 793490
+    },
+    {
+      "path": "/benchmarks",
+      "status": 200,
+      "contains": "One benchmark. Every result.",
+      "bytes": 723179
+    },
+    {
+      "path": "/models/gpt-5.6-sol%3A%3Ahigh",
+      "status": 200,
+      "contains": "Profile signals",
+      "bytes": 1439378
+    },
+    {
+      "path": "/api/health",
+      "status": 200,
+      "health": {
+        "ok": true,
+        "db": false
+      }
+    },
+    {
+      "path": "/api/dataset",
+      "status": 200,
+      "fullDatasetEqualsCommittedSnapshot": true,
+      "cors": "*",
+      "observations": 13908,
+      "registry": 73
+    },
+    {
+      "path": "exact vendor observation lookup",
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "status": 200,
+      "exact": true
+    }
+  ],
+  "browser": {
+    "threeModelSelection": true,
+    "v15SeparateRanking": true,
+    "mobileRadarNoRootOverflow": true,
+    "errors": []
+  },
+  "datasetGeneratedAt": "2026-09-11T01:28:15.062Z"
+}
