@@ -1,0 +1,1242 @@
+{
+  "ok": true,
+  "deterministic": {
+    "ok": true,
+    "generated_at": "2026-09-11T06:32:38.073Z",
+    "run": {
+      "sources_dir": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/sources",
+      "receipts": 458,
+      "first_receipt": "2026-09-11T06:32:13.330Z",
+      "last_receipt": "2026-09-11T06:32:37.261Z"
+    },
+    "datasets": {
+      "aa": {
+        "models": 646,
+        "retained_metadata_fields": 1410,
+        "sources": [
+          "https://artificialanalysis.ai/api/v2/data/llms/models",
+          "https://artificialanalysis.ai/leaderboards/models"
+        ]
+      },
+      "da": {
+        "registry_models": 48,
+        "leaderboard_rows": 86,
+        "boards": [
+          "frontend",
+          "fullstack"
+        ]
+      },
+      "or": {
+        "models": 439,
+        "sources": 440
+      },
+      "aa_efficiency": {
+        "rows": 141,
+        "source": "https://artificialanalysis.ai/models/gpt-5-6-sol"
+      },
+      "or_efficiency": {
+        "pages_verified": 4,
+        "pages_retained": [
+          "moonshotai/kimi-k3",
+          "openai/gpt-6-astra",
+          "openai/gpt-5.6-sol",
+          "anthropic/claude-opus-5",
+          "anthropic/claude-fable-5.1",
+          "z-ai/glm-5.3",
+          "google/gemini-3.8-flash",
+          "deepseek/deepseek-v4-flash-0731"
+        ],
+        "rankings": "verified (20 rows)"
+      },
+      "chutes_efficiency": {
+        "rows": 603,
+        "window": {
+          "start_date": "2026-09-04",
+          "end_date": "2026-09-10"
+        }
+      },
+      "aa_coding_v15": {
+        "rows": 13,
+        "version": "1.5"
+      }
+    },
+    "retained": {
+      "or_efficiency_pages": [
+        "moonshotai/kimi-k3",
+        "openai/gpt-6-astra",
+        "openai/gpt-5.6-sol",
+        "anthropic/claude-opus-5",
+        "anthropic/claude-fable-5.1",
+        "z-ai/glm-5.3",
+        "google/gemini-3.8-flash",
+        "deepseek/deepseek-v4-flash-0731"
+      ],
+      "aa_metadata_fields": 1410
+    },
+    "coverage": {
+      "required_rows": 2000,
+      "covered_rows": 2000,
+      "complete": true,
+      "sampled": false
+    },
+    "limitations": [
+      "Rotated/retained OpenRouter page, cache and rankings entries and AA retained metadata are prior accepted observations republished with original dates; they are checked for original dates AND equality to the prior accepted snapshot, not re-verified against this run’s sources.",
+      "data/raw/aa-coding-agents.json (v1.4) is intentionally untouched; the daily orchestrator validates it.",
+      "This report is the programmatic numeric/source check only. The separate live-step-result.json records adapter-contract gauntlet acceptance and exact model example coverage."
+    ],
+    "evidence": {
+      "directory": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/review",
+      "manifest": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/review/live-evidence-manifest.json",
+      "packets": 300
+    }
+  },
+  "gauntlet": {
+    "contracts": 7,
+    "programmatically_verified_rows": 2000,
+    "model_reviewed_examples": [
+      "aa#00001",
+      "aa#00646",
+      "da#00001",
+      "da#00134",
+      "or#00001",
+      "or#00439",
+      "aa_efficiency#00001",
+      "aa_efficiency#00141",
+      "or_efficiency#00001",
+      "or_efficiency#00024",
+      "chutes_efficiency#00001",
+      "chutes_efficiency#00603",
+      "aa_coding_v15#00001",
+      "aa_coding_v15#00013"
+    ],
+    "complete": true,
+    "coverage_note": "All rows verified programmatically against complete captured primary bodies. Different-model gauntlet verifies adapter contracts and explicit examples. No claim of full manual LLM numeric inspection.",
+    "reviews": [
+      {
+        "dataset": "aa",
+        "manifest": {
+          "artifact_id": "live-contract-aa",
+          "rounds_used": 2,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "aa"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 2,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 2,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-aa/producer-r2.json",
+              "output_sha256": "dfa62dae4ac4954a3ce2f9575ca2eb568ad6267d89482aa6d2c1cff82c1886db",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 7265,
+                "completion_tokens": 229,
+                "total_tokens": 7494,
+                "cost": 0.001042451784,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 64,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0010529816,
+                  "upstream_inference_prompt_cost": 0.0009522216,
+                  "upstream_inference_completions_cost": 0.00010076
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 61,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 2,
+              "role": "critic",
+              "model": "deepseek/deepseek-v4-pro-0813",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-aa/review-r2.json",
+              "output_sha256": "27b873788aca6cd95fc1a63a93ea926b49b656ba2d1e21c6a8ce50ccc6e6c81e",
+              "qualification": {
+                "id": "deepseek/deepseek-v4-pro-0813",
+                "family": "deepseek",
+                "free": false,
+                "input_per_1m": 1.0494,
+                "output_per_1m": 3.1482,
+                "context": 1048576,
+                "aa_intelligence_index": 36.3,
+                "aa_source": "exact_family_slug",
+                "matched_model_ids": [
+                  "deepseek-v4-pro-0813::max"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "deepseek-v4-pro-0813::max",
+                    "index": 36.3
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 7869,
+                "completion_tokens": 4761,
+                "total_tokens": 12630,
+                "cost": 0.0231199056,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1024,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.02335344,
+                  "upstream_inference_prompt_cost": 0.00764214,
+                  "upstream_inference_completions_cost": 0.0157113
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 4567,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dataset": "da",
+        "manifest": {
+          "artifact_id": "live-contract-da",
+          "rounds_used": 1,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "da"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 1,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 1,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-da/producer-r1.json",
+              "output_sha256": "bade99bcf722354739cf39eb47fb78b6ac6c84cc57d879f5d3bee9ff6d881698",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 4686,
+                "completion_tokens": 194,
+                "total_tokens": 4880,
+                "cost": 0.000690182064,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 64,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0006971536,
+                  "upstream_inference_prompt_cost": 0.0006117936,
+                  "upstream_inference_completions_cost": 0.00008536
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 62,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 1,
+              "role": "critic",
+              "model": "deepseek/deepseek-v4-pro-0813",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-da/review-r1.json",
+              "output_sha256": "22bd3c6092c5424f7034bf3611be48979514c3d6de83036a82c60cb9c5760c90",
+              "qualification": {
+                "id": "deepseek/deepseek-v4-pro-0813",
+                "family": "deepseek",
+                "free": false,
+                "input_per_1m": 1.0494,
+                "output_per_1m": 3.1482,
+                "context": 1048576,
+                "aa_intelligence_index": 36.3,
+                "aa_source": "exact_family_slug",
+                "matched_model_ids": [
+                  "deepseek-v4-pro-0813::max"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "deepseek-v4-pro-0813::max",
+                    "index": 36.3
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 5225,
+                "completion_tokens": 3737,
+                "total_tokens": 8962,
+                "cost": 0.0168951816,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 1024,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.01706584,
+                  "upstream_inference_prompt_cost": 0.00473374,
+                  "upstream_inference_completions_cost": 0.0123321
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 3583,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dataset": "or",
+        "manifest": {
+          "artifact_id": "live-contract-or",
+          "rounds_used": 2,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "or"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 2,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 1,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-or/producer-r1.json",
+              "output_sha256": "7c7d3f75d81e8e661f5767fb2955c2a73ff880495ae4ce4a9490c86ac98fd123",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 7004,
+                "completion_tokens": 243,
+                "total_tokens": 7247,
+                "cost": 0.001014442704,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 64,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0010246896,
+                  "upstream_inference_prompt_cost": 0.0009177696,
+                  "upstream_inference_completions_cost": 0.00010692
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 120,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 2,
+              "role": "producer",
+              "reused_from_round": 1,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-or/producer-r1.json",
+              "output_sha256": "7c7d3f75d81e8e661f5767fb2955c2a73ff880495ae4ce4a9490c86ac98fd123",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": null,
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 2,
+              "role": "critic",
+              "model": "google/gemini-3.7-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-or/review-r2.json",
+              "output_sha256": "a4f633a44e66144ed9e72319f232f026e3857f669979d78da9d773fbc4007077",
+              "qualification": {
+                "id": "google/gemini-3.7-flash",
+                "family": "google",
+                "free": false,
+                "input_per_1m": 0.75,
+                "output_per_1m": 3.75,
+                "context": 1048576,
+                "aa_intelligence_index": 36.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "gemini-3.7-flash::high",
+                  "gemini-3.7-flash::low",
+                  "gemini-3.7-flash::medium"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "gemini-3.7-flash::high",
+                    "index": 39.4
+                  },
+                  {
+                    "id": "gemini-3.7-flash::low",
+                    "index": 36.9
+                  },
+                  {
+                    "id": "gemini-3.7-flash::medium",
+                    "index": 39.6
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 8747,
+                "completion_tokens": 116,
+                "total_tokens": 8863,
+                "cost": 0.0069252975,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.00699525,
+                  "upstream_inference_prompt_cost": 0.00656025,
+                  "upstream_inference_completions_cost": 0.000435
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dataset": "aa_efficiency",
+        "manifest": {
+          "artifact_id": "live-contract-aa_efficiency",
+          "rounds_used": 1,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "aa_efficiency"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 1,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 1,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-aa_efficiency/producer-r1.json",
+              "output_sha256": "b713ee379594db3a1d209dcc4e0c302c6c0a124847061afb6b005a4d008e1222",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 5022,
+                "completion_tokens": 365,
+                "total_tokens": 5387,
+                "cost": 0.000808578144,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 64,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0008167456,
+                  "upstream_inference_prompt_cost": 0.0006561456,
+                  "upstream_inference_completions_cost": 0.0001606
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 166,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 1,
+              "role": "critic",
+              "model": "google/gemini-3.7-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-aa_efficiency/review-r1.json",
+              "output_sha256": "017ccffc5d0647a0275c8565e98999fc8e8f043e8a0e671b4bf306e367437e03",
+              "qualification": {
+                "id": "google/gemini-3.7-flash",
+                "family": "google",
+                "free": false,
+                "input_per_1m": 0.75,
+                "output_per_1m": 3.75,
+                "context": 1048576,
+                "aa_intelligence_index": 36.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "gemini-3.7-flash::high",
+                  "gemini-3.7-flash::low",
+                  "gemini-3.7-flash::medium"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "gemini-3.7-flash::high",
+                    "index": 39.4
+                  },
+                  {
+                    "id": "gemini-3.7-flash::low",
+                    "index": 36.9
+                  },
+                  {
+                    "id": "gemini-3.7-flash::medium",
+                    "index": 39.6
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 6386,
+                "completion_tokens": 177,
+                "total_tokens": 6563,
+                "cost": 0.0053987175,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.00545325,
+                  "upstream_inference_prompt_cost": 0.0047895,
+                  "upstream_inference_completions_cost": 0.00066375
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dataset": "or_efficiency",
+        "manifest": {
+          "artifact_id": "live-contract-or_efficiency",
+          "rounds_used": 1,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "or_efficiency"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 1,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 1,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-or_efficiency/producer-r1.json",
+              "output_sha256": "9a377e75475081249f173dcc9afe0fe300ce057a10e1bf1d540adff31c4e1e91",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 8429,
+                "completion_tokens": 399,
+                "total_tokens": 8828,
+                "cost": 0.00127530612,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.001288188,
+                  "upstream_inference_prompt_cost": 0.001112628,
+                  "upstream_inference_completions_cost": 0.00017556
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 219,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 1,
+              "role": "critic",
+              "model": "google/gemini-3.7-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-or_efficiency/review-r1.json",
+              "output_sha256": "4a977da1845ee7c79703d61669698ecb43eb6a0514767021261a200ee0356372",
+              "qualification": {
+                "id": "google/gemini-3.7-flash",
+                "family": "google",
+                "free": false,
+                "input_per_1m": 0.75,
+                "output_per_1m": 3.75,
+                "context": 1048576,
+                "aa_intelligence_index": 36.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "gemini-3.7-flash::high",
+                  "gemini-3.7-flash::low",
+                  "gemini-3.7-flash::medium"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "gemini-3.7-flash::high",
+                    "index": 39.4
+                  },
+                  {
+                    "id": "gemini-3.7-flash::low",
+                    "index": 36.9
+                  },
+                  {
+                    "id": "gemini-3.7-flash::medium",
+                    "index": 39.6
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 10569,
+                "completion_tokens": 167,
+                "total_tokens": 10736,
+                "cost": 0.00846747,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.008553,
+                  "upstream_inference_prompt_cost": 0.00792675,
+                  "upstream_inference_completions_cost": 0.00062625
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dataset": "chutes_efficiency",
+        "manifest": {
+          "artifact_id": "live-contract-chutes_efficiency",
+          "rounds_used": 1,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "chutes_efficiency"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 1,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 1,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-chutes_efficiency/producer-r1.json",
+              "output_sha256": "a332458da8ce822785f8b751e958ced03daab156bafe4929adc8409be79625fe",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 9573,
+                "completion_tokens": 309,
+                "total_tokens": 9882,
+                "cost": 0.001378909224,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 64,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0013928376,
+                  "upstream_inference_prompt_cost": 0.0012568776,
+                  "upstream_inference_completions_cost": 0.00013596
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 130,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 1,
+              "role": "critic",
+              "model": "google/gemini-3.7-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-chutes_efficiency/review-r1.json",
+              "output_sha256": "8e42e8f1ab04e29840720e11eddc7b90ecd8afe2d2d748f350704d6090929970",
+              "qualification": {
+                "id": "google/gemini-3.7-flash",
+                "family": "google",
+                "free": false,
+                "input_per_1m": 0.75,
+                "output_per_1m": 3.75,
+                "context": 1048576,
+                "aa_intelligence_index": 36.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "gemini-3.7-flash::high",
+                  "gemini-3.7-flash::low",
+                  "gemini-3.7-flash::medium"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "gemini-3.7-flash::high",
+                    "index": 39.4
+                  },
+                  {
+                    "id": "gemini-3.7-flash::low",
+                    "index": 36.9
+                  },
+                  {
+                    "id": "gemini-3.7-flash::medium",
+                    "index": 39.6
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 12362,
+                "completion_tokens": 178,
+                "total_tokens": 12540,
+                "cost": 0.00983961,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.009939,
+                  "upstream_inference_prompt_cost": 0.0092715,
+                  "upstream_inference_completions_cost": 0.0006675
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      },
+      {
+        "dataset": "aa_coding_v15",
+        "manifest": {
+          "artifact_id": "live-contract-aa_coding_v15",
+          "rounds_used": 1,
+          "rows": {
+            "total": 1,
+            "accepted": [
+              "aa_coding_v15"
+            ],
+            "quarantined": []
+          },
+          "producer_flagged": [],
+          "criteria": [
+            "mapping",
+            "safety"
+          ],
+          "coverage": {
+            "producer": {
+              "complete": true,
+              "model": "z-ai/glm-5.3-flash",
+              "rows_covered": 1
+            },
+            "critic": [
+              {
+                "round": 1,
+                "verdict": "pass",
+                "coverage_complete": true,
+                "missing_rows": [],
+                "missing_criteria": []
+              }
+            ],
+            "final": {
+              "rows_covered": 1,
+              "criteria_covered": 2,
+              "complete": true
+            }
+          },
+          "receipts": [
+            {
+              "round": 1,
+              "role": "producer",
+              "reused_from_round": null,
+              "model": "z-ai/glm-5.3-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-aa_coding_v15/producer-r1.json",
+              "output_sha256": "7b879b24709527939fc93a02d12b08bda335d6d19a5f670b34f5877217822b84",
+              "qualification": {
+                "id": "z-ai/glm-5.3-flash",
+                "family": "z-ai",
+                "free": false,
+                "input_per_1m": 0.15,
+                "output_per_1m": 0.5,
+                "context": 1310720,
+                "aa_intelligence_index": 41.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "glm-5.3-flash::default"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "glm-5.3-flash::default",
+                    "index": 41.9
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 7498,
+                "completion_tokens": 525,
+                "total_tokens": 8023,
+                "cost": 0.001373328,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.0013872,
+                  "upstream_inference_prompt_cost": 0.0011247,
+                  "upstream_inference_completions_cost": 0.0002625
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 262,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            },
+            {
+              "round": 1,
+              "role": "critic",
+              "model": "google/gemini-3.7-flash",
+              "out": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/gauntlet/live-contract-aa_coding_v15/review-r1.json",
+              "output_sha256": "908d8c358524ed796d92c8f066005d5cf8d07aaad7296c490c06ba3d90560ae4",
+              "qualification": {
+                "id": "google/gemini-3.7-flash",
+                "family": "google",
+                "free": false,
+                "input_per_1m": 0.75,
+                "output_per_1m": 3.75,
+                "context": 1048576,
+                "aa_intelligence_index": 36.9,
+                "aa_source": "exact_id_and_variants",
+                "matched_model_ids": [
+                  "gemini-3.7-flash::high",
+                  "gemini-3.7-flash::low",
+                  "gemini-3.7-flash::medium"
+                ],
+                "aa_variant_scores": [
+                  {
+                    "id": "gemini-3.7-flash::high",
+                    "index": 39.4
+                  },
+                  {
+                    "id": "gemini-3.7-flash::low",
+                    "index": 36.9
+                  },
+                  {
+                    "id": "gemini-3.7-flash::medium",
+                    "index": 39.6
+                  }
+                ]
+              },
+              "usage": {
+                "prompt_tokens": 9552,
+                "completion_tokens": 183,
+                "total_tokens": 9735,
+                "cost": 0.0077717475,
+                "is_byok": false,
+                "prompt_tokens_details": {
+                  "cached_tokens": 0,
+                  "cache_write_tokens": 0,
+                  "audio_tokens": 0,
+                  "video_tokens": 0
+                },
+                "cost_details": {
+                  "upstream_inference_cost": 0.00785025,
+                  "upstream_inference_prompt_cost": 0.007164,
+                  "upstream_inference_completions_cost": 0.00068625
+                },
+                "completion_tokens_details": {
+                  "reasoning_tokens": 0,
+                  "image_tokens": 0,
+                  "audio_tokens": 0
+                }
+              },
+              "reasoning": {
+                "effort": "low",
+                "exclude": true
+              }
+            }
+          ]
+        }
+      }
+    ]
+  }
+}

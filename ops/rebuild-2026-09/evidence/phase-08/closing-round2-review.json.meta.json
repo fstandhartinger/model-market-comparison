@@ -1,0 +1,70 @@
+{
+  "started_at": "2026-09-11T07:00:15.885Z",
+  "mode": "critic",
+  "requested_model": "x-ai/grok-4.5",
+  "producers": [
+    "openai/gpt-6-astra",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-pro-0813",
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemini-3.7-flash"
+  ],
+  "qualification": {
+    "id": "x-ai/grok-4.5",
+    "family": "x-ai",
+    "free": false,
+    "input_per_1m": 2,
+    "output_per_1m": 6,
+    "context": 500000,
+    "aa_intelligence_index": 39.1,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "grok-4.5::high"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "grok-4.5::high",
+        "index": 39.1
+      }
+    ]
+  },
+  "input_sha256": "da3244b1bdfeb47d299733f367af20817519e86135706eec816fe1d9f02e2f81",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "x-ai/grok-4.5",
+  "usage": {
+    "prompt_tokens": 104611,
+    "completion_tokens": 2175,
+    "total_tokens": 106786,
+    "cost": 0.219833856,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 128,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.2220544,
+      "upstream_inference_prompt_cost": 0.2090044,
+      "upstream_inference_completions_cost": 0.01305
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1259,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "xAI",
+  "session_id": null,
+  "finished_at": "2026-09-11T07:01:10.897Z",
+  "output_sha256": "7b99ecad28c58cd9b2c8f11c9d99407ea8d7c9ea8d433c22b773ae4415428503"
+}

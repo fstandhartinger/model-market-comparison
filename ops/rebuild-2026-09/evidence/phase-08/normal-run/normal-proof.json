@@ -1,0 +1,541 @@
+{
+  "verified_at": "2026-09-11T06:52:39.886622+00:00",
+  "ok": true,
+  "commit": "a41df419e69b9c0cd465e8dccb16c1f1f3f375fe",
+  "base": "7046b0b94e28e33f743e9dffcbf03c9716875a5b",
+  "steps_passed": 36,
+  "legacy_v14_byte_preserved": true,
+  "api_verified_by_job": true,
+  "archive_serialization": {
+    "before_and_after_equal_committed_bytes_plus_one_newline": true,
+    "reason": "writeJSONAtomic writes a terminal newline to report exports; build-dataset does not",
+    "before_archive_sha256": "6025ee01fc9306a86f99f4b272f8aca2fa4add407e42e4a95e5bd25deefc1a80",
+    "after_archive_sha256": "33140958802135a977815dd9746ed36819e3441dd376cc178f90acc7d215d63e",
+    "before_git_sha256": "68e6b9c64233d040b4bf104fbb1e45e653b40556697e5ba2efa7a58056b859a1",
+    "after_git_sha256": "e91888b52f554bc54baddb2c64750f25af4fe7295acba422e91184c2833526a7"
+  },
+  "source_body_hashes_verified": 482,
+  "worker_receipts_checked": 33,
+  "all_requested_workers_AA_at_least_34_and_within_price_cap": true,
+  "no_Astra_in_daily_loop": true,
+  "storage": {
+    "applied": true,
+    "compressed": [
+      "reports/dataset-before.json.gz",
+      "reports/dataset-after.json.gz"
+    ],
+    "removed": [
+      "work",
+      "before",
+      "benchmark-candidates"
+    ],
+    "retained": [
+      "sources",
+      "gauntlet",
+      "review",
+      "workers",
+      "reports"
+    ]
+  },
+  "live_coverage": {
+    "contracts": 7,
+    "programmatically_verified_rows": 2000,
+    "model_reviewed_examples": [
+      "aa#00001",
+      "aa#00646",
+      "da#00001",
+      "da#00134",
+      "or#00001",
+      "or#00439",
+      "aa_efficiency#00001",
+      "aa_efficiency#00141",
+      "or_efficiency#00001",
+      "or_efficiency#00024",
+      "chutes_efficiency#00001",
+      "chutes_efficiency#00603",
+      "aa_coding_v15#00001",
+      "aa_coding_v15#00013"
+    ],
+    "complete": true,
+    "coverage_note": "All rows verified programmatically against complete captured primary bodies. Different-model gauntlet verifies adapter contracts and explicit examples. No claim of full manual LLM numeric inspection."
+  },
+  "benchmark_summary": {
+    "ok": true,
+    "checked_at": "2026-09-11T06:39:03.351Z",
+    "sources_attempted": 75,
+    "score_candidates": 6,
+    "accepted_changed_scores": 0,
+    "retained_or_dropped": 6,
+    "retained_failures": 6,
+    "note": "Retained observations keep original dates and approvals. Unreachable/manual sources and incomplete or contested candidates are explicit; no claim of complete benchmark-universe freshness.",
+    "commitPaths": []
+  },
+  "retained_failures": [
+    {
+      "id": "aa-benchmark-fields",
+      "status": "retained_after_failure",
+      "reason": "aa-briefcase::snapshot-2026-09-10: protocol not approved: round 1: 1 disputed rows quarantined; producer uncertainty cannot be overruled by a critic pass; clean critic round but every row was flagged; nothing accept-eligible"
+    },
+    {
+      "id": "https://mistral.ai/news/devstral-2-vibe-cli/",
+      "status": "retained_after_failure",
+      "reason": "z-ai/glm-5.3-flash: JSON mode returned malformed JSON"
+    },
+    {
+      "id": "score-batch-0",
+      "status": "retained_after_failure",
+      "reason": "3 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "score-batch-1",
+      "status": "retained_after_failure",
+      "reason": "1 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "score-batch-2",
+      "status": "retained_after_failure",
+      "reason": "1 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    },
+    {
+      "id": "score-batch-3",
+      "status": "retained_after_failure",
+      "reason": "1 rows quarantined: round 1: worker: No supported viable worker model found; round 2: worker: No supported viable worker model found; round 3: worker: No supported viable worker model found"
+    }
+  ],
+  "worker_calls": {
+    "calls": [
+      {
+        "receipt": "worker-1789108542962-856491.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001042451784,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108585474-857006.json",
+        "role": "critic",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0231199056,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108589577-860133.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000690182064,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108628297-860403.json",
+        "role": "critic",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0168951816,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108632634-863519.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001014442704,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108709899-863835.json",
+        "role": "critic",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0333214398,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108711700-870291.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0069252975,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108716861-870480.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000808578144,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108718522-870809.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0053987175,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108724339-870864.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00127530612,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108726281-871294.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00846747,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108732291-871439.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001378909224,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108734305-871889.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00983961,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108741314-872038.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001373328,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108743150-872450.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0077717475,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108917277-883865.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00029873448,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108918992-884316.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00195723,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108922858-884475.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00026401716,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108924699-884687.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00206415,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108929720-884859.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000272310984,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108931375-885166.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.002092365,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108934143-885224.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000227966904,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108936740-885501.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.003422925,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108941510-885584.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00029503188,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108943188-885855.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0020574675,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109126731-886359.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001979802,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109131516-898491.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.003811995,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109134569-898618.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.017595765,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109138522-898956.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0033642675,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109142131-899208.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0042522975,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109144851-899361.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0031801275,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789108538644-843083.json",
+        "role": "oneshot",
+        "actual_model": null,
+        "requested_model": "deepseek/deepseek-v4-flash-0731",
+        "status": "failed",
+        "returned_cost_usd": null,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789109129281-898234.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "failed",
+        "returned_cost_usd": 0.0005873769,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      }
+    ],
+    "returned_cost_usd": 0.16704639784800002,
+    "calls_without_returned_cost": 1,
+    "note": "Sum of returned charges only, including charged failed completions where reported. Missing charges and owner subscription usage are not estimated."
+  },
+  "dataset_sources": {
+    "openrouter": "2026-09-11",
+    "artificialanalysis": "2026-09-11",
+    "designarena": "2026-09-11",
+    "aws_bedrock": "2026-09-08",
+    "azure_foundry": "2026-09-08",
+    "google_vertex": "2026-09-08",
+    "nebius": "2026-09-08",
+    "inceptron": "2026-09-08",
+    "scaleway": "2026-09-08",
+    "ionos": "2026-09-08",
+    "mistral": "2026-09-08",
+    "tensorx": "2026-09-08",
+    "chutes": "2026-09-08",
+    "ovhcloud": "2026-09-08",
+    "stackit": "2026-09-08",
+    "t_systems_llm_hub": "2026-09-08",
+    "aa_coding_agents": "2026-09-09",
+    "github_copilot": "2026-09-08",
+    "claude_code": "2026-09-08",
+    "aa_coding_agents_v1_5": "2026-09-11",
+    "provider_meta": "2026-07-12",
+    "aa_efficiency": "2026-09-11T06:32:14.403Z",
+    "openrouter_efficiency": "2026-09-11T06:32:17.826Z",
+    "chutes_efficiency": "2026-09-11T06:32:36.168Z"
+  },
+  "dataset_counts": {
+    "models": 839,
+    "families": 654,
+    "providers": 90,
+    "offers": 2801
+  },
+  "dataset_sha256": "e91888b52f554bc54baddb2c64750f25af4fe7295acba422e91184c2833526a7"
+}

@@ -1,0 +1,879 @@
+{
+  "started_at": "2026-09-11T06:32:03.542Z",
+  "run_dir": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690",
+  "dry_run": false,
+  "steps": [
+    {
+      "name": "branch",
+      "ok": true,
+      "duration_ms": 12
+    },
+    {
+      "name": "initial-status",
+      "ok": true,
+      "duration_ms": 10
+    },
+    {
+      "name": "fetch-main",
+      "ok": true,
+      "duration_ms": 493
+    },
+    {
+      "name": "sync-main",
+      "ok": true,
+      "duration_ms": 5
+    },
+    {
+      "name": "base",
+      "ok": true,
+      "duration_ms": 5
+    },
+    {
+      "name": "remote-base",
+      "ok": true,
+      "duration_ms": 4
+    },
+    {
+      "name": "clone",
+      "ok": true,
+      "duration_ms": 802
+    },
+    {
+      "name": "detach-stage",
+      "ok": true,
+      "duration_ms": 586
+    },
+    {
+      "name": "npm-ci",
+      "ok": true,
+      "duration_ms": 5927
+    },
+    {
+      "name": "worker-catalog",
+      "ok": true,
+      "duration_ms": 413
+    },
+    {
+      "name": "fetch-aa",
+      "ok": true,
+      "duration_ms": 2052
+    },
+    {
+      "name": "fetch-da",
+      "ok": true,
+      "duration_ms": 721
+    },
+    {
+      "name": "fetch-or",
+      "ok": true,
+      "duration_ms": 21573
+    },
+    {
+      "name": "fetch-coding-v1.5",
+      "ok": true,
+      "duration_ms": 474
+    },
+    {
+      "name": "review-live",
+      "ok": true,
+      "duration_ms": 385887
+    },
+    {
+      "name": "refresh-benchmarks",
+      "ok": true,
+      "duration_ms": 404423
+    },
+    {
+      "name": "build-dataset",
+      "ok": true,
+      "duration_ms": 1141
+    },
+    {
+      "name": "npm-build",
+      "ok": true,
+      "duration_ms": 50319
+    },
+    {
+      "name": "npm-test",
+      "ok": true,
+      "duration_ms": 8200
+    },
+    {
+      "name": "typecheck",
+      "ok": true,
+      "duration_ms": 18071
+    },
+    {
+      "name": "prerender",
+      "ok": true,
+      "duration_ms": 147
+    },
+    {
+      "name": "top5",
+      "ok": true,
+      "duration_ms": 356
+    },
+    {
+      "name": "stage-status",
+      "ok": true,
+      "duration_ms": 222
+    },
+    {
+      "name": "stage-data",
+      "ok": true,
+      "duration_ms": 609
+    },
+    {
+      "name": "git-name",
+      "ok": true,
+      "duration_ms": 9
+    },
+    {
+      "name": "git-email",
+      "ok": true,
+      "duration_ms": 9
+    },
+    {
+      "name": "commit-data",
+      "ok": true,
+      "duration_ms": 873
+    },
+    {
+      "name": "candidate-commit",
+      "ok": true,
+      "duration_ms": 6
+    },
+    {
+      "name": "recheck-head",
+      "ok": true,
+      "duration_ms": 8
+    },
+    {
+      "name": "recheck-status",
+      "ok": true,
+      "duration_ms": 12
+    },
+    {
+      "name": "remote-url",
+      "ok": true,
+      "duration_ms": 8
+    },
+    {
+      "name": "push-data",
+      "ok": true,
+      "duration_ms": 7559
+    },
+    {
+      "name": "post-push-head",
+      "ok": true,
+      "duration_ms": 6
+    },
+    {
+      "name": "post-push-status",
+      "ok": true,
+      "duration_ms": 13
+    },
+    {
+      "name": "fetch-published",
+      "ok": true,
+      "duration_ms": 1807
+    },
+    {
+      "name": "install-published",
+      "ok": true,
+      "duration_ms": 605
+    }
+  ],
+  "published": true,
+  "exit_code": 0,
+  "base": "7046b0b94e28e33f743e9dffcbf03c9716875a5b",
+  "workers": {
+    "producer": {
+      "id": "deepseek/deepseek-v4-flash-0731",
+      "family": "deepseek",
+      "free": false,
+      "input_per_1m": 0.065,
+      "output_per_1m": 0.18,
+      "context": 1310720,
+      "aa_intelligence_index": 34.5,
+      "aa_source": "exact_id_and_variants",
+      "matched_model_ids": [
+        "deepseek-v4-flash-0731::max"
+      ],
+      "aa_variant_scores": [
+        {
+          "id": "deepseek-v4-flash-0731::max",
+          "index": 34.5
+        }
+      ]
+    },
+    "critic": {
+      "id": "z-ai/glm-5.3-flash",
+      "family": "z-ai",
+      "free": false,
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.5,
+      "context": 1310720,
+      "aa_intelligence_index": 41.9,
+      "aa_source": "exact_id_and_variants",
+      "matched_model_ids": [
+        "glm-5.3-flash::default"
+      ],
+      "aa_variant_scores": [
+        {
+          "id": "glm-5.3-flash::default",
+          "index": 41.9
+        }
+      ]
+    }
+  },
+  "changed_paths": [
+    "data/dataset.json",
+    "data/raw/aa-coding-agents-v1.5.json",
+    "data/raw/aa-efficiency.json",
+    "data/raw/artificialanalysis.json",
+    "data/raw/benchmarks/ingestion-lock.json",
+    "data/raw/benchmarks/public-observations.json",
+    "data/raw/benchmarks/registry.json",
+    "data/raw/benchmarks/scores.json",
+    "data/raw/benchmarks/vendor-candidates.json",
+    "data/raw/chutes-efficiency.json",
+    "data/raw/designarena.json",
+    "data/raw/openrouter-efficiency.json",
+    "data/raw/openrouter.json",
+    "data/raw/benchmarks/daily-checks.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/054fe825966aa24f3251.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/061c8c3d82764dbd02c6.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/0e3dbb92576b1e473223.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/141bc10ec679aa4194a6.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/16925b79d955a1cacef4.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/186ca65e7bb3a07aa268.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/188d8ea4a393978063a6.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/1af05c4fcbbcb33dff60.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/1b5ec4be1ec3dea8c48d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/21c9bee0018f719d56c1.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2767a7f157b54b8a6ad9.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/28cad62a817f8e52162f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/28cb9a93e6aad68a2a9c.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2aa739d957fc2ca6f531.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2b0d42aef4f614dd199d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2dbe8fc878fd39bcb4fb.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2e4734905a27c3556f02.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2e584f47344e95dffbb0.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2ec354bc9eab734c1ba6.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/2f0402654b01e7363c0d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/31e3792c378b20b9a0e3.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/352ad231e3fd18a286dd.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/39dd732fe1ba03464b4f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/3ad6405dcc7af8feb934.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/3aeda5d9691ba92c2439.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4154635c4557af4b4eeb.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/416d4b506040d37d2d53.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/45fad983f706f583c5d3.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/49e18d2425fb2a29672a.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4d0f19f1f87e08772b74.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4d631b8b009936981865.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4de17eb3109b9e499c25.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4f00a8c6523a84776718.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4f0e07dcb4bd1a2b1824.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/4f4312b52154d55e1b50.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/52524f81bdce7c2b22d1.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/6be5173dba184a4a006f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/73ae51e46c0890288a7d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/74eed2627d4a04923a04.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/765fb30f9f7a955242c8.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/788ec3eb6fa034a82b22.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/79b26c906dd3a53e2215.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/7a3f39d0a76902c4e12d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/7de8f5cec86e49b9a0f3.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/7e6d76685aa6c041bc8d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/7f65d7f593f1cce2a24f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/80826b4bd9c7d5e4b847.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/812a3fd645c80725354d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/8b767ed6d44fd100e56f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/8d08652f0da50ee6b6c3.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/9aa7860622381d0ca3ea.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/9fc9b2801eccc702c498.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7272da74acc90925b3f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7d35da0c240af54d9d3.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/a7d9adbb51c307e925f9.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/aa-coding-agents-v1.5.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/aider.chat-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/andonlabs.com-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/arcprize.org-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/artificialanalysis.ai-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/arxiv.org-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/b16f4683a0970694a1aa.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/b5cb5ec6e8c7547c4f11.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/baaa330c53e0fe1eb3a4.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/bb45c43c090022ab933e.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/bd0bd0772a4eddda9136.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/bdb58b9b9972a95fbb94.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/c862011a4ee1d1a7199f.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/cea6cab3ac65e4d41cce.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/checks.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/d5abd451059e489715ec.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/d6494fbd6766d0880f9b.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/d743d7a731ba6b9f102d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/d987ee5524768c575a13.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/dad300ad18655b69db72.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/dc6f43c6140c93d04790.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/e769e53ee838c8abf3bb.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/ec6cf7a7a30476d08570.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/ed39688aa5d40bd73007.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/epoch.ai-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/eqbench.com-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/f3aae5bbd58fcd7de32a.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/fd3bd0049e1a2b39244d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/fe81fbbb395014608c8d.gz",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/review-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-aime-2025/review-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/review-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/review-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/review-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-apex-agents-snapshot-2026-09-10/review-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/review-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-automationbench-1.0.6/review-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/review-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/protocol-aa-briefcase-snapshot-2026-09-10/review-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/artifact-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/artifact-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/critic-schema-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/critic-schema-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-0/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/artifact-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/artifact-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/critic-schema-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/critic-schema-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-1/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/artifact-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/artifact-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/critic-schema-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/critic-schema-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-2/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/artifact-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/artifact-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/artifact-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/coverage-manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/critic-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/critic-schema-r2.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/critic-schema-r3.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-packet-r1.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-packet-r2.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-packet-r3.md",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-r1.json.meta.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/gauntlet/scores-3/producer-schema-r1.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/github.com-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/huggingface.co-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/labs.scale.com-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/livebench.ai-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/manifest.json",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/mistral.ai-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/princeton-nlp.github.io-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/taubench.com-robots.txt",
+    "data/raw/benchmarks/daily-evidence/2026-09-11T06-39-03-351Z/www.swebench.com-robots.txt"
+  ],
+  "commit": "a41df419e69b9c0cd465e8dccb16c1f1f3f375fe",
+  "live_verified": true,
+  "finished_at": "2026-09-11T06:50:09.612Z",
+  "worker_calls": {
+    "calls": [
+      {
+        "receipt": "worker-1789108542962-856491.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001042451784,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108585474-857006.json",
+        "role": "critic",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0231199056,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108589577-860133.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000690182064,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108628297-860403.json",
+        "role": "critic",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0168951816,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108632634-863519.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001014442704,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108709899-863835.json",
+        "role": "critic",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0333214398,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108711700-870291.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0069252975,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108716861-870480.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000808578144,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108718522-870809.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0053987175,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108724339-870864.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00127530612,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108726281-871294.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00846747,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108732291-871439.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001378909224,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108734305-871889.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00983961,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108741314-872038.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001373328,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108743150-872450.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0077717475,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108917277-883865.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00029873448,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108918992-884316.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00195723,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108922858-884475.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00026401716,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108924699-884687.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00206415,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108929720-884859.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000272310984,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108931375-885166.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.002092365,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108934143-885224.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.000227966904,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108936740-885501.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.003422925,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108941510-885584.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00029503188,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789108943188-885855.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0020574675,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109126731-886359.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.001979802,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109131516-898491.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.003811995,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109134569-898618.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.017595765,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109138522-898956.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0033642675,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109142131-899208.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0042522975,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789109144851-899361.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0031801275,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789108538644-843083.json",
+        "role": "oneshot",
+        "actual_model": null,
+        "requested_model": "deepseek/deepseek-v4-flash-0731",
+        "status": "failed",
+        "returned_cost_usd": null,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789109129281-898234.json",
+        "role": "oneshot",
+        "actual_model": "z-ai/glm-5.3-flash",
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "failed",
+        "returned_cost_usd": 0.0005873769,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      }
+    ],
+    "returned_cost_usd": 0.16704639784800002,
+    "calls_without_returned_cost": 1,
+    "note": "Sum of returned charges only, including charged failed completions where reported. Missing charges and owner subscription usage are not estimated."
+  },
+  "dataset_sha256": "e91888b52f554bc54baddb2c64750f25af4fe7295acba422e91184c2833526a7",
+  "storage": {
+    "applied": true,
+    "compressed": [
+      "reports/dataset-before.json.gz",
+      "reports/dataset-after.json.gz"
+    ],
+    "removed": [
+      "work",
+      "before",
+      "benchmark-candidates"
+    ],
+    "retained": [
+      "sources",
+      "gauntlet",
+      "review",
+      "workers",
+      "reports"
+    ]
+  }
+}

@@ -1,0 +1,46 @@
+{
+  "accepted_at": "2026-09-11T07:03:22.250255+00:00",
+  "artifact_id": "phase08-installed-execution-close",
+  "artifact_sha256": "36457d005b3e01acd3ab1301c7cbc456618c2f4ca14adea4493ec29fcf52b434",
+  "round": 2,
+  "verdict": "pass",
+  "findings": [],
+  "files_or_excerpts_verified": 4,
+  "criteria_verified": 4,
+  "actual_critic": "x-ai/grok-4.5",
+  "critic_AA_index": 39.1,
+  "returned_critic_cost_usd": 0.219833856,
+  "input_output_and_reference_hashes_verified": true,
+  "producer_families_excluded": [
+    "openai/gpt-6-astra",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-pro-0813",
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemini-3.7-flash"
+  ],
+  "scope": "Frozen completion-report section, phase08 coverage rows, runtime instructions, and owner execution audit. Independent code/data reviews remain separately scoped. Any owner closing notes appended after this check are not represented as critic-authored content.",
+  "round_1": "Meta Muse Spark 1.3 returned HTTP 403 with no completion; no clean review or reported charge. Not retried.",
+  "uncertainty_adjudication": [
+    {
+      "item": "Exact shell wrapper not literal in installed stdout",
+      "decision": "Owner actually invoked env -u BH_DAILY_HOME -u BH_REPO bash /opt/mmc-daily/run.sh in execution session 28584; the command is an owner observation, and retained stdout establishes the installed run, timing and result."
+    },
+    {
+      "item": "Floating point sum",
+      "decision": "Independently summed every returned_cost_usd field using Decimal from raw JSON. The printed report rounds only a binary floating-point tail.",
+      "exact_decimal_sum_usd": "0.167046397848",
+      "calls_without_returned_cost": 1
+    },
+    {
+      "item": "No tools or exhaustive numeric inspection in text critic",
+      "decision": "Expected transport limitation; explicitly scoped. Owner checks and actual execution/source receipts supply those facts."
+    }
+  ],
+  "remaining_phase08_gate": "Closing commit/push, finished webhook and complete public dataset equality; keep RUNNING until verified.",
+  "later_phase_obligations": [
+    "Global six-machine/runtime skill installation/discovery",
+    "Final original-request audit",
+    "Final Telegram update and delivered explainer video"
+  ]
+}

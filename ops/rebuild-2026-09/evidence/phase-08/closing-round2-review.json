@@ -1,0 +1,31 @@
+{
+  "artifact_id": "phase08-installed-execution-close",
+  "artifact_sha256": "36457d005b3e01acd3ab1301c7cbc456618c2f4ca14adea4493ec29fcf52b434",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "f1",
+    "f2",
+    "f3",
+    "f4",
+    "c1",
+    "c2",
+    "c3",
+    "c4"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Exact shell wrapper text `env -u BH_DAILY_HOME -u BH_REPO bash /opt/mmc-daily/run.sh` is stated in REPORT.md but not literally present in installed-output.txt; the run identity is still bound by DAILY START/END timestamps, run_dir under /opt/benchmarkheaven-daily, rc=0, and matching commit/deployment receipts.",
+    "Returned cost is reported as $0.167046397848 while worker-calls/normal-proof carry 0.16704639784800002; treated as the same floating-point sum of supplied returned_cost_usd fields, not an independent recomputation of every receipt.",
+    "This review did not re-execute commands, recompute file hashes, or inspect every published numeric dataset row; acceptance relies on owner-supplied receipts, logs, and proof JSON as scoped."
+  ],
+  "missing_evidence": [],
+  "coverage_notes": {
+    "c1": "REPORT completion claims match installed-output (06:32:03–06:50:10Z, rc=0, 36 OK steps, commit a41df419…, top5 notify), run-report.json (36 steps, published/live_verified, same commit/base/dataset_sha256), deployment.json (uav6aaxksidqrhm1psfpzsp9 finished 06:49:58Z), push/install logs (7046b0b..a41df41), npm-test/build/typecheck/prerender logs (178/11 pass), normal-public.json (three hosts dataset_equal + brand), and closing-checks/receipt.json plus continuity JSON (only generated_at differs). Planned phase-09 items are not treated as done.",
+    "c2": "Quantitative scopes align across REPORT, normal-proof, live-step-result, benchmarks-step-result, worker-calls, and retained-snapshots: 2000 programmatic rows vs 14 listed model examples; AA 646 / DA 48+86 / OR 439 / AA eff 141 / Chutes 603 / coding v1.5 13; 75 sources; 0 accepted_changed_scores; 6 retained_failures; 482 source-body hashes; 41 unchanged public extracts / 7439 observations retained; vendor candidates quarantined. Cost sum and one missing charge match worker-calls note. No universal freshness claim in f1/f2/f4.",
+    "c3": "runtime-installed.json: /opt/mmc-daily symlink, home /opt/benchmarkheaven-daily, cron `17 5 * * * /opt/mmc-daily/run.sh`, tracked run.sh/README match. Catalog/receipts show AA>=34 and <=$4/M on used models; completed models glm-5.3-flash, deepseek-v4-pro-0813, gemini-3.7-flash; no Astra in daily loop; producer/critic families differ on paired calls; exactly one permitted top5-entrant alert for Claude Fable 5; final Telegram/video/global skills deferred to phase 09 in REPORT and COVERAGE.",
+    "c4": "REPORT/COVERAGE/README state installed-run proof scope, distinguish programmatic vs example review, record residual manual/contested/quarantined paths, phase-09 obligations, and that this artifact is not a new full-code or visual audit; continuity limited to generated_at vs published daily dataset."
+  }
+}

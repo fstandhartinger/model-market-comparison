@@ -1,0 +1,48 @@
+{
+  "started_at": "2026-09-11T06:59:27.812Z",
+  "mode": "critic",
+  "requested_model": "meta/muse-spark-1.3",
+  "producers": [
+    "openai/gpt-6-astra",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-pro-0813",
+    "deepseek/deepseek-v4-flash-0731",
+    "google/gemini-3.7-flash"
+  ],
+  "qualification": {
+    "id": "meta/muse-spark-1.3",
+    "family": "meta",
+    "free": false,
+    "input_per_1m": 1.25,
+    "output_per_1m": 4.25,
+    "context": 1048576,
+    "aa_intelligence_index": 45.2,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "muse-spark-1.3::max",
+      "muse-spark-1.3::xhigh"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "muse-spark-1.3::max",
+        "index": 48.2
+      },
+      {
+        "id": "muse-spark-1.3::xhigh",
+        "index": 45.2
+      }
+    ]
+  },
+  "input_sha256": "bcb18085316a60b5d0f92bedc4eee9fadb74f21291c5178acfed1fb74e0cf1d7",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "status": "failed",
+  "finished_at": "2026-09-11T06:59:28.061Z",
+  "error": "OpenRouter completion HTTP 403"
+}
