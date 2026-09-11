@@ -1,0 +1,30 @@
+{
+  "artifact": "phase08-core-implementation",
+  "rounds_used": 3,
+  "review_status": "Round 3 revise; bounded static loop closed with owner fixes/adjudication, not a claimed clean critic round.",
+  "findings": [
+    {
+      "id": "approval-family-check-not-canonical",
+      "decision": "accepted and fixed",
+      "evidence": "lib/benchmark-score-evidence.mjs now uses the same vendorFamily canonicalization and binds review output SHA, actual critic ID and complete producer ID set to its execution sidecar. Real published self-reports still build. Regression rejects chutes/zai-org versus z-ai and substituted critic identity."
+    },
+    {
+      "id": "failed-failure-alerts-never-replayed",
+      "decision": "proposed repair rejected; policy documentation clarified",
+      "evidence": "Failure alerts are replanned while the failure persists through the weekly gate. Replaying stale failures after recovery would report fixed problems and bypass the weekly gate for accumulated pending messages. Data-event retries remain durable. New integration checks prove retry on the next failing run, no send inside seven days, send at the boundary, escalation after three failures, and quiet recovery. Boundary comparison corrected to >= seven days."
+    }
+  ],
+  "post_review_runtime_fix": "Live Gemini schema-constrained responses were empty objects. A controlled same-packet ordinary-JSON call produced valid full identity/hash/coverage. Daily gauntlet uses ordinary JSON with strict local parsers; input schema artifacts remain frozen. No empty, missing-coverage or malformed result can earn an approval.",
+  "tests": [
+    "approval-identity-tests.txt:6 passed",
+    "approval-build.txt:real existing dataset accepted",
+    "review-fix-tests.txt:10 passed",
+    "middle-row-verification.json:1998 complete programmatic records; two interior-row corruptions rejected"
+  ],
+  "pending": [
+    "End-to-end daily job with final changes",
+    "Final data build/tests/typecheck/production build",
+    "Commit/push and webhook/live verification",
+    "Closing execution-evidence review"
+  ]
+}

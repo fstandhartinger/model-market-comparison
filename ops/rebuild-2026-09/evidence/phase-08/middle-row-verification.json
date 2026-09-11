@@ -1,0 +1,25 @@
+{
+  "source_run": "/opt/benchmarkheaven/state/phase-08/rehearsal-home/runs/2026-09-11T04-46-53-668Z-376876",
+  "clean": {
+    "required_rows": 1998,
+    "covered_rows": 1998,
+    "complete": true,
+    "sampled": false
+  },
+  "synthetic_corruptions": [
+    {
+      "file": "artificialanalysis.json",
+      "index": 300,
+      "id": "4d6dd5ce-08cb-4e87-9288-1dd2f022aa35",
+      "rejected": true,
+      "error": "live-review: aa 4d6dd5ce-08cb-4e87-9288-1dd2f022aa35 API passthrough mismatch — staged: {\"evaluations\":{\"aime\":null,\"aime_25\":0.793333333333333,\"artificial_analysis_coding_index\":null,\"artificial_analysis_intelligence_index\":16.9,\"artificial_analysis_math_inde"
+    },
+    {
+      "file": "openrouter.json",
+      "index": 100,
+      "id": "sakana/fugu-ultra",
+      "rejected": true,
+      "error": "live-review: or sakana/fugu-ultra catalog+endpoints projection (price units $/token strings, provider tags exact) mismatch — staged: {\"architecture\":{\"input_modalities\":[\"text\",\"image\"],\"instruct_type\":null,\"modality\":\"text+image->text\",\"output_modalities\":[\"t"
+    }
+  ]
+}

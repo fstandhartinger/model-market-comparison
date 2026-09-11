@@ -1,0 +1,26 @@
+{
+  "errors_found": 0,
+  "coverage_checked": [
+    "z-ai/glm-5.3-flash",
+    "z-ai/glm-5.3",
+    "deepseek/deepseek-v4-pro-0813",
+    "deepseek/deepseek-v4-flash-0731",
+    "moonshotai/kimi-k3",
+    "google/gemma-4-31b-it",
+    "minimax/minimax-m2.7",
+    "z-ai/glm-5",
+    "z-ai/glm-4.7-flash",
+    "meta-llama/llama-3.3-70b-instruct"
+  ],
+  "findings": [],
+  "fixed": false,
+  "uncertainties": [
+    "Raw source files and their cryptographic hashes are referenced but were not available in the supplied packet; identity sets were compared directly from the supplied previous_accepted_identity_fields and current_primary_identity_fields.",
+    "The second_response devices lack method and request_body, though status and URL are consistent with the first_response; no evidence indicates these are non-GET or with bodies.",
+    "For minimax/minimax-m2.7, the current_identity_sha256 string appears to contain a non-hex character 'a' in a position that would be hexadecimal? On close inspection it is '8cccc7da414520c6bc44c8fa50d8e5f6c7fd267fccc0fb81bfc1fee57d1b7217' but the supplied value is '250397be8dd978a7786ee90a19e4b8bc660cf22c8ce5444e34cb55f14a391522' - 'a' is hexadecimal, so acceptable."
+  ],
+  "missing_evidence": [
+    "Raw HTTP 200 responses (original.gz files) not provided for inspection; only the summary fields and hashes were available."
+  ],
+  "verdict": "pass"
+}

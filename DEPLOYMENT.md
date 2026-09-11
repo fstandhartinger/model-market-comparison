@@ -44,7 +44,7 @@ export ARTIFICIAL_ANALYSIS_API_KEY=aa_…
 npm run data:refresh   # fetch live (AA + DesignArena + OpenRouter) → rebuild dataset.json
 npm run db:seed        # (if using Postgres) reload it
 ```
-Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) remain curated — see [data/SCRAPING.md](data/SCRAPING.md). Collect AA Coding Agent v1.5 with `node scripts/fetch-aa-coding-agents.mjs`; v1.4 stays dated and separate for Composite. The daily wrapper and prompt are tracked in `ops/daily/` and installed at `/opt/mmc-daily/`.
+Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) remain curated — see [data/SCRAPING.md](data/SCRAPING.md). Collect AA Coding Agent v1.5 with `node scripts/fetch-aa-coding-agents.mjs`; v1.4 stays dated and separate for Composite. The daily wrapper and prompt are tracked in `ops/daily/` and installed at `/opt/benchmarkheaven-daily/` (`/opt/mmc-daily/` is a compatibility symlink). See [daily operations](ops/daily/README.md) for the complete staged refresh and dry-run command.
 
 ## Current deployment (Sandy / Coolify)
 
@@ -53,8 +53,8 @@ Since 2026-08-26 the reference instance runs on Florian's private Sandy PaaS (Co
 The compatibility URL `https://model-market-comparison.app.mintapis.com` remains valid. The app is built from this repo's `Dockerfile` in snapshot mode (no `DATABASE_URL`).
 The Coolify health check is disabled because `node:20-slim` ships neither `curl` nor `wget`. A GitHub webhook is now active (verified from Coolify deployment history on 2026-09-08):
 pushes to `main` auto-deploy. The daily refresh cron on the server (`/opt/mmc-daily/run.sh`,
-Codex CLI, 05:17 UTC) pulls, refreshes the data and pushes. Its explicit redeploy helper
-(`/opt/mmc-daily/redeploy.sh`) remains a fallback if the pushed snapshot does not become live;
+cheap OpenRouter workers with a different-family critic, 05:17 UTC) stages and verifies the complete refresh before pushing. Astra is an operator escalation after repeated failures, using ChatGPT subscription auth. The existing explicit redeploy helper
+(`/opt/mmc-daily/redeploy.sh`) is an operator fallback if the pushed snapshot does not become live; the daily runner logs a failed verification and does not automatically duplicate a deployment;
 do not queue a second build while a webhook deployment is already progressing.
 The former Render instance (`model-market-comparison.onrender.com`) was suspended by Render on 2026-08-25 (free-tier usage exceeded).
 

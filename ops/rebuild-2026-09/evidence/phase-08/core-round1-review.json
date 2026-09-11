@@ -1,0 +1,65 @@
+```json
+{
+  "artifact_id": "phase08-core-implementation",
+  "artifact_sha256": "5c0db4607a28da6d447ed83691943b37256bfdbd637d458ed1c967d4b7c677cc",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "source_safety",
+    "source_review",
+    "automation",
+    "quiet",
+    "compatibility",
+    "ops/daily/daily.mjs",
+    "ops/daily/policy.mjs",
+    "ops/daily/gauntlet.mjs",
+    "ops/daily/notify.mjs",
+    "ops/daily/refresh-benchmarks.mjs",
+    "ops/daily/review-live.mjs",
+    "ops/daily/run.sh",
+    "ops/daily/install.sh",
+    "ops/rebuild-2026-09/bin/worker-runner.mjs",
+    "ops/rebuild-2026-09/bin/worker-policy.mjs",
+    "lib/live-source.mjs",
+    "scripts/fetch-live.mjs",
+    "scripts/ingest-benchmark-scores.mjs",
+    "scripts/collect-public-benchmarks.py"
+  ],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "aa-efficiency-attempt-hash-gap",
+      "severity": "major",
+      "location": "ops/daily/review-live.mjs verifyAaEfficiency (attempt verification loop) and collectLiveRun ordering",
+      "evidence": "verifyAaEfficiency's attempt loop only checks attempts that carry a `sha256`, and it calls src.getLast(attempt.url) to confirm the captured source matches. However, fetch-aa-efficiency.mjs's `fetchAaEfficiency` flow, when capturing via captureLiveSource, only records `sha256` for the successful body; the manifested attempt entries (`attempts`) do not carry the sha256 when only a `captured.status` exists. More directly: lib/snapshot.mjs/writeJSONAtomic adds `collected_at` at snapshot level, while fetch-aa-efficiency.mjs passes `fetchedAt` to parseAaEfficiency; the staged aa-efficiency snapshot rows in the packet include `collected_at` from the snapshot, but `verifyAaEfficiency` derives from the captured receipt (`receipt.fetched_at`) and compares via `derived = parseAaEfficiency(receipt.body, { previous: { count: staged.count }, attempts: [], sourceUrl: staged.source_url, fetchedAt: staged.collected_at })`. The `fetchedAt` parameter is set to the staged `collected_at` (a snapshot date) rather than the actual captured `receipt.fetched_at`, so a strict equality comparison between staged rows (which carry the collector-run date) and source-derived rows (which now use the staged date) may mask a date provenance mismatch. The current test only covers attempts that have a non-null sha256; the more common case of an attempt without sha256 (e.g., a 404/403 receipt) is not verified against the manifest, so a stale or failed AA efficiency attempt is not conclusively bound to this run’s capture.",
+      "repair": "Add a deterministic check in verifyAaEfficiency that every staged attempt has a corresponding captured manifest receipt (by URL) within this run’s source directory, and that a failed/partial attempt (no sha256) is either (a) absent from the staged snapshot or (b) explicitly reported as a retained/dated failed attempt. Pass `fetchedAt: receipt.fetched_at` (the actual capture timestamp) to parseAaEfficiency instead of the staged `collected_at`, then assert equality on collected_at/fetched_at. Add a unit test that simulates a 403/429 probe attempt with no body and verifies the review fails or marks the attempt as non-fresh rather than silently passing."
+    },
+    {
+      "id": "or-efficiency-retained-cache-provenance-date-gap",
+      "severity": "major",
+      "location": "ops/daily/review-live.mjs verifyOrEfficiency (cache-retained branch)",
+      "evidence": "In the retained-cache path, when `mergedRetained` or `cache.retained_after_failure` is set, the code asserts `retained_after_failure === true` and then does `eq(cache, { ...prior.models?.[id]?.cache, retained_after_failure: true }, ...)`. The staged cache object in fetch-openrouter-efficiency.mjs is built as `{ ...old.cache, retained_after_failure: true }`, which preserves the original `provenance.collected_at`. However, the `assertRetainedDate(cache.provenance?.collected_at, ...)` check is conditional and only fires when the outer condition matches; if a cache object exists but `retained_after_failure` is absent (e.g., a previous partial merge), the code falls through with no date assertion. Additionally, the `prior_accepted_cache` extract in the packet is only supplied as `null` when a fresh cache source exists; in the retained cache branch, the packet carries the full prior cache object (`prior_accepted_cache: prior.models?.[id]`), but the critic can only verify the value against the prior object, not against a fresh source — so an unchanged-but-invalid prior cache (e.g., one whose provenance is stale, or whose `retained_after_failure` was mistakenly set) could be accepted without a fresh-dated source. The test suite does not cover a retained cache that lacks `retained_after_failure` or whose prior provenance is missing.",
+      "repair": "In verifyOrEfficiency, after the retained-cache branch, add an unconditional check: if `model.cache` is present and it is not a fresh cache (`cache_attempt.status !== 'available'`), then require `model.cache.retained_after_failure === true` and `assertRetainedDate(model.cache.provenance?.collected_at, runStart, ...)`. Add a regression test with a synthetic prior cache lacking `retained_after_failure` and/or provenance and assert the review fails closed. Also ensure `prior_accepted_cache` is always included in the extract for the retained branch so the critic can at least confirm equality with the prior snapshot, while adding a human-opaque freshness marker (e.g., `retained_freshness_confirmed: false`) so the critic cannot mistake a retained entry for a fresh measurement."
+    },
+    {
+      "id": "live-gauntlet-critic-omits-freshness-rule",
+      "severity": "major",
+      "location": "ops/daily/phase-step.mjs (criteria array for live packets); gauntlet.mjs CRITIC_TASK",
+      "evidence": "The live-gauntlet criteria passed to reviewArtifact in phase-step.mjs are only `mapping`, `values`, and `retention`. The `retention` criterion says retained metadata keeps original dates, but it does not require the critic to verify that a retained entry’s date is actually earlier than this run (the `assertRetainedDate` logic lives only in the deterministic code). The GAUNTLET_PACKET does not include a per-row `is_retained` flag or the run start timestamp; the critic is therefore not explicitly asked to confirm that every retained row’s `collected_at` is older than the run’s `fetched_at`. In the current pipeline, a deterministic bug or a source-data quirk could republish a retained observation with today’s date, and the critic would have no evidence to flag it. The `or_efficiency` and `aa_efficiency` packets include `fetched_at` on the source, but the row-level criterion does not mandate that the critic catches a `collected_at` equal to or later than the packet’s `fetched_at`. Test coverage does not include a case where a retained row is stamped with this run’s date.",
+      "repair": "Add an explicit criterion to the live gauntlet: for every row, confirm that if the row is a retained/republished observation (per the source manifest or a `retained` marker), its `collected_at`/`fetched_at` is strictly earlier than the run start, and that the source URL/sha256 matches a prior snapshot entry. Include the run start timestamp in every packet header. Add a synthetic test where a retained row is given a future/current date and assert the gauntlet fails before any acceptance fingerprint is issued."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The actual execution evidence only shows tests run, not a complete end-to-end daily run; this review verifies static code paths and unit/integration test fixtures only.",
+    "I cannot independently recompute SHA-256 hashes or verify the stored gzipped response bytes; I relied on the supplied manifests and tests.",
+    "The `all-or-recheck.log` shows a real failed run due to OpenRouter endpoint removals; the supplied `endpoint-changes-round2-packet.json` covers only 10 of the models and was reviewed by a live critic, but the review output is a separate artifact and I cannot confirm those exact bytes/hashes without executing the verifier.",
+    "The `transported` `first_response`/`second_response` havehes are trusted as supplied; my finding on aa-efficiency and or-efficiency date fields is based on code inspection, not on reproducing the live run."
+  ],
+  "missing_evidence": [
+    "No evidence of a completed live daily run (with actual AA/DA/OR/Chutes sources and worker receipts) was supplied; only dry-run failure fixtures and unit test logs are present.",
+    "score-approvals.json, ingestion-lock.json, registry.json, collection-plan.json, and the current data/raw AA/openrouter snapshots are not included, so exact benchmark-row binding and lock consistency could not be independently cross-checked.",
+    "live-manifest.jsonl contents for a real run are not provided; the code path that reads it is tested only with fixtures."
+  ]
+}
+```

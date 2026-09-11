@@ -1,0 +1,328 @@
+ M API.md
+ M CHANGELOG.md
+ M DEPLOYMENT.md
+ M README.md
+ M data/dataset.json
+ M data/raw/aa-coding-agents-v1.5.json
+ M data/raw/aa-efficiency.json
+ M data/raw/artificialanalysis.json
+ M data/raw/benchmarks/ingestion-lock.json
+ M data/raw/benchmarks/public-observations.json
+ M data/raw/benchmarks/registry.json
+ M data/raw/benchmarks/score-approvals.json
+ M data/raw/benchmarks/scores.json
+ M data/raw/benchmarks/vendor-candidates.json
+ M data/raw/chutes-efficiency.json
+ M data/raw/designarena.json
+ M data/raw/openrouter-efficiency.json
+ M data/raw/openrouter.json
+ M docs/benchmark-ingestion.md
+ M lib/benchmark-score-evidence.mjs
+ M ops/daily-refresh-prompt.md
+ M ops/daily/prompt.md
+ M ops/daily/run.sh
+ M ops/rebuild-2026-09/REPORT.md
+ M ops/rebuild-2026-09/bin/worker-policy.mjs
+ M ops/rebuild-2026-09/bin/worker-runner.mjs
+ M ops/rebuild-2026-09/daily-refresh-prompt.md
+ M scripts/collect-public-benchmarks.py
+ M scripts/fetch-aa-coding-agents.mjs
+ M scripts/fetch-aa-efficiency.mjs
+ M scripts/fetch-chutes-efficiency.mjs
+ M scripts/fetch-live.mjs
+ M scripts/fetch-openrouter-efficiency.mjs
+ M scripts/ingest-benchmark-scores.mjs
+ M test/benchmark-scores.test.mjs
+ M test/dataset.test.mjs
+ M test/worker-qualification.test.mjs
+ M test/worker-runner.test.mjs
+?? data/raw/benchmarks/daily-checks.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/04c7c8c0d611738680aa.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/061c8c3d82764dbd02c6.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/0e3dbb92576b1e473223.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/0f3603bd40c922838be0.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/141bc10ec679aa4194a6.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/16925b79d955a1cacef4.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/186ca65e7bb3a07aa268.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/188d8ea4a393978063a6.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/1af05c4fcbbcb33dff60.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/1b5ec4be1ec3dea8c48d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/21c9bee0018f719d56c1.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2767a7f157b54b8a6ad9.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/28cad62a817f8e52162f.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/28d838f52cd9dd464d07.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2aa739d957fc2ca6f531.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2b0d42aef4f614dd199d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2dbe8fc878fd39bcb4fb.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2e584f47344e95dffbb0.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2ec354bc9eab734c1ba6.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/2f0402654b01e7363c0d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/31e3792c378b20b9a0e3.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/352ad231e3fd18a286dd.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/39dd732fe1ba03464b4f.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/3ad6405dcc7af8feb934.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/3aeda5d9691ba92c2439.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/3f39daeff6545e9bea00.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4154635c4557af4b4eeb.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/416d4b506040d37d2d53.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/45fad983f706f583c5d3.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4afdc2ab6c0a22495198.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4d0f19f1f87e08772b74.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4d631b8b009936981865.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4f00a8c6523a84776718.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4f0e07dcb4bd1a2b1824.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/4f4312b52154d55e1b50.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/6b1fe32c6c131b651a40.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/6be5173dba184a4a006f.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/73ae51e46c0890288a7d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/74eed2627d4a04923a04.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/765fb30f9f7a955242c8.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/788ec3eb6fa034a82b22.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/79b26c906dd3a53e2215.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/7a3f39d0a76902c4e12d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/7de8f5cec86e49b9a0f3.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/7f65d7f593f1cce2a24f.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/80826b4bd9c7d5e4b847.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/812a3fd645c80725354d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/8b767ed6d44fd100e56f.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/8d08652f0da50ee6b6c3.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/961e5bdaa72efd66e60b.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/9aa7860622381d0ca3ea.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/a0ef75755e2c989b2fde.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/aa-coding-agents-v1.5.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/aider.chat-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/andonlabs.com-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/arcprize.org-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/artificialanalysis.ai-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/arxiv.org-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/b16f4683a0970694a1aa.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/b5cb5ec6e8c7547c4f11.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/bb45c43c090022ab933e.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/bb7ef5375f4053941a3c.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/bd0bd0772a4eddda9136.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/bdb58b9b9972a95fbb94.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/c862011a4ee1d1a7199f.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/cea6cab3ac65e4d41cce.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/cf19811b54b811835c71.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/checks.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/d5abd451059e489715ec.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/d6494fbd6766d0880f9b.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/d743d7a731ba6b9f102d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/d987ee5524768c575a13.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/dad300ad18655b69db72.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/dc6f43c6140c93d04790.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/e769e53ee838c8abf3bb.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/e95ef044a5088e2c7193.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/ec6cf7a7a30476d08570.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/ed39688aa5d40bd73007.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/epoch.ai-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/eqbench.com-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/f3aae5bbd58fcd7de32a.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/f7e83fc7dc6eecb0d044.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/fd3bd0049e1a2b39244d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/fe81fbbb395014608c8d.gz
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/critic-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/producer-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/producer-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/review-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-aime-2025/review-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/critic-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/review-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/protocol-aa-analystagent-snapshot-2026-09-10/review-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/artifact-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/critic-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/critic-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-r2.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/producer-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/review-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/review-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/review-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-0/review-r2.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/artifact-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/artifact-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/critic-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/critic-schema-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-r2.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-1/producer-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/artifact-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/artifact-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/critic-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/critic-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/critic-schema-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/producer-packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/producer-packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/producer-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/producer-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-2/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/artifact-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/artifact-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/critic-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/critic-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/critic-schema-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/producer-packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/producer-packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/producer-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/producer-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-3/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/artifact-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/artifact-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/artifact-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/coverage-manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/critic-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/critic-schema-r2.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/critic-schema-r3.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/producer-packet-r1.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/producer-packet-r2.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/producer-packet-r3.md
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/producer-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/producer-r1.json.meta.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/gauntlet/scores-4/producer-schema-r1.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/github.com-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/huggingface.co-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/labs.scale.com-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/livebench.ai-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/manifest.json
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/mistral.ai-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/princeton-nlp.github.io-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/taubench.com-robots.txt
+?? data/raw/benchmarks/daily-evidence/2026-09-11T06-03-31-286Z/www.swebench.com-robots.txt
+?? data/raw/source-change-approvals.json
+?? lib/live-source.mjs
+?? node_modules
+?? ops/daily/README.md
+?? ops/daily/daily.mjs
+?? ops/daily/escalate.sh
+?? ops/daily/gauntlet.mjs
+?? ops/daily/install.sh
+?? ops/daily/notify.mjs
+?? ops/daily/phase-step.mjs
+?? ops/daily/policy.mjs
+?? ops/daily/public-candidate.py
+?? ops/daily/public-identities.mjs
+?? ops/daily/refresh-benchmarks.mjs
+?? ops/daily/review-live.mjs
+?? ops/rebuild-2026-09/bin/worker-export.mjs
+?? ops/rebuild-2026-09/evidence/phase-08/0fdba2302f046770252742500930de81e80d389c32e8e632c780d30e839e3801.gz
+?? ops/rebuild-2026-09/evidence/phase-08/208e25f7f079f95709918b30b1a83230f0d8b230a3f0a0157efe6a896ae8b93d.gz
+?? ops/rebuild-2026-09/evidence/phase-08/25e7d6ecb522bdf15d0ae258906caa3be8392bfc1d0aa44166eb8683c6fd3e40.gz
+?? ops/rebuild-2026-09/evidence/phase-08/278c536498e54be4551c4f2f867506a406f0b67320e4318a3016e72ed99774d5.gz
+?? ops/rebuild-2026-09/evidence/phase-08/30a2535289a69fbf0452ec087ad423a82fcbc6a29be04b4601db9dab17edc90a.gz
+?? ops/rebuild-2026-09/evidence/phase-08/4f0850f7dda323e0f1fbce0d1096f1a3059f61bbf02924c2fa7fa58bf8b35c85.gz
+?? ops/rebuild-2026-09/evidence/phase-08/585bce749b677dc7bf772e78fdde0946ec5a907c90f1815dd6c35fdf3e96744e.gz
+?? ops/rebuild-2026-09/evidence/phase-08/738131bb5a3f5a97eea8e5fe2c8d233c3561c127c9f5e38328f35a2cc1d678d4.gz
+?? ops/rebuild-2026-09/evidence/phase-08/7dfeaebefcdcf754fccb8349702f35e8192974fe1af1e972a5fb3a9652595439.gz
+?? ops/rebuild-2026-09/evidence/phase-08/8bf84b66c73dd0eaadc3f441c9568ed2f4fed589f59a3570538562f2dd34992c.gz
+?? ops/rebuild-2026-09/evidence/phase-08/8e470c4d54c45bbfe76126fe61adfd0e472b5f85b35e24d9bb32dfa435196caf.gz
+?? ops/rebuild-2026-09/evidence/phase-08/962dbb621e8caf2c6505f8c625b0fb3ad52e414c63fd3bb04549bff225df8569.gz
+?? ops/rebuild-2026-09/evidence/phase-08/caf4825d90552091722a1b8b1bced49bca7735e5033a9244e8de5984c508cd2c.gz
+?? ops/rebuild-2026-09/evidence/phase-08/collector-round1-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/collector-round2-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/collector-round3-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/collector-round3-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/collector-round3-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/collector-tests.txt
+?? ops/rebuild-2026-09/evidence/phase-08/core-round1-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round1-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round1-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round2-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round2-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round2-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round3-adjudication.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round3-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round3-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/core-round3-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/d19e0646dec719e5339ce0ab2418eb76244571450b990c41faeb1f77013b9b48.gz
+?? ops/rebuild-2026-09/evidence/phase-08/dd198320a081adff919b779f2a87ee709fde756d2af7201f98c16e66faf17560.gz
+?? ops/rebuild-2026-09/evidence/phase-08/deepseek-completion-check.json
+?? ops/rebuild-2026-09/evidence/phase-08/deepseek-completion-check.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/disagreement-scope-acceptance.json
+?? ops/rebuild-2026-09/evidence/phase-08/disagreement-scope-round1-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/disagreement-scope-round1-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/disagreement-scope-round1-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/e722a66e13ffa0bad752c64326f94731ee42ee6cb97021d28dc74bf7642e570a.gz
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-round2-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-removal-review-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-removal-review2.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-removal-review2.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/endpoint-removal-round2-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/fb37882f139da251d5b3b6bb937923dd1f4e7706461d6c9a32b38ff150414856.gz
+?? ops/rebuild-2026-09/evidence/phase-08/focused-tests.txt
+?? ops/rebuild-2026-09/evidence/phase-08/glm-completion-check.json
+?? ops/rebuild-2026-09/evidence/phase-08/glm-completion-check.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/glm-endpoints-confirmation.json.gz
+?? ops/rebuild-2026-09/evidence/phase-08/initial-worker-catalog.json
+?? ops/rebuild-2026-09/evidence/phase-08/latest-build-dataset.txt
+?? ops/rebuild-2026-09/evidence/phase-08/latest-tests.txt
+?? ops/rebuild-2026-09/evidence/phase-08/latest-typecheck.txt
+?? ops/rebuild-2026-09/evidence/phase-08/live-before.json
+?? ops/rebuild-2026-09/evidence/phase-08/middle-row-verification.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-acceptance.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round1-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round2-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round2-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round2-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round3-packet.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round3-review.json
+?? ops/rebuild-2026-09/evidence/phase-08/runtime-fixes-round3-review.json.meta.json
+?? ops/rebuild-2026-09/evidence/phase-08/transport-stop-reuse-tests.txt
+?? ops/rebuild-2026-09/evidence/phase-08/worker-attempts.json
+?? ops/rebuild-2026-09/evidence/phase-08/worker-tests.txt
+?? ops/rebuild-2026-09/skills/select-benchmarkheaven-workers/SKILL.md
+?? test/daily-gauntlet-gate.test.mjs
+?? test/daily-notification-integration.test.mjs
+?? test/daily-public-identities.test.mjs
+?? test/daily-retained-evidence.test.mjs
+?? test/daily-transaction.test.mjs
+?? test/live-source.test.mjs
+?? test/worker-export.test.mjs

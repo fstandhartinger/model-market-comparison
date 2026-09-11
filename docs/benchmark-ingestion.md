@@ -44,9 +44,13 @@ configurations, once per benchmark; measured/self-reported counts may overlap.
 
 ## Daily workflow
 
-Use the installed refresh prompt `/opt/mmc-daily/prompt.md`, mirrored in
-`ops/rebuild-2026-09/daily-refresh-prompt.md`. Phase 08 owns unattended orchestration;
-phase 05 supplies deterministic adapters and this staged collection contract.
+Run `bash ops/daily/run.sh --dry-run` to rehearse the complete pipeline. The runtime is
+`/opt/benchmarkheaven-daily/`; `/opt/mmc-daily/` remains a compatibility symlink.
+[Daily operations](../ops/daily/README.md) documents model qualification, isolated
+publication, quiet notifications and escalation. `daily-checks.json` records current
+checks without redating retained observations. New source bytes and review artifacts
+live in `data/raw/benchmarks/daily-evidence/`; score-approval fingerprints bind the
+final, exactly joined observation. The following collection contract remains binding.
 
 1. Reuse AA's already captured model page, recording URL, response status, retrieval
    time and SHA-256. Run `scripts/extract-aa-benchmark-fields.mjs` as documented in the

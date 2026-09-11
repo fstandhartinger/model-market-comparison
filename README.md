@@ -9,6 +9,10 @@ Benchmarks in perspective. Costs in context.
 > data schema, IDs, units, Composite and settings keys did not move. Browser preferences are stored per hostname
 > and are not automatically transferred to the new domain.
 
+The [daily refresh](ops/daily/README.md) stages source changes and requires a cheap
+worker plus a different-family critic before publication. Each observation keeps its
+source and date; unavailable or contested candidates do not erase accepted data.
+
 Compare **open-source and frontier LLMs** by capability and price in one place.
 Capability comes from [ArtificialAnalysis](https://artificialanalysis.ai) (Coding,
 Coding Agent & Intelligence indices) and [Intelligence.ai / DesignArena](https://intelligence.ai)

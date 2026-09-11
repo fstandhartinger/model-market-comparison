@@ -1,0 +1,78 @@
+{
+  "started_at": "2026-09-11T06:18:00.766Z",
+  "mode": "critic",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [
+    "openai/gpt-6-astra",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-pro-0813"
+  ],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "e0d35f48817a59d4d78479b02aa216f9e54304c1c1eb9e4218e1131af44bbd61",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 62898,
+    "completion_tokens": 200,
+    "total_tokens": 63098,
+    "cost": 0.047444265,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0479235,
+      "upstream_inference_prompt_cost": 0.0471735,
+      "upstream_inference_completions_cost": 0.00075
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google AI Studio",
+  "session_id": null,
+  "finished_at": "2026-09-11T06:18:02.879Z",
+  "output_sha256": "5adc4f212e78a09f3945cfbcbd68c1fe7613305191c763d82ac90ec153e740c7"
+}

@@ -1,0 +1,44 @@
+```json
+{
+  "errors_found": 0,
+  "coverage_checked": [
+    "z-ai/glm-5.3-flash",
+    "z-ai/glm-5.3",
+    "deepseek/deepseek-v4-pro-0813",
+    "deepseek/deepseek-v4-flash-0731",
+    "moonshotai/kimi-k3",
+    "google/gemma-4-31b-it",
+    "minimax/minimax-m2.7",
+    "z-ai/glm-5",
+    "z-ai/glm-4.7-flash",
+    "meta-llama/llama-3.3-70b-instruct"
+  ],
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Identity-digest values (previous_identity_sha256 / current_identity_sha256) and response-file hashes are owner-executed checks; this read-only model did not and cannot recompute them. Only internal consistency of the supplied fields was reviewed.",
+    "Agreement of the two current responses per model was taken from the owner attestation; byte-level comparison of the two stored responses was not performed by this model.",
+    "Set-difference arithmetic was done manually on the supplied arrays; a formatting/copying slip inside the owner tooling cannot be ruled out, though all ten models cross-checked cleanly against the included full primary JSON."
+  ],
+  "missing_evidence": [],
+  "verification_notes": {
+    "removed_equals_prior_minus_current": {
+      "z-ai/glm-5.3-flash": "prior 26 identities -> current 25; only Io Net/io-net/fp8/fp8 in prior-minus-current; removed array matches exactly; Z.AI and Modal retained (reordered), not removed.",
+      "z-ai/glm-5.3": "prior 28 -> current 28; Morph/morph/fp4/fp4 removed, Morph/morph/fp8 present in both prior and current; removed array matches prior-minus-current exactly (new fp4->fp8 endpoint ratio is an add+remove, not a pure removal beyond the array).",
+      "deepseek/deepseek-v4-pro-0813": "prior 21 -> current 20; prior-minus-current = {Ionstream/ionstream/fp4/fp4, Nebius/nebius/fp8/fp8}; Ionstream/ionstream (unknown) is retained as a current add-back; removed array matches exactly.",
+      "deepseek/deepseek-v4-flash-0731": "prior 28 (incl. two baseten/fp8) -> current 28; prior-minus-current = {GMICloud/gmicloud/fp8/fp8}; GMICloud/gmicloud/fp4 present in current; removed array matches exactly.",
+      "moonshotai/kimi-k3": "prior 19 -> current 19; prior-minus-current = {Morph/morph/fast/fp4, Morph/morph/fp4/fp4}; current adds Morph/morph/fp8 and morph/fast(fp8); removed array matches exactly.",
+      "google/gemma-4-31b-it": "prior 15 -> current 14; only Cerebras/cerebras/fp16/fp16 in prior-minus-current; removed array matches exactly.",
+      "minimax/minimax-m2.7": "prior 10 -> current 9; only DeepInfra/deepinfra/fp8/fp8 in prior-minus-current; deepinfra/turbo retained; removed array matches exactly.",
+      "z-ai/glm-5": "prior 9 -> current 8; only DeepInfra/deepinfra/fp4/fp4 in prior-minus-current; removed array matches exactly.",
+      "z-ai/glm-4.7-flash": "prior 4 -> current 3; only DeepInfra/deepinfra/bf16/bf16 in prior-minus-current; removed array matches exactly.",
+      "meta-llama/llama-3.3-70b-instruct": "prior 13 -> current 12; only Nebius/nebius/fp8/fp8 in prior-minus-current; removed array matches exactly."
+    },
+    "current_primary_identity_fields_vs_included_response": "For every model, current_primary_identity_fields (multiset of provider/tag/quantization) equals the identity multiset of the endpoints array in current_complete_primary_response, including duplicate tags (e.g., deepseek-v4-flash baseten/fp8 x2, glm-5.3 baseten fp4+fp8, kimi-k3 Morph x3 and Fireworks x3, deepseek-v4-pro baseten/fp4 x2). No identity in current_primary_identity_fields is absent from the included response and vice versa.",
+    "no_other_shrink_or_failure_inheriting_exception": "All first_response and second_response entries report status 200; no HTTP failure, schema break, or pricing-structure failure is present that could inherit the removal exception. Shrinkage beyond the removed arrays: none found.",
+    "no_permanent_retirement_claim": "The packet makes no permanent-retirement claim for any removed identity; the one-day expiring exception binds prior and current identity digests only.",
+    "missing_data": "No actual unresolved missing data (null uptime/latency/throughput fields and absent input_cache_read on some endpoints are source-present values, not missing evidence)."
+  },
+  "verdict": "pass"
+}
+```

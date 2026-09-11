@@ -1,0 +1,32 @@
+{
+  "artifact_id": "phase08-runtime-fixes",
+  "artifact_sha256": "297f8dbd231ec36e831dced62dd4e7900efd3a7eb04a9f5d7458cba1c5b4c4cc",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "identity",
+    "transport",
+    "source_stop",
+    "approval",
+    "quiet",
+    "lib/benchmark-score-evidence.mjs",
+    "ops/daily/gauntlet.mjs",
+    "ops/daily/policy.mjs",
+    "ops/daily/public-candidate.py",
+    "ops/daily/public-identities.mjs",
+    "ops/daily/refresh-benchmarks.mjs",
+    "scripts/fetch-live.mjs",
+    "ops/rebuild-2026-09/bin/worker-runner.mjs",
+    "test/daily-gauntlet-gate.test.mjs",
+    "test/daily-public-identities.test.mjs",
+    "test/daily-notification-integration.test.mjs",
+    "test/benchmark-scores.test.mjs",
+    "test/live-source.test.mjs",
+    "test/worker-runner.test.mjs"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}

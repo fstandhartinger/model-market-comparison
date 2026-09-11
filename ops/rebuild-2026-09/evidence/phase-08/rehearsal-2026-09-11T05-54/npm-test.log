@@ -1,0 +1,249 @@
+
+> benchmark-heaven@1.0.0 test
+> node --test test/
+
+✔ full Coding Agent board resolves Flight references and preserves exact model/harness names (12.994503ms)
+✔ Coding Agent rejects partial, malformed, ambiguous, changed-version and invalid-score payloads (22.915334ms)
+✔ failed live fetch or partial parse never overwrites the previous snapshot (49.248503ms)
+✔ metadata parsing does not depend on first key or erase escaped quotes (0.710796ms)
+✔ efficiency parse extracts slug, UUID, variant, measured fields and derived ratios (21.54514ms)
+✔ efficiency parse resolves Flight references for efficiency fields (9.849773ms)
+✔ efficiency parse rejects missing, malformed, partial and invalid payloads (83.938285ms)
+✔ failed or partial refresh never overwrites the previous snapshot (5026.535837ms)
+✔ live fetcher records attempts and only accepts the first successful probe (2510.755061ms)
+✔ AA stops on restrictive robots and 429 without probing alternate pages (2.566071ms)
+✔ a newly published API model keeps scores with explicitly unknown metadata (6.471246ms)
+✔ broken leaderboard parsing or widespread drift cannot replace a good snapshot (0.883683ms)
+✔ slug metadata joins UUID API rows; retained fields keep their original provenance across refreshes (1.951273ms)
+✔ AA discovery preserves exact identity, zero, null, negative score, version fields and references (3.257038ms)
+✔ AA discovery rejects incomplete, conflicting and nonnumeric source data (3.414535ms)
+✔ AA source continuity rejects field loss even when model count is unchanged (0.782335ms)
+✔ accepted registry is complete and exact version lookup never falls back to family (41.162638ms)
+✔ Coding Agent legacy observation date and current source version remain isolated (5.22835ms)
+✔ schema rejects sourceless, nonfinite, mismatched-scale and unversioned scores (3.145741ms)
+✔ divergence isolates versions, effort, harness, audited compatibility and sources (1.755786ms)
+✔ sparse cells do not infer not-tested from absence; coverage counts cells once (1.649559ms)
+✔ source and critic receipts must match; any edited self-report loses approval (50.163556ms)
+✔ Composite slot list and v1.4 source identity are frozen; registry scores cannot enter it (15.846939ms)
+✔ the actual npm build hook refuses a score without a source before Next runs (425.593848ms)
+✔ radar preserves zero, reverses lower-better, and withholds missing or uninformative ranges (1.314015ms)
+✔ observation selection prefers measured and latest, never highest or vendor-derived claims (4.76224ms)
+✔ peer distribution excludes unmatched identities, claims, low battle counts, and duplicate source identities (1.05355ms)
+✔ profile flags require both relative strength and peer deviation and expose independently computable inputs (6.111664ms)
+✔ tiny peer groups, narrow family coverage, and insufficient model profile never trigger flags (4.299158ms)
+✔ explicit CoT settings, dataset splits, and harnesses create separate evaluation axes (0.560329ms)
+✔ actual source adapter keeps all version identities, values and dated legacy inputs, without mutating data (1241.291749ms)
+✔ Chutes sums paired token counts, excludes zero-token rows, preserves zero and scope (2.15763ms)
+✔ Chutes rejects empty, malformed, duplicate, incomplete and impossible aggregates (5.885658ms)
+✔ Chutes uses seven completed UTC days across month/year boundaries (1.343795ms)
+✔ observed slots use per-source percentiles and clamp AA values (29.386431ms)
+✔ all-missing and non-finite rows receive the neutral fallback (1.193488ms)
+✔ unreliable DesignArena boards are omitted before model-mean imputation (5.318339ms)
+✔ DesignArena boards are independent percentile slots instead of a variable average (1.614079ms)
+✔ missing slots inherit the model's mean observed percentile (0.354753ms)
+✔ the mean-imputed base stays exact while the symmetric projection fixes a coverage inversion (0.680777ms)
+✔ the dominance guard also covers a model with exactly one reliable result (5.166073ms)
+✔ long dominance-like catalogs cannot add recursive score margins (51.907313ms)
+✔ an exact clone cannot move any existing score (0.480801ms)
+✔ row order cannot affect composite scores (0.55277ms)
+✔ improving an observed score never lowers the model's composite (1023.45605ms)
+✔ scores remain bounded for extreme valid inputs (2.986403ms)
+✔ every catalog row receives a finite bounded Composite (475.645596ms)
+✔ DeepSeek V4 Pro's attached Frontend evidence and stronger shared AA scores keep it above Flash (277.944635ms)
+✔ GLM-5.2 stays above sparse open contenders; fully-measured Kimi K3 may lead (425.099417ms)
+✔ GPT-5.6 Sol's observed-percentile mean ranks above GLM-5.2 (291.058186ms)
+✔ Fable 5's exact max evidence and family-scoped high evidence both stay above GLM-5.2 (276.08532ms)
+✔ EU scope filters the route before deduplicating a provider (2.413034ms)
+✔ EU policy equivalence admits a Global offer without relabeling technical residency (0.322874ms)
+✔ real client projection keeps exactly the two approved Azure routes in Featured + Open + EU scope (394.228384ms)
+✔ EU plus TEE requires both flags on the same offer (0.234915ms)
+✔ provider exclusions are honored before price ranking (0.289365ms)
+✔ non-US filtering composes with offer-level EU filtering (0.228326ms)
+✔ scoped catalog listings retain active unpriced models without entering price ranks (0.50066ms)
+✔ provider-level dedicated capability never turns a non-EU offer into an EU offer (0.325644ms)
+✔ client projection includes exact effort tokens and shared endpoint observations (214.838025ms)
+✔ adjusted is modelCost default and uses per-model OR ratio before global or AA proxy (0.960922ms)
+✔ model I/O fallback selects global Chutes before benchmark proxy, rejects stale measurements (0.575879ms)
+✔ cache rates require platform + exact SKU + exact endpoint + same provider, with no stale borrowing (0.407902ms)
+✔ alternate route representative changes with actual adjusted price, retaining EU scope (0.292784ms)
+✔ no efficiency copying across effort variants; raw mode ignores telemetry; scoped reference does not leak (0.336463ms)
+✔ a critic pass quarantines producer disagreement without retrying or blacklisting a careful producer (42.677739ms)
+✔ malformed rows are not an accepted empty artifact (3.462614ms)
+✔ one disputed source row is dropped while independently checked neighbors can be accepted (23.1597ms)
+✔ same-family critic and below-gate receipt cannot produce an acceptance fingerprint (13.212459ms)
+✔ an oversized source is refused instead of silently truncated into a passing review (6.923939ms)
+✔ a critic transport retry reuses an unchanged, hash-verified producer audit without another production charge (36.422877ms)
+✔ real notification plan recognizes a top-five family entrant and first run is quiet (3.364046ms)
+✔ failed publication does not advance the successful top-five baseline (1.194277ms)
+✔ actual benchmark divergence output converts fractions to percentage points and excludes generic points (0.854734ms)
+✔ one new major family with several reasoning variants creates one notable entry (0.277585ms)
+notify: plan send top5-entrant [top5:entrant]
+notify: NOT SENT top5-entrant [top5:entrant]: missing_credentials
+notify: plan send top5-entrant [top5:entrant] (retry)
+notify: sent top5-entrant [top5:entrant]
+✔ an eligible event whose send fails is still delivered after the next snapshot becomes the baseline (101.123998ms)
+✔ Telegram transport errors cannot put credentials into logs (0.829554ms)
+notify: plan send failure [failure:2027-01-15]
+notify: NOT SENT failure [failure:2027-01-15]: missing_credentials
+notify: plan send failure [failure:2027-01-16]
+notify: sent failure [failure:2027-01-16]
+notify: skip failure [failure:2027-01-17] (rate-limited)
+ESCALATION REQUESTED: 3 consecutive failures — run ops/daily/escalate.sh --operator
+notify: skip failure [failure:2027-01-23] (rate-limited)
+notify: plan send failure [failure:2027-01-23]
+notify: sent failure [failure:2027-01-23]
+✔ failure delivery retries through the weekly gate and three failures request escalation (14.192879ms)
+notify: plan send failure [failure:2027-01-15]
+notify: NOT SENT failure [failure:2027-01-15]: missing_credentials
+notify: skip top5-entrant (baseline-seeded)
+✔ recovery drops an unsent stale failure alert without a Telegram message (7.878251ms)
+✔ insertion and reorder preserve unique identities while retaining exact changed values and evidence (3.905446ms)
+✔ variant and harness remain separate exact identities (0.925662ms)
+✔ ambiguous identities require unchanged exact-ID semantics and missing rows fail (2.474543ms)
+✔ retained dates cannot claim the current run or a future measurement (1.335465ms)
+✔ retained measured cache requires marker, original date and exact prior values (1.295745ms)
+Benchmark Heaven daily 2026-09-11T06:11:45.464Z: /tmp/bh-daily-transaction-I5BK6v/home/runs/2026-09-11T06-11-45-464Z-748636 (dry run)
+OK branch
+OK initial-status
+OK fetch-main
+OK base
+OK remote-base
+OK clone
+OK detach-stage
+OK worker-catalog
+DAILY FAILED: fetch-aa FAILED: file:///tmp/bh-daily-transaction-I5BK6v/home/runs/2026-09-11T06-11-45-464Z-748636/work/scripts/fetch-live.mjs:1
+import {writeFileSync} from 'node:fs';writeFileSync('data/raw/artificialanalysis.json','PARTIAL_STAGED_FIXTURE');throw new Error('synthetic incomplete collection');
+                                                                                                                       ^
+
+Error: synthetic incomplete collection
+    at file:///tmp/bh-daily-transaction-I5BK6v/home/runs/2026-09-11T06-11-45-464Z-748636/work/scripts/fetch-live.mjs:1:120
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.8.1
+
+Command failed: /home/flori/.hermes/node/bin/node scripts/fetch-live.mjs aa
+file:///tmp/bh-daily-transaction-I5BK6v/home/runs/2026-09-11T06-11-45-464Z-748636/work/scripts/fetch-live.mjs:1
+import {writeFileSync} from 'node:fs';writeFileSync('data/raw/artificialanalysis.json','PARTIAL_STAGED_FIXTURE');throw new Error('synthetic incomplete collection');
+                                                                                                                       ^
+
+Error: synthetic incomplete collection
+    at file:///tmp/bh-daily-transaction-I5BK6v/home/runs/2026-09-11T06-11-45-464Z-748636/work/scripts/fetch-live.mjs:1:120
+    at ModuleJob.run (node:internal/modules/esm/module_job:569:25)
+    at async node:internal/modules/esm/loader:650:26
+    at async asyncRunEntryPointWithESMLoader (node:internal/modules/run_main:101:5)
+
+Node.js v26.8.1
+
+notify: plan send failure [failure:2026-09-11]
+notify: --dry-run — no sends, no state writes
+STATUS: problem
+Benchmark Heaven 2026-09-11 — vollstaendiger Testlauf ohne Push/Telegram
+Lauf: /tmp/bh-daily-transaction-I5BK6v/home/runs/2026-09-11T06-11-45-464Z-748636
+Erste Auswahl: deepseek/fixture; Kritiker: z-ai/fixture
+Modelle mit Abschluss: keine; gemeldete Kosten: $0.0000 (0 Aufrufe ohne Kostenangabe).
+Schritte: 8 erfolgreich; 1 fehlgeschlagen.
+Publikation: Testlauf; Live-Pruefung: nicht erfolgt.
+FEHLER: Node.js v26.8.1
+
+✔ actual isolated daily transaction cannot alter main or remote after a partial collector writes then fails (834.303777ms)
+✔ deployment equality permits the API runtime marker but rejects any changed source date, value or extra field (1.341495ms)
+✔ DB-backed requests opt out of prerender even on an in-process dataset cache hit (1.605369ms)
+✔ DB load preserves additive dataset metadata and rejects old seeds without efficiency or benchmark results (55.138272ms)
+✔ dataset has models, families and offers (2.122939ms)
+✔ every published source snapshot is current for this refresh (0.352733ms)
+✔ all brief-required model families are present (0.974002ms)
+✔ product names are not mistaken for reasoning-effort variants (1.027071ms)
+✔ moving aliases and safe provider prefixes do not split model families (1.813706ms)
+✔ open-weights filter metadata excludes audited proprietary families (2.224307ms)
+✔ OpenRouter aliases merge free tiers and exclude router/music pseudo-models (1.145988ms)
+✔ featured set covers the requested families (0.438771ms)
+✔ benchmarks never silently coerce null to 0 (0.785385ms)
+✔ offers carry numeric per-1M pricing or are explicitly null (4.039264ms)
+✔ every offer carries audited residency and provider-origin flags (1.652648ms)
+✔ EU residency is specific to the model offer, not inherited from the provider (0.247395ms)
+✔ only the two approved Azure Direct Global offers receive the EU policy equivalence (1.502651ms)
+✔ global and EU routes from one provider are both retained (0.254685ms)
+✔ mixed-region OpenRouter providers never inherit an EU flag from company metadata (0.894543ms)
+✔ EU-capable gateway providers mark only their explicitly European OpenRouter routes (5.050504ms)
+✔ context-price tiers and distinct managed routes survive dataset deduplication (2.141649ms)
+✔ audited July provider prices survive the merged dataset (1.249096ms)
+✔ privacy routing is not mislabeled as trusted execution (3.005573ms)
+✔ current Copilot token catalog and legacy request table stay distinct (0.653518ms)
+✔ confirmed non-US provider metadata reaches the provider directory (0.156797ms)
+✔ Claude first-party snapshot contains every currently callable model (0.188066ms)
+✔ Coding Agent snapshot is fresh and internally consistent (0.125598ms)
+✔ Coding Agent source rows retain their exact effort variants (0.620148ms)
+✔ freshly built dataset attaches Coding Agent scores only to exact variants (1.149708ms)
+✔ GLM-5.2 keeps all qualified source evidence on the reasoning max row (0.456241ms)
+✔ family-scoped Intelligence.ai evidence attaches once to deterministic Overview representatives (2.483923ms)
+✔ DeepSeek V4 Pro DesignArena rows mirror the source and sit on the max representative only (1.002361ms)
+✔ Intelligence.ai registry display names resolve opaque and revisioned leaderboard ids (1.078279ms)
+✔ all Artificial Analysis rows and official weight flags survive exactly once (2.200178ms)
+✔ audited upstream repository corrections preserve source provenance (0.412732ms)
+✔ audited provider checkpoint aliases join their benchmark families (1.047471ms)
+✔ canonical organizations are consistent across source aliases (0.915573ms)
+✔ every COMPLETE Coding Agent harness result is retained and the summary is its median (0.636568ms)
+✔ DesignArena board rows attach once and never clone across effort siblings (1.031471ms)
+✔ every current OpenRouter text SKU remains represented after free-tier deduplication (4.70016ms)
+✔ AA rows receive only their exact OpenRouter SKU or a repository-verified replacement for a stale alias (2.516572ms)
+✔ all published providers have metadata and no generated normalization ghosts remain (0.861103ms)
+✔ September frontier additions retain prices, exact efforts and conservative metadata (0.830904ms)
+✔ four terms use USD/million units, and equivalent has explicit own-token denominator (2.491002ms)
+✔ twice the output/task doubles workload cost, while per-million equivalent stays unchanged (0.312884ms)
+✔ unknown statistics earn no caching discount and every missing dimension is flagged (0.214586ms)
+✔ missing read price charges full input even with 100% cache hits (0.279114ms)
+✔ missing write price substitutes input price if explicit write tokens exist (0.211026ms)
+✔ partial list price fallback is explicit; entirely unknown never ranks as free (0.351233ms)
+✔ free prices, zero prompt ratio, and real zero cache statistics are retained (0.222426ms)
+✔ invalid rates, quantities and nonnumeric data fall back, never clamp or coerce silently (0.323504ms)
+✔ all fixed blends calculate independently of task/cache data and preserve fallback and zero (1.249936ms)
+✔ efficiency joins an exact workload SKU; sibling/ambiguous rows use labelled Chutes fallback (63.715839ms)
+✔ stale workload observations fall back without changing retained source dates (56.707961ms)
+✔ duplicate endpoint tags and mismatched provider identities never receive a cache rate (130.653626ms)
+✔ built efficiency observations match dated raw identities, exact values and explicit coverage (265.426283ms)
+✔ catalog shrink, empty, malformed and duplicate identities fail before publication (1.633459ms)
+✔ explicit empty endpoints permitted only without prior known providers (0.780895ms)
+✔ reviewed withdrawal exception expires and binds both complete endpoint identity sets (1.135968ms)
+✔ source evidence retains exact primary response bytes without transport credentials (27.87766ms)
+✔ lost numeric fields are not confused with published zero or already unknown values (2.131979ms)
+✔ actual OpenRouter collector exits nonzero and leaves good file untouched on a partial endpoint response (764.579573ms)
+✔ OpenRouter keeps exact endpoint tags despite identical provider labels, and sums workload tokens (6.019045ms)
+✔ OpenRouter accepts explicit missing usage and reports incomplete/zero-output windows (0.615978ms)
+✔ OpenRouter rejects malformed Flight, wrong identities, duplicate endpoints/days and invalid counts (4.547883ms)
+✔ OpenRouter cache prices distinguish zero and missing, reject coercion and nonfinite values (0.393512ms)
+✔ OpenRouter cache joins UUID to exact routing tag, never base provider slug; zero is observed (1.295366ms)
+✔ OpenRouter cache rejects malformed rates, duplicate UUIDs and inconsistent provider maps (0.386362ms)
+✔ OpenRouter weekly rankings preserve exact free SKU identity and source last-activity date (1.046881ms)
+✔ Pareto frontier keeps cost/capability tradeoffs and removes dominated interiors (7.135205ms)
+✔ Pareto frontier handles cost, score, and exact ties correctly (15.417037ms)
+✔ Pareto frontier is deterministic, order independent, and supports empty/singleton filters (0.388742ms)
+✔ Pareto helper agrees with the strict minimize-cost/maximize-score definition (3.66194ms)
+✔ public source parsers preserve zero, reject malformed values and isolate protocols (141.620497ms)
+✔ collapse picks the strongest measured GPT effort for the selected score (1.313475ms)
+✔ collapse keeps DeepSeek Coding-Agent evidence instead of an unmeasured max row (0.194297ms)
+✔ collapse prefers an explicit GLM max result over a generic default alias (0.166267ms)
+✔ neutral Composite fallback cannot replace a measured family representative (0.261015ms)
+✔ collapsed representative fallback is deterministic and prefers a measured Claude effort (0.272845ms)
+✔ hide-deprecated hides whole families, not individual variants (1.04972ms)
+✔ a fully deprecated family has no selectable model while hiding is active (0.169457ms)
+✔ large worker export survives immediate process exit without a truncated pipe (166.582062ms)
+✔ vision critic sends actual local pixels with hashed receipts, without weakening model or payload gates (20.382213ms)
+✔ AA fallback requires exact version and matching organization (2.358615ms)
+✔ explicit maximum-effort mapping cannot hide a weak or missing sibling (3.522443ms)
+✔ missing or malformed prices never become free eligibility (0.267375ms)
+✔ unscored transport smoke has a price ceiling and cannot select automatically (0.453711ms)
+✔ critic excludes every producer family including aliases and explicit model pins (14.861128ms)
+✔ daily price ceiling is rechecked against live catalog even for explicit pins (3.457794ms)
+✔ a failed worker is excluded while the next cheapest still needs AA qualification, price cap and a different family (0.996671ms)
+✔ worker CLI preserves output on provider failures and accepts a large embedded packet (1888.65967ms)
+✔ transport smoke cannot accept arbitrary data work or a reference file (104.272037ms)
+ℹ tests 176
+ℹ suites 0
+ℹ pass 176
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7767.895374

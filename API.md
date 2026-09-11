@@ -109,8 +109,12 @@ Prefer `GET /api/dataset` or the Git-tracked `data/dataset.json` for ingestion.
 Use `GET /api/models?score=composite` for computed scores (Composite is computed
 by app code, not stored as a scalar in the raw dataset). Check **each** date in
 `sources`; `generated_at` only proves that a build ran, not that every source refreshed.
-The daily job refreshes AA, AA Coding Agents, OpenRouter and DesignArena; curated
-provider snapshots have separate audit dates. Do not assume every source refreshes daily.
+The daily job checks AA, AA Coding Agent v1.5, OpenRouter, DesignArena, token efficiency,
+rotated usage/cache statistics and supported public/vendor benchmark recipes. Retained
+observations and unsupported or unreachable sources keep their original dates.
+`data/raw/benchmarks/daily-checks.json` records check outcomes separately from observation
+freshness. Curated provider snapshots and historical Coding Agent v1.4 have separate
+audit dates. Do not assume every source refreshes daily.
 
 Additive fields under each AA-backed model's `aa_metadata`:
 `available` (boolean), `is_open_weights` and `deprecated` (boolean or null).

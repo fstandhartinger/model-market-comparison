@@ -1,0 +1,15 @@
+{
+  "updated_at": "2026-09-11T05:37:50.634684+00:00",
+  "accepted_producer_families": [
+    "openai/gpt-6-astra",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "z-ai/glm-5.3-flash"
+  ],
+  "notes": [
+    "Kimi bulk agent drafts were partial after timeouts; owner reviewed and completed code.",
+    "Kimi public-identity helper agent timed out after 600 seconds without creating either permitted file. Owner implemented and tested it.",
+    "A Kimi verification agent was automatically denied external_directory /home/flori/ and stopped. That denied access was not retried; owner ran already authorized repository-local checks.",
+    "Malformed/empty DeepSeek or Gemini outputs did not count as accepted reviews. Returned charges are recorded where supplied, never invented for timeouts.",
+    "Kimi report drafting completion succeeded; documentation remains owner edited and verified."
+  ]
+}

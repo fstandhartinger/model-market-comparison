@@ -83,7 +83,14 @@ test('source and critic receipts must match; any edited self-report loses approv
     const approval = { id: claim.id, observation_sha256: observationDigest(claim), critic_model: 'critic/model', producer_models: ['producer/model'],
       review_file: 'review.json', review_sha256: sha256(review), artifact_file: 'artifact.json', review_row: 1, verdict: 'accepted', evidence_locator: 'claim row' };
     const approvals = { rows: [approval] };
+    const receipt = { actual_model: 'critic/model', producers: ['producer/model'], output_sha256: sha256(review) };
+    await writeFile(join(root, 'review.json.meta.json'), JSON.stringify(receipt));
     assert.equal((await verifyScoreEvidence(snapshot([claim]), registry, { root, approvals })).self_reported_verified, 1);
+    const aliased = { ...approval, critic_model: 'z-ai/critic', producer_models: ['chutes/zai-org/producer'] };
+    await assert.rejects(verifyScoreEvidence(snapshot([claim]), registry, { root, approvals: { rows: [aliased] } }), /Unreviewed vendor score/);
+    await writeFile(join(root, 'review.json.meta.json'), JSON.stringify({ ...receipt, actual_model: 'wrong/critic' }));
+    await assert.rejects(verifyScoreEvidence(snapshot([claim]), registry, { root, approvals }), /receipt mismatch/);
+    await writeFile(join(root, 'review.json.meta.json'), JSON.stringify(receipt));
     await assert.rejects(verifyScoreEvidence(snapshot([{ ...claim, value: .9 }]), registry, { root, approvals }), /Unreviewed/);
     const unrelated = { ...claim, value: .9 };
     await assert.rejects(verifyScoreEvidence(snapshot([unrelated]), registry, { root, approvals: { rows: [{ ...approval, observation_sha256: observationDigest(unrelated) }] } }), /differs from critic artifact/);

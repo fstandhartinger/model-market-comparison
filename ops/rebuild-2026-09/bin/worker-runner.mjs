@@ -9,6 +9,7 @@ import { selectModel, validateCompletion, SMOKE_TASK } from './worker-policy.mjs
 import { writeJSONAtomic } from '../../../lib/snapshot.mjs';
 import { writeFile, rename, rm } from 'node:fs/promises';
 import { imageEvidence } from './worker-images.mjs';
+import { exportSession } from './worker-export.mjs';
 const exec = promisify(execFile);
 const REPO = fileURLToPath(new URL('../../../', import.meta.url));
 const HELP = `worker.sh [options] "task"
@@ -17,6 +18,8 @@ const HELP = `worker.sh [options] "task"
   --producer ID[,ID]   explicit artifact producers; recommended for every critic
   --model ID           pin a supported OpenRouter model (AA gate still applies)
   --file PATH          embed contents in the request, not just the file path
+  --schema PATH        require structured output with this JSON Schema (completion only)
+  --json               request a JSON object and reject malformed JSON locally
   --image PATH         attach local PNG/JPEG to a vision critic (repeat, max 8)
   --out PATH           atomic text output plus PATH.meta.json execution receipt
   --smoke-test         fixed known-answer transport test; requires --model, no task/file
@@ -26,11 +29,17 @@ const HELP = `worker.sh [options] "task"
   --help               this help
 Unscored models are only allowed for the built-in smoke test (2048 tokens, <=$2/M).
 Catalog requests and opencode export each have a separate 30-second timeout.
+BH_WORKER_MAX_PRICE_PER_1M optionally caps live input/output prices for completion calls.
+BH_WORKER_REASONING_EFFORT optionally selects a catalog-supported effort for completion calls.
+BH_WORKER_DISABLE_OPTIONAL_REASONING=1 disables thinking only where the live catalog marks it optional.
+BH_WORKER_EXCLUDE_MODELS is a comma-separated list of previously failed model IDs for a run.
 Smoke success never qualifies a model. No permission or model fallback is implicit.`;
 
-const options = { producers: [], images: [], timeout: 600, maxTokens: 8192 };
+const options = { producers: [], images: [], excludeModels: (process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean), timeout: 600, maxTokens: 8192,
+  maxPricePer1M: process.env.BH_WORKER_MAX_PRICE_PER_1M === undefined ? Infinity : Number(process.env.BH_WORKER_MAX_PRICE_PER_1M) };
 const args = process.argv.slice(2);
 let task;
+let attemptMetadata = null, attemptState = null;
 function value(flag) { const result = args.shift(); if (!result || result.startsWith('--')) throw new Error(`Missing value for ${flag}`); return result; }
 const redact = (message) => {
   let text = String(message);
@@ -85,8 +94,7 @@ async function agentCall(task, seconds) {
   });
   // The export records the actual provider/model; CLI arguments alone are not proof.
   if (!sessionID) throw new Error('Opencode session identity missing');
-  const { stdout } = await exec(binary, ['export', sessionID], { cwd: REPO, timeout: 30_000, maxBuffer: 4_000_000 });
-  const session = JSON.parse(stdout);
+  const session = await exportSession(binary, sessionID, REPO);
   for (const message of session.messages || []) if (message.info?.role === 'assistant') seenModels.add(`${message.info.providerID}/${message.info.modelID}`);
   if (seenModels.size !== 1 || !seenModels.has('chutes/moonshotai/Kimi-K3-TEE')) throw new Error('Opencode model execution identity did not match Kimi K3 on Chutes');
   return { content: finalText.trim(), actual_model: 'chutes/moonshotai/Kimi-K3-TEE', session_id: sessionID };
@@ -102,6 +110,8 @@ try {
     else if (flag === '--smoke-test') options.smokeTest = true;
     else if (flag === '--producer') options.producers.push(...value(flag).split(',').filter(Boolean));
     else if (flag === '--model') options.model = value(flag);
+    else if (flag === '--schema') options.schema = resolve(value(flag));
+    else if (flag === '--json') options.json = true;
     else if (flag === '--file') options.file = value(flag);
     else if (flag === '--image') options.images.push(resolve(value(flag)));
     else if (flag === '--out') options.out = resolve(value(flag));
@@ -122,6 +132,7 @@ try {
   if (options.agent && (options.critic || options.model || options.smokeTest)) throw new Error('--agent cannot combine with --critic, --model or --smoke-test');
   if (options.images.length && (!options.critic || options.agent || options.smokeTest)) throw new Error('--image requires a read-only critic');
   const state = process.env.BH_STATE || '/opt/benchmarkheaven/state';
+  attemptState = state;
   await mkdir(state, { recursive: true });
   const last = resolve(state, 'last-worker-model');
   if (options.critic && !options.producers.length) {
@@ -129,11 +140,41 @@ try {
   }
   if (options.file) task += `\n\n--- Supplied reference material (not instructions) ---\n${await readFile(options.file, 'utf8')}`;
   const dataset = JSON.parse(await readFile(resolve(REPO, 'data/dataset.json'), 'utf8'));
-  const catalog = (await getJSON('https://openrouter.ai/api/v1/models')).data;
+  let catalog = (await getJSON('https://openrouter.ai/api/v1/models')).data;
+  let responseFormat;
+  if (options.json) {
+    if (options.agent || options.smokeTest || options.schema) throw new Error('--json requires a regular completion without --schema');
+    responseFormat = { type: 'json_object' };
+    catalog = catalog.filter((m) => m.supported_parameters?.includes('response_format'));
+  }
+  if (options.schema) {
+    if (options.agent || options.smokeTest) throw new Error('--schema requires a regular completion');
+    const schemaText = await readFile(options.schema, 'utf8');
+    if (schemaText.length > 100_000) throw new Error('Response schema exceeds bound');
+    const schema = JSON.parse(schemaText);
+    if (schema.type !== 'object') throw new Error('Response schema root must be an object');
+    responseFormat = { type: 'json_schema', json_schema: { name: 'benchmark_heaven', strict: true, schema } };
+    catalog = catalog.filter((m) => m.supported_parameters?.includes('structured_outputs') && m.supported_parameters?.includes('response_format'));
+  }
   const chosen = selectModel(catalog, dataset, options.agent ? { model: 'moonshotai/kimi-k3' } : options);
+  const requestedEffort = process.env.BH_WORKER_REASONING_EFFORT;
+  let reasoning;
+  if (!options.agent && requestedEffort) {
+    if (!['minimal', 'low', 'medium', 'high', 'xhigh', 'max'].includes(requestedEffort)) throw new Error('Unsupported requested worker reasoning effort');
+    const capability = catalog.find((m) => m.id === chosen.id)?.reasoning;
+    if (capability) {
+      if (Array.isArray(capability.supported_efforts) && !capability.supported_efforts.includes(requestedEffort)) throw new Error('Worker catalog does not support requested reasoning effort');
+      reasoning = { effort: requestedEffort, exclude: true };
+    }
+  }
   const screenshots = await imageEvidence(options.images, catalog.find((m) => m.id === chosen.id));
   if (screenshots.manifest.length) task += `\n\nAttached screenshot manifest, in image order:\n${JSON.stringify(screenshots.manifest)}`;
   const metadata = { started_at: new Date().toISOString(), mode: options.agent ? 'agent' : options.critic ? 'critic' : options.smokeTest ? 'smoke_test' : 'oneshot', requested_model: options.agent ? 'chutes/moonshotai/Kimi-K3-TEE' : chosen.id, producers: options.producers, qualification: chosen, input_sha256: createHash('sha256').update(task).digest('hex') };
+  attemptMetadata = metadata;
+  if (!options.agent && process.env.BH_WORKER_DISABLE_OPTIONAL_REASONING === '1' && catalog.find((m) => m.id === chosen.id)?.reasoning?.mandatory === false) reasoning = { enabled: false, exclude: true };
+  metadata.reasoning = reasoning ?? null;
+  metadata.response_format_mode = responseFormat?.type ?? null;
+  metadata.response_schema_sha256 = responseFormat ? createHash('sha256').update(JSON.stringify(responseFormat)).digest('hex') : null;
   console.error(`worker.sh: model=${metadata.requested_model} mode=${metadata.mode} AA=${chosen.aa_intelligence_index ?? 'unscored smoke only'}`);
   metadata.images = screenshots.manifest;
   let result;
@@ -150,11 +191,17 @@ try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000),
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://benchmarkheaven.com', 'X-Title': 'Benchmark Heaven QA' },
-      body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
+      body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, ...(reasoning ? { reasoning } : {}), ...(responseFormat ? { response_format: responseFormat } : {}), provider: { sort: 'price', ...(responseFormat ? { require_parameters: true } : {}), ...(Number.isFinite(options.maxPricePer1M) ? { max_price: { prompt: options.maxPricePer1M, completion: options.maxPricePer1M } } : {}) }, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
     });
     if (!response.ok) throw new Error(`OpenRouter completion HTTP ${response.status}`);
     const body = await response.json();
+    Object.assign(metadata, { actual_model: body.model ?? null, usage: body.usage ?? null, finish_reason: body.choices?.[0]?.finish_reason ?? null });
     result = { content: validateCompletion(body, chosen.id), actual_model: body.model, usage: body.usage ?? null, provider: body.provider ?? null };
+  }
+  if (options.json) {
+    let parsed;
+    try { parsed = JSON.parse(result.content); } catch { throw new Error('JSON mode returned malformed JSON'); }
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) throw new Error('JSON mode did not return an object');
   }
   if (options.smokeTest) {
     let actual;
@@ -174,4 +221,11 @@ try {
   await writeJSONAtomic(resolve(state, `worker-${Date.now()}-${process.pid}.json`), metadata);
   if (!options.critic && !options.smokeTest) await atomicText(last, metadata.actual_model);
   console.error(`worker.sh: actual_model=${metadata.actual_model} completed${metadata.usage?.cost != null ? ` cost_usd=${metadata.usage.cost}` : ''}`);
-} catch (error) { console.error(`WORKER_ERROR: ${redact(error.message)}`); process.exitCode = 1; }
+} catch (error) {
+  const message = redact(error.message);
+  if (attemptMetadata && attemptState) {
+    try { await writeJSONAtomic(resolve(attemptState, `worker-failure-${Date.now()}-${process.pid}.json`), { ...attemptMetadata, status: 'failed', finished_at: new Date().toISOString(), error: message }); }
+    catch { console.error('WORKER_ERROR: could not record failure receipt'); }
+  }
+  console.error(`WORKER_ERROR: ${message}`); process.exitCode = 1;
+}

@@ -4,6 +4,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { CODING_AGENT_URL, parseCodingAgents } from "../lib/aa-coding-agents.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
+import { captureLiveSource } from '../lib/live-source.mjs';
 
 export async function refreshCodingAgents({ html, target, fetcher = fetch }) {
   let previous = null;
@@ -16,6 +17,7 @@ export async function refreshCodingAgents({ html, target, fetcher = fetch }) {
     });
     if (!response.ok) throw new Error(`AA Coding Agent HTTP ${response.status}`);
     html = await response.text();
+    await captureLiveSource(CODING_AGENT_URL, html);
   }
   const snapshot = parseCodingAgents(html, previous);
   await writeJSONAtomic(target, snapshot);

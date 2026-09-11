@@ -1,0 +1,47 @@
+✔ dataset has models, families and offers (1.109159ms)
+✔ every published source snapshot is current for this refresh (0.183817ms)
+✔ all brief-required model families are present (0.536999ms)
+✔ product names are not mistaken for reasoning-effort variants (0.725876ms)
+✔ moving aliases and safe provider prefixes do not split model families (1.403284ms)
+✔ open-weights filter metadata excludes audited proprietary families (2.08514ms)
+✔ OpenRouter aliases merge free tiers and exclude router/music pseudo-models (0.964402ms)
+✔ featured set covers the requested families (0.622788ms)
+✔ benchmarks never silently coerce null to 0 (0.316324ms)
+✔ offers carry numeric per-1M pricing or are explicitly null (4.256719ms)
+✔ every offer carries audited residency and provider-origin flags (2.264927ms)
+✔ EU residency is specific to the model offer, not inherited from the provider (0.705666ms)
+✔ only the two approved Azure Direct Global offers receive the EU policy equivalence (2.120839ms)
+✔ global and EU routes from one provider are both retained (0.366153ms)
+✔ mixed-region OpenRouter providers never inherit an EU flag from company metadata (1.515751ms)
+✔ EU-capable gateway providers mark only their explicitly European OpenRouter routes (1.662888ms)
+✔ context-price tiers and distinct managed routes survive dataset deduplication (1.300725ms)
+✔ audited July provider prices survive the merged dataset (1.493192ms)
+✔ privacy routing is not mislabeled as trusted execution (1.411493ms)
+✔ current Copilot token catalog and legacy request table stay distinct (0.311214ms)
+✔ confirmed non-US provider metadata reaches the provider directory (0.103468ms)
+✔ Claude first-party snapshot contains every currently callable model (0.122458ms)
+✔ Coding Agent snapshot is fresh and internally consistent (0.076909ms)
+✔ Coding Agent source rows retain their exact effort variants (0.302804ms)
+✔ freshly built dataset attaches Coding Agent scores only to exact variants (0.456442ms)
+✔ GLM-5.2 keeps all qualified source evidence on the reasoning max row (0.248895ms)
+✔ family-scoped Intelligence.ai evidence attaches once to deterministic Overview representatives (0.895373ms)
+✔ DeepSeek V4 Pro DesignArena rows mirror the source and sit on the max representative only (0.333704ms)
+✔ Intelligence.ai registry display names resolve opaque and revisioned leaderboard ids (0.458542ms)
+✔ all Artificial Analysis rows and official weight flags survive exactly once (1.255016ms)
+✔ audited upstream repository corrections preserve source provenance (0.216416ms)
+✔ audited provider checkpoint aliases join their benchmark families (0.55086ms)
+✔ canonical organizations are consistent across source aliases (0.283495ms)
+✔ every COMPLETE Coding Agent harness result is retained and the summary is its median (0.364523ms)
+✔ DesignArena board rows attach once and never clone across effort siblings (0.629538ms)
+✔ every current OpenRouter text SKU remains represented after free-tier deduplication (3.279388ms)
+✔ AA rows receive only their exact OpenRouter SKU or a repository-verified replacement for a stale alias (1.710968ms)
+✔ all published providers have metadata and no generated normalization ghosts remain (0.557549ms)
+✔ September frontier additions retain prices, exact efforts and conservative metadata (0.473941ms)
+ℹ tests 39
+ℹ suites 0
+ℹ pass 39
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 352.218573

@@ -1,0 +1,45 @@
+```json
+{
+  "artifact_id": "phase08-runtime-fixes",
+  "artifact_sha256": "297f8dbd231ec36e831dced62dd4e7900efd3a7eb04a9f5d7458cba1c5b4c4cc",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "identity",
+    "transport",
+    "source_stop",
+    "approval",
+    "quiet",
+    "lib/benchmark-score-evidence.mjs",
+    "ops/daily/gauntlet.mjs",
+    "ops/daily/policy.mjs",
+    "ops/daily/public-candidate.py",
+    "ops/daily/public-identities.mjs",
+    "ops/daily/refresh-benchmarks.mjs",
+    "scripts/fetch-live.mjs",
+    "ops/rebuild-2026-09/bin/worker-runner.mjs",
+    "test/daily-gauntlet-gate.test.mjs",
+    "test/daily-public-identities.test.mjs",
+    "test/daily-notification-integration.test.mjs",
+    "test/benchmark-scores.test.mjs",
+    "test/live-source.test.mjs",
+    "test/worker-runner.test.mjs"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [
+    "Exact unique public benchmark source identity reconciles across source order/insertion changes via reconcilePublicIdentities; ambiguous changes and missing prior rows reject",
+    "Worker transport uses standard JSON object mode (--json) with strict local parsing for structured payloads and critic reviews, preventing empty schema-constrained responses while enforcing validation",
+    "Producer audit reuse safely reuses verified audit from prior round only when artifactSha256 and evidenceSha256 are unchanged, logging reused_from_round truthful accounting",
+    "Critic response validation enforces flat string arrays across coverage_checked, fixed, uncertainties, and missing_evidence, and rejects invented coverage IDs",
+    "Vendor family matching in benchmark-score-evidence and gauntlet uses canonical vendorFamily helper across aliases and providers",
+    "Rate limiting (401/403/429/challenges) marks host stopped in live collectors to prevent scheduling subsequent requests, with partial collections leaving staged/main snapshots intact",
+    "Bytecode generation suppressed via sys.dont_write_bytecode = True in public-candidate.py for data-only staging isolation",
+    "Notification failure streak rate-limiting boundary condition corrected to >= FAILURE_ALERT_INTERVAL_MS with stale failure alerts dropped on recovery"
+  ],
+  "uncertainties": [
+    "End-to-end full daily rehearsal runs and final live production release remain running/pending in background infrastructure and are not evaluated as completed acceptance claims here"
+  ],
+  "missing_evidence": []
+}
+```

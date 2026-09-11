@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-11 — Daily automation
+
+- Replaced the daily Codex prompt loop with staged collection, dynamic AA >=34
+  OpenRouter worker selection and different-family source review.
+- Added efficiency/cache, registry and public/vendor benchmark refresh checks;
+  incomplete candidates preserve prior values and observation dates. Coding Agent
+  v1.5 is current; the dated v1.4 Composite input remains unchanged.
+- Runtime moved to `/opt/benchmarkheaven-daily/`; `/opt/mmc-daily/` remains a symlink
+  and the 05:17 UTC schedule is unchanged. Public API and consumer data paths remain
+  compatible. New audit files live under `data/raw/benchmarks/daily-evidence/` and
+  `daily-checks.json`; expiring reviewed source withdrawals are recorded separately.
+- No routine success notifications. Confirmed-send deduplication, weekly failure
+  alerts, notable data events and subscription-only operator escalation.
+
 ## 2026-09-11 — New domain: Benchmark Heaven at benchmarkheaven.com
 
 - **The product is renamed Benchmark Heaven** (formerly Model Market Comparison).

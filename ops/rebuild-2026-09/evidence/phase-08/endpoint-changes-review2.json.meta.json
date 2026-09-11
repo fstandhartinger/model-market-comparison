@@ -1,0 +1,63 @@
+{
+  "started_at": "2026-09-11T03:56:42.916Z",
+  "mode": "critic",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [
+    "openai/gpt-6-astra"
+  ],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.5,
+    "context": 1310720,
+    "aa_intelligence_index": 41.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.9
+      }
+    ]
+  },
+  "input_sha256": "359f0852e7c41ab4b975e740e7c00af95e8d68be5a1b657d5e82a52291bc3bdd",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 58859,
+    "completion_tokens": 3229,
+    "total_tokens": 62088,
+    "cost": 0.0103389165,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.01044335,
+      "upstream_inference_prompt_cost": 0.00882885,
+      "upstream_inference_completions_cost": 0.0016145
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2070,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Together",
+  "session_id": null,
+  "finished_at": "2026-09-11T03:57:12.682Z",
+  "output_sha256": "ecfd09a073d9c18b0bd1b659ffc9957f3a47218a67d210ef2ff2cac09a6cecf3"
+}

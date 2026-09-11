@@ -9,6 +9,7 @@ import { resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import { AA_EFFICIENCY_MODEL_SLUGS, aaModelPageURL, parseAaEfficiency } from "../lib/aa-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
+import { captureLiveSource } from '../lib/live-source.mjs';
 
 const UA = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
 const POLITE_DELAY_MS = 2500;
@@ -35,9 +36,13 @@ export async function refreshAaEfficiency({ html = undefined, fetchedAt = undefi
       const fetched = new Date().toISOString();
       try {
         const result = await fetcher(url, { headers: { "User-Agent": UA }, signal: AbortSignal.timeout(60_000) });
-        const body = result.ok ? await result.text() : null;
-        const entry = { url, fetched_at: fetched, http_status: result.status, bytes: body?.length ?? 0, sha256: body ? createHash("sha256").update(body).digest("hex") : null };
+        const body = typeof result.text === "function" ? await result.text().catch(() => null) : null;
+        const entry = { url, fetched_at: fetched, http_status: result.status, bytes: body?.length ?? 0, sha256: body !== null ? createHash("sha256").update(body).digest("hex") : null };
         attempts.push(entry);
+        if (evidenceDir && body !== null) {
+          const captured = await captureLiveSource(url, body, { directory: evidenceDir, status: result.status });
+          if (result.ok && fetchedAt === undefined) fetchedAt = captured.fetched_at;
+        }
         if ([403, 429].includes(result.status)) break;
         if (evidenceDir && body) {
           const safe = url.replace(HASH_TAG, "_").slice(-120);

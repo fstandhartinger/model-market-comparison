@@ -184,7 +184,7 @@ def parse(source,spec,load_source):
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows
 
-def collect(plan,registry,root=Path('.')):
+def collect(plan,registry,root=Path('.'),evidence=None):
     observations=[];collections=[];rejected=[];entries={e['id']:e for e in registry['entries']};cache={}
     def load(s):
         if s['file'] not in cache:
@@ -226,6 +226,7 @@ def collect(plan,registry,root=Path('.')):
             supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source'] if k in rule]
             if supporting:
                 o['supporting_sources']=[{'url':s['url'],'file':s['file'],'sha256':s['sha256'],'retrieved_at':s.get('retrieved_at',s.get('fetched_at')),'published_at':None,'locator':k} for k,s in supporting]
+            if evidence is not None:evidence[o['id']]={'source_row':row,'parser':rule,'source_index':index}
             observations.append(o);count+=1
         if count<spec.get('minimum_rows',1):raise ValueError('Coverage shrank / no scores: '+bid)
         collections.append({'benchmark_id':bid,'status':'collected','source_url':source['url'],'reason':f'{count} source results parsed; configurations remain separate; unmatched model identities are retained.'})

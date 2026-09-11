@@ -50,3 +50,23 @@ test('critic excludes every producer family including aliases and explicit model
   assert.throws(() => selectModel(catalog, data, {critic: true, producers: ['deepseek/producer', 'z-ai/producer']}), /No supported viable/);
   assert.throws(() => selectModel(catalog, data, {critic: true, smokeTest: true, producers: ['openai/author']}), /cannot certify/);
 });
+
+test('daily price ceiling is rechecked against live catalog even for explicit pins', () => {
+  const model = catalogRow('example/product-v4.1', { prompt: '0.000001', completion: '0.000003' });
+  const data = { models: [aaRow('known', 40)] };
+  assert.throws(() => selectModel([model], data, { model: model.id, maxPricePer1M: 2 }), /price exceeds/);
+  assert.throws(() => selectModel([model], data, { maxPricePer1M: 2 }), /No supported viable/);
+  assert.throws(() => selectModel([model], data, { maxPricePer1M: NaN }), /Invalid/);
+});
+
+test('a failed worker is excluded while the next cheapest still needs AA qualification, price cap and a different family', () => {
+  const ids = ['deepseek/producer', 'z-ai/reviewer', 'google/reviewer'];
+  const catalog = ids.map((id, i) => catalogRow(id, { prompt: String((i + 1) / 1e6), completion: String((i + 1) / 1e6) }));
+  const data = { models: ids.map((id) => aaRow(id, 34, { family_key: id, aa_metadata: { openrouter_api_id: id } })) };
+  const options = { critic: true, producers: ['deepseek/producer'], excludeModels: ['z-ai/reviewer'], maxPricePer1M: 4 };
+  assert.equal(selectModel(catalog, data, options).id, 'google/reviewer');
+  assert.throws(() => selectModel(catalog, data, { ...options, maxPricePer1M: 2 }), /No supported viable/);
+  assert.throws(() => selectModel(catalog, data, { ...options, model: 'z-ai/reviewer' }), /excluded/);
+  data.models[2].benchmarks.aa_intelligence_index = 33.9;
+  assert.throws(() => selectModel(catalog, data, options), /No supported viable/);
+});

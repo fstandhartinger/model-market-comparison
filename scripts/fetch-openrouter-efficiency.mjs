@@ -7,6 +7,7 @@ import { promisify } from "node:util";
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from "../lib/openrouter-efficiency.mjs";
 import { completedWeek } from "../lib/chutes-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
+import { captureLiveSource } from '../lib/live-source.mjs';
 
 const raw = new URL("../data/raw/", import.meta.url);
 const target = new URL("openrouter-efficiency.json", raw);
@@ -14,7 +15,7 @@ const ua = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-marke
 const args = process.argv.slice(2);
 const explicit = args.find((arg) => arg.startsWith("--models="))?.slice(9).split(",");
 const limit = Number(args.find((arg) => arg.startsWith("--limit="))?.slice(8) || 4);
-const evidenceDir = args.find((arg) => arg.startsWith("--evidence-dir="))?.slice(15);
+const evidenceDir = args.find((arg) => arg.startsWith("--evidence-dir="))?.slice(15) || process.env.BH_EVIDENCE_DIR;
 
 async function get(url) {
   // curl is the established working transport on Sandy; Node fetch intermittently
@@ -23,7 +24,10 @@ async function get(url) {
   const split = stdout.lastIndexOf("\n");
   const status = Number(stdout.slice(split + 1));
   if (status !== 200) throw new Error(`HTTP ${status}: ${url}`);
-  return stdout.slice(0, split);
+  const body = stdout.slice(0, split);
+  if (/<title>just a moment|cf-chl-|g-recaptcha|hcaptcha/i.test(body.slice(0, 100000))) throw new Error(`HTTP 403 challenge detected: ${url}`);
+  await captureLiveSource(url, body, { directory: evidenceDir });
+  return body;
 }
 try {
   if (!Number.isInteger(limit) || limit < 1 || limit > 12) throw new Error("Page limit must be 1..12");
@@ -66,6 +70,9 @@ try {
     try {
       const html = await get(url);
       const parsed = parseOpenRouterPage(html, { or_model_id: id, ...window });
+      if (previous.models[id]?.usage?.status === 'available' && parsed.usage.status !== 'available') {
+        throw new Error(`Current usage ${parsed.usage.status}; retaining the previous complete observation and its dates`);
+      }
       const response_sha256 = createHash("sha256").update(html).digest("hex");
       models[id] = { ...parsed, window, provenance: { source: "OpenRouter model-page usage", url, collected_at: at, basis: "measured" }, response_sha256 };
       const cacheUrl = `https://openrouter.ai/api/frontend/v1/stats/effective-pricing?${new URLSearchParams({ permaslug: parsed.model_permaslug, variant: parsed.variant, shape: "v7" })}`;
@@ -74,6 +81,10 @@ try {
         const cacheText = await get(cacheUrl);
         const cache = parseOpenRouterCache(JSON.parse(cacheText), parsed.endpoints);
         const cacheById = new Map(cache.joined.map((e) => [e.endpoint_id, e]));
+        const missingPrior = (previous.models[id]?.endpoints || []).filter((e) => e.cache_hit_rate != null
+          && parsed.endpoints.some((p) => p.endpoint_id === e.endpoint_id && p.endpoint_tag === e.endpoint_tag)
+          && cacheById.get(e.endpoint_id)?.cache_hit_rate == null);
+        if (missingPrior.length) throw new Error(`Partial cache summary: ${missingPrior.length} previous endpoint rates absent; retaining dated cache observation`);
         models[id].endpoints = parsed.endpoints.map((e) => cacheById.get(e.endpoint_id) || { ...e, cache_status: "not_in_effective_pricing" });
         models[id].cache = { ...cache, joined: undefined, provenance: { source: "OpenRouter effective pricing statistics", url: cacheUrl, collected_at: new Date().toISOString(), basis: "measured" }, response_sha256: createHash("sha256").update(cacheText).digest("hex") };
         models[id].cache_attempt = { ...models[id].cache.provenance, status: "available" };

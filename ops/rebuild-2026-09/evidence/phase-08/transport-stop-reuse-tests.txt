@@ -1,0 +1,21 @@
+✔ a critic pass cannot silently overrule a producer mismatch (27.802831ms)
+✔ malformed rows are not an accepted empty artifact (3.309057ms)
+✔ same-family critic and below-gate receipt cannot produce an acceptance fingerprint (27.817831ms)
+✔ an oversized source is refused instead of silently truncated into a passing review (3.121371ms)
+✔ a critic transport retry reuses an unchanged, hash-verified producer audit without another production charge (18.511188ms)
+✔ catalog shrink, empty, malformed and duplicate identities fail before publication (2.252767ms)
+✔ explicit empty endpoints permitted only without prior known providers (0.712086ms)
+✔ reviewed withdrawal exception expires and binds both complete endpoint identity sets (1.398813ms)
+✔ source evidence retains exact primary response bytes without transport credentials (15.510996ms)
+✔ lost numeric fields are not confused with published zero or already unknown values (0.796035ms)
+✔ actual OpenRouter collector exits nonzero and leaves good file untouched on a partial endpoint response (470.46293ms)
+✔ worker CLI preserves output on provider failures and accepts a large embedded packet (1833.611862ms)
+✔ transport smoke cannot accept arbitrary data work or a reference file (107.100253ms)
+ℹ tests 13
+ℹ suites 0
+ℹ pass 13
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 2026.997922

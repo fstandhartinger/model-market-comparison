@@ -1,0 +1,35 @@
+```json
+{
+  "artifact_id": "phase08-core-implementation",
+  "artifact_sha256": "0e32cd9a45408",
+  "round": 2,
+  "verdict": "pass",
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Static verification cannot independently recompute cryptographic hashes or verify stored gzipped response bytes; these rely on supplied primary evidence.",
+    "Runtime execution, deployment, and end-to-end daily run are not claimed by this static artifact and remain pending.",
+    "Live API endpoint comparisons cover only 10 models as supplied in primary evidence; broader model coverage requires runtime evidence."
+  ],
+  "missing_evidence": [
+    "Complete end-to-end runtime execution evidence",
+    "Independent hash computation verification",
+    "Deployment confirmation"
+  ],
+  "coverage_checked": [
+    "source_safety",
+    "schema_validation",
+    "model_qualification",
+    "transaction_integrity",
+    "benchmark_accuracy",
+    "telegram_notification"
+  ],
+  "coverage_checked_files": [
+    "API.md",
+    "ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-round2-packet.json",
+    "core-implementation.js"
+  ],
+  "additional_context": "Artifact SHA-256 provided as '0e32cd9a45408' appears truncated relative to standard SHA-256 format; treated as supplied identifier per packet contract without independent verification."
+}
+```

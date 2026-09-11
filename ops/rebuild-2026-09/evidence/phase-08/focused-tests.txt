@@ -1,0 +1,39 @@
+✔ full Coding Agent board resolves Flight references and preserves exact model/harness names (4.615492ms)
+✔ Coding Agent rejects partial, malformed, ambiguous, changed-version and invalid-score payloads (33.518623ms)
+✔ failed live fetch or partial parse never overwrites the previous snapshot (27.150993ms)
+✔ metadata parsing does not depend on first key or erase escaped quotes (0.494151ms)
+✔ efficiency parse extracts slug, UUID, variant, measured fields and derived ratios (23.598522ms)
+✔ efficiency parse resolves Flight references for efficiency fields (11.358264ms)
+✔ efficiency parse rejects missing, malformed, partial and invalid payloads (66.665214ms)
+✔ failed or partial refresh never overwrites the previous snapshot (5026.671969ms)
+✔ live fetcher records attempts and only accepts the first successful probe (2511.881708ms)
+✔ AA stops on restrictive robots and 429 without probing alternate pages (1.401244ms)
+✔ catalog shrink, empty, malformed and duplicate identities fail before publication (1.469782ms)
+✔ explicit empty endpoints permitted only without prior known providers (0.730536ms)
+✔ source evidence retains exact primary response bytes without transport credentials (16.176003ms)
+✔ lost numeric fields are not confused with published zero or already unknown values (1.150758ms)
+✔ actual OpenRouter collector exits nonzero and leaves good file untouched on a partial endpoint response (172.07948ms)
+✔ OpenRouter keeps exact endpoint tags despite identical provider labels, and sums workload tokens (9.905711ms)
+✔ OpenRouter accepts explicit missing usage and reports incomplete/zero-output windows (0.625598ms)
+✔ OpenRouter rejects malformed Flight, wrong identities, duplicate endpoints/days and invalid counts (2.239868ms)
+✔ OpenRouter cache prices distinguish zero and missing, reject coercion and nonfinite values (3.099891ms)
+✔ OpenRouter cache joins UUID to exact routing tag, never base provider slug; zero is observed (1.423483ms)
+✔ OpenRouter cache rejects malformed rates, duplicate UUIDs and inconsistent provider maps (0.418402ms)
+✔ OpenRouter weekly rankings preserve exact free SKU identity and source last-activity date (4.955966ms)
+✔ large worker export survives immediate process exit without a truncated pipe (84.445056ms)
+✔ AA fallback requires exact version and matching organization (2.014241ms)
+✔ explicit maximum-effort mapping cannot hide a weak or missing sibling (2.654469ms)
+✔ missing or malformed prices never become free eligibility (0.324724ms)
+✔ unscored transport smoke has a price ceiling and cannot select automatically (0.481731ms)
+✔ critic excludes every producer family including aliases and explicit model pins (15.887628ms)
+✔ daily price ceiling is rechecked against live catalog even for explicit pins (0.436952ms)
+✔ worker CLI preserves output on provider failures and accepts a large embedded packet (2825.961608ms)
+✔ transport smoke cannot accept arbitrary data work or a reference file (144.66154ms)
+ℹ tests 31
+ℹ suites 0
+ℹ pass 31
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 7867.876148

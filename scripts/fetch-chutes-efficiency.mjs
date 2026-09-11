@@ -4,6 +4,7 @@ import { fileURLToPath } from "node:url";
 import { createHash } from "node:crypto";
 import { parseChutesUsage, completedWeek } from "../lib/chutes-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
+import { captureLiveSource } from '../lib/live-source.mjs';
 
 const target = new URL("../data/raw/chutes-efficiency.json", import.meta.url);
 const collected_at = new Date().toISOString();
@@ -14,6 +15,7 @@ try {
   if (!response.ok) throw new Error(`Chutes HTTP ${response.status}`);
   const text = await response.text();
   const parsed = parseChutesUsage(JSON.parse(text), window);
+  await captureLiveSource(url, text);
   const provenance = { source: "Chutes LLM usage statistics", url, collected_at, basis: "self_reported" };
   await mkdir(new URL("../data/raw/", import.meta.url), { recursive: true });
   await writeJSONAtomic(fileURLToPath(target), {

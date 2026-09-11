@@ -11,6 +11,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
+import { assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource } from '../lib/live-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -18,29 +19,55 @@ const RAW = join(__dirname, "..", "data", "raw");
 const AA_KEY = process.env.ARTIFICIAL_ANALYSIS_API_KEY || process.env.ARTIF_ANALYSIS_API_KEY || "";
 const UA = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
 
+const stoppedHosts = new Set();
+const stopStatuses = [401, 403, 429];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 
 async function getJSON(url, opts = {}, tries = 3) {
+  const host = new URL(url).host;
   for (let i = 0; i < tries; i++) {
+    if (stoppedHosts.has(host)) throw Object.assign(new Error(`Source host stopped after access restriction: ${host}`), { status: 403 });
     try {
       const res = await fetch(url, { signal: AbortSignal.timeout(60_000), ...opts, headers: { "User-Agent": UA, ...(opts.headers || {}) } });
-      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-      return await res.json();
+      if (!res.ok) {
+        if (stopStatuses.includes(res.status)) stoppedHosts.add(host);
+        if (res.status === 404 && url.endsWith('/endpoints')) await captureLiveSource(url, await res.text(), { status: 404 });
+        throw Object.assign(new Error(`HTTP ${res.status} for ${url}`), { status: res.status });
+      }
+      const body = await res.text();
+      if (/^\s*</.test(body) && /<title>just a moment|cf-chl-|g-recaptcha|hcaptcha/i.test(body.slice(0, 100000))) {
+        stoppedHosts.add(host);
+        throw Object.assign(new Error(`Challenge detected at ${url}`), { status: 403 });
+      }
+      const parsed = JSON.parse(body);
+      await captureLiveSource(url, body, { method: opts.method, requestBody: opts.body ? JSON.parse(opts.body) : null });
+      return parsed;
     } catch (e) {
-      if (i === tries - 1) throw e;
+      if ([401, 403, 404, 429].includes(e.status) || i === tries - 1) throw e;
       await sleep(800 * (i + 1));
     }
   }
 }
 
 async function getText(url, opts = {}, tries = 3) {
+  const host = new URL(url).host;
   for (let i = 0; i < tries; i++) {
+    if (stoppedHosts.has(host)) throw Object.assign(new Error(`Source host stopped after access restriction: ${host}`), { status: 403 });
     try {
       const res = await fetch(url, { signal: AbortSignal.timeout(60_000), ...opts, headers: { "User-Agent": UA, ...(opts.headers || {}) } });
-      if (!res.ok) throw new Error(`HTTP ${res.status} for ${url}`);
-      return await res.text();
+      if (!res.ok) {
+        if (stopStatuses.includes(res.status)) stoppedHosts.add(host);
+        throw Object.assign(new Error(`HTTP ${res.status} for ${url}`), { status: res.status });
+      }
+      const body = await res.text();
+      if (/<title>just a moment|cf-chl-|g-recaptcha|hcaptcha/i.test(body.slice(0, 100000))) {
+        stoppedHosts.add(host);
+        throw Object.assign(new Error(`Challenge detected at ${url}`), { status: 403 });
+      }
+      await captureLiveSource(url, body);
+      return body;
     } catch (e) {
-      if (i === tries - 1) throw e;
+      if ([401, 403, 429].includes(e.status) || i === tries - 1) throw e;
       await sleep(800 * (i + 1));
     }
   }
@@ -58,6 +85,14 @@ async function fetchArtificialAnalysis() {
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, "artificialanalysis.json"), "utf8")); }
   catch (error) { if (error.code !== "ENOENT") throw error; }
+  assertIdentityCoverage(previous.models, apiModels, (m) => m.id, 'Artificial Analysis models');
+  const priorModels = new Map((previous.models || []).map((m) => [m.id, m]));
+  for (const model of apiModels) {
+    if (!model.evaluations || !model.pricing || typeof model.name !== 'string' || typeof model.slug !== 'string') throw new Error('AA missing model fields');
+    const old = priorModels.get(model.id);
+    assertMeasuredFields(old?.evaluations, model.evaluations, [...new Set([...Object.keys(old?.evaluations || {}), ...Object.keys(model.evaluations)])], `AA ${model.id}`);
+    assertMeasuredFields(old?.pricing, model.pricing, ['price_1m_input_tokens', 'price_1m_output_tokens'], `AA ${model.id}`);
+  }
   const { models, missing, extraCount } = enrichArtificialAnalysis(apiModels, metadata, previous);
   if (missing.length) {
     console.log(`  warn: ${missing.length} API model(s) lack leaderboard metadata (mid-rollout), shipping with null metadata: ${missing.map((m) => m.name).join(", ")}`);
@@ -73,8 +108,8 @@ async function fetchArtificialAnalysis() {
     count: models.length,
     models,
   };
+  const efficiency = await refreshAaEfficiency({ target: join(RAW, "aa-efficiency.json"), evidenceDir: process.env.BH_EVIDENCE_DIR });
   await writeJSONAtomic(target, snapshot);
-  const efficiency = await refreshAaEfficiency({ target: join(RAW, "aa-efficiency.json") });
   console.log(`  ${efficiency.count} AA token-efficiency benchmark rows`);
 }
 
@@ -88,6 +123,9 @@ async function fetchDesignArena() {
     { key: "fullstack", body: { arenaType: "agents", category: "fullstack", variationName: "public" } },
   ];
   const out = {};
+  let previous = {};
+  try { previous = JSON.parse(await readFile(join(RAW, 'designarena.json'), 'utf8')); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
   for (const q of queries) {
     const data = await getJSON(`${baseUrl}/api/leaderboard`, {
       method: "POST",
@@ -95,6 +133,10 @@ async function fetchDesignArena() {
       body: JSON.stringify(q.body),
     });
     out[q.key] = { request: q.body, data: data.data || [] };
+    assertIdentityCoverage(previous.leaderboards?.[q.key]?.data, out[q.key].data, (row) => row.modelId, `DesignArena ${q.key}`);
+    for (const row of out[q.key].data) {
+      if (!Number.isFinite(row.elo) || !Number.isSafeInteger(row.battles) || row.battles < 0) throw new Error(`DesignArena invalid Elo/battles: ${row.modelId}`);
+    }
     console.log(`  ${q.key}: ${out[q.key].data.length} models`);
   }
   // Leaderboard ids are serving identifiers, not always public product names
@@ -129,13 +171,15 @@ async function fetchDesignArena() {
 async function mapLimit(items, limit, fn) {
   const out = new Array(items.length);
   let idx = 0;
+  const failures = [];
   const workers = Array.from({ length: limit }, async () => {
     while (idx < items.length) {
       const i = idx++;
-      try { out[i] = await fn(items[i], i); } catch (e) { out[i] = null; }
+      try { out[i] = await fn(items[i], i); } catch (error) { failures.push(error); }
     }
   });
   await Promise.all(workers);
+  if (failures.length) throw new Error(failures.map((e) => e.message).join('\n'));
   return out;
 }
 
@@ -143,6 +187,14 @@ async function fetchOpenRouter() {
   console.log("→ OpenRouter model catalog …");
   const catalog = await getJSON("https://openrouter.ai/api/v1/models");
   const models = catalog.data || [];
+  let previous = {};
+  try { previous = JSON.parse(await readFile(join(RAW, 'openrouter.json'), 'utf8')); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  assertIdentityCoverage(previous.models, models, (m) => m.id, 'OpenRouter catalog');
+  const previousById = new Map((previous.models || []).map((m) => [m.id, m]));
+  let sourceApprovals = [];
+  try { sourceApprovals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')).openrouter_endpoints || []; }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
   console.log(`  ${models.length} models in catalog`);
 
   // Fetch per-provider endpoints for every model (concurrency limited) so we can
@@ -152,15 +204,23 @@ async function fetchOpenRouter() {
   let done = 0;
   const enriched = await mapLimit(models, 10, async (m) => {
     const id = m.id; // e.g. "moonshotai/kimi-k2"
-    let endpoints = [];
-    try {
-      const ep = await getJSON(`https://openrouter.ai/api/v1/models/${id}/endpoints`);
-      endpoints = (ep.data && ep.data.endpoints) || [];
-    } catch { /* ignore */ }
+    const endpointUrl = `https://openrouter.ai/api/v1/models/${id}/endpoints`;
+    let endpoints, endpointStatus;
+    try { endpoints = (await getJSON(endpointUrl)).data?.endpoints; }
+    catch (error) {
+      // Moving aliases/router SKUs have no per-provider resource. An explicit 404
+      // can establish absence only where no known good endpoints would be lost.
+      if (error.status !== 404 || previousById.get(id)?.endpoints?.length) throw error;
+      endpoints = [];
+      endpointStatus = { status: 'not_published', http_status: 404, url: endpointUrl, collected_at: new Date().toISOString() };
+    }
+    try { assertOpenRouterEndpointCoverage(previousById.get(id)?.endpoints, endpoints, { approval: sourceApprovals.find((a) => a.model_id === id) }); }
+    catch (error) { throw new Error(`${id}: ${error.message}`); }
     done++;
     if (done % 50 === 0) console.log(`    ${done}/${models.length}`);
     return {
       id: m.id,
+      ...(endpointStatus ? { endpoint_status: endpointStatus } : {}),
       canonical_slug: m.canonical_slug,
       hugging_face_id: m.hugging_face_id ?? null,
       name: m.name,

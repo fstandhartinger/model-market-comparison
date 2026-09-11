@@ -1,0 +1,46 @@
+```json
+{
+  "verdict": "APPROVED_WITH_CONDITIONS",
+  "errors_found": 0,
+  "findings": [
+    {
+      "location": "current_primary_response.endpoints vs prior_accepted_endpoints",
+      "severity": "info",
+      "evidence": "Current snapshot contains 25 endpoint entries; prior accepted list contains 26. The only missing identity is {provider_name: 'Io Net', tag: 'io-net/fp8', quantization: 'fp8'}. No entry with tag 'io-net/fp8' (or provider_name 'Io Net') appears in the current 25 entries.",
+      "repair": "Permit a narrowly identity-bound one-day exception keyed exactly on provider_name='Io Net' AND tag='io-net/fp8' AND quantization='fp8'; do not extend to any other missing endpoint."
+    },
+    {
+      "location": "current_primary_response.endpoints (remaining 25 entries)",
+      "severity": "info",
+      "evidence": "All 25 current entries match a prior accepted endpoint on provider_name, tag, quantization, status, and pricing. Differences from prior are only status restorations on still-present endpoints (z-ai/fp8 -2->0, morph/fp8 -5->0, friendli -2->0) and Modal pricing normalization (0.000000149985->0.00000015 etc., discount 0.6667->0); these are present-endpoint field updates, not removals.",
+      "repair": "No removal exception needed beyond io-net/fp8; do not allow the io-net exception to blanket-accept any other shrink."
+    },
+    {
+      "location": "current_primary_response schema",
+      "severity": "info",
+      "evidence": "Every current endpoint carries provider_name, tag, quantization, status, pricing.prompt, pricing.completion, pricing.input_cache_read, pricing.discount with string pricing values and numeric status/discount, matching the prior accepted schema.",
+      "repair": "None; schema valid."
+    },
+    {
+      "location": "proposed exception scope",
+      "severity": "info",
+      "evidence": "Current absence of io-net/fp8 is a point-in-time observation from the supplied snapshot only; no evidence of vendor retirement exists in the packet.",
+      "repair": "Exception must not assert permanent retirement, must expire after one day, and all other shrinks plus any HTTP non-200 or schema-invalid responses must remain fatal."
+    }
+  ],
+  "evidence": {
+    "artifact_id": "glm-endpoint-retirement",
+    "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints",
+    "current_response_sha256": "60fe2581b46dc3d53fba489b180e5b04891f7c3c3d03d609ed0b5bf05252e973",
+    "io_net_absent_from_current": true,
+    "io_net_present_in_prior": true,
+    "current_count": 25,
+    "prior_count": 26
+  },
+  "uncertainties": [
+    "Cannot verify why io-net/fp8 is absent (temporary outage, list churn, or true removal); no external evidence available.",
+    "Cannot independently re-run the extraction or recompute the SHA-256; verification relies solely on the supplied packet and extraction_note.",
+    "Snapshot captured at 03:41 per question text; no second timestamped capture supplied to confirm persistence of absence beyond one observation."
+  ]
+}
+```

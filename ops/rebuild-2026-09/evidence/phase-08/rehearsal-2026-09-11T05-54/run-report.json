@@ -1,0 +1,549 @@
+{
+  "started_at": "2026-09-11T05:54:04.912Z",
+  "run_dir": "/opt/benchmarkheaven/state/phase-08/rehearsal-home/runs/2026-09-11T05-54-04-912Z-678846",
+  "dry_run": true,
+  "steps": [
+    {
+      "name": "branch",
+      "ok": true,
+      "duration_ms": 12
+    },
+    {
+      "name": "initial-status",
+      "ok": true,
+      "duration_ms": 91
+    },
+    {
+      "name": "fetch-main",
+      "ok": true,
+      "duration_ms": 498
+    },
+    {
+      "name": "base",
+      "ok": true,
+      "duration_ms": 4
+    },
+    {
+      "name": "remote-base",
+      "ok": true,
+      "duration_ms": 3
+    },
+    {
+      "name": "clone",
+      "ok": true,
+      "duration_ms": 720
+    },
+    {
+      "name": "detach-stage",
+      "ok": true,
+      "duration_ms": 351
+    },
+    {
+      "name": "worker-catalog",
+      "ok": true,
+      "duration_ms": 418
+    },
+    {
+      "name": "fetch-aa",
+      "ok": true,
+      "duration_ms": 1358
+    },
+    {
+      "name": "fetch-da",
+      "ok": true,
+      "duration_ms": 882
+    },
+    {
+      "name": "fetch-or",
+      "ok": true,
+      "duration_ms": 18327
+    },
+    {
+      "name": "fetch-coding-v1.5",
+      "ok": true,
+      "duration_ms": 427
+    },
+    {
+      "name": "review-live",
+      "ok": true,
+      "duration_ms": 542399
+    },
+    {
+      "name": "refresh-benchmarks",
+      "ok": true,
+      "duration_ms": 446157
+    },
+    {
+      "name": "build-dataset",
+      "ok": true,
+      "duration_ms": 1162
+    },
+    {
+      "name": "npm-build",
+      "ok": true,
+      "duration_ms": 46177
+    },
+    {
+      "name": "npm-test",
+      "ok": true,
+      "duration_ms": 7948
+    },
+    {
+      "name": "typecheck",
+      "ok": true,
+      "duration_ms": 17416
+    },
+    {
+      "name": "prerender",
+      "ok": true,
+      "duration_ms": 127
+    },
+    {
+      "name": "top5",
+      "ok": true,
+      "duration_ms": 353
+    },
+    {
+      "name": "stage-status",
+      "ok": true,
+      "duration_ms": 15
+    }
+  ],
+  "published": false,
+  "exit_code": 1,
+  "base": "b85668137043aea302305a29c29d039ac6161446",
+  "workers": {
+    "producer": {
+      "id": "deepseek/deepseek-v4-flash-0731",
+      "family": "deepseek",
+      "free": false,
+      "input_per_1m": 0.065,
+      "output_per_1m": 0.18,
+      "context": 1310720,
+      "aa_intelligence_index": 34.5,
+      "aa_source": "exact_id_and_variants",
+      "matched_model_ids": [
+        "deepseek-v4-flash-0731::max"
+      ],
+      "aa_variant_scores": [
+        {
+          "id": "deepseek-v4-flash-0731::max",
+          "index": 34.5
+        }
+      ]
+    },
+    "critic": {
+      "id": "z-ai/glm-5.3-flash",
+      "family": "z-ai",
+      "free": false,
+      "input_per_1m": 0.15,
+      "output_per_1m": 0.5,
+      "context": 1310720,
+      "aa_intelligence_index": 41.9,
+      "aa_source": "exact_id_and_variants",
+      "matched_model_ids": [
+        "glm-5.3-flash::default"
+      ],
+      "aa_variant_scores": [
+        {
+          "id": "glm-5.3-flash::default",
+          "index": 41.9
+        }
+      ]
+    }
+  },
+  "error": "Daily commit scope rejected: node_modules",
+  "finished_at": "2026-09-11T06:12:11.099Z",
+  "worker_calls": {
+    "calls": [
+      {
+        "receipt": "worker-1789106456004-704425.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0164534832,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106457716-706124.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.007165125,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106483495-706251.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0143787204,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106485636-708261.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00486189,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106501654-708394.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0136817604,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106503298-709392.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0069498,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106554370-709502.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0288526194,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106556295-712700.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.005234625,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106573801-712840.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0231571494,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106575744-713841.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.014503995,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106587403-714050.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0143667414,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106589189-714820.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0098878725,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106608326-714921.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0153283284,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106611151-716567.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.009624285,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106812084-727677.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0142393284,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106813858-729611.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00197802,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106822296-729738.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0041573664,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106824029-730292.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00208494,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106849293-730741.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0127089567,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106861000-731984.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0085768551,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106878612-732738.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0078074766,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106911620-733846.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0287132274,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106914666-735788.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.01876149,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106943421-735990.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "complete",
+        "returned_cost_usd": 0.0303097014,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789106945503-737788.json",
+        "role": "critic",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0170440875,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789107045390-744252.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0056571075,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789107048766-744428.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.00344817,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789107051854-744707.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.003464505,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-1789107054600-744935.json",
+        "role": "oneshot",
+        "actual_model": "google/gemini-3.7-flash",
+        "requested_model": "google/gemini-3.7-flash",
+        "status": "complete",
+        "returned_cost_usd": 0.0032373,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789106249875-680463.json",
+        "role": "oneshot",
+        "actual_model": null,
+        "requested_model": "deepseek/deepseek-v4-flash-0731",
+        "status": "failed",
+        "returned_cost_usd": null,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789106430271-692459.json",
+        "role": "oneshot",
+        "actual_model": null,
+        "requested_model": "z-ai/glm-5.3-flash",
+        "status": "failed",
+        "returned_cost_usd": null,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      },
+      {
+        "receipt": "worker-failure-1789107043593-737888.json",
+        "role": "oneshot",
+        "actual_model": "deepseek/deepseek-v4-pro-0813",
+        "requested_model": "deepseek/deepseek-v4-pro-0813",
+        "status": "failed",
+        "returned_cost_usd": 0.0339654744,
+        "reasoning": {
+          "effort": "low",
+          "exclude": true
+        }
+      }
+    ],
+    "returned_cost_usd": 0.38060040149999996,
+    "calls_without_returned_cost": 2,
+    "note": "Sum of returned charges only, including charged failed completions where reported. Missing charges and owner subscription usage are not estimated."
+  },
+  "dataset_sha256": "cdee78f1c527ce81cf8ff2af8c981b1887347ce6905be47b8f3fba556c930ca1"
+}

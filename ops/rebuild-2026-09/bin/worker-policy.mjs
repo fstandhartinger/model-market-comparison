@@ -59,15 +59,20 @@ export function candidateList(catalog, dataset, minimum = MIN_INDEX, limit = 10)
   };
 }
 
-export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false } = {}) {
+export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [] } = {}) {
+  if (typeof maxPricePer1M !== 'number' || maxPricePer1M <= 0 || Number.isNaN(maxPricePer1M)) throw new Error('Invalid worker price ceiling');
+  if (!Array.isArray(excludeModels) || excludeModels.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
+  const excluded = new Set(excludeModels);
+  if (model && excluded.has(model)) throw new Error('Pinned worker is excluded after a recorded failure');
   const avoid = new Set(producers.map(vendorFamily));
   if (critic && (!producers.length || producers.some((id) => !id.includes('/')))) throw new Error('Critic requires explicit producer model IDs (or valid last-successful producer state)');
   if (critic && smokeTest) throw new Error('Smoke tests cannot certify a critic round');
   if (smokeTest && !model) throw new Error('Smoke tests require an explicitly pinned model');
   const candidates = candidateList(catalog, dataset, MIN_INDEX, catalog.length);
   const candidate = model ? assessModel(catalog.find((m) => m.id === model) || {}, dataset)
-    : [...candidates.free_verified, ...candidates.cheap_verified].find((m) => !critic || !avoid.has(m.family));
+    : [...candidates.free_verified, ...candidates.cheap_verified].find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)));
   if (!candidate) throw new Error('No supported viable worker model found');
+  if (candidate.input_per_1m > maxPricePer1M || candidate.output_per_1m > maxPricePer1M) throw new Error('Worker price exceeds configured ceiling');
   if (critic && avoid.has(candidate.family)) throw new Error('Critic must belong to a different vendor family than every producer');
   if (candidate.aa_intelligence_index !== null && candidate.aa_intelligence_index < MIN_INDEX) throw new Error(`Model is below AA ${MIN_INDEX}`);
   if (candidate.aa_intelligence_index === null && !smokeTest) throw new Error('Unscored model: only the fixed known-answer --smoke-test is allowed');

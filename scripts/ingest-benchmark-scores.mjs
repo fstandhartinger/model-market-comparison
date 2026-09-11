@@ -99,6 +99,8 @@ for (const e of registry.entries) if (!collections.some((c) => c.benchmark_id ==
 const snapshot = { schema_version: 1, observations, missing, collections, rejected };
 validateBenchmarkScores(snapshot, registry, new Set(models.map((m) => m.id)));
 if (!process.argv.includes('--draft')) await verifyScoreEvidence(snapshot, registry, { approvals: await read('data/raw/benchmarks/score-approvals.json') });
-const target = process.argv.includes('--draft') ? 'ops/rebuild-2026-09/evidence/phase-05/draft-scores.json' : 'data/raw/benchmarks/scores.json';
+const outIndex = process.argv.indexOf('--out');
+if (outIndex >= 0 && (!process.argv.includes('--draft') || !process.argv[outIndex + 1])) throw new Error('--out requires --draft and an output path');
+const target = outIndex >= 0 ? process.argv[outIndex + 1] : process.argv.includes('--draft') ? 'ops/rebuild-2026-09/evidence/phase-05/draft-scores.json' : 'data/raw/benchmarks/scores.json';
 await writeJSONAtomic(target, snapshot);
 console.log(JSON.stringify({ target, observations: observations.length, missing: missing.length, unmatched: observations.filter((o) => !o.subject.model_id).length, rejected: rejected.length }));

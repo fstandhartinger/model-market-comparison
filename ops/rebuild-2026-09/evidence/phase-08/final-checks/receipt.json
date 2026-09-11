@@ -1,0 +1,75 @@
+[
+  {
+    "command": [
+      "node",
+      "scripts/build-dataset.mjs"
+    ],
+    "started_at": "2026-09-11T06:15:40.394658+00:00",
+    "finished_at": "2026-09-11T06:15:41.570828+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/final-checks/01.txt",
+    "sha256": "8c4ddb2010ea226512f24517403a4295cf93729bb038a7a95d7351e39aeaa97b"
+  },
+  {
+    "command": [
+      "npm",
+      "test"
+    ],
+    "started_at": "2026-09-11T06:15:41.571045+00:00",
+    "finished_at": "2026-09-11T06:15:49.532944+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/final-checks/02.txt",
+    "sha256": "e9c17fd02d485a8581fb6b625d68b4951d3d1f10ae5bb2ca9f52b5fe37479652"
+  },
+  {
+    "command": [
+      "npx",
+      "tsc",
+      "--noEmit",
+      "-p",
+      "."
+    ],
+    "started_at": "2026-09-11T06:15:49.533235+00:00",
+    "finished_at": "2026-09-11T06:16:04.408165+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/final-checks/03.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  {
+    "command": [
+      "npm",
+      "run",
+      "build"
+    ],
+    "started_at": "2026-09-11T06:16:04.408532+00:00",
+    "finished_at": "2026-09-11T06:16:47.725736+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/final-checks/04.txt.gz",
+    "sha256": "81e6542045f6ed529c8f64de4317b82a8ae523f58abd98d1b477383cb2245d3d",
+    "encoding": "gzip; SHA256 is of decompressed original command output"
+  },
+  {
+    "command": [
+      "node",
+      "--test",
+      "test/production/prerender.mjs"
+    ],
+    "started_at": "2026-09-11T06:16:47.733993+00:00",
+    "finished_at": "2026-09-11T06:16:47.864835+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/final-checks/05.txt",
+    "sha256": "8e53462c16c3c55f27cc02f938bdca60b031803186c947e5cfeb381711754a49"
+  },
+  {
+    "command": [
+      "git",
+      "diff",
+      "--check"
+    ],
+    "started_at": "2026-09-11T06:16:47.865205+00:00",
+    "finished_at": "2026-09-11T06:16:48.149297+00:00",
+    "exit_code": 0,
+    "output": "ops/rebuild-2026-09/evidence/phase-08/final-checks/06.txt",
+    "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  }
+]

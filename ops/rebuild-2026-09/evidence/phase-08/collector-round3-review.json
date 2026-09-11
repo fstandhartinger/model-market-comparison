@@ -1,0 +1,28 @@
+```json
+{
+  "artifact_id": "phase08-collector-safety",
+  "artifact_sha256": "bd93c1abd37a8428a5a1c8b4378d34e0339561dd98e55509b6a59d5ab8aa7a11",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "lib/live-source.mjs:captureLiveSource",
+    "lib/live-source.mjs:assertIdentityCoverage",
+    "lib/live-source.mjs:assertOpenRouterEndpointCoverage",
+    "lib/live-source.mjs:assertMeasuredFields",
+    "scripts/fetch-live.mjs:getJSON and getText error throwing on 401/403/429 and challenge detection",
+    "scripts/fetch-live.mjs:fetchArtificialAnalysis identity and measurement coverage checks",
+    "scripts/fetch-live.mjs:fetchDesignArena identity and rating assertions",
+    "scripts/fetch-live.mjs:fetchOpenRouter catalog and per-model endpoint coverage checks",
+    "scripts/fetch-aa-coding-agents.mjs:captureLiveSource integration and atomic write",
+    "scripts/fetch-aa-efficiency.mjs:polite probing, robots compliance, 403/429 bailouts, and live source evidence logging",
+    "scripts/fetch-openrouter-efficiency.mjs:usage degradation guard, cache coverage guard, and challenge detection",
+    "scripts/fetch-chutes-efficiency.mjs:captureLiveSource integration and atomic write",
+    "test/live-source.test.mjs:test suite coverage of coverage guards, evidence capture, and failure isolation"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

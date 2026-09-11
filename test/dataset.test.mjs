@@ -426,7 +426,16 @@ test("family-scoped Intelligence.ai evidence attaches once to deterministic Over
   }
 
   assert.equal(ds.models.some((model) => model.variant === "designarena"), false);
-  assert.equal(ds.models.find((model) => model.id === "claude-sonnet-5::max")?.designarena.frontend?.modelId, "claude-sonnet-5");
+  // AA can score a previously unmeasured preferred effort on a later refresh.
+  // On 2026-09-11 Sonnet 5 high gained an Intelligence Index; high then owns
+  // family evidence under the existing preference rule, rather than max.
+  const sonnetHighSource = aa.models.find((model) => model.slug === "claude-sonnet-5-high");
+  const sonnetHighMeasured = ["artificial_analysis_intelligence_index", "artificial_analysis_coding_index"]
+    .some((key) => Number.isFinite(sonnetHighSource?.evaluations?.[key]));
+  const sonnetOwner = `claude-sonnet-5::${sonnetHighMeasured ? "high" : "max"}`;
+  assert.deepEqual(ds.models.filter((model) => model.family_key === "claude-sonnet-5" && model.designarena.frontend)
+    .map((model) => model.id), [sonnetOwner]);
+  assert.equal(ds.models.find((model) => model.id === sonnetOwner)?.designarena.frontend?.modelId, "claude-sonnet-5");
   assert.equal(ds.models.find((model) => model.id === "gpt-5.5::high")?.designarena.frontend?.modelId, "gpt-5.5");
 });
 
