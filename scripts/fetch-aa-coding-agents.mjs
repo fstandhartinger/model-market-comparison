@@ -11,7 +11,7 @@ export async function refreshCodingAgents({ html, target, fetcher = fetch }) {
   catch (error) { if (error.code !== "ENOENT") throw error; }
   if (html === undefined) {
     const response = await fetcher(CODING_AGENT_URL, {
-      headers: { "User-Agent": "model-market-comparison/1.0 (+https://github.com/fstandhartinger/model-market-comparison)" },
+      headers: { "User-Agent": "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)" },
       signal: AbortSignal.timeout(60_000),
     });
     if (!response.ok) throw new Error(`AA Coding Agent HTTP ${response.status}`);

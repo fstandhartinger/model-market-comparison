@@ -26,7 +26,7 @@ Do this, checking in with me at each milestone:
 2. **Re-brand to msg's corporate identity.** Apply msg systems ag's official CI — do NOT
    guess colors; pull them from msg's brand portal / design system (ask me for the brand
    guide or a link if you don't have it). Concretely:
-   - Replace product name/title/metadata ("Model Market Comparison" → the msg product name
+   - Replace product name/title/metadata ("Benchmark Heaven" → the msg product name
      I give you) in `app/layout.tsx`, `components/Nav.tsx`, `app/icon.svg`, README.
      msg's brand color is its signature red — confirm the exact hex with me.
    - Update the theme tokens in `tailwind.config.ts` (`ink`, `panel`, `line`, `accent`,

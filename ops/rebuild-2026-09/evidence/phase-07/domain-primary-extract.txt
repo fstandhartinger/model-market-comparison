@@ -1,0 +1,10 @@
+Source: https://coolify.io/docs/core/networking/domains
+Retrieved through web browser tool 2026-09-11. Direct urllib fetch returned HTTP403; no bypass attempted.
+
+Exact source excerpt: “If DNS was changed recently, you may need to wait for the previous record’s TTL to expire.”
+
+Source table (column value): https://app.example.com,https://www.example.com
+
+Paraphrase: Configure DNS to reach the application server, configure complete HTTPS URLs in Coolify, save and redeploy, then verify DNS, the application and its certificate. HTTPS domains cause the integrated proxy to request and renew certificates. Multiple hostnames can serve the application concurrently.
+
+The user’s primary instruction specifies these exact records: benchmarkheaven.com and www -> 65.109.49.103; app ggbs6upie6tqsousmrkw0vja; keep model-market-comparison.app.mintapis.com working.

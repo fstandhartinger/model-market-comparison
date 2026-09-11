@@ -1,6 +1,7 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { BrandMark } from './BrandMark';
 import { ThemeToggle } from './ThemeToggle';
 
 const LINKS = [
@@ -22,7 +23,7 @@ export function Nav() {
   return (
     <header className="border-b border-line bg-panel">
       <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-        <Link href="/" className="flex min-h-11 items-center gap-2 text-sm font-semibold sm:text-base"><span className="text-accent" aria-hidden="true">◆</span> Model Market Comparison</Link>
+        <Link href="/" className="bh-brand-link flex min-h-11 items-center gap-2.5"><BrandMark className="h-9 w-9 shrink-0" /><span className="bh-wordmark">Benchmark Heaven</span></Link>
         <nav aria-label="Primary" className="relative order-3 flex w-full flex-wrap gap-1 text-sm lg:order-none lg:w-auto">
           {[LINKS[0], LINKS[2], LINKS[1], LINKS[3]].map(([href, label]) => {
             const active = href === "/" ? path === "/" : path.startsWith(href);

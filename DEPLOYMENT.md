@@ -49,7 +49,8 @@ Provider catalogs (AWS/Azure/Vertex/Nebius/Inceptron) remain curated — see [da
 ## Current deployment (Sandy / Coolify)
 
 Since 2026-08-26 the reference instance runs on Florian's private Sandy PaaS (Coolify on the Hetzner server) at
-`https://model-market-comparison.app.mintapis.com`, built from this repo's `Dockerfile` in snapshot mode (no `DATABASE_URL`).
+`https://benchmarkheaven.com` (since 2026-09-11; also `https://www.benchmarkheaven.com`).
+The compatibility URL `https://model-market-comparison.app.mintapis.com` remains valid. The app is built from this repo's `Dockerfile` in snapshot mode (no `DATABASE_URL`).
 The Coolify health check is disabled because `node:20-slim` ships neither `curl` nor `wget`. A GitHub webhook is now active (verified from Coolify deployment history on 2026-09-08):
 pushes to `main` auto-deploy. The daily refresh cron on the server (`/opt/mmc-daily/run.sh`,
 Codex CLI, 05:17 UTC) pulls, refreshes the data and pushes. Its explicit redeploy helper
@@ -91,3 +92,9 @@ The server prompt must include the production build because prerender tests insp
 `/opt/mmc-daily/last-summary.txt`. Neither a healthy cron daemon nor a fresh
 `generated_at` proves the update reached production: verify `/api/meta` source dates
 and compare `/api/dataset` with the committed snapshot after deployment.
+
+## Benchmark Heaven domain configuration (2026-09-11)
+
+Namecheap Advanced DNS has A records for `@` and `www`, both pointing to `65.109.49.103` (TTL 30 minutes). The former parking CNAME/URL redirect were replaced; mail records were preserved. Coolify application `ggbs6upie6tqsousmrkw0vja` keeps all three HTTPS domains, with the same container port 3000 and automatic certificates. No GitHub repository, route, data file, schema, ID, unit, Composite input or settings key moved.
+
+Verify each hostname with normal TLS validation and compare `/api/dataset` against the committed snapshot. Certificate and release receipts live in `ops/rebuild-2026-09/evidence/phase-07/`. A successful deployment alone is not a certificate check.

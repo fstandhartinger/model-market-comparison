@@ -1,4 +1,4 @@
-# PRD — Model Market Comparison
+# PRD — Benchmark Heaven
 
 ## 1. Problem & goal
 

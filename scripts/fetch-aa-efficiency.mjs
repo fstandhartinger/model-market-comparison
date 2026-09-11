@@ -10,7 +10,7 @@ import { fileURLToPath } from "node:url";
 import { AA_EFFICIENCY_MODEL_SLUGS, aaModelPageURL, parseAaEfficiency } from "../lib/aa-efficiency.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 
-const UA = "model-market-comparison/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
+const UA = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
 const POLITE_DELAY_MS = 2500;
 const HASH_TAG = /[/.:?=&]/g;
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));

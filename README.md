@@ -1,4 +1,13 @@
-# Model Market Comparison
+![Benchmark Heaven](public/brand/wordmark.svg)
+
+Benchmarks in perspective. Costs in context.
+
+> Benchmark Heaven (formerly Model Market Comparison) has its primary base URL at
+> **[benchmarkheaven.com](https://benchmarkheaven.com)** (2026-09-11). The previous host
+> **[model-market-comparison.app.mintapis.com](https://model-market-comparison.app.mintapis.com)
+> remains valid** and serves the same app and API endpoints. The GitHub repo, file paths,
+> data schema, IDs, units, Composite and settings keys did not move. Browser preferences are stored per hostname
+> and are not automatically transferred to the new domain.
 
 Compare **open-source and frontier LLMs** by capability and price in one place.
 Capability comes from [ArtificialAnalysis](https://artificialanalysis.ai) (Coding,
@@ -17,7 +26,7 @@ USD per 1M tokens.
 
 ## Benchmark exploration
 
-Explore [benchmark rankings](https://model-market-comparison.app.mintapis.com/benchmarks), compare up to four exact model configurations on [Compare](https://model-market-comparison.app.mintapis.com/compare), or use the standalone [Radar](https://model-market-comparison.app.mintapis.com/radar). Model pages include complete benchmark sheets, source links and dates, missing coverage, and explainable profile signals. Every comparison keeps benchmark versions separate. [Methodology and limitations](docs/benchmark-explorer.md).
+Explore [benchmark rankings](https://benchmarkheaven.com/benchmarks), compare up to four exact model configurations on [Compare](https://benchmarkheaven.com/compare), or use the standalone [Radar](https://benchmarkheaven.com/radar). Model pages include complete benchmark sheets, source links and dates, missing coverage, and explainable profile signals. Every comparison keeps benchmark versions separate. [Methodology and limitations](docs/benchmark-explorer.md).
 
 
 ## Features
@@ -64,7 +73,7 @@ DeepSeek V4 Pro.
 
 ## Stack
 
-Next.js (App Router, TypeScript) · Recharts · PostgreSQL · live at [model-market-comparison.app.mintapis.com](https://model-market-comparison.app.mintapis.com) (Sandy/Coolify, snapshot mode).
+Next.js (App Router, TypeScript) · Recharts · PostgreSQL · live at [benchmarkheaven.com](https://benchmarkheaven.com) (Sandy/Coolify, snapshot mode); the former host [model-market-comparison.app.mintapis.com](https://model-market-comparison.app.mintapis.com) remains valid and serves the same app.
 
 The app reads from Postgres when `DATABASE_URL` is set (seeded from
 `data/dataset.json`) and otherwise serves the committed snapshot, so it always
@@ -131,3 +140,5 @@ attached exactly once to the deterministic active representative used by collaps
 with an explicit provenance note that it does not identify the tested effort setting.
 Figures may still change upstream —
 **verify before relying on them**. Not affiliated with any provider.
+
+Brand: [direction, usage and assets](docs/brand.md) · [three visual concepts](public/brand/variants.svg).

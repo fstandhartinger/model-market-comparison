@@ -1,0 +1,22 @@
+{
+  "at": "2026-09-11T02:09:42.369787+00:00",
+  "files": [
+    {
+      "source": "ops/rebuild-2026-09/daily-refresh-prompt.md",
+      "installed": "/opt/mmc-daily/prompt.md",
+      "sha256": "943ac99621b0c69ba3a6df8bf7217c7554a50e3760db0198f0ac4f6c7deabe3a",
+      "equal": true
+    },
+    {
+      "source": "ops/daily/run.sh",
+      "installed": "/opt/mmc-daily/run.sh",
+      "sha256": "39a9ee2c0c62880eedd29bed24aaa2ef4a77ff63fa2cc41470532d5761dcb34f",
+      "equal": true
+    }
+  ],
+  "schedule": [
+    "17 5 * * * /opt/mmc-daily/run.sh"
+  ],
+  "scope": "Message branding, public URL and current existing prompt mirrored. No cadence, state, callback paths or quiet-policy change. No daily refresh or Telegram send executed.",
+  "schedule_owner": "flori"
+}

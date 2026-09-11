@@ -1,5 +1,5 @@
 #!/bin/bash
-# Daily model-market-comparison refresh driven by Codex CLI (headless). Cron-safe:
+# Daily Benchmark Heaven refresh driven by Codex CLI (headless). Cron-safe:
 # loads secrets itself, runs fully non-interactive, no windows, logs to cron.log.
 set -u
 # The root cron delegates to the subscription-authenticated account before loading secrets.
@@ -51,9 +51,9 @@ try:
         old = {r['family_key'] for r in prev}
         new = [r for r in top if r['family_key'] not in old]
         if new:
-            lines = [f"🏆 MMC: Neu in den Top 5 (Composite): " + ", ".join(f"{r['name']} ({r['composite']})" for r in new), ""]
+            lines = [f"🏆 Benchmark Heaven: Neu in den Top 5 (Composite): " + ", ".join(f"{r['name']} ({r['composite']})" for r in new), ""]
             lines += [f"{i+1}. {r['name']} — {r['composite']}" for i, r in enumerate(top)]
-            lines.append("https://model-market-comparison.app.mintapis.com")
+            lines.append("https://benchmarkheaven.com")
             tg("\n".join(lines)); print('telegram: top5 entrant sent')
         else: print('top5 unchanged: ' + ', '.join(r['family_key'] for r in top))
     else: print('top5 state initialised')
@@ -65,7 +65,7 @@ if problem:
     st = f'{D}/failure-alert.stamp'
     last = os.path.getmtime(st) if os.path.exists(st) else 0
     if time.time() - last > 7 * 86400:
-        tg(f"⚠️ MMC Daily-Refresh (Sandy) hat Probleme (rc={rc}). Nächste Warnung frühestens in 7 Tagen. Log: /opt/mmc-daily/cron.log\n\n{summary[:1500]}")
+        tg(f"⚠️ Benchmark Heaven Daily-Refresh (Sandy) hat Probleme (rc={rc}). Nächste Warnung frühestens in 7 Tagen. Log: /opt/mmc-daily/cron.log\n\n{summary[:1500]}")
         open(st, 'w').close(); print('telegram: failure alert sent')
     else: print('failure alert suppressed (rate limit)')
 PY

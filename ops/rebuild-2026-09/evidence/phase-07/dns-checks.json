@@ -1,0 +1,165 @@
+{
+  "at": "2026-09-11T02:09:02.564231+00:00",
+  "queries": [
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 22611\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com AAAA @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26055\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com CAA @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16582\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 52208\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com AAAA @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 32007\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com CAA @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 17126\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @1.1.1.1",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 50625\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com AAAA @1.1.1.1",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 28685\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com CAA @1.1.1.1",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 64358\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @8.8.8.8",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 16657\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com AAAA @8.8.8.8",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 61438\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com CAA @8.8.8.8",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 49066\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @9.9.9.9",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 56562\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com AAAA @9.9.9.9",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 404\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com CAA @9.9.9.9",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1384\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com A @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 29857\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n;; ANSWER SECTION:\nwww.benchmarkheaven.com. 1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com AAAA @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 11442\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com CAA @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 38762\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com A @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 20128\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n;; ANSWER SECTION:\nwww.benchmarkheaven.com. 1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com AAAA @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 24453\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com CAA @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 24080\n;; flags: qr aa rd; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com A @1.1.1.1",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 54790\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.benchmarkheaven.com. 1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com AAAA @1.1.1.1",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 49000\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com CAA @1.1.1.1",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 20264\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com A @8.8.8.8",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 9783\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n;; ANSWER SECTION:\nwww.benchmarkheaven.com. 1521\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com AAAA @8.8.8.8",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 26367\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com CAA @8.8.8.8",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1042\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 512\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com A @9.9.9.9",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14211\n;; flags: qr rd ra; QUERY: 1, ANSWER: 1, AUTHORITY: 0, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n;; ANSWER SECTION:\nwww.benchmarkheaven.com. 1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com AAAA @9.9.9.9",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 1571\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +time=3 +tries=1 +noall +answer +comments www.benchmarkheaven.com CAA @9.9.9.9",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 14726\n;; flags: qr rd ra; QUERY: 1, ANSWER: 0, AUTHORITY: 1, ADDITIONAL: 1\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 1232\n"
+    },
+    {
+      "command": "dig +tcp +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @dns1.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 33510\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    },
+    {
+      "command": "dig +tcp +time=3 +tries=1 +noall +answer +comments benchmarkheaven.com A @dns2.registrar-servers.com",
+      "exit": 0,
+      "output": ";; Got answer:\n;; ->>HEADER<<- opcode: QUERY, status: NOERROR, id: 51318\n;; flags: qr aa rd; QUERY: 1, ANSWER: 1, AUTHORITY: 2, ADDITIONAL: 1\n;; WARNING: recursion requested but not available\n\n;; OPT PSEUDOSECTION:\n; EDNS: version: 0, flags:; udp: 4096\n;; ANSWER SECTION:\nbenchmarkheaven.com.\t1800\tIN\tA\t65.109.49.103\n\n"
+    }
+  ]
+}

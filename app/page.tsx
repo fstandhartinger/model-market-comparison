@@ -10,13 +10,13 @@ export default async function Home() {
 
   return (
     <div>
-      <section className="mb-6">
-        <h1 className="text-2xl font-bold">LLM Price &amp; Capability Comparison</h1>
+      <section className="bh-hero mb-6">
+        <p className="bh-eyebrow">Benchmark Heaven / Model intelligence</p>
+        <h1 className="bh-display mt-3">Benchmarks in perspective.<br /><span>Costs in context.</span></h1>
         <p className="mt-1 max-w-3xl text-sm text-gray-400">
-          Open-source and frontier LLMs ranked by capability and priced across providers —
-          OpenRouter inference providers, hyperscalers, EU-native APIs, Chutes, GitHub Copilot and
-          the Anthropic / Claude Code list price. Capability is measured with ArtificialAnalysis indices
-          and Intelligence.ai / DesignArena Elo. Pick a benchmark and minimum score to find the cheapest modeled task cost. Adjusted prices are on by default; raw list prices and fixed input/output blends remain selectable.
+          Find the model that meets your benchmark threshold, then compare estimated task costs across providers.
+          Adjusted prices are on by default. Explore versioned results, check their sources, and see where evidence is missing.
+          Raw list prices and fixed input/output blends remain selectable.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Stat label="Models" value={ds.counts.models} />

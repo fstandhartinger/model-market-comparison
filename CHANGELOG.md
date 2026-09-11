@@ -4,6 +4,22 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-11 — New domain: Benchmark Heaven at benchmarkheaven.com
+
+- **The product is renamed Benchmark Heaven** (formerly Model Market Comparison).
+- **New primary base URL: `https://benchmarkheaven.com`.**
+- **The previous base URL `https://model-market-comparison.app.mintapis.com` remains
+  valid as a compatibility URL and serves the same endpoints and dataset.** No consumer
+  migration is required; both hosts stay attached.
+- **Nothing else moved:** the GitHub repo, repo file paths, JSON schema, model/offer/
+  benchmark IDs, units, the Composite definition and settings storage keys are unchanged. Browser preferences are per origin, so
+  saved filters/theme on the old hostname are not transferred to the new hostname.
+- The fetch scripts' HTTP User-Agent now identifies the collector as Benchmark Heaven;
+  the contacted GitHub project URL inside it is unchanged.
+- New Observatory mark, favicon, touch icon, light/dark identity, serif display typography,
+  social card, metadata, README header, and branded fork-sync/Telegram templates.
+- Older entries below keep the previously correct hostnames as their historical record.
+
 ## 2026-09-10 — Phase 04: benchmark discovery
 
 - Added a versioned benchmark registry with verified publication routes, scoring semantics,

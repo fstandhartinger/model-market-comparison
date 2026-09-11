@@ -79,3 +79,19 @@ details[open] > summary { margin-bottom: 8px; }
 [data-theme="light"] .recharts-cartesian-grid line { stroke: rgb(var(--line)); }
 @media (max-width: 639px) { .bh-page-head h1 { font-size: 28px; } .bh-panel { border-radius: 10px; } .bh-table th, .bh-table td { padding: 12px; } }
 @media (prefers-reduced-motion: reduce) { *, ::before, ::after { animation-duration: .01ms !important; animation-iteration-count: 1 !important; transition-duration: .01ms !important; scroll-behavior: auto !important; } }
+
+/* Benchmark Heaven — Observatory identity. UI/data keep the system sans. */
+:root { --brand-serif: Georgia, "Times New Roman", serif; }
+.bh-wordmark { font-family: var(--brand-serif); font-size: 21px; font-weight: 700; letter-spacing: -.045em; color: var(--text); white-space: nowrap; }
+.bh-brand-link { border-radius: 8px; }
+.bh-brand-link:hover .bh-wordmark { color: rgb(var(--accent)); }
+.bh-hero { position: relative; border-bottom: 1px solid rgb(var(--line)); padding: 12px 0 28px; }
+.bh-hero::before { content: ""; position: absolute; inset: -24px -16px 0; background: radial-gradient(ellipse at 90% 0, rgb(var(--accent) / .08), transparent 60%); pointer-events: none; }
+.bh-hero > * { position: relative; }
+.bh-display { font-family: var(--brand-serif); font-size: clamp(32px, 4vw, 52px); font-weight: 400; line-height: 1.06; letter-spacing: -.045em; }
+.bh-display span { color: rgb(var(--accent2)); }
+.bh-hero > p:not(.bh-eyebrow) { margin-top: 18px; max-width: 760px; line-height: 1.7; }
+.bh-page-head > h1, main > div > h1 { font-family: var(--brand-serif); font-weight: 400; letter-spacing: -.035em; }
+.bh-footer { border-top: 1px solid rgb(var(--line)); }
+.bh-footer a { text-decoration: underline; }
+@media (max-width: 639px) { .bh-wordmark { font-size: 20px; } .bh-hero { padding-top: 4px; } }

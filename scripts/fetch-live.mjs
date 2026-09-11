@@ -16,7 +16,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
 
 const AA_KEY = process.env.ARTIFICIAL_ANALYSIS_API_KEY || process.env.ARTIF_ANALYSIS_API_KEY || "";
-const UA = "model-market-comparison/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
+const UA = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
 
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
 

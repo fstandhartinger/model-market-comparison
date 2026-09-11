@@ -7,13 +7,24 @@ refreshes). The upstream repo is public.
 
 ---
 
-You maintain an **msg-branded fork** of the open-source "Model Market Comparison" app. The
+You maintain an **msg-branded fork** of the open-source "Benchmark Heaven" app (formerly "Model Market Comparison"). The
 original ("upstream") lives at **https://github.com/fstandhartinger/model-market-comparison**
 (public). I want you to pull upstream's latest **data and feature developments** into our
 fork **without losing our msg branding** (colours, logo, product name, fonts, footer, repo,
 Azure hosting).
 
-Recent upstream changes to bring in include (2026-09-08): a **CHANGELOG.md** now exists
+Brand change to know about (2026-09-11): upstream is now the **Benchmark Heaven**
+product with primary base URL **https://benchmarkheaven.com**; the previous base URL
+https://model-market-comparison.app.mintapis.com **remains valid** with identical
+endpoints. Upstream gained brand assets and metadata for the new name/wordmark (e.g.
+files under `public/brand/` such as `wordmark.svg`, updated `app/layout.tsx` metadata,
+README header/branding). These are **branding, not data or logic**: keep OURS (msg
+branding) for all of them. Preserve the new upstream brand assets/metadata **only as
+needed** to understand their structure or resolve conflicts; never let them overwrite
+our product name, colours, logo, fonts, footer or metadata, and never let branding
+resolution overwrite functional logic.
+
+Earlier upstream changes (2026-09-08): a **CHANGELOG.md** now exists
 at the repo root summarising exactly this kind of change — read it first on every sync.
 Highlights since your last sync: the reference deployment moved from Render to
 **https://model-market-comparison.app.mintapis.com** (all `/api/*` routes and JSON shapes
@@ -39,7 +50,9 @@ Do this:
    `git merge upstream/main`. Resolve conflicts on this rule:
    - **Keep OURS (msg branding)** for: `app/layout.tsx` (title/metadata), `components/Nav.tsx`
      (product name/labels), `app/icon.svg`, `tailwind.config.ts` + `app/globals.css` (theme
-     tokens/palette/fonts), any msg footer/disclaimer, `README.md` header, and CI/Azure config.
+     tokens/palette/fonts), any msg footer/disclaimer, `README.md` header, any new upstream
+     brand assets/metadata introduced by the Benchmark Heaven rename (e.g. `public/brand/`,
+     wordmark/og assets, `components/BrandMark.tsx`, `app/apple-icon.png`, `app/manifest.ts`), and CI/Azure config.
    - **Take THEIRS (upstream)** for everything else — especially **all of `data/`**
      (`data/raw/*.json`, `data/dataset.json`, `data/gateways.json`), `scripts/build-dataset.mjs`,
      `lib/`, and any new/changed files under `app/` and `components/` that are functional

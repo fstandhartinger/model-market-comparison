@@ -1,8 +1,22 @@
-# Public API
+# Benchmark Heaven public API
+
+> **2026-09-11 — New domain:** Benchmark Heaven at benchmarkheaven.com
+>
+> The product is now **Benchmark Heaven** (formerly Model Market Comparison). Its
+> **new primary base URL is `https://benchmarkheaven.com`**.
+> The previous base URL **`https://model-market-comparison.app.mintapis.com` remains
+> valid as a compatibility URL and serves the same endpoints and dataset** — existing
+> consumers do NOT have to migrate.
+> **Nothing else moved**: API routes, JSON shapes, schema, model/offer/benchmark IDs,
+> units, the Composite definition, settings keys, the GitHub repo and file paths
+> are all unchanged.
+> Browser preferences are stored per origin; the old hostname’s saved filters/theme
+> do not automatically transfer to the new hostname.
 
 All endpoints are **read-only**, return JSON, and are **CORS-enabled** (`Access-Control-Allow-Origin: *`), so they can be called from any site or tool — including directly from a browser.
 
-Base URL (reference deployment): `https://model-market-comparison.app.mintapis.com`
+Base URL (primary): `https://benchmarkheaven.com`
+Base URL (compatibility, unchanged, same endpoints): `https://model-market-comparison.app.mintapis.com`
 
 The data is served from Postgres when `DATABASE_URL` is configured, otherwise from the committed `data/dataset.json` snapshot — the API shape is identical either way.
 
@@ -85,7 +99,8 @@ Dataset `generated_at`, `counts`, per-source collection dates, and whether the d
 
 ## Consumer update — 2026-09-08
 
-The canonical host is `https://model-market-comparison.app.mintapis.com`;
+At this September 8 release, the reference host became `https://model-market-comparison.app.mintapis.com`;
+it remains valid alongside the new primary host announced above.
 the former Render host is suspended. All route paths remain unchanged.
 The reference deployment serves **bundled JSON**, with no runtime database.
 No database migration or credentials are needed to consume the public feed.

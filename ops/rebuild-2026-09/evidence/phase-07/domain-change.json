@@ -1,0 +1,23 @@
+{
+  "at": "2026-09-11T01:56:38.243580+00:00",
+  "domain": "benchmarkheaven.com",
+  "ui": "https://ap.www.namecheap.com/domains/domaincontrolpanel/benchmarkheaven.com/advancedns",
+  "method": "Existing Sandy Chrome saved login, then Advanced DNS; no challenge or mail confirmation required. Replaced parking CNAME www and URL redirect @ with two A records. Save all changes succeeded in UI.",
+  "records": [
+    {
+      "type": "A",
+      "host": "@",
+      "value": "65.109.49.103",
+      "ttl": 1800
+    },
+    {
+      "type": "A",
+      "host": "www",
+      "value": "65.109.49.103",
+      "ttl": 1800
+    }
+  ],
+  "mail_records": "Unmodified.",
+  "propagation": "Verified in dns-checks.json on both authoritative nameservers and three public resolvers; the local resolver also returned 65.109.49.103 at 02:24 UTC.",
+  "browser_screenshots": "Private outside repository; public DNS execution evidence follows."
+}

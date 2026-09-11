@@ -1,0 +1,29 @@
+{
+  "attempts": [
+    {
+      "requested_model": "deepseek/deepseek-v4-flash-0731",
+      "task": "multi-file brand draft",
+      "result": "incomplete completion (length); no usable artifact",
+      "max_tokens": 10000
+    },
+    {
+      "requested_model": "z-ai/glm-5.3-flash",
+      "task": "variants board",
+      "result": "incomplete completion (length); no usable artifact",
+      "max_tokens": 6000
+    },
+    {
+      "requested_model": "z-ai/glm-5.3-flash",
+      "task": "variants board with larger reasoning allowance",
+      "result": "completed; actual model and usage in variants-draft.svg.meta.json",
+      "max_tokens": 16000
+    },
+    {
+      "requested_model": "chutes/moonshotai/Kimi-K3-TEE",
+      "task": "mechanical docs/UA/template rebrand",
+      "result": "600 second agent timeout; partial README.md, API.md, CHANGELOG.md, MSG-UPSTREAM-SYNC-PROMPT.md edits independently inspected and completed by owner. No successful final/export receipt; producer family conservatively excluded from all critics."
+    }
+  ],
+  "owner": "gpt-6-astra",
+  "failed_call_costs": "not returned; not included in successful-call charge totals"
+}

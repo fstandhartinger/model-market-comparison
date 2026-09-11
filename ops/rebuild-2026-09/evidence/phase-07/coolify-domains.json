@@ -1,0 +1,25 @@
+{
+  "ok": true,
+  "data": {
+    "uuid": "ggbs6upie6tqsousmrkw0vja",
+    "name": "Benchmark Heaven",
+    "fqdn": "https://benchmarkheaven.com,https://www.benchmarkheaven.com,https://model-market-comparison.app.mintapis.com",
+    "status": "running:unknown",
+    "git_repository": "fstandhartinger/model-market-comparison",
+    "git_branch": "main",
+    "git_commit_sha": "HEAD",
+    "build_pack": "dockerfile",
+    "base_directory": "/",
+    "ports_exposes": "3000",
+    "health_check_enabled": false,
+    "health_check_path": "/api/health",
+    "health_check_method": "GET",
+    "limits_memory": "768M",
+    "limits_cpus": "1",
+    "created_at": "2026-08-26T15:13:34.000000Z",
+    "updated_at": "2026-09-11T01:56:02.000000Z"
+  },
+  "meta": {
+    "idempotency_replay": false
+  }
+}

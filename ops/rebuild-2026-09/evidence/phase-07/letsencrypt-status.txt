@@ -1,0 +1,6 @@
+Source: https://letsencrypt.status.io/
+Captured 2026-09-11 02:12 UTC. Primary status-page text fetched by curl; the earlier web-tool snapshot still showed the initial investigating update.
+
+Exact incident excerpt: "We have identified an issue with our DNS resolver in our secondary validation."
+
+Status-page facts, paraphrased: Domain Control Validation was partly disrupted on production and staging. The incident began at 01:40 UTC. An update at 02:11 UTC marked the issue identified, said the change was being reverted, and estimated recovery within 15 minutes. This matches our secondary DNS validation error, but is not proof of recovery for our certificate. The final SSL check is still required.

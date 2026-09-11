@@ -1,0 +1,59 @@
+{
+  "at": "2026-09-11T02:16:02.996394+00:00",
+  "checks": [
+    {
+      "command": [
+        "node",
+        "scripts/build-dataset.mjs"
+      ],
+      "exit": 0,
+      "log": "ops/rebuild-2026-09/evidence/phase-07/dataset-final.log"
+    },
+    {
+      "command": [
+        "npm",
+        "test"
+      ],
+      "exit": 0,
+      "log": "ops/rebuild-2026-09/evidence/phase-07/tests-final.log"
+    },
+    {
+      "command": [
+        "npx",
+        "tsc",
+        "--noEmit",
+        "-p",
+        "."
+      ],
+      "exit": 0,
+      "log": "ops/rebuild-2026-09/evidence/phase-07/typecheck-final.log"
+    },
+    {
+      "command": [
+        "npm",
+        "run",
+        "build"
+      ],
+      "exit": 0,
+      "log": "ops/rebuild-2026-09/evidence/phase-07/build-final.log.gz"
+    },
+    {
+      "command": [
+        "node",
+        "--test",
+        "test/production/prerender.mjs"
+      ],
+      "exit": 0,
+      "log": "ops/rebuild-2026-09/evidence/phase-07/prerender-final.log"
+    },
+    {
+      "command": [
+        "git",
+        "diff",
+        "--check"
+      ],
+      "exit": 0,
+      "log": "ops/rebuild-2026-09/evidence/phase-07/whitespace-final.log"
+    }
+  ]
+}

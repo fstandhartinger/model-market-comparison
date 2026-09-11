@@ -2,7 +2,7 @@ import { getDataset } from "../../lib/data";
 import { clientData } from "../../lib/client-model";
 import { ProviderExplorer } from "../../components/ProviderExplorer";
 
-export const metadata = { title: "Provider explorer — Model Market Comparison" };
+export const metadata = { title: "Provider explorer" };
 
 export default async function ProviderExplorerPage() {
   const ds = await getDataset();

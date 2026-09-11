@@ -7,7 +7,7 @@ export default async function AboutPage() {
     <div className="max-w-3xl">
       <h1 className="text-2xl font-bold">About &amp; data sources</h1>
       <p className="mt-2 text-sm text-gray-400">
-        This tool merges pricing and benchmark data for open-source and frontier LLMs into one
+        Benchmark Heaven brings together pricing and benchmark data for open-source and frontier LLMs into one
         comparable view. Prices are normalized to USD per 1M tokens (input and output) unless a
         platform prices differently (GitHub Copilot&apos;s current token/AI-Credit rates and legacy request billing are shown on a separate product axis).
       </p>

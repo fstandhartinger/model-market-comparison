@@ -1,0 +1,11 @@
+import {createRequire} from 'node:module';
+import fs from 'node:fs';
+const require=createRequire(import.meta.url);
+const {chromium}=require('/opt/tao-head-family-video-render-v1/node_modules/playwright');
+const root='/opt/model-market-comparison';const out=root+'/ops/rebuild-2026-09/evidence/phase-07/rendered';fs.mkdirSync(out,{recursive:true});
+const browser=await chromium.launch({executablePath:'/usr/bin/google-chrome',args:['--no-sandbox']});
+const page=await browser.newPage({viewport:{width:1200,height:630},deviceScaleFactor:1});
+await page.goto('file://'+root+'/public/brand/og-image.svg');await page.screenshot({path:root+'/public/brand/og-image.png'});
+await page.setViewportSize({width:180,height:180});await page.goto('file://'+root+'/public/brand/mark.svg');await page.locator('svg').evaluate(el=>{el.style.width='180px';el.style.height='180px'});await page.screenshot({path:root+'/app/apple-icon.png'});
+await page.setViewportSize({width:1440,height:1000});await page.goto('http://127.0.0.1:3317');await page.waitForLoadState('networkidle');await page.screenshot({path:out+'/overview-initial.png'});
+await browser.close();

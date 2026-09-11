@@ -1,0 +1,319 @@
+{
+  "at": "2026-09-11T02:28:27.292086+00:00",
+  "stage": "pre-release",
+  "hosts": [
+    {
+      "host": "benchmarkheaven.com",
+      "public_dns": {
+        "1.1.1.1": "65.109.49.103",
+        "8.8.8.8": "65.109.49.103"
+      },
+      "tls": {
+        "subject": [
+          [
+            [
+              "commonName",
+              "benchmarkheaven.com"
+            ]
+          ]
+        ],
+        "subjectAltName": [
+          [
+            "DNS",
+            "benchmarkheaven.com"
+          ]
+        ],
+        "issuer": [
+          [
+            [
+              "countryName",
+              "US"
+            ]
+          ],
+          [
+            [
+              "organizationName",
+              "Let's Encrypt"
+            ]
+          ],
+          [
+            [
+              "commonName",
+              "YR1"
+            ]
+          ]
+        ],
+        "notBefore": "Sep 11 01:28:47 2026 GMT",
+        "notAfter": "Dec 10 01:28:46 2026 GMT",
+        "sha256": "295b2073223bad63ea8280db4c401ccc334bde147176b769913e52a4837de2d6",
+        "version": "TLSv1.3",
+        "chain_and_hostname_verified": true,
+        "connection_ip": "65.109.49.103"
+      },
+      "requests": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "final_url": "https://benchmarkheaven.com/api/health",
+          "cors": "*",
+          "json": {
+            "ok": true,
+            "db": false
+          }
+        },
+        {
+          "path": "/api/meta",
+          "status": 200,
+          "final_url": "https://benchmarkheaven.com/api/meta",
+          "cors": "*",
+          "json": {
+            "generated_at": "2026-09-11T01:28:15.062Z",
+            "counts": {
+              "models": 835,
+              "families": 650,
+              "providers": 89,
+              "offers": 2786
+            },
+            "sources": {
+              "openrouter": "2026-09-10",
+              "artificialanalysis": "2026-09-10",
+              "designarena": "2026-09-10",
+              "aws_bedrock": "2026-09-08",
+              "azure_foundry": "2026-09-08",
+              "google_vertex": "2026-09-08",
+              "nebius": "2026-09-08",
+              "inceptron": "2026-09-08",
+              "scaleway": "2026-09-08",
+              "ionos": "2026-09-08",
+              "mistral": "2026-09-08",
+              "tensorx": "2026-09-08",
+              "chutes": "2026-09-08",
+              "ovhcloud": "2026-09-08",
+              "stackit": "2026-09-08",
+              "t_systems_llm_hub": "2026-09-08",
+              "aa_coding_agents": "2026-09-09",
+              "github_copilot": "2026-09-08",
+              "claude_code": "2026-09-08",
+              "aa_coding_agents_v1_5": "2026-09-10",
+              "provider_meta": "2026-07-12",
+              "aa_efficiency": "2026-09-10T20:13:54.198Z",
+              "openrouter_efficiency": "2026-09-10T20:13:54.306Z",
+              "chutes_efficiency": "2026-09-10T19:44:35.632Z"
+            },
+            "source": "bundled"
+          }
+        }
+      ],
+      "http_redirect_preserves_path_query": true
+    },
+    {
+      "host": "www.benchmarkheaven.com",
+      "public_dns": {
+        "1.1.1.1": "65.109.49.103",
+        "8.8.8.8": "65.109.49.103"
+      },
+      "tls": {
+        "subject": [
+          [
+            [
+              "commonName",
+              "www.benchmarkheaven.com"
+            ]
+          ]
+        ],
+        "subjectAltName": [
+          [
+            "DNS",
+            "www.benchmarkheaven.com"
+          ]
+        ],
+        "issuer": [
+          [
+            [
+              "countryName",
+              "US"
+            ]
+          ],
+          [
+            [
+              "organizationName",
+              "Let's Encrypt"
+            ]
+          ],
+          [
+            [
+              "commonName",
+              "YR2"
+            ]
+          ]
+        ],
+        "notBefore": "Sep 11 01:28:47 2026 GMT",
+        "notAfter": "Dec 10 01:28:46 2026 GMT",
+        "sha256": "2ea141a5a78ae9fcb33ef75a257d37314506f1a95cc01c94362c9db75a84775e",
+        "version": "TLSv1.3",
+        "chain_and_hostname_verified": true,
+        "connection_ip": "65.109.49.103"
+      },
+      "requests": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "final_url": "https://www.benchmarkheaven.com/api/health",
+          "cors": "*",
+          "json": {
+            "ok": true,
+            "db": false
+          }
+        },
+        {
+          "path": "/api/meta",
+          "status": 200,
+          "final_url": "https://www.benchmarkheaven.com/api/meta",
+          "cors": "*",
+          "json": {
+            "generated_at": "2026-09-11T01:28:15.062Z",
+            "counts": {
+              "models": 835,
+              "families": 650,
+              "providers": 89,
+              "offers": 2786
+            },
+            "sources": {
+              "openrouter": "2026-09-10",
+              "artificialanalysis": "2026-09-10",
+              "designarena": "2026-09-10",
+              "aws_bedrock": "2026-09-08",
+              "azure_foundry": "2026-09-08",
+              "google_vertex": "2026-09-08",
+              "nebius": "2026-09-08",
+              "inceptron": "2026-09-08",
+              "scaleway": "2026-09-08",
+              "ionos": "2026-09-08",
+              "mistral": "2026-09-08",
+              "tensorx": "2026-09-08",
+              "chutes": "2026-09-08",
+              "ovhcloud": "2026-09-08",
+              "stackit": "2026-09-08",
+              "t_systems_llm_hub": "2026-09-08",
+              "aa_coding_agents": "2026-09-09",
+              "github_copilot": "2026-09-08",
+              "claude_code": "2026-09-08",
+              "aa_coding_agents_v1_5": "2026-09-10",
+              "provider_meta": "2026-07-12",
+              "aa_efficiency": "2026-09-10T20:13:54.198Z",
+              "openrouter_efficiency": "2026-09-10T20:13:54.306Z",
+              "chutes_efficiency": "2026-09-10T19:44:35.632Z"
+            },
+            "source": "bundled"
+          }
+        }
+      ],
+      "http_redirect_preserves_path_query": true
+    },
+    {
+      "host": "model-market-comparison.app.mintapis.com",
+      "public_dns": {
+        "1.1.1.1": "65.109.49.103",
+        "8.8.8.8": "65.109.49.103"
+      },
+      "tls": {
+        "subject": [
+          [
+            [
+              "commonName",
+              "model-market-comparison.app.mintapis.com"
+            ]
+          ]
+        ],
+        "subjectAltName": [
+          [
+            "DNS",
+            "model-market-comparison.app.mintapis.com"
+          ]
+        ],
+        "issuer": [
+          [
+            [
+              "countryName",
+              "US"
+            ]
+          ],
+          [
+            [
+              "organizationName",
+              "Let's Encrypt"
+            ]
+          ],
+          [
+            [
+              "commonName",
+              "YR1"
+            ]
+          ]
+        ],
+        "notBefore": "Aug 26 16:12:47 2026 GMT",
+        "notAfter": "Nov 24 16:12:46 2026 GMT",
+        "sha256": "2c0c7d1efa55b81bff29bf92b4ce9f39e7a53423dc31ccc48f9048153e9c4840",
+        "version": "TLSv1.3",
+        "chain_and_hostname_verified": true,
+        "connection_ip": "65.109.49.103"
+      },
+      "requests": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "final_url": "https://model-market-comparison.app.mintapis.com/api/health",
+          "cors": "*",
+          "json": {
+            "ok": true,
+            "db": false
+          }
+        },
+        {
+          "path": "/api/meta",
+          "status": 200,
+          "final_url": "https://model-market-comparison.app.mintapis.com/api/meta",
+          "cors": "*",
+          "json": {
+            "generated_at": "2026-09-11T01:28:15.062Z",
+            "counts": {
+              "models": 835,
+              "families": 650,
+              "providers": 89,
+              "offers": 2786
+            },
+            "sources": {
+              "openrouter": "2026-09-10",
+              "artificialanalysis": "2026-09-10",
+              "designarena": "2026-09-10",
+              "aws_bedrock": "2026-09-08",
+              "azure_foundry": "2026-09-08",
+              "google_vertex": "2026-09-08",
+              "nebius": "2026-09-08",
+              "inceptron": "2026-09-08",
+              "scaleway": "2026-09-08",
+              "ionos": "2026-09-08",
+              "mistral": "2026-09-08",
+              "tensorx": "2026-09-08",
+              "chutes": "2026-09-08",
+              "ovhcloud": "2026-09-08",
+              "stackit": "2026-09-08",
+              "t_systems_llm_hub": "2026-09-08",
+              "aa_coding_agents": "2026-09-09",
+              "github_copilot": "2026-09-08",
+              "claude_code": "2026-09-08",
+              "aa_coding_agents_v1_5": "2026-09-10",
+              "provider_meta": "2026-07-12",
+              "aa_efficiency": "2026-09-10T20:13:54.198Z",
+              "openrouter_efficiency": "2026-09-10T20:13:54.306Z",
+              "chutes_efficiency": "2026-09-10T19:44:35.632Z"
+            },
+            "source": "bundled"
+          }
+        }
+      ],
+      "http_redirect_preserves_path_query": true
+    }
+  ],
+  "same_api_metadata_all_hosts": true
+}

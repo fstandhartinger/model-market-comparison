@@ -1,7 +1,7 @@
 import { GatewaysView } from "../../components/GatewaysView";
 import gw from "../../data/gateways.json";
 
-export const metadata = { title: "LLM Gateways — Model Market Comparison" };
+export const metadata = { title: "LLM Gateways" };
 
 export default function GatewaysPage() {
   return (

@@ -1,0 +1,520 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Benchmark Heaven":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Light
+- group: Price & provider filters · adjusted costs
+- main:
+  - paragraph: Benchmark Heaven / Model intelligence
+  - heading "Benchmarks in perspective. Costs in context." [level=1]
+  - paragraph: Find the model that meets your benchmark threshold, then compare estimated task costs across providers. Adjusted prices are on by default. Explore versioned results, check their sources, and see where evidence is missing. Raw list prices and fixed input/output blends remain selectable.
+  - text: 835 Models 101 Featured 650 Model families 2,786 Provider offers 89 Provider channels
+  - textbox "Search model or organization":
+    - /placeholder: Search model / org…
+  - combobox "Filter organization":
+    - option "All orgs" [selected]
+    - option "AI21 Labs"
+    - option "AI9Stars"
+    - option "AionLabs"
+    - option "Alibaba"
+    - option "Allen Institute for AI"
+    - option "Amazon"
+    - option "Anthracite"
+    - option "Anthropic"
+    - option "Apodex"
+    - option "Arcee AI"
+    - option "Baidu"
+    - option "ByteDance Seed"
+    - option "Celeris"
+    - option "China Mobile"
+    - option "Cohere"
+    - option "Cursor"
+    - option "Deep Cogito"
+    - option "DeepSeek"
+    - option "Dots Studio"
+    - option "Google"
+    - option "Gryphe"
+    - option "IBM"
+    - option "Inception"
+    - option "InclusionAI"
+    - option "Korea Telecom"
+    - option "KwaiKAT"
+    - option "Kwaipilot"
+    - option "LG AI Research"
+    - option "Liquid AI"
+    - option "LongCat"
+    - option "MBZUAI Institute of Foundation Models"
+    - option "Mancer"
+    - option "Meta"
+    - option "Microsoft"
+    - option "MiniMax"
+    - option "Mistral"
+    - option "Moonshot AI"
+    - option "Morph"
+    - option "Motif Technologies"
+    - option "Multiverse Computing"
+    - option "NVIDIA"
+    - option "Nanbeige"
+    - option "Naver"
+    - option "Nex AGI"
+    - option "Nous Research"
+    - option "OpenAI"
+    - option "OpenBMB"
+    - option "Other"
+    - option "Perceptron"
+    - option "Perplexity"
+    - option "Poolside"
+    - option "Prime Intellect"
+    - option "Reka AI"
+    - option "Relace"
+    - option "SK Telecom"
+    - option "Sakana"
+    - option "Sao10K"
+    - option "Sapiens AI"
+    - option "Sarvam"
+    - option "ServiceNow"
+    - option "StepFun"
+    - option "Swiss AI Initiative"
+    - option "TII UAE"
+    - option "Tencent"
+    - option "TheDrummer"
+    - option "Thinking Machines"
+    - option "Trillion Labs"
+    - option "Undi95"
+    - option "Upstage"
+    - option "Venice"
+    - option "Writer"
+    - option "Xiaomi"
+    - option "Z.ai"
+    - option "inclusionAI"
+    - option "xAI"
+  - text: Max $/task
+  - textbox "Max $/task":
+    - /placeholder: e.g. 5
+  - button "✓ Has benchmark evidence" [pressed]
+  - button "✓ Has provider" [pressed]
+  - button "✓ Measured task tokens only" [pressed]
+  - text: 22 models · provider-filtered
+  - paragraph: "Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback). These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task; unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs, dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens."
+  - paragraph: Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.
+  - table "Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4":
+    - caption: Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4
+    - rowgroup:
+      - 'row "Model Org Composite Cheapest Adjusted $/task ▲ # Channels Top provider channels"':
+        - columnheader "Model":
+          - button "Model"
+        - columnheader "Org":
+          - button "Org"
+        - columnheader "Composite":
+          - button "Composite"
+        - columnheader "Cheapest Adjusted $/task ▲":
+          - button "Cheapest Adjusted $/task ▲"
+        - columnheader "# Channels":
+          - button "# Channels"
+        - columnheader "Top provider channels"
+    - rowgroup:
+      - 'row "▸GLM-5.3-Flashopen★ Z.ai 77.4 $0.1548 $/task: show cost inputs for GLM-5.3-Flash, DeepInfra / OpenRouter 25 DeepInfra/OpenRouter $0.1548 $/task: show cost inputs for GLM-5.3-Flash, DeepInfra / OpenRouter Relace/OpenRouter $0.18575 $/task: show cost inputs for GLM-5.3-Flash, Relace / OpenRouter Wafer/OpenRouter $0.20754 $/task: show cost inputs for GLM-5.3-Flash, Wafer / OpenRouter"':
+        - cell "▸GLM-5.3-Flashopen★":
+          - text: ▸
+          - link "GLM-5.3-Flash":
+            - /url: /models/glm-5.3-flash%3A%3Adefault
+          - text: open★
+        - cell "Z.ai"
+        - cell "77.4"
+        - 'cell "$0.1548 $/task: show cost inputs for GLM-5.3-Flash, DeepInfra / OpenRouter"':
+          - 'button "$0.1548 $/task: show cost inputs for GLM-5.3-Flash, DeepInfra / OpenRouter"': $0.1548 est.
+        - cell "25"
+        - 'cell "DeepInfra/OpenRouter $0.1548 $/task: show cost inputs for GLM-5.3-Flash, DeepInfra / OpenRouter Relace/OpenRouter $0.18575 $/task: show cost inputs for GLM-5.3-Flash, Relace / OpenRouter Wafer/OpenRouter $0.20754 $/task: show cost inputs for GLM-5.3-Flash, Wafer / OpenRouter"':
+          - text: DeepInfra/OpenRouter
+          - 'button "$0.1548 $/task: show cost inputs for GLM-5.3-Flash, DeepInfra / OpenRouter"': $0.1548 est.
+          - text: Relace/OpenRouter
+          - 'button "$0.18575 $/task: show cost inputs for GLM-5.3-Flash, Relace / OpenRouter"': $0.18575 est.
+          - text: Wafer/OpenRouter
+          - 'button "$0.20754 $/task: show cost inputs for GLM-5.3-Flash, Wafer / OpenRouter"': $0.20754 est.
+      - 'row "▸MiMo-V2.5-Proopen★ Xiaomi 60.1 $0.20757 $/task: show cost inputs for MiMo-V2.5-Pro, GMICloud / OpenRouter 5 GMICloud/OpenRouter $0.20757 $/task: show cost inputs for MiMo-V2.5-Pro, GMICloud / OpenRouter DeepInfra/OpenRouter $0.27751 $/task: show cost inputs for MiMo-V2.5-Pro, DeepInfra / OpenRouter DigitalOcean/OpenRouter $0.29359 $/task: show cost inputs for MiMo-V2.5-Pro, DigitalOcean / OpenRouter"':
+        - cell "▸MiMo-V2.5-Proopen★":
+          - text: ▸
+          - link "MiMo-V2.5-Pro":
+            - /url: /models/mimo-v2.5-pro%3A%3Adefault
+          - text: open★
+        - cell "Xiaomi"
+        - cell "60.1"
+        - 'cell "$0.20757 $/task: show cost inputs for MiMo-V2.5-Pro, GMICloud / OpenRouter"':
+          - 'button "$0.20757 $/task: show cost inputs for MiMo-V2.5-Pro, GMICloud / OpenRouter"': $0.20757 est.
+        - cell "5"
+        - 'cell "GMICloud/OpenRouter $0.20757 $/task: show cost inputs for MiMo-V2.5-Pro, GMICloud / OpenRouter DeepInfra/OpenRouter $0.27751 $/task: show cost inputs for MiMo-V2.5-Pro, DeepInfra / OpenRouter DigitalOcean/OpenRouter $0.29359 $/task: show cost inputs for MiMo-V2.5-Pro, DigitalOcean / OpenRouter"':
+          - text: GMICloud/OpenRouter
+          - 'button "$0.20757 $/task: show cost inputs for MiMo-V2.5-Pro, GMICloud / OpenRouter"': $0.20757 est.
+          - text: DeepInfra/OpenRouter
+          - 'button "$0.27751 $/task: show cost inputs for MiMo-V2.5-Pro, DeepInfra / OpenRouter"': $0.27751 est.
+          - text: DigitalOcean/OpenRouter
+          - 'button "$0.29359 $/task: show cost inputs for MiMo-V2.5-Pro, DigitalOcean / OpenRouter"': $0.29359 est.
+      - 'row "▸GPT-5.6 Luna★ OpenAI 70.8 $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter 6 Azure/OpenRouter $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter OpenAI/OpenRouter $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), OpenAI / OpenRouter Azure AI Foundry $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure AI Foundry / Azure AI Foundry"':
+        - cell "▸GPT-5.6 Luna★":
+          - text: ▸
+          - link "GPT-5.6 Luna":
+            - /url: /models/gpt-5.6-luna%3A%3Amax
+          - text: ★
+        - cell "OpenAI"
+        - cell "70.8"
+        - 'cell "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter"':
+          - 'button "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter"': $0.33111 est.
+        - cell "6"
+        - 'cell "Azure/OpenRouter $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter OpenAI/OpenRouter $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), OpenAI / OpenRouter Azure AI Foundry $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure AI Foundry / Azure AI Foundry"':
+          - text: Azure/OpenRouter
+          - 'button "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter"': $0.33111 est.
+          - text: OpenAI/OpenRouter
+          - 'button "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), OpenAI / OpenRouter"': $0.33111 est.
+          - text: Azure AI Foundry
+          - 'button "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure AI Foundry / Azure AI Foundry"': $0.33111 est.
+      - 'row "▸Kimi K2.7 Codeopen★ Moonshot AI 60.2 $0.51208 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / Inceptron 14 Inceptron $0.51208 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / Inceptron DeepInfra/OpenRouter $0.52452 $/task: show cost inputs for Kimi K2.7 Code, DeepInfra / OpenRouter Inceptron/OpenRouter $0.53513 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / OpenRouter"':
+        - cell "▸Kimi K2.7 Codeopen★":
+          - text: ▸
+          - link "Kimi K2.7 Code":
+            - /url: /models/kimi-k2.7-code%3A%3Adefault
+          - text: open★
+        - cell "Moonshot AI"
+        - cell "60.2"
+        - 'cell "$0.51208 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / Inceptron"':
+          - 'button "$0.51208 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / Inceptron"': $0.51208 est.
+        - cell "14"
+        - 'cell "Inceptron $0.51208 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / Inceptron DeepInfra/OpenRouter $0.52452 $/task: show cost inputs for Kimi K2.7 Code, DeepInfra / OpenRouter Inceptron/OpenRouter $0.53513 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / OpenRouter"':
+          - text: Inceptron
+          - 'button "$0.51208 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / Inceptron"': $0.51208 est.
+          - text: DeepInfra/OpenRouter
+          - 'button "$0.52452 $/task: show cost inputs for Kimi K2.7 Code, DeepInfra / OpenRouter"': $0.52452 est.
+          - text: Inceptron/OpenRouter
+          - 'button "$0.53513 $/task: show cost inputs for Kimi K2.7 Code, Inceptron / OpenRouter"': $0.53513 est.
+      - 'row "▸GPT-5.6 Sol★ OpenAI 77.5 $0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter 6 OpenAI/OpenRouter $0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter Amazon Bedrock/OpenRouter $1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter Azure/OpenRouter $1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+        - cell "▸GPT-5.6 Sol★":
+          - text: ▸
+          - link "GPT-5.6 Sol":
+            - /url: /models/gpt-5.6-sol%3A%3Ahigh
+          - text: ★
+        - cell "OpenAI"
+        - cell "77.5"
+        - 'cell "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+          - 'button "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"': $0.54392 est.
+        - cell "6"
+        - 'cell "OpenAI/OpenRouter $0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter Amazon Bedrock/OpenRouter $1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter Azure/OpenRouter $1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+          - text: OpenAI/OpenRouter
+          - 'button "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"': $0.54392 est.
+          - text: Amazon Bedrock/OpenRouter
+          - 'button "$1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"': $1.05 est.
+          - text: Azure/OpenRouter
+          - 'button "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"': $1.521 est.
+      - 'row "▸GPT-5.6 Terra★ OpenAI 65.4 $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure AI Foundry / Azure AI Foundry 6 Azure AI Foundry $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure AI Foundry / Azure AI Foundry Azure/OpenRouter $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure / OpenRouter OpenAI/OpenRouter $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), OpenAI / OpenRouter"':
+        - cell "▸GPT-5.6 Terra★":
+          - text: ▸
+          - link "GPT-5.6 Terra":
+            - /url: /models/gpt-5.6-terra%3A%3Ahigh
+          - text: ★
+        - cell "OpenAI"
+        - cell "65.4"
+        - 'cell "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure AI Foundry / Azure AI Foundry"':
+          - 'button "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure AI Foundry / Azure AI Foundry"': $0.60556 est.
+        - cell "6"
+        - 'cell "Azure AI Foundry $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure AI Foundry / Azure AI Foundry Azure/OpenRouter $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure / OpenRouter OpenAI/OpenRouter $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), OpenAI / OpenRouter"':
+          - text: Azure AI Foundry
+          - 'button "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure AI Foundry / Azure AI Foundry"': $0.60556 est.
+          - text: Azure/OpenRouter
+          - 'button "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure / OpenRouter"': $0.60556 est.
+          - text: OpenAI/OpenRouter
+          - 'button "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), OpenAI / OpenRouter"': $0.60556 est.
+      - 'row "▸MiniMax-M3open★ MiniMax 66.6 $0.74504 $/task: show cost inputs for MiniMax-M3, CoreWeave / OpenRouter 13 CoreWeave/OpenRouter $0.74504 $/task: show cost inputs for MiniMax-M3, CoreWeave / OpenRouter GMICloud/OpenRouter $0.77542 $/task: show cost inputs for MiniMax-M3, GMICloud / OpenRouter DeepInfra/OpenRouter $0.90369 $/task: show cost inputs for MiniMax-M3, DeepInfra / OpenRouter"':
+        - cell "▸MiniMax-M3open★":
+          - text: ▸
+          - link "MiniMax-M3":
+            - /url: /models/minimax-m3%3A%3Adefault
+          - text: open★
+        - cell "MiniMax"
+        - cell "66.6"
+        - 'cell "$0.74504 $/task: show cost inputs for MiniMax-M3, CoreWeave / OpenRouter"':
+          - 'button "$0.74504 $/task: show cost inputs for MiniMax-M3, CoreWeave / OpenRouter"': $0.74504 est.
+        - cell "13"
+        - 'cell "CoreWeave/OpenRouter $0.74504 $/task: show cost inputs for MiniMax-M3, CoreWeave / OpenRouter GMICloud/OpenRouter $0.77542 $/task: show cost inputs for MiniMax-M3, GMICloud / OpenRouter DeepInfra/OpenRouter $0.90369 $/task: show cost inputs for MiniMax-M3, DeepInfra / OpenRouter"':
+          - text: CoreWeave/OpenRouter
+          - 'button "$0.74504 $/task: show cost inputs for MiniMax-M3, CoreWeave / OpenRouter"': $0.74504 est.
+          - text: GMICloud/OpenRouter
+          - 'button "$0.77542 $/task: show cost inputs for MiniMax-M3, GMICloud / OpenRouter"': $0.77542 est.
+          - text: DeepInfra/OpenRouter
+          - 'button "$0.90369 $/task: show cost inputs for MiniMax-M3, DeepInfra / OpenRouter"': $0.90369 est.
+      - 'row "▸GLM-5.1opendeprecated★ Z.ai 56.5 $0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / Chutes 13 Chutes $0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / Chutes Chutes/OpenRouter $0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / OpenRouter DeepInfra/OpenRouter $1.047 $/task: show cost inputs for GLM-5.1 (Reasoning), DeepInfra / OpenRouter"':
+        - cell "▸GLM-5.1opendeprecated★":
+          - text: ▸
+          - link "GLM-5.1":
+            - /url: /models/glm-5.1%3A%3Areasoning
+          - text: opendeprecated★
+        - cell "Z.ai"
+        - cell "56.5"
+        - 'cell "$0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / Chutes"':
+          - 'button "$0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / Chutes"': $0.96934 est.
+        - cell "13"
+        - 'cell "Chutes $0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / Chutes Chutes/OpenRouter $0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / OpenRouter DeepInfra/OpenRouter $1.047 $/task: show cost inputs for GLM-5.1 (Reasoning), DeepInfra / OpenRouter"':
+          - text: Chutes
+          - 'button "$0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / Chutes"': $0.96934 est.
+          - text: Chutes/OpenRouter
+          - 'button "$0.96934 $/task: show cost inputs for GLM-5.1 (Reasoning), Chutes / OpenRouter"': $0.96934 est.
+          - text: DeepInfra/OpenRouter
+          - 'button "$1.047 $/task: show cost inputs for GLM-5.1 (Reasoning), DeepInfra / OpenRouter"': $1.047 est.
+      - 'row "▸GLM-5.3open★ Z.ai 87.1 $1.05 $/task: show cost inputs for GLM-5.3 (max), Novita / OpenRouter 26 Novita/OpenRouter $1.05 $/task: show cost inputs for GLM-5.3 (max), Novita / OpenRouter GMICloud/OpenRouter $1.17 $/task: show cost inputs for GLM-5.3 (max), GMICloud / OpenRouter Phala/OpenRouter $1.193 $/task: show cost inputs for GLM-5.3 (max), Phala / OpenRouter"':
+        - cell "▸GLM-5.3open★":
+          - text: ▸
+          - link "GLM-5.3":
+            - /url: /models/glm-5.3%3A%3Amax
+          - text: open★
+        - cell "Z.ai"
+        - cell "87.1"
+        - 'cell "$1.05 $/task: show cost inputs for GLM-5.3 (max), Novita / OpenRouter"':
+          - 'button "$1.05 $/task: show cost inputs for GLM-5.3 (max), Novita / OpenRouter"': $1.05 est.
+        - cell "26"
+        - 'cell "Novita/OpenRouter $1.05 $/task: show cost inputs for GLM-5.3 (max), Novita / OpenRouter GMICloud/OpenRouter $1.17 $/task: show cost inputs for GLM-5.3 (max), GMICloud / OpenRouter Phala/OpenRouter $1.193 $/task: show cost inputs for GLM-5.3 (max), Phala / OpenRouter"':
+          - text: Novita/OpenRouter
+          - 'button "$1.05 $/task: show cost inputs for GLM-5.3 (max), Novita / OpenRouter"': $1.05 est.
+          - text: GMICloud/OpenRouter
+          - 'button "$1.17 $/task: show cost inputs for GLM-5.3 (max), GMICloud / OpenRouter"': $1.17 est.
+          - text: Phala/OpenRouter
+          - 'button "$1.193 $/task: show cost inputs for GLM-5.3 (max), Phala / OpenRouter"': $1.193 est.
+      - 'row "▸Grok 4.5★ xAI 82.8 $1.28 $/task: show cost inputs for Grok 4.5 (high), xAI / OpenRouter 1 xAI/OpenRouter $1.28 $/task: show cost inputs for Grok 4.5 (high), xAI / OpenRouter"':
+        - cell "▸Grok 4.5★":
+          - text: ▸
+          - link "Grok 4.5":
+            - /url: /models/grok-4.5%3A%3Ahigh
+          - text: ★
+        - cell "xAI"
+        - cell "82.8"
+        - 'cell "$1.28 $/task: show cost inputs for Grok 4.5 (high), xAI / OpenRouter"':
+          - 'button "$1.28 $/task: show cost inputs for Grok 4.5 (high), xAI / OpenRouter"': $1.28 est.
+        - cell "1"
+        - 'cell "xAI/OpenRouter $1.28 $/task: show cost inputs for Grok 4.5 (high), xAI / OpenRouter"':
+          - text: xAI/OpenRouter
+          - 'button "$1.28 $/task: show cost inputs for Grok 4.5 (high), xAI / OpenRouter"': $1.28 est.
+      - 'row "▸DeepSeek V4 Pro 0813open★ DeepSeek 65.4 $1.30 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Novita / OpenRouter 16 Novita/OpenRouter $1.30 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Novita / OpenRouter GMICloud/OpenRouter $1.387 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), GMICloud / OpenRouter Ionstream/OpenRouter $1.445 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Ionstream / OpenRouter"':
+        - cell "▸DeepSeek V4 Pro 0813open★":
+          - text: ▸
+          - link "DeepSeek V4 Pro 0813":
+            - /url: /models/deepseek-v4-pro-0813%3A%3Amax
+          - text: open★
+        - cell "DeepSeek"
+        - cell "65.4"
+        - 'cell "$1.30 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Novita / OpenRouter"':
+          - 'button "$1.30 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Novita / OpenRouter"': $1.30 est.
+        - cell "16"
+        - 'cell "Novita/OpenRouter $1.30 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Novita / OpenRouter GMICloud/OpenRouter $1.387 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), GMICloud / OpenRouter Ionstream/OpenRouter $1.445 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Ionstream / OpenRouter"':
+          - text: Novita/OpenRouter
+          - 'button "$1.30 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Novita / OpenRouter"': $1.30 est.
+          - text: GMICloud/OpenRouter
+          - 'button "$1.387 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), GMICloud / OpenRouter"': $1.387 est.
+          - text: Ionstream/OpenRouter
+          - 'button "$1.445 $/task: show cost inputs for DeepSeek V4 Pro 0813 (Reasoning, Max Effort), Ionstream / OpenRouter"': $1.445 est.
+      - 'row "▸Muse Spark 1.2★ Meta 78.7 $1.449 $/task: show cost inputs for Muse Spark 1.2 (xhigh), Meta / OpenRouter 1 Meta/OpenRouter $1.449 $/task: show cost inputs for Muse Spark 1.2 (xhigh), Meta / OpenRouter"':
+        - cell "▸Muse Spark 1.2★":
+          - text: ▸
+          - link "Muse Spark 1.2":
+            - /url: /models/muse-spark-1.2%3A%3Axhigh
+          - text: ★
+        - cell "Meta"
+        - cell "78.7"
+        - 'cell "$1.449 $/task: show cost inputs for Muse Spark 1.2 (xhigh), Meta / OpenRouter"':
+          - 'button "$1.449 $/task: show cost inputs for Muse Spark 1.2 (xhigh), Meta / OpenRouter"': $1.449 est.
+        - cell "1"
+        - 'cell "Meta/OpenRouter $1.449 $/task: show cost inputs for Muse Spark 1.2 (xhigh), Meta / OpenRouter"':
+          - text: Meta/OpenRouter
+          - 'button "$1.449 $/task: show cost inputs for Muse Spark 1.2 (xhigh), Meta / OpenRouter"': $1.449 est.
+      - 'row "▸Grok 4.6★ xAI 91.2 $1.706 $/task: show cost inputs for Grok 4.6 (high), xAI / OpenRouter 3 xAI/OpenRouter $1.706 $/task: show cost inputs for Grok 4.6 (high), xAI / OpenRouter AWS Bedrock $1.877 $/task: show cost inputs for Grok 4.6 (high), AWS Bedrock / AWS Bedrock Amazon Bedrock/OpenRouter $1.877 $/task: show cost inputs for Grok 4.6 (high), Amazon Bedrock / OpenRouter"':
+        - cell "▸Grok 4.6★":
+          - text: ▸
+          - link "Grok 4.6":
+            - /url: /models/grok-4.6%3A%3Ahigh
+          - text: ★
+        - cell "xAI"
+        - cell "91.2"
+        - 'cell "$1.706 $/task: show cost inputs for Grok 4.6 (high), xAI / OpenRouter"':
+          - 'button "$1.706 $/task: show cost inputs for Grok 4.6 (high), xAI / OpenRouter"': $1.706 est.
+        - cell "3"
+        - 'cell "xAI/OpenRouter $1.706 $/task: show cost inputs for Grok 4.6 (high), xAI / OpenRouter AWS Bedrock $1.877 $/task: show cost inputs for Grok 4.6 (high), AWS Bedrock / AWS Bedrock Amazon Bedrock/OpenRouter $1.877 $/task: show cost inputs for Grok 4.6 (high), Amazon Bedrock / OpenRouter"':
+          - text: xAI/OpenRouter
+          - 'button "$1.706 $/task: show cost inputs for Grok 4.6 (high), xAI / OpenRouter"': $1.706 est.
+          - text: AWS Bedrock
+          - 'button "$1.877 $/task: show cost inputs for Grok 4.6 (high), AWS Bedrock / AWS Bedrock"': $1.877 est.
+          - text: Amazon Bedrock/OpenRouter
+          - 'button "$1.877 $/task: show cost inputs for Grok 4.6 (high), Amazon Bedrock / OpenRouter"': $1.877 est.
+      - 'row "▸Muse Spark 1.3★ Meta 95.4 $1.822 $/task: show cost inputs for Muse Spark 1.3 (max), Meta / OpenRouter 1 Meta/OpenRouter $1.822 $/task: show cost inputs for Muse Spark 1.3 (max), Meta / OpenRouter"':
+        - cell "▸Muse Spark 1.3★":
+          - text: ▸
+          - link "Muse Spark 1.3":
+            - /url: /models/muse-spark-1.3%3A%3Amax
+          - text: ★
+        - cell "Meta"
+        - cell "95.4"
+        - 'cell "$1.822 $/task: show cost inputs for Muse Spark 1.3 (max), Meta / OpenRouter"':
+          - 'button "$1.822 $/task: show cost inputs for Muse Spark 1.3 (max), Meta / OpenRouter"': $1.822 est.
+        - cell "1"
+        - 'cell "Meta/OpenRouter $1.822 $/task: show cost inputs for Muse Spark 1.3 (max), Meta / OpenRouter"':
+          - text: Meta/OpenRouter
+          - 'button "$1.822 $/task: show cost inputs for Muse Spark 1.3 (max), Meta / OpenRouter"': $1.822 est.
+      - 'row "▸Kimi K3open★ Moonshot AI 92.4 $2.029 $/task: show cost inputs for Kimi K3 (max), Sail Research / OpenRouter 18 Sail Research/OpenRouter $2.029 $/task: show cost inputs for Kimi K3 (max), Sail Research / OpenRouter Together/OpenRouter $2.086 $/task: show cost inputs for Kimi K3 (max), Together / OpenRouter Relace/OpenRouter $2.15 $/task: show cost inputs for Kimi K3 (max), Relace / OpenRouter"':
+        - cell "▸Kimi K3open★":
+          - text: ▸
+          - link "Kimi K3":
+            - /url: /models/kimi-k3%3A%3Amax
+          - text: open★
+        - cell "Moonshot AI"
+        - cell "92.4"
+        - 'cell "$2.029 $/task: show cost inputs for Kimi K3 (max), Sail Research / OpenRouter"':
+          - 'button "$2.029 $/task: show cost inputs for Kimi K3 (max), Sail Research / OpenRouter"': $2.029 est.
+        - cell "18"
+        - 'cell "Sail Research/OpenRouter $2.029 $/task: show cost inputs for Kimi K3 (max), Sail Research / OpenRouter Together/OpenRouter $2.086 $/task: show cost inputs for Kimi K3 (max), Together / OpenRouter Relace/OpenRouter $2.15 $/task: show cost inputs for Kimi K3 (max), Relace / OpenRouter"':
+          - text: Sail Research/OpenRouter
+          - 'button "$2.029 $/task: show cost inputs for Kimi K3 (max), Sail Research / OpenRouter"': $2.029 est.
+          - text: Together/OpenRouter
+          - 'button "$2.086 $/task: show cost inputs for Kimi K3 (max), Together / OpenRouter"': $2.086 est.
+          - text: Relace/OpenRouter
+          - 'button "$2.15 $/task: show cost inputs for Kimi K3 (max), Relace / OpenRouter"': $2.15 est.
+      - 'row "▸GPT-5.5deprecated★ OpenAI 65.5 $2.093 $/task: show cost inputs for GPT-5.5 (high), Azure AI Foundry / Azure AI Foundry 6 Azure AI Foundry $2.093 $/task: show cost inputs for GPT-5.5 (high), Azure AI Foundry / Azure AI Foundry Azure/OpenRouter $2.093 $/task: show cost inputs for GPT-5.5 (high), Azure / OpenRouter OpenAI/OpenRouter $2.093 $/task: show cost inputs for GPT-5.5 (high), OpenAI / OpenRouter"':
+        - cell "▸GPT-5.5deprecated★":
+          - text: ▸
+          - link "GPT-5.5":
+            - /url: /models/gpt-5.5%3A%3Ahigh
+          - text: deprecated★
+        - cell "OpenAI"
+        - cell "65.5"
+        - 'cell "$2.093 $/task: show cost inputs for GPT-5.5 (high), Azure AI Foundry / Azure AI Foundry"':
+          - 'button "$2.093 $/task: show cost inputs for GPT-5.5 (high), Azure AI Foundry / Azure AI Foundry"': $2.093 est.
+        - cell "6"
+        - 'cell "Azure AI Foundry $2.093 $/task: show cost inputs for GPT-5.5 (high), Azure AI Foundry / Azure AI Foundry Azure/OpenRouter $2.093 $/task: show cost inputs for GPT-5.5 (high), Azure / OpenRouter OpenAI/OpenRouter $2.093 $/task: show cost inputs for GPT-5.5 (high), OpenAI / OpenRouter"':
+          - text: Azure AI Foundry
+          - 'button "$2.093 $/task: show cost inputs for GPT-5.5 (high), Azure AI Foundry / Azure AI Foundry"': $2.093 est.
+          - text: Azure/OpenRouter
+          - 'button "$2.093 $/task: show cost inputs for GPT-5.5 (high), Azure / OpenRouter"': $2.093 est.
+          - text: OpenAI/OpenRouter
+          - 'button "$2.093 $/task: show cost inputs for GPT-5.5 (high), OpenAI / OpenRouter"': $2.093 est.
+      - 'row "▸GPT-6 Astra★ OpenAI 96.0 $2.361 $/task: show cost inputs for GPT-6 Astra (max), OpenAI / OpenRouter 3 OpenAI/OpenRouter $2.361 $/task: show cost inputs for GPT-6 Astra (max), OpenAI / OpenRouter Azure/OpenRouter $3.536 $/task: show cost inputs for GPT-6 Astra (max), Azure / OpenRouter"':
+        - cell "▸GPT-6 Astra★":
+          - text: ▸
+          - link "GPT-6 Astra":
+            - /url: /models/gpt-6-astra%3A%3Amax
+          - text: ★
+        - cell "OpenAI"
+        - cell "96.0"
+        - 'cell "$2.361 $/task: show cost inputs for GPT-6 Astra (max), OpenAI / OpenRouter"':
+          - 'button "$2.361 $/task: show cost inputs for GPT-6 Astra (max), OpenAI / OpenRouter"': $2.361 est.
+        - cell "3"
+        - 'cell "OpenAI/OpenRouter $2.361 $/task: show cost inputs for GPT-6 Astra (max), OpenAI / OpenRouter Azure/OpenRouter $3.536 $/task: show cost inputs for GPT-6 Astra (max), Azure / OpenRouter"':
+          - text: OpenAI/OpenRouter
+          - 'button "$2.361 $/task: show cost inputs for GPT-6 Astra (max), OpenAI / OpenRouter"': $2.361 est.
+          - text: Azure/OpenRouter
+          - 'button "$3.536 $/task: show cost inputs for GPT-6 Astra (max), Azure / OpenRouter"': $3.536 est.
+      - 'row "▸Claude Opus 5★ Anthropic 95.7 $3.84 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Anthropic / OpenRouter 10 Anthropic/OpenRouter $3.84 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Anthropic / OpenRouter Amazon Bedrock/OpenRouter $4.378 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Amazon Bedrock / OpenRouter Google/OpenRouter $4.52 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Google / OpenRouter"':
+        - cell "▸Claude Opus 5★":
+          - text: ▸
+          - link "Claude Opus 5":
+            - /url: /models/claude-opus-5%3A%3Ahigh
+          - text: ★
+        - cell "Anthropic"
+        - cell "95.7"
+        - 'cell "$3.84 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Anthropic / OpenRouter"':
+          - 'button "$3.84 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Anthropic / OpenRouter"': $3.84 est.
+        - cell "10"
+        - 'cell "Anthropic/OpenRouter $3.84 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Anthropic / OpenRouter Amazon Bedrock/OpenRouter $4.378 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Amazon Bedrock / OpenRouter Google/OpenRouter $4.52 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Google / OpenRouter"':
+          - text: Anthropic/OpenRouter
+          - 'button "$3.84 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Anthropic / OpenRouter"': $3.84 est.
+          - text: Amazon Bedrock/OpenRouter
+          - 'button "$4.378 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Amazon Bedrock / OpenRouter"': $4.378 est.
+          - text: Google/OpenRouter
+          - 'button "$4.52 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Google / OpenRouter"': $4.52 est.
+      - 'row "▸Claude Opus 4.8deprecated★ Anthropic 84.3 $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI 9 Google Vertex AI $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI Anthropic $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Anthropic / Anthropic Claude Platform on AWS/OpenRouter $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Claude Platform on AWS / OpenRouter"':
+        - cell "▸Claude Opus 4.8deprecated★":
+          - text: ▸
+          - link "Claude Opus 4.8":
+            - /url: /models/claude-opus-4.8%3A%3Amax
+          - text: deprecated★
+        - cell "Anthropic"
+        - cell "84.3"
+        - 'cell "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI"':
+          - 'button "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI"': $9.104 est.
+        - cell "9"
+        - 'cell "Google Vertex AI $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI Anthropic $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Anthropic / Anthropic Claude Platform on AWS/OpenRouter $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Claude Platform on AWS / OpenRouter"':
+          - text: Google Vertex AI
+          - 'button "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI"': $9.104 est.
+          - text: Anthropic
+          - 'button "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Anthropic / Anthropic"': $9.104 est.
+          - text: Claude Platform on AWS/OpenRouter
+          - 'button "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Claude Platform on AWS / OpenRouter"': $9.104 est.
+      - 'row "▸Claude Sonnet 5★ Anthropic 85.8 $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI 9 Google Vertex AI $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI Anthropic $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Anthropic / Anthropic Claude Platform on AWS/OpenRouter $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Claude Platform on AWS / OpenRouter"':
+        - cell "▸Claude Sonnet 5★":
+          - text: ▸
+          - link "Claude Sonnet 5":
+            - /url: /models/claude-sonnet-5%3A%3Amax
+          - text: ★
+        - cell "Anthropic"
+        - cell "85.8"
+        - 'cell "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI"':
+          - 'button "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI"': $14.12 est.
+        - cell "9"
+        - 'cell "Google Vertex AI $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI Anthropic $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Anthropic / Anthropic Claude Platform on AWS/OpenRouter $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Claude Platform on AWS / OpenRouter"':
+          - text: Google Vertex AI
+          - 'button "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Google Vertex AI / Google Vertex AI"': $14.12 est.
+          - text: Anthropic
+          - 'button "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Anthropic / Anthropic"': $14.12 est.
+          - text: Claude Platform on AWS/OpenRouter
+          - 'button "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Claude Platform on AWS / OpenRouter"': $14.12 est.
+      - 'row "▸Claude Fable 5.1★ Anthropic 100.0 $14.171 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Amazon Bedrock / OpenRouter 7 Amazon Bedrock/OpenRouter $14.171 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Amazon Bedrock / OpenRouter Anthropic/OpenRouter $15.437 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Anthropic / OpenRouter Google/OpenRouter $18.971 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Google / OpenRouter"':
+        - cell "▸Claude Fable 5.1★":
+          - text: ▸
+          - link "Claude Fable 5.1":
+            - /url: /models/claude-fable-5.1%3A%3Amax
+          - text: ★
+        - cell "Anthropic"
+        - cell "100.0"
+        - 'cell "$14.171 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Amazon Bedrock / OpenRouter"':
+          - 'button "$14.171 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Amazon Bedrock / OpenRouter"': $14.171 est.
+        - cell "7"
+        - 'cell "Amazon Bedrock/OpenRouter $14.171 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Amazon Bedrock / OpenRouter Anthropic/OpenRouter $15.437 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Anthropic / OpenRouter Google/OpenRouter $18.971 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Google / OpenRouter"':
+          - text: Amazon Bedrock/OpenRouter
+          - 'button "$14.171 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Amazon Bedrock / OpenRouter"': $14.171 est.
+          - text: Anthropic/OpenRouter
+          - 'button "$15.437 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Anthropic / OpenRouter"': $15.437 est.
+          - text: Google/OpenRouter
+          - 'button "$18.971 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Google / OpenRouter"': $18.971 est.
+      - 'row "▸Claude Fable 5★ Anthropic 93.7 $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Google Vertex AI / Google Vertex AI 8 Google Vertex AI $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Google Vertex AI / Google Vertex AI Anthropic $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Anthropic / Anthropic Claude Platform on AWS/OpenRouter $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Claude Platform on AWS / OpenRouter"':
+        - cell "▸Claude Fable 5★":
+          - text: ▸
+          - link "Claude Fable 5":
+            - /url: /models/claude-fable-5%3A%3Amax
+          - text: ★
+        - cell "Anthropic"
+        - cell "93.7"
+        - 'cell "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Google Vertex AI / Google Vertex AI"':
+          - 'button "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Google Vertex AI / Google Vertex AI"': $17.253 est.
+        - cell "8"
+        - 'cell "Google Vertex AI $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Google Vertex AI / Google Vertex AI Anthropic $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Anthropic / Anthropic Claude Platform on AWS/OpenRouter $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Claude Platform on AWS / OpenRouter"':
+          - text: Google Vertex AI
+          - 'button "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Google Vertex AI / Google Vertex AI"': $17.253 est.
+          - text: Anthropic
+          - 'button "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Anthropic / Anthropic"': $17.253 est.
+          - text: Claude Platform on AWS/OpenRouter
+          - 'button "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Claude Platform on AWS / OpenRouter"': $17.253 est.
+- contentinfo:
+  - text: Benchmark Heaven
+  - link "Sources & methodology":
+    - /url: /about
+  - link "Public API":
+    - /url: https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md
+  - link "GitHub":
+    - /url: https://github.com/fstandhartinger/model-market-comparison
+  - paragraph: Benchmarks in perspective. Costs in context. Every result has a source; every estimate has assumptions.
+  - paragraph: Data from OpenRouter, Artificial Analysis, Intelligence.ai / DesignArena, benchmark maintainers and provider catalogs. Raw token prices are USD per 1M tokens; adjusted task costs are estimates with visible inputs. Source dates vary. Check the linked source before choosing a provider.
+  - paragraph: Independent project. Not affiliated with model or inference providers.
+- alert

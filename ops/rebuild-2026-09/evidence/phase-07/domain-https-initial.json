@@ -1,0 +1,121 @@
+{
+  "at": "2026-09-11T01:59:10.842659+00:00",
+  "deployment_uuid": "ykjqjju6n1scbd8aummkp751",
+  "note": "Domain-only deployment of prior accepted application, before phase07 UI push.",
+  "hosts": [
+    {
+      "host": "benchmarkheaven.com",
+      "dns": "65.109.49.103",
+      "error": "timed out"
+    },
+    {
+      "host": "www.benchmarkheaven.com",
+      "dns": "65.109.49.103",
+      "error": "[SSL: CERTIFICATE_VERIFY_FAILED] certificate verify failed: self-signed certificate (_ssl.c:1007)"
+    },
+    {
+      "host": "model-market-comparison.app.mintapis.com",
+      "dns": "65.109.49.103",
+      "certificate": {
+        "subject": [
+          [
+            [
+              "commonName",
+              "model-market-comparison.app.mintapis.com"
+            ]
+          ]
+        ],
+        "issuer": [
+          [
+            [
+              "countryName",
+              "US"
+            ]
+          ],
+          [
+            [
+              "organizationName",
+              "Let's Encrypt"
+            ]
+          ],
+          [
+            [
+              "commonName",
+              "YR1"
+            ]
+          ]
+        ],
+        "version": 3,
+        "serialNumber": "06E56A05C3D2272DA90A9DAAE5076C0EBA30",
+        "notBefore": "Aug 26 16:12:47 2026 GMT",
+        "notAfter": "Nov 24 16:12:46 2026 GMT",
+        "subjectAltName": [
+          [
+            "DNS",
+            "model-market-comparison.app.mintapis.com"
+          ]
+        ],
+        "caIssuers": [
+          "http://yr1.i.lencr.org/"
+        ],
+        "crlDistributionPoints": [
+          "http://yr1.c.lencr.org/49.crl"
+        ]
+      },
+      "checks": [
+        {
+          "path": "/api/health",
+          "status": 200,
+          "cors": "*",
+          "sha256": "5864b6e202bb365cf4e7444148306466ce3c78dd4a420742fe93f5fc0cf56096",
+          "json": {
+            "ok": true,
+            "db": false
+          }
+        },
+        {
+          "path": "/api/meta",
+          "status": 200,
+          "cors": "*",
+          "sha256": "e4244ffbc9f3c686fea472499199ec0c1be3b2b1424705a3f8cf56e21e4e586a",
+          "json": {
+            "generated_at": "2026-09-11T01:28:15.062Z",
+            "counts": {
+              "models": 835,
+              "families": 650,
+              "providers": 89,
+              "offers": 2786
+            },
+            "sources": {
+              "openrouter": "2026-09-10",
+              "artificialanalysis": "2026-09-10",
+              "designarena": "2026-09-10",
+              "aws_bedrock": "2026-09-08",
+              "azure_foundry": "2026-09-08",
+              "google_vertex": "2026-09-08",
+              "nebius": "2026-09-08",
+              "inceptron": "2026-09-08",
+              "scaleway": "2026-09-08",
+              "ionos": "2026-09-08",
+              "mistral": "2026-09-08",
+              "tensorx": "2026-09-08",
+              "chutes": "2026-09-08",
+              "ovhcloud": "2026-09-08",
+              "stackit": "2026-09-08",
+              "t_systems_llm_hub": "2026-09-08",
+              "aa_coding_agents": "2026-09-09",
+              "github_copilot": "2026-09-08",
+              "claude_code": "2026-09-08",
+              "aa_coding_agents_v1_5": "2026-09-10",
+              "provider_meta": "2026-07-12",
+              "aa_efficiency": "2026-09-10T20:13:54.198Z",
+              "openrouter_efficiency": "2026-09-10T20:13:54.306Z",
+              "chutes_efficiency": "2026-09-10T19:44:35.632Z"
+            },
+            "source": "bundled"
+          }
+        }
+      ]
+    }
+  ]
+}
