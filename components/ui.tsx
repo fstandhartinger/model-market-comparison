@@ -51,13 +51,13 @@ export function ProviderFilter({
   const label = isAll ? "All providers" : `${all.length - excluded.size} of ${all.length}`;
 
   return (
-    <div className="relative inline-block">
-      <button onClick={() => setOpen(!open)}
+    <div className="relative inline-block max-w-full">
+      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)}
         className={`rounded-md border px-3 py-1.5 text-sm ${excluded.size ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-300"}`}>
         Providers: {label} ▾
       </button>
       {open && (
-        <div className="absolute z-20 mt-1 max-h-[60vh] w-80 overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
+        <div className="z-20 mt-1 max-h-[60vh] w-[min(20rem,calc(100vw-3rem))] sm:absolute overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
           <div className="mb-1 flex flex-wrap gap-1">
             <button onClick={() => setExcluded(new Set())} className="rounded border border-line px-2 py-0.5 text-xs text-gray-300">All</button>
             {PROVIDER_PRESETS.map((p) => (
@@ -102,13 +102,13 @@ export function ModelFilter({
   const toggle = (k: string) => { const n = new Set(selected); n.has(k) ? n.delete(k) : n.add(k); setSelected(n); };
   const label = selected.size === 0 ? "All models" : `${selected.size} model${selected.size > 1 ? "s" : ""}`;
   return (
-    <div className="relative inline-block">
-      <button onClick={() => setOpen(!open)}
+    <div className="relative inline-block max-w-full">
+      <button type="button" aria-expanded={open} onClick={() => setOpen(!open)}
         className={`rounded-md border px-3 py-1.5 text-sm ${selected.size ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-300"}`}>
         Models: {label} ▾
       </button>
       {open && (
-        <div className="absolute z-20 mt-1 max-h-[60vh] w-80 overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
+        <div className="z-20 mt-1 max-h-[60vh] w-[min(20rem,calc(100vw-3rem))] sm:absolute overflow-y-auto rounded-lg border border-line bg-panel p-3 shadow-xl">
           <button
             onClick={() => setSelected(new Set())}
             disabled={selected.size === 0}
@@ -117,7 +117,7 @@ export function ModelFilter({
             {selected.size === 0 ? "✓ All models selected" : `↺ Select all models (clear ${selected.size} selected)`}
           </button>
           <div className="mb-2">
-            <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search models…" className="w-full rounded border border-line bg-ink px-2 py-1 text-xs" />
+            <input aria-label="Search model families" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search models…" className="w-full rounded border border-line bg-ink px-2 py-1 text-xs" />
           </div>
           <div className="grid grid-cols-1 gap-0.5">
             {shown.slice(0, 200).map((f) => (

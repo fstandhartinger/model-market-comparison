@@ -1,0 +1,137 @@
+{
+  "base": "http://127.0.0.1:3317",
+  "at": "2026-09-11T00:44:35.764Z",
+  "environment": "Headless system Chrome on Sandy, local production HTTP unless URL overrides; no network/CPU throttling",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "url": "http://127.0.0.1:3317/compare#main-content",
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 748,
+        "fcp": 640,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "compare-light",
+      "url": "http://127.0.0.1:3317/compare?model=gpt-5.6-sol%3A%3Ahigh&model=claude-sonnet-5%3A%3Ahigh&model=grok-4.6%3A%3Ahigh",
+      "metrics": {
+        "cls": 0.022019545777874225,
+        "lcp": 748,
+        "fcp": 640,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "radar-light",
+      "url": "http://127.0.0.1:3317/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1524,
+        "fcp": 1452,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    }
+  ],
+  "interactions": [
+    "Tab reaches skip link; Enter focuses main content",
+    "Native model selects add C/D to four series; focused Remove + Enter reduces to three",
+    "Keyboard Space selects radar axes; eight-axis cap disables remaining choices",
+    "Keyboard Enter opens a numeric source evidence disclosure"
+  ],
+  "screenshots": [
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check/compare-dark.png",
+      "sha256": "0fe0f51aa880b87410ad4b53b5ae2531014bfbdfa3d2c92bf5f903076aa4640a",
+      "bytes": 166880,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check/radar-dark.png",
+      "sha256": "3008bbd719c437257289bc01897f2c1b0841389c38dd0f3cf73be46cbde46ed5",
+      "bytes": 201112,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check/radar-four.png",
+      "sha256": "314a83091769b29757b6fc0fc7f034c9b811631712ccc2d777d452728766220f",
+      "bytes": 245916,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check/compare-evidence.png",
+      "sha256": "a297363b4560c76b696adbe2a3f4de9b6eb41801c8a12a37dc4cefe8dcfe5ea0",
+      "bytes": 154767,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check/radar-light.png",
+      "sha256": "cd3f058a90e425ad31d43a044921b862a2351122e09a48ab33d85ece2a30ca08",
+      "bytes": 253135,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check/failure.png",
+      "sha256": "ef1cc2a6b815f934d5fa35d89ca352a5f0c9be6f91b51093ced4825b7464c4fe",
+      "bytes": 56382,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    }
+  ],
+  "failure": "AssertionError [ERR_ASSERTION]: radar-mobile: document overflow {\"cls\":0.0000012856565875771604,\"lcp\":1524,\"fcp\":1452,\"documentWidth\":678,\"viewport\":390,\"reducedMotion\":true}\n    at audit (file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:31:10)\n    at async file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:64:110",
+  "verdict": "failed"
+}

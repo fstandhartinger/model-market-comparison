@@ -1,0 +1,26 @@
+{
+  "artifact_id": "phase06-docs-and-coverage",
+  "artifact_sha256": "976a0e5605bba4a5f1b92b3620bb2c8fdcd71d8d101d159f321703a3a5a4f789",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "docs/benchmark-explorer.md: methodology documentation, radar normalization formulas (100 * (val - min) / (max - min)), 3-8 axis constraints, leave-one-family-out profile anomaly criteria (>=20 peers, >=10 families, >=5 baseline families, directed z and gap >= 1.5), 0 live verified divergence pairs, and API query parameters",
+    "API.md: documentation for GET /api/benchmarks, GET /api/benchmark-scores (with observation_id and basis filters), GET /api/benchmark-view, and GET /api/price-comparison without altering Composite input definitions or legacy field semantics",
+    "README.md: updated overview covering /benchmarks rankings, /radar, 4-model /compare comparisons, profile signals, version isolation, and link to docs/benchmark-explorer.md",
+    "CHANGELOG.md: recorded Phase 06 additions (versioned registry, presentation projections, model sheets, theme and focus accessibility) and clear downstream consumer notices",
+    "ops/rebuild-2026-09/COVERAGE.md: line-by-line verification status of master brief items (W6, W11, W14, W20, W21, W22, W23, W25 updated to Phase 6 verified/implemented; later phases remain explicitly planned)",
+    "ops/rebuild-2026-09/REPORT.md: Phase 06 summary report confirming 146/146 unit/integration tests, 11/11 prerender routes, 13,908 observations, 971 legacy index checks, worker costs ($0.425570 across 10 completed calls), and explicitly noting live deployment is pending",
+    "scripts/check-benchmark-ui.mjs & scripts/check-benchmark-legacy-ui.mjs: automated Playwright test scripts covering skip links, keyboard navigation, 4-model comparison, 8-axis selection ceiling, HTTP 503 retry, aria snapshots, mobile/desktop viewports (320px/390px/1440px), and axe scans",
+    "tailwind.config.ts: theme color tokens updated to CSS variable rgb format (rgb(var(--ink) / <alpha-value>)) supporting prepaint theme switching",
+    "lib/types.ts: SCORE_LABELS updated with explicit v1.4 label for Coding Agent Index, maintaining isolation from v1.5",
+    "test/production/prerender.mjs: test suite extended to assert static build-time prerendering for /benchmarks and /radar"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Automated accessibility evaluations (0 axe violations) and layout/timing metrics (FCP/LCP/CLS) represent local headless Chrome test receipts rather than field user monitoring or formal third-party WCAG certification.",
+    "Verification of the live deployment on benchmarkheaven.com remains pending future phases (Phases 07 and 09) as explicitly documented."
+  ],
+  "missing_evidence": []
+}

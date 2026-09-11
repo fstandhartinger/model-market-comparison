@@ -1,11 +1,13 @@
 "use client";
 import { useMemo, useState } from "react";
+import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
+import { scoreLabel, scoreChartLabel } from "../lib/score-label";
 import { orgColor } from "../lib/format";
 import { modelPrice, createOfferScope, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { Toggle } from "./ui";
@@ -80,16 +82,16 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
+        <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{scoreLabel(score, data.sourceDates)}</b></span>
         <Toggle label="Log cost axis" on={logX} set={setLogX} />
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
         <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
-      <div className="card p-4" style={{ height: 580 }}>
+      <div aria-hidden="true" className="card p-4" style={{ height: 580 }}>
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
+          <ScatterChart accessibilityLayer={false} margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
             <CartesianGrid stroke="#222932" />
             <XAxis type="number" dataKey="x" name="Cost" reversed
               scale={logX ? "log" : "linear"}
@@ -100,7 +102,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
               <Label value={`← more expensive    ·    cheaper → (cheapest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : [0, "auto"]}>
-              <Label value={SCORE_LABELS[score]} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
+              <Label value={scoreChartLabel(score, data.sourceDates)} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
@@ -109,7 +111,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
                 shape={ParetoHalo} legendType="none" isAnimationActive={false} />
             )}
             {byOrg.map(([org, pts]) => (
-              <Scatter key={org} name={org} data={pts} fill={orgColor(org)} shape={PointShape}
+              <Scatter isAnimationActive={false} key={org} name={org} data={pts} fill={orgColor(org)} shape={PointShape}
                 onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
             ))}
           </ScatterChart>
@@ -140,13 +142,13 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
           <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-3 py-1 text-left text-xs text-gray-400">Model</th>
-              <th className="px-3 py-1 text-right text-xs text-gray-400">Score</th>
+              <th className="px-3 py-1 text-right text-xs text-gray-400">{scoreLabel(score, data.sourceDates)}</th>
               <th className="px-3 py-1 text-right text-xs text-gray-400">{priceLabel(priceSettings)}</th>
             </tr></thead>
             <tbody>
               {[...allPoints].sort((a, b) => a.x - b.x).map((p) => (
                 <tr key={p.id}>
-                  <td className="px-3 py-1">{p.name} <span className="text-gray-500">{p.org}{p.open ? " · open" : ""}</span></td>
+                  <td className="px-3 py-1"><Link href={`/models/${encodeURIComponent(p.id)}`} className="text-accent underline">{p.name}</Link> <span className="text-gray-500">{p.org}{p.open ? " · open" : ""}</span></td>
                   <td className="px-3 py-1 text-right tabular">{p.y.toFixed(isElo ? 0 : 1)}</td>
                   <td className="px-3 py-1 text-right"><PriceValue price={p.price} compact /></td>
                 </tr>

@@ -1,0 +1,18 @@
+# Phase 06 acceptance checklist (frozen before rendered acceptance)
+
+Reference: before-compare.png, the previous release at 1440×1000. Target: compact primary navigation, price filters in a disclosure, clear model selection before evidence, a radar legible without hover, and grouped native-number tables. Preserve the existing price task.
+
+- Navigation: primary Overview, Benchmarks, Compare, Radar; remaining routes reachable; active route announced; skip link; exact model name/effort on model sheets.
+- Compare: native keyboard controls for 0–4 distinct models, remove/change/search; same shared selection in radar and full benchmark table. Separate legacy price selection explicitly labelled. No score mutations or Composite input changes.
+- Radar: 3–8 selectable versioned axes; up to four distinct labelled/dashed series; per-axis fixed measured catalog min/max, direction reversed where needed; explicit missing/zero/constant/low-sample states; exact native and normalized table; light/dark contrast. No closed polygons crossing absent axes.
+- Rankings: version and evaluation group; native units and direction; model/evidence/open-weight/unmatched filters; honest denominators; native tie ranks; source identities distinguished from catalog models; source/date/claim flags visible.
+- Sheets: categories; all observations including vendor claims and existing index snapshots; version/source/link/observed versus publication date; missing coverage states; phase-05 divergence schema and empty state.
+- Anomalies: measured only; at least 20 unique source configurations and 10 model families; at least five other benchmark families; peer-directed population z and leave-family-out baseline gap both >=1.5 in absolute value and same direction; full arithmetic and input values; no significance claim; no flag for small or constant samples.
+- Versions: Coding Agent v1.4 retains 2026-09-09 and its unchanged Composite role; v1.5 navigable separately; other unversioned source captures explicitly dated snapshots. LongBench CoT, MMMU splits, harness groups stay separate.
+- Keyboard evidence: Tab from document to skip link then main; native model select, remove, axis checkboxes (limit eight), evidence/why disclosures, theme toggle, More navigation, ranking filters; no traps; visible focus. Screen-reader evidence: accessible tree and labels.
+- Contrast: WCAG 2.2 text minimum 4.5:1 (large text 3:1), meaningful chart/control boundaries 3:1; information not solely color. Sources: https://www.w3.org/WAI/WCAG22/Understanding/contrast-minimum.html and https://www.w3.org/WAI/WCAG22/Understanding/non-text-contrast.html .
+- Responsive: 1440×1000 and 390×844, plus 320px reflow check; no document horizontal overflow. Data-table/diagram horizontal scrolling may be contained in labelled keyboard-focusable regions (WCAG exception). Source: https://www.w3.org/WAI/WCAG22/Understanding/reflow.html .
+- Keyboard criterion source: https://www.w3.org/WAI/WCAG22/Understanding/keyboard.html . No automatic axe pass is a full accessibility conformance claim.
+- Loading/empty/error: stable chart space, visible in-flight status, no fabricated zero, retry after fetch failure, abort stale selection responses, unmatched and sparse fixtures.
+- Performance: production build; FCP/LCP and CLS receipts with environment, no layout shift in tested load flow; benchmark initial payload below 500KB for default selected models; no external font/image dependencies.
+- Critic must receive actual PNGs through worker --image plus keyboard, axe, DOM and timing receipts; text-only criticism cannot accept pixels. Review source/code separately from rendered visuals, and record exact coverage and limitations.

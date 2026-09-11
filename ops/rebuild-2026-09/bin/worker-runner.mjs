@@ -8,6 +8,7 @@ import { createHash } from 'node:crypto';
 import { selectModel, validateCompletion, SMOKE_TASK } from './worker-policy.mjs';
 import { writeJSONAtomic } from '../../../lib/snapshot.mjs';
 import { writeFile, rename, rm } from 'node:fs/promises';
+import { imageEvidence } from './worker-images.mjs';
 const exec = promisify(execFile);
 const REPO = fileURLToPath(new URL('../../../', import.meta.url));
 const HELP = `worker.sh [options] "task"
@@ -16,6 +17,7 @@ const HELP = `worker.sh [options] "task"
   --producer ID[,ID]   explicit artifact producers; recommended for every critic
   --model ID           pin a supported OpenRouter model (AA gate still applies)
   --file PATH          embed contents in the request, not just the file path
+  --image PATH         attach local PNG/JPEG to a vision critic (repeat, max 8)
   --out PATH           atomic text output plus PATH.meta.json execution receipt
   --smoke-test         fixed known-answer transport test; requires --model, no task/file
   --timeout SECONDS    model execution limit (default 600, maximum 1800)
@@ -26,7 +28,7 @@ Unscored models are only allowed for the built-in smoke test (2048 tokens, <=$2/
 Catalog requests and opencode export each have a separate 30-second timeout.
 Smoke success never qualifies a model. No permission or model fallback is implicit.`;
 
-const options = { producers: [], timeout: 600, maxTokens: 8192 };
+const options = { producers: [], images: [], timeout: 600, maxTokens: 8192 };
 const args = process.argv.slice(2);
 let task;
 function value(flag) { const result = args.shift(); if (!result || result.startsWith('--')) throw new Error(`Missing value for ${flag}`); return result; }
@@ -101,6 +103,7 @@ try {
     else if (flag === '--producer') options.producers.push(...value(flag).split(',').filter(Boolean));
     else if (flag === '--model') options.model = value(flag);
     else if (flag === '--file') options.file = value(flag);
+    else if (flag === '--image') options.images.push(resolve(value(flag)));
     else if (flag === '--out') options.out = resolve(value(flag));
     else if (flag === '--timeout') options.timeout = Number(value(flag));
     else if (flag === '--max-tokens') options.maxTokens = Number(value(flag));
@@ -117,6 +120,7 @@ try {
   if (!Number.isInteger(options.timeout) || options.timeout < 1 || options.timeout > 1800) throw new Error('Timeout must be 1..1800 seconds');
   if (!Number.isInteger(options.maxTokens) || options.maxTokens < 32 || options.maxTokens > 32768) throw new Error('max-tokens must be 32..32768');
   if (options.agent && (options.critic || options.model || options.smokeTest)) throw new Error('--agent cannot combine with --critic, --model or --smoke-test');
+  if (options.images.length && (!options.critic || options.agent || options.smokeTest)) throw new Error('--image requires a read-only critic');
   const state = process.env.BH_STATE || '/opt/benchmarkheaven/state';
   await mkdir(state, { recursive: true });
   const last = resolve(state, 'last-worker-model');
@@ -127,8 +131,11 @@ try {
   const dataset = JSON.parse(await readFile(resolve(REPO, 'data/dataset.json'), 'utf8'));
   const catalog = (await getJSON('https://openrouter.ai/api/v1/models')).data;
   const chosen = selectModel(catalog, dataset, options.agent ? { model: 'moonshotai/kimi-k3' } : options);
+  const screenshots = await imageEvidence(options.images, catalog.find((m) => m.id === chosen.id));
+  if (screenshots.manifest.length) task += `\n\nAttached screenshot manifest, in image order:\n${JSON.stringify(screenshots.manifest)}`;
   const metadata = { started_at: new Date().toISOString(), mode: options.agent ? 'agent' : options.critic ? 'critic' : options.smokeTest ? 'smoke_test' : 'oneshot', requested_model: options.agent ? 'chutes/moonshotai/Kimi-K3-TEE' : chosen.id, producers: options.producers, qualification: chosen, input_sha256: createHash('sha256').update(task).digest('hex') };
   console.error(`worker.sh: model=${metadata.requested_model} mode=${metadata.mode} AA=${chosen.aa_intelligence_index ?? 'unscored smoke only'}`);
+  metadata.images = screenshots.manifest;
   let result;
   if (options.agent) {
     if (Buffer.byteLength(task) > 100_000) throw new Error('Opencode task too large for CLI; use repo-relative input files');
@@ -143,7 +150,7 @@ try {
     const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
       method: 'POST', signal: AbortSignal.timeout(options.timeout * 1000),
       headers: { Authorization: `Bearer ${key}`, 'Content-Type': 'application/json', 'HTTP-Referer': 'https://benchmarkheaven.com', 'X-Title': 'Benchmark Heaven QA' },
-      body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, messages: [{ role: 'system', content: system }, { role: 'user', content: task }] }),
+      body: JSON.stringify({ model: chosen.id, max_tokens: options.maxTokens, messages: [{ role: 'system', content: system }, { role: 'user', content: screenshots.parts.length ? [{ type: 'text', text: task }, ...screenshots.parts] : task }] }),
     });
     if (!response.ok) throw new Error(`OpenRouter completion HTTP ${response.status}`);
     const body = await response.json();

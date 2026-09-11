@@ -1,0 +1,146 @@
+import type { BenchmarkView, ViewAxis, ViewScore } from '../lib/benchmark-view.mjs';
+import { ANOMALY_POLICY, profileAnomalies } from '../lib/benchmark-view.mjs';
+
+// The supplied type material does not define divergence record fields; they are read
+// defensively and rendered only when present. Missing fields are stated, never
+// inferred; no "phase5" filter is applied because no phase field was supplied.
+type DivSide = { value?: number; url?: string; date?: string };
+type DivRec = {
+  model_id?: string; modelId?: string;
+  benchmark_id?: string; benchmarkId?: string; axis_id?: string; axisId?: string;
+  delta?: number; unit?: string; measured?: DivSide; vendor?: DivSide;
+};
+
+const fmt = (n: number | null | undefined, digits = 5): string =>
+  n == null || !Number.isFinite(n) ? 'unavailable' : String(Number(n.toFixed(digits)));
+
+function DivValue({ side, unit }: { side?: DivSide; unit?: string }) {
+  if (!side || side.value == null || !Number.isFinite(side.value))
+    return <span className="bh-muted">value unavailable</span>;
+  return (
+    <span className="tabular-nums">
+      {fmt(side.value)}
+      {unit ? ` ${unit}` : ''}
+      {side.url ? <> · <a href={side.url} target="_blank" rel="noreferrer">source</a></> : <span className="bh-muted"> · no source link</span>}
+      {side.date ? ` · observed ${side.date}` : <span className="bh-muted"> · no date</span>}
+    </span>
+  );
+}
+
+export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: ViewAxis; row: ViewScore }) {
+  const src = view.sources[row.source];
+  const legacy = row.id.startsWith('legacy:');
+  const flag = row.derived ? 'derived from measured' : row.basis;
+  const flagClass = row.derived ? 'bh-badge bh-muted' : row.basis === 'measured' ? 'bh-badge bh-positive' : row.basis.includes('self') ? 'bh-badge bh-alert' : 'bh-badge';
+  return (
+    <span className="bh-panel inline-flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
+      <span className="font-semibold tabular-nums">{fmt(row.value)} {axis.unit}</span>
+      <span className={flagClass}>{flag}</span>
+      {row.lowSample ? <span className="bh-alert">low sample</span> : null}
+      {row.battles != null ? <span className="bh-muted">{row.battles} battles</span> : null}
+      {row.variant == null ? <span className="bh-muted">variant not recorded</span> : null}
+      {row.date ? <span className="bh-muted">observed {row.date}</span> : null}
+      {src?.published ? <span className="bh-muted">published {src.published}</span> : null}
+      <details className="w-full">
+        <summary className="cursor-pointer">Evidence</summary>
+        <div className="bh-muted mt-1 space-y-1 text-xs">
+          <div>Axis: {axis.name} · {axis.version} · {axis.cohort}</div>
+          <div>Exact value: <code>{String(row.value)}</code> {axis.unit}</div>
+          <div>Observation id: <code>{row.id}</code></div>
+          <div>Source: {src ? <a href={src.url} target="_blank" rel="noreferrer">{src.url}</a> : 'no source record'}</div>
+          {!legacy && row.modelId != null ? (
+            // No API spec was supplied to verify against; the parameter is used exactly
+            // as given in the packet: model_id.
+            <div><a href={`/api/benchmark-scores?model_id=${encodeURIComponent(row.modelId)}`}>benchmark-scores API</a></div>
+          ) : null}
+          {legacy ? (
+            <div>Protocol: <a href={axis.url} target="_blank" rel="noreferrer">inspect</a>{src?.file ? <> · file <code>{src.file}</code></> : null}</div>
+          ) : null}
+        </div>
+      </details>
+    </span>
+  );
+}
+
+export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId: string }) {
+  const { flags, eligibleFamilies } = profileAnomalies(view, modelId);
+  const enough = eligibleFamilies >= ANOMALY_POLICY.minProfile;
+  const divs = (view.divergences as unknown as DivRec[]).filter((d) => (d.model_id ?? d.modelId) === modelId);
+  const axisOf = (d: DivRec) =>
+    view.axes.find((a) => a.id === (d.axis_id ?? d.axisId)) ??
+    view.axes.find((a) => a.benchmarkId === (d.benchmark_id ?? d.benchmarkId));
+  return (
+    <section className="bh-panel space-y-2">
+      <h3 className="text-base font-semibold">Profile signals</h3>
+      <p className="bh-muted text-sm">
+        {flags.length
+          ? `${flags.length} threshold-crossing signal${flags.length === 1 ? '' : 's'} flagged`
+          : enough
+            ? 'No threshold-crossing signal'
+            : 'Insufficient evidence to evaluate'}
+        {` · ${eligibleFamilies} eligible benchmark families`}
+      </p>
+      <p className="bh-muted text-xs">
+        Heuristic screen, not statistical significance: benchmark families are correlated and
+        source uncertainty is unknown. Peer evidence needs ≥ {ANOMALY_POLICY.minPeers} independently
+        measured matched configurations from ≥ {ANOMALY_POLICY.minFamilies} distinct model families.
+        A flag needs a directed population z-score of magnitude ≥ {ANOMALY_POLICY.peerZ} and a gap of
+        ≥ {ANOMALY_POLICY.profileGap} from the leave-one-benchmark-family-out mean z in the same
+        direction, over ≥ {ANOMALY_POLICY.minProfile} other benchmark families.
+      </p>
+      {flags.length ? (
+        <ul className="space-y-2">
+          {flags.map((f) => {
+            const axis = view.axes.find((a) => a.id === f.axisId);
+            const row = axis?.scores.find((s) => s.id === f.scoreId);
+            const strong = f.direction === 'strong';
+            return (
+              <li key={`${f.axisId}@@${f.scoreId}`} className="text-sm">
+                <span className={strong ? 'bh-badge bh-positive' : 'bh-badge bh-negative'}>
+                  {strong ? 'unusually strong' : 'unusually weak'}
+                </span>{' '}
+                <span className="font-medium">{axis ? `${axis.name} ${axis.version}` : f.axisId}</span>
+                <details className="mt-1">
+                  <summary className="cursor-pointer bh-muted">Why</summary>
+                  <div className="bh-muted space-y-1 text-xs">
+                    <div>Observed: {fmt(f.value)} {axis?.unit ?? ''}</div>
+                    <div>Peer mean {fmt(f.mean)} · peer sd {fmt(f.sd)} · n {f.peers} · families {f.peerFamilies}</div>
+                    <div>Directed z {fmt(f.z, 3)} · baseline z {fmt(f.baseline, 3)} · gap {fmt(f.gap, 3)} · profile n {f.profileN}</div>
+                    {axis && row ? <SourceScore view={view} axis={axis} row={row} /> : null}
+                  </div>
+                </details>
+              </li>
+            );
+          })}
+        </ul>
+      ) : null}
+      <div className="space-y-1">
+        <h4 className="text-sm font-medium">Protocol-compatible measured/vendor divergences</h4>
+        {divs.length ? (
+          <table className="bh-table w-full text-sm">
+            <thead><tr><th className="text-left">Axis</th><th className="text-left">Measured</th><th className="text-left">Vendor</th><th className="text-left">Native delta</th></tr></thead>
+            <tbody>
+              {divs.map((d, i) => {
+                const axis = axisOf(d);
+                const unit = d.unit ?? axis?.unit;
+                return (
+                  <tr key={i}>
+                    <td>{axis ? `${axis.name} ${axis.version}` : (d.axis_id ?? d.axisId ?? d.benchmark_id ?? d.benchmarkId ?? 'unidentified axis')}</td>
+                    <td><DivValue side={d.measured} unit={unit} /></td>
+                    <td><DivValue side={d.vendor} unit={unit} /></td>
+                    <td className="tabular-nums">{d.delta != null ? `${fmt(d.delta)}${unit ? ` ${unit}` : ''}` : 'unavailable'}</td>
+                  </tr>
+                );
+              })}
+            </tbody>
+          </table>
+        ) : (
+          <p className="bh-muted text-sm">
+            No verified protocol-compatible measured/vendor pair for this model. That is an absence
+            of a verified pairing, not evidence that the measured and vendor values are equal.
+          </p>
+        )}
+      </div>
+    </section>
+  );
+}

@@ -24,12 +24,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const families = [...famMap.values()].sort((a, b) => a.name.localeCompare(b.name));
 
   return (
-    <html lang="en">
+    <html lang="en" suppressHydrationWarning>
+      <head><script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('bh-theme');document.documentElement.dataset.theme=t==='light'||t==='dark'?t:window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}})()` }} /></head>
       <body>
+        <a href="#main-content" className="skip-link">Skip to main content</a>
         <SettingsProvider>
           <Nav />
           <GlobalFilters providers={providers} families={families} />
-          <main className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>
+          <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>
           <footer className="mx-auto max-w-[1400px] px-4 py-10 text-xs text-gray-500">
             Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry ·
             Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted.

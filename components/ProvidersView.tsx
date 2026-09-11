@@ -2,6 +2,7 @@
 import { Fragment, useMemo, useState } from "react";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
+import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { num, orgColor } from "../lib/format";
 import { rankedOffers, createOfferScope, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
 import { DataBar } from "./ui";
@@ -244,9 +245,9 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const modelPicker = (
     <div className="card flex flex-col">
       <div className="border-b border-line p-3">
-        <input value={modelQ} onChange={(e) => setModelQ(e.target.value)} placeholder="Search model / org…"
+        <input aria-label="Search provider models" value={modelQ} onChange={(e) => setModelQ(e.target.value)} placeholder="Search model / org…"
           className="w-full rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
-        <p className="mt-1 text-[11px] text-gray-500">Pick a model — sorted by Composite score.</p>
+        <p className="mt-1 text-[11px] text-gray-500">Pick a model — sorted by Composite (fixed inputs, including Coding Agent v1.4 from September 9, 2026).</p>
       </div>
       <div className="max-h-[70vh] overflow-y-auto">
         <table className="dtable w-full table-fixed text-sm">
@@ -262,7 +263,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
               return (
                 <tr key={m.id} onClick={() => setModelId(m.id)} className={`cursor-pointer ${active ? "bg-accent/15" : ""}`}>
                   <td className="px-3 py-2 truncate">
-                    <span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <span className="font-medium">{collapsedName(m, s.collapse, preferredId)}</span>
+                    <span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} /> <button type="button" aria-pressed={active} className="max-w-full truncate text-left font-medium" onClick={(e) => { e.stopPropagation(); setModelId(m.id); }}>{collapsedName(m, s.collapse, preferredId)}</button>
                     {m.open_weights && <span className="ml-1 text-[10px] text-accent2">open</span>}
                   </td>
                   <td className="px-3 py-2">
@@ -283,7 +284,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
         <span className="inline-flex items-center gap-2">
           <label className="text-sm text-gray-400">Rank by</label>
-          <select value={mode} onChange={(e) => setMode(e.target.value as Mode)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
+          <select aria-label="Rank providers by" value={mode} onChange={(e) => setMode(e.target.value as Mode)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
             <option value="model">A single model&apos;s offers</option>
             <option value="all">Avg price rank across models</option>
           </select>
@@ -292,8 +293,8 @@ export function ProvidersView({ data }: { data: ClientData }) {
           <span className="text-sm text-gray-400">Selected: <b className="text-gray-200">{selectedModel ? collapsedName(selectedModel, s.collapse, preferredId) : "—"}</b></span>
         ) : (
           <>
-            <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{SCORE_LABELS[score]}</b></span>
-            <button onClick={() => setScorePeersOnly(!scorePeersOnly)}
+            <span className="text-sm text-gray-400">Peer score: <b className="text-gray-200">{scoreLabel(score, data.sourceDates)}</b></span>
+            <button aria-pressed={scorePeersOnly} onClick={() => setScorePeersOnly(!scorePeersOnly)}
               className={`rounded-md border px-3 py-1.5 text-sm ${scorePeersOnly ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
               {scorePeersOnly ? "✓ " : ""}{score === "composite" ? "Only models with benchmark evidence" : "Only models with this score"}
             </button>

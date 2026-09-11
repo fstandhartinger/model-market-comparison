@@ -1,4 +1,5 @@
 "use client";
+import { usePathname } from "next/navigation";
 import type { ProviderInfo } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
 import { ScoreSelect, Toggle, ProviderFilter, ModelFilter, NumFilter, type FamilyOption } from "./ui";
@@ -7,10 +8,13 @@ import { defaultMinFor, FIXED_BLENDS } from "../lib/cost";
 /** Top-level filter bar; settings apply to interactive comparisons and model offers. */
 export function GlobalFilters({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
   const s = useSettings();
+  const path = usePathname();
+  if (path === "/benchmarks" || path === "/radar") return null;
   const adjusted = s.priceMode === "adjusted";
   const active = s.providersExcluded.length || s.families.length || !s.featured || !s.collapse || !s.hideDeprecated || !s.excludeChinese || s.euHostedOnly || s.nonUsOnly || s.openOnly || s.teeOnly || s.minScore !== defaultMinFor(s.score) || s.priceMode !== "adjusted";
   return (
-    <div className="border-b border-line bg-[#10141a]">
+    <details className="border-b border-line bg-panel">
+      <summary className="mx-auto max-w-[1400px] cursor-pointer px-4 py-3 text-sm">Price &amp; provider filters · {adjusted ? "adjusted costs" : "raw list prices"}</summary>
       <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-2 px-4 py-2">
         <span className="mr-1 text-xs font-semibold uppercase tracking-wide text-gray-500">Global</span>
         <ScoreSelect value={s.score} onChange={s.setScore} />
@@ -44,8 +48,8 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           <button onClick={() => { s.setProvidersExcluded([]); s.setFamilies([]); s.setFeatured(true); s.setCollapse(true); s.setHideDeprecated(true); s.setExcludeChinese(true); s.setEuHostedOnly(false); s.setNonUsOnly(false); s.setOpenOnly(false); s.setTeeOnly(false); s.setMinScore(defaultMinFor(s.score)); s.setPriceMode("adjusted"); }}
             className="rounded-md border border-line px-2 py-1 text-xs text-gray-400 hover:text-gray-200">Reset</button>
         )}
-        <span className="ml-auto text-[11px] text-gray-600">Applies to comparisons &amp; model offers</span>
+        <span className="ml-auto text-[11px] text-gray-600">Applies to price views &amp; model offers; benchmark evidence stays unfiltered</span>
       </div>
-    </div>
+    </details>
   );
 }

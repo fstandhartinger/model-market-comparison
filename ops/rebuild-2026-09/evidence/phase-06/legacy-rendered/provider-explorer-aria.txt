@@ -1,0 +1,539 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - heading "Provider explorer" [level=1]
+  - paragraph: Browse the provider directory on the left — each tagged Hyperscaler / EU / Non-US, with its model count and HQ. Click a provider to see every model it offers and its price; click a model to compare that provider's price against all other providers of the same model, ranked cheapest-first in the selected cost scenario (adjusted USD/task by default).
+  - textbox "Search providers":
+    - /placeholder: Search providers…
+  - 'button "by #models"'
+  - button "EU first"
+  - button "A–Z"
+  - checkbox "EU-hosted / approved equivalent only"
+  - text: EU-hosted / approved equivalent only
+  - checkbox "Show providers with 0 matching models"
+  - text: Show providers with 0 matching models
+  - table:
+    - rowgroup:
+      - 'row "Provider Flags # models"':
+        - columnheader "Provider"
+        - columnheader "Flags"
+        - columnheader "# models"
+    - rowgroup:
+      - row "Azure OpenRouter · US Hyperscaler EU-capable 15":
+        - cell "Azure OpenRouter · US":
+          - button "Azure" [pressed]
+          - text: OpenRouter · US
+        - cell "Hyperscaler EU-capable"
+        - cell "15"
+      - row "Amazon Bedrock OpenRouter · US Hyperscaler EU-capable 15":
+        - cell "Amazon Bedrock OpenRouter · US":
+          - button "Amazon Bedrock"
+          - text: OpenRouter · US
+        - cell "Hyperscaler EU-capable"
+        - cell "15"
+      - row "AWS Bedrock US Hyperscaler EU-capable 14":
+        - cell "AWS Bedrock US":
+          - button "AWS Bedrock"
+          - text: US
+        - cell "Hyperscaler EU-capable"
+        - cell "14"
+      - row "Azure AI Foundry US Hyperscaler EU-capable 14":
+        - cell "Azure AI Foundry US":
+          - button "Azure AI Foundry"
+          - text: US
+        - cell "Hyperscaler EU-capable"
+        - cell "14"
+      - row "T-Systems LLM Hub Germany EU-capable 12":
+        - cell "T-Systems LLM Hub Germany":
+          - button "T-Systems LLM Hub"
+          - text: Germany
+        - cell "EU-capable"
+        - cell "12"
+      - row "DeepInfra OpenRouter · US 11":
+        - cell "DeepInfra OpenRouter · US":
+          - button "DeepInfra"
+          - text: OpenRouter · US
+        - cell
+        - cell "11"
+      - row "Novita OpenRouter · US 11":
+        - cell "Novita OpenRouter · US":
+          - button "Novita"
+          - text: OpenRouter · US
+        - cell
+        - cell "11"
+      - row "GMICloud OpenRouter · US 10":
+        - cell "GMICloud OpenRouter · US":
+          - button "GMICloud"
+          - text: OpenRouter · US
+        - cell
+        - cell "10"
+      - row "Venice OpenRouter · US 9":
+        - cell "Venice OpenRouter · US":
+          - button "Venice"
+          - text: OpenRouter · US
+        - cell
+        - cell "9"
+      - row "Google Vertex AI US Hyperscaler EU-capable 8":
+        - cell "Google Vertex AI US":
+          - button "Google Vertex AI"
+          - text: US
+        - cell "Hyperscaler EU-capable"
+        - cell "8"
+      - row "Google OpenRouter · US Hyperscaler EU-capable 8":
+        - cell "Google OpenRouter · US":
+          - button "Google"
+          - text: OpenRouter · US
+        - cell "Hyperscaler EU-capable"
+        - cell "8"
+      - row "Parasail OpenRouter · US 8":
+        - cell "Parasail OpenRouter · US":
+          - button "Parasail"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "AtlasCloud OpenRouter · US 8":
+        - cell "AtlasCloud OpenRouter · US":
+          - button "AtlasCloud"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "Nebius Netherlands EU-capable 8":
+        - cell "Nebius Netherlands":
+          - button "Nebius"
+          - text: Netherlands
+        - cell "EU-capable"
+        - cell "8"
+      - row "Phala OpenRouter · US 8":
+        - cell "Phala OpenRouter · US":
+          - button "Phala"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "TensorX Ireland EU-capable 8":
+        - cell "TensorX Ireland":
+          - button "TensorX"
+          - text: Ireland
+        - cell "EU-capable"
+        - cell "8"
+      - row "DigitalOcean OpenRouter · US 8":
+        - cell "DigitalOcean OpenRouter · US":
+          - button "DigitalOcean"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "BaseTen OpenRouter · US 8":
+        - cell "BaseTen OpenRouter · US":
+          - button "BaseTen"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "Anthropic US 8":
+        - cell "Anthropic US":
+          - button "Anthropic"
+          - text: US
+        - cell
+        - cell "8"
+      - row "Fireworks OpenRouter · US 8":
+        - cell "Fireworks OpenRouter · US":
+          - button "Fireworks"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "Anthropic OpenRouter · US 8":
+        - cell "Anthropic OpenRouter · US":
+          - button "Anthropic"
+          - text: OpenRouter · US
+        - cell
+        - cell "8"
+      - row "Claude Platform on AWS OpenRouter · US 7":
+        - cell "Claude Platform on AWS OpenRouter · US":
+          - button "Claude Platform on AWS"
+          - text: OpenRouter · US
+        - cell
+        - cell "7"
+      - row "OpenAI OpenRouter · US 6":
+        - cell "OpenAI OpenRouter · US":
+          - button "OpenAI"
+          - text: OpenRouter · US
+        - cell
+        - cell "6"
+      - row "CoreWeave OpenRouter · US 6":
+        - cell "CoreWeave OpenRouter · US":
+          - button "CoreWeave"
+          - text: OpenRouter · US
+        - cell
+        - cell "6"
+      - row "Cloudflare OpenRouter · US 6":
+        - cell "Cloudflare OpenRouter · US":
+          - button "Cloudflare"
+          - text: OpenRouter · US
+        - cell
+        - cell "6"
+      - row "Together OpenRouter · US 6":
+        - cell "Together OpenRouter · US":
+          - button "Together"
+          - text: OpenRouter · US
+        - cell
+        - cell "6"
+      - row "Crusoe OpenRouter · US 5":
+        - cell "Crusoe OpenRouter · US":
+          - button "Crusoe"
+          - text: OpenRouter · US
+        - cell
+        - cell "5"
+      - row "Chutes US 4":
+        - cell "Chutes US":
+          - button "Chutes"
+          - text: US
+        - cell
+        - cell "4"
+      - row "Friendli OpenRouter · US 4":
+        - cell "Friendli OpenRouter · US":
+          - button "Friendli"
+          - text: OpenRouter · US
+        - cell
+        - cell "4"
+      - row "Sail Research OpenRouter · US 4":
+        - cell "Sail Research OpenRouter · US":
+          - button "Sail Research"
+          - text: OpenRouter · US
+        - cell
+        - cell "4"
+      - row "Inceptron Sweden EU-capable 4":
+        - cell "Inceptron Sweden":
+          - button "Inceptron"
+          - text: Sweden
+        - cell "EU-capable"
+        - cell "4"
+      - row "Inceptron OpenRouter · Sweden EU-capable 4":
+        - cell "Inceptron OpenRouter · Sweden":
+          - button "Inceptron"
+          - text: OpenRouter · Sweden
+        - cell "EU-capable"
+        - cell "4"
+      - row "NextBit OpenRouter · Spain EU-capable 3":
+        - cell "NextBit OpenRouter · Spain":
+          - button "NextBit"
+          - text: OpenRouter · Spain
+        - cell "EU-capable"
+        - cell "3"
+      - row "Morph OpenRouter · US 3":
+        - cell "Morph OpenRouter · US":
+          - button "Morph"
+          - text: OpenRouter · US
+        - cell
+        - cell "3"
+      - row "Chutes OpenRouter · US 3":
+        - cell "Chutes OpenRouter · US":
+          - button "Chutes"
+          - text: OpenRouter · US
+        - cell
+        - cell "3"
+      - row "Makora OpenRouter · US 3":
+        - cell "Makora OpenRouter · US":
+          - button "Makora"
+          - text: OpenRouter · US
+        - cell
+        - cell "3"
+      - row "Wafer OpenRouter · US 3":
+        - cell "Wafer OpenRouter · US":
+          - button "Wafer"
+          - text: OpenRouter · US
+        - cell
+        - cell "3"
+      - row "Modal OpenRouter · US 3":
+        - cell "Modal OpenRouter · US":
+          - button "Modal"
+          - text: OpenRouter · US
+        - cell
+        - cell "3"
+      - row "Decart OpenRouter · US 3":
+        - cell "Decart OpenRouter · US":
+          - button "Decart"
+          - text: OpenRouter · US
+        - cell
+        - cell "3"
+      - row "Nebius OpenRouter · Netherlands EU-capable 2":
+        - cell "Nebius OpenRouter · Netherlands":
+          - button "Nebius"
+          - text: OpenRouter · Netherlands
+        - cell "EU-capable"
+        - cell "2"
+      - row "Reka OpenRouter · US 2":
+        - cell "Reka OpenRouter · US":
+          - button "Reka"
+          - text: OpenRouter · US
+        - cell
+        - cell "2"
+      - row "xAI OpenRouter · US 2":
+        - cell "xAI OpenRouter · US":
+          - button "xAI"
+          - text: OpenRouter · US
+        - cell
+        - cell "2"
+      - row "Relace OpenRouter · US 2":
+        - cell "Relace OpenRouter · US":
+          - button "Relace"
+          - text: OpenRouter · US
+        - cell
+        - cell "2"
+      - row "Io Net OpenRouter · US 2":
+        - cell "Io Net OpenRouter · US":
+          - button "Io Net"
+          - text: OpenRouter · US
+        - cell
+        - cell "2"
+      - row "Meta OpenRouter · US 2":
+        - cell "Meta OpenRouter · US":
+          - button "Meta"
+          - text: OpenRouter · US
+        - cell
+        - cell "2"
+      - row "ModelRun OpenRouter · US 2":
+        - cell "ModelRun OpenRouter · US":
+          - button "ModelRun"
+          - text: OpenRouter · US
+        - cell
+        - cell "2"
+      - row "Mistral OpenRouter · France EU-capable 1":
+        - cell "Mistral OpenRouter · France":
+          - button "Mistral"
+          - text: OpenRouter · France
+        - cell "EU-capable"
+        - cell "1"
+      - row "Scaleway France EU-capable 1":
+        - cell "Scaleway France":
+          - button "Scaleway"
+          - text: France
+        - cell "EU-capable"
+        - cell "1"
+      - row "Mistral France EU-capable 1":
+        - cell "Mistral France":
+          - button "Mistral"
+          - text: France
+        - cell "EU-capable"
+        - cell "1"
+      - row "SambaNova OpenRouter · US 1":
+        - cell "SambaNova OpenRouter · US":
+          - button "SambaNova"
+          - text: OpenRouter · US
+        - cell
+        - cell "1"
+      - row "AkashML OpenRouter · US 1":
+        - cell "AkashML OpenRouter · US":
+          - button "AkashML"
+          - text: OpenRouter · US
+        - cell
+        - cell "1"
+      - row "Ionstream OpenRouter · US 1":
+        - cell "Ionstream OpenRouter · US":
+          - button "Ionstream"
+          - text: OpenRouter · US
+        - cell
+        - cell "1"
+      - row "Ambient OpenRouter · — 1":
+        - cell "Ambient OpenRouter · —":
+          - button "Ambient"
+          - text: OpenRouter · —
+        - cell
+        - cell "1"
+  - paragraph: 53 providers. Click one to see its models & prices.
+  - text: "Azure OpenRouter Hyperscaler EU-capable HQ: US 15 models"
+  - button "Sort by price"
+  - button "Sort by score"
+  - paragraph: Exact OpenRouter provider name. EU-capable only on endpoints explicitly tagged azure/eu or azure/swedencentral; global routes do not inherit EU residency.
+  - paragraph: "Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback). These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task; unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs, dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens."
+  - table:
+    - rowgroup:
+      - row "Model Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4 Raw in $/1M Raw out $/1M Adjusted $/task Price rank":
+        - columnheader "Model"
+        - columnheader "Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4"
+        - columnheader "Raw in $/1M"
+        - columnheader "Raw out $/1M"
+        - columnheader "Adjusted $/task"
+        - columnheader "Price rank"
+        - columnheader
+    - rowgroup:
+      - 'row "Deepseek V4 Pro DeepSeek 60.0 $1.91 $3.83 $0.04358 $/task: show cost inputs for DeepSeek V4 Pro (Reasoning, High Effort), Azure / OpenRouter #13 ▸ compare 13"':
+        - cell "Deepseek V4 Pro DeepSeek":
+          - button "Deepseek V4 Pro"
+          - text: DeepSeek
+        - cell "60.0"
+        - cell "$1.91"
+        - cell "$3.83"
+        - 'cell "$0.04358 $/task: show cost inputs for DeepSeek V4 Pro (Reasoning, High Effort), Azure / OpenRouter"':
+          - 'button "$0.04358 $/task: show cost inputs for DeepSeek V4 Pro (Reasoning, High Effort), Azure / OpenRouter"': $0.04358 /task assumed task
+        - cell "#13"
+        - cell "▸ compare 13"
+      - 'row "GPT 5.4 OpenAI 65.4 $2.50 $15.00 $0.06702 $/task: show cost inputs for GPT-5.4 (xhigh), Azure / OpenRouter #2 ▸ compare 6"':
+        - cell "GPT 5.4 OpenAI":
+          - button "GPT 5.4"
+          - text: OpenAI
+        - cell "65.4"
+        - cell "$2.50"
+        - cell "$15.00"
+        - 'cell "$0.06702 $/task: show cost inputs for GPT-5.4 (xhigh), Azure / OpenRouter"':
+          - 'button "$0.06702 $/task: show cost inputs for GPT-5.4 (xhigh), Azure / OpenRouter"': $0.06702 /task assumed task
+        - cell "#2"
+        - cell "▸ compare 6"
+      - 'row "Claude Opus 4.7 Anthropic 77.4 $5.00 $25.00 $0.12905 $/task: show cost inputs for Claude Opus 4.7 (Adaptive Reasoning, Max Effort), Azure / OpenRouter #4 ▸ compare 8"':
+        - cell "Claude Opus 4.7 Anthropic":
+          - button "Claude Opus 4.7"
+          - text: Anthropic
+        - cell "77.4"
+        - cell "$5.00"
+        - cell "$25.00"
+        - 'cell "$0.12905 $/task: show cost inputs for Claude Opus 4.7 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"':
+          - 'button "$0.12905 $/task: show cost inputs for Claude Opus 4.7 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"': $0.12905 /task assumed task
+        - cell "#4"
+        - cell "▸ compare 8"
+      - 'row "Claude Opus 4.6 Anthropic 70.8 $5.00 $25.00 $0.12905 $/task: show cost inputs for Claude Opus 4.6 (Adaptive Reasoning, Max Effort), Azure / OpenRouter #4 ▸ compare 9"':
+        - cell "Claude Opus 4.6 Anthropic":
+          - button "Claude Opus 4.6"
+          - text: Anthropic
+        - cell "70.8"
+        - cell "$5.00"
+        - cell "$25.00"
+        - 'cell "$0.12905 $/task: show cost inputs for Claude Opus 4.6 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"':
+          - 'button "$0.12905 $/task: show cost inputs for Claude Opus 4.6 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"': $0.12905 /task assumed task
+        - cell "#4"
+        - cell "▸ compare 9"
+      - 'row "Claude Sonnet 4.6 Anthropic 60.3 $3.00 $15.00 $0.2453 $/task: show cost inputs for Sonnet 4.6 (medium), Azure / OpenRouter #4 ▸ compare 9"':
+        - cell "Claude Sonnet 4.6 Anthropic":
+          - button "Claude Sonnet 4.6"
+          - text: Anthropic
+        - cell "60.3"
+        - cell "$3.00"
+        - cell "$15.00"
+        - 'cell "$0.2453 $/task: show cost inputs for Sonnet 4.6 (medium), Azure / OpenRouter"':
+          - 'button "$0.2453 $/task: show cost inputs for Sonnet 4.6 (medium), Azure / OpenRouter"': $0.2453 /task assumed task
+        - cell "#4"
+        - cell "▸ compare 9"
+      - 'row "GPT 5.6 Luna OpenAI 70.8 $0.200 $1.20 $0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter #1 · cheapest ▸ compare 6"':
+        - cell "GPT 5.6 Luna OpenAI":
+          - button "GPT 5.6 Luna"
+          - text: OpenAI
+        - cell "70.8"
+        - cell "$0.200"
+        - cell "$1.20"
+        - 'cell "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter"':
+          - 'button "$0.33111 $/task: show cost inputs for GPT-5.6 Luna (max), Azure / OpenRouter"': $0.33111 /task est.
+        - cell "#1 · cheapest"
+        - cell "▸ compare 6"
+      - 'row "GPT 5.6 Terra OpenAI 65.4 $2.00 $12.00 $0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure / OpenRouter #2 ▸ compare 6"':
+        - cell "GPT 5.6 Terra OpenAI":
+          - button "GPT 5.6 Terra"
+          - text: OpenAI
+        - cell "65.4"
+        - cell "$2.00"
+        - cell "$12.00"
+        - 'cell "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure / OpenRouter"':
+          - 'button "$0.60556 $/task: show cost inputs for GPT-5.6 Terra (high), Azure / OpenRouter"': $0.60556 /task est.
+        - cell "#2"
+        - cell "▸ compare 6"
+      - 'row "GPT 5.6 Sol OpenAI 77.5 $5.00 $30.00 $1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter #3 ▸ compare 6"':
+        - cell "GPT 5.6 Sol OpenAI":
+          - button "GPT 5.6 Sol"
+          - text: OpenAI
+        - cell "77.5"
+        - cell "$5.00"
+        - cell "$30.00"
+        - 'cell "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+          - 'button "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"': $1.521 /task est.
+        - cell "#3"
+        - cell "▸ compare 6"
+      - 'row "GPT 5.5 OpenAI 65.5 $5.00 $30.00 $2.093 $/task: show cost inputs for GPT-5.5 (high), Azure / OpenRouter #2 ▸ compare 6"':
+        - cell "GPT 5.5 OpenAI":
+          - button "GPT 5.5"
+          - text: OpenAI
+        - cell "65.5"
+        - cell "$5.00"
+        - cell "$30.00"
+        - 'cell "$2.093 $/task: show cost inputs for GPT-5.5 (high), Azure / OpenRouter"':
+          - 'button "$2.093 $/task: show cost inputs for GPT-5.5 (high), Azure / OpenRouter"': $2.093 /task est.
+        - cell "#2"
+        - cell "▸ compare 6"
+      - 'row "GPT 6 Astra OpenAI 96.0 $10.00 $50.00 $3.536 $/task: show cost inputs for GPT-6 Astra (max), Azure / OpenRouter #2 ▸ compare 3"':
+        - cell "GPT 6 Astra OpenAI":
+          - button "GPT 6 Astra"
+          - text: OpenAI
+        - cell "96.0"
+        - cell "$10.00"
+        - cell "$50.00"
+        - 'cell "$3.536 $/task: show cost inputs for GPT-6 Astra (max), Azure / OpenRouter"':
+          - 'button "$3.536 $/task: show cost inputs for GPT-6 Astra (max), Azure / OpenRouter"': $3.536 /task est.
+        - cell "#2"
+        - cell "▸ compare 3"
+      - 'row "Claude Opus 5 Anthropic 95.7 $5.00 $25.00 $8.146 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Azure / OpenRouter #5 ▸ compare 10"':
+        - cell "Claude Opus 5 Anthropic":
+          - button "Claude Opus 5"
+          - text: Anthropic
+        - cell "95.7"
+        - cell "$5.00"
+        - cell "$25.00"
+        - 'cell "$8.146 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Azure / OpenRouter"':
+          - 'button "$8.146 $/task: show cost inputs for Claude Opus 5 (Adaptive Reasoning, High Effort), Azure / OpenRouter"': $8.146 /task est.
+        - cell "#5"
+        - cell "▸ compare 10"
+      - 'row "Claude Opus 4.8 Anthropic 84.3 $5.00 $25.00 $9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Azure / OpenRouter #4 ▸ compare 9"':
+        - cell "Claude Opus 4.8 Anthropic":
+          - button "Claude Opus 4.8"
+          - text: Anthropic
+        - cell "84.3"
+        - cell "$5.00"
+        - cell "$25.00"
+        - 'cell "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"':
+          - 'button "$9.104 $/task: show cost inputs for Claude Opus 4.8 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"': $9.104 /task est.
+        - cell "#4"
+        - cell "▸ compare 9"
+      - 'row "Claude Sonnet 5 Anthropic 85.8 $2.00 $10.00 $14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Azure / OpenRouter #4 ▸ compare 9"':
+        - cell "Claude Sonnet 5 Anthropic":
+          - button "Claude Sonnet 5"
+          - text: Anthropic
+        - cell "85.8"
+        - cell "$2.00"
+        - cell "$10.00"
+        - 'cell "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"':
+          - 'button "$14.12 $/task: show cost inputs for Claude Sonnet 5 (Adaptive Reasoning, Max Effort), Azure / OpenRouter"': $14.12 /task est.
+        - cell "#4"
+        - cell "▸ compare 9"
+      - 'row "Claude Fable 5 Anthropic 93.7 $10.00 $50.00 $17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Azure / OpenRouter #4 ▸ compare 8"':
+        - cell "Claude Fable 5 Anthropic":
+          - button "Claude Fable 5"
+          - text: Anthropic
+        - cell "93.7"
+        - cell "$10.00"
+        - cell "$50.00"
+        - 'cell "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Azure / OpenRouter"':
+          - 'button "$17.253 $/task: show cost inputs for Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback), Azure / OpenRouter"': $17.253 /task est.
+        - cell "#4"
+        - cell "▸ compare 8"
+      - 'row "Claude Fable 5.1 Anthropic 100.0 $10.00 $50.00 $29.196 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Azure / OpenRouter #4 ▸ compare 7"':
+        - cell "Claude Fable 5.1 Anthropic":
+          - button "Claude Fable 5.1"
+          - text: Anthropic
+        - cell "100.0"
+        - cell "$10.00"
+        - cell "$50.00"
+        - 'cell "$29.196 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Azure / OpenRouter"':
+          - 'button "$29.196 $/task: show cost inputs for Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback), Azure / OpenRouter"': $29.196 /task est.
+        - cell "#4"
+        - cell "▸ compare 7"
+  - paragraph: Raw in/out are unchanged list prices per 1M tokens. The price column follows the active price mode (Adjusted $/task); click any underlined price for exact inputs, sources and assumptions. Click a model row to compare its price across every provider.
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

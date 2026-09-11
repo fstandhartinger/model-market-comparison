@@ -1,0 +1,28 @@
+{
+  "artifact_id": "phase06-analytics",
+  "artifact_sha256": "88505eb8a41b424137c374e788ad0e1799b4902942b9812374dcd5ce84c59913",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "lib/benchmark-view.mjs: radar normalization arithmetic, zero-handling, direction inversion, and uninformative range withholding",
+    "lib/benchmark-view.mjs: latest observation selection prioritizing measured and latest date without selecting highest score",
+    "lib/benchmark-view.mjs: peer distribution calculation with low-sample and duplicate source suppression",
+    "lib/benchmark-view.mjs: profile anomaly thresholds (minPeers=20, minFamilies=10, minProfile=5, peerZ=1.5, profileGap=1.5) and family-level baseline aggregation",
+    "lib/benchmark-view.mjs: cohort separation by harness, split, and configuration (e.g. CoT, Polyglot edit formats)",
+    "lib/benchmark-view.mjs: dated snapshot axes for AA index and DesignArena without semantic version invention",
+    "lib/benchmark-view.d.mts: type definitions matching presentation adapter exports and interfaces",
+    "lib/benchmark-data.ts: in-memory caching of benchmark view against dataset reference",
+    "app/api/benchmark-view/route.ts: query parsing, axis 404 validation, model slicing, and cache header preservation",
+    "app/api/benchmark-scores/route.ts: pagination bounds (1-500), observation_id filtering, basis validation, and cell/coverage lookup",
+    "app/api/price-comparison/route.ts: on-demand legacy client dataset endpoint",
+    "ops/rebuild-2026-09/bin/worker-images.mjs: image input size gating (4MB per file, 16MB aggregate), 8-image cap, magic-byte MIME validation, and hash receipts",
+    "ops/rebuild-2026-09/bin/worker-runner.mjs: image critic integration and producer/critic family isolation checks",
+    "test/benchmark-view.test.mjs: test coverage for peer distribution, normalization, profile signals, cohorts, and non-mutation of raw dataset",
+    "test/worker-images.test.mjs: vision critic payload, MIME validation, and gate enforcement test coverage"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}

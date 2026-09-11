@@ -1,0 +1,385 @@
+{
+  "base": "http://127.0.0.1:3316",
+  "at": "2026-09-11T01:05:28.745Z",
+  "environment": "Headless system Chrome on Sandy, local production HTTP unless URL overrides; no network/CPU throttling",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "url": "http://127.0.0.1:3316/compare#main-content",
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 876,
+        "fcp": 812,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "compare-light",
+      "url": "http://127.0.0.1:3316/compare?model=gpt-5.6-sol%3A%3Ahigh&model=claude-sonnet-5%3A%3Ahigh&model=grok-4.6%3A%3Ahigh",
+      "metrics": {
+        "cls": 0.015608748010706018,
+        "lcp": 876,
+        "fcp": 812,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "radar-light",
+      "url": "http://127.0.0.1:3316/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 304,
+        "fcp": 184,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "radar-mobile",
+      "url": "http://127.0.0.1:3316/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 304,
+        "fcp": 184,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 50
+      }
+    },
+    {
+      "name": "radar-320",
+      "url": "http://127.0.0.1:3316/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 304,
+        "fcp": 184,
+        "documentWidth": 320,
+        "viewport": 320,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 50
+      }
+    },
+    {
+      "name": "ranking-light",
+      "url": "http://127.0.0.1:3316/benchmarks",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 168,
+        "fcp": 168,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 46
+      }
+    },
+    {
+      "name": "ranking-mobile",
+      "url": "http://127.0.0.1:3316/benchmarks?benchmark=aa-coding-agent-index%3A%3A1.5",
+      "metrics": {
+        "cls": 0.08061966540678048,
+        "lcp": 168,
+        "fcp": 168,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 47
+      }
+    },
+    {
+      "name": "model-sheet",
+      "url": "http://127.0.0.1:3316/models/gpt-5.6-sol%3A%3Ahigh",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 892,
+        "fcp": 892,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 44
+      }
+    },
+    {
+      "name": "overview-light",
+      "url": "http://127.0.0.1:3316/",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 220,
+        "fcp": 220,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 46
+      }
+    },
+    {
+      "name": "overview-mobile",
+      "url": "http://127.0.0.1:3316/",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 220,
+        "fcp": 220,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 47
+      }
+    },
+    {
+      "name": "overview-dark-mobile",
+      "url": "http://127.0.0.1:3316/",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 220,
+        "fcp": 220,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 47
+      }
+    }
+  ],
+  "interactions": [
+    "Tab reaches skip link; Enter focuses main content",
+    "Native model selects add C/D to four series; focused Remove + Enter reduces to three",
+    "Keyboard Space selects radar axes; eight-axis cap disables remaining choices",
+    "Keyboard Enter opens a numeric source evidence disclosure",
+    "Version selector exposes v1.5 separately; no-match search displays explicit empty state",
+    "Model sheet anomaly Why opens through keyboard; input values and directed z are rendered",
+    "Injected local HTTP503 shows retry; retry loads three models without stale or fabricated scores",
+    "Legacy two-model price/provider comparison remains selectable"
+  ],
+  "screenshots": [
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/compare-dark.png",
+      "sha256": "18f8979667dcf44b832caf36302c549b8eae10f830a1efdd7c795489bf334ac3",
+      "bytes": 157697,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-dark.png",
+      "sha256": "a3253fb8baab13994f0a88fe448828abae20fa4517731a0a0c6a234e2aef90d2",
+      "bytes": 219907,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-four.png",
+      "sha256": "473f1baffb89af3518a71a2cecb65513053a6cb1844e87c572770bdd32c7432e",
+      "bytes": 276746,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/compare-evidence.png",
+      "sha256": "649890eef410c975a6b7925ab43e298a48d638914b773639169eb999b2e06114",
+      "bytes": 168123,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-light.png",
+      "sha256": "28dafc9f7d1ddc7d826451d8e31ddb72ae7ba2a975850b32ccc96cc6879c3439",
+      "bytes": 280403,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-mobile.png",
+      "sha256": "f7e3da34320225131d7b3bb52f0adc491a2b4a751770f59919bc579be4c17d48",
+      "bytes": 57473,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-mobile-chart.png",
+      "sha256": "68c4f9d7cc3f50063aeef3d253733454b29ddc0de03c743d1984cd5cb982f964",
+      "bytes": 53728,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/ranking-light.png",
+      "sha256": "0a07caa7968344adefb04750e2a47b63604903b6dcb50da866897ddfcdb02c3c",
+      "bytes": 127379,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/ranking-v1-5.png",
+      "sha256": "504139c2e55184ba514c3658ce08877cfbd86c2f749f5f537d1276d2470f6af6",
+      "bytes": 98080,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/ranking-mobile.png",
+      "sha256": "1d96c429b9adf86a9364a3c0f07682f8d40bde6c39d0712143e7c98bdcbce044",
+      "bytes": 55879,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/model-sheet.png",
+      "sha256": "cf4c440e045980e5f98953cb0b88406ed0fee01daedd180667eb2e7cff77b210",
+      "bytes": 115556,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/anomaly-why.png",
+      "sha256": "86d811c8d7f37cb0ae2ea06dcacee04babb1a9e05cd9b6fa7b4025ca19ea26aa",
+      "bytes": 115945,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/self-reported-sheet.png",
+      "sha256": "5e01892bf22b083a10ee01da1fa13b9c30a1e52e8c113f5b87a8a27e34020a5b",
+      "bytes": 172131,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/overview-light.png",
+      "sha256": "d501e57df69c610cf6f7f13d5c20c1c18c8db7458245c6c39878494ff50edcb7",
+      "bytes": 168701,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-final/overview-mobile.png",
+      "sha256": "c82e19166166d72381bcc3fe3d7f85e09c5b1e01085293091936254ca68d8d2b",
+      "bytes": 64668,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    }
+  ],
+  "errors": [],
+  "verdict": "pass"
+}

@@ -1,0 +1,58 @@
+{
+  "at": "2026-09-11T01:07:17.344Z",
+  "api": [
+    {
+      "id": "aa:0081ab31-d10a-44a0-a10d-eee5533fec65:aime25",
+      "status": 200,
+      "exactObservationEqualsDataset": true
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "status": 200,
+      "exactObservationEqualsDataset": true
+    },
+    {
+      "invalidAxisStatus": 404
+    }
+  ],
+  "mobileFirstNavigationMetrics": [
+    {
+      "path": "/",
+      "cls": 0.000009596225909524688,
+      "lcp": 288,
+      "fcp": 288,
+      "viewport": 390,
+      "documentWidth": 390
+    },
+    {
+      "path": "/compare",
+      "cls": 0.000009596225909524688,
+      "lcp": 144,
+      "fcp": 144,
+      "viewport": 390,
+      "documentWidth": 390
+    },
+    {
+      "path": "/radar",
+      "cls": 0.000009596225909524688,
+      "lcp": 96,
+      "fcp": 96,
+      "viewport": 390,
+      "documentWidth": 390
+    },
+    {
+      "path": "/benchmarks",
+      "cls": 0.000009596225909524688,
+      "lcp": 140,
+      "fcp": 140,
+      "viewport": 390,
+      "documentWidth": 390
+    }
+  ],
+  "environment": "Unthrottled local production Chrome; separate fresh mobile navigations; other browser checks may share server CPU",
+  "interactions": [
+    "390px global price filters + model-family dropdown opened by keyboard; search accepts input; no document overflow",
+    "390px provider dropdown opened by keyboard; no document overflow",
+    "Radar graphic horizontal scrolling works with keyboard ArrowRight"
+  ]
+}

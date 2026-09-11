@@ -1,0 +1,757 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- main:
+  - paragraph: BENCHMARK EXPLORER
+  - heading "One benchmark. Every result." [level=1]
+  - paragraph: Explore rankings, coverage and original sources across 73 registered versions and four existing index snapshots.
+  - group: Composite retains Coding Agent v1.4 · source 2026-09-09
+  - paragraph: PICK A BENCHMARK
+  - text: Category
+  - combobox "Category":
+    - option "All categories" [selected]
+    - option "Agentic"
+    - option "Coding"
+    - option "Instruction-following"
+    - option "Knowledge"
+    - option "Long-context"
+    - option "Math"
+    - option "Other"
+    - option "Reasoning"
+    - option "Roleplay"
+    - option "Safety/Alignment"
+    - option "Science"
+    - option "Tool-use"
+    - option "Uncensored"
+    - option "Vision"
+    - option "Writing"
+  - text: Benchmark and version
+  - combobox "Benchmark and version":
+    - option "AA Coding Index · snapshot-2026-09-10 (unversioned)"
+    - option "AA Intelligence Index · snapshot-2026-09-10 (unversioned)" [selected]
+    - option "AA-AnalystAgent · snapshot-2026-09-10"
+    - option "AA-Briefcase · snapshot-2026-09-10"
+    - option "AA-LCR v1.1 · 1.1"
+    - option "AA-Omniscience Index · snapshot-2026-09-10"
+    - option "Aider Polyglot · snapshot-2026-09-10"
+    - option "AIME 2025 (AA) · 2025"
+    - option "APEX-Agents-AA · snapshot-2026-09-10"
+    - option "ARC-AGI-1 · 1"
+    - option "ARC-AGI-2 · 2"
+    - option "ARC-AGI-3 · 3"
+    - option "Artificial Analysis Coding Agent Index v1.4 · 1.4"
+    - option "Artificial Analysis Coding Agent Index v1.5 · 1.5"
+    - option "AutomationBench-AA · 1.0.6"
+    - option "BuzzBench · snapshot-2026-09-10"
+    - option "CritPt · snapshot-2026-09-10"
+    - option "CritPt (AA) · snapshot-2026-09-10"
+    - option "DesignArena Frontend · snapshot-2026-09-10 (unversioned)"
+    - option "DesignArena Full-Stack · snapshot-2026-09-10 (unversioned)"
+    - option "Elimination Game Benchmark · snapshot-2026-09-10"
+    - option "EnterpriseOps-Gym-AA · snapshot-2026-09-10"
+    - option "EQ-Bench 4 · 4"
+    - option "EQ-Bench Creative Writing v3 · 3"
+    - option "EQ-Bench Longform Creative Writing · v1.11"
+    - option "GDP.pdf (AA) · snapshot-2026-09-10"
+    - option "GDPval-AA v2 · 2"
+    - option "GPQA Diamond (AA) · snapshot-2026-09-10"
+    - option "Harvey LAB-AA · snapshot-2026-09-10"
+    - option "HELMET · snapshot-2026-09-10"
+    - option "Humanity's Last Exam (AA text-only) · snapshot-2026-09-10"
+    - option "Humanity's Last Exam (HLE) · snapshot-2026-09-10"
+    - option "IFBench · snapshot-2026-09-10"
+    - option "IFBench (AA single-turn) · snapshot-2026-09-10"
+    - option "ITBench-AA · snapshot-2026-09-10"
+    - option "Japanese-RP-Bench (Aratako) · snapshot-2026-09-10"
+    - option "Japanese-RP-Bench v2 (tegnike fork) · 2"
+    - option "Judgemark v4 · 4"
+    - option "LiveBench · 2026-06-25"
+    - option "LiveCodeBench (AA historical field) · snapshot-2026-09-10"
+    - option "LLM Creative Story-Writing Benchmark · snapshot-2026-09-10"
+    - option "LLM Divergent Thinking Creativity Benchmark · snapshot-2026-09-10"
+    - option "LongBench v2 · 2"
+    - option "MLCR-AA · snapshot-2026-09-10"
+    - option "MMMU · snapshot-2026-09-10"
+    - option "MMMU Pro (AA) · snapshot-2026-09-10"
+    - option "OTIS Mock AIME 2024-2025 · 2024-2025"
+    - option "PingPong English (unadjusted mean) · 2"
+    - option "RP-Bench Community Elo · snapshot-2026-09-10"
+    - option "RULER · snapshot-2026-09-10"
+    - option "SciCode · snapshot-2026-09-10"
+    - option "SciCode (AA subproblems) · 1.0.1"
+    - option "SimpleBench · snapshot-2026-09-10"
+    - option "Slop Score · snapshot-2026-09-10"
+    - option "SlopBench · snapshot-2026-09-10"
+    - option "Spiral-Bench · 1.2"
+    - option "SWE-bench Multilingual · snapshot-2026-09-10"
+    - option "SWE-bench Multimodal · snapshot-2026-09-10"
+    - option "SWE-Bench Pro Public · snapshot-2026-09-10"
+    - option "SWE-bench Verified · snapshot-2026-09-10"
+    - option "Terminal-Bench · 4.0"
+    - option "Terminal-Bench Hard (AA) · 74221fb"
+    - option "Terminal-Bench v2.1 (AA) · 2.1"
+    - option "Terminal-Bench v4.0 (AA) · 4.0"
+    - option "The Slop Index · snapshot-2026-09-10"
+    - option "Towards AI Editorial Writing · snapshot-2026-09-10"
+    - option "UGI · snapshot-2026-09-10"
+    - option "UGI NatInt · snapshot-2026-09-10"
+    - option "UGI Willingness · snapshot-2026-09-10"
+    - option "UGI Writing · snapshot-2026-09-10"
+    - option "Vending-Bench 2 · 2"
+    - option "WeirdML · 2"
+    - option "τ²-bench · 2"
+    - option "τ²-Bench Telecom (AA) · snapshot-2026-09-10"
+    - option "τ³-Banking · 1.0.1"
+    - option "τ³-Banking (AA) · 1.0.1"
+    - option "τ³-Voice · snapshot-2026-09-10"
+  - paragraph: Reasoning
+  - heading "AA Intelligence Index" [level=2]
+  - paragraph: Version snapshot-2026-09-10 (unversioned) · Published board
+  - link "Primary source ↗":
+    - /url: https://artificialanalysis.ai/leaderboards/models
+  - paragraph: Published AA index from the retained API snapshot. No verified semantic version was supplied.
+  - paragraph: 633 / 835
+  - paragraph: Catalog configurations with a result
+  - paragraph: "0"
+  - paragraph: Source identities not yet matched
+  - paragraph: points
+  - paragraph: Higher is better · native source scale
+  - text: Search models
+  - searchbox "Search models"
+  - text: Evidence
+  - combobox "Evidence":
+    - option "Measured only" [selected]
+    - option "Self-reported only"
+    - option "All · prefer measured"
+  - checkbox "Open weights"
+  - text: Open weights
+  - checkbox "Include unmatched source identities"
+  - text: Include unmatched source identities
+  - status: 633 results match these filters. Coverage above uses the evidence filter before model filters.
+  - region "Benchmark ranking table":
+    - table "AA Intelligence Index, version snapshot-2026-09-10 (unversioned), Published board. Rank is within the filtered results; ties share a rank.":
+      - caption: AA Intelligence Index, version snapshot-2026-09-10 (unversioned), Published board. Rank is within the filtered results; ties share a rank.
+      - rowgroup:
+        - row "Rank Model / configuration Result and provenance Explore":
+          - columnheader "Rank"
+          - columnheader "Model / configuration"
+          - columnheader "Result and provenance"
+          - columnheader "Explore"
+      - rowgroup:
+        - row "1 Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback) Anthropic · max 53.4 points measured observed 2026-09-10 Compare ↗":
+          - cell "1"
+          - rowheader "Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback) Anthropic · max":
+            - link "Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)":
+              - /url: /models/claude-fable-5.1%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "53.4 points measured observed 2026-09-10":
+            - text: 53.4 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-fable-5.1%3A%3Amax
+        - row "2 Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback) Anthropic · xhigh 53.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "2"
+          - rowheader "Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback) Anthropic · xhigh":
+            - link "Claude Fable 5.1 (Adaptive Reasoning, Xhigh Effort, Default Fallback)":
+              - /url: /models/claude-fable-5.1%3A%3Axhigh#benchmark-sheet
+            - paragraph: Anthropic · xhigh
+          - cell "53.2 points measured observed 2026-09-10":
+            - text: 53.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-fable-5.1%3A%3Axhigh
+        - row "3 GPT-6 Astra (max) OpenAI · max 52.8 points measured observed 2026-09-10 Compare ↗":
+          - cell "3"
+          - rowheader "GPT-6 Astra (max) OpenAI · max":
+            - link "GPT-6 Astra (max)":
+              - /url: /models/gpt-6-astra%3A%3Amax#benchmark-sheet
+            - paragraph: OpenAI · max
+          - cell "52.8 points measured observed 2026-09-10":
+            - text: 52.8 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-6-astra%3A%3Amax
+        - row "4 GPT-6 Astra (xhigh) OpenAI · xhigh 52.5 points measured observed 2026-09-10 Compare ↗":
+          - cell "4"
+          - rowheader "GPT-6 Astra (xhigh) OpenAI · xhigh":
+            - link "GPT-6 Astra (xhigh)":
+              - /url: /models/gpt-6-astra%3A%3Axhigh#benchmark-sheet
+            - paragraph: OpenAI · xhigh
+          - cell "52.5 points measured observed 2026-09-10":
+            - text: 52.5 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-6-astra%3A%3Axhigh
+        - row "5 Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback) Anthropic · high 51.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "5"
+          - rowheader "Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback) Anthropic · high":
+            - link "Claude Fable 5.1 (Adaptive Reasoning, High Effort, Default Fallback)":
+              - /url: /models/claude-fable-5.1%3A%3Ahigh#benchmark-sheet
+            - paragraph: Anthropic · high
+          - cell "51.2 points measured observed 2026-09-10":
+            - text: 51.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-fable-5.1%3A%3Ahigh
+        - row "6 GPT-6 Astra (high) OpenAI · high 51 points measured observed 2026-09-10 Compare ↗":
+          - cell "6"
+          - rowheader "GPT-6 Astra (high) OpenAI · high":
+            - link "GPT-6 Astra (high)":
+              - /url: /models/gpt-6-astra%3A%3Ahigh#benchmark-sheet
+            - paragraph: OpenAI · high
+          - cell "51 points measured observed 2026-09-10":
+            - text: 51 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-6-astra%3A%3Ahigh
+        - row "7 Claude Opus 5 (Adaptive Reasoning, Max Effort) Anthropic · max 50.7 points measured observed 2026-09-10 Compare ↗":
+          - cell "7"
+          - rowheader "Claude Opus 5 (Adaptive Reasoning, Max Effort) Anthropic · max":
+            - link "Claude Opus 5 (Adaptive Reasoning, Max Effort)":
+              - /url: /models/claude-opus-5%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "50.7 points measured observed 2026-09-10":
+            - text: 50.7 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-5%3A%3Amax
+        - row "8 Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback) Anthropic · max 49.7 points measured observed 2026-09-10 Compare ↗":
+          - cell "8"
+          - rowheader "Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback) Anthropic · max":
+            - link "Claude Fable 5 (Adaptive Reasoning, Max Effort, Opus 4.8 Fallback)":
+              - /url: /models/claude-fable-5%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "49.7 points measured observed 2026-09-10":
+            - text: 49.7 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-fable-5%3A%3Amax
+        - row "8 Claude Opus 5 (Adaptive Reasoning, Xhigh Effort) Anthropic · xhigh 49.7 points measured observed 2026-09-10 Compare ↗":
+          - cell "8"
+          - rowheader "Claude Opus 5 (Adaptive Reasoning, Xhigh Effort) Anthropic · xhigh":
+            - link "Claude Opus 5 (Adaptive Reasoning, Xhigh Effort)":
+              - /url: /models/claude-opus-5%3A%3Axhigh#benchmark-sheet
+            - paragraph: Anthropic · xhigh
+          - cell "49.7 points measured observed 2026-09-10":
+            - text: 49.7 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-5%3A%3Axhigh
+        - row "8 GPT-6 Astra (medium) OpenAI · medium 49.7 points measured observed 2026-09-10 Compare ↗":
+          - cell "8"
+          - rowheader "GPT-6 Astra (medium) OpenAI · medium":
+            - link "GPT-6 Astra (medium)":
+              - /url: /models/gpt-6-astra%3A%3Amedium#benchmark-sheet
+            - paragraph: OpenAI · medium
+          - cell "49.7 points measured observed 2026-09-10":
+            - text: 49.7 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-6-astra%3A%3Amedium
+        - row "11 Claude Fable 5.1 (Adaptive Reasoning, Medium Effort, Default Fallback) Anthropic · medium 49.1 points measured observed 2026-09-10 Compare ↗":
+          - cell "11"
+          - rowheader "Claude Fable 5.1 (Adaptive Reasoning, Medium Effort, Default Fallback) Anthropic · medium":
+            - link "Claude Fable 5.1 (Adaptive Reasoning, Medium Effort, Default Fallback)":
+              - /url: /models/claude-fable-5.1%3A%3Amedium#benchmark-sheet
+            - paragraph: Anthropic · medium
+          - cell "49.1 points measured observed 2026-09-10":
+            - text: 49.1 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-fable-5.1%3A%3Amedium
+        - row "12 Claude Opus 5 (Adaptive Reasoning, High Effort) Anthropic · high 48.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "12"
+          - rowheader "Claude Opus 5 (Adaptive Reasoning, High Effort) Anthropic · high":
+            - link "Claude Opus 5 (Adaptive Reasoning, High Effort)":
+              - /url: /models/claude-opus-5%3A%3Ahigh#benchmark-sheet
+            - paragraph: Anthropic · high
+          - cell "48.2 points measured observed 2026-09-10":
+            - text: 48.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-5%3A%3Ahigh
+        - row "12 Muse Spark 1.3 (max) Meta · max 48.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "12"
+          - rowheader "Muse Spark 1.3 (max) Meta · max":
+            - link "Muse Spark 1.3 (max)":
+              - /url: /models/muse-spark-1.3%3A%3Amax#benchmark-sheet
+            - paragraph: Meta · max
+          - cell "48.2 points measured observed 2026-09-10":
+            - text: 48.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=muse-spark-1.3%3A%3Amax
+        - row "14 GPT-5.6 Sol (max) OpenAI · max 47.1 points measured observed 2026-09-10 Compare ↗":
+          - cell "14"
+          - rowheader "GPT-5.6 Sol (max) OpenAI · max":
+            - link "GPT-5.6 Sol (max)":
+              - /url: /models/gpt-5.6-sol%3A%3Amax#benchmark-sheet
+            - paragraph: OpenAI · max
+          - cell "47.1 points measured observed 2026-09-10":
+            - text: 47.1 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-sol%3A%3Amax
+        - row "15 Claude Fable 5.1 (Adaptive Reasoning, Low Effort, Default Fallback) Anthropic · low 47 points measured observed 2026-09-10 Compare ↗":
+          - cell "15"
+          - rowheader "Claude Fable 5.1 (Adaptive Reasoning, Low Effort, Default Fallback) Anthropic · low":
+            - link "Claude Fable 5.1 (Adaptive Reasoning, Low Effort, Default Fallback)":
+              - /url: /models/claude-fable-5.1%3A%3Alow#benchmark-sheet
+            - paragraph: Anthropic · low
+          - cell "47 points measured observed 2026-09-10":
+            - text: 47 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-fable-5.1%3A%3Alow
+        - row "16 GPT-6 Astra (low) OpenAI · low 46 points measured observed 2026-09-10 Compare ↗":
+          - cell "16"
+          - rowheader "GPT-6 Astra (low) OpenAI · low":
+            - link "GPT-6 Astra (low)":
+              - /url: /models/gpt-6-astra%3A%3Alow#benchmark-sheet
+            - paragraph: OpenAI · low
+          - cell "46 points measured observed 2026-09-10":
+            - text: 46 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-6-astra%3A%3Alow
+        - row "17 GPT-6 Astra (Non-reasoning) OpenAI · non-reasoning 45.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "17"
+          - rowheader "GPT-6 Astra (Non-reasoning) OpenAI · non-reasoning":
+            - link "GPT-6 Astra (Non-reasoning)":
+              - /url: /models/gpt-6-astra%3A%3Anon-reasoning#benchmark-sheet
+            - paragraph: OpenAI · non-reasoning
+          - cell "45.2 points measured observed 2026-09-10":
+            - text: 45.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-6-astra%3A%3Anon-reasoning
+        - row "17 Muse Spark 1.3 (xhigh) Meta · xhigh 45.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "17"
+          - rowheader "Muse Spark 1.3 (xhigh) Meta · xhigh":
+            - link "Muse Spark 1.3 (xhigh)":
+              - /url: /models/muse-spark-1.3%3A%3Axhigh#benchmark-sheet
+            - paragraph: Meta · xhigh
+          - cell "45.2 points measured observed 2026-09-10":
+            - text: 45.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=muse-spark-1.3%3A%3Axhigh
+        - row "19 Claude Opus 5 (Adaptive Reasoning, Medium Effort) Anthropic · medium 45.1 points measured observed 2026-09-10 Compare ↗":
+          - cell "19"
+          - rowheader "Claude Opus 5 (Adaptive Reasoning, Medium Effort) Anthropic · medium":
+            - link "Claude Opus 5 (Adaptive Reasoning, Medium Effort)":
+              - /url: /models/claude-opus-5%3A%3Amedium#benchmark-sheet
+            - paragraph: Anthropic · medium
+          - cell "45.1 points measured observed 2026-09-10":
+            - text: 45.1 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-5%3A%3Amedium
+        - row "20 GLM-5.3 (max) Z.ai · open weights · max 44.9 points measured observed 2026-09-10 Compare ↗":
+          - cell "20"
+          - rowheader "GLM-5.3 (max) Z.ai · open weights · max":
+            - link "GLM-5.3 (max)":
+              - /url: /models/glm-5.3%3A%3Amax#benchmark-sheet
+            - paragraph: Z.ai · open weights · max
+          - cell "44.9 points measured observed 2026-09-10":
+            - text: 44.9 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=glm-5.3%3A%3Amax
+        - row "21 Grok 4.6 (high) xAI · high 44.4 points measured observed 2026-09-10 Compare ↗":
+          - cell "21"
+          - rowheader "Grok 4.6 (high) xAI · high":
+            - link "Grok 4.6 (high)":
+              - /url: /models/grok-4.6%3A%3Ahigh#benchmark-sheet
+            - paragraph: xAI · high
+          - cell "44.4 points measured observed 2026-09-10":
+            - text: 44.4 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=grok-4.6%3A%3Ahigh
+        - row "22 Grok 4.6 (xhigh) xAI · xhigh 44.3 points measured observed 2026-09-10 Compare ↗":
+          - cell "22"
+          - rowheader "Grok 4.6 (xhigh) xAI · xhigh":
+            - link "Grok 4.6 (xhigh)":
+              - /url: /models/grok-4.6%3A%3Axhigh#benchmark-sheet
+            - paragraph: xAI · xhigh
+          - cell "44.3 points measured observed 2026-09-10":
+            - text: 44.3 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=grok-4.6%3A%3Axhigh
+        - row "23 GPT-5.6 Sol (xhigh) OpenAI · xhigh 44.1 points measured observed 2026-09-10 Compare ↗":
+          - cell "23"
+          - rowheader "GPT-5.6 Sol (xhigh) OpenAI · xhigh":
+            - link "GPT-5.6 Sol (xhigh)":
+              - /url: /models/gpt-5.6-sol%3A%3Axhigh#benchmark-sheet
+            - paragraph: OpenAI · xhigh
+          - cell "44.1 points measured observed 2026-09-10":
+            - text: 44.1 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-sol%3A%3Axhigh
+        - row "24 Kimi K3 (max) Moonshot AI · open weights · max 43.8 points measured observed 2026-09-10 Compare ↗":
+          - cell "24"
+          - rowheader "Kimi K3 (max) Moonshot AI · open weights · max":
+            - link "Kimi K3 (max)":
+              - /url: /models/kimi-k3%3A%3Amax#benchmark-sheet
+            - paragraph: Moonshot AI · open weights · max
+          - cell "43.8 points measured observed 2026-09-10":
+            - text: 43.8 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=kimi-k3%3A%3Amax
+        - row "25 Grok 4.6 (medium) xAI · medium 43 points measured observed 2026-09-10 Compare ↗":
+          - cell "25"
+          - rowheader "Grok 4.6 (medium) xAI · medium":
+            - link "Grok 4.6 (medium)":
+              - /url: /models/grok-4.6%3A%3Amedium#benchmark-sheet
+            - paragraph: xAI · medium
+          - cell "43 points measured observed 2026-09-10":
+            - text: 43 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=grok-4.6%3A%3Amedium
+        - row "26 GPT-5.6 Sol (high) OpenAI · high 42.5 points measured observed 2026-09-10 Compare ↗":
+          - cell "26"
+          - rowheader "GPT-5.6 Sol (high) OpenAI · high":
+            - link "GPT-5.6 Sol (high)":
+              - /url: /models/gpt-5.6-sol%3A%3Ahigh#benchmark-sheet
+            - paragraph: OpenAI · high
+          - cell "42.5 points measured observed 2026-09-10":
+            - text: 42.5 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-sol%3A%3Ahigh
+        - row "27 GPT-5.6 Terra (max) OpenAI · max 42.3 points measured observed 2026-09-10 Compare ↗":
+          - cell "27"
+          - rowheader "GPT-5.6 Terra (max) OpenAI · max":
+            - link "GPT-5.6 Terra (max)":
+              - /url: /models/gpt-5.6-terra%3A%3Amax#benchmark-sheet
+            - paragraph: OpenAI · max
+          - cell "42.3 points measured observed 2026-09-10":
+            - text: 42.3 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-terra%3A%3Amax
+        - row "28 Claude Opus 4.8 (Adaptive Reasoning, Max Effort) Anthropic · max 42 points measured observed 2026-09-10 Compare ↗":
+          - cell "28"
+          - rowheader "Claude Opus 4.8 (Adaptive Reasoning, Max Effort) Anthropic · max":
+            - link "Claude Opus 4.8 (Adaptive Reasoning, Max Effort)":
+              - /url: /models/claude-opus-4.8%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "42 points measured observed 2026-09-10":
+            - text: 42 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-4.8%3A%3Amax
+        - row "29 GLM-5.3-Flash Z.ai · open weights · default 41.9 points measured observed 2026-09-10 Compare ↗":
+          - cell "29"
+          - rowheader "GLM-5.3-Flash Z.ai · open weights · default":
+            - link "GLM-5.3-Flash":
+              - /url: /models/glm-5.3-flash%3A%3Adefault#benchmark-sheet
+            - paragraph: Z.ai · open weights · default
+          - cell "41.9 points measured observed 2026-09-10":
+            - text: 41.9 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=glm-5.3-flash%3A%3Adefault
+        - row "30 Gemini 3.8 Flash (high) Google · high 41.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "30"
+          - rowheader "Gemini 3.8 Flash (high) Google · high":
+            - link "Gemini 3.8 Flash (high)":
+              - /url: /models/gemini-3.8-flash%3A%3Ahigh#benchmark-sheet
+            - paragraph: Google · high
+          - cell "41.2 points measured observed 2026-09-10":
+            - text: 41.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gemini-3.8-flash%3A%3Ahigh
+        - row "31 Claude Opus 4.7 (Adaptive Reasoning, Max Effort) Anthropic · max 40.7 points measured observed 2026-09-10 Compare ↗":
+          - cell "31"
+          - rowheader "Claude Opus 4.7 (Adaptive Reasoning, Max Effort) Anthropic · max":
+            - link "Claude Opus 4.7 (Adaptive Reasoning, Max Effort)":
+              - /url: /models/claude-opus-4.7%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "40.7 points measured observed 2026-09-10":
+            - text: 40.7 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-4.7%3A%3Amax
+        - row "32 Qwen3.8 Max Alibaba · default 40.3 points measured observed 2026-09-10 Compare ↗":
+          - cell "32"
+          - rowheader "Qwen3.8 Max Alibaba · default":
+            - link "Qwen3.8 Max":
+              - /url: /models/qwen3.8-max%3A%3Adefault#benchmark-sheet
+            - paragraph: Alibaba · default
+          - cell "40.3 points measured observed 2026-09-10":
+            - text: 40.3 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=qwen3.8-max%3A%3Adefault
+        - row "33 Gemini 3.8 Flash (medium) Google · medium 40 points measured observed 2026-09-10 Compare ↗":
+          - cell "33"
+          - rowheader "Gemini 3.8 Flash (medium) Google · medium":
+            - link "Gemini 3.8 Flash (medium)":
+              - /url: /models/gemini-3.8-flash%3A%3Amedium#benchmark-sheet
+            - paragraph: Google · medium
+          - cell "40 points measured observed 2026-09-10":
+            - text: 40 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gemini-3.8-flash%3A%3Amedium
+        - row "33 Qwen3.8 2.4T A95B Alibaba · open weights · default 40 points measured observed 2026-09-10 Compare ↗":
+          - cell "33"
+          - rowheader "Qwen3.8 2.4T A95B Alibaba · open weights · default":
+            - link "Qwen3.8 2.4T A95B":
+              - /url: /models/qwen3.8-2.4t-a95b%3A%3Adefault#benchmark-sheet
+            - paragraph: Alibaba · open weights · default
+          - cell "40 points measured observed 2026-09-10":
+            - text: 40 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=qwen3.8-2.4t-a95b%3A%3Adefault
+        - row "35 Qwen3.8-Flash-Next Alibaba · open weights · default 39.9 points measured observed 2026-09-10 Compare ↗":
+          - cell "35"
+          - rowheader "Qwen3.8-Flash-Next Alibaba · open weights · default":
+            - link "Qwen3.8-Flash-Next":
+              - /url: /models/qwen3.8-flash-next%3A%3Adefault#benchmark-sheet
+            - paragraph: Alibaba · open weights · default
+          - cell "39.9 points measured observed 2026-09-10":
+            - text: 39.9 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=qwen3.8-flash-next%3A%3Adefault
+        - row "36 Claude Opus 5 (Adaptive Reasoning, Low Effort) Anthropic · low 39.8 points measured observed 2026-09-10 Compare ↗":
+          - cell "36"
+          - rowheader "Claude Opus 5 (Adaptive Reasoning, Low Effort) Anthropic · low":
+            - link "Claude Opus 5 (Adaptive Reasoning, Low Effort)":
+              - /url: /models/claude-opus-5%3A%3Alow#benchmark-sheet
+            - paragraph: Anthropic · low
+          - cell "39.8 points measured observed 2026-09-10":
+            - text: 39.8 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-opus-5%3A%3Alow
+        - row "36 Muse Spark 1.2 (xhigh) Meta · xhigh 39.8 points measured observed 2026-09-10 Compare ↗":
+          - cell "36"
+          - rowheader "Muse Spark 1.2 (xhigh) Meta · xhigh":
+            - link "Muse Spark 1.2 (xhigh)":
+              - /url: /models/muse-spark-1.2%3A%3Axhigh#benchmark-sheet
+            - paragraph: Meta · xhigh
+          - cell "39.8 points measured observed 2026-09-10":
+            - text: 39.8 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=muse-spark-1.2%3A%3Axhigh
+        - row "38 Gemini 3.7 Flash (medium) Google · medium 39.6 points measured observed 2026-09-10 Compare ↗":
+          - cell "38"
+          - rowheader "Gemini 3.7 Flash (medium) Google · medium":
+            - link "Gemini 3.7 Flash (medium)":
+              - /url: /models/gemini-3.7-flash%3A%3Amedium#benchmark-sheet
+            - paragraph: Google · medium
+          - cell "39.6 points measured observed 2026-09-10":
+            - text: 39.6 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gemini-3.7-flash%3A%3Amedium
+        - row "39 GPT-5.6 Sol (medium) OpenAI · medium 39.5 points measured observed 2026-09-10 Compare ↗":
+          - cell "39"
+          - rowheader "GPT-5.6 Sol (medium) OpenAI · medium":
+            - link "GPT-5.6 Sol (medium)":
+              - /url: /models/gpt-5.6-sol%3A%3Amedium#benchmark-sheet
+            - paragraph: OpenAI · medium
+          - cell "39.5 points measured observed 2026-09-10":
+            - text: 39.5 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-sol%3A%3Amedium
+        - row "40 Gemini 3.7 Flash (high) Google · high 39.4 points measured observed 2026-09-10 Compare ↗":
+          - cell "40"
+          - rowheader "Gemini 3.7 Flash (high) Google · high":
+            - link "Gemini 3.7 Flash (high)":
+              - /url: /models/gemini-3.7-flash%3A%3Ahigh#benchmark-sheet
+            - paragraph: Google · high
+          - cell "39.4 points measured observed 2026-09-10":
+            - text: 39.4 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gemini-3.7-flash%3A%3Ahigh
+        - row "41 Grok 4.5 (high) xAI · high 39.1 points measured observed 2026-09-10 Compare ↗":
+          - cell "41"
+          - rowheader "Grok 4.5 (high) xAI · high":
+            - link "Grok 4.5 (high)":
+              - /url: /models/grok-4.5%3A%3Ahigh#benchmark-sheet
+            - paragraph: xAI · high
+          - cell "39.1 points measured observed 2026-09-10":
+            - text: 39.1 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=grok-4.5%3A%3Ahigh
+        - row "42 GPT-5.4 (xhigh) OpenAI · xhigh 39 points measured observed 2026-09-10 Compare ↗":
+          - cell "42"
+          - rowheader "GPT-5.4 (xhigh) OpenAI · xhigh":
+            - link "GPT-5.4 (xhigh)":
+              - /url: /models/gpt-5.4%3A%3Axhigh#benchmark-sheet
+            - paragraph: OpenAI · xhigh
+          - cell "39 points measured observed 2026-09-10":
+            - text: 39 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.4%3A%3Axhigh
+        - row "43 GLM-5.2 (max) Z.ai · open weights · max 38.6 points measured observed 2026-09-10 Compare ↗":
+          - cell "43"
+          - rowheader "GLM-5.2 (max) Z.ai · open weights · max":
+            - link "GLM-5.2 (max)":
+              - /url: /models/glm-5.2%3A%3Amax#benchmark-sheet
+            - paragraph: Z.ai · open weights · max
+          - cell "38.6 points measured observed 2026-09-10":
+            - text: 38.6 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=glm-5.2%3A%3Amax
+        - row "43 GPT-5.5 (xhigh) OpenAI · xhigh 38.6 points measured observed 2026-09-10 Compare ↗":
+          - cell "43"
+          - rowheader "GPT-5.5 (xhigh) OpenAI · xhigh":
+            - link "GPT-5.5 (xhigh)":
+              - /url: /models/gpt-5.5%3A%3Axhigh#benchmark-sheet
+            - paragraph: OpenAI · xhigh
+          - cell "38.6 points measured observed 2026-09-10":
+            - text: 38.6 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.5%3A%3Axhigh
+        - row "45 Claude Sonnet 5 (Adaptive Reasoning, Max Effort) Anthropic · max 38.4 points measured observed 2026-09-10 Compare ↗":
+          - cell "45"
+          - rowheader "Claude Sonnet 5 (Adaptive Reasoning, Max Effort) Anthropic · max":
+            - link "Claude Sonnet 5 (Adaptive Reasoning, Max Effort)":
+              - /url: /models/claude-sonnet-5%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "38.4 points measured observed 2026-09-10":
+            - text: 38.4 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=claude-sonnet-5%3A%3Amax
+        - row "46 GPT-5.6 Terra (xhigh) OpenAI · xhigh 38.2 points measured observed 2026-09-10 Compare ↗":
+          - cell "46"
+          - rowheader "GPT-5.6 Terra (xhigh) OpenAI · xhigh":
+            - link "GPT-5.6 Terra (xhigh)":
+              - /url: /models/gpt-5.6-terra%3A%3Axhigh#benchmark-sheet
+            - paragraph: OpenAI · xhigh
+          - cell "38.2 points measured observed 2026-09-10":
+            - text: 38.2 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-terra%3A%3Axhigh
+        - row "47 GPT-5.6 Luna (max) OpenAI · max 37.5 points measured observed 2026-09-10 Compare ↗":
+          - cell "47"
+          - rowheader "GPT-5.6 Luna (max) OpenAI · max":
+            - link "GPT-5.6 Luna (max)":
+              - /url: /models/gpt-5.6-luna%3A%3Amax#benchmark-sheet
+            - paragraph: OpenAI · max
+          - cell "37.5 points measured observed 2026-09-10":
+            - text: 37.5 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.6-luna%3A%3Amax
+        - row "48 GPT-5.5 (high) OpenAI · high 37.3 points measured observed 2026-09-10 Compare ↗":
+          - cell "48"
+          - rowheader "GPT-5.5 (high) OpenAI · high":
+            - link "GPT-5.5 (high)":
+              - /url: /models/gpt-5.5%3A%3Ahigh#benchmark-sheet
+            - paragraph: OpenAI · high
+          - cell "37.3 points measured observed 2026-09-10":
+            - text: 37.3 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gpt-5.5%3A%3Ahigh
+        - row "49 Gemini 3.7 Flash (low) Google · low 36.9 points measured observed 2026-09-10 Compare ↗":
+          - cell "49"
+          - rowheader "Gemini 3.7 Flash (low) Google · low":
+            - link "Gemini 3.7 Flash (low)":
+              - /url: /models/gemini-3.7-flash%3A%3Alow#benchmark-sheet
+            - paragraph: Google · low
+          - cell "36.9 points measured observed 2026-09-10":
+            - text: 36.9 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=gemini-3.7-flash%3A%3Alow
+        - row "50 DeepSeek V4 Pro 0813 (Reasoning, Max Effort) DeepSeek · open weights · max 36.3 points measured observed 2026-09-10 Compare ↗":
+          - cell "50"
+          - rowheader "DeepSeek V4 Pro 0813 (Reasoning, Max Effort) DeepSeek · open weights · max":
+            - link "DeepSeek V4 Pro 0813 (Reasoning, Max Effort)":
+              - /url: /models/deepseek-v4-pro-0813%3A%3Amax#benchmark-sheet
+            - paragraph: DeepSeek · open weights · max
+          - cell "36.3 points measured observed 2026-09-10":
+            - text: 36.3 points measured observed 2026-09-10
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=deepseek-v4-pro-0813%3A%3Amax
+  - button "Show 50 more (583 remaining)"
+  - paragraph: Ranks stay within this version and evaluation group. Model prompts, evaluation dates and reasoning settings may differ. Source identities can describe whole agent systems. Inspect evidence before treating results as directly equivalent. Statistical significance is not inferred from rank.
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

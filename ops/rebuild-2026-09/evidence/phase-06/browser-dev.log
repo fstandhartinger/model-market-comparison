@@ -1,0 +1,44 @@
+{
+  "verdict": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: radar-mobile: document overflow {\"cls\":0.0000012856565875771604,\"lcp\":1524,\"fcp\":1452,\"documentWidth\":678,\"viewport\":390,\"reducedMotion\":true}\n    at audit (file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:31:10)\n    at async file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:64:110",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "violations": [],
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 748,
+        "fcp": 640,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "compare-light",
+      "violations": [],
+      "metrics": {
+        "cls": 0.022019545777874225,
+        "lcp": 748,
+        "fcp": 640,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "radar-light",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1524,
+        "fcp": 1452,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "interactions": 4,
+  "screenshots": 6
+}

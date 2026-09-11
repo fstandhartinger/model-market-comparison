@@ -1,0 +1,142 @@
+{
+  "verdict": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: The expression evaluated to a falsy value:\n\n  assert.ok(await page.getByRole('button', { name: 'Retry loading', exact: true }).isVisible())\n\n    at file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:89:10\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:541:9)",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "violations": [],
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 2116,
+        "fcp": 1976,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "compare-light",
+      "violations": [],
+      "metrics": {
+        "cls": 0.019943640347704475,
+        "lcp": 2116,
+        "fcp": 1976,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "radar-light",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1252,
+        "fcp": 1140,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "radar-mobile",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1252,
+        "fcp": 1140,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "radar-320",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1252,
+        "fcp": 1140,
+        "documentWidth": 320,
+        "viewport": 320,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "ranking-light",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1484,
+        "fcp": 1484,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "ranking-mobile",
+      "violations": [],
+      "metrics": {
+        "cls": 0.06610596791208527,
+        "lcp": 1484,
+        "fcp": 1484,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "model-sheet",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 3480,
+        "fcp": 3480,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "overview-light",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 2340,
+        "fcp": 2340,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "overview-mobile",
+      "violations": [],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 2340,
+        "fcp": 2340,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      }
+    },
+    {
+      "name": "overview-dark-mobile",
+      "violations": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 2340,
+        "fcp": 2340,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "interactions": 6,
+  "screenshots": 15
+}

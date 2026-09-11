@@ -1,0 +1,25 @@
+```json
+{
+  "artifact_id": "phase06-ui-core",
+  "artifact_sha256": "4b4531caaabae391855799683b0d1613c36da47978d50bf7f88e62eaf89eaa05",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "Navigation and skip-link behavior (Nav.tsx, layout.tsx, accessible tree receipts)",
+    "Compare view 0-4 model native controls, search, and separate price disclosure (BenchmarkCompare.tsx, ComparePricePanel.tsx, compare-dark.png)",
+    "Benchmark radar rendering, 3-8 axis selection constraint, normalization math, gaps on missing data, dash styles, and accessible scrollable table (BenchmarkRadar.tsx, radar-four.png, radar-light.png, radar-mobile-top.png)",
+    "Rankings view evaluation groups, honest denominators, native units/direction, evidence filtering, and tie ranking (BenchmarkRanking.tsx, ranking-light.png, ranking-v1-5.png, ranking-mobile.png)",
+    "Isolation of legacy Composite inputs / Coding Agent v1.4 from v1.5 navigation (CompositeNote.tsx, score-label.ts, tests.log)",
+    "Theme toggle and light/dark color contrast compliance (globals.css, ThemeToggle.tsx, browser-checks.json)",
+    "Responsive reflow at 1440px, 390px, and 320px without root document horizontal overflow (browser-checks.json, runtime-checks.json)",
+    "Automated axe checks (0 violations across 11 page states) and 146 unit/integration tests passing (tests.log)"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Initial load performance metrics (FCP/LCP) are recorded on unthrottled local production Chrome rather than public field networks."
+  ],
+  "missing_evidence": []
+}
+```

@@ -1,0 +1,455 @@
+{
+  "base": "http://127.0.0.1:3317",
+  "at": "2026-09-11T00:47:56.896Z",
+  "environment": "Headless system Chrome on Sandy, local production HTTP unless URL overrides; no network/CPU throttling",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "url": "http://127.0.0.1:3317/compare#main-content",
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 1140,
+        "fcp": 1076,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "compare-light",
+      "url": "http://127.0.0.1:3317/compare?model=gpt-5.6-sol%3A%3Ahigh&model=claude-sonnet-5%3A%3Ahigh&model=grok-4.6%3A%3Ahigh",
+      "metrics": {
+        "cls": 0.019943640347704475,
+        "lcp": 1140,
+        "fcp": 1076,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "radar-light",
+      "url": "http://127.0.0.1:3317/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1172,
+        "fcp": 1092,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    },
+    {
+      "name": "radar-mobile",
+      "url": "http://127.0.0.1:3317/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1172,
+        "fcp": 1092,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 50
+      }
+    },
+    {
+      "name": "radar-320",
+      "url": "http://127.0.0.1:3317/radar",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1172,
+        "fcp": 1092,
+        "documentWidth": 320,
+        "viewport": 320,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 50
+      }
+    },
+    {
+      "name": "ranking-light",
+      "url": "http://127.0.0.1:3317/benchmarks",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 736,
+        "fcp": 736,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 46
+      }
+    },
+    {
+      "name": "ranking-mobile",
+      "url": "http://127.0.0.1:3317/benchmarks?benchmark=aa-coding-agent-index%3A%3A1.5",
+      "metrics": {
+        "cls": 0.06616249623239777,
+        "lcp": 736,
+        "fcp": 736,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 47
+      }
+    },
+    {
+      "name": "model-sheet",
+      "url": "http://127.0.0.1:3317/models/gpt-5.6-sol%3A%3Ahigh",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1392,
+        "fcp": 1392,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 44
+      }
+    },
+    {
+      "name": "overview-light",
+      "url": "http://127.0.0.1:3317/",
+      "metrics": {
+        "cls": 0,
+        "lcp": 1328,
+        "fcp": 1328,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 46
+      }
+    },
+    {
+      "name": "overview-mobile",
+      "url": "http://127.0.0.1:3317/",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1328,
+        "fcp": 1328,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 47
+      }
+    },
+    {
+      "name": "overview-dark-mobile",
+      "url": "http://127.0.0.1:3317/",
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 1328,
+        "fcp": 1328,
+        "documentWidth": 390,
+        "viewport": 390,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [
+          {
+            "id": "color-contrast",
+            "impact": "serious",
+            "help": "Elements must meet minimum color contrast ratio thresholds",
+            "nodes": [
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(3) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(4) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(5) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(6) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(8) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(9) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(10) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(11) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(12) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(13) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(14) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              },
+              {
+                "target": [
+                  ".hover\\:bg-white\\/5:nth-child(16) > .text-xs.text-gray-400.truncate > .mr-2.whitespace-nowrap:nth-child(1) > .items-baseline.justify-end.gap-x-1 > span:nth-child(1)"
+                ],
+                "failure": "Fix any of the following:\n  Element has insufficient color contrast of 2.52 (foreground color: #4c5e75, background color: #171e29, font size: 9.0pt (12px), font weight: normal). Expected contrast ratio of 4.5:1"
+              }
+            ]
+          }
+        ],
+        "incomplete": [
+          "color-contrast"
+        ],
+        "passes": 47
+      }
+    }
+  ],
+  "interactions": [
+    "Tab reaches skip link; Enter focuses main content",
+    "Native model selects add C/D to four series; focused Remove + Enter reduces to three",
+    "Keyboard Space selects radar axes; eight-axis cap disables remaining choices",
+    "Keyboard Enter opens a numeric source evidence disclosure",
+    "Version selector exposes v1.5 separately; no-match search displays explicit empty state",
+    "Model sheet anomaly Why opens through keyboard; input values and directed z are rendered",
+    "Injected local HTTP503 shows retry; retry loads three models without stale or fabricated scores",
+    "Legacy two-model price/provider comparison remains selectable"
+  ],
+  "screenshots": [
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/compare-dark.png",
+      "sha256": "578929dcc75af7f98e56b2d7b9d10d30d0975fd72bb82c797964fc028ae08e3d",
+      "bytes": 159532,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/radar-dark.png",
+      "sha256": "ed10cd4d0dea9442b3542610dbc7e11f6edd35175fc8c433446a932187267da0",
+      "bytes": 202147,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/radar-four.png",
+      "sha256": "43533ad2a72d0ce56ccadc27d4d1e42bda2ea4b243093b6add0b68b73ca8fdb2",
+      "bytes": 247153,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/compare-evidence.png",
+      "sha256": "da801e8e7ec0ab38f37d39f0b4c1afb419ed0b8d0a6e2e8771f922ddfb6a06cd",
+      "bytes": 154768,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/radar-light.png",
+      "sha256": "4ada4266b482d44b2e4529d31825f4b510aa33950222d332aaf766e26b63d7f0",
+      "bytes": 254838,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/radar-mobile.png",
+      "sha256": "cf2707255f52591bf3a30f98df130479efbd8d1f8d389dd4b37f1116ba0a18bb",
+      "bytes": 59447,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/ranking-light.png",
+      "sha256": "ed79dbc1fcaabcf7fe0b63302e6006bb1dbdf7364c6b96543f43ba84047d6197",
+      "bytes": 122176,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/ranking-v1-5.png",
+      "sha256": "c75ad3eb50388d83e52e5a5c0f2483c8eb42b2643a69c3351f7574a94d4bdb9b",
+      "bytes": 110401,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/ranking-mobile.png",
+      "sha256": "8221aa332506f52d6ee8a5bebe46f56211ae45d3498f742447e030b58ce980a6",
+      "bytes": 55273,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/model-sheet.png",
+      "sha256": "c4883dcab63189cf192c8a1df98df944f84aeda93880cfafda934b6063be041a",
+      "bytes": 141426,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/anomaly-why.png",
+      "sha256": "29f88be62ed2d4aceb1bf2a3af098951cc1c8e8c1a94fc6ca82a414ef11c455b",
+      "bytes": 129466,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/self-reported-sheet.png",
+      "sha256": "0e70d83f11d1afe23c56421ec013d162aa70528d1e6a30f87656302c55fd30ec",
+      "bytes": 173209,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/overview-light.png",
+      "sha256": "4ab6c20da52834c77dfbc264ba9eb6f0f82e22f39d2fc22dced762f3aa4617ae",
+      "bytes": 170929,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "light"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/dev-check-r3/overview-mobile.png",
+      "sha256": "a359a57d8c3772f76cd7cfbe9b35e312a3356a496eb7ce134b518251acd44797",
+      "bytes": 66281,
+      "viewport": {
+        "width": 390,
+        "height": 844
+      },
+      "theme": "light"
+    }
+  ],
+  "errors": [],
+  "verdict": "needs-accessibility-fixes"
+}

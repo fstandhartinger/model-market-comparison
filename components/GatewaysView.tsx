@@ -39,13 +39,13 @@ export function GatewaysView({ gateways, collectedAt, note }: { gateways: Gatewa
   }, [gateways, q, euOnly, selfHostOnly, ossOnly]);
 
   const Toggle = ({ on, set, label }: { on: boolean; set: (b: boolean) => void; label: string }) => (
-    <button onClick={() => set(!on)} className={`rounded-md border px-2 py-1 text-xs ${on ? "border-accent bg-accent/15 text-accent" : "border-line text-gray-400 hover:text-gray-200"}`}>{on ? "✓ " : ""}{label}</button>
+    <button type="button" aria-pressed={on} onClick={() => set(!on)} className={`rounded-md border px-2 py-1 text-xs ${on ? "border-accent bg-accent/15 text-accent" : "border-line text-gray-400 hover:text-gray-200"}`}>{on ? "✓ " : ""}{label}</button>
   );
 
   return (
     <div>
       <div className="mb-3 flex flex-wrap items-center gap-2">
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search gateways…"
+        <input aria-label="Search gateways" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search gateways…"
           className="rounded-md border border-line bg-[#0c0f14] px-2 py-1 text-sm outline-none focus:border-accent" />
         <Toggle on={euOnly} set={setEuOnly} label="EU routing-capable" />
         <Toggle on={selfHostOnly} set={setSelfHostOnly} label="Self-hostable / local" />

@@ -1,0 +1,357 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - heading "Providers per Model" [level=1]
+  - paragraph: Every inference provider and pricing platform tracked, ranked by how cheap they are. Rank either by a provider's average price position across all the models it offers (optionally limited to models that have the selected benchmark), or by a single model's prices across providers. Data bars make the comparison visual.
+  - text: 74 OpenRouter 1 AWS Bedrock 1 Azure AI Foundry 1 Google Vertex AI 1 T-Systems LLM Hub 1 Nebius 1 TensorX 1 Chutes 1 Anthropic 1 Scaleway 1 Mistral 1 OVHcloud 1 IONOS 1 STACKIT 1 Inceptron 1 TrustedRouter Rank by
+  - combobox "Rank providers by":
+    - option "A single model's offers" [selected]
+    - option "Avg price rank across models"
+  - text: "Selected: Kimi K2.6 20 providers"
+  - paragraph: "Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback). These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task; unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs, dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens."
+  - textbox "Search provider models":
+    - /placeholder: Search model / org…
+  - paragraph: Pick a model — sorted by Composite (fixed inputs, including Coding Agent v1.4 from September 9, 2026).
+  - table:
+    - rowgroup:
+      - row "Model Composite ▼":
+        - columnheader "Model"
+        - columnheader "Composite ▼"
+    - rowgroup:
+      - row "Claude Fable 5.1 100.0":
+        - cell "Claude Fable 5.1":
+          - button "Claude Fable 5.1"
+        - cell "100.0"
+      - row "GPT-6 Astra 96.0":
+        - cell "GPT-6 Astra":
+          - button "GPT-6 Astra"
+        - cell "96.0"
+      - row "Claude Opus 5 95.7":
+        - cell "Claude Opus 5":
+          - button "Claude Opus 5"
+        - cell "95.7"
+      - row "Muse Spark 1.3 95.4":
+        - cell "Muse Spark 1.3":
+          - button "Muse Spark 1.3"
+        - cell "95.4"
+      - row "Claude Fable 5 93.7":
+        - cell "Claude Fable 5":
+          - button "Claude Fable 5"
+        - cell "93.7"
+      - row "Kimi K3 open 92.4":
+        - cell "Kimi K3 open":
+          - button "Kimi K3"
+          - text: open
+        - cell "92.4"
+      - row "Grok 4.6 91.2":
+        - cell "Grok 4.6":
+          - button "Grok 4.6"
+        - cell "91.2"
+      - row "GLM-5.3 open 87.1":
+        - cell "GLM-5.3 open":
+          - button "GLM-5.3"
+          - text: open
+        - cell "87.1"
+      - row "Claude Sonnet 5 85.8":
+        - cell "Claude Sonnet 5":
+          - button "Claude Sonnet 5"
+        - cell "85.8"
+      - row "Claude Opus 4.8 84.3":
+        - cell "Claude Opus 4.8":
+          - button "Claude Opus 4.8"
+        - cell "84.3"
+      - row "Grok 4.5 82.8":
+        - cell "Grok 4.5":
+          - button "Grok 4.5"
+        - cell "82.8"
+      - row "Muse Spark 1.2 78.7":
+        - cell "Muse Spark 1.2":
+          - button "Muse Spark 1.2"
+        - cell "78.7"
+      - row "GPT-5.6 Sol 77.5":
+        - cell "GPT-5.6 Sol":
+          - button "GPT-5.6 Sol"
+        - cell "77.5"
+      - row "GLM-5.3-Flash open 77.4":
+        - cell "GLM-5.3-Flash open":
+          - button "GLM-5.3-Flash"
+          - text: open
+        - cell "77.4"
+      - row "Claude Opus 4.7 77.4":
+        - cell "Claude Opus 4.7":
+          - button "Claude Opus 4.7"
+        - cell "77.4"
+      - row "GLM-5.2 open 70.9":
+        - cell "GLM-5.2 open":
+          - button "GLM-5.2"
+          - text: open
+        - cell "70.9"
+      - row "GPT-5.6 Luna 70.8":
+        - cell "GPT-5.6 Luna":
+          - button "GPT-5.6 Luna"
+        - cell "70.8"
+      - row "Claude Opus 4.6 70.8":
+        - cell "Claude Opus 4.6":
+          - button "Claude Opus 4.6"
+        - cell "70.8"
+      - row "MiniMax-M3 open 66.6":
+        - cell "MiniMax-M3 open":
+          - button "MiniMax-M3"
+          - text: open
+        - cell "66.6"
+      - row "GPT-5.5 65.5":
+        - cell "GPT-5.5":
+          - button "GPT-5.5"
+        - cell "65.5"
+      - row "GPT-5.6 Terra 65.4":
+        - cell "GPT-5.6 Terra":
+          - button "GPT-5.6 Terra"
+        - cell "65.4"
+      - row "GPT-5.4 65.4":
+        - cell "GPT-5.4":
+          - button "GPT-5.4"
+        - cell "65.4"
+      - row "DeepSeek V4 Pro 0813 open 65.4":
+        - cell "DeepSeek V4 Pro 0813 open":
+          - button "DeepSeek V4 Pro 0813"
+          - text: open
+        - cell "65.4"
+      - row "Kimi K2.6 open 61.9":
+        - cell "Kimi K2.6 open":
+          - button "Kimi K2.6" [pressed]
+          - text: open
+        - cell "61.9"
+      - row "Claude Sonnet 4.6 60.3":
+        - cell "Claude Sonnet 4.6":
+          - button "Claude Sonnet 4.6"
+        - cell "60.3"
+      - row "Kimi K2.7 Code open 60.2":
+        - cell "Kimi K2.7 Code open":
+          - button "Kimi K2.7 Code"
+          - text: open
+        - cell "60.2"
+      - row "MiMo-V2.5-Pro open 60.1":
+        - cell "MiMo-V2.5-Pro open":
+          - button "MiMo-V2.5-Pro"
+          - text: open
+        - cell "60.1"
+      - row "DeepSeek V4 Pro open 60.0":
+        - cell "DeepSeek V4 Pro open":
+          - button "DeepSeek V4 Pro"
+          - text: open
+        - cell "60.0"
+      - row "GLM-5.1 open 56.5":
+        - cell "GLM-5.1 open":
+          - button "GLM-5.1"
+          - text: open
+        - cell "56.5"
+      - row "Kimi K2.5 open 50.8":
+        - cell "Kimi K2.5 open":
+          - button "Kimi K2.5"
+          - text: open
+        - cell "50.8"
+  - table:
+    - rowgroup:
+      - row "Provider Platform Rank Adjusted $/task vs cheapest":
+        - columnheader "Provider"
+        - columnheader "Platform"
+        - columnheader "Rank"
+        - columnheader "Adjusted $/task"
+        - columnheader "vs cheapest"
+    - rowgroup:
+      - 'row "Decart OpenRouter #1 $0.01467 $/task: show cost inputs for Kimi K2.6, Decart / OpenRouter cheapest"':
+        - cell "Decart"
+        - cell "OpenRouter"
+        - cell "#1"
+        - 'cell "$0.01467 $/task: show cost inputs for Kimi K2.6, Decart / OpenRouter"':
+          - 'button "$0.01467 $/task: show cost inputs for Kimi K2.6, Decart / OpenRouter"': $0.01467 assumed task
+        - cell "cheapest"
+      - 'row "Inceptron OpenRouter #2 $0.01529 $/task: show cost inputs for Kimi K2.6, Inceptron / OpenRouter + $0.00062 $/task: show cost inputs for model, reference"':
+        - cell "Inceptron"
+        - cell "OpenRouter"
+        - cell "#2"
+        - 'cell "$0.01529 $/task: show cost inputs for Kimi K2.6, Inceptron / OpenRouter"':
+          - 'button "$0.01529 $/task: show cost inputs for Kimi K2.6, Inceptron / OpenRouter"': $0.01529 assumed task
+        - 'cell "+ $0.00062 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00062 $/task: show cost inputs for model, reference"': $0.00062 /task est.
+      - 'row "Chutes Chutes #3 $0.01547 $/task: show cost inputs for Kimi K2.6, Chutes / Chutes + $0.0008 $/task: show cost inputs for model, reference"':
+        - cell "Chutes"
+        - cell "Chutes"
+        - cell "#3"
+        - 'cell "$0.01547 $/task: show cost inputs for Kimi K2.6, Chutes / Chutes"':
+          - 'button "$0.01547 $/task: show cost inputs for Kimi K2.6, Chutes / Chutes"': $0.01547 assumed task
+        - 'cell "+ $0.0008 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.0008 $/task: show cost inputs for model, reference"': $0.0008 /task est.
+      - 'row "Chutes OpenRouter #4 $0.01547 $/task: show cost inputs for Kimi K2.6, Chutes / OpenRouter + $0.0008 $/task: show cost inputs for model, reference"':
+        - cell "Chutes"
+        - cell "OpenRouter"
+        - cell "#4"
+        - 'cell "$0.01547 $/task: show cost inputs for Kimi K2.6, Chutes / OpenRouter"':
+          - 'button "$0.01547 $/task: show cost inputs for Kimi K2.6, Chutes / OpenRouter"': $0.01547 assumed task
+        - 'cell "+ $0.0008 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.0008 $/task: show cost inputs for model, reference"': $0.0008 /task est.
+      - 'row "Inceptron Inceptron #5 $0.01629 $/task: show cost inputs for Kimi K2.6, Inceptron / Inceptron + $0.00162 $/task: show cost inputs for model, reference"':
+        - cell "Inceptron"
+        - cell "Inceptron"
+        - cell "#5"
+        - 'cell "$0.01629 $/task: show cost inputs for Kimi K2.6, Inceptron / Inceptron"':
+          - 'button "$0.01629 $/task: show cost inputs for Kimi K2.6, Inceptron / Inceptron"': $0.01629 assumed task
+        - 'cell "+ $0.00162 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00162 $/task: show cost inputs for model, reference"': $0.00162 /task est.
+      - 'row "CoreWeave OpenRouter #6 $0.01694 $/task: show cost inputs for Kimi K2.6, CoreWeave / OpenRouter + $0.00226 $/task: show cost inputs for model, reference"':
+        - cell "CoreWeave"
+        - cell "OpenRouter"
+        - cell "#6"
+        - 'cell "$0.01694 $/task: show cost inputs for Kimi K2.6, CoreWeave / OpenRouter"':
+          - 'button "$0.01694 $/task: show cost inputs for Kimi K2.6, CoreWeave / OpenRouter"': $0.01694 assumed task
+        - 'cell "+ $0.00226 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00226 $/task: show cost inputs for model, reference"': $0.00226 /task est.
+      - 'row "Crusoe OpenRouter #7 $0.01807 $/task: show cost inputs for Kimi K2.6, Crusoe / OpenRouter + $0.00339 $/task: show cost inputs for model, reference"':
+        - cell "Crusoe"
+        - cell "OpenRouter"
+        - cell "#7"
+        - 'cell "$0.01807 $/task: show cost inputs for Kimi K2.6, Crusoe / OpenRouter"':
+          - 'button "$0.01807 $/task: show cost inputs for Kimi K2.6, Crusoe / OpenRouter"': $0.01807 assumed task
+        - 'cell "+ $0.00339 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00339 $/task: show cost inputs for model, reference"': $0.00339 /task est.
+      - 'row "DeepInfra OpenRouter #8 $0.01911 $/task: show cost inputs for Kimi K2.6, DeepInfra / OpenRouter + $0.00443 $/task: show cost inputs for model, reference"':
+        - cell "DeepInfra"
+        - cell "OpenRouter"
+        - cell "#8"
+        - 'cell "$0.01911 $/task: show cost inputs for Kimi K2.6, DeepInfra / OpenRouter"':
+          - 'button "$0.01911 $/task: show cost inputs for Kimi K2.6, DeepInfra / OpenRouter"': $0.01911 assumed task
+        - 'cell "+ $0.00443 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00443 $/task: show cost inputs for model, reference"': $0.00443 /task est.
+      - 'row "Parasail OpenRouter #10 $0.01911 $/task: show cost inputs for Kimi K2.6, Parasail / OpenRouter + $0.00443 $/task: show cost inputs for model, reference"':
+        - cell "Parasail"
+        - cell "OpenRouter"
+        - cell "#10"
+        - 'cell "$0.01911 $/task: show cost inputs for Kimi K2.6, Parasail / OpenRouter"':
+          - 'button "$0.01911 $/task: show cost inputs for Kimi K2.6, Parasail / OpenRouter"': $0.01911 assumed task
+        - 'cell "+ $0.00443 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00443 $/task: show cost inputs for model, reference"': $0.00443 /task est.
+      - 'row "Venice OpenRouter #9 $0.01911 $/task: show cost inputs for Kimi K2.6, Venice / OpenRouter + $0.00443 $/task: show cost inputs for model, reference"':
+        - cell "Venice"
+        - cell "OpenRouter"
+        - cell "#9"
+        - 'cell "$0.01911 $/task: show cost inputs for Kimi K2.6, Venice / OpenRouter"':
+          - 'button "$0.01911 $/task: show cost inputs for Kimi K2.6, Venice / OpenRouter"': $0.01911 assumed task
+        - 'cell "+ $0.00443 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00443 $/task: show cost inputs for model, reference"': $0.00443 /task est.
+      - 'row "Novita OpenRouter #11 $0.02005 $/task: show cost inputs for Kimi K2.6, Novita / OpenRouter + $0.00537 $/task: show cost inputs for model, reference"':
+        - cell "Novita"
+        - cell "OpenRouter"
+        - cell "#11"
+        - 'cell "$0.02005 $/task: show cost inputs for Kimi K2.6, Novita / OpenRouter"':
+          - 'button "$0.02005 $/task: show cost inputs for Kimi K2.6, Novita / OpenRouter"': $0.02005 assumed task
+        - 'cell "+ $0.00537 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00537 $/task: show cost inputs for model, reference"': $0.00537 /task est.
+      - 'row "GMICloud OpenRouter #12 $0.02139 $/task: show cost inputs for Kimi K2.6, GMICloud / OpenRouter + $0.00672 $/task: show cost inputs for model, reference"':
+        - cell "GMICloud"
+        - cell "OpenRouter"
+        - cell "#12"
+        - 'cell "$0.02139 $/task: show cost inputs for Kimi K2.6, GMICloud / OpenRouter"':
+          - 'button "$0.02139 $/task: show cost inputs for Kimi K2.6, GMICloud / OpenRouter"': $0.02139 assumed task
+        - 'cell "+ $0.00672 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00672 $/task: show cost inputs for model, reference"': $0.00672 /task est.
+      - 'row "Azure AI Foundry Azure AI Foundry #13 $0.02377 $/task: show cost inputs for Kimi K2.6, Azure AI Foundry / Azure AI Foundry + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "Azure AI Foundry"
+        - cell "Azure AI Foundry"
+        - cell "#13"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, Azure AI Foundry / Azure AI Foundry"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, Azure AI Foundry / Azure AI Foundry"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "AtlasCloud OpenRouter #16 $0.02377 $/task: show cost inputs for Kimi K2.6, AtlasCloud / OpenRouter + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "AtlasCloud"
+        - cell "OpenRouter"
+        - cell "#16"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, AtlasCloud / OpenRouter"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, AtlasCloud / OpenRouter"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "Nebius Nebius #14 $0.02377 $/task: show cost inputs for Kimi K2.6, Nebius / Nebius + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "Nebius"
+        - cell "Nebius"
+        - cell "#14"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, Nebius / Nebius"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, Nebius / Nebius"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "Cloudflare OpenRouter #17 $0.02377 $/task: show cost inputs for Kimi K2.6, Cloudflare / OpenRouter + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "Cloudflare"
+        - cell "OpenRouter"
+        - cell "#17"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, Cloudflare / OpenRouter"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, Cloudflare / OpenRouter"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "DigitalOcean OpenRouter #15 $0.02377 $/task: show cost inputs for Kimi K2.6, DigitalOcean / OpenRouter + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "DigitalOcean"
+        - cell "OpenRouter"
+        - cell "#15"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, DigitalOcean / OpenRouter"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, DigitalOcean / OpenRouter"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "BaseTen OpenRouter #18 $0.02377 $/task: show cost inputs for Kimi K2.6, BaseTen / OpenRouter + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "BaseTen"
+        - cell "OpenRouter"
+        - cell "#18"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, BaseTen / OpenRouter"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, BaseTen / OpenRouter"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "Fireworks OpenRouter #19 $0.02377 $/task: show cost inputs for Kimi K2.6, Fireworks / OpenRouter + $0.00909 $/task: show cost inputs for model, reference"':
+        - cell "Fireworks"
+        - cell "OpenRouter"
+        - cell "#19"
+        - 'cell "$0.02377 $/task: show cost inputs for Kimi K2.6, Fireworks / OpenRouter"':
+          - 'button "$0.02377 $/task: show cost inputs for Kimi K2.6, Fireworks / OpenRouter"': $0.02377 assumed task
+        - 'cell "+ $0.00909 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.00909 $/task: show cost inputs for model, reference"': $0.00909 /task est.
+      - 'row "Phala OpenRouter #20 $0.02728 $/task: show cost inputs for Kimi K2.6, Phala / OpenRouter + $0.01261 $/task: show cost inputs for model, reference"':
+        - cell "Phala"
+        - cell "OpenRouter"
+        - cell "#20"
+        - 'cell "$0.02728 $/task: show cost inputs for Kimi K2.6, Phala / OpenRouter"':
+          - 'button "$0.02728 $/task: show cost inputs for Kimi K2.6, Phala / OpenRouter"': $0.02728 assumed task
+        - 'cell "+ $0.01261 $/task: show cost inputs for model, reference"':
+          - text: +
+          - 'button "$0.01261 $/task: show cost inputs for model, reference"': $0.01261 /task est.
+  - paragraph: Providers ranked by Adjusted $/task for Kimi K2.6.
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

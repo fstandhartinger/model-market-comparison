@@ -1,0 +1,120 @@
+{
+  "started_at": "2026-09-11T01:08:52.176Z",
+  "mode": "critic",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [
+    "openai/gpt-6-astra",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-flash-0731",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "ca7d5101a9793f67ce045265e46577bb45aa03bb9da7c36fdd2eb0081b1837b3",
+  "images": [
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/before-compare.png",
+      "bytes": 145881,
+      "sha256": "58f4384ef300054fefdd6e94d35c3869da4fe9caeea06b490c53fd92fe4f4bef",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/rendered-final/compare-dark.png",
+      "bytes": 157697,
+      "sha256": "18f8979667dcf44b832caf36302c549b8eae10f830a1efdd7c795489bf334ac3",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-four.png",
+      "bytes": 276746,
+      "sha256": "473f1baffb89af3518a71a2cecb65513053a6cb1844e87c572770bdd32c7432e",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/rendered-final/radar-light.png",
+      "bytes": 280403,
+      "sha256": "28dafc9f7d1ddc7d826451d8e31ddb72ae7ba2a975850b32ccc96cc6879c3439",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/radar-mobile-top.png",
+      "bytes": 55417,
+      "sha256": "16cc2e7b5841aff174198e1a4f7538b721f225519dd9d392e3d98cb3d308dc53",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/rendered-final/ranking-light.png",
+      "bytes": 127379,
+      "sha256": "0a07caa7968344adefb04750e2a47b63604903b6dcb50da866897ddfcdb02c3c",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/rendered-final/ranking-v1-5.png",
+      "bytes": 98080,
+      "sha256": "504139c2e55184ba514c3658ce08877cfbd86c2f749f5f537d1276d2470f6af6",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/rendered-final/ranking-mobile.png",
+      "bytes": 55879,
+      "sha256": "1d96c429b9adf86a9364a3c0f07682f8d40bde6c39d0712143e7c98bdcbce044",
+      "mime": "image/png"
+    }
+  ],
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 72555,
+    "completion_tokens": 1432,
+    "total_tokens": 73987,
+    "cost": 0.0591883875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.05978625,
+      "upstream_inference_prompt_cost": 0.05441625,
+      "upstream_inference_completions_cost": 0.00537
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 936,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google",
+  "session_id": null,
+  "finished_at": "2026-09-11T01:09:04.542Z",
+  "output_sha256": "6188274fb05587b1be9eccacf4c9aad88b813798f6f4de0eea65fabb1073a028"
+}

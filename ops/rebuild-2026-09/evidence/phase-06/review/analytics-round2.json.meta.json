@@ -1,0 +1,71 @@
+{
+  "started_at": "2026-09-11T00:53:15.721Z",
+  "mode": "critic",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [
+    "openai/gpt-6-astra",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-flash-0731",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "c4f61cf9b05a2052ae823e79f77f3026629b48ddc2629476aa3fe947e5bbbf15",
+  "images": [],
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 28265,
+    "completion_tokens": 1802,
+    "total_tokens": 30067,
+    "cost": 0.0276766875,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.02795625,
+      "upstream_inference_prompt_cost": 0.02119875,
+      "upstream_inference_completions_cost": 0.0067575
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1471,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google",
+  "session_id": null,
+  "finished_at": "2026-09-11T00:53:27.826Z",
+  "output_sha256": "f50caa4c0f0fadd223556c364b34bdea4ccaf29026eff5237390f8b968490c28"
+}

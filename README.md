@@ -14,10 +14,15 @@ USD per 1M tokens.
 > 🔄 Data collection & refresh: [data/SCRAPING.md](data/SCRAPING.md) ·
 > 🔌 Public API: [API.md](API.md) · 🚀 Deploy / migrate / env vars: [DEPLOYMENT.md](DEPLOYMENT.md) · 📜 Data/URL changes for consumers: [CHANGELOG.md](CHANGELOG.md)
 
+
+## Benchmark exploration
+
+Explore [benchmark rankings](https://model-market-comparison.app.mintapis.com/benchmarks), compare up to four exact model configurations on [Compare](https://model-market-comparison.app.mintapis.com/compare), or use the standalone [Radar](https://model-market-comparison.app.mintapis.com/radar). Model pages include complete benchmark sheets, source links and dates, missing coverage, and explainable profile signals. Every comparison keeps benchmark versions separate. [Methodology and limitations](docs/benchmark-explorer.md).
+
+
 ## Features
 
-- **Global filter bar** (applies across every interactive comparison and linked model
-  detail, persisted): selectable **score**,
+- **Price & provider filters** (apply to price comparisons and model offers; benchmark exploration uses its own filters, persisted): selectable **score**,
   min-score, **One variant for Reasoning models** (collapse GPT/Claude/GLM/Kimi to one),
   **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted / approved equivalent only**, **Non-US provider only**,
   **TEE / confidential only**, plus

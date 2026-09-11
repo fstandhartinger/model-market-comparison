@@ -1,0 +1,227 @@
+{
+  "at": "2026-09-11T01:10:57.171Z",
+  "accepted_artifacts": [
+    {
+      "artifact_id": "phase06-analytics",
+      "round": 3,
+      "artifact_sha256": "88505eb8a41b424137c374e788ad0e1799b4902942b9812374dcd5ce84c59913",
+      "model": "google/gemini-3.7-flash",
+      "aa": 36.9,
+      "files_verified": [
+        "lib/benchmark-view.mjs",
+        "lib/benchmark-view.d.mts",
+        "lib/benchmark-data.ts",
+        "app/api/benchmark-view/route.ts",
+        "app/api/benchmark-scores/route.ts",
+        "test/benchmark-view.test.mjs",
+        "ops/rebuild-2026-09/bin/worker-images.mjs",
+        "ops/rebuild-2026-09/bin/worker-runner.mjs",
+        "test/worker-images.test.mjs",
+        "app/api/price-comparison/route.ts"
+      ],
+      "image_count": 0,
+      "input_hash_verified": true,
+      "output_hash_verified": true,
+      "coverage": [
+        "lib/benchmark-view.mjs: radar normalization arithmetic, zero-handling, direction inversion, and uninformative range withholding",
+        "lib/benchmark-view.mjs: latest observation selection prioritizing measured and latest date without selecting highest score",
+        "lib/benchmark-view.mjs: peer distribution calculation with low-sample and duplicate source suppression",
+        "lib/benchmark-view.mjs: profile anomaly thresholds (minPeers=20, minFamilies=10, minProfile=5, peerZ=1.5, profileGap=1.5) and family-level baseline aggregation",
+        "lib/benchmark-view.mjs: cohort separation by harness, split, and configuration (e.g. CoT, Polyglot edit formats)",
+        "lib/benchmark-view.mjs: dated snapshot axes for AA index and DesignArena without semantic version invention",
+        "lib/benchmark-view.d.mts: type definitions matching presentation adapter exports and interfaces",
+        "lib/benchmark-data.ts: in-memory caching of benchmark view against dataset reference",
+        "app/api/benchmark-view/route.ts: query parsing, axis 404 validation, model slicing, and cache header preservation",
+        "app/api/benchmark-scores/route.ts: pagination bounds (1-500), observation_id filtering, basis validation, and cell/coverage lookup",
+        "app/api/price-comparison/route.ts: on-demand legacy client dataset endpoint",
+        "ops/rebuild-2026-09/bin/worker-images.mjs: image input size gating (4MB per file, 16MB aggregate), 8-image cap, magic-byte MIME validation, and hash receipts",
+        "ops/rebuild-2026-09/bin/worker-runner.mjs: image critic integration and producer/critic family isolation checks",
+        "test/benchmark-view.test.mjs: test coverage for peer distribution, normalization, profile signals, cohorts, and non-mutation of raw dataset",
+        "test/worker-images.test.mjs: vision critic payload, MIME validation, and gate enforcement test coverage"
+      ],
+      "uncertainties": []
+    },
+    {
+      "artifact_id": "phase06-ui-core",
+      "round": 2,
+      "artifact_sha256": "4b4531caaabae391855799683b0d1613c36da47978d50bf7f88e62eaf89eaa05",
+      "model": "google/gemini-3.7-flash",
+      "aa": 36.9,
+      "files_verified": [
+        "components/BenchmarkRadar.tsx",
+        "components/BenchmarkCompare.tsx",
+        "components/BenchmarkRanking.tsx",
+        "components/CompositeNote.tsx",
+        "components/ComparePricePanel.tsx",
+        "app/compare/page.tsx",
+        "app/radar/page.tsx",
+        "app/benchmarks/page.tsx",
+        "app/globals.css",
+        "components/Nav.tsx",
+        "components/ThemeToggle.tsx",
+        "app/layout.tsx",
+        "components/GlobalFilters.tsx",
+        "lib/score-label.ts"
+      ],
+      "image_count": 8,
+      "input_hash_verified": true,
+      "output_hash_verified": true,
+      "coverage": [
+        "Primary navigation structure, active page attributes, theme toggle, and skip-link behavior (Nav.tsx, ThemeToggle.tsx, app/layout.tsx, compare-dark accessible tree)",
+        "Compare view 0-4 model native controls, remove/search interactions, and isolated on-demand price comparison disclosure (BenchmarkCompare.tsx, ComparePricePanel.tsx, compare-dark.png screenshot)",
+        "Benchmark radar rendering across 3-8 selectable versioned axes, series dashes and color definitions, catalog normalization min/max, unclosed polygon gaps for missing data, and accompanying scrollable table with range metadata (BenchmarkRadar.tsx, radar-four.png, radar-light.png, radar-mobile-top.png screenshots)",
+        "Rankings view evaluation groups/harnesses, native unit and direction rendering, honest denominators, tie ranking within filtered groups, and evidence filtering (BenchmarkRanking.tsx, ranking-light.png, ranking-v1-5.png, ranking-mobile.png screenshots)",
+        "Isolation of legacy Composite inputs and Coding Agent v1.4 from active v1.5 navigation (CompositeNote.tsx, score-label.ts, tests.log, legacy-source-check.json)",
+        "Audit-based evaluation of routes not attached as full screenshots (compare-light, radar-320, model-sheet, overview-light/mobile) via browser-checks.json, runtime-checks.json, and accessibility tree receipts",
+        "Reflow and horizontal containment: 320px viewport verified for the radar route; 1440px and 390px viewports verified across legacy and core pages without document horizontal overflow",
+        "Color contrast and automated axe test passes (0 violations across 11 page states in browser-checks.json; noted that automated scanning does not constitute full WCAG certification)",
+        "146 unit and integration test assertions passing without errors or skips (tests.log)"
+      ],
+      "uncertainties": [
+        "Initial paint timings (FCP/LCP) and layout shift values are verified from local unthrottled production Chrome runs rather than live public field telemetry.",
+        "320px viewport reflow verification is specifically evidenced for the radar view via browser-checks.json and accessible tree receipts, while legacy routes are verified at 1440px and 390px."
+      ]
+    },
+    {
+      "artifact_id": "phase06-ui-evidence",
+      "round": 1,
+      "artifact_sha256": "3dc1cdfde70810d979a17d0a2b59d66feabaa93cd202ced2c273e100990b8f00",
+      "model": "google/gemini-3.7-flash",
+      "aa": 36.9,
+      "files_verified": [
+        "components/BenchmarkEvidence.tsx",
+        "components/BenchmarkSheet.tsx",
+        "app/models/[id]/page.tsx",
+        "components/ModelExplorer.tsx",
+        "components/CompareView.tsx",
+        "lib/benchmark-view.mjs",
+        "app/globals.css",
+        "components/Nav.tsx",
+        "components/ThemeToggle.tsx",
+        "app/layout.tsx",
+        "components/GlobalFilters.tsx",
+        "lib/score-label.ts"
+      ],
+      "image_count": 8,
+      "input_hash_verified": true,
+      "output_hash_verified": true,
+      "coverage": [
+        "Benchmark sheet page rendering and layout (components/BenchmarkSheet.tsx, app/models/[id]/page.tsx)",
+        "Anomaly explanation heuristics and disclosure rendering (components/BenchmarkEvidence.tsx, anomaly-why.png, deterministic anomaly test inputs)",
+        "Vendor self-reported observations and badges (self-reported-sheet.png, components/BenchmarkEvidence.tsx)",
+        "Measured vs vendor divergence empty state and compatibility messaging (model-sheet.png, docs/benchmark-explorer.md)",
+        "Full comparison evidence table with multi-model observation cards and exact IDs (compare-evidence.png, components/CompareView.tsx)",
+        "Overview desktop light and mobile responsive views (overview-light.png, overview-mobile.png, radar-mobile.png)",
+        "Top navigation, active page announcement, and collapsible Price/Provider filters (components/Nav.tsx, components/GlobalFilters.tsx, app/layout.tsx)",
+        "Accessible tree hierarchy, skip link target, and automated axe scan receipts (browser-checks.json, accessible tree excerpts)",
+        "Contrast, badge styling, and table horizontal scroll regions (app/globals.css, components/BenchmarkSheet.tsx)"
+      ],
+      "uncertainties": [
+        "Axe receipt lists incomplete status for color-contrast and th-has-data-cells across multiple pages, which relies on visual/code inspection rather than full automated certification.",
+        "Reported FCP, LCP, and CLS metrics were measured on unthrottled localhost Chrome rather than geographically distributed end-user network conditions."
+      ]
+    },
+    {
+      "artifact_id": "phase06-ui-legacy",
+      "round": 2,
+      "artifact_sha256": "402ed83aa74cd271a3427f081922f2dda8efb53a65ee18fe9fcab1977f6af706",
+      "model": "google/gemini-3.7-flash",
+      "aa": 36.9,
+      "files_verified": [
+        "components/ProviderExplorer.tsx",
+        "components/ProvidersView.tsx",
+        "components/CostCapabilityScatter.tsx",
+        "components/ChartsBoard.tsx",
+        "components/GatewaysView.tsx",
+        "components/ui.tsx",
+        "app/about/page.tsx",
+        "app/eu/page.tsx",
+        "app/charts/page.tsx",
+        "app/globals.css",
+        "components/Nav.tsx",
+        "components/ThemeToggle.tsx",
+        "app/layout.tsx",
+        "components/GlobalFilters.tsx",
+        "lib/score-label.ts"
+      ],
+      "image_count": 8,
+      "input_hash_verified": true,
+      "output_hash_verified": true,
+      "coverage": [
+        "Primary header navigation with Overview, Benchmarks, Compare, Radar, More dropdown, active route indication, skip link, and ThemeToggle",
+        "Global price & provider filter disclosure with ScoreSelect, NumFilter min score, Adjusted/Raw toggle, fixed I/O blend selector, feature/collapse/residency toggles, and multi-select dropdowns",
+        "Charts page (/charts) with capability leaderboard, cheapest models bar chart, open vs closed comparison, and keyboard-accessible price/cost tables (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+        "Cost vs Capability scatter (/scatter) with log/linear cost axis toggle, Pareto frontier halo and connection line, legend by org and weight type, and accessible data table (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+        "Providers per Model view (/providers) with single-model offers ranking, peer rank across models, model picker, data bars, and constituent expansions (rendered 390px light visual inspected; 1440px light/dark verified via browser checks receipt)",
+        "Provider explorer (/provider-explorer) two-pane directory with search, sort options (by #models, EU first, A-Z), filter checkboxes, and model offer comparisons (rendered 1440px dark and 390px light visuals inspected; 1440px light verified via browser checks receipt)",
+        "EU & Sovereign cloud view (/eu) with SOTA open-model table, company-policy equivalents, sovereign provider catalog, and proprietary exclusions (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+        "Gateways view (/gateways) with search, EU routing badges, filter toggles, and metadata listings (rendered 390px light visual inspected; 1440px light/dark verified via browser checks receipt)",
+        "About & data sources view (/about) with tracked source citations, featured models definitions, dataset snapshot metadata, and calculation methodology (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+        "Responsive layout validation confirming zero document overflow across all legacy routes at 1440px and 390px in checks.json receipt (noting 320px reflow evidence is scoped to radar)",
+        "Accessibility check results (zero automated axe violations across routes in receipt, acknowledging automated scans do not certify complete WCAG conformance)"
+      ],
+      "uncertainties": []
+    }
+  ],
+  "completed_worker_receipts": [
+    {
+      "file": "evidence-components-draft.txt.meta.json",
+      "model": "z-ai/glm-5.3-flash",
+      "cost": 0.00974660445
+    },
+    {
+      "file": "styles-draft.txt.meta.json",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "cost": 0.00064137744
+    },
+    {
+      "file": "review/analytics-round1.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.0239092425
+    },
+    {
+      "file": "review/analytics-round2.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.0276766875
+    },
+    {
+      "file": "review/analytics-round3.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.0271094175
+    },
+    {
+      "file": "review/ui-core-round1.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.0591883875
+    },
+    {
+      "file": "review/ui-core-round2.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.0606674475
+    },
+    {
+      "file": "review/ui-evidence-round1.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.0655887375
+    },
+    {
+      "file": "review/ui-legacy-round1.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.07445196
+    },
+    {
+      "file": "review/ui-legacy-round2.json.meta.json",
+      "model": "google/gemini-3.7-flash",
+      "cost": 0.07659036
+    }
+  ],
+  "recorded_completed_call_cost_usd": 0.42557022188999993,
+  "cost_note": "Includes superseded format rounds; incomplete/failed worker charges are not included. Astra subscription usage is separate.",
+  "scope_notes": [
+    "Critics received actual image bytes through image-capable transport. Owner recomputed source/image/input/output hashes.",
+    "Zero axe violations in 11 new/overview states plus 21 legacy states is not full accessibility conformance.",
+    "320px automated reflow evidence is for radar. Legacy reflow is verified at390px/1440px. All shipped routes are represented in source, audit and attached screenshots across the three visual artifacts.",
+    "No live protocol-compatible divergence exists. Empty state and schema rendering were reviewed; numerical pair arithmetic has synthetic phase05 tests.",
+    "No unresolved code or pixel finding; no phase07 branding or phase08 automation completion is claimed."
+  ]
+}

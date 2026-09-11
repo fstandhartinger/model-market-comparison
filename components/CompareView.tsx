@@ -2,6 +2,7 @@
 import { useMemo, useState } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
+import { scoreLabel, scoreVersion } from "../lib/score-label";
 import type { ScoreKey } from "../lib/types";
 import { num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, createOfferScope, priceContext, priceLabel, type OfferScope, type PriceResult, type PriceSettings } from "../lib/cost";
@@ -74,7 +75,7 @@ export function CompareView({ data }: { data: ClientData }) {
       {/* Master: model list */}
       <div>
         <div className="card mb-3 p-3 text-sm">
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search models…" className="w-full rounded-md border border-line bg-ink px-3 py-1.5" />
+          <input value={q} onChange={(e) => setQ(e.target.value)} aria-label="Search price comparison models" placeholder="Search models…" className="w-full rounded-md border border-line bg-ink px-3 py-1.5" />
           <p className="mt-2 text-xs text-gray-500">Click to pick up to two models (A then B). Click again to deselect.</p>
         </div>
         <div className="card max-h-[72vh] overflow-y-auto">
@@ -83,7 +84,7 @@ export function CompareView({ data }: { data: ClientData }) {
             <thead><tr>
               <th className="px-2 py-2 text-left text-xs text-gray-400">A/B</th>
               <th className="px-3 py-2 text-left text-xs text-gray-400">Model</th>
-              <th className="px-3 py-2 text-right text-xs text-gray-400">Score</th>
+              <th className="px-3 py-2 text-right text-xs text-gray-400">Score · {scoreVersion(s.score, data.sourceDates)}</th>
             </tr></thead>
             <tbody>
               {visibleModels.map((m) => {
@@ -134,7 +135,7 @@ export function CompareView({ data }: { data: ClientData }) {
                 const better = a != null && b != null ? (mt.lowerBetter ? (a < b ? "A" : b < a ? "B" : null) : (a > b ? "A" : b > a ? "B" : null)) : null;
                 return (
                   <div key={mt.key} className="px-4 py-3">
-                    <div className="mb-1 text-xs text-gray-400">{mt.key === "cost" ? `Cheapest ${priceLabel(priceSettings)}` : mt.label}{mt.lowerBetter && <span className="ml-1 text-gray-600">(lower is better)</span>}</div>
+                    <div className="mb-1 text-xs text-gray-400">{mt.key === "cost" ? `Cheapest ${priceLabel(priceSettings)}` : scoreLabel(mt.key, data.sourceDates)}{mt.lowerBetter && <span className="ml-1 text-gray-600">(lower is better)</span>}</div>
                     <div className="grid grid-cols-2 gap-3">
                       {(["A", "B"] as const).map((slot) => {
                         const v = slot === "A" ? a : b;

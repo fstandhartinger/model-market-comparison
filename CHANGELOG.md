@@ -89,3 +89,10 @@ some app internals — details per release below.
 The daily data-refresh commits ("Refresh …") only touch `data/` (and occasionally test
 pins) and never change API routes or file locations. For app-level history before this
 file existed, see `git log`.
+
+## 2026-09-11 — Phase 06 benchmark explorer
+
+- Added `/benchmarks` rankings, a standalone `/radar`, and up to four exact configurations on `/compare`, with source scales, versioned evaluation groups, selectable axes and explicit sparse coverage.
+- Added complete per-model benchmark sheets, conservative explainable profile signals, and protocol-compatible divergence displays.
+- Revamped navigation, light/dark themes, keyboard focus and disclosures; retained adjusted-cost and provider comparisons. Coding Agent v1.4 and its September 9 Composite source remain unchanged; v1.5 is separately visible.
+- Added the compact benchmark presentation endpoint and exact observation lookup; canonical source/dataset fields and paths remain compatible. No benchmark value was changed or invented.

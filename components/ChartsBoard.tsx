@@ -5,6 +5,7 @@ import {
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
+import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { orgColor } from "../lib/format";
 import { modelPrice, scopedCatalogOffers, createOfferScope, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { NumFilter } from "./ui";
@@ -89,13 +90,13 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="text-sm text-gray-400">Score: <b className="text-gray-200">{SCORE_LABELS[score]}</b> · min {s.minScore} · costs: <b className="text-gray-200">{priceLabel(priceSettings)}</b></span>
+        <span className="text-sm text-gray-400">Score: <b className="text-gray-200">{scoreLabel(score, data.sourceDates)}</b> · min {s.minScore} · costs: <b className="text-gray-200">{priceLabel(priceSettings)}</b></span>
         <NumFilter label={adjusted ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
         <span className="ml-auto text-xs text-gray-500">{pool.length} models within global provider filters</span>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
-        <Panel title={`Capability leaderboard — ${SCORE_LABELS[score]}`}>
+        <Panel title={`Capability leaderboard — ${scoreLabel(score, data.sourceDates)}`}>
           <ResponsiveContainer width="100%" height={Math.max(360, leaderboard.length * 26)}>
             <BarChart data={leaderboard} layout="vertical" margin={{ left: 20, right: 44 }}>
               <CartesianGrid stroke="#222932" horizontal={false} />

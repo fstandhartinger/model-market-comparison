@@ -1,0 +1,54 @@
+{
+  "base": "http://127.0.0.1:3316",
+  "at": "2026-09-11T00:40:08.439Z",
+  "environment": "Headless system Chrome on Sandy, local production HTTP unless URL overrides; no network/CPU throttling",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "url": "http://127.0.0.1:3316/compare#main-content",
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 580,
+        "fcp": 428,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    }
+  ],
+  "interactions": [
+    "Tab reaches skip link; Enter focuses main content"
+  ],
+  "screenshots": [
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-r2/compare-dark.png",
+      "sha256": "e24b026b96e0057c005d81a62f925ac18b65d67fd432b2d7157bf34e2be18a96",
+      "bytes": 165017,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": null
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered-r2/radar-dark.png",
+      "sha256": "f8de077def64862ef7357f20cd1455891154d10f3aa869122491cf74fbfbb7bb",
+      "bytes": 201111,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": null
+    }
+  ],
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n2 !== 4\n\n    at file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:46:10\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:541:9)",
+  "verdict": "failed"
+}

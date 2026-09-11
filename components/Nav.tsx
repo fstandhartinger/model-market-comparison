@@ -1,10 +1,13 @@
 "use client";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ThemeToggle } from './ThemeToggle';
 
 const LINKS = [
   ["/", "Overview"],
   ["/compare", "Compare"],
+  ["/benchmarks", "Benchmarks"],
+  ["/radar", "Radar"],
   ["/scatter", "Cost vs Capability"],
   ["/charts", "Charts"],
   ["/providers", "Providers per Model"],
@@ -17,25 +20,26 @@ const LINKS = [
 export function Nav() {
   const path = usePathname();
   return (
-    <header className="border-b border-line bg-[#12161c]">
-      <div className="mx-auto flex max-w-[1400px] items-center gap-6 px-4 py-3">
-        <Link href="/" className="flex items-center gap-2 font-semibold">
-          <span className="text-accent">◆</span> Model Market Comparison
-        </Link>
-        <nav className="flex flex-wrap gap-1 text-sm">
-          {LINKS.map(([href, label]) => {
+    <header className="border-b border-line bg-panel">
+      <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
+        <Link href="/" className="flex min-h-11 items-center gap-2 text-sm font-semibold sm:text-base"><span className="text-accent" aria-hidden="true">◆</span> Model Market Comparison</Link>
+        <nav aria-label="Primary" className="relative order-3 flex w-full flex-wrap gap-1 text-sm lg:order-none lg:w-auto">
+          {[LINKS[0], LINKS[2], LINKS[1], LINKS[3]].map(([href, label]) => {
             const active = href === "/" ? path === "/" : path.startsWith(href);
             return (
               <Link
                 key={href}
                 href={href}
-                className={`rounded-md px-3 py-1.5 ${active ? "bg-accent/15 text-accent" : "text-gray-300 hover:bg-white/5"}`}
+                aria-current={active ? 'page' : undefined}
+                className={`inline-flex min-h-11 items-center rounded-md px-3 py-1.5 ${active ? "bg-accent/15 text-accent" : "text-gray-300 hover:bg-accent/5"}`}
               >
                 {label}
               </Link>
             );
           })}
+          <details><summary className="flex min-h-11 cursor-pointer items-center rounded-md px-3 text-gray-300">More ▾</summary><div className="absolute left-0 top-full z-30 mt-2 grid w-64 max-w-full gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{LINKS.slice(4).map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'text-accent bg-accent/10' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></details>
         </nav>
+        <div className="ml-auto"><ThemeToggle /></div>
       </div>
     </header>
   );

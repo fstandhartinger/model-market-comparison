@@ -1,0 +1,120 @@
+{
+  "started_at": "2026-09-11T01:08:52.180Z",
+  "mode": "critic",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [
+    "openai/gpt-6-astra",
+    "z-ai/glm-5.3-flash",
+    "deepseek/deepseek-v4-flash-0731",
+    "chutes/moonshotai/Kimi-K3-TEE"
+  ],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "38801d953e8f5137796071a4cc8117a3e8a95de5a4ff0fd437574f2742d50bb5",
+  "images": [
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/charts-1440-light.png",
+      "bytes": 144672,
+      "sha256": "690b468ba738e682af0bc7424cf4e904696075ab054162d75579fbe79cedcb43",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/scatter-1440-light.png",
+      "bytes": 110612,
+      "sha256": "b8eb8dccd34e3ac412fd0014afb2469ad64d367750958d3e6763a680a2b6a505",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/providers-390-light.png",
+      "bytes": 56304,
+      "sha256": "807887c5ea50c8d120f528d7837c6e45fcf626bf4527deaacdf379a5900bca3d",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/provider-explorer-1440-dark.png",
+      "bytes": 197184,
+      "sha256": "62d37cb453b03360cdbabe47b7ea7053ef8ae6590259b56e49d49dd07b590de4",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/eu-1440-light.png",
+      "bytes": 181270,
+      "sha256": "2025a0dd200741ba6a8c00471f2bb72b204946379493ecfc1925695bd48deed9",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/gateways-390-light.png",
+      "bytes": 73534,
+      "sha256": "ff6a861d1dbaf590a7f38cb4b9a60240ca1eb154a48fb3832f98db60aeaf4287",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/about-1440-light.png",
+      "bytes": 237353,
+      "sha256": "60ef77aa48a8cd1b061d8ffae42bb671965d4cda188ea7bd938c6043f50a6ba9",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-06/legacy-rendered-final/provider-explorer-390-light.png",
+      "bytes": 64834,
+      "sha256": "cc04ae4522b506621efb6ff3ba745b15cf59704d073a57ac91f748776f33d49f",
+      "mime": "image/png"
+    }
+  ],
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 92122,
+    "completion_tokens": 1630,
+    "total_tokens": 93752,
+    "cost": 0.07445196,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.075204,
+      "upstream_inference_prompt_cost": 0.0690915,
+      "upstream_inference_completions_cost": 0.0061125
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 1104,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google",
+  "session_id": null,
+  "finished_at": "2026-09-11T01:09:06.443Z",
+  "output_sha256": "a66df63958f5e9e670b29a4230aba8a8372bc9e3223c3b18a5a766777dafe844"
+}

@@ -1,0 +1,78 @@
+Hydration failed because the server rendered HTML didn't match the client. As a result this tree will be regenerated on the client. This can happen if a SSR-ed Client Component used:
+
+- A server/client branch `if (typeof window !== 'undefined')`.
+- Variable input such as `Date.now()` or `Math.random()` which changes each time it's called.
+- Date formatting in a user's locale which doesn't match the server.
+- External changing data without sending a snapshot of it along with the HTML.
+- Invalid HTML tag nesting.
+
+It can also happen if the client has a browser extension installed which messes with the HTML before React loaded.
+
+https://react.dev/link/hydration-mismatch
+
+  ...
+    <SegmentViewNode type="page" pagePath="compare/pa...">
+      <SegmentTrieNode>
+      <ComparePage>
+        <div>
+          <header>
+          <details>
+          <BenchmarkCompare initialView={{models:[...], ...}} initialPicks={[...]}>
+            <div className="space-y-6">
+              <div className="grid items...">
+                <div>
+                <div aria-busy={false}>
+                  <BenchmarkRadar view={{models:[...], ...}} axes={[...]} picks={[...]}>
+                    <section className="bh-panel m..." aria-label="Benchmark ...">
+                      <div>
+                      <p>
+                      <ul>
+                      <div className="bh-radar-s..." tabIndex={0} role="region" aria-label="Radar grap...">
+                        <svg className="mx-auto bl..." viewBox="0 0 720 500" role="img" aria-label={"Radar fo..."}>
+                          <g>
+                          <g>
+                            <polygon
+                              fill="none"
+                              stroke="var(--radar-grid, #526071)"
+                              strokeOpacity="0.6"
++                             points="360,170 424.9519052838329,207.5 424.9519052838329,282.5 360,320 295.048094716167..."
+-                             points="360,170 424.9519052838329,207.5 424.9519052838329,282.5 360,320 295.048094716167..."
+                            >
+                            ...
+                          <g>
+                          <g>
+                            <polygon
+                              fill="none"
+                              stroke="var(--radar-grid, #526071)"
+                              strokeOpacity="0.6"
++                             points="360,95 489.9038105676658,170 489.9038105676658,320 360,395 230.09618943233426,32..."
+-                             points="360,95 489.9038105676658,170 489.9038105676658,320 360,395 230.09618943233423,32..."
+                            >
+                            ...
+                          <g>
+                          <g>
+                          <g>
+                          <g>
+                          <g>
+                            <line
+                              x1="360"
+                              y1="245"
++                             x2={230.09618943233426}
+-                             x2="230.09618943233423"
+                              y2={320.00000000000006}
+                              stroke="var(--radar-grid, #526071)"
+                              strokeOpacity="0.6"
+                            >
+                            ...
+                          ...
+                          ...
+                            <circle cx={360} cy={100.95794392523374} r={4} fill="var(--surf..." stroke="var(--rada..." ...>
+                              <title>
++                               GPT-5.6 Sol (high)
+                                ...
+                            ...
+                      ...
+                      ...
+              ...
+          ...
+    ...

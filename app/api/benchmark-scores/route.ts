@@ -4,6 +4,7 @@ import { benchmarkCell } from "../../../lib/benchmark-scores.mjs";
 export const dynamic = "force-dynamic";
 export async function GET(request: Request) {
   const q = new URL(request.url).searchParams;
+  const observationId = q.get("observation_id");
   const benchmarkId = q.get("benchmark_id"), modelId = q.get("model_id"), basis = q.get("basis");
   const offset = Number(q.get("offset") ?? 0), limit = Number(q.get("limit") ?? 100);
   if (!Number.isSafeInteger(offset) || offset < 0 || !Number.isSafeInteger(limit) || limit < 1 || limit > 500
@@ -11,7 +12,7 @@ export async function GET(request: Request) {
   const dataset = await getDataset(), r = dataset.benchmark_results;
   if (benchmarkId && !r.registry.some((e) => e.id === benchmarkId)) return NextResponse.json({ error: "Unknown benchmark version; use a complete registry id" }, { status: 404 });
   if (modelId && !dataset.models.some((m) => m.id === modelId)) return NextResponse.json({ error: "Unknown exact model id" }, { status: 404 });
-  const scores = r.observations.filter((o) => (!benchmarkId || o.benchmark_id === benchmarkId) && (!modelId || o.subject.model_id === modelId) && (!basis || o.basis === basis));
+  const scores = r.observations.filter((o) => (!observationId || o.id === observationId) && (!benchmarkId || o.benchmark_id === benchmarkId) && (!modelId || o.subject.model_id === modelId) && (!basis || o.basis === basis));
   return NextResponse.json({ schema_version: 1, total: scores.length, offset, limit, observations: scores.slice(offset, offset + limit),
     divergences: r.divergences.filter((d) => (!benchmarkId || d.benchmark_id === benchmarkId) && (!modelId || d.model_id === modelId)),
     cell: modelId && benchmarkId ? benchmarkCell(r, modelId, benchmarkId) : null,

@@ -1,0 +1,54 @@
+{
+  "base": "http://127.0.0.1:3316",
+  "at": "2026-09-11T00:36:19.868Z",
+  "environment": "Headless system Chrome on Sandy, local production HTTP unless URL overrides; no network/CPU throttling",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "url": "http://127.0.0.1:3316/compare#main-content",
+      "metrics": {
+        "cls": 0.1089135720486111,
+        "lcp": 444,
+        "fcp": 444,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      },
+      "axe": {
+        "violations": [],
+        "incomplete": [
+          "color-contrast",
+          "th-has-data-cells"
+        ],
+        "passes": 49
+      }
+    }
+  ],
+  "interactions": [
+    "Tab reaches skip link; Enter focuses main content"
+  ],
+  "screenshots": [
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered/compare-dark.png",
+      "sha256": "f2b8e84ea89e7262921ea2be27ce938ba2bf1267dcb2b773dd4ccfb15d4d7d12",
+      "bytes": 106205,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    },
+    {
+      "file": "ops/rebuild-2026-09/evidence/phase-06/rendered/radar-dark.png",
+      "sha256": "b3c5bfe4032fe15bc1dee03b87316473746753f53863046ecf0191acda911786",
+      "bytes": 202464,
+      "viewport": {
+        "width": 1440,
+        "height": 1000
+      },
+      "theme": "dark"
+    }
+  ],
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Model C', { exact: true })\u001b[22m\n\n    at /opt/model-market-comparison/scripts/check-benchmark-ui.mjs:44:53",
+  "verdict": "failed"
+}

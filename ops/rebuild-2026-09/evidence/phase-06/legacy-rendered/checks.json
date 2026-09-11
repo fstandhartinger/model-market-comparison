@@ -1,0 +1,562 @@
+{
+  "at": "2026-09-11T01:00:25.417Z",
+  "errors": [],
+  "results": [
+    {
+      "route": "/charts",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".text-accent[href$=\"scatter\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.11:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #4c5e75)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 764,
+        "fcp": 764
+      }
+    },
+    {
+      "route": "/charts",
+      "width": 390,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".text-accent[href$=\"scatter\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.11:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #4c5e75)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 764,
+        "fcp": 764
+      }
+    },
+    {
+      "route": "/scatter",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "svg-img-alt",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(1)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(2)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(4)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(5)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(6)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(7)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(8)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 360,
+        "fcp": 360
+      }
+    },
+    {
+      "route": "/scatter",
+      "width": 390,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "svg-img-alt",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(1)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(2)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(3)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(4)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(5)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(6)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(7)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            },
+            {
+              "target": [
+                ".recharts-layer:nth-child(3) > .recharts-scatter-symbol.recharts-layer[role=\"img\"]:nth-child(8)"
+              ],
+              "summary": "Fix any of the following:\n  Element has no child that is a title\n  aria-label attribute does not exist or is empty\n  aria-labelledby attribute does not exist, references elements that do not exist or references elements that are empty\n  Element has no title attribute"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 360,
+        "fcp": 360
+      }
+    },
+    {
+      "route": "/providers",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 340,
+        "fcp": 340
+      }
+    },
+    {
+      "route": "/providers",
+      "width": 390,
+      "overflow": 0,
+      "violations": [],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 340,
+        "fcp": 340
+      }
+    },
+    {
+      "route": "/provider-explorer",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".bg-accent\\/15 > .px-2.py-1\\.5:nth-child(2) > .gap-1.flex.flex-wrap > .bg-emerald-500\\/20.text-emerald-300.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.22 (foreground color: #046d5b, background color: #b4dbde, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "empty-table-header",
+          "impact": "minor",
+          "nodes": [
+            {
+              "target": [
+                "th:nth-child(7)"
+              ],
+              "summary": "Fix any of the following:\n  Element does not have text that is visible to screen readers"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 444,
+        "fcp": 444
+      }
+    },
+    {
+      "route": "/provider-explorer",
+      "width": 390,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".bg-accent\\/15 > .px-2.py-1\\.5:nth-child(2) > .gap-1.flex.flex-wrap > .bg-emerald-500\\/20.text-emerald-300.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.22 (foreground color: #046d5b, background color: #b4dbde, font size: 7.5pt (10px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        },
+        {
+          "id": "empty-table-header",
+          "impact": "minor",
+          "nodes": [
+            {
+              "target": [
+                "th:nth-child(7)"
+              ],
+              "summary": "Fix any of the following:\n  Element does not have text that is visible to screen readers"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 444,
+        "fcp": 444
+      }
+    },
+    {
+      "route": "/eu",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                "a[href$=\"api.trustedrouter.eu/\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.11:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #4c5e75)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            },
+            {
+              "target": [
+                "a[href$=\"llm-tracker.eu/\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.11:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #4c5e75)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 336,
+        "fcp": 336
+      }
+    },
+    {
+      "route": "/eu",
+      "width": 390,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                "a[href$=\"api.trustedrouter.eu/\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.11:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #4c5e75)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            },
+            {
+              "target": [
+                "a[href$=\"llm-tracker.eu/\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 1.11:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #4c5e75)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 336,
+        "fcp": 336
+      }
+    },
+    {
+      "route": "/gateways",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".align-top:nth-child(28) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(29) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(30) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(31) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(32) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(33) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(34) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(35) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 84,
+        "fcp": 84
+      }
+    },
+    {
+      "route": "/gateways",
+      "width": 390,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "color-contrast",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".align-top:nth-child(28) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(29) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(30) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(31) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(32) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(33) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(34) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            },
+            {
+              "target": [
+                ".align-top:nth-child(35) > td:nth-child(3) > .bg-gray-600\\/30.rounded.px-1\\.5"
+              ],
+              "summary": "Fix any of the following:\n  Element has insufficient color contrast of 4.11 (foreground color: #4c5e75, background color: #c9ccd0, font size: 8.3pt (11px), font weight: normal). Expected contrast ratio of 4.5:1"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 84,
+        "fcp": 84
+      }
+    },
+    {
+      "route": "/about",
+      "width": 1440,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".text-accent[href=\"/eu\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 2.06:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #182639)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 56,
+        "fcp": 56
+      }
+    },
+    {
+      "route": "/about",
+      "width": 390,
+      "overflow": 0,
+      "violations": [
+        {
+          "id": "link-in-text-block",
+          "impact": "serious",
+          "nodes": [
+            {
+              "target": [
+                ".text-accent[href=\"/eu\"]"
+              ],
+              "summary": "Fix any of the following:\n  The link has insufficient color contrast of 2.06:1 with the surrounding text. (Minimum contrast is 3:1, link text: #1d4eb9, surrounding text: #182639)\n  The link has no styling (such as underline) to distinguish it from the surrounding text"
+            }
+          ]
+        }
+      ],
+      "incomplete": [
+        "color-contrast"
+      ],
+      "metrics": {
+        "cls": 0.0000012856565875771604,
+        "lcp": 56,
+        "fcp": 56
+      }
+    }
+  ]
+}

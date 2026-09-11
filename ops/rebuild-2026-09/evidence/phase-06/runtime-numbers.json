@@ -1,0 +1,697 @@
+{
+  "datasetGeneratedAt": "2026-09-11T01:03:42.649Z",
+  "registry": 73,
+  "observations": 13908,
+  "legacyCount": 971,
+  "divergences": 0,
+  "defaultProjectionBytes": 300881,
+  "profiles": [
+    {
+      "id": "gpt-5.6-sol::high",
+      "flags": [
+        {
+          "axisId": "aa-critpt::snapshot-2026-09-10@@Published%20board@@fraction",
+          "scoreId": "aa:8afc250d-b538-45a2-812a-4605f4ffd87e:critpt",
+          "direction": "strong",
+          "value": 0.257142857142857,
+          "z": 2.857144282741154,
+          "baseline": 1.2252914780921063,
+          "gap": 1.6318528046490477,
+          "profileN": 20,
+          "peers": 521,
+          "peerFamilies": 367,
+          "mean": 0.039416741744682536,
+          "sd": 0.07620410236660757
+        }
+      ],
+      "eligibleFamilies": 21
+    },
+    {
+      "id": "claude-sonnet-5::high",
+      "flags": [],
+      "eligibleFamilies": 10
+    },
+    {
+      "id": "gpt-5.6-terra::high",
+      "flags": [
+        {
+          "axisId": "aa-critpt::snapshot-2026-09-10@@Published%20board@@fraction",
+          "scoreId": "aa:81972fba-1219-477e-bbfb-18c656a63ff7:critpt",
+          "direction": "strong",
+          "value": 0.228571428571429,
+          "z": 2.4822113370845704,
+          "baseline": 0.7457141842967363,
+          "gap": 1.7364971527878341,
+          "profileN": 20,
+          "peers": 521,
+          "peerFamilies": 367,
+          "mean": 0.039416741744682536,
+          "sd": 0.07620410236660757
+        },
+        {
+          "axisId": "aa-terminal-bench-hard::74221fb@@Published%20board@@fraction",
+          "scoreId": "aa:81972fba-1219-477e-bbfb-18c656a63ff7:terminalbenchHard",
+          "direction": "strong",
+          "value": 0.575757575757576,
+          "z": 2.3068726337566674,
+          "baseline": 0.7544811194631312,
+          "gap": 1.5523915142935363,
+          "profileN": 20,
+          "peers": 432,
+          "peerFamilies": 315,
+          "mean": 0.18471744015948555,
+          "sd": 0.16951093436020967
+        }
+      ],
+      "eligibleFamilies": 21
+    },
+    {
+      "id": "grok-4.6::high",
+      "flags": [],
+      "eligibleFamilies": 19
+    }
+  ],
+  "samples": [
+    {
+      "id": "aa-coding-agent-index::1.4@@Antigravity%20SDK%20v0.1.12@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.590851412183529,
+        "sd": 0,
+        "min": 0.590851412183529,
+        "max": 0.590851412183529
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Antigravity%20SDK%20v0.1.8@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.5657152973570364,
+        "sd": 0,
+        "min": 0.5657152973570364,
+        "max": 0.5657152973570364
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Claude%20Code@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 20,
+        "families": 9,
+        "mean": 0.5712907351038152,
+        "sd": 0.10621952356436892,
+        "min": 0.3388925953605663,
+        "max": 0.704307846707459
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Codex@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 18,
+        "families": 5,
+        "mean": 0.5440662902855554,
+        "sd": 0.1028263411788933,
+        "min": 0.250636604330228,
+        "max": 0.669713903153459
+      },
+      "rows": [
+        {
+          "id": "aa-coding:1.4:35",
+          "modelId": "gpt-5.6-sol::high",
+          "subjectId": "GPT-5.6 Sol (high)/Codex",
+          "name": "GPT-5.6 Sol (high)",
+          "value": 0.6411644486641197,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/",
+            "date": "2026-09-09",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/2026-09-10-aa-coding-agents.json"
+          },
+          "date": "2026-09-09",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 93.18754450085791
+        },
+        {
+          "id": "aa-coding:1.4:64",
+          "modelId": "gpt-5.6-terra::high",
+          "subjectId": "GPT-5.6 Terra (high)/Codex",
+          "name": "GPT-5.6 Terra (high)",
+          "value": 0.5464647209828707,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/",
+            "date": "2026-09-09",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/2026-09-10-aa-coding-agents.json"
+          },
+          "date": "2026-09-09",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 70.59034633546794
+        }
+      ]
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Cursor%20CLI@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 4,
+        "families": 4,
+        "mean": 0.42585962968071256,
+        "sd": 0.042879242772188214,
+        "min": 0.3830075380367747,
+        "max": 0.4708693600598457
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Devin%20CLI@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.5221389513465003,
+        "sd": 0,
+        "min": 0.5221389513465003,
+        "max": 0.5221389513465003
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Gemini%20CLI@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.3293046837328304,
+        "sd": 0,
+        "min": 0.3293046837328304,
+        "max": 0.3293046837328304
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Grok%20Build@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.6408998279698193,
+        "sd": 0,
+        "min": 0.6408998279698193,
+        "max": 0.6408998279698193
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Kimi%20Code%20CLI@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.6263880112748013,
+        "sd": 0,
+        "min": 0.6263880112748013,
+        "max": 0.6263880112748013
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Muse%20Code@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.6164044159758908,
+        "sd": 0,
+        "min": 0.6164044159758908,
+        "max": 0.6164044159758908
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Muse%20Code%201.0.2%20RC@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 2,
+        "families": 1,
+        "mean": 0.6607515922681573,
+        "sd": 0.018976555853855326,
+        "min": 0.641775036414302,
+        "max": 0.6797281481220127
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.4@@Opencode@@fraction",
+      "version": "1.4",
+      "stats": {
+        "n": 6,
+        "families": 6,
+        "mean": 0.5551734147616648,
+        "sd": 0.04946815281965317,
+        "min": 0.4724127134829677,
+        "max": 0.6115009143224124
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Antigravity%20SDK%20v0.1.12@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.4186315529449987,
+        "sd": 0,
+        "min": 0.4186315529449987,
+        "max": 0.4186315529449987
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Claude%20Code@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 3,
+        "families": 3,
+        "mean": 0.550713866229139,
+        "sd": 0.08410132355718902,
+        "min": 0.43265296412598736,
+        "max": 0.6222249615769457
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Codex@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 2,
+        "families": 2,
+        "mean": 0.5810208613876899,
+        "sd": 0.03542958849124983,
+        "min": 0.54559127289644,
+        "max": 0.6164504498789397
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Grok%20Build@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.4696895205744764,
+        "sd": 0,
+        "min": 0.4696895205744764,
+        "max": 0.4696895205744764
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Kimi%20Code%20CLI@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.519259105470924,
+        "sd": 0,
+        "min": 0.519259105470924,
+        "max": 0.519259105470924
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Muse%20Code@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.5430273329930766,
+        "sd": 0,
+        "min": 0.5430273329930766,
+        "max": 0.5430273329930766
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Muse%20Code%201.0.2%20RC@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 1,
+        "families": 1,
+        "mean": 0.482993172759088,
+        "sd": 0,
+        "min": 0.482993172759088,
+        "max": 0.482993172759088
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-coding-agent-index::1.5@@Opencode@@fraction",
+      "version": "1.5",
+      "stats": {
+        "n": 0,
+        "families": 0,
+        "mean": null,
+        "sd": null,
+        "min": null,
+        "max": null
+      },
+      "rows": []
+    },
+    {
+      "id": "aa-critpt::snapshot-2026-09-10@@Published%20board@@fraction",
+      "version": "snapshot-2026-09-10",
+      "stats": {
+        "n": 521,
+        "families": 367,
+        "mean": 0.039416741744682536,
+        "sd": 0.07620410236660757,
+        "min": 0,
+        "max": 0.322857142857143
+      },
+      "rows": [
+        {
+          "id": "aa:81972fba-1219-477e-bbfb-18c656a63ff7:critpt",
+          "modelId": "gpt-5.6-terra::high",
+          "subjectId": "81972fba-1219-477e-bbfb-18c656a63ff7",
+          "name": "GPT-5.6 Terra (high)",
+          "value": 0.228571428571429,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 70.79646017699125
+        },
+        {
+          "id": "aa:8afc250d-b538-45a2-812a-4605f4ffd87e:critpt",
+          "modelId": "gpt-5.6-sol::high",
+          "subjectId": "8afc250d-b538-45a2-812a-4605f4ffd87e",
+          "name": "GPT-5.6 Sol (high)",
+          "value": 0.257142857142857,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 79.64601769911496
+        },
+        {
+          "id": "aa:ba0224cf-0351-4f56-8508-b3f1a740ae4a:critpt",
+          "modelId": "claude-sonnet-5::high",
+          "subjectId": "ba0224cf-0351-4f56-8508-b3f1a740ae4a",
+          "name": "Claude Sonnet 5 (Adaptive Reasoning, High Effort)",
+          "value": 0.151428571428571,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 46.90265486725648
+        },
+        {
+          "id": "aa:c8adc5cf-fd5a-407b-af51-dc3bede3e49c:critpt",
+          "modelId": "grok-4.6::high",
+          "subjectId": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
+          "name": "Grok 4.6 (high)",
+          "value": 0.171428571428571,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 53.097345132743214
+        }
+      ]
+    },
+    {
+      "id": "aa-gpqa-diamond::snapshot-2026-09-10@@Published%20board@@fraction",
+      "version": "snapshot-2026-09-10",
+      "stats": {
+        "n": 612,
+        "families": 455,
+        "mean": 0.6642226898615788,
+        "sd": 0.2064242200193015,
+        "min": 0.097979797979798,
+        "max": 0.962626262626263
+      },
+      "rows": [
+        {
+          "id": "aa:81972fba-1219-477e-bbfb-18c656a63ff7:gpqa",
+          "modelId": "gpt-5.6-terra::high",
+          "subjectId": "81972fba-1219-477e-bbfb-18c656a63ff7",
+          "name": "GPT-5.6 Terra (high)",
+          "value": 0.895959595959596,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 92.28971962616818
+        },
+        {
+          "id": "aa:8afc250d-b538-45a2-812a-4605f4ffd87e:gpqa",
+          "modelId": "gpt-5.6-sol::high",
+          "subjectId": "8afc250d-b538-45a2-812a-4605f4ffd87e",
+          "name": "GPT-5.6 Sol (high)",
+          "value": 0.928282828282828,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 96.0280373831775
+        },
+        {
+          "id": "aa:c8adc5cf-fd5a-407b-af51-dc3bede3e49c:gpqa",
+          "modelId": "grok-4.6::high",
+          "subjectId": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
+          "name": "Grok 4.6 (high)",
+          "value": 0.94949494949495,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
+            "date": "2026-09-10T21:47:16.627Z",
+            "published": null,
+            "file": "ops/rebuild-2026-09/evidence/phase-04/sources/aa-29d2fef1679c.html.gz"
+          },
+          "date": "2026-09-10T21:47:16.627Z",
+          "variant": "high",
+          "lowSample": false,
+          "normalized": 98.48130841121495
+        }
+      ]
+    },
+    {
+      "id": "critpt::snapshot-2026-09-10@@Published%20board@@percent",
+      "version": "snapshot-2026-09-10",
+      "stats": {
+        "n": 0,
+        "families": 0,
+        "mean": null,
+        "sd": null,
+        "min": null,
+        "max": null
+      },
+      "rows": []
+    },
+    {
+      "id": "aa_coding_index::snapshot-2026-09-10",
+      "version": "snapshot-2026-09-10 (unversioned)",
+      "stats": {
+        "n": 256,
+        "families": 196,
+        "mean": 43.221093749999994,
+        "sd": 23.872531457277656,
+        "min": 0,
+        "max": 81.6
+      },
+      "rows": [
+        {
+          "id": "legacy:aa_coding_index:gpt-5.6-sol::high",
+          "modelId": "gpt-5.6-sol::high",
+          "subjectId": "8afc250d-b538-45a2-812a-4605f4ffd87e",
+          "name": "GPT-5.6 Sol (high)",
+          "value": 77.2,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/leaderboards/models",
+            "date": "2026-09-10",
+            "published": null,
+            "file": "data/raw/artificialanalysis.json"
+          },
+          "date": "2026-09-10",
+          "variant": "high",
+          "lowSample": false,
+          "battles": null,
+          "normalized": 94.6078431372549
+        },
+        {
+          "id": "legacy:aa_coding_index:gpt-5.6-terra::high",
+          "modelId": "gpt-5.6-terra::high",
+          "subjectId": "81972fba-1219-477e-bbfb-18c656a63ff7",
+          "name": "GPT-5.6 Terra (high)",
+          "value": 67.1,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/leaderboards/models",
+            "date": "2026-09-10",
+            "published": null,
+            "file": "data/raw/artificialanalysis.json"
+          },
+          "date": "2026-09-10",
+          "variant": "high",
+          "lowSample": false,
+          "battles": null,
+          "normalized": 82.23039215686273
+        },
+        {
+          "id": "legacy:aa_coding_index:grok-4.6::high",
+          "modelId": "grok-4.6::high",
+          "subjectId": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
+          "name": "Grok 4.6 (high)",
+          "value": 76.8,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/leaderboards/models",
+            "date": "2026-09-10",
+            "published": null,
+            "file": "data/raw/artificialanalysis.json"
+          },
+          "date": "2026-09-10",
+          "variant": "high",
+          "lowSample": false,
+          "battles": null,
+          "normalized": 94.11764705882352
+        }
+      ]
+    },
+    {
+      "id": "aa_intelligence_index::snapshot-2026-09-10",
+      "version": "snapshot-2026-09-10 (unversioned)",
+      "stats": {
+        "n": 633,
+        "families": 473,
+        "mean": 15.785939968404408,
+        "sd": 11.436774812564066,
+        "min": 3.8,
+        "max": 53.4
+      },
+      "rows": [
+        {
+          "id": "legacy:aa_intelligence_index:gpt-5.6-sol::high",
+          "modelId": "gpt-5.6-sol::high",
+          "subjectId": "8afc250d-b538-45a2-812a-4605f4ffd87e",
+          "name": "GPT-5.6 Sol (high)",
+          "value": 42.5,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/leaderboards/models",
+            "date": "2026-09-10",
+            "published": null,
+            "file": "data/raw/artificialanalysis.json"
+          },
+          "date": "2026-09-10",
+          "variant": "high",
+          "lowSample": false,
+          "battles": null,
+          "normalized": 78.0241935483871
+        },
+        {
+          "id": "legacy:aa_intelligence_index:gpt-5.6-terra::high",
+          "modelId": "gpt-5.6-terra::high",
+          "subjectId": "81972fba-1219-477e-bbfb-18c656a63ff7",
+          "name": "GPT-5.6 Terra (high)",
+          "value": 34.5,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/leaderboards/models",
+            "date": "2026-09-10",
+            "published": null,
+            "file": "data/raw/artificialanalysis.json"
+          },
+          "date": "2026-09-10",
+          "variant": "high",
+          "lowSample": false,
+          "battles": null,
+          "normalized": 61.89516129032258
+        },
+        {
+          "id": "legacy:aa_intelligence_index:grok-4.6::high",
+          "modelId": "grok-4.6::high",
+          "subjectId": "c8adc5cf-fd5a-407b-af51-dc3bede3e49c",
+          "name": "Grok 4.6 (high)",
+          "value": 44.4,
+          "basis": "measured",
+          "derived": false,
+          "source": {
+            "url": "https://artificialanalysis.ai/leaderboards/models",
+            "date": "2026-09-10",
+            "published": null,
+            "file": "data/raw/artificialanalysis.json"
+          },
+          "date": "2026-09-10",
+          "variant": "high",
+          "lowSample": false,
+          "battles": null,
+          "normalized": 81.85483870967742
+        }
+      ]
+    }
+  ]
+}

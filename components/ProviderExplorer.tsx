@@ -2,6 +2,7 @@
 import { Fragment, useMemo, useState } from "react";
 import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
+import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { useSettings } from "./SettingsContext";
 import { createOfferScope, rankedOffers, scopedCatalogOffers, scoreOf, offerPrice, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
@@ -136,11 +137,11 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   );
 
   return (
-    <div className="grid gap-4 lg:grid-cols-[minmax(300px,360px)_1fr]">
+    <div className="grid gap-4 lg:grid-cols-[minmax(300px,360px)_minmax(0,1fr)]">
       {/* LEFT: provider directory */}
       <div>
         <div className="mb-2 flex items-center gap-2">
-          <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search providers…"
+          <input aria-label="Search providers" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search providers…"
             className="w-full rounded-md border border-line bg-[#0c0f14] px-2 py-1.5 text-sm outline-none focus:border-accent" />
         </div>
         <div className="mb-1 flex gap-1 text-[11px]">
@@ -172,7 +173,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                 <tr key={p.key} onClick={() => { setSel(p.key); setOpen(new Set()); }}
                   className={`cursor-pointer ${p.key === activeKey ? "bg-accent/15" : "hover:bg-white/5"}`}>
                   <td className="px-2 py-1.5">
-                    <div className="font-medium">{p.provider}</div>
+                    <button type="button" aria-pressed={p.key === activeKey} className="text-left font-medium" onClick={(e) => { e.stopPropagation(); setSel(p.key); setOpen(new Set()); }}>{p.provider}</button>
                     <div className="text-[10px] text-gray-500">{p.platform !== p.provider ? p.platform + " · " : ""}{p.country ?? "—"}</div>
                   </td>
                   <td className="px-2 py-1.5"><div className="flex flex-wrap gap-1">{flags(p)}</div></td>
@@ -186,7 +187,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       </div>
 
       {/* RIGHT: selected provider's models */}
-      <div>
+      <div className="min-w-0">
         {provider && (
           <div className="mb-3 flex flex-wrap items-center gap-2">
             <span className="text-lg font-semibold">{provider.provider}</span>
@@ -207,7 +208,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         <div className="card overflow-x-auto">
           <table className="dtable w-full text-sm">
             <thead><tr>
-              {["Model", SCORE_LABELS[s.score], "Raw in $/1M", "Raw out $/1M", priceLabel(priceSettings), "Price rank", ""].map((h) => (
+              {["Model", scoreLabel(s.score, data.sourceDates), "Raw in $/1M", "Raw out $/1M", priceLabel(priceSettings), "Price rank", "Compare offers"].map((h) => (
                 <th key={h} className="px-3 py-2 text-left text-xs text-gray-400">{h}</th>
               ))}
             </tr></thead>
@@ -221,7 +222,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
                 return (
                   <Fragment key={r.modelId}>
                     <tr className="cursor-pointer hover:bg-white/5" onClick={() => toggle(r.modelId)}>
-                      <td className="px-3 py-2"><span className="font-medium">{r.name}</span> <span className="text-[11px] text-gray-500">{r.org}</span></td>
+                      <td className="px-3 py-2"><button type="button" aria-expanded={isOpen} className="text-left font-medium" onClick={(e) => { e.stopPropagation(); toggle(r.modelId); }}>{r.name}</button> <span className="text-[11px] text-gray-500">{r.org}</span></td>
                       <td className="px-3 py-2 tabular text-gray-300">{r.score?.toFixed(s.score.startsWith("designarena") ? 0 : 1) ?? "—"}</td>
                       <td className="px-3 py-2 tabular text-gray-400">{fmt(r.mine.input_per_1m)}</td>
                       <td className="px-3 py-2 tabular text-gray-400">{fmt(r.mine.output_per_1m)}</td>

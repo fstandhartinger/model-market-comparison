@@ -1,0 +1,25 @@
+{
+  "artifact_id": "phase06-ui-core",
+  "artifact_sha256": "4b4531caaabae391855799683b0d1613c36da47978d50bf7f88e62eaf89eaa05",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "Primary navigation structure, active page attributes, theme toggle, and skip-link behavior (Nav.tsx, ThemeToggle.tsx, app/layout.tsx, compare-dark accessible tree)",
+    "Compare view 0-4 model native controls, remove/search interactions, and isolated on-demand price comparison disclosure (BenchmarkCompare.tsx, ComparePricePanel.tsx, compare-dark.png screenshot)",
+    "Benchmark radar rendering across 3-8 selectable versioned axes, series dashes and color definitions, catalog normalization min/max, unclosed polygon gaps for missing data, and accompanying scrollable table with range metadata (BenchmarkRadar.tsx, radar-four.png, radar-light.png, radar-mobile-top.png screenshots)",
+    "Rankings view evaluation groups/harnesses, native unit and direction rendering, honest denominators, tie ranking within filtered groups, and evidence filtering (BenchmarkRanking.tsx, ranking-light.png, ranking-v1-5.png, ranking-mobile.png screenshots)",
+    "Isolation of legacy Composite inputs and Coding Agent v1.4 from active v1.5 navigation (CompositeNote.tsx, score-label.ts, tests.log, legacy-source-check.json)",
+    "Audit-based evaluation of routes not attached as full screenshots (compare-light, radar-320, model-sheet, overview-light/mobile) via browser-checks.json, runtime-checks.json, and accessibility tree receipts",
+    "Reflow and horizontal containment: 320px viewport verified for the radar route; 1440px and 390px viewports verified across legacy and core pages without document horizontal overflow",
+    "Color contrast and automated axe test passes (0 violations across 11 page states in browser-checks.json; noted that automated scanning does not constitute full WCAG certification)",
+    "146 unit and integration test assertions passing without errors or skips (tests.log)"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Initial paint timings (FCP/LCP) and layout shift values are verified from local unthrottled production Chrome runs rather than live public field telemetry.",
+    "320px viewport reflow verification is specifically evidenced for the radar view via browser-checks.json and accessible tree receipts, while legacy routes are verified at 1440px and 390px."
+  ],
+  "missing_evidence": []
+}

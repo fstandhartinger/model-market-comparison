@@ -1,0 +1,27 @@
+```json
+{
+  "artifact_id": "phase06-ui-legacy",
+  "artifact_sha256": "402ed83aa74cd271a3427f081922f2dda8efb53a65ee18fe9fcab1977f6af706",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "Primary navigation (Overview, Benchmarks, Compare, Radar, More dropdown, active indicators, skip link)",
+    "Global price and provider filter disclosure (ScoreSelect, blend select, toggles, multi-select dropdowns)",
+    "Charts page (/charts) with capability leaderboard, cheapest models, and open vs closed comparison (1440 light/dark, 390 light)",
+    "Cost vs Capability scatter (/scatter) with log/linear toggle, Pareto frontier, accessible table fallback, org legends (1440 light/dark, 390 light)",
+    "Providers per Model view (/providers) with single model mode, peer rank mode, data bars, expandable constituents (1440 light/dark, 390 light)",
+    "Provider explorer (/provider-explorer) with 2-pane layout, search, sort options, EU/TEE filters, offer expansions (1440 dark, 390 light)",
+    "EU & Sovereign cloud view (/eu) with SOTA table, company-policy equivalents, sovereign provider catalog (1440 light)",
+    "LLM Gateways & Routers view (/gateways) with search, filter toggles, EU routing badges (390 light)",
+    "About & Data Sources (/about) with sources list, featured models definition, snapshot metadata, methodology (1440 light)",
+    "Light and dark theme consistency and WCAG 2.2 contrast overrides",
+    "Accessibility: keyboard interactions, skip link, accessible tables for Recharts visuals, axe zero-violation receipts",
+    "Responsive layout reflow at 1440px, 390px, and 320px with zero horizontal document overflow"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

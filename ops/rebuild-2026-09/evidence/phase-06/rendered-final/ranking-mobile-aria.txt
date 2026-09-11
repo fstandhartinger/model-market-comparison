@@ -1,0 +1,208 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- main:
+  - paragraph: BENCHMARK EXPLORER
+  - heading "One benchmark. Every result." [level=1]
+  - paragraph: Explore rankings, coverage and original sources across 73 registered versions and four existing index snapshots.
+  - paragraph: PICK A BENCHMARK
+  - text: Category
+  - combobox "Category":
+    - option "All categories" [selected]
+    - option "Agentic"
+    - option "Coding"
+    - option "Instruction-following"
+    - option "Knowledge"
+    - option "Long-context"
+    - option "Math"
+    - option "Other"
+    - option "Reasoning"
+    - option "Roleplay"
+    - option "Safety/Alignment"
+    - option "Science"
+    - option "Tool-use"
+    - option "Uncensored"
+    - option "Vision"
+    - option "Writing"
+  - text: Benchmark and version
+  - combobox "Benchmark and version":
+    - option "AA Coding Index · snapshot-2026-09-10 (unversioned)"
+    - option "AA Intelligence Index · snapshot-2026-09-10 (unversioned)"
+    - option "AA-AnalystAgent · snapshot-2026-09-10"
+    - option "AA-Briefcase · snapshot-2026-09-10"
+    - option "AA-LCR v1.1 · 1.1"
+    - option "AA-Omniscience Index · snapshot-2026-09-10"
+    - option "Aider Polyglot · snapshot-2026-09-10"
+    - option "AIME 2025 (AA) · 2025"
+    - option "APEX-Agents-AA · snapshot-2026-09-10"
+    - option "ARC-AGI-1 · 1"
+    - option "ARC-AGI-2 · 2"
+    - option "ARC-AGI-3 · 3"
+    - option "Artificial Analysis Coding Agent Index v1.4 · 1.4"
+    - option "Artificial Analysis Coding Agent Index v1.5 · 1.5" [selected]
+    - option "AutomationBench-AA · 1.0.6"
+    - option "BuzzBench · snapshot-2026-09-10"
+    - option "CritPt · snapshot-2026-09-10"
+    - option "CritPt (AA) · snapshot-2026-09-10"
+    - option "DesignArena Frontend · snapshot-2026-09-10 (unversioned)"
+    - option "DesignArena Full-Stack · snapshot-2026-09-10 (unversioned)"
+    - option "Elimination Game Benchmark · snapshot-2026-09-10"
+    - option "EnterpriseOps-Gym-AA · snapshot-2026-09-10"
+    - option "EQ-Bench 4 · 4"
+    - option "EQ-Bench Creative Writing v3 · 3"
+    - option "EQ-Bench Longform Creative Writing · v1.11"
+    - option "GDP.pdf (AA) · snapshot-2026-09-10"
+    - option "GDPval-AA v2 · 2"
+    - option "GPQA Diamond (AA) · snapshot-2026-09-10"
+    - option "Harvey LAB-AA · snapshot-2026-09-10"
+    - option "HELMET · snapshot-2026-09-10"
+    - option "Humanity's Last Exam (AA text-only) · snapshot-2026-09-10"
+    - option "Humanity's Last Exam (HLE) · snapshot-2026-09-10"
+    - option "IFBench · snapshot-2026-09-10"
+    - option "IFBench (AA single-turn) · snapshot-2026-09-10"
+    - option "ITBench-AA · snapshot-2026-09-10"
+    - option "Japanese-RP-Bench (Aratako) · snapshot-2026-09-10"
+    - option "Japanese-RP-Bench v2 (tegnike fork) · 2"
+    - option "Judgemark v4 · 4"
+    - option "LiveBench · 2026-06-25"
+    - option "LiveCodeBench (AA historical field) · snapshot-2026-09-10"
+    - option "LLM Creative Story-Writing Benchmark · snapshot-2026-09-10"
+    - option "LLM Divergent Thinking Creativity Benchmark · snapshot-2026-09-10"
+    - option "LongBench v2 · 2"
+    - option "MLCR-AA · snapshot-2026-09-10"
+    - option "MMMU · snapshot-2026-09-10"
+    - option "MMMU Pro (AA) · snapshot-2026-09-10"
+    - option "OTIS Mock AIME 2024-2025 · 2024-2025"
+    - option "PingPong English (unadjusted mean) · 2"
+    - option "RP-Bench Community Elo · snapshot-2026-09-10"
+    - option "RULER · snapshot-2026-09-10"
+    - option "SciCode · snapshot-2026-09-10"
+    - option "SciCode (AA subproblems) · 1.0.1"
+    - option "SimpleBench · snapshot-2026-09-10"
+    - option "Slop Score · snapshot-2026-09-10"
+    - option "SlopBench · snapshot-2026-09-10"
+    - option "Spiral-Bench · 1.2"
+    - option "SWE-bench Multilingual · snapshot-2026-09-10"
+    - option "SWE-bench Multimodal · snapshot-2026-09-10"
+    - option "SWE-Bench Pro Public · snapshot-2026-09-10"
+    - option "SWE-bench Verified · snapshot-2026-09-10"
+    - option "Terminal-Bench · 4.0"
+    - option "Terminal-Bench Hard (AA) · 74221fb"
+    - option "Terminal-Bench v2.1 (AA) · 2.1"
+    - option "Terminal-Bench v4.0 (AA) · 4.0"
+    - option "The Slop Index · snapshot-2026-09-10"
+    - option "Towards AI Editorial Writing · snapshot-2026-09-10"
+    - option "UGI · snapshot-2026-09-10"
+    - option "UGI NatInt · snapshot-2026-09-10"
+    - option "UGI Willingness · snapshot-2026-09-10"
+    - option "UGI Writing · snapshot-2026-09-10"
+    - option "Vending-Bench 2 · 2"
+    - option "WeirdML · 2"
+    - option "τ²-bench · 2"
+    - option "τ²-Bench Telecom (AA) · snapshot-2026-09-10"
+    - option "τ³-Banking · 1.0.1"
+    - option "τ³-Banking (AA) · 1.0.1"
+    - option "τ³-Voice · snapshot-2026-09-10"
+  - text: Evaluation group / harness
+  - combobox "Evaluation group / harness":
+    - option "Antigravity SDK v0.1.12 · 1 measured catalog peers"
+    - option "Claude Code · 3 measured catalog peers" [selected]
+    - option "Codex · 2 measured catalog peers"
+    - option "Grok Build · 1 measured catalog peers"
+    - option "Kimi Code CLI · 1 measured catalog peers"
+    - option "Muse Code · 1 measured catalog peers"
+    - option "Muse Code 1.0.2 RC · 1 measured catalog peers"
+    - option "Opencode · 0 measured catalog peers"
+  - paragraph: Coding
+  - heading "Artificial Analysis Coding Agent Index v1.5" [level=2]
+  - paragraph: Version 1.5 · Claude Code
+  - link "Primary source ↗":
+    - /url: https://artificialanalysis.ai/agents/coding-agents
+  - paragraph: Measures coding-agent systems on DeepSWE v1.1, Terminal-Bench 4.0 and SWE-Atlas-QnA.
+  - paragraph: 3 / 835
+  - paragraph: Catalog configurations with a result
+  - paragraph: "0"
+  - paragraph: Source identities not yet matched
+  - paragraph: fraction
+  - paragraph: Higher is better · native source scale
+  - text: Search models
+  - searchbox "Search models"
+  - text: Evidence
+  - combobox "Evidence":
+    - option "Measured only" [selected]
+    - option "Self-reported only"
+    - option "All · prefer measured"
+  - checkbox "Open weights"
+  - text: Open weights
+  - checkbox "Include unmatched source identities"
+  - text: Include unmatched source identities
+  - status: 3 results match these filters. Coverage above uses the evidence filter before model filters.
+  - region "Benchmark ranking table":
+    - table "Artificial Analysis Coding Agent Index v1.5, version 1.5, Claude Code. Rank is within the filtered results; ties share a rank.":
+      - caption: Artificial Analysis Coding Agent Index v1.5, version 1.5, Claude Code. Rank is within the filtered results; ties share a rank.
+      - rowgroup:
+        - row "Rank Model / configuration Result and provenance Explore":
+          - columnheader "Rank"
+          - columnheader "Model / configuration"
+          - columnheader "Result and provenance"
+          - columnheader "Explore"
+      - rowgroup:
+        - row "1 Fable 5.1 (max) (with fallback) Anthropic · max 0.62222 fraction measured observed 2026-09-10 artificialanalysis.ai ↗ Compare ↗":
+          - cell "1"
+          - rowheader "Fable 5.1 (max) (with fallback) Anthropic · max":
+            - link "Fable 5.1 (max) (with fallback)":
+              - /url: /models/fable-5.1-with-fallback%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "0.62222 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.62222 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/agents/coding-agents
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=fable-5.1-with-fallback%3A%3Amax
+        - row "2 Opus 5 (max) Anthropic · max 0.59726 fraction measured observed 2026-09-10 artificialanalysis.ai ↗ Compare ↗":
+          - cell "2"
+          - rowheader "Opus 5 (max) Anthropic · max":
+            - link "Opus 5 (max)":
+              - /url: /models/opus-5%3A%3Amax#benchmark-sheet
+            - paragraph: Anthropic · max
+          - cell "0.59726 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.59726 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/agents/coding-agents
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=opus-5%3A%3Amax
+        - row "3 Qwen3.8 Max Alibaba · default 0.43265 fraction measured observed 2026-09-10 artificialanalysis.ai ↗ Compare ↗":
+          - cell "3"
+          - rowheader "Qwen3.8 Max Alibaba · default":
+            - link "Qwen3.8 Max":
+              - /url: /models/qwen3.8-max%3A%3Adefault#benchmark-sheet
+            - paragraph: Alibaba · default
+          - cell "0.43265 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.43265 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/agents/coding-agents
+            - group: Evidence
+          - cell "Compare ↗":
+            - link "Compare ↗":
+              - /url: /compare?model=qwen3.8-max%3A%3Adefault
+  - paragraph: Ranks stay within this version and evaluation group. Model prompts, evaluation dates and reasoning settings may differ. Source identities can describe whole agent systems. Inspect evidence before treating results as directly equivalent. Statistical significance is not inferred from rank.
+  - group: Composite retains Coding Agent v1.4 · source 2026-09-09
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

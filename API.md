@@ -210,3 +210,9 @@ An old seed falls back to the bundled snapshot until reseeded.
 ### Effective-cost UI (phase 03)
 
 The UI now defaults to modeled **USD/task**. Raw API `input_per_1m`, `output_per_1m` and cache fields retain their existing USD/million units and paths; no raw field was renamed or silently converted. Consumers can import the pure `effectiveCost` / `fixedCost` functions from `lib/effective-cost.mjs`. `effective_cost_per_task` and `effective_cost_per_1m_tokens` are separate return fields, with resolved inputs, dollar terms and explicit assumptions. See [effective-cost policy](docs/effective-cost.md) for all fallbacks and workload limitations. The UI settings key is now `mmc.settings.v6`; adjusted costs and the retained fixed-blend alternatives are global and persisted.
+
+### Benchmark exploration (phase 06)
+
+The canonical dataset/benchmark endpoints keep their existing fields. `GET /api/benchmark-scores` additionally accepts `observation_id` for exact row lookup, composable with `benchmark_id`, `model_id` and pagination.
+
+`GET /api/benchmark-view?model=<id>` (repeat up to four) supplies a bounded UI projection with versioned axes, sources and fixed catalog peer statistics. `?axis=<id>` instead selects one published evaluation group including unmatched source identities. These presentation IDs include version, unit and harness/configuration and may change if source protocol metadata changes; use registry IDs and observation IDs from the canonical APIs for integrations. The view is additive and never changes Composite. See [explorer methodology](docs/benchmark-explorer.md).

@@ -1,0 +1,20 @@
+{
+  "verdict": "failed",
+  "failure": "AssertionError [ERR_ASSERTION]: Expected values to be strictly equal:\n\n2 !== 4\n\n    at file:///opt/model-market-comparison/scripts/check-benchmark-ui.mjs:46:10\n    at runNextTicks (node:internal/process/task_queues:65:5)\n    at process.processImmediate (node:internal/timers:541:9)",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "violations": [],
+      "metrics": {
+        "cls": 0.000001211208767361111,
+        "lcp": 580,
+        "fcp": 428,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "interactions": 1,
+  "screenshots": 2
+}

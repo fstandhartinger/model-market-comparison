@@ -4,8 +4,8 @@ export default {
   theme: {
     extend: {
       colors: {
-        ink: "#0e1116", panel: "#161b22", line: "#272e3a",
-        accent: "#5b9dff", accent2: "#7ee0c0", warn: "#ffb454",
+        ink: "rgb(var(--ink) / <alpha-value>)", panel: "rgb(var(--panel) / <alpha-value>)", line: "rgb(var(--line) / <alpha-value>)",
+        accent: "rgb(var(--accent) / <alpha-value>)", accent2: "rgb(var(--accent2) / <alpha-value>)", warn: "rgb(var(--warn) / <alpha-value>)",
       },
       fontFamily: { mono: ["ui-monospace", "SFMono-Regular", "Menlo", "monospace"] },
     },

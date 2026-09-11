@@ -1,0 +1,31 @@
+```json
+{
+  "artifact_id": "phase06-analytics",
+  "artifact_sha256": "861da22636de5e7e614478547b936b84ebdf45995a75a63b765004520007870a",
+  "round": 1,
+  "verdict": "PASS",
+  "coverage_checked": [
+    "lib/benchmark-view.mjs: ANOMALY_POLICY parameters (minPeers=20, minFamilies=10, minProfile=5, peerZ=1.5, profileGap=1.5)",
+    "lib/benchmark-view.mjs: cohortOf configuration and harness isolation",
+    "lib/benchmark-view.mjs: latestScores ranking policy (measured over self-reported, newest date, never highest value)",
+    "lib/benchmark-view.mjs: distribution statistical calculation without imputation",
+    "lib/benchmark-view.mjs: normalize min-max peer range handling and uninformative bounds withholding",
+    "lib/benchmark-view.mjs: profileAnomalies directed anomaly gating without statistical significance claims",
+    "lib/benchmark-view.mjs: buildBenchmarkView registry preservation, dated unversioned legacy snapshots, and dataset immutability",
+    "lib/benchmark-view.mjs: selectBenchmarkView projection maintaining global peer statistics",
+    "lib/benchmark-view.d.mts: TypeScript declaration alignment with presentation adapter exports",
+    "lib/benchmark-data.ts: dataset caching and benchmark view memoization",
+    "app/api/benchmark-view/route.ts: API query parameter handling, validation, and headers",
+    "app/api/benchmark-scores/route.ts: pagination, filtering, divergence linkage, and status code verification",
+    "test/benchmark-view.test.mjs: test coverage for normalization, ranking, distribution, anomaly thresholds, and legacy snapshot retention",
+    "ops/rebuild-2026-09/bin/worker-images.mjs: byte bounds (<=4MB per image, <=16MB total, <=8 images), PNG/JPEG magic byte validation, and SHA-256 receipt hashing",
+    "ops/rebuild-2026-09/bin/worker-runner.mjs: critic image modality requirement, manifest injection into prompt, and receipt persistence",
+    "test/worker-images.test.mjs: unit tests for image transport validation and rejection behavior"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}
+```

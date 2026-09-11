@@ -1,0 +1,25 @@
+{
+  "artifact_id": "phase06-ui-evidence",
+  "artifact_sha256": "3dc1cdfde70810d979a17d0a2b59d66feabaa93cd202ced2c273e100990b8f00",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "Benchmark sheet page rendering and layout (components/BenchmarkSheet.tsx, app/models/[id]/page.tsx)",
+    "Anomaly explanation heuristics and disclosure rendering (components/BenchmarkEvidence.tsx, anomaly-why.png, deterministic anomaly test inputs)",
+    "Vendor self-reported observations and badges (self-reported-sheet.png, components/BenchmarkEvidence.tsx)",
+    "Measured vs vendor divergence empty state and compatibility messaging (model-sheet.png, docs/benchmark-explorer.md)",
+    "Full comparison evidence table with multi-model observation cards and exact IDs (compare-evidence.png, components/CompareView.tsx)",
+    "Overview desktop light and mobile responsive views (overview-light.png, overview-mobile.png, radar-mobile.png)",
+    "Top navigation, active page announcement, and collapsible Price/Provider filters (components/Nav.tsx, components/GlobalFilters.tsx, app/layout.tsx)",
+    "Accessible tree hierarchy, skip link target, and automated axe scan receipts (browser-checks.json, accessible tree excerpts)",
+    "Contrast, badge styling, and table horizontal scroll regions (app/globals.css, components/BenchmarkSheet.tsx)"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Axe receipt lists incomplete status for color-contrast and th-has-data-cells across multiple pages, which relies on visual/code inspection rather than full automated certification.",
+    "Reported FCP, LCP, and CLS metrics were measured on unthrottled localhost Chrome rather than geographically distributed end-user network conditions."
+  ],
+  "missing_evidence": []
+}

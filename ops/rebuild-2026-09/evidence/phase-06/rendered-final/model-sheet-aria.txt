@@ -1,0 +1,616 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - link "← All models":
+    - /url: /
+  - heading "GPT-5.6 Sol (high)" [level=1]
+  - text: ★ featured OpenAI · released 2026-07-09 · 10 recorded token offers
+  - heading "Top 5 cheapest providers (Adjusted $/task)" [level=2]
+  - paragraph: Within the active global provider, residency and confidentiality filters.
+  - table:
+    - rowgroup:
+      - row "# Provider Platform Raw input $/1M Raw output $/1M Adjusted $/task":
+        - columnheader "#"
+        - columnheader "Provider"
+        - columnheader "Platform"
+        - columnheader "Raw input $/1M"
+        - columnheader "Raw output $/1M"
+        - columnheader "Adjusted $/task"
+    - rowgroup:
+      - 'row "1 OpenAI OpenRouter $2.00 $10.00 $0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+        - cell "1"
+        - cell "OpenAI"
+        - cell "OpenRouter"
+        - cell "$2.00"
+        - cell "$10.00"
+        - 'cell "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+          - 'button "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"': $0.54392 /task est.
+      - 'row "2 Amazon Bedrock OpenRouter $4.40 $22.00 $1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"':
+        - cell "2"
+        - cell "Amazon Bedrock"
+        - cell "OpenRouter"
+        - cell "$4.40"
+        - cell "$22.00"
+        - 'cell "$1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"':
+          - 'button "$1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"': $1.05 /task est.
+      - 'row "3 Azure OpenRouter $5.00 $30.00 $1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+        - cell "3"
+        - cell "Azure"
+        - cell "OpenRouter"
+        - cell "$5.00"
+        - cell "$30.00"
+        - 'cell "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+          - 'button "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"': $1.521 /task est.
+      - 'row "4 AWS Bedrock AWS Bedrock $4.40 $22.00 $5.019 $/task: show cost inputs for GPT-5.6 Sol (high), AWS Bedrock / AWS Bedrock"':
+        - cell "4"
+        - cell "AWS Bedrock"
+        - cell "AWS Bedrock"
+        - cell "$4.40"
+        - cell "$22.00"
+        - 'cell "$5.019 $/task: show cost inputs for GPT-5.6 Sol (high), AWS Bedrock / AWS Bedrock"':
+          - 'button "$5.019 $/task: show cost inputs for GPT-5.6 Sol (high), AWS Bedrock / AWS Bedrock"': $5.019 /task est.
+      - 'row "5 Azure AI Foundry Azure AI Foundry $5.00 $30.00 $5.77 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"':
+        - cell "5"
+        - cell "Azure AI Foundry"
+        - cell "Azure AI Foundry"
+        - cell "$5.00"
+        - cell "$30.00"
+        - 'cell "$5.77 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"':
+          - 'button "$5.77 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"': $5.77 /task est.
+  - heading "Benchmarks" [level=2]
+  - text: Composite 77.5 Mean-imputed base 73.8 Dominance adjustment +3.8 Composite evidence 5/5 AA Coding · unversioned snapshot 2026-09-10 77.2 AA Coding Agent · v1.4 · 2026-09-09 64.1 AA Intelligence · unversioned snapshot 2026-09-10 42.5 DesignArena Frontend · unversioned snapshot 2026-09-10 1209 DesignArena Full-Stack · unversioned snapshot 2026-09-10 1168 Output speed (t/s) 63
+  - paragraph: ⓘ Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to gpt-5.6-sol::high, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.
+  - paragraph: MODEL EVIDENCE
+  - heading "Benchmark sheet" [level=2]
+  - paragraph: 19 / 73 registered benchmark versions covered · 23 observations including existing index snapshots.
+  - link "Compare this model ↗":
+    - /url: /compare?model=gpt-5.6-sol%3A%3Ahigh
+  - group: Composite retains Coding Agent v1.4 · source 2026-09-09
+  - heading "Profile signals" [level=3]
+  - paragraph: 1 threshold-crossing signal flagged · 21 eligible benchmark families
+  - group: How flags are calculated
+  - list:
+    - listitem:
+      - text: unusually strong CritPt (AA) snapshot-2026-09-10
+      - group: Why
+  - heading "Protocol-compatible measured/vendor divergences" [level=4]
+  - paragraph: No verified protocol-compatible vendor/measured pair is available for this model; agreement cannot be assessed.
+  - heading "Agentic" [level=3]
+  - region "Agentic benchmark observations":
+    - 'table "Agentic: every observation for this exact model configuration"':
+      - caption: "Agentic: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "AA-Briefcase Version snapshot-2026-09-10 Published board Tests multi-week professional knowledge-work projects with linked tasks and large source collections. 1360.88 Elo measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "AA-Briefcase Version snapshot-2026-09-10":
+            - link "AA-Briefcase":
+              - /url: /benchmarks?benchmark=aa-briefcase%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests multi-week professional knowledge-work projects with linked tasks and large source collections.":
+            - text: Published board
+            - paragraph: Tests multi-week professional knowledge-work projects with linked tasks and large source collections.
+          - cell "1360.88 Elo measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 1360.88 Elo measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "GDPval-AA v2 Version 2 Published board Tests professional knowledge-work deliverables across occupations using AA's Stirrup harness. 1524.01 Elo measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "GDPval-AA v2 Version 2":
+            - link "GDPval-AA v2":
+              - /url: /benchmarks?benchmark=aa-gdpval%3A%3A2
+            - paragraph: Version 2
+          - cell "Published board Tests professional knowledge-work deliverables across occupations using AA's Stirrup harness.":
+            - text: Published board
+            - paragraph: Tests professional knowledge-work deliverables across occupations using AA's Stirrup harness.
+          - cell "1524.01 Elo measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 1524.01 Elo measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "Terminal-Bench Hard (AA) Version 74221fb Published board Tests a pinned 44-task hard subset of terminal-based work using Terminus 2. 0.62121 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "Terminal-Bench Hard (AA) Version 74221fb":
+            - link "Terminal-Bench Hard (AA)":
+              - /url: /benchmarks?benchmark=aa-terminal-bench-hard%3A%3A74221fb
+            - paragraph: Version 74221fb
+          - cell "Published board Tests a pinned 44-task hard subset of terminal-based work using Terminus 2.":
+            - text: Published board
+            - paragraph: Tests a pinned 44-task hard subset of terminal-based work using Terminus 2.
+          - cell "0.62121 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.62121 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "Terminal-Bench v2.1 (AA) Version 2.1 Published board Tests terminal-based work on the 89-task verified refresh using Terminus 2. 0.87266 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "Terminal-Bench v2.1 (AA) Version 2.1":
+            - link "Terminal-Bench v2.1 (AA)":
+              - /url: /benchmarks?benchmark=aa-terminal-bench%3A%3A2.1
+            - paragraph: Version 2.1
+          - cell "Published board Tests terminal-based work on the 89-task verified refresh using Terminus 2.":
+            - text: Published board
+            - paragraph: Tests terminal-based work on the 89-task verified refresh using Terminus 2.
+          - cell "0.87266 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.87266 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "Terminal-Bench v4.0 (AA) Version 4.0 Published board Tests terminal-based work on the 66-task release using mini-SWE-agent v2.4.6. 0.20707 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "Terminal-Bench v4.0 (AA) Version 4.0":
+            - link "Terminal-Bench v4.0 (AA)":
+              - /url: /benchmarks?benchmark=aa-terminal-bench%3A%3A4.0
+            - paragraph: Version 4.0
+          - cell "Published board Tests terminal-based work on the 66-task release using mini-SWE-agent v2.4.6.":
+            - text: Published board
+            - paragraph: Tests terminal-based work on the 66-task release using mini-SWE-agent v2.4.6.
+          - cell "0.20707 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.20707 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - heading "Coding" [level=3]
+  - region "Coding benchmark observations":
+    - 'table "Coding: every observation for this exact model configuration"':
+      - caption: "Coding: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "Artificial Analysis Coding Agent Index v1.4 Version 1.4 Codex The retained AA Coding Agent Index measures coding-agent systems using the earlier three-component implementation. 0.64116 fraction measured observed 2026-09-09 artificialanalysis.ai ↗":
+          - rowheader "Artificial Analysis Coding Agent Index v1.4 Version 1.4":
+            - link "Artificial Analysis Coding Agent Index v1.4":
+              - /url: /benchmarks?benchmark=aa-coding-agent-index%3A%3A1.4
+            - paragraph: Version 1.4
+          - cell "Codex The retained AA Coding Agent Index measures coding-agent systems using the earlier three-component implementation.":
+            - text: Codex
+            - paragraph: The retained AA Coding Agent Index measures coding-agent systems using the earlier three-component implementation.
+          - cell "0.64116 fraction measured observed 2026-09-09 artificialanalysis.ai ↗":
+            - text: 0.64116 fraction measured observed 2026-09-09
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/
+            - group: Evidence
+        - row "SciCode (AA subproblems) Version 1.0.1 Published board Tests scientific Python programming with scientist-annotated background information. 0.57755 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "SciCode (AA subproblems) Version 1.0.1":
+            - link "SciCode (AA subproblems)":
+              - /url: /benchmarks?benchmark=aa-scicode%3A%3A1.0.1
+            - paragraph: Version 1.0.1
+          - cell "Published board Tests scientific Python programming with scientist-annotated background information.":
+            - text: Published board
+            - paragraph: Tests scientific Python programming with scientist-annotated background information.
+          - cell "0.57755 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.57755 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "AA Coding Index Version snapshot-2026-09-10 (unversioned) Published board Published AA index from the retained API snapshot. No verified semantic version was supplied. 77.2 points measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "AA Coding Index Version snapshot-2026-09-10 (unversioned)":
+            - link "AA Coding Index":
+              - /url: /benchmarks?benchmark=aa_coding_index%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10 (unversioned)
+          - cell "Published board Published AA index from the retained API snapshot. No verified semantic version was supplied.":
+            - text: Published board
+            - paragraph: Published AA index from the retained API snapshot. No verified semantic version was supplied.
+          - cell "77.2 points measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 77.2 points measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/leaderboards/models
+            - group: Evidence
+        - row "DesignArena Frontend Version snapshot-2026-09-10 (unversioned) Published board Published Elo. Exact source attachment is retained; fewer than 200 battles excludes a row from radar normalization and anomaly peers. 1209 Elo measured 2255 battles observed 2026-09-10 designarena.ai ↗":
+          - rowheader "DesignArena Frontend Version snapshot-2026-09-10 (unversioned)":
+            - link "DesignArena Frontend":
+              - /url: /benchmarks?benchmark=frontend%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10 (unversioned)
+          - cell "Published board Published Elo. Exact source attachment is retained; fewer than 200 battles excludes a row from radar normalization and anomaly peers.":
+            - text: Published board
+            - paragraph: Published Elo. Exact source attachment is retained; fewer than 200 battles excludes a row from radar normalization and anomaly peers.
+          - cell "1209 Elo measured 2255 battles observed 2026-09-10 designarena.ai ↗":
+            - text: 1209 Elo measured 2255 battles observed 2026-09-10
+            - link "designarena.ai ↗":
+              - /url: https://www.designarena.ai/
+            - group: Evidence
+        - row "DesignArena Full-Stack Version snapshot-2026-09-10 (unversioned) Published board Published Elo. Exact source attachment is retained; fewer than 200 battles excludes a row from radar normalization and anomaly peers. 1168 Elo measured 1611 battles observed 2026-09-10 designarena.ai ↗":
+          - rowheader "DesignArena Full-Stack Version snapshot-2026-09-10 (unversioned)":
+            - link "DesignArena Full-Stack":
+              - /url: /benchmarks?benchmark=fullstack%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10 (unversioned)
+          - cell "Published board Published Elo. Exact source attachment is retained; fewer than 200 battles excludes a row from radar normalization and anomaly peers.":
+            - text: Published board
+            - paragraph: Published Elo. Exact source attachment is retained; fewer than 200 battles excludes a row from radar normalization and anomaly peers.
+          - cell "1168 Elo measured 1611 battles observed 2026-09-10 designarena.ai ↗":
+            - text: 1168 Elo measured 1611 battles observed 2026-09-10
+            - link "designarena.ai ↗":
+              - /url: https://www.designarena.ai/
+            - group: Evidence
+  - heading "Instruction-following" [level=3]
+  - region "Instruction-following benchmark observations":
+    - 'table "Instruction-following: every observation for this exact model configuration"':
+      - caption: "Instruction-following: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "IFBench (AA single-turn) Version snapshot-2026-09-10 Published board Tests precise single-turn instructions with deterministic rule checks. 0.69184 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "IFBench (AA single-turn) Version snapshot-2026-09-10":
+            - link "IFBench (AA single-turn)":
+              - /url: /benchmarks?benchmark=aa-ifbench%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests precise single-turn instructions with deterministic rule checks.":
+            - text: Published board
+            - paragraph: Tests precise single-turn instructions with deterministic rule checks.
+          - cell "0.69184 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.69184 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - heading "Knowledge" [level=3]
+  - region "Knowledge benchmark observations":
+    - 'table "Knowledge: every observation for this exact model configuration"':
+      - caption: "Knowledge: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "Humanity's Last Exam (AA text-only) Version snapshot-2026-09-10 Published board Tests expert-level knowledge on AA's text-only Humanity's Last Exam subset. 0.46015 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "Humanity's Last Exam (AA text-only) Version snapshot-2026-09-10":
+            - link "Humanity's Last Exam (AA text-only)":
+              - /url: /benchmarks?benchmark=aa-hle%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests expert-level knowledge on AA's text-only Humanity's Last Exam subset.":
+            - text: Published board
+            - paragraph: Tests expert-level knowledge on AA's text-only Humanity's Last Exam subset.
+          - cell "0.46015 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.46015 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "AA-Omniscience Index Version snapshot-2026-09-10 Published board Tests factual reliability while rewarding correct answers and penalizing hallucinations. 20.36667 points measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "AA-Omniscience Index Version snapshot-2026-09-10":
+            - link "AA-Omniscience Index":
+              - /url: /benchmarks?benchmark=aa-omniscience%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests factual reliability while rewarding correct answers and penalizing hallucinations.":
+            - text: Published board
+            - paragraph: Tests factual reliability while rewarding correct answers and penalizing hallucinations.
+          - cell "20.36667 points measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 20.36667 points measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - heading "Long-context" [level=3]
+  - region "Long-context benchmark observations":
+    - 'table "Long-context: every observation for this exact model configuration"':
+      - caption: "Long-context: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "GDP.pdf (AA) Version snapshot-2026-09-10 Published board Tests professional reasoning over long PDFs with AA document preparation and grading. 0.278 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "GDP.pdf (AA) Version snapshot-2026-09-10":
+            - link "GDP.pdf (AA)":
+              - /url: /benchmarks?benchmark=aa-gdp-pdf%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests professional reasoning over long PDFs with AA document preparation and grading.":
+            - text: Published board
+            - paragraph: Tests professional reasoning over long PDFs with AA document preparation and grading.
+          - cell "0.278 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.278 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "AA-LCR v1.1 Version 1.1 Published board Tests reasoning across multiple long documents with corrected answer keys and grading. 0.81667 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "AA-LCR v1.1 Version 1.1":
+            - link "AA-LCR v1.1":
+              - /url: /benchmarks?benchmark=aa-lcr%3A%3A1.1
+            - paragraph: Version 1.1
+          - cell "Published board Tests reasoning across multiple long documents with corrected answer keys and grading.":
+            - text: Published board
+            - paragraph: Tests reasoning across multiple long documents with corrected answer keys and grading.
+          - cell "0.81667 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.81667 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "MLCR-AA Version snapshot-2026-09-10 Published board Tests medical-record synthesis and reasoning across long, fragmented case documents. 0.17222 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "MLCR-AA Version snapshot-2026-09-10":
+            - link "MLCR-AA":
+              - /url: /benchmarks?benchmark=aa-mlcr%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests medical-record synthesis and reasoning across long, fragmented case documents.":
+            - text: Published board
+            - paragraph: Tests medical-record synthesis and reasoning across long, fragmented case documents.
+          - cell "0.17222 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.17222 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - heading "Reasoning" [level=3]
+  - region "Reasoning benchmark observations":
+    - 'table "Reasoning: every observation for this exact model configuration"':
+      - caption: "Reasoning: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "AA Intelligence Index Version snapshot-2026-09-10 (unversioned) Published board Published AA index from the retained API snapshot. No verified semantic version was supplied. 42.5 points measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "AA Intelligence Index Version snapshot-2026-09-10 (unversioned)":
+            - link "AA Intelligence Index":
+              - /url: /benchmarks?benchmark=aa_intelligence_index%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10 (unversioned)
+          - cell "Published board Published AA index from the retained API snapshot. No verified semantic version was supplied.":
+            - text: Published board
+            - paragraph: Published AA index from the retained API snapshot. No verified semantic version was supplied.
+          - cell "42.5 points measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 42.5 points measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/leaderboards/models
+            - group: Evidence
+  - heading "Science" [level=3]
+  - region "Science benchmark observations":
+    - 'table "Science: every observation for this exact model configuration"':
+      - caption: "Science: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "CritPt (AA) Version snapshot-2026-09-10 Published board Tests research-level physics reasoning with Python, symbolic and numerical answers. 0.25714 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "CritPt (AA) Version snapshot-2026-09-10":
+            - link "CritPt (AA)":
+              - /url: /benchmarks?benchmark=aa-critpt%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests research-level physics reasoning with Python, symbolic and numerical answers.":
+            - text: Published board
+            - paragraph: Tests research-level physics reasoning with Python, symbolic and numerical answers.
+          - cell "0.25714 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.25714 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "GPQA Diamond (AA) Version snapshot-2026-09-10 Published board Tests graduate-level biology, physics and chemistry knowledge on the Diamond subset. 0.92828 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "GPQA Diamond (AA) Version snapshot-2026-09-10":
+            - link "GPQA Diamond (AA)":
+              - /url: /benchmarks?benchmark=aa-gpqa-diamond%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests graduate-level biology, physics and chemistry knowledge on the Diamond subset.":
+            - text: Published board
+            - paragraph: Tests graduate-level biology, physics and chemistry knowledge on the Diamond subset.
+          - cell "0.92828 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.92828 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - heading "Tool-use" [level=3]
+  - region "Tool-use benchmark observations":
+    - 'table "Tool-use: every observation for this exact model configuration"':
+      - caption: "Tool-use: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "AutomationBench-AA Version 1.0.6 Published board Tests multi-app SaaS workflows through REST tools on a held-out AutomationBench split. 0.55312 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "AutomationBench-AA Version 1.0.6":
+            - link "AutomationBench-AA":
+              - /url: /benchmarks?benchmark=aa-automationbench%3A%3A1.0.6
+            - paragraph: Version 1.0.6
+          - cell "Published board Tests multi-app SaaS workflows through REST tools on a held-out AutomationBench split.":
+            - text: Published board
+            - paragraph: Tests multi-app SaaS workflows through REST tools on a held-out AutomationBench split.
+          - cell "0.55312 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.55312 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "τ²-Bench Telecom (AA) Version snapshot-2026-09-10 Published board Tests dual-control telecom agents that coordinate tool use with a simulated user. 0.83333 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "τ²-Bench Telecom (AA) Version snapshot-2026-09-10":
+            - link "τ²-Bench Telecom (AA)":
+              - /url: /benchmarks?benchmark=aa-tau2-telecom%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests dual-control telecom agents that coordinate tool use with a simulated user.":
+            - text: Published board
+            - paragraph: Tests dual-control telecom agents that coordinate tool use with a simulated user.
+          - cell "0.83333 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.83333 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+        - row "τ³-Banking (AA) Version 1.0.1 Published board Tests banking support agents that retrieve policies and change account state through tools. 0.36701 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "τ³-Banking (AA) Version 1.0.1":
+            - link "τ³-Banking (AA)":
+              - /url: /benchmarks?benchmark=aa-tau3-banking%3A%3A1.0.1
+            - paragraph: Version 1.0.1
+          - cell "Published board Tests banking support agents that retrieve policies and change account state through tools.":
+            - text: Published board
+            - paragraph: Tests banking support agents that retrieve policies and change account state through tools.
+          - cell "0.36701 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.36701 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - heading "Vision" [level=3]
+  - region "Vision benchmark observations":
+    - 'table "Vision: every observation for this exact model configuration"':
+      - caption: "Vision: every observation for this exact model configuration"
+      - rowgroup:
+        - row "Benchmark / version Evaluation group Score / provenance":
+          - columnheader "Benchmark / version"
+          - columnheader "Evaluation group"
+          - columnheader "Score / provenance"
+      - rowgroup:
+        - row "MMMU Pro (AA) Version snapshot-2026-09-10 Published board Tests multimodal understanding using challenging ten-option questions. 0.8185 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+          - rowheader "MMMU Pro (AA) Version snapshot-2026-09-10":
+            - link "MMMU Pro (AA)":
+              - /url: /benchmarks?benchmark=aa-mmmu-pro%3A%3Asnapshot-2026-09-10
+            - paragraph: Version snapshot-2026-09-10
+          - cell "Published board Tests multimodal understanding using challenging ten-option questions.":
+            - text: Published board
+            - paragraph: Tests multimodal understanding using challenging ten-option questions.
+          - cell "0.8185 fraction measured observed 2026-09-10 artificialanalysis.ai ↗":
+            - text: 0.8185 fraction measured observed 2026-09-10
+            - link "artificialanalysis.ai ↗":
+              - /url: https://artificialanalysis.ai/models/gpt-5-6-sol
+            - group: Evidence
+  - group: Missing coverage · 54 benchmark versions
+  - heading "Variants / reasoning settings" [level=2]
+  - table:
+    - rowgroup:
+      - row "Variant Coding · snapshot 2026-09-10 Intelligence · snapshot 2026-09-10":
+        - columnheader "Variant"
+        - columnheader "Coding · snapshot 2026-09-10"
+        - columnheader "Intelligence · snapshot 2026-09-10"
+    - rowgroup:
+      - row "GPT-5.6 Sol (xhigh) 78.3 44.1":
+        - cell "GPT-5.6 Sol (xhigh)":
+          - link "GPT-5.6 Sol (xhigh)":
+            - /url: /models/gpt-5.6-sol%3A%3Axhigh
+        - cell "78.3"
+        - cell "44.1"
+      - row "GPT-5.6 Sol (max) 77.4 47.1":
+        - cell "GPT-5.6 Sol (max)":
+          - link "GPT-5.6 Sol (max)":
+            - /url: /models/gpt-5.6-sol%3A%3Amax
+        - cell "77.4"
+        - cell "47.1"
+      - row "GPT-5.6 Sol (high) 77.2 42.5":
+        - cell "GPT-5.6 Sol (high)":
+          - link "GPT-5.6 Sol (high)":
+            - /url: /models/gpt-5.6-sol%3A%3Ahigh
+        - cell "77.2"
+        - cell "42.5"
+      - row "GPT-5.6 Sol (medium) 76.3 39.5":
+        - cell "GPT-5.6 Sol (medium)":
+          - link "GPT-5.6 Sol (medium)":
+            - /url: /models/gpt-5.6-sol%3A%3Amedium
+        - cell "76.3"
+        - cell "39.5"
+      - row "GPT-5.6 Sol (low) 69.7 33.8":
+        - cell "GPT-5.6 Sol (low)":
+          - link "GPT-5.6 Sol (low)":
+            - /url: /models/gpt-5.6-sol%3A%3Alow
+        - cell "69.7"
+        - cell "33.8"
+      - row "GPT-5.6 Sol (Non-reasoning) 65.1 28.3":
+        - cell "GPT-5.6 Sol (Non-reasoning)":
+          - link "GPT-5.6 Sol (Non-reasoning)":
+            - /url: /models/gpt-5.6-sol%3A%3Anon-reasoning
+        - cell "65.1"
+        - cell "28.3"
+  - heading "GitHub Copilot" [level=2]
+  - paragraph: Current usage-based billing · model token cost is converted to AI Credits at 1 credit = $0.01.
+  - text: Input $4.00 / 1M Cached input $0.400 / 1M Cache write $5.00 / 1M Output $20.00 / 1M Status GA
+  - heading "Token offers by platform — Adjusted $/task" [level=2]
+  - paragraph: "Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback). These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task; unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs, dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens."
+  - paragraph: 10 offers within the active global filters; “—” means the catalog is active but no public token price is available.
+  - heading "OpenRouter (6)" [level=3]
+  - table:
+    - rowgroup:
+      - 'row "OpenAI globalopenai $2.00 raw in $/1M $10.00 raw out $/1M $0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+        - cell "OpenAI"
+        - cell "globalopenai"
+        - cell "$2.00 raw in $/1M"
+        - cell "$10.00 raw out $/1M"
+        - 'cell "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+          - 'button "$0.54392 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"': $0.54392 /task est.
+      - 'row "Amazon Bedrock globalamazon-bedrock/us-east-1 $4.40 raw in $/1M $22.00 raw out $/1M $1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"':
+        - cell "Amazon Bedrock"
+        - cell "globalamazon-bedrock/us-east-1"
+        - cell "$4.40 raw in $/1M"
+        - cell "$22.00 raw out $/1M"
+        - 'cell "$1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"':
+          - 'button "$1.05 $/task: show cost inputs for GPT-5.6 Sol (high), Amazon Bedrock / OpenRouter"': $1.05 /task est.
+      - 'row "OpenAI globalopenai/fast $4.00 raw in $/1M $20.00 raw out $/1M $1.345 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+        - cell "OpenAI"
+        - cell "globalopenai/fast"
+        - cell "$4.00 raw in $/1M"
+        - cell "$20.00 raw out $/1M"
+        - 'cell "$1.345 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"':
+          - 'button "$1.345 $/task: show cost inputs for GPT-5.6 Sol (high), OpenAI / OpenRouter"': $1.345 /task est.
+      - 'row "Azure globalazure $5.00 raw in $/1M $30.00 raw out $/1M $1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+        - cell "Azure"
+        - cell "globalazure"
+        - cell "$5.00 raw in $/1M"
+        - cell "$30.00 raw out $/1M"
+        - 'cell "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+          - 'button "$1.521 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"': $1.521 /task est.
+      - 'row "Azure globalazure/us $5.50 raw in $/1M $33.00 raw out $/1M $1.682 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+        - cell "Azure"
+        - cell "globalazure/us"
+        - cell "$5.50 raw in $/1M"
+        - cell "$33.00 raw out $/1M"
+        - 'cell "$1.682 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+          - 'button "$1.682 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"': $1.682 /task est.
+      - 'row "Azure euazure/euEU $5.50 raw in $/1M $33.00 raw out $/1M $1.729 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+        - cell "Azure"
+        - cell "euazure/euEU"
+        - cell "$5.50 raw in $/1M"
+        - cell "$33.00 raw out $/1M"
+        - 'cell "$1.729 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"':
+          - 'button "$1.729 $/task: show cost inputs for GPT-5.6 Sol (high), Azure / OpenRouter"': $1.729 /task est.
+  - heading "AWS Bedrock (1)" [level=3]
+  - table:
+    - rowgroup:
+      - 'row "AWS Bedrock us-east-1 $4.40 raw in $/1M $22.00 raw out $/1M $5.019 $/task: show cost inputs for GPT-5.6 Sol (high), AWS Bedrock / AWS Bedrock"':
+        - cell "AWS Bedrock"
+        - cell "us-east-1"
+        - cell "$4.40 raw in $/1M"
+        - cell "$22.00 raw out $/1M"
+        - 'cell "$5.019 $/task: show cost inputs for GPT-5.6 Sol (high), AWS Bedrock / AWS Bedrock"':
+          - 'button "$5.019 $/task: show cost inputs for GPT-5.6 Sol (high), AWS Bedrock / AWS Bedrock"': $5.019 /task est.
+  - heading "Azure AI Foundry (2)" [level=3]
+  - table:
+    - rowgroup:
+      - 'row "Azure AI Foundry global $5.00 raw in $/1M $30.00 raw out $/1M $5.77 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"':
+        - cell "Azure AI Foundry"
+        - cell "global"
+        - cell "$5.00 raw in $/1M"
+        - cell "$30.00 raw out $/1M"
+        - 'cell "$5.77 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"':
+          - 'button "$5.77 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"': $5.77 /task est.
+      - 'row "Azure AI Foundry euEU $5.50 raw in $/1M $33.00 raw out $/1M $6.347 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"':
+        - cell "Azure AI Foundry"
+        - cell "euEU"
+        - cell "$5.50 raw in $/1M"
+        - cell "$33.00 raw out $/1M"
+        - 'cell "$6.347 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"':
+          - 'button "$6.347 $/task: show cost inputs for GPT-5.6 Sol (high), Azure AI Foundry / Azure AI Foundry"': $6.347 /task est.
+  - heading "T-Systems LLM Hub (1)" [level=3]
+  - table:
+    - rowgroup:
+      - 'row "T-Systems LLM Hub euEU $5.23 raw in $/1M $31.38 raw out $/1M $6.036 $/task: show cost inputs for GPT-5.6 Sol (high), T-Systems LLM Hub / T-Systems LLM Hub"':
+        - cell "T-Systems LLM Hub"
+        - cell "euEU"
+        - cell "$5.23 raw in $/1M"
+        - cell "$31.38 raw out $/1M"
+        - 'cell "$6.036 $/task: show cost inputs for GPT-5.6 Sol (high), T-Systems LLM Hub / T-Systems LLM Hub"':
+          - 'button "$6.036 $/task: show cost inputs for GPT-5.6 Sol (high), T-Systems LLM Hub / T-Systems LLM Hub"': $6.036 /task est.
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

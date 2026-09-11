@@ -47,7 +47,7 @@ A clean round has no unresolved findings, all required criteria covered, and no 
 
 ## Running a round
 
-The CLI completion path has no browsing, file-reading or execution tools. `--file` embeds file content. It accepts one file, so assemble the frozen artifact, sources and check receipts into that packet first. It does not interpolate prompt placeholders, run tests, interpret the verdict or automate revisions. The owner performs those steps; phase 08 will implement the daily orchestration.
+The CLI completion path has no browsing or execution tools. Phase 06 adds explicit `--image PATH` attachments for local PNG/JPEG screenshots (up to eight, 4 MB each / 16 MB total), with byte hashes in the receipt and input manifest. The selected critic must advertise image input; its AA gate and producer-family exclusions remain mandatory. `--file` embeds file content. It accepts one file, so assemble the frozen artifact, sources and check receipts into that packet first. It does not interpolate prompt placeholders, run tests, interpret the verdict or automate revisions. The owner performs those steps; phase 08 will implement the daily orchestration.
 
 ```bash
 node ops/rebuild-2026-09/bin/pick-worker-models.mjs --json
@@ -117,8 +117,8 @@ radars must label normalization, distinguish missing from zero, support up to fo
 and remain legible in light/dark themes. Check explainers and anomalies against the data.
 Compare actual rendered output to the prechosen reference, naming concrete differences.
 
-Only assess pixels if actual images are attached through an image-capable transport.
-Image paths or a builder's prose are insufficient. With text-only worker.sh, report visual
+Only assess pixels if actual images are attached through an image-capable transport, such as worker.sh --critic --model google/gemini-3.7-flash --image screenshot.png.
+Image paths or a builder's prose are insufficient. Without --image attachments, report visual
 review as missing evidence; do not claim a visual pass. Return the common JSON contract.
 ```
 

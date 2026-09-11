@@ -1,0 +1,20 @@
+{
+  "verdict": "failed",
+  "failure": "locator.selectOption: Timeout 30000ms exceeded.\nCall log:\n\u001b[2m  - waiting for getByLabel('Model C', { exact: true })\u001b[22m\n\n    at /opt/model-market-comparison/scripts/check-benchmark-ui.mjs:44:53",
+  "pages": [
+    {
+      "name": "compare-dark",
+      "violations": [],
+      "metrics": {
+        "cls": 0.1089135720486111,
+        "lcp": 444,
+        "fcp": 444,
+        "documentWidth": 1440,
+        "viewport": 1440,
+        "reducedMotion": true
+      }
+    }
+  ],
+  "interactions": 1,
+  "screenshots": 2
+}

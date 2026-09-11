@@ -1,0 +1,56 @@
+{
+  "started_at": "2026-09-11T00:31:02.756Z",
+  "mode": "oneshot",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.065,
+    "output_per_1m": 0.18,
+    "context": 1310720,
+    "aa_intelligence_index": 34.5,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.5
+      }
+    ]
+  },
+  "input_sha256": "ef350224e3322bb3500ac55b8afb56b87c589173718d64a5b0ccfc1ff04f3c56",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 510,
+    "completion_tokens": 2284,
+    "total_tokens": 2794,
+    "cost": 0.00064137744,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.000647856,
+      "upstream_inference_prompt_cost": 0.00004488,
+      "upstream_inference_completions_cost": 0.000602976
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 39,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "StreamLake",
+  "session_id": null,
+  "finished_at": "2026-09-11T00:31:23.721Z",
+  "output_sha256": "3d053346314afa0875094a70192a743b2703f06af24d03e94086319e4b03f85c"
+}

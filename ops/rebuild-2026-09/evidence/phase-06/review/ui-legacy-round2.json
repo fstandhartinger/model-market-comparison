@@ -1,0 +1,24 @@
+{
+  "artifact_id": "phase06-ui-legacy",
+  "artifact_sha256": "402ed83aa74cd271a3427f081922f2dda8efb53a65ee18fe9fcab1977f6af706",
+  "round": 2,
+  "verdict": "pass",
+  "coverage_checked": [
+    "Primary header navigation with Overview, Benchmarks, Compare, Radar, More dropdown, active route indication, skip link, and ThemeToggle",
+    "Global price & provider filter disclosure with ScoreSelect, NumFilter min score, Adjusted/Raw toggle, fixed I/O blend selector, feature/collapse/residency toggles, and multi-select dropdowns",
+    "Charts page (/charts) with capability leaderboard, cheapest models bar chart, open vs closed comparison, and keyboard-accessible price/cost tables (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+    "Cost vs Capability scatter (/scatter) with log/linear cost axis toggle, Pareto frontier halo and connection line, legend by org and weight type, and accessible data table (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+    "Providers per Model view (/providers) with single-model offers ranking, peer rank across models, model picker, data bars, and constituent expansions (rendered 390px light visual inspected; 1440px light/dark verified via browser checks receipt)",
+    "Provider explorer (/provider-explorer) two-pane directory with search, sort options (by #models, EU first, A-Z), filter checkboxes, and model offer comparisons (rendered 1440px dark and 390px light visuals inspected; 1440px light verified via browser checks receipt)",
+    "EU & Sovereign cloud view (/eu) with SOTA open-model table, company-policy equivalents, sovereign provider catalog, and proprietary exclusions (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+    "Gateways view (/gateways) with search, EU routing badges, filter toggles, and metadata listings (rendered 390px light visual inspected; 1440px light/dark verified via browser checks receipt)",
+    "About & data sources view (/about) with tracked source citations, featured models definitions, dataset snapshot metadata, and calculation methodology (rendered 1440px light visual inspected; 1440px dark and 390px light verified via browser checks receipt)",
+    "Responsive layout validation confirming zero document overflow across all legacy routes at 1440px and 390px in checks.json receipt (noting 320px reflow evidence is scoped to radar)",
+    "Accessibility check results (zero automated axe violations across routes in receipt, acknowledging automated scans do not certify complete WCAG conformance)"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [],
+  "missing_evidence": []
+}

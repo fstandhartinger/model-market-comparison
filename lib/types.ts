@@ -235,7 +235,7 @@ export type ScoreKey =
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (coverage-neutral, dominance-safe percentiles, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",
-  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index (median harness)",
+  aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
   designarena_fullstack: "DesignArena — Agentic Web Dev (Full-Stack) Elo",

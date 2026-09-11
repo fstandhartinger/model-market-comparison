@@ -1,0 +1,41 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - heading "Charts" [level=1]
+  - paragraph:
+    - text: Capability leaderboards, cheapest-model rankings, and an open-weights vs closed comparison. Switch the score and toggle the featured set. For the price/capability scatter, see
+    - link "Cost vs Capability":
+      - /url: /scatter
+    - text: .
+  - text: "Score: Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4 · min 0 · costs: Adjusted $/task Max $/task"
+  - textbox "Max $/task":
+    - /placeholder: e.g. 5
+  - text: 30 models within global provider filters
+  - heading "Capability leaderboard — Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4" [level=2]
+  - img: 0 25 50 75 100 Claude Fable 5.1 GPT-6 Astra Claude Opus 5 Muse Spark 1.3 Claude Fable 5 Kimi K3 Grok 4.6 GLM-5.3 Claude Sonnet 5 Claude Opus 4.8 Grok 4.5 Muse Spark 1.2 GPT-5.6 Sol GLM-5.3-Flash Claude Opus 4.7 GLM-5.2 GPT-5.6 Luna Claude Opus 4.6 100.0 96.0 95.7 95.4 93.7 92.4 91.2 87.1 85.8 84.3 82.8 78.7 77.5 77.4 77.4 70.9 70.8 70.8
+  - heading "Cheapest models — Adjusted $/task" [level=2]
+  - img: $0 $0.35 $0.70 $1.05 $1.40 Kimi K2.5 Kimi K2.6 DeepSeek V4 Pro GLM-5.2 GPT-5.4 Claude Opus 4.7 Claude Opus 4.6 GLM-5.3-Flash MiMo-V2.5-Pro Claude Sonnet 4.6 GPT-5.6 Luna Kimi K2.7 Code GPT-5.6 Sol GPT-5.6 Terra MiniMax-M3 GLM-5.1 GLM-5.3 Grok 4.5 $0.0127 $0.01467 $0.01984 $0.0211 $0.06702 $0.12905 $0.12905 $0.1548 $0.20757 $0.2453 $0.33111 $0.51208 $0.54392 $0.60556 $0.74504 $0.96934 $1.05 $1.28
+  - group: Plotted model costs (keyboard-accessible table, 18 rows, Adjusted $/task)
+  - heading "Open weights vs closed — average capability" [level=2]
+  - img: Open Closed 0 25 50 75 100 67.4 80.9
+  - heading "Open weights vs closed — average cost (Adjusted $/task)" [level=2]
+  - img: Open Closed $0 $1.00 $2.00 $3.00 $4.00 $0.58638 $3.958
+  - group: Constituent models behind each average — arithmetic mean = sum ÷ count
+  - paragraph: "Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback). These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task; unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs, dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens."
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

@@ -1,0 +1,16 @@
+✔ radar preserves zero, reverses lower-better, and withholds missing or uninformative ranges (1.375884ms)
+✔ observation selection prefers measured and latest, never highest or vendor-derived claims (0.385002ms)
+✔ peer distribution excludes unmatched identities, claims, low battle counts, and duplicate source identities (1.163517ms)
+✔ profile flags require both relative strength and peer deviation and expose independently computable inputs (5.29507ms)
+✔ tiny peer groups, narrow family coverage, and insufficient model profile never trigger flags (1.118529ms)
+✔ explicit CoT settings, dataset splits, and harnesses create separate evaluation axes (0.388702ms)
+✔ actual source adapter keeps all version identities, values and dated legacy inputs, without mutating data (781.076916ms)
+✔ vision critic sends actual local pixels with hashed receipts, without weakening model or payload gates (26.81776ms)
+ℹ tests 8
+ℹ suites 0
+ℹ pass 8
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 924.370045

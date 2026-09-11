@@ -5,6 +5,11 @@ import { num, pct, orgColor, usdPerM } from "../../../lib/format";
 import { clientData } from "../../../lib/client-model";
 import { ModelDetailOffers } from "../../../components/ModelDetailOffers";
 
+import { getBenchmarkView } from '../../../lib/benchmark-data';
+import { selectBenchmarkView } from '../../../lib/benchmark-view.mjs';
+import { BenchmarkSheet } from '../../../components/BenchmarkSheet';
+import { scoreVersion } from '../../../lib/score-label';
+
 export const dynamic = "force-dynamic";
 
 export default async function ModelDetail({ params }: { params: Promise<{ id: string }> }) {
@@ -21,6 +26,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const clientModel = data.models.find((candidate) => candidate.id === model.id);
   if (!clientModel) notFound();
   const pricingData = { efficiency: data.efficiency, sourceDates: data.sourceDates, generated_at: data.generated_at };
+  const benchmarkView = selectBenchmarkView(await getBenchmarkView(), [model.id]);
   const b = model.benchmarks;
   const da = model.designarena;
 
@@ -29,7 +35,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       <Link href="/" className="text-sm text-accent">← All models</Link>
       <div className="mt-2 flex items-center gap-3">
         <span className="inline-block h-3 w-3 rounded-full" style={{ background: orgColor(model.org) }} />
-        <h1 className="text-2xl font-bold">{model.family_name}</h1>
+        <h1 className="text-2xl font-bold">{model.display_name}</h1>
         {model.open_weights && <span className="rounded bg-accent2/15 px-2 py-0.5 text-xs text-accent2">open weights</span>}
         {model.deprecated && <span className="rounded bg-amber-500/15 px-2 py-0.5 text-xs text-amber-300">deprecated by benchmark source</span>}
         {model.featured && <span className="rounded bg-warn/15 px-2 py-0.5 text-xs text-warn">★ featured</span>}
@@ -53,18 +59,11 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
               <Metric label="Dominance adjustment" value={`${clientModel.scores.composite > clientModel.composite_base ? "+" : ""}${num(clientModel.scores.composite - clientModel.composite_base)}`} />
             </>}
             <Metric label="Composite evidence" value={`${clientModel?.composite_coverage ?? 0}/5`} />
-            <Metric label="AA Coding Index" value={num(b.aa_coding_index)} hi />
-            <Metric label="AA Coding Agent Index" value={num(b.aa_coding_agent_index)} hi />
-            <Metric label="AA Intelligence Index" value={num(b.aa_intelligence_index)} hi />
-            <Metric label="DesignArena Frontend Elo" value={num(da?.frontend?.elo, 0)} hi />
-            <Metric label="DesignArena Full-Stack Elo" value={num(da?.fullstack?.elo, 0)} hi />
-            <Metric label="LiveCodeBench" value={pct(b.aa_livecodebench)} />
-            <Metric label="SciCode" value={pct(b.aa_scicode)} />
-            <Metric label="Terminal-Bench Hard" value={pct(b.aa_terminalbench_hard)} />
-            <Metric label="τ²-Bench (tool use)" value={pct(b.aa_tau2)} />
-            <Metric label="GPQA Diamond" value={pct(b.aa_gpqa)} />
-            <Metric label="MMLU-Pro" value={pct(b.aa_mmlu_pro)} />
-            <Metric label="AA Math Index" value={num(b.aa_math_index)} />
+            <Metric label={`AA Coding · ${scoreVersion('aa_coding_index', ds.sources)}`} value={num(b.aa_coding_index)} hi />
+            <Metric label={`AA Coding Agent · ${scoreVersion('aa_coding_agent', ds.sources)}`} value={num(b.aa_coding_agent_index)} hi />
+            <Metric label={`AA Intelligence · ${scoreVersion('aa_intelligence_index', ds.sources)}`} value={num(b.aa_intelligence_index)} hi />
+            <Metric label={`DesignArena Frontend · ${scoreVersion('designarena_frontend', ds.sources)}`} value={num(da?.frontend?.elo, 0)} hi />
+            <Metric label={`DesignArena Full-Stack · ${scoreVersion('designarena_fullstack', ds.sources)}`} value={num(da?.fullstack?.elo, 0)} hi />
             <Metric label="Output speed (t/s)" value={num(model.aa_speed?.output_tps, 0)} />
           </div>
           {model.benchmark_override_note && (
@@ -76,6 +75,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         </section>
       </div>
 
+      <BenchmarkSheet view={benchmarkView} modelId={model.id} />
+
       {/* Variants */}
       {variants.length > 1 && (
         <section className="card mt-6 overflow-x-auto p-4">
@@ -83,10 +84,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-2 py-1 text-left text-xs text-gray-400">Variant</th>
-              <th className="px-2 py-1 text-right text-xs text-gray-400">Coding</th>
-              <th className="px-2 py-1 text-right text-xs text-gray-400">Intelligence</th>
-              <th className="px-2 py-1 text-right text-xs text-gray-400">LiveCodeBench</th>
-              <th className="px-2 py-1 text-right text-xs text-gray-400">Terminal-Bench</th>
+              <th className="px-2 py-1 text-right text-xs text-gray-400">Coding · snapshot {ds.sources.artificialanalysis}</th>
+              <th className="px-2 py-1 text-right text-xs text-gray-400">Intelligence · snapshot {ds.sources.artificialanalysis}</th>
             </tr></thead>
             <tbody>
               {variants.map((v) => (
@@ -96,8 +95,6 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
                   </td>
                   <td className="px-2 py-1 text-right tabular">{num(v.benchmarks?.aa_coding_index)}</td>
                   <td className="px-2 py-1 text-right tabular">{num(v.benchmarks?.aa_intelligence_index)}</td>
-                  <td className="px-2 py-1 text-right tabular">{pct(v.benchmarks?.aa_livecodebench)}</td>
-                  <td className="px-2 py-1 text-right tabular">{pct(v.benchmarks?.aa_terminalbench_hard)}</td>
                 </tr>
               ))}
             </tbody>

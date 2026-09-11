@@ -3,6 +3,7 @@ import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS } from "../lib/types";
+import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
@@ -101,8 +102,8 @@ export function ModelExplorer({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <input value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
-        <select value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
+        <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
+        <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
           <option value="">All orgs</option>
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
@@ -118,6 +119,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
 
       <div className="card overflow-x-auto">
         <table className="dtable w-full min-w-[900px] table-fixed text-sm">
+          <caption className="p-3 text-left text-xs text-gray-400">{scoreLabel(score, data.sourceDates)}</caption>
           <colgroup>
             <col style={{ width: "30%" }} /><col style={{ width: "13%" }} /><col style={{ width: "12%" }} />
             <col style={{ width: "17%" }} /><col style={{ width: "8%" }} /><col style={{ width: "20%" }} />
@@ -125,7 +127,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           <thead><tr>
             <Th label="Model" k="name" />
             <Th label="Org" k="org" />
-            <Th label={SCORE_LABELS[score].split("—")[1]?.trim().replace(/\s*\(.*\)/, "") || "Score"} k="score" right />
+            <Th label={SCORE_ROWS.find((row) => row.key === score)?.label || "Score"} k="score" right />
             <Th label={`Cheapest ${priceLabel(priceSettings)}`} k="cost" right />
             <Th label="# Channels" k="providers" right />
             <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">Top provider channels</th>
@@ -183,7 +185,7 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                               const v = m.scores[sr.key];
                               return (
                                 <tr key={sr.key}>
-                                  <td className="py-0.5 text-gray-400">{sr.label}</td>
+                                  <td className="py-0.5 text-gray-400">{sr.label} · {scoreVersion(sr.key, data.sourceDates)}</td>
                                   <td className="py-0.5 text-right tabular font-medium">{v != null ? num(v, sr.dp) : <span className="text-gray-600">—</span>}</td>
                                 </tr>
                               );

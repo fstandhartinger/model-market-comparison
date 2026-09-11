@@ -1,0 +1,482 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - heading "LLM Gateways & Routers" [level=1]
+  - paragraph: "Multi-provider gateways / routers / aggregators (one API key for many models). Compare them on what matters for European deployments: can the actual inference be kept in the EU, can the gateway run locally / self-hosted, and is it open source. Be skeptical of “GDPR-compliant” badges — most providers' “EU” means EU-resident logs/metadata, not EU routing of the model inference. The EU routing column captures the real capability."
+  - textbox "Search gateways":
+    - /placeholder: Search gateways…
+  - button "EU routing-capable"
+  - button "Self-hostable / local"
+  - button "Open source"
+  - text: 35 of 35
+  - table:
+    - rowgroup:
+      - row "Gateway Type EU routing Self-host / local Open source HQ Pricing":
+        - columnheader "Gateway"
+        - columnheader "Type"
+        - columnheader "EU routing"
+        - columnheader "Self-host / local"
+        - columnheader "Open source"
+        - columnheader "HQ"
+        - columnheader "Pricing"
+    - rowgroup:
+      - row "Cortecs ↗ Sovereignty-first EU router; 150+ EU-hosted endpoints. Router EU-native 'Europe's LLM router' — routes only to models hosted within the EU; guarantees data never leaves Europe, incl. for proprietary models (via EU-resident deployment). Genuine EU inference routing. Partial (dedicated EU instances) No Austria (Vienna) Usage + flat 5% service fee (no base-price markup)":
+        - cell "Cortecs ↗ Sovereignty-first EU router; 150+ EU-hosted endpoints.":
+          - link "Cortecs ↗":
+            - /url: https://cortecs.ai/
+          - text: Sovereignty-first EU router; 150+ EU-hosted endpoints.
+        - cell "Router"
+        - cell "EU-native 'Europe's LLM router' — routes only to models hosted within the EU; guarantees data never leaves Europe, incl. for proprietary models (via EU-resident deployment). Genuine EU inference routing."
+        - cell "Partial (dedicated EU instances)"
+        - cell "No"
+        - cell "Austria (Vienna)"
+        - cell "Usage + flat 5% service fee (no base-price markup)"
+      - row "EUrouter ↗ Closed-source but small/new; EU residency is the core product. GitHub Router EU-native api.eurouter.ai — routes actual inference through EU/EEA providers by default; optional country pinning (DE/FR), eu_owned flag, ZDR. The most EU-native router. No No (helpers MIT) Netherlands Free 15% / Plus €39 9% / Pro €99 3% markup":
+        - cell "EUrouter ↗ Closed-source but small/new; EU residency is the core product. GitHub":
+          - link "EUrouter ↗":
+            - /url: https://www.eurouter.ai/
+          - text: Closed-source but small/new; EU residency is the core product.
+          - link "GitHub":
+            - /url: https://github.com/EUrouter
+        - cell "Router"
+        - cell "EU-native api.eurouter.ai — routes actual inference through EU/EEA providers by default; optional country pinning (DE/FR), eu_owned flag, ZDR. The most EU-native router."
+        - cell "No"
+        - cell "No (helpers MIT)"
+        - cell "Netherlands"
+        - cell "Free 15% / Plus €39 9% / Pro €99 3% markup"
+      - row "Orq.ai ↗ Full GenAI platform; SOC2/GDPR/EU-AI-Act; 400+ models / 28+ providers. Router (GenAI platform) EU-native EU-hosted (Amsterdam); AI Router has a Location filter — set to Europe to restrict the pool to EU-hosted models. Genuine EU inference routing when set. Yes (enterprise VPC/on-prem) No Netherlands Free dev (50k spans); paid + enterprise":
+        - cell "Orq.ai ↗ Full GenAI platform; SOC2/GDPR/EU-AI-Act; 400+ models / 28+ providers.":
+          - link "Orq.ai ↗":
+            - /url: https://orq.ai/
+          - text: Full GenAI platform; SOC2/GDPR/EU-AI-Act; 400+ models / 28+ providers.
+        - cell "Router (GenAI platform)"
+        - cell "EU-native EU-hosted (Amsterdam); AI Router has a Location filter — set to Europe to restrict the pool to EU-hosted models. Genuine EU inference routing when set."
+        - cell "Yes (enterprise VPC/on-prem)"
+        - cell "No"
+        - cell "Netherlands"
+        - cell "Free dev (50k spans); paid + enterprise"
+      - row "Eden AI ↗ Most mature EU-HQ option; multimodal (500+ models incl. OCR/speech/vision). GitHub Router (multimodal) EU option French company; dedicated EU endpoint + DPA + ZDR keeps data in Europe. Firmer on data residency than a hard EU-only-inference guarantee for all models. No No France Passthrough + 5.5% platform fee":
+        - cell "Eden AI ↗ Most mature EU-HQ option; multimodal (500+ models incl. OCR/speech/vision). GitHub":
+          - link "Eden AI ↗":
+            - /url: https://www.edenai.co/
+          - text: Most mature EU-HQ option; multimodal (500+ models incl. OCR/speech/vision).
+          - link "GitHub":
+            - /url: https://github.com/edenai
+        - cell "Router (multimodal)"
+        - cell "EU option French company; dedicated EU endpoint + DPA + ZDR keeps data in Europe. Firmer on data residency than a hard EU-only-inference guarantee for all models."
+        - cell "No"
+        - cell "No"
+        - cell "France"
+        - cell "Passthrough + 5.5% platform fee"
+      - 'row "IBM watsonx.ai ↗ Full enterprise studio; real EU regions + on-prem. 2026-07-22 re-check blocked (ibm.com 403) — values from 2026-06. GitHub Enterprise platform EU option Genuine EU inference regions: Frankfurt (eu-de) and London (eu-gb) endpoints. Built-in OpenAI-compatible model gateway to Granite + third-party providers (preview). Yes (OpenShift/CP4D) No (Granite models Apache-2.0) US Usage-based (Resource Units) + on-prem licensing"':
+        - cell "IBM watsonx.ai ↗ Full enterprise studio; real EU regions + on-prem. 2026-07-22 re-check blocked (ibm.com 403) — values from 2026-06. GitHub":
+          - link "IBM watsonx.ai ↗":
+            - /url: https://www.ibm.com/products/watsonx-ai
+          - text: Full enterprise studio; real EU regions + on-prem. 2026-07-22 re-check blocked (ibm.com 403) — values from 2026-06.
+          - link "GitHub":
+            - /url: https://github.com/ibm-granite
+        - cell "Enterprise platform"
+        - 'cell "EU option Genuine EU inference regions: Frankfurt (eu-de) and London (eu-gb) endpoints. Built-in OpenAI-compatible model gateway to Granite + third-party providers (preview)."'
+        - cell "Yes (OpenShift/CP4D)"
+        - cell "No (Granite models Apache-2.0)"
+        - cell "US"
+        - cell "Usage-based (Resource Units) + on-prem licensing"
+      - row "Kilo Code ↗ Coding agent + gateway; EU via provider selection. GitHub Router (coding agent) EU option No first-party EU endpoint; EU via official Inceptron partnership (kilo.ai/eu, EU infra) or third-party EUrouter. Single global gateway otherwise. No (extension only) Partial (extension MIT) Unknown Passthrough 0% markup; Kilo Pass from $19/mo":
+        - cell "Kilo Code ↗ Coding agent + gateway; EU via provider selection. GitHub":
+          - link "Kilo Code ↗":
+            - /url: https://kilo.ai
+          - text: Coding agent + gateway; EU via provider selection.
+          - link "GitHub":
+            - /url: https://github.com/Kilo-Org/kilocode
+        - cell "Router (coding agent)"
+        - cell "EU option No first-party EU endpoint; EU via official Inceptron partnership (kilo.ai/eu, EU infra) or third-party EUrouter. Single global gateway otherwise."
+        - cell "No (extension only)"
+        - cell "Partial (extension MIT)"
+        - cell "Unknown"
+        - cell "Passthrough 0% markup; Kilo Pass from $19/mo"
+      - row "OpenRouter ↗ Largest model market; strongest true-EU-inference guarantee but enterprise-gated. Router EU option eu.openrouter.ai (enterprise) keeps prompts+completions entirely in the EU, EU-eligible providers only. Standard tier has no EU residency. All tiers get ZDR + provider routing controls. No No US Passthrough + 5.5% credit fee; BYOK":
+        - cell "OpenRouter ↗ Largest model market; strongest true-EU-inference guarantee but enterprise-gated.":
+          - link "OpenRouter ↗":
+            - /url: https://openrouter.ai
+          - text: Largest model market; strongest true-EU-inference guarantee but enterprise-gated.
+        - cell "Router"
+        - cell "EU option eu.openrouter.ai (enterprise) keeps prompts+completions entirely in the EU, EU-eligible providers only. Standard tier has no EU residency. All tiers get ZDR + provider routing controls."
+        - cell "No"
+        - cell "No"
+        - cell "US"
+        - cell "Passthrough + 5.5% credit fee; BYOK"
+      - row "Pydantic AI Gateway ↗ Now lives inside Pydantic Logfire; OSS standalone repo archived. GitHub Router EU option gateway-eu.pydantic.dev EU proxy edge + Logfire EU region for logs/telemetry. EU edge routing yes; upstream model still runs where the provider hosts it. Partial AGPL-3.0 (repo archived) UK BYOK free; 5% markup (Personal/Team) / 3% (Growth) on managed inference":
+        - cell "Pydantic AI Gateway ↗ Now lives inside Pydantic Logfire; OSS standalone repo archived. GitHub":
+          - link "Pydantic AI Gateway ↗":
+            - /url: https://pydantic.dev/ai-gateway
+          - text: Now lives inside Pydantic Logfire; OSS standalone repo archived.
+          - link "GitHub":
+            - /url: https://github.com/pydantic/pydantic-ai-gateway
+        - cell "Router"
+        - cell "EU option gateway-eu.pydantic.dev EU proxy edge + Logfire EU region for logs/telemetry. EU edge routing yes; upstream model still runs where the provider hosts it."
+        - cell "Partial"
+        - cell "AGPL-3.0 (repo archived)"
+        - cell "UK"
+        - cell "BYOK free; 5% markup (Personal/Team) / 3% (Growth) on managed inference"
+      - 'row "Requesty ↗ Dedicated EU subdomain endpoint; 600+ models. Router EU option router.eu.requesty.ai (Frankfurt, AWS eu-central-1): its own processing/logs stay in EU; inference stays in EU only if you pick EU model deployments. No No UK 5% markup; free 200 req/day"':
+        - cell "Requesty ↗ Dedicated EU subdomain endpoint; 600+ models.":
+          - link "Requesty ↗":
+            - /url: https://www.requesty.ai
+          - text: Dedicated EU subdomain endpoint; 600+ models.
+        - cell "Router"
+        - 'cell "EU option router.eu.requesty.ai (Frankfurt, AWS eu-central-1): its own processing/logs stay in EU; inference stays in EU only if you pick EU model deployments."'
+        - cell "No"
+        - cell "No"
+        - cell "UK"
+        - cell "5% markup; free 200 req/day"
+      - row "TrueFoundry ↗ Strong region-locked data-residency story; proprietary. GitHub Enterprise gateway EU option Regional gateway data planes deployable in EU; region-locked routing fails closed outside EU for both inference and logs (depends on configured EU backend). Yes (K8s/Helm, enterprise) No US/India Developer $0 / Pro $499 / Pro Plus $2999 / Enterprise":
+        - cell "TrueFoundry ↗ Strong region-locked data-residency story; proprietary. GitHub":
+          - link "TrueFoundry ↗":
+            - /url: https://www.truefoundry.com/ai-gateway
+          - text: Strong region-locked data-residency story; proprietary.
+          - link "GitHub":
+            - /url: https://github.com/truefoundry
+        - cell "Enterprise gateway"
+        - cell "EU option Regional gateway data planes deployable in EU; region-locked routing fails closed outside EU for both inference and logs (depends on configured EU backend)."
+        - cell "Yes (K8s/Helm, enterprise)"
+        - cell "No"
+        - cell "US/India"
+        - cell "Developer $0 / Pro $499 / Pro Plus $2999 / Enterprise"
+      - row "Arch / Plano (Katanemo) ↗ AI-native Envoy edge proxy; semantic routing + guardrails (renamed Arch→Plano). GitHub Self-host gateway Self-host in EU Self-host the Envoy-based proxy in EU; no managed EU endpoint. Yes (Docker/CLI) Apache-2.0 US OSS free":
+        - cell "Arch / Plano (Katanemo) ↗ AI-native Envoy edge proxy; semantic routing + guardrails (renamed Arch→Plano). GitHub":
+          - link "Arch / Plano (Katanemo) ↗":
+            - /url: https://planoai.dev
+          - text: AI-native Envoy edge proxy; semantic routing + guardrails (renamed Arch→Plano).
+          - link "GitHub":
+            - /url: https://github.com/katanemo/plano
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Self-host the Envoy-based proxy in EU; no managed EU endpoint."
+        - cell "Yes (Docker/CLI)"
+        - cell "Apache-2.0"
+        - cell "US"
+        - cell "OSS free"
+      - row "Bifrost (Maxim) ↗ Fast Go gateway; ~µs overhead; 1000+ models. GitHub Self-host gateway Self-host in EU Self-host in an EU region/VPC for residency; no Maxim-operated EU inference endpoint. Yes (npx/Docker/Go/Helm) Apache-2.0 US OSS free; Enterprise custom":
+        - cell "Bifrost (Maxim) ↗ Fast Go gateway; ~µs overhead; 1000+ models. GitHub":
+          - link "Bifrost (Maxim) ↗":
+            - /url: https://www.getmaxim.ai/bifrost
+          - text: Fast Go gateway; ~µs overhead; 1000+ models.
+          - link "GitHub":
+            - /url: https://github.com/maximhq/bifrost
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Self-host in an EU region/VPC for residency; no Maxim-operated EU inference endpoint."
+        - cell "Yes (npx/Docker/Go/Helm)"
+        - cell "Apache-2.0"
+        - cell "US"
+        - cell "OSS free; Enterprise custom"
+      - row "Envoy AI Gateway ↗ CNCF project (Tetrate+Bloomberg); production-ready v1.0; 16 providers. GitHub Self-host gateway Self-host in EU Kubernetes-native; run your cluster in the EU. No managed EU endpoint. Yes (K8s/Helm) Apache-2.0 US / CNCF OSS free; Tetrate support":
+        - cell "Envoy AI Gateway ↗ CNCF project (Tetrate+Bloomberg); production-ready v1.0; 16 providers. GitHub":
+          - link "Envoy AI Gateway ↗":
+            - /url: https://aigateway.envoyproxy.io
+          - text: CNCF project (Tetrate+Bloomberg); production-ready v1.0; 16 providers.
+          - link "GitHub":
+            - /url: https://github.com/envoyproxy/ai-gateway
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Kubernetes-native; run your cluster in the EU. No managed EU endpoint."
+        - cell "Yes (K8s/Helm)"
+        - cell "Apache-2.0"
+        - cell "US / CNCF"
+        - cell "OSS free; Tetrate support"
+      - row "GPTRouter ↗ Appears abandoned (no commits since Apr 2024). GitHub Self-host gateway Self-host in EU Self-host (Docker) in EU; ~6 providers. Yes (Docker) MIT (inactive since 2024) US/India OSS free":
+        - cell "GPTRouter ↗ Appears abandoned (no commits since Apr 2024). GitHub":
+          - link "GPTRouter ↗":
+            - /url: https://gpt-router.writesonic.com/
+          - text: Appears abandoned (no commits since Apr 2024).
+          - link "GitHub":
+            - /url: https://github.com/Writesonic/GPTRouter
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Self-host (Docker) in EU; ~6 providers."
+        - cell "Yes (Docker)"
+        - cell "MIT (inactive since 2024)"
+        - cell "US/India"
+        - cell "OSS free"
+      - row "GPUStack ↗ GPU-cluster + model-serving orchestrator (not a multi-provider router). GitHub Self-host serving Self-host in EU You run it on your own GPUs/servers (EU if you choose). Serves your own models, not a third-party router. Yes (Docker/pip/Helm) Apache-2.0 China (Seal) OSS free":
+        - cell "GPUStack ↗ GPU-cluster + model-serving orchestrator (not a multi-provider router). GitHub":
+          - link "GPUStack ↗":
+            - /url: https://gpustack.ai
+          - text: GPU-cluster + model-serving orchestrator (not a multi-provider router).
+          - link "GitHub":
+            - /url: https://github.com/gpustack/gpustack
+        - cell "Self-host serving"
+        - cell "Self-host in EU You run it on your own GPUs/servers (EU if you choose). Serves your own models, not a third-party router."
+        - cell "Yes (Docker/pip/Helm)"
+        - cell "Apache-2.0"
+        - cell "China (Seal)"
+        - cell "OSS free"
+      - row "Helicone ↗ Observability-first; lightweight Rust router; standalone ai-gateway repo idle since 2025-11 (obs core active). GitHub Self-host gateway Self-host in EU Managed offers US/EU data region for logs/storage only (not inference egress). Self-host the Rust gateway in EU for full control. Yes (npx/Docker) GPL-3.0 (gateway); Apache-2.0 (obs core) US OSS free; SaaS Pro $79 / Team $799":
+        - cell "Helicone ↗ Observability-first; lightweight Rust router; standalone ai-gateway repo idle since 2025-11 (obs core active). GitHub":
+          - link "Helicone ↗":
+            - /url: https://www.helicone.ai/
+          - text: Observability-first; lightweight Rust router; standalone ai-gateway repo idle since 2025-11 (obs core active).
+          - link "GitHub":
+            - /url: https://github.com/Helicone/ai-gateway
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Managed offers US/EU data region for logs/storage only (not inference egress). Self-host the Rust gateway in EU for full control."
+        - cell "Yes (npx/Docker)"
+        - cell "GPL-3.0 (gateway); Apache-2.0 (obs core)"
+        - cell "US"
+        - cell "OSS free; SaaS Pro $79 / Team $799"
+      - row "Kong AI Gateway ↗ AI plugins on Kong; semantic routing/caching/guardrails. GitHub Self-host gateway Self-host in EU Runs entirely in your own infra; residency = where you deploy + which provider region you point at. No Kong-hosted inference. Yes (Docker/Helm) Apache-2.0 (some AI plugins enterprise) US OSS free; Konnect/Enterprise paid":
+        - cell "Kong AI Gateway ↗ AI plugins on Kong; semantic routing/caching/guardrails. GitHub":
+          - link "Kong AI Gateway ↗":
+            - /url: https://konghq.com/products/kong-ai-gateway
+          - text: AI plugins on Kong; semantic routing/caching/guardrails.
+          - link "GitHub":
+            - /url: https://github.com/Kong/kong
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Runs entirely in your own infra; residency = where you deploy + which provider region you point at. No Kong-hosted inference."
+        - cell "Yes (Docker/Helm)"
+        - cell "Apache-2.0 (some AI plugins enterprise)"
+        - cell "US"
+        - cell "OSS free; Konnect/Enterprise paid"
+      - row "LangDB ↗ Fast Rust gateway; OSS repo transferred to vllora/vllora and repositioned as 'Debug your AI agents' (ELv2). langdb.ai pricing unverifiable 2026-07-22 (403) — pricing from 2026-06. GitHub Self-host gateway Self-host in EU No EU endpoint advertised; self-host the Rust gateway on your own EU infra. Yes (cargo/brew/source) ELv2 (source-available) Singapore OSS free + SaaS/enterprise":
+        - cell "LangDB ↗ Fast Rust gateway; OSS repo transferred to vllora/vllora and repositioned as 'Debug your AI agents' (ELv2). langdb.ai pricing unverifiable 2026-07-22 (403) — pricing from 2026-06. GitHub":
+          - link "LangDB ↗":
+            - /url: https://langdb.ai/
+          - text: Fast Rust gateway; OSS repo transferred to vllora/vllora and repositioned as 'Debug your AI agents' (ELv2). langdb.ai pricing unverifiable 2026-07-22 (403) — pricing from 2026-06.
+          - link "GitHub":
+            - /url: https://github.com/vllora/vllora
+        - cell "Self-host gateway"
+        - cell "Self-host in EU No EU endpoint advertised; self-host the Rust gateway on your own EU infra."
+        - cell "Yes (cargo/brew/source)"
+        - cell "ELv2 (source-available)"
+        - cell "Singapore"
+        - cell "OSS free + SaaS/enterprise"
+      - row "LiteLLM ↗ Most-adopted OSS proxy; 100+ providers; region/load-balancing/guardrails. GitHub Self-host gateway Self-host in EU Self-host anywhere; region_name='eu' routing pins inference to EU-tagged provider deployments. No managed EU SaaS endpoint. Yes (pip/Docker/Helm) MIT (core) US OSS free; Enterprise paid":
+        - cell "LiteLLM ↗ Most-adopted OSS proxy; 100+ providers; region/load-balancing/guardrails. GitHub":
+          - link "LiteLLM ↗":
+            - /url: https://www.litellm.ai/
+          - text: Most-adopted OSS proxy; 100+ providers; region/load-balancing/guardrails.
+          - link "GitHub":
+            - /url: https://github.com/BerriAI/litellm
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Self-host anywhere; region_name='eu' routing pins inference to EU-tagged provider deployments. No managed EU SaaS endpoint."
+        - cell "Yes (pip/Docker/Helm)"
+        - cell "MIT (core)"
+        - cell "US"
+        - cell "OSS free; Enterprise paid"
+      - row "llmgateway.io (theopenco) ↗ Newer OSS alternative to Eden AI / Vercel / Cloudflare gateways. GitHub Self-host gateway Self-host in EU OSS unified-API gateway; deploy on your own EU infra. Hosted option exists. Yes AGPL-3.0 Unknown BYOK free; hosted credits +5% flat fee; self-host free (AGPL-3.0); Enterprise custom":
+        - cell "llmgateway.io (theopenco) ↗ Newer OSS alternative to Eden AI / Vercel / Cloudflare gateways. GitHub":
+          - link "llmgateway.io (theopenco) ↗":
+            - /url: https://llmgateway.io/
+          - text: Newer OSS alternative to Eden AI / Vercel / Cloudflare gateways.
+          - link "GitHub":
+            - /url: https://github.com/theopenco/llmgateway
+        - cell "Self-host gateway"
+        - cell "Self-host in EU OSS unified-API gateway; deploy on your own EU infra. Hosted option exists."
+        - cell "Yes"
+        - cell "AGPL-3.0"
+        - cell "Unknown"
+        - cell "BYOK free; hosted credits +5% flat fee; self-host free (AGPL-3.0); Enterprise custom"
+      - row "New API / One API family ↗ one-api lineage (one-api→new-api/one-hub→done-hub); key-mgmt gateways, not semantic routers; homepage now newapi.ai. GitHub Self-host gateway Self-host in EU Self-host (Docker/binary) anywhere incl. EU; key-management + redistribution. Inference egress per configured channel. Yes (Docker/binary) AGPL-3.0 (New API) / MIT (One API) China OSS free (built-in resale/billing)":
+        - cell "New API / One API family ↗ one-api lineage (one-api→new-api/one-hub→done-hub); key-mgmt gateways, not semantic routers; homepage now newapi.ai. GitHub":
+          - link "New API / One API family ↗":
+            - /url: https://github.com/QuantumNous/new-api
+          - text: one-api lineage (one-api→new-api/one-hub→done-hub); key-mgmt gateways, not semantic routers; homepage now newapi.ai.
+          - link "GitHub":
+            - /url: https://github.com/QuantumNous/new-api
+        - cell "Self-host gateway"
+        - cell "Self-host in EU Self-host (Docker/binary) anywhere incl. EU; key-management + redistribution. Inference egress per configured channel."
+        - cell "Yes (Docker/binary)"
+        - cell "AGPL-3.0 (New API) / MIT (One API)"
+        - cell "China"
+        - cell "OSS free (built-in resale/billing)"
+      - row "OptiLLM ↗ Test-time accuracy optimizer (CoT/MoA/MCTS), not a billing gateway. GitHub Library (optimizing proxy) Self-host in EU Self-hosted OpenAI-compatible proxy; residency depends on your deploy + backend. Yes (pip/Docker) Apache-2.0 Singapore OSS free":
+        - cell "OptiLLM ↗ Test-time accuracy optimizer (CoT/MoA/MCTS), not a billing gateway. GitHub":
+          - link "OptiLLM ↗":
+            - /url: https://github.com/algorithmicsuperintelligence/optillm
+          - text: Test-time accuracy optimizer (CoT/MoA/MCTS), not a billing gateway.
+          - link "GitHub":
+            - /url: https://github.com/algorithmicsuperintelligence/optillm
+        - cell "Library (optimizing proxy)"
+        - cell "Self-host in EU Self-hosted OpenAI-compatible proxy; residency depends on your deploy + backend."
+        - cell "Yes (pip/Docker)"
+        - cell "Apache-2.0"
+        - cell "Singapore"
+        - cell "OSS free"
+      - row "Portkey ↗ Runs locally; 1,600+ models / 250+ providers; 50+ guardrails; Gateway 2.0 merging enterprise gateway into OSS. GitHub Self-host gateway Self-host in EU OSS gateway self-hostable in your EU VPC; managed regional residency (US/EU/India) is enterprise (control plane stays global). Route to EU providers. Yes (npx/Docker/K8s) MIT US (acq. Palo Alto Networks 2026) OSS free; SaaS Developer free (10k logs/mo) / Production $49/mo (100k logs) / Enterprise":
+        - cell "Portkey ↗ Runs locally; 1,600+ models / 250+ providers; 50+ guardrails; Gateway 2.0 merging enterprise gateway into OSS. GitHub":
+          - link "Portkey ↗":
+            - /url: https://portkey.ai
+          - text: Runs locally; 1,600+ models / 250+ providers; 50+ guardrails; Gateway 2.0 merging enterprise gateway into OSS.
+          - link "GitHub":
+            - /url: https://github.com/Portkey-AI/gateway
+        - cell "Self-host gateway"
+        - cell "Self-host in EU OSS gateway self-hostable in your EU VPC; managed regional residency (US/EU/India) is enterprise (control plane stays global). Route to EU providers."
+        - cell "Yes (npx/Docker/K8s)"
+        - cell "MIT"
+        - cell "US (acq. Palo Alto Networks 2026)"
+        - cell "OSS free; SaaS Developer free (10k logs/mo) / Production $49/mo (100k logs) / Enterprise"
+      - row "RouteLLM ↗ Strong/weak two-model cost router; ~85% cost cut research; repo inactive since Aug 2024. GitHub Library (router) Self-host in EU Python library; runs wherever you host it, dispatches via LiteLLM to your chosen (EU) provider. Yes (pip) Apache-2.0 US (LMSYS) OSS free":
+        - cell "RouteLLM ↗ Strong/weak two-model cost router; ~85% cost cut research; repo inactive since Aug 2024. GitHub":
+          - link "RouteLLM ↗":
+            - /url: https://github.com/lm-sys/RouteLLM
+          - text: Strong/weak two-model cost router; ~85% cost cut research; repo inactive since Aug 2024.
+          - link "GitHub":
+            - /url: https://github.com/lm-sys/RouteLLM
+        - cell "Library (router)"
+        - cell "Self-host in EU Python library; runs wherever you host it, dispatches via LiteLLM to your chosen (EU) provider."
+        - cell "Yes (pip)"
+        - cell "Apache-2.0"
+        - cell "US (LMSYS)"
+        - cell "OSS free"
+      - row "Braintrust ↗ Eval/observability-first; auto-logs every call as a trace. GitHub Self-host gateway Logs only EU data-plane residency for eval/observability logs on Enterprise; not inference routing. OSS proxy self-deployable to edge/Lambda. Yes (OSS proxy) MIT US Passthrough BYOK; SaaS for evals (Pro $249)":
+        - cell "Braintrust ↗ Eval/observability-first; auto-logs every call as a trace. GitHub":
+          - link "Braintrust ↗":
+            - /url: https://www.braintrust.dev/
+          - text: Eval/observability-first; auto-logs every call as a trace.
+          - link "GitHub":
+            - /url: https://github.com/braintrustdata/braintrust-proxy
+        - cell "Self-host gateway"
+        - cell "Logs only EU data-plane residency for eval/observability logs on Enterprise; not inference routing. OSS proxy self-deployable to edge/Lambda."
+        - cell "Yes (OSS proxy)"
+        - cell "MIT"
+        - cell "US"
+        - cell "Passthrough BYOK; SaaS for evals (Pro $249)"
+      - row "Cloudflare AI Gateway ↗ Easiest to adopt; weakest EU-residency story. Router (proxy) Logs only Global edge proxy; incompatible with Cloudflare's own Regional Services. Only log metadata can be EU-pinned; inference depends on upstream provider. No No US Free core + 5% unified billing":
+        - cell "Cloudflare AI Gateway ↗ Easiest to adopt; weakest EU-residency story.":
+          - link "Cloudflare AI Gateway ↗":
+            - /url: https://developers.cloudflare.com/ai-gateway/
+          - text: Easiest to adopt; weakest EU-residency story.
+        - cell "Router (proxy)"
+        - cell "Logs only Global edge proxy; incompatible with Cloudflare's own Regional Services. Only log metadata can be EU-pinned; inference depends on upstream provider."
+        - cell "No"
+        - cell "No"
+        - cell "US"
+        - cell "Free core + 5% unified billing"
+      - row "AIMLAPI ↗ 1000+ models reseller; EU relevance is corporate only. GitHub Aggregator EU entity only EU-domiciled (Estonia) but makes no EU-routing/residency claim; single global endpoint. No No Estonia Pay-as-you-go (prepaid, $20 min)":
+        - cell "AIMLAPI ↗ 1000+ models reseller; EU relevance is corporate only. GitHub":
+          - link "AIMLAPI ↗":
+            - /url: https://aimlapi.com
+          - text: 1000+ models reseller; EU relevance is corporate only.
+          - link "GitHub":
+            - /url: https://github.com/aimlapi
+        - cell "Aggregator"
+        - cell "EU entity only EU-domiciled (Estonia) but makes no EU-routing/residency claim; single global endpoint."
+        - cell "No"
+        - cell "No"
+        - cell "Estonia"
+        - cell "Pay-as-you-go (prepaid, $20 min)"
+      - row "AnannasAI ↗ Small aggregator (~500 models); fallback + observability + BYOK. Site unreachable (HTTP 522) at 2026-07-22 re-check — values from 2026-06. GitHub Aggregator No EU No EU residency claim. No No (Pipecat integration BSD-2) Unknown 5% markup (0% BYOK first 1M req)":
+        - cell "AnannasAI ↗ Small aggregator (~500 models); fallback + observability + BYOK. Site unreachable (HTTP 522) at 2026-07-22 re-check — values from 2026-06. GitHub":
+          - link "AnannasAI ↗":
+            - /url: https://anannas.ai/
+          - text: Small aggregator (~500 models); fallback + observability + BYOK. Site unreachable (HTTP 522) at 2026-07-22 re-check — values from 2026-06.
+          - link "GitHub":
+            - /url: https://github.com/Anannas-AI
+        - cell "Aggregator"
+        - cell "No EU No EU residency claim."
+        - cell "No"
+        - cell "No (Pipecat integration BSD-2)"
+        - cell "Unknown"
+        - cell "5% markup (0% BYOK first 1M req)"
+      - row "APIpie ↗ 700+ LLMs + integrated web search & chat memory; failover. GitHub Aggregator No EU No EU residency claim. No No Unknown Usage-based":
+        - cell "APIpie ↗ 700+ LLMs + integrated web search & chat memory; failover. GitHub":
+          - link "APIpie ↗":
+            - /url: https://apipie.ai/
+          - text: 700+ LLMs + integrated web search & chat memory; failover.
+          - link "GitHub":
+            - /url: https://github.com/neuronic-ai
+        - cell "Aggregator"
+        - cell "No EU No EU residency claim."
+        - cell "No"
+        - cell "No"
+        - cell "Unknown"
+        - cell "Usage-based"
+      - row "Glama ↗ Gateway tied to an MCP server registry/inspector. GitHub Router + MCP registry No EU 'Globally distributed', no EU residency claim. OSS 'lightport' core self-hostable in EU. Partial (lightport OSS) Partial (lightport) US Subscription ($9/$26/$80) + passthrough":
+        - cell "Glama ↗ Gateway tied to an MCP server registry/inspector. GitHub":
+          - link "Glama ↗":
+            - /url: https://glama.ai/ai/gateway
+          - text: Gateway tied to an MCP server registry/inspector.
+          - link "GitHub":
+            - /url: https://github.com/glama-ai/lightport
+        - cell "Router + MCP registry"
+        - cell "No EU 'Globally distributed', no EU residency claim. OSS 'lightport' core self-hostable in EU."
+        - cell "Partial (lightport OSS)"
+        - cell "Partial (lightport)"
+        - cell "US"
+        - cell "Subscription ($9/$26/$80) + passthrough"
+      - row "Keywords AI (Respan) ↗ Gateway + observability + prompt mgmt + evals (rebranded Keywords AI→Respan). Router + observability No EU Compliance certs (GDPR/SOC2/ISO) but no EU region endpoint for inference; self-host is enterprise-only. Enterprise only No US Free / Team $199 / Enterprise":
+        - cell "Keywords AI (Respan) ↗ Gateway + observability + prompt mgmt + evals (rebranded Keywords AI→Respan).":
+          - link "Keywords AI (Respan) ↗":
+            - /url: https://www.respan.ai/
+          - text: Gateway + observability + prompt mgmt + evals (rebranded Keywords AI→Respan).
+        - cell "Router + observability"
+        - cell "No EU Compliance certs (GDPR/SOC2/ISO) but no EU region endpoint for inference; self-host is enterprise-only."
+        - cell "Enterprise only"
+        - cell "No"
+        - cell "US"
+        - cell "Free / Team $199 / Enterprise"
+      - 'row "Martian ↗ Pioneer quality/cost per-prompt ''model router''. 2026-07-22: homepage repositioned as AI-interpretability research lab; pricing page 404 and route.withmartian.com unreachable — pricing/self-host values stale (from 2026-06). GitHub Router (semantic) No EU No managed EU residency; enterprise VPC deployment could run in an EU cloud region. Enterprise only No US Free 2.5k req; usage + enterprise"':
+        - 'cell "Martian ↗ Pioneer quality/cost per-prompt ''model router''. 2026-07-22: homepage repositioned as AI-interpretability research lab; pricing page 404 and route.withmartian.com unreachable — pricing/self-host values stale (from 2026-06). GitHub"':
+          - link "Martian ↗":
+            - /url: https://withmartian.com/
+          - text: "Pioneer quality/cost per-prompt 'model router'. 2026-07-22: homepage repositioned as AI-interpretability research lab; pricing page 404 and route.withmartian.com unreachable — pricing/self-host values stale (from 2026-06)."
+          - link "GitHub":
+            - /url: https://github.com/withmartian
+        - cell "Router (semantic)"
+        - cell "No EU No managed EU residency; enterprise VPC deployment could run in an EU cloud region."
+        - cell "Enterprise only"
+        - cell "No"
+        - cell "US"
+        - cell "Free 2.5k req; usage + enterprise"
+      - row "nano-gpt ↗ Privacy/crypto pay-per-prompt aggregator; huge multimodal catalog; 5% surcharge for provider pinning and for BYOK. Aggregator (privacy) No EU No EU residency; privacy via TEE 'Private Mode' + crypto/no-account, not residency. No No (community clients OSS) Unknown Passthrough (0% markup) + $8/mo OSS-models sub; crypto":
+        - cell "nano-gpt ↗ Privacy/crypto pay-per-prompt aggregator; huge multimodal catalog; 5% surcharge for provider pinning and for BYOK.":
+          - link "nano-gpt ↗":
+            - /url: https://nano-gpt.com
+          - text: Privacy/crypto pay-per-prompt aggregator; huge multimodal catalog; 5% surcharge for provider pinning and for BYOK.
+        - cell "Aggregator (privacy)"
+        - cell "No EU No EU residency; privacy via TEE 'Private Mode' + crypto/no-account, not residency."
+        - cell "No"
+        - cell "No (community clients OSS)"
+        - cell "Unknown"
+        - cell "Passthrough (0% markup) + $8/mo OSS-models sub; crypto"
+      - row "Unify ↗ Former benchmark-driven router — no longer a gateway product. GitHub Discontinued router No EU Router product shut down; pivoted to an AI-agent ('droids') SaaS. No No (SDKs MIT/Apache) UK Agent SaaS (Team $75/mo)":
+        - cell "Unify ↗ Former benchmark-driven router — no longer a gateway product. GitHub":
+          - link "Unify ↗":
+            - /url: https://unify.ai
+          - text: Former benchmark-driven router — no longer a gateway product.
+          - link "GitHub":
+            - /url: https://github.com/unifyai
+        - cell "Discontinued router"
+        - cell "No EU Router product shut down; pivoted to an AI-agent ('droids') SaaS."
+        - cell "No"
+        - cell "No (SDKs MIT/Apache)"
+        - cell "UK"
+        - cell "Agent SaaS (Team $75/mo)"
+      - row "Vercel AI Gateway ↗ Zero markup, strong fallbacks/BYOK; no EU residency. GitHub Router No EU Single global endpoint ai-gateway.vercel.sh; no EU region routing (open feature request). ZDR = retention, not residency. No (SDK OSS) No (AI SDK Apache-2.0) US Passthrough, 0% markup (incl. BYOK); free tier (model subset, rate-limited); paid add-ons (team ZDR / provider allowlist $0.10/1k req, custom reporting)":
+        - cell "Vercel AI Gateway ↗ Zero markup, strong fallbacks/BYOK; no EU residency. GitHub":
+          - link "Vercel AI Gateway ↗":
+            - /url: https://vercel.com/ai-gateway
+          - text: Zero markup, strong fallbacks/BYOK; no EU residency.
+          - link "GitHub":
+            - /url: https://github.com/vercel/ai
+        - cell "Router"
+        - cell "No EU Single global endpoint ai-gateway.vercel.sh; no EU region routing (open feature request). ZDR = retention, not residency."
+        - cell "No (SDK OSS)"
+        - cell "No (AI SDK Apache-2.0)"
+        - cell "US"
+        - cell "Passthrough, 0% markup (incl. BYOK); free tier (model subset, rate-limited); paid add-ons (team ZDR / provider allowlist $0.10/1k req, custom reporting)"
+  - paragraph: "LLM gateways / routers / aggregators (one API for many models). 'EU' = can the request actually be kept in the EU: EU-native (inference routed in-EU by design) > EU option (EU endpoint/region available, often enterprise; inference EU only if you pick EU models) > Self-host in EU (OSS — run it on your own EU infra) > Logs-only (only logs/metadata are EU-resident) > No. Most are US-HQ (US CLOUD Act applies regardless of server location). Researched 2026-06 from each product's own docs/pricing; re-verified 2026-07-22 against the same first-party sources (fields that could not be re-confirmed keep the 2026-06 values and are flagged in notes)."
+  - paragraph: "Collected 2026-07-22. EU rank: EU-native (inference in-EU by design) › EU option (EU endpoint/region, often enterprise) › Self-host in EU (OSS, run it yourself) › Logs only › No."
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert
