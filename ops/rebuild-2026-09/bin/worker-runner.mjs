@@ -156,7 +156,7 @@ try {
     responseFormat = { type: 'json_schema', json_schema: { name: 'benchmark_heaven', strict: true, schema } };
     catalog = catalog.filter((m) => m.supported_parameters?.includes('structured_outputs') && m.supported_parameters?.includes('response_format'));
   }
-  const chosen = selectModel(catalog, dataset, options.agent ? { model: 'moonshotai/kimi-k3' } : options);
+  const chosen = selectModel(catalog, dataset, options.agent ? { model: 'moonshotai/kimi-k3' } : { ...options, scheduled: true });
   const requestedEffort = process.env.BH_WORKER_REASONING_EFFORT;
   let reasoning;
   if (!options.agent && requestedEffort) {

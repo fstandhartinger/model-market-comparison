@@ -59,7 +59,33 @@ export function candidateList(catalog, dataset, minimum = MIN_INDEX, limit = 10)
   };
 }
 
-export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [] } = {}) {
+// Florian 2026-09-11: models he has explicitly authorized for unattended
+// scheduled worker work. Anything else fails closed in scheduled runs — his
+// cost ceilings are policy, not suggestions. Quality gates sit above this.
+export const FLORIAN_ALLOWED_SCHEDULED_WORKERS = [
+  'nex-agi/nex-n2.5-pro',
+  'deepseek/deepseek-v4-flash-0731',
+  'deepseek/deepseek-v4.1-flash',
+  'deepseek/deepseek-v4-flash-0731',
+  'z-ai/glm-5.3-flash',
+  'z-ai/glm-5.3-flash-0731',
+  'moonshotai/kimi-k3',
+];
+
+export function composeFlorianGate({ agent = false } = {}) {
+  return {
+    additionalRules:
+      'Florian whitelist 2026-09-11: any paid OpenRouter candidate must be in ' +
+      FLORIAN_ALLOWED_SCHEDULED_WORKERS + '. Free OpenRouter without a verified ' +
+      'AA score is not enough — verified free (Nex 2.5 Pro) is preferred. Rarely ' +
+      'use standout price/performance (DeepSeek V4.1 Flash, GLM-5.3 Flash). Kimi K3 ' +
+      'over Chutes is the normal path (free, unlimited, not oversubscribed). ' +
+      'x-ai/* is NEVER allowed unattended without explicit per-run approval.',
+    allowedIds: FLORIAN_ALLOWED_SCHEDULED_WORKERS,
+  };
+}
+
+export function selectModel(catalog, dataset, { model, critic = false, producers = [], smokeTest = false, maxPricePer1M = Infinity, excludeModels = [], scheduled = false } = {}) {
   if (typeof maxPricePer1M !== 'number' || maxPricePer1M <= 0 || Number.isNaN(maxPricePer1M)) throw new Error('Invalid worker price ceiling');
   if (!Array.isArray(excludeModels) || excludeModels.some((m) => typeof m !== 'string' || !m.includes('/'))) throw new Error('Invalid excluded worker model IDs');
   const excluded = new Set(excludeModels);
@@ -77,6 +103,9 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   if (candidate.aa_intelligence_index !== null && candidate.aa_intelligence_index < MIN_INDEX) throw new Error(`Model is below AA ${MIN_INDEX}`);
   if (candidate.aa_intelligence_index === null && !smokeTest) throw new Error('Unscored model: only the fixed known-answer --smoke-test is allowed');
   if (smokeTest && (candidate.input_per_1m > 2 || candidate.output_per_1m > 2)) throw new Error('Smoke-test price exceeds the $2 per million token ceiling');
+  if (scheduled && !FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(candidate.id))) {
+    throw new Error(`Scheduled model ${candidate.id} not in Florian's authorized scheduled-worker set`);
+  }
   return candidate;
 }
 
