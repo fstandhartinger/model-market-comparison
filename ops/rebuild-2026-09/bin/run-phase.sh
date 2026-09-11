@@ -79,6 +79,10 @@ NOT need direct write access to /opt/benchmarkheaven/state — finish with the r
 PREAMBLE
 )
 
+# Laufzeitmarke: dient der Erkennung, ob der Agent in DIESEM Lauf Belege
+# (Bericht/Evidence) erzeugt hat, auch wenn er den Status nicht gesetzt hat.
+T0=$(date +%s)
+
 {
   echo "=== phase $NN start $(date -u +%FT%TZ) ==="
   CODEX_MODEL="${BH_CODEX_MODEL:-gpt-5.6-terra}"
@@ -119,6 +123,27 @@ PREAMBLE
   if [ $rc -ne 0 ] && ! grep -q '^DONE' "$STATE/phase-$NN.status" 2>/dev/null; then
     echo "CRASHED rc=$rc $(date -u +%FT%TZ)" > "$STATE/phase-$NN.status"
   fi
+  # Selbstheilung: Phase 09 hat den Status am 11.09. trotz fertiger Arbeit auf
+  # RUNNING gelassen ("runner-managed"), worauf der Tick den Lauf neu startete und
+  # Versuche verbrannte. Wenn der Agent sauber endet (rc=0) und in diesem Lauf
+  # tatsaechlich Belege entstanden sind, setzt der Runner DONE. Das Qualitaetstor
+  # (Nachtwache, watch.sh --gate) prueft danach unabhaengig, ob DONE berechtigt ist.
+  status_now=$(head -1 "$STATE/phase-$NN.status" 2>/dev/null)
+  case "$status_now" in
+    DONE*|BLOCKED*) ;;
+    *)
+      if [ $rc -eq 0 ]; then
+        report_new=$(find "$REPO/ops/rebuild-2026-09/REPORT.md" -newermt "@$T0" 2>/dev/null | wc -l | tr -d ' ')
+        evid_root="$REPO/ops/rebuild-2026-09/evidence/phase-$NN"
+        evid_new=$(find "$evid_root" -type f -newermt "@$T0" 2>/dev/null | wc -l | tr -d ' ')
+        if [ "$report_new" -gt 0 ] && [ "$evid_new" -ge 1 ]; then
+          echo "DONE (runner-erkannt: rc=0, Bericht und $evid_new Evidence-Datei(en) neu; Agent liess den Status offen)" > "$STATE/phase-$NN.status"
+          echo "runner: Status auf DONE gesetzt (Agent liess ihn offen)"
+        else
+          echo "runner: rc=0, aber keine neuen Belege (report_new=$report_new evid_new=$evid_new) — Status bleibt, Tick entscheidet"
+        fi
+      fi;;
+  esac
 } >> "$LOG" 2>&1
 
 # Keep logs bounded — the disk on Sandy is at ~90%.

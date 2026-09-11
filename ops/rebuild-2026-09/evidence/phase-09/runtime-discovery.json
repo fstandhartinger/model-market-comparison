@@ -1,0 +1,222 @@
+{
+  "phase": "09",
+  "kind": "runtime-discovery",
+  "created_at": "2026-09-11T23:44:50Z",
+  "canonical": {
+    "collect-aa-efficiency": {
+      "path": "ops/skills/collect-aa-efficiency/SKILL.md",
+      "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7",
+      "frontmatter_parses": true
+    },
+    "collect-chutes-io-ratio": {
+      "path": "ops/skills/collect-chutes-io-ratio/SKILL.md",
+      "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0",
+      "frontmatter_parses": true
+    },
+    "collect-openrouter-efficiency": {
+      "path": "ops/skills/collect-openrouter-efficiency/SKILL.md",
+      "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336",
+      "frontmatter_parses": true
+    },
+    "maintain-benchmarkheaven-registry": {
+      "path": "ops/skills/maintain-benchmarkheaven-registry/SKILL.md",
+      "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f",
+      "frontmatter_parses": true
+    },
+    "run-benchmarkheaven-gauntlet": {
+      "path": "ops/skills/run-benchmarkheaven-gauntlet/SKILL.md",
+      "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4",
+      "frontmatter_parses": true
+    },
+    "select-benchmarkheaven-workers": {
+      "path": "ops/skills/select-benchmarkheaven-workers/SKILL.md",
+      "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65",
+      "frontmatter_parses": true
+    }
+  },
+  "targets": {
+    "sandy-claude": {
+      "runtime": "claude-code",
+      "base": "/home/flori/.claude/skills",
+      "cli_present": "2.1.265 (Claude Code)",
+      "installed": {
+        "collect-aa-efficiency": {
+          "exists": true,
+          "real_path": "/home/flori/.claude/skills/collect-aa-efficiency/SKILL.md",
+          "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7",
+          "matches_canonical": true
+        },
+        "collect-chutes-io-ratio": {
+          "exists": true,
+          "real_path": "/home/flori/.claude/skills/collect-chutes-io-ratio/SKILL.md",
+          "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0",
+          "matches_canonical": true
+        },
+        "collect-openrouter-efficiency": {
+          "exists": true,
+          "real_path": "/home/flori/.claude/skills/collect-openrouter-efficiency/SKILL.md",
+          "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336",
+          "matches_canonical": true
+        },
+        "maintain-benchmarkheaven-registry": {
+          "exists": true,
+          "real_path": "/home/flori/.claude/skills/maintain-benchmarkheaven-registry/SKILL.md",
+          "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f",
+          "matches_canonical": true
+        },
+        "run-benchmarkheaven-gauntlet": {
+          "exists": true,
+          "real_path": "/home/flori/.claude/skills/run-benchmarkheaven-gauntlet/SKILL.md",
+          "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4",
+          "matches_canonical": true
+        },
+        "select-benchmarkheaven-workers": {
+          "exists": true,
+          "real_path": "/home/flori/.claude/skills/select-benchmarkheaven-workers/SKILL.md",
+          "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65",
+          "matches_canonical": true
+        }
+      },
+      "all_match_canonical": true
+    },
+    "sandy-codex": {
+      "runtime": "codex",
+      "base": "/home/flori/.codex/skills",
+      "cli_present": "codex-cli 0.154.0",
+      "installed": {
+        "collect-aa-efficiency": {
+          "exists": true,
+          "real_path": "/home/flori/.codex/skills/collect-aa-efficiency/SKILL.md",
+          "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7",
+          "matches_canonical": true
+        },
+        "collect-chutes-io-ratio": {
+          "exists": true,
+          "real_path": "/home/flori/.codex/skills/collect-chutes-io-ratio/SKILL.md",
+          "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0",
+          "matches_canonical": true
+        },
+        "collect-openrouter-efficiency": {
+          "exists": true,
+          "real_path": "/home/flori/.codex/skills/collect-openrouter-efficiency/SKILL.md",
+          "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336",
+          "matches_canonical": true
+        },
+        "maintain-benchmarkheaven-registry": {
+          "exists": true,
+          "real_path": "/home/flori/.codex/skills/maintain-benchmarkheaven-registry/SKILL.md",
+          "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f",
+          "matches_canonical": true
+        },
+        "run-benchmarkheaven-gauntlet": {
+          "exists": true,
+          "real_path": "/home/flori/.codex/skills/run-benchmarkheaven-gauntlet/SKILL.md",
+          "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4",
+          "matches_canonical": true
+        },
+        "select-benchmarkheaven-workers": {
+          "exists": true,
+          "real_path": "/home/flori/.codex/skills/select-benchmarkheaven-workers/SKILL.md",
+          "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65",
+          "matches_canonical": true
+        }
+      },
+      "all_match_canonical": true
+    },
+    "sandy-opencode": {
+      "runtime": "opencode",
+      "base": "/home/flori/.config/opencode/skills",
+      "cli_present": "1.18.18",
+      "installed": {
+        "collect-aa-efficiency": {
+          "exists": true,
+          "real_path": "/home/flori/.config/opencode/skills/collect-aa-efficiency/SKILL.md",
+          "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7",
+          "matches_canonical": true
+        },
+        "collect-chutes-io-ratio": {
+          "exists": true,
+          "real_path": "/home/flori/.config/opencode/skills/collect-chutes-io-ratio/SKILL.md",
+          "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0",
+          "matches_canonical": true
+        },
+        "collect-openrouter-efficiency": {
+          "exists": true,
+          "real_path": "/home/flori/.config/opencode/skills/collect-openrouter-efficiency/SKILL.md",
+          "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336",
+          "matches_canonical": true
+        },
+        "maintain-benchmarkheaven-registry": {
+          "exists": true,
+          "real_path": "/home/flori/.config/opencode/skills/maintain-benchmarkheaven-registry/SKILL.md",
+          "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f",
+          "matches_canonical": true
+        },
+        "run-benchmarkheaven-gauntlet": {
+          "exists": true,
+          "real_path": "/home/flori/.config/opencode/skills/run-benchmarkheaven-gauntlet/SKILL.md",
+          "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4",
+          "matches_canonical": true
+        },
+        "select-benchmarkheaven-workers": {
+          "exists": true,
+          "real_path": "/home/flori/.config/opencode/skills/select-benchmarkheaven-workers/SKILL.md",
+          "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65",
+          "matches_canonical": true
+        }
+      },
+      "all_match_canonical": true
+    }
+  },
+  "runtime_discovery": {
+    "sandy-opencode": {
+      "method": "running opencode session skill registry",
+      "tested": true,
+      "detail": "The live opencode process on Sandy enumerated exactly these six installed skills (name + absolute path) in its own skill registry, confirming runtime discovery from /home/flori/.config/opencode/skills.",
+      "observed": [
+        {
+          "name": "collect-aa-efficiency",
+          "path": "/home/flori/.config/opencode/skills/collect-aa-efficiency/SKILL.md"
+        },
+        {
+          "name": "collect-chutes-io-ratio",
+          "path": "/home/flori/.config/opencode/skills/collect-chutes-io-ratio/SKILL.md"
+        },
+        {
+          "name": "collect-openrouter-efficiency",
+          "path": "/home/flori/.config/opencode/skills/collect-openrouter-efficiency/SKILL.md"
+        },
+        {
+          "name": "maintain-benchmarkheaven-registry",
+          "path": "/home/flori/.config/opencode/skills/maintain-benchmarkheaven-registry/SKILL.md"
+        },
+        {
+          "name": "run-benchmarkheaven-gauntlet",
+          "path": "/home/flori/.config/opencode/skills/run-benchmarkheaven-gauntlet/SKILL.md"
+        },
+        {
+          "name": "select-benchmarkheaven-workers",
+          "path": "/home/flori/.config/opencode/skills/select-benchmarkheaven-workers/SKILL.md"
+        }
+      ]
+    },
+    "sandy-claude": {
+      "method": "documented discovery root + frontmatter parse",
+      "tested": false,
+      "detail": "claude --help (2.1.265) states skills resolve via /skill-name and that --disable-slash-commands disables skills; discovery root is ~/.claude/skills/<name>/SKILL.md. All six files exist, match canonical SHA-256 and parse. A model-invocation test was deliberately NOT run to preserve the scarce Claude quota (see AGENTS budget rules)."
+    },
+    "sandy-codex": {
+      "method": "installation path + frontmatter parse",
+      "tested": false,
+      "detail": "codex-cli 0.154.0 exposes no skills-listing command, so runtime invocation could not be exercised non-interactively. ~/.codex/skills resolves to /home/flori/.claude/skills (byte-identical install); all six files match canonical SHA-256."
+    }
+  },
+  "runtime_discovery_tested": true,
+  "wsl_machine": {
+    "host": "flo-nitro",
+    "reachable_from_sandy": false,
+    "probe": "ping \"100.110.29.45\" timed out",
+    "status": "incomplete",
+    "note": "Florian's WSL machine is unreachable from Sandy (tailscale offline); the six skills are NOT installed there. This installation is explicitly incomplete and the repo copy under ops/skills/ is the handoff."
+  }
+}

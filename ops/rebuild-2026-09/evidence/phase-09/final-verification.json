@@ -1,0 +1,79 @@
+{
+  "phase": "09",
+  "kind": "final-verification",
+  "checked_at": "2026-09-11T23:45:30Z",
+  "run": {
+    "attempt": 3,
+    "note": "Re-verification run. The prior phase-09 run finished rc=0 and committed 347b068 + cd12496 but left phase-09.status on RUNNING (the phase prompt says the runner owns it; the old runner never wrote DONE). The tick restarted the phase for free at 2026-09-11T23:40:02Z. run-phase.sh and tick.sh now self-heal this (rc=0 + fresh report/evidence => DONE), gated afterwards by watch.sh --gate."
+  },
+  "canonical_checks": {
+    "build_dataset": {
+      "command": "node scripts/build-dataset.mjs",
+      "ok": true,
+      "counts": { "models": 839, "families": 654, "providers": 90, "offers": 2801 },
+      "registry": "73 versioned entries, 25 AA field mappings, 55 verified evidence files"
+    },
+    "tests": {
+      "command": "npm test",
+      "ok": true,
+      "passed": 178,
+      "failed": 0,
+      "duration_ms": 7809
+    },
+    "typecheck": {
+      "command": "npx tsc --noEmit -p .",
+      "exit_code": 0
+    }
+  },
+  "live": {
+    "hosts": {
+      "https://benchmarkheaven.com/": { "status": 200, "bytes": 5776967, "seconds": 0.174 },
+      "https://www.benchmarkheaven.com/": { "status": 200, "bytes": 5776967, "seconds": 0.280 },
+      "https://model-market-comparison.app.mintapis.com/": { "status": 200, "bytes": 5776967, "seconds": 0.188 }
+    },
+    "api_meta": {
+      "generated_at": "2026-09-11T06:55:14.060Z",
+      "counts": { "models": 839, "families": 654, "providers": 90, "offers": 2801 }
+    },
+    "api_health": { "ok": true, "db": false, "note": "no DATABASE_URL; product serves the committed static dataset" }
+  },
+  "explainer_video": {
+    "path": "ops/rebuild-2026-09/evidence/phase-09/benchmarkheaven-de.mp4",
+    "sha256": "aa0392908f6b9d6cc368bf39104ab6820fa7cc4bd2a3dd13c9b17ece604c21aa",
+    "bytes": 2931976,
+    "container": "mov,mp4,m4a,3gp,3g2,mj2",
+    "video_codec": "h264",
+    "audio_codec": "aac",
+    "resolution": "1920x1080",
+    "duration_seconds": 49.1,
+    "delivery": {
+      "claimed": true,
+      "channel": "Telegram @cursor_noti_bot",
+      "method": "sendVideo",
+      "message_id": 13546,
+      "source": "prior run record in commit 347b068 and COVERAGE W27",
+      "bot_identity_reverified": {
+        "command": "GET https://api.telegram.org/bot<GATE_TOKEN>/getMe",
+        "TG_BOT_TOKEN -> username": "cursor_noti_bot",
+        "ok": true,
+        "note": "The configured TG_BOT_TOKEN is @cursor_noti_bot, matching the claimed sending bot. Bot API cannot fetch an already-sent message by id, so the message_id itself is taken from the prior run's record; the artifact is independently re-hashed and re-probed here."
+      }
+    }
+  },
+  "skills_runtime_discovery": {
+    "evidence": "ops/rebuild-2026-09/evidence/phase-09/runtime-discovery.json",
+    "runtime_discovery_tested": true,
+    "sandy_opencode": "tested: running opencode session enumerated all six skills from /home/flori/.config/opencode/skills",
+    "sandy_claude": "files present + SHA-256 match + frontmatter parses; invocation not run to conserve Claude quota",
+    "sandy_codex": "files present + SHA-256 match + frontmatter parses; codex 0.154.0 has no skills-list command",
+    "wsl_machine": "incomplete: flo-nitro (Florian's WSL host) offline/unreachable from Sandy; repo copy under ops/skills/ is the handoff"
+  },
+  "gauntlet": {
+    "rounds": 3,
+    "residue": "ops/rebuild-2026-09/evidence/phase-09/critic-residue.md",
+    "final_open_items_resolved": [
+      "R3-1 substantiated from the daily pick-time worker catalog",
+      "runtime discovery now tested for opencode and path-verified for claude/codex"
+    ]
+  }
+}

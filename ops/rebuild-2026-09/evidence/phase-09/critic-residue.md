@@ -76,6 +76,14 @@ cannot be embedded in the file it hashes, each packet's digest is recorded in a
 - Explainer video: W27 **incomplete** — brief written, local Claude handoff outstanding.
 - Florian's WSL machine unreachable: skills installed on the three Sandy runtimes only.
 - Skill runtime discovery/invocation not tested; file presence + SHA-256 only.
+  **Resolved after freeze (owner, attempt 3):** `bin/verify-skills-discovery.mjs` re-hashes
+  all six installed files on all three Sandy runtimes (all match canonical) and records a
+  real discovery test for the running opencode session, which enumerated the six skills
+  from `/home/flori/.config/opencode/skills`. Claude Code (2.1.265, `/skill-name`) and
+  Codex (0.154.0, no list command) remain path-/frontmatter-verified only; a Claude
+  model-invocation test was skipped to conserve quota. Evidence:
+  `evidence/phase-09/runtime-discovery.json`. The WSL installation stays incomplete
+  (`flo-nitro` offline; `tailscale ping` times out).
 - Byte-identity of the four copied skills to their phase-02/04/08 originals is asserted
   in the packet header; the originals live in phase directories and were verified with
   `diff -q` at copy time.

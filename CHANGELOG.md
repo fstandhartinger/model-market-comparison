@@ -26,6 +26,13 @@ some app internals — details per release below.
   (`message_id 13546`).
 - **Known gap:** Florian's WSL machine was unreachable from Sandy, so the skills are not
   installed there; documented in `COVERAGE.md` (W28) and the receipt.
+- Re-verification (attempt 3): canonical checks re-run green (build 839/654/90/2801,
+  178 tests, `tsc` exit 0) and all three hosts still 200. Added
+  `bin/verify-skills-discovery.mjs`, which re-hashes every installed skill and records a
+  real runtime-discovery test for opencode (Claude Code/Codex path-verified only);
+  evidence in `evidence/phase-09/runtime-discovery.json`. Also added `run-phase.sh`/`tick.sh`
+  self-healing so a clean `rc=0` run that leaves the status on `RUNNING` is marked `DONE`
+  (previously it burned a retry). The WSL gap above is unchanged.
 
 ## 2026-09-11 — Daily automation
 
