@@ -1,0 +1,49 @@
+{
+  "accepted_artifacts": [
+    {
+      "id": "phase07-brand-ui",
+      "round": 3,
+      "receipt": "ui-acceptance.json"
+    },
+    {
+      "id": "phase07-consumer-docs-ops",
+      "round": 2,
+      "receipt": "docs-acceptance.json"
+    },
+    {
+      "id": "phase07-domain-release-report",
+      "round": 1,
+      "critic": "google/gemini-3.7-flash",
+      "source_image_input_output_hashes_match": true
+    }
+  ],
+  "verdict": "pass",
+  "unresolved_product_findings": [],
+  "coverage_checked": [
+    "DNS configuration and propagation: authoritative nameservers (dns1/dns2.registrar-servers.com) and public resolvers (1.1.1.1, 8.8.8.8, 9.9.9.9) for A, AAAA, CAA records on apex benchmarkheaven.com and www",
+    "RDAP registration and nameserver delegation matching Namecheap infrastructure",
+    "Coolify application configuration (ggbs6upie6tqsousmrkw0vja) with FQDNs for apex, www, and compatibility host model-market-comparison.app.mintapis.com",
+    "TLS certificate issuance, hostname validation, and HTTP-to-HTTPS redirect preservation across all three hostnames",
+    "Documentation and accounting of initial Let's Encrypt CA validation incident vs final trusted certificate verification",
+    "Deployment receipts for domain activation (doblw9veld5qskwbuhjpqpsw) and rebrand release (fuotj6trvelbn2sqz7idk5xo) at commit 989ce7d3b6d17c909a2470e06fa9bb64fd371a96",
+    "Live API endpoints, CORS headers, dataset byte-level equality, and brand verification across 45 checks on all three hosts",
+    "Live browser visual verification including desktop overview, 3-model comparison, mobile reflow (390px), theme toggle, and published social PNG matching",
+    "Consumer documentation notices in README.md, API.md, and CHANGELOG.md covering new primary URL, compatibility URL preservation, and per-origin storage isolation",
+    "Installed daily refresh runner and prompt mirroring with preserved 05:17 UTC schedule and Telegram quiet policy",
+    "Local regression suite verification: dataset build, 146 unit tests, TypeScript typecheck, Next.js build, and 11 prerender checks"
+  ],
+  "owner_precision": "API dataset checks compare the complete parsed JSON after deleting only runtime _source, not response-byte identity. The public social PNG is byte-identical.",
+  "retained_uncertainties": [
+    "Upstream Let's Encrypt incident resolution is tracked via status notices, with domain recovery verified by direct TLS handshakes and live HTTP receipts.",
+    "The initial browser probe timeout on the mobile theme toggle is retained with root cause not definitively established, while the instrumented repeat execution passed without application modification."
+  ],
+  "completed_worker_calls": 7,
+  "total_returned_cost_usd": 0.211831191,
+  "cost_excludes": "Incomplete/failed calls and owner subscription usage.",
+  "reviewed_report_prefix": {
+    "bytes": 73357,
+    "sha256": "e3fd30b0b70923f7b937565139307158c6484f8fb7e5822b1a3664e2b51468ac",
+    "note": "Only administrative acceptance/cost/closing-commit statements are appended after the critic; all reviewed report text is preserved."
+  },
+  "closing_gate": "Documentation-only closing push and its webhook/HTTPS health check must succeed before writing phase-07.status DONE."
+}

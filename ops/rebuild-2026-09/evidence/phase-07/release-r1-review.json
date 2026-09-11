@@ -1,0 +1,27 @@
+{
+  "artifact_id": "phase07-domain-release-report",
+  "artifact_sha256": "ae7fc49d25d93cf940f23d539d9f1359b3660a2917ddc0e40053d0d6ce0476af",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "DNS configuration and propagation: authoritative nameservers (dns1/dns2.registrar-servers.com) and public resolvers (1.1.1.1, 8.8.8.8, 9.9.9.9) for A, AAAA, CAA records on apex benchmarkheaven.com and www",
+    "RDAP registration and nameserver delegation matching Namecheap infrastructure",
+    "Coolify application configuration (ggbs6upie6tqsousmrkw0vja) with FQDNs for apex, www, and compatibility host model-market-comparison.app.mintapis.com",
+    "TLS certificate issuance, hostname validation, and HTTP-to-HTTPS redirect preservation across all three hostnames",
+    "Documentation and accounting of initial Let's Encrypt CA validation incident vs final trusted certificate verification",
+    "Deployment receipts for domain activation (doblw9veld5qskwbuhjpqpsw) and rebrand release (fuotj6trvelbn2sqz7idk5xo) at commit 989ce7d3b6d17c909a2470e06fa9bb64fd371a96",
+    "Live API endpoints, CORS headers, dataset byte-level equality, and brand verification across 45 checks on all three hosts",
+    "Live browser visual verification including desktop overview, 3-model comparison, mobile reflow (390px), theme toggle, and published social PNG matching",
+    "Consumer documentation notices in README.md, API.md, and CHANGELOG.md covering new primary URL, compatibility URL preservation, and per-origin storage isolation",
+    "Installed daily refresh runner and prompt mirroring with preserved 05:17 UTC schedule and Telegram quiet policy",
+    "Local regression suite verification: dataset build, 146 unit tests, TypeScript typecheck, Next.js build, and 11 prerender checks"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "Upstream Let's Encrypt incident resolution is tracked via status notices, with domain recovery verified by direct TLS handshakes and live HTTP receipts.",
+    "The initial browser probe timeout on the mobile theme toggle is retained with root cause not definitively established, while the instrumented repeat execution passed without application modification."
+  ],
+  "missing_evidence": []
+}

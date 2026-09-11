@@ -1,0 +1,10 @@
+{
+  "result": "incomplete",
+  "completed_before_failure": [
+    "branded root page",
+    "three-model compare interaction"
+  ],
+  "failure": "30-second wait for Toggle color theme button after a mobile root navigation timed out. The failed page DOM was not captured in that first probe.",
+  "followup": "Fresh instrumented browser run captured the page/tree, found one theme button, exercised it successfully and reported no page runtime errors. Container logs showed normal startup. No application change was made.",
+  "root_cause": "not established; do not label this as a diagnosed app or network defect"
+}

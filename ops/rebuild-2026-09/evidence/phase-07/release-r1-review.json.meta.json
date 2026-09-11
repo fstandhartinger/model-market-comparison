@@ -1,0 +1,90 @@
+{
+  "started_at": "2026-09-11T02:35:41.993Z",
+  "mode": "critic",
+  "requested_model": "google/gemini-3.7-flash",
+  "producers": [
+    "openai/gpt-6-astra",
+    "z-ai/glm-5.3-flash",
+    "chutes/moonshotai/Kimi-K3-TEE",
+    "deepseek/deepseek-v4-flash-0731"
+  ],
+  "qualification": {
+    "id": "google/gemini-3.7-flash",
+    "family": "google",
+    "free": false,
+    "input_per_1m": 0.75,
+    "output_per_1m": 3.75,
+    "context": 1048576,
+    "aa_intelligence_index": 36.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "gemini-3.7-flash::high",
+      "gemini-3.7-flash::low",
+      "gemini-3.7-flash::medium"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "gemini-3.7-flash::high",
+        "index": 39.4
+      },
+      {
+        "id": "gemini-3.7-flash::low",
+        "index": 36.9
+      },
+      {
+        "id": "gemini-3.7-flash::medium",
+        "index": 39.6
+      }
+    ]
+  },
+  "input_sha256": "5443a9f1ef5d65ced796b82ae0540f86e702e2b47edaa9605b3e4a80f91c2962",
+  "images": [
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-07/live/overview.png",
+      "bytes": 235819,
+      "sha256": "fc58f6c850a077905606b18a4053456e2af88b16becc09cfaf3b3cec43ab7f7f",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-07/live/compare.png",
+      "bytes": 166137,
+      "sha256": "cedb1934c19305686b44d685616a07e1a7f3df9f2a7171d7b1b1fda8d344df90",
+      "mime": "image/png"
+    },
+    {
+      "path": "/opt/model-market-comparison/ops/rebuild-2026-09/evidence/phase-07/live/mobile-dark.png",
+      "bytes": 106175,
+      "sha256": "8c9997033927d0acd94828058e938482d3e4f7c6e92fefd90bb30dc7c6959fa2",
+      "mime": "image/png"
+    }
+  ],
+  "actual_model": "google/gemini-3.7-flash",
+  "usage": {
+    "prompt_tokens": 40289,
+    "completion_tokens": 3265,
+    "total_tokens": 43554,
+    "cost": 0.042035895,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.0424605,
+      "upstream_inference_prompt_cost": 0.03021675,
+      "upstream_inference_completions_cost": 0.01224375
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 2613,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Google",
+  "session_id": null,
+  "finished_at": "2026-09-11T02:36:03.988Z",
+  "output_sha256": "ffc60d03564df144f29df0c27b71b3e59c35e6c174eba9e32f7bf66bceeff4bc"
+}
