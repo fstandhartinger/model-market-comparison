@@ -1,0 +1,83 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - heading "About & data sources" [level=1]
+  - paragraph: This tool merges pricing and benchmark data for open-source and frontier LLMs into one comparable view. Prices are normalized to USD per 1M tokens (input and output) unless a platform prices differently (GitHub Copilot's current token/AI-Credit rates and legacy request billing are shown on a separate product axis).
+  - heading "Sources" [level=2]
+  - list:
+    - listitem: OpenRouter — model catalog and per-provider endpoint pricing (live API).
+    - listitem: ArtificialAnalysis — Intelligence & Coding indices plus sub-benchmarks (LiveCodeBench, SciCode, Terminal-Bench Hard, τ²-Bench, GPQA, MMLU-Pro) via the v2 API.
+    - listitem: AA Coding Agent Index — Composite retains v1.4, last collected 2026-09-09. AA now publishes v1.5 with different benchmark components. We collect it separately and do not mix the versions.
+    - listitem: Some AA licensing and model identifiers are retained from earlier source publications. Their original dates are recorded per field in the downloadable dataset.
+    - listitem: Intelligence.ai / DesignArena — Agentic Web Dev Frontend & Full-Stack Elo leaderboards.
+    - listitem: AWS Bedrock — on-demand token pricing, European regions (eu-central-1 where available).
+    - listitem: Azure AI Foundry — retail token meters plus model-card serving-region checks. A billing/resource region alone is not treated as proof that inference stays in the EU. By company policy, only Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code are additionally eligible as EU-hosted equivalents; they remain marked Global because inference may occur outside the EU.
+    - listitem: Google Vertex AI — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); offers are marked EU-hosted only where the model supports a documented European serving location.
+    - listitem:
+      - text: TensorX, Inceptron, Scaleway, IONOS, Mistral, Nebius, OVHcloud, STACKIT & T-Systems — direct European serverless/managed catalogs. TensorX is the broadest in-EU host for GLM/Kimi/DeepSeek/MiniMax; Inceptron serves GLM/Kimi/MiniMax from Finland; Scaleway and OVHcloud serve from France; STACKIT and T-Systems publish German/EU catalogs. Nebius is EU-capable but mixes EU, US and UK serving regions, so every model offer is checked separately. See the
+      - link "EU & Sovereign":
+        - /url: /eu
+      - text: tab.
+    - listitem: GitHub Copilot — current 26-model AI-Credit/token-price catalog plus the 25-model legacy premium-request multiplier table. The UI's separate per-request field applies only to eligible legacy annual Pro/Pro+ plans.
+    - listitem: Anthropic / Claude Code — all 11 currently callable first-party API models, their cache/batch/list prices, active promotions and Claude Code Enterprise terms.
+  - heading "What are “Featured” models?" [level=2]
+  - paragraph: "★ Featured marks the specific models this tool was commissioned to track closely — the current frontier and leading open-weight families that matter most for the price/capability comparison. Filtering to “Featured” (the default on most pages) hides the long tail of older or niche models so the charts and tables stay focused. The featured set is:"
+  - list:
+    - listitem: • GPT-5.6 Sol/Terra/Luna, GPT-5.5 & GPT-5.4 (incl. Mini/Nano, low→xhigh effort)
+    - listitem: • Claude Opus 4.8 / 4.7 / 4.6
+    - listitem: • Claude Sonnet 4.6 / 5 & Claude Fable 5
+    - listitem: • Kimi K2.5 / K2.6 / K2.7-Coding
+    - listitem: • GLM 5.1 / 5.2
+    - listitem: • MiniMax M2.5 / M2.7 / M3
+    - listitem: • Xiaomi MiMo-V2.5-Pro
+    - listitem: • DeepSeek V4 Pro
+  - paragraph: Turn the “Featured” filter off on any page to explore all 835 tracked models. Featured status is derived from the model's family, so every reasoning variant of a featured family (e.g. each GPT-5.5 effort level) is included.
+  - heading "Snapshot" [level=2]
+  - text: "Dataset generated: Fri, 11 Sep 2026 01:28:15 GMT Models: 835 · families: 650 · offers: 2786 · providers: 89 Per-source collection dates:"
+  - list:
+    - listitem: "openrouter: 2026-09-10"
+    - listitem: "artificialanalysis: 2026-09-10"
+    - listitem: "designarena: 2026-09-10"
+    - listitem: "aws_bedrock: 2026-09-08"
+    - listitem: "azure_foundry: 2026-09-08"
+    - listitem: "google_vertex: 2026-09-08"
+    - listitem: "nebius: 2026-09-08"
+    - listitem: "inceptron: 2026-09-08"
+    - listitem: "scaleway: 2026-09-08"
+    - listitem: "ionos: 2026-09-08"
+    - listitem: "mistral: 2026-09-08"
+    - listitem: "tensorx: 2026-09-08"
+    - listitem: "chutes: 2026-09-08"
+    - listitem: "ovhcloud: 2026-09-08"
+    - listitem: "stackit: 2026-09-08"
+    - listitem: "t_systems_llm_hub: 2026-09-08"
+    - listitem: "aa_coding_agents: 2026-09-09"
+    - listitem: "github_copilot: 2026-09-08"
+    - listitem: "claude_code: 2026-09-08"
+    - listitem: "aa_coding_agents_v1_5: 2026-09-10"
+    - listitem: "provider_meta: 2026-07-12"
+    - listitem: "aa_efficiency: 2026-09-10T20:13:54.198Z"
+    - listitem: "openrouter_efficiency: 2026-09-10T20:13:54.306Z"
+    - listitem: "chutes_efficiency: 2026-09-10T19:44:35.632Z"
+  - heading "Methodology" [level=2]
+  - paragraph:
+    - text: "Costs default to modeled USD/task, using exact-variant AA output tokens, OpenRouter usage I/O (Chutes global fallback), and exact-endpoint cache-hit rates. Missing values are assumed and flagged: 1,000 output tokens/task, no cache discount, and zero additional cache writes. General traffic and benchmark tasks are proxies for coding-agent usage. Click an underlined price to inspect the full formula, inputs, dates and assumptions. Raw list-price mode uses your chosen fixed blend per million tokens (including 1:1, 3:1, 10:1, 100:1, input-only and output-only). Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo. The Composite score uses five slots: AA Coding, source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. A DesignArena board qualifies at an app-selected minimum of 200 battles, aligned with the source's typical preliminary/reliability threshold; its Elo is converted to the expected score against a fixed Elo 1000 opponent. Each observed slot is converted to its percentile among the current catalog's unique observed values. Every missing slot inherits that model's mean observed percentile, producing a base score exactly equal to the mean of its available percentiles. A final dominance-safe projection prevents missing data from reversing an otherwise unambiguous comparison: when one model covers every reliable slot of another measured model and is no worse in any shared slot, the catalog scores are adjusted by the smallest symmetric amount needed to keep the dominating model at least 0.1 points ahead. The unadjusted base and any adjustment are shown separately in model details. A model with no reliable observed slot receives the neutral fallback 50; its zero evidence coverage remains distinct from a measured score and is excluded from capability charts. Coding Agent results are attached to an exact or explicitly audited model/reasoning identity; every harness result is retained and their median is used. Family-scoped Intelligence.ai / DesignArena results are attached exactly once to the deterministic collapsed-family representative rather than copied to effort siblings. The provenance note explicitly states that this does not identify the tested effort setting. Raw DesignArena score views continue to show Elo. Stable model ids and repositories are preferred over fuzzy names so distinct releases, modes, context tiers and serving routes do not share the wrong price. See the repository README and"
+    - code: data/SCRAPING.md
+    - text: for how each source is collected and refreshed.
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

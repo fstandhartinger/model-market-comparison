@@ -1,0 +1,33 @@
+- link "Skip to main content":
+  - /url: "#main-content"
+- banner:
+  - link "Model Market Comparison":
+    - /url: /
+  - navigation "Primary":
+    - link "Overview":
+      - /url: /
+    - link "Benchmarks":
+      - /url: /benchmarks
+    - link "Compare":
+      - /url: /compare
+    - link "Radar":
+      - /url: /radar
+    - group: More ▾
+  - button "Toggle color theme": Dark
+- group: Price & provider filters · adjusted costs
+- main:
+  - heading "Cost vs Capability" [level=1]
+  - paragraph: Every model plotted by price (x) against capability (y). The x-axis is inverted — cheaper to the right — and defaults to the cheapest modeled USD per task. The global toggle restores raw list prices per million tokens using your chosen fixed input/output blend; the y-axis is your chosen benchmark score. The best value sits in the upper-right.
+  - text: "Capability (Y): Composite (coverage-neutral, dominance-safe percentiles, 0–100) · 5 fixed inputs; Coding Agent v1.4"
+  - button "✓ Log cost axis" [pressed]
+  - button "✓ Pareto frontier" [pressed]
+  - text: "30 models · X inverted: cheaper → right · provider-filtered"
+  - img
+  - text: closed lab
+  - img
+  - text: open weights Anthropic OpenAI Z.ai Moonshot AI Meta DeepSeek xAI MiniMax Xiaomi
+  - paragraph: "Up & to the right is better: more capability for less money. The green Pareto frontier marks and connects the best-value models — those no other model beats on both price and capability. Click any point to open the model detail."
+  - paragraph: "Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback). These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task; unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs, dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens."
+  - group: Model prices and scores (accessible table, 30 rows)
+- contentinfo: "Data: OpenRouter · ArtificialAnalysis · Intelligence.ai / DesignArena · AWS Bedrock · Azure AI Foundry · Google Vertex AI · EU-native APIs · Chutes · GitHub Copilot · Anthropic. Prices are list/on-demand USD per 1M tokens unless noted. Not affiliated with any provider — figures may be stale; verify before relying on them."
+- alert

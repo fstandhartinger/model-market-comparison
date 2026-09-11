@@ -1,0 +1,29 @@
+{
+  "deployment_uuid": "fw4yulbdx2ldlpmialqfiul6",
+  "commit": "7361ed6b17e66654adf75521c5750e0ba9b5d49f",
+  "status": "failed",
+  "outputs": [
+    {
+      "timestamp": "2026-09-11T01:15:54.203549Z",
+      "output": "#10 22.27  \u2713 Compiled successfully in 17.1s"
+    },
+    {
+      "timestamp": "2026-09-11T01:16:33.443158Z",
+      "output": "#10 61.51    Generating static pages (12/17) \r\n#10 61.51  \u2713 Generating static pages (17/17)"
+    },
+    {
+      "timestamp": "2026-09-11T01:16:49.029492Z",
+      "output": "#12 writing image sha256:2a4ee43a2ac0cef24ded1ca2733f18e7caf85a4658f470993b1be1b542d118ff done\n#12 naming to docker.io/library/ggbs6upie6tqsousmrkw0vja:7361ed6b17e66654adf75521c5750e0ba9b5d49f 0.0s done\n#12 DONE 2.8s"
+    },
+    {
+      "timestamp": "2026-09-11T01:16:49.095985Z",
+      "output": "Building docker image completed."
+    },
+    {
+      "timestamp": "2026-09-11T01:16:52Z",
+      "output": "Container start tried to pull local image ggbs6upie6tqsousmrkw0vja:7361ed6b17e66654adf75521c5750e0ba9b5d49f and failed with pull access denied. The locally inspected image was absent; previous live container remained running. Read-only MCP log endpoint returned empty output, so these bounded outputs were obtained by a read-only SELECT of this deployment log in the local Coolify database."
+    }
+  ],
+  "retry_deployment_uuid": "jsi4ftmz5eo8mmnwbghdxtkh",
+  "root_cause": "Local image unavailable during rollout; deeper cause not established"
+}

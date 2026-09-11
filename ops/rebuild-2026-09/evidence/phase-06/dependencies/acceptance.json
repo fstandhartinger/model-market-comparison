@@ -1,0 +1,25 @@
+{
+  "at": "2026-09-11T01:33:22.216Z",
+  "artifact": "phase06-dependency-followup",
+  "artifact_sha256": "a98bb6068be6b42fdb095421e4b1de0b6e228f755cd6d9997fdefc23a463d50f",
+  "round": 1,
+  "critic": "google/gemini-3.7-flash",
+  "input_hash_verified": true,
+  "output_hash_verified": true,
+  "files_and_image_hashes_verified": true,
+  "coverage": [
+    "Primary advisory coverage for Next.js and PostCSS (GHSA-2xp9-vwfh-vxw4, GHSA-r28c-9q8g-f849)",
+    "Exact lockfile dependency tree resolution and package.json overrides (Next.js 15.5.25, PostCSS 8.5.28, sharp 0.35.4)",
+    "Clean installation receipts and npm audit resolution (0 vulnerabilities in audit-after.json)",
+    "Full test suite execution (146 passing tests in tests.log)",
+    "Build and static prerender validation (build.log, prerender.log)",
+    "Browser axe accessibility and layout telemetry (browser-checks.json, checks.json)",
+    "Continuity and frozen UI source hash integrity (continuity.json)",
+    "Paired before/after screenshot hash equality across manifest order"
+  ],
+  "uncertainties": [
+    "Npm advisory resolution verifies published CVE/GHSA remediation but does not provide an absolute security guarantee against undisclosed vulnerabilities",
+    "Deployment of this specific dependency followup update container is recorded as pending final sign-off"
+  ],
+  "cost_usd": 0.0802694475
+}

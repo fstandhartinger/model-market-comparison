@@ -96,3 +96,5 @@ file existed, see `git log`.
 - Added complete per-model benchmark sheets, conservative explainable profile signals, and protocol-compatible divergence displays.
 - Revamped navigation, light/dark themes, keyboard focus and disclosures; retained adjusted-cost and provider comparisons. Coding Agent v1.4 and its September 9 Composite source remain unchanged; v1.5 is separately visible.
 - Added the compact benchmark presentation endpoint and exact observation lookup; canonical source/dataset fields and paths remain compatible. No benchmark value was changed or invented.
+
+- Phase 06 release follow-up: update Next.js to 15.5.25 and compatible PostCSS 8 resolution; clean npm audit reports no remaining findings. Benchmark data and Composite definitions are unchanged.
