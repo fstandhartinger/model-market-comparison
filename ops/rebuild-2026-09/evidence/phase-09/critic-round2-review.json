@@ -1,0 +1,100 @@
+{
+  "artifact_id": "phase-09-completion-artifacts",
+  "artifact_sha256": null,
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "R1 repair E1 (W28 Sandy install status) vs Evidence 2 targets.sandy-{claude,codex,opencode}",
+    "R1 repair E2 (767 derived) vs EXPLAINER-VIDEO-BRIEF.md and COVERAGE W25",
+    "R1 repair E3 (UTF-8 byte counts) vs receipt canonical_repository_copy.bytes",
+    "R1 repair E4 (trigger clauses) vs both SKILL.md frontmatter descriptions and receipt changes field",
+    "R1 repair E5 (/api/health db:false) vs Evidence 1 health body + note",
+    "R1 repair E6 (mixed source dates) vs Evidence 1 meta.source_dates",
+    "R1 repair E7 (W3 aa-efficiency snapshot; W8 worker-calls.json) vs Evidence 1 and supplied evidence set",
+    "All six SKILL.md frontmatter name/description presence and trigger clauses",
+    "SHA-256 and byte consistency across artifact headers and Evidence 2",
+    "Brief before/after table, source-backed numbers, 10 screenshot moments, not-delivered framing",
+    "CHANGELOG phase-09 entry vs receipt and COVERAGE audit",
+    "COVERAGE rows W1-W28, F1 and deviations section",
+    "Cron receipt figures vs brief daily-automation claims"
+  ],
+  "errors_found": 4,
+  "findings": [
+    {
+      "id": "R2-1",
+      "severity": "minor",
+      "location": "Artifact 3 CHANGELOG.md, bullet 2",
+      "evidence": "CHANGELOG says 'the existing collection/worker skills are copied unchanged'. Evidence 2 'changes' field: 'collect-openrouter-efficiency and collect-chutes-io-ratio frontmatter descriptions extended with an explicit auto-trigger clause. All six skills reinstalled... hashes above are post-edit.' The packet header likewise states byte-identity holds only 'apart from phase-09 description-trigger edits'.",
+      "repair": "Amend the CHANGELOG bullet to 'copied unchanged except for phase-09 description-trigger edits to collect-openrouter-efficiency and collect-chutes-io-ratio (see install receipt)'."
+    },
+    {
+      "id": "R2-2",
+      "severity": "minor",
+      "location": "Artifact 4 COVERAGE.md live-state paragraph",
+      "evidence": "COVERAGE states '2026-09-11 for OpenRouter, Artificial Analysis (including Coding Agent v1.5), DesignArena and the three efficiency snapshots'. Evidence 1 meta.source_dates shows aa_coding_agents: '2026-09-09' (only aa_coding_agents_v1_5 is 2026-09-11), so the v1.4 Coding Agent source date is not 2026-09-11 and the enumeration omits the 09-09 bucket.",
+      "repair": "Add aa_coding_agents to the date enumeration as 2026-09-09, or rephrase so only v1.5 is claimed under 2026-09-11."
+    },
+    {
+      "id": "R2-3",
+      "severity": "minor",
+      "location": "Artifact 2 EXPLAINER-VIDEO-BRIEF.md, 'Freshness' row and 'Daily automation' bullet",
+      "evidence": "Brief says 'daily 05:17 UTC staged job' and 'installed run 06:32→06:50 UTC, 36/36 steps, exit 0'. Evidence 3 confirms the run started 2026-09-11T06-32-03Z, 36 steps successful, snapshot a41df419..., $0.1670 — but contains no end time (06:50), no explicit exit code, and no AA scores for the named workers, so '→06:50', 'exit 0' and 'all-worker AA ≥ 34' are not evidenced by the supplied receipt.",
+      "repair": "Cite or attach the run receipt that records the end timestamp, exit status and per-worker AA scores, or drop '→06:50'/'exit 0' and qualify the AA ≥ 34 claim as picker-enforced rather than measured in this receipt."
+    },
+    {
+      "id": "R2-4",
+      "severity": "minor",
+      "location": "Artifact 1 ops/skills/collect-chutes-io-ratio/SKILL.md, final line",
+      "evidence": "Skill text: 'Installation to all runtimes and both machines is handled in rebuild phase 09.' Evidence 2 wsl_gap: 'Florian's WSL machine (/home/flori/) unreachable from Sandy; skills not installed there.' The 'both machines' phrasing contradicts the documented one-machine gap.",
+      "repair": "Change to 'Installation to all Sandy runtimes is handled in rebuild phase 09; the WSL machine remains a documented gap (see skills-install receipt).' (Same pattern appears in collect-openrouter-efficiency's 'staged here for phase-09 installation across runtimes and machines' — soften 'machines' there too.)"
+    }
+  ],
+  "fixed": [
+    {
+      "id": "E1",
+      "re_test_evidence": "Evidence 2 lists all six skills with exists:true and matching SHA-256 under sandy-claude (/home/flori/.claude/skills), sandy-codex and sandy-opencode; W28 now says installed on all three Sandy runtimes with only the WSL machine partial. Consistent."
+    },
+    {
+      "id": "E2",
+      "re_test_evidence": "Brief and COVERAGE W25 now state 767 derived (and 519 self-reported, 12,622 measured); 12,622+767+519 = 13,908 matches the brief's total. No source file for these counts was supplied, so the internal consistency is verified but the underlying scores.json count itself is missing evidence (see missing_evidence)."
+    },
+    {
+      "id": "E3",
+      "re_test_evidence": "Receipt bytes (5850/3539/6886/5139/4762/3178) match the bytes_utf8 values quoted per artifact header. Independent recomputation of UTF-8 byte lengths was not possible (no execution tools); values are internally consistent."
+    },
+    {
+      "id": "E4",
+      "re_test_evidence": "Both collect-openrouter-efficiency and collect-chutes-io-ratio frontmatter descriptions now contain explicit 'Use when...' clauses; receipt 'changes' field confirms reinstall of all six skills with post-edit hashes."
+    },
+    {
+      "id": "E5",
+      "re_test_evidence": "Evidence 1 health: status 200, body {ok:true, db:false}, note explains db:false means no DATABASE_URL and the static dataset is served. CHANGELOG and brief framing match."
+    },
+    {
+      "id": "E6",
+      "re_test_evidence": "COVERAGE live-state paragraph now enumerates 2026-09-11 / 2026-09-08 / 2026-07-12 source dates, consistent with Evidence 1 except for the aa_coding_agents 2026-09-09 omission tracked as R2-2."
+    },
+    {
+      "id": "E7",
+      "re_test_evidence": "W3 cites data/raw/aa-efficiency.json with count 141 / coverage.published_rows 141 / collected 2026-09-11T06:32:14Z, matching Evidence 1 meta.source_dates.aa_efficiency (2026-09-11T06:32:14.403Z). W8's citation of evidence/phase-08/normal-run/worker-calls.json (33 calls) is properly attributed, but the file itself was not supplied — tracked as missing evidence, not an error in the citation."
+    }
+  ],
+  "uncertainties": [
+    "artifact_sha256 is null: the packet defines an artifact set of four files with individual SHA-256 values but supplies no single set digest; I cannot compute one.",
+    "Byte-identity of the four collection skills to their phase-02/04/08 originals is asserted in the packet header but the phase-02/04/08 originals were not supplied, so it cannot be independently confirmed (the post-edit hashes match between artifact headers and the receipt, which is the check that was possible).",
+    "The brief's 'daily 05:17 UTC staged job' phrasing vs the 06:32 run start in Evidence 3 may indicate a two-stage schedule (stage at 05:17, run at 06:32); no cron definition or W17 receipt was supplied to confirm the 05:17 schedule.",
+    "COVERAGE W12 (@Whats_AI editorial board), W13 ('phase 08 checked 75 sources'), W7 ('runner header' recording quota exhaustion) and the 'final completion Telegram sent this phase' claim cite receipts not included in this packet; accepted as receipt-cited, not independently verified.",
+    "All 141/1288/939/274/21.03/51/788 figures are cross-consistent between the brief and COVERAGE, but the underlying files (aa-efficiency.json, openrouter-efficiency.json, chutes-efficiency.json, dataset.json benchmark_results) were not supplied for direct verification."
+  ],
+  "missing_evidence": [
+    "evidence/phase-08/normal-run/worker-calls.json — cited by W8 (33 calls, all AA ≥ 34, under $4/M); contents not supplied.",
+    "ops/rebuild-2026-09/evidence/phase-09/skills-install.json is supplied as Evidence 2, but no receipt demonstrating runtime discovery/invocation — receipt itself states runtime_discovery_tested: false; criterion 3 is satisfied for installation, criterion 1 'usable by an agent' is only file-presence evidenced.",
+    "data/raw/benchmarks/scores.json and dataset.benchmark_results.observations — cited by W25/E2 for 12,622/767/519 counts; not supplied.",
+    "data/raw/aa-efficiency.json — cited by W3 (count 141); not supplied (only its timestamp appears in Evidence 1).",
+    "data/raw/openrouter-efficiency.json / openrouter_endpoints stats — basis for 1,288 pairs, 939 cache-read, 274 cache-write, 51 OpenRouter models (W2, W4, brief); not supplied.",
+    "data/raw/chutes-efficiency.json — basis for the 21.03 global fallback ratio and 788-model fallback count (W2, brief); not supplied.",
+    "Run receipt recording end time, exit code and worker AA scores for the 2026-09-11 daily run (supports R2-3); not supplied.",
+    "EXPLAINER-VIDEO-BRIEF.md sha256 is listed but no digest for CHANGELOG.md or COVERAGE.md was supplied; file-level hashes cannot be recomputed."
+  ],
+  "coverage_checked_note": "All seven round-1 repairs (E1-E7) verified against supplied evidence; all six skills re-scanned for frontmatter, trigger clauses, invented paths/numbers; brief, CHANGELOG and COVERAGE cross-checked against Evidence 1-4."
+}

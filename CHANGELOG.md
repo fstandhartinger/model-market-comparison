@@ -4,6 +4,25 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-11 — Phase 09: completion audit and published skills
+
+- Owner verification pass over the live product: `benchmarkheaven.com` (and `www`) and the
+  compatibility host both resolve and serve the current dataset; `/api/health`, `/api/meta`
+  and all shipped routes return 200; branding and build date are current on both hosts.
+  Health reports `{"ok":true,"db":false}` — no `DATABASE_URL` is configured and the product
+  serves the committed static dataset, so `db:false` is expected here.
+- Published the project's operational skills canonically under `ops/skills/` and installed
+  them on the Sandy build server for Claude Code, Codex and opencode. Added two skills:
+  `maintain-benchmarkheaven-registry` and `run-benchmarkheaven-gauntlet`; the existing
+  collection/worker skills are copied unchanged except for phase-09 description-trigger
+  edits to `collect-openrouter-efficiency` and `collect-chutes-io-ratio`. Installation
+  receipt with SHA-256 hashes:
+  `ops/rebuild-2026-09/evidence/phase-09/skills-install.json`.
+- Added `ops/rebuild-2026-09/EXPLAINER-VIDEO-BRIEF.md` (source-backed narrative and
+  screenshot plan for the product explainer).
+- **Known gap:** Florian's WSL machine was unreachable from Sandy, so the skills are not
+  installed there; documented in `COVERAGE.md` (W28) and the receipt.
+
 ## 2026-09-11 — Daily automation
 
 - Replaced the daily Codex prompt loop with staged collection, dynamic AA >=34
@@ -57,7 +76,7 @@ some app internals — details per release below.
   - `data/raw/*.json` — per-source snapshots (ArtificialAnalysis, OpenRouter, DesignArena, per-provider catalogs, `manual.json` overrides).
   - `data/gateways.json` — gateway comparison data.
 - **Live API** (same JSON shapes as the repo, CORS `*`; see [API.md](API.md)):
-  - Base URL: **`https://model-market-comparison.app.mintapis.com`**
+  - Base URL: **`https://benchmarkheaven.com`** (compatibility: `https://model-market-comparison.app.mintapis.com`)
   - `GET /api/dataset` · `GET /api/models` · `GET /api/providers` · `GET /api/meta` · `GET /api/health`
 
 ## 2026-09-10 — rebuild phase 02

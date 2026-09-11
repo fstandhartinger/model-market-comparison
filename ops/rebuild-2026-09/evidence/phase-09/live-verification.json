@@ -1,0 +1,85 @@
+{
+  "phase": "09",
+  "kind": "live-verification",
+  "checked_at": "2026-09-11T23:21:54Z",
+  "hosts": {
+    "https://benchmarkheaven.com": {
+      "home_status": 200,
+      "home_seconds": 0.082,
+      "home_bytes": 5776967,
+      "branding_present": true,
+      "build_date_present": true
+    },
+    "https://www.benchmarkheaven.com": {
+      "home_status": 200,
+      "home_seconds": 0.126,
+      "home_bytes": 5776967,
+      "branding_present": true,
+      "build_date_present": true
+    },
+    "https://model-market-comparison.app.mintapis.com": {
+      "home_status": 200,
+      "home_seconds": 0.155,
+      "home_bytes": 5776967,
+      "branding_present": true,
+      "build_date_present": true
+    }
+  },
+  "routes": {
+    "/": 200,
+    "/about": 200,
+    "/benchmarks": 200,
+    "/charts": 200,
+    "/compare": 200,
+    "/eu": 200,
+    "/gateways": 200,
+    "/provider-explorer": 200,
+    "/providers": 200,
+    "/radar": 200,
+    "/scatter": 200
+  },
+  "health": {
+    "status": 200,
+    "body": {
+      "ok": true,
+      "db": false
+    },
+    "note": "app/api/health/route.ts returns { ok: true, db: !!process.env.DATABASE_URL }. db:false means no DATABASE_URL is configured on the deployed service; the product serves the committed static dataset and does not require a live database."
+  },
+  "meta": {
+    "generated_at": "2026-09-11T06:55:14.060Z",
+    "counts": {
+      "models": 839,
+      "families": 654,
+      "providers": 90,
+      "offers": 2801
+    },
+    "source_dates": {
+      "openrouter": "2026-09-11",
+      "artificialanalysis": "2026-09-11",
+      "designarena": "2026-09-11",
+      "aws_bedrock": "2026-09-08",
+      "azure_foundry": "2026-09-08",
+      "google_vertex": "2026-09-08",
+      "nebius": "2026-09-08",
+      "inceptron": "2026-09-08",
+      "scaleway": "2026-09-08",
+      "ionos": "2026-09-08",
+      "mistral": "2026-09-08",
+      "tensorx": "2026-09-08",
+      "chutes": "2026-09-08",
+      "ovhcloud": "2026-09-08",
+      "stackit": "2026-09-08",
+      "t_systems_llm_hub": "2026-09-08",
+      "aa_coding_agents": "2026-09-09",
+      "github_copilot": "2026-09-08",
+      "claude_code": "2026-09-08",
+      "aa_coding_agents_v1_5": "2026-09-11",
+      "provider_meta": "2026-07-12",
+      "aa_efficiency": "2026-09-11T06:32:14.403Z",
+      "openrouter_efficiency": "2026-09-11T06:32:17.826Z",
+      "chutes_efficiency": "2026-09-11T06:32:36.168Z"
+    }
+  },
+  "health_status": 200
+}

@@ -1,0 +1,44 @@
+{
+  "artifact_id": "phase-09-completion-artifacts",
+  "artifact_sha256": "not verifiable from supplied material — the packet header contains the placeholder '<computed after write; equals SHA-256 of this packet file>' rather than an actual digest",
+  "round": 3,
+  "verdict": "revise",
+  "coverage_checked": [
+    "R2-1: CHANGELOG phase-09 entry now states phase-09 description-trigger edits to collect-openrouter-efficiency and collect-chutes-io-ratio (verified present)",
+    "R2-2: COVERAGE live-state lists aa_coding_agents v1.4 at 2026-09-09 and v1.5 at 2026-09-11 (matches Evidence 1 source_dates)",
+    "R2-3: brief cites run-report start/finish/exit/steps (06:32:03.542Z / 06:50:09.612Z / exit 0 / 36 steps, matching Evidence 4) and states AA >= 34 is enforced at pick time, not re-scored in the receipt",
+    "R2-4: both collect-chutes-io-ratio and collect-openrouter-efficiency SKILL.md state 'all Sandy runtimes; WSL remains a documented gap'",
+    "Round-1 repairs E1-E7 spot-checked: E1 six skills on three Sandy runtimes per Evidence 2 (matches W28); E2 767 derived matches Evidence 6; E3 bytes_utf8 fields present; E4 trigger clauses present in both descriptions (and recorded in receipt 'changes'); E5 /api/health 200 with db:false explanation (Evidence 1 + CHANGELOG); E6 mixed source dates paragraph present; E7 W3/W8 cite evidence files",
+    "Arithmetic: 12,622 + 767 + 519 = 13,908 (Evidence 6 matches brief and W25); 51 + 788 = 839 efficiency coverage (Evidence 8 matches brief/W2); ratio 21.0346 ≈ 21.03",
+    "Frontmatter present with name + trigger-clause description on all six skills; hashes in packet match Evidence 2 receipt byte-for-byte",
+    "Snapshot counts: aa-efficiency count 141 / published_rows 141 (Evidence 7) matches brief and W3; the 138/636 figures in the collect-aa-efficiency skill are explicitly dated 2026-09-10 and explained in W3",
+    "Cost figure $0.167 (Evidence 4/5 summary, 33 calls, 1 call without cost) matches brief and cron summary; no contradiction found",
+    "Known gaps (W27 video not delivered, WSL unreachable, runtime discovery untested) are stated as not delivered in brief, CHANGELOG, COVERAGE and Evidence 2 (runtime_discovery_tested: false)"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "R3-1",
+      "severity": "minor",
+      "location": "COVERAGE.md W8 / Evidence 5 (worker-calls.json)",
+      "evidence": "W8 claims the phase-08 daily run's 33 calls were 'all AA >= 34 and under the $4/M ceiling'. Evidence 5 shows three distinct worker models (z-ai/glm-5.3-flash, deepseek/deepseek-v4-pro-0813, google/gemini-3.7-flash) plus the requested deepseek-v4-flash-0731, but the packet only evidences AA index and prices for two of them (Evidence 4: deepseek-v4-flash-0731 = 34.5, glm-5.3-flash = 41.9). No AA score or price evidence for deepseek-v4-pro-0813 or google/gemini-3.7-flash is included in the packet, so the 'all AA >= 34' and 'under $4/M' portion of W8 cannot be verified from the supplied material.",
+      "repair": "Embed the AA qualification and price fields for deepseek-v4-pro-0813 and google/gemini-3.7-flash (e.g. from the pick-time selection receipts) into the packet, or scope the W8 claim to the models whose qualification is evidenced."
+    }
+  ],
+  "fixed": [
+    "R2-1: verified repaired — CHANGELOG now carries the phase-09 description-trigger wording (criteria 3 criterion met; no re-test needed beyond text match)",
+    "R2-2: verified repaired — COVERAGE live-state and Evidence 1 agree (aa_coding_agents 2026-09-09, aa_coding_agents_v1_5 2026-09-11)",
+    "R2-3: verified repaired — brief run-report citations match Evidence 4 exactly; pick-time enforcement statement present",
+    "R2-4: verified repaired — both skills contain the 'WSL remains a documented gap' wording, consistent with Evidence 2 wsl_gap and COVERAGE W28"
+  ],
+  "uncertainties": [
+    "The packet's own artifact_sha256 is a placeholder by design ('computed after write'); as a read-only critic I cannot compute or confirm it. Owner must confirm the file digest was stamped after the final write.",
+    "Skill-internal figures dated 2026-09-10 (138 efficiency rows, 636 scored rows, cross-check token counts) are historical skill notes, superseded by the 2026-09-11 snapshot (141/637, Evidence 7); they are consistent as dated history and were not treated as current claims.",
+    "Byte-counted files (bytes_utf8) and per-file SHA-256 values cannot be independently recomputed without execution tools; they are internally consistent between the packet and Evidence 2."
+  ],
+  "missing_evidence": [
+    "AA Intelligence Index scores for deepseek/deepseek-v4-pro-0813 and google/gemini-3.7-flash as used in the phase-08 run (needed to substantiate 'all AA >= 34' in W8 / Evidence 5)",
+    "Per-call price evidence for all worker models (only the two run-report workers carry prices) needed to substantiate 'under the $4/M ceiling' for all 33 calls",
+    "The packet file's actual SHA-256 digest (placeholder in header)"
+  ]
+}

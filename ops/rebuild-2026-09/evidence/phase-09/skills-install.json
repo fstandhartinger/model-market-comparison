@@ -1,0 +1,141 @@
+{
+  "phase": "09",
+  "kind": "skills-install",
+  "created_at": "2026-09-11T23:28:40Z",
+  "canonical_repository_copy": {
+    "collect-aa-efficiency": {
+      "path": "ops/skills/collect-aa-efficiency/SKILL.md",
+      "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7",
+      "bytes": 5850,
+      "frontmatter_name": "collect-aa-efficiency",
+      "frontmatter_description": "Collect Artificial Analysis Intelligence Index token-efficiency data (output tokens per task, canonical input/output token counts) for the broad population exposed by a model-page fetch. Use when asked for AA token efficiency, tokens-per-task, input:output benchmark ratios, reasoning-vs-answer token splits, or to refresh data/raw/aa-efficiency.json."
+    },
+    "collect-chutes-io-ratio": {
+      "path": "ops/skills/collect-chutes-io-ratio/SKILL.md",
+      "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0",
+      "bytes": 3598,
+      "frontmatter_name": "collect-chutes-io-ratio",
+      "frontmatter_description": "Collect a documented global input/output token ratio from Chutes usage statistics when per-model OpenRouter workload usage is missing. Use when an app or dataset needs a documented global input:output fallback ratio and no per-model OpenRouter workload usage is available."
+    },
+    "collect-openrouter-efficiency": {
+      "path": "ops/skills/collect-openrouter-efficiency/SKILL.md",
+      "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336",
+      "bytes": 6954,
+      "frontmatter_name": "collect-openrouter-efficiency",
+      "frontmatter_description": "Collect OpenRouter per-model workload I/O ratios and exact-endpoint cache-hit statistics and prices using public Flight payloads and the frontend effective-pricing API. Use when OpenRouter per-model I/O ratios, endpoint cache-hit rates, or cache read/write prices need to be refreshed or checked against a primary payload."
+    },
+    "maintain-benchmarkheaven-registry": {
+      "path": "ops/skills/maintain-benchmarkheaven-registry/SKILL.md",
+      "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f",
+      "bytes": 5139,
+      "frontmatter_name": "maintain-benchmarkheaven-registry",
+      "frontmatter_description": "Maintain Benchmark Heaven's versioned benchmark registry and ingest new benchmark scores with full provenance. Use when adding or updating a benchmark entry, ingesting leaderboard or vendor scores, pinning benchmark versions, or validating that no number reaches the dataset without a source, date and basis."
+    },
+    "run-benchmarkheaven-gauntlet": {
+      "path": "ops/skills/run-benchmarkheaven-gauntlet/SKILL.md",
+      "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4",
+      "bytes": 4762,
+      "frontmatter_name": "run-benchmarkheaven-gauntlet",
+      "frontmatter_description": "Run a Benchmark Heaven gauntlet review round with a producer/critic pair to QA data rows, code or UI before publication. Use when validating a frozen phase artifact, reviewing candidate benchmark rows, double-checking a code change or design, or when someone says \"gauntlet\", \"critic round\" or \"independent review\"."
+    },
+    "select-benchmarkheaven-workers": {
+      "path": "ops/skills/select-benchmarkheaven-workers/SKILL.md",
+      "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65",
+      "bytes": 3178,
+      "frontmatter_name": "select-benchmarkheaven-workers",
+      "frontmatter_description": "Choose currently qualified free or cheap workers for Benchmark Heaven collection and independent source review. Use for this repository's daily refresh and gauntlet tasks."
+    }
+  },
+  "targets": {
+    "sandy-claude": {
+      "base": "/home/flori/.claude/skills",
+      "installed": {
+        "collect-aa-efficiency": {
+          "exists": true,
+          "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7"
+        },
+        "collect-chutes-io-ratio": {
+          "exists": true,
+          "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0"
+        },
+        "collect-openrouter-efficiency": {
+          "exists": true,
+          "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336"
+        },
+        "maintain-benchmarkheaven-registry": {
+          "exists": true,
+          "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f"
+        },
+        "run-benchmarkheaven-gauntlet": {
+          "exists": true,
+          "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4"
+        },
+        "select-benchmarkheaven-workers": {
+          "exists": true,
+          "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65"
+        }
+      }
+    },
+    "sandy-codex": {
+      "base": "/home/flori/.codex/skills",
+      "installed": {
+        "collect-aa-efficiency": {
+          "exists": true,
+          "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7"
+        },
+        "collect-chutes-io-ratio": {
+          "exists": true,
+          "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0"
+        },
+        "collect-openrouter-efficiency": {
+          "exists": true,
+          "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336"
+        },
+        "maintain-benchmarkheaven-registry": {
+          "exists": true,
+          "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f"
+        },
+        "run-benchmarkheaven-gauntlet": {
+          "exists": true,
+          "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4"
+        },
+        "select-benchmarkheaven-workers": {
+          "exists": true,
+          "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65"
+        }
+      }
+    },
+    "sandy-opencode": {
+      "base": "/home/flori/.config/opencode/skills",
+      "installed": {
+        "collect-aa-efficiency": {
+          "exists": true,
+          "sha256": "057d1158f265e2b04a5899abaec1aa160d5ef9ce27545957bbb728984db80ba7"
+        },
+        "collect-chutes-io-ratio": {
+          "exists": true,
+          "sha256": "e4e168a45b922b1bc27360bb343e02c208593bd6e16b9cc7fe4ccbfd2c86d1f0"
+        },
+        "collect-openrouter-efficiency": {
+          "exists": true,
+          "sha256": "cb468a8fb7ccbc0f40673f0f63e9613db500c5694c3422532ac2efbf31135336"
+        },
+        "maintain-benchmarkheaven-registry": {
+          "exists": true,
+          "sha256": "00458f20fc14cd32cdcf20e7059558028b24028870c4fdd7824649801025dc9f"
+        },
+        "run-benchmarkheaven-gauntlet": {
+          "exists": true,
+          "sha256": "558f3dbeac864492216863cc201bc595d78323055cc8f5da53931feecb2f56d4"
+        },
+        "select-benchmarkheaven-workers": {
+          "exists": true,
+          "sha256": "bac9a5833dfd8b2d183bed27e9d941d45a3fbc384947ab4ab51dd2c597003b65"
+        }
+      }
+    }
+  },
+  "runtime_discovery_tested": false,
+  "changes": "Round-1 critic E4: collect-openrouter-efficiency and collect-chutes-io-ratio frontmatter descriptions extended with an explicit auto-trigger clause. All six skills reinstalled on all three Sandy runtimes; hashes above are post-edit.",
+  "wsl_gap": "Florian's WSL machine (/home/flori/) unreachable from Sandy; skills not installed there."
+}

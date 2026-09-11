@@ -5,7 +5,7 @@
 > “Completion evidence required” is an acceptance criterion, not an observation.
 > Phase 1 execution and deployment evidence is in `REPORT.md`; future evidence requirements below are not completion claims.
 
-Phase 1 foundations and phases 02–05 have release evidence in `REPORT.md`. Phase 06 is implemented and live-verified, with final release receipts in `REPORT.md`. Phase 08 has a successful installed daily run and published-data receipts; phase 09 delivery obligations remain planned. This table only updates the wishes verified by the current phase; the report carries prior phase detail.
+Phase 1 foundations and phases 02–05 have release evidence in `REPORT.md`. Phase 06 is implemented and live-verified, with final release receipts in `REPORT.md`. Phase 07 has DNS/TLS and rebrand receipts. Phase 08 has a successful installed daily run and published-data receipts. Phase 09 (below) re-checked every row against the deployed product and gave final verdicts. This table only updates the wishes verified by the current phase; the report carries prior phase detail.
 
 ---
 
@@ -42,6 +42,70 @@ Phase 1 foundations and phases 02–05 have release evidence in `REPORT.md`. Pha
 | W27 | At the end: update via `/notify-telegram` **and** an `/explainer-video` about the end result | 9 + handoff to local Claude session | Telegram sent; explainer-video brief handed to Claude session; actual video delivery confirmed; a blocked handoff remains incomplete | Planned |
 | W28 | Efficient collection recipes saved as user-level skills everywhere: local machine and Sandy, Claude Code, Codex and opencode | 2, 8, 9 | Token/I/O/cache collection skills written; installed in each of the six runtime/machine combinations; discovery and successful invocation receipts; repository copies alone do not count | Repository recipe/worker-selection skills prepared; installation and discovery across all six machine/runtime combinations remain phase 09 |
 | F1 | Binding follow-up: use **xplainervideo** for all X/Grok interactions, **NOT airesearch12** | 4, 9 | Operational logs and final audit show only xplainervideo; no airesearch12 usage in any phase artifact | Planned |
+
+---
+
+## Phase 09 completion audit (2026-09-11)
+
+Owner line-by-line re-read of §11 and the binding follow-up against the deployed
+product, the committed registry/dataset bytes, and the per-phase release receipts in
+`REPORT.md`. Rows accepted in earlier phases are cited by their receipt rather than
+re-derived from scratch. Live state re-checked this phase: both hosts resolve to
+Sandy and return HTTPS 200, and live `/api/meta` reports 839 models / 654 families /
+90 providers / 2801 offers. Source dates are mixed by source: `2026-09-11` for
+OpenRouter, DesignArena, the three efficiency snapshots and Artificial Analysis
+Coding Agent **v1.5**; `2026-09-09` for the frozen Artificial Analysis Coding Agent
+**v1.4** (`aa_coding_agents`); `2026-09-08` for the cloud and Chutes catalogues;
+`2026-07-12` for provider metadata. Raw payload:
+`evidence/phase-09/live-verification.json`. The 05:17 UTC cron produced today's
+published snapshot `a41df419`.
+
+| ID | Phase 09 verdict | Basis |
+|---|---|---|
+| W1 | Complete | Adjusted price is the default; phase 03/06 receipts; live homepage exposes adjusted prices. |
+| W2 | Complete | `dataset.efficiency`: OpenRouter per-model empirical ratio for 51 models, Chutes global fallback (`derived`, 21.03) for 788, both with source+url+date+basis; existing blends retained. |
+| W3 | Complete | `data/raw/aa-efficiency.json` (`collected_at 2026-09-11T06:32:14.403Z`) holds `count: 141` and `coverage.published_rows: 141`; the `collect-aa-efficiency` skill note dated 2026-09-10 records the earlier 138-row snapshot. |
+| W4 | Complete | `openrouter_endpoints`: 1,288 model×provider pairs; 939 cache-read and 274 cache-write prices; unknown hit rates stay `null`. |
+| W5 | Complete | New fields ship in `data/dataset.json` and the public API; daily job republishes them (phase 08 run). |
+| W6 | Complete | Adjusted default + raw toggle + min-score filter; phase 03/06 browser evidence. |
+| W7 | Complete with deviation | Phases 01–08 were driven and accepted by Codex on Sandy with re-test/deploy per phase; phase 09 ran on OpenCode/DeepSeek V4.1 Flash because the Codex quota was exhausted (recorded in the runner header). See deviations. |
+| W8 | Complete | `bin/worker.sh` + `pick-worker-models.mjs`; phase 08 daily run used dynamic AA ≥ 34 selection; `evidence/phase-08/normal-run/worker-calls.json` records 33 calls. Per-model qualification is evidenced by the pick-time `benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690/reports/worker-catalog.json` (`min_index: 34`): the four models actually used — deepseek-v4-flash-0731 (AA 34.5), z-ai/glm-5.3-flash (41.9), deepseek-v4-pro-0813 (36.3), google/gemini-3.7-flash (36.9) — are all ≥ 34, with the highest used output price $3.75/M (below the $4/M ceiling); see `evidence/phase-09/critic-residue.md`. |
+| W9 | Complete | Daily quiet policy verified in phase 08; final completion Telegram sent this phase. |
+| W10 | Complete with deviation | Codex drove phases 01–08; Claude was used only for the explainer-video handoff. Phase 09 ran on OpenCode per the same quota constraint. |
+| W11 | Complete | Radar on `/compare` and `/radar`, 4-model selection, versions shown; phase 06 receipts. |
+| W12 | Complete (scoped) | Phase 04 X sweep used **xplainervideo** only, found the @Whats_AI editorial-writing board, imported no numbers; registry `how_to_collect` populated for all 73 entries. |
+| W13 | Complete as scoped | 73-entry registry with explicit exclusions/saturated/superseded ledger; phase 08 checked 75 sources. "Complete benchmark-universe freshness" is not claimed. |
+| W14 | Complete | v1.4 Composite bytes/inputs unchanged; Coding Agent v1.5 kept separate (phase 06/08). |
+| W15 | Complete (scoped) | Grok prompts recorded in phase-04 `grok-answer*.txt`; exclusions have reasons. |
+| W16 | Complete | `GAUNTLET.md` + per-phase critic rounds; this phase ran a closing critic round. |
+| W17 | Complete | Installed 05:17 UTC cron; AA ≥ 34 picker; quiet policy (phase 08 normal run). |
+| W18 | Complete | `primary_url` / `how_to_collect` on all 73 entries; recipes executed by the daily refresh. |
+| W19 | Complete | `one_sentence_description` and `category` populated on all 73 entries. |
+| W20 | Complete | Per-model score list, model-vs-model, inverse per-benchmark views (phase 06). |
+| W21 | Complete | Version isolation, explicit sparse states, no zero imputation (phase 06). |
+| W22 | Complete | Phase 06 usability/accessibility/performance checklist; critic review of rendered output. |
+| W23 | Complete | Measured-peer/profile anomaly heuristics with small-sample guard (phase 06). |
+| W24 | Complete | `benchmarkheaven.com` + www + old host all HTTPS 200 on Sandy; brand assets and metadata shipped (phase 07). |
+| W25 | Complete (scoped) | 519 `basis: self_reported` observations with source URLs and 767 `basis: derived` observations (both counts recomputed from `data/raw/benchmarks/scores.json` and `dataset.benchmark_results.observations`); claim flags/pair UI shipped. Zero live measured-vs-self-reported divergences found, so none are displayed (no invented deltas). |
+| W26 | Complete | This audit: §11 read line by line; discrepancies recorded below. |
+| W27 | **Incomplete** | `EXPLAINER-VIDEO-BRIEF.md` written and handed to the local Claude session, but the narrated video has **not** been delivered to Florian. See corrections item 6. |
+| W28 | **Partial** | Six skills published in `ops/skills/` and installed on Sandy under `~/.claude/skills`, `~/.codex/skills` and `~/.config/opencode/skills`; file presence and SHA-256 per runtime are in [the install receipt](evidence/phase-09/skills-install.json). Runtime file-presence is verified, not runtime discovery/invocation. Not installed on Florian's WSL machine — unreachable from Sandy; that blocker remains. See corrections item 5. |
+| F1 | Complete | No `airesearch12` interaction appears in any phase artifact; the only mentions are the original brief quote and the binding correction. |
+
+### Deviations from the original request
+
+- **W7/W10 — quality gate identity.** §11 asked for Codex GPT-6 Astra to carry and own the
+  rebuild. Phases 01–08 were in fact produced and accepted by that owner with per-phase
+  re-test and deploy. Phase 09 (the final verification, skills, report and Telegram pass)
+  ran as OpenCode with `openrouter/deepseek/deepseek-v4.1-flash` because the Codex quota
+  was exhausted; this is an execution-environment change, not a change of acceptance
+  standard, and it is recorded rather than hidden.
+- **W13/W15 — breadth.** The registry is 73 verified entries with an explicit exclusion
+  ledger, not a claim to have captured the entire AI-Twitter universe. This is stated as
+  a coverage limit in `REPORT.md` phase 04/08.
+- **W25 — divergence flags.** The mechanism exists and is tested, but with zero verified
+  live measured–self-reported pairs there is nothing real to display; no delta was
+  fabricated.
 
 ---
 
