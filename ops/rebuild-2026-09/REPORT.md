@@ -386,7 +386,7 @@ This closing change contains only report/coverage updates, audit/review artifact
 
 The owner re-read master-brief section 11 and the binding xplainervideo follow-up against the deployed product, the committed registry/dataset bytes and the per-phase receipts. Both hosts resolve to Sandy over HTTPS and return 200; live `/api/meta` reports **839 models / 654 families / 90 providers / 2,801 offers**. `/api/health` returns 200 with `{"ok":true,"db":false}`: no `DATABASE_URL` is configured and the product serves the committed static dataset, so `db:false` is expected. Source dates are mixed by source — `2026-09-11` for OpenRouter, DesignArena, the three efficiency snapshots and Artificial Analysis Coding Agent v1.5; `2026-09-09` for the frozen v1.4 (`aa_coding_agents`); `2026-09-08` for the cloud and Chutes catalogues; `2026-07-12` for provider metadata. Today's 05:17 UTC cron produced published snapshot **a41df419**. [Live verification](evidence/phase-09/live-verification.json), [full wish-by-wish verdicts](COVERAGE.md).
 
-All phase-09 wishes resolve **Complete** except **W27**, which is **Incomplete**: `EXPLAINER-VIDEO-BRIEF.md` is written and handed to the local Claude session, but the narrated video has not been delivered to Florian. Skills row W28 is **Partial**: all six skills are installed on all three Sandy runtimes; Florian's WSL machine was unreachable from Sandy and is a documented gap.
+All phase-09 wishes resolve **Complete** except **W28**, which is **Partial**: all six skills are installed on all three Sandy runtimes, but Florian's WSL machine was unreachable from Sandy and is a documented gap. W27 (final Telegram **and** explainer video) is **Complete** — see the final-delivery subsection below.
 
 ### Published and installed skills
 
@@ -398,6 +398,10 @@ Owner-authored phase-09 artifacts (`deepseek/deepseek-v4.1-flash`, family deepse
 
 The frozen review packets and their `.sha256` sidecars are retained under `evidence/phase-09/`; the review JSONs include each critic's own uncertainties and missing-evidence lists.
 
+### Final delivery: Telegram and explainer video
+
+The phase-09 delivery requirement (W27) is met. A German narrated explainer video — six beats, 49.10 s, 1920×1080, 30 fps, H.264 + AAC, 2.93 MB — was produced on Sandy from `EXPLAINER-VIDEO-BRIEF.md` using the `explainer-video` skill with ElevenLabs (`eleven_multilingual_v2`, voice George), claiming nothing outside the brief's "must not claim" list. The artifact is retained at `evidence/phase-09/benchmarkheaven-de.mp4` (sha256 `aa0392908f6b9d6cc368bf39104ab6820fa7cc4bd2a3dd13c9b17ece604c21aa`). It was delivered to Florian via `@cursor_noti_bot` `sendVideo`, and the German completion summary was sent in the same window (Telegram `message_id 13546`). [Video brief and receipt](EXPLAINER-VIDEO-BRIEF.md).
+
 ### Remaining obligations and honest limits
 
-No data location moved: the same repository, JSON schema, IDs, units and API paths serve `benchmarkheaven.com` and the old compatibility hostname. Outstanding, and not to be reported as delivered: the W27 narrated explainer video (brief only), skill installation on Florian's unreachable WSL machine, runtime invocation testing of the installed skills, and independent re-derivation of byte-hash claims by the critic (which had no execution tools). The phase-08 data and the tested daily implementation are unchanged by this closing phase; the only dataset difference is the regenerated build timestamp.
+No data location moved: the same repository, JSON schema, IDs, units and API paths serve `benchmarkheaven.com` and the old compatibility hostname. Outstanding, and not to be reported as delivered: skill installation on Florian's unreachable WSL machine, runtime invocation testing of the installed skills, and independent re-derivation of byte-hash claims by the critic (which had no execution tools). The phase-08 data and the tested daily implementation are unchanged by this closing phase; the only dataset difference is the regenerated build timestamp.

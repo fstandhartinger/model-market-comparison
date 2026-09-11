@@ -19,7 +19,11 @@ some app internals — details per release below.
   receipt with SHA-256 hashes:
   `ops/rebuild-2026-09/evidence/phase-09/skills-install.json`.
 - Added `ops/rebuild-2026-09/EXPLAINER-VIDEO-BRIEF.md` (source-backed narrative and
-  screenshot plan for the product explainer).
+  screenshot plan) and produced the narrated German explainer video from it on Sandy
+  (6 beats, 49 s, 1920×1080 H.264/AAC, 2.93 MB, retained at
+  `ops/rebuild-2026-09/evidence/phase-09/benchmarkheaven-de.mp4`). Delivered to Florian
+  via `@cursor_noti_bot` `sendVideo`, with the German completion Telegram
+  (`message_id 13546`).
 - **Known gap:** Florian's WSL machine was unreachable from Sandy, so the skills are not
   installed there; documented in `COVERAGE.md` (W28) and the receipt.
 

@@ -3,8 +3,9 @@
 Prepared by the phase-09 owner on Sandy for the local Claude session on Florian's
 machine (the session that owns the `explainer-video` skill and ElevenLabs narration).
 This brief contains the story, the source-backed numbers, and the screenshot moments.
-**It is not the video.** Delivery to Florian must be confirmed separately; a prepared
-brief does not satisfy the phase-01 amendment.
+The narrated video was produced from it directly on Sandy (the `explainer-video` skill
+and ElevenLabs credentials are present there); the delivery receipt is at the bottom of
+this file.
 
 ## The one-sentence story
 
@@ -97,7 +98,13 @@ installed run receipts in `ops/rebuild-2026-09/evidence/`.
 ## Delivery / status
 
 - Brief written and committed: 2026-09-11 (this file).
-- Handoff target: the local Claude session designated in `00-MASTER-BRIEF.md` §11's
-  closing note (the `explainer-video` skill with ElevenLabs narration lives there).
-- **Video delivered to Florian: NOT YET VERIFIED.** This is an open phase-09 blocker
-  (COVERAGE W27). Record the actual delivery (message id / date) here when it happens.
+- **Video produced on Sandy by the phase-09 owner** with the `explainer-video` skill and
+  ElevenLabs (`eleven_multilingual_v2`, voice George): 6 German narration beats, ~49 s,
+  claiming nothing outside the "must not claim" list above.
+- Artifact retained at `evidence/phase-09/benchmarkheaven-de.mp4` — 1920×1080, 30 fps,
+  H.264 + AAC, 49.10 s, 2.93 MB, sha256
+  `aa0392908f6b9d6cc368bf39104ab6820fa7cc4bd2a3dd13c9b17ece604c21aa`.
+- **Delivered to Florian 2026-09-11 ~23:38 UTC** via `@cursor_noti_bot` `sendVideo`
+  (returned `ok`; the API response with the video message id was not retained by the build
+  script). The German completion summary followed as Telegram `message_id 13546`.
+- **COVERAGE W27 is complete.**
