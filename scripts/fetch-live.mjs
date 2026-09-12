@@ -85,7 +85,13 @@ async function fetchArtificialAnalysis() {
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, "artificialanalysis.json"), "utf8")); }
   catch (error) { if (error.code !== "ENOENT") throw error; }
-  assertIdentityCoverage(previous.models, apiModels, (m) => m.id, 'Artificial Analysis models');
+  let approvals = {};
+  try { approvals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')); }
+  catch (error) { if (error.code !== 'ENOENT') throw error; }
+  // AA can legitimately retire or merge a model identity, but an unattended
+  // collector must never infer that from one response. An expiring approval is
+  // bound to both complete identity sets and the exact removed IDs.
+  assertApprovedIdentityCoverage(previous.models, apiModels, (m) => m.id, 'Artificial Analysis models', { approval: approvals.aa_models });
   const priorModels = new Map((previous.models || []).map((m) => [m.id, m]));
   for (const model of apiModels) {
     if (!model.evaluations || !model.pricing || typeof model.name !== 'string' || typeof model.slug !== 'string') throw new Error('AA missing model fields');

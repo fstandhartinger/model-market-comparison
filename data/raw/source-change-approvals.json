@@ -1,4 +1,17 @@
 {
+  "aa_models": {
+    "previous_identity_sha256": "1543a66de61b0e86b42c3818ea04b7459479209189812ad14cf2b7a391eefcad",
+    "current_identity_sha256": "d79bd5a037f5512554e71cdee1e0b1c942c6db073dd5d25f31d328faf0f9a787",
+    "removed": [
+      "21a0a2f6-bc72-40d2-80db-ea4e66b02b90"
+    ],
+    "expires_at": "2026-09-14T23:30:00Z",
+    "reviewed_at": "2026-09-12T22:55:00Z",
+    "primary_url": "https://artificialanalysis.ai/api/v2/data/llms/models",
+    "primary_capture_sha256": "61104c5aa480335071c822fee2f1c111cbc43169f97c50af3379e4504c0d9161",
+    "review_basis": "The complete primary API response contained 646 unique identities, replacing exactly one prior identity (GPT-6 Astra (Non-reasoning)) with one new identity (Agnes 3.0 Flash). The same run's ordinary Artificial Analysis leaderboard HTML contains Astra's other variants but not the removed non-reasoning row. This exception binds both complete identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
+    "owner_acceptance": "Operator reviewed the captured primary API response and leaderboard HTML during the 2026-09-12 daily-refresh remediation; approve only this exact withdrawal for a bounded rerun."
+  },
   "openrouter_catalog": {
     "previous_identity_sha256": "acf5085377c9e3d7ce67d983b7c5bbd1c6ea73ed01587090c7c1569092df3e60",
     "current_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",
