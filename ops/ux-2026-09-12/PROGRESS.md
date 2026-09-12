@@ -55,7 +55,7 @@ credited below, the rest is marked open.
 | R4.1 | Redesign the filter bar, elegant and uncluttered | implemented | `ux-evidence/iter1-live/desktop-filters.png` | grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
 | R4.2 | Fixed I/O blend: add 20:1 (default) and 30:1 | implemented | `ux-evidence/iter1-live/verification.json` | blend list now has 20:1 and 30:1; default reads back as 20 |
 | R4.3 | "One variant for Reasoning models" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
-| R4.4 | Featured audit ≈ AA top 20; DeepSeek V4.1 Flash included | implemented | `scripts/build-dataset.mjs`, `/about#featured`, `test/dataset.test.mjs` | featured is now **derived**: top 20 families by best AA Intelligence Index across variants, deprecated excluded, plus pins. 20 families / 58 rows (was 35 / 101). DeepSeek V4.1 Flash ranks 18 **and** is pinned. Rule + list published in `build_diagnostics.featured_selection` and rendered on /about |
+| R4.4 | Featured audit ≈ AA top 20; DeepSeek V4.1 Flash included | implemented | `ux-evidence/iter2-live/verification-iter2.json`, `desktop-about-featured.png` | featured is now **derived**: top 20 families by best AA Intelligence Index across variants, deprecated excluded, plus pins. 20 families / 58 rows (was 35 / 101). DeepSeek V4.1 Flash ranks 18 **and** is pinned. Rule + list published in `build_diagnostics.featured_selection` and rendered on /about |
 | R4.5 | "Hide deprecated" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
 | R4.6 | "Exclude Chinese providers" unchecked by default | implemented | `ux-evidence/iter1-live/verification.json` | `aria-pressed=false` on load; Reset now restores false (D2) |
 | R4.7 | Rename → "EU-hosted only" | implemented | `ux-evidence/iter1-live/verification.json` | label changed, EU eligibility logic untouched |
@@ -65,16 +65,16 @@ credited below, the rest is marked open.
 | R4.11 | Evidence/provider/task-token toggles → extra settings | implemented | `ux-evidence/iter1-live/desktop-overview-tooltip.png` | folded into an "Evidence ▾" popover above the table |
 | R5.1 | Simple (start) + Advanced mode | implemented | `ux-evidence/iter1-live/verification.json` | `aria-selected=true` on Simple at first load |
 | R5.2 | Simple: top 15 featured, sorted by adjusted cost descending | implemented | `ux-evidence/iter1-live/verification.json` | featured-only, limit 15, cost descending (17.40 → 1.83). Only 6 rows survive the score≥85 + measured-token filters today |
-| R5.3 | Score slider, default > 85 | implemented | `components/ShortlistControls.tsx` | range slider, default 85, range taken from the pool; value and "10 % below the best model" stated next to it |
-| R5.4 | Max adjusted cost slider, default unlimited | implemented | `components/ShortlistControls.tsx` | log-scaled slider, default "no limit"; the limit now lives in SettingsContext so Simple, Advanced and the wizard share it |
-| R5.5 | Distribution histogram while a slider moves | implemented | `components/ShortlistControls.tsx` | both histograms are shown permanently rather than only on drag — the score limit is already active at 85 on first paint, so an interaction-only chart would hide exactly the fact that the default is cutting the field. Cost bins are log-scaled (costs span 3 orders of magnitude). Kept vs excluded bars are colour-separated |
-| R5.6 | Wizard (company → privacy/region → minimums → budget → results) | implemented | `components/Wizard.tsx`, third tab "Guided" | five pages in Florian's order, every page skippable. Capability page offers "at least the best model available N months ago" for intelligence and coding separately, computed from release dates + today's scores (never an old published number against a fresh one). Budget page offers real p25/p50/p75 of the shortlist plus "no limit yet" |
+| R5.3 | Score slider, default > 85 | implemented | `ux-evidence/iter2-live/verification-iter2.json` | range slider, default 85, range taken from the pool; value and "10 % below the best model" stated next to it |
+| R5.4 | Max adjusted cost slider, default unlimited | implemented | `ux-evidence/iter2-live/verification-iter2.json` | log-scaled slider, default "no limit"; the limit now lives in SettingsContext so Simple, Advanced and the wizard share it |
+| R5.5 | Distribution histogram while a slider moves | implemented | `ux-evidence/iter2-live/desktop-simple-sliders.png`, `mobile-simple-sliders.png` | both histograms are shown permanently rather than only on drag — the score limit is already active at 85 on first paint, so an interaction-only chart would hide exactly the fact that the default is cutting the field. Cost bins are log-scaled (costs span 3 orders of magnitude). Kept vs excluded bars are colour-separated |
+| R5.6 | Wizard (company → privacy/region → minimums → budget → results) | implemented | `ux-evidence/iter2-live/desktop-wizard-*.png`, `mobile-wizard-step1.png` | five pages in Florian's order, every page skippable. Capability page offers "at least the best model available N months ago" for intelligence and coding separately, computed from release dates + today's scores (never an old published number against a fresh one). Budget page offers real p25/p50/p75 of the shortlist plus "no limit yet" |
 | R6.1 | "Are you a company" checkbox | partial | `components/GlobalFilters.tsx`, `components/Wizard.tsx` | the checkbox exists in the filters **and** as the wizard's first question. It has no pricing effect yet because the site prices API/platform routes only — the tooltip now says exactly that instead of claiming a filter that does not run. Closes fully with R6.3 |
 | R6.2 | Research: may companies use consumer subscriptions? + Telegram | implemented | `ops/ux-2026-09-12/research/R6.2-subscriptions.md` | delegated to Kimi K3, then independently re-fetched. Anthropic and Google forbid company use in their own words; Cursor allows entity use; GitHub steers to Business/Enterprise without forbidding; OpenAI and xAI return HTTP 403 to automated clients and were **not** worked around. Telegram sent — see the iteration log |
 | R6.3 | Subscription prices/quotas folded into the cost view, labelled | open | — | |
-| R7.1 | New logo in the page | implemented | `components/BrandMark.tsx`, `scripts/build-brand-assets.mjs`, `docs/brand.md` | re-drawn as SVG from geometry measured off the JPEG (cloud = 3 circles cut at a flat bottom, 7 treads, 7 measured ray endpoints). Nav wordmark now splits Benchmark / Heaven in ink and brand blue like the artwork |
-| R7.2 | Favicon / apple-touch / og from the new logo | implemented | `app/icon.svg`, `app/apple-icon.png`, `public/brand/*` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
-| R7.3 | Dark-mode logo variant, switched with the theme | implemented | `app/globals.css` `--brand-*`, `public/brand/mark-dark.svg` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
+| R7.1 | New logo in the page | implemented | `ux-evidence/iter2-live/logo-light.png`, `logo-dark.png` | re-drawn as SVG from geometry measured off the JPEG (cloud = 3 circles cut at a flat bottom, 7 treads, 7 measured ray endpoints). Nav wordmark now splits Benchmark / Heaven in ink and brand blue like the artwork |
+| R7.2 | Favicon / apple-touch / og from the new logo | implemented | `ux-evidence/iter2-live/verification-iter2.json` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
+| R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
 | R8.1 | Release-post-style benchmark comparisons and listings | open | — | `ChartsBoard`/`BenchmarkCompare` exist; not yet to the bar |
 | R9.1 | Full fresh data run, every live source dated today | open | — | |
 | H1 | Historical snapshots of all benchmark scores | implemented | — | `573ea60`; `benchmark_results.historical` present — needs audit |
@@ -237,5 +237,20 @@ Notes for whoever picks this up:
     back genuinely good — verbatim quotes, vendor domains only, honest "could not fetch" for
     the two sites that 403 automated clients. Every load-bearing claim was independently
     re-fetched before it was committed; nothing had to be corrected.
+  - **Verified live against https://benchmarkheaven.com after the deploy landed**, desktop
+    1440×1000 and mobile 390×844, evidence in
+    `/opt/benchmarkheaven/state/ux-evidence/iter2-live/` (`verification-iter2.json` plus 9
+    screenshots). Harness committed as `ops/ux-2026-09-12/bin/verify-live-iter2.mjs`.
+    What it proves: three modes with Simple selected on load · score slider is a real
+    `type=range` at 85 whose movement changes the table (6 → 14 rows) · cost slider present at
+    "no limit" · 48 histogram bars on desktop **and** on mobile · all four wizard question
+    pages plus its results, on both widths, with the capability floor naming the model it came
+    from · `--brand-*` demonstrably different between themes · favicon, touch icon, PWA icon
+    and OG image all 200 and the favicon containing the new mark · /about listing exactly 20
+    featured families with rank and index, DeepSeek V4.1 Flash among them.
+  - Defects the live run caught: the /about featured list spelled "Deepseek" where the table
+    said "DeepSeek" (and "QWEN3.8" for "Qwen3.8") — vendor brand casing is now applied in
+    `familyDisplay()`. And on a 390 px phone the hero filled the whole first screen, pushing
+    the shortlist below the fold; the small-screen hero is now denser.
   - **Statuses stay `implemented`, not `verified`** — ground rule 2 reserves `verified` for a
-    different engine.
+    different engine. The evidence a reviewer needs is in place.
