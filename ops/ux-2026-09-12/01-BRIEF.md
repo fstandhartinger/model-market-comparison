@@ -1,6 +1,8 @@
 # Benchmark Heaven — UX, data & analysis workstream (commissioned 2026-09-12)
 
-**Authoritative source:** `00-REQUIREMENTS-VERBATIM.md`. This brief turns it into a checklist.
+**Authoritative sources:** `00-REQUIREMENTS-VERBATIM.md` and `02-ADDENDUM-HERMES-CHAT.md`
+(requirements Florian sent only to Hermes: ECI in the Composite, eight extra benchmarks, PRD
+review, one-writer coordination). This brief turns it into a checklist.
 Where they disagree, the verbatim text wins. Where the verbatim text is ambiguous, this brief
 records the decision taken, so a reviewer can challenge it.
 

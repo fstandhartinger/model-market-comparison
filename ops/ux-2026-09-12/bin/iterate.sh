@@ -36,6 +36,7 @@ PROMPT="You are part of the autonomous Benchmark Heaven workstream on the Sandy 
 Read first, in this order:
   ops/ux-2026-09-12/00-REQUIREMENTS-VERBATIM.md   (authoritative, verbatim — it wins every conflict)
   ops/ux-2026-09-12/01-BRIEF.md                   (checklist R1.1…X7, engine rules, ground rules)
+  ops/ux-2026-09-12/02-ADDENDUM-HERMES-CHAT.md    (equally binding: ECI in Composite, 8 extra benchmarks, PRD review, one-writer rule)
   ops/ux-2026-09-12/PROGRESS.md                   (ledger; create it from the brief + /opt/benchmarkheaven/state/USER-UX-CORRECTION-ACCEPTANCE.md if missing)
   ops/ux-2026-09-12/DESIGN-DIRECTIVES.md and the newest ops/ux-2026-09-12/REVIEW-*.md (if present)
 
