@@ -1,6 +1,7 @@
 # PROGRESS — Benchmark Heaven UX / data / Benchmaxxing workstream
 
-Single ledger for the checklist in `01-BRIEF.md` (authoritative text: `00-REQUIREMENTS-VERBATIM.md`).
+Single ledger for the checklist in `01-BRIEF.md` (authoritative texts:
+`00-REQUIREMENTS-VERBATIM.md` **and** `02-ADDENDUM-HERMES-CHAT.md`).
 
 **Status vocabulary:** `open` · `in-progress` · `implemented` (code merged + green + deployed)
 · `verified` (checked live at desktop *and* mobile width, evidence saved).
@@ -40,30 +41,30 @@ credited below, the rest is marked open.
 
 | ID | Requirement (short) | Status | Evidence | Notes |
 |---|---|---|---|---|
-| R1.1 | Default sort: score descending | implemented | `ux-evidence/iter1/verification.json` | `aria-sort=descending`, first scores 99.2→89.5 |
-| R1.2 | Header "Score" + small "(active score)" underneath, follows selector | implemented | `ux-evidence/iter1/verification.json` | header renders `SCORE ▼ (Composite)`; follows the selector via `SCORE_SHORT_LABELS` |
-| R1.3 | Rename → "Adjusted Cost" | implemented | `ux-evidence/iter1/verification.json` | live string check |
-| R1.4 | (i) next to Adjusted Cost, plain explanation | implemented | `ux-evidence/iter1/verification.json` | `InfoTip` next to Adjusted Cost; tooltip text verified |
-| R1.5 | Remove the "Chutes global fallback" inline text | implemented | `ux-evidence/iter1/verification.json` | phrase gone from the whole source tree; `PriceAssumptions` now one line + method link |
+| R1.1 | Default sort: score descending | implemented | `ux-evidence/iter1-live/verification.json` | `aria-sort=descending`, first scores 99.2→89.5 |
+| R1.2 | Header "Score" + small "(active score)" underneath, follows selector | implemented | `ux-evidence/iter1-live/verification.json` | header renders `SCORE ▼ (Composite)`; follows the selector via `SCORE_SHORT_LABELS` |
+| R1.3 | Rename → "Adjusted Cost" | implemented | `ux-evidence/iter1-live/verification.json` | live string check |
+| R1.4 | (i) next to Adjusted Cost, plain explanation | implemented | `ux-evidence/iter1-live/verification.json` | `InfoTip` next to Adjusted Cost; tooltip text verified |
+| R1.5 | Remove the "Chutes global fallback" inline text | implemented | `ux-evidence/iter1-live/verification.json` | phrase gone from the whole source tree; `PriceAssumptions` now one line + method link |
 | R1.6 | Fuller methodology section, reachable but not prominent | implemented | `app/about/page.tsx` | `/about` rewritten into anchored sections: #adjusted-cost, #score, #data-policy, #identity |
-| R1.7 | (i) next to Score explaining composition | implemented | `ux-evidence/iter1/verification.json` | per-score explanation via `scoreTip()` |
-| R1.8 | (i): desktop hover tooltip, mobile modal with ✕; a11y | implemented | `ux-evidence/iter1/verification.json` | desktop: 1 tooltip / 0 dialogs; mobile: dialog with ✕, closes. Branches on `(hover:hover) and (pointer:fine)`, not width |
-| R2.1 | Remove Channels / Top provider channels columns | implemented | `ux-evidence/iter1/verification.json` | from `f59c021`; re-checked live — neither column string is rendered |
-| R2.2 | Add #benchmarks and #providers columns | implemented | `ux-evidence/iter1/verification.json` | now `benchmark_count` from `benchmark_results.coverage.by_model[].available` — observed 14–20, i.e. no longer the 0–5 composite slots |
-| R3.1 | New hero claim (most complete collection + realistic cost) | implemented | `ux-evidence/iter1/verification.json` | claim is generated from the dataset (13,924 results · 75 benchmarks · 839 models) so it cannot drift; also in metadata, OG, footer, README, brand SVGs. **Pending Fable 5.1 final wording (X3).** |
-| R4.1 | Redesign the filter bar, elegant and uncluttered | implemented | `ux-evidence/iter1/desktop-filters.png` | grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
-| R4.2 | Fixed I/O blend: add 20:1 (default) and 30:1 | implemented | `ux-evidence/iter1/verification.json` | blend list now has 20:1 and 30:1; default reads back as 20 |
-| R4.3 | "One variant for Reasoning models" → extra settings | implemented | `ux-evidence/iter1/desktop-filters.png` | moved into "More settings" |
+| R1.7 | (i) next to Score explaining composition | implemented | `ux-evidence/iter1-live/verification.json` | per-score explanation via `scoreTip()` |
+| R1.8 | (i): desktop hover tooltip, mobile modal with ✕; a11y | implemented | `ux-evidence/iter1-live/verification.json` | desktop: 1 tooltip / 0 dialogs; mobile: dialog with ✕, closes. Branches on `(hover:hover) and (pointer:fine)`, not width |
+| R2.1 | Remove Channels / Top provider channels columns | implemented | `ux-evidence/iter1-live/verification.json` | from `f59c021`; re-checked live — neither column string is rendered |
+| R2.2 | Add #benchmarks and #providers columns | implemented | `ux-evidence/iter1-live/verification.json` | now `benchmark_count` from `benchmark_results.coverage.by_model[].available` — observed 14–20, i.e. no longer the 0–5 composite slots |
+| R3.1 | New hero claim (most complete collection + realistic cost) | implemented | `ux-evidence/iter1-live/verification.json` | claim is generated from the dataset (13,924 results · 75 benchmarks · 839 models) so it cannot drift; also in metadata, OG, footer, README, brand SVGs. **Pending Fable 5.1 final wording (X3).** |
+| R4.1 | Redesign the filter bar, elegant and uncluttered | implemented | `ux-evidence/iter1-live/desktop-filters.png` | grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
+| R4.2 | Fixed I/O blend: add 20:1 (default) and 30:1 | implemented | `ux-evidence/iter1-live/verification.json` | blend list now has 20:1 and 30:1; default reads back as 20 |
+| R4.3 | "One variant for Reasoning models" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
 | R4.4 | Featured audit ≈ AA top 20; DeepSeek V4.1 Flash included | open | — | 101 models currently featured — far more than 20 |
-| R4.5 | "Hide deprecated" → extra settings | implemented | `ux-evidence/iter1/desktop-filters.png` | moved into "More settings" |
-| R4.6 | "Exclude Chinese providers" unchecked by default | implemented | `ux-evidence/iter1/verification.json` | `aria-pressed=false` on load; Reset now restores false (D2) |
-| R4.7 | Rename → "EU-hosted only" | implemented | `ux-evidence/iter1/verification.json` | label changed, EU eligibility logic untouched |
-| R4.8 | Regional settings section (Chinese / EU / US) | implemented | `ux-evidence/iter1/desktop-filters.png` | the three options now sit under a "Regional settings" heading |
-| R4.9 | Rename → "Strong confidential guarantees" | implemented | `ux-evidence/iter1/verification.json` | label changed, TEE logic untouched |
-| R4.10 | "Trains or keeps your data" filter from OpenRouter policy list; Chutes exception | implemented | `ux-evidence/iter1/`, `data/raw/openrouter-data-policy.json` | collector + parser + 7 tests; 85 providers, 48 pass; parse cross-checked against OpenRouter's own facet counts (47/81 exact). Off by default and the cheapest route demonstrably changes when toggled |
-| R4.11 | Evidence/provider/task-token toggles → extra settings | implemented | `ux-evidence/iter1/desktop-overview-tooltip.png` | folded into an "Evidence ▾" popover above the table |
-| R5.1 | Simple (start) + Advanced mode | implemented | `ux-evidence/iter1/verification.json` | `aria-selected=true` on Simple at first load |
-| R5.2 | Simple: top 15 featured, sorted by adjusted cost descending | implemented | `ux-evidence/iter1/verification.json` | featured-only, limit 15, cost descending (17.40 → 1.83). Only 6 rows survive the score≥85 + measured-token filters today |
+| R4.5 | "Hide deprecated" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
+| R4.6 | "Exclude Chinese providers" unchecked by default | implemented | `ux-evidence/iter1-live/verification.json` | `aria-pressed=false` on load; Reset now restores false (D2) |
+| R4.7 | Rename → "EU-hosted only" | implemented | `ux-evidence/iter1-live/verification.json` | label changed, EU eligibility logic untouched |
+| R4.8 | Regional settings section (Chinese / EU / US) | implemented | `ux-evidence/iter1-live/desktop-filters.png` | the three options now sit under a "Regional settings" heading |
+| R4.9 | Rename → "Strong confidential guarantees" | implemented | `ux-evidence/iter1-live/verification.json` | label changed, TEE logic untouched |
+| R4.10 | "Trains or keeps your data" filter from OpenRouter policy list; Chutes exception | implemented | `ux-evidence/iter1-live/`, `data/raw/openrouter-data-policy.json` | collector + parser + 7 tests; 85 providers, 48 pass; parse cross-checked against OpenRouter's own facet counts (47/81 exact). Off by default and the cheapest route demonstrably changes when toggled |
+| R4.11 | Evidence/provider/task-token toggles → extra settings | implemented | `ux-evidence/iter1-live/desktop-overview-tooltip.png` | folded into an "Evidence ▾" popover above the table |
+| R5.1 | Simple (start) + Advanced mode | implemented | `ux-evidence/iter1-live/verification.json` | `aria-selected=true` on Simple at first load |
+| R5.2 | Simple: top 15 featured, sorted by adjusted cost descending | implemented | `ux-evidence/iter1-live/verification.json` | featured-only, limit 15, cost descending (17.40 → 1.83). Only 6 rows survive the score≥85 + measured-token filters today |
 | R5.3 | Score slider, default > 85 | open | — | currently a text `NumFilter` |
 | R5.4 | Max adjusted cost slider, default unlimited | open | — | currently a text `NumFilter` |
 | R5.5 | Distribution histogram while a slider moves | open | — | |
@@ -93,9 +94,18 @@ credited below, the rest is marked open.
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | open | — | |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
-| D1 | Blend default 20 is not a selectable option | implemented | `ux-evidence/iter1/verification.json` | blend 20 is a real option; settings key bumped to v7 to discard the broken payload |
+| D1 | Blend default 20 is not a selectable option | implemented | `ux-evidence/iter1-live/verification.json` | blend 20 is a real option; settings key bumped to v7 to discard the broken payload |
 | D2 | Reset restores `excludeChinese = true` against its default | implemented | `components/GlobalFilters.tsx` | Reset restores every documented default; `defaultMinFor("composite")` is now 85 so a clean page is not reported as modified |
-| D3 | `#benchmarks` shows composite slots, not benchmark count | implemented | `ux-evidence/iter1/verification.json` | see R2.2 |
+| D3 | `#benchmarks` shows composite slots, not benchmark count | implemented | `ux-evidence/iter1-live/verification.json` | see R2.2 |
+| E1 | ECI (general + software engineering) into the Composite, with scraping recipe in the update mechanism | open | — | Epoch AI ECI; newer than the "keep Composite as is" rule, so it wins. Needs re-weighting doc, Score (i) text update, and H2 bridging across the Composite definition change |
+| E2 | Secondary/community benchmarks (Vals AI, CursorBench, Apprentice Bench, DeepSWE, FrontierBench, RealSWE, 2 X threads) — NOT in the Composite | open | — | check `data/raw/benchmarks/` and `bfeada7` first; Real-SWE looks already ingested |
+| E3 | Collection method order: official API/export → structured page data → static HTML → the page's own network calls | open | — | recipes go into the skills and the daily refresh. The R4.10 collector added this iteration already follows it (SSR HTML, robots-allowed, one request, self-verifying) |
+| P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | open | — | reviewer must be a different engine than the author |
+| P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | open | — | AA is the named reference comparator |
+| P3 | Do not stop before P2 is achieved | open | — | |
+| P4 | Positioning claims only in a form the live coverage numbers support | implemented | `app/layout.tsx`, `app/page.tsx` | hero counts are generated from the dataset; the meta description's "most complete … anywhere" superlative was removed this iteration |
+| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | open | — | Fable 5.1 design passes judge against exactly this |
+| C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly |
 
 ---
 
@@ -120,6 +130,26 @@ credited below, the rest is marked open.
 
 ---
 
+## Handover — what the next iteration should pick up
+
+Highest value first, dependencies before the UI that shows them:
+
+1. **R5.3–R5.5** — turn Simple mode's min-score and max-cost into sliders with the
+   distribution histogram. `ModelExplorer` already accepts `defaultSort`/`defaultAsc` and
+   `limit`; the two controls are still `NumFilter` text inputs.
+   Note: only **6 of 15** rows survive today's Simple defaults (featured + score ≥ 85 +
+   measured task tokens). Decide whether "top 15" means relaxing a default or is simply what
+   the data supports, and say which on the page.
+2. **R7.1–R7.3** — the logo. Source is `ops/ux-2026-09-12/assets/benchmark-heaven-logo-light.jpg`;
+   a dark SVG already exists at `public/benchmark-heaven-logo-dark.svg` (from Hermes) and must
+   be checked against the new artwork before being reused.
+3. **R4.4** — featured audit. 101 models are featured against a "roughly top 20" rule; confirm
+   DeepSeek V4.1 Flash is in. This changes what Simple mode shows, so do it before judging (1).
+4. **E1** — ECI into the Composite. Touches the Composite definition, so H2 bridging and the
+   Score (i) text must move with it.
+5. **R6.2** — retry the subscription research. The free-model delegation aborted on a sandbox
+   permission prompt; give it a prompt that never leaves the repo directory.
+
 ## Iteration log
 
 - **2026-09-12 · iteration 1 · claude-opus** — seeded this ledger; re-checked every prior claim
@@ -136,12 +166,21 @@ credited below, the rest is marked open.
     Non-OpenRouter platforms use a small documented alias table; anything unmapped stays
     `null`, never a guessed verdict.
   - Gate: `build-dataset` ✓, `npm test` 238/238 ✓, `tsc --noEmit` ✓, `npm run build` ✓.
-  - Verification harness committed as `bin/verify-live.mjs`; evidence in
-    `/opt/benchmarkheaven/state/ux-evidence/iter1/` (verification.json + 4 screenshots,
-    desktop 1440×950 and mobile 390×844).
+  - Verification harness committed as `bin/verify-live.mjs`; run it with
+    `BH_OUT=<dir> node ops/ux-2026-09-12/bin/verify-live.mjs <base-url>`.
+  - Verified **against https://benchmarkheaven.com after the deploy landed**, not only
+    locally: `/opt/benchmarkheaven/state/ux-evidence/iter1-live/` (verification.json +
+    4 screenshots, desktop 1440×950 and mobile 390×844). The local pre-push run is in
+    `.../iter1/`. Legacy host `model-market-comparison.app.mintapis.com` still returns 200.
+  - **Statuses stay `implemented`, not `verified`** — ground rule 2 reserves `verified` for
+    an engine other than the implementer. The evidence for the review gate is in place.
   - Two defects the browser check caught and that are now fixed: Advanced inherited
     Simple's sort because `defaultSort` only seeds `useState` (fixed with a remount key),
     and the score sub-label printed the full 60-character label instead of the name.
+  - Second push added the `02-ADDENDUM-HERMES-CHAT.md` rows (E1–E3, P1–P4, F1, C1) and,
+    following **P4**, removed the unsupported superlative ("the most complete collection of
+    model benchmark results anywhere") from the page metadata. The visible hero keeps
+    Florian's own sanctioned phrasing but states the actual counts in the line underneath.
   - **R6.2 delegation failed** — the free OpenCode model aborted on a sandbox permission
     prompt (`/home/flori/.agent-budget.json`) before doing any research. R6.2 stays open;
     retry with a prompt that does not leave the repo directory.

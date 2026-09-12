@@ -10,7 +10,9 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://benchmarkheaven.com"),
   applicationName: "Benchmark Heaven",
   title: { default: "Benchmark Heaven — Model benchmarks & costs", template: "%s | Benchmark Heaven" },
-  description: "The most complete collection of model benchmark results anywhere, and the only cost figure that reflects what a model will actually cost you — provider prices, caching and the model's own token appetite included.",
+  // P4: positioning claims only in a form the live coverage supports — so this states
+  // what the site holds and what the cost figure accounts for, not an unverifiable superlative.
+  description: "Published benchmark results for hundreds of models, gathered in one place with their sources and dates — and a cost per task that accounts for the provider, its caching and the model's own token appetite.",
   openGraph: {
     type: "website", siteName: "Benchmark Heaven",
     title: "Benchmark Heaven", description: "Every benchmark result for every model — and what each one actually costs.",
