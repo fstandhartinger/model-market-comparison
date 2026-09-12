@@ -3,14 +3,15 @@
 #   pick-engine.sh work     -> claude-opus | codex-astra | opencode-kimi | opencode-nex
 #   pick-engine.sh review <implementer-engine>
 #   pick-engine.sh design   -> claude-fable | none
-# Rule (Florian, 2026-09-12): Opus 5 while Claude has headroom; then Codex GPT-6 Astra while
+# Rules: Florian 2026-09-12 plus the stricter shared QUOTA-CONTINUITY.md ("honor stricter gates").
+# Opus 5 while Claude has headroom; then Codex GPT-6 Astra while
 # Codex has headroom (never above 80 % of the weekly window); then OpenCode Kimi K3 via
 # Chutes; then OpenCode nex-n2.5-pro:free via OpenRouter. Work must never stop on a quota.
 set -uo pipefail
 MODE="${1:-work}"; AVOID="${2:-}"
 STATE=/opt/benchmarkheaven/state/ux
 mkdir -p "$STATE"
-CLAUDE_MAX=80      # switch away from Claude when session or week reaches this
+CLAUDE_MAX=70      # QUOTA-CONTINUITY.md (Florian 2026-09-12): no new Claude unit at >=70% on either window
 CODEX_START_MAX=75 # do not START a Codex run above this (a run consumes several %)
 
 J="$(python3 "$HOME/.claude/skills/agent-limits/limits.py" --json 2>/dev/null || echo '{}')"

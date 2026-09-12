@@ -56,15 +56,21 @@ Every iteration, `bin/pick-engine.sh` measures the real limits with
 `~/.claude/skills/agent-limits/limits.py --json` and chooses **in this order**:
 
 1. **Claude Code Opus 5** — while the Claude session *and* weekly windows are both below
-   80 % and no hard limit hit is recent.
+   70 % and no hard limit hit is recent. (Florian's shared `QUOTA-CONTINUITY.md` of
+   2026-09-12 is stricter than this message and binds all agents on Sandy: prepare a durable
+   handoff at 60 %, start no new Claude unit at 70 %. The stricter gate wins.)
 2. **Codex GPT-6 Astra** — if Claude is near its limit, and Codex's weekly window is below
    75 %. **Hard cap: Codex must never exceed 80 % of the weekly limit** (Florian: keep 20 %
-   in reserve). `iterate.sh` re-measures every 5 minutes during a Codex run and stops the
+   in reserve; QUOTA-CONTINUITY: prepare handoff at 70 %, admit no new unit at 75 %). `iterate.sh` re-measures every 5 minutes during a Codex run and stops the
    run at 80 %.
 3. **OpenCode + Kimi K3 via Chutes** (`chutes/moonshotai/Kimi-K3-TEE`, free for us).
 4. **OpenCode + `nex-agi/nex-n2.5-pro:free` via OpenRouter** — last fallback.
 
-The goal is that work never stops because one quota ran out.
+The goal is that work never stops because one quota ran out. Unknown or unmeasurable quota
+counts as *no headroom* for that engine (fall through to the next one, never guess).
+Before a long Claude unit reaches 60 %, leave a durable handoff in `PROGRESS.md` (what is
+half-done, which files, next step) so the next engine can continue without loss. Fable 5.1
+is used only for design passes, never as a fallback work engine.
 
 **Inside a Claude Opus 5 iteration, delegate as much as possible** — to OpenCode with
 `nex-agi/nex-n2.5-pro:free` and OpenCode with Kimi K3 via Chutes (see `bin/delegate.sh`):
