@@ -173,17 +173,46 @@ const EXCLUDE_RE = /(vision-only|embed|rerank|moderation|ocr|guard|^openrouter\/
 // be compared only after the upstream catalog names the concrete model version.
 const AMBIGUOUS_MODEL_RE = /^~?[^/]+\/[^/]*latest$/i;
 
-// The models the product brief explicitly asks us to feature.
-// Audited 2026-08-26 against vendor announcements since 2026-07-15. Every alternative
-// ends in (?!-) so service-tier / size variants (-fast, -pro, -mini, -nano, -instant,
-// -flash, -contributor …) do not spill into the featured set. Explicit exceptions:
-// kimi-k2.7-code (the only K2.7 SKU) and deepseek-v4-pro-0813 (the 2026-08-12 GA
-// release, a distinct OpenRouter model from the April deepseek-v4-pro).
-// Gemini is intentionally NOT featured (house policy).
-// 2026-09-08 (Florian): GPT-6 Astra, GLM-5.3 Flash and Muse Spark 1.3 join the featured
-// set; Qwen3.8 Max additionally matches its dated 0902 refresh. -pro/-flash spill stays
-// blocked elsewhere (glm-5.3-flash is an explicit, deliberate exception).
-const FEATURED_RE = /^(gpt-6-astra(?!-)|gpt-5\.[45](?!-)|gpt-5\.6-(sol|terra|luna)(?!-)|claude-opus-5(?!-)|claude-opus-4\.[678](?!-)|claude-sonnet-(4\.6|5)(?!-)|claude-fable-5(?!-)|kimi-k2\.[56](?!-)|kimi-k2\.7(-code)?(?!-)|kimi-k3(?!-)|glm-5\.[123](?!-)|glm-5\.3-flash(?!-)|minimax-(m2\.5|m2\.7|m3)(?!-)|mimo-v2\.5-pro(?!-)|deepseek-v4-pro(-0813)?(?!-)|grok-4\.[56](?!-)|qwen3\.[78]-max(-0902)?(?!-)|muse-spark-1\.[23](?!-))/;
+// R4.4 (Florian, 2026-09-12): "Faustregel ist ungefähr die top 20 der AA Index charts
+// sollten da drin sein" — the featured set is no longer a hand-maintained regex but is
+// DERIVED from the Artificial Analysis Intelligence Index, so it cannot drift away from
+// the chart it claims to follow and no model has to be added by hand after a release.
+//
+// Rule, in full:
+//   * rank distinct model families by the best AA Intelligence Index across their variants
+//     (the reasoning-effort variants of one family are one entry, as in the AA chart);
+//   * deprecated families are not eligible — a shortlist of recommended models must not
+//     recommend something the vendor has retired;
+//   * the top FEATURED_TOP_N families are featured;
+//   * FEATURED_PINS are featured regardless of rank. Florian named DeepSeek V4.1 Flash
+//     explicitly, so it stays featured even if a release pushes it past rank 20.
+// This supersedes the earlier house rule "Gemini is intentionally NOT featured": the
+// top-20 rule is the newer instruction, and it is applied without exceptions for vendors.
+// Recorded in PROGRESS.md so Florian can overrule it.
+const FEATURED_TOP_N = 20;
+const FEATURED_PINS = new Set(["deepseek-v4.1-flash"]);
+
+/** Returns { featured:Set<family_key>, ranking:[{family_key, aa_intelligence_index, rank, reason}] }. */
+function selectFeaturedFamilies(rows) {
+  const best = new Map();
+  for (const row of rows) {
+    if (row.deprecated === true) continue;
+    const value = row.benchmarks?.aa_intelligence_index;
+    if (value == null || !Number.isFinite(value)) continue;
+    const seen = best.get(row.family_key);
+    if (seen == null || value > seen) best.set(row.family_key, value);
+  }
+  const ranked = [...best.entries()]
+    .sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0]))
+    .map(([family_key, aa_intelligence_index], i) => ({ family_key, aa_intelligence_index, rank: i + 1 }));
+  const featured = new Set(ranked.slice(0, FEATURED_TOP_N).map((r) => r.family_key));
+  for (const pin of FEATURED_PINS) if (best.has(pin)) featured.add(pin);
+  const listing = ranked
+    .filter((r) => featured.has(r.family_key))
+    .map((r) => ({ ...r, reason: r.rank <= FEATURED_TOP_N ? "aa_intelligence_top_n" : "pinned" }));
+  const missingPins = [...FEATURED_PINS].filter((pin) => !best.has(pin));
+  return { featured, listing, missingPins };
+}
 
 // Canonicalize vendor names that arrive spelled differently across sources.
 const ORG_ALIASES = {
@@ -1060,9 +1089,13 @@ async function build() {
         && !hasScore && !hasDesign && !row.offers.length && !row.copilot) models.delete(row.id);
   }
   modelRows = [...models.values()];
+  const featuredSelection = selectFeaturedFamilies(modelRows);
+  if (featuredSelection.missingPins.length) {
+    console.warn("! featured pin without an AA Intelligence Index:", featuredSelection.missingPins.join(", "));
+  }
   for (const r of modelRows) {
     r.org = canonOrg(r.org);
-    r.featured = FEATURED_RE.test(r.family_key);
+    r.featured = featuredSelection.featured.has(r.family_key);
     const b = r.benchmarks || {};
     r.has_benchmark = b.aa_coding_index != null || b.aa_intelligence_index != null || b.aa_coding_agent_index != null ||
       (r.designarena && (r.designarena.frontend || r.designarena.fullstack));
@@ -1185,6 +1218,14 @@ async function build() {
         .map(([family_key, ids]) => ({ family_key, source_ids: [...ids].sort() })),
       coding_agent_results_input: expectedAgentResults,
       coding_agent_results_output: attachedAgentResults,
+      // R4.4: the featured shortlist, auditable — every entry with the AA Intelligence
+      // Index and the rank that put it there.
+      featured_selection: {
+        rule: `top ${FEATURED_TOP_N} model families by the best AA Intelligence Index across their variants; deprecated families excluded; pinned families always featured`,
+        top_n: FEATURED_TOP_N,
+        pins: [...FEATURED_PINS],
+        families: featuredSelection.listing,
+      },
     },
     models: modelRows,
     providers,

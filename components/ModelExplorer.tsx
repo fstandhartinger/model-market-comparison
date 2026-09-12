@@ -11,6 +11,7 @@ import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
+import { ShortlistControls } from "./ShortlistControls";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
@@ -29,7 +30,7 @@ const routeSignature = (offer: ClientData["offersByModel"][string][number]) => [
   offer.input_per_1m, offer.output_per_1m, offer.status,
 ].join("::");
 
-export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean }) {
+export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
@@ -42,7 +43,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: 
   const [hasProviderOnly, setHasProviderOnly] = useState(true);
   const [measuredTasksOnly, setMeasuredTasksOnly] = useState(true);
   const [org, setOrg] = useState("");
-  const [maxCost, setMaxCost] = useState("");
+  // null = no budget limit. Simple mode drives this with a slider (R5.4), Advanced with
+  // the numeric field in the toolbar; both write the same state.
+  const [maxCost, setMaxCost] = useState<number | null>(null);
 
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const orgs = useMemo(() => Array.from(new Set(candidates.map((m) => m.org))).sort(), [candidates]);
@@ -50,8 +53,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: 
   const provByKey = useMemo(() => new Map(data.providers.map((p) => [p.key, p])), [data.providers]);
   const [expanded, setExpanded] = useState<string | null>(null);
 
-  const rows = useMemo(() => {
-    const maxC = parseFloat(maxCost);
+  // The pool is everything the current filters allow BEFORE the two shortlist limits
+  // (min score, max cost) are applied. Simple mode's histograms describe this pool, so
+  // the user sees the field they are cutting into rather than what is left of it.
+  const pool = useMemo(() => {
     let r = candidates.map((m) => {
       const ctx = priceContext(m, data, priceSettings);
       return {
@@ -71,15 +76,24 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: 
       const tokens = x.m.token_efficiency?.aa.tokens_per_task;
       return tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
     });
+    // "Has provider": keep only models offered by ≥1 provider within the active filters.
+    if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
+    return r;
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId]);
+
+  const matching = useMemo(() => {
+    let r = pool;
     // A composite with zero evidence is the neutral fallback 50, not a measured
     // score — it must not satisfy a positive min-score filter. For the other
     // scores hasEvidence === score != null, so existing policy is unchanged.
     if (s.minScore > 0) r = r.filter((x) => x.hasEvidence && x.sc != null && x.sc >= s.minScore);
-    if (Number.isFinite(maxC)) r = r.filter((x) => x.price.value != null && x.price.value <= maxC);
-    // "Has provider": keep only models offered by ≥1 provider within the active filters.
-    if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
+    if (maxCost != null) r = r.filter((x) => x.price.value != null && x.price.value <= maxCost);
+    return r;
+  }, [pool, s.minScore, maxCost]);
 
+  const rows = useMemo(() => {
     const dir = asc ? 1 : -1;
+    const r = [...matching];
     r.sort((a, b) => {
       if (sort === "name") return dir * a.m.display_name.localeCompare(b.m.display_name);
       if (sort === "org") return dir * a.m.org.localeCompare(b.m.org);
@@ -89,7 +103,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: 
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return limit ? r.slice(0, limit) : r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, maxCost, sort, asc, preferredId, limit]);
+  }, [matching, sort, asc, limit]);
 
   const evidenceRelaxed = !withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && !measuredTasksOnly);
 
@@ -110,13 +124,26 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: 
 
   return (
     <div>
-      <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
+      {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
+          behind each one while it is moved. Advanced keeps the full toolbar. */}
+      {simple && (
+        <ShortlistControls
+          scores={pool.map((x) => x.sc).filter((v): v is number => v != null)}
+          costs={pool.map((x) => x.price.value).filter((v): v is number => v != null)}
+          minScore={s.minScore} setMinScore={s.setMinScore} scoreName={SCORE_SHORT_LABELS[score]}
+          maxCost={maxCost} setMaxCost={setMaxCost}
+          costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
+          matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
+        />
+      )}
+      <div className={`card mb-4 flex-wrap items-center gap-3 p-3 ${simple ? "hidden" : "flex"}`}>
         <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
         <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
           <option value="">All orgs</option>
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
-        <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
+        <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost == null ? "" : String(maxCost)}
+          onChange={(v) => { const n = parseFloat(v); setMaxCost(Number.isFinite(n) ? n : null); }} placeholder="e.g. 5" />
         {/* R4.11: the three evidence requirements are defaults almost nobody changes.
             They stay with the table they govern, but folded away so the toolbar reads as
             "search, org, budget" rather than as six competing switches. */}
@@ -134,7 +161,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: 
       </div>
 
       <PriceAssumptions />
-      {s.priceMode === "adjusted" && measuredTasksOnly && <p className="mb-3 text-xs text-amber-200">Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</p>}
+      {s.priceMode === "adjusted" && measuredTasksOnly && !simple && <p className="mb-3 text-xs text-amber-200">Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</p>}
+      {s.priceMode === "adjusted" && measuredTasksOnly && simple && <p className="mb-3 text-xs text-gray-500">Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</p>}
 
       <div className="card overflow-x-auto">
         <table className="dtable w-full min-w-[900px] table-fixed text-sm">

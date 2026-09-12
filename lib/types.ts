@@ -218,6 +218,17 @@ export interface Dataset {
   sources: Record<string, string>;
   efficiency?: EfficiencyDataset;
   source_status?: Record<string, { version: string; status: string; collected_at?: string; note?: string; count?: number; path?: string; url?: string }>;
+  /** Build-time provenance. `featured_selection` records the R4.4 rule and the exact
+   *  shortlist it produced, so the page can publish what it is filtering on. */
+  build_diagnostics?: {
+    featured_selection?: {
+      rule: string;
+      top_n: number;
+      pins: string[];
+      families: { family_key: string; aa_intelligence_index: number; rank: number; reason: string }[];
+    };
+    [key: string]: unknown;
+  };
   models: ModelRow[];
   providers: {
     platform: string; provider: string; model_count: number;

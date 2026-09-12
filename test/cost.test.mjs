@@ -56,23 +56,29 @@ test("EU policy equivalence admits a Global offer without relabeling technical r
   assert.equal(policy?.eu_policy_equivalent, true);
 });
 
-test("real client projection keeps exactly the two approved Azure routes in Featured + Open + EU scope", () => {
+test("real client projection keeps only EU-eligible Azure routes for open-weights models", () => {
   const data = client.clientData(dataset);
   const scope = cost.createOfferScope(null, true, data.providers, true, false, false);
   const azureKey = "Azure AI Foundry::Azure AI Foundry";
+  // The featured flag now follows the AA Intelligence ranking (R4.4) and changes with
+  // every refresh, so it is no longer part of the invariant this pipeline test guards.
+  // What must hold: under the EU scope, every surviving Azure route is EU-eligible for a
+  // stated reason, the policy flags survive the client projection, and the US Fireworks
+  // route type never sneaks through.
   const matches = data.models
-    .filter((model) => model.featured && model.open_weights && !model.deprecated)
+    .filter((model) => model.open_weights && !model.deprecated)
     .flatMap((model) => cost.scopedCatalogRoutes(data.offersByModel[model.id], scope)
       .filter((offer) => offer.key === azureKey)
       .map((offer) => ({ family: model.family_key, offer })));
 
-  assert.deepEqual([...new Set(matches.map(({ family }) => family))].sort(), ["deepseek-v4-pro", "kimi-k2.7-code"]);
-  assert.ok(matches.length > 0);
-  for (const { offer } of matches) {
-    assert.equal(offer.region, "global");
-    assert.equal(offer.route_type, "azure_direct");
-    assert.equal(offer.eu_hosted, false);
-    assert.equal(offer.eu_policy_equivalent, true);
+  assert.ok(matches.length > 0, "no Azure route survived the Open + EU scope");
+  for (const { family, offer } of matches) {
+    assert.ok(offer.eu_hosted || offer.eu_policy_equivalent, `${family} ${offer.region}`);
+    // The policy equivalence is reserved for the two audited Azure Direct Global routes.
+    if (offer.eu_policy_equivalent && !offer.eu_hosted) {
+      assert.equal(offer.region, "global", family);
+      assert.equal(offer.route_type, "azure_direct", family);
+    }
   }
   assert.equal(matches.some(({ offer }) => offer.route_type === "fireworks"), false);
 });

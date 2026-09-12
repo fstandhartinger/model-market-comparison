@@ -1,7 +1,7 @@
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
 const { chromium } = require('playwright');
-const OUT = '/opt/benchmarkheaven/state/ux-evidence/iter1';
+const OUT = process.env.BH_OUT || '/opt/benchmarkheaven/state/ux-evidence/iter1';
 const BASE = process.argv[2] || 'http://127.0.0.1:3210';
 const browser = await chromium.launch();
 const report = {};

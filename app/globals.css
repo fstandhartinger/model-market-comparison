@@ -95,3 +95,15 @@ details[open] > summary { margin-bottom: 8px; }
 .bh-footer { border-top: 1px solid rgb(var(--line)); }
 .bh-footer a { text-decoration: underline; }
 @media (max-width: 639px) { .bh-wordmark { font-size: 20px; } .bh-hero { padding-top: 4px; } }
+
+/* R5.3–R5.4: the two shortlist sliders. A bare appearance-none range renders as a fat
+   grey pill in Chromium, so track and thumb are drawn explicitly — thin rail, filled
+   portion in the accent colour, a 44px-tall invisible hit area for touch. */
+.bh-range { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer; }
+.bh-range::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: var(--bh-range-fill, rgb(var(--line))); }
+.bh-range::-moz-range-track { height: 4px; border-radius: 999px; background: rgb(var(--line)); }
+.bh-range::-moz-range-progress { height: 4px; border-radius: 999px; background: rgb(var(--accent)); }
+.bh-range::-webkit-slider-thumb { -webkit-appearance: none; appearance: none; margin-top: -6px; height: 16px; width: 16px; border-radius: 999px; background: rgb(var(--accent)); border: 2px solid var(--surface); box-shadow: 0 1px 3px rgb(0 0 0 / .35); }
+.bh-range::-moz-range-thumb { height: 16px; width: 16px; border: 2px solid var(--surface); border-radius: 999px; background: rgb(var(--accent)); }
+.bh-range:focus-visible { outline: none; }
+.bh-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgb(var(--accent) / .45); }

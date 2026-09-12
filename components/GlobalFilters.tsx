@@ -49,7 +49,16 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
         <Section title="Ranking">
           <ScoreSelect value={s.score} onChange={s.setScore} />
           <NumFilter label="Min score" value={String(s.minScore)} onChange={(v) => s.setMinScore(v === "" ? 0 : (parseFloat(v) || 0))} placeholder={String(defaultMinFor(s.score))} />
-          <Toggle label="Featured" on={s.featured} set={s.setFeatured} />
+          <span className="inline-flex items-center">
+            <Toggle label="Featured" on={s.featured} set={s.setFeatured} />
+            <InfoTip title="Featured models" label="the featured filter">
+              The shortlist the recommendations start from: the top 20 model families of the
+              Artificial Analysis Intelligence Index, taken from each family’s best reasoning
+              variant, with deprecated models left out. It is recomputed from the chart on every
+              data refresh, so it follows new releases on its own. Turn it off to see every
+              tracked model. <a className="text-accent" href="/about#featured">The current list</a>.
+            </InfoTip>
+          </span>
           <ModelFilter families={families} selected={s.familySet ?? new Set()} setSelected={(set) => s.setFamilies([...set])} />
         </Section>
 

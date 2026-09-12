@@ -123,11 +123,43 @@ test("OpenRouter aliases merge free tiers and exclude router/music pseudo-models
   assert.equal([...families].some((family) => family.includes("lyria")), false);
 });
 
-test("featured set covers the requested families", () => {
-  const featured = new Set(ds.models.filter((m) => m.featured).map((m) => m.family_key));
-  for (const k of ["gpt-5.5", "claude-opus-4.8", "claude-fable-5", "kimi-k2.6", "minimax-m3", "deepseek-v4-pro"]) {
-    assert.ok(featured.has(k), `expected featured: ${k}`);
+// R4.4: the featured set follows the AA Intelligence Index chart instead of a
+// hand-kept list, so the test re-derives the rule from the data rather than naming
+// families that a single release would invalidate.
+test("featured set is the AA Intelligence top 20 plus the explicit pins", () => {
+  const selection = ds.build_diagnostics.featured_selection;
+  assert.equal(selection.top_n, 20);
+
+  const best = new Map();
+  for (const m of ds.models) {
+    if (m.deprecated === true) continue;
+    const v = m.benchmarks?.aa_intelligence_index;
+    if (v == null) continue;
+    if (!best.has(m.family_key) || best.get(m.family_key) < v) best.set(m.family_key, v);
   }
+  const ranked = [...best.entries()].sort((a, b) => b[1] - a[1] || a[0].localeCompare(b[0])).map(([k]) => k);
+  const expected = new Set(ranked.slice(0, selection.top_n));
+  for (const pin of selection.pins) if (best.has(pin)) expected.add(pin);
+
+  const featured = new Set(ds.models.filter((m) => m.featured).map((m) => m.family_key));
+  assert.deepEqual([...featured].sort(), [...expected].sort());
+  assert.deepEqual(selection.families.map((f) => f.family_key).sort(), [...expected].sort());
+});
+
+test("featured models are current, scored and explicitly named where Florian asked", () => {
+  const featured = ds.models.filter((m) => m.featured);
+  assert.ok(featured.length > 0);
+  // A recommendation shortlist must not recommend a retired model, and every featured
+  // family has to carry the index that put it on the list.
+  for (const m of featured) assert.notEqual(m.deprecated, true, `deprecated but featured: ${m.family_key}`);
+  const families = new Set(featured.map((m) => m.family_key));
+  for (const family of families) {
+    const rows = ds.models.filter((m) => m.family_key === family);
+    assert.ok(rows.some((m) => m.benchmarks?.aa_intelligence_index != null), `no AA index: ${family}`);
+  }
+  // R4.4, Florian verbatim: "Ich vermisse bisschen DeepSeek V4.1 Flash, denke das sollte da mit rein".
+  assert.ok(families.has("deepseek-v4.1-flash"), "DeepSeek V4.1 Flash must be featured");
+  assert.ok(families.size <= 24, `"roughly the top 20" must stay roughly 20, got ${families.size}`);
 });
 
 test("benchmarks never silently coerce null to 0", () => {
@@ -635,7 +667,8 @@ test("September frontier additions retain prices, exact efforts and conservative
   for (const family of ["gpt-6-astra", "glm-5.3-flash", "qwen3.8-max-0902"]) {
     const rows = ds.models.filter((m) => m.family_key === family);
     assert.ok(rows.length, family);
-    assert.ok(rows.every((m) => m.featured), family);
+    // Featuring is decided by the AA Intelligence rank (R4.4), not by a hand-kept list —
+    // the dated Qwen refresh carries pricing only and therefore has no rank of its own.
     if (family !== "qwen3.8-max-0902") assert.ok(rows.some((m) => m.has_benchmark), family);
     // The dated Qwen release has pricing only; bare-family scores must not be copied.
     assert.ok(rows.some((m) => m.offers.some((o) => o.input_per_1m != null)), family);

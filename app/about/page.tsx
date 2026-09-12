@@ -3,6 +3,11 @@ import { getDataset } from "../../lib/data";
 
 export default async function AboutPage() {
   const ds = await getDataset();
+  // R4.4: the featured shortlist is derived at build time and published in the dataset,
+  // so this page lists exactly what the site is filtering on — never a stale hand-list.
+  const featured = ds.build_diagnostics?.featured_selection ?? null;
+  const familyNames = new Map(ds.models.map((m) => [m.family_key, m.family_name || m.family_key]));
+  const familyName = (key: string) => familyNames.get(key) ?? key;
   return (
     <div className="max-w-3xl">
       <h1 className="text-2xl font-bold">About &amp; data sources</h1>
@@ -27,28 +32,37 @@ export default async function AboutPage() {
         <li><b>Anthropic / Claude Code</b> — all 11 currently callable first-party API models, their cache/batch/list prices, active promotions and Claude Code Enterprise terms.</li>
       </ul>
 
-      <h2 className="mt-6 mb-2 font-semibold">What are &ldquo;Featured&rdquo; models?</h2>
+      <h2 id="featured" className="mt-6 mb-2 font-semibold">What are &ldquo;Featured&rdquo; models?</h2>
       <p className="text-sm text-gray-400">
-        <span className="text-warn">★ Featured</span> marks the specific models this tool was
-        commissioned to track closely — the current frontier and leading open-weight families that
-        matter most for the price/capability comparison. Filtering to &ldquo;Featured&rdquo; (the
-        default on most pages) hides the long tail of older or niche models so the charts and tables
-        stay focused. The featured set is:
+        <span className="text-warn">★ Featured</span> is the shortlist the recommendation views
+        start from. It is not hand-picked: it is the{" "}
+        <b>top {featured?.top_n ?? 20} model families of the Artificial Analysis Intelligence
+        Index</b>, ranked by the best score any of their reasoning-effort variants reaches, with
+        models their vendor has deprecated left out. Because the set is derived from the chart on
+        every data refresh, it follows new releases by itself instead of waiting for someone to
+        edit a list.
       </p>
-      <ul className="mt-2 grid grid-cols-1 gap-1 text-sm text-gray-300 sm:grid-cols-2">
-        <li>• GPT-5.6 Sol/Terra/Luna, GPT-5.5 &amp; GPT-5.4 (incl. Mini/Nano, low→xhigh effort)</li>
-        <li>• Claude Opus 4.8 / 4.7 / 4.6</li>
-        <li>• Claude Sonnet 4.6 / 5 &amp; Claude Fable 5</li>
-        <li>• Kimi K2.5 / K2.6 / K2.7-Coding</li>
-        <li>• GLM 5.1 / 5.2</li>
-        <li>• MiniMax M2.5 / M2.7 / M3</li>
-        <li>• Xiaomi MiMo-V2.5-Pro</li>
-        <li>• DeepSeek V4 Pro</li>
-      </ul>
-      <p className="mt-2 text-xs text-gray-500">
+      {featured && (
+        <ol className="mt-3 grid grid-cols-1 gap-x-6 gap-y-1 text-sm text-gray-300 sm:grid-cols-2">
+          {featured.families.map((f) => (
+            <li key={f.family_key} className="flex items-baseline justify-between gap-3 border-b border-line/40 py-0.5">
+              <span><span className="mr-2 text-xs text-gray-600">{f.rank}.</span>{familyName(f.family_key)}</span>
+              <span className="tabular text-xs text-gray-500">
+                {f.aa_intelligence_index.toFixed(1)}
+                {f.reason === "pinned" && <span className="ml-1 text-warn" title="Explicitly requested, featured regardless of rank">pinned</span>}
+              </span>
+            </li>
+          ))}
+        </ol>
+      )}
+      <p className="mt-3 text-xs text-gray-500">
         Turn the &ldquo;Featured&rdquo; filter off on any page to explore all {ds.counts.models}{" "}
-        tracked models. Featured status is derived from the model&apos;s family, so every reasoning
-        variant of a featured family (e.g. each GPT-5.5 effort level) is included.
+        tracked models. Featured status belongs to the family, so every reasoning variant of a
+        featured family is included. One family can be pinned into the set on request — today that
+        is {featured?.pins?.length ? featured.pins.map(familyName).join(", ") : "none"} — and pinned
+        entries are labelled above. Ranking by index means a family can leave the list when a newer
+        model outranks it; the ranks shown here are the ones in the current dataset, dated{" "}
+        {new Date(ds.generated_at).toISOString().slice(0, 10)}.
       </p>
 
       <h2 className="mt-6 mb-2 font-semibold">Snapshot</h2>
