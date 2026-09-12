@@ -84,8 +84,9 @@ export default async function BenchmaxxingPage() {
             <h3 className="text-sm font-semibold">Uncertainty, honestly</h3>
             <ul className="bh-muted mt-2 list-disc space-y-1.5 pl-5 text-sm">
               <li>Every estimate shows a roughly 95% prediction interval: ±2 × residual standard deviation, widened by √(1 + 1/n + (x − x̄)²/Sxx), so thin evidence or extrapolation widens the interval automatically.</li>
-              <li>Estimates whose predictor value lies outside the fit cohort&#39;s range are flagged <span className="bh-badge bh-alert">extrapolation</span>.</li>
-              <li>The target&#39;s observed cohort range is shown next to every estimate for grounding.</li>
+              <li>Estimates whose predictor value lies outside the fit cohort's range are flagged <span className="bh-badge bh-alert">extrapolation</span>.</li>
+              <li>The target's observed cohort range is shown next to every estimate for grounding.</li>
+              <li>When a target has a documented finite score range (for example, fraction 0–1), an OLS point outside it is omitted as unknown — never clipped into range. No bound is assumed for unbounded units such as Elo.</li>
               <li>Estimates appear only on this tab; they never enter rankings, radar charts, or the Composite.</li>
             </ul>
           </div>

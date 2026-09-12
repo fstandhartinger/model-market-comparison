@@ -42,7 +42,7 @@ const row = (axisId, modelId, value, basis = 'measured', extra = {}) => ({
   lowSample: false,
   ...extra,
 });
-const mkAxis = (id, rows, { higherBetter = true, unit = 'points', family = id, category = 'Test', version = 'v1' } = {}) => ({
+const mkAxis = (id, rows, { higherBetter = true, unit = 'points', family = id, category = 'Test', version = 'v1', publishedRange = null } = {}) => ({
   id,
   benchmarkId: id,
   family,
@@ -51,6 +51,7 @@ const mkAxis = (id, rows, { higherBetter = true, unit = 'points', family = id, c
   category,
   unit,
   higherBetter,
+  publishedRange,
   cohort: 'Published board',
   url: '',
   scores: rows,
@@ -195,6 +196,33 @@ test('predictForModel estimates an exact value and honors evidence and gates', (
   assert.equal(predictForModel(first, measuredAxisMaps(first), evidencedAxisMaps(first), miniStats, 'nope'), null, 'unknown model returns null');
   const idle = viewOf([P, T], [...first.models, { id: 'z', name: 'Z', org: 'org' }]);
   assert.deepEqual(predictForModel(idle, measuredAxisMaps(idle), evidencedAxisMaps(idle), miniStats, 'z').predictions, [], 'no measured axes: no predictions');
+});
+
+test('predictForModel suppresses an extrapolated point outside a target’s documented score range', () => {
+  const core = mkModels(12);
+  const models = [...core, { id: 'q', name: 'Q', org: 'org' }];
+  const predictor = mkAxis('P', rowsFor('P', core, (i) => i));
+  // The documented fraction range is semantic: a negative point is impossible,
+  // even though a linear extrapolation can calculate one.
+  const target = mkAxis('T', rowsFor('T', core, (i) => 0.2 + i * 0.05), { unit: 'fraction', publishedRange: [0, 1] });
+  predictor.scores.push(row('P', 'q', -10));
+  const mini = viewOf([predictor, target], models);
+  const out = predictForModel(mini, measuredAxisMaps(mini), evidencedAxisMaps(mini), computePairStats(measuredAxisMaps(mini)), 'q');
+  assert.equal(out.predictions.find((p) => p.target.axisId === 'T'), undefined, 'impossible bounded points stay unknown rather than being clamped');
+
+  const unbounded = mkAxis('E', rowsFor('E', core, (i) => 0.2 + i * 0.05), { unit: 'Elo' });
+  const eloView = viewOf([predictor, unbounded], models);
+  const eloOut = predictForModel(eloView, measuredAxisMaps(eloView), evidencedAxisMaps(eloView), computePairStats(measuredAxisMaps(eloView)), 'q');
+  assert.ok(eloOut.predictions.find((p) => p.target.axisId === 'E' && p.point < 0), 'negative predictions remain eligible for targets with no documented finite range');
+});
+
+test('real Gemma prediction omits the impossible bounded Coding Agent v1.4 point', () => {
+  const targetAxisId = 'aa-coding-agent-index::1.4@@Codex@@fraction';
+  const target = view.axes.find((a) => a.id === targetAxisId);
+  assert.deepEqual(target?.publishedRange, [0, 1], 'registry documents this fraction target as 0..1');
+  const out = predictForModel(view, maps, evid, stats, 'gemma-3-12b-instruct::default', { limit: 100 });
+  assert.ok(out);
+  assert.equal(out.predictions.find((p) => p.target.axisId === targetAxisId), undefined, 'the former negative extrapolation is suppressed, never clamped');
 });
 
 test('predictForAxis predicts only models without evidence and rejects unknown axes', () => {

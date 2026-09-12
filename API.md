@@ -252,6 +252,8 @@ sample size and leverage), the predictor axis (`predictor.axisId`, always one ex
 shared measured models `n`, `r`, `r2`, the predictor value used (`predictorValue`), and `outsideFitRange`
 flagging extrapolation beyond the fit cohort. Target axes keep their exact version and cohort; versions and
 cohorts are never mixed or pooled, and estimates never count as benchmark results anywhere else in the API.
+For a target with a documented finite scoring range, a point estimate outside that range is omitted rather
+than clipped; an unbounded range is not inferred from its unit (in particular, negative Elo remains valid).
 The bottom-decile logic lives in the `/benchmaxxing` page itself: measured results only, at least 20
 measured catalog peers per axis, worst decile direction-adjusted, aggregate tag requires at least 4 axes
 across at least 2 benchmark families. Nothing here changes any canonical benchmark endpoint, score, ID,

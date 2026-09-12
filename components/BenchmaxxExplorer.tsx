@@ -5,7 +5,7 @@ type ModelOpt = { id: string; name: string; org: string };
 type AxisOpt = { id: string; name: string; version: string; cohort: string; unit: string; n: number };
 
 type PredictorLine = { name: string; version: string; unit: string };
-type TargetMeta = { axisId: string; name: string; version: string; cohort: string; unit: string; observedRange: [number, number] | null };
+type TargetMeta = { axisId: string; name: string; version: string; cohort: string; unit: string; publishedRange: [number, number] | null; observedRange: [number, number] | null };
 type PredictionCore = {
   point: number; low: number; high: number; outsideFitRange: boolean; predictorValue: number;
   n: number; r: number; r2: number;
@@ -74,6 +74,7 @@ function ModelPredictions({ data }: { data: ModelResponse }) {
                     <p className="bh-muted mt-1 text-xs font-normal">
                       Observed cohort range {p.target.observedRange ? `${fmt(p.target.observedRange[0])}–${fmt(p.target.observedRange[1])} ${p.target.unit}` : '—'}
                     </p>
+                    {p.target.publishedRange ? <p className="bh-muted mt-1 text-xs font-normal">Documented score range {fmt(p.target.publishedRange[0])}–{fmt(p.target.publishedRange[1])} {p.target.unit}; impossible points are omitted, not clamped.</p> : null}
                   </th>
                   <td className="min-w-44 align-top"><EstimateCell p={p} unit={p.target.unit} /></td>
                   <td className="align-top"><EvidenceCell n={p.n} r={p.r} r2={p.r2} /></td>
@@ -102,6 +103,7 @@ function AxisPredictions({ data }: { data: AxisResponse }) {
         <span className="bh-badge">Target</span>
         <span>{data.axis.name} · {data.axis.version} · {data.axis.cohort} · {data.axis.unit}</span>
         <span className="bh-muted text-xs">Observed cohort range {data.axis.observedRange ? `${fmt(data.axis.observedRange[0])}–${fmt(data.axis.observedRange[1])} ${data.axis.unit}` : '—'}</span>
+        {data.axis.publishedRange ? <span className="bh-muted text-xs">Documented score range {fmt(data.axis.publishedRange[0])}–{fmt(data.axis.publishedRange[1])} {data.axis.unit}; impossible points are omitted, not clamped.</span> : null}
       </div>
       <div className="bh-muted mb-3 max-w-3xl text-sm">
         Estimated results on this exact benchmark version for catalog models with <em>no recorded result</em>.

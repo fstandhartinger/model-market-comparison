@@ -13,7 +13,7 @@ export interface FitStats {
 }
 export interface Interval { point: number; half: number; low: number; high: number }
 export interface AxisShort { axisId: string; benchmarkId: string; name: string; version: string; cohort: string; unit: string }
-export interface TargetMeta extends AxisShort { higherBetter: boolean | null; category: string; observedRange: [number, number] | null }
+export interface TargetMeta extends AxisShort { higherBetter: boolean | null; category: string; publishedRange: [number, number] | null; observedRange: [number, number] | null }
 export interface ModelRef { id: string; name: string; org: string }
 
 export interface GapPredictionBase {
