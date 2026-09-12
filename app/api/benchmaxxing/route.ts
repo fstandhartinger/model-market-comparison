@@ -7,6 +7,7 @@ import {
   measuredAxisMaps,
   predictForAxis,
   predictForModel,
+  scoreBenchmaxxing,
   type FitStats,
 } from '../../../lib/benchmax.mjs';
 import type { BenchmarkView } from '../../../lib/benchmark-view.mjs';
@@ -39,11 +40,17 @@ const POLICY = {
 export async function GET(request: Request) {
   const url = new URL(request.url);
   const modelId = url.searchParams.get('model');
+  const reportId = url.searchParams.get('report');
   const axisId = url.searchParams.get('axis');
   const headers = { 'Cache-Control': 'public, max-age=300', 'Access-Control-Allow-Origin': '*' };
-  if (!modelId && !axisId) return Response.json({ error: 'Supply ?model=<model id> or ?axis=<axis id>' }, { status: 400, headers });
-  if (modelId && axisId) return Response.json({ error: 'Supply only one of ?model=<id> and ?axis=<axisId>' }, { status: 400, headers });
+  if (!modelId && !reportId && !axisId) return Response.json({ error: 'Supply ?report=<model id>, ?model=<model id> or ?axis=<axis id>' }, { status: 400, headers });
+  if ([modelId, reportId, axisId].filter(Boolean).length > 1) return Response.json({ error: 'Supply exactly one query mode' }, { status: 400, headers });
   const c = await setup();
+  if (reportId) {
+    const model = c.view.models.find((m) => m.id === reportId);
+    if (!model) return Response.json({ error: 'Unknown model' }, { status: 404, headers });
+    return Response.json({ model: { id: model.id, name: model.name, org: model.org }, report: scoreBenchmaxxing(c.view, reportId) }, { headers });
+  }
   if (modelId) {
     const model = c.view.models.find((m) => m.id === modelId);
     if (!model) return Response.json({ error: 'Unknown model' }, { status: 404, headers });

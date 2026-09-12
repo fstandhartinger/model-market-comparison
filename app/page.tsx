@@ -1,6 +1,6 @@
 import { getDataset } from "../lib/data";
 import { clientData } from "../lib/client-model";
-import { ModelExplorer } from "../components/ModelExplorer";
+import { HomeMode } from "../components/HomeMode";
 
 
 export default async function Home() {
@@ -12,11 +12,10 @@ export default async function Home() {
     <div>
       <section className="bh-hero mb-6">
         <p className="bh-eyebrow">Benchmark Heaven / Model intelligence</p>
-        <h1 className="bh-display mt-3">Benchmarks in perspective.<br /><span>Costs in context.</span></h1>
+        <h1 className="bh-display mt-3">Every model benchmark result,<br /><span>and the cost you will actually pay.</span></h1>
         <p className="mt-1 max-w-3xl text-sm text-gray-400">
-          Find the model that meets your benchmark threshold, then compare estimated task costs across providers.
-          Adjusted prices are on by default. Explore versioned results, check their sources, and see where evidence is missing.
-          Raw list prices and fixed input/output blends remain selectable.
+          A broad, versioned collection of model benchmarks in one place, paired with transparent adjusted task-cost estimates.
+          Start with a short recommendation list; open Advanced when you need every filter, provider route and assumption.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
           <Stat label="Models" value={ds.counts.models} />
@@ -27,7 +26,7 @@ export default async function Home() {
         </div>
       </section>
 
-      <ModelExplorer data={data} />
+      <HomeMode data={data} />
     </div>
   );
 }
