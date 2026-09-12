@@ -145,3 +145,52 @@ from a board-level failure. The plan links these instructions by exact registry 
   must receive actual readable primary evidence. No private task/judge details are
   inferred; no comparison_key is assigned. Record missing visual evidence and withhold
   the number if the critic cannot verify it. No X session was needed in phase 05.
+
+## Real-SWE (Specific Labs): what this source does differently
+
+Real-SWE (`https://realswe.withspecific.com/`, canonical
+`https://withspecific.com/benchmarks/real-swe`) is captured like any other public source
+— bounded fetch, HTTP status, retrieval time and SHA-256 into
+`data/raw/benchmarks/daily-evidence/<ISO>/`, then a reviewed `ingestion-lock.json`
+binding the page and its embedded chunk — but its shape differs from the boards above in
+ways the parser must preserve:
+
+- **Model and harness are one evaluated unit.** `subject.harness` (Claude Code, Codex
+  CLI, Gemini CLI, Grok Build, Muse Code, Kimi Code) is part of the identity, not a
+  footnote. Two configurations of the same model must never be merged into one value:
+  `lib/benchmark-view.mjs` groups one axis per `[benchmark_id, cohort, unit]`, where the
+  cohort is the harness. A later run that finds the same model under a second harness is
+  therefore a separate axis and row, proven by `test/benchmark-view.test.mjs`.
+- **Native percent, no fraction conversion.** The source publishes percent, so the
+  registry unit is `percent`. The 95 % confidence interval (`confidence_interval`) and
+  the per-rollout cost are retained as published; the cost is a **separate observation**
+  with unit `USD` (`realswe-cost::snapshot-2026-09-12`, difference-cost category), never
+  a silent conversion into a score.
+- **Independent evaluator ⇒ `basis: measured`.** Specific Labs runs the evaluations on
+  private, licensed corporate codebases; it is the evaluator, not the vendor whose model
+  is scored. This is measured, not `self_reported`, so no owner approval in
+  `score-approvals.json` is required for the basis.
+- **Public sample is a hard limit.** Only 10 tasks are publicly evaluable (more only on
+  request). The published model values are the source headline; the task level is the
+  sample. `details.publication_scope` records `{tasks: 10, runs: 8, configurations: 8,
+  rollouts: 640}`, the 640-rollout count is asserted by extraction, and the UI prints a
+  "Public sample" note. Nothing is described as "all tasks".
+- **Task level and failure taxonomy live in `details`, not in invented scores.**
+  `benchmark_results.details['realswe::snapshot-2026-09-12']` keeps the 10 tasks with
+  passes/8 per configuration plus the summed failure taxonomy; the cost axis keeps
+  `cost_provenance` (per-configuration displayed cost, runs, basis and a lower-bound flag
+  for the two incomplete-usage configurations). Collections carry only the
+  `{benchmark_id, status, source_url, reason}` contract.
+- **Unknown identity stays unmatched.** The source publishes no catalog model IDs, so
+  every row is `model_id: null` and counts toward no catalog coverage. The rows surface as
+  unmatched source identities, hidden behind the "Include unmatched source identities"
+  toggle, until a human mapping is reviewed.
+- **Historically comparable from day one.** The first Real-SWE state is retained as the
+  dated history state `20260912-35c64794` (with `realswe::snapshot-2026-09-12` among its
+  benchmark ids) so later states can bridge against it via the phase-10 machinery.
+
+The collector is deterministic and offline once the bytes exist:
+`node scripts/collect-realswe.mjs` rebuilds the snapshot from
+`data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/` and refuses to run if the
+source hash no longer matches `ingestion-lock.json`. Parser: `lib/realswe.mjs`. Tests:
+`test/realswe.test.mjs`.

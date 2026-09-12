@@ -2,8 +2,10 @@ import type { BenchmarkEntry, BenchmarkObservation } from './benchmark-scores.mj
 
 export interface BridgePair { model_key: string; subject_name?: string | null; old_value: number; new_value: number; ratio: number }
 export interface BridgeSpread { min: number; q1: number; q3: number; max: number; iqr: number; iqr_relative: number | null }
+export type BridgeCause = 'insufficient_bridges' | 'spread_too_wide';
 export interface BridgeComparison {
   bridge_count: number; comparable: boolean; reason: string | null; aggregate: number | null;
+  cause: BridgeCause | null; cause_value: number | null;
   spread: BridgeSpread | null; bridges?: BridgePair[];
 }
 export interface HistoryStateRow {
@@ -25,7 +27,7 @@ export interface HistoricalEstimate {
   status: 'estimated' | 'not_comparable' | 'recompute_required';
   source_value: number; value: number | null;
   uncertainty: { lower: number; upper: number; min: number; max: number; iqr: number; iqr_relative: number | null } | null;
-  comparison: { bridge_count: number; aggregate: number | null; spread: BridgeSpread | null; comparable: boolean; reason: string | null; bridges: BridgePair[] };
+  comparison: { bridge_count: number; aggregate: number | null; spread: BridgeSpread | null; comparable: boolean; reason: string | null; cause: BridgeCause | null; cause_value: number | null; bridges: BridgePair[] };
   source: { url: string | null; retrieved_at: string | null; published_at: string | null; file: string | null; locator: string | null } | null;
   note: string;
 }
@@ -43,7 +45,7 @@ export function modelKey(o: Pick<BenchmarkObservation, 'subject'>): string;
 export function versionRank(entry: Pick<BenchmarkEntry, 'version'> & { first_seen?: string }): number;
 export function buildState(observations: BenchmarkObservation[], meta: { state_id: string; source: string; collected_at: string }): HistoryState;
 export function computeBridgeComparison(pairs: { model_key: string; subject_name?: string | null; old_value: number | null; new_value: number | null }[]): BridgeComparison;
-export function computeRankShift(oldValues: { value: number }[], newValues: { value: number }[], pairs: { old_value: number; new_value: number }[]): { bridge_count: number; comparable: boolean; shift: number | null; spread: BridgeSpread | null; reason: string | null };
+export function computeRankShift(oldValues: { value: number }[], newValues: { value: number }[], pairs: { old_value: number; new_value: number }[]): { bridge_count: number; comparable: boolean; shift: number | null; spread: BridgeSpread | null; reason: string | null; cause: BridgeCause | null; cause_value: number | null };
 export function estimateFromRankShift(sourceValue: number, oldValues: { value: number }[], newValues: { value: number }[], comparison: { shift: number }): number;
 export function crossVersionEstimates(observations: BenchmarkObservation[], registry: { entries: BenchmarkEntry[] }): HistoricalEstimate[];
 export function datedEstimates(observations: BenchmarkObservation[], registry: { entries: BenchmarkEntry[] }, states: HistoryState[]): HistoricalEstimate[];

@@ -4553,6 +4553,148 @@
           "excerpt": "Version 2 of WeirdML is now out! ... The 'Average Accuracy Across Tasks' column shows the overall mean accuracy (bold number) calculated as the average of the mean max accuracy for each task. That is, for each model, we take the maximum accuracy of the 5 iterations per run, we average these values over all the runs for a given task (typically 5 runs/model/task), then we average these results over all the 17 tasks."
         }
       ]
+    },
+    {
+      "id": "realswe::snapshot-2026-09-12",
+      "name": "Real-SWE (Specific Labs)",
+      "version": "snapshot-2026-09-12",
+      "version_status": "snapshot",
+      "family": "realswe",
+      "category": "Coding",
+      "one_sentence_description": "Resolution rate of coding agents on private, licensed enterprise codebases, published as pass@1 over eight runs per task on a ten-task sample.",
+      "scoring": {
+        "metric": "Resolution rate = pass@1 correctness averaged over eight independent runs per task, with a published 95% confidence interval",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Native unit is percent; do not convert to fraction. Model and harness are evaluated together and remain separate configurations. The public leaderboard covers a ten-task sample (8 configurations x 10 tasks x 8 runs = 640 rollouts); the full suite is not public and no result may be labelled \"all tasks\"."
+      },
+      "maintainer": "Specific Labs",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://withspecific.com/benchmarks/real-swe",
+      "publication_urls": [
+        {
+          "url": "https://withspecific.com/benchmarks/real-swe",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication, declared rel=canonical by the access page"
+        },
+        {
+          "url": "https://realswe.withspecific.com/",
+          "type": "official_leaderboard",
+          "role": "Access URL named by the requester; same leaderboard application"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/collect-realswe.mjs --dir data/raw/benchmarks/daily-evidence/<ISO-timestamp>",
+        "format": "Next.js RSC HTML plus one _next/static/chunks bundle carrying the dataset",
+        "locator": "Leaderboard row exact passes (resolution rate = passes / 80); `data-confidence-whisker` gives the 95% CI. The dataset chunk is the bundle containing the marker `entitlement-overage-lines`.",
+        "version_guard": "No version number is published; the dated identity is the version. Verify the captured HTML hash before reading results.",
+        "notes": "Model and harness are published and evaluated together (native harnesses) and must stay separate configurations. Only ten tasks are public; never present the leaderboard as covering the whole suite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "evidence": [
+        {
+          "url": "https://realswe.withspecific.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/2dbdba3da783922e840be7523160450ec785c9584a8aa3b29f8da3d67ddca538.gz",
+          "sha256": "1025a3e4bb7a4f209d2bc2489a9019fa901d6b00edf1e0a303bbd0900309d5b4",
+          "source_sha256": "2dbdba3da783922e840be7523160450ec785c9584a8aa3b29f8da3d67ddca538",
+          "fetched_at": "2026-09-12T09:06:26.205Z",
+          "excerpt": "Resolution-rate leaderboard: eight model-harness configurations, each with an exact passes/80 value, a 95% confidence interval (data-confidence-whisker) and a published cost per rollout (data-pareto-point); the page declares rel=canonical https://withspecific.com/benchmarks/real-swe and states the public evaluation covers a ten-task sample."
+        },
+        {
+          "url": "https://realswe.withspecific.com/_next/static/chunks/0b7b7d0bd02a3d46.js?dpl=dpl_ABGtodWDkmm7BqTikqe2cpVTakLw",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc.gz",
+          "sha256": "1805df1d3684c1b394923b71fde0453dad65a95d3a8626b3269fe4ede7ffeb29",
+          "source_sha256": "a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc",
+          "fetched_at": "2026-09-12T09:06:26.205Z",
+          "excerpt": "Next.js dataset bundle (contains the marker entitlement-overage-lines): per-configuration passes/valid counts and the recorded cost-provenance rows (basis, source, recorded runs, lower-bound flags) for each of the eight configurations."
+        }
+      ]
+    },
+    {
+      "id": "realswe-cost::snapshot-2026-09-12",
+      "name": "Real-SWE cost per rollout (Specific Labs)",
+      "version": "snapshot-2026-09-12",
+      "version_status": "snapshot",
+      "family": "realswe-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Estimated provider-usage cost in USD for one Real-SWE rollout, per model-harness configuration.",
+      "scoring": {
+        "metric": "Estimated cost in USD per rollout as published by Specific Labs (provider usage at list rates; some values are explicit lower bounds)",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Cost is a separate published value with its own registry identity; it is never an implicit score conversion. Two configurations carry data-cost-lower-bound and may cost more than published."
+      },
+      "maintainer": "Specific Labs",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://withspecific.com/benchmarks/real-swe",
+      "publication_urls": [
+        {
+          "url": "https://withspecific.com/benchmarks/real-swe",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication, declared rel=canonical by the access page"
+        },
+        {
+          "url": "https://realswe.withspecific.com/",
+          "type": "official_leaderboard",
+          "role": "Access URL named by the requester; same leaderboard application"
+        }
+      ],
+      "how_to_collect": {
+        "command": "node scripts/collect-realswe.mjs --dir data/raw/benchmarks/daily-evidence/<ISO-timestamp>",
+        "format": "Next.js RSC HTML plus one _next/static/chunks bundle carrying the dataset",
+        "locator": "Cost per rollout from the Pareto points (`data-pareto-point` title, USD after the middle dot); `data-cost-lower-bound` marks explicit lower bounds. Provenance in the dataset chunk cost map.",
+        "version_guard": "No version number is published; the dated identity is the version. Verify the captured HTML hash before reading results.",
+        "notes": "Published provider-usage cost estimate with its own unit; never folded into the resolution rate. Two configurations are explicit lower bounds and may cost more."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated in the verified source; no promised publication schedule.",
+        "check_recommendation": "Weekly; daily on a known model launch (our policy, not a maintainer promise)."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting that the benchmark is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-12",
+      "last_verified": "2026-09-12",
+      "evidence": [
+        {
+          "url": "https://realswe.withspecific.com/_next/static/chunks/0b7b7d0bd02a3d46.js?dpl=dpl_ABGtodWDkmm7BqTikqe2cpVTakLw",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc.gz",
+          "sha256": "1805df1d3684c1b394923b71fde0453dad65a95d3a8626b3269fe4ede7ffeb29",
+          "source_sha256": "a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc",
+          "fetched_at": "2026-09-12T09:06:26.205Z",
+          "excerpt": "Next.js dataset bundle (contains the marker entitlement-overage-lines): per-configuration passes/valid counts and the recorded cost-provenance rows (basis, source, recorded runs, lower-bound flags) for each of the eight configurations."
+        },
+        {
+          "url": "https://realswe.withspecific.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/2dbdba3da783922e840be7523160450ec785c9584a8aa3b29f8da3d67ddca538.gz",
+          "sha256": "1025a3e4bb7a4f209d2bc2489a9019fa901d6b00edf1e0a303bbd0900309d5b4",
+          "source_sha256": "2dbdba3da783922e840be7523160450ec785c9584a8aa3b29f8da3d67ddca538",
+          "fetched_at": "2026-09-12T09:06:26.205Z",
+          "excerpt": "Resolution-rate leaderboard: eight model-harness configurations, each with an exact passes/80 value, a 95% confidence interval (data-confidence-whisker) and a published cost per rollout (data-pareto-point); the page declares rel=canonical https://withspecific.com/benchmarks/real-swe and states the public evaluation covers a ten-task sample."
+        }
+      ]
     }
   ],
   "aa_field_map": [

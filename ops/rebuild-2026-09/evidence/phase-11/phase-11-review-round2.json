@@ -1,0 +1,79 @@
+{
+  "verdict": "pass",
+  "errors_found": 0,
+  "coverage_checked": [
+    {
+      "requirement": "1. Artifact hash: single artifact_sha256 stated and hashed bundle constituents named",
+      "result": "pass",
+      "evidence": "Supplement header: artifact_sha256 0b2deb5e82c6cd20fbb861a921f4c1849a1f2552e071bc0c5ca80337232eef3d over 'parser + realswe scores rows + realswe registry entries + realswe observations + realswe details'; per-file hashes given for parser lib/realswe.mjs (6f7f553e...) and data/raw/benchmarks/scores.json (6212b198...); history content hashes 35c64794... (13924) and b2963bd0... (13908) match round-1 §I."
+    },
+    {
+      "requirement": "2. Output tokens: raw page titles present and details.output_tokens_k matches them",
+      "result": "pass",
+      "evidence": "Supplement §1 provides the raw 3-column page titles (80 rows: k value, task, configuration). I compared all 80 against produced details.output_tokens_k (round-1 §F / supplement §1): 80/80 equal (e.g., Grok 4.6 'Analytics stream reducer' 315=315; GLM 5.3 'API token metering' 177=177; GPT-5.6 Sol 'Multi-region sweep' 8=8). HTML-escaped task name 'API keys &amp; environments' is correctly unescaped to 'API keys & environments'."
+    },
+    {
+      "requirement": "3. Phase-10 cause: not_comparable rows expose cause+cause_value; distribution stated (482/482); estimated rows expose bridge_count, spread, uncertainty",
+      "result": "pass",
+      "evidence": "Supplement §2: counts {estimated:85, not_comparable:482, recompute_required:0}; cause distribution over all not_comparable rows stated as {\"spread_too_wide\": 482} (482/482). Two sampled not_comparable rows carry comparison.cause='spread_too_wide' and cause_value=2.237733361483256 (equal to spread.iqr_relative, the 'concrete number'). Two sampled estimated rows carry comparison.bridge_count=153, full spread object, and a top-level uncertainty object."
+    },
+    {
+      "requirement": "4. Value-level state diff: no value/unit/basis change among common keys; AA coding rows unchanged; 25 removed keys are identity re-keys with identical value+unit; realswe adds exactly 8 score + 8 cost rows",
+      "result": "pass (one low-severity evidence-consistency note, finding qa-r11-r2-01)",
+      "evidence": "Supplement §3: 'changed value/unit/basis among keys present in both: 0' with empty changed-rows sample; 'AA coding rows in prior state 81, in new state 81; value/unit mismatches: 0'; 25-row re-key table (source:<uuid> -> catalog-matched) with value+unit preserved, stated to account for 25 of 25 removed keys; added-keys list contains exactly 8 realswe::snapshot-2026-09-12 and 8 realswe-cost::snapshot-2026-09-12 keys. Arithmetic 13908 − 25 + 41 = 13924 matches §I counts. Cross-check: the two estimated sample rows in §2 (aa-automationbench, values 0.6889097769674057 / 0.1568437535870999) match the re-key table values for the same source uuids."
+    },
+    {
+      "requirement": "5. Catalog exclusion: every realswe observation has subject.model_id === null; zero catalog models carry a realswe benchmark key",
+      "result": "pass",
+      "evidence": "Round-1 §E: all 16 observations individually show \"model_id\": null. Supplement §4: 'All realswe observations have subject.model_id === null: true'; 'Catalog models whose benchmarks map contains a realswe key: 0'; by_benchmark entries for both realswe ids show available 0, measured 0, observations 8, unmatched_observations 8, consistent with the coverage note that unmatched source identities never inflate catalog coverage."
+    },
+    {
+      "requirement": "6. Drift refusal: mutated-fixture receipt shows the parser throws; baseline parse reports 8 configs / 640 rollouts",
+      "result": "pass",
+      "evidence": "Supplement §5: 'baseline parse ok: configs 8 rollouts 640' and 'drift refused: Real-SWE source: Fable 5.1: bar 99.75% disagrees with 31/80' (a thrown parser error on mutated bytes). Corroborated by named passing tests 'Real-SWE refuses drifted bytes instead of publishing a wrong number' and 'Real-SWE evidence is hash-bound to the lock and never fetched at parse time'."
+    },
+    {
+      "requirement": "7. Re-adjudicate the five round-1 findings",
+      "result": "pass (adjudication below)",
+      "evidence": "qa-r11-01 (low): REMAINS — deferred as recorded scope residue (supplement §6); lower-bound caveat lives in registry notes + details.cost_provenance, not on the two affected cost observation rows. qa-r11-02 (low): RESOLVED — supplement §1 supplies raw titles; I verified 80/80 matches. qa-r11-03 (info): CLOSED — packet duplication acknowledged, no artifact impact. qa-r11-04 (info): REMAINS — deferred; CI level 0.95 is registry-asserted, captured whisker bytes carry geometry only. qa-r11-05 (info): RESOLVED — round-1 §C2 raw titles supply the chunk-minified astra (passes 27) and meta (passes 19), matching produced 33.75 and 23.75."
+    },
+    {
+      "requirement": "8. Independent reconciliation: PASS 172 = sum of per-config passes; 8 scores = passes/80 in percent",
+      "result": "pass",
+      "evidence": "Round-1 §C2 per-config passes 31+27+25+23+19+19+15+13 = 172 = outcomes.PASS (172). Each produced score in §E equals passes/80×100: 31/80=38.75, 27/80=33.75, 25/80=31.25, 23/80=28.75, 19/80=23.75 (grok), 19/80=23.75 (meta), 15/80=18.75, 13/80=16.25. Failure taxonomy: 190+118+136+18+6=468=640−172; each config's taxonomy counts sum to 80−passes (e.g., kimi 10+35+18+2=65=80−15; gpt 29+21+11+6=67=80−13) and match the raw C2 entries row-for-row. Task-level passes sum to 172 and each task's passes_by_config sums to its task total (e.g., 'Multi-region sweep' 7+8+8+2+3+8+2+5=43). Costs in §E match §B Pareto titles exactly (2.50/2.65/2.74/3.44/3.90/4.67/5.12/6.96) with lower-bound flags on grok and kimi only."
+    }
+  ],
+  "findings": [
+    {
+      "id": "qa-r11-r2-01",
+      "severity": "low",
+      "summary": "Internal tension in supplement §3: three identity re-key targets do not appear in the added-keys list, and three added keys (ling-3.0-flash-vl::default on aa-critpt / aa-terminal-bench::2.1 / aa-terminal-bench::4.0) are not re-key targets. Reconcilable only if those re-key targets pre-existed in the old state with identical values (consistent with the stated 'changed: 0'), but the packet does not say this. No stored value is affected per the packet's own diff; phase-10 AA scope, not realswe. Repair: state explicitly whether deepseek-v3.1::reasoning@aa-critpt, hy3::default@aa-terminal-bench::2.1 and celeris-1::default@aa-terminal-bench::4.0 pre-existed with identical values.",
+      "evidence": "Supplement §3 re-key table: aa-critpt source:433d5c5d...→deepseek-v3.1::reasoning (0.02); aa-terminal-bench::2.1 source:433d5c5d...→hy3::default (0.644194756554307); aa-terminal-bench::4.0 source:433d5c5d...→celeris-1::default (0). The added-keys list instead shows 'aa-critpt::snapshot-2026-09-10|ling-3.0-flash-vl::default||||', 'aa-terminal-bench::2.1|ling-3.0-flash-vl::default||||', 'aa-terminal-bench::4.0|ling-3.0-flash-vl::default||||' and never lists deepseek-v3.1::reasoning, hy3::default or celeris-1::default. Both lists contain 25 non-realswe entries; 22 agree exactly."
+    },
+    {
+      "id": "qa-r11-r2-02",
+      "severity": "low",
+      "summary": "Round-1 qa-r11-01 remains as deferred residue: the grok and kimi cost observation rows carry no lower-bound marker; the caveat exists only in registry scoring/how_to_collect notes and in details.cost_provenance. Disposition (deferred, recorded in REPORT.md) is documented and no value changes; kept visible here as an open residual.",
+      "evidence": "Round-1 §E realswe-cost grok (3.44) and kimi (3.9) observations have no lower-bound field; round-1 §G realswe-cost registry notes 'Two configurations carry data-cost-lower-bound and may cost more than published'; round-1 §F cost_provenance marks grok.lower_bound=true and kimi.lower_bound=true with the source note; supplement §6: 'qa-r11-01 ... DEFERRED as explicit scope residue, recorded in REPORT.md'."
+    },
+    {
+      "id": "qa-r11-r2-03",
+      "severity": "info",
+      "summary": "Round-1 qa-r11-04 remains as deferred residue: the 0.95 CI level is asserted via the registry/how_to_collect, not present in the captured whisker bytes; whisker geometry itself matches the stored intervals exactly (to 1 ulp).",
+      "evidence": "Round-1 §A data-confidence-whisker markup (left/width percentages) contains no '95%' string; round-1 §G scoring.metric asserts 'published 95% confidence interval'; supplement §6: 'qa-r11-04 ... DEFERRED as residue; captured page exposes whisker geometry, level 0.95 comes from the registry/how_to_collect'."
+    },
+    {
+      "id": "qa-r11-r2-04",
+      "severity": "info",
+      "summary": "Stored CI upper bounds differ from whisker left+width by 1 ulp on three configurations, consistent with independent interval computation rather than copying page arithmetic; no stored value is wrong at display precision.",
+      "evidence": "Round-1 §A vs §E: gemini 24.767909287891754 + 12.964181424216491 = 37.732090712108245 vs stored 37.732090712108246; meta 17.820623978865903 + 11.858752042268193 = 29.679376021134096 vs stored 29.679376021134097; grok 16.758755475596637 + 13.982489048806727 = 30.741244524403364 vs stored 30.741244524403363."
+    }
+  ],
+  "missing_evidence": [
+    "Full 839-model enumeration behind 'Catalog models whose benchmarks map contains a realswe key: 0' (supplement §4 provides the aggregate statement plus the two realswe by_benchmark summaries showing unmatched_observations 8/8; corroborating but not exhaustive). Not acceptance-blocking.",
+    "Explicit statement reconciling the three re-key targets (deepseek-v3.1::reasoning@aa-critpt, hy3::default@aa-terminal-bench::2.1, celeris-1::default@aa-terminal-bench::4.0) with the added-keys list — pre-existence with identical values is implied by 'changed: 0' but not stated (see qa-r11-r2-01). Not value-affecting per the packet's own diff.",
+    "Page-level confirmation that the whiskers denote a 95% confidence interval; level 0.95 remains registry-asserted (deferred residue qa-r11-04, info severity)."
+  ],
+  "artifact_sha256": "0b2deb5e82c6cd20fbb861a921f4c1849a1f2552e071bc0c5ca80337232eef3d",
+  "notes": "All eight required checks pass against the frozen packet. Independent reconciliation (check 8) was recomputed by hand from round-1 §C2/§E/§F: per-config passes sum to 172 (= outcomes.PASS); all eight stored scores equal passes/80 in percent; failure outcomes total 468 = 640−172 and each config's taxonomy matches the raw C2 entries count-for-count; task-level passes sum to 172 with internally consistent passes_by_config; costs match the Pareto titles exactly with lower-bound flags only on grok/kimi; stored CI bounds match the whisker geometry to 1 ulp. Phase-10 arithmetic is consistent: 567 estimates = 482 not_comparable + 85 estimated; 13908 − 25 removed + 41 added = 13924; AA coding rows 81→81 with 0 mismatches; realswe adds exactly 8 score + 8 cost rows, all with model_id null and zero catalog coverage claimed. Round-1 disposition: qa-r11-02 and qa-r11-05 resolved by the supplement; qa-r11-03 closed; qa-r11-01 and qa-r11-04 remain as explicitly deferred low/info residue and are carried above as open findings. Limitations of this review: read-only — I did not execute anything; owner-run receipts (round-1 §J, supplement §5: build rc=0, 201/201 tests, tsc rc=0, 17/17 named realswe tests, drift refusal) and the artifact_sha256 are accepted as stated and checked only for internal consistency, not recomputed. The three missing-evidence items are corroboration-depth gaps, none acceptance-relevant, so the verdict is pass."
+}

@@ -4,6 +4,7 @@ export interface BenchmarkEntry { id: string; family: string; version: string; n
 export interface BenchmarkObservation {
   id: string; benchmark_id: string; subject: { source_id: string; name: string; model_id: string | null; variant: string | null; harness: string | null };
   value: number; unit: string; basis: 'measured' | 'self_reported' | 'derived'; source_basis?: 'measured' | 'self_reported'; derivation?: { formula: string; inputs: number[] }; source: ScoreSource; supporting_sources?: ScoreSource[]; protocol: string; comparison_key: string | null; comparison_note?: string;
+  confidence_interval?: { level: number; lower: number; upper: number };
 }
 export interface BenchmarkMissing { model_id: string; benchmark_id: string; status: MissingStatus; reason: string; source: ScoreSource }
 export interface BenchmarkCollection { benchmark_id: string; status: 'collected' | 'not_published' | 'source_unreachable' | 'contested' | 'manual_required'; reason: string; source_url: string }
@@ -15,6 +16,7 @@ export interface BenchmarkDivergence {
 export interface BenchmarkResults {
   schema_version: 1; registry: BenchmarkEntry[]; observations: BenchmarkObservation[]; missing: BenchmarkMissing[];
   collections: BenchmarkCollection[]; rejected: unknown[]; divergences: BenchmarkDivergence[];
+  details?: Record<string, Record<string, unknown>>;
   coverage: { by_model: Record<string, Record<string, number>>; by_benchmark: Record<string, Record<string, number>>; note: string };
   historical?: import('./benchmark-history.mjs').HistoricalResults;
 }

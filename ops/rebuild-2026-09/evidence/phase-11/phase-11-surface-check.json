@@ -1,0 +1,38 @@
+{
+  "checked_at": "2026-09-12T14:49:08.995Z",
+  "server": "local production build (next build && next start -p 3005)",
+  "request": {
+    "method": "GET",
+    "url": "/api/benchmark-view?axis=realswe::snapshot-2026-09-12@@Claude%20Code@@percent",
+    "status": 200,
+    "bytes": 128757
+  },
+  "axis": {
+    "id": "realswe::snapshot-2026-09-12@@Claude%20Code@@percent",
+    "name": "Real-SWE (Specific Labs)",
+    "version": "snapshot-2026-09-12",
+    "cohort": "Claude Code",
+    "unit": "percent"
+  },
+  "publication_scope": {
+    "published_tasks": 10,
+    "runs_per_task": 8,
+    "configurations": 8,
+    "rollouts": 640,
+    "note": "The public Real-SWE leaderboard exposes a 10-task sample, not the full task set. Values are resolution rate (pass@1 mean over 8 runs)."
+  },
+  "sample_row": {
+    "name": "Fable 5.1",
+    "harness": "Claude Code",
+    "value": 38.75,
+    "confidence_interval": {
+      "level": 0.95,
+      "lower": 32.13694473030809,
+      "upper": 45.36305526969191
+    },
+    "cost_per_rollout": 6.96,
+    "basis": "measured"
+  },
+  "screenshot": "ops/rebuild-2026-09/evidence/phase-11/phase-11-realswe-surface.png",
+  "note": "Surface check after next build; unmatched source identities checkbox enabled so Real-SWE configs are visible. Rows show harness, 95% CI and USD/rollout; the axis shows the 10-task/640-rollout public-sample note."
+}

@@ -8,7 +8,7 @@ BH=/opt/benchmarkheaven
 STATE=$BH/state
 BIN=$REPO/ops/rebuild-2026-09/bin
 LOCK=$BH/tick.lock
-PHASES="01 02 03 04 05 06 07 08 09 10"
+PHASES="01 02 03 04 05 06 07 08 09 10 11"
 MAX_RETRIES=2
 
 exec 9>"$LOCK"; flock -n 9 || exit 0
@@ -38,6 +38,9 @@ restart() {
   [ "${1:-}" = "free" ] && n=0
   echo $((n + 1)) > "$STATE/retries-$cur"
   echo "tick: starting phase $cur (attempt $((n + 1)))"
+  # Sperre nicht an den Langlaeufer vererben: sonst blockiert der laufende
+  # Phasenprozess jeden weiteren Tick, bis er endet (im Hangfall bis zu 6 h).
+  exec 9>&-
   exec bash "$BIN/run-phase.sh" "$cur"
 }
 
@@ -48,7 +51,7 @@ case "$st" in
     # arbeitet, waehrend das Tor noch Tests faehrt. Die Tor-Datei setzt die
     # Nachtwache (bh-nachtwache) bzw. der Qualitaetslauf watch.sh --gate.
     case "$cur" in
-      09|10)
+      09|10|11)
         gate_ok="$STATE/.watch/gate-$cur.ok"
         if [ ! -f "$gate_ok" ]; then
           # Notausgang: Wenn seit ueber 90 Minuten ein PASS-Ergebnis vorliegt und
@@ -69,11 +72,11 @@ case "$st" in
     if [ -z "$nxt" ]; then
       if [ ! -f "$STATE/all-done" ]; then
         date -u +%FT%TZ > "$STATE/all-done"
-        bash "$BIN/notify.sh" "🏁 Benchmark Heaven: alle 10 Phasen abgeschlossen. Report: $REPO/ops/rebuild-2026-09/REPORT.md"
+        bash "$BIN/notify.sh" "🏁 Benchmark Heaven: alle Phasen abgeschlossen. Report: $REPO/ops/rebuild-2026-09/REPORT.md"
       fi
       exit 0
     fi
-    echo "tick: $cur done -> starting $nxt"; exec bash "$BIN/run-phase.sh" "$nxt";;
+    echo "tick: $cur done -> starting $nxt"; exec 9>&-; exec bash "$BIN/run-phase.sh" "$nxt";;
   BLOCKED*)
     if [ ! -f "$STATE/blocked-notified-$cur" ]; then
       touch "$STATE/blocked-notified-$cur"

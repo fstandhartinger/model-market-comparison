@@ -57,6 +57,34 @@ test('explicit CoT settings, dataset splits, and harnesses create separate evalu
   assert.notEqual(cohortOf(make('validation')), cohortOf(make('test')));
   assert.notEqual(cohortOf(make(null, 'Codex')), cohortOf(make(null, 'Claude Code')));
 });
+test('two harnesses of one model stay separate axes and rows, never merged', () => {
+  const observation = (harness, value) => ({
+    id: `realswe:${harness}`, benchmark_id: 'realswe::snapshot-2026-09-12',
+    subject: { model_id: null, source_id: `realswe:${harness}`, name: 'GPT-6 Astra', harness, variant: null },
+    value, unit: 'percent', basis: 'measured', protocol: 'Real-SWE public leaderboard',
+    confidence_interval: { level: 0.95, lower: value, upper: value },
+    source: { url: 'https://realswe.withspecific.com/', retrieved_at: '2026-09-12', published_at: null, file: 'evidence' },
+  });
+  const ds = {
+    models: [],
+    sources: { artificialanalysis: '2026-09-01', designarena: '2026-09-01' },
+    benchmark_results: {
+      registry: [{ id: 'realswe::snapshot-2026-09-12', family: 'realswe', name: 'Real-SWE', version: 'snapshot-2026-09-12',
+        category: 'Coding', one_sentence_description: 'Resolution rate on a public sample.', scoring: { unit: 'percent', higher_better: true },
+        primary_url: 'https://realswe.withspecific.com/' }],
+      observations: [observation('Codex CLI', 20), observation('Claude Code', 30)],
+      collections: [],
+    },
+  };
+  const axes = buildBenchmarkView(ds).axes.filter((a) => a.benchmarkId === 'realswe::snapshot-2026-09-12');
+  assert.equal(axes.length, 2, 'each harness is its own axis');
+  assert.deepEqual(axes.map((a) => a.cohort).sort(), ['Claude Code', 'Codex CLI']);
+  for (const axis of axes) {
+    assert.equal(axis.scores.length, 1);
+    assert.equal(axis.scores[0].harness, axis.cohort);
+    assert.equal(axis.scores[0].modelId, null);
+  }
+});
 test('actual source adapter keeps all version identities, values and dated legacy inputs, without mutating data', async () => {
   const ds = JSON.parse(await readFile('data/dataset.json', 'utf8')), before = JSON.stringify(ds);
   const view = buildBenchmarkView(ds), ids = new Set(view.axes.map((a) => a.benchmarkId));

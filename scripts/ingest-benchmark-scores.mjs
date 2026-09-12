@@ -2,9 +2,11 @@
 // Deterministic offline ingestion of captured sources. Changed methodology needs a reviewed lock.
 import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
+import { gunzipSync } from 'node:zlib';
 import { writeJSONAtomic } from '../lib/snapshot.mjs';
 import { validateBenchmarkScores } from '../lib/benchmark-scores.mjs';
 import { verifyScoreEvidence } from '../lib/benchmark-score-evidence.mjs';
+import { parseRealSwe, buildRealSweSnapshot } from '../lib/realswe.mjs';
 const read = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const hash = (s) => createHash('sha256').update(s).digest('hex');
 const registry = await read('data/raw/benchmarks/registry.json');
@@ -13,6 +15,7 @@ const lock = await read('data/raw/benchmarks/ingestion-lock.json');
 const aa = await read('data/raw/benchmarks/aa-observed-fields.json');
 if (aa.source_sha256 !== lock.aa.source_sha256 || hash(await readFile('data/raw/benchmarks/aa-observed-fields.json')) !== lock.aa.observations_sha256) throw new Error('AA snapshot changed: review methodology/version mapping and refresh ingestion-lock before accepting scores');
 const observations = [], missing = [], collections = [], rejected = [];
+const details = {};
 const aaModels = new Map(models.filter((m) => m.aa_model_id).map((m) => [m.aa_model_id, m]));
 const exactNames = new Map();
 for (const m of models) {
@@ -71,6 +74,30 @@ for (const version of ['1.4', '1.5']) {
   collections.push({ benchmark_id, status: 'collected', source_url: 'https://artificialanalysis.ai/agents/coding-agents',
     reason: `Reviewed ${version} snapshot. ${version === '1.4' ? 'Historical date retained; unchanged Composite source.' : 'Separate registry observations; no Composite attachment.'}` });
 }
+{
+  const spec = lock.realswe;
+  const htmlBytes = gunzipSync(await readFile(spec.source_file));
+  if (hash(htmlBytes) !== spec.source_sha256) throw new Error('Real-SWE page capture changed: review provenance before accepting scores');
+  const chunkBytes = gunzipSync(await readFile(spec.chunk_file));
+  if (hash(chunkBytes) !== spec.chunk_sha256) throw new Error('Real-SWE data chunk capture changed: review provenance before accepting scores');
+  const parsedRealSwe = parseRealSwe(htmlBytes.toString('utf8'), { chunk: chunkBytes.toString('utf8') });
+  const realswe = buildRealSweSnapshot(parsedRealSwe, {
+    date: spec.snapshot_date,
+    retrievedAt: spec.retrieved_at,
+    sourceFile: spec.source_file,
+    sourceSha256: spec.source_sha256,
+    chunkUrl: spec.chunk_url,
+    chunkFile: spec.chunk_file,
+    chunkSha256: spec.chunk_sha256,
+    chunkLocator: 'Next.js dataset chunk: per-configuration passes/valid array (verified against the leaderboard) and the cost-provenance map; the bundle is identified by the marker `entitlement-overage-lines`.',
+  });
+  observations.push(...realswe.observations);
+  Object.assign(details, realswe.details);
+  collections.push({ benchmark_id: realswe.scoreId, status: 'collected', source_url: spec.source_url,
+    reason: 'Hash-bound page and dataset chunk parsed offline; eight model-harness configurations on a published ten-task sample (8 x 10 x 8 = 640 rollouts), each value reconciled against the individual rollout outcomes.' });
+  collections.push({ benchmark_id: realswe.costId, status: 'collected', source_url: spec.source_url,
+    reason: 'Published mean cost per rollout from the source Pareto view; recorded with per-configuration provider-usage provenance and explicit lower-bound flags.' });
+}
 for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/benchmarks/vendor-candidates.json']) {
   let raw;
   try { raw = await read(path); } catch (e) { if (e.code === 'ENOENT' && process.argv.includes('--draft')) continue; throw e; }
@@ -96,7 +123,7 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
 }
 for (const e of registry.entries) if (!collections.some((c) => c.benchmark_id === e.id)) collections.push({ benchmark_id: e.id,
   status: 'manual_required', source_url: e.primary_url, reason: e.how_to_collect.locator });
-const snapshot = { schema_version: 1, observations, missing, collections, rejected };
+const snapshot = { schema_version: 1, observations, missing, collections, rejected, ...(Object.keys(details).length ? { details } : {}) };
 validateBenchmarkScores(snapshot, registry, new Set(models.map((m) => m.id)));
 if (!process.argv.includes('--draft')) await verifyScoreEvidence(snapshot, registry, { approvals: await read('data/raw/benchmarks/score-approvals.json') });
 const outIndex = process.argv.indexOf('--out');

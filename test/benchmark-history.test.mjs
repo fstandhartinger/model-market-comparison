@@ -40,6 +40,8 @@ test('bridge ratio is exact: a uniform factor-2 board doubles the retained histo
   assert.equal(direct.bridge_count, 5);
   assert.equal(direct.aggregate, 2);
   assert.equal(direct.spread.iqr_relative, 0);
+  assert.equal(direct.cause, null, 'a comparable bridge has no refusal cause');
+  assert.equal(direct.cause_value, null);
 
   const estimates = datedEstimates(live, registry([registryEntry('bench::1')]), [state('S1', '2026-09-01T00:00:00.000Z', old)]);
   assert.equal(estimates.length, 1);
@@ -59,6 +61,8 @@ test('naive old/new juxtaposition is impossible: no bridges means no number', ()
   assert.equal(empty.comparable, false);
   assert.equal(empty.aggregate, null);
   assert.equal(empty.bridge_count, 0);
+  assert.equal(empty.cause, 'insufficient_bridges');
+  assert.equal(empty.cause_value, 0);
   assert.match(empty.reason, /at least 3 required/);
 
   // The historical model existed before but only two bridge configurations remain:
@@ -71,6 +75,8 @@ test('naive old/new juxtaposition is impossible: no bridges means no number', ()
   assert.equal(h.status, 'not_comparable');
   assert.equal(h.value, null);
   assert.equal(h.uncertainty, null);
+  assert.equal(h.comparison.cause, 'insufficient_bridges');
+  assert.equal(h.comparison.cause_value, 2, 'the cause carries the concrete bridge count');
   assert.match(h.comparison.reason, /only 2 bridge/);
   assert.match(h.note, /not comparable/i);
 });
@@ -86,6 +92,44 @@ test('a wide bridge spread is refused instead of published as a number', () => {
   assert.equal(c.comparable, false);
   assert.match(c.reason, /IQR is/);
   assert.ok(c.spread.iqr_relative > BRIDGE_POLICY.maxIqrRelative);
+  assert.equal(c.cause, 'spread_too_wide');
+  assert.equal(c.cause_value, c.spread.iqr_relative, 'the cause carries the concrete relative IQR');
+  assert.ok(c.cause_value > BRIDGE_POLICY.maxIqrRelative);
+});
+
+test('every refusal exposes a machine-readable cause with its concrete value', () => {
+  const tooFew = computeBridgeComparison([{ model_key: 'a', old_value: 1, new_value: 2 }]);
+  assert.equal(tooFew.cause, 'insufficient_bridges');
+  assert.equal(tooFew.cause_value, 1);
+
+  const tooWide = computeBridgeComparison([
+    { model_key: 'a', old_value: 1, new_value: 0.1 },
+    { model_key: 'b', old_value: 1, new_value: 1.0 },
+    { model_key: 'c', old_value: 1, new_value: 8.0 },
+  ]);
+  assert.equal(tooWide.cause, 'spread_too_wide');
+  assert.equal(tooWide.cause_value, tooWide.spread.iqr_relative);
+
+  const rankTooFew = computeRankShift([{ value: 1 }, { value: 2 }], [{ value: 1 }, { value: 2 }, { value: 3 }], []);
+  assert.equal(rankTooFew.cause, 'insufficient_bridges');
+  assert.equal(rankTooFew.cause_value, 0);
+  const rankWide = computeRankShift(
+    [100, 90, 80, 70, 60].map((value) => ({ value })),
+    [1000, 900, 800, 700, 600].map((value) => ({ value })),
+    [{ old_value: 100, new_value: 600 }, { old_value: 90, new_value: 700 }, { old_value: 80, new_value: 800 }],
+  );
+  assert.equal(rankWide.cause, 'spread_too_wide');
+  assert.equal(rankWide.cause_value, rankWide.spread.iqr);
+
+  // Only refusals carry a cause; a published estimate must not look like a refusal.
+  const bridges = ['b1', 'b2', 'b3'];
+  const live = bridges.map((id) => observation(id, 2));
+  const old = [...bridges.map((id) => observation(id, 1)), observation('h', 3)];
+  const h = datedEstimates(live, registry([registryEntry('bench::1')]), [state('S1', '2026-09-01T00:00:00.000Z', old)])
+    .find((e) => e.subject_name === title('h'));
+  assert.equal(h.status, 'estimated');
+  assert.equal(h.comparison.cause, null);
+  assert.equal(h.comparison.cause_value, null);
 });
 
 test('zero old values are floored out of ratio bridges (no division blow-up)', () => {
@@ -227,6 +271,12 @@ test('real states: a superseded model gets a labelled estimate; an incomparable 
   assert.equal(notComparable.value, null);
   assert.ok(notComparable.comparison.reason);
   assert.match(notComparable.note, /not comparable/i);
+  for (const e of historical.estimates) {
+    if (e.status !== 'not_comparable') continue;
+    assert.ok(['insufficient_bridges', 'spread_too_wide'].includes(e.comparison.cause), `${e.id} needs a machine-readable cause`);
+    assert.equal(typeof e.comparison.cause_value, 'number');
+    assert.ok(Number.isFinite(e.comparison.cause_value), `${e.id} needs a concrete cause value`);
+  }
 
   for (const e of historical.estimates) {
     assert.ok(['estimated', 'not_comparable', 'recompute_required'].includes(e.status));

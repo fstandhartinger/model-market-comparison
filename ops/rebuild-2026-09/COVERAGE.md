@@ -120,3 +120,16 @@ published snapshot `a41df419`.
 7. **Unknown AA worker scores (phase 01/08):** the fixed known-answer smoke test verifies transport, not AA qualification, including the requested free and near-free backends. It has a price/token cap and accepts no custom task. Models with no AA score remain excluded from unattended data-bearing work. Known scores below 34 are excluded even from pinned and smoke paths.
 
 All original wishes have phase owners. No new product features are claimed complete by this phase-01 mapping. Phase 09 must re-check every row against the actual deployed product and delivery receipts. The binding xplainervideo correction supersedes the original airesearch12 account reference everywhere, including vendor-release searches in phase 05.
+
+---
+
+## Phase 11 addendum — new source, no wish verdict changed (2026-09-12)
+
+Florian's request after phase 09 (Real-SWE, Specific Labs) is a **new source**, not a new
+wish, so it adds coverage without changing any W1–W28 or F1 verdict above. It is ingested
+under the same binding contract (`docs/benchmark-ingestion.md`): hash-bound bytes, a
+registry entry (`realswe::snapshot-2026-09-12` plus the separate `realswe-cost::`
+board), `basis: measured`, no invented numbers and the public-10-task limit stated.
+The harness dimension and the dated history state are the phase-11-specific deliverables;
+the machine-readable `cause` for `not_comparable` rows closes the phase-10 night-review
+addendum. See `REPORT.md` → "Phase 11" and `CHANGELOG.md`.

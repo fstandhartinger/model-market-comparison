@@ -4,6 +4,62 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-12 — Phase 11: Real-SWE (Specific Labs) source
+
+- Added the Real-SWE coding-agent board (`https://realswe.withspecific.com/`, canonical
+  `https://withspecific.com/benchmarks/real-swe`) as a hash-bound, network-free source.
+  The date identifies the snapshot: `realswe::snapshot-2026-09-12` (unit **percent**,
+  higher-better, category Coding) and a separate `realswe-cost::snapshot-2026-09-12`
+  (unit **USD per rollout**, lower-better, category Efficiency) — the cost is never folded
+  into the score. Eight model+harness configurations × 10 public tasks × 8 runs = **640**
+  scored rollouts, the source's own cross-check and the collector's.
+- Model and harness are scored together and stay separate in the product: every
+  observation keeps `subject.harness`, the presentation adapter groups one axis per
+  benchmark+harness cohort, and two harnesses of the same model can never merge into one
+  value. All rows carry `model_id: null` because the source publishes no catalog identity;
+  they surface as unmatched source identities until a human mapping exists.
+- Observations carry the native unit, basis `measured` (Specific Labs is the independent
+  evaluator, not the vendor), a 95 % `confidence_interval`, and full source provenance.
+  Cost rows carry a USD unit plus a `cost_provenance` block that flags the two
+  lower-bound configurations (incomplete usage: Grok 4.6 and Kimi K3). Task-level pass
+  counts (bestanden/8 per model) and the failure taxonomy (PASS 172,
+  MISSED_REQUIREMENT 190, UNVERIFIED_ASSUMPTION 118, INTEGRATION_ERROR 136, REGRESSION 18,
+  WRONG_FILE 6) are retained under `benchmark_results.details`, not as invented scores.
+- The public sample limit is explicit, not hidden: `details.publication_scope` records
+  10 published tasks / 8 runs / 8 configurations / 640 rollouts, and the UI prints
+  "Public sample" on the axis. Only the 10-task sample is public; the values are never
+  described as "all tasks".
+- Collector `scripts/collect-realswe.mjs`, parser `lib/realswe.mjs` and tests
+  `test/realswe.test.mjs` reproduce the snapshot from the stored bytes with no network
+  access; `ingestion-lock.json` pins the page and chunk SHA-256, and the parser refuses
+  drifted bytes. The `not_comparable` historical rows now carry a machine-readable
+  `cause`/`cause_value` (`insufficient_bridges` / `spread_too_wide`) so the UI can explain
+  why no estimate is published.
+- No evidence file, score, ID, unit or API path was removed; the change is additive.
+  Regression tests assert Real-SWE leaves the Composite slots and the AA v1.4/v1.5 Coding
+  entries untouched.
+
+## 2026-09-12 — Phase 10: historical retention and bridge comparison
+
+- Every accepted score snapshot is now projected to an immutable, write-once dated state
+  under `data/raw/benchmarks/history/states/<state_id>.json` with `index.json` as the
+  ordered index; the id is `<yyyymmdd>-<content_sha256[0..8]>`, so identical observations
+  dedupe and a re-run is a no-op. The daily refresh appends the state after the accepted
+  scores write; `dataset.json` carries only state metadata.
+- A model whose value vanished from the current board but exists in an older dated state
+  or an older version of the same family receives a **labelled estimate** (`method:
+  bridge-median-ratio`), never a measurement: median over ≥ 3 bridge configurations,
+  with min/q1/q3/max spread, IQR relative to the median and the bridge count. Fewer than
+  three bridges or an IQR above 25 % of the median yields `not_comparable` with
+  `value: null`. Elo boards shift ranks (`bridge-rank-shift`), derived/composite indices
+  are `recompute_required`, and a version change cites `source_benchmark_id` or
+  `source_state_id`. `not_comparable` rows now expose `cause` (`insufficient_bridges` /
+  `spread_too_wide`) and the concrete `cause_value`.
+- `lib/benchmark-history.mjs`, `scripts/build-benchmark-history.mjs`,
+  `test/benchmark-history.test.mjs` and `data/SCHEMA.md` document and test the policy;
+  the UI/API attach estimates to their axis (`axis.estimates`) and never merge them into
+  measured scores. No schema path, ID or unit was removed.
+
 ## 2026-09-11 — Phase 09: completion audit and published skills
 
 - Owner verification pass over the live product: `benchmarkheaven.com` (and `www`) and the

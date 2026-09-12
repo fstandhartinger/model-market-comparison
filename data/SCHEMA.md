@@ -207,9 +207,14 @@ measured on both sides:
 Estimates (`method: bridge-median-ratio`) publish the aggregate, the min/q1/q3/max
 spread, the IQR relative to the median, the bridge count and the contributing bridges.
 If there are fewer than three bridges, or the bridge IQR exceeds **25 % of the median**,
-the row is `not_comparable` and `value` is `null` — a number is never invented. Old
-values of `|x| < 1e-12` are floored out of the ratio. Units, direction and family
-(`scoring.unit`, `scoring.higher_better`) must match; benchmarks are never mixed.
+the row is `not_comparable` and `value` is `null` — a number is never invented. Each
+`not_comparable` row carries a machine-readable `cause` with the concrete number that
+triggered it: `insufficient_bridges` with `cause_value` = the bridge count
+(`BRIDGE_POLICY.minBridges = 3`), or `spread_too_wide` with `cause_value` = the
+`iqr_relative` (`BRIDGE_POLICY.maxIqrRelative = 0.25`). The UI reads the cause to explain
+*why* no estimate is published. Old values of `|x| < 1e-12` are floored out of the ratio
+(`BRIDGE_POLICY.zeroFloor`). Units, direction and family (`scoring.unit`,
+`scoring.higher_better`) must match; benchmarks are never mixed.
 
 ### Special cases
 
@@ -242,3 +247,31 @@ view already served by `/api/benchmark-view?axis=<id>` carries them, and
 `components/BenchmarkRanking.tsx` renders each with its bridge count, spread and
 estimate label. `selectBenchmarkView` keeps an axis's estimates when that axis is
 requested directly.
+
+## Real-SWE (phase 11)
+
+Real-SWE (`realswe::snapshot-2026-09-12`, `family: realswe`, `category: Coding`) adds a
+coding-agent board whose model+harness unit is scored together. Observations follow the
+phase-05 shape — `subject` (nullable catalog `model_id`, `harness`, effort),
+native `value`/`unit` (**percent**), `basis: measured`, `protocol`, and complete source
+provenance — plus:
+
+- `confidence_interval`: the source's 95 % interval (`{level: 0.95, lower, upper}`) in
+  the native unit.
+- `subject.harness` as a first-class cohort dimension: one axis per
+  `[benchmark_id, harness, unit]`, so two harnesses of one model never merge.
+
+The separate cost board `realswe-cost::snapshot-2026-09-12` stores the published
+**USD per rollout** (unit `USD`, difference-cost category, lower-better) as its own
+observation; it is never converted into a score. Task-level pass counts (passes/8 per
+configuration) and the summed failure taxonomy are retained under
+`benchmark_results.details['realswe::snapshot-2026-09-12']`, together with
+`publication_scope` (`{tasks: 10, runs: 8, configurations: 8, rollouts: 640}`);
+`details['realswe-cost::snapshot-2026-09-12']` holds `cost_provenance` (per-configuration
+displayed cost, runs, basis and a lower-bound flag for incomplete-usage configurations).
+`benchmark_results.collections` carries only `{benchmark_id, status, source_url, reason}`.
+Every Real-SWE row has `model_id: null` (the source publishes no catalog identity) and
+therefore contributes to neither `coverage.by_model` nor catalog coverage; it surfaces
+only under the unmatched-source-identities toggle. The `not_comparable` historical rows
+carry the phase-10 `cause`/`cause_value` described above. Sources and formula notes:
+`docs/benchmark-ingestion.md`; types `lib/realswe.mjs`.

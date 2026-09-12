@@ -14,6 +14,8 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
     <div className="flex flex-wrap items-baseline gap-x-2 gap-y-1 text-sm">
       <span className="font-semibold tabular-nums">{fmt(row.value)} {axis.unit}</span>
       <span className={flagClass}>{flag}</span>
+      {row.confidenceInterval ? <span className="bh-muted">{Math.round(row.confidenceInterval.level * 100)}% CI {fmt(row.confidenceInterval.lower, 1)}–{fmt(row.confidenceInterval.upper, 1)} {axis.unit}</span> : null}
+      {row.costPerRollout != null ? <span className="bh-muted">· {fmt(row.costPerRollout, 2)} USD/rollout</span> : null}
       {divergence && <span className="bh-badge bh-alert">Vendor − measured: {fmt(divergence.delta)} {divergence.unit}</span>}
       {row.lowSample ? <span className="bh-alert">low sample</span> : null}
       {row.battles != null ? <span className="bh-muted">{row.battles} battles</span> : null}
@@ -25,6 +27,9 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
         <div className="bh-muted mt-1 space-y-1 break-words text-xs">
           <div>Axis: {axis.name} · {axis.version} · {axis.cohort}</div>
           <div>Exact value: <code>{String(row.value)}</code> {axis.unit}</div>
+          {row.confidenceInterval ? <div>{Math.round(row.confidenceInterval.level * 100)}% confidence interval: {row.confidenceInterval.lower} to {row.confidenceInterval.upper} {axis.unit}</div> : null}
+          {row.costPerRollout != null ? <div>Published mean cost: {row.costPerRollout} USD per rollout</div> : null}
+          {row.harness ? <div>Evaluation harness: {row.harness}</div> : null}
           <div>Observed: {row.date} · publication date: {src?.published || 'not recorded'}</div>
           <div>Observation id: <code>{row.id}</code></div>
           <div>Source: {src ? <a href={src.url} target="_blank" rel="noreferrer">{src.url}</a> : 'no source record'}</div>

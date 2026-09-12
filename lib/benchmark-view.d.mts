@@ -1,7 +1,8 @@
 import type { Dataset } from './types';
 import type { BenchmarkDivergence, BenchmarkMissing } from './benchmark-scores.mjs';
 export interface ViewModel { id: string; name: string; org: string; family: string; open: boolean; deprecated: boolean; historical?: boolean }
-export interface ViewScore { id: string; modelId: string | null; subjectId: string; name: string; value: number; basis: string; derived: boolean; source: number; date: string; variant: string | null; lowSample: boolean; battles?: number | null }
+export interface ViewScore { id: string; modelId: string | null; subjectId: string; name: string; value: number; basis: string; derived: boolean; source: number; date: string; variant: string | null; harness?: string | null; confidenceInterval?: { level: number; lower: number; upper: number } | null; costPerRollout?: number | null; lowSample: boolean; battles?: number | null }
+export interface ViewPublicationScope { published_tasks: number; runs_per_task: number; configurations: number; rollouts: number; note: string }
 export interface ViewEstimateSpread { min: number; q1: number; q3: number; max: number; iqr: number; iqr_relative: number }
 export interface ViewEstimateUncertainty { lower: number; upper: number; min: number; max: number; iqr: number; iqr_relative: number }
 export interface ViewEstimate {
@@ -13,7 +14,7 @@ export interface ViewEstimate {
   source: { url: string | null; retrieved_at: string | null; published_at: string | null; file: string | null; locator: string | null } | null;
 }
 export interface ViewStats { n: number; families: number; mean: number | null; sd: number | null; min: number | null; max: number | null }
-export interface ViewAxis { id: string; benchmarkId: string; family: string; name: string; version: string; category: string; description: string; unit: string; higherBetter: boolean | null; cohort: string; url: string; scores: ViewScore[]; stats: ViewStats; estimates?: ViewEstimate[]; historical?: boolean; collection?: { status: string; reason: string; source_url?: string } }
+export interface ViewAxis { id: string; benchmarkId: string; family: string; name: string; version: string; category: string; description: string; unit: string; higherBetter: boolean | null; cohort: string; url: string; scores: ViewScore[]; stats: ViewStats; estimates?: ViewEstimate[]; historical?: boolean; publicationScope?: ViewPublicationScope | null; detailNote?: string | null; collection?: { status: string; reason: string; source_url?: string } }
 export interface BenchmarkView { models: ViewModel[]; axes: ViewAxis[]; sources: { url: string; date: string; published: string | null; file: string }[]; divergences: BenchmarkDivergence[]; missing: BenchmarkMissing[]; generatedAt: string; registryCount: number; legacyDate: string }
 export interface ProfileFlag { axisId: string; scoreId: string; direction: string; value: number; z: number; baseline: number; gap: number; profileN: number; peers: number; peerFamilies: number; mean: number; sd: number }
 export const ANOMALY_POLICY: { minPeers: number; minFamilies: number; minProfile: number; peerZ: number; profileGap: number };
