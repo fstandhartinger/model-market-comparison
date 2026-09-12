@@ -97,7 +97,7 @@ credited below, the rest is marked open.
 | D1 | Blend default 20 is not a selectable option | implemented | `ux-evidence/iter1-live/verification.json` | blend 20 is a real option; settings key bumped to v7 to discard the broken payload |
 | D2 | Reset restores `excludeChinese = true` against its default | implemented | `components/GlobalFilters.tsx` | Reset restores every documented default; `defaultMinFor("composite")` is now 85 so a clean page is not reported as modified |
 | D3 | `#benchmarks` shows composite slots, not benchmark count | implemented | `ux-evidence/iter1-live/verification.json` | see R2.2 |
-| E1 | ECI (general + software engineering) into the Composite, with scraping recipe in the update mechanism | open | — | Epoch AI ECI; newer than the "keep Composite as is" rule, so it wins. Needs re-weighting doc, Score (i) text update, and H2 bridging across the Composite definition change |
+| E1 | ECI (general + software engineering) into the Composite, with scraping recipe in the update mechanism | implemented | `ux-evidence/iter3-live/eci-verification.json` | Epoch AI source collected 264 general / 101 software rows; 130 families mapped conservatively, 134 source models retained unmatched. Composite is now seven equal native/percentile-normalized slots; source and H2 recompute provenance are documented. Awaiting independent-engine verification. |
 | E2 | Secondary/community benchmarks (Vals AI, CursorBench, Apprentice Bench, DeepSWE, FrontierBench, RealSWE, 2 X threads) — NOT in the Composite | open | — | check `data/raw/benchmarks/` and `bfeada7` first; Real-SWE looks already ingested |
 | E3 | Collection method order: official API/export → structured page data → static HTML → the page's own network calls | open | — | recipes go into the skills and the daily refresh. The R4.10 collector added this iteration already follows it (SSR HTML, robots-allowed, one request, self-verifying) |
 | P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | open | — | reviewer must be a different engine than the author |
@@ -150,25 +150,21 @@ credited below, the rest is marked open.
 
 Highest value first, dependencies before the UI that shows them:
 
-1. **E1 — ECI into the Composite.** The largest untouched requirement and the one that moves
-   numbers. Epoch AI ECI (general + software engineering), scraping recipe into the daily
-   refresh, Composite re-weighting documented, the Score (i) text updated to say ECI is in it,
-   and H2 bridging taught about the Composite definition change.
-2. **B4 / B5 — the Benchmaxxing tag in the overview table and the small-print method note.**
+1. **B4 / B5 — the Benchmaxxing tag in the overview table and the small-print method note.**
    `BenchmaxxExplorer` and `BenchmaxxingReport` already exist; the tag never reaches the
    overview table, and the method is not explained on the page. Cheap, visible, and B1–B3/B6/B7
    are claimed implemented but have never been verified live.
-3. **R8.1 — release-post-style benchmark comparisons.** `ChartsBoard` / `BenchmarkCompare`
+2. **R8.1 — release-post-style benchmark comparisons.** `ChartsBoard` / `BenchmarkCompare`
    exist and are not at the bar Florian described. This is the biggest remaining *design*
    item and should follow a Fable 5.1 pass (X3 is still open — no `DESIGN-DIRECTIVES.md`
    exists yet).
-4. **R9.1 — a full fresh data run** with every live source dated today, deployed and proven.
-5. **R6.3 — subscriptions in the cost view.** The research (R6.2) is done and says something
+3. **R9.1 — a full fresh data run** with every live source dated today, deployed and proven.
+4. **R6.3 — subscriptions in the cost view.** The research (R6.2) is done and says something
    important: only GitHub Copilot publishes an absolute included quota. Model Copilot
    honestly, and show "quota not published" for the rest instead of an implied per-task price.
-6. **H3** — the "better than model X in category Y" filter. The wizard's capability page
+5. **H3** — the "better than model X in category Y" filter. The wizard's capability page
    already computes a release-date frontier; H3 is the general case of the same idea.
-7. **P1 / P2** — the PRD and the cited Artificial Analysis capability comparison. Both are
+6. **P1 / P2** — the PRD and the cited Artificial Analysis capability comparison. Both are
    gates on declaring the ledger complete, and P1 needs a *different engine* as reviewer.
 
 Notes for whoever picks this up:
@@ -262,3 +258,23 @@ Notes for whoever picks this up:
     iteration must read that file first** — if Florian answered, his answer outranks
     everything in this handover. This is not X7: the final Telegram still owes him the
     R4.10 and R5.2 interpretations and whatever is open at the end.
+
+- **2026-09-12 · iteration 3 · codex-luna** — implemented E1 and deployed it.
+  - Collected the official Epoch AI ECI exports and benchmark catalog: 264 general rows and
+    101 software-engineering rows. Software ECI is refit from the official performance and
+    difficulty exports with the published sigmoid method and a two-benchmark minimum.
+  - Added the fail-closed collector, hashes, method note, daily refresh hook, conservative
+    family attachment diagnostics (130 mapped / 134 unmatched), seven-slot Composite
+    reweighting, Score (i) copy, model/detail evidence, and H2's explicit recompute boundary
+    for the Composite definition change.
+  - Gates: `build-dataset` ✓, `npm test` 244/244 ✓, `tsc --noEmit` ✓, `npm run build` ✓.
+    Commits `618f1dc` and `32fdd2c` are pushed to `main`; live revision verified as
+    `32fdd2c455b76014e7f9a5982eb38a270274edfd`.
+  - Live evidence: `ux-evidence/iter3-live/verification.json` and
+    `ux-evidence/iter3-live/eci-verification.json`, with desktop/mobile verifier output,
+    software-ECI selector evidence, and a fresh model-detail/API check. Status remains
+    **implemented**, not **verified**, because the independent-engine rule reserves the latter
+    for a different engine.
+  - Delegation was attempted for mechanical review; the free worker stopped at its sandbox
+    permission prompt for `/home/flori/.agent-budget.json`. No delegated output was trusted
+    or shipped.
