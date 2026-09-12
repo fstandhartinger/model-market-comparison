@@ -1,7 +1,7 @@
 import { SCORE_LABELS, type ScoreKey } from './types';
 export function scoreVersion(key: ScoreKey, dates?: Record<string, string>) {
   if (key === 'composite') return `7 fixed inputs; Epoch ECI ${dates?.epoch_eci?.slice(0, 10) || 'date unavailable'}; Coding Agent v1.4`;
-  if (key === 'epoch_eci' || key === 'epoch_eci_software') return `Epoch ECI · ${dates?.epoch_eci || 'date unavailable'}`;
+  if (key === 'epoch_eci' || key === 'epoch_eci_software') return `Epoch source ${dates?.epoch_eci?.slice(0, 10) || 'date unavailable'}`;
   if (key === 'aa_coding_agent') return `v1.4 · ${dates?.aa_coding_agents || 'date unavailable'}`;
   return `unversioned snapshot ${dates?.[key.startsWith('designarena') ? 'designarena' : 'artificialanalysis'] || 'date unavailable'}`;
 }
