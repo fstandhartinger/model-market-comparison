@@ -301,3 +301,8 @@ Notes for whoever picks this up:
     two actionable integration issues: the explanation was hidden in Simple mode, and the
     Overview/dedicated-page model pools could diverge. Both were corrected in the follow-up
     working revision; the optional client fields also remain absent when no report is supplied.
+  - Follow-up commit `5b780c3` is pushed and deployed via Sandy PaaS deployment
+    `x1yrve8ud4zcuh240j3vq552`; the live canonical and legacy `/api/meta` revisions both match
+    `5b780c37ab8d3c5bd01ca33cda0ac240c4e9dfd9`. Final evidence, including the Simple first-load
+    explanation and the relaxed-filter desktop/mobile checks, is in
+    `/opt/benchmarkheaven/state/ux-evidence/iter4-live/verification.json`.
