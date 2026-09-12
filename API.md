@@ -85,7 +85,10 @@ One model by `id` (e.g. `glm-5.2::max`) or by `family_key` (e.g. `glm-5.2`): ful
 The provider/platform directory with per-provider model counts and the `eu_hosted` / `non_us` / `country` flags.
 
 ### `GET /api/meta`
-Dataset `generated_at`, `counts`, per-source collection dates, and whether the data is served from `postgres` or the bundled snapshot.
+Dataset `generated_at`, `counts`, per-source collection dates, whether the data is served from `postgres` or the bundled snapshot, and `revision`. `revision` is the nonsecret `SOURCE_COMMIT` injected by Coolify; its identical value is also sent as `X-Benchmark-Heaven-Revision`. If deployment identity is unavailable it is explicitly `unknown`, never guessed.
+
+### `GET /api/operator-status`
+Versioned operations receipt: last successful and attempted daily run, source dates, and source ages calculated at request time. `refresh_claim: "none"` means this endpoint never turns a failed attempt into a freshness claim.
 
 ### `GET /api/health`
 `{ "ok": true, "db": true|false }` — liveness + whether a database is wired.

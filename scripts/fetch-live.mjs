@@ -11,7 +11,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource } from '../lib/live-source.mjs';
+import { assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource } from '../lib/live-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -190,11 +190,12 @@ async function fetchOpenRouter() {
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, 'openrouter.json'), 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
-  assertIdentityCoverage(previous.models, models, (m) => m.id, 'OpenRouter catalog');
-  const previousById = new Map((previous.models || []).map((m) => [m.id, m]));
-  let sourceApprovals = [];
-  try { sourceApprovals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')).openrouter_endpoints || []; }
+  let approvals = {};
+  try { approvals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
+  assertApprovedIdentityCoverage(previous.models, models, (m) => m.id, 'OpenRouter catalog', { approval: approvals.openrouter_catalog });
+  const previousById = new Map((previous.models || []).map((m) => [m.id, m]));
+  const sourceApprovals = approvals.openrouter_endpoints || [];
   console.log(`  ${models.length} models in catalog`);
 
   // Fetch per-provider endpoints for every model (concurrency limited) so we can

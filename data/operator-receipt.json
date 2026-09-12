@@ -1,0 +1,21 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-12T18:45:16Z",
+  "last_success": {
+    "started_at": "2026-09-11T06:32:03.542Z",
+    "finished_at": "2026-09-11T06:50:09.612Z",
+    "commit": "a41df419e69b9c0cd465e8dccb16c1f1f3f375fe",
+    "live_verified": true,
+    "run_dir": "/opt/benchmarkheaven-daily/runs/2026-09-11T06-32-03-542Z-839690"
+  },
+  "last_attempt": {
+    "started_at": "2026-09-12T05:17:01.126Z",
+    "finished_at": "2026-09-12T05:17:15.242Z",
+    "status": "problem",
+    "published": false,
+    "run_dir": "/opt/benchmarkheaven-daily/runs/2026-09-12T05-17-01-126Z-2448757",
+    "error_code": "openrouter_catalog_identity_withdrawal",
+    "error": "OpenRouter catalog reported the prior identity ~openai/gpt-latest absent; the identity-coverage guard stopped publication. No refreshed data was deployed."
+  },
+  "operator_action": "Review the captured primary response and bind any approved upstream withdrawal to exact prior/current identity sets before rerunning. Do not bypass the guard or claim a refresh."
+}

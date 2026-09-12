@@ -5,12 +5,21 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
-import { assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest } from '../lib/live-source.mjs';
+import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest } from '../lib/live-source.mjs';
 
 test('catalog shrink, empty, malformed and duplicate identities fail before publication', () => {
   const previous = [{ id: 'one' }, { id: 'two' }];
   for (const rows of [[], null, [{ id: 'one' }], [{ id: 'one' }, { id: 'one' }], [{ id: 'one' }, {}]]) assert.throws(() => assertIdentityCoverage(previous, rows, (m) => m.id, 'fixture'));
   assert.doesNotThrow(() => assertIdentityCoverage(previous, [...previous, { id: 'three' }], (m) => m.id, 'fixture'));
+});
+
+test('catalog withdrawal requires an unexpired review bound to both complete identity sets', () => {
+  const previous = [{ id: 'one' }, { id: 'two' }, { id: 'retired' }];
+  const current = [{ id: 'one' }, { id: 'two' }, { id: 'new' }];
+  const approval = { expires_at: '2026-01-02T00:00:00Z', previous_identity_sha256: identityDigest(previous, (r) => r.id), current_identity_sha256: identityDigest(current, (r) => r.id), removed: ['retired'] };
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, current, (r) => r.id, 'fixture', { approval, now: Date.parse('2026-01-01') }));
+  assert.throws(() => assertApprovedIdentityCoverage(previous, current, (r) => r.id, 'fixture', { approval, now: Date.parse('2026-01-03') }));
+  assert.throws(() => assertApprovedIdentityCoverage(previous, [{ id: 'one' }, { id: 'two' }], (r) => r.id, 'fixture', { approval, now: Date.parse('2026-01-01') }));
 });
 
 test('explicit empty endpoints permitted only without prior known providers', () => {

@@ -79,6 +79,21 @@ The same artifact maps cleanly onto Azure:
 
 All `/api/*` routes are CORS-enabled read-only JSON (incl. `/api/dataset` for the full export). See [API.md](API.md). This means a deployment can also serve as a **public data API** for this dataset.
 
+### Release identity and refresh receipt
+
+Coolify injects its checked-out nonsecret Git commit into the running container as
+`SOURCE_COMMIT`; the application exposes that exact value in `/api/meta` as
+`revision` and in `X-Benchmark-Heaven-Revision`. The Dockerfile accepts the same
+build argument only to preserve it in non-Coolify images; an absent/malformed value
+is deliberately reported as `unknown`, never replaced with a guessed SHA. Before
+accepting a deploy, compare either live value with `git rev-parse HEAD`.
+
+`/api/operator-status` exposes the versioned operator receipt, the actual last
+successful and attempted daily run, snapshot source dates, and source ages computed
+at request time. It makes no freshness claim: a failed collection remains visible as
+failed and cannot alter the bundled snapshot. The current container is intentionally
+snapshot-only, so `/api/health` returning `db:false` remains expected.
+
 ## Daily refresh recovery (2026-09-08)
 
 The server cron is enabled at `17 5 * * *` (05:17 UTC; 07:17 Berlin during summer).

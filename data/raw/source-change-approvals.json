@@ -1,4 +1,16 @@
 {
+  "openrouter_catalog": {
+    "previous_identity_sha256": "acf5085377c9e3d7ce67d983b7c5bbd1c6ea73ed01587090c7c1569092df3e60",
+    "current_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",
+    "removed": [
+      "~openai/gpt-latest"
+    ],
+    "expires_at": "2026-09-14T18:45:16Z",
+    "reviewed_at": "2026-09-12T18:45:16Z",
+    "primary_url": "https://openrouter.ai/api/v1/models",
+    "review_basis": "A direct primary API response contained 445 unique IDs against 439 prior accepted IDs: exactly ~openai/gpt-latest was absent and seven IDs were added. This exception binds both full identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
+    "owner_acceptance": "Operator reviewed the captured primary catalog identity transition during the 2026-09-12 daily-refresh remediation; approve only this exact withdrawal for a bounded rerun."
+  },
   "openrouter_endpoints": [
     {
       "model_id": "z-ai/glm-5.3-flash",
