@@ -1,10 +1,10 @@
 #!/bin/bash
 # Choose the engine for the next Benchmark Heaven iteration from MEASURED limits.
-#   pick-engine.sh work     -> claude-opus | codex-astra | opencode-kimi | opencode-nex
+#   pick-engine.sh work     -> claude-opus | codex-luna | opencode-kimi | opencode-nex
 #   pick-engine.sh review <implementer-engine>
 #   pick-engine.sh design   -> claude-fable | none
 # Rules: Florian 2026-09-12 plus the stricter shared QUOTA-CONTINUITY.md ("honor stricter gates").
-# Opus 5 while Claude has headroom; then Codex GPT-6 Astra while
+# Opus 5 while Claude has headroom; then Codex GPT-5.6 Luna while
 # Codex has headroom (never above 80 % of the weekly window); then OpenCode Kimi K3 via
 # Chutes; then OpenCode nex-n2.5-pro:free via OpenRouter. Work must never stop on a quota.
 set -uo pipefail
@@ -44,10 +44,10 @@ case "$MODE" in
   design)
     [ "$claude_ok" = 1 ] && echo claude-fable || echo none ;;
   review)
-    for e in codex-astra claude-opus opencode-kimi opencode-nex; do
+    for e in codex-luna claude-opus opencode-kimi opencode-nex; do
       [ "$e" = "$AVOID" ] && continue
       case "$e" in
-        codex-astra)  [ "$codex_ok" = 1 ] && { echo "$e"; exit 0; } ;;
+        codex-luna)  [ "$codex_ok" = 1 ] && { echo "$e"; exit 0; } ;;
         claude-opus)  [ "$claude_ok" = 1 ] && { echo "$e"; exit 0; } ;;
         opencode-kimi) [ "$kimi_ok" = 1 ] && { echo "$e"; exit 0; } ;;
         opencode-nex) echo "$e"; exit 0 ;;
@@ -55,7 +55,7 @@ case "$MODE" in
     done ;;
   *)
     if   [ "$claude_ok" = 1 ]; then echo claude-opus
-    elif [ "$codex_ok" = 1 ];  then echo codex-astra
+    elif [ "$codex_ok" = 1 ];  then echo codex-luna
     elif [ "$kimi_ok" = 1 ];   then echo opencode-kimi
     else echo opencode-nex; fi ;;
 esac

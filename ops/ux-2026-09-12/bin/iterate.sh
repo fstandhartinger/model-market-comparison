@@ -1,7 +1,7 @@
 #!/bin/bash
 # Run ONE Benchmark Heaven UX-workstream iteration with a given engine and role.
 #   iterate.sh <engine> <role>
-#   engine: claude-opus | claude-fable | codex-astra | opencode-kimi | opencode-nex
+#   engine: claude-opus | claude-fable | codex-luna | opencode-kimi | opencode-nex
 #   role:   work | review | design
 set -uo pipefail
 ENGINE="${1:?engine}"; ROLE="${2:-work}"
@@ -77,11 +77,11 @@ case "$ENGINE" in
       echo "$(( $(date +%s) + 3600 ))" > "$STATE/claude-cooldown-until"
       echo "=== claude limit detected — cooling down Claude for 1h ===" >> "$LOG"
     fi ;;
-  codex-astra)
+  codex-luna)
     case "$(codex login status 2>&1 | head -1)" in *ChatGPT*) ;; *) echo "ABORT: codex not on ChatGPT subscription" >> "$LOG"; rm -f "$STATE/running"; exit 1;; esac
     EFFORT=high; [ "$ROLE" = review ] && EFFORT=xhigh
     run_with_codex_cap timeout 10800 codex exec --dangerously-bypass-approvals-and-sandbox \
-      -m gpt-6-astra -c model_reasoning_effort="$EFFORT" -c tools.web_search=true -C "$REPO" "$PROMPT"; rc=$? ;;
+      -m "${BH_CODEX_MODEL:-gpt-5.6-luna}" -c model_reasoning_effort="$EFFORT" -c tools.web_search=true -C "$REPO" "$PROMPT" < /dev/null; rc=$? ;;
   opencode-kimi)
     timeout 10800 opencode run -m chutes/moonshotai/Kimi-K3-TEE "$PROMPT" >> "$LOG" 2>&1; rc=$?
     if [ $rc -ne 0 ] && [ "$(stat -c%s "$LOG")" -lt 20000 ]; then echo "$(( $(date +%s) + 1800 ))" > "$STATE/kimi-cooldown-until"; fi ;;

@@ -54,6 +54,13 @@ colleague, write the decision down, keep going.
 
 ## 1. Engines, limits and delegation (verbatim rule, made operational)
 
+> **Update 2026-09-12 ~20:00 UTC (Florian):** "Ich fürchte wir müssen GPT-6 Astra etwas
+> sparsamer einsetzen, das Limit ist bei 63% und der Rest bis 100 muss noch 6d 12h reichen …
+> lass uns lieber auf GPT 5.6 Luna ausweichen wenn wir codex einsetzen." → Wherever this
+> workstream uses Codex (fallback work engine and review gates), the model is
+> **GPT-5.6 Luna** (`gpt-5.6-luna`), not GPT-6 Astra. Engine id `codex-luna`. Do not call
+> `gpt-6-astra` from this workstream at all. The 75 % start / 80 % hard cap still applies.
+
 Every iteration, `bin/pick-engine.sh` measures the real limits with
 `~/.claude/skills/agent-limits/limits.py --json` and chooses **in this order**:
 
@@ -61,7 +68,7 @@ Every iteration, `bin/pick-engine.sh` measures the real limits with
    70 % and no hard limit hit is recent. (Florian's shared `QUOTA-CONTINUITY.md` of
    2026-09-12 is stricter than this message and binds all agents on Sandy: prepare a durable
    handoff at 60 %, start no new Claude unit at 70 %. The stricter gate wins.)
-2. **Codex GPT-6 Astra** — if Claude is near its limit, and Codex's weekly window is below
+2. **Codex GPT-5.6 Luna** (was GPT-6 Astra until 2026-09-12 20:00 UTC) — if Claude is near its limit, and Codex's weekly window is below
    75 %. **Hard cap: Codex must never exceed 80 % of the weekly limit** (Florian: keep 20 %
    in reserve; QUOTA-CONTINUITY: prepare handoff at 70 %, admit no new unit at 75 %). `iterate.sh` re-measures every 5 minutes during a Codex run and stops the
    run at 80 %.
@@ -80,7 +87,7 @@ scraping, bulk extraction, first drafts, tests, mechanical refactors, research d
 Opus decides, integrates and verifies. Treat free-model output as a draft: check numbers
 against primary sources before they land.
 
-**Codex GPT-6 Astra review gate** runs "immer wieder mal zwischendurch": `tick.sh` schedules
+**Codex review gate (GPT-5.6 Luna)** runs "immer wieder mal zwischendurch": `tick.sh` schedules
 it after every 3rd work iteration and before anything is declared finished — only while
 Codex is below 75 %. It reviews the diff since the last gate against the verbatim
 requirements, re-verifies claims live, and flips unproven `verified`/`implemented` rows back
