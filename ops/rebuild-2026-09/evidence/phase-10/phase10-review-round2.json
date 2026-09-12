@@ -1,0 +1,41 @@
+{
+  "artifact_id": "phase10-historical-comparison",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "C1 F1: two paths confirmed distinct in code (hist: vs hist-state:)",
+    "C2 F1: one comparison per source version, so every cohort axis shares the same bridge set (code-guaranteed)",
+    "C3 F1: per-cohort counts sum to 60 = reported estimated count; UI shows 23 for Claude Code",
+    "C4 F2: SCHEMA appearance condition matches code (>=1 state; >=2 family versions with observations)",
+    "C5 F2: single-state Limitations sentence consistent (newest state == current snapshot in pipeline)",
+    "C6 F3: iqr_relative = iqr in computeRankShift; SCHEMA and report both updated",
+    "C7 F4: board-membership pair filter present; new test asserts bridge_count 5 not 7",
+    "C8 F5: test file contains exactly 11 tests; report lists all 11 incl. model-key and missing-rank",
+    "C9 honesty gates (>=3 bridges, 25%, 1e-12 floor) match SCHEMA/report",
+    "C10 write-once, content-hash state store matches SCHEMA text",
+    "C11 daily wiring appends state after accepted scores write (state_appended/state_retained)",
+    "C12 gate numbers internally consistent (839/654/90/2801; 189 tests; 11 new)"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "location": "lib/benchmark-history.mjs, crossVersionEstimates, estimate source field",
+      "severity": "minor",
+      "evidence": "Loop guard is 'if (targetObs.has(key)) continue;', yet source uses 'targetSource(targetObs.get(key) || [...targetObs.values()][0])'. get(key) is always undefined here, so every cross-version estimate cites the FIRST target observation's url/file/locator — another configuration's provenance. datedEstimates uses the row's own provenance; this path deviates.",
+      "repair": "Use targetSource(s) (the bridged row's own provenance from s.source) or null — the type allows null. Add a test asserting estimate.source matches the source-row provenance."
+    }
+  ],
+  "fixed": ["F2", "F3", "F4", "F5"],
+  "uncertainties": [
+    "Dataset numbers (60/482, 8 bridges, 67, 13908) not independently recomputable; consistency checks only.",
+    "build-dataset.mjs / benchmark-view.mjs not supplied; per-axis and inclusion claims taken from report+tests.",
+    "'Current store holds one state' vs appended state B read as isolated experiment (root param); consistent with estimated:60."
+  ],
+  "missing_evidence": [
+    "data/dataset.json",
+    "evidence/phase-10/phase-10-before-after.json",
+    "evidence/phase-10/phase-10-ui-proof.json",
+    "scripts/build-dataset.mjs",
+    "lib/benchmark-view.mjs"
+  ]
+}

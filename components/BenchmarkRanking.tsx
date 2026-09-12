@@ -4,6 +4,8 @@ import Link from 'next/link';
 import { latestScores, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import { SourceScore } from './BenchmarkEvidence';
 
+const finite = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
+
 export function BenchmarkRanking({ initialView, axisList }: { initialView: BenchmarkView; axisList: ViewAxis[] }) {
   const [view, setView] = useState(initialView), [benchmark, setBenchmark] = useState(initialView.axes[0].benchmarkId), [axisId, setAxisId] = useState(initialView.axes[0].id);
   const [q, setQ] = useState(''), [basis, setBasis] = useState('measured'), [openOnly, setOpenOnly] = useState(false), [unmatched, setUnmatched] = useState(false), [limit, setLimit] = useState(50), [category, setCategory] = useState('');
@@ -25,6 +27,18 @@ export function BenchmarkRanking({ initialView, axisList }: { initialView: Bench
   const models = new Map(view.models.map((m) => [m.id, m]));
   const rows = allRows.filter((r) => (unmatched || r.modelId) && (!openOnly || (r.modelId && models.get(r.modelId)?.open)) && `${r.modelId ? models.get(r.modelId)?.name : r.name} ${r.modelId ? models.get(r.modelId)?.org : ''}`.toLowerCase().includes(q.toLowerCase())).sort((a, b) => (axis.higherBetter === false ? a.value - b.value : b.value - a.value) || a.name.localeCompare(b.name));
   const matched = new Set(allRows.map((r) => r.modelId).filter(Boolean)).size;
+  const historicalAxis = view.axes[0]?.id === axisId ? view.axes[0] : null;
+  const estFilter = (e: NonNullable<ViewAxis['estimates']>[number]) => {
+    if (openOnly && !(e.modelId && models.get(e.modelId)?.open)) return false;
+    const label = `${e.modelId ? models.get(e.modelId)?.name : e.name} ${e.modelId ? models.get(e.modelId)?.org : ''} ${e.cohort ?? ''}`;
+    return label.toLowerCase().includes(q.toLowerCase());
+  };
+  const estimates = (historicalAxis?.estimates ?? []).filter(estFilter);
+  const estimatedRows = estimates.filter((e) => e.status === 'estimated' && finite(e.value)).sort((a, b) => (axis.higherBetter === false ? (a.value as number) - (b.value as number) : (b.value as number) - (a.value as number)));
+  const incomparable = estimates.filter((e) => e.status === 'not_comparable');
+  const recompute = estimates.filter((e) => e.status === 'recompute_required');
+  const histLabel = (e: NonNullable<ViewAxis['estimates']>[number]) => (e.modelId && models.get(e.modelId) ? models.get(e.modelId)!.name : e.name);
+  const spreadPct = (e: NonNullable<ViewAxis['estimates']>[number]) => (e.spread?.iqr_relative != null ? `${(100 * e.spread.iqr_relative).toFixed(0)}%` : null);
   return <div className="space-y-6">
     <section className="bh-panel p-5"><p className="bh-eyebrow">PICK A BENCHMARK</p><div className="mt-3 grid gap-4 md:grid-cols-[1fr_3fr]">
       <label className="text-sm">Category<select className="bh-input mt-1 w-full" value={category} onChange={(e) => setCategory(e.target.value)}><option value="">All categories</option>{[...new Set(axisList.map((a) => a.category))].sort().map((c) => <option key={c}>{c}</option>)}</select></label>
@@ -41,6 +55,17 @@ export function BenchmarkRanking({ initialView, axisList }: { initialView: Bench
         return <tr key={r.id}><td className="align-top tabular bh-muted">{axis.higherBetter == null ? '—' : rank}</td><th scope="row" className="max-w-md text-left align-top font-medium">{m ? <Link href={`/models/${encodeURIComponent(m.id)}#benchmark-sheet`} className="hover:underline">{m.name}</Link> : r.name}<p className="bh-muted mt-1 text-xs font-normal">{m ? `${m.org}${m.open ? ' · open weights' : ''}` : 'Unmatched source identity; excluded from model coverage and radar peers'}{r.variant ? ` · ${r.variant}` : ''}</p></th><td className="min-w-56 align-top"><SourceScore view={view} axis={axis} row={r} /></td><td className="align-top">{m && <Link className="text-accent underline" href={`/compare?model=${encodeURIComponent(m.id)}`}>Compare ↗</Link>}</td></tr>;
       })}</tbody></table></div> : <div className="bh-empty min-h-56"><h3 className="font-semibold">No results in this view</h3><p className="mt-2">{axis.collection?.status !== 'collected' ? axis.collection?.reason : 'Try including self-reported results or unmatched source identities, or clear the model filters. Missing evidence is never a zero.'}</p><p className="mt-2 text-xs">Collection status: {axis.collection?.status || 'unknown'}</p></div>}
       {rows.length > limit && <button className="bh-button mt-4" onClick={() => setLimit((n) => n + 50)}>Show 50 more ({rows.length - limit} remaining)</button>}
+      {!busy && (estimatedRows.length > 0 || incomparable.length > 0 || recompute.length > 0) && <section className="mt-8 border-t border-line pt-5" aria-label="Historic configurations">
+        <h3 className="text-lg font-semibold">Historic configurations on this version</h3>
+        <p className="bh-muted mt-1 max-w-3xl text-sm">These configurations are no longer measured on {axis.name} · {axis.version}. Each value is a labelled estimate bridged through configurations measured on both versions — it is not a measurement. Spread and bridge count bound the uncertainty.</p>
+        {estimatedRows.length > 0 && <div className="bh-table-wrap mt-4 overflow-x-auto" tabIndex={0} role="region" aria-label="Historic estimates table"><table className="bh-table w-full text-sm"><caption className="sr-only">Relative estimates for historic configurations, with bridge count and spread.</caption><thead><tr><th scope="col">Rank</th><th scope="col">Model / configuration</th><th scope="col">Relative estimate</th></tr></thead><tbody>{estimatedRows.slice(0, limit).map((e) => {
+          const rank = estimatedRows.findIndex((v) => v.value === e.value) + 1;
+          const m = e.modelId ? models.get(e.modelId) : null;
+          return <tr key={e.id}><td className="align-top tabular bh-muted">{axis.higherBetter == null ? '—' : rank}</td><th scope="row" className="max-w-md text-left align-top font-medium">{m ? <Link href={`/models/${encodeURIComponent(m.id)}#benchmark-sheet`} className="hover:underline">{m.name}</Link> : e.name}<p className="bh-muted mt-1 text-xs font-normal">historic · no current measurement{e.cohort && e.cohort !== axis.cohort ? ` · ${e.cohort}` : ''}{e.variant ? ` · ${e.variant}` : ''}</p></th><td className="min-w-56 align-top tabular"><span className="font-semibold">{(e.value as number).toLocaleString('en-US', { maximumSignificantDigits: 4 })} {axis.unit}</span>{e.sourceValue != null && <p className="bh-muted mt-1 text-xs">source value {e.sourceValue.toLocaleString('en-US', { maximumSignificantDigits: 4 })} on {e.sourceBenchmarkId}</p>}<p className="mt-1 inline-block rounded border border-line px-2 py-0.5 text-xs">relative estimate · {e.bridgeCount} bridge {e.bridgeCount === 1 ? 'model' : 'models'}{spreadPct(e) ? ` · ±${spreadPct(e)} bridge spread` : ''}</p></td></tr>;
+        })}</tbody></table></div>}
+        {estimatedRows.length > limit && <button className="bh-button mt-4" onClick={() => setLimit((n) => n + 50)}>Show 50 more estimates ({estimatedRows.length - limit} remaining)</button>}
+        {(incomparable.length > 0 || recompute.length > 0) && <details className="mt-4"><summary className="cursor-pointer text-sm font-medium">{incomparable.length + recompute.length} historic {incomparable.length + recompute.length === 1 ? 'configuration is' : 'configurations are'} not comparable</summary><ul className="mt-3 space-y-2 text-sm">{incomparable.slice(0, 200).map((e) => <li key={e.id}><span className="font-medium">{histLabel(e)}</span>{e.cohort ? ` · ${e.cohort}` : ''} <span className="bh-muted">— retained from {e.sourceBenchmarkId}; {e.reason || 'not comparable under the bridge policy'}.</span></li>)}{recompute.map((e) => <li key={e.id}><span className="font-medium">{histLabel(e)}</span>{e.cohort ? ` · ${e.cohort}` : ''} <span className="bh-muted">— derived index: {e.reason || 'recompute from its inputs instead of bridging'}.</span></li>)}</ul>{incomparable.length > 200 && <p className="bh-muted mt-2 text-xs">Showing the first 200 of {incomparable.length}.</p>}</details>}
+      </section>}
       <p className="mt-4 text-xs bh-muted">Ranks stay within this version and evaluation group. Model prompts, evaluation dates and reasoning settings may differ. Source identities can describe whole agent systems. Inspect evidence before treating results as directly equivalent. Statistical significance is not inferred from rank.</p>
     </section>
   </div>;

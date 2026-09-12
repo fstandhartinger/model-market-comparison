@@ -1,0 +1,25 @@
+{
+  "artifact_id": "phase10-historical-comparison",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": [
+    "crossVersionEstimates estimate loop now uses source: targetSource(s); buggy fallback targetObs.get(key) || [...targetObs.values()][0] absent",
+    "confirm targetObs.has(key) continue precedes push, so source row s provenance is the cited one",
+    "new test 'cross-version estimate cites the source row provenance' asserts locator 'row h' and notEqual 'row b1' (discriminates old bug)",
+    "targetSource helper unchanged; returns {url, retrieved_at, published_at, file, locator} matching d.mts HistoricalEstimate.source",
+    "datedEstimates source construction unchanged (state row url/locator fields)",
+    "no other consumer of the changed line; refresh-benchmarks calls build-benchmark-history only for state append, unaffected",
+    "bridge/elo/recompute paths emit provenance for all statuses; value stays null when not estimated",
+    "test file contains 12 tests, matching gate claim of 12 phase-10 tests"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": ["R2-F6"],
+  "uncertainties": [
+    "Gate results (build exit 0, 190/0 tests, tsc, build) and sha256 receipts are owner-reported; unverifiable without execution tools",
+    "lib/benchmark-view.mjs and data/dataset.json not supplied; real-data/view behavior rests on supplied test code plus owner gate"
+  ],
+  "missing_evidence": [
+    "lib/benchmark-view.mjs source not in packet (covered only indirectly by tests and owner gate)"
+  ]
+}

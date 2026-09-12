@@ -228,6 +228,11 @@ export async function refreshBenchmarks({ runDir } = {}) {
   await put(join(root, 'vendor-candidates.json'), { ...vendor, observations: resolveRows(vendorRows, vendor.observations) });
   await put(join(root, 'score-approvals.json'), { ...approvals, rows: [...approvals.rows, ...fingerprints] });
   await exec(process.execPath, ['scripts/ingest-benchmark-scores.mjs'], { timeout: 120_000, maxBuffer: 2_000_000 });
+  // Phase 10: retain this accepted snapshot as an immutable dated state before the
+  // dataset is rebuilt. Write-once and content-deduplicated, so a re-run is a no-op.
+  const { stdout: historyStdout } = await exec(process.execPath, ['scripts/build-benchmark-history.mjs'], { timeout: 120_000, maxBuffer: 2_000_000 });
+  const history = JSON.parse(historyStdout);
+  checks.push({ id: 'benchmark-history', status: history.written ? 'state_appended' : 'state_retained', state_id: history.state_id, rows: history.count });
   // Registry entries without an executable public adapter keep explicit status;
   // a checked URL is never represented as a new benchmark measurement.
   for (const entry of registry.entries) if (!checks.some((c) => c.id === entry.id) && !protocolCache.has(entry.id)) {

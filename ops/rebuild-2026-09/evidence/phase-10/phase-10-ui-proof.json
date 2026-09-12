@@ -1,0 +1,34 @@
+{
+  "phase": "10-historical-comparison",
+  "check": "a live historical model renders a labelled relative estimate with bridge count and spread",
+  "server": {
+    "command": "env -u DATABASE_URL PORT=3219 npm run start",
+    "url": "http://localhost:3219/benchmarks?benchmark=aa-coding-agent-index::1.5",
+    "mode": "bundled data/dataset.json (no DATABASE_URL)"
+  },
+  "browser": {
+    "tool": "playwright",
+    "region": "Historic configurations",
+    "heading": "Historic configurations",
+    "intro": "These configurations are no longer measured on Artificial Analysis Coding Agent Index v1.5 · 1.5. Each value is a labelled estimate bridged through configurations measured on both versions — it is not a measurement. Spread and bridge count bound the uncertainty.",
+    "table_caption": "Relative estimates for historic configurations, with bridge count and spread.",
+    "rows_rendered": 23,
+    "asserted_row": {
+      "rank": 1,
+      "model": "Opus 5 (xhigh)",
+      "model_link": "/models/opus-5%3A%3Axhigh#benchmark-sheet",
+      "subtitle": "historic · no current measurement · xhigh",
+      "estimate_cell": "0.5683 fraction",
+      "source_line": "source value 0.6815 on aa-coding-agent-index::1.4",
+      "badge": "relative estimate · 8 bridge models · ±17% bridge spread"
+    },
+    "measured_peers_on_axis": 3,
+    "estimates_on_axis": 23,
+    "screenshot": "phase-10-historic-estimates.png"
+  },
+  "label_guards": {
+    "estimate_never_merged_into_measured_scores": true,
+    "estimated_also_measured_on_same_axis": [],
+    "each_estimate_cites_source_benchmark_version": "aa-coding-agent-index::1.4"
+  }
+}

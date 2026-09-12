@@ -1114,8 +1114,10 @@ async function build() {
   const benchmarkScores = await readJSON("benchmarks/scores.json");
   const { verifyScoreEvidence } = await import("../lib/benchmark-score-evidence.mjs");
   const { buildBenchmarkResults } = await import("../lib/benchmark-scores.mjs");
+  const { readHistory } = await import("./build-benchmark-history.mjs");
   await verifyScoreEvidence(benchmarkScores, benchmarkRegistry, { approvals: await readJSON("benchmarks/score-approvals.json") });
-  const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows);
+  const benchmarkHistory = await readHistory();
+  const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null);
   const dataset = {
     benchmark_results,
     generated_at,

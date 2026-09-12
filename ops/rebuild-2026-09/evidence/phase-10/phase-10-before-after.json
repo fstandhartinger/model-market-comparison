@@ -1,0 +1,44 @@
+{
+  "experiment": "controlled real-data before/after: state A full, state B with one benchmark-1.4 observation removed",
+  "target_removed": {
+    "id": "aa-coding:1.4:0",
+    "benchmark_id": "aa-coding-agent-index::1.4",
+    "model_key": "gpt-5.6-sol::medium|Codex|medium",
+    "value": 0.616195748748264
+  },
+  "state_A": {
+    "state_id": "20260912-b2963bd0",
+    "written": true,
+    "count": 13908
+  },
+  "state_B": {
+    "state_id": "20260913-75bde1d9",
+    "written": true,
+    "count": 13907,
+    "dedup_same_as_A": false
+  },
+  "store": {
+    "states": 2,
+    "state_ids": [
+      "20260912-b2963bd0",
+      "20260913-75bde1d9"
+    ]
+  },
+  "prior_state_retains_removed_value": {
+    "benchmark_id": "aa-coding-agent-index::1.4",
+    "model_key": "gpt-5.6-sol::medium|Codex|medium",
+    "value": 0.616195748748264,
+    "source_url": "present"
+  },
+  "deleted_from_current": true,
+  "dated_estimate": {
+    "id": "hist-state:20260912-b2963bd0:aa-coding-agent-index::1.4:gpt-5.6-sol::medium|Codex|medium",
+    "status": "estimated",
+    "method": "bridge-median-ratio",
+    "source_state_id": "20260912-b2963bd0",
+    "source_value": 0.616195748748264,
+    "value": 0.616195748748264,
+    "bridge_count": 67,
+    "iqr_relative": 0
+  }
+}

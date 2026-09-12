@@ -16,6 +16,7 @@ export interface BenchmarkResults {
   schema_version: 1; registry: BenchmarkEntry[]; observations: BenchmarkObservation[]; missing: BenchmarkMissing[];
   collections: BenchmarkCollection[]; rejected: unknown[]; divergences: BenchmarkDivergence[];
   coverage: { by_model: Record<string, Record<string, number>>; by_benchmark: Record<string, Record<string, number>>; note: string };
+  historical?: import('./benchmark-history.mjs').HistoricalResults;
 }
 export const MISSING_STATUSES: MissingStatus[];
 export function benchmarkCell(results: BenchmarkResults, modelId: string, benchmarkId: string): { model_id: string; benchmark_id: string; status: MissingStatus | 'available'; reason?: string; observations: BenchmarkObservation[]; source?: ScoreSource; source_url?: string | null };

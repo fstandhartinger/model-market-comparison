@@ -169,3 +169,76 @@ remain distinct. Explicit missing cells need source evidence. Coverage counts ca
 configurations once, excluding unmatched source subjects. Divergences require an
 audited exact protocol key as well as identical model/version/unit/configuration.
 See `docs/benchmark-ingestion.md` for formulas, daily staging and critic approvals.
+
+## Historical comparison (phase 10)
+
+`benchmark_results` gains an optional `historical` object (`schema_version: 1`) whenever
+date-provenance is available — at least one retained dated state, or at least two
+versions of a benchmark family among the current observations. It never replaces an
+observation: an old value stays a historical record and a superseded model receives a
+*labelled estimate*, never a measurement. Types are in `lib/benchmark-history.d.mts`;
+math and policy in `lib/benchmark-history.mjs`.
+
+### Immutable dated states
+
+Every ingestion run projects the accepted score snapshot to a compact state and
+stores it write-once under `data/raw/benchmarks/history/states/<state_id>.json`, with
+`data/raw/benchmarks/history/index.json` as the ordered index. `state_id` is
+`<yyyymmdd>-<content_sha256[0..8]>`, so identical observations resolve to the same
+state and re-running is a no-op. A prior state is never overwritten or deleted:
+`writeStateOnce` aborts if an existing id carries different content. Each state row
+keeps `benchmark_id`, `model_key` (catalog model + harness + effort), value, unit,
+basis and source. `scripts/build-benchmark-history.mjs` appends (`--from <file>`) and
+rebuilds the index (`--reindex`); `ops/daily/refresh-benchmarks.mjs` appends after the
+accepted scores write. `dataset.json` only carries the state *metadata* (id, source,
+time, content hash, count, benchmark ids); full row bodies live in the store.
+
+### Bridge estimates
+
+A value absent from the current snapshot but present in an older **dated state** or an
+older **benchmark version of the same family** is bridged through configurations
+measured on both sides:
+
+    r_b = value_new(b) / value_old(b)
+    aggregate = median(r_b)          # requires >= 3 bridges
+    estimate  = value_old * aggregate
+    uncertainty = value_old * [q1, q3]   # spread over the bridge ratios
+
+Estimates (`method: bridge-median-ratio`) publish the aggregate, the min/q1/q3/max
+spread, the IQR relative to the median, the bridge count and the contributing bridges.
+If there are fewer than three bridges, or the bridge IQR exceeds **25 % of the median**,
+the row is `not_comparable` and `value` is `null` — a number is never invented. Old
+values of `|x| < 1e-12` are floored out of the ratio. Units, direction and family
+(`scoring.unit`, `scoring.higher_better`) must match; benchmarks are never mixed.
+
+### Special cases
+
+- **Elo / battle boards** (`scoring.unit === 'Elo'` or an Elo metric) shift ranks, not
+  values (`method: bridge-rank-shift`). The estimate is the target value at the
+  historical model's 0–1 rank corrected by the median bridge rank shift. The same 25 %
+  limit is applied to the *absolute* IQR on the 0–1 rank scale (`iqr_relative = iqr`),
+  not to an IQR relative to the median as for ratio bridges; a bridge pair whose value is
+  absent from a published board is dropped rather than ranked at last place.
+- **Derived/composite indices** (`scoring.derived === true`) are never bridged; a
+  superseded input is `recompute_required` and must be recomputed from its inputs.
+- **Index/version changes** (`family::version`) are separate provenance branches, not
+  the same value; an estimate always cites `source_benchmark_id` (version bridge) or
+  `source_state_id` (dated bridge).
+
+### Limitations
+
+An estimate is not a measurement, is marked as an estimate in the API and UI, and
+carries its bridge count and uncertainty. It depends on the bridge cohort being
+representative; a protocol change that spreads bridge ratios beyond the 25 % limit is
+reported as incomparable rather than estimated. With a single retained state only the
+cross-version bridge path is live; dated-state estimates additionally require a second,
+distinct state to have been retained.
+
+### UI and API
+
+`lib/benchmark-view.mjs` attaches estimates to the axis of their benchmark and cohort
+(`axis.estimates`); they are never merged into measured `axis.scores`. The per-axis
+view already served by `/api/benchmark-view?axis=<id>` carries them, and
+`components/BenchmarkRanking.tsx` renders each with its bridge count, spread and
+estimate label. `selectBenchmarkView` keeps an axis's estimates when that axis is
+requested directly.

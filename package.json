@@ -15,7 +15,8 @@
     "db:seed": "node scripts/seed-db.mjs",
     "test": "node --test test/",
     "prebuild": "node scripts/validate-benchmark-scores.mjs",
-    "data:benchmarks": "node scripts/ingest-benchmark-scores.mjs"
+    "data:benchmarks": "node scripts/ingest-benchmark-scores.mjs && node scripts/build-benchmark-history.mjs",
+    "data:history": "node scripts/build-benchmark-history.mjs"
   },
   "dependencies": {
     "next": "^15.5.25",

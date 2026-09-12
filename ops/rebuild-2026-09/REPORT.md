@@ -416,3 +416,61 @@ This run re-ran every canonical check from a clean tree — `node scripts/build-
 - **The explainer video was independently re-checked.** `evidence/phase-09/benchmarkheaven-de.mp4` is a valid 49.10 s 1920×1080 H.264/AAC file, sha256 `aa0392908f6b9d6cc368bf39104ab6820fa7cc4bd2a3dd13c9b17ece604c21aa`. The configured `TG_BOT_TOKEN` was re-queried (`getMe`) and is `@cursor_noti_bot`, matching the claimed sender; the Bot API cannot re-fetch an already-sent message by id, so `message_id 13546` remains the prior run's record while the artifact itself is now re-probed. [Final verification](evidence/phase-09/final-verification.json).
 
 The one remaining limit is unchanged and explicit: **skills are not installed on Florian's WSL machine** (`flo-nitro` is offline/unreachable from Sandy, `tailscale ping` times out). The repository copies under `ops/skills/` are the handoff there, so **W28 stays Partial**.
+
+## Phase 10 — historical retention and bridge comparison (2026-09-12)
+
+### What the phase had to solve
+
+Phase 05 made benchmark results versioned and auditable, but an old value could still be compared naively against a new one, and a configuration that vanished from a current board disappeared from view. Phase 10 keeps every accepted score as an immutable dated record and makes a superseded model relatively comparable through bridge configurations — **as a labelled estimate, never as a measurement**.
+
+### Immutable dated states
+
+`scripts/build-benchmark-history.mjs` projects the accepted `scores.json` observations to a compact state and writes it write-once to `data/raw/benchmarks/history/states/<state_id>.json`, with `index.json` as the ordered index. The state id is `<yyyymmdd>-<content_sha256[0..8]>`, so identical observations dedupe to the same state and a re-run is a no-op; an existing id carrying different content aborts instead of clobbering. `ops/daily/refresh-benchmarks.mjs` now appends the state immediately after the accepted scores write (and records `state_appended`/`state_retained` in its check report), so the daily ingestion keeps the promise. `dataset.json` carries only state metadata; full row bodies stay in the store. The current store holds one state, `20260912-b2963bd0`, with **13,908 rows**.
+
+### Bridge comparison
+
+For a value absent from the current snapshot but present in an older dated state or an older version of the same benchmark family:
+
+    r_b = value_new(b) / value_old(b)
+    aggregate = median(r_b)          # >= 3 bridges required
+    estimate  = value_old * aggregate
+    uncertainty = value_old * [q1, q3]
+
+The estimate publishes the bridge count, the min/q1/q3/max spread and the IQR relative to the median. Fewer than three bridges, or a bridge IQR above **25 % of the median**, yields `not_comparable` with `value: null` — a number is never invented, and values of `|x| < 1e-12` are floored out of the ratio. Elo/battle boards shift ranks (`bridge-rank-shift`) instead of scaling values, applying the 25 % limit to the absolute IQR on the 0–1 rank scale; derived/composite indices are `recompute_required` and must be recomputed from their inputs; a version change is a separate provenance branch that cites `source_benchmark_id` (version bridge) or `source_state_id` (dated bridge). Units and direction must match; benchmarks are never mixed.
+
+Real dataset facts (`data/dataset.json`): `historical.counts = { estimated: 60, not_comparable: 482, recompute_required: 0 }`. All 60 estimates live on `aa-coding-agent-index::1.5` bridged from `::1.4` via `bridge-median-ratio`; the cross-version bridge set is the **8 configurations measured on both `::1.4` and `::1.5`**, and every cohort axis on that version pair shares that same 8-bridge set (the per-axis view reports it per axis). This is a different path and scope from the controlled dated-state experiment below, whose estimate bridges across all 67 common rows of two retained states — hence the two bridge counts are both correct and are not a contradiction. The two incomparable groups are honest refusals, not failures: `aa-terminal-bench::2.1 -> ::4.0` has **91 bridges but a 223.8 % IQR** and `arc-agi::3` has 27 bridges with a 1536.1 % IQR — both correctly held to `not_comparable`. `bridge-rank-shift` and `recompute_required` have no live trigger today and are exercised by synthetic fixtures.
+
+### Tests and acceptance gate
+
+The new `test/benchmark-history.test.mjs` adds **12 tests** to the suite, named for the phase's required cases:
+
+- exact factor-2 bridge scaling produces an exact estimate (`uncertainty.lower === uncertainty.upper === 6`);
+- a naive old/new juxtaposition is structurally impossible — an empty bridge set returns `comparable: false, aggregate: null`, and a value with only 2 bridges is `not_comparable` with `value: null`;
+- a wide bridge spread (`iqr_relative > 0.25`) is refused;
+- zero/`1e-12` old values never blow up a ratio;
+- Elo boards use rank shift (`estimateFromRankShift(500) === 650`) and cross-version Elo yields `method: 'bridge-rank-shift'`;
+- a rank-shift pair whose value is absent from a published board is dropped instead of being ranked at last place;
+- a cross-version estimate cites the provenance of the source row it bridges from, not another row on the target board;
+- a derived index is `recompute_required` with `value: null`;
+- **a vanished value is not deleted**: after a second append the store keeps both states, the old state still holds the removed value, the dated estimate cites the first state, and a re-append dedupes to `written: false`;
+- real states yield an estimate with `bridge_count >= 3` and a bounded uncertainty, and every `not_comparable` row has `value: null`;
+- the real view attaches each estimate to its axis and never merges it into measured scores;
+- the model key keeps catalog identity, harness and effort apart, so two configurations are never conflated.
+
+Canonical gate on the frozen tree: `node scripts/build-dataset.mjs` → **839 models / 654 families / 90 providers / 2,801 offers** (exit 0); `npm test` → **190 passed, 0 failed**; `npx tsc --noEmit -p .` → **exit 0**; `npm run build` (including the prebuild score validation) succeeds.
+
+### Before/after ingestion evidence
+
+A controlled real-data experiment (`evidence/phase-10/phase-10-before-after.json`) retained state A (`20260912-b2963bd0`, 13,908 rows), then appended state B (`20260913-75bde1d9`, 13,907 rows) with the observation `aa-coding:1.4:0` (`gpt-5.6-sol::medium|Codex|medium`, value `0.616195748748264`) removed. State A still carries that exact value and its source; the removed model still receives a dated estimate (`source_state_id 20260912-b2963bd0`, `bridge_count 67`, `iqr_relative 0`), proving the old value survives a new ingestion and is not silently deleted or silently re-scored.
+
+### UI and API proof
+
+With the committed dataset served from the bundled JSON (no `DATABASE_URL`), the live page `http://localhost:3219/benchmarks?benchmark=aa-coding-agent-index::1.5` renders a **Historic configurations** section on the *Claude Code* cohort axis: 3 measured peers plus 23 estimates, each marked `historic · no current measurement`. The top row, `Opus 5 (xhigh)`, shows `0.5683 fraction`, `source value 0.6815 on aa-coding-agent-index::1.4`, and the badge `relative estimate · 8 bridge models · ±17% bridge spread`; the intro states plainly that the value "is a labelled estimate … it is not a measurement". `/api/benchmark-view?axis=…` returns the same rows with `note: "Bridge-based estimate from an older benchmark version. Not a measurement; spread and bridge count bound the uncertainty."`, and no estimate model appears among the axis' measured scores. Proof: `evidence/phase-10/phase-10-historic-estimates.png` and `phase-10-ui-proof.json`. Estimates flow to the app in both modes — `scripts/seed-db.mjs` stores `benchmark_results` (including `historical`) in `dataset_meta.extensions`, which `lib/db.ts` reloads when `schema_version === 1`.
+
+### Documentation and limitations
+
+`data/SCHEMA.md` now documents the dated states, the formula, the special cases and the UI/API contract. The honest limits: an estimate is not a measurement and depends on the bridge cohort being representative; a protocol change that spreads bridge ratios beyond the 25 % limit is reported as incomparable rather than estimated; the dated-state machinery is inert until a second distinct state exists, so today only version bridges produce live estimates and the dated path is proven by the controlled experiment plus the synthetic tests; `bridge-rank-shift` and `recompute_required` await a live trigger. No schema path, ID, unit or API field was removed; the change is additive.
+
+### Gauntlet review: three rounds, clean pass
+
+Owner-authored phase-10 artifacts (producer family deepseek) were reviewed by `z-ai/glm-5.3-flash` (family z-ai, AA 41.9), selected under the AA >= 34 rule with a different family from the producer. Round 1 raised 5 findings (2 major, 3 minor): **F1** report-vs-experiment bridge-count wording — adjudicated a false alarm and disambiguated (the report's 8 is the uniform cross-version bridge set on `aa-coding-agent-index::1.4 -> ::1.5`; the experiment's 67 is the dated-state path across all common rows of two retained states); **F2** a `SCHEMA.md` contradiction about when the `historical` object appears — fixed; **F3** rank-shift IQR semantics — clarified (absolute IQR on the 0–1 rank scale, not relative to the median); **F4** a missing board value could be ranked at last place — hardened by filtering bridge pairs to published boards; **F5** the report claimed 10 tests while listing only 9 — corrected. Round 2 confirmed F2–F5 fixed and found one real minor defect, **R2-F6**: `crossVersionEstimates` cited the first target-board row's provenance (`targetObs.get(key) || [...targetObs.values()][0]`, where `get(key)` is always `undefined` after the `continue` guard) instead of the source row's; repaired to `targetSource(s)` with a regression test. Round 3 confirmed the repair and returned a **clean pass with zero findings**. Critic charges were separate from daily-operation costs: **$0.004792392**, **$0.0081742716** and **$0.0054986085**. Round-1 was a `revise` verdict; the three-round limit was not needed. Receipts: `evidence/phase-10/phase-10-review-round1.json`, `phase-10-review-round2.json`, `phase-10-review-round3.json`, `phase-10-adjudication.md`, `phase-10-adjudication-r3.md`.

@@ -1,0 +1,84 @@
+{
+  "artifact_id": "phase10-historical-comparison",
+  "artifact_sha256": "not verifiable: the artifact is a multi-file set; the reviewer cannot recompute digests without execution tools, so the owner-supplied sha256 list is taken as data",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["C1","C2","C3","C4","C5","C6","C7","C8","C9","C10","C11","C12"],
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "major",
+      "location": "report phase-10 section (Bridge comparison paragraph) vs lib/benchmark-history.mjs crossVersionEstimates/datedEstimates",
+      "evidence": "Report states all 60 real estimates were bridged 'via bridge-median-ratio with 8 bridges' and the UI proof shows a badge 'relative estimate · 8 bridge models · ±17% bridge spread', while the frozen before/after evidence for the same benchmark bridge (aa-coding-agent-index::1.4 -> ::1.5) reports 'bridge_count': 67 for the dated-state estimate of aa-coding:1.4:0 and the report's own before/after paragraph cites 67 bridges. These cannot both be correct for the same family pair; the '8 bridges' figure is not derivable from any supplied artifact and is contradicted by the owner's own controlled-experiment JSON.",
+      "repair": "Reconcile the bridge-count claim in the report and UI evidence: state per-path bridge counts explicitly (cross-version path vs dated-state path) and correct whichever of '8' / '67' is wrong, citing the exact estimate record ids. Do not publish both numbers unqualified."
+    },
+    {
+      "id": "F2",
+      "severity": "major",
+      "location": "data/SCHEMA.md (Phase 10 section) vs lib/benchmark-history.mjs crossVersionEstimates",
+      "evidence": "SCHEMA.md says the 'historical' object exists 'once at least one dated state exists', but the real dataset facts show historical.states.length = 1 and 60 live cross-version estimates — so estimates are produced even with only one state, and the mechanism is not inert. Conversely the same doc's Limitations section says 'Dated-state estimates only exist once a second, distinct state has been retained — the mechanism is inert on a single state', conflating the dated-state path (correct) with the whole historical mechanism (incorrect).",
+      "repair": "Rewrite the two SCHEMA.md sentences to say: cross-version estimates are produced once the registry has ≥2 versions of a family in the current observations; dated-state estimates additionally require ≥2 distinct retained states; with a single state only the cross-version path is live."
+    },
+    {
+      "id": "F3",
+      "severity": "minor",
+      "location": "lib/benchmark-history.mjs computeRankShift (C4/C7 boundary) and SCHEMA.md 'Special cases'",
+      "evidence": "computeRankShift gates on 'iqr_relative = iqr' against the 0–1 rank scale and documents that in code and docs, so the ±25% gate on rank shifts is a different (scale-relative, not median-relative) quantity than the ratio gate, but both are described in SCHEMA.md and the report under the single phrase 'the same ±25 % IQR gate applies'. The gate is the same threshold, not the same relative measure; a reader may wrongly infer the rank gate is 25% of the median shift (and when shift median is 0, as in the synthetic test, iqr_relative equals absolute IQR).",
+      "repair": "Add one sentence to SCHEMA.md and the report: for rank shifts the 25% limit is applied to the absolute IQR on the 0–1 rank scale (iqr_relative = iqr there), not to an IQR-relative-to-median as for ratios."
+    },
+    {
+      "id": "F4",
+      "severity": "minor",
+      "location": "lib/benchmark-history.mjs rankIn",
+      "evidence": "If a source/pairs value is not found in oldSorted (rankIn returns 1 for a missing value, i.e. last place), the shift is silently computed against a fabricated rank instead of refusing the bridge. In the frozen call paths the pairs are derived from the same maps as oldValues/newValues, so this is not reachable in current wiring, but the exported helper is permissive.",
+      "repair": "Either document rankIn's missing-value convention at the export site or make computeRankShift drop pairs whose old_value/new_value is absent from the respective sorted boards, so the public API cannot produce a shift from a non-existent rank."
+    },
+    {
+      "id": "F5",
+      "severity": "minor",
+      "location": "report phase-10 section (Tests paragraph) vs test/benchmark-history.test.mjs",
+      "evidence": "The report says phase 10 'adds 10 tests' and lists 9 bullet points; the frozen test file contains 10 top-level test() blocks (factor-2, naive, wide-spread, zero-floor, Elo, derived, vanished-value, real-state estimate, real view, model-key). The model-key test is real but unlisted.",
+      "repair": "Either list the model-key identity test in the report bullets or correct the count wording; no code change needed."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The UI badge '±17% bridge spread' cannot be reconciled from the frozen code alone: uncertainty exposes min/q1/q3/max as value_old*[q1,q3] fractions, and the report's own before/after JSON for the same family shows iqr_relative 0; whether '±17%' means the 8-bridge estimate's iqr_relative (0.1724 per the API sample) is plausible but the sample estimate (value 0.27373) is not the top row (0.5683), so the badge-to-row mapping is unverified.",
+    "The owner-asserted acceptance gate (188 tests, tsc, build, 13,908-row state) is consistent with the frozen files but is owner-attested; I cannot re-execute it.",
+    "artifact_sha256 cannot be independently recomputed for a multi-file set from the supplied packet."
+  ],
+  "missing_evidence": [
+    "components/BenchmarkRanking.tsx and lib/benchmark-view.mjs were not supplied as frozen artifacts, so C8's UI-side claim (estimates never merged into axis.scores) and the '±17% spread' rendering are only evidenced by the report text and the supplied API sample, not by the component source.",
+    "ops/rebuild-2026-09/REPORT.md was referenced by digest only; its full phase-10 appendix was supplied verbatim, but no evidence packet for phase-10-ui-proof.json contents was included.",
+    "No test file or script evidence was supplied for scripts/seed-db.mjs storing benchmark_results.historical in dataset_meta.extensions (C9-adjacent DB path); the claim rests on the report alone."
+  ],
+  "missing_evidence_counts": {
+    "C1": "met by code inspection (writeStateOnce aborts on content mismatch; wx flag; dedup by content hash) plus owner before/after JSON",
+    "C2": "met by code (states retained; vanished row remains in state A) plus controlled experiment JSON",
+    "C3": "met by code (s.value * comparison.aggregate) and synthetic factor-2 test",
+    "C4": "met for ratio path (minBridges 3, iqr_relative 0.25); note F3 clarifies the rank-scale variant",
+    "C5": "met structurally: datedEstimates/crossVersionEstimates only emit values through comparison.comparable; naive juxtaposition test enforces it",
+    "C6": "met: sources filtered on scoring.unit and scoring.higher_better equality within a family; dated path compares identical benchmark_id",
+    "C7": "met: rank shift for Elo, recompute_required for derived, source_benchmark_id/source_state_id cited on both paths",
+    "C8": "met in supplied code (note strings, status, bridge_count, spread on every estimate); UI component not in packet",
+    "C9": "met: refresh-benchmarks.mjs invokes scripts/build-benchmark-history.mjs after the accepted scores write and records state_appended/state_retained",
+    "C10": "met: all four required test classes present and non-trivial; report count wording off by one bullet (F5)",
+    "C11": "met per owner dataset facts (482 not_comparable incl. 223.8% and 1536.1% IQR refusals); not independently verifiable without dataset.json",
+    "C12": "revise: SCHEMA.md contains an internal contradiction about single-state behavior (F2)"
+  },
+  "criteria_met": {
+    "C1": "met",
+    "C2": "met",
+    "C3": "met",
+    "C4": "met",
+    "C5": "met",
+    "C6": "met",
+    "C7": "met",
+    "C8": "met (UI component not in packet)",
+    "C9": "met",
+    "C10": "met",
+    "C11": "met (owner-attested)",
+    "C12": "unmet pending F2"
+  }
+}
