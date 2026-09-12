@@ -55,3 +55,7 @@ export function predictForAxis(view: BenchmarkView, maps: Map<string, Map<string
 export function topPairs(view: BenchmarkView, stats: Map<string, FitStats>, opts?: { limit?: number; minN?: number }): PairSignal[];
 export function topPredictions(view: BenchmarkView, maps: Map<string, Map<string, number>>, evid: Map<string, Map<string, number>>, stats: Map<string, FitStats>, opts?: { limit?: number }): GapPrediction[];
 export function bottomDecileTags(view: BenchmarkView, opts?: { minPeers?: number; minAxes?: number; minFamilies?: number }, maps?: Map<string, Map<string, number>>): DecileResult;
+export interface RadarAxis { id: string; name: string; version: string; category: string; value: number | null; missing: boolean; unit: string }
+export interface BenchmaxxingReport { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; profile: { modelId: string; axes: RadarAxis[]; measured: number; total: number }; domainSpecialization: number | null; jumps: { category: string; from: string; to: string; magnitude: number }[] }
+export function groupedRadarProfile(view: BenchmarkView, modelId: string): BenchmaxxingReport['profile'];
+export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minCoverage?: number; minMeasured?: number }): BenchmaxxingReport;

@@ -39,7 +39,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: true, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: defaultMinFor(DEFAULT_SCORE), teeOnly: false, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: 10 };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, teeOnly: false, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: 20 };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was

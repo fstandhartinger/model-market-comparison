@@ -27,7 +27,7 @@ const routeSignature = (offer: ClientData["offersByModel"][string][number]) => [
   offer.input_per_1m, offer.output_per_1m, offer.status,
 ].join("::");
 
-export function ModelExplorer({ data }: { data: ClientData }) {
+export function ModelExplorer({ data, limit }: { data: ClientData; limit?: number }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
@@ -86,8 +86,8 @@ export function ModelExplorer({ data }: { data: ClientData }) {
       if (sort === "cost") return dir * ((a.price.value ?? Infinity) - (b.price.value ?? Infinity));
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
-    return r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, maxCost, sort, asc, preferredId]);
+    return limit ? r.slice(0, limit) : r;
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, maxCost, sort, asc, preferredId, limit]);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.price.value ?? 0)), [rows]);
@@ -127,10 +127,10 @@ export function ModelExplorer({ data }: { data: ClientData }) {
           <thead><tr>
             <Th label="Model" k="name" />
             <Th label="Org" k="org" />
-            <Th label={SCORE_ROWS.find((row) => row.key === score)?.label || "Score"} k="score" right />
-            <Th label={`Cheapest ${priceLabel(priceSettings)}`} k="cost" right />
-            <Th label="# Channels" k="providers" right />
-            <th className="px-3 py-2 text-left text-xs font-semibold uppercase tracking-wide text-gray-400">Top provider channels</th>
+            <Th label="Score (Composite) ⓘ" k="score" right />
+            <Th label="Adjusted Cost ⓘ" k="cost" right />
+            <th className="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-400"># benchmarks</th>
+            <Th label="# providers" k="providers" right />
           </tr></thead>
           <tbody>
             {rows.map(({ m, sc, price, cheap, ncheap }) => {
@@ -162,12 +162,8 @@ export function ModelExplorer({ data }: { data: ClientData }) {
                 <td className="px-3 py-2 truncate"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
                 <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScoreVal} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2">{price.value != null ? <DataBar frac={price.value / maxCostVal} color="#7ee0c0" align="right"><span className="block text-right"><PriceValue price={price} compact /></span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2 text-right tabular text-gray-400">{m.composite_coverage || "—"}</td>
                 <td className="px-3 py-2 text-right tabular text-gray-400">{ncheap || "—"}</td>
-                <td className="px-3 py-2 truncate text-xs text-gray-400">
-                  {cheap.map((o, i) => <span key={i} className="mr-2 whitespace-nowrap">{o.provider}{o.platform !== o.provider ? <span className="text-gray-600">/{o.platform}</span> : null} <PriceValue price={o.price} compact />{o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}</span>)}
-                  {ncheap > 0 && cheap.length === 0 && <span className="text-gray-600">price not public</span>}
-                  {ncheap === 0 && <span className="text-gray-600">no catalog offer</span>}
-                </td>
               </tr>
               {isOpen && (
                 <tr>
