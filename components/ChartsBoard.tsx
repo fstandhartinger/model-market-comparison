@@ -75,7 +75,9 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       const costSum = priced.reduce((a, x) => a + (x.price.value as number), 0);
       return {
         name: k,
-        avgScore: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : 0,
+        // No measured score is not a zero. Recharts leaves a null bar empty,
+        // which keeps an evidence gap visible instead of ranking it as worst.
+        avgScore: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null,
         avgCost: priced.length ? costSum / priced.length : null,
         costSum,
         priced,
@@ -154,7 +156,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
               <Bar dataKey="avgScore" name="Avg score" radius={[4, 4, 0, 0]}>
                 <Cell fill="#7ee0c0" /><Cell fill="#5b9dff" />
-                <LabelList dataKey="avgScore" position="top" fill="#cbd5e1" fontSize={11} formatter={(v: number) => v.toFixed(1)} />
+                <LabelList dataKey="avgScore" position="top" fill="#cbd5e1" fontSize={11} formatter={(v: number | null) => v == null ? "Unavailable" : v.toFixed(1)} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
