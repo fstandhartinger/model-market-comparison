@@ -83,8 +83,8 @@ credited below, the rest is marked open.
 | B1 | Benchmaxxing tab in Advanced | implemented | — | `BenchmaxxExplorer`; needs live verify |
 | B2 | Method identifying strong-on-some / weak-on-others | implemented | — | topic-local percentile jump; critique pending |
 | B3 | Missing scores must not bias the result | implemented | — | coverage suppression; needs test audit |
-| B4 | Benchmaxxing tag in overview table + tab | open | — | tab only, not in the overview table |
-| B5 | Small-print method explanation | open | — | |
+| B4 | Benchmaxxing tag in overview table + tab | implemented | `ux-evidence/iter4-live/verification.json` | Overview receives the same deterministic top-decile, coverage-qualified topic-local signal as the dedicated tab; live DOM shows 8 badges after relaxing filters at desktop and mobile. |
+| B5 | Small-print method explanation | implemented | `ux-evidence/iter4-live/verification.json` | Advanced Overview carries a restrained explanation and link to `/benchmaxxing#method`; the dedicated method disclosure is now addressable by that anchor. |
 | B6 | Many-axis radar, similar topics clockwise-adjacent | implemented | — | `BenchmaxxingReport`; needs live verify |
 | B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | — | `test/benchmax-jagged.test.mjs`; needs critique |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
@@ -278,3 +278,23 @@ Notes for whoever picks this up:
   - Delegation was attempted for mechanical review; the free worker stopped at its sandbox
     permission prompt for `/home/flori/.agent-budget.json`. No delegated output was trusted
     or shipped.
+
+- **2026-09-12 · iteration 4 · codex-luna** — implemented B4/B5 and deployed them.
+  - Overview now receives the dedicated Benchmaxxing page's deterministic top-decile signal as
+    server-derived display data. Missing/unknown reports remain `null`/`false`; no score is
+    synthesized in the client projection. The table badge is explicitly described as a
+    screening signal, not evidence of leakage or intent.
+  - Added a restrained Advanced-mode method note linking to the anchored explanation on
+    `/benchmaxxing#method`, plus a deterministic tie-break in the dedicated ranking.
+  - Gates: `node scripts/build-dataset.mjs` ✓, `npm test` 245/245 ✓, `npx tsc --noEmit -p .` ✓,
+    `npm run build` ✓. Timestamp-only output from the dataset build was excluded; R9.1 remains
+    open because no fresh source collection was run in this iteration.
+  - Commit `81cbc75` pushed to `main`; Sandy PaaS deployment
+    `0vzfbysnuxohiltiobcsdrnm` finished on the exact full revision
+    `81cbc75565ed4eb84ef2c946a6893e7198a459d0`.
+  - Live evidence is in `/opt/benchmarkheaven/state/ux-evidence/iter4-live/verification.json`:
+    canonical and legacy hosts return 200; desktop 1440×1000 and mobile 390×844 checks show
+    the badge and method link, with no mobile page-level horizontal overflow.
+  - Independent review was attempted twice through the free delegation ladder. Nex stopped at
+    its forbidden `/home/flori/.agent-budget.json` read; Kimi did not return a completed review
+    before this bounded iteration ended. Neither output was accepted as verification.
