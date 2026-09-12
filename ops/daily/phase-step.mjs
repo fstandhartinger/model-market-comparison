@@ -25,6 +25,7 @@ try {
     if (!verified?.ok || !verified.evidence?.manifest?.coverage?.complete) throw new Error('Live primary-source verification failed');
     const manifest = verified.evidence.manifest;
     const verifier = await readFile('ops/daily/review-live.mjs', 'utf8');
+    const aaEfficiencyParser = await readFile('lib/aa-efficiency.mjs', 'utf8');
     const reviewed = [];
     // All numeric records were compared against complete, hash-verified source
     // bodies above. LLM review covers the adapter contract and explicit examples,
@@ -41,7 +42,7 @@ try {
         aa: ['async function verifyAa(', 'async function verifyDa('],
         da: ['async function verifyDa(', 'async function verifyOr('],
         or: ['async function verifyOr(', 'async function verifyAaEfficiency('],
-        aa_efficiency: ['async function verifyAaEfficiency(', 'async function verifyOrEfficiency('],
+        aa_efficiency: ['function aaCarrierExtracts(', 'async function verifyOrEfficiency('],
         or_efficiency: ['async function verifyOrEfficiency(', 'async function verifyChutes('],
         chutes_efficiency: ['async function verifyChutes(', '// Raw benchmarkRows'],
         aa_coding_v15: ['function codingSourceRows(', '// --- evidence packets'],
@@ -54,6 +55,10 @@ try {
         { url: 'execution:review-live', sha256: sha256(JSON.stringify(verified.report)), retrieved_at: new Date().toISOString(), locator: dataset.dataset, content: JSON.stringify({ run_started_at: verified.report.run?.first_receipt, dataset, execution_report: verified.report, complete_coverage: manifest.coverage }) },
         ...examples.map((r) => ({ ...r.source, locator: r.pointer, content: JSON.stringify({ row_id: r.row_id, staged: r.staged, primary: r.extract }) })),
       ];
+      if (dataset.dataset === 'aa_efficiency') sources.splice(1, 0, {
+        url: 'repo:lib/aa-efficiency.mjs', locator: 'complete file', content: aaEfficiencyParser,
+        sha256: sha256(aaEfficiencyParser), retrieved_at: new Date().toISOString(), note: 'Complete local AA-efficiency parser used by the deterministic verifier',
+      });
       const review = await reviewArtifact({ runDir, artifactId: `live-contract-${dataset.dataset}`, rows: [row], sources,
         criteria: [
           { id: 'mapping', text: 'Review this source adapter contract using the actual supplied native primary examples, verifier code, and successful execution report. The programmatic verifier compared EVERY numeric row against complete hash-verified primary bodies. LLM inspection is explicitly limited to the contract and listed examples, not manual full-row numeric coverage. Does the mapping preserve native units, identities, zero/null distinctions and required version boundaries?' },
