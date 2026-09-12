@@ -13,6 +13,7 @@ const providerMeta = JSON.parse(await readFile(join(__dirname, "..", "data", "ra
 const codingAgents = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "aa-coding-agents.json"), "utf8"));
 const copilot = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "github-copilot.json"), "utf8"));
 const claude = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "claude-code.json"), "utf8"));
+const epochEci = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "epoch-eci.json"), "utf8"));
 
 const REQUIRED = [
   "gpt-5.5", "gpt-5.4", "gpt-5.5-mini", "gpt-5.4-mini",
@@ -26,6 +27,18 @@ const REQUIRED = [
 test("dataset has models, families and offers", () => {
   assert.ok(ds.models.length > 100, "expected many models");
   assert.ok(ds.counts.offers > 500, "expected many offers");
+});
+
+test("Epoch ECI source is complete and attached conservatively", () => {
+  assert.equal(epochEci.counts.general_models, epochEci.models.length);
+  assert.ok(epochEci.counts.general_models >= 200);
+  assert.ok(epochEci.counts.software_models >= 20);
+  assert.equal(ds.sources.epoch_eci, epochEci.collected_at);
+  assert.equal(ds.source_status.epoch_eci.version, epochEci.definition_version);
+  const attached = ds.models.filter((model) => model.benchmarks?.epoch_eci != null);
+  assert.ok(attached.length > 50 && attached.length < epochEci.models.length);
+  assert.ok(attached.every((model) => model.epoch_eci_attachment_note?.includes("attached once")));
+  assert.equal(new Set(attached.map((model) => model.family_key)).size, attached.length);
 });
 
 test("every published source snapshot is current for this refresh", () => {

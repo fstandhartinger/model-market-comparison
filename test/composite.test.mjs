@@ -13,6 +13,8 @@ const inputsFromDataset = (dataset) => dataset.models.map((model) => ({
     aa_coding_index: model.benchmarks?.aa_coding_index ?? null,
     aa_coding_agent: model.benchmarks?.aa_coding_agent_index ?? null,
     aa_intelligence_index: model.benchmarks?.aa_intelligence_index ?? null,
+    epoch_eci: model.benchmarks?.epoch_eci ?? null,
+    epoch_eci_software: model.benchmarks?.epoch_eci_software ?? null,
     designarena_frontend: model.designarena?.frontend?.elo ?? null,
     designarena_fullstack: model.designarena?.fullstack?.elo ?? null,
   },
@@ -56,6 +58,18 @@ test("all-missing and non-finite rows receive the neutral fallback", () => {
   assert.equal(compositeEvidenceCount({ id: "missing", scores: {} }), 0);
   assert.deepEqual(computeCompositeScores([]), new Map());
   assert.deepEqual(computeCompositeScoreDetails([]), { scores: new Map(), baseScores: new Map() });
+});
+
+test("Epoch general and software ECI are independent Composite percentile slots", () => {
+  const rows = [
+    { id: "low", scores: { epoch_eci: 100, epoch_eci_software: 110 } },
+    { id: "high", scores: { epoch_eci: 170, epoch_eci_software: 180 } },
+  ];
+  const scores = computeCompositeScores(rows);
+  assert.equal(compositeEvidenceCount(rows[0]), 2);
+  assert.equal(compositeEvidenceCount(rows[1]), 2);
+  assert.equal(scores.get("low"), 0);
+  assert.equal(scores.get("high"), 100);
 });
 
 test("unreliable DesignArena boards are omitted before model-mean imputation", () => {

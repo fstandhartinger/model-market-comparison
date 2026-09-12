@@ -20,6 +20,8 @@ const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: st
   { key: "aa_coding_index", label: "AA Coding", dp: 1 },
   { key: "aa_coding_agent", label: "AA Coding-Agent", dp: 1 },
   { key: "aa_intelligence_index", label: "AA Intelligence", dp: 1 },
+  { key: "epoch_eci", label: "Epoch ECI", dp: 1 },
+  { key: "epoch_eci_software", label: "Epoch Software ECI", dp: 1 },
   { key: "designarena_frontend", label: "DA Frontend Elo", dp: 0 },
   { key: "designarena_fullstack", label: "DA Full-Stack Elo", dp: 0 },
 ];
@@ -255,7 +257,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
                                 <td className="py-0.5 text-right tabular">{m.scores.composite > m.composite_base ? "+" : ""}{num(m.scores.composite - m.composite_base, 1)}</td>
                               </tr>
                             </>}
-                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage}/5</td></tr>
+                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage}/7</td></tr>
                             <tr><td className="py-0.5 text-gray-400">Weights</td><td className="py-0.5 text-right">{m.open_weights ? "open" : "closed"}</td></tr>
                           </tbody>
                         </table>

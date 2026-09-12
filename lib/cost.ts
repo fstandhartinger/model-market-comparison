@@ -117,6 +117,8 @@ export const SCORE_OPTIONS: ScoreKey[] = [
   "designarena_frontend",
   "aa_coding_index",
   "aa_intelligence_index",
+  "epoch_eci_software",
+  "epoch_eci",
 ];
 
 /** Default score across the whole app. */

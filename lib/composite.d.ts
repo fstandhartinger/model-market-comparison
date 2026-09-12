@@ -4,6 +4,8 @@ export interface CompositeInput {
     aa_coding_index?: number | null;
     aa_coding_agent?: number | null;
     aa_intelligence_index?: number | null;
+    epoch_eci?: number | null;
+    epoch_eci_software?: number | null;
     designarena_frontend?: number | null;
     designarena_fullstack?: number | null;
   };
@@ -11,6 +13,7 @@ export interface CompositeInput {
 }
 
 export const DEFAULT_MIN_DA_BATTLES: number;
+export const COMPOSITE_DEFINITION: { version: string; slotCount: number; slots: string[] };
 export function compositeEvidenceCount(
   row: CompositeInput,
   options?: { minDesignArenaBattles?: number },

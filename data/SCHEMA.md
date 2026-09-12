@@ -94,10 +94,13 @@ Composite inputs unchanged. See [the registry contract](raw/benchmarks/README.md
 
 ## Score keys (`ScoreKey`)
 
-`composite` (0–100 dominance-safe projection of five model-mean-imputed percentile slots;
+`composite` (0–100 dominance-safe projection of seven model-mean-imputed percentile slots;
 the unadjusted mean is exposed as `composite_base` by `/api/models`),
 `aa_coding_index`, `aa_coding_agent` (→ `aa_coding_agent_index`, median harness result per exact model),
-`aa_intelligence_index`, `designarena_frontend`, `designarena_fullstack`.
+`aa_intelligence_index`, `epoch_eci`, `epoch_eci_software`, `designarena_frontend`,
+`designarena_fullstack`. Epoch ECI is on its native published scale; software ECI is
+refit from Epoch's official performance and difficulty exports and is null below two
+qualifying software benchmarks.
 
 ## Normalization
 
@@ -122,8 +125,9 @@ once to the deterministic active representative also used by collapsed compariso
 `designarena_attachment_note` records that this does not establish the tested effort setting.
 Results are never copied to every reasoning-effort sibling and no hidden `::designarena`
 duplicate row is created.
-The Composite uses five capability slots: AA Coding, source-matched
-Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA
+The Composite uses seven capability slots: AA Coding, source-matched
+Coding Agent, AA Intelligence, Epoch general ECI, Epoch Software Engineering ECI,
+DesignArena Frontend and DesignArena Full-Stack. AA
 values are clamped to 0–100. Each DesignArena board qualifies with at least 200 battles
 and its Elo is converted to the expected score against a fixed Elo 1000 opponent:
 `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is converted to its empirical

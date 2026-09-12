@@ -8,7 +8,7 @@ EU-provider research lives in `data/research/` (e.g. `llm-tracker-eu.md`).
 Full rebuild:
 
 ```bash
-npm run data:refresh   # fetch-live.mjs (OpenRouter + AA + Intelligence.ai/DesignArena) then build-dataset.mjs
+npm run data:refresh   # live sources + Epoch ECI, then build-dataset.mjs
 # or step by step:
 npm run data:fetch     # only the live APIs → data/raw/{openrouter,artificialanalysis,designarena}.json
 npm run data:build     # merge all raw/*.json → data/dataset.json
@@ -46,6 +46,7 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 
 | Source | Snapshot | How to refresh |
 |---|---|---|
+| Epoch AI ECI (general + software engineering) | `data/raw/epoch-eci.json` | `node scripts/fetch-epoch-eci.mjs` — official CSV exports plus the official benchmark catalog; general scores are copied, software ECI is refit with Epoch's public sigmoid least-squares method and a minimum of two qualifying benchmarks |
 | AWS Bedrock (regional on-demand token prices) | `data/raw/aws-bedrock.json` | [aws-bedrock.method.md](raw/aws-bedrock.method.md) — AWS Price List Bulk API per region + model cards; EU and non-EU offers stay distinct |
 | Azure AI Foundry (retail token meters + serving scope) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API plus model-card/partner-region checks; a billing region is not assumed to be the inference region; the two company-policy equivalents are stored separately from technical residency |
 | Google Vertex AI (Gemini + Model Garden partner models) | `data/raw/google-vertex.json` | [google-vertex.method.md](raw/google-vertex.method.md) — Vertex pricing and model-location docs; `global` is never marked EU-hosted |
@@ -103,3 +104,20 @@ AA metadata parsing now keys source records by slug (UUID fallback). Fields no l
 provided by the source retain previous values only for the same UUID and slug, with
 original per-field provenance in `metadata.retained_fields`. Explicit current nulls
 clear values; absent fields do not acquire a new observation date.
+
+## Epoch ECI refresh details
+
+The collector makes one request per official export at each run:
+`eci_scores.csv` (published general ECI and confidence intervals),
+`processed_data_for_eci.csv` (model/benchmark performance), `edi_scores.csv` (benchmark
+difficulty and slope), and Epoch's public benchmark catalog module (the domain labels).
+It normalizes only the benchmark join key (lowercase, punctuation removed), keeps source
+rows for all published models, and attaches matched rows once to the deterministic family
+representative in `dataset.json`. Unmatched source rows are retained in the raw snapshot
+and listed in `build_diagnostics.epoch_eci_attachment`; no model score is guessed. Download
+hashes and retrieval time are stored under `epoch-eci.json`.
+
+The software value minimizes the same sigmoid residuals as Epoch's public explorer,
+`performance = sigmoid(slope × (capability − difficulty))`, on `[-100, 300]`, using at
+least two software-engineering benchmarks. ECI remains on Epoch's native scale in the
+individual score view; the Composite percentile-normalizes it against the current catalog.

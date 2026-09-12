@@ -187,7 +187,7 @@ test('rank shift drops bridge pairs whose values are absent from the published b
 });
 
 test('derived/composite indices are recompute-required, never bridged', () => {
-  const derivedEntry = (version) => ({ id: `comp::${version}`, family: 'comp', version, status: 'active', scoring: { unit: 'fraction', higher_better: true, derived: true } });
+  const derivedEntry = (version) => ({ id: `comp::${version}`, family: 'comp', version, status: 'active', scoring: { unit: 'fraction', higher_better: true, derived: true, definition_version: version === '1' ? 'composite-v1-five-slots' : 'composite-v2-epoch-eci' } });
   const observations = [observation('a', 0.5, 'comp::1'), observation('b', 0.4, 'comp::1'), observation('a', 0.6, 'comp::2'), observation('c', 0.7, 'comp::2')];
   const b = crossVersionEstimates(observations, registry([derivedEntry('1'), derivedEntry('2')])).find((e) => e.subject_name === title('b'));
   assert.ok(b);
@@ -195,6 +195,8 @@ test('derived/composite indices are recompute-required, never bridged', () => {
   assert.equal(b.status, 'recompute_required');
   assert.equal(b.value, null);
   assert.match(b.note, /recompute/i);
+  assert.equal(b.comparison.definition_change, true);
+  assert.match(b.comparison.reason, /definition changed/i);
 });
 
 test('cross-version estimate cites the source row provenance, not another target row', () => {

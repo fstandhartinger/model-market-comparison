@@ -117,8 +117,9 @@ export default async function AboutPage() {
         Benchmarks are not on a common scale, so we do not average raw scores. Each model&apos;s
         result on a benchmark becomes its <b>percentile</b> among all models measured on that same
         benchmark, and those percentiles are averaged — a hard benchmark and an easy one then count
-        equally. The composite uses five slots: AA Coding, source-matched AA Coding Agent, AA
-        Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to
+        equally. The composite uses seven slots: AA Coding, source-matched AA Coding Agent, AA
+        Intelligence, Epoch general ECI, Epoch Software Engineering ECI, DesignArena Frontend and
+        DesignArena Full-Stack. AA values are clamped to
         0–100. A DesignArena board qualifies at an app-selected minimum of 200 battles, aligned with
         the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the
         expected score against a fixed Elo 1000 opponent.
@@ -134,7 +135,7 @@ export default async function AboutPage() {
         reliable observed slot receives the neutral fallback 50; its zero evidence coverage stays
         distinct from a measured score and is excluded from capability charts. The <b>#benchmarks</b>
         column counts the distinct versioned benchmarks a model has a usable result for, which is a
-        broader set than the five composite slots.
+        broader set than the seven composite slots.
       </p>
 
       <h3 id="data-policy" className="mt-6 mb-2 font-semibold">Provider data policy</h3>

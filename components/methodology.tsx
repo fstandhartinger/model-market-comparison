@@ -15,7 +15,8 @@ export const ADJUSTED_COST_TIP = (
 
 const COMPOSITE_TIP = (
   <>
-    A single 0–100 number per model. Each benchmark we hold is turned into the model’s
+    A single 0–100 number per model. Seven equally weighted capability slots — including
+    Epoch AI’s general ECI and Software Engineering ECI — are each turned into the model’s
     percentile among all models measured on it, and those percentiles are averaged, so a
     hard benchmark and an easy one count the same. Models measured on fewer benchmarks are
     not rewarded for the gaps: missing slots are filled with the model’s own mean and then
@@ -28,6 +29,9 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
   if (score === "composite") return COMPOSITE_TIP;
   if (score.startsWith("designarena")) {
     return <>An Elo rating from head-to-head DesignArena duels, published by DesignArena. It moves as new duels are played, so it is a live ranking rather than a fixed test score, and it is only comparable within the same board.</>;
+  }
+  if (score === "epoch_eci" || score === "epoch_eci_software") {
+    return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table.</>;
   }
   return <>Published by Artificial Analysis, shown on their scale exactly as reported — we do not rescale it. The index version and the date we read it are printed under the table, because Artificial Analysis re-bases these indices from time to time.</>;
 }

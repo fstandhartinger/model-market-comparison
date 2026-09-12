@@ -99,10 +99,10 @@ test('source and critic receipts must match; any edited self-report loses approv
   } finally { await rm(root, { recursive: true, force: true }); }
 });
 
-test('Composite slot list and v1.4 source identity are frozen; registry scores cannot enter it', async () => {
+test('Composite slot list and v1.4 source identity are explicit; registry scores cannot enter it', async () => {
   const code = await readFile(new URL('../lib/composite.mjs', import.meta.url), 'utf8');
   const keys = JSON.parse(code.match(/const SLOT_KEYS = (\[[\s\S]*?\]);/)[1].replace(/,\s*\]/, ']'));
-  assert.deepEqual(keys, ['aa_coding_index', 'aa_coding_agent', 'aa_intelligence_index', 'designarena_frontend', 'designarena_fullstack']);
+  assert.deepEqual(keys, ['aa_coding_index', 'aa_coding_agent', 'aa_intelligence_index', 'epoch_eci', 'epoch_eci_software', 'designarena_frontend', 'designarena_fullstack']);
   const legacy = await readFile(new URL('../data/raw/aa-coding-agents.json', import.meta.url));
   assert.equal(sha256(legacy), 'e3b39c00dfff19717d8da6a875ff44e999b5255300da26f174c5bdcea843368b');
   assert.equal(JSON.parse(legacy).version, '1.4');

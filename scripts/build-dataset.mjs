@@ -416,6 +416,30 @@ function deterministicFamilyRepresentative(familyKey, familyRows) {
   })[0];
 }
 
+function attachEpochEci(modelRows, epochEci) {
+  const rowsByFamily = new Map();
+  for (const row of modelRows) {
+    if (!rowsByFamily.has(row.family_key)) rowsByFamily.set(row.family_key, []);
+    rowsByFamily.get(row.family_key).push(row);
+  }
+  const mapped = [], unmatched = [], ambiguous = [];
+  for (const source of epochEci.models || []) {
+    const familyKey = normalizeFamily(source.source_model_name, source.organization || undefined).familyKey;
+    const familyRows = rowsByFamily.get(familyKey) || [];
+    if (!familyRows.length) { unmatched.push(source.source_model_name); continue; }
+    const target = deterministicFamilyRepresentative(familyKey, familyRows);
+    if (!target) { ambiguous.push({ source_model_name: source.source_model_name, family_key: familyKey }); continue; }
+    if (target.benchmarks.epoch_eci != null && target.benchmarks.epoch_eci !== source.general) {
+      throw new Error(`Epoch ECI attachment collision: ${source.source_model_name} → ${target.id}`);
+    }
+    target.benchmarks.epoch_eci = source.general;
+    target.benchmarks.epoch_eci_software = source.software;
+    target.epoch_eci_attachment_note = `Epoch AI publishes ECI at model/family scope. General ECI and the software-engineering refit are attached once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Epoch tested this exact effort setting.`;
+    mapped.push({ source_model_name: source.source_model_name, family_key: familyKey, target_id: target.id, software_benchmark_count: source.software_benchmark_count });
+  }
+  return { mapped, unmatched, ambiguous };
+}
+
 // ---------------------------------------------------------------------------
 // Build
 // ---------------------------------------------------------------------------
@@ -497,6 +521,7 @@ async function build() {
   const tSystems = await readJSON("t-systems-llm-hub.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
   const dataPolicy = await readJSON("openrouter-data-policy.json").catch(() => ({ providers: [] }));
+  const epochEci = await readJSON("epoch-eci.json");
   const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
   const currentCodingAgents = await readJSON("aa-coding-agents-v1.5.json");
   if (codingAgents.version !== "1.4" || currentCodingAgents.version !== "1.5"
@@ -1105,6 +1130,7 @@ async function build() {
         && !hasScore && !hasDesign && !row.offers.length && !row.copilot) models.delete(row.id);
   }
   modelRows = [...models.values()];
+  const epochEciAttachment = attachEpochEci(modelRows, epochEci);
   const featuredSelection = selectFeaturedFamilies(modelRows);
   if (featuredSelection.missingPins.length) {
     console.warn("! featured pin without an AA Intelligence Index:", featuredSelection.missingPins.join(", "));
@@ -1114,6 +1140,7 @@ async function build() {
     r.featured = featuredSelection.featured.has(r.family_key);
     const b = r.benchmarks || {};
     r.has_benchmark = b.aa_coding_index != null || b.aa_intelligence_index != null || b.aa_coding_agent_index != null ||
+      b.epoch_eci != null || b.epoch_eci_software != null ||
       (r.designarena && (r.designarena.frontend || r.designarena.fullstack));
     r.has_pricing = r.offers.some((o) => o.input_per_1m != null || o.output_per_1m != null || o.input_per_1m_eur != null || o.output_per_1m_eur != null);
   }
@@ -1212,6 +1239,7 @@ async function build() {
       aa_efficiency: aaEfficiency.collected_at,
       openrouter_efficiency: openrouterEfficiency.collected_at,
       chutes_efficiency: chutesEfficiency.collected_at,
+      epoch_eci: epochEci.collected_at,
     },
     source_status: {
       aa_coding_agents: {
@@ -1221,6 +1249,17 @@ async function build() {
       aa_coding_agents_v1_5: {
         version: currentCodingAgents.version, status: "collected_separately", count: currentCodingAgents.count,
         path: "data/raw/aa-coding-agents-v1.5.json", url: currentCodingAgents.endpoint,
+      },
+      epoch_eci: {
+        version: epochEci.definition_version, status: "collected", collected_at: epochEci.collected_at,
+        count: epochEci.counts?.general_models ?? epochEci.models?.length ?? 0,
+        path: "data/raw/epoch-eci.json", url: epochEci.source?.urls?.general,
+        note: "General ECI is source-published; software engineering ECI is refit from Epoch's official performance and difficulty exports with a two-benchmark minimum. Source rows are retained even when no current catalog family matches.",
+      },
+      composite: {
+        version: "composite-v2-epoch-eci", status: "recompute_required_on_definition_change",
+        collected_at: generated_at,
+        note: "Composite definition v2 adds general and Software Engineering ECI as equal percentile slots. Historical Composite values are never bridged; recompute from common source slots when comparing definitions.",
       },
     },
     build_diagnostics: {
@@ -1234,6 +1273,13 @@ async function build() {
         .map(([family_key, ids]) => ({ family_key, source_ids: [...ids].sort() })),
       coding_agent_results_input: expectedAgentResults,
       coding_agent_results_output: attachedAgentResults,
+      epoch_eci_attachment: {
+        source_models: epochEci.models?.length ?? 0,
+        mapped_families: epochEciAttachment.mapped.length,
+        unmatched_source_models: epochEciAttachment.unmatched,
+        ambiguous_source_models: epochEciAttachment.ambiguous,
+        targets: epochEciAttachment.mapped,
+      },
       // R4.4: the featured shortlist, auditable — every entry with the AA Intelligence
       // Index and the rank that put it there.
       featured_selection: {

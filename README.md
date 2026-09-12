@@ -40,7 +40,7 @@ Explore [benchmark rankings](https://benchmarkheaven.com/benchmarks), compare up
   **Featured**, **Hide deprecated** (on by default), **Exclude Chinese providers**, **EU-hosted / approved equivalent only**, **Non-US provider only**,
   **TEE / confidential only**, plus
   provider- and model-checklist filters.
-- **Selectable scores**: **Composite** (five percentile slots with model-mean imputation plus a dominance-safe projection, 0–100, default), ArtificialAnalysis
+- **Selectable scores**: **Composite** (seven percentile slots, including general and Software Engineering ECI, with model-mean imputation plus a dominance-safe projection, 0–100, default), ArtificialAnalysis
   **Coding Index**, **Coding Agent Index** (median across published harnesses for the exact model/effort variant), **Intelligence Index**,
   and DesignArena **Frontend** / **Full-Stack** Elo.
 - **Overview** — fully sortable table with per-column filters, **Has benchmark evidence**
@@ -118,9 +118,11 @@ audited per offer/model/region; an EU-capable provider does not make its US or g
 routes EU-hosted. Separately, `eu_policy_equivalent` admits only Azure Direct Global
 DeepSeek V4 Pro and Kimi K2.7 Code to the EU filter under this company&apos;s legal/business
 classification; inference may occur outside the EU and the flag is not a technical residency
-guarantee. The Composite uses five capability slots: AA Coding,
-source-matched AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena
-Full-Stack. AA values are clamped to 0–100. A DesignArena board qualifies with at least
+guarantee. The Composite uses seven capability slots: AA Coding,
+source-matched AA Coding Agent, AA Intelligence, Epoch general ECI, Epoch Software
+Engineering ECI, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to
+0–100. Epoch ECI stays on its native scale in its own score view and is percentile-normalized
+inside the Composite. A DesignArena board qualifies with at least
 200 battles (an app minimum aligned with the source&apos;s typical preliminary/reliability threshold) and its Elo is converted to the expected score against a fixed Elo 1000
 opponent: `100 / (1 + 10^((1000 − Elo) / 400))`. Each observed slot is then converted
 to its empirical percentile among the current catalog&apos;s unique observed values. Every

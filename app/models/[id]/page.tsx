@@ -58,10 +58,12 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
               <Metric label="Mean-imputed base" value={num(clientModel.composite_base)} />
               <Metric label="Dominance adjustment" value={`${clientModel.scores.composite > clientModel.composite_base ? "+" : ""}${num(clientModel.scores.composite - clientModel.composite_base)}`} />
             </>}
-            <Metric label="Composite evidence" value={`${clientModel?.composite_coverage ?? 0}/5`} />
+            <Metric label="Composite evidence" value={`${clientModel?.composite_coverage ?? 0}/7`} />
             <Metric label={`AA Coding · ${scoreVersion('aa_coding_index', ds.sources)}`} value={num(b.aa_coding_index)} hi />
             <Metric label={`AA Coding Agent · ${scoreVersion('aa_coding_agent', ds.sources)}`} value={num(b.aa_coding_agent_index)} hi />
             <Metric label={`AA Intelligence · ${scoreVersion('aa_intelligence_index', ds.sources)}`} value={num(b.aa_intelligence_index)} hi />
+            <Metric label={`Epoch ECI · ${scoreVersion('epoch_eci', ds.sources)}`} value={num(b.epoch_eci)} hi />
+            <Metric label={`Epoch Software ECI · ${scoreVersion('epoch_eci_software', ds.sources)}`} value={num(b.epoch_eci_software)} hi />
             <Metric label={`DesignArena Frontend · ${scoreVersion('designarena_frontend', ds.sources)}`} value={num(da?.frontend?.elo, 0)} hi />
             <Metric label={`DesignArena Full-Stack · ${scoreVersion('designarena_fullstack', ds.sources)}`} value={num(da?.fullstack?.elo, 0)} hi />
             <Metric label="Output speed (t/s)" value={num(model.aa_speed?.output_tps, 0)} />
@@ -71,6 +73,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           )}
           {model.designarena_attachment_note && (
             <p className="mt-3 border-t border-line/50 pt-2 text-xs text-gray-500">ⓘ {model.designarena_attachment_note}</p>
+          )}
+          {model.epoch_eci_attachment_note && (
+            <p className="mt-3 border-t border-line/50 pt-2 text-xs text-gray-500">ⓘ {model.epoch_eci_attachment_note}</p>
           )}
         </section>
       </div>

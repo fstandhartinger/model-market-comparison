@@ -3,6 +3,8 @@ export interface Benchmarks {
   aa_intelligence_index?: number | null;
   aa_coding_index?: number | null;
   aa_coding_agent_index?: number | null;
+  epoch_eci?: number | null;
+  epoch_eci_software?: number | null;
   aa_math_index?: number | null;
   aa_livecodebench?: number | null;
   aa_scicode?: number | null;
@@ -208,6 +210,7 @@ export interface ModelRow {
   manual_notes?: string;
   benchmark_override_note?: string;
   designarena_attachment_note?: string;
+  epoch_eci_attachment_note?: string;
   token_efficiency?: TokenEfficiency;
 }
 
@@ -242,6 +245,8 @@ export type ScoreKey =
   | "aa_coding_index"
   | "aa_coding_agent"
   | "aa_intelligence_index"
+  | "epoch_eci"
+  | "epoch_eci_software"
   | "designarena_frontend"
   | "designarena_fullstack";
 
@@ -252,6 +257,8 @@ export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
   aa_coding_index: "AA Coding",
   aa_coding_agent: "AA Coding Agent",
   aa_intelligence_index: "AA Intelligence",
+  epoch_eci: "Epoch ECI",
+  epoch_eci_software: "Epoch Software ECI",
   designarena_frontend: "DesignArena Frontend Elo",
   designarena_fullstack: "DesignArena Full-Stack Elo",
 };
@@ -261,6 +268,8 @@ export const SCORE_LABELS: Record<ScoreKey, string> = {
   aa_coding_index: "ArtificialAnalysis — Coding Index",
   aa_coding_agent: "ArtificialAnalysis — Coding Agent Index v1.4 (median harness)",
   aa_intelligence_index: "ArtificialAnalysis — Intelligence Index",
+  epoch_eci: "Epoch AI — Capabilities Index (ECI)",
+  epoch_eci_software: "Epoch AI — Software Engineering ECI",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
   designarena_fullstack: "DesignArena — Agentic Web Dev (Full-Stack) Elo",
 };

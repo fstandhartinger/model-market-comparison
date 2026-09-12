@@ -71,8 +71,9 @@ capability per dollar, and who is the cheapest place to run it?" in one view.
   A separate company-policy overlay treats only Azure Direct Global DeepSeek V4 Pro and
   Kimi K2.7 Code as EU-filter equivalents; their technical region remains Global and inference
   may occur outside the EU.
-- The Composite uses five capability slots: AA Coding, source-matched
-  AA Coding Agent, AA Intelligence, DesignArena Frontend and DesignArena Full-Stack.
+- The Composite uses seven capability slots: AA Coding, source-matched
+  AA Coding Agent, AA Intelligence, Epoch general ECI, Epoch Software Engineering ECI,
+  DesignArena Frontend and DesignArena Full-Stack.
   AA values are clamped to 0–100. DesignArena boards require at least 200 battles and
   their Elo is converted to the expected score against a fixed Elo 1000 opponent.
   Every observed slot is percentile-normalized across the current catalog's unique

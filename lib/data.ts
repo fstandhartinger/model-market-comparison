@@ -80,8 +80,10 @@ export function scoreOf(model: ModelRow, key: ScoreKey): number | null {
     case "aa_coding_index": return model.benchmarks?.aa_coding_index ?? null;
     case "aa_coding_agent": return model.benchmarks?.aa_coding_agent_index ?? null;
     case "aa_intelligence_index": return model.benchmarks?.aa_intelligence_index ?? null;
+    case "epoch_eci": return model.benchmarks?.epoch_eci ?? null;
+    case "epoch_eci_software": return model.benchmarks?.epoch_eci_software ?? null;
     case "designarena_frontend": return model.designarena?.frontend?.elo ?? null;
     case "designarena_fullstack": return model.designarena?.fullstack?.elo ?? null;
-    case "composite": return null; // computed client-side from five potential slots, model-mean imputation, and DA battle counts
+    case "composite": return null; // computed client-side from seven potential slots, model-mean imputation, and DA battle counts
   }
 }

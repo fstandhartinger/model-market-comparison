@@ -46,13 +46,15 @@ export interface ClientModel {
     aa_coding_index: number | null;
     aa_coding_agent: number | null;
     aa_intelligence_index: number | null;
+    epoch_eci: number | null;
+    epoch_eci_software: number | null;
     designarena_frontend: number | null;
     designarena_fullstack: number | null;
   };
   composite_base: number | null;
   composite_coverage: number;
   /** Distinct registry benchmarks this model has a usable result for (R2.2). Not the
-   *  same as `composite_coverage`, which counts the five composite slots only. */
+   *  same as `composite_coverage`, which counts the seven composite slots only. */
   benchmark_count: number;
   offer_count: number;
   aa_ref_input: number | null;
@@ -147,10 +149,12 @@ export function clientData(ds: Dataset): ClientData {
       release_date: m.release_date,
       deprecated: m.deprecated,
       scores: {
-        composite: null, // filled below from the five benchmark slots
+        composite: null, // filled below from the seven benchmark slots
         aa_coding_index: m.benchmarks?.aa_coding_index ?? null,
         aa_coding_agent: m.benchmarks?.aa_coding_agent_index ?? null,
         aa_intelligence_index: m.benchmarks?.aa_intelligence_index ?? null,
+        epoch_eci: m.benchmarks?.epoch_eci ?? null,
+        epoch_eci_software: m.benchmarks?.epoch_eci_software ?? null,
         designarena_frontend: m.designarena?.frontend?.elo ?? null,
         designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
       },
@@ -165,8 +169,8 @@ export function clientData(ds: Dataset): ClientData {
     };
   });
 
-  // Five conceptual slots: three AA indices plus separate, reliability-gated
-  // DesignArena Frontend and Full-Stack values. Each observed source value is
+  // Seven conceptual slots: three AA indices, two Epoch ECI indices, plus separate,
+  // reliability-gated DesignArena Frontend and Full-Stack values. Each observed source value is
   // percentile-normalized; every missing slot inherits the model's mean observed
   // percentile. An evidence-free row receives 50 but keeps coverage 0 so it cannot
   // masquerade as a measured family representative.
@@ -179,14 +183,16 @@ export function clientData(ds: Dataset): ClientData {
   // model's own mean percentile. Without this, whichever row represents a family is
   // punished for the slots that happen to live on its siblings (GPT-5.4 ranked below its
   // own mini/nano), and low-coverage rows game the imputation upward.
-  const famBest = new Map<string, { c: number | null; ca: number | null; i: number | null; df: { elo: number; battles: number | null } | null; ds: { elo: number; battles: number | null } | null }>();
+  const famBest = new Map<string, { c: number | null; ca: number | null; i: number | null; eci: number | null; eciSoftware: number | null; df: { elo: number; battles: number | null } | null; ds: { elo: number; battles: number | null } | null }>();
   for (const m of models) {
     const raw = rawById.get(m.id);
-    const fb = famBest.get(m.family_key) ?? { c: null, ca: null, i: null, df: null, ds: null };
+    const fb = famBest.get(m.family_key) ?? { c: null, ca: null, i: null, eci: null, eciSoftware: null, df: null, ds: null };
     const better = (a: number | null, b: number | null) => (a == null ? b : b == null ? a : Math.max(a, b));
     fb.c = better(fb.c, m.scores.aa_coding_index);
     fb.ca = better(fb.ca, m.scores.aa_coding_agent);
     fb.i = better(fb.i, m.scores.aa_intelligence_index);
+    fb.eci = better(fb.eci, m.scores.epoch_eci);
+    fb.eciSoftware = better(fb.eciSoftware, m.scores.epoch_eci_software);
     const df = m.scores.designarena_frontend;
     if (df != null && (fb.df == null || df > fb.df.elo)) fb.df = { elo: df, battles: raw?.designarena?.frontend?.battles ?? null };
     const dsv = m.scores.designarena_fullstack;
@@ -221,6 +227,8 @@ export function clientData(ds: Dataset): ClientData {
     m.scores.aa_coding_index = m.scores.aa_coding_index ?? fb.c;
     m.scores.aa_coding_agent = m.scores.aa_coding_agent ?? fb.ca;
     m.scores.aa_intelligence_index = m.scores.aa_intelligence_index ?? fb.i;
+    m.scores.epoch_eci = m.scores.epoch_eci ?? fb.eci;
+    m.scores.epoch_eci_software = m.scores.epoch_eci_software ?? fb.eciSoftware;
     m.scores.designarena_frontend = ownDf ?? fb.df?.elo ?? null;
     m.scores.designarena_fullstack = ownDs ?? fb.ds?.elo ?? null;
     return {

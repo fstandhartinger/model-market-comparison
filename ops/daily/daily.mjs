@@ -98,6 +98,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await writeJSONAtomic(join(reports, 'workers.json'), report.workers);
     for (const source of ['aa', 'da', 'or']) await command(`fetch-${source}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
     await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
+    await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
     // R4.10: refresh the OpenRouter provider data-policy table daily. Deliberately
     // non-fatal: it drives one filter, and the collector hard-fails on any layout change
     // it cannot verify against the page's own counts. Aborting the whole price and
@@ -119,7 +120,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.']);
     await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs']);
     after = await readJSON(join(work, 'data/dataset.json'));
-    for (const key of ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v1_5', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency']) {
+    for (const key of ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v1_5', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci']) {
       if (after.sources[key]?.slice(0, 10) !== day) throw new Error(`Source ${key} is not today's collector run (${after.sources[key]})`);
     }
     top5 = JSON.parse(await command('top5', process.execPath, ['scripts/top5.mjs', '5']));

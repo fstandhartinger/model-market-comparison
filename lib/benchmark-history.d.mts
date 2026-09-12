@@ -27,12 +27,13 @@ export interface HistoricalEstimate {
   status: 'estimated' | 'not_comparable' | 'recompute_required';
   source_value: number; value: number | null;
   uncertainty: { lower: number; upper: number; min: number; max: number; iqr: number; iqr_relative: number | null } | null;
-  comparison: { bridge_count: number; aggregate: number | null; spread: BridgeSpread | null; comparable: boolean; reason: string | null; cause: BridgeCause | null; cause_value: number | null; bridges: BridgePair[] };
+  comparison: { bridge_count: number; aggregate: number | null; spread: BridgeSpread | null; comparable: boolean; reason: string | null; cause: BridgeCause | null; cause_value: number | null; definition_change?: boolean; bridges: BridgePair[] };
   source: { url: string | null; retrieved_at: string | null; published_at: string | null; file: string | null; locator: string | null } | null;
   note: string;
 }
 export interface HistoricalResults {
   schema_version: 1; policy: { minBridges: number; maxIqrRelative: number; zeroFloor: number };
+  derived_policy: { status: 'recompute_required'; note: string };
   states: { state_id: string; source: string; collected_at: string; content_sha256: string; count: number; benchmark_ids: string[] }[];
   counts: { estimated: number; not_comparable: number; recompute_required: number };
   estimates: HistoricalEstimate[];
@@ -41,6 +42,7 @@ export interface HistoricalResults {
 export const HISTORY_SCHEMA_VERSION: 1;
 export const BRIDGE_POLICY: { minBridges: number; maxIqrRelative: number; zeroFloor: number };
 export const ESTIMATE_STATUS: string[];
+export const DERIVED_RECOMPUTE_POLICY: { status: 'recompute_required'; note: string };
 export function modelKey(o: Pick<BenchmarkObservation, 'subject'>): string;
 export function versionRank(entry: Pick<BenchmarkEntry, 'version'> & { first_seen?: string }): number;
 export function buildState(observations: BenchmarkObservation[], meta: { state_id: string; source: string; collected_at: string }): HistoryState;
