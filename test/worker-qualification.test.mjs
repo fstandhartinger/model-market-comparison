@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { assessModel, selectModel, candidateList } from '../ops/rebuild-2026-09/bin/worker-policy.mjs';
+import { assessModel, selectModel, selectModelForWorker, candidateList } from '../ops/rebuild-2026-09/bin/worker-policy.mjs';
 
 const catalogRow = (id, pricing = {prompt: '0.0000001', completion: '0.0000002'}) => ({id, pricing});
 const aaRow = (id, score, overrides = {}) => ({ id, aa_model_id: id, family_key: 'product-v4.1', org: 'Example', benchmarks: {aa_intelligence_index: score}, ...overrides });
@@ -80,4 +80,19 @@ test('scheduled selection filters the whitelist before choosing the cheapest fal
   ] };
   assert.equal(selectModel([unauthorized, authorized], data, { scheduled: true }).id, authorized.id);
   assert.throws(() => selectModel([unauthorized], { models: [data.models[0]] }, { scheduled: true }), /No supported viable/);
+});
+
+test('critic retry reuses an excluded family only when no other scheduled candidate exists', () => {
+  const deepseek = catalogRow('deepseek/deepseek-v4-flash-0731');
+  const zai = catalogRow('z-ai/glm-5.3-flash');
+  const data = { models: [
+    aaRow('deepseek/deepseek-v4-flash-0731', 40, { family_key: deepseek.id, aa_metadata: { openrouter_api_id: deepseek.id } }),
+    aaRow('z-ai/glm-5.3-flash', 40, { family_key: zai.id, aa_metadata: { openrouter_api_id: zai.id } }),
+  ] };
+  assert.equal(selectModelForWorker([deepseek, zai], data, {
+    scheduled: true, critic: true, producers: [zai.id], excludeModels: [deepseek.id],
+  }).id, deepseek.id);
+  assert.throws(() => selectModelForWorker([deepseek, zai], data, {
+    scheduled: true, critic: true, producers: [deepseek.id, zai.id], excludeModels: [deepseek.id],
+  }), /No supported viable/);
 });

@@ -111,6 +111,20 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   return candidate;
 }
 
+// A transient critic transport failure should not make a bounded run
+// impossible when the whitelist has only one remaining different family. Keep
+// producer failures excluded; only a critic may retry its excluded pool, and
+// only after the normal selection has no viable scheduled candidate.
+export function selectModelForWorker(catalog, dataset, options = {}) {
+  try { return selectModel(catalog, dataset, options); }
+  catch (error) {
+    if (options.scheduled && options.critic && options.excludeModels?.length && error.message === 'No supported viable worker model found') {
+      return selectModel(catalog, dataset, { ...options, excludeModels: [] });
+    }
+    throw error;
+  }
+}
+
 export function validateCompletion(body, requested) {
   if (body?.error) throw new Error('Provider returned an API error');
   if (typeof body?.model !== 'string' || modelBase(body.model) !== modelBase(requested)) throw new Error('Provider returned an unexpected or missing model ID');

@@ -5,7 +5,7 @@ import { fileURLToPath } from 'node:url';
 import { spawn, execFile } from 'node:child_process';
 import { promisify } from 'node:util';
 import { createHash } from 'node:crypto';
-import { selectModel, validateCompletion, SMOKE_TASK } from './worker-policy.mjs';
+import { selectModel, selectModelForWorker, validateCompletion, SMOKE_TASK } from './worker-policy.mjs';
 import { writeJSONAtomic } from '../../../lib/snapshot.mjs';
 import { writeFile, rename, rm } from 'node:fs/promises';
 import { imageEvidence } from './worker-images.mjs';
@@ -156,7 +156,9 @@ try {
     responseFormat = { type: 'json_schema', json_schema: { name: 'benchmark_heaven', strict: true, schema } };
     catalog = catalog.filter((m) => m.supported_parameters?.includes('structured_outputs') && m.supported_parameters?.includes('response_format'));
   }
-  const chosen = selectModel(catalog, dataset, options.agent ? { model: 'moonshotai/kimi-k3' } : { ...options, scheduled: true });
+  const chosen = options.agent
+    ? selectModel(catalog, dataset, { model: 'moonshotai/kimi-k3' })
+    : selectModelForWorker(catalog, dataset, { ...options, scheduled: true });
   const requestedEffort = process.env.BH_WORKER_REASONING_EFFORT;
   let reasoning;
   if (!options.agent && requestedEffort) {
