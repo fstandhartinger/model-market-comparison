@@ -174,7 +174,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
       </div>
 
       <PriceAssumptions />
-      {!simple && <p className="mb-3 text-xs text-gray-500">The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></p>}
+      <p className="mb-3 text-xs text-gray-500">The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></p>
       {s.priceMode === "adjusted" && measuredTasksOnly && !simple && <p className="mb-3 text-xs text-amber-200">Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</p>}
       {s.priceMode === "adjusted" && measuredTasksOnly && simple && <p className="mb-3 text-xs text-gray-500">Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</p>}
 

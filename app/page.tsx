@@ -11,7 +11,8 @@ export default async function Home() {
   // Benchmaxxing page. Keep this server-side so the client table receives only
   // display data and never recomputes benchmark scores.
   const view = await getBenchmarkView();
-  const reports = ds.models.map((m) => [m.id, scoreBenchmaxxing(view, m.id)] as const)
+  const datasetIds = new Set(ds.models.map((m) => m.id));
+  const reports = view.models.filter((m) => datasetIds.has(m.id)).map((m) => [m.id, scoreBenchmaxxing(view, m.id)] as const)
     .filter(([, report]) => report.status === "scored")
     .sort((a, b) => (b[1].score ?? -1) - (a[1].score ?? -1) || a[0].localeCompare(b[0]));
   const signalIds = new Set(reports.slice(0, Math.max(1, Math.ceil(reports.length * 0.1))).map(([id]) => id));

@@ -296,5 +296,8 @@ Notes for whoever picks this up:
     canonical and legacy hosts return 200; desktop 1440×1000 and mobile 390×844 checks show
     the badge and method link, with no mobile page-level horizontal overflow.
   - Independent review was attempted twice through the free delegation ladder. Nex stopped at
-    its forbidden `/home/flori/.agent-budget.json` read; Kimi did not return a completed review
-    before this bounded iteration ended. Neither output was accepted as verification.
+    its forbidden `/home/flori/.agent-budget.json` read. Kimi's completed review is preserved in
+    `/opt/benchmarkheaven/state/ux-evidence/iter4-live/independent-review-kimi.txt` and found
+    two actionable integration issues: the explanation was hidden in Simple mode, and the
+    Overview/dedicated-page model pools could diverge. Both were corrected in the follow-up
+    working revision; the optional client fields also remain absent when no report is supplied.

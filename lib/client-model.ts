@@ -67,8 +67,8 @@ export interface ClientModel {
   copilot_multiplier: number | null;
   copilot_usd_per_request: number | null;
   /** Coverage-aware topic-local inconsistency signal. Estimates are never used. */
-  benchmaxxing_score: number | null;
-  benchmaxxing_signal: boolean;
+  benchmaxxing_score?: number | null;
+  benchmaxxing_signal?: boolean;
 }
 
 export interface ProviderInfo {
@@ -174,8 +174,9 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       aa_ref_output: m.aa_reference_price?.output_per_1m ?? null,
       copilot_multiplier: m.copilot?.multiplier ?? null,
       copilot_usd_per_request: m.copilot?.usd_per_request ?? null,
-      benchmaxxing_score: benchmaxxing[m.id]?.score ?? null,
-      benchmaxxing_signal: benchmaxxing[m.id]?.signal ?? false,
+      ...(Object.prototype.hasOwnProperty.call(benchmaxxing, m.id)
+        ? { benchmaxxing_score: benchmaxxing[m.id].score, benchmaxxing_signal: benchmaxxing[m.id].signal }
+        : {}),
     };
   });
 

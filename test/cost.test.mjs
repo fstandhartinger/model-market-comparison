@@ -132,8 +132,8 @@ test('client projection carries the optional Overview Benchmaxxing signal withou
   assert.equal(projected.models.find(m=>m.id===first.id).benchmaxxing_score, 91.2);
   assert.equal(projected.models.find(m=>m.id===first.id).benchmaxxing_signal, true);
   const untouched = projected.models.find(m=>m.id===dataset.models[1].id);
-  assert.equal(untouched.benchmaxxing_score, null);
-  assert.equal(untouched.benchmaxxing_signal, false);
+  assert.equal(untouched.benchmaxxing_score, undefined);
+  assert.equal(untouched.benchmaxxing_signal, undefined);
 });
 test('adjusted is modelCost default and uses per-model OR ratio before global or AA proxy',()=>{
   assert.equal(cost.modelCost(model,telemetryData,null),0.023);
