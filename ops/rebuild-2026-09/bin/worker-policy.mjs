@@ -95,8 +95,10 @@ export function selectModel(catalog, dataset, { model, critic = false, producers
   if (critic && smokeTest) throw new Error('Smoke tests cannot certify a critic round');
   if (smokeTest && !model) throw new Error('Smoke tests require an explicitly pinned model');
   const candidates = candidateList(catalog, dataset, MIN_INDEX, catalog.length);
+  const rankedCandidates = [...candidates.free_verified, ...candidates.cheap_verified]
+    .filter((m) => !scheduled || FLORIAN_ALLOWED_SCHEDULED_WORKERS.includes(modelBase(m.id)));
   const candidate = model ? assessModel(catalog.find((m) => m.id === model) || {}, dataset)
-    : [...candidates.free_verified, ...candidates.cheap_verified].find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)));
+    : rankedCandidates.find((m) => !excluded.has(m.id) && m.input_per_1m <= maxPricePer1M && m.output_per_1m <= maxPricePer1M && (!critic || !avoid.has(m.family)));
   if (!candidate) throw new Error('No supported viable worker model found');
   if (candidate.input_per_1m > maxPricePer1M || candidate.output_per_1m > maxPricePer1M) throw new Error('Worker price exceeds configured ceiling');
   if (critic && avoid.has(candidate.family)) throw new Error('Critic must belong to a different vendor family than every producer');

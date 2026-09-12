@@ -70,3 +70,14 @@ test('a failed worker is excluded while the next cheapest still needs AA qualifi
   data.models[2].benchmarks.aa_intelligence_index = 33.9;
   assert.throws(() => selectModel(catalog, data, options), /No supported viable/);
 });
+
+test('scheduled selection filters the whitelist before choosing the cheapest fallback', () => {
+  const unauthorized = catalogRow('google/reviewer', { prompt: '0.0000001', completion: '0.0000001' });
+  const authorized = catalogRow('nex-agi/nex-n2.5-pro', { prompt: '0.0000002', completion: '0.0000002' });
+  const data = { models: [
+    aaRow('google/reviewer', 40, { family_key: 'google/reviewer', aa_metadata: { openrouter_api_id: unauthorized.id } }),
+    aaRow('nex-agi/nex-n2.5-pro', 40, { family_key: 'nex-agi/nex-n2.5-pro', aa_metadata: { openrouter_api_id: authorized.id } }),
+  ] };
+  assert.equal(selectModel([unauthorized, authorized], data, { scheduled: true }).id, authorized.id);
+  assert.throws(() => selectModel([unauthorized], { models: [data.models[0]] }, { scheduled: true }), /No supported viable/);
+});
