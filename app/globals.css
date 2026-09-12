@@ -103,7 +103,19 @@ details[open] > summary { margin-bottom: 8px; }
 .bh-page-head > h1, main > div > h1 { font-family: var(--brand-serif); font-weight: 400; letter-spacing: -.035em; }
 .bh-footer { border-top: 1px solid rgb(var(--line)); }
 .bh-footer a { text-decoration: underline; }
-@media (max-width: 639px) { .bh-wordmark { font-size: 20px; } .bh-hero { padding-top: 4px; } }
+/* On a phone the hero used to fill the whole first screen, so the product itself — the
+   shortlist and its two controls — started below the fold. The claim and the counts stay;
+   they just stop being a full-page cover. */
+@media (max-width: 639px) {
+  .bh-wordmark { font-size: 20px; }
+  .bh-hero { padding: 2px 0 16px; }
+  .bh-display { font-size: 27px; line-height: 1.12; }
+  .bh-hero > p:not(.bh-eyebrow) { margin-top: 10px; font-size: 13px; line-height: 1.55; }
+  .bh-stat-row { gap: 8px; }
+  .bh-stat-row > .card { padding: 6px 10px; }
+  .bh-stat-row > .card > div:first-child { font-size: 15px; }
+  .bh-stat-row > .card > div:last-child { font-size: 10px; }
+}
 
 /* R5.3–R5.4: the two shortlist sliders. A bare appearance-none range renders as a fat
    grey pill in Chromium, so track and thumb are drawn explicitly — thin rail, filled

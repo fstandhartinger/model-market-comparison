@@ -23,7 +23,7 @@ export default async function Home() {
           Then the part no price list tells you: what a task really costs once the provider, its caching
           and the model&apos;s own token appetite are counted.
         </p>
-        <div className="mt-4 flex flex-wrap gap-3">
+        <div className="bh-stat-row mt-4 flex flex-wrap gap-3">
           <Stat label="Benchmark results" value={results} />
           <Stat label="Benchmarks" value={benchmarks} />
           <Stat label="Models" value={ds.counts.models} />
