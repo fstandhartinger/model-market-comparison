@@ -17,8 +17,11 @@ if [ -f "$STATE/running" ]; then
   pid=$(awk '{print $4}' "$STATE/running")
   if kill -0 "$pid" 2>/dev/null; then
     newest=$(ls -t /opt/benchmarkheaven/logs/ux/*-*.log 2>/dev/null | grep -v tick.log | head -1)
-    if [ -n "$newest" ] && [ $(( $(date +%s) - $(stat -c %Y "$newest") )) -gt 2700 ]; then
-      echo "$(date -u +%FT%TZ) iteration pid $pid silent for >45 min ($newest) — stopping it"
+    # Only judge logs that stream progress (they grow past the start line). Older-style runs
+    # print only at the end, so their silence means nothing; the 3 h timeout caps those.
+    if [ -n "$newest" ] && [ "$(stat -c %s "$newest")" -gt 2000 ] \
+       && [ $(( $(date +%s) - $(stat -c %Y "$newest") )) -gt 5400 ]; then
+      echo "$(date -u +%FT%TZ) iteration pid $pid silent for >90 min ($newest) — stopping it"
       pkill -TERM -P "$pid" 2>/dev/null; kill -TERM "$pid" 2>/dev/null
       echo "$(date -u +%Y%m%dT%H%M%SZ) work hung-killed rc=124" >> "$STATE/history.log"
       rm -f "$STATE/running"
