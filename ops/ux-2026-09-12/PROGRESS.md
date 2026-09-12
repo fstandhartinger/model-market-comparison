@@ -75,7 +75,7 @@ credited below, the rest is marked open.
 | R7.1 | New logo in the page | implemented | `ux-evidence/iter2-live/logo-light.png`, `logo-dark.png` | re-drawn as SVG from geometry measured off the JPEG (cloud = 3 circles cut at a flat bottom, 7 treads, 7 measured ray endpoints). Nav wordmark now splits Benchmark / Heaven in ink and brand blue like the artwork |
 | R7.2 | Favicon / apple-touch / og from the new logo | implemented | `ux-evidence/iter2-live/verification-iter2.json` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
 | R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
-| R8.1 | Release-post-style benchmark comparisons and listings | open | — | `ChartsBoard`/`BenchmarkCompare` exist; not yet to the bar |
+| R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
 | R9.1 | Full fresh data run, every live source dated today | open | — | |
 | H1 | Historical snapshots of all benchmark scores | implemented | — | `573ea60`; `benchmark_results.historical` present — needs audit |
 | H2 | Bridged comparison via anchor models, uncertainty reported | implemented | — | `573ea60`; needs multi-hop + re-basing tests |
@@ -306,3 +306,25 @@ Notes for whoever picks this up:
     `5b780c37ab8d3c5bd01ca33cda0ac240c4e9dfd9`. Final evidence, including the Simple first-load
     explanation and the relaxed-filter desktop/mobile checks, is in
     `/opt/benchmarkheaven/state/ux-evidence/iter4-live/verification.json`.
+
+- **2026-09-12 · iteration 5 · codex-luna** — implemented R8.1 and deployed it.
+  - Added release-post-style measured benchmark category snapshots to `/compare`: topic cards
+    average each selected model's normalized measured positions within the topic, show exact
+    coverage, and explicitly state that the 0–100 values are not a new score. Missing and
+    low-sample rows remain excluded rather than becoming zeroes. The full comparison table now
+    highlights tied best measured relative positions while retaining native values and evidence.
+  - Corrected the existing open-vs-closed chart so a group with no measured score is `null`
+    / unavailable, never a plotted zero. `/charts` now links directly to the benchmark report.
+  - A free Nex review was used as a mechanical critique only; its null-as-zero finding was
+    independently inspected and fixed. No worker code or unsupported number was accepted.
+  - Gates: `node scripts/build-dataset.mjs` ✓, `npm test` 245/245 ✓, `npx tsc --noEmit -p .` ✓,
+    `npm run build` ✓. Commit `a61edf2` pushed to `main` and redeployed through the Sandy PaaS
+    MCP as deployment `qo3ml7gwbvsocyhoudapblwr`, finished for exact revision
+    `a61edf25ddb8dd4177dd93fdb26f903a4c971163`.
+  - Live evidence: `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json` and
+    `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json`, plus desktop/mobile
+    category screenshots. Both hosts return the exact revision; both widths show seven cards,
+    exact comparison table, 14 highlighted best cells, and no page-level mobile overflow.
+  - The webhook did not remain deployed and the documented shell fallback could not read
+    `/etc/sandy-paas/mcp.env` as user `flori`; the user-level Sandy PaaS MCP redeploy completed
+    successfully. R8.1 remains `implemented`, not `verified`, pending a different-engine review.
