@@ -314,12 +314,28 @@ function normalizeCatalogFamily(model, platform) {
 }
 
 // Pretty family display name from key.
+// Words whose casing the vendor sets and plain title-casing gets wrong. Without this the
+// featured list on /about read "Deepseek V4.1 Flash" while the table two clicks away said
+// "DeepSeek V4.1 Flash" — the same model, spelled two ways on one site.
+const BRAND_CASE = {
+  deepseek: "DeepSeek", minimax: "MiniMax", openai: "OpenAI", xai: "xAI",
+  qwen: "Qwen", mimo: "MiMo", nanbeige: "Nanbeige", llama: "Llama",
+  mistral: "Mistral", nvidia: "NVIDIA",
+};
+const BRAND_PREFIX_RE = new RegExp(`^(${Object.keys(BRAND_CASE).join("|")})(?=[0-9])`);
+
 function familyDisplay(key) {
   return key
     .split("-")
     .map((w) => {
+      if (BRAND_CASE[w]) return BRAND_CASE[w];
+      // "qwen3.8" / "nanbeige4.1": a brand glued to its version number. Without this the
+      // version branch below shouts the whole token ("QWEN3.8"), and the featured list on
+      // /about ends up spelling a model differently from the table two clicks away.
+      const brand = w.match(BRAND_PREFIX_RE);
+      if (brand) return BRAND_CASE[brand[1]] + w.slice(brand[1].length);
       if (/^v?\d/.test(w) || w.includes(".")) return w.toUpperCase().replace("V", "V");
-      if (["gpt", "glm", "mimo"].includes(w)) return w.toUpperCase();
+      if (["gpt", "glm"].includes(w)) return w.toUpperCase();
       if (w === "oss") return "OSS";
       return w.charAt(0).toUpperCase() + w.slice(1);
     })

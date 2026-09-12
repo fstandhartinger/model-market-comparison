@@ -55,7 +55,7 @@ credited below, the rest is marked open.
 | R4.1 | Redesign the filter bar, elegant and uncluttered | implemented | `ux-evidence/iter1-live/desktop-filters.png` | grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
 | R4.2 | Fixed I/O blend: add 20:1 (default) and 30:1 | implemented | `ux-evidence/iter1-live/verification.json` | blend list now has 20:1 and 30:1; default reads back as 20 |
 | R4.3 | "One variant for Reasoning models" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
-| R4.4 | Featured audit ≈ AA top 20; DeepSeek V4.1 Flash included | open | — | 101 models currently featured — far more than 20 |
+| R4.4 | Featured audit ≈ AA top 20; DeepSeek V4.1 Flash included | implemented | `scripts/build-dataset.mjs`, `/about#featured`, `test/dataset.test.mjs` | featured is now **derived**: top 20 families by best AA Intelligence Index across variants, deprecated excluded, plus pins. 20 families / 58 rows (was 35 / 101). DeepSeek V4.1 Flash ranks 18 **and** is pinned. Rule + list published in `build_diagnostics.featured_selection` and rendered on /about |
 | R4.5 | "Hide deprecated" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
 | R4.6 | "Exclude Chinese providers" unchecked by default | implemented | `ux-evidence/iter1-live/verification.json` | `aria-pressed=false` on load; Reset now restores false (D2) |
 | R4.7 | Rename → "EU-hosted only" | implemented | `ux-evidence/iter1-live/verification.json` | label changed, EU eligibility logic untouched |
@@ -65,16 +65,16 @@ credited below, the rest is marked open.
 | R4.11 | Evidence/provider/task-token toggles → extra settings | implemented | `ux-evidence/iter1-live/desktop-overview-tooltip.png` | folded into an "Evidence ▾" popover above the table |
 | R5.1 | Simple (start) + Advanced mode | implemented | `ux-evidence/iter1-live/verification.json` | `aria-selected=true` on Simple at first load |
 | R5.2 | Simple: top 15 featured, sorted by adjusted cost descending | implemented | `ux-evidence/iter1-live/verification.json` | featured-only, limit 15, cost descending (17.40 → 1.83). Only 6 rows survive the score≥85 + measured-token filters today |
-| R5.3 | Score slider, default > 85 | open | — | currently a text `NumFilter` |
-| R5.4 | Max adjusted cost slider, default unlimited | open | — | currently a text `NumFilter` |
-| R5.5 | Distribution histogram while a slider moves | open | — | |
-| R5.6 | Wizard (company → privacy/region → minimums → budget → results) | open | — | |
-| R6.1 | "Are you a company" checkbox | open | — | |
-| R6.2 | Research: may companies use consumer subscriptions? + Telegram | open | — | |
+| R5.3 | Score slider, default > 85 | implemented | `components/ShortlistControls.tsx` | range slider, default 85, range taken from the pool; value and "10 % below the best model" stated next to it |
+| R5.4 | Max adjusted cost slider, default unlimited | implemented | `components/ShortlistControls.tsx` | log-scaled slider, default "no limit"; the limit now lives in SettingsContext so Simple, Advanced and the wizard share it |
+| R5.5 | Distribution histogram while a slider moves | implemented | `components/ShortlistControls.tsx` | both histograms are shown permanently rather than only on drag — the score limit is already active at 85 on first paint, so an interaction-only chart would hide exactly the fact that the default is cutting the field. Cost bins are log-scaled (costs span 3 orders of magnitude). Kept vs excluded bars are colour-separated |
+| R5.6 | Wizard (company → privacy/region → minimums → budget → results) | implemented | `components/Wizard.tsx`, third tab "Guided" | five pages in Florian's order, every page skippable. Capability page offers "at least the best model available N months ago" for intelligence and coding separately, computed from release dates + today's scores (never an old published number against a fresh one). Budget page offers real p25/p50/p75 of the shortlist plus "no limit yet" |
+| R6.1 | "Are you a company" checkbox | partial | `components/GlobalFilters.tsx`, `components/Wizard.tsx` | the checkbox exists in the filters **and** as the wizard's first question. It has no pricing effect yet because the site prices API/platform routes only — the tooltip now says exactly that instead of claiming a filter that does not run. Closes fully with R6.3 |
+| R6.2 | Research: may companies use consumer subscriptions? + Telegram | implemented | `ops/ux-2026-09-12/research/R6.2-subscriptions.md` | delegated to Kimi K3, then independently re-fetched. Anthropic and Google forbid company use in their own words; Cursor allows entity use; GitHub steers to Business/Enterprise without forbidding; OpenAI and xAI return HTTP 403 to automated clients and were **not** worked around. Telegram sent — see the iteration log |
 | R6.3 | Subscription prices/quotas folded into the cost view, labelled | open | — | |
-| R7.1 | New logo in the page | open | — | asset at `ops/ux-2026-09-12/assets/benchmark-heaven-logo-light.jpg` |
-| R7.2 | Favicon / apple-touch / og from the new logo | open | — | |
-| R7.3 | Dark-mode logo variant, switched with the theme | open | — | |
+| R7.1 | New logo in the page | implemented | `components/BrandMark.tsx`, `scripts/build-brand-assets.mjs`, `docs/brand.md` | re-drawn as SVG from geometry measured off the JPEG (cloud = 3 circles cut at a flat bottom, 7 treads, 7 measured ray endpoints). Nav wordmark now splits Benchmark / Heaven in ink and brand blue like the artwork |
+| R7.2 | Favicon / apple-touch / og from the new logo | implemented | `app/icon.svg`, `app/apple-icon.png`, `public/brand/*` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
+| R7.3 | Dark-mode logo variant, switched with the theme | implemented | `app/globals.css` `--brand-*`, `public/brand/mark-dark.svg` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
 | R8.1 | Release-post-style benchmark comparisons and listings | open | — | `ChartsBoard`/`BenchmarkCompare` exist; not yet to the bar |
 | R9.1 | Full fresh data run, every live source dated today | open | — | |
 | H1 | Historical snapshots of all benchmark scores | implemented | — | `573ea60`; `benchmark_results.historical` present — needs audit |
@@ -127,28 +127,60 @@ credited below, the rest is marked open.
   7 are unknown. Florian can overrule this to "unknown is filtered out too" — carry to X7.
 - **R5.2** "über den Preis absteigend sortiert" is implemented **literally** (most expensive
   first) in Simple mode.
+- **R4.4 (new, consequential)** "Roughly the top 20 of the AA Index charts" is implemented as
+  **exactly** the top 20 model families by best AA Intelligence Index, deprecated excluded,
+  plus pins. Consequences Florian may want to overrule: (a) the older house rule "Gemini is
+  never featured" is gone — Gemini 3.8 Flash (rank 12) and Gemini 3.7 Flash (rank 17) are now
+  featured; (b) popular workhorses just outside the cut are no longer featured — Claude
+  Sonnet 5 (rank 25 of the non-deprecated field), GPT-5.4, GLM 5.2 is in at 20 but GPT-5.6
+  Luna, MiniMax, MiMo and the Kimi K2.x line are out; (c) deprecated flagships drop out by
+  rule, which today removes Claude Opus 4.8 and 4.7. Raising the cut-off to ~25 would bring
+  Sonnet 5 and GPT-5.4 back — a one-line change (`FEATURED_TOP_N`).
+- **R5.5** The distribution histograms are shown **permanently**, not only while a slider is
+  dragged. Reason in the code: the score limit is already active at 85 on first paint, so an
+  interaction-only chart would hide the very fact that the default is cutting the field.
+- **R6.2** The verdicts for OpenAI and xAI are "unclear from published terms" because both
+  sites answer an automated request with HTTP 403. That is bot protection, and this workstream
+  does not work around it. Someone reading those two pages in an ordinary browser would close
+  the gap in two minutes.
 
 ---
 
-## Handover — what the next iteration should pick up
+## Handover — what the next iteration should pick up (rewritten 2026-09-12, iteration 2)
 
 Highest value first, dependencies before the UI that shows them:
 
-1. **R5.3–R5.5** — turn Simple mode's min-score and max-cost into sliders with the
-   distribution histogram. `ModelExplorer` already accepts `defaultSort`/`defaultAsc` and
-   `limit`; the two controls are still `NumFilter` text inputs.
-   Note: only **6 of 15** rows survive today's Simple defaults (featured + score ≥ 85 +
-   measured task tokens). Decide whether "top 15" means relaxing a default or is simply what
-   the data supports, and say which on the page.
-2. **R7.1–R7.3** — the logo. Source is `ops/ux-2026-09-12/assets/benchmark-heaven-logo-light.jpg`;
-   a dark SVG already exists at `public/benchmark-heaven-logo-dark.svg` (from Hermes) and must
-   be checked against the new artwork before being reused.
-3. **R4.4** — featured audit. 101 models are featured against a "roughly top 20" rule; confirm
-   DeepSeek V4.1 Flash is in. This changes what Simple mode shows, so do it before judging (1).
-4. **E1** — ECI into the Composite. Touches the Composite definition, so H2 bridging and the
-   Score (i) text must move with it.
-5. **R6.2** — retry the subscription research. The free-model delegation aborted on a sandbox
-   permission prompt; give it a prompt that never leaves the repo directory.
+1. **E1 — ECI into the Composite.** The largest untouched requirement and the one that moves
+   numbers. Epoch AI ECI (general + software engineering), scraping recipe into the daily
+   refresh, Composite re-weighting documented, the Score (i) text updated to say ECI is in it,
+   and H2 bridging taught about the Composite definition change.
+2. **B4 / B5 — the Benchmaxxing tag in the overview table and the small-print method note.**
+   `BenchmaxxExplorer` and `BenchmaxxingReport` already exist; the tag never reaches the
+   overview table, and the method is not explained on the page. Cheap, visible, and B1–B3/B6/B7
+   are claimed implemented but have never been verified live.
+3. **R8.1 — release-post-style benchmark comparisons.** `ChartsBoard` / `BenchmarkCompare`
+   exist and are not at the bar Florian described. This is the biggest remaining *design*
+   item and should follow a Fable 5.1 pass (X3 is still open — no `DESIGN-DIRECTIVES.md`
+   exists yet).
+4. **R9.1 — a full fresh data run** with every live source dated today, deployed and proven.
+5. **R6.3 — subscriptions in the cost view.** The research (R6.2) is done and says something
+   important: only GitHub Copilot publishes an absolute included quota. Model Copilot
+   honestly, and show "quota not published" for the rest instead of an implied per-task price.
+6. **H3** — the "better than model X in category Y" filter. The wizard's capability page
+   already computes a release-date frontier; H3 is the general case of the same idea.
+7. **P1 / P2** — the PRD and the cited Artificial Analysis capability comparison. Both are
+   gates on declaring the ledger complete, and P1 needs a *different engine* as reviewer.
+
+Notes for whoever picks this up:
+- `ops/ux-2026-09-12/bin/verify-live.mjs` now honours `BH_OUT`; run it against
+  https://benchmarkheaven.com, not only locally.
+- Simple mode shows 6 of 15 rows at its defaults (featured + Composite ≥ 85 + measured task
+  tokens). That is now *stated on the page* ("6 of 15 recommended models meet your limits"),
+  so it is no longer a silent shortfall — but if Florian wants a fuller list, the lever is
+  `FEATURED_TOP_N` or the 85 default, not the limit of 15.
+- Settings storage key is at **v8**; anything added to `SettingsState` needs the sanitiser
+  entry, the Reset call and the `active` check in `GlobalFilters` or it will silently not
+  reset.
 
 ## Iteration log
 
@@ -184,3 +216,26 @@ Highest value first, dependencies before the UI that shows them:
   - **R6.2 delegation failed** — the free OpenCode model aborted on a sandbox permission
     prompt (`/home/flori/.agent-budget.json`) before doing any research. R6.2 stays open;
     retry with a prompt that does not leave the repo directory.
+
+- **2026-09-12 · iteration 2 · claude-opus** — implemented R4.4, R5.3–R5.6, R7.1–R7.3, R6.2;
+  moved R6.1 to `partial` with an honest tooltip.
+  - **R4.4** turned the featured set from a 35-family hand-kept regex into a derived top-20 of
+    the AA Intelligence Index. Three tests that named specific families as featured were
+    rewritten to re-derive the rule from the data; one Azure route test was asserting on the
+    featured flag when what it actually guards is route policy, and now says so.
+  - **R7** added `scripts/build-brand-assets.mjs` as the single generator for every brand
+    asset, with the measurement transform from the JPEG written into the file so the shape
+    stays checkable against Florian's artwork.
+  - **R5.6** required lifting `maxCost` (and the new `minIntelligence` / `minCoding`) out of
+    `ModelExplorer` into `SettingsContext`, storage key v7 → v8.
+  - Defects found and fixed while verifying in a browser: an unpriced model headed the
+    cost-descending ranking (null price sorted as infinity); the "I'm buying for a company"
+    tooltip claimed a filter that does not run.
+  - Gate before every push: `build-dataset` ✓, `npm test` 239/239 ✓, `tsc --noEmit` ✓,
+    `next build` ✓.
+  - Delegation: the R6.2 research went to OpenCode (nex free failed over to Kimi K3) and came
+    back genuinely good — verbatim quotes, vendor domains only, honest "could not fetch" for
+    the two sites that 403 automated clients. Every load-bearing claim was independently
+    re-fetched before it was committed; nothing had to be corrected.
+  - **Statuses stay `implemented`, not `verified`** — ground rule 2 reserves `verified` for a
+    different engine.
