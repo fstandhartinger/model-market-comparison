@@ -15,8 +15,23 @@ exec 9>"$STATE/tick.lock"; flock -n 9 || exit 0
 # An iteration is still running?
 if [ -f "$STATE/running" ]; then
   pid=$(awk '{print $4}' "$STATE/running")
-  if kill -0 "$pid" 2>/dev/null; then exit 0; fi
+  if kill -0 "$pid" 2>/dev/null; then
+    newest=$(ls -t /opt/benchmarkheaven/logs/ux/*-*.log 2>/dev/null | grep -v tick.log | head -1)
+    if [ -n "$newest" ] && [ $(( $(date +%s) - $(stat -c %Y "$newest") )) -gt 2700 ]; then
+      echo "$(date -u +%FT%TZ) iteration pid $pid silent for >45 min ($newest) — stopping it"
+      pkill -TERM -P "$pid" 2>/dev/null; kill -TERM "$pid" 2>/dev/null
+      echo "$(date -u +%Y%m%dT%H%M%SZ) work hung-killed rc=124" >> "$STATE/history.log"
+      rm -f "$STATE/running"
+    fi
+    exit 0
+  fi
   echo "$(date -u +%FT%TZ) stale running marker (pid $pid gone) — clearing"; rm -f "$STATE/running"
+fi
+
+# Idle: pick up newer versions of these scripts and the brief, but only fast-forward and
+# only on a clean worktree, so an interrupted iteration's work is never clobbered.
+if [ -z "$(git -C "$REPO" status --porcelain 2>/dev/null)" ]; then
+  git -C "$REPO" pull --ff-only -q origin main 2>/dev/null || echo "$(date -u +%FT%TZ) note: ff-only pull skipped"
 fi
 
 # Finished?

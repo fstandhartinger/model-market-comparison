@@ -71,7 +71,7 @@ rc=0
 case "$ENGINE" in
   claude-opus|claude-fable)
     MODEL=claude-opus-5; [ "$ENGINE" = claude-fable ] && MODEL=claude-fable-5-1
-    timeout 10800 claude -p --model "$MODEL" --permission-mode bypassPermissions "$PROMPT" >> "$LOG" 2>&1; rc=$?
+    timeout 10800 claude -p --model "$MODEL" --permission-mode bypassPermissions --output-format stream-json --verbose "$PROMPT" >> "$LOG" 2>&1; rc=$?
     if grep -qiE "hit your (session|weekly)? ?limit|usage limit reached|limit will reset" "$LOG"; then
       echo "$(( $(date +%s) + 3600 ))" > "$STATE/claude-cooldown-until"
       echo "=== claude limit detected — cooling down Claude for 1h ===" >> "$LOG"
