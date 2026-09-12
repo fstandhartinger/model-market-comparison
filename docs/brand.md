@@ -2,7 +2,7 @@
 
 Use **Benchmark Heaven**, two title-case words. The domain is **benchmarkheaven.com**. Do not abbreviate the product to MMC. The GitHub repository and on-disk project paths retain `model-market-comparison` for compatibility.
 
-**Benchmarks in perspective. Costs in context.**
+**Every benchmark result for every model — and what each one actually costs.**
 
 ## Direction: Observatory
 

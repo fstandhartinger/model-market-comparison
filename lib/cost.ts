@@ -1,11 +1,11 @@
 import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
-import { effectiveCost, fixedCost, FIXED_BLENDS, type EffectiveCostResult } from "./effective-cost.mjs";
-export { FIXED_BLENDS };
+import { effectiveCost, fixedCost, FIXED_BLENDS, DEFAULT_BLEND, type EffectiveCostResult } from "./effective-cost.mjs";
+export { FIXED_BLENDS, DEFAULT_BLEND };
 
 export type PriceMode = "adjusted" | "raw";
 export interface PriceSettings { priceMode: PriceMode; inputWeight: number }
-export const DEFAULT_PRICE_SETTINGS: PriceSettings = { priceMode: "adjusted", inputWeight: 10 };
+export const DEFAULT_PRICE_SETTINGS: PriceSettings = { priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 export interface PriceContext extends PriceSettings { model: ClientModel; data: ClientData }
 export interface PriceSource { label: string; source: string; url?: string; date?: string; basis?: string; note?: string }
 export interface PriceResult {
@@ -132,6 +132,10 @@ export interface OfferScope {
   allowed: Set<string> | null;
   euHostedOnly: boolean;
   teeOnly: boolean;
+  /** R4.10: drop routes whose provider does NOT survive OpenRouter's own
+   *  "Does not train" + "Zero retention" filter. Routes with no published policy
+   *  (`data_private == null`) are kept — absence of a policy is not evidence of a bad one. */
+  privateDataOnly: boolean;
   restricted: boolean;
 }
 
@@ -158,6 +162,7 @@ export function offerMatchesScope(offer: ClientOffer, selection: OfferSelection)
   if (selection.allowed && !selection.allowed.has(offer.key)) return false;
   if (selection.teeOnly && !offer.tee) return false;
   if (selection.euHostedOnly && !isEuOffer(offer)) return false;
+  if (selection.privateDataOnly && offer.data_private === false) return false;
   return true;
 }
 
@@ -249,8 +254,11 @@ export function scoreOf(m: ClientModel, key: ScoreKey): number | null {
 
 /** Sensible default minimum for a score: DesignArena is Elo (~1000), AA indices ~35,
  *  Composite is a 0–100 blend (no floor by default). */
+/** The min-score a score selection resets to. For Composite this is 85 (R5.3) — the same
+ *  value `SettingsContext` starts from, so a fresh page is not reported as "modified" and
+ *  Reset does not silently widen the shortlist it was supposed to restore. */
 export function defaultMinFor(score: ScoreKey): number {
-  if (score === "composite") return 0;
+  if (score === "composite") return 85;
   return score.startsWith("designarena") ? 1000 : 35;
 }
 
@@ -302,12 +310,14 @@ export function createOfferScope(
   euHostedOnly = false,
   nonUsOnly = false,
   teeOnly = false,
+  privateDataOnly = false,
 ): OfferScope {
   return {
     allowed: effectiveAllowed(excluded, excludeChinese, providers, euHostedOnly, nonUsOnly),
     euHostedOnly,
     teeOnly,
-    restricted: !!(excluded?.size || excludeChinese || euHostedOnly || nonUsOnly || teeOnly),
+    privateDataOnly,
+    restricted: !!(excluded?.size || excludeChinese || euHostedOnly || nonUsOnly || teeOnly || privateDataOnly),
   };
 }
 

@@ -10,13 +10,13 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://benchmarkheaven.com"),
   applicationName: "Benchmark Heaven",
   title: { default: "Benchmark Heaven — Model benchmarks & costs", template: "%s | Benchmark Heaven" },
-  description: "Explore model benchmarks, compare provider prices, and see the assumptions behind adjusted task costs. Versioned results with sources and dates.",
+  description: "The most complete collection of model benchmark results anywhere, and the only cost figure that reflects what a model will actually cost you — provider prices, caching and the model's own token appetite included.",
   openGraph: {
     type: "website", siteName: "Benchmark Heaven",
-    title: "Benchmark Heaven", description: "Benchmarks in perspective. Costs in context.",
-    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Benchmark Heaven — Benchmarks in perspective. Costs in context." }],
+    title: "Benchmark Heaven", description: "Every benchmark result for every model — and what each one actually costs.",
+    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Benchmark Heaven — Every benchmark result for every model — and what each one actually costs." }],
   },
-  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: "Benchmarks in perspective. Costs in context.", images: ["/brand/og-image.png"] },
+  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: "Every benchmark result for every model — and what each one actually costs.", images: ["/brand/og-image.png"] },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 
@@ -45,7 +45,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <span className="bh-wordmark text-lg">Benchmark Heaven</span>
               <div className="flex flex-wrap gap-5"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a></div>
             </div>
-            <p>Benchmarks in perspective. Costs in context. Every result has a source; every estimate has assumptions.</p>
+            <p>Every benchmark result for every model — and what each one actually costs. Every result has a source; every estimate has assumptions.</p>
             <p className="mt-2">Data from OpenRouter, Artificial Analysis, Intelligence.ai / DesignArena, benchmark maintainers and provider catalogs.
               Raw token prices are USD per 1M tokens; adjusted task costs are estimates with visible inputs.
               Source dates vary. Check the linked source before choosing a provider.</p>

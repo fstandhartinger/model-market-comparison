@@ -98,6 +98,18 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await writeJSONAtomic(join(reports, 'workers.json'), report.workers);
     for (const source of ['aa', 'da', 'or']) await command(`fetch-${source}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
     await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
+    // R4.10: refresh the OpenRouter provider data-policy table daily. Deliberately
+    // non-fatal: it drives one filter, and the collector hard-fails on any layout change
+    // it cannot verify against the page's own counts. Aborting the whole price and
+    // benchmark publication because a secondary table moved would be the worse outcome —
+    // the previous snapshot stays in place and its date is visible in `sources`.
+    try {
+      await command('fetch-data-policy', process.execPath, ['scripts/fetch-openrouter-data-policy.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-data-policy skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-data-policy: keeping the previous snapshot`);
+    }
     await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 3_600_000);
     await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 3_600_000);
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');

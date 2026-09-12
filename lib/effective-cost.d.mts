@@ -2,6 +2,7 @@ export const FALLBACK_OUTPUT_TOKENS: number;
 export const FALLBACK_IO_RATIO: number;
 export const INPUT_ONLY: number;
 export const FIXED_BLENDS: { value: number; label: string }[];
+export const DEFAULT_BLEND: number;
 export interface EffectiveCostInputs {
   input_per_1m?: number | null;
   output_per_1m?: number | null;

@@ -2,16 +2,18 @@
 import { Fragment, useMemo, useState } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
-import { SCORE_LABELS } from "../lib/types";
+import { SCORE_LABELS, SCORE_SHORT_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
 import { Toggle, DataBar, NumFilter } from "./ui";
+import { InfoTip } from "./InfoTip";
+import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 
-type SortKey = "name" | "org" | "score" | "cost" | "providers";
+type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
 const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: string; dp: number }[] = [
   { key: "composite", label: "Composite", dp: 1 },
   { key: "aa_coding_index", label: "AA Coding", dp: 1 },
@@ -27,15 +29,14 @@ const routeSignature = (offer: ClientData["offersByModel"][string][number]) => [
   offer.input_per_1m, offer.output_per_1m, offer.status,
 ].join("::");
 
-export function ModelExplorer({ data, limit }: { data: ClientData; limit?: number }) {
+export function ModelExplorer({ data, limit, defaultSort, defaultAsc }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
-  // Cost ascending is the default sort: with the global min-score filter and the
-  // assumptions below the table, "cheapest model with score ≥ X" is one screen.
-  const [sort, setSort] = useState<SortKey>("cost");
-  const [asc, setAsc] = useState(true);
+  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  // R1.1: the table opens sorted by the score column, highest first.
+  const [sort, setSort] = useState<SortKey>(defaultSort ?? "score");
+  const [asc, setAsc] = useState(defaultSort === "cost" ? defaultAsc ?? true : false);
   const [q, setQ] = useState("");
   const [withScoreOnly, setWithScoreOnly] = useState(true);
   const [hasProviderOnly, setHasProviderOnly] = useState(true);
@@ -83,19 +84,27 @@ export function ModelExplorer({ data, limit }: { data: ClientData; limit?: numbe
       if (sort === "name") return dir * a.m.display_name.localeCompare(b.m.display_name);
       if (sort === "org") return dir * a.m.org.localeCompare(b.m.org);
       if (sort === "providers") return dir * (a.ncheap - b.ncheap);
+      if (sort === "benchmarks") return dir * (a.m.benchmark_count - b.m.benchmark_count);
       if (sort === "cost") return dir * ((a.price.value ?? Infinity) - (b.price.value ?? Infinity));
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return limit ? r.slice(0, limit) : r;
   }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.minScore, s.openOnly, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, maxCost, sort, asc, preferredId, limit]);
 
+  const evidenceRelaxed = !withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && !measuredTasksOnly);
+
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.price.value ?? 0)), [rows]);
 
   const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
-  const Th = ({ label, k, right }: { label: string; k: SortKey; right?: boolean }) => (
+  const Th = ({ label, k, right, sub, info }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode }) => (
     <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`px-3 py-2 text-xs font-semibold uppercase tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
-      <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
+      <span className={`inline-flex items-center gap-0.5 ${right ? "justify-end" : ""}`}>
+        <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
+        {info}
+      </span>
+      {/* R1.2: the active score name rides along underneath, so the header follows the selector. */}
+      {sub && <span className="block text-[10px] font-normal normal-case tracking-normal text-gray-500">({sub})</span>}
     </th>
   );
 
@@ -108,10 +117,20 @@ export function ModelExplorer({ data, limit }: { data: ClientData; limit?: numbe
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
         </select>
         <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
-        <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
-        <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
-        {s.priceMode === "adjusted" && <Toggle label="Measured task tokens only" on={measuredTasksOnly} set={setMeasuredTasksOnly} />}
-        <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · provider-filtered" : ""}</span>
+        {/* R4.11: the three evidence requirements are defaults almost nobody changes.
+            They stay with the table they govern, but folded away so the toolbar reads as
+            "search, org, budget" rather than as six competing switches. */}
+        <details className="relative">
+          <summary className={`cursor-pointer list-none rounded-md border px-3 py-1.5 text-sm ${evidenceRelaxed ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
+            Evidence{evidenceRelaxed ? " · relaxed" : ""} ▾
+          </summary>
+          <div className="absolute left-0 z-20 mt-1 flex w-[min(20rem,calc(100vw-3rem))] flex-col gap-2 rounded-lg border border-line bg-panel p-3 shadow-xl">
+            <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
+            <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
+            {s.priceMode === "adjusted" && <Toggle label="Measured task tokens only" on={measuredTasksOnly} set={setMeasuredTasksOnly} />}
+          </div>
+        </details>
+        <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · filtered" : ""}</span>
       </div>
 
       <PriceAssumptions />
@@ -127,9 +146,9 @@ export function ModelExplorer({ data, limit }: { data: ClientData; limit?: numbe
           <thead><tr>
             <Th label="Model" k="name" />
             <Th label="Org" k="org" />
-            <Th label="Score (Composite) ⓘ" k="score" right />
-            <Th label="Adjusted Cost ⓘ" k="cost" right />
-            <th className="px-3 py-2 text-right text-xs font-semibold uppercase tracking-wide text-gray-400"># benchmarks</th>
+            <Th label="Score" k="score" right sub={SCORE_SHORT_LABELS[score]} info={<InfoTip title={`Score — ${SCORE_LABELS[score]}`} label="the Score column">{scoreTip(score)}</InfoTip>} />
+            <Th label="Adjusted Cost" k="cost" right info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
+            <Th label="# benchmarks" k="benchmarks" right />
             <Th label="# providers" k="providers" right />
           </tr></thead>
           <tbody>
@@ -162,7 +181,7 @@ export function ModelExplorer({ data, limit }: { data: ClientData; limit?: numbe
                 <td className="px-3 py-2 truncate"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
                 <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScoreVal} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2">{price.value != null ? <DataBar frac={price.value / maxCostVal} color="#7ee0c0" align="right"><span className="block text-right"><PriceValue price={price} compact /></span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2 text-right tabular text-gray-400">{m.composite_coverage || "—"}</td>
+                <td className="px-3 py-2 text-right tabular text-gray-400">{m.benchmark_count || "—"}</td>
                 <td className="px-3 py-2 text-right tabular text-gray-400">{ncheap || "—"}</td>
               </tr>
               {isOpen && (

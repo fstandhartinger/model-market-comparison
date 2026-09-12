@@ -24,6 +24,9 @@ export interface ClientOffer {
   eu_hosted?: boolean;
   eu_policy_equivalent?: boolean;
   non_us?: boolean;
+  /** R4.10: true/false = OpenRouter publishes a policy for the serving provider and it
+   *  does / does not satisfy "Does not train" + "Zero retention". Undefined = unknown. */
+  data_private?: boolean;
 }
 
 export interface ClientModel {
@@ -48,6 +51,9 @@ export interface ClientModel {
   };
   composite_base: number | null;
   composite_coverage: number;
+  /** Distinct registry benchmarks this model has a usable result for (R2.2). Not the
+   *  same as `composite_coverage`, which counts the five composite slots only. */
+  benchmark_count: number;
   offer_count: number;
   aa_ref_input: number | null;
   aa_ref_output: number | null;
@@ -108,6 +114,7 @@ export function clientData(ds: Dataset): ClientData {
     pricing_tier: o.pricing_tier, route_type: o.route_type,
     region: o.region, estimated: o.estimated, notes: o.notes, tee: o.tee,
     eu_hosted: o.eu_hosted, eu_policy_equivalent: o.eu_policy_equivalent, non_us: o.non_us,
+    data_private: o.data_private,
   });
   for (const m of ds.models) {
     const exact = (m.offers || []).filter((offer) => offer.unit === "per_1m_token").map(toClientOffer);
@@ -149,6 +156,7 @@ export function clientData(ds: Dataset): ClientData {
       },
       composite_base: null,
       composite_coverage: 0,
+      benchmark_count: ds.benchmark_results?.coverage?.by_model?.[m.id]?.available ?? 0,
       offer_count: (offersByModel[m.id] || []).length,
       aa_ref_input: m.aa_reference_price?.input_per_1m ?? null,
       aa_ref_output: m.aa_reference_price?.output_per_1m ?? null,

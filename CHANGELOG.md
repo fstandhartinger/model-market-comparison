@@ -4,6 +4,37 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-12 — Provider data policy, grouped settings, self-explaining table
+
+**New data file for downstream consumers: `data/raw/openrouter-data-policy.json`.**
+A daily snapshot of OpenRouter's published provider table, reduced to the two facets that
+site exposes as filters: `does_not_train` and `zero_retention`. Each entry also carries the
+derived `private` verdict (both true), the provider's headquarters, and any `override`.
+Every parse is cross-checked against the counts OpenRouter prints for its own filters and
+the collector fails rather than publishing a table it cannot reconcile. Collect it with
+`npm run data:policy`.
+
+- `dataset.json` additions (all optional, nothing removed or renamed):
+  - offers gain `or_provider_slug` and `data_private`. `data_private` is **tri-state** —
+    `true`/`false` mean OpenRouter publishes a verdict; **absent means unknown**, which is
+    not the same as `false` and must not be rendered as "trains on your data".
+  - `providers[]` gain `data_private` (worst known verdict across that channel's routes).
+  - `sources.openrouter_data_policy` records when the snapshot was taken.
+- **Chutes is an explicit, recorded override**: OpenRouter miscategorises it, so it is
+  treated as satisfying both guarantees. The reason ships inside the snapshot itself.
+- New UI filter "Trains or keeps your data" (off by default → such providers are excluded
+  from every figure). Providers OpenRouter does not list are kept and labelled unknown.
+- Fixed I/O blend gains **20:1 (the new default)** and **30:1**. The previous default of 20
+  was not a selectable blend, so the stored value was rejected on load; the settings key
+  moved to `mmc.settings.v7` to discard those payloads.
+- `defaultMinFor("composite")` is now **85**, matching the shipped default, so "reset" no
+  longer widened the list it was restoring.
+- Overview table: sorts by score descending by default, the header shows the active score
+  name, `#benchmarks` now counts distinct benchmarks with a result (previously it showed
+  the 0–5 composite slot coverage), and `#benchmarks` is sortable.
+- `/about` is restructured into anchored sections — `#adjusted-cost`, `#score`,
+  `#data-policy`, `#identity` — and is where the long cost paragraph now lives.
+
 ## 2026-09-12 — Benchmaxxing tab: cross-benchmark estimates (~1 day after phase 11)
 
 - New public tab `/benchmaxxing` ("Benchmaxxing") with navigation entry and read-only API

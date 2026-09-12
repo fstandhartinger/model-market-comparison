@@ -61,26 +61,91 @@ export default async function AboutPage() {
         </ul>
       </div>
 
-      <h2 className="mt-6 mb-2 font-semibold">Methodology</h2>
+      <h2 id="methodology" className="mt-8 mb-2 text-lg font-semibold">How we calculate</h2>
       <p className="text-sm text-gray-400">
-        Costs default to modeled USD/task, using exact-variant AA output tokens, OpenRouter usage I/O (Chutes global fallback), and exact-endpoint cache-hit rates.
-        Missing values are assumed and flagged: 1,000 output tokens/task, no cache discount, and zero additional cache writes. General traffic and benchmark tasks are proxies for coding-agent usage.
-        Click an underlined price to inspect the full formula, inputs, dates and assumptions. Raw list-price mode uses your chosen fixed blend per million tokens (including 1:1, 3:1, 10:1, 100:1, input-only and output-only). Capability scores are shown as published; AA indices are 0–100, DesignArena values are Elo.
-        The Composite score uses five slots: AA Coding, source-matched AA Coding Agent,
-        AA Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to 0–100. A DesignArena
-        board qualifies at an app-selected minimum of 200 battles, aligned with the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the expected score against a fixed Elo 1000
-        opponent. Each observed slot is converted to its percentile among the current catalog&apos;s unique observed values.
-        Every missing slot inherits that model&apos;s mean observed percentile, producing a base score exactly equal to the mean of its
-        available percentiles. A final dominance-safe projection prevents missing data from reversing an otherwise unambiguous comparison:
-        when one model covers every reliable slot of another measured model and is no worse in any shared slot,
-        the catalog scores are adjusted by the smallest symmetric amount needed to keep the dominating model at least 0.1 points ahead.
-        The unadjusted base and any adjustment are shown separately in model details. A model with no reliable observed slot receives the neutral fallback 50; its zero evidence
-        coverage remains distinct from a measured score and is excluded from capability charts. Coding Agent results are
-        attached to an exact or explicitly audited model/reasoning identity; every harness
-        result is retained and their median is used. Family-scoped Intelligence.ai / DesignArena results are attached exactly once to the deterministic collapsed-family representative rather than copied to effort
-        siblings. The provenance note explicitly states that this does not identify the tested effort setting. Raw DesignArena score views continue to show Elo. Stable model ids and repositories are preferred over
-        fuzzy names so distinct releases, modes, context tiers and serving routes do not share the wrong price.
-        See the repository README and <code>data/SCRAPING.md</code> for how each source is collected and refreshed.
+        Two numbers on this site are ours rather than a source&apos;s: the <b>adjusted cost</b> of a task
+        and the <b>composite score</b> of a model. Everything else is reproduced as published. This
+        section explains both in full, so any figure on the site can be traced back to its inputs.
+      </p>
+
+      <h3 id="adjusted-cost" className="mt-6 mb-2 font-semibold">Adjusted cost per task</h3>
+      <p className="text-sm text-gray-400">
+        A price per million tokens does not tell you what a model costs you, because two models
+        need very different numbers of tokens for the same job, and because what you actually pay
+        depends on which provider serves you and how much of your input that provider can read from
+        cache. The adjusted cost folds all of that into one number — modelled USD for one task:
+      </p>
+      <ul className="mt-2 space-y-1.5 text-sm text-gray-300">
+        <li><b>Which provider.</b> Of all the routes that survive your filters, we cost the cheapest
+          one, using that exact endpoint&apos;s published prices — not a platform average.</li>
+        <li><b>Its cache behaviour.</b> Cached input is billed at that endpoint&apos;s cache-read price,
+          uncached input at its normal input price, and cache writes at its write price. The cache-hit
+          rate is the measured one for that exact endpoint where OpenRouter publishes it.</li>
+        <li><b>The model&apos;s token efficiency.</b> How many output tokens this specific model
+          variant needs per task, from Artificial Analysis&apos; measurements. A model that reasons at
+          length pays for every one of those tokens.</li>
+        <li><b>The input:output ratio</b> of real workloads on that model, from OpenRouter usage
+          statistics. Where a model has no published per-model usage, we fall back to a documented
+          global ratio and label the figure as an estimate rather than a measurement.</li>
+      </ul>
+      <p className="mt-3 text-sm text-gray-400">
+        USD/task = [input × (1 − hit) × input price + input × hit × cache-read price + additional
+        writes × write price + output × output price] ÷ 1,000,000. Where an input is unknown we say
+        so instead of hiding it: missing task-token measurements assume 1,000 output tokens/task, an
+        unknown cache-hit rate assumes 0 %, and unmeasured cache writes assume 0 tokens. Every such
+        assumption is listed on the price itself — click any underlined price to see the exact
+        inputs, sources and dates behind it. Raw list-price mode skips all of this and simply blends
+        list prices at the fixed input:output ratio you choose.
+      </p>
+
+      <h3 id="score" className="mt-6 mb-2 font-semibold">The composite score</h3>
+      <p className="text-sm text-gray-400">
+        Benchmarks are not on a common scale, so we do not average raw scores. Each model&apos;s
+        result on a benchmark becomes its <b>percentile</b> among all models measured on that same
+        benchmark, and those percentiles are averaged — a hard benchmark and an easy one then count
+        equally. The composite uses five slots: AA Coding, source-matched AA Coding Agent, AA
+        Intelligence, DesignArena Frontend and DesignArena Full-Stack. AA values are clamped to
+        0–100. A DesignArena board qualifies at an app-selected minimum of 200 battles, aligned with
+        the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the
+        expected score against a fixed Elo 1000 opponent.
+      </p>
+      <p className="mt-3 text-sm text-gray-400">
+        Thin evidence must not become an advantage. Every missing slot inherits that model&apos;s own
+        mean observed percentile, producing a base score exactly equal to the mean of its available
+        percentiles. A final dominance-safe projection then prevents missing data from reversing an
+        otherwise unambiguous comparison: when one model covers every reliable slot of another
+        measured model and is no worse in any shared slot, the catalog scores are adjusted by the
+        smallest symmetric amount needed to keep the dominating model at least 0.1 points ahead. The
+        unadjusted base and any adjustment are shown separately in model details. A model with no
+        reliable observed slot receives the neutral fallback 50; its zero evidence coverage stays
+        distinct from a measured score and is excluded from capability charts. The <b>#benchmarks</b>
+        column counts the distinct versioned benchmarks a model has a usable result for, which is a
+        broader set than the five composite slots.
+      </p>
+
+      <h3 id="data-policy" className="mt-6 mb-2 font-semibold">Provider data policy</h3>
+      <p className="text-sm text-gray-400">
+        &ldquo;Trains or keeps your data&rdquo; is taken from OpenRouter&apos;s published provider
+        table: a provider passes when it appears under both of OpenRouter&apos;s own filters,
+        &ldquo;Does not train&rdquo; and &ldquo;Zero retention&rdquo;. While the option is unchecked,
+        providers that fail that test are removed from every evaluation on this site. Two things are
+        stated openly rather than hidden. <b>Chutes</b> is treated as satisfying both, because
+        OpenRouter miscategorises it. And providers that OpenRouter does not list at all — the
+        European sovereign hosts among them — have no published verdict to read; they are kept and
+        marked as unknown, because we will not assert a data policy we have not read.
+      </p>
+
+      <h3 id="identity" className="mt-6 mb-2 font-semibold">Matching models to prices</h3>
+      <p className="text-sm text-gray-400">
+        Coding Agent results are attached to an exact or explicitly audited model/reasoning identity;
+        every harness result is retained and their median is used. Family-scoped Intelligence.ai /
+        DesignArena results are attached exactly once to the deterministic collapsed-family
+        representative rather than copied to effort siblings — the provenance note states explicitly
+        that this does not identify the tested effort setting. Raw DesignArena score views continue
+        to show Elo. Stable model ids and repositories are preferred over fuzzy names, so distinct
+        releases, modes, context tiers and serving routes never share the wrong price. See the
+        repository README and <code>data/SCRAPING.md</code> for how each source is collected and
+        refreshed.
       </p>
     </div>
   );

@@ -451,6 +451,7 @@ async function build() {
   const stackit = await readJSON("stackit.json").catch(() => ({ models: [] }));
   const tSystems = await readJSON("t-systems-llm-hub.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
+  const dataPolicy = await readJSON("openrouter-data-policy.json").catch(() => ({ providers: [] }));
   const codingAgents = await readJSON("aa-coding-agents.json").catch(() => ({ rows: [] }));
   const currentCodingAgents = await readJSON("aa-coding-agents-v1.5.json");
   if (codingAgents.version !== "1.4" || currentCodingAgents.version !== "1.5"
@@ -1068,6 +1069,23 @@ async function build() {
     r.has_pricing = r.offers.some((o) => o.input_per_1m != null || o.output_per_1m != null || o.input_per_1m_eur != null || o.output_per_1m_eur != null);
   }
 
+  // R4.10: stamp each offer with the OpenRouter-published data policy of the provider
+  // that actually serves it. `data_private` is deliberately tri-state — `null` means we
+  // could not read a policy for that provider, which is not the same as "trains on your
+  // data" and must never be rendered as one.
+  {
+    const { offerPolicySlug, policyIndex } = await import("../lib/openrouter-data-policy.mjs");
+    const index = policyIndex(dataPolicy);
+    for (const r of modelRows) {
+      for (const o of r.offers) {
+        const slug = offerPolicySlug(o);
+        o.or_provider_slug = slug;
+        const verdict = slug != null && index.has(slug) ? index.get(slug) : null;
+        if (verdict != null) o.data_private = verdict;
+      }
+    }
+  }
+
   const attachedAgentResults = modelRows.reduce((sum, row) => sum + (row.coding_agent_results?.length || 0), 0);
   // Partial rows (complete === false) are intentionally not ingested — see the filter above.
   const expectedAgentResults = (codingAgents.rows || []).filter((row) => num(row.score) != null && row.complete !== false).length;
@@ -1083,8 +1101,14 @@ async function build() {
   for (const r of modelRows) {
     for (const o of r.offers) {
       const k = `${o.platform}::${o.provider}`;
-      if (!providerStats.has(k)) providerStats.set(k, { platform: o.platform, provider: o.provider, model_count: new Set() });
+      if (!providerStats.has(k)) providerStats.set(k, { platform: o.platform, provider: o.provider, model_count: new Set(), data_private: undefined });
       providerStats.get(k).model_count.add(r.family_key);
+      // Worst known verdict wins for the channel summary: one non-private route makes the
+      // channel non-private; otherwise a known-private route makes it private; if no route
+      // resolved to a published policy the channel stays unknown (null).
+      const st = providerStats.get(k);
+      if (o.data_private === false) st.data_private = false;
+      else if (o.data_private === true && st.data_private === undefined) st.data_private = true;
     }
   }
   const pmeta = providerMeta.providers || {};
@@ -1094,6 +1118,7 @@ async function build() {
     return {
       platform: p.platform, provider: p.provider, model_count: p.model_count.size,
       eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, eu_dedicated: !!m.eu_dedicated, hyperscaler: !!m.hyperscaler, country: m.country || null, note: m.note || "",
+      data_private: p.data_private ?? null,
     };
   }).sort((a, b) => b.model_count - a.model_count);
   const missingProviderMeta = providers.filter((provider) => !pmeta[provider.provider]).map((provider) => provider.provider);
@@ -1131,6 +1156,7 @@ async function build() {
       scaleway: scaleway.collected_at, ionos: ionos.collected_at, mistral: mistral.collected_at, tensorx: tensorx.collected_at,
       chutes: chutes.collected_at, ovhcloud: ovhcloud.collected_at, stackit: stackit.collected_at,
       t_systems_llm_hub: tSystems.collected_at,
+      openrouter_data_policy: dataPolicy.source?.retrieved_at || null,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
       aa_coding_agents_v1_5: currentCodingAgents.collected_at,
       provider_meta: providerMeta.collected_at,

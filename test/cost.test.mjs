@@ -166,3 +166,37 @@ test('no efficiency copying across effort variants; raw mode ignores telemetry; 
   assert.equal(cost.modelPrice(model,telemetryData,new Set()).value,null);
   assert.ok(cost.modelPrice(model,{...telemetryData,offersByModel:{}},null).assumptions.some(x=>x.startsWith('No priced provider route')));
 });
+
+// R4.10 — the data-policy dimension of the shared offer scope.
+const policyOffers = [
+  { key: "P::private", platform: "P", provider: "private", input_per_1m: 3, output_per_1m: 3, region: "global", data_private: true },
+  { key: "P::trains", platform: "P", provider: "trains", input_per_1m: 1, output_per_1m: 1, region: "global", data_private: false },
+  { key: "P::unknown", platform: "P", provider: "unknown", input_per_1m: 2, output_per_1m: 2, region: "global" },
+];
+const policyProviders = policyOffers.map((o) => ({ key: o.key, provider: o.provider }));
+
+test("privateDataOnly drops providers that train or retain, and keeps unknown ones", () => {
+  // Dropping a route asserts that its provider trains on or keeps your data. We only
+  // have that from OpenRouter's published table; absence of a published policy is not
+  // evidence of a bad one, so an unlabelled route stays in.
+  const on = cost.createOfferScope(null, false, policyProviders, false, false, false, true);
+  const keys = cost.scopedCatalogOffers(policyOffers, on).map((o) => o.provider).sort();
+  assert.deepEqual(keys, ["private", "unknown"]);
+  assert.equal(on.restricted, true, "the data-policy filter must mark the scope as restricted");
+});
+
+test("allowing data training restores the excluded routes and the cheapest price with them", () => {
+  const off = cost.createOfferScope(null, false, policyProviders, false, false, false, false);
+  assert.equal(cost.scopedCatalogOffers(policyOffers, off).length, 3);
+  assert.equal(off.restricted, false);
+  // The filter is not cosmetic: it changes which route wins on price.
+  const on = cost.createOfferScope(null, false, policyProviders, false, false, false, true);
+  assert.equal(cost.rankedOffers(policyOffers, off)[0].provider, "trains");
+  assert.equal(cost.rankedOffers(policyOffers, on)[0].provider, "unknown");
+});
+
+test("the data-policy filter composes with the other scope dimensions instead of replacing them", () => {
+  const excluded = new Set(["P::unknown"]);
+  const scope = cost.createOfferScope(excluded, false, policyProviders, false, false, false, true);
+  assert.deepEqual(cost.scopedCatalogOffers(policyOffers, scope).map((o) => o.provider), ["private"]);
+});

@@ -1,6 +1,6 @@
 ![Benchmark Heaven](public/brand/wordmark.svg)
 
-Benchmarks in perspective. Costs in context.
+Every benchmark result for every model — and what each one actually costs.
 
 > Benchmark Heaven (formerly Model Market Comparison) has its primary base URL at
 > **[benchmarkheaven.com](https://benchmarkheaven.com)** (2026-09-11). The previous host

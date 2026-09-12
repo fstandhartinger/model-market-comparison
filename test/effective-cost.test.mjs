@@ -71,7 +71,9 @@ test('invalid rates, quantities and nonnumeric data fall back, never clamp or co
   assert.equal(effectiveCost({...measured,output_tokens_per_task:1e308,input_output_ratio:1e308}).effective_cost_per_task,null);
 });
 test('all fixed blends calculate independently of task/cache data and preserve fallback and zero',()=>{
-  const expected = new Map([[0,12],[1,7],[3,4.5],[10,32/11],[100,212/101],[INPUT_ONLY,2]]);
+  // fixedCost(2,12,w) = (2w + 12) / (w + 1); 20 and 30 were added for R4.2.
+  const expected = new Map([[0,12],[1,7],[3,4.5],[10,32/11],[20,52/21],[30,72/31],[100,212/101],[INPUT_ONLY,2]]);
+  assert.deepEqual(FIXED_BLENDS.map((b)=>b.value).sort((a,b)=>a-b),[...expected.keys()].sort((a,b)=>a-b),'every FIXED_BLENDS entry needs an expected value here');
   for(const {value} of FIXED_BLENDS) {
     close(fixedCost(2,12,value).value,expected.get(value));
     assert.equal(fixedCost(0,0,value).value,0);

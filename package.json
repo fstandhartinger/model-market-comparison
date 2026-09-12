@@ -12,6 +12,7 @@
     "data:build": "node scripts/build-dataset.mjs",
     "data:refresh": "node scripts/fetch-live.mjs && node scripts/build-dataset.mjs",
     "data:efficiency": "node scripts/fetch-aa-efficiency.mjs && node scripts/fetch-openrouter-efficiency.mjs && node scripts/fetch-chutes-efficiency.mjs",
+    "data:policy": "node scripts/fetch-openrouter-data-policy.mjs",
     "db:seed": "node scripts/seed-db.mjs",
     "test": "node --test test/",
     "prebuild": "node scripts/validate-benchmark-scores.mjs",

@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
 import type { ScoreKey } from "../lib/types";
-import { DEFAULT_SCORE, defaultMinFor, FIXED_BLENDS, SCORE_OPTIONS, type PriceMode } from "../lib/cost";
+import { DEFAULT_BLEND, DEFAULT_SCORE, defaultMinFor, FIXED_BLENDS, SCORE_OPTIONS, type PriceMode } from "../lib/cost";
 
 interface SettingsState {
   score: ScoreKey;
@@ -13,7 +13,11 @@ interface SettingsState {
   nonUsOnly: boolean;       // only providers whose company is not US-based
   openOnly: boolean;        // only open-weights models (off by default)
   minScore: number;         // hide models scoring below this (score-aware default)
-  teeOnly: boolean;         // only models with a TEE / confidential-compute offer
+  teeOnly: boolean;         // "Strong confidential guarantees": only TEE / confidential-compute offers
+  // R4.10: opt-in to INCLUDE providers that train on or retain your data. Unchecked by
+  // default, so such providers are filtered out until the user asks for them.
+  allowDataTraining: boolean;
+  isCompany: boolean;       // R6.1: consumer subscriptions are not available to companies
   providersExcluded: string[]; // BLOCKLIST of deselected provider keys; empty = all included (incl. future providers)
   families: string[];      // selected model family keys; empty = all
   priceMode: PriceMode;    // adjusted $/task (default) vs raw fixed-blend list prices
@@ -31,6 +35,8 @@ interface SettingsCtx extends SettingsState {
   setOpenOnly: (b: boolean) => void;
   setMinScore: (n: number) => void;
   setTeeOnly: (b: boolean) => void;
+  setAllowDataTraining: (b: boolean) => void;
+  setIsCompany: (b: boolean) => void;
   setProvidersExcluded: (k: string[]) => void;
   setFamilies: (k: string[]) => void;
   setPriceMode: (m: PriceMode) => void;
@@ -39,7 +45,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, teeOnly: false, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: 20 };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, teeOnly: false, allowDataTraining: false, isCompany: false, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
@@ -48,7 +54,11 @@ const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured
 // discards the old (inclusion-shaped) persisted `providers` array.
 // v5: dropped hideGptOpus/hideFable (toggles removed; nothing is hidden by them anymore).
 // v6: added priceMode/inputWeight; stored values are validated on load (below).
-const KEY = "mmc.settings.v6";
+// v7: added allowDataTraining/isCompany, and 20:1 became a real blend option. v6 stored
+// `inputWeight: 20` while 20 was not in FIXED_BLENDS, so the guard rejected it and the
+// blend <select> rendered a value with no matching <option>. Bumping the key discards
+// those payloads instead of carrying the broken state forward.
+const KEY = "mmc.settings.v7";
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 
@@ -70,6 +80,8 @@ function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (bool(raw.openOnly)) out.openOnly = raw.openOnly;
   if (typeof raw.minScore === "number" && Number.isFinite(raw.minScore) && raw.minScore >= 0) out.minScore = raw.minScore;
   if (bool(raw.teeOnly)) out.teeOnly = raw.teeOnly;
+  if (bool(raw.allowDataTraining)) out.allowDataTraining = raw.allowDataTraining;
+  if (bool(raw.isCompany)) out.isCompany = raw.isCompany;
   if (strArr(raw.providersExcluded)) out.providersExcluded = raw.providersExcluded;
   if (strArr(raw.families)) out.families = raw.families;
   if (raw.priceMode === "adjusted" || raw.priceMode === "raw") out.priceMode = raw.priceMode;
@@ -114,6 +126,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setOpenOnly: (openOnly) => setState((s) => ({ ...s, openOnly })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
+    setAllowDataTraining: (allowDataTraining) => setState((s) => ({ ...s, allowDataTraining })),
+    setIsCompany: (isCompany) => setState((s) => ({ ...s, isCompany })),
     setProvidersExcluded: (providersExcluded) => setState((s) => ({ ...s, providersExcluded })),
     setFamilies: (families) => setState((s) => ({ ...s, families })),
     setPriceMode: (priceMode) => setState((s) => ({ ...s, priceMode })),

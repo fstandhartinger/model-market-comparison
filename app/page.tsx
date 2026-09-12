@@ -7,21 +7,27 @@ export default async function Home() {
   const ds = await getDataset();
   const data = clientData(ds);
   const featured = data.models.filter((r) => r.featured).length;
+  // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
+  // away from what the page actually shows.
+  const benchmarks = ds.benchmark_results?.registry?.length ?? 0;
+  const results = ds.benchmark_results?.observations?.length ?? 0;
 
   return (
     <div>
       <section className="bh-hero mb-6">
         <p className="bh-eyebrow">Benchmark Heaven / Model intelligence</p>
-        <h1 className="bh-display mt-3">Every model benchmark result,<br /><span>and the cost you will actually pay.</span></h1>
+        <h1 className="bh-display mt-3">Every benchmark result for every model,<br /><span>and what each one actually costs.</span></h1>
         <p className="mt-1 max-w-3xl text-sm text-gray-400">
-          A broad, versioned collection of model benchmarks in one place, paired with transparent adjusted task-cost estimates.
-          Start with a short recommendation list; open Advanced when you need every filter, provider route and assumption.
+          {results.toLocaleString()} published results across {benchmarks} versioned benchmarks and{" "}
+          {ds.counts.models.toLocaleString()} models — collected in one place, each with its source and date.
+          Then the part no price list tells you: what a task really costs once the provider, its caching
+          and the model&apos;s own token appetite are counted.
         </p>
         <div className="mt-4 flex flex-wrap gap-3">
+          <Stat label="Benchmark results" value={results} />
+          <Stat label="Benchmarks" value={benchmarks} />
           <Stat label="Models" value={ds.counts.models} />
           <Stat label="Featured" value={featured} />
-          <Stat label="Model families" value={ds.counts.families} />
-          <Stat label="Provider offers" value={ds.counts.offers} />
           <Stat label="Provider channels" value={ds.counts.providers} />
         </div>
       </section>

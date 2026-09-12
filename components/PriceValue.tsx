@@ -58,11 +58,13 @@ export function PriceValue({ price, compact = false }: { price: PriceResult; com
   </>;
 }
 
+/** R1.5: the long modelling paragraph that used to sit above the table is gone — the
+ *  column now explains itself through its (i), and the full derivation lives on /about
+ *  (R1.6). What stays here is only the one thing a reader needs at the table: every
+ *  price is clickable and shows its own inputs, dates and assumptions. */
 export function PriceAssumptions() {
-  return <p className="my-2 max-w-4xl text-xs leading-relaxed text-gray-400" data-testid="price-assumptions">
-    Adjusted costs are modeled USD per task: AA output tokens × OpenRouter usage I/O (Chutes global fallback).
-    These are general usage and benchmark proxies for coding-agent work. Missing AA data assumes 1,000 output tokens/task;
-    unknown cache hit assumes 0%; unmeasured additional cache writes assume 0 tokens. Click any underlined price for exact inputs,
-    dates and assumptions. Raw list prices use the selected fixed input/output blend, in USD per million tokens.
+  return <p className="my-2 max-w-4xl text-xs leading-relaxed text-gray-500" data-testid="price-assumptions">
+    Click any underlined price for its exact inputs, sources, dates and assumptions.{" "}
+    <a href="/about#adjusted-cost" className="text-accent underline underline-offset-2">How we calculate adjusted cost</a>.
   </p>;
 }

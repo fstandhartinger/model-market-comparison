@@ -133,6 +133,8 @@ export interface Offer {
   eu_hosted?: boolean; // this specific offer/model is served from an EU region
   eu_policy_equivalent?: boolean; // company-approved EU-filter equivalent; not a technical residency guarantee
   non_us?: boolean; // provider company is not US-based (copied from provider metadata)
+  or_provider_slug?: string | null; // OpenRouter provider slug this route resolves to
+  data_private?: boolean; // OpenRouter publishes "Does not train" AND "Zero retention" for that provider
 }
 
 export interface CopilotTokenPricing {
@@ -219,7 +221,7 @@ export interface Dataset {
   models: ModelRow[];
   providers: {
     platform: string; provider: string; model_count: number;
-    eu_hosted?: boolean; eu_dedicated?: boolean; non_us?: boolean; hyperscaler?: boolean;
+    eu_hosted?: boolean; eu_dedicated?: boolean; non_us?: boolean; hyperscaler?: boolean; data_private?: boolean | null;
     country?: string | null; note?: string; coming_soon?: boolean;
   }[];
 }
@@ -231,6 +233,17 @@ export type ScoreKey =
   | "aa_intelligence_index"
   | "designarena_frontend"
   | "designarena_fullstack";
+
+/** Short names for places with no room for the full label — R1.2 puts this in small
+ *  parentheses under the "Score" column header, where it must stay a name, not a sentence. */
+export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
+  composite: "Composite",
+  aa_coding_index: "AA Coding",
+  aa_coding_agent: "AA Coding Agent",
+  aa_intelligence_index: "AA Intelligence",
+  designarena_frontend: "DesignArena Frontend Elo",
+  designarena_fullstack: "DesignArena Full-Stack Elo",
+};
 
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (coverage-neutral, dominance-safe percentiles, 0–100)",
