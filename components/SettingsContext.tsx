@@ -18,6 +18,11 @@ interface SettingsState {
   // default, so such providers are filtered out until the user asks for them.
   allowDataTraining: boolean;
   isCompany: boolean;       // R6.1: consumer subscriptions are not available to companies
+  // R5.4 / R5.6: the shortlist limits. `null` means "no requirement" — deliberately not 0,
+  // because 0 is a legitimate threshold and must not read as "unset".
+  maxCost: number | null;        // maximum adjusted cost per task (or raw blended $/1M)
+  minIntelligence: number | null; // AA Intelligence Index floor
+  minCoding: number | null;       // AA Coding Index floor
   providersExcluded: string[]; // BLOCKLIST of deselected provider keys; empty = all included (incl. future providers)
   families: string[];      // selected model family keys; empty = all
   priceMode: PriceMode;    // adjusted $/task (default) vs raw fixed-blend list prices
@@ -37,6 +42,9 @@ interface SettingsCtx extends SettingsState {
   setTeeOnly: (b: boolean) => void;
   setAllowDataTraining: (b: boolean) => void;
   setIsCompany: (b: boolean) => void;
+  setMaxCost: (n: number | null) => void;
+  setMinIntelligence: (n: number | null) => void;
+  setMinCoding: (n: number | null) => void;
   setProvidersExcluded: (k: string[]) => void;
   setFamilies: (k: string[]) => void;
   setPriceMode: (m: PriceMode) => void;
@@ -45,7 +53,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, teeOnly: false, allowDataTraining: false, isCompany: false, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
@@ -58,7 +66,9 @@ const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured
 // `inputWeight: 20` while 20 was not in FIXED_BLENDS, so the guard rejected it and the
 // blend <select> rendered a value with no matching <option>. Bumping the key discards
 // those payloads instead of carrying the broken state forward.
-const KEY = "mmc.settings.v7";
+// v8: maxCost, minIntelligence and minCoding moved out of ModelExplorer's local state so
+// the wizard, Simple mode and Advanced mode all read and write the same limits.
+const KEY = "mmc.settings.v8";
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 
@@ -82,6 +92,10 @@ function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (bool(raw.teeOnly)) out.teeOnly = raw.teeOnly;
   if (bool(raw.allowDataTraining)) out.allowDataTraining = raw.allowDataTraining;
   if (bool(raw.isCompany)) out.isCompany = raw.isCompany;
+  const limit = (v: unknown) => v === null || (typeof v === "number" && Number.isFinite(v) && v >= 0);
+  if (limit(raw.maxCost)) out.maxCost = raw.maxCost as number | null;
+  if (limit(raw.minIntelligence)) out.minIntelligence = raw.minIntelligence as number | null;
+  if (limit(raw.minCoding)) out.minCoding = raw.minCoding as number | null;
   if (strArr(raw.providersExcluded)) out.providersExcluded = raw.providersExcluded;
   if (strArr(raw.families)) out.families = raw.families;
   if (raw.priceMode === "adjusted" || raw.priceMode === "raw") out.priceMode = raw.priceMode;
@@ -128,6 +142,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
     setAllowDataTraining: (allowDataTraining) => setState((s) => ({ ...s, allowDataTraining })),
     setIsCompany: (isCompany) => setState((s) => ({ ...s, isCompany })),
+    setMaxCost: (maxCost) => setState((s) => ({ ...s, maxCost })),
+    setMinIntelligence: (minIntelligence) => setState((s) => ({ ...s, minIntelligence })),
+    setMinCoding: (minCoding) => setState((s) => ({ ...s, minCoding })),
     setProvidersExcluded: (providersExcluded) => setState((s) => ({ ...s, providersExcluded })),
     setFamilies: (families) => setState((s) => ({ ...s, families })),
     setPriceMode: (priceMode) => setState((s) => ({ ...s, priceMode })),

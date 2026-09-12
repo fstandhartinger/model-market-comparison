@@ -30,11 +30,13 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   const adjusted = s.priceMode === "adjusted";
   const active = s.providersExcluded.length || s.families.length || !s.featured || !s.collapse || !s.hideDeprecated
     || s.excludeChinese || s.euHostedOnly || s.nonUsOnly || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
+    || s.maxCost != null || s.minIntelligence != null || s.minCoding != null
     || s.minScore !== defaultMinFor(s.score) || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND;
   const reset = () => {
     s.setProvidersExcluded([]); s.setFamilies([]); s.setFeatured(true); s.setCollapse(true);
     s.setHideDeprecated(true); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
     s.setOpenOnly(false); s.setTeeOnly(false); s.setAllowDataTraining(false); s.setIsCompany(false);
+    s.setMaxCost(null); s.setMinIntelligence(null); s.setMinCoding(null);
     s.setMinScore(defaultMinFor(s.score)); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
   };
 
@@ -104,8 +106,12 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           <span className="inline-flex items-center">
             <Toggle label="I'm buying for a company" on={s.isCompany} set={s.setIsCompany} />
             <InfoTip title="Buying for a company" label="the company setting">
-              Consumer subscriptions such as ChatGPT Plus/Pro or Claude Pro/Max are generally not
-              available for company use. With this on, those plans are excluded from cost comparisons.
+              Consumer subscriptions such as ChatGPT Plus/Pro or Claude Pro/Max are sold to
+              individuals, and a company usually needs a business plan or API access instead.
+              Today this site prices API and platform routes only, so the setting records your
+              answer and the guided questionnaire uses it; it will exclude consumer plans as soon
+              as subscription pricing is part of the cost view. We would rather say that than
+              imply a filter that is not doing anything yet.
             </InfoTip>
           </span>
         </Section>

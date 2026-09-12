@@ -43,9 +43,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   const [hasProviderOnly, setHasProviderOnly] = useState(true);
   const [measuredTasksOnly, setMeasuredTasksOnly] = useState(true);
   const [org, setOrg] = useState("");
-  // null = no budget limit. Simple mode drives this with a slider (R5.4), Advanced with
-  // the numeric field in the toolbar; both write the same state.
-  const [maxCost, setMaxCost] = useState<number | null>(null);
+  // null = no budget limit. Simple mode drives this with a slider (R5.4), Advanced with the
+  // numeric field in the toolbar and the wizard with its budget page (R5.6) — one shared
+  // setting, so switching mode never silently drops the limit the user just set.
+  const { maxCost, setMaxCost } = s;
 
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const orgs = useMemo(() => Array.from(new Set(candidates.map((m) => m.org))).sort(), [candidates]);
@@ -88,8 +89,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     // scores hasEvidence === score != null, so existing policy is unchanged.
     if (s.minScore > 0) r = r.filter((x) => x.hasEvidence && x.sc != null && x.sc >= s.minScore);
     if (maxCost != null) r = r.filter((x) => x.price.value != null && x.price.value <= maxCost);
+    // R5.6: the wizard's separate intelligence and coding floors. A model with no result on
+    // that index cannot satisfy a floor on it, so it drops out rather than being assumed good.
+    if (s.minIntelligence != null) r = r.filter((x) => x.m.scores.aa_intelligence_index != null && x.m.scores.aa_intelligence_index >= s.minIntelligence!);
+    if (s.minCoding != null) r = r.filter((x) => x.m.scores.aa_coding_index != null && x.m.scores.aa_coding_index >= s.minCoding!);
     return r;
-  }, [pool, s.minScore, maxCost]);
+  }, [pool, s.minScore, maxCost, s.minIntelligence, s.minCoding]);
 
   const rows = useMemo(() => {
     const dir = asc ? 1 : -1;
@@ -99,7 +104,13 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
       if (sort === "org") return dir * a.m.org.localeCompare(b.m.org);
       if (sort === "providers") return dir * (a.ncheap - b.ncheap);
       if (sort === "benchmarks") return dir * (a.m.benchmark_count - b.m.benchmark_count);
-      if (sort === "cost") return dir * ((a.price.value ?? Infinity) - (b.price.value ?? Infinity));
+      // A model we cannot price must never head a price ranking. Unpriced rows sink to the
+      // bottom in both directions instead of being treated as infinitely expensive.
+      if (sort === "cost") {
+        const av = a.price.value, bv = b.price.value;
+        if (av == null || bv == null) return (av == null ? 1 : 0) - (bv == null ? 1 : 0);
+        return dir * (av - bv);
+      }
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
     return limit ? r.slice(0, limit) : r;
