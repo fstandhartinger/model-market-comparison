@@ -236,6 +236,27 @@ The canonical dataset/benchmark endpoints keep their existing fields. `GET /api/
 
 `GET /api/benchmark-view?model=<id>` (repeat up to four) supplies a bounded UI projection with versioned axes, sources and fixed catalog peer statistics. `?axis=<id>` instead selects one published evaluation group including unmatched source identities. These presentation IDs include version, unit and harness/configuration and may change if source protocol metadata changes; use registry IDs and observation IDs from the canonical APIs for integrations. The view is additive and never changes Composite. See [explorer methodology](docs/benchmark-explorer.md).
 
+### Benchmaxxing estimates (2026-09-12 correction)
+
+`GET /api/benchmaxxing?model=<id>` returns up to 25 estimated results for that catalog model on exact
+benchmark versions where the catalog records **no result of any kind** for it. `?axis=<axisId>` instead
+returns up to 50 estimated results for catalog models with no result on that exact axis. Unknown identifiers
+return 404; missing/ambiguous parameters return 400. Cached 5 min (`Cache-Control: public, max-age=300`),
+CORS `*`.
+
+Every prediction is an **estimate, never a measurement**: an ordinary least-squares fit, in native units,
+over catalog models measured on both exact benchmark versions — published only when the pair shares at
+least 12 measured catalog models and |Pearson r| is at least 0.5 (measured results only, low-sample rows
+excluded). Each row carries `point` plus a roughly 95% interval (`low`/`high`, widened by residual noise,
+sample size and leverage), the predictor axis (`predictor.axisId`, always one exact version), the number of
+shared measured models `n`, `r`, `r2`, the predictor value used (`predictorValue`), and `outsideFitRange`
+flagging extrapolation beyond the fit cohort. Target axes keep their exact version and cohort; versions and
+cohorts are never mixed or pooled, and estimates never count as benchmark results anywhere else in the API.
+The bottom-decile logic lives in the `/benchmaxxing` page itself: measured results only, at least 20
+measured catalog peers per axis, worst decile direction-adjusted, aggregate tag requires at least 4 axes
+across at least 2 benchmark families. Nothing here changes any canonical benchmark endpoint, score, ID,
+unit or Composite input.
+
 ### Coding-agent sources, harness and cost (phase 11)
 
 Real-SWE observations reach the same endpoints with no new path. `GET /api/benchmark-scores` returns their native `unit` (**percent**), `basis: measured`, `confidence_interval` (95 %), `subject.harness`, and full source provenance; every Real-SWE row has `subject.model_id: null`. The per-rollout cost is a separate benchmark (`realswe-cost::snapshot-2026-09-12`) with unit `USD`, so a consumer that wants cost joins on `subject.source_id` + harness rather than reading it off the score row.

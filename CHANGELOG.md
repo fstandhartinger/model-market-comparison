@@ -4,6 +4,29 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-12 — Benchmaxxing tab: cross-benchmark estimates (~1 day after phase 11)
+
+- New public tab `/benchmaxxing` ("Benchmaxxing") with navigation entry and read-only API
+  `GET /api/benchmaxxing?model=<id>` / `?axis=<axisId>`. It estimates results on exact
+  benchmark versions where a catalog model has **no result of any kind**, from an ordinary
+  least-squares fit across catalog models measured on **both exact versions** (native units,
+  roughly 95% prediction intervals; published only when the pair shares at least 12 measured
+  catalog models and |Pearson r| ≥ 0.5; measured results only, low-sample and unmatched
+  identities excluded).
+- Every estimate is labelled **estimated · not a measurement**: it carries a roughly 95%
+  prediction interval (residual noise × sample-size/leverage factor), the predictor value,
+  `n` / `r` / `R²`, an extrapolation flag, and the observed cohort range for grounding.
+  Versions and cohorts are never mixed or pooled, and estimates live only on this tab —
+  they never enter rankings, radar charts or the Composite.
+- The tab also adds carefully qualified **bottom-decile tags**: the worst decile of the
+  measured catalog cohort on one exact benchmark version (at least 20 measured catalog
+  peers, direction-adjusted, measured results only), with the model-level tag
+  "Bottom decile on N axes" requiring at least 4 axes across at least 2 benchmark families.
+  Missing benchmarks never count against a model; versions are never pooled; the tag is not
+  a claim of overall worst.
+- No raw benchmark path, score, ID, unit or Composite input changed; one additive UI tab,
+  one additive read-only API, and targeted tests were added.
+
 ## 2026-09-12 — Phase 11: Real-SWE (Specific Labs) source
 
 - Added the Real-SWE coding-agent board (`https://realswe.withspecific.com/`, canonical
