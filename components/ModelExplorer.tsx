@@ -174,6 +174,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
       </div>
 
       <PriceAssumptions />
+      {!simple && <p className="mb-3 text-xs text-gray-500">The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></p>}
       {s.priceMode === "adjusted" && measuredTasksOnly && !simple && <p className="mb-3 text-xs text-amber-200">Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</p>}
       {s.priceMode === "adjusted" && measuredTasksOnly && simple && <p className="mb-3 text-xs text-gray-500">Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</p>}
 
@@ -218,6 +219,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
                   {m.open_weights && <span className="ml-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
                   {m.deprecated && <span className="ml-1 rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
                   {m.featured && <span className="ml-1 text-[10px] text-warn">★</span>}
+                  {m.benchmaxxing_signal && <span className="bh-badge bh-alert ml-2" title={`Benchmaxxing signal ${m.benchmaxxing_score?.toFixed(1)} — topic-local inconsistency flag, not evidence of intent`}>Benchmaxxing signal</span>}
                 </td>
                 <td className="px-3 py-2 truncate"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
                 <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScoreVal} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>

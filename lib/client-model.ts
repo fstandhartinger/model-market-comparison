@@ -1,6 +1,11 @@
 import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
 import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
 
+export interface ClientBenchmaxxing {
+  score: number | null;
+  signal: boolean;
+}
+
 export interface ClientOffer {
   key: string; // `${platform}::${provider}`
   source: string;
@@ -61,6 +66,9 @@ export interface ClientModel {
   aa_ref_output: number | null;
   copilot_multiplier: number | null;
   copilot_usd_per_request: number | null;
+  /** Coverage-aware topic-local inconsistency signal. Estimates are never used. */
+  benchmaxxing_score: number | null;
+  benchmaxxing_signal: boolean;
 }
 
 export interface ProviderInfo {
@@ -100,7 +108,7 @@ function offerKey(platform: string, provider: string) {
   return `${platform}::${provider}`;
 }
 
-export function clientData(ds: Dataset): ClientData {
+export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBenchmaxxing> = {}): ClientData {
   const offersByFamily: Record<string, ClientOffer[]> = {};
   const offersByModel: Record<string, ClientOffer[]> = {};
   const familyOfferKeys = new Map<string, Set<string>>();
@@ -166,6 +174,8 @@ export function clientData(ds: Dataset): ClientData {
       aa_ref_output: m.aa_reference_price?.output_per_1m ?? null,
       copilot_multiplier: m.copilot?.multiplier ?? null,
       copilot_usd_per_request: m.copilot?.usd_per_request ?? null,
+      benchmaxxing_score: benchmaxxing[m.id]?.score ?? null,
+      benchmaxxing_signal: benchmaxxing[m.id]?.signal ?? false,
     };
   });
 

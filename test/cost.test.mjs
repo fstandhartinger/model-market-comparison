@@ -125,6 +125,16 @@ test('client projection includes exact effort tokens and shared endpoint observa
   assert.deepEqual(projected.efficiency,dataset.efficiency);
   for(const raw of dataset.models) assert.deepEqual(projected.models.find(m=>m.id===raw.id).token_efficiency,raw.token_efficiency);
 });
+
+test('client projection carries the optional Overview Benchmaxxing signal without inventing one',()=>{
+  const first = dataset.models[0];
+  const projected = client.clientData(dataset, {[first.id]: {score: 91.2, signal: true}});
+  assert.equal(projected.models.find(m=>m.id===first.id).benchmaxxing_score, 91.2);
+  assert.equal(projected.models.find(m=>m.id===first.id).benchmaxxing_signal, true);
+  const untouched = projected.models.find(m=>m.id===dataset.models[1].id);
+  assert.equal(untouched.benchmaxxing_score, null);
+  assert.equal(untouched.benchmaxxing_signal, false);
+});
 test('adjusted is modelCost default and uses per-model OR ratio before global or AA proxy',()=>{
   assert.equal(cost.modelCost(model,telemetryData,null),0.023);
   const p=cost.modelPrice(model,telemetryData,null,adjusted);

@@ -1,11 +1,22 @@
 import { getDataset } from "../lib/data";
-import { clientData } from "../lib/client-model";
+import { clientData, type ClientBenchmaxxing } from "../lib/client-model";
 import { HomeMode } from "../components/HomeMode";
+import { getBenchmarkView } from "../lib/benchmark-data";
+import { scoreBenchmaxxing } from "../lib/benchmax.mjs";
 
 
 export default async function Home() {
   const ds = await getDataset();
-  const data = clientData(ds);
+  // Overview carries the same deterministic top-decile tag as the dedicated
+  // Benchmaxxing page. Keep this server-side so the client table receives only
+  // display data and never recomputes benchmark scores.
+  const view = await getBenchmarkView();
+  const reports = ds.models.map((m) => [m.id, scoreBenchmaxxing(view, m.id)] as const)
+    .filter(([, report]) => report.status === "scored")
+    .sort((a, b) => (b[1].score ?? -1) - (a[1].score ?? -1) || a[0].localeCompare(b[0]));
+  const signalIds = new Set(reports.slice(0, Math.max(1, Math.ceil(reports.length * 0.1))).map(([id]) => id));
+  const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(reports.map(([id, report]) => [id, { score: report.score ?? null, signal: signalIds.has(id) }]));
+  const data = clientData(ds, benchmaxxing);
   const featured = data.models.filter((r) => r.featured).length;
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.
