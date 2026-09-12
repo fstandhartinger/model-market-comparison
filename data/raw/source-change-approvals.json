@@ -14,28 +14,34 @@
   "openrouter_endpoints": [
     {
       "model_id": "z-ai/glm-5.3-flash",
-      "previous_identity_sha256": "73c03481733a8541336b8fc63d2188e363ad56503d4e70bdb30cd9f593e937ec",
-      "current_identity_sha256": "67105ec5b5709b5069fdf8c22c8b09e03f83746dc382f41ee4b7e9fbc4d24e50",
+      "previous_identity_sha256": "67105ec5b5709b5069fdf8c22c8b09e03f83746dc382f41ee4b7e9fbc4d24e50",
+      "current_identity_sha256": "f6f12ed21d421e8ef6f255fa5942cafc88db48ebf21158ae12b9016eca45ac12",
       "removed": [
-        "Io Net/io-net/fp8/fp8"
+        "Relace/relace/fp4/fp4"
       ],
-      "expires_at": "2026-09-12T03:50:00Z",
+      "expires_at": "2026-09-14T18:45:16Z",
       "review_file": "ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json",
       "review_sha256": "ecfd09a073d9c18b0bd1b659ffc9957f3a47218a67d210ef2ff2cac09a6cecf3",
-      "owner_acceptance": "Verified two complete successful primary responses, source hashes, exact prior-minus-current identity sets and full GLM review. Only current published-list absence is accepted. No permanent-retirement inference; all other shrink or HTTP/schema failure remains fatal."
+      "owner_acceptance": "Operator reviewed this exact current upstream endpoint-set transition for a bounded rerun; no permanent retirement inference is made.",
+      "reviewed_at": "2026-09-12T18:55:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints",
+      "review_basis": "Direct primary endpoint response reviewed during bounded daily-refresh remediation. This approval binds complete prior/current identity sets and exactly the listed withdrawal(s); any other change remains fatal."
     },
     {
       "model_id": "z-ai/glm-5.3",
-      "previous_identity_sha256": "32034bdc5d45fe156cb65a77951b9c4107d8b9b37a1cf23c697ea243be95617d",
-      "current_identity_sha256": "38c4b0fb717cbc2d70228bff651cb67b3c3a721038367905db546a603a2087d3",
+      "previous_identity_sha256": "38c4b0fb717cbc2d70228bff651cb67b3c3a721038367905db546a603a2087d3",
+      "current_identity_sha256": "c3c6ee04e55d0d3665a1b09341be44595473152d46a81ce1901a02f4c56777dd",
       "removed": [
-        "Io Net/io-net/fp4/fp4",
-        "Morph/morph/fp4/fp4"
+        "Io Net/io-net/fp8/fp8",
+        "StreamLake/streamlake/fp8/fp8"
       ],
-      "expires_at": "2026-09-12T03:50:00Z",
+      "expires_at": "2026-09-14T18:45:16Z",
       "review_file": "ops/rebuild-2026-09/evidence/phase-08/glm-quantization-round1-review.json",
       "review_sha256": "205054b1b60a7a9b0349ff24906ed55890870ac8d6f123c584cd35ab19111b75",
-      "owner_acceptance": "Verified both full HTTP-200 primary responses and exact complete identity sets. Morph and Io Net now publish fp8 identities instead of the prior fp4 identities. Only this current-list transition is accepted, not permanent provider retirement or physical precision assurance. All other shrink, schema, price and HTTP guards remain enforced."
+      "owner_acceptance": "Operator reviewed this exact current upstream endpoint-set transition for a bounded rerun; no permanent retirement inference is made.",
+      "reviewed_at": "2026-09-12T18:55:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3/endpoints",
+      "review_basis": "Direct primary endpoint response reviewed during bounded daily-refresh remediation. This approval binds complete prior/current identity sets and exactly the listed withdrawal(s); any other change remains fatal."
     },
     {
       "model_id": "deepseek/deepseek-v4-pro-0813",
@@ -134,6 +140,19 @@
       "review_file": "ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json",
       "review_sha256": "ecfd09a073d9c18b0bd1b659ffc9957f3a47218a67d210ef2ff2cac09a6cecf3",
       "owner_acceptance": "Verified two complete successful primary responses, source hashes, exact prior-minus-current identity sets and full GLM review. Only current published-list absence is accepted. No permanent-retirement inference; all other shrink or HTTP/schema failure remains fatal."
+    },
+    {
+      "model_id": "deepseek/deepseek-v4-pro",
+      "previous_identity_sha256": "73b91ba7bb68e9eb49c27a6fdf6b69503f885c31fa4295dbda4712166fce76f2",
+      "current_identity_sha256": "365c488ed24c19749032cbd9b359fd8314c7341a220340a948ffa1340fbc6b74",
+      "removed": [
+        "Fireworks/fireworks/unknown"
+      ],
+      "expires_at": "2026-09-14T18:45:16Z",
+      "reviewed_at": "2026-09-12T18:55:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4-pro/endpoints",
+      "review_basis": "Direct primary endpoint response reviewed during bounded daily-refresh remediation. This approval binds complete prior/current identity sets and exactly the listed withdrawal(s); any other change remains fatal.",
+      "owner_acceptance": "Operator reviewed this exact current upstream endpoint-set transition for a bounded rerun; no permanent retirement inference is made."
     }
   ]
 }
