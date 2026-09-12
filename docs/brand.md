@@ -4,11 +4,38 @@ Use **Benchmark Heaven**, two title-case words. The domain is **benchmarkheaven.
 
 **Every benchmark result for every model — and what each one actually costs.**
 
-## Direction: Observatory
+## Direction: Stairway (2026-09-12)
 
-The arch frames a field of measurements; three bars suggest comparison without pretending to be actual data. The baseline anchors the mark. This is an observatory for published evidence, not a promise that any model is best. The final small-size mark omits the concept star to keep its silhouette clear at 16 pixels.
+The mark is Florian's own artwork, delivered on 2026-09-12 and kept in the repository at
+`ops/ux-2026-09-12/assets/benchmark-heaven-logo-light.jpg`: a staircase of white treads
+climbing through a blue-to-cyan cloud, with a seven-ray sun rising behind it. Benchmarks are
+steps, each one measured; the climb is the point, not any single rung.
 
-[Three visual concepts](../public/brand/variants.svg) compare Observatory, Cloudline and a BH monogram. Observatory ties the name to the product's analytical purpose. Cloudline feels more like a cloud hosting service; the monogram is compact but tells a new visitor little about the product. The selected production geometry is refined separately in [mark.svg](../public/brand/mark.svg).
+It replaces the earlier **Observatory** arch. The three concepts that led to Observatory are
+kept for the record in [variants.svg](../public/brand/variants.svg); they are history, not
+the current identity.
+
+The production SVG is **re-drawn from the artwork, not traced or embedded**: the cloud is
+three circles cut off at a flat bottom edge, the staircase is seven treads and the rays use
+the endpoints measured in the JPEG. Every coordinate and the measurement transform are
+documented in `scripts/build-brand-assets.mjs`, which is the single generator for the
+navigation mark, the favicon, the touch icon, the PWA icons, the README wordmark and the
+social image. Re-run it after any change to the artwork:
+
+```
+node scripts/build-brand-assets.mjs --png
+```
+
+One deliberate departure from the artwork: the rays are drawn 1.8 units wide in a 64-unit
+viewBox where the original measures 1.25. At 1254 px the original rays are 16 px; at a 36 px
+navigation logo that is half a pixel and they disappear. The heavier stroke keeps the mark
+recognisable down to 16 px.
+
+**Dark mode.** The artwork is a light-background logo. The dark variant is ours: the cloud
+gradient and the rays are lifted in luminance (`#2a68ff → #5ae6ff`, rays `#ffd95c`, treads
+pure white) so the mark keeps the weight it has on white instead of sinking into the page.
+Both palettes live in `--brand-*` CSS variables in `app/globals.css`, so `BrandMark` switches
+with the theme without a second component.
 
 ## Color and typography
 
@@ -28,10 +55,17 @@ Use Georgia, then Times New Roman/serif, for the wordmark and display headings. 
 
 ## Mark and assets
 
-- [Navigation/favicons master](../public/brand/mark.svg), mirrored in `components/BrandMark.tsx` and `app/icon.svg`.
-- [README wordmark](../public/brand/wordmark.svg), with an explicit dark backplate so it works in both GitHub themes.
+All of these are written by `scripts/build-brand-assets.mjs`; edit the generator, not the files.
+
+- [Light mark](../public/brand/mark.svg) and [dark mark](../public/brand/mark-dark.svg), mirrored in `components/BrandMark.tsx` (which uses the CSS variables instead of fixed colours).
+- `app/icon.svg`: the favicon — the mark on the brand ink square, so it keeps a silhouette on a white tab strip.
+- `app/apple-icon.png` (180 × 180) and `public/brand/icon-192.png` / `icon-512.png` for the web manifest.
+- [README wordmark](../public/brand/wordmark.svg) with a dark backplate, plus [a light-backplate variant](../public/brand/wordmark-light.svg).
 - [Social source](../public/brand/og-image.svg) and 1200 × 630 [PNG](../public/brand/og-image.png).
-- `app/apple-icon.png`: 180 × 180 touch icon.
+- `public/brand/mark-light-512.png` / `mark-dark-512.png` for places that cannot take an SVG.
+
+The wordmark sets **Benchmark** in ink and **Heaven** in brand blue, as the artwork does; the
+navigation applies the same split with `.bh-wordmark-accent`.
 
 Keep the mark square and undistorted. Leave at least one quarter of its width as clear space in standalone artwork. Decorative SVGs are hidden from assistive technology when adjacent text supplies the name. Use meaningful alt text on standalone images.
 

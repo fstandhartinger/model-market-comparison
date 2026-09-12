@@ -25,7 +25,7 @@ export function Nav() {
   return (
     <header className="border-b border-line bg-panel">
       <div className="mx-auto flex max-w-[1400px] flex-wrap items-center gap-x-6 gap-y-2 px-4 py-3">
-        <Link href="/" className="bh-brand-link flex min-h-11 items-center gap-2.5"><BrandMark className="h-9 w-9 shrink-0" /><span className="bh-wordmark">Benchmark Heaven</span></Link>
+        <Link href="/" className="bh-brand-link flex min-h-11 items-center gap-2.5"><BrandMark className="h-9 w-9 shrink-0" /><span className="bh-wordmark">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
         <nav aria-label="Primary" className="relative order-3 flex w-full flex-wrap gap-1 text-sm lg:order-none lg:w-auto">
           {PRIMARY.map(([href, label]) => {
             const active = href === "/" ? path === "/" : path.startsWith(href);

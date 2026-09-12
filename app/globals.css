@@ -9,6 +9,10 @@
   --surface: #171e29; --text: #edf2f8; --muted: #adb9ca; --control-border: #74869e;
   --negative: #ffafbc; --radar-1: #6caeff; --radar-2: #67e0c1;
   --radar-3: #ffc56f; --radar-4: #d0acff; --radar-grid: #8c9ab0;
+  /* R7.3: the mark's own palette, lifted for the dark page so it keeps the visual weight
+     it has on white. Light values are sampled from Florian's artwork. */
+  --brand-from: #2a68ff; --brand-to: #5ae6ff; --brand-ray: #ffd95c; --brand-stair: #ffffff;
+  --brand-word: #5aa8ff;
 }
 [data-theme="light"] {
   color-scheme: light;
@@ -17,6 +21,8 @@
   --surface: #fff; --text: #182639; --muted: #4c5e75; --control-border: #718198;
   --negative: #b91c3a; --radar-1: #1d4eb9; --radar-2: #046d5b;
   --radar-3: #914509; --radar-4: #7433b7; --radar-grid: #61758f;
+  --brand-from: #0951fd; --brand-to: #2ddbfd; --brand-ray: #fed432; --brand-stair: #f2f7fd;
+  --brand-word: #0a5fd8;
 }
 html, body { background: rgb(var(--ink)); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; }
 html { -webkit-text-size-adjust: 100%; }
@@ -84,7 +90,10 @@ details[open] > summary { margin-bottom: 8px; }
 :root { --brand-serif: Georgia, "Times New Roman", serif; }
 .bh-wordmark { font-family: var(--brand-serif); font-size: 21px; font-weight: 700; letter-spacing: -.045em; color: var(--text); white-space: nowrap; }
 .bh-brand-link { border-radius: 8px; }
-.bh-brand-link:hover .bh-wordmark { color: rgb(var(--accent)); }
+/* R7.1: the artwork sets "Benchmark" in ink and "Heaven" in brand blue — the nav
+   wordmark follows it so the page and the logo file read as one thing. */
+.bh-wordmark-accent { color: var(--brand-word); }
+.bh-brand-link:hover .bh-wordmark, .bh-brand-link:hover .bh-wordmark-accent { color: rgb(var(--accent)); }
 .bh-hero { position: relative; border-bottom: 1px solid rgb(var(--line)); padding: 12px 0 28px; }
 .bh-hero::before { content: ""; position: absolute; inset: -24px -16px 0; background: radial-gradient(ellipse at 90% 0, rgb(var(--accent) / .08), transparent 60%); pointer-events: none; }
 .bh-hero > * { position: relative; }
