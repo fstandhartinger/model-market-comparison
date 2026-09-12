@@ -254,3 +254,11 @@ Notes for whoever picks this up:
     the shortlist below the fold; the small-screen hero is now denser.
   - **Statuses stay `implemented`, not `verified`** — ground rule 2 reserves `verified` for a
     different engine. The evidence a reviewer needs is in place.
+  - **Telegram sent** (message_id 13597, 2026-09-12 ~20:50 UTC): the R6.2 research result
+    Florian asked for by name, plus the one decision he may want to overrule (R4.4 as exactly
+    top 20 → Gemini in, Claude Sonnet 5 and GPT-5.4 out; the lever is `FEATURED_TOP_N`), plus
+    two lines of status. A reply watcher runs for 120 minutes and writes
+    `~/.claude/skills/watch-telegram-replies-30min/scripts/tg_reply.json`. **The next
+    iteration must read that file first** — if Florian answered, his answer outranks
+    everything in this handover. This is not X7: the final Telegram still owes him the
+    R4.10 and R5.2 interpretations and whatever is open at the end.
