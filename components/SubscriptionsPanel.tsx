@@ -52,7 +52,7 @@ export function SubscriptionsPanel({ rows, perTask }: { rows: SubscriptionRow[];
           </li>
         ))}
       </ul>
-      {uncollected.length > 0 && <p className="mt-2 text-xs text-gray-500">Not collected: {uncollected.map((plan) => plan.name).join(" / ")} — the vendor sites refuse automated reads.</p>}
+      {uncollected.length > 0 && <p className="mt-2 text-xs text-gray-500">Not collected: {uncollected.map((plan) => plan.name).join(", ")} — the vendor sites refuse automated reads.</p>}
     </details>
   );
 }
