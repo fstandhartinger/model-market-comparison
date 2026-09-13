@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-13 — Advanced comparison filter (H3)
+
+Advanced mode now includes a folded **Better than a model** filter. Choose a reference
+model and either a benchmark or category median; the table keeps only models above that
+reference. Current measured values win. Retained bridge estimates can participate only when
+they are explicitly marked approximate; missing and low-sample values remain unknown and
+are excluded. This is a UI-only change: no dataset paths, benchmark rows, or public API
+contracts changed.
+
 ## 2026-09-12 — Provider data policy, grouped settings, self-explaining table
 
 **New data file for downstream consumers: `data/raw/openrouter-data-policy.json`.**

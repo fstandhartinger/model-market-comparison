@@ -79,7 +79,7 @@ credited below, the rest is marked open.
 | R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/iter6-refresh-failure/` | Iteration 6 collected all seven live sources successfully in two clean transactions, but both were correctly held before publication because the free live-review workers timed out/incompletely returned on the AA contract in all three bounded rounds. No fresh dataset or deployment claim is accepted. Retry after worker transport recovers. |
 | H1 | Historical snapshots of all benchmark scores | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-ui/verification.json` | New write-once state retains six history-only headline boards — AA Intelligence/Coding, Epoch general/software ECI, DesignArena Frontend/Full-Stack Elo — with stable upstream identities, optional catalog joins, source hashes and locators. Live canonical and legacy hosts serve state `20260913-cb91473c`, all six IDs, and registry denominator 75. Implemented by codex-luna; independent-engine verification remains required. |
 | H2 | Bridged comparison via anchor models, uncertainty reported | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json`; `test/benchmark-history-chain.test.mjs`; `test/headline-history.test.mjs` | Existing multi-hop chain logic is extended to headline states; dated headline IDs alias to current dated UI axes, and `/api/benchmark-view` now projects `hops`, `path`, and `chainIqrRelative`. Live APIs return the four dated headline axes without stable duplicate axes; direct hop preference and all uncertainty gates remain. Implemented by codex-luna; independent-engine verification remains required. |
-| H3 | UI filter "better than model X in category Y" | open | — | |
+| H3 | UI filter "better than model X in category Y" | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter10-h3/verification.json` | Advanced-only folded filter supports exact benchmarks and category medians; measured values win, explicit bridge estimates are marked approximate, and missing values stay unknown. Live on both hosts in desktop/mobile light/dark; independent-engine verification remains required. |
 | B1 | Benchmaxxing tab in Advanced | verified | `ux-evidence/review-20260913T002002Z/*-benchmaxxing.png` | review (claude-opus, Hermes-built): 200 at desktop+mobile, light+dark; nav tab; method anchor |
 | B2 | Method identifying strong-on-some / weak-on-others | implemented | `REVIEW-20260913T002002Z.md` #3–4 | topic-local percentile jump; tag quality blocked by B3 |
 | B3 | Missing scores must not bias the result | implemented | `ux-evidence/iter7-b3/bm-audit-after.txt`, `ux-evidence/iter7-b3/live/verification.json` | **Iteration 7 (`004f8dc`):** score = within-topic mean absolute percentile difference over *all* measured pairs (order-independent), weighted by n−1; published only with ≥ 6 related comparisons over ≥ 2 topics; shrunk toward the catalog mean by n/(n+k), k by empirical Bayes (min 2). Real data: 174 scored / 18 tagged (was 574 / 58); tagged 3/21 at 6–7 comparisons, 5/74 at 8–10, 0/36 at 11–13, 10/43 at ≥ 14 — no longer falling with coverage; minimum comparisons among tagged = 6. Tests: floor, order invariance, synthetic equal-noise catalog, real-data "rate must not collapse with coverage". Live 174/18 at desktop + mobile |
@@ -514,3 +514,33 @@ Notes for whoever picks this up:
     open: these are retained source snapshots, not a claim that every source refreshed today.
   - Final quota check at 2026-09-13 02:48 UTC: Codex week 66%, Claude session 79%; `prefer` remains
     `codex`, no API-key billing was used, and no new worker was started after the failed review.
+
+- **2026-09-13 · iteration 10 · codex-luna** — H3 comparison filter implemented, deployed and
+  live-checked; not independently verified.
+  - Added `lib/benchmark-comparison.mjs` plus focused tests. The catalog is deliberately
+    compact and client-safe: exact measured observations are preferred; only finite,
+    comparable `estimated` bridge rows are retained as `approximate`; missing and low-sample
+    values are omitted rather than treated as zero. Category values are the median of each
+    model's available normalized axis positions and respect lower-is-better axes.
+  - Added an Advanced-only folded **Better than a model** control with reference-model and
+    benchmark/category selectors. The explanatory status names measured versus approximate
+    provenance and says that unknown values are excluded. No dataset rows, API routes or
+    ranking/Composite inputs changed. Changelog updated accordingly.
+  - Gates passed on the final feature tree: `node scripts/build-dataset.mjs` (timestamp-only
+    output discarded), `npm test` (261/261), `npx tsc --noEmit -p .`, `npm run build` (21/21),
+    and `git diff --check`.
+  - Commit `78301fd64a8dc88644483fc607a4e9bbe61261be` was pushed to `origin/main`. Sandy
+    deployment `cnptw9nwu8jsloo0wwuczflq` finished successfully for that exact revision.
+    `/api/meta` on the canonical host reports the same revision.
+  - Focused Playwright live evidence is in
+    `/opt/benchmarkheaven/state/ux-evidence/iter10-h3/verification.json` with eight screenshots:
+    canonical and legacy hosts × desktop 1440×1000/mobile 390×844 × light/dark. Every check
+    returned HTTP 200, found the H3 controls, selected a measured Agentic category reference,
+    filtered 16 rows to 8, showed the unknown-safe copy, and found no horizontal overflow.
+    Desktop and mobile screenshots were visually inspected after capture.
+  - Delegated Kimi K3 an advisory, read-only H3 critique through `delegate.sh`; after 12 minutes
+    it had produced no output or receipt, so it contributed no acceptance and no numbers were
+    used. The launched advisory process was stopped cleanly after the live check.
+  - H3 remains `implemented`, not `verified`, because the one-writer rule requires a different
+    engine to make the verification decision. R9.1, R6.3, E2/E3, P1/P2, X2, X3, X4 and X6/X7
+    remain open or in progress as recorded above.
