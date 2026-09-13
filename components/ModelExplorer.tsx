@@ -248,7 +248,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
         <ShortlistControls
           scores={pool.map((x) => x.sc).filter((v): v is number => v != null)}
           costs={pool.map((x) => x.price.value).filter((v): v is number => v != null)}
-          minScore={minScore} setMinScore={s.setMinScore} scoreName={SCORE_SHORT_LABELS[score]}
+          minScore={minScore} setMinScore={s.setMinScore} score={score} scoreName={SCORE_SHORT_LABELS[score]}
           maxCost={maxCost} setMaxCost={setMaxCost}
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
@@ -331,8 +331,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
             <col className="w-[27%] md:w-[13%]" />
             <col className="w-[27%] md:w-[12%]" />
             <col className="w-0 md:w-[17%]" />
-            <col className="w-0 md:w-[8%]" />
-            <col className="w-0 md:w-[20%]" />
+            <col className="w-0 md:w-[14%]" />
+            <col className="w-0 md:w-[14%]" />
           </colgroup>
           <thead><tr>
             <Th label="Model" k="name" />

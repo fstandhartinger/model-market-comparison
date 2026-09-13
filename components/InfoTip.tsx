@@ -18,6 +18,8 @@ export function InfoTip({ title, children, label }: { title: string; children: R
   const [precise, setPrecise] = useState(false);
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
+  const triggerRef = useRef<HTMLButtonElement>(null);
+  const [tooltipPosition, setTooltipPosition] = useState<{ left: number; top: number } | null>(null);
   const id = useId();
 
   useEffect(() => {
@@ -30,8 +32,33 @@ export function InfoTip({ title, children, label }: { title: string; children: R
 
   useEffect(() => { if (open && !precise) dialog.current?.showModal(); }, [open, precise]);
 
+  // Desktop tooltips are portalled as well as mobile dialogs. Table headers are sticky
+  // and live inside an overflow-x container; an absolutely positioned tooltip there is
+  // clipped or trapped under the table's stacking context. A fixed portal keeps it above
+  // both the header and any open sheet while retaining the trigger's visual attachment.
+  useEffect(() => {
+    if (!precise || !open) return;
+    const update = () => {
+      const rect = triggerRef.current?.getBoundingClientRect();
+      if (!rect) return;
+      const halfWidth = 128;
+      setTooltipPosition({
+        left: Math.min(Math.max(rect.left + rect.width / 2, halfWidth + 8), window.innerWidth - halfWidth - 8),
+        top: rect.bottom + 8,
+      });
+    };
+    update();
+    window.addEventListener("resize", update);
+    window.addEventListener("scroll", update, true);
+    return () => {
+      window.removeEventListener("resize", update);
+      window.removeEventListener("scroll", update, true);
+    };
+  }, [precise, open]);
+
   const trigger = (
     <button
+      ref={triggerRef}
       type="button"
       aria-label={label ? `About ${label}` : `About ${title}`}
       aria-describedby={precise && open ? id : undefined}
@@ -55,13 +82,13 @@ export function InfoTip({ title, children, label }: { title: string; children: R
     return (
       <span className="relative inline-flex items-center normal-case">
         {trigger}
-        {open && (
+        {open && tooltipPosition && createPortal(
           <span role="tooltip" id={id}
-            className="pointer-events-none absolute left-1/2 top-full z-30 mt-2 w-64 -translate-x-1/2 rounded-lg border border-line bg-[#161b22] p-3 text-left text-xs font-normal normal-case tracking-normal text-gray-200 shadow-xl">
+            style={{ left: tooltipPosition.left, top: tooltipPosition.top }}
+            className="pointer-events-none fixed z-[1000] w-64 -translate-x-1/2 rounded-lg border border-line bg-[#161b22] p-3 text-left text-xs font-normal normal-case tracking-normal text-gray-200 shadow-xl">
             <span className="mb-1 block font-semibold text-gray-100">{title}</span>
             <span className="block leading-relaxed text-gray-300">{children}</span>
-          </span>
-        )}
+          </span>, document.body)}
       </span>
     );
   }

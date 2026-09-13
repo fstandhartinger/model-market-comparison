@@ -1,6 +1,9 @@
 "use client";
 import { useMemo } from "react";
 import { useSettings } from "./SettingsContext";
+import { InfoTip } from "./InfoTip";
+import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
+import type { ScoreKey } from "../lib/types";
 
 /** R5.3–R5.5 — Simple mode's two questions, as sliders.
  *
@@ -92,12 +95,13 @@ const trackFill = (frac: number) => {
 };
 
 export function ShortlistControls({
-  scores, costs, minScore, setMinScore, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool, map,
+  scores, costs, minScore, setMinScore, score, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool, map,
 }: {
   scores: number[];               // scores of every model in the pool, before the two sliders
   costs: number[];                // adjusted costs of every model in the pool, before the sliders
   minScore: number;
   setMinScore: (n: number) => void;
+  score: ScoreKey;
   scoreName: string;
   maxCost: number | null;         // null = no limit
   setMaxCost: (n: number | null) => void;
@@ -148,7 +152,7 @@ export function ShortlistControls({
       <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
         <div className="grid grid-cols-2 gap-3 self-start lg:grid-cols-1 lg:gap-2">
           <Row
-            title={<><span>Minimum score</span> <span className="bh-muted text-[11px]">({scoreName})</span></>}
+            title={<><span>Minimum Capability Score</span> <span className="bh-muted text-[11px]">({scoreName})</span><InfoTip title={`Minimum capability score — ${scoreName}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This setting follows the active score selector.</span></InfoTip></>}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
           >
             <div className="relative mt-1">
@@ -162,7 +166,7 @@ export function ShortlistControls({
           </Row>
 
           <Row
-            title="Max cost / task"
+            title={<><span>{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span>{costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
             value={maxCost == null ? "no limit" : money(maxCost)}
           >
             <div className="relative mt-1">

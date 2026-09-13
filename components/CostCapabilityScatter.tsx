@@ -129,6 +129,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
   const narrow = useNarrow();
+  // Simple must keep genuinely free routes visible. A linear axis is the only honest
+  // representation for x=0; the full Charts view keeps its logarithmic default for the
+  // long cost tail.
+  const logCostAxis = compact && !advanced ? false : logX;
   const minScore = compact && !advanced ? s.minScoreSimple : s.minScoreApplied;
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
@@ -150,8 +154,8 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         pass: (x.sc as number) >= minScore && (s.maxCost == null || (x.price.value as number) <= s.maxCost) }));
   }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, s.maxCost, preferredId, measuredOnly, s.priceMode]);
 
-  const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logX || p.x > 0)), [allPoints, logX, compact]);
-  const compactPoints = useMemo(() => allPoints.filter((p) => !logX || p.x > 0), [allPoints, logX]);
+  const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
+  const compactPoints = useMemo(() => allPoints.filter((p) => !logCostAxis || p.x > 0), [allPoints, logCostAxis]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;
 
   const byOrg = useMemo(() => {
@@ -163,7 +167,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
   // F-17: only points that pass the current limits can be on the frontier — a dimmed point
   // with a halo would contradict the dimming.
-  const pareto = useMemo(() => paretoFrontier(allPoints.filter((p) => p.pass)).filter((p: { x: number }) => !logX || p.x > 0), [allPoints, logX]);
+  const pareto = useMemo(() => paretoFrontier(allPoints.filter((p) => p.pass)).filter((p: { x: number }) => !logCostAxis || p.x > 0), [allPoints, logCostAxis]);
 
   const xs = (compact ? compactPoints : points).map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;
@@ -189,7 +193,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
     return <div className="bh-value-map" aria-label="Score versus adjusted cost value map">
       <div className="flex items-baseline justify-end gap-3 lg:mb-1">
-        <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : "Value map · cheaper → right · green = Pareto"}</span>
+        <span className="text-[11px] text-gray-500">{advanced ? "cheaper ← left · green line = Pareto frontier" : "Value map · cheaper ← left · green = Pareto"}</span>
       </div>
       <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
         <ResponsiveContainer width="100%" height="100%">
@@ -197,7 +201,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             <CartesianGrid stroke="#222932" />
             {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
                 data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
-            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed scale="log" domain={[xMin * 0.85, xMax * 1.15]} ticks={narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
+            <XAxis type="number" dataKey="x" name="Adjusted cost" scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
             <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? [yCompact.domain[0], 100] : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
@@ -210,7 +214,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      {advanced && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · log scale</span></div>}
+      {advanced && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · {logCostAxis ? "log scale" : "linear scale"}</span></div>}
     </div>;
   }
 
@@ -222,7 +226,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
         <span className="ml-auto text-xs text-gray-500">
           {/* F-18: the count is what the filters allow, so it opens them. */}
-          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{points.length} models</button> · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
+          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{points.length} models</button> · cost: cheaper ← left{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
@@ -236,7 +240,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
               ticks={logX ? logTicks(xMin, xMax) : undefined}
               allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
               tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={12}>
-              <Label value={`← more expensive    ·    cheaper → (cheapest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
+              <Label value={`cheaper ←    ·    more expensive → (lowest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFull.domain} ticks={isElo ? undefined : yFull.ticks} allowDataOverflow={false}>
               <Label value={scoreChartLabel(score, data.sourceDates)} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
@@ -264,7 +268,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         ))}
       </div>
       <p className="mt-3 text-xs text-gray-500">
-        Up &amp; to the <b>right</b> is better: more capability for less money. The
+        Up is more capability; toward the <b>left</b> is better value. The
         <span className="text-accent2"> green Pareto frontier</span> marks and connects the best-value models —
         those no other model beats on both price and capability. Click any point to open the model detail.
       </p>
