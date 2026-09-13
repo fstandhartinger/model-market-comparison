@@ -102,7 +102,7 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
         <h2 className="text-sm font-semibold">Value map</h2>
         <span className="text-[11px] text-gray-500">cheaper → right · green line = Pareto frontier</span>
       </div>
-      <div aria-hidden="true" className="h-[100px] sm:h-[320px]">
+      <div aria-hidden="true" className="h-[80px] sm:h-[320px]">
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 12, right: 120, bottom: 36, left: 24 }}>
             <CartesianGrid stroke="#222932" />
