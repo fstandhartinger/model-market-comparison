@@ -104,7 +104,7 @@ credited below, the rest is marked open.
 | P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | open | — | AA is the named reference comparator |
 | P3 | Do not stop before P2 is achieved | open | — | |
 | P4 | Positioning claims only in a form the live coverage numbers support | implemented | `DESIGN-DIRECTIVES.md` §R3.1 | superlative "every benchmark result" removed; "most complete" is backed by the generated counts line under the H1; "only place … really costs you" is Florian's explicit ask — carry to X7 |
-| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter11-f07/f07-live/verification.json` | Fable pass judged against exactly this bar; this iteration materially improves the Benchmaxxing radar, but the ≥40-axis default acceptance remains open because no current model reaches it. |
+| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter12-f05-live/verification.json` | Fable pass judged against exactly this bar; F-05 now uses aligned score/cost magnitude bars and was live-checked by Codex, but independent verification and the remaining open directives are still required. |
 | C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly |
 
 ---
@@ -572,3 +572,23 @@ Notes for whoever picks this up:
     Advanced-tab click timeouts but still recorded all four theme/width Benchmaxxing checks;
     raw evidence is retained under `iter11-f07/review/` rather than hidden. Codex quota was 66%
     at the iteration boundary; no API-key billing was used.
+
+- **2026-09-13 · iteration 12 · codex-luna** — F-05 table magnitude language.
+  - The ranking table now places a 4 px accent score bar below the right-aligned score, keeps
+    organization colour only in the organization dot, and places a 4 px neutral-grey adjusted
+    cost bar below the value. Cost bars use the finite prices in the displayed rows with a
+    logarithmic min/max normalization; missing and non-positive values never become a bar.
+    The row disclosure marker is a restrained 12 px-width chevron.
+  - A Kimi K3 delegation was attempted in `/tmp/bh-f05-iter12` but produced no output or diff
+    within the bounded attempt; no delegated output was accepted. The change was implemented
+    and reviewed locally by Codex.
+  - Gates: `node scripts/build-dataset.mjs` ✓ (timestamp-only output reverted), `npm test`
+    261/261 ✓, `npx tsc --noEmit -p .` ✓, `npm run build` 21/21 ✓, `git diff --check` ✓.
+    Commit `649804a` is pushed to `origin/main`.
+  - Live evidence `/opt/benchmarkheaven/state/ux-evidence/iter12-f05-live/verification.json`
+    checks both canonical and legacy hosts at 1440×1000 and 390×844 in light/dark: exact
+    revision, 16 rows, 4 px score/cost bars, accent versus neutral colors, and no page overflow.
+    Status remains implemented because this engine authored the change; a different engine must
+    set verified.
+  - Codex quota remained below the 80% hard cap; no API-key billing was used and the temporary
+    preview was stopped cleanly.

@@ -152,7 +152,7 @@ callers, `components/ChartsBoard.tsx`, `components/CostCapabilityScatter.tsx`,
 *Accept:* `/` body text does not contain "dominance-safe" outside a tooltip/dialog; the DOM
 between the slider card and `table.dtable` contains only the summary line.
 
-### F-05 `[mechanical]` Table cells: one magnitude language
+### F-05 `[mechanical]` ✅ done (Codex Luna) — Table cells: one magnitude language
 *Where:* `components/ModelExplorer.tsx` (score and cost cells), `components/PriceValue.tsx`,
 `app/globals.css`.
 *What:*
@@ -293,3 +293,4 @@ source; every estimate has assumptions." (it is on `/about`).
 | F-03 Simple value map: sliders, compact score/cost scatter, concise pass summary | `e573ef6` (Codex Luna) | `ux-evidence/iter8-final/verification-e573.json` + live screenshots | pending independent verifier; mobile map is intentionally compact to meet F-01 fold target |
 | F-12 concise footer (identity note remains on /about) | `4d4783c` (Codex Luna) | `ux-evidence/iter8-final/verification-final.json` | pending independent verifier |
 | F-07 many-axis radar: sectors, measurable spokes, topic-local lines, native tooltips, coverage-aware default | `a21eec3` (Codex Luna) | `ux-evidence/iter11-f07/f07-live/verification.json` + `ux-evidence/iter11-f07/review/verification.json` | partial: live geometry passes on both hosts and widths; current catalog has 0 models with ≥40 measured axes (maximum 29/214), so the verifier records the required highest-coverage fallback and leaves the ≥40 acceptance open |
+| F-05 ranking magnitude bars: score accent below value, log-scaled neutral cost bar, subtle chevron | `649804a` (Codex Luna) | `/opt/benchmarkheaven/state/ux-evidence/iter12-f05-live/verification.json` + four host/width/theme screenshots | live-checked on canonical and legacy hosts at desktop/mobile in light/dark; needs independent-engine verification |
