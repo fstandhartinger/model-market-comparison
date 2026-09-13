@@ -56,6 +56,27 @@ export function topPairs(view: BenchmarkView, stats: Map<string, FitStats>, opts
 export function topPredictions(view: BenchmarkView, maps: Map<string, Map<string, number>>, evid: Map<string, Map<string, number>>, stats: Map<string, FitStats>, opts?: { limit?: number }): GapPrediction[];
 export function bottomDecileTags(view: BenchmarkView, opts?: { minPeers?: number; minAxes?: number; minFamilies?: number }, maps?: Map<string, Map<string, number>>): DecileResult;
 export interface RadarAxis { id: string; name: string; version: string; category: string; value: number | null; missing: boolean; unit: string }
-export interface BenchmaxxingReport { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; profile: { modelId: string; axes: RadarAxis[]; measured: number; total: number }; domainSpecialization: number | null; jumps: { category: string; from: string; to: string; magnitude: number }[] }
+export interface BenchmaxxingReport {
+  status: 'scored' | 'insufficient-coverage';
+  /** Shrunk within-topic spread (the ranking basis); null below the coverage rule. */
+  score: number | null;
+  rawScore: number | null;
+  coverage: number;
+  profile: { modelId: string; axes: RadarAxis[]; measured: number; total: number };
+  domainSpecialization: number | null;
+  comparisons: number;
+  topics: number;
+  topicSpread: { category: string; measured: number; spread: number }[];
+  rule: { minComparisons: number; minTopics: number };
+  shrinkage?: { priorMean: number; k: number };
+  jumps: { category: string; from: string; to: string; magnitude: number }[];
+}
+export const BENCHMAXX_MIN_COMPARISONS: number;
+export const BENCHMAXX_MIN_TOPICS: number;
+export const BENCHMAXX_MIN_SHRINK: number;
+export const BENCHMAXX_MAX_SHRINK: number;
+export const BENCHMAXX_TAG_SHARE: number;
 export function groupedRadarProfile(view: BenchmarkView, modelId: string): BenchmaxxingReport['profile'];
-export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minCoverage?: number; minMeasured?: number }): BenchmaxxingReport;
+export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minMeasured?: number; minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
+export function benchmaxxingPrior(view: BenchmarkView): { mean: number | null; shrink: number; eligible: number };
+export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string> };
