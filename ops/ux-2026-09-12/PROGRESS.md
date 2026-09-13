@@ -1225,3 +1225,19 @@ Notes for whoever picks this up:
   A real-browser smoke check at 1440×1000 light and 390×844 dark also passes with the hero,
   table, score 86 and no horizontal overflow: `/opt/benchmarkheaven/state/ux-evidence/iter39-data-refresh-20260913/live/browser-smoke.json`.
   R9.1 remains open because the curated source dates are still stale.
+
+- **2026-09-13 · iteration 40 · codex-luna** — rechecked the current deployed `a566991` release
+  after the prior gate's stale-readback findings. The free Kimi K3 delegation inspected F-50 in
+  an isolated worktree and produced no diff; no worker output or number was trusted. Fresh live
+  `bin/verify-f50-f51.mjs` receipts pass 42/42 on both `benchmarkheaven.com` and the legacy host,
+  at 1440/390 and light/dark: the desktop radar/right-column gap is 40 px (≤120), mobile order
+  is radar → signal → details, and there is no page overflow. Fresh `verify-f40.mjs` receipts pass
+  on both hosts and both widths: Simple's untouched score threshold is `86` (strictly >85), and
+  its rows remain stable through the Advanced/Guided transitions. The live metadata revision is
+  `a566991c0ac05a22ce95f43aefc63d3de0a9bc35`; hero copy is qualified and no longer uses the
+  unsupported exclusivity claim. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter40-f50-live-{canonical,legacy}/`
+  and `/opt/benchmarkheaven/state/ux-evidence/iter40-r5-f40-live-{canonical,legacy}/`.
+  Required gates pass again: `node scripts/build-dataset.mjs`, `npm test` (275/275),
+  `npm run build`, `npx tsc --noEmit -p .`; the dataset rebuild changed only generated
+  timestamps, which were restored. R5.3 and F-50 remain `implemented`, not `verified`, because
+  this is the same codex-luna implementation engine; R9.1, E2/E3, P2/P3 and X6/X7 remain open.
