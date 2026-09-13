@@ -5,7 +5,8 @@ import type { ScoreKey } from "../lib/types";
  *  the long inline paragraph used (R1.5). The full derivation lives on /about (R1.6). */
 export const ADJUSTED_COST_TIP = (
   <>
-    What one task actually costs you — not a headline price per million tokens. It combines
+    Every adjusted cost is a modeled estimate: it describes what one task actually costs you,
+    not a headline price per million tokens. It combines
     the provider we would route you to, that provider’s prices, how much of your input it
     serves from cache and what cache reads and writes cost there, and how many tokens this
     particular model needs to finish the task. A verbose model on a cheap provider can cost

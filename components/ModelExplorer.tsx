@@ -338,7 +338,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
             <Th label="Model" k="name" />
             <Th label="Org" k="org" hideBelowMd />
             <Th label="Score" k="score" right sub={SCORE_SHORT_LABELS[score]} info={<InfoTip title={`Score — ${SCORE_LABELS[score]}`} label="the Score column">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">{scoreLabel(score, data.sourceDates)}</span></InfoTip>} />
-            <Th label="Adjusted Cost" k="cost" right info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
+            <Th label="Adjusted Cost" k="cost" right sub="modeled $/task" info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
             <Th label="# benchmarks" k="benchmarks" right hideBelowMd />
             <Th label="# providers" k="providers" right hideBelowMd />
           </tr></thead>
@@ -384,10 +384,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
                   const thin = inputs < 3;
                   return <MagnitudeBar frac={sc / maxScoreVal} tone="score" thin={thin}>
                     <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>
-                    {inputs < 7 && !simple && <span className="block text-right text-[11px] font-normal text-gray-500">{inputs}/7 inputs</span>}
+                    {inputs < 7 && !simple && <span className="mt-1 flex justify-end gap-0.5" title={`${inputs} of 7 Composite inputs`} aria-label={`${inputs} of 7 Composite inputs`} role="img">
+                      {Array.from({ length: 7 }, (_, i) => <span key={i} aria-hidden="true" className={`h-1 w-1 rounded-[1px] border ${i < inputs ? "border-accent bg-accent" : "border-line bg-transparent"}`} />)}
+                    </span>}
                   </MagnitudeBar>;
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact showEstimate={false} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>
@@ -458,7 +460,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
                                   </td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)}</td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.output_per_1m)}</td>
-                                  <td className="py-1 tabular text-right font-semibold"><PriceValue price={o.price} compact /></td>
+                                  <td className="py-1 tabular text-right font-semibold"><PriceValue price={o.price} compact showEstimate={false} /></td>
                                 </tr>
                               );
                             })}

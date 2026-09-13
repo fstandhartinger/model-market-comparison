@@ -11,7 +11,7 @@ export function priceNumber(value: number | null | undefined): string {
 
 /** Native modal: usable from keyboard/touch, outside table/chart overflow, with
  * Escape dismissal and browser-managed focus return. Contents mount on demand. */
-export function PriceValue({ price, compact = false }: { price: PriceResult; compact?: boolean }) {
+export function PriceValue({ price, compact = false, showEstimate = true }: { price: PriceResult; compact?: boolean; showEstimate?: boolean }) {
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => { if (open) dialog.current?.showModal(); }, [open]);
@@ -23,7 +23,7 @@ export function PriceValue({ price, compact = false }: { price: PriceResult; com
       title="Show cost inputs, sources and assumptions"
       className="inline-flex max-w-full flex-wrap items-baseline justify-end gap-x-1 rounded text-right tabular underline decoration-dotted underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
       <span>{priceNumber(price.value)}</span>{!compact && <span className="text-[10px] font-normal text-gray-400">{price.unit === "$/task" ? "/task" : "/1M"}</span>}
-      {price.assumptions.length > 0 && <span className="text-[10px] font-normal text-amber-300">{assumedTask ? "assumed task" : "est."}</span>}
+      {price.assumptions.length > 0 && (assumedTask || showEstimate) && <span className="text-[10px] font-normal text-amber-300">{assumedTask ? "assumed task" : "est."}</span>}
     </button>
     {open && createPortal(<dialog ref={dialog} onClose={() => setOpen(false)} onClick={(event) => event.stopPropagation()}
       aria-label="Cost inputs and assumptions"

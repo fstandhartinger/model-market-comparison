@@ -135,6 +135,39 @@ test('client projection carries the optional Overview Benchmaxxing signal withou
   assert.equal(untouched.benchmaxxing_score, undefined);
   assert.equal(untouched.benchmaxxing_signal, undefined);
 });
+
+test('Composite coverage separates exact inputs from family- or product-attached values', () => {
+  const projected = client.clientData(dataset);
+  const slots = [
+    ['aa_coding_index', 'aa_coding_index'],
+    ['aa_coding_agent', 'aa_coding_agent_index'],
+    ['aa_intelligence_index', 'aa_intelligence_index'],
+    ['epoch_eci', 'epoch_eci'],
+    ['epoch_eci_software', 'epoch_eci_software'],
+    ['designarena_frontend', 'frontend'],
+    ['designarena_fullstack', 'fullstack'],
+  ];
+  for (const raw of dataset.models) {
+    const model = projected.models.find((candidate) => candidate.id === raw.id);
+    assert.ok(model, raw.id);
+    const exact = slots.filter(([slot, field]) => {
+      const value = field === 'frontend' || field === 'fullstack'
+        ? raw.designarena?.[field]?.elo
+        : raw.benchmarks?.[field];
+      return value != null && !model.composite_attachments[slot];
+    });
+    assert.equal(model.composite_coverage, exact.length, `${raw.id}: exact Composite coverage`);
+    assert.ok(model.benchmark_count >= exact.length, `${raw.id}: #benchmarks must cover exact Composite inputs`);
+  }
+  const fable = projected.models.find((model) => model.id === 'claude-fable-5::high');
+  assert.ok(fable);
+  assert.equal(fable.benchmark_count, 1);
+  assert.equal(fable.composite_coverage, 1);
+  assert.ok(fable.composite_attachments.aa_coding_index);
+  assert.ok(fable.composite_attachments.aa_intelligence_index);
+  assert.ok(fable.composite_attachments.epoch_eci);
+  assert.ok(fable.composite_attachments.designarena_fullstack);
+});
 test('adjusted is modelCost default and uses per-model OR ratio before global or AA proxy',()=>{
   assert.equal(cost.modelCost(model,telemetryData,null),0.023);
   const p=cost.modelPrice(model,telemetryData,null,adjusted);

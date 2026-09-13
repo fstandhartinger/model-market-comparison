@@ -52,9 +52,9 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
     data.models.map((m) => m.scores[key]).filter((v): v is number => v != null), clientModel.scores[key]);
   const daPcts = [pctOf("designarena_frontend"), pctOf("designarena_fullstack")].filter((v): v is number => v != null);
   const radarAxes = [
-    { label: "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: null },
-    { label: "Coding Agent", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: null },
-    { label: "AA Intelligence", value: pctOf("aa_intelligence_index"), native: num(clientModel.scores.aa_intelligence_index), note: null },
+    { label: "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: clientModel.composite_attachments.aa_coding_index?.note ?? null },
+    { label: "Coding Agent", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: clientModel.composite_attachments.aa_coding_agent?.note ?? null },
+    { label: "AA Intelligence", value: pctOf("aa_intelligence_index"), native: num(clientModel.scores.aa_intelligence_index), note: clientModel.composite_attachments.aa_intelligence_index?.note ?? null },
     { label: "Epoch ECI", value: pctOf("epoch_eci"), native: num(clientModel.scores.epoch_eci), note: model.epoch_eci_attachment_note ?? null },
     { label: "Software ECI", value: pctOf("epoch_eci_software"), native: num(clientModel.scores.epoch_eci_software), note: model.epoch_eci_attachment_note ?? null },
     { label: "DesignArena", value: daPcts.length ? daPcts.reduce((a, v) => a + v, 0) / daPcts.length : null,
@@ -89,7 +89,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         <section className="card min-w-0 p-4" aria-label="Composite and its inputs">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="font-semibold">Composite</h2>
-            <span className="text-xs text-gray-500">{clientModel.composite_coverage}/7 inputs measured</span>
+            <span className="text-xs text-gray-500">{clientModel.composite_coverage}/7 exact inputs{Object.keys(clientModel.composite_attachments).length ? ` · ${Object.keys(clientModel.composite_attachments).length} attached` : ""}</span>
           </div>
           <p className="text-4xl font-bold tabular">{num(clientModel.scores.composite)}</p>
           <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />
@@ -109,7 +109,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         </section>
       </div>
 
-      <BenchmarkSheet view={benchmarkView} modelId={model.id} percentiles={percentiles} />
+      <BenchmarkSheet view={benchmarkView} modelId={model.id} percentiles={percentiles} attachments={clientModel.composite_attachments} />
 
       {/* Variants */}
       {variants.length > 1 && (

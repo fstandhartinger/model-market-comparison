@@ -56,7 +56,7 @@ export function ModelDetailOffers({
                   <td className="hidden px-2 py-1 text-gray-400 sm:table-cell">{offer.platform}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}</td>
-                  <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} /></td>
+                  <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} showEstimate={false} /></td>
                 </tr>
               ))}
             </tbody>
@@ -91,7 +91,7 @@ export function ModelDetailOffers({
                   <td className="hidden px-2 py-1 text-xs text-gray-500 md:table-cell">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> raw in $/1M</span></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> raw out $/1M</span></td>
-                  <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} /></td>
+                  <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} showEstimate={false} /></td>
                 </tr>
               ))}
             </tbody>

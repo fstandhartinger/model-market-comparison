@@ -35,6 +35,23 @@ export interface ClientOffer {
   data_private?: boolean;
 }
 
+export type CompositeSlot =
+  | "aa_coding_index"
+  | "aa_coding_agent"
+  | "aa_intelligence_index"
+  | "epoch_eci"
+  | "epoch_eci_software"
+  | "designarena_frontend"
+  | "designarena_fullstack";
+
+export interface CompositeAttachment {
+  /** The catalog row that supplied the displayed value, when there is one. */
+  sourceModelId: string | null;
+  /** Short, user-facing provenance for an attached value. */
+  label: string;
+  note: string;
+}
+
 export interface ClientModel {
   token_efficiency?: TokenEfficiency;
   id: string;
@@ -59,6 +76,8 @@ export interface ClientModel {
   };
   composite_base: number | null;
   composite_coverage: number;
+  /** Composite values used for this row but not measured on this exact configuration. */
+  composite_attachments: Partial<Record<CompositeSlot, CompositeAttachment>>;
   /** Distinct registry benchmarks this model has a usable result for (R2.2). Not the
    *  same as `composite_coverage`, which counts the seven composite slots only. */
   benchmark_count: number;
@@ -171,6 +190,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       },
       composite_base: null,
       composite_coverage: 0,
+      composite_attachments: {},
       benchmark_count: ds.benchmark_results?.coverage?.by_model?.[m.id]?.available ?? 0,
       offer_count: (offersByModel[m.id] || []).length,
       aa_ref_input: m.aa_reference_price?.input_per_1m ?? null,
@@ -213,20 +233,93 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     if (dsv != null && (fb.ds == null || dsv > fb.ds.elo)) fb.ds = { elo: dsv, battles: raw?.designarena?.fullstack?.battles ?? null };
     famBest.set(m.family_key, fb);
   }
-  // Coverage counts a row's OWN measurements only (pre-backfill): backfilled slots make
+  const slotValue = (row: ModelRow, slot: CompositeSlot): number | null => {
+    if (slot === "aa_coding_index") return row.benchmarks?.aa_coding_index ?? null;
+    if (slot === "aa_coding_agent") return row.benchmarks?.aa_coding_agent_index ?? null;
+    if (slot === "aa_intelligence_index") return row.benchmarks?.aa_intelligence_index ?? null;
+    if (slot === "epoch_eci") return row.benchmarks?.epoch_eci ?? null;
+    if (slot === "epoch_eci_software") return row.benchmarks?.epoch_eci_software ?? null;
+    return row.designarena?.[slot === "designarena_frontend" ? "frontend" : "fullstack"]?.elo ?? null;
+  };
+  const familySource = (row: ModelRow, slot: CompositeSlot): ModelRow | null => {
+    const candidates = [...rawById.values()]
+      .filter((candidate) => candidate.family_key === row.family_key && slotValue(candidate, slot) != null)
+      .sort((a, b) => (slotValue(b, slot) ?? -Infinity) - (slotValue(a, slot) ?? -Infinity));
+    return candidates[0] ?? null;
+  };
+  const slotLabels: Record<CompositeSlot, string> = {
+    aa_coding_index: "AA Coding",
+    aa_coding_agent: "Coding Agent",
+    aa_intelligence_index: "AA Intelligence",
+    epoch_eci: "Epoch ECI",
+    epoch_eci_software: "Software ECI",
+    designarena_frontend: "DesignArena Frontend",
+    designarena_fullstack: "DesignArena Full-Stack",
+  };
+  const attachmentMaps = new Map<string, Partial<Record<CompositeSlot, CompositeAttachment>>>();
+  for (const model of models) {
+    const raw = rawById.get(model.id)!;
+    const attached: Partial<Record<CompositeSlot, CompositeAttachment>> = {};
+    const add = (slot: CompositeSlot, sourceModelId: string | null, note: string) => {
+      attached[slot] = { sourceModelId, label: slotLabels[slot], note };
+    };
+    for (const slot of ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index"] as const) {
+      const source = familySource(raw, slot);
+      if (slotValue(raw, slot) == null && source && slotValue(source, slot) != null) {
+        add(slot, source.id, `Attached from ${source.display_name}; the source published this value on another configuration of the same model family.`);
+      }
+    }
+    if (raw.benchmarks?.epoch_eci != null && raw.epoch_eci_attachment_note) {
+      add("epoch_eci", null, raw.epoch_eci_attachment_note);
+    } else if (raw.benchmarks?.epoch_eci == null && famBest.get(raw.family_key)?.eci != null) {
+      const source = familySource(raw, "epoch_eci");
+      add("epoch_eci", source?.id ?? null, source ? `Attached from ${source.display_name}; ${source.epoch_eci_attachment_note ?? "Epoch AI publishes this at family scope."}` : "Attached from another configuration in this model family.");
+    }
+    if (raw.benchmarks?.epoch_eci_software != null && raw.epoch_eci_attachment_note) {
+      add("epoch_eci_software", null, raw.epoch_eci_attachment_note);
+    } else if (raw.benchmarks?.epoch_eci_software == null && famBest.get(raw.family_key)?.eciSoftware != null) {
+      const source = familySource(raw, "epoch_eci_software");
+      add("epoch_eci_software", source?.id ?? null, source ? `Attached from ${source.display_name}; ${source.epoch_eci_attachment_note ?? "Epoch AI publishes this at family scope."}` : "Attached from another configuration in this model family.");
+    }
+    for (const [slot, board] of [["designarena_frontend", "frontend"], ["designarena_fullstack", "fullstack"]] as const) {
+      const own = raw.designarena?.[board]?.elo ?? null;
+      const hasAttachmentNote = !!raw.designarena_attachment_note;
+      if (own != null && hasAttachmentNote) add(slot, null, raw.designarena_attachment_note!);
+      else if (own == null && famBest.get(raw.family_key)?.[slot === "designarena_frontend" ? "df" : "ds"] != null) {
+        const source = familySource(raw, slot);
+        add(slot, source?.id ?? null, source ? `Attached from ${source.display_name}; ${source.designarena_attachment_note ?? "DesignArena publishes this at product/family scope."}` : "Attached from another configuration in this model family.");
+      }
+    }
+    attachmentMaps.set(model.id, attached);
+    model.composite_attachments = attached;
+  }
+  // The registry coverage contains the versioned secondary benchmark catalog. The six
+  // headline axes below are retained from their own primary snapshots rather than copied
+  // into that registry, so count exact (non-attached) headline observations as well. The
+  // Coding Agent slot is already versioned in the registry and is intentionally excluded.
+  const headlineSlots: CompositeSlot[] = ["aa_coding_index", "aa_intelligence_index", "epoch_eci", "epoch_eci_software", "designarena_frontend", "designarena_fullstack"];
+  for (const model of models) {
+    const raw = rawById.get(model.id)!;
+    const exactHeadlineCount = headlineSlots.filter((slot) => slotValue(raw, slot) != null && !model.composite_attachments[slot]).length;
+    model.benchmark_count += exactHeadlineCount;
+  }
+  // Coverage counts a row's exact, non-attached measurements only (pre-backfill): backfilled slots make
   // every sibling inherit the family maxima, so counting them would let a never-measured
   // catalog row (e.g. a bare OpenRouter listing) pose as the family's measured
   // representative and win the collapse pick. Evaluated BEFORE the display backfill below.
   const coverage = new Map(models.map((m) => {
     const raw = rawById.get(m.id);
-    return [m.id, compositeEvidenceCount({
+    const rawCount = compositeEvidenceCount({
       id: m.id,
       scores: m.scores,
       designarenaBattles: {
         frontend: raw?.designarena?.frontend?.battles ?? null,
         fullstack: raw?.designarena?.fullstack?.battles ?? null,
       },
-    })];
+    });
+    const attachedOwnSlots = Object.keys(attachmentMaps.get(m.id) ?? {})
+      .filter((slot) => slotValue(raw!, slot as CompositeSlot) != null).length;
+    return [m.id, Math.max(0, rawCount - attachedOwnSlots)];
   }));
   // DISPLAY BACKFILL (user policy): a variant that lacks a metric inherits the family's
   // best measured value of that metric — shown everywhere (Compare, model detail, metric
