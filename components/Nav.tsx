@@ -36,8 +36,9 @@ function FilterButton() {
 
 export function Nav() {
   const path = usePathname();
+  const { filtersOpen } = useSettings();
   return (
-    <header className="border-b border-line bg-panel">
+    <header className={`relative border-b border-line bg-panel ${filtersOpen ? "z-50" : ""}`}>
       <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-2 px-4">
         <Link href="/" aria-label="Benchmark Heaven home" className="bh-brand-link flex min-h-10 shrink-0 items-center gap-2.5"><BrandMark className="h-8 w-8 shrink-0" /><span className="bh-wordmark hidden sm:inline">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
         <nav aria-label="Primary" className="relative ml-4 hidden flex-1 items-center gap-1 text-sm lg:flex">

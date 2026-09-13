@@ -22,8 +22,8 @@ export function ModelDetailOffers({
 }) {
   const s = useSettings();
   const scope = useMemo(
-    () => createOfferScope(s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly),
-    [s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly],
+    () => createOfferScope(s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
+    [s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining],
   );
   const ctx = useMemo(() => priceContext(model, { ...pricingData, models: [model], offersByModel: { [model.id]: offers }, offersByFamily: {}, providers, families: [] }, s), [model, pricingData, offers, providers, s.priceMode, s.inputWeight]);
   const ranked = useMemo(() => rankedOffers(offers, scope, ctx), [offers, scope, ctx]);

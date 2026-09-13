@@ -24,8 +24,8 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   const [showEmpty, setShowEmpty] = useState(false);
   const effectiveEuOnly = s.euHostedOnly || euOnly;
   const offerScope = useMemo(
-    () => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, s.teeOnly),
-    [s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, s.teeOnly],
+    () => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
+    [s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining],
   );
 
   // Match the global collapse switch exactly: either one score-preferred variant

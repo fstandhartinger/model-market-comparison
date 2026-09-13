@@ -39,8 +39,9 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
       true,
       s.nonUsOnly,
       s.teeOnly,
+      !s.allowDataTraining,
     ),
-    [s.excludedSet, s.excludeChinese, data.providers, s.nonUsOnly, s.teeOnly],
+    [s.excludedSet, s.excludeChinese, data.providers, s.nonUsOnly, s.teeOnly, s.allowDataTraining],
   );
 
   const rows = entries.reduce<SotaRow[]>((result, entry) => {
