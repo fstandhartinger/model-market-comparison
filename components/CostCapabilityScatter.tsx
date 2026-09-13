@@ -107,6 +107,11 @@ function phoneCostTicks(lo: number, hi: number): number[] {
   return inRange.length >= 2 ? inRange : logTicks(lo, hi).slice(0, 4);
 }
 
+/** F-39: a genuinely free route keeps its place on the log axis — pinned at the left edge. */
+function pinFree<T extends { x: number }>(p: T, xFloor: number): T & { free?: boolean } {
+  return p.x > 0 ? p : { ...p, x: xFloor, free: true };
+}
+
 function logTicks(min: number, max: number): number[] {
   const ticks: number[] = [];
   for (let e = Math.floor(Math.log10(min)); e <= Math.ceil(Math.log10(max)); e++) for (const m of [1, 3]) {
@@ -129,10 +134,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
   const narrow = useNarrow();
-  // Simple must keep genuinely free routes visible. A linear axis is the only honest
-  // representation for x=0; the full Charts view keeps its logarithmic default for the
-  // long cost tail.
-  const logCostAxis = compact && !advanced ? false : logX;
+  // F-39 (Fable pass 5): the map keeps its logarithmic axis everywhere. A linear axis in
+  // Simple crushed the sub-$3 field — where most of the shortlist sits — into a sliver with
+  // overprinted tick labels. Free routes are not dropped for it (R5.10): they are pinned at
+  // the left edge and named "free".
+  const logCostAxis = logX;
   const minScore = compact && !advanced ? s.minScoreSimple : s.minScoreApplied;
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
@@ -155,8 +161,9 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, s.maxCost, preferredId, measuredOnly, s.priceMode]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
-  const compactPoints = useMemo(() => allPoints.filter((p) => !logCostAxis || p.x > 0), [allPoints, logCostAxis]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;
+  const xFloor = useMemo(() => { const pos = allPoints.filter((p) => p.x > 0).map((p) => p.x); return pos.length ? Math.min(...pos) * 0.85 : 0.1; }, [allPoints]);
+  const compactPoints = useMemo(() => allPoints.map((p) => pinFree(p, xFloor)), [allPoints, xFloor]);
 
   const byOrg = useMemo(() => {
     const g = new Map<string, typeof points>();
@@ -167,7 +174,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
   // F-17: only points that pass the current limits can be on the frontier — a dimmed point
   // with a halo would contradict the dimming.
-  const pareto = useMemo(() => paretoFrontier(allPoints.filter((p) => p.pass)).filter((p: { x: number }) => !logCostAxis || p.x > 0), [allPoints, logCostAxis]);
+  const pareto = useMemo(() => {
+    const frontier = paretoFrontier(allPoints.filter((p) => p.pass)) as typeof allPoints;
+    return compact ? frontier.map((p) => pinFree(p, xFloor)) : frontier.filter((p) => !logCostAxis || p.x > 0);
+  }, [allPoints, logCostAxis, compact, xFloor]);
 
   const xs = (compact ? compactPoints : points).map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;

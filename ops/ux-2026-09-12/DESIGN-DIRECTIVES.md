@@ -1,12 +1,13 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 4: 2026-09-13 12:00 UTC**, against live revision `1b17731` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass4/` — 73 screenshots +
-`metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple, Advanced incl.
-expanded row, Guided steps 1–4, Filters, Benchmaxxing, model page, Benchmarks, Charts), plus
-`desktop_light-compare*.png`, `desktop_light-subscriptions-open.png` and the DOM checks in
-`/tmp/fable-checks.mjs` / `/tmp/fable-leak.mjs` (copied to `…/pass4/checks/`). Pass 3 is in
-`…/fable-20260913-pass3/`, pass 2 in `…/fable-20260913-pass2/`, pass 1 in `…/fable-20260913/`.
+**Pass 5: 2026-09-13 15:30 UTC**, against live revision `3d7af32` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass5/` — 80 screenshots +
+`metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple incl. moved slider,
+Advanced incl. expanded row and a fresh session, Guided steps 1–4, Benchmaxxing, model page,
+Compare, Benchmarks, Charts), `verify-f31-f38/verification.json` (independent live acceptance of
+the Codex-implemented F-31 … F-38, 0 fails at both widths) and `/tmp/fable5-checks.mjs` output
+(tick-label overlap counts, Advanced row counts). Pass 4 is in `…/fable-20260913-pass4/`,
+pass 3 in `…/fable-20260913-pass3/`, pass 2 in `…/fable-20260913-pass2/`, pass 1 in `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -23,7 +24,66 @@ delegated diff is reviewed before it lands.
 
 ---
 
-## Verdict on the live site — pass 4 (2026-09-13)
+## Verdict on the live site — pass 5 (2026-09-13)
+
+Everything from pass 4 shipped and holds: coverage pips instead of `n/7 inputs`, no `est.` in
+any cell, the Compare table is a release-post table with one expand per row, the Benchmaxxing
+signal card is 326 px, the Benchmarks page opens with one coverage sentence and a bar per
+result, the model page reads like a release post at 2,443 px / 4,089 px. F-31 … F-38 are
+**verified** in this pass (Fable ≠ Codex, `verify-f31-f38/verification.json`, 0 fails).
+Advanced opens on 101 rows sorted by score in a fresh session. The Guided wizard remains the
+best-written surface on the site. Hero, logo, nav and footer need nothing.
+
+**What fails the bar now, in order of damage:**
+
+1. **The Simple value map is unreadable on its cost axis.** Iteration 26 switched Simple to a
+   *linear* cost axis (R5.10 "every model displayed"). Result: 10 of the 16 shortlist models sit
+   in the left 15 % of the plot and the axis prints a tick per data value — 46 overlapping tick
+   labels at 1440 px, 138 at 390 px, a black smear under the phone map. The one chart Florian
+   asked for in Simple ("how much more expensive is the priciest model than one 10 % worse")
+   cannot be read. → fixed in this pass (**F-39**, Fable, surgical): log axis back, free routes
+   pinned at the left edge instead of dropped, round money ticks.
+2. **Simple's slider leaks into Advanced.** Touching the Simple score slider — even returning it
+   to 85 — sets `minScoreTouched`, and Advanced then opens on "7 models · filtered" with no
+   visible control that explains or removes the floor (`minScoreApplied = touched ? minScore : 0`).
+   F-16 promised a full-catalog Advanced; it only holds for users who never touch Simple. → **F-40**.
+3. **Five of seven Simple rows are hatched as "thin evidence", including the #1 model.** Since
+   F-32 separated exact from family-attached inputs, the hatch (`composite_coverage < 3`) fires
+   on Claude Fable 5.1, Opus 5, Kimi K3, Grok 4.6 and GLM-5.3 — models with 17–22 benchmarks
+   and 6 of 7 Composite inputs (2 exact + 4 attached, as the Opus 5 page itself says). Simple
+   shows the stripes with no pips, no legend and no title. A stripe that hits most of the
+   flagship set discriminates nothing and reads as "don't trust this table". → **F-41**.
+4. **Phone Simple: the two slider captions collide.** With the R5.7 wording the side-by-side
+   sliders at 390 px wrap to three lines each ("Max adjusted cost / task" + "no limit" stacked),
+   the values no longer align with their tracks. → **F-42**.
+5. **Benchmaxxing radar draws 214 spokes for 29 measured axes.** The default plot is a grey
+   sea of unmeasured spokes with blue slivers; three sectors are named (Writing, Agentic,
+   Coding) and 13 topics are lumped into an unlabeled grey "Other" that covers half the circle.
+   The jaggedness Florian wants to *see* is invisible. → **F-43**.
+6. **Compare is still 5,576 px at 1440 px (9,541 px at 390 px)** with two models: the F-35 table
+   is fine (2,403 px); the rest is a 4-card "Build your comparison" sidebar, a six-axis radar with
+   a three-line caption and an axis table. → **F-44**.
+7. **Micro-defects:** the Advanced toolbar's "Better than a model ▾" and "Evidence ▾" popovers
+   and the Filters overlay are three places for filters; Charts' Score vs cost card repeats the
+   Simple map (fine) but its "16 models" is not a link on `/charts` at 390 px; the Benchmarks
+   "Explore → Compare ↗" column is dead weight on desktop. Folded into **F-44** and **F-45**.
+
+## Decisions in pass 5
+
+1. **R5.10 / F-39 — log axis stays, free routes are pinned, not dropped.** Florian asked for
+   "cheaper left, every model displayed"; Codex read the second half as "linear axis". A linear
+   axis over $0.19–$17 is a chart of the three most expensive models. The pinned-free-route log
+   axis satisfies both halves; recorded for X7 so he can overrule.
+2. **F-41 hatch rule — count exact + attached inputs.** Attached values (same product family,
+   labelled "attached" on the model page) are used in the Composite and are legitimate evidence
+   for it. The hatch is for a Composite built on fewer than three inputs *in total*; the pips
+   distinguish exact (filled) from attached (half-filled) so the honesty F-32 added is kept.
+3. **F-38's "Minimum score" label is superseded by R5.7** ("Minimum Capability Score (Composite)",
+   Florian's wording). F-38 is verified on its other two points.
+4. **F-31 … F-38 promoted to `verified`** by this pass (evidence above). The pass-4 Done-log
+   rows are updated below.
+
+## Verdict on the live site — pass 4 (2026-09-13, kept for the record)
 
 The pass-3 backlog shipped and holds live: model page 2,433 px / 4,062 px, phone Advanced
 toolbar 54 px with a Refine sheet, Benchmaxxing rows 53 px with orange signal bars, phone
@@ -101,128 +161,107 @@ asked for.
 
 ## Directives (open)
 
-> **Status 2026-09-13 pass 5 (Codex implementation):** F-08a/F-08b and F-22 … F-30 are done and live;
-> F-35 … F-38 are now implemented and live on `085207b` (see the Done log), pending a non-Codex
-> verifier. The remaining open directives below are ordered by value.
-> **Previous status, pass 4 (Fable):** F-08a/F-08b and F-22 … F-28 were done and live
-> (Done log). F-29 and F-30 were fixed by Fable in this pass. The list below is the complete
-> remaining design backlog, ordered by value. F-33 and F-34 were delegated to Kimi K3 in this
-> pass; their diffs are reviewed by Fable before they land (see the Done log for the outcome).
+> **Status 2026-09-13 pass 5 (Fable):** F-31 … F-38 verified and moved to the Done log. F-39 was
+> fixed by Fable in this pass (see the Done log once live). The list below is the complete
+> remaining design backlog, ordered by value. F-40 and F-41 are `[judgment]` (state model and
+> evidence rule) and go to Codex Luna or Claude Opus 5; F-42 is `[mechanical]`; F-43 and F-44 are
+> `[judgment]` layout work. The Kimi/Nex UI delegations have produced no usable diff in the last
+> seven attempts — delegate only `[mechanical]` CSS to them, with a 20-minute cap, and implement
+> directly when they return nothing.
 
-### F-32 `[judgment]` One model, one benchmark count
-*Where:* `lib/client-model.ts` (`benchmark_count` = `benchmark_results.coverage.by_model[id].available`),
-`scripts/build-dataset.mjs` (benchmark_results coverage and Composite input attachment),
-`components/BenchmarkSheet.tsx`.
-*What:* the "# benchmarks" column and the model-page sheet count must include every
-benchmark result the Composite consumed for that configuration. Live contradiction:
-`/models/claude-fable-5%3A%3Ahigh` shows Composite 92.9 from AA Coding 76.5, Coding Agent
-65.1, AA Intelligence 49.7, Epoch ECI 163.4 (attached), Software ECI 165.9 (attached) and
-DesignArena 1274/1281, yet "1 of 75 registered benchmark versions" and `# benchmarks = 1`
-in Advanced. Either the AA Coding, Coding Agent, AA Intelligence and DesignArena rows are
-registered results for this configuration (then the sheet and the count must show them), or
-they are variant/family-attached values (then the model page must label them "attached
-from <configuration>" with the (i), exactly as it already does for the ECIs, and they must
-not count as this configuration's own evidence in the Composite coverage `5/7`). Find the
-cause in the build (most likely: the AA snapshot rows are keyed by a different
-configuration name than the registry rows), fix it at the source, and add a test that for
-every model `benchmark_count ≥ number of non-attached Composite inputs`.
-*Accept:* for every row in Advanced, `# benchmarks` ≥ the number of Composite inputs that are
-not marked attached; the Fable 5 (high) page lists its AA index rows in the sheet or marks
-them attached; the new test passes; no Composite value changes for models whose inputs are
-all registered.
+### F-40 `[judgment]` Simple's sliders belong to Simple
+*Where:* `components/SettingsContext.tsx` (`minScore`, `minScoreTouched`, `maxCost`, the
+`minScoreApplied` / `minScoreSimple` selectors), `components/ShortlistControls.tsx`,
+`components/ModelExplorer.tsx` (Advanced toolbar), `components/CostCapabilityScatter.tsx`,
+`components/CompareView.tsx`, `components/EuSotaTable.tsx`, tests in `test/settings*.test.mjs`.
+*What:* split the floor and the cap by mode. `simpleMinScore` (default 85, or `defaultMinFor(score)`)
+and `simpleMaxCost` (default null) are written **only** by the two Simple sliders and read only
+by Simple's list and map. `advancedMinScore` (default 0) and `advancedMaxCost` (default null)
+are written only by Advanced controls (the Max $/task field, "Better than a model", the Guided
+results hand-off) and read by Advanced, Charts, Compare and the EU table. Guided writes the
+Advanced pair (it lands in an Advanced-style results view) and never the Simple pair (F-30 rule
+kept). When `advancedMinScore > 0`, the Advanced toolbar shows a removable chip **`Score ≥ 85 ×`**
+next to the count, so a floor is never invisible. Persisted settings migrate: an existing
+`minScoreTouched` payload becomes `simpleMinScore` only. Reproduction of the defect: fresh
+session → Simple → press ← then → on the score slider (value 85 again) → Advanced tab → live
+today shows "7 models · filtered".
+*Accept:* after the reproduction above, Advanced shows the same row count as a fresh Advanced
+(101 today); Simple still shows 85 / 7 rows afterwards; setting Max $/task = 5 in Advanced does
+not move Simple's cost slider; Guided with a "3 mo" floor lands on a results view whose toolbar
+shows the `Score ≥ …` chip and clicking × restores the full catalog; the settings tests cover
+the split and the migration.
 
-### F-31 `[mechanical]` Advanced rows: coverage pips, "est." in the header
-*Where:* `components/ModelExplorer.tsx` (Score cell, cost cell, `Th` for Adjusted Cost),
-`components/BenchmarkSheet.tsx` / model page top-5 table (same "est." rule).
+### F-41 `[judgment]` One evidence rule: hatch on total inputs, pips tell exact from attached
+*Where:* `lib/client-model.ts` (expose `composite_inputs_exact` and `composite_inputs_attached`
+alongside `composite_coverage`), `components/ModelExplorer.tsx` (Score cell, small print),
+`components/BenchmarkSheet.tsx` (Composite headline "2/7 exact inputs · 4 attached" stays).
 *What:*
-- **Score cell:** replace the `n/7 inputs` text sub-label with seven **coverage pips**: a
-  right-aligned row of 7 squares, 4×4 px, 2 px gap, filled `accent` for a present input,
-  `border-line` hollow for a missing one; rendered only when the Composite is the active
-  score and coverage < 7; `title` and `aria-label` = "5 of 7 Composite inputs". The hatch
-  rule for < 3 inputs is unchanged. Nothing is rendered at 7/7.
-- **Cost header:** "Adjusted Cost" gets the same sub-label pattern as Score: a muted 11 px
-  `(modeled $/task)` on the second header line. Remove the `est.` suffix from every cost
-  cell in the overview (both modes) and from the model page's top-5 and per-platform
-  tables (`/task est.` → `/task`). The orange **`assumed task`** flag stays exactly as it is.
-- **Cost (i):** first sentence becomes *"Every adjusted cost is a modeled estimate: …"* so
-  the word "estimate" is still on the page.
-*Accept:* in Advanced no cell contains the string `est.` and no cell contains `/7 inputs`;
-rows with coverage < 7 show a 7-pip row (`[aria-label$="Composite inputs"]`); the Adjusted
-Cost header contains "(modeled $/task)"; the "assumed task" flag is still present on the
-Fable 5 (high) row; Simple is unchanged apart from the header sub-label and the missing
-`est.`; the model page top-5 table shows `$4.378 /task` for Claude Opus 5 (high).
+- **Hatch** (`thin`) when `exact + attached < 3`, not when `exact < 3`. Muted value text follows
+  the same rule.
+- **Pips** (Advanced only, as F-31): exact input = filled accent square; attached input =
+  accent outline with a 50 % fill (`bg-accent/40 border-accent`); missing = hollow `border-line`.
+  `title`/`aria-label` = "2 exact + 4 attached of 7 Composite inputs". Nothing at 7/7 exact.
+- **Simple:** no pips (unchanged). When at least one visible row is hatched, the small print
+  gains one clause at the end: *"· Striped score = built on fewer than 3 of 7 inputs"*. A hatched
+  Simple bar gets `title="Composite built on n of 7 inputs"`.
+- The Score (i) text gains one sentence: *"Attached values come from the same model family
+  when a configuration was not measured itself; the model page marks them."*
+*Accept:* in a fresh Simple no flagship row (Fable 5.1, Opus 5, Kimi K3, Grok 4.6, GLM-5.3) is
+hatched; Advanced rows with fewer than 3 total inputs are still hatched (count > 0 today);
+`[aria-label*="attached of 7"]` exists on the Fable 5.1 row; the small-print clause appears only
+when a hatched row is on screen; `npm test` has a case for a model with 2 exact + 4 attached
+(not thin) and one with 2 exact + 0 attached (thin).
 
-### F-35 `[judgment]` Compare: a release-post table, not a provenance dump
-*Where:* `components/CompareView.tsx` (full benchmark table, radar axis table),
-`components/BenchmarkSheet.tsx` (reuse the F-08b row pattern).
+### F-42 `[mechanical]` Phone Simple: sliders stacked, caption on one line
+*Where:* `components/ShortlistControls.tsx` (and the F-13 grid in `ModelExplorer.tsx`).
+*What:* below `sm` the two sliders stack vertically, each full width (the map keeps its 200 px
+below them). Each caption is one line: label + `(Composite)` + (i) on the left, the value
+right-aligned on the same baseline, in `whitespace-nowrap`; if the label still cannot fit at
+390 px, the phone label reads **"Min. capability score"** / **"Max cost / task"** and the full
+R5.7 wording stays in `aria-label` and in the (i). Histogram height and end labels unchanged.
+*Accept:* at 390 px each slider caption is ≤ 24 px tall and its value sits on the caption line;
+the shortlist card is ≤ 900 px tall including the map; desktop is unchanged.
+
+### F-43 `[judgment]` Benchmaxxing radar: show the measured shape, not the missing one
+*Where:* `components/BenchmaxxingReport.tsx` (radar, sector labels, legend line).
 *What:*
-- **Full benchmark table:** one row per benchmark version, one column per model. A cell is
-  the native value (bold if best in row, cell tinted `accent/8` as the green tint is today
-  — use the accent, not green, unless "best" means "cheaper") plus a 4 px percentile bar
-  beneath it (catalog percentile, same as the model page sheet). "measured" badges, source
-  links, observed dates and the Evidence disclosure move into a **per-row expand** (chevron
-  at the row start, F-08b pattern). "Unknown / no published match" cells render `—`.
-- **Radar axis table** under the Benchmark radar becomes a disclosure "Axis values and
-  normalisation" (closed by default).
-- **"Where each model is strongest"** stays as it is — it is the best block on the page.
-- Category headings stay; the "Find a benchmark" search and category select stay.
-- Unusual-results panels at the end: render only for models that have a flag; drop the
-  "Protocol-compatible …" paragraph (F-36 rule).
-*Accept:* `/compare` with GPT-5.6 Sol (high) vs Claude Sonnet 5 (high) is ≤ 3,500 px at
-1440 px and ≤ 6,000 px at 390 px; the string "observed 2026-" appears 0 times outside an
-open expand; each row shows one bar per model with a value; the best value per row is bold.
+- **Default = measured axes only.** The radar's axes are the benchmarks this model has a result
+  for (29 for Gemini 3.1 Pro Preview today), ordered clockwise by topic; the 214-axis view stays
+  behind a toggle **"Show all 214 axes"** (off by default).
+- **Every topic with ≥ 2 measured axes is its own sector** with its own label and a light tint
+  from the topic palette; topics with one measured axis are grouped as "Other" *and* listed in
+  the legend line as now. No sector may cover more than 50 % of the ring unless it has more than
+  half of the axes.
+- **Line:** one closed polygon through the measured axes of each topic (topic-local, as F-07),
+  sectors separated by a 2° gap; within a topic the polygon is filled `accent/15`. Dots stay.
+- **Signal card** unchanged. Under the radar, replace the two-line note with one sentence:
+  *"Axes are the n benchmarks this model has results for, grouped clockwise by topic; a jagged
+  outline inside one topic is the Benchmaxxing pattern."*
+*Accept:* `/benchmaxxing` default radar has exactly as many spokes as "measured" in the selector
+(29/214 → 29); ≥ 5 labelled sectors for that model; the toggle shows 214; at 390 px labels stay
+≥ 10 px (F-33 holds); the topic-local polygons render for each sector with ≥ 2 axes.
 
-### F-33 `[mechanical]` Benchmaxxing: card self-height, readable phone sector labels — delegated (Kimi K3, `.worktrees/f33`)
-*Where:* `components/BenchmaxxingReport.tsx`.
-*What:* the `<aside>` signal card gets `self-start`; the radar's topic labels leave the SVG
-and become absolutely positioned HTML spans (11 px) over a `relative` wrapper, positioned by
-`x/size`, `y/size` percentages, so they keep 11 px at 316 px as well as at 640 px.
-*Accept:* at 1440 px the signal card is ≤ 360 px tall; at 390 px the labels "Writing",
-"Agentic", "Coding" have a rendered height ≥ 10 px; no label overlaps the plot.
+### F-44 `[judgment]` Compare: one picker row, one radar caption, ≤ 4,000 px
+*Where:* `components/CompareView.tsx`.
+*What:* the "Build your comparison" sidebar becomes a single **picker row** above the content:
+up to four compact model chips (colour dot · name · ×) plus one "Add a model" combobox that
+searches; the "Benchmark sheet ↗" link moves into each chip's hover/expand. The radar's
+three-line caption ("Each version uses its measured catalog minimum → 0 …") becomes an (i) next to
+the "Benchmark radar" title; the axis table under the radar stays a closed disclosure (F-35).
+"Where each model is strongest" stays first after the radar. The "View radar ↓ / Full benchmark
+table ↓" jump links go.
+*Accept:* `/compare` with the default two models is ≤ 4,000 px at 1440 px and ≤ 7,000 px at
+390 px; the picker is one row at 1440 px; removing and adding a model works by keyboard;
+no regression in `bin/verify-f35.mjs`.
 
-### F-34 `[mechanical]` Benchmarks page: one coverage line, a bar per result — delegated (Kimi K3, `.worktrees/f34`)
-*Where:* `components/BenchmarkRanking.tsx`.
-*What:* the three stat boxes become one sentence (`636 of 839 catalog configurations have a
-result · unit: points · higher is better`), with "· n source identities not yet matched"
-only when n > 0; the "Include unmatched source identities" checkbox appears only when n > 0;
-the status line is `636 results`; each Result cell gets a 4 px accent bar relative to the
-top value (omitted for Elo units, where a bar from zero says nothing); the first row's model
-name is semibold.
-*Accept:* `/benchmarks` shows no "Source identities not yet matched" box for AA Intelligence
-Index, no "Coverage above uses" sentence, ≥ 25 bars in the ranking; page height at 1440 px
-≤ 2,700 px.
-
-### F-36 `[mechanical]` Model page: say nothing when there is nothing to say
-*Where:* `components/BenchmarkEvidence.tsx` (AnomalySummary), `components/ModelDetailOffers.tsx`
-(GitHub Copilot card).
-*What:* the "Protocol-compatible measured/vendor divergences" heading and its "No verified
-protocol-compatible vendor/measured pair is available for this model; agreement cannot be
-assessed." sentence render only when at least one pair exists (then keep the wording). The
-lone "GitHub Copilot" card gets the eyebrow **Subscription plan** above its title and moves
-directly above "Token offers by platform".
-*Accept:* `/models/claude-opus-5%3A%3Ahigh` body text does not contain "Protocol-compatible";
-the Copilot card has the eyebrow and sits above the token offers disclosure.
-
-### F-37 `[mechanical]` Subscriptions list: neutral badges, footnote for uncollected plans
-*Where:* the "Would a subscription be cheaper?" component on `/` (`components/Subscription*.tsx`).
-*What:* "Personal use only" and "Company use unclear" become neutral `bh-badge` chips (muted
-text, `border-line`), not orange text. Plans whose price and quota were not collected
-(ChatGPT Plus / Pro, SuperGrok) leave the table and become one muted footnote line under it:
-*"Not collected: ChatGPT Plus / Pro, SuperGrok — the vendor sites refuse automated reads."*
-When "I'm buying for a company" is on, plans that companies may not use are hidden (as now)
-and the header count says so (`9 plans · 5 hidden for company use`).
-*Accept:* no orange (`text-warn`) text inside the disclosure; the words "not collected" occur
-once, in a footnote; the row count drops by two.
-
-### F-38 `[mechanical]` Simple: label and small print
-*Where:* `components/ShortlistControls.tsx`, `components/ModelExplorer.tsx` (small print).
-*What:* slider label "Minimum Composite" → **"Minimum score"** with `(Composite)` in 11 px
-muted after it (same pattern as the table header; follows the score selector). Small print
-under the Simple table becomes one line: *"Underlined prices open their inputs and sources ·
-How we calculate adjusted cost · Only models with measured task-token usage are ranked here;
-Advanced can relax that."*
-*Accept:* the Simple card shows "Minimum score"; the small print is a single paragraph ≤ 200
-characters with the methodology link intact.
+### F-45 `[mechanical]` Small cuts
+*Where:* `components/BenchmarkRanking.tsx`, `components/ModelExplorer.tsx` (Advanced toolbar).
+*What:* (a) `/benchmarks`: drop the "Explore" column; the row's model name becomes the link to
+the model page and "Compare ↗" moves into the per-row expand. (b) Advanced toolbar: "Better than
+a model ▾" and "Evidence ▾" keep their popovers but get the same 36 px height, border and font
+as the search field and the org select, so the toolbar is one visual row of equal controls.
+*Accept:* `/benchmarks` table has 3 columns at 1440 px (Rank · Model · Result); the Advanced
+toolbar controls all measure 36 px tall.
 
 ---
 
@@ -296,7 +335,11 @@ Live revision `0e7380c`, script `ops/ux-2026-09-12/bin/verify-directives-indep.m
 | F-28 slider histograms visible + range end labels; Evidence button neutral by default | `74b5a2d` (Claude Opus) | same | live: 4 end labels, no accent-filled button in a fresh Advanced session; needs a non-Claude verifier |
 | F-29 dark-mode value-map labels (`fill="var(--text)"`) | `2e4abce` (Fable, pass 4) | `ux-evidence/fable-20260913-pass4/checks/` | needs a non-Fable verifier: label fill ≠ rgb(0,0,0) in dark |
 | F-30 Guided no longer resets Simple's floor (`resetMinScore` on mount) | `2e4abce` + `9840328` (Fable, pass 4) | same | needs a non-Fable verifier: Simple shows 85 / 6 rows after Guided → Simple |
-| F-35 Compare release-post table: compact native values, percentile bars and one evidence expand per benchmark row | `085207b` (Codex Luna) | `ux-evidence/iter25-f35-live/{canonical,legacy}/verification.json` and `iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
-| F-36 Model page: suppress empty protocol-divergence copy; label Copilot card | `085207b` (Codex Luna) | `ux-evidence/iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
-| F-37 Subscription list: neutral verdict chips and one uncollected-plan footnote | `085207b` (Codex Luna) | `ux-evidence/iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
-| F-38 Simple score caption and one-line explanatory small print | `085207b` (Codex Luna) | `ux-evidence/iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
+| F-35 Compare release-post table: compact native values, percentile bars and one evidence expand per benchmark row | `085207b` (Codex Luna) | `ux-evidence/iter25-f35-live/{canonical,legacy}/verification.json`; `ux-evidence/fable-20260913-pass5/verify-f31-f38/` | **verified by Fable (pass 5):** 0 "observed 2026-" outside expands, 23 rows each with bars and a bold best value, both widths |
+| F-36 Model page: suppress empty protocol-divergence copy; label Copilot card | `085207b` (Codex Luna) | `ux-evidence/fable-20260913-pass5/verify-f31-f38/` | **verified by Fable (pass 5):** no "Protocol-compatible", Copilot eyebrow above token offers, both widths |
+| F-37 Subscription list: neutral verdict chips and one uncollected-plan footnote | `085207b` (Codex Luna) | `ux-evidence/fable-20260913-pass5/verify-f31-f38/` | **verified by Fable (pass 5):** no `text-warn` in the disclosure, "not collected" once, both widths |
+| F-38 Simple score caption and one-line explanatory small print | `085207b` (Codex Luna) | `ux-evidence/fable-20260913-pass5/verify-f31-f38/` | **verified by Fable (pass 5):** small print 167 chars with the methodology link; caption wording superseded by R5.7 ("Minimum Capability Score (Composite)") |
+| F-31 coverage pips, "est." out of the cells, "(modeled $/task)" header | `e57fa3a` (Codex Luna) | `ux-evidence/fable-20260913-pass5/verify-f31-f38/` | **verified by Fable (pass 5):** 101/101 Advanced rows carry a pip row, 0 cells with `est.` or `/7 inputs`, header sub-label present, both widths; rule refined by F-41 |
+| F-32 exact vs attached Composite inputs, benchmark-count invariant | `e57fa3a` (Codex Luna) | same | **verified by Fable (pass 5):** `# benchmarks ≥ exact inputs` on all 101 rows; Opus 5 page says "2/7 exact inputs · 4 attached"; the hatch consequence is F-41 |
+| F-33 Benchmaxxing card self-height, HTML sector labels | `efa17f9` (Codex Luna) | same | **verified by Fable (pass 5):** card 326 px at 1440; labels 16 px tall at 390; no overflow |
+| F-34 Benchmarks page: one coverage line, a bar per result | `efa17f9` (Codex Luna) | same | **verified by Fable (pass 5):** coverage sentence present, no stat boxes, 25 bars, both widths |
