@@ -125,15 +125,6 @@ test('computePairStats keeps only gated pairs in both directions', () => {
   assert.equal(out.get('a|flat'), undefined, 'zero variance excluded');
 });
 
-test('fitPair rejects degenerate and non-finite inputs', () => {
-  assert.equal(fitPair([1, 2], [1, 2]), null, 'n<3 rejected');
-  assert.equal(fitPair([1, 2, 3], [1, 2]), null, 'length mismatch');
-  assert.equal(fitPair([7, 7, 7], [1, 2, 3]), null, 'constant x');
-  assert.equal(fitPair([5, 5, 5], [5, 5, 5]), null, 'constant y');
-  assert.equal(fitPair([1, 2, NaN], [1, 2, 3]), null, 'non-finite');
-  assert.equal(fitPair([1, 2, 3], [4, Infinity, 6]), null, 'non-finite y');
-});
-
 test('fitPair recovers an exact linear relationship', () => {
   const st = fitPair([0, 1, 2, 3], [3, 5, 7, 9]);
   assert.ok(st);
@@ -339,18 +330,6 @@ test('predictForModel and predictForAxis return null on unknown identifiers', ()
   assert.equal(out.predictions[0].predictor.axisId !== rich.id, true);
 });
 
-test('predictForModel and predictForAxis return null on unknown identifiers', () => {
-  assert.equal(predictForModel(view, maps, evid, stats, 'no-such-model::default'), null);
-  assert.equal(predictForAxis(view, maps, evid, stats, 'no-such-axis'), null);
-  const rich = view.axes.find((a) => (maps.get(a.id)?.size ?? 0) >= 200);
-  assert.ok(rich, 'expected a rich axis');
-  const out = predictForAxis(view, maps, evid, stats, rich.id, { limit: 5 });
-  assert.ok(out);
-  assert.equal(out.predictions.length <= 5, true);
-  assert.ok(out.predictions.length > 0);
-  assert.equal(out.predictions[0].predictor.axisId !== rich.id, true);
-});
-
 test('real-data predictions expose gates, uncertainty and provenance on every row', () => {
   const tops = topPredictions(view, maps, evid, stats, { limit: 8 });
   assert.ok(tops.length > 3);
@@ -385,18 +364,6 @@ test('bottom-decile aggregates on the real dataset honor all qualifications', ()
     assert.ok(ax.models.length >= 1);
     assert.ok(ax.models.every((m) => Number.isFinite(m.value)));
   }
-});
-
-test('predictForModel and predictForAxis return null on unknown identifiers', () => {
-  assert.equal(predictForModel(view, maps, evid, stats, 'no-such-model::default'), null);
-  assert.equal(predictForAxis(view, maps, evid, stats, 'no-such-axis'), null);
-  const rich = view.axes.find((a) => (maps.get(a.id)?.size ?? 0) >= 200);
-  assert.ok(rich, 'expected a rich axis');
-  const out = predictForAxis(view, maps, evid, stats, rich.id, { limit: 5 });
-  assert.ok(out);
-  assert.equal(out.predictions.length <= 5, true);
-  assert.ok(out.predictions.length > 0);
-  assert.equal(out.predictions[0].predictor.axisId !== rich.id, true);
 });
 
 test('topPredictions emits only gated, version-locked, finite estimates', () => {

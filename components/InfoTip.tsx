@@ -43,7 +43,9 @@ export function InfoTip({ title, children, label }: { title: string; children: R
       onMouseEnter={() => precise && setOpen(true)}
       onMouseLeave={() => precise && setOpen(false)}
       onKeyDown={(event) => { if (event.key === "Escape" && precise) setOpen(false); }}
-      className="ml-1 inline-flex h-4 w-4 shrink-0 items-center justify-center rounded-full border border-current/50 text-[10px] font-normal leading-none text-gray-400 align-middle hover:border-accent hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
+      // The global 44px button min-height stretched the 16px circle into a capsule; the
+      // before: layer keeps a 40px tap area without changing how the circle looks.
+      className="relative ml-1 inline-flex h-4 min-h-0 w-4 shrink-0 before:absolute before:-inset-3 before:content-[''] items-center justify-center rounded-full border border-current/50 text-[10px] font-normal leading-none text-gray-400 align-middle hover:border-accent hover:text-accent focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent"
     >
       i
     </button>

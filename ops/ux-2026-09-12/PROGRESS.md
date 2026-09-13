@@ -49,7 +49,7 @@ credited below, the rest is marked open.
 | R1.6 | Fuller methodology section, reachable but not prominent | implemented | `app/about/page.tsx` | `/about` rewritten into anchored sections: #adjusted-cost, #score, #data-policy, #identity |
 | R1.7 | (i) next to Score explaining composition | implemented | `ux-evidence/iter1-live/verification.json` | per-score explanation via `scoreTip()` |
 | R1.8 | (i): desktop hover tooltip, mobile modal with ✕; a11y | implemented | `ux-evidence/iter1-live/verification.json` | desktop: 1 tooltip / 0 dialogs; mobile: dialog with ✕, closes. Branches on `(hover:hover) and (pointer:fine)`, not width |
-| R2.1 | Remove Channels / Top provider channels columns | implemented | `ux-evidence/iter1-live/verification.json` | from `f59c021`; re-checked live — neither column string is rendered |
+| R2.1 | Remove Channels / Top provider channels columns | verified | `ux-evidence/iter1-live/verification.json` | from `f59c021`; re-checked live — neither column string is rendered |
 | R2.2 | Add #benchmarks and #providers columns | implemented | `ux-evidence/iter1-live/verification.json` | now `benchmark_count` from `benchmark_results.coverage.by_model[].available` — observed 14–20, i.e. no longer the 0–5 composite slots |
 | R3.1 | New hero claim (most complete collection + realistic cost) | implemented | `ux-evidence/iter1-live/verification.json` | claim is generated from the dataset (13,924 results · 75 benchmarks · 839 models) so it cannot drift; also in metadata, OG, footer, README, brand SVGs. **Pending Fable 5.1 final wording (X3).** |
 | R4.1 | Redesign the filter bar, elegant and uncluttered | implemented | `ux-evidence/iter1-live/desktop-filters.png` | grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
@@ -75,20 +75,20 @@ credited below, the rest is marked open.
 | R7.1 | New logo in the page | implemented | `ux-evidence/iter2-live/logo-light.png`, `logo-dark.png` | re-drawn as SVG from geometry measured off the JPEG (cloud = 3 circles cut at a flat bottom, 7 treads, 7 measured ray endpoints). Nav wordmark now splits Benchmark / Heaven in ink and brand blue like the artwork |
 | R7.2 | Favicon / apple-touch / og from the new logo | implemented | `ux-evidence/iter2-live/verification-iter2.json` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
 | R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
-| R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
+| R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | **Review 2026-09-13:** default (no selection) `/compare` overflowed a 390 px phone (cards 429 px) — fixed in the review commit, needs re-verify by a non-implementer. `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
 | R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/iter6-refresh-failure/` | Iteration 6 collected all seven live sources successfully in two clean transactions, but both were correctly held before publication because the free live-review workers timed out/incompletely returned on the AA contract in all three bounded rounds. No fresh dataset or deployment claim is accepted. Retry after worker transport recovers. |
-| H1 | Historical snapshots of all benchmark scores | implemented | — | `573ea60`; `benchmark_results.historical` present — needs audit |
-| H2 | Bridged comparison via anchor models, uncertainty reported | implemented | — | `573ea60`; needs multi-hop + re-basing tests |
+| H1 | Historical snapshots of all benchmark scores | open | `REVIEW-20260913T002002Z.md` #1 | review: retained states cover only the 75-entry registry; AA Intelligence/Coding Index, ECI, DesignArena Elo are not retained (the approved AA withdrawal in `716a2b0` dropped a row with no history) |
+| H2 | Bridged comparison via anchor models, uncertainty reported | open | `REVIEW-20260913T002002Z.md` #2 | review: single-hop only (source→target via shared models); no multi-hop chain and no test for it; headline scores not bridgeable until H1 |
 | H3 | UI filter "better than model X in category Y" | open | — | |
-| B1 | Benchmaxxing tab in Advanced | implemented | — | `BenchmaxxExplorer`; needs live verify |
-| B2 | Method identifying strong-on-some / weak-on-others | implemented | — | topic-local percentile jump; critique pending |
-| B3 | Missing scores must not bias the result | implemented | — | coverage suppression; needs test audit |
-| B4 | Benchmaxxing tag in overview table + tab | implemented | `ux-evidence/iter4-live/verification.json` | Overview receives the same deterministic top-decile, coverage-qualified topic-local signal as the dedicated tab; live DOM shows 8 badges after relaxing filters at desktop and mobile. |
-| B5 | Small-print method explanation | implemented | `ux-evidence/iter4-live/verification.json` | Advanced Overview carries a restrained explanation and link to `/benchmaxxing#method`; the dedicated method disclosure is now addressable by that anchor. |
-| B6 | Many-axis radar, similar topics clockwise-adjacent | implemented | — | `BenchmaxxingReport`; needs live verify |
-| B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | — | `test/benchmax-jagged.test.mjs`; needs critique |
+| B1 | Benchmaxxing tab in Advanced | verified | `ux-evidence/review-20260913T002002Z/*-benchmaxxing.png` | review (claude-opus, Hermes-built): 200 at desktop+mobile, light+dark; nav tab; method anchor |
+| B2 | Method identifying strong-on-some / weak-on-others | implemented | `REVIEW-20260913T002002Z.md` #3–4 | topic-local percentile jump; tag quality blocked by B3 |
+| B3 | Missing scores must not bias the result | open | `ux-evidence/review-20260913T002002Z/bm-audit.txt` | review: minMeasured=4, no coverage floor; tag rate 11 % at <3 jumps vs 5.9 % at 8–19; 28/58 tags rest on ≤2 jumps, one on a single jump |
+| B4 | Benchmaxxing tag in overview table + tab | open | `ux-evidence/iter4-live/verification.json` | Overview receives the same deterministic top-decile, coverage-qualified topic-local signal as the dedicated tab; live DOM shows 8 badges after relaxing filters at desktop and mobile. **Review: back to open** — the badge is live but ranks by the coverage-biased score of B3 |
+| B5 | Small-print method explanation | verified | `ux-evidence/iter4-live/verification.json` | Advanced Overview carries a restrained explanation and link to `/benchmaxxing#method`; the dedicated method disclosure is now addressable by that anchor. |
+| B6 | Many-axis radar, similar topics clockwise-adjacent | verified | `ux-evidence/review-20260913T002002Z/desktop_light-benchmaxxing-full.png` | review: 214-axis radar live in all 4 combos, topic-grouped, gaps for missing; mobile overflow fixed in the review commit |
+| B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4 | test proves zig-zag > smooth specialisation; critique: alphabetical within-topic order and top-end percentile compression favour flagging mid-field models — revisit with B3 |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
-| X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; needs a recorded check |
+| X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
 | X3 | Fable 5.1 design passes happened and were implemented | open | — | no `DESIGN-DIRECTIVES.md` yet |
 | X4 | UI meets the design bar | open | — | |
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | open | — | |
@@ -97,13 +97,13 @@ credited below, the rest is marked open.
 | D1 | Blend default 20 is not a selectable option | implemented | `ux-evidence/iter1-live/verification.json` | blend 20 is a real option; settings key bumped to v7 to discard the broken payload |
 | D2 | Reset restores `excludeChinese = true` against its default | implemented | `components/GlobalFilters.tsx` | Reset restores every documented default; `defaultMinFor("composite")` is now 85 so a clean page is not reported as modified |
 | D3 | `#benchmarks` shows composite slots, not benchmark count | implemented | `ux-evidence/iter1-live/verification.json` | see R2.2 |
-| E1 | ECI (general + software engineering) into the Composite, with scraping recipe in the update mechanism | implemented | `ux-evidence/iter3-live/eci-verification.json` | Epoch AI source collected 264 general / 101 software rows; 130 families mapped conservatively, 134 source models retained unmatched. Composite is now seven equal native/percentile-normalized slots; source and H2 recompute provenance are documented. Awaiting independent-engine verification. |
+| E1 | ECI (general + software engineering) into the Composite, with scraping recipe in the update mechanism | verified | `ux-evidence/iter3-live/eci-verification.json` | Epoch AI source collected 264 general / 101 software rows; 130 families mapped conservatively, 134 source models retained unmatched. Composite is now seven equal native/percentile-normalized slots; source and H2 recompute provenance are documented. Awaiting independent-engine verification. |
 | E2 | Secondary/community benchmarks (Vals AI, CursorBench, Apprentice Bench, DeepSWE, FrontierBench, RealSWE, 2 X threads) — NOT in the Composite | open | — | check `data/raw/benchmarks/` and `bfeada7` first; Real-SWE looks already ingested |
 | E3 | Collection method order: official API/export → structured page data → static HTML → the page's own network calls | open | — | recipes go into the skills and the daily refresh. The R4.10 collector added this iteration already follows it (SSR HTML, robots-allowed, one request, self-verifying) |
 | P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | open | — | reviewer must be a different engine than the author |
 | P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | open | — | AA is the named reference comparator |
 | P3 | Do not stop before P2 is achieved | open | — | |
-| P4 | Positioning claims only in a form the live coverage numbers support | implemented | `app/layout.tsx`, `app/page.tsx` | hero counts are generated from the dataset; the meta description's "most complete … anywhere" superlative was removed this iteration |
+| P4 | Positioning claims only in a form the live coverage numbers support | open | `REVIEW-20260913T002002Z.md` #6 | review: live hero "Every benchmark result for every model" over-reaches (6 of 75 registry benchmarks without results; AA/ECI indices outside the registry). Earlier note: | hero counts are generated from the dataset; the meta description's "most complete … anywhere" superlative was removed this iteration |
 | F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | open | — | Fable 5.1 design passes judge against exactly this |
 | C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly |
 
@@ -353,3 +353,15 @@ Notes for whoever picks this up:
     forbidden `/home/flori/.agent-budget.json` access and produced no trusted diff. No delegated
     output shipped. R9.1 returns to **open** pending worker transport recovery; this engine does
     not mark any item **verified**.
+
+- **2026-09-13 · review gate · claude-opus** — `REVIEW-20260913T002002Z.md`. Reviewed
+  `9c5fa40..8681fa5` against the verbatim requirements; re-checked live on
+  https://benchmarkheaven.com at desktop + mobile, light + dark (38 screenshots,
+  `ux-evidence/review-20260913T002002Z/`).
+  - **verified** (built by other engines): R2.1, B1, B5, B6, E1.
+  - **back to open:** H1 (history misses AA indices/ECI/Elo), H2 (no multi-hop), B3 + B4
+    (tag rate halves as coverage grows; 28/58 tags on ≤2 jumps), P4 (hero over-reaches).
+  - Claude-built items that pass live stay `implemented` — they need a non-Claude verifier.
+  - Fixed directly: mobile page overflow on `/compare` and `/benchmaxxing`, (i) capsule glitch,
+    identical duplicate tests. Gates: build-dataset ✓, npm test 244/244 ✓, tsc ✓, next build ✓.
+  - Not ALL-ACCEPTED. Next: B3/B4 ranking fix, H1/H2, the first Fable 5.1 pass (X3), R9.1.
