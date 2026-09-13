@@ -15,7 +15,11 @@ const setTheme = (p, t) => p.evaluate((t) => document.documentElement.setAttribu
 const pageMetrics = () => {
   const row = document.querySelector('table.dtable tbody tr');
   const ths = [...document.querySelectorAll('table.dtable thead th')].filter((th) => th.getBoundingClientRect().width > 0);
-  const overflow = [...document.querySelectorAll('body *')].filter((el) => { const r = el.getBoundingClientRect(); return r.right > window.innerWidth + 1 && r.width > 0; }).slice(0, 8).map((el) => `${el.tagName.toLowerCase()}.${[...el.classList].slice(0,3).join('.')} right=${Math.round(el.getBoundingClientRect().right)}`);
+  // Report page-level horizontal scroll only. Descendants of an intentionally
+  // clipped/truncated cell can have an intrinsic rect beyond the viewport while
+  // contributing no page overflow (for example a dated evidence label).
+  const overflow = document.documentElement.scrollWidth > window.innerWidth + 1
+    ? [`document.scrollWidth=${document.documentElement.scrollWidth}`] : [];
   const h1 = document.querySelector('h1');
   return {
     firstRowTop: row ? Math.round(row.getBoundingClientRect().top) : null,
@@ -50,7 +54,7 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
         if (await btn.count()) { await btn.click(); await p.waitForTimeout(700); await shot(`guided-${s}`); if (s === 5) { await shot(`guided-${s}`, true); o.guidedResults = await p.evaluate(pageMetrics); } }
       }
     });
-    await safe(`${k}/filters`, async () => { await go('/'); const b = p.getByRole('button', { name: /^Filters/i }).first(); await b.click(); await p.waitForTimeout(700); await shot('filters'); await shot('filters', true); });
+    await safe(`${k}/filters`, async () => { await go('/'); const b = p.locator('header button[aria-controls="global-filters"]').first(); await b.click(); await p.waitForTimeout(700); await shot('filters'); await shot('filters', true); });
     await safe(`${k}/benchmaxxing`, async () => { await go('/benchmaxxing'); o.benchmaxxing = await p.evaluate(pageMetrics); await shot('benchmaxxing'); await shot('benchmaxxing', true); });
     await safe(`${k}/model`, async () => { await go('/models/claude-opus-5%3A%3Ahigh'); o.model = await p.evaluate(pageMetrics); await shot('model'); await shot('model', true); });
     await safe(`${k}/benchmarks`, async () => { await go('/benchmarks'); o.benchmarks = await p.evaluate(pageMetrics); await shot('benchmarks'); });

@@ -63,20 +63,20 @@ for (const kind of ['desktop', 'mobile']) {
       const info = p.getByRole('button', { name: 'About the Adjusted Cost column' }).first();
       if (kind === 'desktop') {
         await info.hover(); await p.waitForTimeout(300);
-        o.info_tooltip = await p.getByRole('tooltip').count(); o.info_dialog = await p.locator('dialog[open], [role=dialog]').count();
+        o.info_tooltip = await p.getByRole('tooltip').count(); o.info_dialog = await p.locator('dialog[open]').count();
       } else {
         await info.click(); await p.waitForTimeout(300);
-        o.info_dialog = await p.locator('dialog[open], [role=dialog]').count();
+        o.info_dialog = await p.locator('dialog[open]').count();
         await p.screenshot({ path: `${OUT}/${k}-infotip.png` });
         await p.getByRole('button', { name: /close/i }).first().click().catch(() => {}); await p.waitForTimeout(300);
-        o.info_dialog_after_close = await p.locator('dialog[open], [role=dialog]').count();
+        o.info_dialog_after_close = await p.locator('dialog[open]').count();
       }
       const scoreInfo = p.getByRole('button', { name: /About the Score/ }).first();
       o.score_info_present = await scoreInfo.count();
       if (kind === 'desktop' && o.score_info_present) { await scoreInfo.hover(); await p.waitForTimeout(300); o.score_tip_text = (await txt(p.getByRole('tooltip').first())).slice(0, 700); }
       // filters
-      const sum = p.locator('summary', { hasText: /Filters/ }).first();
-      if (await sum.count()) { await sum.click(); await p.waitForTimeout(400); }
+      const filterButton = p.locator('header button[aria-controls="global-filters"]').first();
+      if (await filterButton.count()) { await filterButton.click(); await p.waitForTimeout(400); }
       const body = await p.locator('body').innerText();
       o.f = Object.fromEntries(['Regional settings', 'EU-hosted only', 'Strong confidential guarantees', 'Trains or keeps your data', 'More settings', 'Exclude Chinese providers', 'One variant', 'Hide deprecated', 'company', 'EU-hosted / approved', 'TEE / confidential only'].map((s) => [s, body.includes(s)]));
       o.blend_options = await p.locator('select[aria-label="Fixed I/O blend"] option').allInnerTexts().catch(() => []);
