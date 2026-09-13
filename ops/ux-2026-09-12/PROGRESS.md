@@ -82,14 +82,14 @@ credited below, the rest is marked open.
 | H3 | UI filter "better than model X in category Y" | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter10-h3/verification.json` | Advanced-only folded filter supports exact benchmarks and category medians; measured values win, explicit bridge estimates are marked approximate, and missing values stay unknown. Live on both hosts in desktop/mobile light/dark; independent-engine verification remains required. |
 | B1 | Benchmaxxing tab in Advanced | verified | `ux-evidence/review-20260913T002002Z/*-benchmaxxing.png` | review (claude-opus, Hermes-built): 200 at desktop+mobile, light+dark; nav tab; method anchor |
 | B2 | Method identifying strong-on-some / weak-on-others | implemented | `REVIEW-20260913T002002Z.md` #3–4 | topic-local percentile jump; tag quality blocked by B3 |
-| B3 | Missing scores must not bias the result | implemented | `ux-evidence/iter7-b3/bm-audit-after.txt`, `ux-evidence/iter7-b3/live/verification.json` | **Iteration 7 (`004f8dc`):** score = within-topic mean absolute percentile difference over *all* measured pairs (order-independent), weighted by n−1; published only with ≥ 6 related comparisons over ≥ 2 topics; shrunk toward the catalog mean by n/(n+k), k by empirical Bayes (min 2). Real data: 174 scored / 18 tagged (was 574 / 58); tagged 3/21 at 6–7 comparisons, 5/74 at 8–10, 0/36 at 11–13, 10/43 at ≥ 14 — no longer falling with coverage; minimum comparisons among tagged = 6. Tests: floor, order invariance, synthetic equal-noise catalog, real-data "rate must not collapse with coverage". Live 174/18 at desktop + mobile |
-| B4 | Benchmaxxing tag in overview table + tab | implemented | `ux-evidence/iter7-b3/live/verification.json` | one shared `benchmaxxingSignals()` feeds the overview badge and `/benchmaxxing` (18 badges in the top-25 table live, both widths, no overflow). Needs a non-Claude verifier |
+| B3 | Missing scores must not bias the result | verified | `ux-evidence/iter11-f07/b3-live/verification.json` + `ux-evidence/iter7-b3/bm-audit-after.txt` | **Iteration 7 (`004f8dc`):** score = within-topic mean absolute percentile difference over *all* measured pairs (order-independent), weighted by n−1; published only with ≥ 6 related comparisons over ≥ 2 topics; shrunk toward the catalog mean by n/(n+k), k by empirical Bayes (min 2). Real data: 174 scored / 18 tagged (was 574 / 58); tagged 3/21 at 6–7 comparisons, 5/74 at 8–10, 0/36 at 11–13, 10/43 at ≥ 14 — no longer falling with coverage; minimum comparisons among tagged = 6. Tests: floor, order invariance, synthetic equal-noise catalog, real-data "rate must not collapse with coverage". Codex independently re-checked both widths live: 174 qualified / 18 tagged, floor note present, no overflow. |
+| B4 | Benchmaxxing tag in overview table + tab | verified | `ux-evidence/iter11-f07/b3-live/verification.json` | one shared `benchmaxxingSignals()` feeds the overview badge and `/benchmaxxing`; Codex independently re-checked 18 badges in the top-25 table at desktop and mobile, both without overflow. |
 | B5 | Small-print method explanation | verified | `ux-evidence/iter4-live/verification.json` | Advanced Overview carries a restrained explanation and link to `/benchmaxxing#method`; the dedicated method disclosure is now addressable by that anchor. |
 | B6 | Many-axis radar, similar topics clockwise-adjacent | verified | `ux-evidence/review-20260913T002002Z/desktop_light-benchmaxxing-full.png` | review: 214-axis radar live in all 4 combos, topic-grouped, gaps for missing; mobile overflow fixed in the review commit |
 | B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4, `test/benchmax-jagged.test.mjs` | zig-zag > smooth specialisation still proven. Iteration 7 removed the alphabetical-order critique (all-pairs spread, order-invariance test). **Remaining, documented on `/benchmaxxing#method`:** percentiles are bounded, so a model at the top of most boards has less room to vary than a mid-field one |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
 | X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
-| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed; F-02…F-12 open for implementers |
+| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913/`, `ux-evidence/iter11-f07/f07-live/verification.json` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed, F-07 radar geometry/default fallback implemented here. F-02…F-06 and F-08…F-12 remain open or require independent verification. F-07's ≥40-axes acceptance is blocked by the current catalog's maximum measured coverage of 29/214; the verifier records the honest fallback rather than fabricating coverage. |
 | X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict" | fails today on: key message below the fold, no chart in Simple, jargon on the surface, unreadable 214-axis radar, Advanced opening on 6 rows — each has a directive |
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | implemented | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`; `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json` | Documents the six history-only headline boards and the multi-hop API projection; committed in `33a1963` and served on both live hosts. |
 | X6 | Final line-by-line completeness audit | open | — | |
@@ -104,7 +104,7 @@ credited below, the rest is marked open.
 | P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | open | — | AA is the named reference comparator |
 | P3 | Do not stop before P2 is achieved | open | — | |
 | P4 | Positioning claims only in a form the live coverage numbers support | implemented | `DESIGN-DIRECTIVES.md` §R3.1 | superlative "every benchmark result" removed; "most complete" is backed by the generated counts line under the H1; "only place … really costs you" is Florian's explicit ask — carry to X7 |
-| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md` | Fable pass judged against exactly this bar; see Verdict section |
+| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter11-f07/f07-live/verification.json` | Fable pass judged against exactly this bar; this iteration materially improves the Benchmaxxing radar, but the ≥40-axis default acceptance remains open because no current model reaches it. |
 | C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly |
 
 ---
@@ -544,3 +544,31 @@ Notes for whoever picks this up:
   - H3 remains `implemented`, not `verified`, because the one-writer rule requires a different
     engine to make the verification decision. R9.1, R6.3, E2/E3, P1/P2, X2, X3, X4 and X6/X7
     remain open or in progress as recorded above.
+
+- **2026-09-13 · iteration 11 · codex-luna** — F-07 Benchmaxxing radar readability and independent
+  coverage verification.
+  - Updated `BenchmaxxingReport` with topic-colored outer-ring sectors and horizontal labels,
+    spokes that start at 18% radius only for measured axes, low-opacity ticks for missing axes,
+    topic-local measured lines, five-pixel accent points, and native-value/percentile/date tooltips.
+    The overview now includes numeric domain/measured columns and a 20×12 topic-mean sparkline.
+  - The selector is sorted by measured coverage and prints `measured/total`; the initial model
+    prefers the highest Composite among models with ≥40 measured axes. A fresh local audit found
+    **zero** such models in the current 214-axis catalog (maximum 29), so the live page uses and
+    records the highest-coverage fallback rather than claiming the impossible threshold.
+  - `groupedRadarProfile` now carries the exact native value and observed date only for the same
+    measured, non-low-sample row that produced the percentile; no benchmark number was invented.
+  - Gates: `node scripts/build-dataset.mjs` ✓ (timestamp-only output discarded), `npm test` 261/261 ✓,
+    `npx tsc --noEmit -p .` ✓, `npm run build` ✓, `git diff --check` ✓.
+  - Commit `a21eec3` pushed; automatic Sandy deployment `v6g1dvkqge3tdx3wps4agvge` finished for
+    the exact revision. Direct live browser evidence covers both canonical and legacy hosts at
+    desktop 1440×1000 and mobile 390×844 (light/dark pair used by the portable verifier), with
+    214 lines, 16 sectors, native tooltips and no horizontal overflow:
+    `/opt/benchmarkheaven/state/ux-evidence/iter11-f07/f07-live/verification.json`.
+  - Codex also independently re-ran `verify-b3-live.mjs`: 174 coverage-qualified / 18 tagged,
+    the ≥6-comparison/≥2-topic floor appears in the method, badges are present at both widths,
+    and `Advanced` preserves its full-catalog state without overflow:
+    `/opt/benchmarkheaven/state/ux-evidence/iter11-f07/b3-live/verification.json`.
+  - No foreign writer was found. The broad review harness completed with four pre-existing
+    Advanced-tab click timeouts but still recorded all four theme/width Benchmaxxing checks;
+    raw evidence is retained under `iter11-f07/review/` rather than hidden. Codex quota was 66%
+    at the iteration boundary; no API-key billing was used.
