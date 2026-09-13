@@ -51,7 +51,7 @@ credited below, the rest is marked open.
 | R1.8 | (i): desktop hover tooltip, mobile modal with ✕; a11y | verified | `ux-evidence/review-20260913T110002Z/broad-fixed-{canonical,legacy}/verification.json` | Codex rechecked desktop tooltip and mobile open/close: `dialog[open]` is 0 after close |
 | R2.1 | Remove Channels / Top provider channels columns | verified | `ux-evidence/iter1-live/verification.json` | from `f59c021`; re-checked live — neither column string is rendered |
 | R2.2 | Add #benchmarks and #providers columns | verified | `ux-evidence/review-20260913T110002Z/broad-fixed-{canonical,legacy}/verification.json` | Current Simple and Advanced tables expose both columns; source code uses full benchmark coverage, not Composite slots |
-| R3.1 | New hero claim (most complete collection + realistic cost) | in-progress | `ux-evidence/fable-20260913-pass6/`, `ux-evidence/review-20260913T205002Z/broad-{canonical,legacy}/verification.json`, `DESIGN-DIRECTIVES.md` "Decisions in pass 6" | Iteration 35 is replacing the unsupported exclusive wording with a source-linked, coverage-qualified claim and will update metadata/OG/footer consistently. Artificial Analysis also exposes a per-model Cost per Task; no exclusive “only place” claim will ship without evidence. |
+| R3.1 | New hero claim (most complete collection + realistic cost) | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter35-live-{canonical,legacy}/verification.json` and `api-meta.json` | Live on both hosts at `f98a23d`: “A complete, source-linked collection of AI model benchmarks. Realistic modeled cost per task, grounded in provider prices, caching, and token efficiency.” The unsupported exclusive comparison was removed from hero, metadata, footer and OG asset; independent review still required before `verified`. |
 | R4.1 | Redesign the filter bar, elegant and uncluttered | verified | `ux-evidence/review-20260913T110002Z/agent-browser-filters.png`, `broad-fixed-{canonical,legacy}/verification.json` | Current live filter sheet is grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
 | R4.2 | Fixed I/O blend: add 20:1 (default) and 30:1 | verified | `ux-evidence/review-20260913T110002Z/broad-fixed-{canonical,legacy}/verification.json` | Current live options include 20:1 and 30:1; selected value is 20 |
 | R4.3 | "One variant for Reasoning models" → extra settings | verified | `ux-evidence/review-20260913T110002Z/agent-browser-filters.png` | Current live sheet places the setting under More settings |
@@ -65,7 +65,7 @@ credited below, the rest is marked open.
 | R4.11 | Evidence/provider/task-token toggles → extra settings | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Current live Advanced controls show Evidence and Better than a model as the compact evidence popovers |
 | R5.1 | Simple (start) + Advanced mode | verified | `ux-evidence/review-20260913T110002Z/broad-fixed-{canonical,legacy}/verification.json` | Current live loads Simple selected and exposes all three modes |
 | R5.2 | Simple: top 15 featured, sorted by adjusted cost descending | verified | `ux-evidence/review-20260913T161002Z/{broad-fixed-canonical,broad-fixed-legacy}/verification.json` | Current live shows 7 qualified featured rows (within the top-15 cap) and the adjusted-cost descending header; the score/token/provider filters legitimately reduce the visible set. |
-| R5.3 | Score slider, default > 85 | in-progress | `ux-evidence/review-20260913T205002Z/broad-{canonical,legacy}/verification.json` | Iteration 35 is changing the untouched Composite default to 86, updating score-aware reset semantics and acceptance checks. The authoritative requirement is literal `>85`; the prior ≥85 reinterpretation is retired. |
+| R5.3 | Score slider, default > 85 | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter35-live-{canonical,legacy}/verification.json` and `test/settings-state.test.mjs` | Live Simple loads at `86` in all four viewport/theme combinations on both hosts; Guided does not overwrite it. The prior ≥85 reinterpretation is retired; independent review still required before `verified`. |
 | R5.4 | Max adjusted cost slider, default unlimited | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Current live cost slider starts at no limit and shares SettingsContext with the modes |
 | R5.5 | Distribution histogram while a slider moves | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Current live Simple map/histogram evidence has 48 bars in the two themes and both widths; range end labels are present |
 | R5.6 | Wizard (company → privacy/region → minimums → budget → results) | verified | `ux-evidence/review-20260913T110002Z/broad-fixed-{canonical,legacy}/verification.json`, `fable-canonical-fixed2/metrics.json` | Current live wizard starts with the company step and the full Fable walkthrough remains error-free; source/tests cover the five pages |
@@ -108,7 +108,7 @@ credited below, the rest is marked open.
 | P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | verified | `ops/ux-2026-09-12/PRD.md`, `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json`, `ux-evidence/iter14-prd-review/review-claude-opus.json`, `/opt/benchmarkheaven/state/ux-evidence/iter32-prd-review-codex/review.json` | **Codex Luna independently confirmed Claude's repaired digest `57d164a25de84547944527a5c5a0f1f919c01ade37b8afc81efb734e86d36f5a`**: all six prior findings are repaired, all E2 source names and F1/C1 rows are present, AA claims are supported by retained captures, and unresolved P2/P3/P4/E2/E3 gaps remain explicitly open. This closes P1 only; it does not close the product gaps or X6. |
 | P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | in-progress | `ops/ux-2026-09-12/PRD.md`, `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json` | Capability matrix now cites the allowed AA leaderboard, comparison, methodology and current-index URLs row by row; material gaps are prioritized, not claimed closed. |
 | P3 | Do not stop before P2 is achieved | open | — | |
-| P4 | Positioning claims only in a form the live coverage numbers support | in-progress | `DESIGN-DIRECTIVES.md` §R3.1, `ux-evidence/iter14-prd-review/review-claude-opus.json` (P4-CLAIM-01) | Iteration 35 applies the review gate's decision: describe the complete tracked collection and realistic modeled task cost without claiming exclusivity against Artificial Analysis. |
+| P4 | Positioning claims only in a form the live coverage numbers support | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter35-live-{canonical,legacy}/verification.json`, `api-meta.json` | The live claim is explicitly limited to the tracked, source-linked collection and modeled cost inputs; it makes no unsupported “only place” claim. Independent review still required before `verified`. |
 | F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter12-f05-live/verification.json` | Fable pass judged against exactly this bar; F-05 now uses aligned score/cost magnitude bars and was live-checked by Codex, but independent verification and the remaining open directives are still required. |
 | C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly. Iteration 15: no foreign commits; the only other process in the repo was the design pass's own orphaned Kimi delegate (stopped, see the log) |
 | F-19 | Benchmaxxing title, sector labels and signal table | verified | `/opt/benchmarkheaven/state/ux-evidence/iter34-indep/live-{canonical,legacy}/verification.json` (`bin/verify-r410-r58-r511-f19.mjs`) | **Independent verification (claude-opus, iteration 34; implementer codex-luna `0c37a18`):** H1 "Benchmaxxing", 10 default rows, "Show all 18 tagged", no overflow, 1440/390, both hosts. |
@@ -1154,3 +1154,27 @@ Notes for whoever picks this up:
   coverage guard (dirty registry 88 identities vs dirty plan 59), and its Vals/Frontier rows lack
   complete independent critic receipts; none was staged or trusted. Codex measured 72% weekly and
   stayed below the 80% cap. X6 does not pass, so no `ALL-ACCEPTED` line and no Telegram were sent.
+
+- **2026-09-13 · iteration 35 · codex-luna** — repaired the two unambiguous positioning/settings blockers.
+  - **R5.3:** Simple's untouched Composite threshold is now `86` (strictly `>85`), and
+    score-selection resets, persistence tests and live acceptance scripts use the same
+    score-aware default. Advanced and Guided remain independent of Simple's floor.
+  - **R3.1/P4:** replaced the unsupported exclusive “only place” claim everywhere it could
+    reach users (hero, OpenGraph/Twitter metadata, footer and generated OG artwork) with:
+    “A complete, source-linked collection of AI model benchmarks. Realistic modeled cost per
+    task, grounded in provider prices, caching, and token efficiency.” This is deliberately
+    qualified to the tracked collection and does not claim superiority over Artificial Analysis.
+  - **Verification:** `f98a23d` deployed to both `benchmarkheaven.com` and
+    `model-market-comparison.app.mintapis.com`; `/api/meta` on both reports the exact revision
+    `f98a23d990f1d5ee150acb8749f1d001eef97448`. The visual-test matrix is clean in fresh desktop
+    1440×1000 and mobile 390×844 sessions, light and dark: no page errors/overflow, hero copy is
+    exact, Simple slider is `86`, obsolete Chutes fallback copy is absent, and table headers are
+    Score / Adjusted Cost / # benchmarks / # providers. Receipts:
+    `/opt/benchmarkheaven/state/ux-evidence/iter35-live-{canonical,legacy}/`.
+  - **Gates:** `node scripts/build-dataset.mjs`, `npm test` (275/275), `npx tsc --noEmit -p .`,
+    `npm run build` and `git diff --check` all passed. The in-progress Vals/FrontierCode and
+    RelayModels draft was preserved, not shipped, in `stash@{0}` because the last review found
+    its registry/collection-plan guard mismatch and incomplete critic receipts.
+  - **Independence:** R3.1, R5.3 and P4 remain `implemented`, not `verified`, until a different
+    engine independently checks this deployed revision. R9.1, F-50, E2/E3, P2/P3, X3/X4, X6/X7
+    and the RelayModels wiring request remain open; no `ALL-ACCEPTED` line or final Telegram was sent.
