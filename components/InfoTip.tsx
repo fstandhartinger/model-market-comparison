@@ -42,9 +42,13 @@ export function InfoTip({ title, children, label }: { title: string; children: R
       const rect = triggerRef.current?.getBoundingClientRect();
       if (!rect) return;
       const halfWidth = 128;
+      const tooltipHeight = 420;
+      const below = rect.bottom + 8;
       setTooltipPosition({
         left: Math.min(Math.max(rect.left + rect.width / 2, halfWidth + 8), window.innerWidth - halfWidth - 8),
-        top: rect.bottom + 8,
+        top: below + tooltipHeight <= window.innerHeight
+          ? below
+          : Math.max(8, rect.top - tooltipHeight - 8),
       });
     };
     update();
