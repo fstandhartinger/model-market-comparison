@@ -1,7 +1,7 @@
 "use client";
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { hasScoreEvidence, type ClientData } from "../lib/client-model";
+import { hasScoreEvidence, isThinComposite, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS, SCORE_SHORT_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
@@ -395,15 +395,18 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   </span>
                 </td>
                 <td className="hidden truncate px-3 py-2 md:table-cell"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
-                {/* F-25: a Composite built on few of its seven inputs must look thin — muted and
-                    hatched below three inputs, and the input count shown whenever it is not 7/7. */}
+                {/* F-25/F-41: a Composite with fewer than three filled slots (exact or attached)
+                    looks thin — muted and hatched. Advanced pips tell exact from attached. */}
                 <td className="px-3 py-2">{sc != null ? (() => {
-                  const inputs = score === "composite" ? m.composite_coverage : 7;
-                  const thin = inputs < 3;
+                  const composite = score === "composite";
+                  const exact = composite ? m.composite_coverage : 7;
+                  const attached = composite ? m.composite_attached : 0;
+                  const thin = composite && isThinComposite(m);
+                  const evidence = `${exact} exact + ${attached} attached of 7 Composite inputs`;
                   return <MagnitudeBar frac={sc / maxScoreVal} tone="score" thin={thin}>
-                    <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>
-                    {inputs < 7 && !simple && <span className="mt-1 flex justify-end gap-0.5" title={`${inputs} of 7 Composite inputs`} aria-label={`${inputs} of 7 Composite inputs`} role="img">
-                      {Array.from({ length: 7 }, (_, i) => <span key={i} aria-hidden="true" className={`h-1 w-1 rounded-[1px] border ${i < inputs ? "border-accent bg-accent" : "border-line bg-transparent"}`} />)}
+                    <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={thin && simple ? `Composite built on ${exact + attached} of 7 inputs` : undefined}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>
+                    {exact < 7 && !simple && <span className="mt-1 flex justify-end gap-0.5" title={evidence} aria-label={evidence} role="img">
+                      {Array.from({ length: 7 }, (_, i) => <span key={i} aria-hidden="true" className={`h-1 w-1 rounded-[1px] border ${i < exact ? "border-accent bg-accent" : i < exact + attached ? "border-accent bg-accent/40" : "border-line bg-transparent"}`} />)}
                     </span>}
                   </MagnitudeBar>;
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
@@ -443,7 +446,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                                 <td className="py-0.5 text-right tabular">{m.scores.composite > m.composite_base ? "+" : ""}{num(m.scores.composite - m.composite_base, 1)}</td>
                               </tr>
                             </>}
-                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage}/7</td></tr>
+                            <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage} exact{m.composite_attached ? ` + ${m.composite_attached} attached` : ""} / 7</td></tr>
                             <tr><td className="py-0.5 text-gray-400">Weights</td><td className="py-0.5 text-right">{m.open_weights ? "open" : "closed"}</td></tr>
                           </tbody>
                         </table>
@@ -502,7 +505,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           price hint, the Benchmaxxing screening note (only when a displayed row carries
           the signal) and the measured-task-tokens note with " · ". */}
       <p className="mt-3 text-xs text-gray-500">
-        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span></> : <><PriceAssumptions inline />
+        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span>{score === "composite" && rows.some((x) => isThinComposite(x.m)) && <span> · Striped score = built on fewer than 3 of 7 inputs</span>}</> : <><PriceAssumptions inline />
           {rows.some((x) => x.m.benchmaxxing_signal) && <>{" · "}The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
           {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>

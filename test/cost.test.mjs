@@ -168,6 +168,13 @@ test('Composite coverage separates exact inputs from family- or product-attached
   assert.ok(fable.composite_attachments.epoch_eci);
   assert.ok(fable.composite_attachments.designarena_fullstack);
 });
+test('F-41: thin Composite counts exact plus attached inputs', () => {
+  assert.equal(client.isThinComposite({ composite_coverage: 2, composite_attached: 4 }), false);
+  assert.equal(client.isThinComposite({ composite_coverage: 2, composite_attached: 0 }), true);
+  for (const model of client.clientData(dataset).models) {
+    assert.equal(model.composite_attached, Math.min(7 - model.composite_coverage, Object.keys(model.composite_attachments).length), model.id);
+  }
+});
 test('adjusted is modelCost default and uses per-model OR ratio before global or AA proxy',()=>{
   assert.equal(cost.modelCost(model,telemetryData,null),0.023);
   const p=cost.modelPrice(model,telemetryData,null,adjusted);

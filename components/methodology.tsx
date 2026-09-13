@@ -21,8 +21,9 @@ const COMPOSITE_TIP = (
     percentile among all models measured on it, and those percentiles are averaged, so a
     hard benchmark and an easy one count the same. Models measured on fewer benchmarks are
     not rewarded for the gaps: missing slots are filled with the model’s own mean and then
-    adjusted so a thin record cannot overtake a fuller one it never beat. Scores built on
-    fewer than three of the seven inputs are shown hatched.
+    adjusted so a thin record cannot overtake a fuller one it never beat. Attached values come
+    from the same model family when a configuration was not measured itself; the model page
+    marks them. Scores built on fewer than three of the seven inputs are shown hatched.
   </>
 );
 

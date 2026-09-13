@@ -76,6 +76,8 @@ export interface ClientModel {
   };
   composite_base: number | null;
   composite_coverage: number;
+  /** Composite slots filled by an attached (family- or product-scope) value; see F-41. */
+  composite_attached: number;
   /** Composite values used for this row but not measured on this exact configuration. */
   composite_attachments: Partial<Record<CompositeSlot, CompositeAttachment>>;
   /** Distinct registry benchmarks this model has a usable result for (R2.2). Not the
@@ -124,6 +126,12 @@ export interface ClientData {
  * may be the neutral 50 fallback even when this returns false. */
 export function hasScoreEvidence(model: ClientModel, score: ScoreKey): boolean {
   return score === "composite" ? model.composite_coverage > 0 : model.scores[score] != null;
+}
+
+/** F-41: a Composite looks thin when fewer than three of its seven slots hold any value,
+ *  exact or attached. Attached inputs are disclosed separately, not treated as missing. */
+export function isThinComposite(model: Pick<ClientModel, "composite_coverage" | "composite_attached">): boolean {
+  return model.composite_coverage + model.composite_attached < 3;
 }
 
 function offerKey(platform: string, provider: string) {
@@ -190,6 +198,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       },
       composite_base: null,
       composite_coverage: 0,
+      composite_attached: 0,
       composite_attachments: {},
       benchmark_count: ds.benchmark_results?.coverage?.by_model?.[m.id]?.available ?? 0,
       offer_count: (offersByModel[m.id] || []).length,
@@ -352,6 +361,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     m.scores.composite = composites.get(m.id) ?? 50;
     m.composite_base = baseScores.get(m.id) ?? 50;
     m.composite_coverage = coverage.get(m.id) ?? 0;
+    m.composite_attached = Math.min(7 - m.composite_coverage, Object.keys(m.composite_attachments).length);
   }
 
   const providers: ProviderInfo[] = ds.providers.map((p) => ({
