@@ -63,6 +63,18 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 table.dtable th, table.dtable td { border-bottom: 1px solid rgb(var(--line)); }
 table.dtable thead th { position: sticky; top: 0; background: var(--surface); z-index: 1; user-select: none; }
 table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
+/* F-05: both ranking magnitudes share the same baseline. The bar is below the
+   value, never a coloured block beside it; organization colour belongs only to
+   the dot in the Org column. */
+.bh-magnitude-bar { position: relative; min-height: 30px; padding-bottom: 6px; text-align: right; }
+.bh-magnitude-bar button { min-height: 0; }
+.bh-magnitude-track { position: absolute; right: 0; bottom: 0; left: 0; height: 4px; overflow: hidden; border-radius: 999px; background: rgb(var(--line) / .42); }
+.bh-magnitude-fill { height: 100%; border-radius: inherit; }
+.bh-magnitude-score .bh-magnitude-fill { background: rgb(var(--accent) / .55); }
+.bh-magnitude-cost .bh-magnitude-fill { background: var(--muted); opacity: .72; }
+.bh-row-chevron { display: inline-block; width: 12px; color: var(--muted); font-size: 17px; line-height: 12px; opacity: .5; transition: color .15s ease, opacity .15s ease, transform .15s ease; }
+.bh-ranking-row:hover .bh-row-chevron, .bh-row-chevron.is-open { color: rgb(var(--accent)); opacity: 1; }
+.bh-row-chevron.is-open { transform: rotate(90deg); }
 .bh-empty { display: grid; align-content: center; padding: 32px; text-align: center; color: var(--muted); }
 .bh-grid { display: grid; gap: 24px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 240px), 1fr)); }
 .bh-stat { border: 1px solid rgb(var(--line)); border-radius: 10px; padding: 16px; }

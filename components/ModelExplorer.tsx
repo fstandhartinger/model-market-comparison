@@ -1,12 +1,12 @@
 "use client";
-import { Fragment, useMemo, useState } from "react";
+import { Fragment, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS, SCORE_SHORT_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
-import { Toggle, DataBar, NumFilter } from "./ui";
+import { Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
@@ -32,6 +32,20 @@ const routeSignature = (offer: ClientData["offersByModel"][string][number]) => [
   offer.endpoint_tag || "", offer.pricing_tier || "", offer.route_type || "",
   offer.input_per_1m, offer.output_per_1m, offer.status,
 ].join("::");
+
+/** F-05: keep the number and its magnitude cue in one vertical rhythm. The bar
+ * is intentionally decorative; the accessible value remains the text/button. */
+function MagnitudeBar({ frac, tone, children }: { frac: number; tone: "score" | "cost"; children: ReactNode }) {
+  const bounded = Number.isFinite(frac) ? Math.max(0, Math.min(1, frac)) : 0;
+  return (
+    <div className={`bh-magnitude-bar bh-magnitude-${tone}`}>
+      <div className="bh-magnitude-track" aria-hidden="true">
+        <div className="bh-magnitude-fill" style={{ width: `${bounded * 100}%` }} />
+      </div>
+      <span className="relative z-[1] block tabular">{children}</span>
+    </div>
+  );
+}
 
 export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean }) {
   const s = useSettings();
@@ -143,7 +157,19 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   const evidenceRelaxed = !withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && !measuredTasksOnly);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
-  const maxCostVal = useMemo(() => Math.max(1, ...rows.map((x) => x.price.value ?? 0)), [rows]);
+  // F-05: cost magnitude is relative to the finite prices actually visible in this
+  // table. A log scale keeps a very expensive route from flattening every ordinary
+  // model into the first few pixels; missing prices deliberately have no bar.
+  const costRange = useMemo(() => {
+    const values = rows.map((x) => x.price.value).filter((v): v is number => v != null && Number.isFinite(v) && v > 0);
+    if (!values.length) return null;
+    return { min: Math.min(...values), max: Math.max(...values) };
+  }, [rows]);
+  const costBarFraction = (value: number | null): number | null => {
+    if (value == null || !Number.isFinite(value) || value <= 0 || !costRange) return null;
+    if (costRange.max === costRange.min) return 1;
+    return Math.log(value / costRange.min) / Math.log(costRange.max / costRange.min);
+  };
 
   const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
   const Th = ({ label, k, right, sub, info }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode }) => (
@@ -252,9 +278,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
               });
               return (
               <Fragment key={m.id}>
-              <tr className="cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
+              <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
                 <td className="px-3 py-2 truncate">
-                  <span className="mr-1 text-[10px] text-gray-500">{isOpen ? "▾" : "▸"}</span>
+                  <span aria-hidden="true" className={`bh-row-chevron mr-1 ${isOpen ? "is-open" : ""}`}>›</span>
                   <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{collapsedName(m, s.collapse, preferredId)}</Link>
                   {m.open_weights && <span className="ml-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
                   {m.deprecated && <span className="ml-1 rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
@@ -262,8 +288,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
                   {m.benchmaxxing_signal && <span className="bh-badge bh-alert ml-2" title={`Benchmaxxing signal ${m.benchmaxxing_score?.toFixed(1)} — topic-local inconsistency flag, not evidence of intent`}>Benchmaxxing signal</span>}
                 </td>
                 <td className="px-3 py-2 truncate"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
-                <td className="px-3 py-2">{sc != null ? <DataBar frac={sc / maxScoreVal} color={orgColor(m.org)} align="right"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{price.value != null ? <DataBar frac={price.value / maxCostVal} color="#7ee0c0" align="right"><span className="block text-right"><PriceValue price={price} compact /></span></DataBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2">{sc != null ? <MagnitudeBar frac={sc / maxScoreVal} tone="score"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2 text-right tabular text-gray-400">{m.benchmark_count || "—"}</td>
                 <td className="px-3 py-2 text-right tabular text-gray-400">{ncheap || "—"}</td>
               </tr>
