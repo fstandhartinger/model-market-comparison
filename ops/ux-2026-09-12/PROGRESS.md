@@ -131,6 +131,9 @@ credited below, the rest is marked open.
 | F-36 | Model page: no empty "Protocol-compatible" paragraph; Copilot card labelled | implemented | `ux-evidence/iter25-f36-f38-live/verification.json` | `085207b` live matrix: no empty protocol copy on the checked Copilot model; Subscription plan eyebrow is present above GitHub Copilot. Needs a non-Codex verifier. |
 | F-37 | Subscriptions list: neutral badges, uncollected plans as a footnote | implemented | `ux-evidence/iter25-f36-f38-live/verification.json`, `ux-evidence/iter25-f36-f38-live/f37-final.json` | `2c3692c` live on both hosts: ChatGPT Plus / Pro and SuperGrok are absent from rows, appear once in the exact muted Not collected footnote, and no warning-colour text remains inside the disclosure. Needs a non-Codex verifier. |
 | F-38 | Simple: "Minimum score (Composite)" label, one-line small print | implemented | `ux-evidence/iter25-f36-f38-live/verification.json` | `085207b` live matrix: active label is Minimum score (Composite), the measured-task-token note and methodology link are one 167-character paragraph. Needs a non-Codex verifier. |
+| F-39 | Simple value map: log cost axis, free routes pinned left, round ticks | implemented | `ux-evidence/fable-20260913-pass5/after-F39/verification-F39.json` | `64063b5` by Fable (pass 5), live on both hosts; needs a non-Fable verifier |
+| F-40 | Simple's score floor and cost cap stay in Simple; Advanced/Guided own pair with removable floor chip | implemented | `ux-evidence/iter29-f40/{local,live-canonical,live-legacy}/verification.json` | `f454195` by claude-opus; live acceptance 2026-09-13 16:01 UTC passes on both hosts at 1440/390, 0 fails; settings split + migration tests in `test/settings-state.test.mjs`. Needs a non-Claude-Opus verifier (`bin/verify-f40.mjs`) |
+| F-41 | Hatch on exact + attached Composite inputs; pips tell exact from attached | implemented | `ux-evidence/iter29-f41/live-{canonical,legacy}/verification.json` | `d5c2ac9` by claude-opus: `isThinComposite`, `composite_attached`, half-filled attached pips with "n exact + m attached of 7" label, Simple small-print clause only when a striped row is shown, Score (i) sentence. Tests 275/275. Needs a non-Claude-Opus verifier (`bin/verify-f41.mjs`) |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1015,3 +1018,25 @@ Notes for whoever picks this up:
     Claude Opus 5, not to a free model.
   - **Next, highest value:** F-40, then F-41 (both change what the first screen says), then
     F-42; a non-Fable verifier for F-39, F-29, F-30, F-22, F-08a.
+
+- **2026-09-13 · iteration 29 · claude-opus** — closed F-40 and F-41 from Fable pass 5.
+  - **F-40** (`f454195`, written earlier in this iteration window but not yet recorded): live on
+    both hosts at the exact revision; `bin/verify-f40.mjs` passes on canonical and legacy at
+    1440/390 with 0 fails (`ux-evidence/iter29-f40/live-{canonical,legacy}/`).
+  - **F-41** (`d5c2ac9`): thin = exact + attached Composite inputs < 3 (`isThinComposite`,
+    new `composite_attached` projection field); Advanced pips fill exact, half-fill attached,
+    label "n exact + m attached of 7 Composite inputs"; Simple small-print clause only when a
+    striped row is on screen; Score (i) explains attached values; expanded row shows
+    "exact + attached / 7". Live `bin/verify-f41.mjs` on both hosts at 1440/390, 0 fails: fresh
+    Simple 7 rows, 0 flagship rows hatched (was 5 of 7), no clause; Advanced 101 rows, 38 thin,
+    each thin flag matches its own label; Fable 5.1 "2 exact + 3 attached". The first canonical
+    run died with a transient browser error before writing; the re-run passed.
+  - Gates: build-dataset ✓ (timestamp-only diff restored), `npm test` 275/275 ✓, tsc ✓.
+  - Delegation: none. Both items are `[judgment]` state/evidence rules, and the Claude session was at
+    97 % (`/home/flori/.agent-budget.json`, prefer=codex), so the scope was kept small and the
+    iteration exits here.
+  - Both rows stay `implemented`; a non-Claude-Opus engine must verify them (scripts above).
+  - **Next, highest value:** F-42 `[mechanical]` phone slider captions, F-43 Benchmaxxing radar
+    measured-axes default, F-44 Compare picker row, F-45 small cuts. Ledger rows F-31…F-38 still read
+    `implemented` although Fable verified them in pass 5 (Done log); the next gate should
+    promote them.
