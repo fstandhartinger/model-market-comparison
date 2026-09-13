@@ -32,22 +32,24 @@ The authoritative requirements are `00-REQUIREMENTS-VERBATIM.md` and
 
 | Requirement | Product obligation | Acceptance evidence |
 |---|---|---|
-| R1.1–R1.8 | Score-first table, adjusted provider cost, accessible responsive info tips, and a reachable methodology explanation. | Live canonical and legacy hosts at 1440px and 390px, light/dark; DOM checks for descending active score, headers, tooltip/dialog behavior, and `/about#score`/`#adjusted-cost`. |
+| R1.1–R1.8 | Score-first table, adjusted provider cost, accessible responsive info tips, and a reachable methodology explanation. The “Chutes global fallback” wording is removed and never reused. | Live canonical and legacy hosts at 1440px and 390px, light/dark; DOM checks for descending active score, headers, tooltip/dialog behavior, and `/about#score`/`#adjusted-cost`. |
 | R2.1–R2.2 | Remove channel columns; show filtered benchmark and provider counts. | Table DOM contains no channel headers; counts change with the active filter and remain finite. |
 | R3.1, P4 | Positioning may say “most complete” and “only place” only with generated coverage/cost proof directly below it; never claim every benchmark result when coverage is incomplete. | Copy review against generated counts plus a source/date line; no unsupported “all/every” claim in hero metadata, OG, or footer. |
 | R4.1–R4.11 | Keep settings grouped, defaults explicit, and provider data-policy decisions provenance-first. | Fresh-session and reset checks; policy snapshot has URL, retrieval time, parser/evidence, and known-pass/known-fail/unknown behavior. |
-| R5.1–R5.6 | Simple-first recommendations, literal cost-descending default, Advanced full catalog, and skippable five-step wizard. | Fresh browser checks at both widths; Simple default score >85 and no-limit cost; Advanced does not inherit untouched Simple-only constraints; wizard answers map to filters. |
-| R6.1–R6.3 | Company context is visible; consumer/business subscription restrictions and prices/quotas are cited and labelled as estimates or unknown. | Terms-source matrix, no guessed quota, company toggle changes only supported subscription eligibility/cost rows. |
+| R5.1–R5.6 | Simple-first recommendations, literal cost-descending default, Advanced full catalog, a distribution chart behind the score and cost sliders, and a skippable five-step wizard whose capability page offers “at least the best model that existed 1…6 months ago”. | Fresh browser checks at both widths; Simple default score >85 and no-limit cost; Advanced does not inherit untouched Simple-only constraints; wizard answers map to filters. |
+| R6.1–R6.3 | Company context is visible; consumer/business subscription restrictions and prices/quotas are cited and labelled as estimates or unknown; the R6.2 research result is sent to Florian by Telegram. | Terms-source matrix, no guessed quota, company toggle changes only supported subscription eligibility/cost rows, Telegram message id in the ledger. |
 | R7.1–R7.3 | New logo, favicon/touch/OG assets, and a readable dark variant. | Rendered assets at 16/32/48px and screenshots in both themes. |
 | R8.1 | Benchmark results read like a release-post sheet: grouped categories, comparable bars/tables, missing evidence visible. | Compare/model-page screenshots plus DOM checks that missing/low-sample rows are not rendered as zero. |
 | R9.1 | Refresh the live sources without redating retained evidence. | A dated run receipt for every source, source hashes, registry validation, full gates, deploy revision, and live API readback. |
 | H1–H3 | Retain all score snapshots; bridge re-based sources only through dated anchors and multiple hops; expose “better than model X” with approximate labels. | Write-once mutation test, multi-hop ratio and Elo tests, bridge uncertainty/cause fields, and live H3 measured-vs-approximate checks. |
 | B1–B7 | Benchmaxxing is a coverage-qualified within-topic inconsistency signal; specialization is disclosed, not penalized; radar axes are topic-adjacent. | Sparse synthetic fixtures, zig-zag versus smooth-specialization fixture, coverage floor/rate test, and desktop/mobile radar screenshots. |
 | E1 | General and software ECI are versioned Composite inputs with a collection recipe. | Source receipt, seven-slot score explanation, ECI fixture tests, and history recompute-required behavior on definition change. |
-| E2–E3 | Add the eight non-Composite/community sources only with primary evidence and an efficient documented collection recipe. | Registry identity, source capture/hash/locator, parser fixture, independent critic result, and daily-refresh recipe per source; missing sources remain open rather than guessed. |
+| E2–E3 | Add the eight non-Composite/community sources — Vals AI, the gregpr07 and petergostev X threads, CursorBench, Apprentice Bench, DeepSWE, FrontierBench (Cognition), RealSWE — only with primary evidence and an efficient documented collection recipe (API/export → page data → static HTML → the page's own requests). As of 2026-09-13 only RealSWE is ingested. | Registry identity, source capture/hash/locator, parser fixture, independent critic result, and daily-refresh recipe per source; missing sources remain open rather than guessed. |
 | P1 | Requirements from both chats are represented here and independently reviewed. | Reviewer receipt from a different engine/session, digest of this exact file, and resolved findings. |
 | P2–P3 | Benchmark Heaven is at least competitive with the named Artificial Analysis reference on the decision path, while retaining its provenance/history/adjusted-cost differentiators. | Capability matrix below, gap closures, and live regression evidence; no “complete” claim while material gaps remain. |
-| X1–X7, C1 | Autonomous fallback, quota reserve, design review, docs, one writer, final audit and Telegram handoff. | Engine/limit receipts, commits with trailer, docs diff, live evidence directory, final line-by-line audit, and only then `ALL-ACCEPTED`. |
+| F1 | Gauntlet-loop quality: simple, elegant, easy to understand, extremely intuitive, yet complete. | Fable 5.1 design passes judge against exactly this wording; every directive has live desktop/mobile, light/dark evidence and a non-implementer verification in `DESIGN-DIRECTIVES.md`. |
+| C1 | One writer for Benchmark Heaven until `ALL-ACCEPTED`; never race another agent in the repo. | Per-iteration check of processes and unknown commits recorded in the ledger; a found writer ends the iteration with a note to Hermes. |
+| X1–X7 | Autonomous fallback, quota reserve, design review, docs, final audit and Telegram handoff. | Engine/limit receipts, commits with trailer, docs diff, live evidence directory, final line-by-line audit, and only then `ALL-ACCEPTED`. |
 
 There is no `R3.2` in the authoritative checklist: the hero requirement is
 `R3.1`; `P4` is the addendum's separate positioning-truthfulness requirement.
@@ -96,6 +98,7 @@ The current public index page also exposes benchmark, token-use, and cost views:
 | Price realism | AA reports per-task cost and provider/token/cache methodology for its Intelligence Index ([methodology](https://artificialanalysis.ai/methodology/intelligence-benchmarking)). | Benchmark Heaven models the selected provider route, cache efficiency/prices, and model token efficiency in adjusted cost. | Finish R9.1 refresh and R6.3 subscription treatment; label modeled versus measured costs. |
 | Provider choice | AA's public leaderboard exposes model/provider comparisons and provider-facing entries ([leaderboard](https://artificialanalysis.ai/leaderboards/models/)). | Benchmark Heaven filters offers by region, confidentiality, data-policy snapshot, and cost. | Keep unknown policy states explicit and cite the public policy snapshot. |
 | Historical comparability | AA publishes current index methodology and version context ([methodology](https://artificialanalysis.ai/methodology/intelligence-benchmarking)). | Benchmark Heaven retains snapshots and has anchor-based ratio/rank bridges, including multi-hop fixtures. | Obtain a real multi-hop production case or retain the honest “no current multi-hop” state; never fabricate one. |
+| Speed, latency, context | AA leads with output speed (tokens/s), latency (TTFT) and context window on both the leaderboard and the five-model comparison ([leaderboard](https://artificialanalysis.ai/leaderboards/models/), [comparison tool](https://artificialanalysis.ai/models/comparisons)). | **Gap:** Benchmark Heaven carries no speed or latency metric; context length is not a ranking dimension. | Decide explicitly: collect from a public, robots-allowed primary source with provenance, or record it as a non-goal with the reason. Never imply parity. (Review finding P2-GAP-01, 2026-09-13.) |
 | Decision UX | AA gives leaderboard and side-by-side model comparison views ([leaderboard](https://artificialanalysis.ai/leaderboards/models/), [comparison tool](https://artificialanalysis.ai/models/comparisons)). | Benchmark Heaven adds Simple/Guided/Advanced modes, a value map, evidence-aware filters, and Benchmaxxing. | Complete the Fable directives: first-screen recommendations, compact navigation, readable radar, and no jargon on the surface. |
 
 ## Prioritized gap closure
@@ -103,12 +106,16 @@ The current public index page also exposes benchmark, token-use, and cost views:
 1. **Trust and freshness:** complete R9.1 with a fully reviewed source receipt, then
    complete E2/E3 only for sources that pass the provenance and independent-critic
    gate. This closes the largest factual gap before adding more UI.
-2. **Decision UX:** finish the open Fable directives (especially first-screen model
-   visibility, Simple value map, Advanced defaults, and mobile overflow) and verify
-   both hosts in both themes. A recommendation page that shows no recommendation in
-   the first viewport fails its primary job.
-3. **Cost completeness:** research and integrate R6.3 with explicit company and
-   subscription eligibility, published prices, and `quota unknown` where appropriate.
+2. **Decision UX:** finish the open Fable directives and verify both hosts in both
+   themes. The Simple value map (`e573ef6`) and mobile first row are live; the desktop
+   first screen at 1440×1000 still shows no model row because the value map sits above
+   the list (F-01 vs F-03, for Fable pass 2). A recommendation page that shows no
+   recommendation in the first viewport fails its primary job.
+3. **Cost completeness:** R6.3 is live (`0e7380c`): cited company eligibility, vendor-page
+   prices, `quota not published`, and break-even task counts instead of invented per-task
+   subscription prices. Remaining: OpenAI and xAI terms/prices are unreadable to automated
+   clients and stay "not collected".
+3a. **Speed and latency:** close or explicitly decline the P2-GAP-01 gap above.
 4. **Historical product surface:** connect H1/H2 to the H3 UI for category references,
    show path/uncertainty, and add a real retained example once a source supplies it.
 5. **Governance:** independently review this PRD, update API/changelog/fork-sync
@@ -119,6 +126,12 @@ The current public index page also exposes benchmark, token-use, and cost views:
 - “Most complete” is positioning, not proof of universal coverage; generated counts
   must stay beside it. The current local baseline has fewer observed benchmark IDs
   than registered identities.
+- “The only place that shows what each model really costs you” is contestable as worded:
+  AA's comparison page also shows a per-model “Cost per Task” and cache-hit prices
+  ([comparison tool](https://artificialanalysis.ai/models/comparisons)). What AA does not
+  do is pick among provider routes under the user's own region, confidentiality and
+  data-policy filters. The wording decision belongs to Fable pass 2 and Florian (X7);
+  review finding P4-CLAIM-01, 2026-09-13.
 - A historical bridge can be mathematically stable while semantically wrong if the
   protocol changed. Registry identity, unit, direction, cohort, and definition gates
   therefore outrank producing a number.

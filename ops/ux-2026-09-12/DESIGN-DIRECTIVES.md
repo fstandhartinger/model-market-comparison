@@ -297,6 +297,20 @@ Live revision `0e7380c`, https://benchmarkheaven.com, 1440×1000 and 390×844, l
 | F-01 | Fable | **desktop acceptance fails** — 0 model rows on the 1440×1000 first screen (first row at 958 px). Mobile passes (first row at 692 px). Cause: F-03's 320 px value map sits between the sliders and the list. The two directives conflict at 1000 px height; **Fable pass 2 must choose** (e.g. map beside the sliders on desktop, or a shorter map). Not re-interpreted here |
 | F-06 | Claude Opus | Advanced 16 rows (still the recorded "≥ 50 vs Featured on" conflict) — not verifiable by a Claude engine anyway |
 
+## Questions for Fable pass 2 (collected by implementers, not decided)
+
+1. **F-01 vs F-03 on desktop** — see the independent verification table above: with the
+   320 px value map between sliders and list, 1440×1000 shows no model row on the first screen.
+2. **Hero line 2 (P4-CLAIM-01)** — Artificial Analysis' comparison page also shows a per-model
+   "Cost per Task" with cache-hit prices, so "the only place that shows what each model really
+   costs you" can be challenged. What is ours alone: the cost follows the provider route you
+   would actually use under your own region, confidentiality and data-policy filters, plus
+   measured token efficiency. Keep, sharpen, or soften? Florian asked for the "only" claim, so
+   any change is carried to X7.
+3. **F-06** — Advanced opens on ~16 rows because Featured stays on (see F-06 status).
+4. **F-11 remainder** — the scatter's model count should open the Filters sheet, which today has
+   no external opener; confirm it is still wanted before a Nav/SettingsContext change.
+
 ## Done log
 
 | Directive | Commit | Evidence | Verified by |
@@ -310,5 +324,5 @@ Live revision `0e7380c`, https://benchmarkheaven.com, 1440×1000 and 390×844, l
 | F-07 many-axis radar: sectors, measurable spokes, topic-local lines, native tooltips, coverage-aware default | `a21eec3` (Codex Luna) | `ux-evidence/iter11-f07/f07-live/verification.json` + `ux-evidence/iter11-f07/review/verification.json` | partial: live geometry passes on both hosts and widths; current catalog has 0 models with ≥40 measured axes (maximum 29/214), so the verifier records the required highest-coverage fallback and leaves the ≥40 acceptance open |
 | F-10 wizard polish: step 1 footnote one line (78 chars, `0e7380c`); results step renders the value map (via Simple ModelExplorer) with the answer chips above it; "Change answers" is the accent primary, "Open in Advanced" a borderless secondary link | `0e7380c` + iteration-14 follow-up (Claude Opus 5) | `ux-evidence/iter14-f11/local/verification.json`, `wizard-results-*.png` | pending non-Claude verifier |
 | F-11 scatter: full chart Y domain `floor(min − 3) → 100` (≥ 20 wide; Elo keeps auto), intro is the directive's one sentence. Points span 87 % of the plot height locally (target ≥ 50 %). **Not done:** "the model count links to the filter panel" — the Filters sheet has no external opener; adding one is a Nav/SettingsContext change left for the next implementer | iteration-14 follow-up (Claude Opus 5) | `ux-evidence/iter14-f11/local/verification.json`, `scatter-*.png` | pending non-Claude verifier |
-| F-03 fix: the compact value map drew the Pareto halo on **every** point and its line through all of them; now only frontier members (5 of 20 locally) get the halo and line, as the directive specifies | iteration-14 follow-up (Claude Opus 5) | `ux-evidence/iter14-f11/local/verification.json` (`valueMap.halos`) | F-03 was independently verified above on the other criteria; this aspect needs a non-Claude re-check |
+| F-03 fix: the compact value map drew the Pareto halo on **every** point and its line through all of them; now only frontier members (5 of 20) get the halo and line, as the directive specifies | `638f047` (Claude Opus 5) | live on both hosts, 1440/390: `ux-evidence/iter14-f11/live-canonical/verification.json`, `…/live-legacy/verification.json` (`valueMap.halos` 5 / `dots` 20); F-10 and F-11 rows above were confirmed by the same live run (scatter fraction 0.87, wizard map present, primary accent) — harness `bin/verify-f10-f11-live.mjs` | F-03 was independently verified above on the other criteria; this aspect needs a non-Claude re-check |
 | F-05 ranking magnitude bars: score accent below value, log-scaled neutral cost bar, subtle chevron | `649804a` (Codex Luna) | `/opt/benchmarkheaven/state/ux-evidence/iter12-f05-live/verification.json` + four host/width/theme screenshots | live-checked on canonical and legacy hosts at desktop/mobile in light/dark; needs independent-engine verification |
