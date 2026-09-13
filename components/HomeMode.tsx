@@ -1,6 +1,7 @@
 "use client";
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { ModelExplorer } from './ModelExplorer';
+import { useSettings } from './SettingsContext';
 import { Wizard } from './Wizard';
 import type { ClientData } from '../lib/client-model';
 
@@ -16,6 +17,9 @@ export function HomeMode({ data }: { data: ClientData }) {
   // questionnaire (R5.6) is the third way in, not a replacement for either.
   const [mode, setMode] = useState<Mode>('simple');
   const advanced = mode === 'advanced';
+  // F-16: tell the global filter sheet which Featured value is in effect on screen.
+  const { setAdvancedView } = useSettings();
+  useEffect(() => { setAdvancedView(advanced); return () => setAdvancedView(false); }, [advanced, setAdvancedView]);
   return <section aria-label="Recommendation mode">
       {/* F-13: plain row instead of the bordered card — the segmented group carries its own border. */}
       <div className="mb-3 flex flex-wrap items-center justify-between gap-2">

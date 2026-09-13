@@ -35,12 +35,11 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
     return () => window.removeEventListener("bh:toggle-filters", toggle);
   }, []);
   if (path === "/benchmarks" || path === "/radar") return null;
-  const active = s.providersExcluded.length || s.families.length || !s.featured || !s.collapse || !s.hideDeprecated
-    || s.excludeChinese || s.euHostedOnly || s.nonUsOnly || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
-    || s.maxCost != null || s.minIntelligence != null || s.minCoding != null
-    || s.minScoreTouched || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND;
+  const active = s.userFiltersActive;
+  // F-16: on the Advanced home view the toggle shows what that view applies (off until set).
+  const featuredShown = path === "/" && s.advancedView ? s.featuredAdvanced : s.featured;
   const reset = () => {
-    s.setProvidersExcluded([]); s.setFamilies([]); s.setFeatured(true); s.setCollapse(true);
+    s.setProvidersExcluded([]); s.setFamilies([]); s.resetFeatured(); s.setCollapse(true);
     s.setHideDeprecated(true); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
     s.setOpenOnly(false); s.setTeeOnly(false); s.setAllowDataTraining(false); s.setIsCompany(false);
     s.setMaxCost(null); s.setMinIntelligence(null); s.setMinCoding(null);
@@ -56,7 +55,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           <ScoreSelect value={s.score} onChange={s.setScore} />
           <NumFilter label="Min score" value={s.minScoreTouched ? String(s.minScore) : ""} onChange={(v) => v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0)} placeholder={`any · Simple ${defaultMinFor(s.score)}`} />
           <span className="inline-flex items-center">
-            <Toggle label="Featured" on={s.featured} set={s.setFeatured} />
+            <Toggle label="Featured" on={featuredShown} set={s.setFeatured} />
             <InfoTip title="Featured models" label="the featured filter">
               The shortlist the recommendations start from: the top 20 model families of the
               Artificial Analysis Intelligence Index, taken from each family’s best reasoning

@@ -69,6 +69,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   const { maxCost, setMaxCost } = s;
   // F-06: mode-scoped score minimum (Simple: 85 until changed; Advanced: none until changed).
   const minScore = simple ? s.minScoreSimple : s.minScoreApplied;
+  // F-16: Featured is mode-scoped too (Simple: featured only; Advanced: full catalog until set).
+  const featuredOnly = simple ? s.featured : s.featuredAdvanced;
 
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const orgs = useMemo(() => Array.from(new Set(candidates.map((m) => m.org))).sort(), [candidates]);
@@ -101,7 +103,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     });
     if (s.collapse) r = r.filter((x) => !preferredId.has(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
     if (s.openOnly) r = r.filter((x) => x.m.open_weights);
-    if (s.featured) r = r.filter((x) => x.m.featured);
+    if (featuredOnly) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
@@ -119,7 +121,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
     if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
     return r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
 
   const matching = useMemo(() => {
     let r = pool;
@@ -211,9 +213,15 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
         </select>
         <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost == null ? "" : String(maxCost)}
           onChange={(v) => { const n = parseFloat(v); setMaxCost(Number.isFinite(n) ? n : null); }} placeholder="e.g. 5" />
-        {data.comparison && <details className={`basis-full rounded-lg border px-3 py-2 ${chosenComparisonMetric && comparisonReference ? "border-accent/50 bg-accent/5" : "border-line/70 bg-ink/40"}`}>
-          <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wide text-gray-500">Better than a model ▾</summary>
-          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+        {/* F-16: the H3 comparison is a popover like "Evidence", so the toolbar stays one row. */}
+        {data.comparison && <details className="relative">
+          <summary className={`cursor-pointer list-none rounded-md border px-3 py-1.5 text-sm ${chosenComparisonMetric && comparisonReference ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
+            {chosenComparisonMetric && comparisonReference
+              ? `Better than ${candidates.find((m) => m.id === comparisonTarget)?.display_name ?? "a model"} · ${chosenComparisonMetric.label.split(" · ")[0]}`
+              : "Better than a model"} ▾
+          </summary>
+          <div className="absolute left-0 z-20 mt-1 w-[min(28rem,calc(100vw-3rem))] rounded-lg border border-line bg-panel p-3 shadow-xl">
+          <div className="grid gap-2 sm:grid-cols-2">
             <label className="min-w-0 text-xs text-gray-400">Reference model
               <select aria-label="Reference model" value={comparisonTarget} onChange={(e) => setComparisonTarget(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
                 <option value="">Choose a model…</option>
@@ -233,6 +241,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
               : <>This reference has no comparable result for that choice, so the filter is inactive. Missing values stay unknown.</>}
           </p>}
           {(comparisonTarget || comparisonMetric) && <button type="button" className="mt-2 text-xs text-accent underline" onClick={() => { setComparisonTarget(""); setComparisonMetric(""); }}>Clear comparison</button>}
+          </div>
         </details>}
         {/* R4.11: the three evidence requirements are defaults almost nobody changes.
             They stay with the table they govern, but folded away so the toolbar reads as
@@ -247,7 +256,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
             {s.priceMode === "adjusted" && <Toggle label="Measured task tokens only" on={measuredTasksOnly} set={setMeasuredTasksOnly} />}
           </div>
         </details>
-        <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · filtered" : ""}</span>
+        <span className="ml-auto text-xs text-gray-500">{rows.length} models{s.userFiltersActive || q.trim() || org || (chosenComparisonMetric && comparisonReference) ? " · filtered" : ""}</span>
       </div>
 
       <div className="card overflow-x-auto">

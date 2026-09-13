@@ -17,7 +17,10 @@ interface SettingsState {
   // the score's default (85 for Composite, R5.3) and every other view applies none, so
   // Advanced opens on the full catalog. A hand-set value applies everywhere.
   minScoreTouched: boolean;
-  teeOnly: boolean;         // "Strong confidential guarantees": only TEE / confidential-compute offers
+  // F-16: Featured is mode-scoped the same way. Simple applies `featured` (on by default),
+  // Advanced applies nothing until the user sets Featured by hand, so it opens on the catalog.
+  featuredTouched: boolean;
+  teeOnly: boolean;        // "Strong confidential guarantees": only TEE / confidential-compute offers
   // R4.10: opt-in to INCLUDE providers that train on or retain your data. Unchecked by
   // default, so such providers are filtered out until the user asks for them.
   allowDataTraining: boolean;
@@ -49,6 +52,15 @@ interface SettingsCtx extends SettingsState {
   minScoreApplied: number;
   /** The score minimum Simple mode applies: the hand-set value, else the score's default. */
   minScoreSimple: number;
+  /** F-16: the Featured filter Advanced applies — the hand-set value, else off (full catalog). */
+  featuredAdvanced: boolean;
+  /** Back to the untouched, mode-scoped default (Simple: featured only, Advanced: all). */
+  resetFeatured: () => void;
+  /** Which home view is on screen, so the global Featured toggle shows the value that view applies. Not persisted. */
+  advancedView: boolean;
+  setAdvancedView: (b: boolean) => void;
+  /** True when any setting differs from its documented default (drives Reset and "· filtered"). */
+  userFiltersActive: boolean;
   setTeeOnly: (b: boolean) => void;
   setAllowDataTraining: (b: boolean) => void;
   setIsCompany: (b: boolean) => void;
@@ -63,7 +75,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, minScoreTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, minScoreTouched: false, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
@@ -81,7 +93,10 @@ const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured
 // (F-06 added minScoreTouched without a bump: a v8 payload has no flag, so it loads as
 // untouched and the mode-scoped defaults apply — v8 always persisted minScore, even
 // when it was only the default, so the stored number cannot be trusted as a user choice.)
-const KEY = "mmc.settings.v8";
+// v9 (F-16): added featuredTouched. v8 always persisted `featured: true` as the default, so
+// a v8 payload is migrated with its Featured choice dropped — it loads as untouched.
+const KEY = "mmc.settings.v9";
+const PREVIOUS_KEY = "mmc.settings.v8";
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 
@@ -96,6 +111,7 @@ function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (typeof raw.score === "string" && (SCORE_OPTIONS as string[]).includes(raw.score)) out.score = raw.score as ScoreKey;
   if (bool(raw.collapse)) out.collapse = raw.collapse;
   if (bool(raw.featured)) out.featured = raw.featured;
+  out.featuredTouched = raw.featuredTouched === true && out.featured != null;
   if (bool(raw.hideDeprecated)) out.hideDeprecated = raw.hideDeprecated;
   if (bool(raw.excludeChinese)) out.excludeChinese = raw.excludeChinese;
   if (bool(raw.euHostedOnly)) out.euHostedOnly = raw.euHostedOnly;
@@ -129,8 +145,12 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   useEffect(() => {
     try {
       const raw = localStorage.getItem(KEY);
+      const previous = raw ? null : localStorage.getItem(PREVIOUS_KEY);
       if (raw) {
         const stored = sanitizeSettings(JSON.parse(raw));
+        setState((s) => ({ ...s, ...stored }));
+      } else if (previous) {
+        const { featured: _dropped, featuredTouched: _untouched, ...stored } = sanitizeSettings(JSON.parse(previous));
         setState((s) => ({ ...s, ...stored }));
       }
     } catch { /* ignore */ }
@@ -142,11 +162,21 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     try { localStorage.setItem(KEY, JSON.stringify(state)); } catch { /* ignore */ }
   }, [state, hydrated]);
 
+  const [advancedView, setAdvancedView] = useState(false);
+
   const value = useMemo<SettingsCtx>(() => ({
     ...state,
     setScore: (score) => setState((s) => ({ ...s, score, minScore: defaultMinFor(score), minScoreTouched: false })),
     setCollapse: (collapse) => setState((s) => ({ ...s, collapse })),
-    setFeatured: (featured) => setState((s) => ({ ...s, featured })),
+    setFeatured: (featured) => setState((s) => ({ ...s, featured, featuredTouched: true })),
+    featuredAdvanced: state.featuredTouched ? state.featured : false,
+    resetFeatured: () => setState((s) => ({ ...s, featured: true, featuredTouched: false })),
+    advancedView,
+    setAdvancedView,
+    userFiltersActive: !!(state.providersExcluded.length || state.families.length || state.featuredTouched || !state.collapse || !state.hideDeprecated
+      || state.excludeChinese || state.euHostedOnly || state.nonUsOnly || state.openOnly || state.teeOnly || state.allowDataTraining || state.isCompany
+      || state.maxCost != null || state.minIntelligence != null || state.minCoding != null
+      || state.minScoreTouched || state.priceMode !== "adjusted" || state.inputWeight !== DEFAULT_BLEND),
     setHideDeprecated: (hideDeprecated) => setState((s) => ({ ...s, hideDeprecated })),
     setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
     setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
@@ -168,7 +198,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setInputWeight: (inputWeight) => setState((s) => BLEND_VALUES.has(inputWeight) ? { ...s, inputWeight } : s),
     excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,
-  }), [state]);
+  }), [state, advancedView]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
