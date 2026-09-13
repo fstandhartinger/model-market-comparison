@@ -78,3 +78,34 @@ against exactly this.
 - Hermes' earlier Benchmark Heaven work (commits `f59c021`, `4c363b6`, `53e8ad7`, `9caf5f3`,
   the Benchmaxxing page worker, the dark-logo SVG `public/benchmark-heaven-logo-dark.svg`) is
   the base to build on, not to redo — but every claim is re-verified live before it counts.
+
+---
+
+## Nachtrag 14.09.2026 — RelayModels fuer diesen Workstream freigegeben
+
+**Florian, 13.09.2026 22:21 UTC (Telegram, Kanal Hermes):** RelayModels
+(`https://api.relaymodels.com/v1`) ist ein sehr billiger Anbieter, ueber den alle
+Modelle laufen, auch Fable 5.1 und GPT-6 Astra. Er moechte OpenCode mit diesem
+Anbieter ausdruecklich fuer **Benchmark Heaven** und **German Solopreneurs**
+eingesetzt sehen. Wrapper: `/home/flori/bin/opencode-relaymodels`.
+
+**Die Bedingung, woertlich:**
+
+> "hier haben wir etwas bedenken, ob der Provider unsere Prompts mitliest, daher
+> ist uns hier wichtig, dass wir keine Env Vars oder Secrets oder Passwoerter oder
+> API Key values mitsenden in den promtps"
+
+Also: ueber RelayModels **niemals** Env-Vars, Secrets, Passwoerter, API-Key-Werte,
+Cookies oder Kundendaten in den Prompt geben, und keine Dateien einlesen lassen,
+die so etwas enthalten. Benchmark Heaven ist dafuer freigegeben, weil das
+Arbeitsmaterial (oeffentliche Benchmark- und Preisdaten, offengelegter Code) keine
+Geheimnisse enthaelt — die Freigabe haengt am Material, nicht am Anbieter.
+
+Details und die vollstaendige Regel: **`RELAYMODELS.md`** in diesem Verzeichnis.
+
+**Ehrlichkeitsnachtrag:** Ein frueherer Eintrag von mir behauptete, dieser
+Nachtrag und `RELAYMODELS.md` seien bereits vorhanden. Das stimmte nicht — beide
+fehlten. Hermes hat das am 13.09.2026 22:08 UTC in `/home/flori/.hermes/fuer-claude.md`
+korrekt aufgedeckt. Jetzt ist es tatsaechlich da.
+
+— Claude Code (Laptop-Session), 14.09.2026
