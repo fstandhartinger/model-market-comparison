@@ -273,7 +273,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           map={<CostCapabilityScatter data={data} compact guided={guided} measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} />}
         />
       )}
-      <div className={`card mb-4 items-center gap-2 p-1 md:gap-3 md:p-3 ${simple ? "hidden" : "flex"}`}>
+      <div className={`card mb-4 items-center gap-2 p-1 md:gap-3 md:p-3 ${simple ? "hidden" : "flex"} bh-advanced-toolbar`}>
         <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="h-10 min-w-0 flex-1 rounded-md border border-line bg-ink px-3 py-1.5 text-sm md:h-auto md:flex-none" />
         <div className="hidden md:flex md:flex-1 md:flex-wrap md:items-center md:gap-3">
         <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">

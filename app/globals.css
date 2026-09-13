@@ -154,3 +154,14 @@ details[open] > summary { margin-bottom: 8px; }
 .bh-range::-moz-range-thumb { height: 16px; width: 16px; border: 2px solid var(--surface); border-radius: 999px; background: rgb(var(--accent)); }
 .bh-range:focus-visible { outline: none; }
 .bh-range:focus-visible::-webkit-slider-thumb { box-shadow: 0 0 0 3px rgb(var(--accent) / .45); }
+
+/* F-45: the desktop Advanced toolbar is one visual row. The shared global control
+   minimum remains generous for standalone/mobile controls; this compact toolbar has
+   enough surrounding spacing and uses the directive's 36px geometry instead. */
+@media (min-width: 768px) {
+  .bh-advanced-toolbar :is(input:not([type="checkbox"]):not([type="radio"]), select, details > summary) {
+    min-height: 36px;
+    height: 36px;
+  }
+  .bh-advanced-toolbar details > summary { padding-top: 6px; padding-bottom: 6px; }
+}

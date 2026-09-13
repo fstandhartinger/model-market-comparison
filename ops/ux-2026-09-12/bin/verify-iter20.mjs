@@ -1,6 +1,6 @@
 // Iteration 20 acceptance: F-23 (phone Advanced toolbar + Refine sheet), F-24 (Benchmaxxing
-// table density), F-25 (thin evidence hatched), F-28 (slider end labels, Evidence button),
-// plus F-13's phone first-row guard for Simple. 1440×1000 and 390×844, light and dark.
+// table density), F-41 (thin evidence hatched), F-28 (slider end labels, Evidence button),
+// plus F-42's phone Simple card guard. 1440×1000 and 390×844, light and dark.
 // Usage: node verify-iter20.mjs <base-url> <out-dir>
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
@@ -33,6 +33,8 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
           firstRowTop: row ? Math.round(row.getBoundingClientRect().top) : null,
           rows: document.querySelectorAll('table.dtable tbody tr').length,
           hatched: document.querySelectorAll('table.dtable .bh-magnitude-thin').length,
+          cardHeight: card ? Math.round(card.getBoundingClientRect().height) : null,
+          captionHeights: card ? [...card.querySelectorAll(':scope > div > div:first-child > div')].map((row) => Math.round(row.firstElementChild?.getBoundingClientRect().height ?? 0)) : [],
           sparkTotals: document.querySelectorAll('.bh-spark-total').length,
           sparkColor: getComputedStyle(document.querySelector('.bh-spark-total') || document.body).backgroundColor,
           mapTicks: [...document.querySelectorAll('.bh-value-map .recharts-cartesian-axis-tick text')].filter((t) => t.getBoundingClientRect().width > 0).length,
@@ -43,7 +45,10 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
       expect(`${k} F-28 slider end labels`, o.simple.endLabels.length >= 4, o.simple.endLabels);
       expect(`${k} F-25 Simple unhatched`, o.simple.hatched === 0, o.simple.hatched);
       expect(`${k} F-26 value map has >= 4 visible tick labels`, o.simple.mapTicks >= 4, o.simple.mapTicks);
-      if (mobile) expect(`${k} F-13 phone first row <= 780`, o.simple.firstRowTop != null && o.simple.firstRowTop <= 780, o.simple.firstRowTop);
+      if (mobile) {
+        expect(`${k} F-42 phone Simple card <= 900`, o.simple.cardHeight != null && o.simple.cardHeight <= 900, o.simple.cardHeight);
+        expect(`${k} F-42 phone captions <= 24 px`, o.simple.captionHeights.length === 2 && o.simple.captionHeights.every((height) => height <= 24), o.simple.captionHeights);
+      }
       await p.screenshot({ path: `${OUT}/${k}-simple.png` });
     });
 
@@ -56,14 +61,14 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
         const rows = [...document.querySelectorAll('table.dtable tbody tr.bh-ranking-row')];
         const fable = rows.find((r) => /Fable 5 \(high\)/.test(r.textContent || ''));
         const accentFilled = toolbar ? [...toolbar.querySelectorAll('summary, button')].filter((b) => (b.tagName === 'SUMMARY' || !b.closest('details:not([open])')) && b.getBoundingClientRect().width > 0 && /bg-accent\/15/.test(b.className)).map((b) => b.textContent?.trim()) : [];
-        const withSub = rows.filter((r) => /\d\/7 inputs/.test(r.textContent || ''));
+        const pips = rows.filter((r) => r.querySelector('[aria-label$="Composite inputs"]'));
         return {
           toolbarHeight: tb ? Math.round(tb.height) : null,
           toolbarTop: tb ? Math.round(tb.top) : null,
           firstRowTop: row ? Math.round(row.getBoundingClientRect().top) : null,
           rows: rows.length,
           fableRow: fable ? { text: (fable.textContent || '').replace(/\s+/g, ' ').slice(0, 120), hatched: !!fable.querySelector('.bh-magnitude-thin') } : null,
-          rowsWithInputsLabel: withSub.length,
+          rowsWithInputPips: pips.length,
           hatchedRows: document.querySelectorAll('table.dtable .bh-magnitude-thin').length,
           accentFilled,
           evidenceLabel: [...(toolbar?.querySelectorAll('summary') || [])].map((s) => s.textContent?.trim()),
@@ -71,12 +76,15 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
           scrollWidth: document.documentElement.scrollWidth,
         };
       });
-      // The directive's example ("Fable 5 (high)" = 1/7) confused # benchmarks (1) with
-      // composite_coverage (5/7). The written rule is checked instead: some rows hatched, and
-      // every hatched row carries a "0/7"–"2/7 inputs" label.
+      // F-41 counts exact plus attached inputs. The pips expose the same breakdown, so a
+      // hatched row must have fewer than three total inputs; attached values are not missing.
       o.advanced.hatchRule = await p.evaluate(() => [...document.querySelectorAll('table.dtable tbody tr.bh-ranking-row')]
-        .filter((r) => r.querySelector('.bh-magnitude-thin')).every((r) => /[012]\/7 inputs/.test(r.textContent || '')));
-      expect(`${k} F-25 hatched rows follow the <3 inputs rule`, o.advanced.hatchedRows > 0 && o.advanced.hatchRule, { hatched: o.advanced.hatchedRows, rule: o.advanced.hatchRule });
+        .filter((r) => r.querySelector('.bh-magnitude-thin')).every((r) => {
+          const label = r.querySelector('[aria-label$="Composite inputs"]')?.getAttribute('aria-label') || '';
+          const match = label.match(/(\d+) exact \+ (\d+) attached/);
+          return !!match && Number(match[1]) + Number(match[2]) < 3;
+        }));
+      expect(`${k} F-41 hatched rows follow the <3 total inputs rule`, o.advanced.hatchedRows > 0 && o.advanced.hatchRule, { hatched: o.advanced.hatchedRows, rule: o.advanced.hatchRule });
       expect(`${k} F-28 no accent-filled toolbar button in fresh Advanced`, o.advanced.accentFilled.length === 0, o.advanced.accentFilled);
       expect(`${k} F-28 Evidence label`, !o.advanced.evidenceLabel.some((t) => /relaxed/.test(t || '')), o.advanced.evidenceLabel);
       expect(`${k} no overflow`, o.advanced.scrollWidth === vp.width, o.advanced.scrollWidth);

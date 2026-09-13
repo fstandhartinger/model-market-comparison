@@ -66,8 +66,8 @@ function Row({ title, value, children }: { title: React.ReactNode; value: string
   return (
     <div className="min-w-0">
       <div className="flex items-baseline justify-between gap-3">
-        <span className="text-sm text-gray-300">{title}</span>
-        <span className="tabular text-sm font-semibold text-accent">{value}</span>
+        <span className="min-w-0 whitespace-nowrap text-sm text-gray-300">{title}</span>
+        <span className="shrink-0 tabular text-sm font-semibold text-accent">{value}</span>
       </div>
       {children}
     </div>
@@ -149,10 +149,10 @@ export function ShortlistControls({
           At lg the grid places the map in column 2 spanning both rows, so the left column
           reads: sliders stacked (score above cost), then the summary line. Below lg the two
           sliders sit side by side so the list starts on the first phone screen. */}
-      <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
-        <div className="grid grid-cols-2 gap-3 self-start lg:grid-cols-1 lg:gap-2">
+       <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
+        <div className="grid grid-cols-1 gap-3 self-start sm:grid-cols-2 lg:grid-cols-1 lg:gap-2">
           <Row
-            title={<><span>Minimum Capability Score</span> <span className="bh-muted text-[11px]">({scoreName})</span><InfoTip title={`Minimum capability score — ${scoreName}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This setting follows the active score selector.</span></InfoTip></>}
+            title={<><span className="sm:hidden">Min. capability score</span><span className="hidden sm:inline">Minimum Capability Score</span> <span className="bh-muted text-[11px]">({scoreName})</span><InfoTip title={`Minimum capability score — ${scoreName}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This setting follows the active score selector.</span></InfoTip></>}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
           >
             <div className="relative mt-1">
@@ -166,7 +166,7 @@ export function ShortlistControls({
           </Row>
 
           <Row
-            title={<><span>{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span>{costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
+            title={<><span className="sm:hidden">Max cost / task</span><span className="hidden sm:inline">{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span>{costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
             value={maxCost == null ? "no limit" : money(maxCost)}
           >
             <div className="relative mt-1">
