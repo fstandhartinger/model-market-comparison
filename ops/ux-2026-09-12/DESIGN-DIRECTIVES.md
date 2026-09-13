@@ -1,10 +1,12 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 3: 2026-09-13 10:00 UTC**, against live revision `75534f5` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass3/` — 64 screenshots +
-`metrics.json`, desktop 1440×1000 and mobile 390×844, light and dark: Simple, Advanced (incl.
-expanded row), Guided steps 1–4, Benchmaxxing, model page, Benchmarks, Charts. Pass 2 is in
-`…/fable-20260913-pass2/`, pass 1 in `…/fable-20260913/`.
+**Pass 4: 2026-09-13 12:00 UTC**, against live revision `1b17731` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass4/` — 73 screenshots +
+`metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple, Advanced incl.
+expanded row, Guided steps 1–4, Filters, Benchmaxxing, model page, Benchmarks, Charts), plus
+`desktop_light-compare*.png`, `desktop_light-subscriptions-open.png` and the DOM checks in
+`/tmp/fable-checks.mjs` / `/tmp/fable-leak.mjs` (copied to `…/pass4/checks/`). Pass 3 is in
+`…/fable-20260913-pass3/`, pass 2 in `…/fable-20260913-pass2/`, pass 1 in `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -21,59 +23,66 @@ delegated diff is reviewed before it lands.
 
 ---
 
-## Verdict on the live site — pass 3 (2026-09-13)
+## Verdict on the live site — pass 4 (2026-09-13)
 
-Pass 2's fold work landed and holds: Simple shows six recommended rows on the first desktop
-screen (first row 669 px), the phone table is Model · Score · Cost with no horizontal scroll,
-the header is one calm row, Advanced opens on 118 rows, the value map has round ticks and no
-label collisions, Charts and Compare are quiet. The Guided wizard remains the reference for
-tone. The site is now *close*; what is left is one big page and a handful of honesty and
-density defects.
+The pass-3 backlog shipped and holds live: model page 2,433 px / 4,062 px, phone Advanced
+toolbar 54 px with a Refine sheet, Benchmaxxing rows 53 px with orange signal bars, phone
+value map with a scale, Benchmarks page contained at 390 px, slider histograms visible with
+end labels, no accent-filled toolbar button in a fresh Advanced session. The Simple view now
+answers Florian's question on one screen: two sliders, a value map, six recommended rows.
+The Guided wizard is the reference for tone. The model page reads like a release post.
 
 **What still fails the bar, in order of damage:**
 
-1. **The Simple value map and the Simple list disagree.** The map plots seven passing points
-   and halos "Fable 5 (high)" as a Pareto member; the list beneath it ranks six models and
-   refuses that one because its task tokens are not measured. A reader sees a recommended
-   dot that is not in the recommendation. → fixed in this pass (**F-22**, Fable, surgical).
-2. **The model page is still a 6,308 px scroll** (10,112 px on a phone) of provenance boxes,
-   with a provider table that overflows 390 px and a "Composite definition" disclosure that
-   F-08 asked to remove. → **F-08a** (mechanical, delegated this pass) and **F-08b** (judgment).
-3. **A one-benchmark model ranks 4th in Advanced.** "Fable 5 (high)" shows Composite 92.9 with
-   `# benchmarks = 1` and an "assumed task" cost. The number is honest but *looks* like the
-   others; a reader cannot tell a 7-input score from a 1-input one without reading the
-   sixth column. → **F-25**.
-4. **Advanced on a phone opens with a 250 px, five-row toolbar** (search, org select, max $,
-   comparison, evidence) before the first model. → **F-23**.
-5. **Benchmaxxing:** the H1 rendered at 16 px (fixed this pass), the signal table spends
-   100 px per row because every row repeats the "Benchmaxxing signal" badge on a page whose
-   title already says so, the Signal column has no magnitude bar, and the summary box says
-   "18 tagged models / 18 with the strongest signals" twice. → **F-24**.
-6. **Phone value map has no scale.** At 390 px the compact map hides all tick text, so it is
-   a box of dots with no axis — decoration, not a chart. → **F-26**.
-7. **Benchmarks page:** 7,215 px on desktop; its ranking table overflows to 498 px at 390 px
-   (`table.bh-table` right edge 498). → **F-27**.
-8. **Micro-defects:** Simple slider histograms are near-invisible light grey in light mode and
-   carry no end labels; the "Evidence · relaxed" button in Advanced is accent-filled as if it
-   were an active user filter although it is the mode's default; the Benchmaxxing selector's
-   orange dot marker is a text bullet and not visibly orange.
+1. **Dark mode value map had invisible labels.** The point labels were filled with
+   `rgb(var(--text))`, but `--text` is a hex colour, so every label fell back to black —
+   unreadable on the dark card in Simple, Advanced and the Guided results. → fixed in this
+   pass (**F-29**, Fable, surgical, commit `2e4abce`).
+2. **Guided leaked into Simple.** Visiting the wizard called `setMinScore(0)`, which marked
+   the floor as user-touched; Simple afterwards opened at 70 with 14 rows instead of 85 with
+   6. Every user who tries Guided and returns gets a different Simple than the one the page
+   promises. → fixed in this pass (**F-30**, Fable, surgical, `2e4abce` + `9840328`).
+3. **A model with "# benchmarks = 1" has a Composite built from 5 inputs.** "Fable 5 (high)"
+   ranks 4th in Advanced with `1` in the benchmarks column while its model page shows AA
+   Coding 76.5, Coding Agent 65.1, AA Intelligence 49.7, both ECIs and DesignArena as
+   Composite inputs and "1 of 75 registered benchmark versions" in the sheet. The two counts
+   contradict each other on the same screen. → **F-32** (judgment; data identity, not CSS).
+4. **Advanced repeats two labels on every row.** `5/7 inputs` under every score and `est.`
+   after every cost: 236 small labels on 118 rows that carry no per-row information, because
+   almost no model has 7/7 and every adjusted cost is modeled. → **F-31**.
+5. **Compare is 6,743 px** at 1440 px with two models: the full benchmark table repeats
+   "measured", the source link, the observed date and an Evidence disclosure in every cell.
+   This is the R8.1 release-post surface and it is the least release-post-like page. → **F-35**.
+6. **Benchmaxxing:** the signal card is 640 px tall for 300 px of content; on phones the
+   radar's sector labels render at 7 px (SVG text inside a scaled viewBox). → **F-33**
+   (delegated this pass to Kimi K3 in `.worktrees/f33`).
+7. **Benchmarks page** opens with three stat boxes of which one is a unit ("points") styled
+   as a number and one is a maintenance counter ("0 source identities not yet matched"), a
+   checkbox for that empty set, and the sentence "Coverage above uses the evidence filter
+   before model filters." The ranking is a table of numbers without a single bar. → **F-34**
+   (delegated this pass to Kimi K3 in `.worktrees/f34`).
+8. **Micro-defects:** "Personal use only" in the subscription list is orange (orange is
+   reserved for the Benchmaxxing tag); the model page prints "Protocol-compatible
+   measured/vendor divergences — No verified … pair is available" when there is nothing to
+   say; the Simple slider is labelled "Minimum Composite" while the table header says
+   "Score (Composite)". → **F-36**, **F-37**, **F-38**.
 
-## Decisions on the pass-3 questions
+## Decisions on the pass-4 questions
 
-1. **F-08 is split.** F-08a is the mechanical half (drop raw columns below `md`, rename and
-   move the anomaly panel, remove the disclosure, hide the description column on phones) and
-   was delegated to Kimi K3 in this pass. F-08b is the release-post sheet and the mini radar;
-   it needs a judgment engine. The page-height acceptance moves to F-08b.
-2. **Thin evidence stays ranked but must look thin (F-25).** Removing one-input models from
-   Advanced would hide data Florian asked to keep; instead the score cell carries the input
-   count and a hatched bar below three inputs. Simple is unaffected (it requires measured
-   task tokens, which excludes these rows).
-3. **P4 hero line 2 — no change from pass 2.** The "only place" wording rests on pricing the
-   route the reader's own filters leave open; the record for X7 is in the pass-2 decision.
-   Nothing in the pass-3 evidence weakens that.
-4. **R5.2 literal cost-descending sort in Simple — keep.** With six rows it reads as "the
-   premium option first, the bargain last", and the Score column stays sortable for anyone
-   who wants the other order. Note it in X7 as decided.
+1. **P4 / hero line 2 — keep the wording, record the fallback.** Artificial Analysis shows a
+   list-price cost per task; it does not price the provider route a reader's own filters
+   leave open, with that route's cache prices, nor a subscription break-even. "What each model
+   really costs *you*" is the claim, and the Adjusted Cost (i) and the methodology page must
+   say exactly that distinction (they do). If Florian wants an exclusivity-free line, the
+   fallback is: *"And the only place that prices each model the way you would actually buy
+   it."* Put both in X7; do not change the live line without him.
+2. **R5.2 cost-descending Simple — keep** (pass 3 decision stands; six rows read as
+   "premium first, bargain last", Score stays sortable).
+3. **F-25 sub-label rule is revised by F-31.** Coverage pips replace the text; the hatch for
+   fewer than three inputs stays.
+4. **"est." moves from the cell to the header** (F-31): the column already says "Adjusted"
+   and carries an (i); a per-row suffix repeated 118 times is noise, while the orange
+   "assumed task" flag is real per-row information and stays.
 
 ---
 
@@ -92,119 +101,125 @@ asked for.
 
 ## Directives (open)
 
-> **Status 2026-09-13 pass 3 (Fable):** F-13 … F-21 are done (see the Done log). F-19 is
-> live-checked by Fable in this pass: H1 text, ten default rows, "Show all 18 tagged", ring
-> labels with an "Other" legend, and `scrollWidth` 390 on phones all hold; the 16 px title was
-> a CSS omission and is fixed in this pass. Its table density is re-specified in F-24. The
-> open list below is the complete remaining design backlog, ordered by value.
+> **Status 2026-09-13 pass 4 (Fable):** F-08a/F-08b and F-22 … F-28 are done and live
+> (Done log). F-29 and F-30 were fixed by Fable in this pass. The list below is the complete
+> remaining design backlog, ordered by value. F-33 and F-34 were delegated to Kimi K3 in this
+> pass; their diffs are reviewed by Fable before they land (see the Done log for the outcome).
 
-### F-08a `[mechanical]` Model page trims — DONE in pass 3 (Fable; the Kimi delegation produced no edits in 12 min and was stopped)
-*Where:* `components/ModelDetailOffers.tsx`, `components/BenchmarkEvidence.tsx`,
+### F-32 `[judgment]` One model, one benchmark count
+*Where:* `lib/client-model.ts` (`benchmark_count` = `benchmark_results.coverage.by_model[id].available`),
+`scripts/build-dataset.mjs` (benchmark_results coverage and Composite input attachment),
 `components/BenchmarkSheet.tsx`.
+*What:* the "# benchmarks" column and the model-page sheet count must include every
+benchmark result the Composite consumed for that configuration. Live contradiction:
+`/models/claude-fable-5%3A%3Ahigh` shows Composite 92.9 from AA Coding 76.5, Coding Agent
+65.1, AA Intelligence 49.7, Epoch ECI 163.4 (attached), Software ECI 165.9 (attached) and
+DesignArena 1274/1281, yet "1 of 75 registered benchmark versions" and `# benchmarks = 1`
+in Advanced. Either the AA Coding, Coding Agent, AA Intelligence and DesignArena rows are
+registered results for this configuration (then the sheet and the count must show them), or
+they are variant/family-attached values (then the model page must label them "attached
+from <configuration>" with the (i), exactly as it already does for the ECIs, and they must
+not count as this configuration's own evidence in the Composite coverage `5/7`). Find the
+cause in the build (most likely: the AA snapshot rows are keyed by a different
+configuration name than the registry rows), fix it at the source, and add a test that for
+every model `benchmark_count ≥ number of non-attached Composite inputs`.
+*Accept:* for every row in Advanced, `# benchmarks` ≥ the number of Composite inputs that are
+not marked attached; the Fable 5 (high) page lists its AA index rows in the sheet or marks
+them attached; the new test passes; no Composite value changes for models whose inputs are
+all registered.
+
+### F-31 `[mechanical]` Advanced rows: coverage pips, "est." in the header
+*Where:* `components/ModelExplorer.tsx` (Score cell, cost cell, `Th` for Adjusted Cost),
+`components/BenchmarkSheet.tsx` / model page top-5 table (same "est." rule).
 *What:*
-- Provider tables (top-5 and per-platform): "Raw input $/1M" and "Raw output $/1M" columns get
-  `hidden md:table-cell`; "Platform" in the top-5 table gets `hidden sm:table-cell`.
-- `AnomalySummary`: heading "Profile signals" → **"Unusual results"**; render `null` when there
-  are no flags.
-- The anomaly panel moves *after* the per-category sheet, before "Missing coverage".
-- The "Evaluation group" column (cohort + description) is `hidden md:table-cell`.
-- The "Composite definition" disclosure is gone from the model page (done by Fable, this pass).
-*Accept:* at 390 px `/models/claude-opus-5%3A%3Ahigh` has `scrollWidth` = 390 and the top-5
-table shows `#`, `Provider`, `Adjusted $/task`; the body text contains no "Composite
-definition"; for a model with zero flags the text "Unusual results" is absent.
+- **Score cell:** replace the `n/7 inputs` text sub-label with seven **coverage pips**: a
+  right-aligned row of 7 squares, 4×4 px, 2 px gap, filled `accent` for a present input,
+  `border-line` hollow for a missing one; rendered only when the Composite is the active
+  score and coverage < 7; `title` and `aria-label` = "5 of 7 Composite inputs". The hatch
+  rule for < 3 inputs is unchanged. Nothing is rendered at 7/7.
+- **Cost header:** "Adjusted Cost" gets the same sub-label pattern as Score: a muted 11 px
+  `(modeled $/task)` on the second header line. Remove the `est.` suffix from every cost
+  cell in the overview (both modes) and from the model page's top-5 and per-platform
+  tables (`/task est.` → `/task`). The orange **`assumed task`** flag stays exactly as it is.
+- **Cost (i):** first sentence becomes *"Every adjusted cost is a modeled estimate: …"* so
+  the word "estimate" is still on the page.
+*Accept:* in Advanced no cell contains the string `est.` and no cell contains `/7 inputs`;
+rows with coverage < 7 show a 7-pip row (`[aria-label$="Composite inputs"]`); the Adjusted
+Cost header contains "(modeled $/task)"; the "assumed task" flag is still present on the
+Fable 5 (high) row; Simple is unchanged apart from the header sub-label and the missing
+`est.`; the model page top-5 table shows `$4.378 /task` for Claude Opus 5 (high).
 
-### F-08b `[judgment]` Model page: release-post benchmark sheet and mini radar
-*Where:* `app/models/[id]/page.tsx`, `components/BenchmarkSheet.tsx`, `components/BenchmarkEvidence.tsx`.
+### F-35 `[judgment]` Compare: a release-post table, not a provenance dump
+*Where:* `components/CompareView.tsx` (full benchmark table, radar axis table),
+`components/BenchmarkSheet.tsx` (reuse the F-08b row pattern).
 *What:*
-- **Header:** title on one line; badges under the title on `< md`, never inline. The muted line
-  `Anthropic · released 2026-07-24 · 16 offers` stays.
-- **Top row, right card:** replace the two-column number list with a **six-axis mini radar**
-  of the Composite inputs (AA Coding, AA Coding Agent, AA Intelligence, Epoch ECI, Epoch
-  Software ECI, DesignArena; each normalised to the catalog percentile, missing = gap), 220 px
-  tall, and a **caption strip** beneath it with the native numbers (`76.5 · — · 48.2 · 162.6 ·
-  163.8 · 1278/1330`). The Composite number and its `6/7` evidence count sit above the radar
-  as the card's headline. The two ⓘ attachment paragraphs become one (i) icon next to the
-  affected axis labels.
-- **Benchmark sheet:** per category one **horizontal bar list**, one row per benchmark
-  version: name (link) · a bar of the model's *catalog percentile* on that benchmark (accent,
-  0–100, `tabular-nums` percentile at its end) · the native value with unit · the observed
-  date. Row height ≤ 40 px. The `SourceScore` provenance block (source link, measured badge,
-  Evidence disclosure) moves into a per-row expand (chevron). "Missing coverage" stays a
-  disclosure.
-- **Variants** and **Token offers by platform** stay, but the per-platform offer tables reuse
-  the top-5 column set.
-*Accept:* `/models/claude-opus-5%3A%3Ahigh` full-page height ≤ 2,600 px at 1440 px and
-≤ 4,500 px at 390 px; the mini radar renders in both themes; each sheet row shows a bar
-and a percentile; no `<table>` in the sheet wider than the viewport at 390 px.
+- **Full benchmark table:** one row per benchmark version, one column per model. A cell is
+  the native value (bold if best in row, cell tinted `accent/8` as the green tint is today
+  — use the accent, not green, unless "best" means "cheaper") plus a 4 px percentile bar
+  beneath it (catalog percentile, same as the model page sheet). "measured" badges, source
+  links, observed dates and the Evidence disclosure move into a **per-row expand** (chevron
+  at the row start, F-08b pattern). "Unknown / no published match" cells render `—`.
+- **Radar axis table** under the Benchmark radar becomes a disclosure "Axis values and
+  normalisation" (closed by default).
+- **"Where each model is strongest"** stays as it is — it is the best block on the page.
+- Category headings stay; the "Find a benchmark" search and category select stay.
+- Unusual-results panels at the end: render only for models that have a flag; drop the
+  "Protocol-compatible …" paragraph (F-36 rule).
+*Accept:* `/compare` with GPT-5.6 Sol (high) vs Claude Sonnet 5 (high) is ≤ 3,500 px at
+1440 px and ≤ 6,000 px at 390 px; the string "observed 2026-" appears 0 times outside an
+open expand; each row shows one bar per model with a value; the best value per row is bold.
 
-### F-25 `[mechanical]` Thin evidence must look thin
-*Where:* `components/ModelExplorer.tsx` (Score cell, `MagnitudeBar`), `app/globals.css`.
-*What:* in the Score cell, when the model's `composite_coverage` (inputs present out of 7) is
-below **3**, render the score number in the muted colour, the magnitude bar with a diagonal
-hatch (`repeating-linear-gradient`, 4 px), and an 11 px muted sub-label `1/7 inputs` under
-the number. From 3 to 6 inputs, only the sub-label `5/7 inputs`. At 7/7 nothing extra. Applies
-to the Composite score only (the other scores are single sources). The Score (i) text gains
-one sentence: *"Scores built on fewer than three of the seven inputs are shown hatched."*
-*Accept:* in Advanced, the row "Fable 5 (high)" shows a hatched bar and "1/7 inputs"; rows
-with 7/7 show no sub-label; Simple is unchanged (six rows, no hatching).
+### F-33 `[mechanical]` Benchmaxxing: card self-height, readable phone sector labels — delegated (Kimi K3, `.worktrees/f33`)
+*Where:* `components/BenchmaxxingReport.tsx`.
+*What:* the `<aside>` signal card gets `self-start`; the radar's topic labels leave the SVG
+and become absolutely positioned HTML spans (11 px) over a `relative` wrapper, positioned by
+`x/size`, `y/size` percentages, so they keep 11 px at 316 px as well as at 640 px.
+*Accept:* at 1440 px the signal card is ≤ 360 px tall; at 390 px the labels "Writing",
+"Agentic", "Coding" have a rendered height ≥ 10 px; no label overlaps the plot.
 
-### F-23 `[judgment]` Advanced toolbar on phones: search plus one Refine button
-*Where:* `components/ModelExplorer.tsx` (toolbar block), `components/ui.tsx`.
-*What:* below `md` the toolbar is **one row**: the search field (flex-1) and a `Refine ▾`
-button (40 px, `bh-nav-button` style). Refine opens the same bottom-sheet pattern as F-18
-containing, in this order: All orgs (select), Max $/task (input), Better than a model (the
-H3 popover content inline), Evidence (the three toggles). Sticky footer `Show 118 models`
-and `Reset`. When any of those is non-default the button reads `Refine · 2 ▾` in accent.
-The `118 models` count moves under the row as 12 px muted text. `md` and up: unchanged.
-*Accept:* at 390 px the Advanced toolbar is ≤ 56 px tall and the first model row starts at
-≤ 480 px; the sheet opens and closes; the desktop toolbar is still one row at 1440 px.
+### F-34 `[mechanical]` Benchmarks page: one coverage line, a bar per result — delegated (Kimi K3, `.worktrees/f34`)
+*Where:* `components/BenchmarkRanking.tsx`.
+*What:* the three stat boxes become one sentence (`636 of 839 catalog configurations have a
+result · unit: points · higher is better`), with "· n source identities not yet matched"
+only when n > 0; the "Include unmatched source identities" checkbox appears only when n > 0;
+the status line is `636 results`; each Result cell gets a 4 px accent bar relative to the
+top value (omitted for Elo units, where a bar from zero says nothing); the first row's model
+name is semibold.
+*Accept:* `/benchmarks` shows no "Source identities not yet matched" box for AA Intelligence
+Index, no "Coverage above uses" sentence, ≥ 25 bars in the ranking; page height at 1440 px
+≤ 2,700 px.
 
-### F-24 `[mechanical]` Benchmaxxing table: dense rows, a bar for the signal
-*Where:* `components/BenchmaxxingOverview.tsx`, `components/BenchmaxxingReport.tsx`.
-*What:*
-- Remove the per-row "Benchmaxxing signal" badge (every row in this table is tagged; the
-  heading says so). Row height ≤ 56 px: model name, org as an 11 px muted second line.
-- **Signal** column: number + a 4 px accent-orange magnitude bar scaled to the strongest
-  signal in the table (same `MagnitudeBar` as the overview, tone "warn").
-- The summary box becomes one line: `18 tagged models · coverage floor: 6 comparisons in
-  2 topics` (drop the duplicate second line); the floor sentence under the table goes away.
-- "Related comparisons" and "Measured" stay; "Domain specialisation" keeps its (i).
-- In the per-model selector, tagged models get a real orange dot (`●` styled `text-warn`),
-  not a plain text bullet; if a `<select>` cannot colour options, prefix `▲ ` instead and say
-  so in the label (`▲ = tagged`).
-*Accept:* the default table's ten rows fit in ≤ 620 px at 1440 px; every Signal cell has a
-bar; the string "Benchmaxxing signal" occurs at most once in the table region.
+### F-36 `[mechanical]` Model page: say nothing when there is nothing to say
+*Where:* `components/BenchmarkEvidence.tsx` (AnomalySummary), `components/ModelDetailOffers.tsx`
+(GitHub Copilot card).
+*What:* the "Protocol-compatible measured/vendor divergences" heading and its "No verified
+protocol-compatible vendor/measured pair is available for this model; agreement cannot be
+assessed." sentence render only when at least one pair exists (then keep the wording). The
+lone "GitHub Copilot" card gets the eyebrow **Subscription plan** above its title and moves
+directly above "Token offers by platform".
+*Accept:* `/models/claude-opus-5%3A%3Ahigh` body text does not contain "Protocol-compatible";
+the Copilot card has the eyebrow and sits above the token offers disclosure.
 
-### F-26 `[mechanical]` Phone value map gets a scale
-*Where:* `components/CostCapabilityScatter.tsx` (compact branch), `app/globals.css` (the
-639 px rule that hides tick text).
-*What:* on phones show the X ticks `$3 · $1 · $0.3 · $0.1` and two Y ticks (the floor and 100)
-at 10 px muted; keep labels for frontier members only (as now). The map keeps 200 px height.
-Ticks must not overlap the plot area: reserve 18 px bottom, 24 px left.
-*Accept:* at 390 px the compact map contains ≥ 4 `text` tick elements; no tick overlaps a dot.
+### F-37 `[mechanical]` Subscriptions list: neutral badges, footnote for uncollected plans
+*Where:* the "Would a subscription be cheaper?" component on `/` (`components/Subscription*.tsx`).
+*What:* "Personal use only" and "Company use unclear" become neutral `bh-badge` chips (muted
+text, `border-line`), not orange text. Plans whose price and quota were not collected
+(ChatGPT Plus / Pro, SuperGrok) leave the table and become one muted footnote line under it:
+*"Not collected: ChatGPT Plus / Pro, SuperGrok — the vendor sites refuse automated reads."*
+When "I'm buying for a company" is on, plans that companies may not use are hidden (as now)
+and the header count says so (`9 plans · 5 hidden for company use`).
+*Accept:* no orange (`text-warn`) text inside the disclosure; the words "not collected" occur
+once, in a footnote; the row count drops by two.
 
-### F-27 `[mechanical]` Benchmarks page: phone table and length
-*Where:* `components/BenchmarkRanking.tsx`, `app/benchmarks/page.tsx`.
-*What:* the ranking table drops "Explore" and the provenance details below `md`: columns
-`Rank · Model · Result` only, with the provenance (source link, observed date, Evidence
-disclosure) in a per-row expand. Default page size 25 rows with `Show more`. The eyebrow
-"BENCHMARK EXPLORER" goes; the intro is one sentence. The `CompositeNote` disclosure at the
-end of the page goes (F-21 rule).
-*Accept:* at 390 px `document.documentElement.scrollWidth === 390` and no `table` wider than
-390; at 1440 px full-page height ≤ 3,500 px for AA Intelligence Index; body text has no
-"Composite definition".
-
-### F-28 `[mechanical]` Micro-defects
-*Where:* `components/ShortlistControls.tsx`, `components/ModelExplorer.tsx`, `app/globals.css`.
-*What:*
-- Slider histograms: bars in `accent/35` (light) and `accent/45` (dark) for both sliders — the
-  score histogram is currently a barely visible grey in light mode; add the range end labels
-  (`60 … 100`, `$0.02 … $7`) at 10 px muted under each track.
-- The "Evidence ▾" button is accent-filled only when the user changed a toggle away from the
-  mode default; the default state renders like the other toolbar buttons and reads
-  `Evidence ▾` (drop "· relaxed" from the label; the popover explains the state).
-*Accept:* in a fresh Advanced session no toolbar button is accent-filled; each slider shows
-two end labels.
+### F-38 `[mechanical]` Simple: label and small print
+*Where:* `components/ShortlistControls.tsx`, `components/ModelExplorer.tsx` (small print).
+*What:* slider label "Minimum Composite" → **"Minimum score"** with `(Composite)` in 11 px
+muted after it (same pattern as the table header; follows the score selector). Small print
+under the Simple table becomes one line: *"Underlined prices open their inputs and sources ·
+How we calculate adjusted cost · Only models with measured task-token usage are ranked here;
+Advanced can relax that."*
+*Accept:* the Simple card shows "Minimum score"; the small print is a single paragraph ≤ 200
+characters with the methodology link intact.
 
 ---
 
@@ -276,4 +291,5 @@ Live revision `0e7380c`, script `ops/ux-2026-09-12/bin/verify-directives-indep.m
 | F-26 phone value-map scale | `74b5a2d` (Claude Opus) | same | live: 5 tick labels at 390, 8 at 1440; needs a non-Claude verifier |
 | F-27 Benchmarks page: Rank · Model · Result on phones, provenance in a per-row expand, 25 rows + Show more, no eyebrow, no Composite definition | `8fb9e6f` (Claude Opus, iteration 21) | `/opt/benchmarkheaven/state/ux-evidence/iter21/f27-live-canonical/`, `…/f27-live-legacy/` (`bin/verify-f27.mjs`) | live: 2,814 px at 1440 (AA Intelligence Index), 3 columns and 352 px table at 390, no overflow; needs a non-Claude verifier |
 | F-28 slider histograms visible + range end labels; Evidence button neutral by default | `74b5a2d` (Claude Opus) | same | live: 4 end labels, no accent-filled button in a fresh Advanced session; needs a non-Claude verifier |
-
+| F-29 dark-mode value-map labels (`fill="var(--text)"`) | `2e4abce` (Fable, pass 4) | `ux-evidence/fable-20260913-pass4/checks/` | needs a non-Fable verifier: label fill ≠ rgb(0,0,0) in dark |
+| F-30 Guided no longer resets Simple's floor (`resetMinScore` on mount) | `2e4abce` + `9840328` (Fable, pass 4) | same | needs a non-Fable verifier: Simple shows 85 / 6 rows after Guided → Simple |

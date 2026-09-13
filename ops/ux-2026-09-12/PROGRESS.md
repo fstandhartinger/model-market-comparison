@@ -89,8 +89,8 @@ credited below, the rest is marked open.
 | B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4, `test/benchmax-jagged.test.mjs` | zig-zag > smooth specialisation still proven. Iteration 7 removed the alphabetical-order critique (all-pairs spread, order-invariance test). **Remaining, documented on `/benchmaxxing#method`:** percentiles are bounded, so a model at the top of most boards has less room to vary than a mid-field one |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
 | X2 | Codex never above 80 % weekly | open | `/opt/benchmarkheaven/state/ux-evidence/review-20260913T110002Z-limits.json` | `limits.py --json` at 11:41 UTC: codex 69% weekly, Claude 54% session / 29% week; below the 80% ceiling. X2 remains open because the final completeness gate X6 is not complete. |
-| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md` (pass 3), `ux-evidence/review-20260913T110002Z/{fable-canonical-fixed2,iter20-canonical,iter20-legacy,f27-canonical,f27-legacy}/` | Codex independently verified the non-Codex F-08a/F-08b and F-22–F-28 implementations live on both hosts, 1440/390, light/dark. F-19 is live but was implemented by codex-luna (`0c37a18`), so this gate cannot set it verified. X3 therefore remains in-progress under the one-engine rule. |
-| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict — pass 3"; `ux-evidence/review-20260913T110002Z/fable-canonical-fixed2/metrics.json` | Current non-Codex pass-3 matrix has no product overflow or former F-08/F-23–F-28 dimension failures: model 2,433/4,062 px, phone toolbar 54 px, Benchmaxxing rows 53 px, five map ticks, Benchmarks table 352 px. F-19 remains same-engine `implemented`, and X6 still fails on data/PRD/community-benchmark gates. |
+| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md` (pass 3), `ux-evidence/review-20260913T110002Z/{fable-canonical-fixed2,iter20-canonical,iter20-legacy,f27-canonical,f27-legacy}/` | Codex independently verified the non-Codex F-08a/F-08b and F-22–F-28 implementations live on both hosts, 1440/390, light/dark. F-19 is live but was implemented by codex-luna (`0c37a18`), so this gate cannot set it verified. X3 therefore remains in-progress under the one-engine rule. **Fable pass 4 (2026-09-13 12:00 UTC):** fresh 73-shot matrix judged; F-29/F-30 fixed by Fable and live-verified; F-31…F-38 written; F-33/F-34 delegated. |
+| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict — pass 3"; `ux-evidence/review-20260913T110002Z/fable-canonical-fixed2/metrics.json` | Current non-Codex pass-3 matrix has no product overflow or former F-08/F-23–F-28 dimension failures: model 2,433/4,062 px, phone toolbar 54 px, Benchmaxxing rows 53 px, five map ticks, Benchmarks table 352 px. F-19 remains same-engine `implemented`, and X6 still fails on data/PRD/community-benchmark gates. **Fable pass 4 verdict:** pass-3 backlog holds live; remaining damage in order: F-32 (benchmark-count contradiction), F-31 (row-label noise), F-35 (Compare 6,743 px), F-33, F-34, F-36–F-38. |
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | verified | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`, current live `/about` and API evidence | Codex checked the H2 fields, six headline boards, `data/raw/*.json` sync, ECI/featured/Compare changelog entries and the matching build-diagnostic field paths. |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
@@ -116,6 +116,16 @@ credited below, the rest is marked open.
 | F-26 | Phone value-map scale | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Codex verified five phone ticks and eight desktop ticks with no overflow. |
 | F-27 | Benchmarks page phone table | verified | `ux-evidence/review-20260913T110002Z/f27-{canonical,legacy}/verification.json` | Codex verified 25 rows, per-row provenance expand, three phone columns, 352 px table and no overflow. |
 | F-28 | Micro-defect cleanup | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Codex verified neutral evidence button state and histogram end labels in all four viewports/themes. |
+| F-29 | Dark-mode value-map point labels theme-aware | implemented | `ux-evidence/fable-20260913-pass4/checks/verification-F29-F30.json`, `…/desktop_dark-simple-after-F29.png` | Fable pass 4 (`2e4abce`): `fill="rgb(var(--text))"` fell back to black; now `var(--text)`. Live: label fill `rgb(237,242,248)` in dark at 1440 and 390. Needs a non-Fable verifier. |
+| F-30 | Guided must not reset Simple's 85 floor | implemented | same | Fable pass 4 (`2e4abce`, `9840328`): wizard used `setMinScore(0)` (marks the floor touched) → Simple opened at 70 / 14 rows after Guided. Now `resetMinScore()` on mount. Live: 85 / 6 rows after Guided → Simple at both widths. Needs a non-Fable verifier. |
+| F-31 | Advanced rows: coverage pips instead of `n/7 inputs`, `est.` into the header | open | — | Fable pass 4 directive `[mechanical]`; revises F-25's sub-label rule. |
+| F-32 | One model, one benchmark count (`# benchmarks` vs Composite inputs contradiction, Fable 5 (high)) | open | `ux-evidence/fable-20260913-pass4/checks/f5.mjs` | Fable pass 4 directive `[judgment]`; data identity in the build, not CSS. Highest-value open design item. |
+| F-33 | Benchmaxxing: signal card self-height, phone sector labels in HTML | in-progress | `ux-evidence/fable-20260913-pass4/delegations/f33-*` | Delegated to Kimi K3 in `.worktrees/f33` (branch `fable4-f33`) during pass 4; Fable reviews the diff before it lands. |
+| F-34 | Benchmarks page: one coverage line, bar per result | in-progress | `ux-evidence/fable-20260913-pass4/delegations/f34-*` | Delegated to Kimi K3 in `.worktrees/f34` (branch `fable4-f34`) during pass 4; Fable reviews the diff before it lands. |
+| F-35 | Compare: release-post table with per-row provenance expand, ≤ 3,500 px | open | `ux-evidence/fable-20260913-pass4/desktop_light-compare-full.png` (6,743 px) | Fable pass 4 directive `[judgment]`; this is the R8.1 surface. |
+| F-36 | Model page: no empty "Protocol-compatible" paragraph; Copilot card labelled | open | — | Fable pass 4 `[mechanical]` |
+| F-37 | Subscriptions list: neutral badges, uncollected plans as a footnote | open | `ux-evidence/fable-20260913-pass4/desktop_light-subscriptions-open.png` | Fable pass 4 `[mechanical]` |
+| F-38 | Simple: "Minimum score (Composite)" label, one-line small print | open | — | Fable pass 4 `[mechanical]` |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -876,3 +886,16 @@ Notes for whoever picks this up:
   - **Next, highest value:** a non-Claude gate over F-08b, F-22…F-28 (`bin/verify-iter20.mjs`,
     `bin/verify-f27.mjs` are ready); E2 ingestion from the four
     machine-readable sources; R9.1 fresh run with a clean tree; P1 non-Claude PRD confirmation.
+
+- **2026-09-13 · iteration 23 · claude-fable · design pass 4** — fresh screenshot matrix of
+  live `1b17731` (73 shots, `ux-evidence/fable-20260913-pass4/`), plus Compare and the
+  subscriptions disclosure, plus DOM checks. Verdict and eight directives in
+  `DESIGN-DIRECTIVES.md` (pass 4). Two defects fixed surgically and verified live at 1440/390
+  in dark: **F-29** value-map labels were black in dark mode (`rgb(var(--text))` with a hex
+  variable); **F-30** Guided reset Simple to 70 / 14 rows. Commits `2e4abce`, `9840328`;
+  evidence `…/pass4/checks/verification-F29-F30.json`. P4 hero decision recorded again with a
+  fallback line for X7. F-33 and F-34 delegated to Kimi K3 in in-repo worktrees
+  (`.worktrees/f33`, `.worktrees/f34`); outcome in the DESIGN-DIRECTIVES Done log.
+  - **Next, highest value (design):** F-32 needs a judgment engine (data identity between the
+    AA snapshot rows and the registry); then F-31 and F-35. Any engine other than Fable may
+    set F-29/F-30 `verified` with `checks/fable-after.mjs`.
