@@ -97,8 +97,8 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       .filter((x) => (Number.isFinite(maxC) ? x.price.value != null && x.price.value <= maxC : true))
       // A composite with zero evidence is the neutral fallback 50, not a
       // measured score — it cannot satisfy a positive min-score filter.
-      .filter((x) => (s.minScoreApplied > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.minScoreApplied : true));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied, maxCost, preferredId]);
+      .filter((x) => (s.advancedMinScore > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.advancedMinScore : true));
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.advancedMinScore, maxCost, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)

@@ -125,7 +125,7 @@ function logTicks(min: number, max: number): number[] {
  *  Advanced's score minimum and keeps a readable height on phones. */
 /** `measuredOnly` (Simple): the map must plot exactly the pool the list ranks — models whose
  *  task-token usage is measured. Without it the map shows an "assumed task" point the list refuses. */
-export function CostCapabilityScatter({ data, compact = false, advanced = false, measuredOnly = false }: { data: ClientData; compact?: boolean; advanced?: boolean; measuredOnly?: boolean }) {
+export function CostCapabilityScatter({ data, compact = false, advanced = false, guided = false, measuredOnly = false }: { data: ClientData; compact?: boolean; advanced?: boolean; guided?: boolean; measuredOnly?: boolean }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
@@ -139,7 +139,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   // overprinted tick labels. Free routes are not dropped for it (R5.10): they are pinned at
   // the left edge and named "free".
   const logCostAxis = logX;
-  const minScore = compact && !advanced ? s.minScoreSimple : s.minScoreApplied;
+  // F-40: only Simple's own map reads Simple's floor and cap; Guided results and Charts read Advanced's.
+  const simplePair = compact && !advanced && !guided;
+  const minScore = simplePair ? s.minScoreSimple : s.advancedMinScore;
+  const maxCost = simplePair ? s.simpleMaxCost : s.maxCost;
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
@@ -157,8 +160,8 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
       .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0)
       .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
-        pass: (x.sc as number) >= minScore && (s.maxCost == null || (x.price.value as number) <= s.maxCost) }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, s.maxCost, preferredId, measuredOnly, s.priceMode]);
+        pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) }));
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, maxCost, preferredId, measuredOnly, s.priceMode]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;

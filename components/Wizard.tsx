@@ -81,13 +81,12 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   // The questionnaire never asks about the Composite, so it must not inherit Simple mode's
   // ≥ 85 default — that would quietly filter the result by a criterion the user was not
   // asked about. Capability is asked on step 3 and applied there instead.
-  // Pass 4 (Fable): use resetMinScore, not setMinScore(0). setMinScore(0) marked the floor
-  // as user-touched, so Simple mode afterwards opened at 70 with 14 rows instead of its
-  // 85 default with 6 — the wizard leaked into the mode it never asked about.
+  // F-40: the wizard writes only the Advanced pair (its results and "Open in Advanced" read it)
+  // and never Simple's floor or cap — pass 4 found Simple opening at 70 after a Guided visit.
   // Mount-only on purpose: the setter's identity follows the settings state.
-  const { resetMinScore } = s;
+  const { setAdvancedMinScore } = s;
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  useEffect(() => { resetMinScore(); }, []);
+  useEffect(() => { setAdvancedMinScore(0); }, []);
 
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const scope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
@@ -120,7 +119,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
     setCompany(null); setIntelMonths(null); setCodingMonths(null);
     s.setIsCompany(false); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
     s.setTeeOnly(false); s.setAllowDataTraining(false);
-    s.setMinIntelligence(null); s.setMinCoding(null); s.setMaxCost(null); s.resetMinScore();
+    s.setMinIntelligence(null); s.setMinCoding(null); s.setMaxCost(null); s.setAdvancedMinScore(0);
     setStep(1);
   };
 
@@ -258,7 +257,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
           <Chip on={s.maxCost != null}>{s.maxCost != null ? `≤ ${money(s.maxCost)} per task` : "No budget limit"}</Chip>
         </div>
       </div>
-      <ModelExplorer data={data} simple limit={15} defaultSort="cost" defaultAsc={false} />
+      <ModelExplorer data={data} simple guided limit={15} defaultSort="cost" defaultAsc={false} />
     </div>
   );
 }

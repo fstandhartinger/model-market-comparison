@@ -48,7 +48,7 @@ function MagnitudeBar({ frac, tone, thin, children }: { frac: number; tone: "sco
   );
 }
 
-export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean }) {
+export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, guided }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean; guided?: boolean }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
@@ -63,12 +63,18 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   // not in Advanced, which must be able to show every priced model.
   const [measuredTasksOnly, setMeasuredTasksOnly] = useState(!!simple);
   const [org, setOrg] = useState("");
-  // null = no budget limit. Simple mode drives this with a slider (R5.4), Advanced with the
-  // numeric field in the toolbar and the wizard with its budget page (R5.6) — one shared
-  // setting, so switching mode never silently drops the limit the user just set.
-  const { maxCost, setMaxCost } = s;
-  // F-06: mode-scoped score minimum (Simple: 85 until changed; Advanced: none until changed).
-  const minScore = simple ? s.minScoreSimple : s.minScoreApplied;
+  // F-40: the floor and the cap are split by mode. Simple's sliders own Simple's pair (85 until
+  // changed / no limit); Advanced's toolbar and the Guided wizard own the Advanced pair (no floor
+  // / no limit until changed). Guided results render Simple's layout but read Advanced's pair, so
+  // neither the wizard nor a nudged Simple slider can filter the other view invisibly.
+  const simplePair = !!simple && !guided;
+  const maxCost = simplePair ? s.simpleMaxCost : s.maxCost;
+  const setMaxCost = simplePair ? s.setSimpleMaxCost : s.setMaxCost;
+  const minScore = simplePair ? s.minScoreSimple : s.advancedMinScore;
+  const setViewMinScore = simplePair ? s.setMinScore : s.setAdvancedMinScore;
+  // The wizard's intelligence and coding floors belong to the Advanced side too.
+  const minIntelligence = simplePair ? null : s.minIntelligence;
+  const minCoding = simplePair ? null : s.minCoding;
   // F-16: Featured is mode-scoped too (Simple: featured only; Advanced: full catalog until set).
   const featuredOnly = simple ? s.featured : s.featuredAdvanced;
 
@@ -132,10 +138,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     if (maxCost != null) r = r.filter((x) => x.price.value != null && x.price.value <= maxCost);
     // R5.6: the wizard's separate intelligence and coding floors. A model with no result on
     // that index cannot satisfy a floor on it, so it drops out rather than being assumed good.
-    if (s.minIntelligence != null) r = r.filter((x) => x.m.scores.aa_intelligence_index != null && x.m.scores.aa_intelligence_index >= s.minIntelligence!);
-    if (s.minCoding != null) r = r.filter((x) => x.m.scores.aa_coding_index != null && x.m.scores.aa_coding_index >= s.minCoding!);
+    if (minIntelligence != null) r = r.filter((x) => x.m.scores.aa_intelligence_index != null && x.m.scores.aa_intelligence_index >= minIntelligence);
+    if (minCoding != null) r = r.filter((x) => x.m.scores.aa_coding_index != null && x.m.scores.aa_coding_index >= minCoding);
     return r;
-  }, [pool, minScore, maxCost, s.minIntelligence, s.minCoding]);
+  }, [pool, minScore, maxCost, minIntelligence, minCoding]);
 
   const rows = useMemo(() => {
     const dir = asc ? 1 : -1;
@@ -180,7 +186,19 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     setOrg(""); setMaxCost(null); setComparisonTarget(""); setComparisonMetric("");
     setWithScoreOnly(true); setHasProviderOnly(true); setMeasuredTasksOnly(!!simple);
   };
-  const countLabel = `${rows.length} models${s.userFiltersActive || q.trim() || org || comparisonActive ? " · filtered" : ""}`;
+  const countLabel = `${rows.length} models${s.advancedFiltersActive || q.trim() || org || comparisonActive ? " · filtered" : ""}`;
+  // F-40: a floor Advanced applies is never invisible — each one is a removable chip by the count.
+  const floorChips = simple ? [] : [
+    ...(minScore > 0 ? [{ key: "score", label: `Score ≥ ${minScore}`, clear: () => s.setAdvancedMinScore(0) }] : []),
+    ...(minIntelligence != null ? [{ key: "intelligence", label: `Intelligence ≥ ${minIntelligence}`, clear: () => s.setMinIntelligence(null) }] : []),
+    ...(minCoding != null ? [{ key: "coding", label: `Coding ≥ ${minCoding}`, clear: () => s.setMinCoding(null) }] : []),
+  ];
+  const floorChipList = floorChips.map((chip) => (
+    <button key={chip.key} type="button" onClick={chip.clear} aria-label={`Remove ${chip.label}`} data-floor-chip={chip.key}
+      className="inline-flex items-center gap-1 whitespace-nowrap rounded-full border border-accent/50 bg-accent/10 px-2 py-0.5 text-xs text-accent">
+      {chip.label} <span aria-hidden="true">×</span>
+    </button>
+  ));
   const evidencePanel = <>
     <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
     <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
@@ -248,11 +266,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
         <ShortlistControls
           scores={pool.map((x) => x.sc).filter((v): v is number => v != null)}
           costs={pool.map((x) => x.price.value).filter((v): v is number => v != null)}
-          minScore={minScore} setMinScore={s.setMinScore} score={score} scoreName={SCORE_SHORT_LABELS[score]}
+          minScore={minScore} setMinScore={setViewMinScore} score={score} scoreName={SCORE_SHORT_LABELS[score]}
           maxCost={maxCost} setMaxCost={setMaxCost}
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
-          map={<CostCapabilityScatter data={data} compact measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} />}
+          map={<CostCapabilityScatter data={data} compact guided={guided} measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} />}
         />
       )}
       <div className={`card mb-4 items-center gap-2 p-1 md:gap-3 md:p-3 ${simple ? "hidden" : "flex"}`}>
@@ -286,7 +304,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
             {evidencePanel}
           </div>
         </details>
-        <span className="ml-auto text-xs text-gray-500">{countLabel}</span>
+        <span className="ml-auto inline-flex flex-wrap items-center gap-2 text-xs text-gray-500">{floorChipList}{countLabel}</span>
         </div>
         {/* F-23: phones get one Refine button instead of four controls. */}
         <button type="button" onClick={() => setRefineOpen(true)} aria-haspopup="dialog" aria-expanded={refineOpen}
@@ -294,7 +312,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           Refine{refineChanged ? ` · ${refineChanged}` : ""} ▾
         </button>
       </div>
-      {!simple && <p className="-mt-3 mb-3 px-1 text-xs text-gray-500 md:hidden">{countLabel}</p>}
+      {!simple && <p className="-mt-3 mb-3 flex flex-wrap items-center gap-2 px-1 text-xs text-gray-500 md:hidden">{floorChipList}{countLabel}</p>}
       {!simple && refineOpen && (
         <div className="fixed inset-0 z-50 md:hidden">
           <div className="absolute inset-0 bg-black/40" aria-hidden="true" onClick={() => setRefineOpen(false)} />

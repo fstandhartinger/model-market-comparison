@@ -59,8 +59,15 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
     s.setHideDeprecated(true); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
     s.setOpenOnly(false); s.setTeeOnly(false); s.setAllowDataTraining(false); s.setIsCompany(false);
     s.setMaxCost(null); s.setMinIntelligence(null); s.setMinCoding(null);
-    s.resetMinScore(); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
+    s.resetMinScore(); s.setSimpleMaxCost(null); s.setAdvancedMinScore(0); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
   };
+  // F-40: "Min score" edits the floor of the view on screen — Simple's on the Simple home view,
+  // the Advanced floor everywhere else (Advanced, Charts, Compare, the EU table read it).
+  const simpleFloor = path === "/" && !s.advancedView;
+  const minScoreField = simpleFloor ? (s.minScoreTouched ? String(s.minScore) : "") : (s.advancedMinScore > 0 ? String(s.advancedMinScore) : "");
+  const onMinScore = (v: string) => simpleFloor
+    ? (v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0))
+    : s.setAdvancedMinScore(parseFloat(v) || 0);
 
   return (
     // F-18: zero-height anchor under the header. Desktop: a right-aligned popover over the
@@ -73,7 +80,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
       <div className="min-h-0 space-y-4 overflow-y-auto px-4 pb-4 pt-4">
         <Section title="Ranking">
           <ScoreSelect value={s.score} onChange={s.setScore} />
-          <NumFilter label="Min score" value={s.minScoreTouched ? String(s.minScore) : ""} onChange={(v) => v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0)} placeholder="any" />
+          <NumFilter label="Min score" value={minScoreField} onChange={onMinScore} placeholder="any" />
           <span className="inline-flex items-center">
             <Toggle label="Featured" on={featuredShown} set={s.setFeatured} />
             <InfoTip title="Featured models" label="the featured filter">
