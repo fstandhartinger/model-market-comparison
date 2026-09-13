@@ -77,8 +77,8 @@ credited below, the rest is marked open.
 | R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
 | R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | **Review 2026-09-13:** default (no selection) `/compare` overflowed a 390 px phone (cards 429 px) — fixed in the review commit, needs re-verify by a non-implementer. `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
 | R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/iter6-refresh-failure/` | Iteration 6 collected all seven live sources successfully in two clean transactions, but both were correctly held before publication because the free live-review workers timed out/incompletely returned on the AA contract in all three bounded rounds. No fresh dataset or deployment claim is accepted. Retry after worker transport recovers. |
-| H1 | Historical snapshots of all benchmark scores | in-progress | `data/raw/benchmarks/history/states/20260913-cb91473c.json` (local) | New write-once state retains six history-only headline boards — AA Intelligence/Coding, Epoch general/software ECI, DesignArena Frontend/Full-Stack Elo — with stable upstream identities, optional catalog joins, source hashes and locators. Registry denominator remains 75. Awaiting deployment/live evidence. |
-| H2 | Bridged comparison via anchor models, uncertainty reported | in-progress | `test/benchmark-history-chain.test.mjs`; `test/headline-history.test.mjs` (local) | Existing multi-hop chain logic is extended to headline states; dated headline IDs alias to current dated UI axes, and `/api/benchmark-view` now projects `hops`, `path`, and `chainIqrRelative`. Direct hop preference and all uncertainty gates remain. Awaiting deployment/live evidence. |
+| H1 | Historical snapshots of all benchmark scores | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json`; `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-ui/verification.json` | New write-once state retains six history-only headline boards — AA Intelligence/Coding, Epoch general/software ECI, DesignArena Frontend/Full-Stack Elo — with stable upstream identities, optional catalog joins, source hashes and locators. Live canonical and legacy hosts serve state `20260913-cb91473c`, all six IDs, and registry denominator 75. Implemented by codex-luna; independent-engine verification remains required. |
+| H2 | Bridged comparison via anchor models, uncertainty reported | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json`; `test/benchmark-history-chain.test.mjs`; `test/headline-history.test.mjs` | Existing multi-hop chain logic is extended to headline states; dated headline IDs alias to current dated UI axes, and `/api/benchmark-view` now projects `hops`, `path`, and `chainIqrRelative`. Live APIs return the four dated headline axes without stable duplicate axes; direct hop preference and all uncertainty gates remain. Implemented by codex-luna; independent-engine verification remains required. |
 | H3 | UI filter "better than model X in category Y" | open | — | |
 | B1 | Benchmaxxing tab in Advanced | verified | `ux-evidence/review-20260913T002002Z/*-benchmaxxing.png` | review (claude-opus, Hermes-built): 200 at desktop+mobile, light+dark; nav tab; method anchor |
 | B2 | Method identifying strong-on-some / weak-on-others | implemented | `REVIEW-20260913T002002Z.md` #3–4 | topic-local percentile jump; tag quality blocked by B3 |
@@ -91,7 +91,7 @@ credited below, the rest is marked open.
 | X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
 | X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed; F-02…F-12 open for implementers |
 | X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict" | fails today on: key message below the fold, no chart in Simple, jargon on the surface, unreadable 214-axis radar, Advanced opening on 6 rows — each has a directive |
-| X5 | CHANGELOG / API.md / fork-sync prompt updated | in-progress | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md` (local) | Documents the six history-only headline boards and the multi-hop API projection; awaiting commit/deploy. |
+| X5 | CHANGELOG / API.md / fork-sync prompt updated | implemented | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`; `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json` | Documents the six history-only headline boards and the multi-hop API projection; committed in `33a1963` and served on both live hosts. |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
 | D1 | Blend default 20 is not a selectable option | implemented | `ux-evidence/iter1-live/verification.json` | blend 20 is a real option; settings key bumped to v7 to discard the broken payload |
@@ -498,6 +498,17 @@ Notes for whoever picks this up:
     `npx tsc --noEmit -p .`, `npm run build` 21/21, `git diff --check`.
   - Kimi K3 read-only review was attempted through `delegate.sh --kimi`; it returned no output
     or receipt, so it was treated as a failed review and contributed no acceptance.
-  - Live deployment and fresh desktop/mobile evidence remain to be recorded before H1/H2/X5
-    can move from in-progress to implemented. R9.1 is intentionally still open: these are
-    retained source snapshots, not a claim that every source refreshed today.
+  - Commit `33a1963` was pushed to `origin/main`; Sandy webhook deployment
+    `frjc28wlnvoxuothjczoxlod` finished for the exact full revision
+    `33a1963882ae6e709fe603de23a1b06866bb3084`. The API probe confirms both
+    `https://benchmarkheaven.com` and `https://model-market-comparison.app.mintapis.com` serve
+    three history states, state `20260913-cb91473c`, 15,268 observations, all six headline IDs,
+    registry count 75, and four dated presentation axes without stable duplicates. The focused
+    Playwright probe passed desktop/mobile (1440/390), light/dark, home/Advanced and
+    /about /benchmaxxing /compare /charts with no horizontal overflow; the broad review harness
+    also completed, but recorded four pre-existing Advanced-tab click timeouts, so that anomaly
+    is retained in its raw verification file rather than hidden. Evidence is under
+    `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-{api,ui,canonical}/`.
+  - H1, H2 and X5 are now `implemented`, not `verified`: codex-luna authored the change and the
+    attempted Kimi K3 independent review returned no output/receipt. R9.1 is intentionally still
+    open: these are retained source snapshots, not a claim that every source refreshed today.
