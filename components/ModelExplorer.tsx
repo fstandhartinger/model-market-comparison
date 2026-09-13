@@ -207,7 +207,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           maxCost={maxCost} setMaxCost={setMaxCost}
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
-          map={<CostCapabilityScatter data={data} compact />}
+          map={<CostCapabilityScatter data={data} compact measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} />}
         />
       )}
       <div className={`card mb-4 flex-wrap items-center gap-3 p-3 ${simple ? "hidden" : "flex"}`}>

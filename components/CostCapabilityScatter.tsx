@@ -112,7 +112,9 @@ function logTicks(min: number, max: number): number[] {
 
 /** `advanced` marks the compact map when it is embedded outside Simple (Charts): it follows
  *  Advanced's score minimum and keeps a readable height on phones. */
-export function CostCapabilityScatter({ data, compact = false, advanced = false }: { data: ClientData; compact?: boolean; advanced?: boolean }) {
+/** `measuredOnly` (Simple): the map must plot exactly the pool the list ranks — models whose
+ *  task-token usage is measured. Without it the map shows an "assumed task" point the list refuses. */
+export function CostCapabilityScatter({ data, compact = false, advanced = false, measuredOnly = false }: { data: ClientData; compact?: boolean; advanced?: boolean; measuredOnly?: boolean }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
@@ -131,12 +133,16 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
     if (s.openOnly) pool = pool.filter((m) => m.open_weights);
     if (s.featured) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
+    if (measuredOnly && s.priceMode === "adjusted") pool = pool.filter((m) => {
+      const tokens = m.token_efficiency?.aa.tokens_per_task;
+      return !!tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
+    });
     return pool
       .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
       .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0)
       .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
         pass: (x.sc as number) >= minScore && (s.maxCost == null || (x.price.value as number) <= s.maxCost) }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, s.maxCost, preferredId]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, s.maxCost, preferredId, measuredOnly, s.priceMode]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logX || p.x > 0)), [allPoints, logX, compact]);
   const compactPoints = useMemo(() => allPoints.filter((p) => !logX || p.x > 0), [allPoints, logX]);

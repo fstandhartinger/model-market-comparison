@@ -49,9 +49,11 @@ export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId
   const { flags, eligibleFamilies } = profileAnomalies(view, modelId);
   const enough = eligibleFamilies > ANOMALY_POLICY.minProfile;
   const divs = view.divergences.filter((d) => d.model_id === modelId);
+  // F-08a: the panel exists only when there is something unusual to show.
+  if (!flags.length && !divs.length) return null;
   return (
     <section className="space-y-3">
-      <h3 className="text-base font-semibold">Profile signals</h3>
+      <h3 className="text-base font-semibold">Unusual results</h3>
       <p className="bh-muted text-sm">
         {flags.length
           ? `${flags.length} threshold-crossing signal${flags.length === 1 ? '' : 's'} flagged`
