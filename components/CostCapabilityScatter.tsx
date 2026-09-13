@@ -97,7 +97,7 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
   if (compact) {
     const passing = compactPoints.filter((p) => p.pass);
     const failing = compactPoints.filter((p) => !p.pass);
-    return <div className="card p-3" aria-label="Score versus adjusted cost value map">
+    return <div className="bh-value-map card p-3" aria-label="Score versus adjusted cost value map">
       <div className="mb-1 flex items-baseline justify-between gap-3">
         <h2 className="text-sm font-semibold">Value map</h2>
         <span className="text-[11px] text-gray-500">cheaper → right · green line = Pareto frontier</span>
