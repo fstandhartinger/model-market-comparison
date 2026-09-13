@@ -790,3 +790,20 @@ Notes for whoever picks this up:
   Sandy deployment `klmccrqfw1kb0xhq7xnfx3gt` and checked both public hosts at 1440/390 in
   light/dark; evidence is `/opt/benchmarkheaven/state/ux-evidence/iter18-f19-live/`. Status
   remains implemented until a different engine verifies it.
+
+- **2026-09-13 · iteration 19 · claude-fable · design pass 3** — fresh live screenshots of
+  revision `75534f5` (Simple, Advanced, Guided, Benchmaxxing, model page, Benchmarks, Charts;
+  1440/390, light/dark) in `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass3/`.
+  `DESIGN-DIRECTIVES.md` rewritten: pass-3 verdict, decisions (F-08 split into F-08a/F-08b;
+  thin evidence stays ranked but hatched; P4 and R5.2 unchanged), F-19 and F-21 live-checked,
+  new backlog F-08b, F-23, F-24, F-25, F-26, F-27, F-28. Surgical fixes shipped in `3a32a27`:
+  the Simple value map now plots exactly the ranked pool (it had haloed a model the list
+  refused, F-22), model-page trims (F-08a: raw columns and evaluation-group column hidden on
+  phones, "Unusual results" only when flagged and after the sheet, Composite disclosure
+  removed), Benchmaxxing H1 at page-title size. Gates green: build-dataset (timestamp-only
+  diff reverted), tsc, npm test 266/266, next build. Both hosts serve `3a32a27`; live
+  evidence `…/fable-20260913-pass3/after-live/verification.json` (6 rows = 6 full dots at both
+  widths; phone model page 10,112 → 7,978 px, top-5 table `# · Provider · Adjusted $/task`).
+  A Kimi K3 delegation for F-08a produced no edits in 12 min and was stopped; Fable did the
+  edits itself. Codex was not used. F-22/F-08a need a non-Fable verifier.
+
