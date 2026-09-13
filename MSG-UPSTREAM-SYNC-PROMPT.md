@@ -36,6 +36,9 @@ DeepSeek V4 Pro); all provider catalogs re-audited (AWS Bedrock EU-Geo Claude pr
 corrected, FX refreshes, delistings); `scripts/top5.mjs` added; the AA fetch in
 `scripts/fetch-live.mjs` tolerates mid-rollout metadata gaps. Data still lives in
 `data/dataset.json` + `data/raw/*.json`, refreshed by a daily automated commit to `main`.
+The immutable `data/raw/benchmarks/history/` store is also functional data: preserve its
+dated registry and history-only AA/ECI/DesignArena headline states so bridged comparisons
+remain reproducible after a source drops an older model.
 
 Do this:
 

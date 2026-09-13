@@ -8,10 +8,12 @@
 //   node scripts/build-benchmark-history.mjs --from <file>   # append an explicit snapshot
 //   node scripts/build-benchmark-history.mjs --reindex       # rebuild index.json only
 import { readFile, writeFile, mkdir, readdir } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { existsSync } from "node:fs";
 import { join, dirname } from "node:path";
 import { fileURLToPath } from "node:url";
 import { HISTORY_SCHEMA_VERSION, buildState } from "../lib/benchmark-history.mjs";
+import { buildHeadlineObservations } from "../lib/headline-history.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT = join(__dirname, "..");
@@ -19,6 +21,7 @@ const HISTORY_DIR = join(ROOT, "data", "raw", "benchmarks", "history");
 const STATES_DIR = join(HISTORY_DIR, "states");
 
 const readJSON = async (path) => JSON.parse(await readFile(path, "utf8"));
+const fileSha256 = async (path) => createHash("sha256").update(await readFile(path)).digest("hex");
 
 export function stateId(collected_at, content_sha256) {
   return `${String(collected_at).slice(0, 10).replace(/-/g, "")}-${content_sha256.slice(0, 8)}`;
@@ -78,7 +81,24 @@ export async function appendState({ root = ROOT, from = null, source = null, col
   const snapshot = await readJSON(scoresPath);
   const when = collected_at ?? snapshot.collected_at ?? snapshot.verified_at ?? new Date().toISOString();
   const label = source ?? (from ? `snapshot:${from}` : "scores.json");
-  const provisional = buildState(snapshot.observations ?? [], { state_id: "pending", source: label, collected_at: when });
+  // Headline boards are kept alongside registry observations in the immutable
+  // state, but remain history-only so the product's benchmark denominator does
+  // not silently change. A catalog join is optional and is never inferred.
+  const rawDir = join(root, "data", "raw");
+  const load = async (name) => {
+    try { return await readJSON(join(rawDir, name)); } catch (error) { if (error.code === "ENOENT") return null; throw error; }
+  };
+  const [artificialanalysis, designarena, epochEci, dataset] = await Promise.all([
+    load("artificialanalysis.json"), load("designarena.json"), load("epoch-eci.json"), load("../dataset.json"),
+  ]);
+  const withHash = async (payload, name) => payload ? { ...payload, sha256: await fileSha256(join(rawDir, name)) } : null;
+  const headlineObservations = buildHeadlineObservations({
+    artificialanalysis: await withHash(artificialanalysis, "artificialanalysis.json"),
+    designarena: await withHash(designarena, "designarena.json"),
+    epochEci,
+    modelRows: dataset?.models || [],
+  });
+  const provisional = buildState([...snapshot.observations ?? [], ...headlineObservations], { state_id: "pending", source: label, collected_at: when });
   const existing = (await readIndex(dir)).states.find((s) => s.content_sha256 === provisional.content_sha256);
   if (existing) {
     const index = await reindex(dir);

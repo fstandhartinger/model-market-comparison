@@ -10,8 +10,10 @@ export interface BridgeComparison {
 }
 export interface HistoryStateRow {
   benchmark_id: string; model_key: string; model_id: string | null; subject_name: string | null;
+  catalog_model_id?: string | null;
   harness: string | null; variant: string | null; value: number; unit: string; basis: string;
-  source_url: string | null; source_retrieved_at: string | null;
+  source_url: string | null; source_retrieved_at: string | null; source_published_at?: string | null;
+  source_sha256?: string | null; source_file?: string | null; source_locator?: string | null;
 }
 export interface HistoryState {
   schema_version: 1; state_id: string; source: string; collected_at: string; content_sha256: string;
@@ -28,7 +30,7 @@ export interface HistoricalEstimate {
   source_value: number; value: number | null;
   uncertainty: { lower: number; upper: number; min: number; max: number; iqr: number; iqr_relative: number | null } | null;
   comparison: { bridge_count: number; aggregate: number | null; spread: BridgeSpread | null; comparable: boolean; reason: string | null; cause: BridgeCause | null; cause_value: number | null; definition_change?: boolean; bridges: BridgePair[] };
-  source: { url: string | null; retrieved_at: string | null; published_at: string | null; file: string | null; locator: string | null } | null;
+  source: { url: string | null; retrieved_at: string | null; published_at: string | null; sha256?: string | null; file: string | null; locator: string | null } | null;
   note: string;
 }
 export interface HistoricalResults {

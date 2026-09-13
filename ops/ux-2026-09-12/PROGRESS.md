@@ -77,8 +77,8 @@ credited below, the rest is marked open.
 | R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
 | R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | **Review 2026-09-13:** default (no selection) `/compare` overflowed a 390 px phone (cards 429 px) — fixed in the review commit, needs re-verify by a non-implementer. `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
 | R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/iter6-refresh-failure/` | Iteration 6 collected all seven live sources successfully in two clean transactions, but both were correctly held before publication because the free live-review workers timed out/incompletely returned on the AA contract in all three bounded rounds. No fresh dataset or deployment claim is accepted. Retry after worker transport recovers. |
-| H1 | Historical snapshots of all benchmark scores | open | `REVIEW-20260913T002002Z.md` #1 | review: retained states cover only the 75-entry registry; AA Intelligence/Coding Index, ECI, DesignArena Elo are not retained (the approved AA withdrawal in `716a2b0` dropped a row with no history) |
-| H2 | Bridged comparison via anchor models, uncertainty reported | implemented (multi-hop) | `test/benchmark-history-chain.test.mjs` (8 tests), commits `7d077b0` + `9628f6e`, `ux-evidence/iter7-b3/live-2/` | **Iteration 7:** chains over intermediate retained snapshots *and* re-based versions (S0→S1→current, v1→v2→v3), ≤ 3 hops, each hop passes the single-hop gate, summed relative IQR ≤ 50 %, direct hop preferred; Elo chains rank shifts (fixed `rankIn` sending off-board values to the bottom). Estimates publish `hops`, `path`, `chain_iqr_relative`. All 567 existing estimates unchanged. Real data has 0 multi-hop cases today (only 2 retained states). Live on `9628f6e`: `/api/benchmark-view?axis=aa-automationbench::1.0.6@@Published%20board@@fraction` still serves its 2 historical estimates (`ux-evidence/iter7-b3/live-2/h2-api.json`). **Gap found live:** the view projection flattens estimates (`bridgeCount`, `aggregate`, `spread`, `reason`, `note`) and does not carry `hops` / `path` / `chain_iqr_relative`; they exist in `dataset.json` only, and a multi-hop estimate would be recognisable in the API only by its `note`. Next: add them to the projection in `lib/benchmark-view.mjs` and to `API.md`. **Still open inside H2:** headline scores (AA indices, ECI, Elo boards outside the registry) are not bridgeable until H1 retains them |
+| H1 | Historical snapshots of all benchmark scores | in-progress | `data/raw/benchmarks/history/states/20260913-cb91473c.json` (local) | New write-once state retains six history-only headline boards — AA Intelligence/Coding, Epoch general/software ECI, DesignArena Frontend/Full-Stack Elo — with stable upstream identities, optional catalog joins, source hashes and locators. Registry denominator remains 75. Awaiting deployment/live evidence. |
+| H2 | Bridged comparison via anchor models, uncertainty reported | in-progress | `test/benchmark-history-chain.test.mjs`; `test/headline-history.test.mjs` (local) | Existing multi-hop chain logic is extended to headline states; dated headline IDs alias to current dated UI axes, and `/api/benchmark-view` now projects `hops`, `path`, and `chainIqrRelative`. Direct hop preference and all uncertainty gates remain. Awaiting deployment/live evidence. |
 | H3 | UI filter "better than model X in category Y" | open | — | |
 | B1 | Benchmaxxing tab in Advanced | verified | `ux-evidence/review-20260913T002002Z/*-benchmaxxing.png` | review (claude-opus, Hermes-built): 200 at desktop+mobile, light+dark; nav tab; method anchor |
 | B2 | Method identifying strong-on-some / weak-on-others | implemented | `REVIEW-20260913T002002Z.md` #3–4 | topic-local percentile jump; tag quality blocked by B3 |
@@ -91,7 +91,7 @@ credited below, the rest is marked open.
 | X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
 | X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed; F-02…F-12 open for implementers |
 | X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict" | fails today on: key message below the fold, no chart in Simple, jargon on the surface, unreadable 214-axis radar, Advanced opening on 6 rows — each has a directive |
-| X5 | CHANGELOG / API.md / fork-sync prompt updated | open | — | |
+| X5 | CHANGELOG / API.md / fork-sync prompt updated | in-progress | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md` (local) | Documents the six history-only headline boards and the multi-hop API projection; awaiting commit/deploy. |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
 | D1 | Blend default 20 is not a selectable option | implemented | `ux-evidence/iter1-live/verification.json` | blend 20 is a real option; settings key bumped to v7 to discard the broken payload |
@@ -477,3 +477,27 @@ Notes for whoever picks this up:
   - Budget record at iteration start: Codex weekly 65 % in `/home/flori/.agent-budget.json`,
     below the 75 % review gate and 80 % hard cap; no API-key billing was used. No foreign writer
     was found and the local preview server was stopped cleanly.
+
+- **2026-09-13 · iteration 9 · codex-luna** — H1/H2 headline-history extension, pending live verification.
+  - Added `lib/headline-history.mjs`: the current AA Intelligence/Coding boards, Epoch general/
+    Software ECI and DesignArena Frontend/Full-Stack Elo are converted to stable,
+    history-only observations. Their upstream identities, raw snapshot hashes and locators are
+    retained; the normal registry remains 75 benchmarks. Catalog joins are only emitted when
+    deterministic and unique.
+  - Extended the write-once history builder to append those observations on every accepted
+    snapshot and extended the dataset build to use the same current observation set for dated
+    estimates. Existing normal benchmark rows remain unchanged; Composite is still recompute-
+    required rather than bridged across definition changes.
+  - Fixed the H2 API gap: stable history IDs alias to the current dated presentation axes, and
+    `benchmark-view` now carries `hops`, `path`, and `chainIqrRelative`. Added tests for stable
+    provenance, dated headline bridging, axis aliasing, and the existing multi-hop policy.
+  - The newly retained local state is `data/raw/benchmarks/history/states/20260913-cb91473c.json`:
+    15,268 rows, 75 distinct benchmark IDs including all six headline IDs. The generated
+    dataset has 839 models and 85 historical estimates / 482 explicit non-comparables; no
+    synthetic score was accepted. Gates passed: `build-dataset`, `npm test` 259/259,
+    `npx tsc --noEmit -p .`, `npm run build` 21/21, `git diff --check`.
+  - Kimi K3 read-only review was attempted through `delegate.sh --kimi`; it returned no output
+    or receipt, so it was treated as a failed review and contributed no acceptance.
+  - Live deployment and fresh desktop/mobile evidence remain to be recorded before H1/H2/X5
+    can move from in-progress to implemented. R9.1 is intentionally still open: these are
+    retained source snapshots, not a claim that every source refreshed today.

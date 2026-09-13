@@ -194,7 +194,14 @@ state and re-running is a no-op. A prior state is never overwritten or deleted:
 keeps `benchmark_id`, `model_key` (catalog model + harness + effort), value, unit,
 basis and source. `scripts/build-benchmark-history.mjs` appends (`--from <file>`) and
 rebuilds the index (`--reindex`); `ops/daily/refresh-benchmarks.mjs` appends after the
-accepted scores write. `dataset.json` only carries the state *metadata* (id, source,
+accepted scores write. The state also retains six history-only headline boards that are
+stored on model rows rather than in the 75-entry registry: AA Intelligence Index, AA Coding
+Index, Epoch general ECI, Epoch Software Engineering ECI, and DesignArena Frontend/Full-Stack
+Elo. Their stable IDs are `aa-intelligence-index::snapshot`, `aa-coding-index::snapshot`,
+`epoch-eci::general`, `epoch-eci::software`, `designarena-frontend::snapshot` and
+`designarena-fullstack::snapshot`; they do not change the registry denominator. These rows
+keep the immutable upstream source identity in `model_id`, an optional audited catalog join in
+`catalog_model_id`, and the source file hash/locator. `dataset.json` only carries the state *metadata* (id, source,
 time, content hash, count, benchmark ids); full row bodies live in the store.
 
 ### Bridge estimates
@@ -233,6 +240,11 @@ triggered it: `insufficient_bridges` with `cause_value` = the bridge count
 - **Index/version changes** (`family::version`) are separate provenance branches, not
   the same value; an estimate always cites `source_benchmark_id` (version bridge) or
   `source_state_id` (dated bridge).
+- **Multi-hop history** is allowed when a direct bridge is unavailable: the shortest path
+  over retained intermediate states/versions wins, each hop must pass the single-hop gate,
+  the path is capped at three hops and the summed relative IQR is capped at 50 %. The
+  estimate carries `comparison.hops`, `comparison.path` (with each hop's bridge count and
+  aggregate), and `comparison.chain_iqr_relative`; a direct comparable hop is preferred.
 
 ### Limitations
 

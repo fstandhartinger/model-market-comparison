@@ -2,7 +2,7 @@ export type MissingStatus = 'unknown' | 'not_tested' | 'not_published' | 'source
 export interface ScoreSource { url: string; retrieved_at: string; published_at: string | null; sha256: string; file: string; locator: string }
 export interface BenchmarkEntry { id: string; family: string; version: string; name: string; category: string; one_sentence_description: string; scoring: { metric: string; unit: string; range: [number | null, number | null]; higher_better: boolean | null; notes: string }; [key: string]: unknown }
 export interface BenchmarkObservation {
-  id: string; benchmark_id: string; subject: { source_id: string; name: string; model_id: string | null; variant: string | null; harness: string | null };
+  id: string; benchmark_id: string; subject: { source_id: string; name: string; model_id: string | null; catalog_model_id?: string | null; variant: string | null; harness: string | null };
   value: number; unit: string; basis: 'measured' | 'self_reported' | 'derived'; source_basis?: 'measured' | 'self_reported'; derivation?: { formula: string; inputs: number[] }; source: ScoreSource; supporting_sources?: ScoreSource[]; protocol: string; comparison_key: string | null; comparison_note?: string;
   confidence_interval?: { level: number; lower: number; upper: number };
 }

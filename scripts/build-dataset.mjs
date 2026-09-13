@@ -3,6 +3,7 @@
 // Output shape is documented in data/SCHEMA.md and consumed by the DB seeder
 // (scripts/seed-db.mjs) and as the app's bundled fallback dataset.
 import { readFile, writeFile } from "node:fs/promises";
+import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 
@@ -11,6 +12,7 @@ const RAW = join(__dirname, "..", "data", "raw");
 const OUT = join(__dirname, "..", "data", "dataset.json");
 
 const readJSON = async (f) => JSON.parse(await readFile(join(RAW, f), "utf8"));
+const rawFileSha256 = async (f) => createHash("sha256").update(await readFile(join(RAW, f))).digest("hex");
 
 // ---------------------------------------------------------------------------
 // Normalization
@@ -1215,10 +1217,17 @@ async function build() {
   const benchmarkScores = await readJSON("benchmarks/scores.json");
   const { verifyScoreEvidence } = await import("../lib/benchmark-score-evidence.mjs");
   const { buildBenchmarkResults } = await import("../lib/benchmark-scores.mjs");
+  const { buildHeadlineObservations } = await import("../lib/headline-history.mjs");
   const { readHistory } = await import("./build-benchmark-history.mjs");
   await verifyScoreEvidence(benchmarkScores, benchmarkRegistry, { approvals: await readJSON("benchmarks/score-approvals.json") });
   const benchmarkHistory = await readHistory();
-  const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null);
+  const headlineObservations = buildHeadlineObservations({
+    artificialanalysis: { ...aa, sha256: await rawFileSha256("artificialanalysis.json") },
+    designarena: { ...da, sha256: await rawFileSha256("designarena.json") },
+    epochEci,
+    modelRows,
+  });
+  const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null, headlineObservations);
   const dataset = {
     benchmark_results,
     generated_at,

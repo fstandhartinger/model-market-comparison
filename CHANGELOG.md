@@ -95,6 +95,17 @@ the collector fails rather than publishing a table it cannot reconcile. Collect 
 
 ## 2026-09-12 — Phase 10: historical retention and bridge comparison
 
+### 2026-09-13 history extension
+
+- Retained states now also include the six headline boards that live on model rows rather
+  than in the registry: AA Intelligence/Coding, Epoch general/software ECI and both
+  DesignArena Elo boards. They use stable history-only IDs and retain upstream source
+  identities, raw snapshot hashes and locators without changing the 75-benchmark coverage
+  denominator.
+- Historical bridge projections now expose multi-hop `hops`, `path` and
+  `chain_iqr_relative` fields through `/api/benchmark-view`; the direct hop remains preferred
+  and every intermediate hop is subject to the same uncertainty gate.
+
 - Every accepted score snapshot is now projected to an immutable, write-once dated state
   under `data/raw/benchmarks/history/states/<state_id>.json` with `index.json` as the
   ordered index; the id is `<yyyymmdd>-<content_sha256[0..8]>`, so identical observations
