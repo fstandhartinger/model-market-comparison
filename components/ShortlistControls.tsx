@@ -1,5 +1,6 @@
 "use client";
 import { useMemo } from "react";
+import { useSettings } from "./SettingsContext";
 
 /** R5.3–R5.5 — Simple mode's two questions, as sliders.
  *
@@ -95,6 +96,7 @@ export function ShortlistControls({
   pool: number;                   // rows the other filters allow, before the sliders
   map?: React.ReactNode;          // F-13: value-map node, rendered beside the sliders (lg) / between sliders and summary (below lg)
 }) {
+  const { openFilters } = useSettings();
   const scoreStats = useMemo(() => {
     const sorted = [...scores].sort((a, b) => a - b);
     return { sorted, min: Math.floor(sorted[0] ?? 0), max: Math.ceil(sorted[sorted.length - 1] ?? 100) };
@@ -127,12 +129,13 @@ export function ShortlistControls({
   const money = (v: number) => (v >= 10 ? `$${v.toFixed(0)}` : v >= 1 ? `$${v.toFixed(2)}` : `$${v.toFixed(3)}`);
 
   return (
-    <div className="card mb-4 p-4">
+    <div className="card mb-4 p-3 lg:p-4">
       {/* F-13: one card. DOM order — sliders, map, summary — is what phones stack with.
           At lg the grid places the map in column 2 spanning both rows, so the left column
-          reads: sliders stacked (score above cost), then the summary line. */}
-      <div className={map ? "grid items-start gap-6 lg:grid-cols-[2fr_3fr]" : undefined}>
-        <div className="grid gap-2 self-start">
+          reads: sliders stacked (score above cost), then the summary line. Below lg the two
+          sliders sit side by side so the list starts on the first phone screen. */}
+      <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
+        <div className="grid grid-cols-2 gap-3 self-start lg:grid-cols-1 lg:gap-2">
           <Row
             title={`Minimum ${scoreName}`}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
@@ -161,10 +164,14 @@ export function ShortlistControls({
 
         {map && <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">{map}</div>}
 
-        <div className="border-t border-line/60 pt-2 text-xs text-gray-400">
+        <div className="border-t border-line/60 pt-1.5 text-xs text-gray-400 lg:pt-2">
           {matching === 0
             ? `No model out of ${pool} meets both limits — lower the score or raise the budget.`
-            : <><b className="text-gray-200">{matching} models pass</b> · {Math.max(0, pool - matching)} below your score line
+            : <><b className="text-gray-200">{matching} models pass</b>{" "}
+            {/* F-18: the pool is what the filters allow, so its count opens them. */}
+            <button type="button" data-bh-filters-toggle onClick={openFilters} title="These models are what your filters allow — open the filters"
+              className="min-h-0 text-accent underline decoration-dotted underline-offset-2">of {pool}</button>
+            {" "}· {Math.max(0, pool - matching)} below your score line
               {matching > limit && <> · the {limit} most expensive are listed</>}</>}
           {(minScore > 0 || maxCost != null) && (
             <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }} className="ml-2 text-accent underline underline-offset-2">

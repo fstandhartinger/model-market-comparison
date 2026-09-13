@@ -3,6 +3,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { BrandMark } from './BrandMark';
 import { ThemeToggle } from './ThemeToggle';
+import { useSettings } from './SettingsContext';
 
 const LINKS = [
   ["/", "Overview"],
@@ -24,8 +25,9 @@ const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
 /** F-15: Filters is one of the three shared 40 px header controls, visible at every
  *  width — on mobile it sits between the logo and Menu. */
 function FilterButton() {
+  const { filtersOpen, toggleFilters } = useSettings();
   return (
-    <button type="button" className="bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent" aria-controls="global-filters" aria-label="Open filters and settings" onClick={() => window.dispatchEvent(new CustomEvent("bh:toggle-filters"))}>
+    <button type="button" data-bh-filters-toggle className={`bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2.5 text-sm hover:bg-accent/10 hover:text-accent ${filtersOpen ? "text-accent" : "text-gray-300"}`} aria-controls="global-filters" aria-expanded={filtersOpen} aria-label="Open filters and settings" onClick={toggleFilters}>
       <svg aria-hidden="true" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
       <span>Filters</span>
     </button>

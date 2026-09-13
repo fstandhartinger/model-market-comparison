@@ -1,9 +1,9 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import {
-  ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
+  ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label, Customized,
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_SHORT_LABELS } from "../lib/types";
@@ -30,13 +30,75 @@ function ParetoHalo(props: { cx?: number; cy?: number }) {
   return <circle cx={cx} cy={cy} r={9} fill="none" stroke="#7ee0c0" strokeWidth={1.5} opacity={0.7} />;
 }
 
-function CompactPointShape(props: { cx?: number; cy?: number; payload?: { name: string; pass: boolean } }) {
+// F-17: dots only — names are placed by <PointLabels>, which can see every label at once.
+function CompactPointShape(props: { cx?: number; cy?: number; payload?: { pass: boolean } }) {
   const { cx, cy, payload } = props;
   if (cx == null || cy == null) return <g />;
-  return <g>
-    <circle cx={cx} cy={cy} r={payload?.pass ? 5 : 4} fill="rgb(var(--accent))" opacity={payload?.pass ? 1 : 0.25} stroke="rgb(var(--ink))" strokeWidth={1} />
-    {payload?.pass && <text x={cx + 8} y={cy + 4} fill="rgb(var(--text))" fontSize={10}>{payload.name.length > 22 ? `${payload.name.slice(0, 21)}…` : payload.name}</text>}
-  </g>;
+  return <circle cx={cx} cy={cy} r={payload?.pass ? 5 : 4} fill="rgb(var(--accent))" opacity={payload?.pass ? 1 : 0.25} stroke="rgb(var(--ink))" strokeWidth={1} />;
+}
+
+/** Phones (the same 639 px breakpoint globals.css uses to hide the compact map's tick text). */
+function useNarrow(): boolean {
+  const [narrow, setNarrow] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 639px)");
+    const update = () => setNarrow(mq.matches);
+    update();
+    mq.addEventListener("change", update);
+    return () => mq.removeEventListener("change", update);
+  }, []);
+  return narrow;
+}
+
+/** F-17: round Y ticks (multiples of 5, or 10 on a wide range) from a floor up to `max`. */
+function niceTicks(min: number, max: number): { domain: [number, number]; ticks: number[] } {
+  const step = max - min > 25 ? 10 : 5;
+  const lo = Math.floor(min / step) * step;
+  const ticks: number[] = [];
+  for (let v = lo; v <= max; v += step) ticks.push(v);
+  return { domain: [lo, max], ticks };
+}
+
+type LabelPoint = { x: number; y: number; name: string; id: string };
+type AxisMap = Record<string, { scale: (v: number) => number }>;
+
+/** F-17: greedy, collision-free point labels. `labels` arrive in priority order (frontier
+ *  first, then by score). Each tries right of its dot, then above, below and left; a label
+ *  that would leave the plot, overlap a placed label or cover another dot is dropped and
+ *  the dot stays. On a narrow plot (phones) only frontier members are named. */
+function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: { left: number; top: number; width: number; height: number }; labels: LabelPoint[]; dots: { x: number; y: number }[]; frontier: Set<string> }) {
+  const xAxis = props.xAxisMap && Object.values(props.xAxisMap)[0];
+  const yAxis = props.yAxisMap && Object.values(props.yAxisMap)[0];
+  const o = props.offset;
+  if (!xAxis || !yAxis || !o) return null;
+  const narrow = o.width < 400;
+  const LINE = 12, GLYPH = 6, MAX = 12;
+  const dots = props.dots.map((d) => ({ cx: xAxis.scale(d.x), cy: yAxis.scale(d.y) }));
+  const placed: { l: number; t: number; r: number; b: number }[] = [];
+  const out: { key: string; x: number; y: number; text: string }[] = [];
+  for (const p of props.labels) {
+    if (out.length >= MAX) break;
+    if (narrow && !props.frontier.has(p.id)) continue;
+    const text = p.name.length > 22 ? `${p.name.slice(0, 21)}…` : p.name;
+    if (!text) continue;
+    const cx = xAxis.scale(p.x), cy = yAxis.scale(p.y), w = text.length * GLYPH;
+    const slots = [
+      { l: cx + 8, t: cy - LINE / 2 },
+      { l: cx - w / 2, t: cy - 8 - LINE },
+      { l: cx - w / 2, t: cy + 8 },
+      { l: cx - 8 - w, t: cy - LINE / 2 },
+    ];
+    const slot = slots.find(({ l, t }) => {
+      const r = l + w, b = t + LINE;
+      if (l < o.left || r > o.left + o.width || t < o.top || b > o.top + o.height) return false;
+      if (placed.some((q) => l < q.r && q.l < r && t < q.b && q.t < b)) return false;
+      return !dots.some((d) => !(Math.abs(d.cx - cx) < 0.5 && Math.abs(d.cy - cy) < 0.5) && d.cx > l - 4 && d.cx < r + 4 && d.cy > t - 4 && d.cy < b + 4);
+    });
+    if (!slot) continue;
+    placed.push({ l: slot.l, t: slot.t, r: slot.l + w, b: slot.t + LINE });
+    out.push({ key: p.id, x: slot.l, y: slot.t + LINE - 2, text });
+  }
+  return <g className="bh-point-labels">{out.map((l) => <text key={l.key} x={l.x} y={l.y} fill="rgb(var(--text))" fontSize={10}>{l.text}</text>)}</g>;
 }
 
 function logTicks(min: number, max: number): number[] {
@@ -58,6 +120,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
+  const narrow = useNarrow();
   const minScore = compact && !advanced ? s.minScoreSimple : s.minScoreApplied;
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
@@ -86,7 +149,9 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
   }, [points]);
 
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
-  const pareto = useMemo(() => paretoFrontier(allPoints).filter((p: { x: number }) => !logX || p.x > 0), [allPoints, logX]);
+  // F-17: only points that pass the current limits can be on the frontier — a dimmed point
+  // with a halo would contradict the dimming.
+  const pareto = useMemo(() => paretoFrontier(allPoints.filter((p) => p.pass)).filter((p: { x: number }) => !logX || p.x > 0), [allPoints, logX]);
 
   const xs = (compact ? compactPoints : points).map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;
@@ -94,29 +159,33 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
   const isElo = score.startsWith("designarena");
   const ys = (compact ? compactPoints : points).map((p) => p.y);
   const yMin = ys.length ? Math.min(...ys) : 80;
-  const yDomain = [Math.min(yMin - 3, 80), 100] as [number, number];
+  const yCompact = niceTicks(Math.min(yMin - 3, 80), 100);
   // F-11: the full chart's Y axis follows the data (floor(min − 3) → 100, at least 20 wide)
-  // so the points use the plot instead of huddling at the top of 0–100.
-  const yFullDomain: [number, number] = [Math.max(0, Math.min(Math.floor(yMin - 3), 80)), 100];
+  // so the points use the plot instead of huddling at the top of 0–100. F-17: round ticks.
+  const yFull = niceTicks(Math.max(0, Math.min(Math.floor(yMin - 3), 80)), 100);
 
   if (compact) {
     // In Charts nothing is cut by a score line, so labelling every passing point stacks
     // names on top of each other; there only the frontier members are named.
-    const frontierIds = new Set(pareto.map((p: { id: string }) => p.id));
-    const passing = compactPoints.filter((p) => p.pass).map((p) => (advanced && !frontierIds.has(p.id) ? { ...p, name: "" } : p));
+    const frontierIds = new Set<string>(pareto.map((p: { id: string }) => p.id));
+    const passing = compactPoints.filter((p) => p.pass);
     const failing = compactPoints.filter((p) => !p.pass);
-    // Embedded (advanced) maps sit inside a panel that already has a card and a title.
-    return <div className={advanced ? "bh-value-map" : "bh-value-map card p-3"} aria-label="Score versus adjusted cost value map">
-      <div className={`mb-1 flex items-baseline gap-3 ${advanced ? "justify-end" : "justify-between"}`}>
-        {!advanced && <h2 className="text-sm font-semibold">Value map</h2>}
-        <span className="text-[11px] text-gray-500">cheaper → right · green line = Pareto frontier</span>
+    // Label priority: frontier members, then passing points by score. In Charts nothing is
+    // cut by a score line, so only the frontier is named there.
+    const labels = [...passing].filter((p) => !advanced || frontierIds.has(p.id))
+      .sort((a, b) => Number(frontierIds.has(b.id)) - Number(frontierIds.has(a.id)) || b.y - a.y);
+    // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
+    return <div className="bh-value-map" aria-label="Score versus adjusted cost value map">
+      <div className="flex items-baseline justify-end gap-3 lg:mb-1">
+        <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : "Value map · cheaper → right · green = Pareto"}</span>
       </div>
-      <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[80px] sm:h-[320px]"}>
+      <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 12, right: 120, bottom: 36, left: 24 }}>
+          <ScatterChart margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
             <CartesianGrid stroke="#222932" />
-            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed scale="log" domain={[xMin * 0.85, xMax * 1.15]} ticks={logTicks(xMin, xMax)} allowDataOverflow interval={0} tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={11} />
-            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yDomain} stroke="#8a93a3" fontSize={11} tickFormatter={(v) => v.toFixed(0)} />
+            {/* On phones the tick text is hidden (globals.css), so the axes give up its space too. */}
+            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed scale="log" domain={[xMin * 0.85, xMax * 1.15]} ticks={logTicks(xMin, xMax)} allowDataOverflow interval={0} tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={11} tick={!narrow} height={narrow ? 4 : 30} />
+            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={yCompact.ticks} interval={0} width={narrow ? 4 : 32} tick={!narrow} stroke="#8a93a3" fontSize={11} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
             {/* Only frontier members get the halo and the connecting line — not every point. */}
@@ -124,10 +193,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
             <Scatter data={failing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false} />
             <Scatter data={passing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false}
               onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
+            <Customized component={<PointLabels labels={labels} dots={compactPoints} frontier={frontierIds} />} />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · log scale</span></div>
+      {advanced && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · log scale</span></div>}
     </div>;
   }
 
@@ -137,7 +207,9 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
         <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b></span>
         <Toggle label="Log cost axis" on={logX} set={setLogX} />
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
-        <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
+        <span className="ml-auto text-xs text-gray-500">
+          {/* F-18: the count is what the filters allow, so it opens them. */}
+          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{points.length} models</button> · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
@@ -153,7 +225,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false 
               tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={12}>
               <Label value={`← more expensive    ·    cheaper → (cheapest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
-            <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFullDomain} allowDataOverflow={false}>
+            <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFull.domain} ticks={isElo ? undefined : yFull.ticks} allowDataOverflow={false}>
               <Label value={scoreChartLabel(score, data.sourceDates)} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />

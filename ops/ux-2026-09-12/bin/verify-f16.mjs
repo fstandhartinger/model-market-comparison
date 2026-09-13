@@ -15,7 +15,9 @@ const tableState = () => {
   const scores = rows.map((r) => parseFloat((r.querySelectorAll('td')[2]?.innerText || '').replace(/[^0-9.]/g, ''))).filter(Number.isFinite);
   const toolbar = [...document.querySelectorAll('.card')].find((c) => c.querySelector('input[aria-label="Search model or organization"]'));
   const kids = toolbar ? [...toolbar.children].filter((k) => k.getBoundingClientRect().height > 0) : [];
-  const tops = new Set(kids.map((k) => Math.round(k.getBoundingClientRect().top / 8)));
+  // A second row exists when some control starts below the bottom of the first one.
+  const firstBottom = kids.length ? kids[0].getBoundingClientRect().bottom : 0;
+  const tops = new Set(kids.map((k) => (k.getBoundingClientRect().top >= firstBottom ? 'second' : 'first')));
   return {
     rows: rows.length,
     stars: rows.filter((r) => r.innerText.includes('★')).length,
@@ -38,13 +40,13 @@ for (const [name, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
     await page.waitForTimeout(1500);
     r.advanced = await page.evaluate(tableState);
     // The global Featured toggle must show what Advanced applies (off).
-    await page.evaluate(() => window.dispatchEvent(new CustomEvent('bh:toggle-filters')));
+    await page.locator('header button[aria-controls="global-filters"]').click();
     await page.waitForTimeout(400);
     r.featuredToggleInAdvanced = await page.evaluate(() => {
       const b = [...document.querySelectorAll('#global-filters button')].find((x) => x.innerText.trim().startsWith('Featured'));
       return b ? b.getAttribute('aria-pressed') : null;
     });
-    await page.evaluate(() => window.dispatchEvent(new CustomEvent('bh:toggle-filters')));
+    await page.keyboard.press('Escape');
     await page.screenshot({ path: `${OUT}/${name}-advanced.png` });
     await page.getByRole('tab', { name: 'Simple' }).click();
     await page.waitForTimeout(1500);

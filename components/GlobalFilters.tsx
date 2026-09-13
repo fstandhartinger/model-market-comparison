@@ -28,12 +28,28 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   const s = useSettings();
   const path = usePathname();
   const adjusted = s.priceMode === "adjusted";
-  const panel = useRef<HTMLDetailsElement>(null);
+  const panel = useRef<HTMLDivElement>(null);
+  const { filtersOpen, closeFilters } = s;
+  // F-18: an overlay, not a page push. Escape and a click outside close it; focus moves into
+  // the panel on open and back to whatever opened it on close.
   useEffect(() => {
-    const toggle = () => { if (panel.current) panel.current.open = !panel.current.open; };
-    window.addEventListener("bh:toggle-filters", toggle);
-    return () => window.removeEventListener("bh:toggle-filters", toggle);
-  }, []);
+    if (!filtersOpen) return;
+    const opener = document.activeElement as HTMLElement | null;
+    panel.current?.focus();
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeFilters(); };
+    const onDown = (e: PointerEvent) => {
+      const t = e.target as Element | null;
+      if (!t || panel.current?.contains(t) || t.closest("[data-bh-filters-toggle]")) return;
+      closeFilters();
+    };
+    document.addEventListener("keydown", onKey);
+    document.addEventListener("pointerdown", onDown);
+    return () => {
+      document.removeEventListener("keydown", onKey);
+      document.removeEventListener("pointerdown", onDown);
+      opener?.focus?.();
+    };
+  }, [filtersOpen, closeFilters]);
   if (path === "/benchmarks" || path === "/radar") return null;
   const active = s.userFiltersActive;
   // F-16: on the Advanced home view the toggle shows what that view applies (off until set).
@@ -47,13 +63,17 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   };
 
   return (
-    <details ref={panel} id="global-filters" className="border-b border-line bg-panel">
-      <summary className="sr-only">Filters and settings</summary>
+    // F-18: zero-height anchor under the header. Desktop: a right-aligned popover over the
+    // page. Phones: a bottom sheet over a dimmed page, with a sticky footer.
+    <div className="relative z-40" hidden={!filtersOpen}>
+      <div className="fixed inset-0 bg-black/40 lg:hidden" aria-hidden="true" />
+      <div ref={panel} id="global-filters" role="dialog" aria-label="Filters and settings" tabIndex={-1}
+        className="fixed inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-2xl border-t border-line bg-panel shadow-xl outline-none lg:absolute lg:inset-x-auto lg:bottom-auto lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:top-2 lg:max-h-[calc(100vh-90px)] lg:w-[min(960px,calc(100vw-2rem))] lg:rounded-xl lg:border">
 
-      <div className="mx-auto max-w-[1400px] space-y-4 px-4 pb-4 pt-1">
+      <div className="min-h-0 space-y-4 overflow-y-auto px-4 pb-4 pt-4">
         <Section title="Ranking">
           <ScoreSelect value={s.score} onChange={s.setScore} />
-          <NumFilter label="Min score" value={s.minScoreTouched ? String(s.minScore) : ""} onChange={(v) => v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0)} placeholder={`any · Simple ${defaultMinFor(s.score)}`} />
+          <NumFilter label="Min score" value={s.minScoreTouched ? String(s.minScore) : ""} onChange={(v) => v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0)} placeholder="any" />
           <span className="inline-flex items-center">
             <Toggle label="Featured" on={featuredShown} set={s.setFeatured} />
             <InfoTip title="Featured models" label="the featured filter">
@@ -127,11 +147,15 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           <p className="mt-2 text-[11px] text-gray-600">Evidence requirements (benchmark evidence, priced provider, measured task tokens) sit above the table they apply to.</p>
         </details>
 
-        <div className="flex flex-wrap items-center gap-3">
-          {active && <button onClick={reset} className="rounded-md border border-line px-2 py-1 text-xs text-gray-400 hover:text-gray-200">Reset to defaults</button>}
-          <span className="text-[11px] text-gray-600">Applies to price views &amp; model offers; benchmark evidence stays unfiltered</span>
-        </div>
+        <p className="text-[11px] text-gray-600">Applies to price views &amp; model offers; benchmark evidence stays unfiltered.</p>
       </div>
-    </details>
+      <div className="flex shrink-0 items-center gap-3 border-t border-line bg-panel px-4 py-3">
+        <button type="button" onClick={closeFilters} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">
+          {s.resultCount != null ? `Show ${s.resultCount} models` : "Show results"}
+        </button>
+        {active && <button type="button" onClick={reset} className="inline-flex min-h-10 items-center rounded-md border border-line px-3 text-sm text-gray-400 hover:text-gray-200">Reset</button>}
+      </div>
+      </div>
+    </div>
   );
 }

@@ -1,5 +1,5 @@
 "use client";
-import { Fragment, useMemo, useState, type ReactNode } from "react";
+import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, type ClientData } from "../lib/client-model";
 import { SCORE_LABELS, SCORE_SHORT_LABELS } from "../lib/types";
@@ -157,7 +157,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     return limit ? r.slice(0, limit) : r;
   }, [matching, sort, asc, limit]);
 
-  const evidenceRelaxed = !withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && !measuredTasksOnly);
+  // F-18: the Filters sheet's primary button reads "Show N models" for the ranking on screen.
+  const { setResultCount } = s;
+  useEffect(() => { setResultCount(rows.length); }, [rows.length, setResultCount]);
+  useEffect(() => () => setResultCount(null), [setResultCount]);
+
+  const evidenceRelaxed =!withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && !measuredTasksOnly);
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   // F-05: cost magnitude is relative to the finite prices actually visible in this
@@ -268,9 +273,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
         <table aria-label="Model ranking" className="dtable w-full table-fixed text-sm">
           <colgroup>
             <col className="w-[46%] md:w-[30%]" />
-            <col className="w-0 md:w-[13%]" />
+            <col className="w-[27%] md:w-[13%]" />
             <col className="w-[27%] md:w-[12%]" />
-            <col className="w-[27%] md:w-[17%]" />
+            <col className="w-0 md:w-[17%]" />
             <col className="w-0 md:w-[8%]" />
             <col className="w-0 md:w-[20%]" />
           </colgroup>

@@ -1,5 +1,5 @@
 "use client";
-import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ScoreKey } from "../lib/types";
 import { DEFAULT_BLEND, DEFAULT_SCORE, defaultMinFor, FIXED_BLENDS, SCORE_OPTIONS, type PriceMode } from "../lib/cost";
 
@@ -61,6 +61,14 @@ interface SettingsCtx extends SettingsState {
   setAdvancedView: (b: boolean) => void;
   /** True when any setting differs from its documented default (drives Reset and "· filtered"). */
   userFiltersActive: boolean;
+  /** F-18: the Filters overlay. Stable callbacks, so listeners can depend on them. */
+  filtersOpen: boolean;
+  openFilters: () => void;
+  closeFilters: () => void;
+  toggleFilters: () => void;
+  /** Rows the ranking on screen shows, for the sheet's "Show N models" button; null elsewhere. */
+  resultCount: number | null;
+  setResultCount: (n: number | null) => void;
   setTeeOnly: (b: boolean) => void;
   setAllowDataTraining: (b: boolean) => void;
   setIsCompany: (b: boolean) => void;
@@ -163,6 +171,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   }, [state, hydrated]);
 
   const [advancedView, setAdvancedView] = useState(false);
+  const [filtersOpen, setFiltersOpen] = useState(false);
+  const [resultCount, setResultCount] = useState<number | null>(null);
+  const openFilters = useCallback(() => setFiltersOpen(true), []);
+  const closeFilters = useCallback(() => setFiltersOpen(false), []);
+  const toggleFilters = useCallback(() => setFiltersOpen((o) => !o), []);
 
   const value = useMemo<SettingsCtx>(() => ({
     ...state,
@@ -173,6 +186,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     resetFeatured: () => setState((s) => ({ ...s, featured: true, featuredTouched: false })),
     advancedView,
     setAdvancedView,
+    filtersOpen, openFilters, closeFilters, toggleFilters,
+    resultCount, setResultCount,
     userFiltersActive: !!(state.providersExcluded.length || state.families.length || state.featuredTouched || !state.collapse || !state.hideDeprecated
       || state.excludeChinese || state.euHostedOnly || state.nonUsOnly || state.openOnly || state.teeOnly || state.allowDataTraining || state.isCompany
       || state.maxCost != null || state.minIntelligence != null || state.minCoding != null
@@ -198,7 +213,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setInputWeight: (inputWeight) => setState((s) => BLEND_VALUES.has(inputWeight) ? { ...s, inputWeight } : s),
     excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,
-  }), [state, advancedView]);
+  }), [state, advancedView, filtersOpen, resultCount, openFilters, closeFilters, toggleFilters]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }
