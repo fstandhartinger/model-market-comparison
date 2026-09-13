@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-13T14:42:57.811Z",
+  "collected_at": "2026-09-13T23:23:56.649Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-13T14:42:57.209Z",
+      "fetched_at": "2026-09-13T23:23:56.155Z",
       "http_status": 200,
-      "bytes": 3506184,
-      "sha256": "ffde5f18636b8305394276800d87b8b310d6ddd8c5e8b4cdc86615a6ba0c7390"
+      "bytes": 3517859,
+      "sha256": "3623a7ae9365cc1e584c7cd0653831bd93818f12f6ae9974661068e61fdd08f2"
     }
   ],
   "coverage": {
-    "published_rows": 144,
-    "scored_denominator": 637,
+    "published_rows": 148,
+    "scored_denominator": 641,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 144,
+  "count": 148,
   "rows": [
     {
       "source_id": "8decf027-5114-4721-9ee1-81c0552980a0",
@@ -2051,6 +2051,72 @@
       }
     },
     {
+      "source_id": "9e9fb958-87f5-4835-a761-26102ef25898",
+      "slug": "k2-1b-final",
+      "name": "K2 Horizon 0.9B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 9426.961700116737,
+        "answer": 22831.90881364575,
+        "output": 32258.870513762486
+      },
+      "canonical_token_counts": {
+        "input": 4213221448,
+        "output": 59591388,
+        "answer": 32281443,
+        "reasoning": 27309945
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 70.70185121380291,
+        "reasoning_output_share": 0.29222851110347914
+      }
+    },
+    {
+      "source_id": "31da3a71-0773-47d9-8560-9f19f069926b",
+      "slug": "k2-4b-ph1",
+      "name": "K2 Horizon 3.7B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 48430.98982369936,
+        "answer": 23650.324095897675,
+        "output": 72081.31391959704
+      },
+      "canonical_token_counts": {
+        "input": 10766186482,
+        "output": 176817175,
+        "answer": 33577280,
+        "reasoning": 143239895
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 60.88880495913364,
+        "reasoning_output_share": 0.6718938264322097
+      }
+    },
+    {
+      "source_id": "122a1fa1-976a-4089-87a2-5a0a13e2a52c",
+      "slug": "k2-7b-ph2",
+      "name": "K2 Horizon 7B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 49501.375402382466,
+        "answer": 22661.927400091412,
+        "output": 72163.30280247387
+      },
+      "canonical_token_counts": {
+        "input": 8271270890,
+        "output": 159994456,
+        "answer": 27538039,
+        "reasoning": 132456417
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 51.69723437167098,
+        "reasoning_output_share": 0.6859632732980381
+      }
+    },
+    {
       "source_id": "bb3d7e75-8e22-4082-b9d6-1db0803e042f",
       "slug": "k2-horizon-375b-a23b",
       "name": "K2 Horizon 375B A23B",
@@ -2070,6 +2136,28 @@
         "basis": "derived",
         "input_output_ratio": 29.54345813244525,
         "reasoning_output_share": 0.6942796818357678
+      }
+    },
+    {
+      "source_id": "53b9e276-e360-4a39-9076-1a19d72c25fe",
+      "slug": "k2-mova-36b-mid5",
+      "name": "K2 Horizon MoVA 36B A4B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 37842.38186264047,
+        "answer": 17160.094457061008,
+        "output": 55002.476319701476
+      },
+      "canonical_token_counts": {
+        "input": 5208669169,
+        "output": 113698036,
+        "answer": 21623247,
+        "reasoning": 92074789
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 45.8114260566471,
+        "reasoning_output_share": 0.6880123295300726
       }
     },
     {

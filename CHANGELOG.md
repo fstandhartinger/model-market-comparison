@@ -13,6 +13,16 @@ products was removed from the page, metadata, footer and social image. Simple mo
 at a minimum Composite score of **86** (strictly above the requested 85 threshold); Advanced
 and Guided settings remain independent.
 
+## 2026-09-13 — Executable source refresh audit (R9.1 remains open)
+
+The daily-refreshable DesignArena, OpenRouter, Epoch ECI, efficiency, and OpenRouter
+provider-policy snapshots were refreshed from their public sources and the dataset was
+rebuilt and tested. Artificial Analysis failed closed on a live API/leaderboard row-count
+mismatch, so its retained snapshot was not replaced. Curated provider catalogs remain
+explicitly dated at their last audited collection; they were not relabelled as fresh.
+See [the refresh audit](data/research/refresh-2026-09-13.md) and the evidence receipt for
+the exact commands, source dates, and remaining gap.
+
 ## 2026-09-13 — Subscriptions beside the per-task cost (R6.3)
 
 **New data file: `data/raw/subscriptions.json`.** Flat-rate plans (Claude, Google AI,
