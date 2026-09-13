@@ -26,6 +26,41 @@ they are explicitly marked approximate; missing and low-sample values remain unk
 are excluded. This is a UI-only change: no dataset paths, benchmark rows, or public API
 contracts changed.
 
+## 2026-09-12 — Benchmark comparison snapshots on /compare (R8.1)
+
+`/compare` gains release-post-style topic cards: each selected model's normalized measured
+positions are averaged per topic, with exact coverage shown, and the full comparison table
+highlights the best measured relative position per benchmark. The 0–100 card values are
+explicitly not a new score. Missing and low-sample rows are excluded rather than drawn as
+zero. In the same change the `/charts` open-vs-closed comparison stopped plotting a group
+without measured scores as 0 (it is now unavailable). UI only — no dataset path, benchmark
+row or API field changed.
+
+## 2026-09-12 — Featured set derived from the AA Intelligence Index (R4.4)
+
+`featured` is no longer a hand-kept family regex. It is now the **top 20 model families by
+best AA Intelligence Index across variants**, deprecated families excluded, plus documented
+pins (DeepSeek V4.1 Flash is pinned). The rule and the resulting list are published in
+`dataset.json` under `build_diagnostics.featured_selection` and rendered on `/about#featured`.
+Consequence for consumers that read `models[].featured`: the set is now 20 families (58
+model rows on 2026-09-13) and follows the index (Gemini families can be featured; families
+just outside the cut, e.g. Claude Sonnet 5, are not). The `FEATURED_RE` notes further down
+describe the old mechanism. The cut-off is `FEATURED_TOP_N` in `scripts/build-dataset.mjs`.
+
+## 2026-09-12 — Epoch Capabilities Index in the Composite (E1)
+
+**Scoring change.** The Composite now has **seven** equal percentile slots: the previous five
+plus Epoch AI's general ECI and Software Engineering ECI. Composite values from before this
+change are not comparable with values after it; historical Composite values are never bridged
+(`source_status.composite.status` is `recompute_required_on_definition_change`). New raw file
+`data/raw/epoch-eci.json` (collected from Epoch's official exports; Software ECI is refit
+from the published performance/difficulty exports with Epoch's sigmoid method and at least
+two software benchmarks). Models gain `benchmarks.epoch_eci` and
+`benchmarks.epoch_eci_software` (130 and 77 models on 2026-09-13) plus
+`epoch_eci_attachment_note`; the API accepts `score=epoch_eci` and `score=epoch_eci_software`;
+`composite_coverage` now counts out of 7. Family attachment is conservative: source models
+without a unique catalog match stay unmatched rather than guessed.
+
 ## 2026-09-12 — Provider data policy, grouped settings, self-explaining table
 
 **New data file for downstream consumers: `data/raw/openrouter-data-policy.json`.**
