@@ -72,19 +72,23 @@ export function ModelDetailOffers({
     byPlatform.get(offer.platform)!.push(offer);
   }
   return (
-    <section className="card mt-6 min-w-0 overflow-x-auto p-4">
-      <h2 className="mb-1 font-semibold">Token offers by platform — {priceLabel(s)}</h2>
+    // F-08b: the full route list stays on the page, folded — the top-5 table above answers
+    // the usual question, and the unfolded list alone was a third of the page.
+    <details className="card mt-6 min-w-0 overflow-x-auto p-4">
+      <summary className="font-semibold">Token offers by platform · {catalog.length} offers <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></summary>
       <PriceAssumptions />
       <p className="mb-3 text-[11px] text-gray-500">{catalog.length} offers within the active global filters; “—” means the catalog is active but no public token price is available.</p>
       {[...byPlatform.entries()].map(([platform, platformOffers]) => (
         <div key={platform} className="mb-4">
           <h3 className="mb-1 text-sm font-medium text-accent">{platform} <span className="text-xs font-normal text-gray-500">({platformOffers.length})</span></h3>
+          {/* F-08b: the same column set as the top-5 table — Provider and price on phones,
+              route details and raw prices from md up. */}
           <table className="dtable w-full text-sm">
             <tbody>
               {platformOffers.map((offer) => (
                 <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")}>
                   <td className="px-2 py-1">{offer.provider}</td>
-                  <td className="px-2 py-1 text-xs text-gray-500">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
+                  <td className="hidden px-2 py-1 text-xs text-gray-500 md:table-cell">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> raw in $/1M</span></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> raw out $/1M</span></td>
                   <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} /></td>
@@ -95,6 +99,6 @@ export function ModelDetailOffers({
         </div>
       ))}
       {catalog.length === 0 && <p className="text-sm text-gray-500">No token offers match the active global filters.</p>}
-    </section>
+    </details>
   );
 }

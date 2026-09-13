@@ -36,10 +36,10 @@ const routeSignature = (offer: ClientData["offersByModel"][string][number]) => [
 
 /** F-05: keep the number and its magnitude cue in one vertical rhythm. The bar
  * is intentionally decorative; the accessible value remains the text/button. */
-function MagnitudeBar({ frac, tone, children }: { frac: number; tone: "score" | "cost"; children: ReactNode }) {
+function MagnitudeBar({ frac, tone, thin, children }: { frac: number; tone: "score" | "cost"; thin?: boolean; children: ReactNode }) {
   const bounded = Number.isFinite(frac) ? Math.max(0, Math.min(1, frac)) : 0;
   return (
-    <div className={`bh-magnitude-bar bh-magnitude-${tone}`}>
+    <div className={`bh-magnitude-bar bh-magnitude-${tone}${thin ? " bh-magnitude-thin" : ""}`}>
       <div className="bh-magnitude-track" aria-hidden="true">
         <div className="bh-magnitude-fill" style={{ width: `${bounded * 100}%` }} />
       </div>
@@ -162,7 +162,52 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   useEffect(() => { setResultCount(rows.length); }, [rows.length, setResultCount]);
   useEffect(() => () => setResultCount(null), [setResultCount]);
 
-  const evidenceRelaxed =!withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && !measuredTasksOnly);
+  // F-28: the Evidence button is highlighted only when a toggle differs from this mode's default
+  // (Advanced's default already leaves task tokens unmeasured, so that is not a user filter).
+  const evidenceChanged = !withScoreOnly || !hasProviderOnly || (s.priceMode === "adjusted" && measuredTasksOnly !== !!simple);
+
+  // F-23: on phones the org, budget, comparison and evidence controls live in one Refine sheet.
+  const [refineOpen, setRefineOpen] = useState(false);
+  useEffect(() => {
+    if (!refineOpen) return;
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") setRefineOpen(false); };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, [refineOpen]);
+  const comparisonActive = !!(chosenComparisonMetric && comparisonReference);
+  const refineChanged = Number(!!org) + Number(maxCost != null) + Number(comparisonActive) + Number(evidenceChanged);
+  const resetRefine = () => {
+    setOrg(""); setMaxCost(null); setComparisonTarget(""); setComparisonMetric("");
+    setWithScoreOnly(true); setHasProviderOnly(true); setMeasuredTasksOnly(!!simple);
+  };
+  const countLabel = `${rows.length} models${s.userFiltersActive || q.trim() || org || comparisonActive ? " · filtered" : ""}`;
+  const evidencePanel = <>
+    <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
+    <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
+    {s.priceMode === "adjusted" && <Toggle label="Measured task tokens only" on={measuredTasksOnly} set={setMeasuredTasksOnly} />}
+  </>;
+  const comparisonPanel = <>
+    <div className="grid gap-2 sm:grid-cols-2">
+      <label className="min-w-0 text-xs text-gray-400">Reference model
+        <select aria-label="Reference model" value={comparisonTarget} onChange={(e) => setComparisonTarget(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
+          <option value="">Choose a model…</option>
+          {candidates.map((model) => <option key={model.id} value={model.id}>{model.display_name} · {model.org}</option>)}
+        </select>
+      </label>
+      <label className="min-w-0 text-xs text-gray-400">Benchmark or category
+        <select aria-label="Benchmark or category" value={comparisonMetric} onChange={(e) => setComparisonMetric(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
+          <option value="">Choose a comparison…</option>
+          {comparisonMetrics.map((metric) => <option key={metric.id} value={metric.id}>{metric.label}</option>)}
+        </select>
+      </label>
+    </div>
+    {comparisonTarget && comparisonMetric && <p role="status" className="mt-2 text-xs text-gray-500">
+      {comparisonReference
+        ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(1)}</b> for this reference{comparisonReference.approximate ? " (approximated from a retained bridge)" : " (measured)"}. Missing values stay unknown and are excluded; {matching.length} models currently qualify.</>
+        : <>This reference has no comparable result for that choice, so the filter is inactive. Missing values stay unknown.</>}
+    </p>}
+    {(comparisonTarget || comparisonMetric) && <button type="button" className="mt-2 text-xs text-accent underline" onClick={() => { setComparisonTarget(""); setComparisonMetric(""); }}>Clear comparison</button>}
+  </>;
 
   const maxScoreVal = useMemo(() => Math.max(1, ...rows.map((x) => x.sc ?? 0)), [rows]);
   // F-05: cost magnitude is relative to the finite prices actually visible in this
@@ -210,8 +255,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           map={<CostCapabilityScatter data={data} compact measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} />}
         />
       )}
-      <div className={`card mb-4 flex-wrap items-center gap-3 p-3 ${simple ? "hidden" : "flex"}`}>
-        <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
+      <div className={`card mb-4 items-center gap-2 p-1 md:gap-3 md:p-3 ${simple ? "hidden" : "flex"}`}>
+        <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="h-10 min-w-0 flex-1 rounded-md border border-line bg-ink px-3 py-1.5 text-sm md:h-auto md:flex-none" />
+        <div className="hidden md:flex md:flex-1 md:flex-wrap md:items-center md:gap-3">
         <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
           <option value="">All orgs</option>
           {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
@@ -226,43 +272,52 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
               : "Better than a model"} ▾
           </summary>
           <div className="absolute left-0 z-20 mt-1 w-[min(28rem,calc(100vw-3rem))] rounded-lg border border-line bg-panel p-3 shadow-xl">
-          <div className="grid gap-2 sm:grid-cols-2">
-            <label className="min-w-0 text-xs text-gray-400">Reference model
-              <select aria-label="Reference model" value={comparisonTarget} onChange={(e) => setComparisonTarget(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
-                <option value="">Choose a model…</option>
-                {candidates.map((model) => <option key={model.id} value={model.id}>{model.display_name} · {model.org}</option>)}
-              </select>
-            </label>
-            <label className="min-w-0 text-xs text-gray-400">Benchmark or category
-              <select aria-label="Benchmark or category" value={comparisonMetric} onChange={(e) => setComparisonMetric(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
-                <option value="">Choose a comparison…</option>
-                {comparisonMetrics.map((metric) => <option key={metric.id} value={metric.id}>{metric.label}</option>)}
-              </select>
-            </label>
-          </div>
-          {comparisonTarget && comparisonMetric && <p role="status" className="mt-2 text-xs text-gray-500">
-            {comparisonReference
-              ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(1)}</b> for this reference{comparisonReference.approximate ? " (approximated from a retained bridge)" : " (measured)"}. Missing values stay unknown and are excluded; {matching.length} models currently qualify.</>
-              : <>This reference has no comparable result for that choice, so the filter is inactive. Missing values stay unknown.</>}
-          </p>}
-          {(comparisonTarget || comparisonMetric) && <button type="button" className="mt-2 text-xs text-accent underline" onClick={() => { setComparisonTarget(""); setComparisonMetric(""); }}>Clear comparison</button>}
+          {comparisonPanel}
           </div>
         </details>}
         {/* R4.11: the three evidence requirements are defaults almost nobody changes.
             They stay with the table they govern, but folded away so the toolbar reads as
             "search, org, budget" rather than as six competing switches. */}
         <details className="relative">
-          <summary className={`cursor-pointer list-none rounded-md border px-3 py-1.5 text-sm ${evidenceRelaxed ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
-            Evidence{evidenceRelaxed ? " · relaxed" : ""} ▾
+          <summary className={`cursor-pointer list-none rounded-md border px-3 py-1.5 text-sm ${evidenceChanged ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
+            Evidence ▾
           </summary>
           <div className="absolute left-0 z-20 mt-1 flex w-[min(20rem,calc(100vw-3rem))] flex-col gap-2 rounded-lg border border-line bg-panel p-3 shadow-xl">
-            <Toggle label={score === "composite" ? "Has benchmark evidence" : "Has score"} on={withScoreOnly} set={setWithScoreOnly} />
-            <Toggle label="Has provider" on={hasProviderOnly} set={setHasProviderOnly} />
-            {s.priceMode === "adjusted" && <Toggle label="Measured task tokens only" on={measuredTasksOnly} set={setMeasuredTasksOnly} />}
+            {evidencePanel}
           </div>
         </details>
-        <span className="ml-auto text-xs text-gray-500">{rows.length} models{s.userFiltersActive || q.trim() || org || (chosenComparisonMetric && comparisonReference) ? " · filtered" : ""}</span>
+        <span className="ml-auto text-xs text-gray-500">{countLabel}</span>
+        </div>
+        {/* F-23: phones get one Refine button instead of four controls. */}
+        <button type="button" onClick={() => setRefineOpen(true)} aria-haspopup="dialog" aria-expanded={refineOpen}
+          className={`bh-nav-button inline-flex h-10 shrink-0 items-center rounded-md border px-3 text-sm md:hidden ${refineChanged ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-300"}`}>
+          Refine{refineChanged ? ` · ${refineChanged}` : ""} ▾
+        </button>
       </div>
+      {!simple && <p className="-mt-3 mb-3 px-1 text-xs text-gray-500 md:hidden">{countLabel}</p>}
+      {!simple && refineOpen && (
+        <div className="fixed inset-0 z-50 md:hidden">
+          <div className="absolute inset-0 bg-black/40" aria-hidden="true" onClick={() => setRefineOpen(false)} />
+          <div role="dialog" aria-label="Refine the ranking" className="absolute inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-2xl border-t border-line bg-panel shadow-xl">
+            <div className="min-h-0 space-y-4 overflow-y-auto p-4">
+              <label className="block text-xs text-gray-400">Organization
+                <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="mt-1 block w-full rounded-md border border-line bg-ink px-3 py-2 text-sm">
+                  <option value="">All orgs</option>
+                  {orgs.map((o) => <option key={o} value={o}>{o}</option>)}
+                </select>
+              </label>
+              <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost == null ? "" : String(maxCost)}
+                onChange={(v) => { const n = parseFloat(v); setMaxCost(Number.isFinite(n) ? n : null); }} placeholder="e.g. 5" />
+              {data.comparison && <div><p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-500">Better than a model</p>{comparisonPanel}</div>}
+              <div><p className="mb-1 text-[11px] font-semibold uppercase tracking-wide text-gray-500">Evidence</p><div className="flex flex-wrap gap-2">{evidencePanel}</div></div>
+            </div>
+            <div className="flex shrink-0 items-center gap-3 border-t border-line bg-panel px-4 py-3">
+              <button type="button" onClick={() => setRefineOpen(false)} className="inline-flex min-h-10 items-center rounded-md bg-accent px-4 text-sm font-semibold text-ink">Show {rows.length} models</button>
+              {refineChanged > 0 && <button type="button" onClick={resetRefine} className="inline-flex min-h-10 items-center rounded-md border border-line px-3 text-sm text-gray-400">Reset</button>}
+            </div>
+          </div>
+        </div>
+      )}
 
       <div className="card overflow-x-auto">
         {/* F-14: no fixed minimum width. On phones exactly three columns carry the width
@@ -322,7 +377,16 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
                   </span>
                 </td>
                 <td className="hidden truncate px-3 py-2 md:table-cell"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
-                <td className="px-3 py-2">{sc != null ? <MagnitudeBar frac={sc / maxScoreVal} tone="score"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                {/* F-25: a Composite built on few of its seven inputs must look thin — muted and
+                    hatched below three inputs, and the input count shown whenever it is not 7/7. */}
+                <td className="px-3 py-2">{sc != null ? (() => {
+                  const inputs = score === "composite" ? m.composite_coverage : 7;
+                  const thin = inputs < 3;
+                  return <MagnitudeBar frac={sc / maxScoreVal} tone="score" thin={thin}>
+                    <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>
+                    {inputs < 7 && !simple && <span className="block text-right text-[11px] font-normal text-gray-500">{inputs}/7 inputs</span>}
+                  </MagnitudeBar>;
+                })() : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>

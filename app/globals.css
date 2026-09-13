@@ -75,6 +75,9 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 .bh-magnitude-fill { height: 100%; border-radius: inherit; }
 .bh-magnitude-score .bh-magnitude-fill { background: rgb(var(--accent) / .55); }
 .bh-magnitude-cost .bh-magnitude-fill { background: var(--muted); opacity: .72; }
+/* F-25: thin evidence (a Composite on fewer than three of seven inputs) gets a hatched bar. */
+.bh-magnitude-thin .bh-magnitude-fill { background: repeating-linear-gradient(135deg, rgb(var(--accent) / .6) 0 4px, transparent 4px 8px); }
+.bh-magnitude-warn .bh-magnitude-fill { background: rgb(var(--warn) / .8); }
 .bh-row-chevron { display: inline-block; width: 12px; color: var(--muted); font-size: 17px; line-height: 12px; opacity: .5; transition: color .15s ease, opacity .15s ease, transform .15s ease; }
 .bh-ranking-row:hover .bh-row-chevron, .bh-row-chevron.is-open { color: rgb(var(--accent)); opacity: 1; }
 .bh-row-chevron.is-open { transform: rotate(90deg); }
@@ -133,12 +136,16 @@ details[open] > summary { margin-bottom: 8px; }
   table.dtable thead th { padding-top: 6px; padding-bottom: 6px; }
   .bh-range { min-height: 36px; }
   /* F-13: .bh-mode-switch no longer exists — the mode switch is a plain row of 36 px tabs now. */
-  .bh-value-map .recharts-text { display: none; }
+  /* F-26: the value map keeps its tick text on phones — the component renders a small
+     fixed scale instead of hiding it. */
 }
 
 /* R5.3–R5.4: the two shortlist sliders. A bare appearance-none range renders as a fat
    grey pill in Chromium, so track and thumb are drawn explicitly — thin rail, filled
    portion in the accent colour, a 44px-tall invisible hit area for touch. */
+/* F-28: the full-pool histogram bars behind each slider — visible in both themes. */
+.bh-spark-total { background: rgb(var(--accent) / .45); }
+[data-theme="light"] .bh-spark-total { background: rgb(var(--accent) / .35); }
 .bh-range { -webkit-appearance: none; appearance: none; width: 100%; height: 22px; background: transparent; cursor: pointer; }
 .bh-range::-webkit-slider-runnable-track { height: 4px; border-radius: 999px; background: var(--bh-range-fill, rgb(var(--line))); }
 .bh-range::-moz-range-track { height: 4px; border-radius: 999px; background: rgb(var(--line)); }

@@ -76,6 +76,7 @@ export const BENCHMAXX_MIN_TOPICS: number;
 export const BENCHMAXX_MIN_SHRINK: number;
 export const BENCHMAXX_MAX_SHRINK: number;
 export const BENCHMAXX_TAG_SHARE: number;
+export function percentileFor(axis: BenchmarkView['axes'][number], modelId: string): number | null;
 export function groupedRadarProfile(view: BenchmarkView, modelId: string): BenchmaxxingReport['profile'];
 export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minMeasured?: number; minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
 export function benchmaxxingPrior(view: BenchmarkView): { mean: number | null; shrink: number; eligible: number };

@@ -9,6 +9,18 @@ import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { selectBenchmarkView } from '../../../lib/benchmark-view.mjs';
 import { BenchmarkSheet } from '../../../components/BenchmarkSheet';
 import { scoreVersion } from '../../../lib/score-label';
+import { percentileFor } from '../../../lib/benchmax.mjs';
+import { MiniRadar } from '../../../components/MiniRadar';
+import { InfoTip } from '../../../components/InfoTip';
+import type { ScoreKey } from '../../../lib/types';
+
+/** Mid-rank percentile of `value` among every model with a value on that input (0–100). */
+function catalogPercentile(values: number[], value: number | null): number | null {
+  if (value == null || values.length < 2) return null;
+  const below = values.filter((v) => v < value).length;
+  const equal = values.filter((v) => v === value).length;
+  return ((below + (equal - 1) / 2) / (values.length - 1)) * 100;
+}
 
 export const dynamic = "force-dynamic";
 
@@ -26,71 +38,89 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const clientModel = data.models.find((candidate) => candidate.id === model.id);
   if (!clientModel) notFound();
   const pricingData = { efficiency: data.efficiency, sourceDates: data.sourceDates, generated_at: data.generated_at };
-  const benchmarkView = selectBenchmarkView(await getBenchmarkView(), [model.id]);
+  const fullView = await getBenchmarkView();
+  const benchmarkView = selectBenchmarkView(fullView, [model.id]);
+  // F-08b: percentiles need the whole catalog, so they are taken before the view is narrowed.
+  const percentiles = Object.fromEntries(fullView.axes
+    .filter((axis) => axis.scores.some((row) => row.modelId === model.id))
+    .map((axis) => [axis.id, percentileFor(axis, model.id)]));
   const b = model.benchmarks;
   const da = model.designarena;
+  // The six Composite inputs of the mini radar (DesignArena's two boards share one axis: the
+  // mean of the percentiles it has). Percentiles use the same display values as the ranking.
+  const pctOf = (key: ScoreKey) => catalogPercentile(
+    data.models.map((m) => m.scores[key]).filter((v): v is number => v != null), clientModel.scores[key]);
+  const daPcts = [pctOf("designarena_frontend"), pctOf("designarena_fullstack")].filter((v): v is number => v != null);
+  const radarAxes = [
+    { label: "AA Coding", value: pctOf("aa_coding_index"), native: num(clientModel.scores.aa_coding_index), note: null },
+    { label: "Coding Agent", value: pctOf("aa_coding_agent"), native: num(clientModel.scores.aa_coding_agent), note: null },
+    { label: "AA Intelligence", value: pctOf("aa_intelligence_index"), native: num(clientModel.scores.aa_intelligence_index), note: null },
+    { label: "Epoch ECI", value: pctOf("epoch_eci"), native: num(clientModel.scores.epoch_eci), note: model.epoch_eci_attachment_note ?? null },
+    { label: "Software ECI", value: pctOf("epoch_eci_software"), native: num(clientModel.scores.epoch_eci_software), note: model.epoch_eci_attachment_note ?? null },
+    { label: "DesignArena", value: daPcts.length ? daPcts.reduce((a, v) => a + v, 0) / daPcts.length : null,
+      native: `${num(clientModel.scores.designarena_frontend, 0)}/${num(clientModel.scores.designarena_fullstack, 0)}`, note: model.designarena_attachment_note ?? null },
+  ];
 
   return (
     <div>
       <Link href="/" className="text-sm text-accent">← All models</Link>
-      <div className="mt-2 flex items-center gap-3">
-        <span className="inline-block h-3 w-3 rounded-full" style={{ background: orgColor(model.org) }} />
-        <h1 className="text-2xl font-bold">{model.display_name}</h1>
-        {model.open_weights && <span className="rounded bg-accent2/15 px-2 py-0.5 text-xs text-accent2">open weights</span>}
-        {model.deprecated && <span className="rounded bg-amber-500/15 px-2 py-0.5 text-xs text-amber-300">deprecated by benchmark source</span>}
-        {model.featured && <span className="rounded bg-warn/15 px-2 py-0.5 text-xs text-warn">★ featured</span>}
+      {/* F-08b: title on one line; badges under it on phones, inline from md. */}
+      <div className="mt-2 flex flex-col gap-1 md:flex-row md:items-center md:gap-3">
+        <div className="flex min-w-0 items-center gap-3">
+          <span className="inline-block h-3 w-3 shrink-0 rounded-full" style={{ background: orgColor(model.org) }} />
+          <h1 className="truncate text-2xl font-bold">{model.display_name}</h1>
+        </div>
+        {(model.open_weights || model.deprecated || model.featured) && <div className="flex flex-wrap gap-2">
+          {model.open_weights && <span className="rounded bg-accent2/15 px-2 py-0.5 text-xs text-accent2">open weights</span>}
+          {model.deprecated && <span className="rounded bg-amber-500/15 px-2 py-0.5 text-xs text-amber-300">deprecated by benchmark source</span>}
+          {model.featured && <span className="rounded bg-warn/15 px-2 py-0.5 text-xs text-warn">★ featured</span>}
+        </div>}
       </div>
       <div className="mt-1 text-sm text-gray-400">
-        {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {offers.length} recorded token offers
+        {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {offers.length} offers
       </div>
       {model.manual_notes && <p className="mt-2 max-w-3xl text-xs text-warn/90">{model.manual_notes}</p>}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
         <ModelDetailOffers offers={offers} providers={data.providers} model={clientModel} pricingData={pricingData} view="top" />
 
-        {/* Benchmarks */}
-        <section className="card min-w-0 p-4">
-          <h2 className="mb-3 font-semibold">Benchmarks</h2>
-          <div className="grid grid-cols-1 gap-x-6 gap-y-1.5 text-sm sm:grid-cols-2">
-            <Metric label="Composite" value={num(clientModel?.scores.composite)} hi />
-            {clientModel?.composite_base != null && clientModel.scores.composite != null
-              && Math.abs(clientModel.scores.composite - clientModel.composite_base) >= 0.05 && <>
-              <Metric label="Mean-imputed base" value={num(clientModel.composite_base)} />
-              <Metric label="Dominance adjustment" value={`${clientModel.scores.composite > clientModel.composite_base ? "+" : ""}${num(clientModel.scores.composite - clientModel.composite_base)}`} />
-            </>}
-            <Metric label="Composite evidence" value={`${clientModel?.composite_coverage ?? 0}/7`} />
-            <Metric label={`AA Coding · ${scoreVersion('aa_coding_index', ds.sources)}`} value={num(b.aa_coding_index)} hi />
-            <Metric label={`AA Coding Agent · ${scoreVersion('aa_coding_agent', ds.sources)}`} value={num(b.aa_coding_agent_index)} hi />
-            <Metric label={`AA Intelligence · ${scoreVersion('aa_intelligence_index', ds.sources)}`} value={num(b.aa_intelligence_index)} hi />
-            <Metric label={`Epoch ECI · ${scoreVersion('epoch_eci', ds.sources)}`} value={num(b.epoch_eci)} hi />
-            <Metric label={`Epoch Software ECI · ${scoreVersion('epoch_eci_software', ds.sources)}`} value={num(b.epoch_eci_software)} hi />
-            <Metric label={`DesignArena Frontend · ${scoreVersion('designarena_frontend', ds.sources)}`} value={num(da?.frontend?.elo, 0)} hi />
-            <Metric label={`DesignArena Full-Stack · ${scoreVersion('designarena_fullstack', ds.sources)}`} value={num(da?.fullstack?.elo, 0)} hi />
-            <Metric label="Output speed (t/s)" value={num(model.aa_speed?.output_tps, 0)} />
+        {/* F-08b: the Composite as the headline, its inputs as a six-axis percentile radar,
+            and the native numbers as a caption strip. */}
+        <section className="card min-w-0 p-4" aria-label="Composite and its inputs">
+          <div className="flex items-baseline justify-between gap-3">
+            <h2 className="font-semibold">Composite</h2>
+            <span className="text-xs text-gray-500">{clientModel.composite_coverage}/7 inputs measured</span>
           </div>
+          <p className="text-4xl font-bold tabular">{num(clientModel.scores.composite)}</p>
+          <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />
+          <p className="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
+            {radarAxes.map((axis) => (
+              <span key={axis.label} className="inline-flex items-center whitespace-nowrap">
+                {axis.label} <b className="ml-1 font-semibold tabular text-gray-200">{axis.native}</b>
+                {axis.note && <InfoTip title={`${axis.label} attachment`} label={`the ${axis.label} attachment note`}>{axis.note}</InfoTip>}
+              </span>
+            ))}
+            {model.aa_speed?.output_tps != null && <span className="whitespace-nowrap">Output <b className="font-semibold tabular text-gray-200">{num(model.aa_speed.output_tps, 0)}</b> t/s</span>}
+          </p>
+          <p className="mt-1 text-center text-[11px] text-gray-500">Radar: percentile among all models measured on each input; a gap means not measured.</p>
           {model.benchmark_override_note && (
             <p className="mt-3 border-t border-line/50 pt-2 text-xs text-warn/90">⚠ {model.benchmark_override_note}</p>
-          )}
-          {model.designarena_attachment_note && (
-            <p className="mt-3 border-t border-line/50 pt-2 text-xs text-gray-500">ⓘ {model.designarena_attachment_note}</p>
-          )}
-          {model.epoch_eci_attachment_note && (
-            <p className="mt-3 border-t border-line/50 pt-2 text-xs text-gray-500">ⓘ {model.epoch_eci_attachment_note}</p>
           )}
         </section>
       </div>
 
-      <BenchmarkSheet view={benchmarkView} modelId={model.id} />
+      <BenchmarkSheet view={benchmarkView} modelId={model.id} percentiles={percentiles} />
 
       {/* Variants */}
       {variants.length > 1 && (
         <section className="card mt-6 overflow-x-auto p-4">
-          <h2 className="mb-3 font-semibold">Variants / reasoning settings</h2>
+          <h2 className="font-semibold">Variants / reasoning settings</h2>
+          <p className="mb-3 text-xs text-gray-500">Artificial Analysis snapshot {ds.sources.artificialanalysis}</p>
           <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-2 py-1 text-left text-xs text-gray-400">Variant</th>
-              <th className="px-2 py-1 text-right text-xs text-gray-400">Coding · snapshot {ds.sources.artificialanalysis}</th>
-              <th className="px-2 py-1 text-right text-xs text-gray-400">Intelligence · snapshot {ds.sources.artificialanalysis}</th>
+              <th className="px-2 py-1 text-right text-xs text-gray-400">AA Coding</th>
+              <th className="px-2 py-1 text-right text-xs text-gray-400">AA Intelligence</th>
             </tr></thead>
             <tbody>
               {variants.map((v) => (

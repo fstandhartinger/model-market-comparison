@@ -48,9 +48,9 @@ function Sparkline({ values, min, max, keep, log }: {
       <div className="flex h-full items-end gap-px px-0.5">
         {bins.map((b, i) => (
           <div key={i} className="relative flex-1" style={{ height: "100%" }}>
-            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-gray-500/25"
+            <div className="bh-spark-total absolute inset-x-0 bottom-0 rounded-t-[2px]"
                  style={{ height: `${(b.total / peak) * 100}%` }} />
-            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-accent/70"
+            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-accent"
                  style={{ height: `${(b.kept / peak) * 100}%` }} />
           </div>
         ))}
@@ -67,6 +67,17 @@ function Row({ title, value, children }: { title: string; value: string; childre
         <span className="tabular text-sm font-semibold text-accent">{value}</span>
       </div>
       {children}
+    </div>
+  );
+}
+
+/** F-28: the two ends of a slider's range, 10 px muted under the track. */
+function RangeEnds({ lo, hi }: { lo: string; hi: string }) {
+  return (
+    // The range input is taller than its 4 px rail (22 px, 36 px on phones), so the labels
+    // sit in that empty space under the rail instead of adding a line to the card.
+    <div className="-mt-3 flex justify-between text-[10px] leading-none tabular text-gray-500 sm:-mt-2" aria-hidden="true">
+      <span>{lo}</span><span>{hi}</span>
     </div>
   );
 }
@@ -147,6 +158,7 @@ export function ShortlistControls({
                 onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
                 style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
             </div>
+            <RangeEnds lo={String(scoreStats.min)} hi={String(scoreStats.max)} />
           </Row>
 
           <Row
@@ -159,6 +171,7 @@ export function ShortlistControls({
                 onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
                 style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
             </div>
+            {costStats.sorted.length > 0 && <RangeEnds lo={money(costMin)} hi={money(costMax)} />}
           </Row>
         </div>
 

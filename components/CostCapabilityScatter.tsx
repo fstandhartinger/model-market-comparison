@@ -37,7 +37,7 @@ function CompactPointShape(props: { cx?: number; cy?: number; payload?: { pass: 
   return <circle cx={cx} cy={cy} r={payload?.pass ? 5 : 4} fill="rgb(var(--accent))" opacity={payload?.pass ? 1 : 0.25} stroke="rgb(var(--ink))" strokeWidth={1} />;
 }
 
-/** Phones (the same 639 px breakpoint globals.css uses to hide the compact map's tick text). */
+/** Phones (below Tailwind's `sm`, 640 px): the compact map switches to its small fixed scale. */
 function useNarrow(): boolean {
   const [narrow, setNarrow] = useState(false);
   useEffect(() => {
@@ -99,6 +99,12 @@ function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: {
     out.push({ key: p.id, x: slot.l, y: slot.t + LINE - 2, text });
   }
   return <g className="bh-point-labels">{out.map((l) => <text key={l.key} x={l.x} y={l.y} fill="rgb(var(--text))" fontSize={10}>{l.text}</text>)}</g>;
+}
+
+/** F-26: the fixed phone scale, limited to the plotted domain so no tick sits off the plot. */
+function phoneCostTicks(lo: number, hi: number): number[] {
+  const inRange = [3, 1, 0.3, 0.1].filter((v) => v >= lo && v <= hi);
+  return inRange.length >= 2 ? inRange : logTicks(lo, hi).slice(0, 4);
 }
 
 function logTicks(min: number, max: number): number[] {
@@ -189,9 +195,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
             <CartesianGrid stroke="#222932" />
-            {/* On phones the tick text is hidden (globals.css), so the axes give up its space too. */}
-            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed scale="log" domain={[xMin * 0.85, xMax * 1.15]} ticks={logTicks(xMin, xMax)} allowDataOverflow interval={0} tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={11} tick={!narrow} height={narrow ? 4 : 30} />
-            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={yCompact.ticks} interval={0} width={narrow ? 4 : 32} tick={!narrow} stroke="#8a93a3" fontSize={11} tickFormatter={(v) => v.toFixed(0)} />
+            {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
+                data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
+            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed scale="log" domain={[xMin * 0.85, xMax * 1.15]} ticks={narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
+            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? [yCompact.domain[0], 100] : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
             {/* Only frontier members get the halo and the connecting line — not every point. */}
