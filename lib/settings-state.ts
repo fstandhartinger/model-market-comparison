@@ -39,7 +39,7 @@ export interface SettingsState {
   inputWeight: number;     // raw mode's fixed input:output blend; persists while adjusted
 }
 
-export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 export const isBlendValue = (n: number) => BLEND_VALUES.has(n);

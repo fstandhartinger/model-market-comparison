@@ -55,7 +55,7 @@ for (const [name, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
   r.pass = {
     advancedAtLeast50: (r.advanced?.rows ?? 0) >= 50,
     noStarInSimple: r.simpleFirst?.stars === 0 && r.simpleAfterAdvanced?.stars === 0,
-    simpleKeeps85: (r.simpleAfterAdvanced?.minScore ?? 0) >= 85,
+    simpleKeepsAbove85: (r.simpleAfterAdvanced?.minScore ?? 0) > 85,
     simpleFeaturedOnly: (r.simpleAfterAdvanced?.rows ?? 99) <= 15,
     toolbarOneRow: name !== 'desktop' || r.advanced?.toolbarRows === 1,
     noFilteredSuffixByDefault: !(r.advanced?.count || '').includes('filtered'),

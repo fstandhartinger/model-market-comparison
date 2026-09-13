@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-13 — Honest positioning and Simple threshold (R3.1, R5.3)
+
+The landing claim now stays source-linked and coverage-qualified: Benchmark Heaven presents
+the tracked benchmark collection and a realistic modeled cost per task grounded in provider
+prices, caching and token efficiency. The unsupported exclusive comparison with other
+products was removed from the page, metadata, footer and social image. Simple mode now starts
+at a minimum Composite score of **86** (strictly above the requested 85 threshold); Advanced
+and Guided settings remain independent.
+
 ## 2026-09-13 — Subscriptions beside the per-task cost (R6.3)
 
 **New data file: `data/raw/subscriptions.json`.** Flat-rate plans (Claude, Google AI,
@@ -94,7 +103,7 @@ the collector fails rather than publishing a table it cannot reconcile. Collect 
 - Fixed I/O blend gains **20:1 (the new default)** and **30:1**. The previous default of 20
   was not a selectable blend, so the stored value was rejected on load; the settings key
   moved to `mmc.settings.v7` to discard those payloads.
-- `defaultMinFor("composite")` is now **85**, matching the shipped default, so "reset" no
+- `defaultMinFor("composite")` is now **86**, matching the shipped default, so "reset" no
   longer widened the list it was restoring.
 - Overview table: sorts by score descending by default, the header shows the active score
   name, `#benchmarks` now counts distinct benchmarks with a result (previously it showed

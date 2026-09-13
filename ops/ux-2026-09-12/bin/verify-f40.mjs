@@ -50,7 +50,7 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
     await tab(p, 'Simple');
   }
   const simpleAfter = { rows: await simpleRows(p), value: await p.getByLabel(/Minimum Capability Score/).first().inputValue() };
-  expect(`${kind}/Simple still 85 with the same rows`, simpleAfter.value === '85' && simpleAfter.rows === simpleFresh.rows, { simpleFresh, simpleAfter });
+  expect(`${kind}/Simple still 86 (>85) with the same rows`, simpleAfter.value === '86' && simpleAfter.rows === simpleFresh.rows, { simpleFresh, simpleAfter });
   await c.close();
 
   // Guided with a 3-month intelligence floor → results → Open in Advanced → chip → × restores.
@@ -76,7 +76,7 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
   expect(`${kind}/removing the chip restores the full catalog`, advCleared.n === advFresh.n && (await chips(p)).length === 0, { advCleared, advFresh });
   await tab(p, 'Simple');
   const simpleAfterGuided = { rows: await simpleRows(p), value: await p.getByLabel(/Minimum Capability Score/).first().inputValue() };
-  expect(`${kind}/Simple untouched by Guided`, simpleAfterGuided.value === '85' && simpleAfterGuided.rows === simpleFresh.rows, { simpleFresh, simpleAfterGuided });
+  expect(`${kind}/Simple untouched by Guided`, simpleAfterGuided.value === '86' && simpleAfterGuided.rows === simpleFresh.rows, { simpleFresh, simpleAfterGuided });
   await c.close();
 }
 await b.close();

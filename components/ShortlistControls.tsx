@@ -11,7 +11,7 @@ import type { ScoreKey } from "../lib/types";
  *  ausgeben will, und dann bekommt er die liste der empfehlenswertesten Modelle."
  *
  *  R5.5 asks for the distribution to appear when a slider is moved. It is shown
- *  permanently instead: the score limit is already active at 85 on first paint, so a
+ *  permanently instead: the score limit is already active at 86 on first paint, so a
  *  histogram that only appeared on interaction would hide the very fact that the default
  *  is cutting the field — and the chart is the point ("viele Diagramme"). The cost
  *  histogram is binned on a log scale: adjusted task costs span three orders of magnitude,

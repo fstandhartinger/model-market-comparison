@@ -63,7 +63,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // not in Advanced, which must be able to show every priced model.
   const [measuredTasksOnly, setMeasuredTasksOnly] = useState(!!simple);
   const [org, setOrg] = useState("");
-  // F-40: the floor and the cap are split by mode. Simple's sliders own Simple's pair (85 until
+  // F-40: the floor and the cap are split by mode. Simple's sliders own Simple's pair (86 until
   // changed / no limit); Advanced's toolbar and the Guided wizard own the Advanced pair (no floor
   // / no limit until changed). Guided results render Simple's layout but read Advanced's pair, so
   // neither the wizard nor a nudged Simple slider can filter the other view invisibly.

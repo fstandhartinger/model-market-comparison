@@ -23,7 +23,7 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
   for (let i = 0; i < 4; i++) { const btn = p.getByRole('button', { name: /^(Continue|See results|Show results)/i }).first(); if (await btn.count()) { await btn.click(); await p.waitForTimeout(400); } }
   await p.getByRole('tab', { name: 'Simple' }).click(); await p.waitForTimeout(800);
   const s1 = await rd();
-  expect(`${kind}/F-30 Simple keeps 85 after Guided`, s1.ranges[0] === '85' && s1.pass === s0.pass, s1);
+  expect(`${kind}/F-30 Simple keeps 86 (>85) after Guided`, s1.ranges[0] === '86' && s1.pass === s0.pass, s1);
   // F-33
   await go('/benchmaxxing');
   const bmx = await p.evaluate(() => {

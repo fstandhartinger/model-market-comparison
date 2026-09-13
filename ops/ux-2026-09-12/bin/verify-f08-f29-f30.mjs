@@ -56,7 +56,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     const stateResult = { before, after, labelFills: labels, overflow: await noOverflow(home) };
     report.viewports[`${kind}_${theme}_state`] = stateResult;
     check(`${kind}_${theme} F-29 dark/light map labels`, labels.length > 0 && labels.every((fill) => fill !== 'rgba(0, 0, 0, 0)'), labels);
-    check(`${kind}_${theme} F-30 Guided retains Simple floor`, before === '85' && after === '85', stateResult);
+    check(`${kind}_${theme} F-30 Guided retains Simple floor`, before === '86' && after === '86', stateResult);
     check(`${kind}_${theme} home state no overflow`, stateResult.overflow, stateResult);
     await home.screenshot({ path: `${OUT}/${kind}_${theme}-state.png` });
   } catch (error) { report.failures.push({ name: `${kind}_${theme} state exception`, detail: String(error).split('\n')[0] }); }

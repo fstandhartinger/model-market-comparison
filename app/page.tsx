@@ -26,7 +26,7 @@ export default async function Home() {
       {/* F-01 (Fable 5.1 design pass, 2026-09-13): compact hero — the recommendation list
           must be visible on the first screen. R3.1 claim decided in DESIGN-DIRECTIVES.md. */}
       <section className="bh-hero mb-4">
-        <h1 className="bh-display">The most complete collection of AI model benchmarks.<br /><span>And the only place that shows what each model really costs you.</span></h1>
+        <h1 className="bh-display">A complete, source-linked collection of AI model benchmarks.<br /><span>Realistic modeled cost per task, grounded in provider prices, caching, and token efficiency.</span></h1>
         <p className="bh-hero-line mt-2 text-sm text-gray-400">
           <span className="tabular">{results.toLocaleString()}</span> results · <span className="tabular">{benchmarks}</span> benchmarks · <span className="tabular">{ds.counts.models.toLocaleString()}</span> models · updated {updated}
         </p>

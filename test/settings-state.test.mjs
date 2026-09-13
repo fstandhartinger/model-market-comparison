@@ -17,8 +17,8 @@ const { SETTINGS_DEFAULTS, sanitizeSettings, advancedFiltersActive, anyFiltersAc
 
 const load = (payload) => ({ ...SETTINGS_DEFAULTS, ...sanitizeSettings(payload) });
 
-test("F-40: defaults give Simple 85 / no cap and Advanced no floor / no cap", () => {
-  assert.equal(SETTINGS_DEFAULTS.minScore, 85);
+test("R5.3/F-40: defaults give Simple 86 (>85) / no cap and Advanced no floor / no cap", () => {
+  assert.equal(SETTINGS_DEFAULTS.minScore, 86);
   assert.equal(SETTINGS_DEFAULTS.minScoreTouched, false);
   assert.equal(SETTINGS_DEFAULTS.simpleMaxCost, null);
   assert.equal(SETTINGS_DEFAULTS.advancedMinScore, 0);
@@ -28,7 +28,7 @@ test("F-40: defaults give Simple 85 / no cap and Advanced no floor / no cap", ()
 });
 
 test("F-40: touching Simple's pair does not mark Advanced as filtered", () => {
-  const s = { ...SETTINGS_DEFAULTS, minScore: 85, minScoreTouched: true, simpleMaxCost: 2 };
+  const s = { ...SETTINGS_DEFAULTS, minScore: 86, minScoreTouched: true, simpleMaxCost: 2 };
   assert.equal(advancedFiltersActive(s), false);
   assert.equal(anyFiltersActive(s), true);
 });
@@ -41,8 +41,8 @@ test("F-40: the Advanced pair and Guided floors count as Advanced filters", () =
 });
 
 test("F-40 migration: a pre-split payload keeps its floor and cap on Simple only", () => {
-  const s = load({ score: "composite", minScore: 85, minScoreTouched: true, maxCost: 3.5 });
-  assert.equal(s.minScore, 85);
+  const s = load({ score: "composite", minScore: 86, minScoreTouched: true, maxCost: 3.5 });
+  assert.equal(s.minScore, 86);
   assert.equal(s.minScoreTouched, true);
   assert.equal(s.simpleMaxCost, 3.5);
   assert.equal(s.maxCost, null);
@@ -51,7 +51,7 @@ test("F-40 migration: a pre-split payload keeps its floor and cap on Simple only
 });
 
 test("F-40 migration: a pre-split payload with no cap leaves both caps empty", () => {
-  const s = load({ minScore: 85, maxCost: null });
+  const s = load({ minScore: 86, maxCost: null });
   assert.equal(s.simpleMaxCost, null);
   assert.equal(s.maxCost, null);
 });
@@ -67,6 +67,6 @@ test("sanitize rejects implausible limits", () => {
   assert.equal(s.advancedMinScore, 0);
   assert.equal(s.maxCost, null);
   assert.equal(s.simpleMaxCost, null);
-  assert.equal(s.minScore, 85);
+  assert.equal(s.minScore, 86);
   assert.equal(s.minScoreTouched, false);
 });

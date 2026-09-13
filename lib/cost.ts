@@ -256,11 +256,11 @@ export function scoreOf(m: ClientModel, key: ScoreKey): number | null {
 
 /** Sensible default minimum for a score: DesignArena is Elo (~1000), AA indices ~35,
  *  Composite is a 0–100 blend (no floor by default). */
-/** The min-score a score selection resets to. For Composite this is 85 (R5.3) — the same
+/** The min-score a score selection resets to. For Composite this is 86 (R5.3) — the same
  *  value `SettingsContext` starts from, so a fresh page is not reported as "modified" and
  *  Reset does not silently widen the shortlist it was supposed to restore. */
 export function defaultMinFor(score: ScoreKey): number {
-  if (score === "composite") return 85;
+  if (score === "composite") return 86;
   return score.startsWith("designarena") ? 1000 : 35;
 }
 

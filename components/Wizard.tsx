@@ -79,7 +79,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   const [codingMonths, setCodingMonths] = useState<number | null>(null);
 
   // The questionnaire never asks about the Composite, so it must not inherit Simple mode's
-  // ≥ 85 default — that would quietly filter the result by a criterion the user was not
+  // Simple's default floor — that would quietly filter the result by a criterion the user was not
   // asked about. Capability is asked on step 3 and applied there instead.
   // F-40: the wizard writes only the Advanced pair (its results and "Open in Advanced" read it)
   // and never Simple's floor or cap — pass 4 found Simple opening at 70 after a Guided visit.
