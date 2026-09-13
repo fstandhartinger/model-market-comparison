@@ -58,6 +58,7 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-negative { color: var(--negative); background: color-mix(in srgb, var(--negative) 8%, transparent); }
 .bh-alert { color: rgb(var(--warn)); background: rgb(var(--warn) / .08); }
 .bh-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid rgb(var(--line)); border-radius: 10px; }
+.bh-bounded-table { height: 1100px; max-height: 1100px; contain: layout paint; }
 .bh-table { width: 100%; border-collapse: collapse; font-size: 14px; }
 .bh-table th, .bh-table td { padding: 14px 16px; border-bottom: 1px solid rgb(var(--line)); }
 .bh-table thead th { font-size: 12px; color: var(--muted); text-align: left; background: rgb(var(--ink)); }
@@ -87,6 +88,10 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 summary { cursor: pointer; padding-top: 10px; padding-bottom: 10px; }
 summary::marker { color: rgb(var(--accent)); }
 details[open] > summary { margin-bottom: 8px; }
+/* Tailwind's display utilities can outrank the browser rule that hides closed
+   <details> contents. Keep folded secondary panels out of document height. */
+details:not([open]) > .bh-collapsible-grid { display: none !important; }
+details[open] > .bh-collapsible-grid { display: grid; }
 .bh-table details { max-width: 380px; }
 .bh-table code { overflow-wrap: anywhere; }
 .skip-link { position: fixed; top: 8px; left: 8px; z-index: 100; transform: translateY(-180%); border-radius: 6px; padding: 12px; background: var(--surface); color: var(--text); border: 2px solid rgb(var(--accent)); }

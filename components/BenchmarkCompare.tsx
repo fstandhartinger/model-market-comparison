@@ -21,7 +21,7 @@ export function MissingCell({ view, axis, modelId }: { view: BenchmarkView; axis
 
 export function BenchmarkCompare({ initialView, initialPicks, standalone = false }: { initialView: BenchmarkView; initialPicks: string[]; standalone?: boolean }) {
   const [view, setView] = useState(initialView), [picks, setPicks] = useState(initialPicks);
-  const [search, setSearch] = useState(''), [axisSearch, setAxisSearch] = useState('');
+  const [addSearch, setAddSearch] = useState(''), [axisSearch, setAxisSearch] = useState('');
   const defaults = initialView.axes.filter((a) => ['aa_coding_index', 'aa_intelligence_index', 'aa-gpqa-diamond', 'aa-hle', 'aa-scicode', 'aa-lcr'].includes(a.family)).map((a) => a.id).slice(0, 6);
   const [axesIds, setAxes] = useState(defaults), [showEmpty, setShowEmpty] = useState(false), [category, setCategory] = useState('');
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
@@ -42,7 +42,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     }).catch((e) => { if (e.name !== 'AbortError') { setError(e.message); setBusy(false); } });
     return () => controller.abort();
   }, [picks, retry, loadedKey]);
-  const options = useMemo(() => view.models.filter((m) => `${m.name} ${m.org}`.toLowerCase().includes(search.toLowerCase())).sort((a, b) => a.name.localeCompare(b.name)), [view.models, search]);
+  const modelOptions = useMemo(() => [...view.models].sort((a, b) => a.name.localeCompare(b.name) || a.org.localeCompare(b.org)), [view.models]);
   const selectedAxes = axesIds.map((id) => view.axes.find((a) => a.id === id)).filter((a): a is ViewAxis => !!a);
   const displayPicks = loadedKey !== picks.join('|') ? loadedKey.split('|').filter(Boolean) : picks;
   const visibleAxes = view.axes.filter((a) => (!category || a.category === category) && (!axisSearch || `${a.name} ${a.version} ${a.cohort}`.toLowerCase().includes(axisSearch.toLowerCase())) && (showEmpty || a.scores.some((r) => r.modelId && displayPicks.includes(r.modelId))));
@@ -59,40 +59,58 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     return { name, axes, models };
   }).filter((snapshot) => snapshot.axes.length && snapshot.models.some((model) => model.measured));
 
+  const addModel = () => {
+    const needle = addSearch.trim().toLowerCase();
+    if (!needle || picks.length >= 4) return;
+    const chosen = modelOptions.find((m) => m.id.toLowerCase() === needle || `${m.name} · ${m.org}`.toLowerCase() === needle || m.name.toLowerCase() === needle);
+    if (!chosen || picks.includes(chosen.id)) return;
+    setPicks((old) => [...old, chosen.id].slice(0, 4));
+    setAddSearch('');
+  };
+
   return <div className="space-y-6">
-    <div className="grid items-start gap-6 xl:grid-cols-[320px_minmax(0,1fr)]"><div className="min-w-0 space-y-4">
-    <section className="bh-panel p-5" aria-label="Model selection">
-      <div className="flex flex-wrap items-center justify-between gap-3"><div><p className="bh-eyebrow">BUILD YOUR COMPARISON</p><h2 className="text-lg font-semibold">Choose up to four models</h2></div><span className="bh-badge">{picks.length} / 4 selected</span></div>
-      <p className="bh-muted mt-1 text-sm">Exact reasoning configurations. All catalog models are available; price and provider filters do not hide benchmark evidence.</p>
-      <label className="mt-4 block text-sm">Find models<input className="bh-input mt-1 block w-full" type="search" value={search} onChange={(e) => setSearch(e.target.value)} placeholder="Search by model or creator" /></label>
-      <div className="mt-4 grid gap-3 sm:grid-cols-2 xl:grid-cols-1">{[0, 1, 2, 3].map((slot) => {
-        const chosen = view.models.find((m) => m.id === picks[slot]);
-        const rows = chosen && !options.some((m) => m.id === chosen.id) ? [chosen, ...options] : options;
-        return <div key={slot} className="min-w-0 rounded-lg border border-line p-3" style={{ borderTop: `3px solid ${SERIES_COLORS[slot]}` }}><label className="block text-sm font-medium">Model {String.fromCharCode(65 + slot)}<select className="bh-input mt-2 w-full" disabled={slot > picks.length} value={picks[slot] || ''} onChange={(e) => setPicks((old) => { const next = [...old]; next[slot] = e.target.value; return next.filter(Boolean); })}><option value="">Choose a model</option>{rows.filter((m) => !picks.includes(m.id) || picks[slot] === m.id).map((m) => <option key={m.id} value={m.id}>{m.name}</option>)}</select></label>{chosen && <div className="mt-3 flex flex-wrap items-center justify-between gap-2 text-xs"><Link className="text-accent underline" href={`/models/${encodeURIComponent(chosen.id)}#benchmark-sheet`}>Benchmark sheet ↗</Link><button className="bh-button" onClick={() => setPicks((old) => old.filter((id) => id !== chosen.id))} aria-label={`Remove ${chosen.name}`}>Remove</button></div>}</div>;
-      })}</div>
-      {options.length === 0 && <p className="bh-muted mt-2 text-sm" role="status">No matching models. Clear the search to browse the catalog.</p>}
+    <section className="bh-panel p-4 sm:p-5" aria-label="Model selection">
+      <div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">Compare models</h2><span className="bh-badge">{picks.length} / 4 selected</span></div>
+      <p className="bh-muted mt-1 text-sm">Choose exact reasoning configurations; benchmark evidence stays visible regardless of price filters.</p>
+      <div className="mt-3 flex flex-wrap items-center gap-2" role="list" aria-label="Selected models">
+        {picks.map((id, slot) => {
+          const chosen = view.models.find((m) => m.id === id);
+          if (!chosen) return null;
+          return <div key={id} role="listitem" className="flex min-w-0 max-w-full items-center gap-1.5 rounded-lg border border-line px-2 py-1.5 text-sm" style={{ borderLeft: `3px solid ${SERIES_COLORS[slot]}` }}>
+            <span className="bh-muted shrink-0 text-[10px] font-bold">{String.fromCharCode(65 + slot)}</span><span className="h-2 w-2 shrink-0 rounded-full" style={{ background: SERIES_COLORS[slot] }} />
+            <Link className="min-w-0 max-w-[12rem] truncate font-medium text-accent hover:underline" href={`/models/${encodeURIComponent(chosen.id)}#benchmark-sheet`} title={`${chosen.name} — open benchmark sheet`}>{chosen.name}</Link>
+            <button type="button" className="ml-1 min-h-0 rounded px-1 text-lg leading-none text-gray-400 hover:text-accent" onClick={() => setPicks((old) => old.filter((pick) => pick !== chosen.id))} aria-label={`Remove ${chosen.name}`}>×</button>
+          </div>;
+        })}
+        <form className="flex min-w-[min(100%,16rem)] flex-1 items-center gap-2 sm:max-w-sm" onSubmit={(event) => { event.preventDefault(); addModel(); }}>
+          <label className="sr-only" htmlFor="compare-add-model">Add a model</label>
+          <input id="compare-add-model" list="compare-model-options" role="combobox" aria-expanded="false" aria-controls="compare-model-options" className="bh-input min-w-0 flex-1" value={addSearch} onChange={(e) => setAddSearch(e.target.value)} placeholder={picks.length >= 4 ? 'Four models selected' : 'Add a model…'} disabled={picks.length >= 4} />
+          <datalist id="compare-model-options">{modelOptions.filter((m) => !picks.includes(m.id)).map((m) => <option key={m.id} value={`${m.name} · ${m.org}`} />)}</datalist>
+          <button type="submit" className="bh-button shrink-0 px-3" disabled={picks.length >= 4 || !addSearch.trim()}>Add</button>
+        </form>
+      </div>
       <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} models selected. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
       {error && <button className="bh-button" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
     </section>
-    <details className="bh-panel p-5"><summary className="font-medium">Radar axes · {axesIds.length} / 8 selected</summary><p className="bh-muted mt-2 text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><div className="mt-4 grid max-h-80 gap-2 overflow-y-auto">{view.axes.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">Version {a.version} · {a.cohort} · {a.stats.n} measured peers</span></span></label>)}</div></details>
-    </div><div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} /></div></div>
+    <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} /></div>
+    <details className="bh-panel p-4 sm:p-5"><summary className="font-medium">Radar axes · {axesIds.length} / 8 selected</summary><p className="bh-muted mt-2 text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{view.axes.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">Version {a.version} · {a.cohort} · {a.stats.n} measured peers</span></span></label>)}</div></details>
     {displayPicks.length > 0 && <section className="bh-panel p-5" aria-label="Benchmark category snapshots">
       <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">RELEASE-STYLE SNAPSHOT</p><h2 className="text-xl font-semibold">Where each model is strongest</h2></div><span className="bh-badge">Measured results only</span></div>
       <p className="bh-muted mt-2 max-w-3xl text-sm">Each card averages the selected model&apos;s independently measured benchmark positions within one topic. The 0–100 scale is relative to the collected peer range for each exact benchmark; it is not a new score and missing results are excluded.</p>
-      {!categorySnapshots.length ? <div className="bh-empty mt-4">No measured benchmark rows match the current selection.</div> : <div className="mt-4 grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">{categorySnapshots.map((snapshot) => <article key={snapshot.name} className="rounded-xl border border-line p-4">
+      {!categorySnapshots.length ? <div className="bh-empty mt-4">No measured benchmark rows match the current selection.</div> : <div className="mt-4 max-h-[1400px] overflow-y-auto pr-1"><div className="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">{categorySnapshots.map((snapshot) => <article key={snapshot.name} className="rounded-xl border border-line p-4">
         <div className="flex items-baseline justify-between gap-3"><h3 className="font-semibold">{snapshot.name}</h3><span className="bh-muted text-xs">{snapshot.axes.length} benchmark{snapshot.axes.length === 1 ? '' : 's'}</span></div>
         <ul className="mt-4 space-y-3">{snapshot.models.map((model) => <li key={model.id}>
           <div className="flex items-baseline justify-between gap-3 text-sm"><span className="min-w-0 truncate">{model.name}</span><span className="tabular font-semibold">{model.average == null ? 'No measured result' : `${model.average.toFixed(0)} / 100`}</span></div>
           <div className="mt-1 h-2 overflow-hidden rounded-full bg-line" role="progressbar" aria-label={`${model.name} relative ${snapshot.name} position`} aria-valuemin={0} aria-valuemax={100} aria-valuenow={model.average == null ? undefined : Math.round(model.average)}><div className="h-full rounded-full bg-accent" style={{ width: model.average == null ? '0%' : `${model.average}%` }} /></div>
           <p className="bh-muted mt-1 text-xs">{model.measured ? `${model.measured} of ${snapshot.axes.length} benchmark${snapshot.axes.length === 1 ? '' : 's'} measured` : 'No measured result in this topic'}</p>
         </li>)}</ul>
-      </article>)}</div>}
+      </article>)}</div></div>}
     </section>}
     <section className="bh-panel p-5" id="full-comparison" aria-busy={busy} aria-label="Full benchmark comparison">
       <p className="bh-eyebrow">EVERY COLLECTED BENCHMARK</p><h2 className="text-xl font-semibold">{standalone ? 'The numbers behind the profile' : 'Full benchmark comparison'}</h2>
       <p className="bh-muted mt-2 text-sm">Native units; versions and evaluation groups remain separate. Measured results take priority over vendor claims, then the latest observation. A tinted cell marks the best measured relative position in that row; small differences are not evidence of significance.</p>
       <div className="my-4 flex flex-wrap items-end gap-4"><label className="text-sm">Find a benchmark<input type="search" className="bh-input mt-1 block" value={axisSearch} onChange={(e) => setAxisSearch(e.target.value)} placeholder="Name, version, harness…" /></label><label className="text-sm">Category<select className="bh-input mt-1 block" value={category} onChange={(e) => setCategory(e.target.value)}><option value="">All categories</option>{categories.map((c) => <option key={c}>{c}</option>)}</select></label><label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={showEmpty} onChange={(e) => setShowEmpty(e.target.checked)} />Include rows without selected-model results</label></div>
-      {!displayPicks.length ? <div className="bh-empty">Select a model to explore all benchmark results.</div> : !visibleAxes.length ? <div className="bh-empty">No benchmark rows match. Clear filters or include missing results.</div> : <div className="bh-table-wrap overflow-x-auto" tabIndex={0} role="region" aria-label="Full comparison table"><table className="bh-table w-full text-sm"><caption className="sr-only">All matching benchmark versions and model scores with evidence</caption><thead><tr><th scope="col">Benchmark / version</th>{displayPicks.map((id, i) => <th key={id} scope="col">{String.fromCharCode(65 + i)} · {view.models.find((m) => m.id === id)?.name}</th>)}</tr></thead>{categories.map((c) => {
+      {!displayPicks.length ? <div className="bh-empty">Select a model to explore all benchmark results.</div> : !visibleAxes.length ? <div className="bh-empty">No benchmark rows match. Clear filters or include missing results.</div> : <div className="bh-table-wrap bh-bounded-table overflow-auto" tabIndex={0} role="region" aria-label="Full comparison table"><table className="bh-table w-full text-sm"><caption className="sr-only">All matching benchmark versions and model scores with evidence</caption><thead><tr><th scope="col">Benchmark / version</th>{displayPicks.map((id, i) => <th key={id} scope="col">{String.fromCharCode(65 + i)} · {view.models.find((m) => m.id === id)?.name}</th>)}</tr></thead>{categories.map((c) => {
         const rows = visibleAxes.filter((a) => a.category === c); if (!rows.length) return null;
         return <tbody key={c}><tr><th colSpan={displayPicks.length + 1} className="text-left bh-eyebrow bg-accent/5">{c}</th></tr>{rows.map((a) => {
           const cells = displayPicks.map((id) => {
@@ -123,6 +141,6 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
         })}</tbody>;
       })}</table></div>}
     </section>
-    {!busy && <div className="grid items-start gap-5 xl:grid-cols-2">{displayPicks.map((id) => <section key={id} className="bh-panel p-5"><h2 className="mb-4 font-semibold">{view.models.find((m) => m.id === id)?.name}</h2><AnomalySummary view={view} modelId={id} /></section>)}</div>}
+    {!busy && <details className="bh-panel p-4 sm:p-5"><summary className="font-semibold">Unusual results by model</summary><div className="bh-collapsible-grid grid items-start gap-5 pt-4 xl:grid-cols-2">{displayPicks.map((id) => <section key={id} className="bh-panel p-5"><h2 className="mb-4 font-semibold">{view.models.find((m) => m.id === id)?.name}</h2><AnomalySummary view={view} modelId={id} /></section>)}</div></details>}
   </div>;
 }
