@@ -282,6 +282,21 @@ source; every estimate has assumptions." (it is on `/about`).
 
 ---
 
+## Independent verification 2026-09-13 (claude-opus, iteration 14)
+
+Live revision `0e7380c`, https://benchmarkheaven.com, 1440×1000 and 390×844, light and dark
+(`colorScheme`), script `ops/ux-2026-09-12/bin/verify-directives-indep.mjs`, evidence
+`/opt/benchmarkheaven/state/ux-evidence/iter14-indep-review/verification.json` + 8 screenshots.
+
+| Directive | Implementer | Result |
+|---|---|---|
+| F-02 | Codex Luna | **verified** — nav 59 px at both widths, Filters button in the nav, no second filter bar, no "Radar" in the top nav |
+| F-03 | Codex Luna | **verified** — 2 sliders, compact value map (SVG with points), summary "6 models pass", third row ends at 1,099 px (≤ 1,400) |
+| F-05 | Codex Luna | **verified** — score and cost bars 4 px under every row, score accent at 55 % in both themes, cost neutral grey, one colour for all score bars |
+| F-12 | Codex Luna | **failed as shipped** — identity note gone, but footer 185 px at 1440 (target ≤ 120). Fixed in iteration 14 (padding, claim + one sources sentence on one line); needs a non-Claude re-check |
+| F-01 | Fable | **desktop acceptance fails** — 0 model rows on the 1440×1000 first screen (first row at 958 px). Mobile passes (first row at 692 px). Cause: F-03's 320 px value map sits between the sliders and the list. The two directives conflict at 1000 px height; **Fable pass 2 must choose** (e.g. map beside the sliders on desktop, or a shorter map). Not re-interpreted here |
+| F-06 | Claude Opus | Advanced 16 rows (still the recorded "≥ 50 vs Featured on" conflict) — not verifiable by a Claude engine anyway |
+
 ## Done log
 
 | Directive | Commit | Evidence | Verified by |

@@ -42,15 +42,14 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <Nav />
           <GlobalFilters providers={providers} families={families} />
           <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>
-          <footer className="bh-footer mx-auto max-w-[1400px] px-4 py-10 text-xs text-gray-500">
-            <div className="mb-5 flex flex-wrap items-center justify-between gap-4">
-              <span className="bh-wordmark text-lg">Benchmark Heaven</span>
-              <div className="flex flex-wrap gap-5"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a></div>
+          {/* F-12: wordmark, the R3.1 line, one data-sources sentence, three links. */}
+          <footer className="bh-footer mx-auto max-w-[1400px] px-4 py-5 text-xs text-gray-500">
+            <div className="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
+              <span className="bh-wordmark text-base">Benchmark Heaven</span>
+              <div className="flex flex-wrap gap-4"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a></div>
             </div>
-            <p>The most complete collection of AI model benchmarks, and the only place that shows what each model really costs you.</p>
-            <p className="mt-2">Data from OpenRouter, Artificial Analysis, Intelligence.ai / DesignArena, benchmark maintainers and provider catalogs.
-              Raw token prices are USD per 1M tokens; adjusted task costs are estimates with visible inputs.
-              Source dates vary. Check the linked source before choosing a provider.</p>
+            <p>The most complete collection of AI model benchmarks, and the only place that shows what each model really costs you.
+              Data from OpenRouter, Artificial Analysis, Epoch AI, DesignArena, benchmark maintainers and provider catalogs, each with its source date.</p>
           </footer>
         </SettingsProvider>
       </body>
