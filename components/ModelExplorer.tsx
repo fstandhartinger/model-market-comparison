@@ -345,9 +345,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             columns from eating the table-fixed width budget. */}
         <table aria-label="Model ranking" className="dtable w-full table-fixed text-sm">
           <colgroup>
-            <col className="w-[46%] md:w-[30%]" />
+            {/* F-46 (Fable pass 6): the Adjusted Cost header ("ADJUSTED / COST ▼" + (i)) needs
+                86 px of content room; at 27 % of a 356 px phone table the (i) overflowed the
+                card by 4 px. Model gives up 4 %, Cost takes it. */}
+            <col className="w-[42%] md:w-[30%]" />
             <col className="w-[27%] md:w-[13%]" />
-            <col className="w-[27%] md:w-[12%]" />
+            <col className="w-[31%] md:w-[12%]" />
             <col className="w-0 md:w-[17%]" />
             <col className="w-0 md:w-[14%]" />
             <col className="w-0 md:w-[14%]" />
