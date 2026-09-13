@@ -125,8 +125,8 @@ credited below, the rest is marked open.
 | F-30 | Guided must not reset Simple's 85 floor | verified | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Fable implemented the reset fix; Codex independently verified Guided → Simple retains 85 and the result count at desktop/mobile. |
 | F-31 | Advanced rows: coverage pips instead of `n/7 inputs`, `est.` into the header | implemented | `ux-evidence/iter24-f31-f32/verification.json` | Codex added seven accessible 4px coverage pips, the modeled-cost header sublabel, and removed `est.` from overview/model cost cells while retaining `assumed task`. Needs non-Codex verification. |
 | F-32 | One model, one benchmark count (`# benchmarks` vs Composite inputs contradiction, Fable 5 (high)) | implemented | `ux-evidence/iter24-f31-f32/verification.json`, `test/cost.test.mjs` | Codex made exact-vs-attached Composite provenance explicit: attached family/product values contribute to the score but not exact coverage; benchmark count includes exact headline observations and is covered by an invariant. Needs non-Codex verification. |
-| F-33 | Benchmaxxing: signal card self-height, phone sector labels in HTML | implemented | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Kimi delegation produced no diff; Codex moved topic labels to 11px HTML overlays and added `self-start` to the signal card. Needs non-Codex verification. |
-| F-34 | Benchmarks page: one coverage line, bar per result | implemented | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Kimi delegation produced no diff; Codex replaced stat boxes with one coverage sentence, made unmatched controls conditional, added per-result bars and semibold first row. Needs non-Codex verification. |
+| F-33 | Benchmaxxing: signal card self-height, phone sector labels in HTML | implemented | `ux-evidence/iter24-f31-f32/fable-{canonical,legacy}-after/verification.json` | Kimi delegation produced no diff; Codex moved topic labels to 11px HTML overlays and added `self-start` to the signal card. Independent live receipt: signal card 326px desktop, Writing/Agentic/Coding labels 16px mobile, no overflow on either host. Needs non-Codex verification. |
+| F-34 | Benchmarks page: one coverage line, bar per result | implemented | `ux-evidence/iter24-f31-f32/fable-{canonical,legacy}-after/verification.json` | Kimi delegation produced no diff; Codex replaced stat boxes with one coverage sentence, made unmatched controls conditional, added per-result bars and semibold first row, then tightened row padding to meet the page-height cap. Independent live receipt: 25 bars and 2,648px desktop height on both hosts. Needs non-Codex verification. |
 | F-35 | Compare: release-post table with per-row provenance expand, ≤ 3,500 px | open | `ux-evidence/fable-20260913-pass4/desktop_light-compare-full.png` (6,743 px) | Fable pass 4 directive `[judgment]`; this is the R8.1 surface. |
 | F-36 | Model page: no empty "Protocol-compatible" paragraph; Copilot card labelled | open | — | Fable pass 4 `[mechanical]` |
 | F-37 | Subscriptions list: neutral badges, uncollected plans as a footnote | open | `ux-evidence/fable-20260913-pass4/desktop_light-subscriptions-open.png` | Fable pass 4 `[mechanical]` |
@@ -913,5 +913,8 @@ Notes for whoever picks this up:
   overview and model cost cells. F-33/F-34 Kimi worktrees were verified no-op after the
   delegation wrapper rejected their external-path reads; Codex then implemented the signal
   card/HTML radar labels and the benchmark coverage sentence/result bars directly. Local
-  gates: build-dataset, npm test 267/267, tsc, next build and diff-check all pass. Commit and
-  deployment evidence are pending the final live matrix for this iteration.
+  gates: build-dataset, npm test 267/267, tsc, next build and diff-check all pass. Commits
+  `e57fa3a` and `efa17f9` are pushed; Sandy deployment `onq21smofxh6xdc3dhnjq4r7` finished
+  successfully at `efa17f9`. Final independent live receipts pass F-29/F-30/F-33/F-34 on
+  canonical and legacy hosts at desktop/mobile dark mode; F-31/F-32 remain implemented until
+  a non-Codex engine verifies them.
