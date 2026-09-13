@@ -110,12 +110,10 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           <span className="inline-flex items-center">
             <Toggle label="I'm buying for a company" on={s.isCompany} set={s.setIsCompany} />
             <InfoTip title="Buying for a company" label="the company setting">
-              Consumer subscriptions such as ChatGPT Plus/Pro or Claude Pro/Max are sold to
-              individuals, and a company usually needs a business plan or API access instead.
-              Today this site prices API and platform routes only, so the setting records your
-              answer and the guided questionnaire uses it; it will exclude consumer plans as soon
-              as subscription pricing is part of the cost view. We would rather say that than
-              imply a filter that is not doing anything yet.
+              Some consumer subscriptions are for personal use only: Anthropic&apos;s terms for
+              Claude Pro/Max say &ldquo;Non-commercial use only&rdquo; and Google AI plans are open to
+              personal accounts only. With this on, the subscription list under the ranking hides
+              those plans and shows business seats instead. API prices are the same for everyone.
             </InfoTip>
           </span>
         </Section>

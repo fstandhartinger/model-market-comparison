@@ -13,6 +13,7 @@ import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { ShortlistControls } from "./ShortlistControls";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
+import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
@@ -390,6 +391,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           ? <>Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</>
           : <>Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>
+      <SubscriptionsPanel perTask={s.priceMode === "adjusted"}
+        rows={matching.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, score: x.sc, cost: x.price.value }))} />
     </div>
   );
 }

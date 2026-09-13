@@ -4,6 +4,19 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-13 — Subscriptions beside the per-task cost (R6.3)
+
+**New data file: `data/raw/subscriptions.json`.** Flat-rate plans (Claude, Google AI,
+ChatGPT, SuperGrok, GitHub Copilot, Cursor, plus Claude Team/Enterprise and Copilot
+Business/Enterprise) with monthly list price, the vendor's published company-use verdict
+(`allowed` / `not_allowed` / `unclear`) with a verbatim quote and source URL, and a plain
+statement of what quota is (not) published. Prices were re-read from the vendors' own pages
+on 2026-09-13; OpenAI and xAI refuse automated reads, so their prices are `null` and marked
+not collected. `lib/subscriptions.mjs` never converts a monthly price into a per-task price —
+no vendor publishes an included task count — and instead reports the break-even task count
+against the vendor's best-scoring model in view. "I'm buying for a company" now hides the
+consumer plans whose terms exclude business use. No existing dataset field or API changed.
+
 ## 2026-09-13 — Advanced comparison filter (H3)
 
 Advanced mode now includes a folded **Better than a model** filter. Choose a reference

@@ -1,0 +1,74 @@
+{
+  "schema_version": 1,
+  "retrieved_at": "2026-09-13",
+  "method": "Vendor pages only. Plain HTTPS fetch honouring robots.txt; client-rendered pages (one.google.com, cursor.com pricing) read in headless Chromium as an ordinary visitor. Pages that answer automated clients with HTTP 403 (openai.com, x.ai) were NOT worked around and are recorded as not collected. Research and verbatim quotes: ops/ux-2026-09-12/research/R6.2-subscriptions.md. Price re-check captures: /opt/benchmarkheaven/state/ux-evidence/iter14-r63/.",
+  "credit_usd": { "github_ai_credit": 0.01 },
+  "vendors": {
+    "anthropic": {
+      "name": "Anthropic",
+      "consumer_company_use": "not_allowed",
+      "quote": "Non-commercial use only. You agree that you will not use our Services for any commercial or business purposes …",
+      "quote_note": "EEA/Switzerland consumer terms, effective 2025-10-08 (the version served to our location).",
+      "terms_url": "https://www.anthropic.com/legal/consumer-terms",
+      "pricing_url": "https://www.anthropic.com/pricing"
+    },
+    "google": {
+      "name": "Google",
+      "consumer_company_use": "not_allowed",
+      "quote": "Only personal Google Accounts can sign up for Google AI plans. Workspace customers can sign up for a Gemini add-on to their existing subscription.",
+      "terms_url": "https://one.google.com/about/google-ai-plans/",
+      "pricing_url": "https://one.google.com/intl/en_us/about/google-ai-plans/"
+    },
+    "openai": {
+      "name": "OpenAI",
+      "consumer_company_use": "unclear",
+      "quote": null,
+      "quote_note": "openai.com answers automated requests with HTTP 403; terms and prices were not collected.",
+      "terms_url": "https://openai.com/policies/terms-of-use/",
+      "pricing_url": "https://openai.com/chatgpt/pricing/"
+    },
+    "xai": {
+      "name": "xAI",
+      "consumer_company_use": "unclear",
+      "quote": null,
+      "quote_note": "x.ai answers automated requests with HTTP 403; terms and prices were not collected.",
+      "terms_url": "https://x.ai/legal/terms-of-service",
+      "pricing_url": "https://x.ai/grok"
+    },
+    "github": {
+      "name": "GitHub",
+      "consumer_company_use": "unclear",
+      "quote": "GitHub Copilot Individual is designed for individual developers, freelancers, students, educators, and open source maintainers.",
+      "quote_note": "Organisations are steered to Copilot Business/Enterprise; no outright prohibition was found.",
+      "terms_url": "https://github.com/features/copilot/plans",
+      "pricing_url": "https://github.com/features/copilot/plans"
+    },
+    "cursor": {
+      "name": "Cursor",
+      "consumer_company_use": "allowed",
+      "quote": "If you are entering into these Terms on behalf of an entity, you represent that you have the legal authority to bind that entity.",
+      "terms_url": "https://cursor.com/terms-of-service",
+      "pricing_url": "https://cursor.com/pricing"
+    }
+  },
+  "plans": [
+    { "id": "anthropic-claude-pro", "vendor": "anthropic", "org": "Anthropic", "name": "Claude Pro", "audience": "individual", "usd_per_month": 20, "price_is_from": false, "billing_note": "$17/mo when billed annually", "flat_rate": true, "included": "Quota not published — only “at least 5× Free” per 5-hour window" },
+    { "id": "anthropic-claude-max", "vendor": "anthropic", "org": "Anthropic", "name": "Claude Max", "audience": "individual", "usd_per_month": 100, "price_is_from": true, "billing_note": null, "flat_rate": true, "included": "Quota not published — only “5× or 20× Pro”" },
+    { "id": "google-ai-plus", "vendor": "google", "org": "Google", "name": "Google AI Plus", "audience": "individual", "usd_per_month": 4.99, "price_is_from": false, "billing_note": null, "flat_rate": true, "included": "Quota not published" },
+    { "id": "google-ai-pro", "vendor": "google", "org": "Google", "name": "Google AI Pro", "audience": "individual", "usd_per_month": 19.99, "price_is_from": false, "billing_note": null, "flat_rate": true, "included": "Quota not published — relative multipliers only" },
+    { "id": "google-ai-ultra-5x", "vendor": "google", "org": "Google", "name": "Google AI Ultra 5x", "audience": "individual", "usd_per_month": 99.99, "price_is_from": false, "billing_note": null, "flat_rate": true, "included": "Quota not published — “5× Pro”" },
+    { "id": "google-ai-ultra-20x", "vendor": "google", "org": "Google", "name": "Google AI Ultra 20x", "audience": "individual", "usd_per_month": 199.99, "price_is_from": false, "billing_note": null, "flat_rate": true, "included": "Quota not published — “20× Pro”" },
+    { "id": "openai-chatgpt-plus-pro", "vendor": "openai", "org": "OpenAI", "name": "ChatGPT Plus / Pro", "audience": "individual", "usd_per_month": null, "price_is_from": false, "billing_note": null, "flat_rate": true, "included": "Price and quota not collected — the vendor site refuses automated reads" },
+    { "id": "xai-supergrok", "vendor": "xai", "org": "xAI", "name": "SuperGrok", "audience": "individual", "usd_per_month": null, "price_is_from": false, "billing_note": null, "flat_rate": true, "included": "Price and quota not collected — the vendor site refuses automated reads" },
+    { "id": "github-copilot-pro", "vendor": "github", "org": null, "name": "Copilot Pro", "audience": "individual", "usd_per_month": 10, "price_is_from": false, "billing_note": null, "flat_rate": false, "included": "$15 of AI credits a month (published), models from several vendors" },
+    { "id": "github-copilot-pro-plus", "vendor": "github", "org": null, "name": "Copilot Pro+", "audience": "individual", "usd_per_month": 39, "price_is_from": false, "billing_note": null, "flat_rate": false, "included": "$70 of AI credits a month (published), models from several vendors" },
+    { "id": "github-copilot-max", "vendor": "github", "org": null, "name": "Copilot Max", "audience": "individual", "usd_per_month": 100, "price_is_from": false, "billing_note": null, "flat_rate": false, "included": "$200 of AI credits a month (published), models from several vendors" },
+    { "id": "cursor-pro", "vendor": "cursor", "org": null, "name": "Cursor Pro", "audience": "individual", "usd_per_month": 20, "price_is_from": false, "billing_note": null, "flat_rate": false, "included": "Quota not published, models from several vendors" },
+    { "id": "cursor-pro-plus", "vendor": "cursor", "org": null, "name": "Cursor Pro+", "audience": "individual", "usd_per_month": 60, "price_is_from": false, "billing_note": null, "flat_rate": false, "included": "Quota not published — “3× Pro limits”" },
+    { "id": "cursor-ultra", "vendor": "cursor", "org": null, "name": "Cursor Ultra", "audience": "individual", "usd_per_month": 200, "price_is_from": false, "billing_note": null, "flat_rate": false, "included": "Quota not published — “20× Pro limits”" },
+    { "id": "anthropic-claude-team", "vendor": "anthropic", "org": "Anthropic", "name": "Claude Team (standard seat)", "audience": "business", "usd_per_month": 25, "price_is_from": false, "billing_note": "$20/seat/mo when billed annually", "flat_rate": true, "included": "Quota not published — “more usage than Pro”" },
+    { "id": "anthropic-claude-enterprise", "vendor": "anthropic", "org": "Anthropic", "name": "Claude Enterprise", "audience": "business", "usd_per_month": 20, "price_is_from": false, "billing_note": "per seat, plus usage at API rates", "flat_rate": false, "included": "Usage billed at API rates on top of the seat" },
+    { "id": "github-copilot-business", "vendor": "github", "org": null, "name": "Copilot Business", "audience": "business", "usd_per_month": 19, "price_is_from": false, "billing_note": "per seat", "flat_rate": false, "included": "1,900 AI credits per user a month (published)" },
+    { "id": "github-copilot-enterprise", "vendor": "github", "org": null, "name": "Copilot Enterprise", "audience": "business", "usd_per_month": 39, "price_is_from": false, "billing_note": "per seat", "flat_rate": false, "included": "3,900 AI credits per user a month (published)" }
+  ]
+}

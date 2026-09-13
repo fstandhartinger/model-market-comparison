@@ -130,9 +130,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
           onClick={() => { setCompany("no"); s.setIsCompany(false); }} />
       </div>
       <p className="mt-4 text-xs text-gray-500">
-        Today this site prices API and platform routes only, so the answer is recorded and will
-        filter subscription plans as soon as they are part of the cost view — we would rather say
-        that than imply a filter that is not there yet.
+        Hides Claude Pro/Max and Google AI plans, whose terms rule out business use.
       </p>
     </Page>
   );

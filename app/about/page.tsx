@@ -150,6 +150,24 @@ export default async function AboutPage() {
         marked as unknown, because we will not assert a data policy we have not read.
       </p>
 
+      <h3 id="subscriptions" className="mt-6 mb-2 font-semibold">Subscriptions and company use</h3>
+      <p className="text-sm text-gray-400">
+        Below the ranking, &ldquo;Would a subscription be cheaper?&rdquo; lists flat-rate plans with the
+        monthly list price from each vendor&apos;s own pricing page. We read the vendors&apos; terms
+        ourselves: Anthropic&apos;s consumer terms (Claude Pro/Max) say &ldquo;Non-commercial use
+        only&rdquo;, and Google says &ldquo;Only personal Google Accounts can sign up for Google AI
+        plans&rdquo;, so with &ldquo;I&apos;m buying for a company&rdquo; set those plans are hidden
+        and business seats are shown instead. Cursor&apos;s terms explicitly allow use on behalf of an
+        entity. GitHub steers organisations to Copilot Business without forbidding individual plans,
+        so that stays &ldquo;unclear&rdquo;. OpenAI and xAI refuse automated reads of their pages; we
+        do not work around that, so their prices and terms are marked as not collected. No vendor
+        publishes how many tasks a plan includes (GitHub publishes a credit allowance in dollars), so
+        we never turn a monthly price into a per-task price. Instead we show the break-even point —
+        the plan&apos;s price divided by the adjusted API cost per task of that vendor&apos;s
+        best-scoring model in your current view. The plan is only cheaper if its unpublished quota
+        reaches that number of tasks a month.
+      </p>
+
       <h3 id="identity" className="mt-6 mb-2 font-semibold">Matching models to prices</h3>
       <p className="text-sm text-gray-400">
         Coding Agent results are attached to an exact or explicitly audited model/reasoning identity;
