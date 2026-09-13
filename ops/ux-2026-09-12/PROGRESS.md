@@ -142,7 +142,7 @@ credited below, the rest is marked open.
 | F-47 | Route error boundary `app/error.tsx` (branded panel, nav intact, Try again) | verified | `ux-evidence/fable-20260913-pass6/`checks/verification-F46-F47.json, `ux-evidence/iter30-f46-f47-live-{canonical,legacy}.json` | One pass-6 capture of the model page (mobile dark) showed Next's unbranded "Application error"; three sequenced reproductions with console capture were clean (`checks/crash-repro.json`). The site had no error boundary; `3b92bf5` adds one. Codex Luna independently verified the branded unknown-model route live on both hosts. |
 | F-48 | Benchmarks page: one head card, first ranked row within the first phone screen | verified | `ux-evidence/fable-20260913-pass7/{desktop,mobile}_light-benchmarks.png`, `/opt/benchmarkheaven/state/ux-evidence/iter31-f48-live/verification-f48.json` plus `iter31-f48-live-{canonical,legacy}/verification.json` and screenshots | **Verified by Fable (pass 7):** one head panel, selectors on one row at 1440, text Primary-source link, one paragraph, first ranked row ≈ 560 px at 1440. `7c275c4` deployed by Coolify as `fujgbulyjhxh2iisrqyfc066`. One merged panel with compact Category / Benchmark and version selectors, text Primary source link, one description/coverage paragraph, and results count in the control row. Live first row: 561 px desktop / 837 px mobile on both hosts; F-27 regression 0/0. Needs an independent engine to promote to verified. |
 | F-49 | Cost precision: two decimals from $1, three significant figures below $1 (`priceNumber`) | verified | `/opt/benchmarkheaven/state/ux-evidence/iter34-f49-f52/live-{canonical,legacy}/verification.json` (`bin/verify-f49-f52.mjs`) | **Independent verification (claude-opus, iteration 34; implementer Fable):** 0 over-precise `$` values in Simple, 606 Advanced price cells and 25 model-page prices, 1440/390, both hosts at `79f1af7`+. |
-| F-50 | Benchmaxxing report: topic-groups disclosure moves into the right column at lg | in-progress | `/opt/benchmarkheaven/state/ux-evidence/iter34-f50-f51/live-{canonical,legacy}/verification.json` (`bin/verify-f50-f51.mjs`) | Structure shipped in `2d9c834` (claude-opus). This iteration makes the right column stretch with the radar grid row and lets the collapsed disclosure fill the remaining desktop height; mobile remains stacked. Needs live verification after deployment. |
+| F-50 | Benchmaxxing report: topic-groups disclosure moves into the right column at lg | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter36-f50-live-{canonical,legacy}/verification.json` (`bin/verify-f50-f51.mjs`) | Commit `3d32e8c`: right column stretches with the radar grid row and the collapsed disclosure fills the remaining desktop height; mobile remains stacked. Both public hosts pass 42/42 at 1440/390, light/dark; independent non-Codex verification is still required before `verified`. |
 | F-51 | Compare: "Radar axes · n / 8 selected" folded into the radar card | verified | `ux-evidence/review-20260913T205002Z/f50-{canonical,legacy}/verification.json`, `ux-evidence/review-20260913T205002Z/f44-{canonical,legacy}/`, `ux-evidence/review-20260913T205002Z/f35-{canonical,legacy}/` | Independent Codex verification of the Claude Opus implementation: one panel, summary inside the radar card in the specified order, axis toggle re-draws, bounded page heights and no regressions on both hosts at 1440/390, light/dark. |
 | F-52 | Compare head: "Compare" + one line, no eyebrow/slogan (consistent with Charts, Benchmarks, Benchmaxxing) | verified | same as F-49 | **Independent verification (claude-opus, iteration 34; implementer Fable):** H1 "Compare", no eyebrow, one paragraph, no overflow, 1440/390, both hosts. |
 
@@ -1175,6 +1175,16 @@ Notes for whoever picks this up:
     `npm run build` and `git diff --check` all passed. The in-progress Vals/FrontierCode and
     RelayModels draft was preserved, not shipped, in `stash@{0}` because the last review found
     its registry/collection-plan guard mismatch and incomplete critic receipts.
-  - **Independence:** R3.1, R5.3 and P4 remain `implemented`, not `verified`, until a different
-    engine independently checks this deployed revision. R9.1, F-50, E2/E3, P2/P3, X3/X4, X6/X7
-    and the RelayModels wiring request remain open; no `ALL-ACCEPTED` line or final Telegram was sent.
+- **Independence:** R3.1, R5.3 and P4 remain `implemented`, not `verified`, until a different
+  engine independently checks this deployed revision. R9.1, F-50, E2/E3, P2/P3, X3/X4, X6/X7
+  and the RelayModels wiring request remain open; no `ALL-ACCEPTED` line or final Telegram was sent.
+
+- **2026-09-13 · iteration 36 · codex-luna** — fixed F-50 in `components/BenchmaxxingReport.tsx`:
+  at `lg`, the Benchmaxxing signal/disclosure column stretches with the radar grid row and the
+  collapsed disclosure fills the remaining desktop height; below `lg`, the existing radar →
+  signal → disclosure order is unchanged. Local gates passed: build-dataset (timestamp-only
+  generated diff restored), npm test 275/275, tsc, production build (21 pages), and diff-check.
+  Commit `3d32e8c` was pushed and deployed by Sandy webhook deployment
+  `abxxk4yrdukwxjjim5bbdglt` (`finished`, 2026-09-13T22:08:24Z). Live
+  `bin/verify-f50-f51.mjs` passes 42/42 on both public hosts at desktop/mobile and light/dark.
+  F-50 remains `implemented` pending a different-engine verifier.
