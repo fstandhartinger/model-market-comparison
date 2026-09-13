@@ -60,6 +60,17 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
   const provByKey = useMemo(() => new Map(data.providers.map((p) => [p.key, p])), [data.providers]);
   const [expanded, setExpanded] = useState<string | null>(null);
+  // H3 is deliberately tucked into Advanced: it is a powerful comparison tool, not a
+  // default ranking rule. Metric values are built server-side from the benchmark view;
+  // the current measured value always wins over a bridged estimate.
+  const [comparisonTarget, setComparisonTarget] = useState("");
+  const [comparisonMetric, setComparisonMetric] = useState("");
+  const comparisonMetrics = useMemo(() => [
+    ...(data.comparison?.categories ?? []).map((category) => ({ id: `category:${category.id}`, label: `${category.label} · ${category.benchmarkCount} benchmarks`, values: category.values })),
+    ...(data.comparison?.axes ?? []).map((axis) => ({ id: `axis:${axis.id}`, label: `${axis.name} · ${axis.category} · ${axis.unit}`, values: axis.values })),
+  ], [data.comparison]);
+  const chosenComparisonMetric = comparisonMetrics.find((metric) => metric.id === comparisonMetric) ?? null;
+  const comparisonReference = chosenComparisonMetric?.values[comparisonTarget] ?? null;
 
   // The pool is everything the current filters allow BEFORE the two shortlist limits
   // (min score, max cost) are applied. Simple mode's histograms describe this pool, so
@@ -79,6 +90,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
+    if (chosenComparisonMetric && comparisonReference) {
+      r = r.filter((x) => {
+        const value = chosenComparisonMetric.values[x.m.id];
+        return value != null && value.value > comparisonReference.value;
+      });
+    }
     if (withScoreOnly) r = r.filter((x) => x.hasEvidence);
     if (s.priceMode === "adjusted" && measuredTasksOnly) r = r.filter((x) => {
       const tokens = x.m.token_efficiency?.aa.tokens_per_task;
@@ -87,7 +104,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
     if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
     return r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
 
   const matching = useMemo(() => {
     let r = pool;
@@ -163,6 +180,29 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
         </select>
         <NumFilter label={s.priceMode === "adjusted" ? "Max $/task" : "Max $/1M"} value={maxCost == null ? "" : String(maxCost)}
           onChange={(v) => { const n = parseFloat(v); setMaxCost(Number.isFinite(n) ? n : null); }} placeholder="e.g. 5" />
+        {data.comparison && <details className={`basis-full rounded-lg border px-3 py-2 ${chosenComparisonMetric && comparisonReference ? "border-accent/50 bg-accent/5" : "border-line/70 bg-ink/40"}`}>
+          <summary className="cursor-pointer text-[11px] font-semibold uppercase tracking-wide text-gray-500">Better than a model ▾</summary>
+          <div className="mt-2 grid gap-2 sm:grid-cols-2">
+            <label className="min-w-0 text-xs text-gray-400">Reference model
+              <select aria-label="Reference model" value={comparisonTarget} onChange={(e) => setComparisonTarget(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
+                <option value="">Choose a model…</option>
+                {candidates.map((model) => <option key={model.id} value={model.id}>{model.display_name} · {model.org}</option>)}
+              </select>
+            </label>
+            <label className="min-w-0 text-xs text-gray-400">Benchmark or category
+              <select aria-label="Benchmark or category" value={comparisonMetric} onChange={(e) => setComparisonMetric(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
+                <option value="">Choose a comparison…</option>
+                {comparisonMetrics.map((metric) => <option key={metric.id} value={metric.id}>{metric.label}</option>)}
+              </select>
+            </label>
+          </div>
+          {comparisonTarget && comparisonMetric && <p role="status" className="mt-2 text-xs text-gray-500">
+            {comparisonReference
+              ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(1)}</b> for this reference{comparisonReference.approximate ? " (approximated from a retained bridge)" : " (measured)"}. Missing values stay unknown and are excluded; {matching.length} models currently qualify.</>
+              : <>This reference has no comparable result for that choice, so the filter is inactive. Missing values stay unknown.</>}
+          </p>}
+          {(comparisonTarget || comparisonMetric) && <button type="button" className="mt-2 text-xs text-accent underline" onClick={() => { setComparisonTarget(""); setComparisonMetric(""); }}>Clear comparison</button>}
+        </details>}
         {/* R4.11: the three evidence requirements are defaults almost nobody changes.
             They stay with the table they govern, but folded away so the toolbar reads as
             "search, org, budget" rather than as six competing switches. */}

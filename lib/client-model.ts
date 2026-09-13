@@ -1,5 +1,6 @@
 import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
 import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
+import type { BenchmarkComparison } from "./benchmark-comparison.mjs";
 
 export interface ClientBenchmaxxing {
   score: number | null;
@@ -96,6 +97,8 @@ export interface ClientData {
   offersByModel: Record<string, ClientOffer[]>;
   providers: ProviderInfo[];
   families: FamilyOption[];
+  /** H3: current measured or explicitly bridged comparison values for the Advanced filter. */
+  comparison?: BenchmarkComparison;
 }
 
 /** Whether a displayed score is backed by at least one source result. Composite

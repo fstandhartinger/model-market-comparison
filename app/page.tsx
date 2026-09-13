@@ -3,6 +3,7 @@ import { clientData, type ClientBenchmaxxing } from "../lib/client-model";
 import { HomeMode } from "../components/HomeMode";
 import { getBenchmarkView } from "../lib/benchmark-data";
 import { benchmaxxingSignals } from "../lib/benchmax.mjs";
+import { buildBenchmarkComparison } from "../lib/benchmark-comparison.mjs";
 
 
 export default async function Home() {
@@ -13,7 +14,7 @@ export default async function Home() {
   const view = await getBenchmarkView();
   const { reports, tagged } = benchmaxxingSignals(view);
   const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(reports.map(([id, report]) => [id, { score: report.score ?? null, signal: tagged.has(id) }]));
-  const data = clientData(ds, benchmaxxing);
+  const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.
   const benchmarks = ds.benchmark_results?.registry?.length ?? 0;
