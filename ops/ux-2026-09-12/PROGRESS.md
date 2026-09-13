@@ -69,6 +69,11 @@ credited below, the rest is marked open.
 | R5.4 | Max adjusted cost slider, default unlimited | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Current live cost slider starts at no limit and shares SettingsContext with the modes |
 | R5.5 | Distribution histogram while a slider moves | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Current live Simple map/histogram evidence has 48 bars in the two themes and both widths; range end labels are present |
 | R5.6 | Wizard (company → privacy/region → minimums → budget → results) | verified | `ux-evidence/review-20260913T110002Z/broad-fixed-{canonical,legacy}/verification.json`, `fable-canonical-fixed2/metrics.json` | Current live wizard starts with the company step and the full Fable walkthrough remains error-free; source/tests cover the five pages |
+| R5.7 | Score slider caption "Minimum Composite" must become "Minimum Capability Score (Composite)" and the parenthetical must switch with the active score selector | open | — | Florian direct message 2026-09-13, change 1. The current caption is built from a mode-scoped copy and the active score name; the parenthetical is correct today but must be checked on score change. A small (i) next to the caption opens a short explanation of the capability/composite score and its construction. |
+| R5.8 | (i) tooltip on the adjusted cost slider explaining the cost model and why it is superior (real token efficiency, caching efficiency, exact prices) | open | — | Florian direct message 2026-09-13, change 2. The existing tooltip already links to the full methodology at `/about#adjusted-cost` and contains the full numerical calculation; the (i) icon should be next to the caption and must mention actual token/caching efficiency explicitly. |
+| R5.9 | Table columns '#Benchmarks' and '#Providers' must be the same width; current visual looks like providers is wider | open | — | Florian direct message 2026-09-13, change 5 (final visible defect: benchmark column seems narrower; both need measured equal widths). |
+| R5.10 | Pareto chart next to the value map in Simple mode: invert x-axis so low costs left, high costs right; every model displayed | open | — | Florian direct message 2026-09-13, change 4. The current chart shows expensive→right due to `reversed:!0`; must be `low costs left`. All models that pass limits should be visible (not just 12). |
+| R5.11 | Tooltip z-index issue in table header score and adjusted cost columns | open | — | Florian direct message 2026-09-13, change 5. Tooltips currently appear greyed inside dialogs. |
 | R6.1 | "Are you a company" checkbox | verified | `ux-evidence/review-20260913T075003Z-r63-postfix-canonical/verification.json`, `…-legacy/verification.json` | **Codex independent gate:** filters toggle changes the live subscription panel from 14 personal plans to 12 plans open to companies; Claude Pro disappears, Claude Team appears, the hidden-plan explanation remains, and `scrollWidth` equals the viewport at both widths |
 | R6.2 | Research: may companies use consumer subscriptions? + Telegram | implemented | `ops/ux-2026-09-12/research/R6.2-subscriptions.md` | delegated to Kimi K3, then independently re-fetched. Anthropic and Google forbid company use in their own words; Cursor allows entity use; GitHub steers to Business/Enterprise without forbidding; OpenAI and xAI return HTTP 403 to automated clients and were **not** worked around. Telegram sent — see the iteration log |
 | R6.3 | Subscription prices/quotas folded into the cost view, labelled | verified | `data/raw/subscriptions.json`, `test/subscriptions.test.mjs`, `ux-evidence/review-20260913T075003Z-r63-postfix-canonical/verification.json`, `…-legacy/verification.json` | **Codex independent gate:** the subscription panel is present on desktop/mobile and both hosts, with 14 personal plans, 2 break-even lines, dated vendor pricing copy, unknown quotas rather than invented task counts, and `/about#subscriptions`; company mode is covered by R6.1 |
@@ -116,16 +121,16 @@ credited below, the rest is marked open.
 | F-26 | Phone value-map scale | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Codex verified five phone ticks and eight desktop ticks with no overflow. |
 | F-27 | Benchmarks page phone table | verified | `ux-evidence/review-20260913T110002Z/f27-{canonical,legacy}/verification.json` | Codex verified 25 rows, per-row provenance expand, three phone columns, 352 px table and no overflow. |
 | F-28 | Micro-defect cleanup | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` | Codex verified neutral evidence button state and histogram end labels in all four viewports/themes. |
-| F-29 | Dark-mode value-map point labels theme-aware | implemented | `ux-evidence/fable-20260913-pass4/checks/verification-F29-F30.json`, `…/desktop_dark-simple-after-F29.png` | Fable pass 4 (`2e4abce`): `fill="rgb(var(--text))"` fell back to black; now `var(--text)`. Live: label fill `rgb(237,242,248)` in dark at 1440 and 390. Needs a non-Fable verifier. |
-| F-30 | Guided must not reset Simple's 85 floor | implemented | same | Fable pass 4 (`2e4abce`, `9840328`): wizard used `setMinScore(0)` (marks the floor touched) → Simple opened at 70 / 14 rows after Guided. Now `resetMinScore()` on mount. Live: 85 / 6 rows after Guided → Simple at both widths. Needs a non-Fable verifier. |
-| F-31 | Advanced rows: coverage pips instead of `n/7 inputs`, `est.` into the header | open | — | Fable pass 4 directive `[mechanical]`; revises F-25's sub-label rule. |
-| F-32 | One model, one benchmark count (`# benchmarks` vs Composite inputs contradiction, Fable 5 (high)) | open | `ux-evidence/fable-20260913-pass4/checks/f5.mjs` | Fable pass 4 directive `[judgment]`; data identity in the build, not CSS. Highest-value open design item. |
-| F-33 | Benchmaxxing: signal card self-height, phone sector labels in HTML | in-progress | `ux-evidence/fable-20260913-pass4/delegations/f33-*` | Delegated to Kimi K3 in `.worktrees/f33` (branch `fable4-f33`) during pass 4; Fable reviews the diff before it lands. |
-| F-34 | Benchmarks page: one coverage line, bar per result | in-progress | `ux-evidence/fable-20260913-pass4/delegations/f34-*` | Delegated to Kimi K3 in `.worktrees/f34` (branch `fable4-f34`) during pass 4; Fable reviews the diff before it lands. |
+| F-29 | Dark-mode value-map point labels theme-aware | verified | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Fable implemented the theme fix; Codex independently verified label fill `rgb(237,242,248)` at 1440/390 in dark mode. |
+| F-30 | Guided must not reset Simple's 85 floor | verified | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Fable implemented the reset fix; Codex independently verified Guided → Simple retains 85 and the result count at desktop/mobile. |
+| F-31 | Advanced rows: coverage pips instead of `n/7 inputs`, `est.` into the header | implemented | `ux-evidence/iter24-f31-f32/verification.json` | Codex added seven accessible 4px coverage pips, the modeled-cost header sublabel, and removed `est.` from overview/model cost cells while retaining `assumed task`. Needs non-Codex verification. |
+| F-32 | One model, one benchmark count (`# benchmarks` vs Composite inputs contradiction, Fable 5 (high)) | implemented | `ux-evidence/iter24-f31-f32/verification.json`, `test/cost.test.mjs` | Codex made exact-vs-attached Composite provenance explicit: attached family/product values contribute to the score but not exact coverage; benchmark count includes exact headline observations and is covered by an invariant. Needs non-Codex verification. |
+| F-33 | Benchmaxxing: signal card self-height, phone sector labels in HTML | implemented | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Kimi delegation produced no diff; Codex moved topic labels to 11px HTML overlays and added `self-start` to the signal card. Needs non-Codex verification. |
+| F-34 | Benchmarks page: one coverage line, bar per result | implemented | `ux-evidence/iter24-f31-f32/fable-canonical/verification.json` | Kimi delegation produced no diff; Codex replaced stat boxes with one coverage sentence, made unmatched controls conditional, added per-result bars and semibold first row. Needs non-Codex verification. |
 | F-35 | Compare: release-post table with per-row provenance expand, ≤ 3,500 px | open | `ux-evidence/fable-20260913-pass4/desktop_light-compare-full.png` (6,743 px) | Fable pass 4 directive `[judgment]`; this is the R8.1 surface. |
 | F-36 | Model page: no empty "Protocol-compatible" paragraph; Copilot card labelled | open | — | Fable pass 4 `[mechanical]` |
 | F-37 | Subscriptions list: neutral badges, uncollected plans as a footnote | open | `ux-evidence/fable-20260913-pass4/desktop_light-subscriptions-open.png` | Fable pass 4 `[mechanical]` |
-| F-38 | Simple: "Minimum score (Composite)" label, one-line small print | open | — | Fable pass 4 `[mechanical]` |
+| F-38 | Simple: "Minimum score (Composite)" label, one-line small print | open | — | Fable pass 4 `[mechanical]` → Florian direct message 2026-09-13: this is now split into R5.7 (caption becomes "Minimum Capability Score (Composite)", parenthetical switches with active score; (i) next to caption opens a short explanation). |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -896,6 +901,17 @@ Notes for whoever picks this up:
   evidence `…/pass4/checks/verification-F29-F30.json`. P4 hero decision recorded again with a
   fallback line for X7. F-33 and F-34 delegated to Kimi K3 in in-repo worktrees
   (`.worktrees/f33`, `.worktrees/f34`); outcome in the DESIGN-DIRECTIVES Done log.
-  - **Next, highest value (design):** F-32 needs a judgment engine (data identity between the
-    AA snapshot rows and the registry); then F-31 and F-35. Any engine other than Fable may
-    set F-29/F-30 `verified` with `checks/fable-after.mjs`.
+- **Next, highest value (design):** F-32 needs a judgment engine (data identity between the
+  AA snapshot rows and the registry); then F-31 and F-35. Any engine other than Fable may
+  set F-29/F-30 `verified` with `checks/fable-after.mjs`.
+
+- **2026-09-13 · iteration 24 · codex-luna** — resolved the Fable pass-4 F-31/F-32 defects and
+  independently rechecked F-29/F-30. F-32 now distinguishes exact Composite inputs from
+  family/product-attached values in the client projection, exposes attachment provenance in
+  the model sheet/radar, and tests the benchmark-count invariant. F-31 now uses seven compact
+  accessible coverage pips, labels Adjusted Cost as modeled $/task, and removes `est.` from
+  overview and model cost cells. F-33/F-34 Kimi worktrees were verified no-op after the
+  delegation wrapper rejected their external-path reads; Codex then implemented the signal
+  card/HTML radar labels and the benchmark coverage sentence/result bars directly. Local
+  gates: build-dataset, npm test 267/267, tsc, next build and diff-check all pass. Commit and
+  deployment evidence are pending the final live matrix for this iteration.
