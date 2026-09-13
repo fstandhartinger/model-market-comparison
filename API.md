@@ -270,3 +270,15 @@ unit or Composite input.
 Real-SWE observations reach the same endpoints with no new path. `GET /api/benchmark-scores` returns their native `unit` (**percent**), `basis: measured`, `confidence_interval` (95 %), `subject.harness`, and full source provenance; every Real-SWE row has `subject.model_id: null`. The per-rollout cost is a separate benchmark (`realswe-cost::snapshot-2026-09-12`) with unit `USD`, so a consumer that wants cost joins on `subject.source_id` + harness rather than reading it off the score row.
 
 `GET /api/benchmark-view?axis=<id>` now also exposes, on the axis: `publicationScope` (`{tasks, runs, configurations, rollouts}` for Real-SWE) and `detailNote`; and on each row: `harness`, `confidenceInterval` and `costPerRollout` (USD, when a matching cost observation exists). A model scored under two harnesses yields two axes and two rows — the adapter never merges them. Historical rows remain under `axis.estimates`, and `not_comparable` historical rows carry a machine-readable `cause` (`insufficient_bridges` / `spread_too_wide`) with `cause_value`. All of this is additive; no raw benchmark path, field or unit changed.
+
+### CursorBench 4.0 (secondary, non-Composite)
+
+The registry also exposes Cursor's published CursorBench 4.0 SSR table as two exact versioned
+benchmark IDs: `cursorbench::4.0` for the score (percent, higher is better) and
+`cursorbench-cost::4.0` for published cost per task (USD, lower is better). Both are
+`self_reported` source claims and are excluded from the Composite. Each contains the source's
+43 model/effort labels, with `subject.model_id: null` unless a future capture publishes an exact
+catalog checkpoint identity; effort aliases are never inferred. Rows remain queryable through
+`GET /api/benchmark-scores?benchmark_id=...` and include the exact source hash and HTML-table
+locator. The collection plan captures only the robots-allowed `/cursorbench` page, requires the
+CursorBench 4.0 version heading, and does not call Cursor's disallowed `/api/` paths.

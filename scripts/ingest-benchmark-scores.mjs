@@ -18,11 +18,20 @@ const observations = [], missing = [], collections = [], rejected = [];
 const details = {};
 const aaModels = new Map(models.filter((m) => m.aa_model_id).map((m) => [m.aa_model_id, m]));
 const exactNames = new Map();
+const foldedDefaultNames = new Map();
 for (const m of models) {
   if (!exactNames.has(m.display_name)) exactNames.set(m.display_name, []);
   exactNames.get(m.display_name).push(m);
+  if (m.variant === 'default') {
+    const folded = m.display_name.toLocaleLowerCase('en-US');
+    if (!foldedDefaultNames.has(folded)) foldedDefaultNames.set(folded, []);
+    foldedDefaultNames.get(folded).push(m);
+  }
 }
 const entryById = new Map(registry.entries.map((e) => [e.id, e]));
+const preserveSourceIdentity = new Set(registry.entries
+  .filter((e) => e.how_to_collect?.identity_policy === 'source_label')
+  .map((e) => e.id));
 for (const mapping of registry.aa_field_map) {
   const entry = entryById.get(mapping.benchmark_id);
   const blocked = mapping.field === 'livecodebench';
@@ -104,16 +113,24 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
   for (const observation of raw.observations) {
     // Only a unique, exact checkpoint identity may bridge a public source to the catalog.
     // Generic vendor product aliases never choose an effort variant.
-    if (path.endsWith('public-observations.json') && observation.subject.model_id === null) {
+    if (path.endsWith('public-observations.json') && observation.subject.model_id === null
+        && !preserveSourceIdentity.has(observation.benchmark_id)) {
       const subject = observation.subject;
       const hf = subject.source_id.startsWith('https://huggingface.co/') ? subject.source_id
         : subject.source_id.includes('/') ? `https://huggingface.co/${subject.source_id}` : null;
       const candidates = hf ? models.filter((m) => m.aa_metadata?.huggingface_url === hf) : [];
       const exactDefault = models.filter((m) => m.variant === 'default' && m.display_name === subject.name);
-      const matches = candidates.length === 1 ? candidates : exactDefault.length === 1 ? exactDefault : [];
+      const foldedDefault = foldedDefaultNames.get(subject.name.toLocaleLowerCase('en-US')) || [];
+      // Source labels occasionally differ only in capitalization. Keep the bridge
+      // conservative: exact checkpoint first, then exact display name, then one
+      // unique case-insensitive default name; never infer an effort variant.
+      const matches = candidates.length === 1 ? candidates
+        : exactDefault.length === 1 ? exactDefault
+        : foldedDefault.length === 1 ? foldedDefault : [];
       if (matches.length === 1) {
         subject.model_id = matches[0].id;
-        observation.join_note = candidates.length === 1 ? 'Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published.' : 'Exact display name, unique default catalog configuration; no effort alias inference.';
+        observation.join_note = candidates.length === 1 ? 'Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published.'
+          : 'Exact display name, unique default catalog configuration; no effort alias inference.';
       }
     }
     observations.push(observation);

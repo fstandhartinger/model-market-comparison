@@ -156281,7 +156281,7 @@
       "subject": {
         "source_id": "DeepSeek R1",
         "name": "DeepSeek R1",
-        "model_id": null,
+        "model_id": "deepseek-r1::default",
         "variant": null,
         "harness": null
       },
@@ -156297,7 +156297,8 @@
         "locator": "html_table; source row 53; DeepSeek R1; field value"
       },
       "protocol": "225-exercise Polyglot benchmark; percent correct after edits; edit format and command retained per row; not a single-model run when an editor model is specified.; source row: {\"cells\":[\"▶\",\"DeepSeek R1\",\"56.9%\",\"$5.42\",\"aider --model deepseek/deepseek-reasoner\",\"96.9%\",\"diff\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:0c91c1f791f4512fe02da68b",
@@ -156473,7 +156474,7 @@
       "subject": {
         "source_id": "gpt-4.1",
         "name": "gpt-4.1",
-        "model_id": null,
+        "model_id": "gpt-4.1::default",
         "variant": null,
         "harness": null
       },
@@ -156489,7 +156490,8 @@
         "locator": "html_table; source row 69; gpt-4.1; field value"
       },
       "protocol": "225-exercise Polyglot benchmark; percent correct after edits; edit format and command retained per row; not a single-model run when an editor model is specified.; source row: {\"cells\":[\"▶\",\"gpt-4.1\",\"52.4%\",\"$9.86\",\"aider --model gpt-4.1\",\"98.2%\",\"diff\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:8e9676e9979d259eb87e779a",
@@ -173106,7 +173108,7 @@
       "subject": {
         "source_id": "DeepSeek R1",
         "name": "DeepSeek R1",
-        "model_id": null,
+        "model_id": "deepseek-r1::default",
         "variant": null,
         "harness": null
       },
@@ -173122,7 +173124,8 @@
         "locator": "markdown_table; source row 25; DeepSeek R1; field value"
       },
       "protocol": "Average accuracy over 5 runs x 70 test challenges (headline Challenge Accuracy); source row: [\"DeepSeek R1\",\"1.1\"]",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:8d588bceb6a8272632a28e93",
@@ -173611,7 +173614,7 @@
       "subject": {
         "source_id": "xiaomi/mimo-v2.5-pro",
         "name": "mimo-v2.5-pro",
-        "model_id": null,
+        "model_id": "mimo-v2.5-pro::default",
         "variant": null,
         "harness": null
       },
@@ -173627,7 +173630,8 @@
         "locator": "json_assignment; source row 14; xiaomi/mimo-v2.5-pro; field elo"
       },
       "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:a1eea4492f8995bcfa384ff4",
@@ -173731,7 +173735,7 @@
       "subject": {
         "source_id": "minimax/minimax-m3",
         "name": "minimax-m3",
-        "model_id": null,
+        "model_id": "minimax-m3::default",
         "variant": null,
         "harness": null
       },
@@ -173747,7 +173751,8 @@
         "locator": "json_assignment; source row 19; minimax/minimax-m3; field elo"
       },
       "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:15a1ca123b4ef58752ebbdb3",
@@ -175611,7 +175616,7 @@
       "subject": {
         "source_id": "gpt-4.1",
         "name": "gpt-4.1",
-        "model_id": null,
+        "model_id": "gpt-4.1::default",
         "variant": null,
         "harness": null
       },
@@ -175627,7 +175632,8 @@
         "locator": "template_csv; source row 69; gpt-4.1; field elo_score"
       },
       "protocol": "Elo Score column in the leaderboard",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:786338758a97a21f86f2678d",
@@ -180937,7 +180943,7 @@
       "subject": {
         "source_id": "mimo-v2-pro",
         "name": "mimo-v2-pro",
-        "model_id": null,
+        "model_id": "mimo-v2-pro::default",
         "variant": null,
         "harness": null
       },
@@ -180953,7 +180959,8 @@
         "locator": "template_csv; source row 102; mimo-v2-pro; field overall_score_100"
       },
       "protocol": "Score (0-100): average of all chapter scores plus the final scored piece across 14 rubric dimensions, with the forced poetry/metaphor criterion weighted 5x and a long-context degradation penalty applied",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:3a1cd568de354e7f8b0e502b",
@@ -185330,7 +185337,7 @@
       "subject": {
         "source_id": "minimax-m3",
         "name": "minimax-m3",
-        "model_id": null,
+        "model_id": "minimax-m3::default",
         "variant": null,
         "harness": null
       },
@@ -185393,7 +185400,8 @@
           "published_at": null,
           "locator": "frontend_source"
         }
-      ]
+      ],
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:f9df391ad044ef8a6f83ca0e",
@@ -187247,7 +187255,7 @@
       "subject": {
         "source_id": "glm-5.3-flash",
         "name": "glm-5.3-flash",
-        "model_id": null,
+        "model_id": "glm-5.3-flash::default",
         "variant": null,
         "harness": null
       },
@@ -187310,7 +187318,8 @@
           "published_at": null,
           "locator": "frontend_source"
         }
-      ]
+      ],
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:4110dd87307ca080690fde0f",
@@ -187318,7 +187327,7 @@
       "subject": {
         "source_id": "qwen3.8-flash-next",
         "name": "qwen3.8-flash-next",
-        "model_id": null,
+        "model_id": "qwen3.8-flash-next::default",
         "variant": null,
         "harness": null
       },
@@ -187381,7 +187390,8 @@
           "published_at": null,
           "locator": "frontend_source"
         }
-      ]
+      ],
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:5589251220fa893776c1cc9b",
@@ -191865,7 +191875,7 @@
       "subject": {
         "source_id": "DeepSeek R1",
         "name": "DeepSeek R1",
-        "model_id": null,
+        "model_id": "deepseek-r1::default",
         "variant": null,
         "harness": null
       },
@@ -191881,7 +191891,8 @@
         "locator": "markdown_table; source row 133; DeepSeek R1; field value"
       },
       "protocol": "TrueSkill mean (μ), with σ uncertainty reported separately; source row: [\"32\",\"DeepSeek R1\",\"4.063\",\"0.142\",\"4.063\",\"1165\",\"596.571\",\"0.512\"]",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:807be75a95130d4b03bc7e31",
@@ -201513,7 +201524,7 @@
       "subject": {
         "source_id": "Deepseek-Coder-v2",
         "name": "Deepseek-Coder-v2",
-        "model_id": null,
+        "model_id": "deepseek-coder-v2::default",
         "variant": null,
         "harness": null
       },
@@ -201529,7 +201540,8 @@
         "locator": "html_table; source row 9; Deepseek-Coder-v2; field value"
       },
       "protocol": "Official SciCode leaderboard Main Problem Resolve Rate; background setting is not stated on this table, so no cross-source equivalence or delta is asserted.; source row: {\"cells\":[\"Deepseek-Coder-v2\",\"3.1\",\"21.2\"],\"configuration\":null,\"value_column\":1}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:9b8a9d6ec45782999d5ca0ef",
@@ -203632,7 +203644,7 @@
       "subject": {
         "source_id": "DeepSeek R1",
         "name": "DeepSeek R1",
-        "model_id": null,
+        "model_id": "deepseek-r1::default",
         "variant": null,
         "harness": null
       },
@@ -203648,7 +203660,8 @@
         "locator": "simplebench; source row 76; DeepSeek R1; field score"
       },
       "protocol": "SimpleBench MCQ AVG@5 board only; human baselines and open-ended board excluded.",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:1dec537cae6e69582b792efd",
@@ -204942,7 +204955,7 @@
       "subject": {
         "source_id": "qwen3.7-flash",
         "name": "Qwen3.7 Flash",
-        "model_id": null,
+        "model_id": "qwen3.7-flash::default",
         "variant": null,
         "harness": null
       },
@@ -204958,7 +204971,8 @@
         "locator": "json; source row 29; qwen3.7-flash; field overall"
       },
       "protocol": "Slop Score 0-100 = 40% live arena Elo votes + 15% each for concise, templating, rhythm, and tells measured against pre-AI human writing; higher = sloppier",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:77b0a9b61bf79b434119d83d",
@@ -340960,7 +340974,7 @@
       "subject": {
         "source_id": "gpt-4.1-2025-04-14",
         "name": "gpt-4.1",
-        "model_id": null,
+        "model_id": "gpt-4.1::default",
         "variant": null,
         "harness": null
       },
@@ -340983,7 +340997,8 @@
         "inputs": [
           0.3904019607843137
         ]
-      }
+      },
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:2d70f8c9e4ea8f8874b95641",
@@ -341332,7 +341347,7 @@
       "subject": {
         "source_id": "minimax-m2.7",
         "name": "minimax-m2.7",
-        "model_id": null,
+        "model_id": "minimax-m2.7::default",
         "variant": null,
         "harness": null
       },
@@ -341355,7 +341370,8 @@
         "inputs": [
           0.3694563725490196
         ]
-      }
+      },
+      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
     },
     {
       "id": "public:a5ec740bad6e0ba231f6bdf9",
@@ -342566,6 +342582,2070 @@
           0.01729411764705882
         ]
       }
+    },
+    {
+      "id": "public:a6733a51ed77c54d4c74c4b0",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Max",
+        "name": "Fable 5.1 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 51.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 1; Fable 5.1 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"1\",\"Fable 5.1 Max\",\"51.8 %\",\"$ 17.28\",\"117,236\",\"128\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a1d27d0337abe6eb7a933096",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Extra High",
+        "name": "Fable 5.1 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 51.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 2; Fable 5.1 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"2\",\"Fable 5.1 Extra High\",\"51.6 %\",\"$ 13.01\",\"87,294\",\"101\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4fe377e371d67303d1a8bd72",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 High",
+        "name": "Fable 5.1 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 49.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 3; Fable 5.1 High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"3\",\"Fable 5.1 High\",\"49.2 %\",\"$ 9.08\",\"58,438\",\"77\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5bfca3ae2c5d093a56d18f8d",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Medium",
+        "name": "Fable 5.1 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 46.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 4; Fable 5.1 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"4\",\"Fable 5.1 Medium\",\"46.8 %\",\"$ 7.05\",\"45,411\",\"63\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:306e88668761e354c467ad79",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Opus 5 Max",
+        "name": "Opus 5 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 46.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 5; Opus 5 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"5\",\"Opus 5 Max\",\"46.6 %\",\"$ 11.95\",\"85,384\",\"106\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eb8ccf515c6cdc80577fafc4",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Opus 5 Extra High",
+        "name": "Opus 5 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 46.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 6; Opus 5 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"6\",\"Opus 5 Extra High\",\"46.1 %\",\"$ 11.43\",\"80,094\",\"103\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:07bbe0053620069f5760b743",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Low",
+        "name": "Fable 5.1 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 45.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 7; Fable 5.1 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"7\",\"Fable 5.1 Low\",\"45.1 %\",\"$ 5.44\",\"34,795\",\"51\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:56de16a7aaf60a33bfe159a6",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Opus 5 High",
+        "name": "Opus 5 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 8; Opus 5 High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"8\",\"Opus 5 High\",\"44.7 %\",\"$ 9.00\",\"61,405\",\"86\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:66464aa2c76084f507ddb142",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Opus 5 Medium",
+        "name": "Opus 5 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 43.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 9; Opus 5 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"9\",\"Opus 5 Medium\",\"43.3 %\",\"$ 6.94\",\"45,272\",\"72\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:07f91d2ab26e2b6aced889ec",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Max",
+        "name": "GPT-5.6 Sol Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 10; GPT-5.6 Sol Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"10\",\"GPT-5.6 Sol Max\",\"41.7 %\",\"$ 8.23\",\"42,944\",\"99\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d8d53baa5292f51c2263e79a",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Max",
+        "name": "Muse Spark 1.3 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 11; Muse Spark 1.3 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"11\",\"Muse Spark 1.3 Max\",\"41.6 %\",\"$ 2.64\",\"52,005\",\"98\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7a19f5772bb0ccbe0832075b",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 Extra High",
+        "name": "Grok 4.6 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 12; Grok 4.6 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"12\",\"Grok 4.6 Extra High\",\"41.4 %\",\"$ 6.10\",\"49,814\",\"56\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:59eef30d266381024d7da809",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Max",
+        "name": "GPT-5.6 Terra Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 13; GPT-5.6 Terra Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"13\",\"GPT-5.6 Terra Max\",\"41.3 %\",\"$ 5.14\",\"60,814\",\"107\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:bebf4d01f889628d4a406af1",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Opus 5 Low",
+        "name": "Opus 5 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 40.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 14; Opus 5 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"14\",\"Opus 5 Low\",\"40.7 %\",\"$ 4.87\",\"31,995\",\"57\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2571bc2234bcc1be8aebdcea",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 High",
+        "name": "Grok 4.6 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 40.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 15; Grok 4.6 High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"15\",\"Grok 4.6 High\",\"40.4 %\",\"$ 5.20\",\"41,387\",\"48\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d463e2ebd7a35df3d811836e",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash High",
+        "name": "Gemini 3.8 Flash High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 39.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 16; Gemini 3.8 Flash High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"16\",\"Gemini 3.8 Flash High\",\"39.6 %\",\"$ 4.70\",\"162,565\",\"324\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:64b143158aa4a982598d7a00",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Extra High",
+        "name": "GPT-5.6 Sol Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 37.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 17; GPT-5.6 Sol Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"17\",\"GPT-5.6 Sol Extra High\",\"37.7 %\",\"$ 4.40\",\"24,729\",\"55\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4d5fbe601bf3a31018b1cf01",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Extra High",
+        "name": "Muse Spark 1.3 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 37.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 18; Muse Spark 1.3 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"18\",\"Muse Spark 1.3 Extra High\",\"37.5 %\",\"$ 2.10\",\"40,891\",\"83\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eb425a3454d7924371d572f0",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash Medium",
+        "name": "Gemini 3.8 Flash Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 37.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 19; Gemini 3.8 Flash Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"19\",\"Gemini 3.8 Flash Medium\",\"37.3 %\",\"$ 4.06\",\"128,364\",\"290\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0e9d08ed1a7c0fcd0a4db7c6",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 Medium",
+        "name": "Grok 4.6 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 36.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 20; Grok 4.6 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"20\",\"Grok 4.6 Medium\",\"36.1 %\",\"$ 3.48\",\"24,893\",\"40\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:34da203d51c614ade0dde45d",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Max",
+        "name": "GPT-5.6 Luna Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 35.9,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 21; GPT-5.6 Luna Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"21\",\"GPT-5.6 Luna Max\",\"35.9 %\",\"$ 1.03\",\"87,284\",\"208\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0c1005d6e5e02a5216a7d251",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol High",
+        "name": "GPT-5.6 Sol High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 35.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 22; GPT-5.6 Sol High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"22\",\"GPT-5.6 Sol High\",\"35.7 %\",\"$ 2.85\",\"16,174\",\"41\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:555dc11c8c4cd2ca770419c8",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Max",
+        "name": "Sonnet 5 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 34.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 23; Sonnet 5 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"23\",\"Sonnet 5 Max\",\"34.1 %\",\"$ 7.17\",\"149,257\",\"140\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d2e3470ed0550d3da248dfee",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Extra High",
+        "name": "GPT-5.6 Terra Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 24; GPT-5.6 Terra Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"24\",\"GPT-5.6 Terra Extra High\",\"33.6 %\",\"$ 1.81\",\"23,436\",\"43\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b44cce6342de9cc8903664d8",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 Low",
+        "name": "Grok 4.6 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 25; Grok 4.6 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"25\",\"Grok 4.6 Low\",\"33.4 %\",\"$ 2.25\",\"16,307\",\"32\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:20fb43ccec990698aa7d9565",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 High",
+        "name": "Muse Spark 1.3 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 26; Muse Spark 1.3 High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"26\",\"Muse Spark 1.3 High\",\"33.4 %\",\"$ 1.66\",\"30,654\",\"69\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:977ea26330c03544b6b6161b",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Extra High",
+        "name": "GPT-5.6 Luna Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 27; GPT-5.6 Luna Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"27\",\"GPT-5.6 Luna Extra High\",\"33.0 %\",\"$ 0.44\",\"40,598\",\"98\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e9bdf440b017d87027693fb3",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Medium",
+        "name": "Muse Spark 1.3 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 32.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 28; Muse Spark 1.3 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"28\",\"Muse Spark 1.3 Medium\",\"32.6 %\",\"$ 1.49\",\"27,255\",\"64\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c4b80538c1f6470d5865ebe2",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Extra High",
+        "name": "Sonnet 5 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 32,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 29; Sonnet 5 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"29\",\"Sonnet 5 Extra High\",\"32.0 %\",\"$ 4.55\",\"83,373\",\"102\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:20a4bce7816584167555137e",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Medium",
+        "name": "GPT-5.6 Sol Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 31.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 30; GPT-5.6 Sol Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"30\",\"GPT-5.6 Sol Medium\",\"31.1 %\",\"$ 1.77\",\"10,111\",\"32\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dbf68e78cf6afcd8a14a2538",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 High",
+        "name": "Sonnet 5 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 30.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 31; Sonnet 5 High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"31\",\"Sonnet 5 High\",\"30.8 %\",\"$ 3.48\",\"61,146\",\"85\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1eaf61fc41201691fabf3d4a",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra High",
+        "name": "GPT-5.6 Terra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 30.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 32; GPT-5.6 Terra High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"32\",\"GPT-5.6 Terra High\",\"30.7 %\",\"$ 1.11\",\"13,162\",\"33\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f1c8354305071d7a957932e5",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna High",
+        "name": "GPT-5.6 Luna High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 29.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 33; GPT-5.6 Luna High; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"33\",\"GPT-5.6 Luna High\",\"29.4 %\",\"$ 0.25\",\"23,368\",\"64\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:64ec147eb5ffe2e08bee3051",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Low",
+        "name": "Muse Spark 1.3 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 29.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 34; Muse Spark 1.3 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"34\",\"Muse Spark 1.3 Low\",\"29.3 %\",\"$ 0.93\",\"17,483\",\"47\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cf39fecd0171ce90446bdd4c",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Medium",
+        "name": "Sonnet 5 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 28,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 35; Sonnet 5 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"35\",\"Sonnet 5 Medium\",\"28.0 %\",\"$ 2.31\",\"39,114\",\"65\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a25379b2f3f231dd590d3532",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Composer 2.5",
+        "name": "Composer 2.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 27.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 36; Composer 2.5; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"36\",\"Composer 2.5\",\"27.7 %\",\"$ 0.68\",\"17,347\",\"41\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:faab3b240bc0ed8ea528faaa",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Medium",
+        "name": "GPT-5.6 Terra Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 27.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 37; GPT-5.6 Terra Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"37\",\"GPT-5.6 Terra Medium\",\"27.6 %\",\"$ 0.64\",\"7,307\",\"25\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:99a40920e5ea73460d9a0dbc",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Low",
+        "name": "GPT-5.6 Terra Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 25.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 38; GPT-5.6 Terra Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"38\",\"GPT-5.6 Terra Low\",\"25.2 %\",\"$ 0.52\",\"5,914\",\"23\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:99dd554d23b5241cbd3a0e9a",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Low",
+        "name": "GPT-5.6 Sol Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 24.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 39; GPT-5.6 Sol Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"39\",\"GPT-5.6 Sol Low\",\"24.6 %\",\"$ 0.87\",\"4,885\",\"21\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4663ac6a22aa05da61dbea82",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Minimal",
+        "name": "Muse Spark 1.3 Minimal",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 24.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 40; Muse Spark 1.3 Minimal; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"40\",\"Muse Spark 1.3 Minimal\",\"24.3 %\",\"$ 0.56\",\"10,620\",\"34\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d1ab68ef753235cc7ce29b27",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Low",
+        "name": "Sonnet 5 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 24.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 41; Sonnet 5 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"41\",\"Sonnet 5 Low\",\"24.1 %\",\"$ 1.39\",\"23,772\",\"46\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ed2bfd02e514848b88146b8d",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Medium",
+        "name": "GPT-5.6 Luna Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 22.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 42; GPT-5.6 Luna Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"42\",\"GPT-5.6 Luna Medium\",\"22.2 %\",\"$ 0.08\",\"7,642\",\"32\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:30ac7d4eb95df34e209e5377",
+      "benchmark_id": "cursorbench::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Low",
+        "name": "GPT-5.6 Luna Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 16,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 43; GPT-5.6 Luna Low; field value"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"43\",\"GPT-5.6 Luna Low\",\"16.0 %\",\"$ 0.03\",\"3,288\",\"18\"],\"configuration\":null,\"value_column\":2}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d365ec7d25a75db28e44e05c",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Max",
+        "name": "Fable 5.1 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 17.28,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 1; Fable 5.1 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"1\",\"Fable 5.1 Max\",\"51.8 %\",\"$ 17.28\",\"117,236\",\"128\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:02177de2d04f54b1887f7dbc",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Extra High",
+        "name": "Fable 5.1 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 13.01,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 2; Fable 5.1 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"2\",\"Fable 5.1 Extra High\",\"51.6 %\",\"$ 13.01\",\"87,294\",\"101\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a9f3015e2aaa339ced7fd5f6",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 High",
+        "name": "Fable 5.1 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 9.08,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 3; Fable 5.1 High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"3\",\"Fable 5.1 High\",\"49.2 %\",\"$ 9.08\",\"58,438\",\"77\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:80294afa848c744ace002e2c",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Medium",
+        "name": "Fable 5.1 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 7.05,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 4; Fable 5.1 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"4\",\"Fable 5.1 Medium\",\"46.8 %\",\"$ 7.05\",\"45,411\",\"63\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a2fe71667a6b0fa7e5ed9d77",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Opus 5 Max",
+        "name": "Opus 5 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 11.95,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 5; Opus 5 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"5\",\"Opus 5 Max\",\"46.6 %\",\"$ 11.95\",\"85,384\",\"106\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6131db35dbad4f8c154c5107",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Opus 5 Extra High",
+        "name": "Opus 5 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 11.43,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 6; Opus 5 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"6\",\"Opus 5 Extra High\",\"46.1 %\",\"$ 11.43\",\"80,094\",\"103\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:09a4fd23b5bf5a541c93b954",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Fable 5.1 Low",
+        "name": "Fable 5.1 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 5.44,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 7; Fable 5.1 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"7\",\"Fable 5.1 Low\",\"45.1 %\",\"$ 5.44\",\"34,795\",\"51\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:55c370b624c6f96d993118a6",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Opus 5 High",
+        "name": "Opus 5 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 9,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 8; Opus 5 High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"8\",\"Opus 5 High\",\"44.7 %\",\"$ 9.00\",\"61,405\",\"86\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:276bac6a156513ab5b9da30b",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Opus 5 Medium",
+        "name": "Opus 5 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 6.94,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 9; Opus 5 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"9\",\"Opus 5 Medium\",\"43.3 %\",\"$ 6.94\",\"45,272\",\"72\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:595e5a99d4ad81903fc1fd81",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Max",
+        "name": "GPT-5.6 Sol Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 8.23,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 10; GPT-5.6 Sol Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"10\",\"GPT-5.6 Sol Max\",\"41.7 %\",\"$ 8.23\",\"42,944\",\"99\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b98fb80819451f859276231d",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Max",
+        "name": "Muse Spark 1.3 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 2.64,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 11; Muse Spark 1.3 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"11\",\"Muse Spark 1.3 Max\",\"41.6 %\",\"$ 2.64\",\"52,005\",\"98\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a038628fd831449be458fa7b",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 Extra High",
+        "name": "Grok 4.6 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 6.1,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 12; Grok 4.6 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"12\",\"Grok 4.6 Extra High\",\"41.4 %\",\"$ 6.10\",\"49,814\",\"56\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5abdfb29561c4c0bdbf9d298",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Max",
+        "name": "GPT-5.6 Terra Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 5.14,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 13; GPT-5.6 Terra Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"13\",\"GPT-5.6 Terra Max\",\"41.3 %\",\"$ 5.14\",\"60,814\",\"107\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8861b9c706ade9680090a7f7",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Opus 5 Low",
+        "name": "Opus 5 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 4.87,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 14; Opus 5 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"14\",\"Opus 5 Low\",\"40.7 %\",\"$ 4.87\",\"31,995\",\"57\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4a9d5f6e9fc8612d1c173935",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 High",
+        "name": "Grok 4.6 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 5.2,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 15; Grok 4.6 High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"15\",\"Grok 4.6 High\",\"40.4 %\",\"$ 5.20\",\"41,387\",\"48\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:afb26be6dfbe37bb948e6b52",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash High",
+        "name": "Gemini 3.8 Flash High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 4.7,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 16; Gemini 3.8 Flash High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"16\",\"Gemini 3.8 Flash High\",\"39.6 %\",\"$ 4.70\",\"162,565\",\"324\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:79ddb94d2dde880941e34f38",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Extra High",
+        "name": "GPT-5.6 Sol Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 4.4,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 17; GPT-5.6 Sol Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"17\",\"GPT-5.6 Sol Extra High\",\"37.7 %\",\"$ 4.40\",\"24,729\",\"55\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:857ff88ed24e88229b80bfe2",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Extra High",
+        "name": "Muse Spark 1.3 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 2.1,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 18; Muse Spark 1.3 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"18\",\"Muse Spark 1.3 Extra High\",\"37.5 %\",\"$ 2.10\",\"40,891\",\"83\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3c87be8f9f4a3685d0cbb05a",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash Medium",
+        "name": "Gemini 3.8 Flash Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 4.06,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 19; Gemini 3.8 Flash Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"19\",\"Gemini 3.8 Flash Medium\",\"37.3 %\",\"$ 4.06\",\"128,364\",\"290\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e7ae786b46d966875813f8ce",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 Medium",
+        "name": "Grok 4.6 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 3.48,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 20; Grok 4.6 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"20\",\"Grok 4.6 Medium\",\"36.1 %\",\"$ 3.48\",\"24,893\",\"40\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fb5aaf1dbc00437b7bb3e0db",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Max",
+        "name": "GPT-5.6 Luna Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.03,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 21; GPT-5.6 Luna Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"21\",\"GPT-5.6 Luna Max\",\"35.9 %\",\"$ 1.03\",\"87,284\",\"208\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a94a839ed6430382a935481e",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol High",
+        "name": "GPT-5.6 Sol High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 2.85,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 22; GPT-5.6 Sol High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"22\",\"GPT-5.6 Sol High\",\"35.7 %\",\"$ 2.85\",\"16,174\",\"41\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b4e2c4324f0ba8f7307153ed",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Max",
+        "name": "Sonnet 5 Max",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 7.17,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 23; Sonnet 5 Max; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"23\",\"Sonnet 5 Max\",\"34.1 %\",\"$ 7.17\",\"149,257\",\"140\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6dfe8a550c5fc5546edf622a",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Extra High",
+        "name": "GPT-5.6 Terra Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.81,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 24; GPT-5.6 Terra Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"24\",\"GPT-5.6 Terra Extra High\",\"33.6 %\",\"$ 1.81\",\"23,436\",\"43\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:39544e36f0a1287cd0c11b31",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Grok 4.6 Low",
+        "name": "Grok 4.6 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 2.25,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 25; Grok 4.6 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"25\",\"Grok 4.6 Low\",\"33.4 %\",\"$ 2.25\",\"16,307\",\"32\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:332de00e7881b9435e69b21b",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 High",
+        "name": "Muse Spark 1.3 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.66,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 26; Muse Spark 1.3 High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"26\",\"Muse Spark 1.3 High\",\"33.4 %\",\"$ 1.66\",\"30,654\",\"69\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:171e3732a93ee8e5450ff755",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Extra High",
+        "name": "GPT-5.6 Luna Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.44,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 27; GPT-5.6 Luna Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"27\",\"GPT-5.6 Luna Extra High\",\"33.0 %\",\"$ 0.44\",\"40,598\",\"98\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d6f91ef955cd6402410602e7",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Medium",
+        "name": "Muse Spark 1.3 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.49,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 28; Muse Spark 1.3 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"28\",\"Muse Spark 1.3 Medium\",\"32.6 %\",\"$ 1.49\",\"27,255\",\"64\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f7c0a6aef4baf6a4e1d18d13",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Extra High",
+        "name": "Sonnet 5 Extra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 4.55,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 29; Sonnet 5 Extra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"29\",\"Sonnet 5 Extra High\",\"32.0 %\",\"$ 4.55\",\"83,373\",\"102\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9a280db35631db0cbc62a421",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Medium",
+        "name": "GPT-5.6 Sol Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.77,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 30; GPT-5.6 Sol Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"30\",\"GPT-5.6 Sol Medium\",\"31.1 %\",\"$ 1.77\",\"10,111\",\"32\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:bd65418f6e95ae9c487cea95",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 High",
+        "name": "Sonnet 5 High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 3.48,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 31; Sonnet 5 High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"31\",\"Sonnet 5 High\",\"30.8 %\",\"$ 3.48\",\"61,146\",\"85\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:692406e7eecc7a3f7df9172b",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra High",
+        "name": "GPT-5.6 Terra High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.11,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 32; GPT-5.6 Terra High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"32\",\"GPT-5.6 Terra High\",\"30.7 %\",\"$ 1.11\",\"13,162\",\"33\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cddd64360bb21d4efa988183",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna High",
+        "name": "GPT-5.6 Luna High",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.25,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 33; GPT-5.6 Luna High; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"33\",\"GPT-5.6 Luna High\",\"29.4 %\",\"$ 0.25\",\"23,368\",\"64\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e95fdd839682030ff9702b01",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Low",
+        "name": "Muse Spark 1.3 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.93,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 34; Muse Spark 1.3 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"34\",\"Muse Spark 1.3 Low\",\"29.3 %\",\"$ 0.93\",\"17,483\",\"47\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:76b62463bb9dfcf00572bcb8",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Medium",
+        "name": "Sonnet 5 Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 2.31,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 35; Sonnet 5 Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"35\",\"Sonnet 5 Medium\",\"28.0 %\",\"$ 2.31\",\"39,114\",\"65\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8ec61a3db2943414934755fe",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Composer 2.5",
+        "name": "Composer 2.5",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.68,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 36; Composer 2.5; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"36\",\"Composer 2.5\",\"27.7 %\",\"$ 0.68\",\"17,347\",\"41\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b1e9917f86e513c18cae7121",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Medium",
+        "name": "GPT-5.6 Terra Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.64,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 37; GPT-5.6 Terra Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"37\",\"GPT-5.6 Terra Medium\",\"27.6 %\",\"$ 0.64\",\"7,307\",\"25\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:659199da25747c9d28dc9385",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Terra Low",
+        "name": "GPT-5.6 Terra Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.52,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 38; GPT-5.6 Terra Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"38\",\"GPT-5.6 Terra Low\",\"25.2 %\",\"$ 0.52\",\"5,914\",\"23\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:86155bfbda28191f36c7dabd",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Sol Low",
+        "name": "GPT-5.6 Sol Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.87,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 39; GPT-5.6 Sol Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"39\",\"GPT-5.6 Sol Low\",\"24.6 %\",\"$ 0.87\",\"4,885\",\"21\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:65a96f19e814c925a7b3bb80",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Muse Spark 1.3 Minimal",
+        "name": "Muse Spark 1.3 Minimal",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.56,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 40; Muse Spark 1.3 Minimal; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"40\",\"Muse Spark 1.3 Minimal\",\"24.3 %\",\"$ 0.56\",\"10,620\",\"34\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:19255c7beec38f9b9b0c9b94",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "Sonnet 5 Low",
+        "name": "Sonnet 5 Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 1.39,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 41; Sonnet 5 Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"41\",\"Sonnet 5 Low\",\"24.1 %\",\"$ 1.39\",\"23,772\",\"46\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f83c4cdb7336b150e40e0b9e",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Medium",
+        "name": "GPT-5.6 Luna Medium",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.08,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 42; GPT-5.6 Luna Medium; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"42\",\"GPT-5.6 Luna Medium\",\"22.2 %\",\"$ 0.08\",\"7,642\",\"32\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:182571f29e3ce97dcbf67861",
+      "benchmark_id": "cursorbench-cost::4.0",
+      "subject": {
+        "source_id": "GPT-5.6 Luna Low",
+        "name": "GPT-5.6 Luna Low",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 0.03,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "locator": "html_table; source row 43; GPT-5.6 Luna Low; field value"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.; source row: {\"cells\":[\"43\",\"GPT-5.6 Luna Low\",\"16.0 %\",\"$ 0.03\",\"3,288\",\"18\"],\"configuration\":null,\"value_column\":3}",
+      "comparison_key": null
     },
     {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
@@ -352242,6 +354322,18 @@
       "status": "collected",
       "source_url": "https://htihle.github.io/data/weirdml_data.csv",
       "reason": "161 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "status": "collected",
+      "source_url": "https://cursor.com/cursorbench",
+      "reason": "43 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "cursorbench-cost::4.0",
+      "status": "collected",
+      "source_url": "https://cursor.com/cursorbench",
+      "reason": "43 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

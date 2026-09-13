@@ -43,7 +43,7 @@ def numeric(value):
     value=text(value)
     if value in ['', '-', '—', '–', 'N/A', 'n/a', 'NA', 'NaN']:return None
     # Published confidence intervals are ancillary, never part of the point estimate.
-    match=re.fullmatch(r'\$?([-+]?\d[\d,]*(?:\.\d+)?)(?:%|\*)?(?:\s*(?:±|\+/-|\(|\[).*)?',value)
+    match=re.fullmatch(r'\$?\s*([-+]?\d[\d,]*(?:\.\d+)?)(?:\s*(?:%|\*))?(?:\s*(?:±|\+/-|\(|\[).*)?',value)
     if not match:raise ValueError('Unexpected numeric cell: '+value[:100])
     return float(match[1].replace(',',''))
 

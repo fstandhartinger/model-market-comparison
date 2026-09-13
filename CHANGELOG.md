@@ -17,6 +17,16 @@ no vendor publishes an included task count — and instead reports the break-eve
 against the vendor's best-scoring model in view. "I'm buying for a company" now hides the
 consumer plans whose terms exclude business use. No existing dataset field or API changed.
 
+## 2026-09-13 — CursorBench 4.0 secondary benchmark slice (E2)
+
+The benchmark registry and score API now include Cursor's published CursorBench 4.0 table as
+two separate, non-Composite identities: `cursorbench::4.0` (score, percent, higher is better)
+and `cursorbench-cost::4.0` (cost per task, USD, lower is better). Each identity retains all 43
+published model/effort rows, the exact SSR source capture, robots evidence and source locator.
+These are `self_reported` vendor claims; source labels remain unmatched when no exact catalog
+checkpoint/effort identity is published, rather than being guessed. The daily recipe uses the
+robots-allowed HTML page and refuses a changed version/table shape.
+
 ## 2026-09-13 — Advanced comparison filter (H3)
 
 Advanced mode now includes a folded **Better than a model** filter. Choose a reference

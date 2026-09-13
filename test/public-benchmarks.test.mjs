@@ -8,7 +8,7 @@ test('public source parsers preserve zero, reject malformed values and isolate p
 import importlib.util,json,tempfile,hashlib
 from pathlib import Path
 s=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
-assert m.numeric('0%')==0 and m.numeric('—') is None and m.numeric('58.2 ± 1.1')==58.2
+assert m.numeric('0%')==0 and m.numeric('51.8 %')==51.8 and m.numeric('$ 17.28')==17.28 and m.numeric('—') is None and m.numeric('58.2 ± 1.1')==58.2
 assert m.text('[Gemini-1.5-pro](https://example.org/models#Pro%20(Preview%20only),-Text%20and%20images)')=='Gemini-1.5-pro'
 for value in [True, float('inf'), 'oops', '12 percent', 'Infinity']:
  try: m.numeric(value)

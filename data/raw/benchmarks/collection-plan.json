@@ -1646,6 +1646,78 @@
       "source_urls": [
         "https://htihle.github.io/data/weirdml_data.csv"
       ]
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 2,
+        "width": 6,
+        "header_contains": ["Model", "Score", "Cost"],
+        "header_rows": 1,
+        "context_fields": ["tokens_per_task", "steps_per_task"]
+      },
+      "status": "collected",
+      "reason": "CursorBench 4.0 server-rendered leaderboard; score values are kept separate by the published model/effort label and never enter the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/cursorbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Server-rendered HTML table",
+        "locator": "First table headed Model / Score / Cost / Tokens / Steps; extract the Score column for each of the 43 model-effort rows and retain all cells in the protocol context.",
+        "version_guard": "Require the page heading CursorBench 4.0. A changed version or task protocol is a new registry identity.",
+        "notes": "Check robots.txt first. The public /cursorbench path is allowed; do not call Cursor's disallowed /api/ paths. Cost, tokens and steps are auxiliary unless collected under their own identity. Score ingestion remains separate from the Composite."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the page heading CursorBench 4.0.",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00"
+      },
+      "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.",
+      "basis": "self_reported",
+      "minimum_rows": 43,
+      "source_urls": ["https://cursor.com/cursorbench"]
+    },
+    {
+      "benchmark_id": "cursorbench-cost::4.0",
+      "parser": {
+        "kind": "html_table",
+        "table_index": 0,
+        "name_field": "name",
+        "value_field": "value",
+        "name_column": 1,
+        "value_column": 3,
+        "width": 6,
+        "header_contains": ["Model", "Score", "Cost"],
+        "header_rows": 1,
+        "context_fields": ["tokens_per_task", "steps_per_task"]
+      },
+      "status": "collected",
+      "reason": "CursorBench 4.0 publishes a separate USD cost-per-task value; it is not a score and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/cursorbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Server-rendered HTML table",
+        "locator": "First table headed Model / Score / Cost / Tokens / Steps; extract the Cost / task USD column for each of the 43 model-effort rows and retain all cells in the protocol context.",
+        "version_guard": "Require the page heading CursorBench 4.0. A changed version or task protocol is a new registry identity.",
+        "notes": "Check robots.txt first. The public /cursorbench path is allowed; do not call Cursor's disallowed /api/ paths. Cost is a separate published metric with unit USD and is not folded into the score or Composite."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the page heading CursorBench 4.0.",
+      "source": {
+        "url": "https://cursor.com/cursorbench",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+        "sha256": "83dd64d1135465c00f22904fcac5f4184346022298208135094564ab8f7f3b2e",
+        "retrieved_at": "2026-09-13T19:14:13.282923+00:00"
+      },
+      "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.",
+      "basis": "self_reported",
+      "minimum_rows": 43,
+      "source_urls": ["https://cursor.com/cursorbench"]
     }
   ]
 }

@@ -76,7 +76,7 @@ test('source and critic receipts must match; any edited self-report loses approv
     await writeFile(join(root, 'source.txt'), 'primary');
     const claim = row('claim', .8, 'self_reported');
     const artifact = JSON.stringify([claim]);
-    const review = JSON.stringify({ verdict: 'pass', artifact_sha256: sha256(artifact), coverage_checked: [1], errors_found: 0, findings: [], fixed: [], missing_evidence: [] });
+    const review = JSON.stringify({ verdict: 'pass', artifact_sha256: sha256(artifact), coverage_checked: [1, claim.id], errors_found: 0, findings: [], fixed: [], missing_evidence: [] });
     await writeFile(join(root, 'artifact.json'), artifact);
     await writeFile(join(root, 'review.json'), review);
     await assert.rejects(verifyScoreEvidence(snapshot([claim]), registry, { root }), /Unreviewed/);

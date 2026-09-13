@@ -4695,6 +4695,130 @@
           "excerpt": "Resolution-rate leaderboard: eight model-harness configurations, each with an exact passes/80 value, a 95% confidence interval (data-confidence-whisker) and a published cost per rollout (data-pareto-point); the page declares rel=canonical https://withspecific.com/benchmarks/real-swe and states the public evaluation covers a ten-task sample."
         }
       ]
+    },
+    {
+      "id": "cursorbench::4.0",
+      "name": "CursorBench 4.0 (Cursor)",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "cursorbench",
+      "category": "Coding",
+      "one_sentence_description": "Agent evaluation on ambiguous, multi-file tasks drawn from real Cursor sessions.",
+      "scoring": {
+        "metric": "CursorBench score",
+        "unit": "percent",
+        "range": [0, 100],
+        "higher_better": true,
+        "notes": "Cursor publishes one score percentage per model and reasoning-effort configuration; this secondary benchmark is not a Composite input."
+      },
+      "maintainer": "Cursor (Anysphere)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://cursor.com/cursorbench",
+      "publication_urls": [
+        {
+          "url": "https://cursor.com/cursorbench",
+          "type": "official_leaderboard",
+          "role": "Primary CursorBench 4.0 leaderboard and protocol page"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/cursorbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Server-rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "First table headed Model / Score / Cost / Tokens / Steps; extract Score for every model-effort row and retain all cells in the protocol context.",
+        "version_guard": "Require the page heading CursorBench 4.0. A changed version or task protocol is a new registry identity.",
+        "notes": "Check robots.txt first. The public /cursorbench path is allowed; never call Cursor's disallowed /api/ paths. Cost, tokens and steps are auxiliary and have separate identities."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated by the source.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-13",
+      "last_verified": "2026-09-13",
+      "evidence": [
+        {
+          "url": "https://cursor.com/cursorbench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+          "sha256": "d93f1f5666dbd8e0f5fee9ef1977698a35ffc7765b731cdeebab3b95237d2638",
+          "fetched_at": "2026-09-13T19:14:13.282923+00:00",
+          "excerpt": "CursorBench 4.0 leaderboard table: 43 model-effort rows with Score, Cost / task, Tokens / task and Steps / task columns; page states that higher scores are better."
+        },
+        {
+          "url": "https://cursor.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/cursor.com-robots.txt",
+          "sha256": "3f6b4f93ddf92ee721fafbbd93a2b28e59a60386b361e7dce6beb9f7afe9c491",
+          "fetched_at": "2026-09-13T19:14:13.282923+00:00",
+          "excerpt": "Cursor robots policy allows the public site and disallows /api/; collection uses only the allowed /cursorbench HTML page."
+        }
+      ]
+    },
+    {
+      "id": "cursorbench-cost::4.0",
+      "name": "CursorBench 4.0 cost per task (Cursor)",
+      "version": "4.0",
+      "version_status": "published",
+      "family": "cursorbench-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Cursor's published USD cost per task for each CursorBench 4.0 model-effort configuration.",
+      "scoring": {
+        "metric": "Cost per task",
+        "unit": "USD",
+        "range": [0, null],
+        "higher_better": false,
+        "notes": "Cost is a separate published metric, not a capability score and not a Composite input; it may reflect the source's adjusted pricing note."
+      },
+      "maintainer": "Cursor (Anysphere)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://cursor.com/cursorbench",
+      "publication_urls": [
+        {
+          "url": "https://cursor.com/cursorbench",
+          "type": "official_leaderboard",
+          "role": "Primary CursorBench 4.0 leaderboard and published task-cost page"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/cursorbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
+        "format": "Server-rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "First table headed Model / Score / Cost / Tokens / Steps; extract Cost / task USD for every model-effort row and retain all cells in the protocol context.",
+        "version_guard": "Require the page heading CursorBench 4.0. A changed version or task protocol is a new registry identity.",
+        "notes": "Check robots.txt first. The public /cursorbench path is allowed; never call Cursor's disallowed /api/ paths. Cost is separate from score and is not folded into the Composite."
+      },
+      "update_cadence": {
+        "source_schedule": "Not stated by the source.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-13",
+      "last_verified": "2026-09-13",
+      "evidence": [
+        {
+          "url": "https://cursor.com/cursorbench",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/83dd64d1135465c00f22.gz",
+          "sha256": "d93f1f5666dbd8e0f5fee9ef1977698a35ffc7765b731cdeebab3b95237d2638",
+          "fetched_at": "2026-09-13T19:14:13.282923+00:00",
+          "excerpt": "CursorBench 4.0 leaderboard table: 43 model-effort rows with Score, Cost / task, Tokens / task and Steps / task columns; the cost column is published in USD per task."
+        },
+        {
+          "url": "https://cursor.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-cursorbench/cursor.com-robots.txt",
+          "sha256": "3f6b4f93ddf92ee721fafbbd93a2b28e59a60386b361e7dce6beb9f7afe9c491",
+          "fetched_at": "2026-09-13T19:14:13.282923+00:00",
+          "excerpt": "Cursor robots policy allows the public site and disallows /api/; collection uses only the allowed /cursorbench HTML page."
+        }
+      ]
     }
   ],
   "aa_field_map": [

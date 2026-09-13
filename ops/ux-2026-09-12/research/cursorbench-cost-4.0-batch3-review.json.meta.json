@@ -1,0 +1,62 @@
+{
+  "started_at": "2026-09-13T19:38:06.942Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "openai/gpt-5.6-luna"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.04,
+    "output_per_1m": 0.08,
+    "context": 1310720,
+    "aa_intelligence_index": 34.5,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.5
+      }
+    ]
+  },
+  "input_sha256": "a53265f8b84f545e5a1bf468c16b625430b69084bf3eeb178a3bfdcf8f7d072c",
+  "reasoning": null,
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 21058,
+    "completion_tokens": 1076,
+    "total_tokens": 22134,
+    "cost": 0.0008376812928,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 256,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00084614272,
+      "upstream_inference_prompt_cost": 0.00073251712,
+      "upstream_inference_completions_cost": 0.0001136256
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 722,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "Baidu",
+  "session_id": null,
+  "finished_at": "2026-09-13T19:38:12.787Z",
+  "output_sha256": "f7464040417d1ed8b751230111add781d80bcc3bb47c1d11f09fb3291a166f2b"
+}

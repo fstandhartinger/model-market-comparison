@@ -40,6 +40,12 @@ The immutable `data/raw/benchmarks/history/` store is also functional data: pres
 dated registry and history-only AA/ECI/DesignArena headline states so bridged comparisons
 remain reproducible after a source drops an older model.
 
+The upstream benchmark registry may also contain secondary, non-Composite sources such as
+CursorBench 4.0. Preserve their exact versioned IDs, source captures, `self_reported` basis,
+43-row model/effort labels and unmatched source identities; never map an effort label to a
+catalog model by name alone and never fold these rows into the Composite. Keep the robots-aware
+collection recipe and provenance files with the data sync.
+
 Do this:
 
 1. **Add upstream + fetch.**
