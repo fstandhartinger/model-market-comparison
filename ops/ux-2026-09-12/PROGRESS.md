@@ -446,3 +446,34 @@ Notes for whoever picks this up:
     as a non-Claude engine with `OUT=<dir> node ops/ux-2026-09-12/bin/verify-b3-live.mjs`; then
     H1 (retain AA Intelligence/Coding Index, ECI and DesignArena Elo in `history/states` —
     today `buildState` only sees registry observations), then H3.
+
+- **2026-09-13 · iteration 8 · codex-luna** — F-02, F-03 and F-12, deployed and live-checked.
+  - **F-02:** replaced the wrapping header with a 59 px single-row responsive navigation. Desktop
+    keeps Overview · Benchmarks · Compare · Charts · Benchmaxxing · More; Radar is no longer a
+    top-level nav item. Mobile keeps the mark, theme, Menu and Filters in one row; Filters opens
+    the same grouped sheet below the header through an accessible button.
+  - **F-03:** Simple now puts the two controls first, renders the distributions as sparklines in
+    their tracks, places a score-vs-adjusted-cost value map before the list, dims models outside
+    the active limits, labels passing points on desktop, and uses a concise “models pass / below
+    your score line / show all” summary. The desktop map is 320 px; mobile is a compact 80 px
+    strip so F-01’s explicit first-row-above-700 px requirement is met while the list remains
+    immediately discoverable. Mobile chart tick text is suppressed to avoid illegible overlap.
+  - **F-12:** removed the repeated identity disclaimer from the footer; it remains available at
+    `/about#identity` as required.
+  - Gates on the final tree: `npm test` ✓ (256/256), `npx tsc --noEmit -p .` ✓, `npm run build` ✓
+    (21/21 static pages), `git diff --check` ✓. No data refresh was claimed; the committed
+    dataset timestamp remains the last accepted source snapshot, so R9.1 stays open.
+  - Commits `4d4783c`, `4c63bcb`, `f30e5c2`, `e573ef6` pushed to `main`; final Sandy deployment
+    `3yx3j5q71lretrhl00qpdeie` finished for `e573ef6112bd1d6a5ab72feabed095c6b7b995a3`.
+    The earlier intermediate deploys `fad3jezdnrrokkx3vofg9yfm`, `dbztopowuzom0omdwnwzzsz2` and
+    `cg34gykyqqnojz7bdzhbcliy` were superseded by this final deployment.
+  - Live evidence: `/opt/benchmarkheaven/state/ux-evidence/iter8-final/verification-e573.json`
+    and its eight `e573-*` screenshots. Both canonical and legacy hosts returned 200 at desktop
+    1440×1000 and mobile 390×844 in light/dark; all served the exact final revision, body width
+    equalled the viewport, nav height was 59 px, mobile first row was 692 px, Simple was selected,
+    the value map and filters were present, 20:1 and 30:1 were present, and Advanced showed 16
+    score-descending rows. Statuses remain `implemented`, not `verified`, pending an independent
+    engine under the one-engine verification rule.
+  - Budget record at iteration start: Codex weekly 65 % in `/home/flori/.agent-budget.json`,
+    below the 75 % review gate and 80 % hard cap; no API-key billing was used. No foreign writer
+    was found and the local preview server was stopped cleanly.

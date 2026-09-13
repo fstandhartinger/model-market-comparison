@@ -289,3 +289,6 @@ source; every estimate has assumptions." (it is on `/about`).
 | R3.1 hero claim + meta/OG/footer text | `76d8f86` (Fable) | `ux-evidence/fable-20260913/local/`, `…/after/` | pending non-Claude verifier |
 | F-01 compact hero (eyebrow and stat boxes gone, one counts line, smaller display) | `76d8f86` (Fable) | `ux-evidence/fable-20260913/local/desktop_light-simple.png` | pending non-Claude verifier |
 | F-04 small print under the table, caption into the Score (i), short score labels in Charts/Scatter/select | `76d8f86` (Kimi K3 via delegate.sh, reviewed by Fable) | `ux-evidence/fable-20260913/after/` | pending non-Claude verifier |
+| F-02 one-row responsive nav, Filters button and sheet | `e573ef6` (Codex Luna) | `ux-evidence/iter8-final/verification-e573.json` + live screenshots | pending independent verifier |
+| F-03 Simple value map: sliders, compact score/cost scatter, concise pass summary | `e573ef6` (Codex Luna) | `ux-evidence/iter8-final/verification-e573.json` + live screenshots | pending independent verifier; mobile map is intentionally compact to meet F-01 fold target |
+| F-12 concise footer (identity note remains on /about) | `4d4783c` (Codex Luna) | `ux-evidence/iter8-final/verification-final.json` | pending independent verifier |
