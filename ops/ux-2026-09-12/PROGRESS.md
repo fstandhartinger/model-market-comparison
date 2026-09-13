@@ -1222,4 +1222,6 @@ Notes for whoever picks this up:
   audit: `data/research/refresh-2026-09-13.md`. Commit `ff48c42` deployed successfully to both
   public hosts; `/api/health`, `/api/meta` and `/api/dataset` read back green in
   `/opt/benchmarkheaven/state/ux-evidence/iter39-data-refresh-20260913/live/live-readback.json`.
+  A real-browser smoke check at 1440×1000 light and 390×844 dark also passes with the hero,
+  table, score 86 and no horizontal overflow: `/opt/benchmarkheaven/state/ux-evidence/iter39-data-refresh-20260913/live/browser-smoke.json`.
   R9.1 remains open because the curated source dates are still stale.
