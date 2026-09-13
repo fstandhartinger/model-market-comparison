@@ -279,6 +279,6 @@ source; every estimate has assumptions." (it is on `/about`).
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
-| R3.1 hero claim + meta/OG/footer text | design pass 1 (Fable) | `ux-evidence/fable-20260913/local/`, `…/after/` | pending non-Claude verifier |
-| F-01 compact hero (eyebrow and stat boxes gone, one counts line, smaller display) | design pass 1 (Fable) | `ux-evidence/fable-20260913/local/desktop_light-simple.png` | pending non-Claude verifier |
-| F-04 small print under the table, caption into the Score (i), short score labels in Charts/Scatter/select | design pass 1 (Kimi K3 via delegate.sh, reviewed by Fable) | `ux-evidence/fable-20260913/after/` | pending non-Claude verifier |
+| R3.1 hero claim + meta/OG/footer text | `76d8f86` (Fable) | `ux-evidence/fable-20260913/local/`, `…/after/` | pending non-Claude verifier |
+| F-01 compact hero (eyebrow and stat boxes gone, one counts line, smaller display) | `76d8f86` (Fable) | `ux-evidence/fable-20260913/local/desktop_light-simple.png` | pending non-Claude verifier |
+| F-04 small print under the table, caption into the Score (i), short score labels in Charts/Scatter/select | `76d8f86` (Kimi K3 via delegate.sh, reviewed by Fable) | `ux-evidence/fable-20260913/after/` | pending non-Claude verifier |

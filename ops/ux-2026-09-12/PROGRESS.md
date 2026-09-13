@@ -389,8 +389,11 @@ Notes for whoever picks this up:
     Kimi K3 via `bin/delegate.sh --kimi` in an isolated worktree; reviewed the diff before it
     landed (see the commit that follows).
   - Gates on the tree: build-dataset ✓ (timestamp-only dataset diff discarded), npm test ✓,
-    tsc ✓, next build ✓. Local production render checked before push; live re-check after the
-    Coolify deploy is recorded in `ux-evidence/fable-20260913/after/`.
+    tsc ✓, next build ✓. Commit `76d8f86`, deployed and stable on both hosts. Live re-check
+    (`bin/verify-fable.mjs`, `ux-evidence/fable-20260913/after/verification.json`): new
+    claim in H1/meta/OG, no eyebrow, no "Every benchmark result", no "dominance-safe" in body
+    text, no overflow; desktop first screen now shows 3 model rows (was 0), mobile first row
+    at 1,151 px (was ~1,500 px; F-02/F-03 must bring it above 700 px).
   - Open for the next implementers, in order: F-02 (nav/filter bar), F-03 (Simple value
     map), F-06 (Advanced defaults), F-07 (Benchmaxxing radar), F-08 (model page sheet),
     F-05, F-09…F-12. Fable does not set `verified` on anything.
