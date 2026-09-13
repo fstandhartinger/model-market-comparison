@@ -93,7 +93,10 @@ export async function defaultRunner(args) {
     catch (error) { if (error.code !== 'ENOENT') throw error; }
   }
   try {
-    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '8192', '--timeout', '180', ...args], {
+    // 16,384 completion tokens: on 2026-09-13 both DeepSeek producers spent all 8,192 on
+    // reasoning for the 16.6k-token or_efficiency contract packet and never wrote an answer,
+    // which blocked publication. 8,192 took ~40 s, so the 180 s deadline still holds.
+    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '16384', '--timeout', '180', ...args], {
       cwd: REPO, env: { ...process.env, BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_MAX_PRICE_PER_1M: '4',
         BH_WORKER_EXCLUDE_MODELS: [...new Set([...failed, ...(process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean)])].join(',') },
       maxBuffer: 4 * 1024 * 1024, timeout: 240_000,

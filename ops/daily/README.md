@@ -26,7 +26,7 @@ The live OpenRouter model catalog is joined to our accepted AA dataset each run.
 The AA Intelligence Index gate is **>=34**, using the conservative minimum among
 matched published variants. Unknown models cannot qualify through smoke tests.
 Routine completion calls are capped at **$4 per million input and output tokens**,
-with low reasoning effort where the current catalog supports it. Reasoning remains enabled for daily data work, with an 8,192-token total completion bound and 180-second request deadline. Actual model identity, reasoning configuration, returned usage and
+with low reasoning effort where the current catalog supports it. Reasoning remains enabled for daily data work, with a 16,384-token total completion bound (raised from 8,192 on 2026-09-13, when reasoning alone exhausted 8,192 tokens on the largest contract packet) and 180-second request deadline. Actual model identity, reasoning configuration, returned usage and
 review coverage are recorded. Producer and critic must belong to different families.
 Model responses, source pages and candidate data are untrusted inputs.
 
