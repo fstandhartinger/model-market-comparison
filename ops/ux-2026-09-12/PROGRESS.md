@@ -89,8 +89,8 @@ credited below, the rest is marked open.
 | B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4, `test/benchmax-jagged.test.mjs` | zig-zag > smooth specialisation still proven. Iteration 7 removed the alphabetical-order critique (all-pairs spread, order-invariance test). **Remaining, documented on `/benchmaxxing#method`:** percentiles are bounded, so a model at the top of most boards has less room to vary than a mid-field one |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
 | X2 | Codex never above 80 % weekly | open | `/opt/benchmarkheaven/state/ux-evidence/review-20260913T085002Z-limits.json` | `limits.py --json` at 09:13 UTC: codex 69% weekly, Claude 75% session / 24% week; below the 80% ceiling. X2 remains open because the final completeness gate X6 is not complete. |
-| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `/opt/benchmarkheaven/state/ux-evidence/review-20260913T085002Z/final-audit/verification.json` | Pass-2 items F-13/F-14/F-15/F-16/F-17/F-18/F-20 remain live and independently rechecked. F-21 was fixed in `299efad` and passes live: Compare/Radar no longer render the Composite definition. F-08 and F-19 still fail their explicit acceptance criteria, so X3 cannot close. |
-| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict — pass 2"; `/opt/benchmarkheaven/state/ux-evidence/review-20260913T085002Z/final-audit/verification.json` | Current live audit (`299efad`, both hosts, 1440/390, light/dark): hero, nav, footer, Charts, wizard, filter overlay, Simple/Advanced, radar containment and F-21 pass. Still failing: model page 6,308 px desktop / 10,112 px mobile with a provider table up to 567 px at 390 px (F-08), and Benchmaxxing still has the old question H1/eyebrow and old table/per-cell `not scored` treatment (F-19). |
+| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `/opt/benchmarkheaven/state/ux-evidence/review-20260913T085002Z/final-audit/verification.json` | Pass-2 items F-13/F-14/F-15/F-16/F-17/F-18/F-20 remain live and independently rechecked. F-19 is now implemented and live on both hosts; it still needs independent verification. F-21 was fixed in `299efad`; F-08 remains open, so X3 cannot close. |
+| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict — pass 2"; `/opt/benchmarkheaven/state/ux-evidence/iter18-f19-live/verification.json` | Current F-19 live audit passes at 1440/390 in light/dark on both hosts; the model page still fails F-08 at 6,308 px desktop / 10,112 px mobile with a provider table up to 567 px at 390 px. |
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | implemented | **Iteration 14 (claude-opus) re-check:** `API.md` documents the H2 fields and the six headline boards; the fork-sync prompt syncs `data/raw/*.json` by glob (covers the data-policy, ECI and subscriptions files) and names the history store. **Gap found and closed:** CHANGELOG had no entry for E1 (a Composite scoring change), the derived top-20 featured set (R4.4) or the `/compare` snapshots (R8.1) — added, every field path checked against `dataset.json` and the build script (`benchmarks.epoch_eci` 130 / `epoch_eci_software` 77 models, `source_status.composite.status`, `build_diagnostics.featured_selection` 20 families / 58 rows, `FEATURED_TOP_N`, pin `deepseek-v4.1-flash`). Needs a non-Claude verifier for the new entries. Earlier: | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`; `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json` | Documents the six history-only headline boards and the multi-hop API projection; committed in `33a1963` and served on both live hosts. |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
@@ -106,6 +106,7 @@ credited below, the rest is marked open.
 | P4 | Positioning claims only in a form the live coverage numbers support | open | `DESIGN-DIRECTIVES.md` §R3.1, `ux-evidence/iter14-prd-review/review-claude-opus.json` (P4-CLAIM-01) | Reopened by this gate: Artificial Analysis' comparison page also shows a per-model "Cost per Task" with cache-hit prices, so "the only place that shows what each model really costs you" is not independently supported as an exclusive claim. The live page's provider-route choice under user filters and measured token efficiency may support a narrower distinction, but X7/product review must resolve wording. |
 | F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter12-f05-live/verification.json` | Fable pass judged against exactly this bar; F-05 now uses aligned score/cost magnitude bars and was live-checked by Codex, but independent verification and the remaining open directives are still required. |
 | C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly. Iteration 15: no foreign commits; the only other process in the repo was the design pass's own orphaned Kimi delegate (stopped, see the log) |
+| F-19 | Benchmaxxing title, sector labels and signal table | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter18-f19-live/verification.json` | Title is concise, the default table shows 10 strongest tagged signals with a Show all 18 control, mobile collapses to Model/Signal/Measured without overflow, and the radar uses qualified topic labels plus an Other legend. Needs a different engine to set verified. |
 
 ---
 
@@ -779,6 +780,13 @@ Notes for whoever picks this up:
     X6 and X7. E1 was conservatively returned from `verified` to `implemented` because its own
     ledger note still required independent-engine verification. No `ALL-ACCEPTED` line is added.
 
-- **2026-09-13 · iteration 18 · codex-luna · in progress** — taking F-19 (Benchmaxxing page
-  title, topic-ring labels and overview table) as the highest-value bounded UI item. No data
-  refresh or score changes are in scope; missing benchmark results remain unknown.
+- **2026-09-13 · iteration 18 · codex-luna** — implemented F-19 (Benchmaxxing page title,
+  topic-ring labels and overview table) in `0c37a18`. The overview now defaults to the 10
+  strongest tagged signals and can reveal all 18; mobile shows Model/Signal/Measured only;
+  the per-model selector marks tagged models with an orange-dot marker; radar labels require
+  at least six axes and 14 degrees, smaller topics are rendered as grey Other sectors with a
+  legend, and measured gaps remain gaps. Local gates passed: build-dataset (timestamp-only
+  output reverted), npm test 266/266, tsc, next build 21/21 and diff-check. Deployed through
+  Sandy deployment `klmccrqfw1kb0xhq7xnfx3gt` and checked both public hosts at 1440/390 in
+  light/dark; evidence is `/opt/benchmarkheaven/state/ux-evidence/iter18-f19-live/`. Status
+  remains implemented until a different engine verifies it.

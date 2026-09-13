@@ -83,11 +83,12 @@ asked for.
 
 ## Directives (open)
 
-> **Status 2026-09-13, iteration 16 (codex-luna review gate):** F-13, F-14, F-15, F-16,
+> **Status 2026-09-13, iteration 18 (codex-luna):** F-13, F-14, F-15, F-16,
 > F-17 and F-20 are independently **verified** on both hosts at desktop/mobile widths in
 > light/dark (`ux-evidence/review-20260913T075003Z-*postfix*/`). F-18 remains implemented,
 > with a small header-layering correction in `8d950fb` and therefore is not marked verified
-> by this gate. Still open: **F-08, F-19, F-21.** Two notes for the verifier: F-16 applies "Advanced starts with
+> by that gate. F-19 is implemented in `0c37a18` and live-checked on both hosts at desktop/mobile
+> widths in light/dark; it needs an independent verifier. Still open: **F-08.** Two notes for the verifier: F-16 applies "Advanced starts with
 > Featured off" to the Advanced home view only; Charts, Compare, Providers and Scatter keep
 > the Featured default (on), which the directive does not mention. F-17's "labels never
 > extend past the plot's right edge" is met by keeping labels inside the plot (they flip
@@ -324,3 +325,4 @@ Live revision `0e7380c`, script `ops/ux-2026-09-12/bin/verify-directives-indep.m
 | F-17 value map: collision-free labels, round ticks, frontier over passing points, 200 px phone map | `939b278` (Claude Opus; the Kimi delegation produced nothing in 50 min and was stopped) | `ux-evidence/review-20260913T075003Z-f18-postfix-canonical/`, `…-legacy/` | **verified by codex-luna:** 0 overlaps/clipped labels, round ticks 60…100, 240 px desktop / 200 px phone map |
 | F-18 Filters overlay (desktop popover, phone bottom sheet), `openFilters()`, count links | `939b278` (Claude Opus) + `8d950fb` (Codex Luna header layering correction) | same | implemented; live acceptance passes, but this gate changed the header layering and does not mark its own fix verified |
 | F-20 Charts control bar and one-sentence intro | `21ff9e8` (Kimi K3, reviewed) | `ux-evidence/review-20260913T075003Z-fable-postfix-canonical/`, `…-legacy/` | **verified by codex-luna:** no "fixed inputs" / "Coding Agent v1", intro 102 chars on both hosts |
+| F-19 Benchmaxxing title, ring labels, signal table and tagged selector markers | `0c37a18` (Codex Luna) | `/opt/benchmarkheaven/state/ux-evidence/iter18-f19-live/` | implemented; needs a different engine to verify |
