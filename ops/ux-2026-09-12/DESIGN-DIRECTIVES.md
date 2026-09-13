@@ -101,7 +101,10 @@ asked for.
 
 ## Directives (open)
 
-> **Status 2026-09-13 pass 4 (Fable):** F-08a/F-08b and F-22 … F-28 are done and live
+> **Status 2026-09-13 pass 5 (Codex implementation):** F-08a/F-08b and F-22 … F-30 are done and live;
+> F-35 … F-38 are now implemented and live on `085207b` (see the Done log), pending a non-Codex
+> verifier. The remaining open directives below are ordered by value.
+> **Previous status, pass 4 (Fable):** F-08a/F-08b and F-22 … F-28 were done and live
 > (Done log). F-29 and F-30 were fixed by Fable in this pass. The list below is the complete
 > remaining design backlog, ordered by value. F-33 and F-34 were delegated to Kimi K3 in this
 > pass; their diffs are reviewed by Fable before they land (see the Done log for the outcome).
@@ -293,3 +296,7 @@ Live revision `0e7380c`, script `ops/ux-2026-09-12/bin/verify-directives-indep.m
 | F-28 slider histograms visible + range end labels; Evidence button neutral by default | `74b5a2d` (Claude Opus) | same | live: 4 end labels, no accent-filled button in a fresh Advanced session; needs a non-Claude verifier |
 | F-29 dark-mode value-map labels (`fill="var(--text)"`) | `2e4abce` (Fable, pass 4) | `ux-evidence/fable-20260913-pass4/checks/` | needs a non-Fable verifier: label fill ≠ rgb(0,0,0) in dark |
 | F-30 Guided no longer resets Simple's floor (`resetMinScore` on mount) | `2e4abce` + `9840328` (Fable, pass 4) | same | needs a non-Fable verifier: Simple shows 85 / 6 rows after Guided → Simple |
+| F-35 Compare release-post table: compact native values, percentile bars and one evidence expand per benchmark row | `085207b` (Codex Luna) | `ux-evidence/iter25-f35-live/{canonical,legacy}/verification.json` and `iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
+| F-36 Model page: suppress empty protocol-divergence copy; label Copilot card | `085207b` (Codex Luna) | `ux-evidence/iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
+| F-37 Subscription list: neutral verdict chips and one uncollected-plan footnote | `085207b` (Codex Luna) | `ux-evidence/iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
+| F-38 Simple score caption and one-line explanatory small print | `085207b` (Codex Luna) | `ux-evidence/iter25-f36-f38-live/verification.json` | implemented; needs a non-Codex verifier |
