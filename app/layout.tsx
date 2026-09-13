@@ -10,15 +10,15 @@ export const metadata: Metadata = {
   metadataBase: new URL("https://benchmarkheaven.com"),
   applicationName: "Benchmark Heaven",
   title: { default: "Benchmark Heaven — Model benchmarks & costs", template: "%s | Benchmark Heaven" },
-  // P4: positioning claims only in a form the live coverage supports — so this states
-  // what the site holds and what the cost figure accounts for, not an unverifiable superlative.
+  // R3.1 (Fable 5.1, 2026-09-13): the two-part claim Florian asked for; the page proves it with
+  // generated counts. P4: never "every benchmark result".
   description: "Published benchmark results for hundreds of models, gathered in one place with their sources and dates — and a cost per task that accounts for the provider, its caching and the model's own token appetite.",
   openGraph: {
     type: "website", siteName: "Benchmark Heaven",
-    title: "Benchmark Heaven", description: "Every benchmark result for every model — and what each one actually costs.",
-    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Benchmark Heaven — Every benchmark result for every model — and what each one actually costs." }],
+    title: "Benchmark Heaven", description: "The most complete collection of AI model benchmarks, and the only place that shows what each model really costs you.",
+    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Benchmark Heaven — The most complete collection of AI model benchmarks, and the only place that shows what each model really costs you." }],
   },
-  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: "Every benchmark result for every model — and what each one actually costs.", images: ["/brand/og-image.png"] },
+  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: "The most complete collection of AI model benchmarks, and the only place that shows what each model really costs you.", images: ["/brand/og-image.png"] },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 
@@ -47,7 +47,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <span className="bh-wordmark text-lg">Benchmark Heaven</span>
               <div className="flex flex-wrap gap-5"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a></div>
             </div>
-            <p>Every benchmark result for every model — and what each one actually costs. Every result has a source; every estimate has assumptions.</p>
+            <p>The most complete collection of AI model benchmarks, and the only place that shows what each model really costs you.</p>
             <p className="mt-2">Data from OpenRouter, Artificial Analysis, Intelligence.ai / DesignArena, benchmark maintainers and provider catalogs.
               Raw token prices are USD per 1M tokens; adjusted task costs are estimates with visible inputs.
               Source dates vary. Check the linked source before choosing a provider.</p>

@@ -94,12 +94,12 @@ details[open] > summary { margin-bottom: 8px; }
    wordmark follows it so the page and the logo file read as one thing. */
 .bh-wordmark-accent { color: var(--brand-word); }
 .bh-brand-link:hover .bh-wordmark, .bh-brand-link:hover .bh-wordmark-accent { color: rgb(var(--accent)); }
-.bh-hero { position: relative; border-bottom: 1px solid rgb(var(--line)); padding: 12px 0 28px; }
+.bh-hero { position: relative; padding: 8px 0 12px; }
 .bh-hero::before { content: ""; position: absolute; inset: -24px -16px 0; background: radial-gradient(ellipse at 90% 0, rgb(var(--accent) / .08), transparent 60%); pointer-events: none; }
 .bh-hero > * { position: relative; }
-.bh-display { font-family: var(--brand-serif); font-size: clamp(32px, 4vw, 52px); font-weight: 400; line-height: 1.06; letter-spacing: -.045em; }
+.bh-display { font-family: var(--brand-serif); font-size: clamp(26px, 2.6vw, 38px); font-weight: 400; line-height: 1.1; letter-spacing: -.035em; max-width: 1100px; }
 .bh-display span { color: rgb(var(--accent2)); }
-.bh-hero > p:not(.bh-eyebrow) { margin-top: 18px; max-width: 760px; line-height: 1.7; }
+.bh-hero > p:not(.bh-eyebrow) { margin-top: 10px; max-width: 900px; line-height: 1.55; }
 .bh-page-head > h1, main > div > h1 { font-family: var(--brand-serif); font-weight: 400; letter-spacing: -.035em; }
 .bh-footer { border-top: 1px solid rgb(var(--line)); }
 .bh-footer a { text-decoration: underline; }
@@ -108,8 +108,8 @@ details[open] > summary { margin-bottom: 8px; }
    they just stop being a full-page cover. */
 @media (max-width: 639px) {
   .bh-wordmark { font-size: 20px; }
-  .bh-hero { padding: 2px 0 16px; }
-  .bh-display { font-size: 27px; line-height: 1.12; }
+  .bh-hero { padding: 2px 0 8px; }
+  .bh-display { font-size: 22px; line-height: 1.15; }
   .bh-hero > p:not(.bh-eyebrow) { margin-top: 10px; font-size: 13px; line-height: 1.55; }
   .bh-stat-row { gap: 8px; }
   .bh-stat-row > .card { padding: 6px 10px; }

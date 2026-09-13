@@ -51,7 +51,7 @@ credited below, the rest is marked open.
 | R1.8 | (i): desktop hover tooltip, mobile modal with ✕; a11y | implemented | `ux-evidence/iter1-live/verification.json` | desktop: 1 tooltip / 0 dialogs; mobile: dialog with ✕, closes. Branches on `(hover:hover) and (pointer:fine)`, not width |
 | R2.1 | Remove Channels / Top provider channels columns | verified | `ux-evidence/iter1-live/verification.json` | from `f59c021`; re-checked live — neither column string is rendered |
 | R2.2 | Add #benchmarks and #providers columns | implemented | `ux-evidence/iter1-live/verification.json` | now `benchmark_count` from `benchmark_results.coverage.by_model[].available` — observed 14–20, i.e. no longer the 0–5 composite slots |
-| R3.1 | New hero claim (most complete collection + realistic cost) | implemented | `ux-evidence/iter1-live/verification.json` | claim is generated from the dataset (13,924 results · 75 benchmarks · 839 models) so it cannot drift; also in metadata, OG, footer, README, brand SVGs. **Pending Fable 5.1 final wording (X3).** |
+| R3.1 | New hero claim (most complete collection + realistic cost) | implemented | `ux-evidence/fable-20260913/` (before) · `DESIGN-DIRECTIVES.md` §R3.1 | **Fable 5.1 decided 2026-09-13:** "The most complete collection of AI model benchmarks. And the only place that shows what each model really costs you." — hero, meta, OG image, footer all changed; "every benchmark result" no longer used anywhere. Needs non-Claude live verification after deploy |
 | R4.1 | Redesign the filter bar, elegant and uncluttered | implemented | `ux-evidence/iter1-live/desktop-filters.png` | grouped into Ranking / Price basis / Regional settings / Data confidentiality / More settings |
 | R4.2 | Fixed I/O blend: add 20:1 (default) and 30:1 | implemented | `ux-evidence/iter1-live/verification.json` | blend list now has 20:1 and 30:1; default reads back as 20 |
 | R4.3 | "One variant for Reasoning models" → extra settings | implemented | `ux-evidence/iter1-live/desktop-filters.png` | moved into "More settings" |
@@ -89,8 +89,8 @@ credited below, the rest is marked open.
 | B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4 | test proves zig-zag > smooth specialisation; critique: alphabetical within-topic order and top-end percentile compression favour flagging mid-field models — revisit with B3 |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
 | X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
-| X3 | Fable 5.1 design passes happened and were implemented | open | — | no `DESIGN-DIRECTIVES.md` yet |
-| X4 | UI meets the design bar | open | — | |
+| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed; F-02…F-12 open for implementers |
+| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict" | fails today on: key message below the fold, no chart in Simple, jargon on the surface, unreadable 214-axis radar, Advanced opening on 6 rows — each has a directive |
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | open | — | |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
@@ -103,8 +103,8 @@ credited below, the rest is marked open.
 | P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | open | — | reviewer must be a different engine than the author |
 | P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | open | — | AA is the named reference comparator |
 | P3 | Do not stop before P2 is achieved | open | — | |
-| P4 | Positioning claims only in a form the live coverage numbers support | open | `REVIEW-20260913T002002Z.md` #6 | review: live hero "Every benchmark result for every model" over-reaches (6 of 75 registry benchmarks without results; AA/ECI indices outside the registry). Earlier note: | hero counts are generated from the dataset; the meta description's "most complete … anywhere" superlative was removed this iteration |
-| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | open | — | Fable 5.1 design passes judge against exactly this |
+| P4 | Positioning claims only in a form the live coverage numbers support | implemented | `DESIGN-DIRECTIVES.md` §R3.1 | superlative "every benchmark result" removed; "most complete" is backed by the generated counts line under the H1; "only place … really costs you" is Florian's explicit ask — carry to X7 |
+| F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md` | Fable pass judged against exactly this bar; see Verdict section |
 | C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly |
 
 ---
@@ -127,6 +127,11 @@ credited below, the rest is marked open.
   7 are unknown. Florian can overrule this to "unknown is filtered out too" — carry to X7.
 - **R5.2** "über den Preis absteigend sortiert" is implemented **literally** (most expensive
   first) in Simple mode.
+  **Fable 5.1 (2026-09-13) judges cheapest-first clearly better for a recommendation list**;
+  the literal default stays, the Adjusted Cost header toggles it in one click — ask Florian in X7.
+- **R3.1** Fable 5.1 rejected Florian's draft wording ("All benchmark results … most realistic
+  cost estimate") because "all" over-reaches (P4) and "most realistic" is weaker than the
+  "only site" claim he asked for. Final line in `DESIGN-DIRECTIVES.md`. He may prefer his own.
 - **R4.4 (new, consequential)** "Roughly the top 20 of the AA Index charts" is implemented as
   **exactly** the top 20 model families by best AA Intelligence Index, deprecated excluded,
   plus pins. Consequences Florian may want to overrule: (a) the older house rule "Gemini is
@@ -365,3 +370,28 @@ Notes for whoever picks this up:
   - Fixed directly: mobile page overflow on `/compare` and `/benchmaxxing`, (i) capsule glitch,
     identical duplicate tests. Gates: build-dataset ✓, npm test 244/244 ✓, tsc ✓, next build ✓.
   - Not ALL-ACCEPTED. Next: B3/B4 ranking fix, H1/H2, the first Fable 5.1 pass (X3), R9.1.
+
+- **2026-09-13 · design pass 1 · claude-fable** — `DESIGN-DIRECTIVES.md` created. Fresh live
+  screenshots of `3d4573a` at 1440×1000 and 390×844, light and dark, for Simple, Advanced
+  (+ filters), Guided 1–5, Benchmaxxing, model page, Compare, Charts, Benchmarks, Radar,
+  Scatter, Providers, About (89 files, `ux-evidence/fable-20260913/`).
+  - Verdict: the wizard, the filter grouping, Compare's radar/category cards and dark mode
+    are good. Failing the bar: key message below the fold (desktop shows zero model rows on
+    the first screen; mobile shows the first row at ~1,500 px), Simple has no chart of the
+    thesis, long score definitions printed as labels, three paragraphs between sliders and
+    list, the 214-axis Benchmaxxing radar is a grey disc with a black centre, Advanced opens
+    on 6 rows, several cell-level defects (cost bar beside the number, org-tinted score bars).
+  - Decided R3.1 (hero claim) and applied it: `app/page.tsx`, `app/layout.tsx` (meta/OG/
+    footer), `scripts/build-brand-assets.mjs` + regenerated `public/brand/og-image.*`.
+    Applied F-01 (compact hero: no eyebrow, no stat boxes, one generated counts line, smaller
+    display size) in the same files.
+  - Delegated F-04 (small print below the table, jargon into the (i), short score labels) to
+    Kimi K3 via `bin/delegate.sh --kimi` in an isolated worktree; reviewed the diff before it
+    landed (see the commit that follows).
+  - Gates on the tree: build-dataset ✓ (timestamp-only dataset diff discarded), npm test ✓,
+    tsc ✓, next build ✓. Local production render checked before push; live re-check after the
+    Coolify deploy is recorded in `ux-evidence/fable-20260913/after/`.
+  - Open for the next implementers, in order: F-02 (nav/filter bar), F-03 (Simple value
+    map), F-06 (Advanced defaults), F-07 (Benchmaxxing radar), F-08 (model page sheet),
+    F-05, F-09…F-12. Fable does not set `verified` on anything.
+

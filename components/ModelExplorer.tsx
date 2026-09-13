@@ -173,14 +173,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
         <span className="ml-auto text-xs text-gray-500">{rows.length} models{offerScope.restricted ? " · filtered" : ""}</span>
       </div>
 
-      <PriceAssumptions />
-      <p className="mb-3 text-xs text-gray-500">The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></p>
-      {s.priceMode === "adjusted" && measuredTasksOnly && !simple && <p className="mb-3 text-xs text-amber-200">Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</p>}
-      {s.priceMode === "adjusted" && measuredTasksOnly && simple && <p className="mb-3 text-xs text-gray-500">Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</p>}
-
       <div className="card overflow-x-auto">
-        <table className="dtable w-full min-w-[900px] table-fixed text-sm">
-          <caption className="p-3 text-left text-xs text-gray-400">{scoreLabel(score, data.sourceDates)}</caption>
+        <table aria-label="Model ranking" className="dtable w-full min-w-[900px] table-fixed text-sm">
           <colgroup>
             <col style={{ width: "30%" }} /><col style={{ width: "13%" }} /><col style={{ width: "12%" }} />
             <col style={{ width: "17%" }} /><col style={{ width: "8%" }} /><col style={{ width: "20%" }} />
@@ -188,7 +182,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           <thead><tr>
             <Th label="Model" k="name" />
             <Th label="Org" k="org" />
-            <Th label="Score" k="score" right sub={SCORE_SHORT_LABELS[score]} info={<InfoTip title={`Score — ${SCORE_LABELS[score]}`} label="the Score column">{scoreTip(score)}</InfoTip>} />
+            <Th label="Score" k="score" right sub={SCORE_SHORT_LABELS[score]} info={<InfoTip title={`Score — ${SCORE_LABELS[score]}`} label="the Score column">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">{scoreLabel(score, data.sourceDates)}</span></InfoTip>} />
             <Th label="Adjusted Cost" k="cost" right info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
             <Th label="# benchmarks" k="benchmarks" right />
             <Th label="# providers" k="providers" right />
@@ -313,6 +307,17 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           </tbody>
         </table>
       </div>
+
+      {/* F-04: the small print lives under the table now — one footnote joining the
+          price hint, the Benchmaxxing screening note (only when a displayed row carries
+          the signal) and the measured-task-tokens note with " · ". */}
+      <p className="mt-3 text-xs text-gray-500">
+        <PriceAssumptions inline />
+        {rows.some((x) => x.m.benchmaxxing_signal) && <>{" · "}The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
+        {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}{simple
+          ? <>Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</>
+          : <>Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
+      </p>
     </div>
   );
 }

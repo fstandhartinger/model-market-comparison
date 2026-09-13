@@ -62,9 +62,13 @@ export function PriceValue({ price, compact = false }: { price: PriceResult; com
  *  column now explains itself through its (i), and the full derivation lives on /about
  *  (R1.6). What stays here is only the one thing a reader needs at the table: every
  *  price is clickable and shows its own inputs, dates and assumptions. */
-export function PriceAssumptions() {
-  return <p className="my-2 max-w-4xl text-xs leading-relaxed text-gray-500" data-testid="price-assumptions">
+export function PriceAssumptions({ inline = false }: { inline?: boolean }) {
+  const text = <>
     Click any underlined price for its exact inputs, sources, dates and assumptions.{" "}
     <a href="/about#adjusted-cost" className="text-accent underline underline-offset-2">How we calculate adjusted cost</a>.
-  </p>;
+  </>;
+  // `inline` renders a <span> so the note can sit inside a single footnote paragraph
+  // (a <p> nested in a <p> is invalid HTML).
+  if (inline) return <span data-testid="price-assumptions">{text}</span>;
+  return <p className="my-2 max-w-4xl text-xs leading-relaxed text-gray-500" data-testid="price-assumptions">{text}</p>;
 }

@@ -6,8 +6,8 @@ import {
   ScatterChart, Scatter, XAxis, YAxis, ZAxis, CartesianGrid, Tooltip, ResponsiveContainer, Label,
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
-import { SCORE_LABELS } from "../lib/types";
-import { scoreLabel, scoreChartLabel } from "../lib/score-label";
+import { SCORE_SHORT_LABELS } from "../lib/types";
+import { scoreChartLabel } from "../lib/score-label";
 import { orgColor } from "../lib/format";
 import { modelPrice, createOfferScope, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { Toggle } from "./ui";
@@ -82,7 +82,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{scoreLabel(score, data.sourceDates)}</b></span>
+        <span className="text-sm text-gray-400">Capability (Y): <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b></span>
         <Toggle label="Log cost axis" on={logX} set={setLogX} />
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
         <span className="ml-auto text-xs text-gray-500">{points.length} models · X inverted: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
@@ -142,7 +142,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
           <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-3 py-1 text-left text-xs text-gray-400">Model</th>
-              <th className="px-3 py-1 text-right text-xs text-gray-400">{scoreLabel(score, data.sourceDates)}</th>
+              <th className="px-3 py-1 text-right text-xs text-gray-400">{SCORE_SHORT_LABELS[score]}</th>
               <th className="px-3 py-1 text-right text-xs text-gray-400">{priceLabel(priceSettings)}</th>
             </tr></thead>
             <tbody>

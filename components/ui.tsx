@@ -2,7 +2,7 @@
 import { useState } from "react";
 import type { ProviderInfo } from "../lib/client-model";
 import { PROVIDER_PRESETS } from "../lib/cost";
-import { SCORE_LABELS, type ScoreKey } from "../lib/types";
+import { SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { SCORE_OPTIONS } from "../lib/cost";
 
 export function ScoreSelect({ value, onChange, label = "Score" }: { value: ScoreKey; onChange: (s: ScoreKey) => void; label?: string }) {
@@ -11,7 +11,7 @@ export function ScoreSelect({ value, onChange, label = "Score" }: { value: Score
       <label className="text-sm text-gray-400">{label}</label>
       <select aria-label={label} value={value} onChange={(e) => onChange(e.target.value as ScoreKey)}
         className="min-w-0 max-w-[240px] rounded-md border border-line bg-ink px-3 py-1.5 text-sm sm:max-w-none">
-        {SCORE_OPTIONS.map((s) => <option key={s} value={s}>{SCORE_LABELS[s]}</option>)}
+        {SCORE_OPTIONS.map((s) => <option key={s} value={s}>{SCORE_SHORT_LABELS[s]}</option>)}
       </select>
     </span>
   );
