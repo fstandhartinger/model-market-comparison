@@ -76,7 +76,7 @@ credited below, the rest is marked open.
 | R7.2 | Favicon / apple-touch / og from the new logo | implemented | `ux-evidence/iter2-live/verification-iter2.json` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
 | R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
 | R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
-| R9.1 | Full fresh data run, every live source dated today | in-progress | — | Iteration 6: running the transactional daily refresh; no source or dataset claim will be accepted until the run's own freshness gates, green checks, deployment readback, and live evidence pass. |
+| R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/iter6-refresh-failure/` | Iteration 6 collected all seven live sources successfully in two clean transactions, but both were correctly held before publication because the free live-review workers timed out/incompletely returned on the AA contract in all three bounded rounds. No fresh dataset or deployment claim is accepted. Retry after worker transport recovers. |
 | H1 | Historical snapshots of all benchmark scores | implemented | — | `573ea60`; `benchmark_results.historical` present — needs audit |
 | H2 | Bridged comparison via anchor models, uncertainty reported | implemented | — | `573ea60`; needs multi-hop + re-basing tests |
 | H3 | UI filter "better than model X in category Y" | open | — | |
@@ -328,3 +328,28 @@ Notes for whoever picks this up:
   - The webhook did not remain deployed and the documented shell fallback could not read
     `/etc/sandy-paas/mcp.env` as user `flori`; the user-level Sandy PaaS MCP redeploy completed
     successfully. R8.1 remains `implemented`, not `verified`, pending a different-engine review.
+
+- **2026-09-12/13 · iteration 6 · codex-luna** — attempted R9.1 and hardened the live-review evidence path.
+  - A reviewed Artificial Analysis identity withdrawal was added to
+    `data/raw/source-change-approvals.json`: exactly one expired-model ID was replaced by one
+    new primary-API ID, bound to both complete identity-set hashes, the captured response hash,
+    an owner review timestamp and a short expiry. No unreviewed source shrink is permitted.
+  - Scheduled worker selection now filters the configured whitelist before fallback, and a
+    bounded critic retry may reuse an excluded family only when no other authorized scheduled
+    candidate exists. Tests cover both rules. Commits `716a2b0`, `f85b2cd`, and `eebe047` were
+    pushed; the complete evidence packet for AA efficiency was then expanded and pushed as
+    `e6ad689` after a critic correctly identified that the parser body was outside its locator.
+  - The isolated gate after `e6ad689` passed: `node scripts/build-dataset.mjs`, `npm test`
+    (247/247), `npx tsc --noEmit -p .`, and `npm run build` (21/21 static pages).
+  - Two clean daily transactions started 2026-09-12 23:51:21Z and 23:58:45Z. Each fetched
+    AA, DesignArena, OpenRouter, Coding Agent v1.5, Epoch ECI and data-policy sources with
+    HTTP-success receipts; the final run's source manifest and exact compressed captures are
+    preserved under `/opt/benchmarkheaven/state/ux-evidence/iter6-refresh-failure/`.
+    Neither transaction published: the AA live contract exhausted all three bounded rounds
+    with the same external worker pattern — DeepSeek critic timeout, DeepSeek v4.1 incomplete
+    completion, DeepSeek critic timeout. `published:false` and `storage.applied:false` are
+    retained in both run reports. No source number was accepted on worker failure.
+  - Delegation to the free Nex worker was attempted for the AA approval task; it stopped at a
+    forbidden `/home/flori/.agent-budget.json` access and produced no trusted diff. No delegated
+    output shipped. R9.1 returns to **open** pending worker transport recovery; this engine does
+    not mark any item **verified**.
