@@ -126,8 +126,8 @@ export function ShortlistControls({
   const money = (v: number) => (v >= 10 ? `$${v.toFixed(0)}` : v >= 1 ? `$${v.toFixed(2)}` : `$${v.toFixed(3)}`);
 
   return (
-    <div className="card mb-4 p-4">
-      <div className="grid grid-cols-2 gap-3">
+    <div className="card mb-4 p-3">
+      <div className="grid grid-cols-2 gap-2">
         <Row
           title={`Minimum ${scoreName}`}
           value={minScore > 0 ? minScore.toFixed(0) : "any"}
@@ -154,7 +154,7 @@ export function ShortlistControls({
         </Row>
       </div>
 
-      <div className="mt-3 border-t border-line/60 pt-3 text-xs text-gray-400">
+      <div className="mt-2 border-t border-line/60 pt-2 text-xs text-gray-400">
         {matching === 0
           ? `No model out of ${pool} meets both limits — lower the score or raise the budget.`
           : <><b className="text-gray-200">{matching} models pass</b> · {Math.max(0, pool - matching)} below your score line

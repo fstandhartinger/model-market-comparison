@@ -17,7 +17,7 @@ export function HomeMode({ data }: { data: ClientData }) {
   const [mode, setMode] = useState<Mode>('simple');
   const advanced = mode === 'advanced';
   return <section aria-label="Recommendation mode">
-    <div className="mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-panel p-2">
+      <div className="bh-mode-switch mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-panel p-2">
       <div className="flex gap-1" role="tablist" aria-label="View mode">
         {(['simple', 'guided', 'advanced'] as Mode[]).map((m) => (
           <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => setMode(m)}
