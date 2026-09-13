@@ -606,7 +606,7 @@ Notes for whoever picks this up:
     receipt; a Kimi K3 fallback review was started and is not yet accepted.
   - Live readback before deploy was healthy on revision `a790be1`; after commit/push, the
     authorized Sandy deploy `yw1orr9zewjcqb33qqxtgaor` finished and both canonical and legacy
-    hosts returned HTTP 200 on exact revision `4692c8c`, with `/api/health` successful and the
+    hosts returned HTTP 200 on exact revision `d348904`, with `/api/health` successful and the
     current hero, Score, Adjusted Cost and Benchmaxxing strings. Gates in an isolated
     worktree: `build-dataset` ✓, `npm test` 261/261 ✓, `npx tsc --noEmit -p .` ✓, `npm run build` ✓,
     `git diff --check` ✓. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json`.
