@@ -175,6 +175,13 @@ stays on in Simple, off in Advanced (Advanced must be able to show every priced 
 The header count reads `70 models` (no "· filtered" when no user filter is active). Switching
 mode never silently rewrites a value the user set by hand — only the untouched defaults differ.
 *Accept:* fresh session → Advanced shows ≥ 50 rows; Simple still shows the ≥ 85 default.
+*Status (claude-opus, iteration 7, `a36fcc6`):* implemented as written — the score minimum and
+"Measured task tokens only" are mode-scoped, hand-set values apply everywhere. Live fresh
+session: Advanced **16 rows** (was 6), Simple slider still 85 before and after visiting
+Advanced. **The "≥ 50 rows" acceptance cannot be met while "Featured stays on"**: since R4.4
+the featured set is the top 20 AA families, i.e. ≤ 20 rows with one variant per family. Left
+for Fable pass 2 to decide: accept ~16–20 rows, or start Advanced with Featured off (then
+~70+ rows). Not re-interpreted here.
 
 ### F-07 `[judgment]` Benchmaxxing radar that can be read
 *Where:* `components/BenchmaxxingReport.tsx`, `components/BenchmarkRadar.tsx`, `lib/benchmax.mjs`

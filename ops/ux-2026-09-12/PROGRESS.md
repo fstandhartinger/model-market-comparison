@@ -78,15 +78,15 @@ credited below, the rest is marked open.
 | R8.1 | Release-post-style benchmark comparisons and listings | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter5-live/verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter5-legacy/verification.json` | **Review 2026-09-13:** default (no selection) `/compare` overflowed a 390 px phone (cards 429 px) — fixed in the review commit, needs re-verify by a non-implementer. `/compare` now adds measured-only topic cards with relative 0–100 positions, preserves missing/low-sample gaps, and highlights best measured relative positions in the exact comparison table. `/charts` links to the report. Both hosts pass desktop/mobile evidence. |
 | R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/iter6-refresh-failure/` | Iteration 6 collected all seven live sources successfully in two clean transactions, but both were correctly held before publication because the free live-review workers timed out/incompletely returned on the AA contract in all three bounded rounds. No fresh dataset or deployment claim is accepted. Retry after worker transport recovers. |
 | H1 | Historical snapshots of all benchmark scores | open | `REVIEW-20260913T002002Z.md` #1 | review: retained states cover only the 75-entry registry; AA Intelligence/Coding Index, ECI, DesignArena Elo are not retained (the approved AA withdrawal in `716a2b0` dropped a row with no history) |
-| H2 | Bridged comparison via anchor models, uncertainty reported | open | `REVIEW-20260913T002002Z.md` #2 | review: single-hop only (source→target via shared models); no multi-hop chain and no test for it; headline scores not bridgeable until H1 |
+| H2 | Bridged comparison via anchor models, uncertainty reported | implemented (multi-hop) | `test/benchmark-history-chain.test.mjs` (8 tests), commits `7d077b0` + `9628f6e`, `ux-evidence/iter7-b3/live-2/` | **Iteration 7:** chains over intermediate retained snapshots *and* re-based versions (S0→S1→current, v1→v2→v3), ≤ 3 hops, each hop passes the single-hop gate, summed relative IQR ≤ 50 %, direct hop preferred; Elo chains rank shifts (fixed `rankIn` sending off-board values to the bottom). Estimates publish `hops`, `path`, `chain_iqr_relative`. All 567 existing estimates unchanged. Real data has 0 multi-hop cases today (only 2 retained states). Live on `9628f6e`: `/api/benchmark-view?axis=aa-automationbench::1.0.6@@Published%20board@@fraction` still serves its 2 historical estimates (`ux-evidence/iter7-b3/live-2/h2-api.json`). **Gap found live:** the view projection flattens estimates (`bridgeCount`, `aggregate`, `spread`, `reason`, `note`) and does not carry `hops` / `path` / `chain_iqr_relative`; they exist in `dataset.json` only, and a multi-hop estimate would be recognisable in the API only by its `note`. Next: add them to the projection in `lib/benchmark-view.mjs` and to `API.md`. **Still open inside H2:** headline scores (AA indices, ECI, Elo boards outside the registry) are not bridgeable until H1 retains them |
 | H3 | UI filter "better than model X in category Y" | open | — | |
 | B1 | Benchmaxxing tab in Advanced | verified | `ux-evidence/review-20260913T002002Z/*-benchmaxxing.png` | review (claude-opus, Hermes-built): 200 at desktop+mobile, light+dark; nav tab; method anchor |
 | B2 | Method identifying strong-on-some / weak-on-others | implemented | `REVIEW-20260913T002002Z.md` #3–4 | topic-local percentile jump; tag quality blocked by B3 |
-| B3 | Missing scores must not bias the result | open | `ux-evidence/review-20260913T002002Z/bm-audit.txt` | review: minMeasured=4, no coverage floor; tag rate 11 % at <3 jumps vs 5.9 % at 8–19; 28/58 tags rest on ≤2 jumps, one on a single jump |
-| B4 | Benchmaxxing tag in overview table + tab | open | `ux-evidence/iter4-live/verification.json` | Overview receives the same deterministic top-decile, coverage-qualified topic-local signal as the dedicated tab; live DOM shows 8 badges after relaxing filters at desktop and mobile. **Review: back to open** — the badge is live but ranks by the coverage-biased score of B3 |
+| B3 | Missing scores must not bias the result | implemented | `ux-evidence/iter7-b3/bm-audit-after.txt`, `ux-evidence/iter7-b3/live/verification.json` | **Iteration 7 (`004f8dc`):** score = within-topic mean absolute percentile difference over *all* measured pairs (order-independent), weighted by n−1; published only with ≥ 6 related comparisons over ≥ 2 topics; shrunk toward the catalog mean by n/(n+k), k by empirical Bayes (min 2). Real data: 174 scored / 18 tagged (was 574 / 58); tagged 3/21 at 6–7 comparisons, 5/74 at 8–10, 0/36 at 11–13, 10/43 at ≥ 14 — no longer falling with coverage; minimum comparisons among tagged = 6. Tests: floor, order invariance, synthetic equal-noise catalog, real-data "rate must not collapse with coverage". Live 174/18 at desktop + mobile |
+| B4 | Benchmaxxing tag in overview table + tab | implemented | `ux-evidence/iter7-b3/live/verification.json` | one shared `benchmaxxingSignals()` feeds the overview badge and `/benchmaxxing` (18 badges in the top-25 table live, both widths, no overflow). Needs a non-Claude verifier |
 | B5 | Small-print method explanation | verified | `ux-evidence/iter4-live/verification.json` | Advanced Overview carries a restrained explanation and link to `/benchmaxxing#method`; the dedicated method disclosure is now addressable by that anchor. |
 | B6 | Many-axis radar, similar topics clockwise-adjacent | verified | `ux-evidence/review-20260913T002002Z/desktop_light-benchmaxxing-full.png` | review: 214-axis radar live in all 4 combos, topic-grouped, gaps for missing; mobile overflow fixed in the review commit |
-| B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4 | test proves zig-zag > smooth specialisation; critique: alphabetical within-topic order and top-end percentile compression favour flagging mid-field models — revisit with B3 |
+| B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4, `test/benchmax-jagged.test.mjs` | zig-zag > smooth specialisation still proven. Iteration 7 removed the alphabetical-order critique (all-pairs spread, order-invariance test). **Remaining, documented on `/benchmaxxing#method`:** percentiles are bounded, so a model at the top of most boards has less room to vary than a mid-field one |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
 | X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
 | X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed; F-02…F-12 open for implementers |
@@ -398,3 +398,51 @@ Notes for whoever picks this up:
     map), F-06 (Advanced defaults), F-07 (Benchmaxxing radar), F-08 (model page sheet),
     F-05, F-09…F-12. Fable does not set `verified` on anything.
 
+
+- **2026-09-13 · iteration 7 · claude-opus** — B3/B4, F-06, H2.
+  - Read first: no Florian reply file; only this iteration and `next start` previews had cwd in
+    the repo (C1 clean). Budget file: claude 15 % week, codex 65 %.
+  - **B3/B4 (`004f8dc`)** — coverage-robust Benchmaxxing, following review finding 3.
+    Prototyped four rankings on the real dataset before choosing (raw, fixed k=4, empirical
+    Bayes, lower confidence bound): once the score is an all-pairs within-topic spread with a
+    floor of ≥ 6 related comparisons over ≥ 2 topics, the coverage bias is gone for all three
+    corrected variants; empirical-Bayes shrinkage (k clamped to [2, 50]) kept as the least
+    arbitrary. A synthetic test caught that k fell to its minimum when τ² ≤ 0 (noise-only
+    catalog) — fixed to the maximum. Percentiles are now cached per axis (5.8 s → 77 ms for
+    the whole catalog). Evidence: `ux-evidence/iter7-b3/bm-audit-after.{mjs,txt}`, live
+    `ux-evidence/iter7-b3/live/verification.json` (174 qualified, "18 of 174", 18 badges,
+    method text, both widths, `scrollWidth` = viewport).
+  - **F-06 (`a36fcc6`)** — score minimum and "Measured task tokens only" are mode-scoped
+    (`minScoreTouched`, `minScoreApplied`, `minScoreSimple` in SettingsContext; Charts,
+    Compare, Providers, EU, Scatter follow Advanced). Live fresh session: Simple slider 85
+    before and after visiting Advanced; Advanced 16 rows (was 6). The directive's "≥ 50 rows"
+    conflicts with "Featured stays on" after R4.4 — recorded under F-06 for Fable, not
+    re-interpreted.
+  - **H2 (`7d077b0`, `9628f6e`)** — multi-hop chains, see the H2 row. Mistake made and fixed
+    in the same iteration: `7d077b0` pushed `dataset.json` with two rebuild timestamps (a
+    `;` instead of `&&` let the commit run after a refused rewrite) and had dropped
+    `bridges[].subject_name`. `9628f6e` restores both; a full structural diff against the
+    pre-H2 dataset now shows only the new H2 fields.
+  - Gates before every push: build-dataset ✓ (timestamp-only diffs discarded), npm test ✓
+    (248 → 256), tsc ✓, next build ✓ (21/21).
+  - Delegation: X5 docs (CHANGELOG + fork-sync prompt) handed to Kimi K3 in worktree
+    `/tmp/bh-x5`. A first `&`-launched run looked dead but was alive; a relaunch ran in
+    parallel until the older one was killed. See the next line for what came of it.
+  - Statuses: B3, B4, H2 `implemented` (claude-built → need a non-Claude verifier). B7 critique
+    on axis order resolved; bounded-percentile limitation documented on the page.
+  - Next, highest value: **H1** (retain AA Intelligence/Coding Index, ECI, DesignArena Elo in
+    history, so H2 can bridge headline scores), **H3** (filter "better than model X in
+    category Y", now that chains exist), F-02/F-03 (Fable), R9.1 retry, R6.3, E2/E3, P1/P2.
+  - **Stopped early on quota (handoff).** `limits.py --json` at 2026-09-13 01:22 UTC: Claude
+    session **76 %** (resets 05:00 UTC), week 19 %; Codex week **66 %** (below the 75 % / 80 %
+    caps — X2 record for this iteration). QUOTA-CONTINUITY forbids a new Claude unit above
+    70 %, so H1 was not started. Nothing is half-done in `main`.
+  - **Unreviewed delegation left behind:** Kimi K3 is still working on X5 in worktree
+    `/tmp/bh-x5` (branch `x5-docs-kimi`, log `/tmp/bh-x5-log.txt`, bounded by `timeout 5400`).
+    It had changed nothing after 14 minutes. The next engine should `git -C /tmp/bh-x5 diff`,
+    check every CHANGELOG / fork-sync line against `git log` and `API.md`, and either land it on
+    `main` or drop it (`git worktree remove --force /tmp/bh-x5 && git branch -D x5-docs-kimi`).
+  - **Handoff for the next engine (codex-luna preferred by the limits):** verify B3/B4/H2/F-06
+    as a non-Claude engine with `OUT=<dir> node ops/ux-2026-09-12/bin/verify-b3-live.mjs`; then
+    H1 (retain AA Intelligence/Coding Index, ECI and DesignArena Elo in `history/states` —
+    today `buildState` only sees registry observations), then H3.
