@@ -69,9 +69,9 @@ credited below, the rest is marked open.
 | R5.4 | Max adjusted cost slider, default unlimited | implemented | `ux-evidence/iter2-live/verification-iter2.json` | log-scaled slider, default "no limit"; the limit now lives in SettingsContext so Simple, Advanced and the wizard share it |
 | R5.5 | Distribution histogram while a slider moves | implemented | `ux-evidence/iter2-live/desktop-simple-sliders.png`, `mobile-simple-sliders.png` | both histograms are shown permanently rather than only on drag — the score limit is already active at 85 on first paint, so an interaction-only chart would hide exactly the fact that the default is cutting the field. Cost bins are log-scaled (costs span 3 orders of magnitude). Kept vs excluded bars are colour-separated |
 | R5.6 | Wizard (company → privacy/region → minimums → budget → results) | implemented | `ux-evidence/iter2-live/desktop-wizard-*.png`, `mobile-wizard-step1.png` | five pages in Florian's order, every page skippable. Capability page offers "at least the best model available N months ago" for intelligence and coding separately, computed from release dates + today's scores (never an old published number against a fresh one). Budget page offers real p25/p50/p75 of the shortlist plus "no limit yet" |
-| R6.1 | "Are you a company" checkbox | partial | `components/GlobalFilters.tsx`, `components/Wizard.tsx` | the checkbox exists in the filters **and** as the wizard's first question. It has no pricing effect yet because the site prices API/platform routes only — the tooltip now says exactly that instead of claiming a filter that does not run. Closes fully with R6.3 |
+| R6.1 | "Are you a company" checkbox | implemented | `ux-evidence/iter14-r63/live-canonical/verification.json`, `…/live-legacy/verification.json` | **Iteration 14 (`0e7380c`):** the checkbox (filters + wizard step 1) now has a real effect: the subscription list hides the 6 consumer plans whose terms exclude business use and shows business seats (14 personal plans → 12 plans open to companies, live on both hosts, both widths). Tooltip and wizard footnote no longer say "does nothing yet". Claude-built → needs a non-Claude verifier |
 | R6.2 | Research: may companies use consumer subscriptions? + Telegram | implemented | `ops/ux-2026-09-12/research/R6.2-subscriptions.md` | delegated to Kimi K3, then independently re-fetched. Anthropic and Google forbid company use in their own words; Cursor allows entity use; GitHub steers to Business/Enterprise without forbidding; OpenAI and xAI return HTTP 403 to automated clients and were **not** worked around. Telegram sent — see the iteration log |
-| R6.3 | Subscription prices/quotas folded into the cost view, labelled | open | — | |
+| R6.3 | Subscription prices/quotas folded into the cost view, labelled | implemented | `data/raw/subscriptions.json`, `test/subscriptions.test.mjs`, `ux-evidence/iter14-r63/` (captures + local + live-canonical + live-legacy) | **Iteration 14 (`0e7380c`):** folded panel "Would a subscription be cheaper?" under the ranking (Simple, Advanced, wizard results). 18 plans; every price re-read from the vendor page on 2026-09-13 (captures gzipped + SHA256 in evidence). **No per-task subscription price is invented** — no vendor publishes an included task count — so each flat-rate plan shows its break-even task count against the vendor's best-scoring priced model in view (e.g. Claude Pro beats the API above 2 tasks/mo of Claude Fable 5.1). Copilot shows its published credit allowance; OpenAI/xAI prices `null` + "not collected" (HTTP 403, not worked around). Research deltas: Cursor now lists Pro $20 / Pro+ $60 / Ultra $200; Cursor Teams price could not be re-read, so it is not shipped; Google Workspace (EUR only, not re-verified) not shipped. `/about#subscriptions` explains the method. Claude-built → needs a non-Claude verifier |
 | R7.1 | New logo in the page | implemented | `ux-evidence/iter2-live/logo-light.png`, `logo-dark.png` | re-drawn as SVG from geometry measured off the JPEG (cloud = 3 circles cut at a flat bottom, 7 treads, 7 measured ray endpoints). Nav wordmark now splits Benchmark / Heaven in ink and brand blue like the artwork |
 | R7.2 | Favicon / apple-touch / og from the new logo | implemented | `ux-evidence/iter2-live/verification-iter2.json` | one generator writes favicon, 180 px touch icon, 192/512 PWA icons (now in the manifest), both wordmarks, OG SVG+PNG and two 512 px marks. Checked rendered at 16/32/48 px |
 | R7.3 | Dark-mode logo variant, switched with the theme | implemented | `ux-evidence/iter2-live/logo-dark.png` + `verification-iter2.json` | the artwork is a light-background logo; the dark variant is ours (lifted luminance). BrandMark reads CSS variables, so it follows the theme toggle with no second component. Hermes' claimed `public/benchmark-heaven-logo-dark.svg` did **not** exist |
@@ -613,3 +613,34 @@ Notes for whoever picks this up:
   - Quota samples: Codex 67% weekly, under the 80% cap; Claude was unavailable initially and
     later measured at 20% after reset. No API-key billing used. P1/P2 stay in-progress pending
     an independent final pass; R9.1, R6.3, E2/E3 and the remaining Fable/UI gaps remain open.
+
+- **2026-09-13 · iteration 14 · claude-opus** — R6.3 + R6.1 (subscriptions in the cost view).
+  - Start: no Telegram reply file; no foreign writer (C1 clean — only this iteration, the owner
+    lease and `next start` previews had cwd in the repo). `limits.py --json` 05:50 UTC: Claude
+    session 2 % / week 20 %, Codex week 68 % (X2 record: below 75/80). Removed the stale,
+    already-merged `/tmp/bh-x5` worktree and its branch.
+  - Re-read every subscription price from the vendor pages instead of trusting the R6.2 draft
+    (plain fetch for anthropic.com, github.com, docs.github.com; headless Chromium for the
+    client-rendered one.google.com and cursor.com). Confirmed: Claude Pro $20/Max from $100/Team
+    $25/Enterprise $20+API; Google AI Plus 4.99/Pro 19.99/Ultra 5x 99.99/Ultra 20x 199.99;
+    Copilot Pro 10/Pro+ 39/Max 100 with $15/$70/$200 credits, Business 19 (1,900 credits),
+    Enterprise 39 (3,900). Changed since R6.2: Cursor Pro+ $60 and Ultra $200 exist; the Cursor
+    Teams price was not re-readable and is not shipped. Cursor's entity-use quote re-verified on
+    the terms page (updated 2026-09-03). OpenAI/xAI still 403 — recorded, not worked around.
+  - Gates: `build-dataset` ✓ (timestamp-only diff discarded), `npm test` 266/266 ✓ (+5 new),
+    `tsc` ✓, `next build` ✓ in an isolated copy (`/tmp/bh-iter14-build`, so the running previews
+    were not disturbed), `git diff --check` ✓. Local browser probe caught a squeezed mobile
+    layout and an over-long model name; both fixed before the push.
+  - Commit `0e7380c` pushed; auto-deploy live on canonical after ~105 s and on legacy shortly
+    after. Live probe (`bin/verify-r63-live.mjs`) passes on **both hosts at 1440 and 390**: panel
+    present, 14 personal plans, 2 break-even lines, company toggle via the real Filters sheet
+    → 12 plans, Claude Pro hidden, Claude Team shown, hidden-plans note, `scrollWidth` =
+    viewport, `/about#subscriptions` present. (The first live run hit the deploy switchover and
+    timed out; re-run passed.)
+  - **Delegation hazard found:** the E2 source research went to Kimi K3, which failed and fell
+    back to Nex; Nex aborted on the known `/home/flori/.agent-budget.json` permission prompt —
+    and in the same window `data/dataset.json` in the repo was rebuilt (timestamp-only,
+    06:00:41). Nothing of this iteration ran build-dataset then. It was discarded before the
+    commit. Delegates run with the repo as cwd can touch tracked files; always `git status`
+    before committing. E2 research was relaunched on Kimi with an explicit "stay in cwd, no
+    skills, no edits" prompt.
