@@ -88,9 +88,9 @@ credited below, the rest is marked open.
 | B6 | Many-axis radar, similar topics clockwise-adjacent | verified | `ux-evidence/review-20260913T002002Z/desktop_light-benchmaxxing-full.png` | review: 214-axis radar live in all 4 combos, topic-grouped, gaps for missing; mobile overflow fixed in the review commit |
 | B7 | Jaggedness weighs heavily; specialisation not penalised | implemented | `REVIEW-20260913T002002Z.md` #4, `test/benchmax-jagged.test.mjs` | zig-zag > smooth specialisation still proven. Iteration 7 removed the alphabetical-order critique (all-pairs spread, order-invariance test). **Remaining, documented on `/benchmaxxing#method`:** percentiles are bounded, so a model at the top of most boards has less room to vary than a mid-field one |
 | X1 | Autonomous on Sandy with engine fallback | implemented | — | `bin/tick.sh` cron |
-| X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); needs a final record |
-| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913-pass2/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed, F-07 radar geometry/default fallback implemented here. F-02…F-06 and F-08…F-12 remain open or require independent verification. F-07's ≥40-axes acceptance is blocked by the current catalog's maximum measured coverage of 29/214; the verifier records the honest fallback rather than fabricating coverage. **Fable pass 2 (2026-09-13, `afa8d26`):** 85 fresh live screenshots + `metrics.json`; F-01/F-03 conflict decided (F-13 one shortlist card), F-06 decided (F-16 Advanced starts with Featured off), hero line 2 kept, F-11 remainder folded into F-18. New directives F-13…F-21; F-08 re-issued as priority 3. Delegated F-13/F-14 (Kimi), F-17 (Kimi), F-15/F-20 (Kimi); ThemeToggle icon-only and ★-only-in-Advanced done by Fable. |
-| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict — pass 2" | fails today on: key message below the fold, no chart in Simple, jargon on the surface, unreadable 214-axis radar, Advanced opening on 6 rows — each has a directive **Fable pass 2:** still fails on: desktop first screen shows 0 rows (first row 958 px), phone table hides Score and Cost behind a horizontal scroll, mobile value map is an 80 px strip, Advanced opens on 16 featured rows, model page 6,561 px with a clipped provider table at 390 px. Passes now: hero, nav, footer, Charts, wizard, dark mode. |
+| X2 | Codex never above 80 % weekly | open | — | enforced by `iterate.sh`; recorded check 2026-09-13 00:07 UTC: codex 65 % weekly (`~/.agent-budget.json`); **iteration 15 record: 68 % at 07:30 UTC** (`limits.py --json`, chatgpt auth); needs a final record |
+| X3 | Fable 5.1 design passes happened and were implemented | in-progress | `ops/ux-2026-09-12/DESIGN-DIRECTIVES.md`, `ux-evidence/fable-20260913-pass2/` | first Fable 5.1 pass 2026-09-13: 12 directives F-01…F-12 with acceptance checks; F-01 (compact hero) + R3.1 done by Fable, F-04 delegated to Kimi K3 and reviewed, F-07 radar geometry/default fallback implemented here. F-02…F-06 and F-08…F-12 remain open or require independent verification. F-07's ≥40-axes acceptance is blocked by the current catalog's maximum measured coverage of 29/214; the verifier records the honest fallback rather than fabricating coverage. **Fable pass 2 (2026-09-13, `afa8d26`):** 85 fresh live screenshots + `metrics.json`; F-01/F-03 conflict decided (F-13 one shortlist card), F-06 decided (F-16 Advanced starts with Featured off), hero line 2 kept, F-11 remainder folded into F-18. New directives F-13…F-21; F-08 re-issued as priority 3. Delegated F-13/F-14 (Kimi), F-17 (Kimi), F-15/F-20 (Kimi); ThemeToggle icon-only and ★-only-in-Advanced done by Fable. **Iteration 15 (claude-opus, `21ff9e8` `a0a7703` `939b278`):** the pass-2 delegations had been left uncommitted and unpushed (together with Fable's own `afa8d26`/`581094b`); reviewed, gated and landed. F-13, F-14, F-15, F-16, F-17, F-18, F-20 implemented and live on both hosts (`ux-evidence/iter15/live-{canonical,legacy}-{p2,f16,f18}/`). Open directives: **F-08, F-19, F-21**. |
+| X4 | UI meets the design bar | open | `DESIGN-DIRECTIVES.md` "Verdict — pass 2" | fails today on: key message below the fold, no chart in Simple, jargon on the surface, unreadable 214-axis radar, Advanced opening on 6 rows — each has a directive **Fable pass 2:** still fails on: desktop first screen shows 0 rows (first row 958 px), phone table hides Score and Cost behind a horizontal scroll, mobile value map is an 80 px strip, Advanced opens on 16 featured rows, model page 6,561 px with a clipped provider table at 390 px. Passes now: hero, nav, footer, Charts, wizard, dark mode. **Iteration 15 live (`939b278`, both hosts, light + dark):** desktop first screen shows 6 rows (first row 669 px); phone table is Model · Score · Adjusted Cost, first row 757 px, `scrollWidth` 390; phone value map 200 px with frontier labels only, 0 label overlaps; Advanced opens on 118 rows; Filters overlays instead of pushing the page. Still failing the bar: model page length and clipped provider table (F-08), Benchmaxxing ring labels and table (F-19), definition disclosures on Compare/Radar (F-21). |
 | X5 | CHANGELOG / API.md / fork-sync prompt updated | implemented | **Iteration 14 (claude-opus) re-check:** `API.md` documents the H2 fields and the six headline boards; the fork-sync prompt syncs `data/raw/*.json` by glob (covers the data-policy, ECI and subscriptions files) and names the history store. **Gap found and closed:** CHANGELOG had no entry for E1 (a Composite scoring change), the derived top-20 featured set (R4.4) or the `/compare` snapshots (R8.1) — added, every field path checked against `dataset.json` and the build script (`benchmarks.epoch_eci` 130 / `epoch_eci_software` 77 models, `source_status.composite.status`, `build_diagnostics.featured_selection` 20 families / 58 rows, `FEATURED_TOP_N`, pin `deepseek-v4.1-flash`). Needs a non-Claude verifier for the new entries. Earlier: | `API.md`, `CHANGELOG.md`, `MSG-UPSTREAM-SYNC-PROMPT.md`; `/opt/benchmarkheaven/state/ux-evidence/iter9-h1h2-api/verification.json` | Documents the six history-only headline boards and the multi-hop API projection; committed in `33a1963` and served on both live hosts. |
 | X6 | Final line-by-line completeness audit | open | — | |
 | X7 | Final Telegram to Florian | open | — | |
@@ -105,7 +105,7 @@ credited below, the rest is marked open.
 | P3 | Do not stop before P2 is achieved | open | — | |
 | P4 | Positioning claims only in a form the live coverage numbers support | implemented | `DESIGN-DIRECTIVES.md` §R3.1, `ux-evidence/iter14-prd-review/review-claude-opus.json` (P4-CLAIM-01) | **Open question (iteration 14):** Artificial Analysis' comparison page also shows a per-model "Cost per Task" with cache-hit prices, so "the only place that shows what each model really costs you" is contestable as worded; the defensible difference is provider-route choice under the user's own filters plus measured token efficiency. Not changed here — wording is Fable pass 2 / Florian (X7). Earlier: | superlative "every benchmark result" removed; "most complete" is backed by the generated counts line under the H1; "only place … really costs you" is Florian's explicit ask — carry to X7 |
 | F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter12-f05-live/verification.json` | Fable pass judged against exactly this bar; F-05 now uses aligned score/cost magnitude bars and was live-checked by Codex, but independent verification and the remaining open directives are still required. |
-| C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly |
+| C1 | One writer only until `ALL-ACCEPTED`; do not race another agent in this repo | open | — | iteration 1 saw only expected ops commits from the workstream's own setup and rebased cleanly. Iteration 15: no foreign commits; the only other process in the repo was the design pass's own orphaned Kimi delegate (stopped, see the log) |
 
 ---
 
@@ -672,3 +672,44 @@ Notes for whoever picks this up:
   - **E2** research: delegation produced no usable report; the robots.txt verdicts it captured
     are recorded in the E2 row. **R9.1**: the 05:17 daily was blocked by a dirty checkout (see
     the R9.1 row).
+
+- **2026-09-13 · iteration 15 · claude-opus** — landed Fable pass 2: F-13, F-14, F-15, F-16,
+  F-17, F-18, F-20.
+  - **Found at start:** the design pass (06:50 tick) had exited leaving seven files of Kimi K3
+    work uncommitted, its own two commits (`afa8d26`, `581094b`) unpushed, and a third Kimi
+    delegate (F-17, `CostCapabilityScatter.tsx`) still running with no parent. That delegate had
+    not changed its file after ~50 minutes; it was stopped by PID so it could not race this
+    iteration's edits. No Telegram reply file; no foreign commits on `origin/main`.
+  - **Delegated work reviewed before landing (`21ff9e8`):** F-13/F-14 and F-15/F-20 diffs read
+    line by line and gated in an isolated copy (`/tmp/bh-iter15-build`, so the running previews
+    were untouched). The browser check caught a defect the review did not: below `md` the
+    hidden table cells leave the column layout, so Score landed on a zero-width `<col>` and
+    the phone table showed only Model and Adjusted Cost. Fixed in `939b278`.
+  - **F-16 (`a0a7703`):** `featuredTouched` makes Featured mode-scoped like the score minimum;
+    settings key v8 → v9 with a migration that keeps every other stored choice; the global
+    Featured toggle shows the value the Advanced view applies; "Better than a model" is a
+    popover; "· filtered" appears only when a setting differs from its default (it was shown
+    permanently because the data-policy default always restricts routes). Scope note:
+    Charts/Compare/Providers/Scatter keep Featured on by default — the directive names only
+    Advanced.
+  - **F-17 + F-18 (`939b278`):** a global label layer (`<Customized>` with the axis scales)
+    replaces per-dot labels; round ticks on both scatter charts; frontier over passing points
+    only. Filters became a popover / bottom sheet driven by `openFilters()` on
+    SettingsContext (the window event is gone; no harness or test used it); the Simple pool
+    count ("of 14") and the `/scatter` count open it. The phone shortlist card needed three
+    trims (sliders side by side below `lg`, axes give up hidden tick space, 6 px of spacing)
+    to bring the first row from 882 px to 757 px (target ≤ 760).
+  - **Gates** before the push: `build-dataset` ✓, `npm test` 266/266 ✓, `tsc --noEmit` ✓,
+    `next build` ✓. Tree clean apart from intended files; no `dataset.json` diff.
+  - **Live verification after the deploy**, `939b278` on both hosts, 1440×1000 and 390×844,
+    light and dark: `bin/verify-fable-pass2.mjs`, new `bin/verify-f16.mjs` and
+    `bin/verify-f18.mjs` all pass — numbers in the X4 row, evidence in
+    `/opt/benchmarkheaven/state/ux-evidence/iter15/live-{canonical,legacy}-{p2,f16,f18}/`
+    (local runs in `…/iter15/local4`, `f16-local4`, `f18-local4`).
+  - **Statuses:** everything here was built by Claude (Opus or Fable) or by Kimi and reviewed
+    by Claude → `implemented`, needs a non-Claude verifier. Quota: Claude's own probe was
+    rate-limited (unmeasurable), budget file 06:07 UTC read session 9 % / week 20 %; Codex 68 %.
+  - **Next, highest value:** a non-Claude review gate over F-13…F-20 (the three scripts above
+    are ready to re-run); F-08 model page sheet; F-19 Benchmaxxing page; F-21; R9.1 retry
+    (keep the tree clean); E2 ingestion from the four machine-readable sources in
+    `ux-evidence/iter14-e2/SUMMARY.md`; P1 non-Claude confirmation of PRD digest `57d164a2…`.

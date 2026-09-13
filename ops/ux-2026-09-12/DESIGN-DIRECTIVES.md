@@ -83,6 +83,14 @@ asked for.
 
 ## Directives (open)
 
+> **Status 2026-09-13, iteration 15 (claude-opus):** F-13, F-14, F-15, F-16, F-17, F-18 and
+> F-20 are implemented (see the Done log; specs kept below for the verifier). Still open:
+> **F-08, F-19, F-21.** Two notes for the verifier: F-16 applies "Advanced starts with
+> Featured off" to the Advanced home view only; Charts, Compare, Providers and Scatter keep
+> the Featured default (on), which the directive does not mention. F-17's "labels never
+> extend past the plot's right edge" is met by keeping labels inside the plot (they flip
+> to above/below/left) instead of a 72 px margin.
+
 ### F-13 `[judgment]` Simple first screen: one shortlist card, list above the fold
 *Where:* `components/ModelExplorer.tsx` (the `simple && <>…</>` block, lines ~191–201),
 `components/ShortlistControls.tsx`, `components/HomeMode.tsx`, `app/globals.css`.
@@ -307,3 +315,10 @@ Live revision `0e7380c`, script `ops/ux-2026-09-12/bin/verify-directives-indep.m
 | F-10 wizard polish | `0e7380c` + `638f047` (Claude Opus) | `ux-evidence/iter14-f11/` | pass 2 live check OK: step 1 footnote one line, results step shows the map, "Change answers" primary |
 | F-11 scatter axis and intro | `638f047` (Claude Opus) | `ux-evidence/iter14-f11/` | pass 2: done except the "N models → filters" link, folded into F-18 |
 | F-12 concise footer | `4d4783c`, `ad59d65` (Codex Luna / Claude Opus) | `ux-evidence/iter8-final/` | pass 2 live: footer is wordmark + claim line + one sources sentence + three links |
+| F-13 one shortlist card (sliders + 240 px map side by side at lg; sliders side by side, 200 px map on phones) | `21ff9e8` (Kimi K3, reviewed) + `939b278` (Claude Opus: phone trims) | `ux-evidence/iter15/local4/`, `…/iter15/live-{canonical,legacy}-p2/` | needs a non-Claude verifier. Local: first row 669 px / 6 rows at 1440×1000, 757 px at 390×844 |
+| F-14 phone table Model · Score · Cost | `21ff9e8` (Kimi K3) + `939b278` (col widths fixed: hidden cells had shifted Score onto a 0-width column) | same | needs a non-Claude verifier. Local: 3 header cells at 390, 6 at 1440, `scrollWidth` = viewport |
+| F-15 header: icon-only theme toggle, Filters · Menu · theme, underline active item | `afa8d26` (Fable) + `21ff9e8` (Kimi K3) | same | needs a non-Claude verifier. Local: theme button 40×40, no text, header 59 px |
+| F-16 Advanced opens on the full catalog; H3 popover; honest "· filtered" | `a0a7703` (Claude Opus) | `ux-evidence/iter15/f16-local4/`, `…/live-{canonical,legacy}-f16/` | needs a non-Claude verifier. Local: Advanced 118 rows, toolbar one row, Simple still ≥ 85 and featured-only after Advanced, no ★ in Simple |
+| F-17 value map: collision-free labels, round ticks, frontier over passing points, 200 px phone map | `939b278` (Claude Opus; the Kimi delegation produced nothing in 50 min and was stopped) | `ux-evidence/iter15/f18-local4/`, `…/live-{canonical,legacy}-f18/` | needs a non-Claude verifier. Local: 0 overlaps, 0 clipped, ticks 60…100 |
+| F-18 Filters overlay (desktop popover, phone bottom sheet), `openFilters()`, count links | `939b278` (Claude Opus) | same | needs a non-Claude verifier. Local: hero does not move, sheet bottom = viewport bottom, "Show 6 models" visible, Escape/outside click close, focus in and back |
+| F-20 Charts control bar and one-sentence intro | `21ff9e8` (Kimi K3, reviewed) | `ux-evidence/iter15/local4/` | needs a non-Claude verifier. Local: no "fixed inputs" / "Coding Agent v1", intro 102 chars; same on both live hosts |
