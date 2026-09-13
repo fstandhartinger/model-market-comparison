@@ -604,8 +604,10 @@ Notes for whoever picks this up:
     traceability, missing baseline digest/provenance, and non-row-level AA citations. All three
     were repaired; repaired PRD digest is `b9ee6ddc…f0bf`. Nex round 2 timed out without a
     receipt; a Kimi K3 fallback review was started and is not yet accepted.
-  - Live readback: canonical and legacy hosts both returned HTTP 200 and revision `a790be1`,
-    with the current hero, Score, Adjusted Cost and Benchmaxxing strings. Gates in an isolated
+  - Live readback before deploy was healthy on revision `a790be1`; after commit/push, the
+    authorized Sandy deploy `yw1orr9zewjcqb33qqxtgaor` finished and both canonical and legacy
+    hosts returned HTTP 200 on exact revision `82f0a47`, with `/api/health` successful and the
+    current hero, Score, Adjusted Cost and Benchmaxxing strings. Gates in an isolated
     worktree: `build-dataset` ✓, `npm test` 261/261 ✓, `npx tsc --noEmit -p .` ✓, `npm run build` ✓,
     `git diff --check` ✓. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json`.
   - Quota samples: Codex 67% weekly, under the 80% cap; Claude was unavailable initially and
