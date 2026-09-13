@@ -58,9 +58,9 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     return pool
       .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
-      .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0 && (x.sc as number) >= s.minScore)
+      .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0 && (x.sc as number) >= s.minScoreApplied)
       .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied, preferredId]);
 
   const points = useMemo(() => allPoints.filter((p) => !logX || p.x > 0), [allPoints, logX]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;

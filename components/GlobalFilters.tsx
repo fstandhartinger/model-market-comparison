@@ -31,13 +31,13 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   const active = s.providersExcluded.length || s.families.length || !s.featured || !s.collapse || !s.hideDeprecated
     || s.excludeChinese || s.euHostedOnly || s.nonUsOnly || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
     || s.maxCost != null || s.minIntelligence != null || s.minCoding != null
-    || s.minScore !== defaultMinFor(s.score) || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND;
+    || s.minScoreTouched || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND;
   const reset = () => {
     s.setProvidersExcluded([]); s.setFamilies([]); s.setFeatured(true); s.setCollapse(true);
     s.setHideDeprecated(true); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
     s.setOpenOnly(false); s.setTeeOnly(false); s.setAllowDataTraining(false); s.setIsCompany(false);
     s.setMaxCost(null); s.setMinIntelligence(null); s.setMinCoding(null);
-    s.setMinScore(defaultMinFor(s.score)); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
+    s.resetMinScore(); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
   };
 
   return (
@@ -50,7 +50,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
       <div className="mx-auto max-w-[1400px] space-y-4 px-4 pb-4 pt-1">
         <Section title="Ranking">
           <ScoreSelect value={s.score} onChange={s.setScore} />
-          <NumFilter label="Min score" value={String(s.minScore)} onChange={(v) => s.setMinScore(v === "" ? 0 : (parseFloat(v) || 0))} placeholder={String(defaultMinFor(s.score))} />
+          <NumFilter label="Min score" value={s.minScoreTouched ? String(s.minScore) : ""} onChange={(v) => v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0)} placeholder={`any · Simple ${defaultMinFor(s.score)}`} />
           <span className="inline-flex items-center">
             <Toggle label="Featured" on={s.featured} set={s.setFeatured} />
             <InfoTip title="Featured models" label="the featured filter">

@@ -39,9 +39,9 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       const score = scoreOf(model, s.score);
       // A composite without benchmark evidence is the neutral fallback 50, not
       // a measured score — it must not satisfy a positive min-score filter.
-      return !(s.minScore > 0 && (score == null || score < s.minScore || (s.score === "composite" && model.composite_coverage <= 0)));
+      return !(s.minScoreApplied > 0 && (score == null || score < s.minScoreApplied || (s.score === "composite" && model.composite_coverage <= 0)));
     });
-  }, [candidates, preferredId, s.collapse, s.openOnly, s.featured, s.familySet, s.minScore, s.score]);
+  }, [candidates, preferredId, s.collapse, s.openOnly, s.featured, s.familySet, s.minScoreApplied, s.score]);
 
   // Per-provider model count over the FILTERED model rows (so the directory count matches the
   // list you actually see when you click through).

@@ -54,8 +54,8 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       .filter((x) => (Number.isFinite(maxC) ? x.price.value != null && x.price.value <= maxC : true))
       // A composite with zero evidence is the neutral fallback 50, not a
       // measured score — it cannot satisfy a positive min-score filter.
-      .filter((x) => (s.minScore > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.minScore : true));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, maxCost, preferredId]);
+      .filter((x) => (s.minScoreApplied > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.minScoreApplied : true));
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied, maxCost, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
@@ -92,7 +92,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="text-sm text-gray-400">Score: <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b> <span className="text-gray-500">· {scoreVersion(score, data.sourceDates)}</span> · min {s.minScore} · costs: <b className="text-gray-200">{priceLabel(priceSettings)}</b></span>
+        <span className="text-sm text-gray-400">Score: <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b> <span className="text-gray-500">· {scoreVersion(score, data.sourceDates)}</span> · min {s.minScoreApplied} · costs: <b className="text-gray-200">{priceLabel(priceSettings)}</b></span>
         <NumFilter label={adjusted ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
         <span className="ml-auto text-xs text-gray-500">{pool.length} models within global provider filters</span>
       </div>

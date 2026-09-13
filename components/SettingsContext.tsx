@@ -13,6 +13,10 @@ interface SettingsState {
   nonUsOnly: boolean;       // only providers whose company is not US-based
   openOnly: boolean;        // only open-weights models (off by default)
   minScore: number;         // hide models scoring below this (score-aware default)
+  // F-06: the score minimum is mode-scoped. Until the user sets it by hand, Simple applies
+  // the score's default (85 for Composite, R5.3) and every other view applies none, so
+  // Advanced opens on the full catalog. A hand-set value applies everywhere.
+  minScoreTouched: boolean;
   teeOnly: boolean;         // "Strong confidential guarantees": only TEE / confidential-compute offers
   // R4.10: opt-in to INCLUDE providers that train on or retain your data. Unchecked by
   // default, so such providers are filtered out until the user asks for them.
@@ -39,6 +43,12 @@ interface SettingsCtx extends SettingsState {
   setNonUsOnly: (b: boolean) => void;
   setOpenOnly: (b: boolean) => void;
   setMinScore: (n: number) => void;
+  /** Back to the untouched, mode-scoped default (Simple: score default, elsewhere: none). */
+  resetMinScore: () => void;
+  /** The score minimum every non-Simple view applies: the hand-set value, else none. */
+  minScoreApplied: number;
+  /** The score minimum Simple mode applies: the hand-set value, else the score's default. */
+  minScoreSimple: number;
   setTeeOnly: (b: boolean) => void;
   setAllowDataTraining: (b: boolean) => void;
   setIsCompany: (b: boolean) => void;
@@ -53,7 +63,7 @@ interface SettingsCtx extends SettingsState {
   familySet: Set<string> | null;   // null = all
 }
 
-const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 85, minScoreTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 // v3: the provider filter is now a BLOCKLIST (persisted `providersExcluded`) instead of
 // an inclusion list. An inclusion list is a snapshot of the providers that existed when
 // the user last touched the filter, so any provider added later (e.g. TensorX) was
@@ -68,6 +78,9 @@ const DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured
 // those payloads instead of carrying the broken state forward.
 // v8: maxCost, minIntelligence and minCoding moved out of ModelExplorer's local state so
 // the wizard, Simple mode and Advanced mode all read and write the same limits.
+// (F-06 added minScoreTouched without a bump: a v8 payload has no flag, so it loads as
+// untouched and the mode-scoped defaults apply — v8 always persisted minScore, even
+// when it was only the default, so the stored number cannot be trusted as a user choice.)
 const KEY = "mmc.settings.v8";
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
@@ -89,6 +102,7 @@ function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (bool(raw.nonUsOnly)) out.nonUsOnly = raw.nonUsOnly;
   if (bool(raw.openOnly)) out.openOnly = raw.openOnly;
   if (typeof raw.minScore === "number" && Number.isFinite(raw.minScore) && raw.minScore >= 0) out.minScore = raw.minScore;
+  out.minScoreTouched = raw.minScoreTouched === true && out.minScore != null;
   if (bool(raw.teeOnly)) out.teeOnly = raw.teeOnly;
   if (bool(raw.allowDataTraining)) out.allowDataTraining = raw.allowDataTraining;
   if (bool(raw.isCompany)) out.isCompany = raw.isCompany;
@@ -130,7 +144,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
 
   const value = useMemo<SettingsCtx>(() => ({
     ...state,
-    setScore: (score) => setState((s) => ({ ...s, score, minScore: defaultMinFor(score) })),
+    setScore: (score) => setState((s) => ({ ...s, score, minScore: defaultMinFor(score), minScoreTouched: false })),
     setCollapse: (collapse) => setState((s) => ({ ...s, collapse })),
     setFeatured: (featured) => setState((s) => ({ ...s, featured })),
     setHideDeprecated: (hideDeprecated) => setState((s) => ({ ...s, hideDeprecated })),
@@ -138,7 +152,10 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
     setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
     setOpenOnly: (openOnly) => setState((s) => ({ ...s, openOnly })),
-    setMinScore: (minScore) => setState((s) => ({ ...s, minScore })),
+    setMinScore: (minScore) => setState((s) => ({ ...s, minScore, minScoreTouched: true })),
+    resetMinScore: () => setState((s) => ({ ...s, minScore: defaultMinFor(s.score), minScoreTouched: false })),
+    minScoreApplied: state.minScoreTouched ? state.minScore : 0,
+    minScoreSimple: state.minScoreTouched ? state.minScore : defaultMinFor(state.score),
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
     setAllowDataTraining: (allowDataTraining) => setState((s) => ({ ...s, allowDataTraining })),
     setIsCompany: (isCompany) => setState((s) => ({ ...s, isCompany })),

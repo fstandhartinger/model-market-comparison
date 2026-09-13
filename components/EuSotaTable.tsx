@@ -48,14 +48,14 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
     if (!model) {
       const hiddenAsDeprecated = s.hideDeprecated
         && data.models.some((candidate) => candidate.family_key === entry.key && candidate.deprecated);
-      if (!hiddenAsDeprecated && s.minScore <= 0) result.push({ entry, model: null, offers: [] });
+      if (!hiddenAsDeprecated && s.minScoreApplied <= 0) result.push({ entry, model: null, offers: [] });
       return result;
     }
     if (s.openOnly && !model.open_weights) return result;
     if (s.featured && !model.featured) return result;
     if (s.familySet && !s.familySet.has(model.family_key)) return result;
     const score = model.scores[s.score];
-    if (s.minScore > 0 && (!hasScoreEvidence(model, s.score) || score == null || score < s.minScore)) return result;
+    if (s.minScoreApplied > 0 && (!hasScoreEvidence(model, s.score) || score == null || score < s.minScoreApplied)) return result;
     const ctx = priceContext(model, data, s);
     const offers = scopedCatalogOffers(data.offersByModel[model.id], offerScope, ctx).sort((a,b) => (offerPrice(a, ctx).value ?? Infinity) - (offerPrice(b, ctx).value ?? Infinity));
     // Unlike the page's built-in EU baseline (which intentionally keeps a row

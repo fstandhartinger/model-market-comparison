@@ -42,9 +42,9 @@ export function CompareView({ data }: { data: ClientData }) {
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
     // Composite without evidence is the neutral fallback 50 and must not meet a
     // positive minimum; other scores keep the existing null/value policy.
-    if (s.minScore > 0) r = r.filter((m) => hasScoreEvidence(m, s.score) && m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScore);
+    if (s.minScoreApplied > 0) r = r.filter((m) => hasScoreEvidence(m, s.score) && m.scores[s.score] != null && (m.scores[s.score] as number) >= s.minScoreApplied);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore, preferredId]);
+  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied, preferredId]);
 
   const visibleModels = useMemo(() => {
     if (!q.trim()) return models;

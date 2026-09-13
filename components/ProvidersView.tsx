@@ -74,7 +74,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
     if (s.familySet && !s.familySet.has(m.family_key)) return false;
     // A composite without benchmark evidence is the neutral fallback 50, not a
     // measured score — it must not satisfy a positive min-score filter.
-    if (s.minScore > 0 && (!hasScoreEvidence(m, score) || (m.scores[score] as number) < s.minScore)) return false;
+    if (s.minScoreApplied > 0 && (!hasScoreEvidence(m, score) || (m.scores[score] as number) < s.minScoreApplied)) return false;
     return true;
   };
 
@@ -94,14 +94,14 @@ export function ProvidersView({ data }: { data: ClientData }) {
       if (!previous || (m.scores[score] ?? -Infinity) > (previous.scores[score] ?? -Infinity)) fams.set(m.family_key, m);
     }
     return [...fams.values()];
-  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore]);
+  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied]);
 
   const modelOptions = useMemo(
     () => (s.collapse ? collapseModels(candidates, preferredId) : candidates)
       .filter((m) => rankedOffers(data.offersByModel[m.id], offerScope, priceContext(m, data, priceSettings)).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, candidates, score, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScore]
+    [data, candidates, score, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];
