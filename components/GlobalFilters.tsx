@@ -1,4 +1,5 @@
 "use client";
+import { useEffect, useRef } from "react";
 import { usePathname } from "next/navigation";
 import type { ProviderInfo } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
@@ -26,8 +27,14 @@ function Section({ title, hint, children }: { title: string; hint?: string; chil
 export function GlobalFilters({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
   const s = useSettings();
   const path = usePathname();
-  if (path === "/benchmarks" || path === "/radar") return null;
   const adjusted = s.priceMode === "adjusted";
+  const panel = useRef<HTMLDetailsElement>(null);
+  useEffect(() => {
+    const toggle = () => { if (panel.current) panel.current.open = !panel.current.open; };
+    window.addEventListener("bh:toggle-filters", toggle);
+    return () => window.removeEventListener("bh:toggle-filters", toggle);
+  }, []);
+  if (path === "/benchmarks" || path === "/radar") return null;
   const active = s.providersExcluded.length || s.families.length || !s.featured || !s.collapse || !s.hideDeprecated
     || s.excludeChinese || s.euHostedOnly || s.nonUsOnly || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
     || s.maxCost != null || s.minIntelligence != null || s.minCoding != null
@@ -41,11 +48,8 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   };
 
   return (
-    <details className="border-b border-line bg-panel">
-      <summary className="mx-auto max-w-[1400px] cursor-pointer px-4 py-3 text-sm">
-        Filters &amp; settings · <span className="text-gray-400">{adjusted ? "adjusted costs" : "raw list prices"}</span>
-        {active && <span className="ml-2 rounded bg-accent/15 px-1.5 py-0.5 text-[10px] text-accent">modified</span>}
-      </summary>
+    <details ref={panel} id="global-filters" className="border-b border-line bg-panel">
+      <summary className="sr-only">Filters and settings</summary>
 
       <div className="mx-auto max-w-[1400px] space-y-4 px-4 pb-4 pt-1">
         <Section title="Ranking">

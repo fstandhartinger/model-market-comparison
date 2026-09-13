@@ -23,12 +23,8 @@ function quantile(sorted: number[], q: number): number {
   return lo === hi ? sorted[lo] : sorted[lo] + (sorted[hi] - sorted[lo]) * (pos - lo);
 }
 
-function Histogram({
-  values, min, max, threshold, keep, log, format, label,
-}: {
-  values: number[]; min: number; max: number; threshold: number;
-  keep: (v: number) => boolean; log?: boolean;
-  format: (v: number) => string; label: string;
+function Sparkline({ values, min, max, keep, log }: {
+  values: number[]; min: number; max: number; keep: (v: number) => boolean; log?: boolean;
 }) {
   const n = BINS;
   const bins = useMemo(() => {
@@ -47,31 +43,22 @@ function Histogram({
   const peak = Math.max(1, ...bins.map((b) => b.total));
 
   return (
-    <div className="mt-2" aria-hidden="true">
-      <div className="flex h-12 items-end gap-[3px]">
+    <div className="pointer-events-none absolute inset-x-0 top-0 h-[22px]" aria-hidden="true">
+      <div className="flex h-full items-end gap-px px-0.5">
         {bins.map((b, i) => (
           <div key={i} className="relative flex-1" style={{ height: "100%" }}>
-            {/* An empty bin keeps a hairline, so the axis stays readable as an axis. */}
-            <div className="absolute inset-x-0 bottom-0 h-px bg-line" />
-            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-gray-500/45"
+            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-gray-500/25"
                  style={{ height: `${(b.total / peak) * 100}%` }} />
-            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-accent"
+            <div className="absolute inset-x-0 bottom-0 rounded-t-[2px] bg-accent/70"
                  style={{ height: `${(b.kept / peak) * 100}%` }} />
           </div>
         ))}
-      </div>
-      <div className="mt-1 flex justify-between text-[10px] text-gray-500">
-        <span>{format(min)}</span>
-        <span className="text-gray-600">{label}{log ? " · log scale" : ""}</span>
-        <span>{format(max)}</span>
       </div>
     </div>
   );
 }
 
-function Row({
-  title, hint, value, children,
-}: { title: string; hint: string; value: string; children: React.ReactNode }) {
+function Row({ title, value, children }: { title: string; value: string; children: React.ReactNode }) {
   return (
     <div className="min-w-0">
       <div className="flex items-baseline justify-between gap-3">
@@ -79,7 +66,6 @@ function Row({
         <span className="tabular text-sm font-semibold text-accent">{value}</span>
       </div>
       {children}
-      <p className="mt-1 text-[11px] text-gray-500">{hint}</p>
     </div>
   );
 }
@@ -139,70 +125,46 @@ export function ShortlistControls({
   };
   const money = (v: number) => (v >= 10 ? `$${v.toFixed(0)}` : v >= 1 ? `$${v.toFixed(2)}` : `$${v.toFixed(3)}`);
 
-  // The comparison Florian asked for, stated in words next to the slider: what does the
-  // expensive end cost compared with the middle of the field, and with a model 10 % weaker?
-  const spread = costStats.median > 0 ? costMax / costStats.median : null;
-  const tenPctWorse = useMemo(() => {
-    if (!scores.length) return null;
-    const best = Math.max(...scores);
-    const target = best * 0.9;
-    return { target, best };
-  }, [scores]);
-
   return (
     <div className="card mb-4 p-4">
-      <div className="grid gap-5 sm:grid-cols-2">
+      <div className="grid grid-cols-2 gap-3">
         <Row
           title={`Minimum ${scoreName}`}
           value={minScore > 0 ? minScore.toFixed(0) : "any"}
-          hint={tenPctWorse
-            ? `Best model in view scores ${tenPctWorse.best.toFixed(1)}; 10 % below that is ${tenPctWorse.target.toFixed(1)}.`
-            : "How good the model has to be."}
         >
-          <input
-            type="range" aria-label={`Minimum ${scoreName}`}
-            min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
-            onChange={(e) => setMinScore(Number(e.target.value))}
-            className={slider}
-            style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties}
-          />
-          <Histogram values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max}
-              threshold={minScore} keep={(v) => v >= minScore}
-              format={(v) => v.toFixed(0)} label={`${scores.length} models`} />
+          <div className="relative mt-1">
+            <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
+            <input type="range" aria-label={`Minimum ${scoreName}`}
+              min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
+              onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
+              style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
+          </div>
         </Row>
 
         <Row
-          title="Maximum cost per task"
+          title="Max cost / task"
           value={maxCost == null ? "no limit" : money(maxCost)}
-          hint={spread && spread > 1.2
-            ? `The priciest model in view costs ${spread.toFixed(0)}× the median (${money(costStats.median)} → ${money(costMax)}).`
-            : "How much one task may cost you."}
         >
-          <input
-            type="range" aria-label="Maximum cost per task"
-            min={0} max={1000} step={1} value={fromCost(maxCost)}
-            onChange={(e) => setMaxCost(toCost(Number(e.target.value)))}
-            className={slider}
-            style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties}
-          />
-          <Histogram values={costStats.sorted} min={costMin} max={costMax} log
-              threshold={maxCost ?? costMax} keep={(v) => maxCost == null || v <= maxCost}
-              format={money} label={`${costStats.sorted.length} models · ${costUnit}`} />
+          <div className="relative mt-1">
+            <Sparkline values={costStats.sorted} min={costMin} max={costMax} log keep={(v) => maxCost == null || v <= maxCost} />
+            <input type="range" aria-label="Maximum cost per task" min={0} max={1000} step={1} value={fromCost(maxCost)}
+              onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
+              style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
+          </div>
         </Row>
       </div>
 
-      <p className="mt-4 border-t border-line/60 pt-3 text-xs text-gray-400">
+      <div className="mt-3 border-t border-line/60 pt-3 text-xs text-gray-400">
         {matching === 0
           ? `No model out of ${pool} meets both limits — lower the score or raise the budget.`
-          : <><b className="text-gray-200">{matching}</b> of {pool} recommended models meet your limits
-            {matching > limit ? <>; the {limit} most expensive are listed</> : <>, all listed</>}.</>}
+          : <><b className="text-gray-200">{matching} models pass</b> · {Math.max(0, pool - matching)} below your score line
+            {matching > limit && <> · the {limit} most expensive are listed</>}</>}
         {(minScore > 0 || maxCost != null) && (
-          <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }}
-            className="ml-3 rounded border border-line px-2 py-0.5 text-[11px] text-gray-400 hover:text-gray-200">
-            clear both limits
+          <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }} className="ml-2 text-accent underline underline-offset-2">
+            show all {pool}
           </button>
         )}
-      </p>
+      </div>
     </div>
   );
 }

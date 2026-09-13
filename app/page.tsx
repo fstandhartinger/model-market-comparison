@@ -27,7 +27,7 @@ export default async function Home() {
       <section className="bh-hero mb-4">
         <h1 className="bh-display">The most complete collection of AI model benchmarks.<br /><span>And the only place that shows what each model really costs you.</span></h1>
         <p className="bh-hero-line mt-2 text-sm text-gray-400">
-          <span className="tabular">{results.toLocaleString()}</span> results · <span className="tabular">{benchmarks}</span> benchmarks · <span className="tabular">{ds.counts.models.toLocaleString()}</span> models · updated {updated} — every result with its source and date. Cost counts the provider you would actually use, its cache prices and hit rates, and the tokens the model burns per task.
+          <span className="tabular">{results.toLocaleString()}</span> results · <span className="tabular">{benchmarks}</span> benchmarks · <span className="tabular">{ds.counts.models.toLocaleString()}</span> models · updated {updated}
         </p>
       </section>
 

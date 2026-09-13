@@ -109,12 +109,13 @@ details[open] > summary { margin-bottom: 8px; }
 @media (max-width: 639px) {
   .bh-wordmark { font-size: 20px; }
   .bh-hero { padding: 2px 0 8px; }
-  .bh-display { font-size: 22px; line-height: 1.15; }
-  .bh-hero > p:not(.bh-eyebrow) { margin-top: 10px; font-size: 13px; line-height: 1.55; }
+  .bh-display { font-size: 20px; line-height: 1.1; }
+  .bh-hero > p:not(.bh-eyebrow) { margin-top: 8px; font-size: 12px; line-height: 1.35; }
   .bh-stat-row { gap: 8px; }
   .bh-stat-row > .card { padding: 6px 10px; }
   .bh-stat-row > .card > div:first-child { font-size: 15px; }
   .bh-stat-row > .card > div:last-child { font-size: 10px; }
+  table.dtable thead th { padding-top: 6px; padding-bottom: 6px; }
 }
 
 /* R5.3–R5.4: the two shortlist sliders. A bare appearance-none range renders as a fat

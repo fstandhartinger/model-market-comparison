@@ -12,6 +12,7 @@ import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { ShortlistControls } from "./ShortlistControls";
+import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
@@ -143,7 +144,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     <div>
       {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
           behind each one while it is moved. Advanced keeps the full toolbar. */}
-      {simple && (
+      {simple && <>
         <ShortlistControls
           scores={pool.map((x) => x.sc).filter((v): v is number => v != null)}
           costs={pool.map((x) => x.price.value).filter((v): v is number => v != null)}
@@ -152,7 +153,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
         />
-      )}
+        <CostCapabilityScatter data={data} compact />
+      </>}
       <div className={`card mb-4 flex-wrap items-center gap-3 p-3 ${simple ? "hidden" : "flex"}`}>
         <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
         <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">

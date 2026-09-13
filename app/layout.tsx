@@ -51,7 +51,6 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <p className="mt-2">Data from OpenRouter, Artificial Analysis, Intelligence.ai / DesignArena, benchmark maintainers and provider catalogs.
               Raw token prices are USD per 1M tokens; adjusted task costs are estimates with visible inputs.
               Source dates vary. Check the linked source before choosing a provider.</p>
-            <p className="mt-2">Independent project. Not affiliated with model or inference providers.</p>
           </footer>
         </SettingsProvider>
       </body>

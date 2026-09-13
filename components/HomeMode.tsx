@@ -26,7 +26,7 @@ export function HomeMode({ data }: { data: ClientData }) {
           </button>
         ))}
       </div>
-      <p className="bh-muted pr-2 text-xs">{HINT[mode]}</p>
+      <p className="bh-muted hidden pr-2 text-xs sm:block">{HINT[mode]}</p>
     </div>
     {mode === 'guided' && <Wizard data={data} onFinish={() => setMode('advanced')} />}
     {/* The key remounts the table when the mode changes: defaultSort/defaultAsc seed

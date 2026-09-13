@@ -30,6 +30,15 @@ function ParetoHalo(props: { cx?: number; cy?: number }) {
   return <circle cx={cx} cy={cy} r={9} fill="none" stroke="#7ee0c0" strokeWidth={1.5} opacity={0.7} />;
 }
 
+function CompactPointShape(props: { cx?: number; cy?: number; payload?: { name: string; pass: boolean } }) {
+  const { cx, cy, payload } = props;
+  if (cx == null || cy == null) return <g />;
+  return <g>
+    <circle cx={cx} cy={cy} r={payload?.pass ? 5 : 4} fill="rgb(var(--accent))" opacity={payload?.pass ? 1 : 0.25} stroke="rgb(var(--ink))" strokeWidth={1} />
+    {payload?.pass && <text x={cx + 8} y={cy + 4} fill="rgb(var(--text))" fontSize={10}>{payload.name.length > 22 ? `${payload.name.slice(0, 21)}…` : payload.name}</text>}
+  </g>;
+}
+
 function logTicks(min: number, max: number): number[] {
   const ticks: number[] = [];
   for (let e = Math.floor(Math.log10(min)); e <= Math.ceil(Math.log10(max)); e++) for (const m of [1, 3]) {
@@ -39,7 +48,7 @@ function logTicks(min: number, max: number): number[] {
   return ticks.length ? ticks : [min, max];
 }
 
-export function CostCapabilityScatter({ data }: { data: ClientData }) {
+export function CostCapabilityScatter({ data, compact = false }: { data: ClientData; compact?: boolean }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
@@ -47,6 +56,7 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
+  const minScore = compact ? s.minScoreSimple : s.minScoreApplied;
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
@@ -58,11 +68,13 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     return pool
       .map((m: ClientModel) => ({ m, price: modelPrice(m, data, offerScope, priceSettings), sc: m.scores[score], hasEvidence: hasScoreEvidence(m, score) }))
-      .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0 && (x.sc as number) >= s.minScoreApplied)
-      .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100 }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.minScoreApplied, preferredId]);
+      .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0)
+      .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
+        pass: (x.sc as number) >= minScore && (s.maxCost == null || (x.price.value as number) <= s.maxCost) }));
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, s.maxCost, preferredId]);
 
-  const points = useMemo(() => allPoints.filter((p) => !logX || p.x > 0), [allPoints, logX]);
+  const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logX || p.x > 0)), [allPoints, logX, compact]);
+  const compactPoints = useMemo(() => allPoints.filter((p) => !logX || p.x > 0), [allPoints, logX]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;
 
   const byOrg = useMemo(() => {
@@ -74,10 +86,40 @@ export function CostCapabilityScatter({ data }: { data: ClientData }) {
   // Pareto frontier: models not dominated on (cheaper cost, higher capability).
   const pareto = useMemo(() => paretoFrontier(allPoints).filter((p: { x: number }) => !logX || p.x > 0), [allPoints, logX]);
 
-  const xs = points.map((p) => p.x);
+  const xs = (compact ? compactPoints : points).map((p) => p.x);
   const xMin = xs.length ? Math.min(...xs) : 0.1;
   const xMax = xs.length ? Math.max(...xs) : 100;
   const isElo = score.startsWith("designarena");
+  const ys = (compact ? compactPoints : points).map((p) => p.y);
+  const yMin = ys.length ? Math.min(...ys) : 80;
+  const yDomain = [Math.min(yMin - 3, 80), 100] as [number, number];
+
+  if (compact) {
+    const passing = compactPoints.filter((p) => p.pass);
+    const failing = compactPoints.filter((p) => !p.pass);
+    return <div className="card p-3" aria-label="Score versus adjusted cost value map">
+      <div className="mb-1 flex items-baseline justify-between gap-3">
+        <h2 className="text-sm font-semibold">Value map</h2>
+        <span className="text-[11px] text-gray-500">cheaper → right · green line = Pareto frontier</span>
+      </div>
+      <div aria-hidden="true" className="h-[60px] sm:h-[320px]">
+        <ResponsiveContainer width="100%" height="100%">
+          <ScatterChart margin={{ top: 12, right: 120, bottom: 36, left: 24 }}>
+            <CartesianGrid stroke="#222932" />
+            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed scale="log" domain={[xMin * 0.85, xMax * 1.15]} ticks={logTicks(xMin, xMax)} allowDataOverflow interval={0} tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={11} />
+            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yDomain} stroke="#8a93a3" fontSize={11} tickFormatter={(v) => v.toFixed(0)} />
+            <ZAxis type="number" dataKey="z" range={[50, 50]} />
+            <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
+            {showPareto && <Scatter data={compactPoints} line={compactPoints.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint" shape={ParetoHalo} legendType="none" isAnimationActive={false} />}
+            <Scatter data={failing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false} />
+            <Scatter data={passing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false}
+              onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
+          </ScatterChart>
+        </ResponsiveContainer>
+      </div>
+      <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · log scale</span></div>
+    </div>;
+  }
 
   return (
     <div>
