@@ -140,7 +140,7 @@ credited below, the rest is marked open.
 | F-45 | Benchmarks table drops Explore and keeps Compare inside the expanded row; Advanced controls are compact | verified | `ux-evidence/review-20260913T161002Z/f42-f45-fixed-{canonical,legacy}/`, `ux-evidence/fable-20260913-pass6/`desktop_*-benchmarks.png, desktop_*-advanced.png | Codex Luna implemented; **verified by Fable (pass 6)** live: Rank · Model · Result at 1440, model names link, Advanced toolbar one row of equal 36 px controls. |
 | F-46 | Phone table columns 42/27/31 % so the Adjusted Cost (i) stays inside the card | verified | `ux-evidence/fable-20260913-pass6/`checks/verification-F46-F47.json, `ux-evidence/iter30-f46-f47-live-{canonical,legacy}.json` | Fable pass 6 found the (i) 4 px outside the card at 390 (right 378 vs card 374) in Simple and Advanced, light and dark. Fixed in `3b92bf5`; Codex Luna independently verified the pushed revision live on both hosts, including unchanged desktop proportions. |
 | F-47 | Route error boundary `app/error.tsx` (branded panel, nav intact, Try again) | verified | `ux-evidence/fable-20260913-pass6/`checks/verification-F46-F47.json, `ux-evidence/iter30-f46-f47-live-{canonical,legacy}.json` | One pass-6 capture of the model page (mobile dark) showed Next's unbranded "Application error"; three sequenced reproductions with console capture were clean (`checks/crash-repro.json`). The site had no error boundary; `3b92bf5` adds one. Codex Luna independently verified the branded unknown-model route live on both hosts. |
-| F-48 | Benchmarks page: one head card, first ranked row within the first phone screen | open | `ux-evidence/fable-20260913-pass6/`mobile_light-benchmarks*.png | `[mechanical]` spec in `DESIGN-DIRECTIVES.md`; first row today at ~1,150 px on phones, 733 px on desktop. Delegated to Kimi K3 in `.worktrees/f48` during pass 6 (outcome in the iteration-30 log). |
+| F-48 | Benchmarks page: one head card, first ranked row within the first phone screen | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter31-f48-live/verification-f48.json` plus `iter31-f48-live-{canonical,legacy}/verification.json` and screenshots | `7c275c4` deployed by Coolify as `fujgbulyjhxh2iisrqyfc066`. One merged panel with compact Category / Benchmark and version selectors, text Primary source link, one description/coverage paragraph, and results count in the control row. Live first row: 561 px desktop / 837 px mobile on both hosts; F-27 regression 0/0. Needs an independent engine to promote to verified. |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1082,3 +1082,17 @@ Notes for whoever picks this up:
     `https://benchmarkheaven.com` and `https://model-market-comparison.app.mintapis.com` both
     return `/api/health` OK and `/api/meta` with that revision. F-43/F-44 pass their live
     1440/390 light/dark matrices on both hosts; the independent F-46/F-47 live verifier also passes.
+
+- **2026-09-13 · iteration 31 · codex-luna** — implemented F-48 and deployed it through the
+  Sandy PaaS MCP after the local `/opt/mmc-daily/redeploy.sh` fallback could not read its
+  protected token file. The two former top cards in `BenchmarkRanking` are now one panel:
+  Category (`w-full sm:w-48`) and Benchmark/version selectors share the first row, the
+  `PICK A BENCHMARK` eyebrow is gone, the version line uses a text `Primary source ↗` link,
+  description + coverage are one paragraph, and the result count sits at the right of the
+  search/evidence controls. Local gates passed: build-dataset (timestamp-only diff restored),
+  npm test 275/275, tsc, production build and diff-check. The Nex delegation was attempted in
+  an isolated worktree but was rejected while reading `/home/flori/.agent-budget.json`; it made
+  no product changes and no output was trusted. Coolify deployment `fujgbulyjhxh2iisrqyfc066`
+  finished on `7c275c4`; live evidence on both hosts at 1440/390, with light/dark F-27 regression
+  checks, is in `/opt/benchmarkheaven/state/ux-evidence/iter31-f48-live/` and its two host
+  subdirectories. F-48 stays `implemented` until an independent engine verifies it.

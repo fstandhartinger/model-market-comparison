@@ -144,23 +144,6 @@ slivers (`mobile_*-benchmaxxing-full.png`); the measured-axes default fixes this
 (29/214 → 29); ≥ 5 labelled sectors for that model; the toggle shows 214; at 390 px labels stay
 ≥ 10 px (F-33 holds); the topic-local polygons render for each sector with ≥ 2 axes.
 
-### F-48 `[mechanical]` Benchmarks page: one head card, data within the first screen
-*Where:* `components/BenchmarkRanking.tsx` (the two `<section className="bh-panel p-5">` blocks
-at the top; `app/benchmarks/page.tsx` only if the H1 block needs trimming).
-*What:* merge the "Pick a benchmark" card into the benchmark's own header card, in this order:
-1. one row: **Category** select (narrow, `w-full sm:w-48`) · **Benchmark and version** select
-   (fills the rest); no "PICK A BENCHMARK" eyebrow — the selects are self-explanatory;
-2. the benchmark title block as today (category eyebrow, H2 name), with the version line
-   extended by a text link: `Version … · Published board · Primary source ↗` (`bh-link`, not a
-   44 px `bh-button`);
-3. the one-sentence description and the coverage sentence stay, as one paragraph;
-4. the search / evidence / open-weights row stays; the "637 results" count moves to the right end
-   of that row (`ml-auto`, `bh-muted`).
-Desktop keeps the same order; nothing else changes below the table header.
-*Accept:* at 390 px the first `tbody tr` top is ≤ 900 px (today ~1,150); at 1440 px ≤ 620 px
-(today 733); no element wider than the viewport; `bin/verify-f27.mjs` still passes; the
-`Primary source` link keeps `target="_blank" rel="noreferrer"`.
-
 ---
 
 ## Design system notes (apply while touching any file above)
@@ -254,3 +237,4 @@ Desktop keeps the same order; nothing else changes below the table header.
 | F-45 Benchmarks 3 columns, Compare in the row expand; 36 px Advanced toolbar controls | `f7fb2a2` (Codex Luna) | same | **verified by Fable (pass 6):** Rank · Model · Result at 1440, toolbar one row of equal controls |
 | F-46 phone table columns 42 / 27 / 31 % so the Adjusted Cost (i) stays inside the card | pass 6 (Fable, surgical) | `ux-evidence/fable-20260913-pass6/checks/verification-F46-F47.json` | needs a non-Fable verifier: (i) right edge ≤ table right edge at 390 in Simple and Advanced |
 | F-47 route error boundary (`app/error.tsx`) | pass 6 (Fable, surgical) | same | needs a non-Fable verifier: `/models/<bad-id>` or a thrown client error renders the branded panel with nav intact |
+| F-48 Benchmarks head card merged and first result brought into the first screen | `7c275c4` (Codex Luna) | `/opt/benchmarkheaven/state/ux-evidence/iter31-f48-live/verification-f48.json`, plus canonical/legacy F-27 screenshots and verification | **implemented; pending independent verification:** one panel, compact Category/Benchmark selectors, text Primary source link, one description/coverage paragraph, and results count aligned with filters; first row 561 px desktop / 837 px phone on both hosts |
