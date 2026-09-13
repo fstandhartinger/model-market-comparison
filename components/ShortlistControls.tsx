@@ -157,7 +157,7 @@ export function ShortlistControls({
           >
             <div className="relative mt-1">
               <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
-              <input type="range" aria-label={`Minimum ${scoreName}`}
+              <input type="range" aria-label={`Minimum Capability Score (${scoreName})`}
                 min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
                 onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
                 style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
@@ -171,7 +171,7 @@ export function ShortlistControls({
           >
             <div className="relative mt-1">
               <Sparkline values={costStats.sorted} min={costMin} max={costMax} log keep={(v) => maxCost == null || v <= maxCost} />
-              <input type="range" aria-label="Maximum cost per task" min={0} max={1000} step={1} value={fromCost(maxCost)}
+              <input type="range" aria-label={`Maximum ${costUnit}`} min={0} max={1000} step={1} value={fromCost(maxCost)}
                 onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
                 style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
             </div>
