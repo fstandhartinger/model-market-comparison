@@ -512,3 +512,5 @@ Notes for whoever picks this up:
   - H1, H2 and X5 are now `implemented`, not `verified`: codex-luna authored the change and the
     attempted Kimi K3 independent review returned no output/receipt. R9.1 is intentionally still
     open: these are retained source snapshots, not a claim that every source refreshed today.
+  - Final quota check at 2026-09-13 02:48 UTC: Codex week 66%, Claude session 79%; `prefer` remains
+    `codex`, no API-key billing was used, and no new worker was started after the failed review.
