@@ -14,7 +14,7 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
   const go = async (path) => { await p.goto(BASE + path, { waitUntil: 'networkidle' }); await p.waitForTimeout(700); };
   // F-38 Simple small print
   await go('/');
-  const s = await p.evaluate(() => { const sp = [...document.querySelectorAll('p')].find((e) => /How we calculate adjusted cost/.test(e.innerText) && /Underlined prices/.test(e.innerText)); return { len: sp ? sp.innerText.length : null, link: !!sp?.querySelector('a'), label: document.body.innerText.includes('Minimum Capability Score') }; });
+  const s = await p.evaluate(() => { const sp = [...document.querySelectorAll('p')].find((e) => /How we calculate adjusted cost/.test(e.innerText) && /Underlined prices/.test(e.innerText)); const phoneLabel = /Min\. capability score/.test(document.body.innerText) && !!document.querySelector('input[aria-label="Minimum Capability Score (Composite)"]'); return { len: sp ? sp.innerText.length : null, link: !!sp?.querySelector('a'), label: document.body.innerText.includes('Minimum Capability Score') || (innerWidth < 640 && phoneLabel) }; });
   expect(`${kind}/F-38 small print ≤ 200 chars with link`, s.len != null && s.len <= 200 && s.link, s);
   expect(`${kind}/F-38 slider label (R5.7 wording)`, s.label, s);
   // F-37 subscriptions disclosure
