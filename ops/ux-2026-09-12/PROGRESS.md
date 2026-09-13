@@ -653,3 +653,12 @@ Notes for whoever picks this up:
     1440×1000 first screen, first row at 958 px) because F-03's value map sits above the list —
     a conflict between two directives, left for Fable pass 2 in `DESIGN-DIRECTIVES.md`, not
     re-interpreted.
+  - **F-10, F-11 and a value-map defect** (details in the `DESIGN-DIRECTIVES.md` Done log):
+    wizard results button hierarchy; `/scatter` data-driven Y axis (points now span 87 % of the
+    plot, was a band at the top of 0–100) and one-sentence intro; the Simple value map drew the
+    Pareto halo and line through every point instead of the frontier — now 5 of 20. F-11's
+    "count opens the filter panel" part is not done (no external opener exists).
+  - `delegate.sh`: the failure check grepped the model's whole answer for `401|402|429`, which
+    benchmark numbers in a research answer can match; a real answer could be thrown away and
+    the task silently re-run on the fallback model. Now only `HTTP/status/code/error` + code
+    counts as a failure.

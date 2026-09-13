@@ -35,7 +35,7 @@ unset OPENAI_API_KEY ANTHROPIC_API_KEY
 TMP=$(mktemp)
 run() { (cd "$DIR" && timeout 5400 opencode run -m "$1" "$TASK") > "$TMP" 2>&1; }
 echo "delegate.sh: model=$PRIMARY dir=$DIR" >&2
-if ! run "$PRIMARY" || [ ! -s "$TMP" ] || grep -qiE "model not found|ProviderModelNotFound|rate.?limit|No endpoints found|401|402|429" "$TMP"; then
+if ! run "$PRIMARY" || [ ! -s "$TMP" ] || grep -qiE "model not found|ProviderModelNotFound|rate.?limit|No endpoints found|(HTTP|status|code|error)[ :=\"]*(401|402|429)\b" "$TMP"; then
   echo "delegate.sh: $PRIMARY failed, falling back to $SECONDARY" >&2
   run "$SECONDARY"
 fi

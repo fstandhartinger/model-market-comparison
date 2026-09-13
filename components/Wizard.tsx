@@ -236,9 +236,10 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
             <h2 className="mt-1 text-lg font-semibold">Models that fit</h2>
           </div>
           <div className="flex gap-2">
-            <button type="button" onClick={() => setStep(4)} className="rounded-md border border-line px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">← Change answers</button>
+            {/* F-10: "Change answers" is the primary action; leaving for Advanced is secondary. */}
+            <button type="button" onClick={() => setStep(4)} className="rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-ink">← Change answers</button>
             <button type="button" onClick={restart} className="rounded-md border border-line px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">Start over</button>
-            <button type="button" onClick={onFinish} className="rounded-md border border-line px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">Open in Advanced</button>
+            <button type="button" onClick={onFinish} className="px-2 py-1.5 text-sm text-gray-500 underline-offset-2 hover:text-gray-200 hover:underline">Open in Advanced</button>
           </div>
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5 text-xs">

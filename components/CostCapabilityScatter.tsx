@@ -93,6 +93,9 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
   const ys = (compact ? compactPoints : points).map((p) => p.y);
   const yMin = ys.length ? Math.min(...ys) : 80;
   const yDomain = [Math.min(yMin - 3, 80), 100] as [number, number];
+  // F-11: the full chart's Y axis follows the data (floor(min − 3) → 100, at least 20 wide)
+  // so the points use the plot instead of huddling at the top of 0–100.
+  const yFullDomain: [number, number] = [Math.max(0, Math.min(Math.floor(yMin - 3), 80)), 100];
 
   if (compact) {
     const passing = compactPoints.filter((p) => p.pass);
@@ -110,7 +113,8 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
             <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yDomain} stroke="#8a93a3" fontSize={11} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
-            {showPareto && <Scatter data={compactPoints} line={compactPoints.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint" shape={ParetoHalo} legendType="none" isAnimationActive={false} />}
+            {/* Only frontier members get the halo and the connecting line — not every point. */}
+            {showPareto && pareto.length > 0 && <Scatter data={pareto} line={pareto.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint" shape={ParetoHalo} legendType="none" isAnimationActive={false} />}
             <Scatter data={failing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false} />
             <Scatter data={passing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false}
               onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
@@ -143,7 +147,7 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
               tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={12}>
               <Label value={`← more expensive    ·    cheaper → (cheapest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
-            <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : [0, "auto"]}>
+            <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFullDomain} allowDataOverflow={false}>
               <Label value={scoreChartLabel(score, data.sourceDates)} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />
