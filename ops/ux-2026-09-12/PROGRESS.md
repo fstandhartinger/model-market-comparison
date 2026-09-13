@@ -129,7 +129,7 @@ credited below, the rest is marked open.
 | F-34 | Benchmarks page: one coverage line, bar per result | implemented | `ux-evidence/iter24-f31-f32/fable-{canonical,legacy}-after/verification.json` | Kimi delegation produced no diff; Codex replaced stat boxes with one coverage sentence, made unmatched controls conditional, added per-result bars and semibold first row, then tightened row padding to meet the page-height cap. Independent live receipt: 25 bars and 2,648px desktop height on both hosts. Needs non-Codex verification. |
 | F-35 | Compare: release-post table with per-row provenance expand, ≤ 3,500 px | implemented | `ux-evidence/iter25-f35-live/{canonical,legacy}/verification.json`, `ux-evidence/iter25-f36-f38-live/verification.json` | `085207b` is live on both hosts. Compact comparison section is 2,403 px desktop / 3,143 px mobile; closed rows contain native values and percentile bars, evidence/date/source details are in one row expand. Needs a non-Codex verifier. |
 | F-36 | Model page: no empty "Protocol-compatible" paragraph; Copilot card labelled | implemented | `ux-evidence/iter25-f36-f38-live/verification.json` | `085207b` live matrix: no empty protocol copy on the checked Copilot model; Subscription plan eyebrow is present above GitHub Copilot. Needs a non-Codex verifier. |
-| F-37 | Subscriptions list: neutral badges, uncollected plans as a footnote | implemented | `ux-evidence/iter25-f36-f38-live/verification.json` | `085207b` live matrix: ChatGPT Plus / Pro and SuperGrok are absent from rows, appear once in the muted Not collected footnote, and no warning-colour text remains inside the disclosure. Needs a non-Codex verifier. |
+| F-37 | Subscriptions list: neutral badges, uncollected plans as a footnote | implemented | `ux-evidence/iter25-f36-f38-live/verification.json`, `ux-evidence/iter25-f36-f38-live/f37-final.json` | `2c3692c` live on both hosts: ChatGPT Plus / Pro and SuperGrok are absent from rows, appear once in the exact muted Not collected footnote, and no warning-colour text remains inside the disclosure. Needs a non-Codex verifier. |
 | F-38 | Simple: "Minimum score (Composite)" label, one-line small print | implemented | `ux-evidence/iter25-f36-f38-live/verification.json` | `085207b` live matrix: active label is Minimum score (Composite), the measured-task-token note and methodology link are one 167-character paragraph. Needs a non-Codex verifier. |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
@@ -938,3 +938,6 @@ Notes for whoever picks this up:
     identity-coverage guard because one prior GMICloud endpoint disappeared for
     `deepseek/deepseek-v4-flash-0731`. Evidence is retained under `ux-evidence/iter25-r9-fresh/`;
     no source was redated or published. ALL-ACCEPTED remains forbidden.
+  - After the wording correction, `f37-final.json` rechecked both hosts at revision `2c3692c`;
+    both passed with the comma-separated uncollected-plan footnote. The F-35–F-38 statuses stay
+    implemented until a non-Codex verifier supplies the required independent receipt.
