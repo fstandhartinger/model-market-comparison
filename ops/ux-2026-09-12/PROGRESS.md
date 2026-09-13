@@ -978,3 +978,8 @@ Notes for whoever picks this up:
     Owner hash/readback evidence: `/opt/benchmarkheaven/state/ux-evidence/iter27-r9-final/`.
     R9.1 is `implemented` pending deployment and live readback; E2/P1/P2/P3/P4/F1/X3/X4/X6/X7
     remain open or in-progress as previously recorded.
+  - The first Sandy redeploy failed before replacing the healthy release. Local `npm run build`
+    reproduced the cause: `prebuild` compared a dataset built with history-only headline
+    observations against a validator that omitted them. `scripts/validate-benchmark-scores.mjs`
+    now constructs the same six headline axes as `build-dataset`; the production build passes
+    (21/21 pages). A forward redeploy is required before this row can move beyond implemented.
