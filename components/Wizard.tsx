@@ -84,8 +84,10 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   // Pass 4 (Fable): use resetMinScore, not setMinScore(0). setMinScore(0) marked the floor
   // as user-touched, so Simple mode afterwards opened at 70 with 14 rows instead of its
   // 85 default with 6 — the wizard leaked into the mode it never asked about.
+  // Mount-only on purpose: the setter's identity follows the settings state.
   const { resetMinScore } = s;
-  useEffect(() => { resetMinScore(); }, [resetMinScore]);
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  useEffect(() => { resetMinScore(); }, []);
 
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const scope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
