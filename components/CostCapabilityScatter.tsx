@@ -48,7 +48,9 @@ function logTicks(min: number, max: number): number[] {
   return ticks.length ? ticks : [min, max];
 }
 
-export function CostCapabilityScatter({ data, compact = false }: { data: ClientData; compact?: boolean }) {
+/** `advanced` marks the compact map when it is embedded outside Simple (Charts): it follows
+ *  Advanced's score minimum and keeps a readable height on phones. */
+export function CostCapabilityScatter({ data, compact = false, advanced = false }: { data: ClientData; compact?: boolean; advanced?: boolean }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
@@ -56,7 +58,7 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
-  const minScore = compact ? s.minScoreSimple : s.minScoreApplied;
+  const minScore = compact && !advanced ? s.minScoreSimple : s.minScoreApplied;
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
@@ -98,14 +100,18 @@ export function CostCapabilityScatter({ data, compact = false }: { data: ClientD
   const yFullDomain: [number, number] = [Math.max(0, Math.min(Math.floor(yMin - 3), 80)), 100];
 
   if (compact) {
-    const passing = compactPoints.filter((p) => p.pass);
+    // In Charts nothing is cut by a score line, so labelling every passing point stacks
+    // names on top of each other; there only the frontier members are named.
+    const frontierIds = new Set(pareto.map((p: { id: string }) => p.id));
+    const passing = compactPoints.filter((p) => p.pass).map((p) => (advanced && !frontierIds.has(p.id) ? { ...p, name: "" } : p));
     const failing = compactPoints.filter((p) => !p.pass);
-    return <div className="bh-value-map card p-3" aria-label="Score versus adjusted cost value map">
-      <div className="mb-1 flex items-baseline justify-between gap-3">
-        <h2 className="text-sm font-semibold">Value map</h2>
+    // Embedded (advanced) maps sit inside a panel that already has a card and a title.
+    return <div className={advanced ? "bh-value-map" : "bh-value-map card p-3"} aria-label="Score versus adjusted cost value map">
+      <div className={`mb-1 flex items-baseline gap-3 ${advanced ? "justify-end" : "justify-between"}`}>
+        {!advanced && <h2 className="text-sm font-semibold">Value map</h2>}
         <span className="text-[11px] text-gray-500">cheaper → right · green line = Pareto frontier</span>
       </div>
-      <div aria-hidden="true" className="h-[80px] sm:h-[320px]">
+      <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[80px] sm:h-[320px]"}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 12, right: 120, bottom: 36, left: 24 }}>
             <CartesianGrid stroke="#222932" />

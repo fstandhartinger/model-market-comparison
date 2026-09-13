@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState } from "react";
 import {
-  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, Cell, LabelList,
+  BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList,
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_SHORT_LABELS } from "../lib/types";
@@ -11,6 +11,7 @@ import { modelPrice, scopedCatalogOffers, createOfferScope, priceContext, priceL
 import { NumFilter } from "./ui";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
+import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 
 interface PoolEntry {
@@ -21,9 +22,52 @@ interface PoolEntry {
   offerCount: number;
 }
 
-function truncTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
-  const t = payload.value.length > 26 ? payload.value.slice(0, 25) + "…" : payload.value;
-  return <text x={x} y={y} dy={3} textAnchor="end" fill="#9aa4b2" fontSize={11}><title>{payload.value}</title>{t}</text>;
+/** F-09: bars are one accent colour; the organisation lives only in the 8 px dot before
+ *  the label. The axis is 205 px wide, so the dot and label are anchored at its left edge. */
+function orgTick(orgByName: Map<string, string>) {
+  return function OrgTick({ x, y, payload }: { x: number; y: number; payload: { value: string } }) {
+    const t = payload.value.length > 26 ? payload.value.slice(0, 25) + "…" : payload.value;
+    const org = orgByName.get(payload.value);
+    return <g>
+      {org && <circle cx={x - 197} cy={y} r={4} fill={orgColor(org)} />}
+      <text x={x - 188} y={y} dy={3} textAnchor="start" fill="#9aa4b2" fontSize={11}><title>{org ? `${payload.value} · ${org}` : payload.value}</title>{t}</text>
+    </g>;
+  };
+}
+
+const BAR_FILL = "rgb(var(--accent))";
+
+/** F-09: every model as a dot on one axis per group, with the group mean as a tick — the
+ *  spread is the point, which two average bars hid. Missing values are not drawn. */
+function DotStrip({ label, groups, format, log }: { label: string; groups: { name: string; values: number[] }[]; format: (v: number) => string; log?: boolean }) {
+  const usable = (v: number) => Number.isFinite(v) && (!log || v > 0);
+  const all = groups.flatMap((g) => g.values).filter(usable);
+  if (!all.length) return <p className="mb-4 text-xs text-gray-500">{label}: no values in view.</p>;
+  let lo = Math.min(...all), hi = Math.max(...all);
+  if (lo === hi) { lo = log ? lo / 1.5 : lo - 1; hi = log ? hi * 1.5 : hi + 1; }
+  const pos = (v: number) => 100 * (log ? (Math.log(v) - Math.log(lo)) / (Math.log(hi) - Math.log(lo)) : (v - lo) / (hi - lo));
+  const clamp = (p: number) => Math.max(6, Math.min(94, p));
+  return (
+    <div className="mb-5">
+      <div className="mb-1 flex justify-between gap-2 text-[11px] text-gray-500"><span>{label}</span><span className="tabular">{format(lo)} – {format(hi)}{log ? " · log scale" : ""}</span></div>
+      {groups.map((g) => {
+        const vals = g.values.filter(usable);
+        const mean = vals.length ? vals.reduce((a, b) => a + b, 0) / vals.length : null;
+        return (
+          <div key={g.name} className="grid grid-cols-[5rem_1fr] items-center gap-2 pt-4">
+            <span className="text-xs text-gray-400">{g.name} <span className="text-gray-600">({vals.length})</span></span>
+            <div className="relative h-6 rounded bg-white/[0.03]" role="img" aria-label={`${g.name}: ${vals.length} models${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
+              {vals.map((v, i) => <span key={i} className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/50" style={{ left: `${pos(v)}%` }} />)}
+              {mean != null && <>
+                <span className="absolute top-0 h-6 w-0.5 -translate-x-1/2 bg-gray-400" style={{ left: `${pos(mean)}%` }} />
+                <span className="absolute -top-4 -translate-x-1/2 whitespace-nowrap text-[10px] tabular text-gray-400" style={{ left: `${clamp(pos(mean))}%` }}>mean {format(mean)}</span>
+              </>}
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  );
 }
 
 export function ChartsBoard({ data }: { data: ClientData }) {
@@ -67,21 +111,17 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       .map((x) => ({ name: collapsedName(x.m, s.collapse, preferredId), value: x.price.value as number, org: x.m.org, price: x.price })),
     [pool, s.collapse, preferredId]);
 
+  const leaderTick = useMemo(() => orgTick(new Map(leaderboard.map((d) => [d.name, d.org]))), [leaderboard]);
+  const cheapTick = useMemo(() => orgTick(new Map(cheapest.map((d) => [d.name, d.org]))), [cheapest]);
+
   const openVsClosed = useMemo(() => {
     const groups = { Open: pool.filter((x) => x.m.open_weights), Closed: pool.filter((x) => !x.m.open_weights) };
     return Object.entries(groups).map(([k, arr]) => {
-      const sc = arr.filter((x) => x.hasEvidence).map((x) => x.sc).filter((v): v is number => v != null);
+      // No measured score is not a zero: models without evidence are left out, not plotted at 0.
+      const scores = arr.filter((x) => x.hasEvidence).map((x) => x.sc).filter((v): v is number => v != null);
       const priced = arr.filter((x) => x.price.value != null);
       const costSum = priced.reduce((a, x) => a + (x.price.value as number), 0);
-      return {
-        name: k,
-        // No measured score is not a zero. Recharts leaves a null bar empty,
-        // which keeps an evidence gap visible instead of ranking it as worst.
-        avgScore: sc.length ? sc.reduce((a, b) => a + b, 0) / sc.length : null,
-        avgCost: priced.length ? costSum / priced.length : null,
-        costSum,
-        priced,
-      };
+      return { name: k, scores, costs: priced.map((x) => x.price.value as number), avgCost: priced.length ? costSum / priced.length : null, costSum, priced };
     });
   }, [pool]);
 
@@ -103,11 +143,10 @@ export function ChartsBoard({ data }: { data: ClientData }) {
             <BarChart data={leaderboard} layout="vertical" margin={{ left: 20, right: 44 }}>
               <CartesianGrid stroke="#222932" horizontal={false} />
               <XAxis type="number" stroke="#8a93a3" fontSize={11} domain={isElo ? ["dataMin - 20", "dataMax"] : [0, "auto"]} />
-              <YAxis type="category" dataKey="name" width={205} tick={truncTick} interval={0} />
+              <YAxis type="category" dataKey="name" width={205} tick={leaderTick} interval={0} />
               <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
-              <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                {leaderboard.map((d, i) => <Cell key={i} fill={orgColor(d.org)} />)}
-                <LabelList dataKey="value" position="right" fill="#cbd5e1" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
+              <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
+                <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -118,11 +157,10 @@ export function ChartsBoard({ data }: { data: ClientData }) {
             <BarChart data={cheapest} layout="vertical" margin={{ left: 20, right: 64 }}>
               <CartesianGrid stroke="#222932" horizontal={false} />
               <XAxis type="number" stroke="#8a93a3" fontSize={11} tickFormatter={(v) => priceNumber(v)} />
-              <YAxis type="category" dataKey="name" width={205} tick={truncTick} interval={0} />
+              <YAxis type="category" dataKey="name" width={205} tick={cheapTick} interval={0} />
               <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => [`${priceNumber(v)} ${unitShort}`, priceLabel(priceSettings)]} />
-              <Bar dataKey="value" radius={[0, 4, 4, 0]}>
-                {cheapest.map((d, i) => <Cell key={i} fill={orgColor(d.org)} />)}
-                <LabelList dataKey="value" position="right" fill="#cbd5e1" fontSize={11} formatter={(v: number) => priceNumber(v)} />
+              <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
+                <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => priceNumber(v)} />
               </Bar>
             </BarChart>
           </ResponsiveContainer>
@@ -147,36 +185,13 @@ export function ChartsBoard({ data }: { data: ClientData }) {
           </details>
         </Panel>
 
-        <Panel title="Open weights vs closed — average capability">
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={openVsClosed} margin={{ left: 10, right: 20 }}>
-              <CartesianGrid stroke="#222932" vertical={false} />
-              <XAxis dataKey="name" stroke="#8a93a3" fontSize={12} />
-              <YAxis stroke="#8a93a3" fontSize={11} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
-              <Bar dataKey="avgScore" name="Avg score" radius={[4, 4, 0, 0]}>
-                <Cell fill="#7ee0c0" /><Cell fill="#5b9dff" />
-                <LabelList dataKey="avgScore" position="top" fill="#cbd5e1" fontSize={11} formatter={(v: number | null) => v == null ? "Unavailable" : v.toFixed(1)} />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-        </Panel>
-
-        <Panel title={`Open weights vs closed — average cost (${priceLabel(priceSettings)})`}>
-          <ResponsiveContainer width="100%" height={300}>
-            <BarChart data={openVsClosed} margin={{ left: 10, right: 20 }}>
-              <CartesianGrid stroke="#222932" vertical={false} />
-              <XAxis dataKey="name" stroke="#8a93a3" fontSize={12} />
-              <YAxis stroke="#8a93a3" fontSize={11} tickFormatter={(v) => priceNumber(v)} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => [`${priceNumber(v)} ${unitShort}`, `Avg ${unitShort}`]} />
-              <Bar dataKey="avgCost" name={`Avg cost ${unitShort}`} radius={[4, 4, 0, 0]}>
-                <Cell fill="#7ee0c0" /><Cell fill="#5b9dff" />
-                <LabelList dataKey="avgCost" position="top" fill="#cbd5e1" fontSize={11} formatter={(v: number) => priceNumber(v)} />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
-          <details className="mt-3">
-            <summary className="cursor-pointer text-xs text-gray-400">Constituent models behind each average — arithmetic mean = sum ÷ count</summary>
+        <Panel title="Open weights vs closed">
+          <DotStrip label={SCORE_SHORT_LABELS[score]} format={(v) => v.toFixed(isElo ? 0 : 1)}
+            groups={openVsClosed.map((g) => ({ name: g.name, values: g.scores }))} />
+          <DotStrip label={`Cost (${unitShort})`} format={(v) => priceNumber(v)} log
+            groups={openVsClosed.map((g) => ({ name: g.name, values: g.costs }))} />
+          <details className="mt-1">
+            <summary className="cursor-pointer text-xs text-gray-400">Constituent models behind each mean cost — arithmetic mean = sum ÷ count</summary>
             <div className="mt-2 grid gap-4 sm:grid-cols-2">
               {openVsClosed.map((g) => (
                 <div key={g.name}>
@@ -198,6 +213,12 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               ))}
             </div>
           </details>
+        </Panel>
+
+        {/* F-09: the graphical home of the thesis in Advanced — the same value map as Simple,
+            fed by the Advanced filter pool. */}
+        <Panel title="Score vs cost">
+          <CostCapabilityScatter data={data} compact advanced />
         </Panel>
       </div>
       <PriceAssumptions />
