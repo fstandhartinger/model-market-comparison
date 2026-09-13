@@ -96,7 +96,7 @@ export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId
           })}
         </ul>
       ) : null}
-      <div className="space-y-1">
+      {divs.length > 0 && <div className="space-y-1">
         <h4 className="text-sm font-medium">Protocol-compatible measured/vendor divergences</h4>
         {divs.length ? (
           <ul className="space-y-3">{divs.map((d) => { const axis = view.axes.find((a) => a.benchmarkId === d.benchmark_id); return <li key={d.id} className="rounded border border-line p-3 text-sm">
@@ -104,12 +104,8 @@ export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId
             <p>Self-reported {fmt(d.self_reported_value)} − measured {fmt(d.measured_value)} = {fmt(d.delta)} {d.unit} ({d.relative_percent == null ? 'relative difference undefined: measured value is zero' : `${fmt(d.relative_percent)}% relative difference`}).</p>
             <details><summary>Pair evidence</summary><p className="break-words text-xs">{d.formula} · Protocol: {d.comparison_key}</p><ul>{d.source_urls.map((url, i) => <li key={url+i}><a className="text-accent underline" href={url}>Source {i+1} ↗</a> · {d.source_dates[i]}</li>)}</ul><p className="break-words text-xs">Observation IDs: {d.self_reported_id}; {d.measured_id}</p></details>
           </li>; })}</ul>
-        ) : (
-          <p className="bh-muted text-sm">
-            No verified protocol-compatible vendor/measured pair is available for this model; agreement cannot be assessed.
-          </p>
-        )}
-      </div>
+        ) : null}
+      </div>}
     </section>
   );
 }

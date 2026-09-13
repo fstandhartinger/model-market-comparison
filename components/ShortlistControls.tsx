@@ -59,7 +59,7 @@ function Sparkline({ values, min, max, keep, log }: {
   );
 }
 
-function Row({ title, value, children }: { title: string; value: string; children: React.ReactNode }) {
+function Row({ title, value, children }: { title: React.ReactNode; value: string; children: React.ReactNode }) {
   return (
     <div className="min-w-0">
       <div className="flex items-baseline justify-between gap-3">
@@ -148,7 +148,7 @@ export function ShortlistControls({
       <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
         <div className="grid grid-cols-2 gap-3 self-start lg:grid-cols-1 lg:gap-2">
           <Row
-            title={`Minimum ${scoreName}`}
+            title={<><span>Minimum score</span> <span className="bh-muted text-[11px]">({scoreName})</span></>}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
           >
             <div className="relative mt-1">

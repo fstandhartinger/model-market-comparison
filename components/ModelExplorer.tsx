@@ -484,11 +484,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           price hint, the Benchmaxxing screening note (only when a displayed row carries
           the signal) and the measured-task-tokens note with " · ". */}
       <p className="mt-3 text-xs text-gray-500">
-        <PriceAssumptions inline />
-        {rows.some((x) => x.m.benchmaxxing_signal) && <>{" · "}The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
-        {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}{simple
-          ? <>Only models whose task-token usage has actually been measured are ranked here — a cost we cannot measure is not a cost we will quote. Advanced mode can relax that.</>
-          : <>Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
+        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span></> : <><PriceAssumptions inline />
+          {rows.some((x) => x.m.benchmaxxing_signal) && <>{" · "}The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
+          {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>
       <SubscriptionsPanel perTask={s.priceMode === "adjusted"}
         rows={matching.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, score: x.sc, cost: x.price.value }))} />

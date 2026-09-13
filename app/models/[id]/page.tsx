@@ -140,6 +140,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {/* GitHub Copilot */}
       {model.copilot && (
         <section className="card mt-6 p-4">
+          <p className="bh-eyebrow">SUBSCRIPTION PLAN</p>
           <h2 className="mb-2 font-semibold">GitHub Copilot</h2>
           {model.copilot.current && (
             <div>

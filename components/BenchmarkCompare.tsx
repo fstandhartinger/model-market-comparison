@@ -1,9 +1,14 @@
 "use client";
-import { useEffect, useMemo, useState } from 'react';
+import { Fragment, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import { BenchmarkRadar, SERIES_COLORS } from './BenchmarkRadar';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
+
+const nativeValue = (value: number, unit: string | null) => {
+  const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
+  return `${Number(value.toFixed(digits))}${unit ? ` ${unit}` : ''}`;
+};
 
 export function MissingCell({ view, axis, modelId }: { view: BenchmarkView; axis: ViewAxis; modelId: string }) {
   const known = view.missing.find((m) => m.model_id === modelId && m.benchmark_id === axis.benchmarkId);
@@ -19,6 +24,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
   const [search, setSearch] = useState(''), [axisSearch, setAxisSearch] = useState('');
   const defaults = initialView.axes.filter((a) => ['aa_coding_index', 'aa_intelligence_index', 'aa-gpqa-diamond', 'aa-hle', 'aa-scicode', 'aa-lcr'].includes(a.family)).map((a) => a.id).slice(0, 6);
   const [axesIds, setAxes] = useState(defaults), [showEmpty, setShowEmpty] = useState(false), [category, setCategory] = useState('');
+  const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
   const [loadedKey, setLoadedKey] = useState(initialPicks.join('|'));
   useEffect(() => {
@@ -95,7 +101,25 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
             return { id, row, normalized };
           });
           const best = cells.reduce<number | null>((max, cell) => cell.normalized == null ? max : max == null ? cell.normalized : Math.max(max, cell.normalized), null);
-          return <tr key={a.id}><th scope="row" className="max-w-xs text-left align-top font-medium"><Link href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`} className="text-accent hover:underline">{a.name}</Link><div className="bh-muted mt-1 text-xs">Version {a.version}<br />{a.cohort}<br />{a.unit} · {a.higherBetter == null ? 'direction unknown' : a.higherBetter ? 'higher better' : 'lower better'}</div></th>{cells.map(({ id, row, normalized }) => { const bestInRow = best != null && normalized != null && Math.abs(normalized - best) < 0.000001; return <td key={id} className={`min-w-48 align-top ${bestInRow ? 'bg-accent2/10' : ''}`}>{bestInRow && <span className="sr-only">Best measured relative position in this row. </span>}{row ? <SourceScore view={view} axis={a} row={row} /> : <MissingCell view={view} axis={a} modelId={id} />}</td>; })}</tr>;
+          const expanded = expandedRows.has(a.id);
+          return <Fragment key={a.id}>
+            <tr key={`${a.id}-summary`}>
+              <th scope="row" className="max-w-xs text-left align-top font-medium">
+                <button type="button" className="flex w-full items-start gap-1 text-left" aria-expanded={expanded} aria-controls={`comparison-evidence-${encodeURIComponent(a.id)}`} onClick={() => setExpandedRows((old) => { const next = new Set(old); if (next.has(a.id)) next.delete(a.id); else next.add(a.id); return next; })}>
+                  <span aria-hidden="true" className={`bh-row-chevron mt-0.5 shrink-0 ${expanded ? 'rotate-90' : ''}`}>›</span>
+                  <span><span className="text-accent hover:underline">{a.name}</span><span className="bh-muted mt-1 block text-xs">{a.version} · {a.cohort}</span></span>
+                </button>
+              </th>
+              {cells.map(({ id, row, normalized }) => {
+                const bestInRow = best != null && normalized != null && Math.abs(normalized - best) < 0.000001;
+                return <td key={id} className={`min-w-36 align-top ${bestInRow ? 'bg-accent2/10' : ''}`}>
+                  {bestInRow && <span className="sr-only">Best measured relative position in this row. </span>}
+                  {row ? <><span className={`block tabular-nums ${bestInRow ? 'font-bold' : 'font-semibold'}`}>{nativeValue(row.value, a.unit)}</span><span className="mt-1 block h-1 w-full overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: normalized == null ? '0%' : `${Math.max(2, normalized)}%` }} /></span>{normalized != null && <span className="sr-only">Catalog percentile {Math.round(normalized)}.</span>}</> : <span className="block text-xl tabular-nums">—</span>}
+                </td>;
+              })}
+            </tr>
+            {expanded && <tr key={`${a.id}-evidence`} id={`comparison-evidence-${encodeURIComponent(a.id)}`}><td colSpan={displayPicks.length + 1} className="bg-[rgb(var(--line)/.08)]"><div className="p-3"><p className="mb-3 text-xs"><Link className="text-accent underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {a.version} ↗</Link><span className="bh-muted"> · {a.cohort} · {a.unit} · {a.higherBetter == null ? 'direction unknown' : a.higherBetter ? 'higher better' : 'lower better'}</span></p><div className="grid gap-3 md:grid-cols-2">{cells.map(({ id, row }) => <div key={id} className="min-w-0 rounded-lg border border-line p-3"><p className="bh-muted mb-2 text-xs font-semibold">{String.fromCharCode(65 + displayPicks.indexOf(id))} · {view.models.find((m) => m.id === id)?.name || id}</p>{row ? <SourceScore view={view} axis={a} row={row} /> : <MissingCell view={view} axis={a} modelId={id} />}</div>)}</div></div></td></tr>}
+          </Fragment>;
         })}</tbody>;
       })}</table></div>}
     </section>
