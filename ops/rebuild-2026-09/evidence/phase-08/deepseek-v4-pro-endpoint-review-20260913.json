@@ -1,0 +1,18 @@
+{
+  "errors_found": false,
+  "findings": [],
+  "fixed": false,
+  "uncertainties": [
+    "The physical-object-sha of the source .gz is supplied, but its contents are not directly provided; I rely on the documented source_file and response receipt.",
+    "The 'current_response_sha256' equals the response receipt sha, but I cannot independently recompute the hash without execution.",
+    "The 'data_model_note' references 'lib/live-source.mjs', but that file is not supplied; I only verify that the duplicate-object semantics are consistent with the captured data.",
+    "The bounded approval binding stresses 'expiring review file', but no expiring review file content or timestamp is provided to verify that binding."
+  ],
+  "missing_evidence": [
+    "No content or hash of 'lib/live-source.mjs' to confirm the documented deduplication behavior beyond the data_model_note.",
+    "No expiring review file object or timestamp, so I cannot verify the 'expiring' binding requirement.",
+    "No prior HTTP receipt or prior primary response hash is provided beyond the identity hash; the prior endpoint data is supplied as 'prior_primary_response', but its physical receipt isn't independently verifiable."
+  ],
+  "verification_notes": "I checked the supplied packet for the identity-set delta, HTTP/schema/pricing completeness, the documented duplicate-object data model, and safety of the bounded approval. The prior response shows 16 physical endpoint objects, including two BaseTen objects with identical provider_name/tag/quantization; the current response also shows 16 physical endpoint objects, including two identical BaseTen objects. The unique identity lists (excluding duplicates) both contain 15 entries. Prior identities include Fireworks/fireworks/unknown and BaseTen/baseten/fp4; current identities include Cloudflare/cloudflare/unknown and BaseTen/baseten/fp4; all other 14 identities match. Thus the prior-minus-current delta is exactly the removal of Fireworks/fireworks/unknown and the addition of Cloudflare/cloudflare/unknown. The HTTP receipt is 200 with sha e616b39be6f8f7e96054f8c213dd56a75678b690a83e00b8c90dfb78d3e91ade. The current response includes all 16 endpoint objects, each with provider_name, tag, quantization, context_length, max_completion_tokens, supported_parameters, pricing (prompt, completion, input_cache_read, discount), and status. The Cloudflare entry has prompt 0.00000115, completion 0.00000255, input_cache_read 0.0000002, discount 0; all other pricing fields match between prior and current responses for identical providers. The 'duplicate_identity_objects' field documents the BaseTen duplicate with a distinct uptime_last_1d (99.65872240395373), and the data_model_note explicitly states that all endpoint objects are preserved while identity-coverage/removal guards deduplicate. The counts (16 prior/current object, 15 prior/current unique identity) are consistent. The bounded approval only modifies the endpoint identity set (adding Cloudflare, removing Fireworks), does not imply permanent retirement of Fireworks, and otherwise preserves the response hash. No unrelated shrink or schema/pricing failure was found in the supplied evidence.",
+  "verdict": "approve"
+}

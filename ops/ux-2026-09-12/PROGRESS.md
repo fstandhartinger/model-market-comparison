@@ -81,7 +81,7 @@ credited below, the rest is marked open.
 | R7.2 | Favicon / apple-touch / og from the new logo | verified | `ux-evidence/review-20260913T110002Z/asset-status.txt` | Current canonical and legacy hosts return HTTP 200 for manifest, icon, Apple touch icon and OG PNG; generator/assets remain in source |
 | R7.3 | Dark-mode logo variant, switched with the theme | verified | `ux-evidence/review-20260913T110002Z/fable-canonical-fixed2/{desktop_light-simple,desktop_dark-simple}.png` | Current live light/dark screenshots show the theme-switched mark; BrandMark reads theme CSS variables |
 | R8.1 | Release-post-style benchmark comparisons and listings | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260913T075003Z-r81-postfix-canonical/verification.json`, `…-legacy/verification.json` | **Codex independent gate:** both hosts show seven measured-only category snapshot cards, a full comparison table and 14 best cells; mobile has a dedicated table scroll region but no page-level horizontal overflow. Missing/low-sample values remain gaps in the rendered table |
-| R9.1 | Full fresh data run, every live source dated today | open | `ux-evidence/review-20260913T110002Z/broad-fixed-canonical/verification.json`, `ux-evidence/iter25-r9-fresh/` | **Codex review 2026-09-13:** source inventory is still 2026-09-08 through 2026-09-12. A fresh dry-run fetched AA and DesignArena successfully, then fail-closed on OpenRouter because `deepseek/deepseek-v4-flash-0731` lost one prior GMICloud endpoint and requires explicit identity review. No partial snapshot was published or redated; no fresh-publication claim is accepted. |
+| R9.1 | Full fresh data run, every live source dated today | implemented | `ux-evidence/iter27-r9-final/source-refresh-owner-verification.json`, `/opt/benchmarkheaven/state/ux-evidence/iter27-r9-{aa-1,da-1,openrouter-4}/` | **Codex iteration 27:** AA (646 models), DesignArena (43 frontend / 45 fullstack), and OpenRouter (445 models plus all per-provider endpoints) fetched successfully on 2026-09-13 after three exact endpoint reviews. The build remained fail-closed: the withdrawn AA Astra non-reasoning UUID's 14 historical scores were preserved as unmatched, never aliased; new InferenceNet metadata was sourced from its primary terms/privacy pages. Local build, 267 tests and TypeScript pass. Awaiting production deployment/live readback; this iteration cannot mark it verified. |
 | H1 | Historical snapshots of all benchmark scores | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` plus `iter20/h1h2-indep/verification.json` | Claude's independent verification remains valid; Codex rechecked the current live hosts, retained state/API shape and current six headline IDs. |
 | H2 | Bridged comparison via anchor models, uncertainty reported | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` plus `iter20/h1h2-indep/verification.json` | Claude's independent verification remains valid; Codex rechecked current live uncertainty labels and the 266/266 chain/headline tests. |
 | H3 | UI filter "better than model X in category Y" | verified | `ux-evidence/iter14-indep-review/h3-functional.json`, `h3-1440.png`, `h3-390.png` — **independent verification (claude-opus, iteration 14; implementer codex-luna):** live `0e7380c`, Advanced 16 rows → reference GLM-5.3-Flash + "Coding median · 13 benchmarks" → 9 rows, status names "measured" and "Missing values stay unknown and are excluded", no overflow at 1440/390. Original evidence: | `/opt/benchmarkheaven/state/ux-evidence/iter10-h3/verification.json` | Advanced-only folded filter supports exact benchmarks and category medians; measured values win, explicit bridge estimates are marked approximate, and missing values stay unknown. Live on both hosts in desktop/mobile light/dark; independent-engine verification remains required. |
@@ -956,3 +956,25 @@ Notes for whoever picks this up:
   The Nex delegation was attempted in an isolated worktree but produced no receipt/diff and was
   discarded. These rows remain `implemented`, not `verified`, because this iteration's engine
   authored the changes; a different engine must perform the acceptance promotion.
+
+- **2026-09-13 · iteration 27 · codex-luna** — completed the fresh-source remediation for R9.1.
+  OpenRouter initially failed closed on three exact endpoint identity transitions. Each was
+  captured from the primary HTTP 200 response, locally recomputed, and reviewed by an
+  AA-qualified different-family critic: DeepSeek V4 Flash (GMICloud fp4 → fp8), GLM 5.3 Flash
+  (Makora/Relace withdrawals with the published Relace unknown identity), and DeepSeek V4 Pro
+  (Fireworks → Cloudflare). The first V4 Pro critic pass was rejected for an unclear duplicate
+  endpoint count; the packet was repaired to include both physical-object and unique-identity
+  counts plus the full prior projection, and the second pass approved it. The expiring approval
+  ledger now binds all exact hashes and deltas.
+  - Direct live fetches then passed: AA 646 models, DesignArena 43 frontend + 45 fullstack,
+    OpenRouter 445 models with all endpoint calls. `InferenceNet` provider metadata was added
+    from its official terms/privacy material, conservatively marked US / not EU-hosted; no
+    privacy or residency guarantee was invented.
+  - The refreshed AA snapshot no longer publishes UUID `21a0a2f6-…`; its 14 historical measured
+    score rows remain in `scores.json` with `model_id: null` and the one retired missing cell was
+    removed, so no exact score was reassigned to another effort. GLM-5.2's test expectation was
+    updated to the current AA value 34 with a dated source comment.
+  - Gates: `node scripts/build-dataset.mjs` ✓, `npm test` **267/267** ✓, `npx tsc --noEmit` ✓.
+    Owner hash/readback evidence: `/opt/benchmarkheaven/state/ux-evidence/iter27-r9-final/`.
+    R9.1 is `implemented` pending deployment and live readback; E2/P1/P2/P3/P4/F1/X3/X4/X6/X7
+    remain open or in-progress as previously recorded.

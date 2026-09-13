@@ -1,0 +1,37 @@
+{
+  "verdict": "pass",
+  "errors_found": 0,
+  "coverage_checked": [
+    "Prior identity set: 28 entries in prior_accepted_endpoints, tags enumerated (incl. duplicate baseten/fp8) matches prior_count 28",
+    "Current identity set: 28 endpoints in current_primary_response.data.endpoints matches current_count 28",
+    "Set diff: only 'GMICloud/gmicloud/fp4/fp4' removed and 'GMICloud/gmicloud/fp8/fp8' added; all other 27 tags/providers present in both sets (including duplicate baseten/fp8 on both sides)",
+    "Required fields on all 28 current endpoints: provider_name, tag, quantization, status present; pricing.prompt and pricing.completion present, numeric-parseable, finite, non-negative",
+    "GMICloud fp8 endpoint fields verified (tag gmicloud/fp8, quantization fp8, status 0, prices 0.000000286 / 0.000000858, cache read 0.0000000091, discount 0.35)",
+    "No permanent-retirement language asserted; exception framed as narrowly bound and short-lived per criteria 4"
+  ],
+  "findings": [
+    {
+      "location": "whole payload",
+      "severity": "info",
+      "evidence": "Several surviving endpoints show price changes vs prior accepted snapshot (e.g. OpenInference completion 0.00000016 -> 0.00000007; StreamLake prompt 0.0000001188 -> 0.0000000616; Inceptron prompt 0.00000013 -> 0.0000000619; Sail Research prompt 0.000000065 -> 0.000000078; Mancer 2 prompt 0.000000165 -> 0.00000019; Baidu prompt 0.00000044 -> 0.0000000352; Relace prompt 0.000000065 -> 0.00000004) and status transitions (BaseTen, Fireworks -2 -> 0).",
+      "repair": "None required for this gate: criteria restrict identity-set diff to the single GMICloud fp4->fp8 replacement, which holds. Price/status deltas are value updates, not identity changes, and criteria 3 only requires presence of fields and finite non-negative prices. Flagging for downstream price-refresh ingestion, not as a blocker."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Hash values (current_response_sha256, prior_identity_sha256, current_identity_sha256, source_file_sha256) cannot be recomputed or verified without execution; approved solely on the assertion that supplied evidence binds them. Any future re-verification must recompute these hashes.",
+    "Prior snapshot omits input_cache_read for Mancer 2; current payload likewise omits it for Mancer 2, so this cannot be confirmed as a change vs omission on the source side.",
+    "prior_response_file (data/raw/openrouter.json) itself was not supplied, so the prior set is taken from prior_accepted_endpoints as given.",
+    "Treat 'source hash verified' as attested-not-recomputed; if a recomputed hash ever mismatches, gate must fail closed."
+  ],
+  "missing_evidence": [
+    "Recomputed SHA-256 digests for current response, prior/current identity projections, and source file (no execution tools available)",
+    "Raw prior snapshot file contents beyond the projection supplied"
+  ],
+  "approved_exception": {
+    "scope": "single replacement: remove GMICloud/gmicloud/fp4/fp4, add GMICloud/gmicloud/fp8/fp8",
+    "prior_identity_sha256": "d82da3e682cc9794f37136eb8ddf04a926522c25f2ac93c20865bfa588cbbf1e",
+    "current_identity_sha256": "0f92ed1c36c2628f709b6a95943daca5de2cfffde54e658a826a09b43800f45e",
+    "duration": "short-lived only; no permanent retirement claimed; all other identity changes must fail closed"
+  }
+}

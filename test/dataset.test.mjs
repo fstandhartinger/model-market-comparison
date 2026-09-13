@@ -437,8 +437,8 @@ test("GLM-5.2 keeps all qualified source evidence on the reasoning max row", () 
   assert.ok(glm);
   assert.equal(glm.benchmarks.aa_coding_index, 68.8);
   assert.equal(glm.benchmarks.aa_coding_agent_index, 43.3); // 2026-08-26: AA re-scored
-  // 2026-09-09: AA re-scored GLM-5.2 intelligence 42.1 -> 38.6.
-  assert.equal(glm.benchmarks.aa_intelligence_index, 38.6);
+  // 2026-09-13: AA re-scored GLM-5.2 intelligence 38.6 -> 34.
+  assert.equal(glm.benchmarks.aa_intelligence_index, 34);
   assert.equal(glm.designarena.frontend?.modelId, "glm-5.2");
   assert.equal(glm.designarena.fullstack?.modelId, "glm-5.2");
   assert.ok(glm.designarena.frontend?.battles >= 500);

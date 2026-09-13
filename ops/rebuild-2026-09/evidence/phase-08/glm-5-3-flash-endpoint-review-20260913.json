@@ -1,0 +1,38 @@
+{
+  "verdict": "pass",
+  "errors_found": 0,
+  "coverage_checked": {
+    "prior_endpoint_count": 25,
+    "current_endpoint_count": 25,
+    "prior_provider_tags_verified": ["deepinfra/fp4","relace/fp4","morph/fp8","wafer","gmicloud/fp8","novita/fp8","streamlake/fp8","makora","crusoe/fp4","coreweave/fp8","sail-research/fp8","nextbit/fp8","fireworks","phala/fp8","friendli","siliconflow/fp8","digitalocean","together","reka/fp8","parasail/fp8","baseten/fp8","venice","cloudflare","z-ai/fp8","modal/fp8"],
+    "current_provider_tags_verified": ["deepinfra/fp4","relace","morph/fp8","wafer","streamlake/fp8","gmicloud/fp8","reka/fp8","novita/fp8","crusoe/fp4","coreweave/fp8","sail-research/fp8","fireworks","phala/fp8","friendli","siliconflow/fp8","digitalocean","together","parasail/fp8","baseten/fp8","venice","io-net/fp8","cloudflare","z-ai/fp8","nextbit/fp8","modal/fp8"],
+    "removals_verified": ["Makora/makora/unknown — absent from current response, matches declared removal", "Relace/relace/fp4/fp4 — absent from current response, matches declared removal"],
+    "additions_verified": ["Io Net/io-net/fp8/fp8 — present in current response, matches declared addition", "Relace/relace/unknown — present in current response, matches declared addition (Relace tag changed from 'relace/fp4'/fp4 to 'relace'/unknown)"],
+    "pricing_fields_checked": "prompt, completion, input_cache_read, discount present and finite/non-negative on all 25 current endpoints",
+    "status_fields_checked": "status present on all 25 current endpoints"
+  },
+  "findings": [
+    {
+      "location": "endpoint set diff",
+      "severity": "none",
+      "evidence": "Identity diff exactly equals declared removed/added lists; no undeclared tag/quantization/provider changes among the 23 surviving identities.",
+      "repair": null
+    },
+    {
+      "location": "StreamLake pricing; several surviving endpoints' status fields (e.g., Morph 0->-2, Friendli -2->-5, Phala/Venice/Z.AI -2->0, CoreWeave -2->0)",
+      "severity": "info",
+      "evidence": "StreamLake prompt 0.000000135->0.00000011235; multiple status changes. Price updates on surviving identities are explicitly not identity changes; status is non-identity metadata and is present.",
+      "repair": null
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "sha256 hashes (current_response_sha256, prior_identity_sha256, current_identity_sha256) and the source file could not be independently recomputed; I have no execution tools and cannot verify hash bindings myself.",
+    "The short-lived exception, if applied, must bind prior_identity_sha256 67105ec5b5709b5069fdf8c22c8b09e03f83746dc382f41ee4b7e9fbc4d24e50, current_identity_sha256 273c560b17def7abc85c15b14f46721f74eba6addd6277dacf69631f217b3586, and exactly the removed identities Makora/makora/unknown and Relace/relace/fp4/fp4; I cannot verify such binding exists downstream — only that the change itself is narrow and consistent with it.",
+    "No evidence of permanent retirement for the removed endpoints; none claimed. Removals are treated as a transient snapshot diff only."
+  ],
+  "missing_evidence": [
+    "Independent hash recomputation of current_response_sha256 against the gz source file (no execution tools available).",
+    "Downstream artifact demonstrating the exception is bound to both identity digests and the exact removed identities."
+  ]
+}

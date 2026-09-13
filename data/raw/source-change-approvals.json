@@ -28,17 +28,18 @@
     {
       "model_id": "z-ai/glm-5.3-flash",
       "previous_identity_sha256": "67105ec5b5709b5069fdf8c22c8b09e03f83746dc382f41ee4b7e9fbc4d24e50",
-      "current_identity_sha256": "f6f12ed21d421e8ef6f255fa5942cafc88db48ebf21158ae12b9016eca45ac12",
+      "current_identity_sha256": "273c560b17def7abc85c15b14f46721f74eba6addd6277dacf69631f217b3586",
       "removed": [
+        "Makora/makora/unknown",
         "Relace/relace/fp4/fp4"
       ],
       "expires_at": "2026-09-14T18:45:16Z",
-      "review_file": "ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json",
-      "review_sha256": "ecfd09a073d9c18b0bd1b659ffc9957f3a47218a67d210ef2ff2cac09a6cecf3",
-      "owner_acceptance": "Operator reviewed this exact current upstream endpoint-set transition for a bounded rerun; no permanent retirement inference is made.",
-      "reviewed_at": "2026-09-12T18:55:00Z",
+      "review_file": "ops/rebuild-2026-09/evidence/phase-08/glm-5-3-flash-endpoint-review-20260913.json",
+      "review_sha256": "2d1f9626bc0be26f276b82595dec331cc8b3aa07c20fc6e26102286e5a154d93",
+      "owner_acceptance": "2026-09-13 bounded review: fresh HTTP 200 primary response sha256 58c855593ba9e4feb40630ad7b4a6314d18c33a86db968a09f6c5a452de8fbbc has 25 endpoints; local recomputation binds the complete prior/current identity digests and exactly the two removals. Different-family critic z-ai/glm-5.3-flash returned pass with no unresolved findings; informational price/status changes are not identity removals. This is a short-lived source-list exception only; no permanent retirement inference; all other shrink, HTTP, schema or pricing failures remain fatal.",
+      "reviewed_at": "2026-09-13T14:27:00Z",
       "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints",
-      "review_basis": "Direct primary endpoint response reviewed during bounded daily-refresh remediation. This approval binds complete prior/current identity sets and exactly the listed withdrawal(s); any other change remains fatal."
+      "review_basis": "Direct primary endpoint response reviewed from the captured 2026-09-13 response. This approval binds complete prior/current identity sets and exactly the listed withdrawals; any other change remains fatal."
     },
     {
       "model_id": "z-ai/glm-5.3",
@@ -71,15 +72,15 @@
     },
     {
       "model_id": "deepseek/deepseek-v4-flash-0731",
-      "previous_identity_sha256": "0f92ed1c36c2628f709b6a95943daca5de2cfffde54e658a826a09b43800f45e",
-      "current_identity_sha256": "d82da3e682cc9794f37136eb8ddf04a926522c25f2ac93c20865bfa588cbbf1e",
+      "previous_identity_sha256": "d82da3e682cc9794f37136eb8ddf04a926522c25f2ac93c20865bfa588cbbf1e",
+      "current_identity_sha256": "0f92ed1c36c2628f709b6a95943daca5de2cfffde54e658a826a09b43800f45e",
       "removed": [
-        "GMICloud/gmicloud/fp8/fp8"
+        "GMICloud/gmicloud/fp4/fp4"
       ],
-      "expires_at": "2026-09-12T03:50:00Z",
-      "review_file": "ops/rebuild-2026-09/evidence/phase-08/endpoint-changes-review2.json",
-      "review_sha256": "ecfd09a073d9c18b0bd1b659ffc9957f3a47218a67d210ef2ff2cac09a6cecf3",
-      "owner_acceptance": "Verified two complete successful primary responses, source hashes, exact prior-minus-current identity sets and full GLM review. Only current published-list absence is accepted. No permanent-retirement inference; all other shrink or HTTP/schema failure remains fatal."
+      "expires_at": "2026-09-14T15:00:00Z",
+      "review_file": "ops/rebuild-2026-09/evidence/phase-08/deepseek-v4-flash-endpoint-review.json",
+      "review_sha256": "5d5327ec35be9f3dc302372ed1244f4c036f4f404dcd526058737456b7bcafef",
+      "owner_acceptance": "2026-09-13 bounded review: a fresh HTTP 200 primary response (sha256 8741d2f026b0e1d470a53a3b0dc61d728dda51f899de85f925ca8d476b51fcc9; captured file sha256 68e8c7402411e887fae073d557bed7526a9cccaccb5170868d6d02c5bcbc2991) has 28 endpoints; local recomputation binds the complete prior/current identity digests and the sole GMICloud fp4-to-fp8 replacement. Different-family critic z-ai/glm-5.3-flash returned pass with no unresolved findings. This is a short-lived source-list exception only; no permanent retirement inference; all other shrink, HTTP, schema or pricing failures remain fatal."
     },
     {
       "model_id": "moonshotai/kimi-k3",
@@ -157,15 +158,17 @@
     {
       "model_id": "deepseek/deepseek-v4-pro",
       "previous_identity_sha256": "73b91ba7bb68e9eb49c27a6fdf6b69503f885c31fa4295dbda4712166fce76f2",
-      "current_identity_sha256": "365c488ed24c19749032cbd9b359fd8314c7341a220340a948ffa1340fbc6b74",
+      "current_identity_sha256": "d9d0e23c57fc3f0a10d901870d6f8eff6ff959512a97d2bb07f427b380834e1b",
       "removed": [
         "Fireworks/fireworks/unknown"
       ],
       "expires_at": "2026-09-14T18:45:16Z",
-      "reviewed_at": "2026-09-12T18:55:00Z",
+      "reviewed_at": "2026-09-13T14:42:00Z",
       "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4-pro/endpoints",
-      "review_basis": "Direct primary endpoint response reviewed during bounded daily-refresh remediation. This approval binds complete prior/current identity sets and exactly the listed withdrawal(s); any other change remains fatal.",
-      "owner_acceptance": "Operator reviewed this exact current upstream endpoint-set transition for a bounded rerun; no permanent retirement inference is made."
+      "review_basis": "Fresh direct HTTP 200 primary endpoint response captured 2026-09-13. The complete unique identity set is bound to prior digest 73b91ba7bb68e9eb49c27a6fdf6b69503f885c31fa4295dbda4712166fce76f2 and current digest d9d0e23c57fc3f0a10d901870d6f8eff6ff959512a97d2bb07f427b380834e1b; the exact delta is Fireworks/fireworks/unknown removed and Cloudflare/cloudflare/unknown added. Duplicate physical BaseTen objects are retained in the source and intentionally deduplicated only for identity coverage, as documented by the collector. Any other identity shrink, HTTP/schema/pricing failure or malformed response remains fatal.",
+      "review_file": "ops/rebuild-2026-09/evidence/phase-08/deepseek-v4-pro-endpoint-review-20260913.json",
+      "review_sha256": "e9ab1fb2d86df22634276cd21426f8585f9276d964244140546cebf5ee6627d4",
+      "owner_acceptance": "2026-09-13 bounded review: response sha256 e616b39be6f8f7e96054f8c213dd56a75678b690a83e00b8c90dfb78d3e91ade and captured gzip sha256 f5828cfc22b243a00fde721b94c441bb86a1139988c02ecf9e37dee53b97ed78 were recomputed locally; response status 200, all 16 endpoint objects have valid provider identity and prompt/completion prices, and unique identity hashes/delta were recomputed locally. Different-family AA-qualified critic deepseek/deepseek-v4-flash-0731 returned approve with no errors. This short-lived exception makes no permanent retirement inference; all other changes remain fatal."
     }
   ]
 }

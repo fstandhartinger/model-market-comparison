@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-11T06:32:14.403Z",
+  "collected_at": "2026-09-13T14:42:57.811Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-11T06:32:13.755Z",
+      "fetched_at": "2026-09-13T14:42:57.209Z",
       "http_status": 200,
-      "bytes": 3508863,
-      "sha256": "baaa330c53e0fe1eb3a4c346bd2e43ae97444ad2b8f6b55a525440d7f3879b9b"
+      "bytes": 3506184,
+      "sha256": "ffde5f18636b8305394276800d87b8b310d6ddd8c5e8b4cdc86615a6ba0c7390"
     }
   ],
   "coverage": {
-    "published_rows": 141,
+    "published_rows": 144,
     "scored_denominator": 637,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 141,
+  "count": 144,
   "rows": [
     {
       "source_id": "8decf027-5114-4721-9ee1-81c0552980a0",
@@ -486,6 +486,28 @@
         "basis": "derived",
         "input_output_ratio": 43.50732847841122,
         "reasoning_output_share": 0.5648469604880315
+      }
+    },
+    {
+      "source_id": "99f376bf-cbcb-4124-bf3e-6b0a4e6e9bea",
+      "slug": "claude-sonnet-5-xhigh",
+      "name": "Claude Sonnet 5 (Adaptive Reasoning, Xhigh Effort)",
+      "variant": "xhigh",
+      "tokens_per_task": {
+        "reasoning": 43958.72513700623,
+        "answer": 21398.113523242846,
+        "output": 65356.83866024908
+      },
+      "canonical_token_counts": {
+        "input": 7024403059,
+        "output": 134736197,
+        "answer": 30163641,
+        "reasoning": 104572556
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 52.13449106775665,
+        "reasoning_output_share": 0.6725956462723238
       }
     },
     {
@@ -1058,6 +1080,28 @@
         "basis": "derived",
         "input_output_ratio": 12.627986946839911,
         "reasoning_output_share": 0.6515669803041512
+      }
+    },
+    {
+      "source_id": "f7a4ea75-e548-4069-80d4-9be8bc7c009b",
+      "slug": "glm-5-2",
+      "name": "GLM-5.2 (max)",
+      "variant": "max",
+      "tokens_per_task": {
+        "reasoning": 50734.846447808704,
+        "answer": 13582.181628947597,
+        "output": 64317.0280767563
+      },
+      "canonical_token_counts": {
+        "input": 2048384609,
+        "output": 177562341,
+        "answer": 20210658,
+        "reasoning": 157351683
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 11.536143291780547,
+        "reasoning_output_share": 0.788824483420805
       }
     },
     {
@@ -1677,28 +1721,6 @@
       }
     },
     {
-      "source_id": "21a0a2f6-bc72-40d2-80db-ea4e66b02b90",
-      "slug": "gpt-6-astra-non-reasoning",
-      "name": "GPT-6 Astra (Non-reasoning)",
-      "variant": null,
-      "tokens_per_task": {
-        "reasoning": 0,
-        "answer": 7629.742391700481,
-        "output": 7629.742391700481
-      },
-      "canonical_token_counts": {
-        "input": 973758254,
-        "output": 12377780,
-        "answer": 12377780,
-        "reasoning": 0
-      },
-      "derived": {
-        "basis": "derived",
-        "input_output_ratio": 78.66986277022212,
-        "reasoning_output_share": 0
-      }
-    },
-    {
       "source_id": "1f541ef3-913f-4eb2-9d07-0e93c7a9a5e3",
       "slug": "gpt-6-astra-xhigh",
       "name": "GPT-6 Astra (xhigh)",
@@ -2029,6 +2051,28 @@
       }
     },
     {
+      "source_id": "bb3d7e75-8e22-4082-b9d6-1db0803e042f",
+      "slug": "k2-horizon-375b-a23b",
+      "name": "K2 Horizon 375B A23B",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 35767.52344738368,
+        "answer": 15749.933253652986,
+        "output": 51517.456701036666
+      },
+      "canonical_token_counts": {
+        "input": 3718189028,
+        "output": 125854902,
+        "answer": 20396527,
+        "reasoning": 105458375
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 29.54345813244525,
+        "reasoning_output_share": 0.6942796818357678
+      }
+    },
+    {
       "source_id": "8d0cb231-7303-452c-9923-a9620b948475",
       "slug": "kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
@@ -2070,6 +2114,28 @@
         "basis": "derived",
         "input_output_ratio": 15.941289880899355,
         "reasoning_output_share": 0.6697548666104121
+      }
+    },
+    {
+      "source_id": "512d17ef-13d2-4f65-bf9b-154b0dec7e8d",
+      "slug": "kimi-k3-low",
+      "name": "Kimi K3 (low)",
+      "variant": "low",
+      "tokens_per_task": {
+        "reasoning": 5891.506417923906,
+        "answer": 6330.173973735501,
+        "output": 12221.680391659407
+      },
+      "canonical_token_counts": {
+        "input": 1516936640,
+        "output": 21666644,
+        "answer": 11574636,
+        "reasoning": 10092008
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 70.01253355157357,
+        "reasoning_output_share": 0.4820537134929923
       }
     },
     {
