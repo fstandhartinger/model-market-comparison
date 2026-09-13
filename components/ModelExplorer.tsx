@@ -173,8 +173,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
   };
 
   const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
-  const Th = ({ label, k, right, sub, info }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode }) => (
-    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`px-3 py-2 text-xs font-semibold uppercase tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
+  // F-14: Org, # benchmarks and # providers drop out on phones (hidden below md); their
+  // six-column layout and widths return at md. ('hidden' alone would also hide at md+ in a
+  // different cascade order — 'hidden md:table-cell' is the standard responsive pairing.)
+  const Th = ({ label, k, right, sub, info, hideBelowMd }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode; hideBelowMd?: boolean }) => (
+    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`${hideBelowMd ? "hidden md:table-cell " : ""}px-3 py-2 text-xs font-semibold uppercase tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
       <span className={`inline-flex items-center gap-0.5 ${right ? "justify-end" : ""}`}>
         <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
         {info}
@@ -188,7 +191,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
     <div>
       {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
           behind each one while it is moved. Advanced keeps the full toolbar. */}
-      {simple && <>
+      {/* F-13: the sliders and the value map form one card now; ShortlistControls owns the layout. */}
+      {simple && (
         <ShortlistControls
           scores={pool.map((x) => x.sc).filter((v): v is number => v != null)}
           costs={pool.map((x) => x.price.value).filter((v): v is number => v != null)}
@@ -196,9 +200,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
           maxCost={maxCost} setMaxCost={setMaxCost}
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
+          map={<CostCapabilityScatter data={data} compact />}
         />
-        <CostCapabilityScatter data={data} compact />
-      </>}
+      )}
       <div className={`card mb-4 flex-wrap items-center gap-3 p-3 ${simple ? "hidden" : "flex"}`}>
         <input aria-label="Search model or organization" value={q} onChange={(e) => setQ(e.target.value)} placeholder="Search model / org…" className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm" />
         <select aria-label="Filter organization" value={org} onChange={(e) => setOrg(e.target.value)} className="rounded-md border border-line bg-ink px-3 py-1.5 text-sm">
@@ -247,18 +251,27 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
       </div>
 
       <div className="card overflow-x-auto">
-        <table aria-label="Model ranking" className="dtable w-full min-w-[900px] table-fixed text-sm">
+        {/* F-14: no fixed minimum width. On phones exactly three columns carry the width
+            (Model 46 % / Score 27 % / Adjusted Cost 27 %, the hidden columns sit at 0 %);
+            from md up today's six columns and widths return. Widths on <col> because
+            'hidden md:table-cell' is illegal on <col> — the w-0 below md keeps the hidden
+            columns from eating the table-fixed width budget. */}
+        <table aria-label="Model ranking" className="dtable w-full table-fixed text-sm">
           <colgroup>
-            <col style={{ width: "30%" }} /><col style={{ width: "13%" }} /><col style={{ width: "12%" }} />
-            <col style={{ width: "17%" }} /><col style={{ width: "8%" }} /><col style={{ width: "20%" }} />
+            <col className="w-[46%] md:w-[30%]" />
+            <col className="w-0 md:w-[13%]" />
+            <col className="w-[27%] md:w-[12%]" />
+            <col className="w-[27%] md:w-[17%]" />
+            <col className="w-0 md:w-[8%]" />
+            <col className="w-0 md:w-[20%]" />
           </colgroup>
           <thead><tr>
             <Th label="Model" k="name" />
-            <Th label="Org" k="org" />
+            <Th label="Org" k="org" hideBelowMd />
             <Th label="Score" k="score" right sub={SCORE_SHORT_LABELS[score]} info={<InfoTip title={`Score — ${SCORE_LABELS[score]}`} label="the Score column">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">{scoreLabel(score, data.sourceDates)}</span></InfoTip>} />
             <Th label="Adjusted Cost" k="cost" right info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
-            <Th label="# benchmarks" k="benchmarks" right />
-            <Th label="# providers" k="providers" right />
+            <Th label="# benchmarks" k="benchmarks" right hideBelowMd />
+            <Th label="# providers" k="providers" right hideBelowMd />
           </tr></thead>
           <tbody>
             {rows.map(({ m, sc, price, cheap, ncheap }) => {
@@ -280,19 +293,25 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple }: 
               return (
               <Fragment key={m.id}>
               <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
-                <td className="px-3 py-2 truncate">
+                {/* F-14: on phones the name and badges may wrap (md:truncate restores the
+                    single-line look at md), and the org moves here as an 11 px muted line. */}
+                <td className="px-3 py-2 md:truncate">
                   <span aria-hidden="true" className={`bh-row-chevron mr-1 ${isOpen ? "is-open" : ""}`}>›</span>
                   <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{collapsedName(m, s.collapse, preferredId)}</Link>
                   {m.open_weights && <span className="ml-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
                   {m.deprecated && <span className="ml-1 rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
                   {m.featured && !simple && <span className="ml-1 text-[10px] text-warn" title="Featured model">★</span>}
                   {m.benchmaxxing_signal && <span className="bh-badge bh-alert ml-2" title={`Benchmaxxing signal ${m.benchmaxxing_score?.toFixed(1)} — topic-local inconsistency flag, not evidence of intent`}>Benchmaxxing signal</span>}
+                  <span className="mt-0.5 flex items-center gap-1.5 text-[11px] text-gray-500 md:hidden">
+                    <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: orgColor(m.org) }} />
+                    {m.org}
+                  </span>
                 </td>
-                <td className="px-3 py-2 truncate"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
+                <td className="hidden truncate px-3 py-2 md:table-cell"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>
                 <td className="px-3 py-2">{sc != null ? <MagnitudeBar frac={sc / maxScoreVal} tone="score"><span className="block text-right font-semibold">{num(sc, score.startsWith("designarena") ? 0 : 1)}</span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2 text-right tabular text-gray-400">{m.benchmark_count || "—"}</td>
-                <td className="px-3 py-2 text-right tabular text-gray-400">{ncheap || "—"}</td>
+                <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
+                <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>
               {isOpen && (
                 <tr>

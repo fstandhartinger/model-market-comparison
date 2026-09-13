@@ -17,16 +17,17 @@ export function HomeMode({ data }: { data: ClientData }) {
   const [mode, setMode] = useState<Mode>('simple');
   const advanced = mode === 'advanced';
   return <section aria-label="Recommendation mode">
-      <div className="bh-mode-switch mb-4 flex flex-wrap items-center justify-between gap-2 rounded-xl border border-line bg-panel p-2">
-      <div className="flex gap-1" role="tablist" aria-label="View mode">
+      {/* F-13: plain row instead of the bordered card — the segmented group carries its own border. */}
+      <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+      <div className="flex gap-1 rounded-lg border border-line p-0.5" role="tablist" aria-label="View mode">
         {(['simple', 'guided', 'advanced'] as Mode[]).map((m) => (
           <button key={m} type="button" role="tab" aria-selected={mode === m} onClick={() => setMode(m)}
-            className={`rounded-lg px-4 py-2 text-sm capitalize ${mode === m ? 'bg-accent text-ink' : 'text-gray-300'}`}>
+            className={`h-9 min-h-0 rounded-md px-4 text-sm capitalize ${mode === m ? 'bg-accent text-ink' : 'text-gray-300'}`}>
             {m === 'guided' ? 'Guided' : m === 'simple' ? 'Simple' : 'Advanced'}
           </button>
         ))}
       </div>
-      <p className="bh-muted hidden pr-2 text-xs sm:block">{HINT[mode]}</p>
+      <p className="bh-muted hidden text-xs sm:block">{HINT[mode]}</p>
     </div>
     {mode === 'guided' && <Wizard data={data} onFinish={() => setMode('advanced')} />}
     {/* The key remounts the table when the mode changes: defaultSort/defaultAsc seed

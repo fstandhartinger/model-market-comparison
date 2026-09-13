@@ -21,11 +21,15 @@ const LINKS = [
 const PRIMARY = [LINKS[0], LINKS[1], LINKS[2], LINKS[3], LINKS[4]];
 const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
 
-function FilterButton({ mobile = false }: { mobile?: boolean }) {
-  return <button type="button" className={`${mobile ? "" : "hidden lg:inline-flex"} bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent`} aria-controls="global-filters" aria-label="Open filters and settings" onClick={() => window.dispatchEvent(new CustomEvent("bh:toggle-filters"))}>
-    <svg aria-hidden="true" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
-    <span>Filters</span>
-  </button>;
+/** F-15: Filters is one of the three shared 40 px header controls, visible at every
+ *  width — on mobile it sits between the logo and Menu. */
+function FilterButton() {
+  return (
+    <button type="button" className="bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent" aria-controls="global-filters" aria-label="Open filters and settings" onClick={() => window.dispatchEvent(new CustomEvent("bh:toggle-filters"))}>
+      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+      <span>Filters</span>
+    </button>
+  );
 }
 
 export function Nav() {
@@ -42,7 +46,7 @@ export function Nav() {
                 key={href}
                 href={href}
                 aria-current={active ? 'page' : undefined}
-                className={`inline-flex min-h-10 items-center rounded-md px-2.5 ${active ? "bg-accent/15 text-accent" : "text-gray-300 hover:bg-accent/5"}`}
+                className={`inline-flex min-h-10 items-center rounded-md px-2.5 ${active ? "border-b-2 border-accent text-accent" : "text-gray-300 hover:bg-accent/5"}`}
               >
                 {label}
               </Link>
@@ -52,16 +56,15 @@ export function Nav() {
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <FilterButton />
-          <ThemeToggle />
           <div className="relative lg:hidden">
             <details>
-              <summary className="flex min-h-10 cursor-pointer list-none items-center rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10">Menu</summary>
+              <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent">Menu</summary>
               <div className="absolute right-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">
                 {LINKS.filter(([href]) => href !== "/radar").map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
               </div>
             </details>
           </div>
-          <span className="lg:hidden"><FilterButton mobile /></span>
+          <ThemeToggle />
         </div>
       </div>
     </header>

@@ -5,7 +5,6 @@ import {
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_SHORT_LABELS } from "../lib/types";
-import { scoreVersion } from "../lib/score-label";
 import { orgColor } from "../lib/format";
 import { modelPrice, scopedCatalogOffers, createOfferScope, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { NumFilter } from "./ui";
@@ -132,9 +131,9 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   return (
     <div>
       <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="text-sm text-gray-400">Score: <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b> <span className="text-gray-500">· {scoreVersion(score, data.sourceDates)}</span> · min {s.minScoreApplied} · costs: <b className="text-gray-200">{priceLabel(priceSettings)}</b></span>
+        <span className="text-sm text-gray-400">Score <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b> · Cost <b className="text-gray-200">{priceLabel(priceSettings)}</b> ·</span>
         <NumFilter label={adjusted ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
-        <span className="ml-auto text-xs text-gray-500">{pool.length} models within global provider filters</span>
+        <span className="ml-auto text-xs text-gray-500">{pool.length} models</span>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">

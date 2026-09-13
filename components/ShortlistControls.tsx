@@ -80,7 +80,7 @@ const trackFill = (frac: number) => {
 };
 
 export function ShortlistControls({
-  scores, costs, minScore, setMinScore, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool,
+  scores, costs, minScore, setMinScore, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool, map,
 }: {
   scores: number[];               // scores of every model in the pool, before the two sliders
   costs: number[];                // adjusted costs of every model in the pool, before the sliders
@@ -93,6 +93,7 @@ export function ShortlistControls({
   matching: number;               // rows matching the sliders, before the limit
   limit: number;
   pool: number;                   // rows the other filters allow, before the sliders
+  map?: React.ReactNode;          // F-13: value-map node, rendered beside the sliders (lg) / between sliders and summary (below lg)
 }) {
   const scoreStats = useMemo(() => {
     const sorted = [...scores].sort((a, b) => a - b);
@@ -126,44 +127,51 @@ export function ShortlistControls({
   const money = (v: number) => (v >= 10 ? `$${v.toFixed(0)}` : v >= 1 ? `$${v.toFixed(2)}` : `$${v.toFixed(3)}`);
 
   return (
-    <div className="card mb-4 p-3">
-      <div className="grid grid-cols-2 gap-2">
-        <Row
-          title={`Minimum ${scoreName}`}
-          value={minScore > 0 ? minScore.toFixed(0) : "any"}
-        >
-          <div className="relative mt-1">
-            <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
-            <input type="range" aria-label={`Minimum ${scoreName}`}
-              min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
-              onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
-              style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
-          </div>
-        </Row>
+    <div className="card mb-4 p-4">
+      {/* F-13: one card. DOM order — sliders, map, summary — is what phones stack with.
+          At lg the grid places the map in column 2 spanning both rows, so the left column
+          reads: sliders stacked (score above cost), then the summary line. */}
+      <div className={map ? "grid items-start gap-6 lg:grid-cols-[2fr_3fr]" : undefined}>
+        <div className="grid gap-2 self-start">
+          <Row
+            title={`Minimum ${scoreName}`}
+            value={minScore > 0 ? minScore.toFixed(0) : "any"}
+          >
+            <div className="relative mt-1">
+              <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
+              <input type="range" aria-label={`Minimum ${scoreName}`}
+                min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
+                onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
+                style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
+            </div>
+          </Row>
 
-        <Row
-          title="Max cost / task"
-          value={maxCost == null ? "no limit" : money(maxCost)}
-        >
-          <div className="relative mt-1">
-            <Sparkline values={costStats.sorted} min={costMin} max={costMax} log keep={(v) => maxCost == null || v <= maxCost} />
-            <input type="range" aria-label="Maximum cost per task" min={0} max={1000} step={1} value={fromCost(maxCost)}
-              onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
-              style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
-          </div>
-        </Row>
-      </div>
+          <Row
+            title="Max cost / task"
+            value={maxCost == null ? "no limit" : money(maxCost)}
+          >
+            <div className="relative mt-1">
+              <Sparkline values={costStats.sorted} min={costMin} max={costMax} log keep={(v) => maxCost == null || v <= maxCost} />
+              <input type="range" aria-label="Maximum cost per task" min={0} max={1000} step={1} value={fromCost(maxCost)}
+                onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
+                style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
+            </div>
+          </Row>
+        </div>
 
-      <div className="mt-2 border-t border-line/60 pt-2 text-xs text-gray-400">
-        {matching === 0
-          ? `No model out of ${pool} meets both limits — lower the score or raise the budget.`
-          : <><b className="text-gray-200">{matching} models pass</b> · {Math.max(0, pool - matching)} below your score line
-            {matching > limit && <> · the {limit} most expensive are listed</>}</>}
-        {(minScore > 0 || maxCost != null) && (
-          <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }} className="ml-2 text-accent underline underline-offset-2">
-            show all {pool}
-          </button>
-        )}
+        {map && <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">{map}</div>}
+
+        <div className="border-t border-line/60 pt-2 text-xs text-gray-400">
+          {matching === 0
+            ? `No model out of ${pool} meets both limits — lower the score or raise the budget.`
+            : <><b className="text-gray-200">{matching} models pass</b> · {Math.max(0, pool - matching)} below your score line
+              {matching > limit && <> · the {limit} most expensive are listed</>}</>}
+          {(minScore > 0 || maxCost != null) && (
+            <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }} className="ml-2 text-accent underline underline-offset-2">
+              show all {pool}
+            </button>
+          )}
+        </div>
       </div>
     </div>
   );

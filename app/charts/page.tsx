@@ -10,11 +10,8 @@ export default async function ChartsPage() {
     <div>
       <h1 className="text-2xl font-bold">Charts</h1>
       <p className="mt-1 mb-5 max-w-3xl text-sm text-gray-400">
-        Capability leaderboards, cheapest-model rankings, and an open-weights vs closed comparison.
-        Switch the score and toggle the featured set. For release-style benchmark cards, exact
-        evidence, and model-versus-model comparisons, open the{" "}
-        <a href="/compare" className="text-accent">benchmark report</a>. For the price/capability scatter, see{" "}
-        <a href="/scatter" className="text-accent">Cost vs Capability</a>.
+        <a href="/compare" className="text-accent">Leaderboard</a>, cheapest models, open vs closed, and{" "}
+        <a href="/scatter" className="text-accent">score against cost</a> — all under your current filters.
       </p>
       <ChartsBoard data={data} />
     </div>
