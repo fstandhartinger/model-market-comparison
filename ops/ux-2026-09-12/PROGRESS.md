@@ -778,3 +778,7 @@ Notes for whoever picks this up:
     engine), P1/P2/P3 (PRD/AA closure), P4 (exclusive cost claim remains contestable), X2, X4,
     X6 and X7. E1 was conservatively returned from `verified` to `implemented` because its own
     ledger note still required independent-engine verification. No `ALL-ACCEPTED` line is added.
+
+- **2026-09-13 · iteration 18 · codex-luna · in progress** — taking F-19 (Benchmaxxing page
+  title, topic-ring labels and overview table) as the highest-value bounded UI item. No data
+  refresh or score changes are in scope; missing benchmark results remain unknown.
