@@ -65,7 +65,7 @@ export function BenchmaxxingOverview({ rows, taggedCount, minComparisons, minTop
           <th scope="col" className="text-left">Signal</th>
           <th scope="col" className="hidden text-left md:table-cell">Related comparisons</th>
           <th scope="col" className="text-left">Measured</th>
-          <th scope="col" className="hidden text-left md:table-cell">Domain specialisation <InfoTip title="Domain specialisation" label="the Domain specialisation column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>
+          <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>
         </tr></thead>
         <tbody><Rows rows={visible} maxScore={maxScore} /></tbody>
       </table>

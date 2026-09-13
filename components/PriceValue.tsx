@@ -6,7 +6,8 @@ import type { PriceResult } from "../lib/cost";
 export function priceNumber(value: number | null | undefined): string {
   if (value == null) return "—";
   if (value === 0) return "$0";
-  return `$${value < 0.0001 ? value.toPrecision(3) : value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: value < 1 ? 5 : 3 })}`;
+  // Modeled estimate: three significant figures are all the inputs support (F-49).
+  return `$${value < 1 ? Number(value.toPrecision(3)).toString() : value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
 /** Native modal: usable from keyboard/touch, outside table/chart overflow, with

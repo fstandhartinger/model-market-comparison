@@ -1,12 +1,12 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 6: 2026-09-13 ~17:30 UTC**, against live revision `2cf4080` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass6/` — 74 screenshots +
+**Pass 7: 2026-09-13 ~20:10 UTC**, against live revision `dea90cb` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass7/` — 80 screenshots +
 `metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple incl. moved slider,
-Advanced incl. price modal, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks, Charts),
-`checks/` (Filters overlay at both widths, header-icon geometry, map-dot counts, radar spoke count,
-crash reproduction attempts) and `checks/verification-F46-F47.json` once the fixes are live.
-Earlier passes: `…/fable-20260913-pass5/`, `-pass4/`, `-pass3/`, `-pass2/`, `…/fable-20260913/`.
+Advanced incl. expanded row, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks, Charts),
+`checks/` (Filters overlay at both widths incl. "More settings", `verification-F43-F44.json`),
+`delegate-f51.{log,md}` (the Kimi delegation record for F-51).
+Earlier passes: `…/fable-20260913-pass6/`, `-pass5/`, `-pass4/`, `-pass3/`, `-pass2/`, `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -23,64 +23,67 @@ Luna. Every delegated diff is reviewed before it lands.
 
 ---
 
-## Verdict on the live site — pass 6 (2026-09-13)
+## Verdict on the live site — pass 7 (2026-09-13)
 
-The site now meets the bar on every surface except two. Simple answers Florian's question on
-the first screen at both widths (two sliders with histograms, the value map, seven rows, 1,243 px
-total on desktop); Advanced opens on 101 rows with pips and one toolbar row; the Filters overlay
-is a clean four-group popover on desktop and a bottom sheet on phones; Guided reads best of all;
-the model page is a release post (2,443 / 4,089 px); Charts is four cards with one accent colour;
-Benchmarks is one bar per result. Dark mode is complete: no black-on-dark label anywhere, the
-accent shifts to the light blue, orange stays reserved for Benchmaxxing. Everything from pass 5
-shipped: F-40, F-41 (no flagship row hatched, 0 of 7), F-42 (phone sliders stacked, captions one
-line), F-45 (Rank · Model · Result, 36 px toolbar) all hold live.
+**The site meets the bar on every surface.** Nothing on the first screen of any page fails
+Florian's four tests any more; what is left is polish, and all of it is small.
 
-**What still fails the bar, in order of damage:**
+What pass 7 confirmed live (both widths, both themes):
 
-1. **Compare is the one page that is not ours yet** — 5,576 px at 1440, 9,541 px at 390. On a phone
-   the reader scrolls through four stacked "Model A … D" cards before the first chart appears at
-   ~2,100 px. The F-35 table itself is right; the frame around it is a form. → **F-44**, now first.
-2. **The Benchmaxxing radar still draws 214 spokes for 29 measured axes.** On desktop it is a grey
-   sea with blue slivers; at 390 px it is a solid grey disc. The one chart that should *show*
-   Benchmaxxing shows nothing. → **F-43**, second.
-3. **Phone table header: the Adjusted Cost (i) overflowed the card by 4 px** (right edge 378 px,
-   card 374 px) in Simple and Advanced, light and dark — the icon sat on the border. Cause: the
-   27 % column gives 72 px of content room, "ADJUSTED / COST ▼" + (i) needs 86. → fixed in this
-   pass (**F-46**, Fable, surgical: 42 / 27 / 31 % phone columns).
-4. **One capture of the model page (mobile, dark) returned Next's unbranded "Application error"
-   screen** (`mobile_dark-model.png`). Three sequenced re-runs with console capture did not
-   reproduce it (`checks/crash-repro.json`, 0 errors, 4,089 px) — a transient chunk/hydration
-   failure, not a data bug. But the site had no error boundary at all, so any such failure blanks
-   the whole page. → fixed in this pass (**F-47**, Fable, `app/error.tsx`: nav and footer stay, one
-   sentence, "Try again" + "Back to the overview").
-5. **Benchmarks on phones: the first ranked row is at ~1,150 px.** Two stacked cards (picker,
-   then a header with a 44 px "Primary source ↗" button, a description, the coverage line, then
-   search + evidence) precede any data. → **F-48** `[mechanical]`.
+- **Simple** answers the question on the first screen: two sliders with histograms, the value
+  map with 7 labelled points for the 7 ranked rows, the table right below (1,243 px total at
+  1440; 1,606 px at 390). Dark mode is clean.
+- **Advanced** opens on 101 rows, one toolbar row, pips on every row; the phone version has
+  search + Refine and three columns with the (i) inside the card (F-46 holds).
+- **Filters overlay** is four titled groups (Ranking · Price basis · Regional settings · Data
+  confidentiality) with the rare options behind "More settings"; 20:1 is the default blend;
+  Chinese-provider exclusion is off; the phone sheet is the same content stacked.
+- **Guided** is the calmest surface on the site; step 3's "No floor · 1 mo … 6 mo" chips are
+  exactly the "best model that existed n months ago" idea, made tangible.
+- **Benchmaxxing (F-43 ✔ verified):** the radar now draws exactly the 29 measured spokes for
+  Gemini 3.1 Pro Preview, with seven labelled topic sectors and topic-local polygons; the
+  Agentic sector visibly saw-tooths, which is the whole point. 29 spokes at both widths, the
+  "Show all 217 axes" toggle is off by default (`checks/verification-F43-F44.json`).
+- **Compare (F-44 ✔ verified):** one picker row (two chips + combobox on one line at 1440,
+  chips stacked and ≤ 160 px at 390), no jump links, 3,967 px / 5,233 px, first chart at 555 /
+  858 px. All inside the F-44 bounds.
+- **Model page** is a release post: headline Composite + mini radar, nine category panels of
+  bar rows, one "Unusual results" panel, the rest folded. 2,443 / 4,089 px.
+- **Benchmarks (F-48 ✔ verified):** one head panel, Category + Benchmark selectors on one row,
+  text "Primary source ↗", one description paragraph, first ranked row inside the first screen
+  at 1440.
 
-## Decisions in pass 6 (close the three items the 16:10 gate reopened)
+**What still falls short, in order of damage (all small):**
 
-1. **R3.1 / P4 — the hero line 2 is final.** The gate objects that Artificial Analysis also
-   publishes a per-model "cost per task". It does: a list-price number for one route. Our claim
-   is *what each model really costs **you*** — priced on the route your own filters leave open
-   (region, confidentiality, company status), with that endpoint's cache-read/write prices and
-   measured hit rate, and the model's own token usage. No other site does that; the About page
-   says so in four bullets ("Which provider … not a platform average"). The claim stands as
-   published. For X7, the exclusivity-free fallback remains recorded: *"And the only place that
-   prices each model the way you would actually buy it."* Gates may not reopen R3.1 without a
-   site that prices a reader-filtered route; note it and move on.
-2. **R5.3 — the Simple floor stays at 85, applied as ≥ 85.** Florian wrote "Score >85" the way
-   people speak; a slider whose default is 86 would be an arbitrary number no one asked for, and
-   the caption already reads "Minimum Capability Score 85". Recorded for X7 so he can overrule.
-3. **F-22 — the map plots the Simple pool, not only the ranked rows; that is the design.** The
-   `measuredOnly` pool (featured, measured task tokens) is drawn in full; rows that pass the
-   two sliders are full-opacity and labelled, the rest are dimmed dots below the line. That is
-   the "distribution behind the slider" Florian asked for in R5.5. Acceptance is re-specified:
-   *number of full-opacity, labelled points = number of ranked rows* (today 7 = 7 at both widths;
-   the earlier "10 full circles" count in `checks/checks.json` includes the three Pareto rings).
-   Ledger row F-22 → `verified` on that definition.
-4. **The model-page crash is recorded, not chased.** One occurrence in ~80 page loads, zero in
-   three targeted reproductions. F-47 makes the failure mode survivable; if it recurs, the
-   `digest` shown on the error panel identifies it in the server log.
+1. **Cost precision was noise.** The table printed `$0.89512` next to `$17.308` and the model
+   page `$4.378 /task`; five significant figures on a modeled estimate over-promise and make the
+   column ragged. → fixed in this pass (**F-49**, Fable, surgical: `priceNumber` now prints two
+   decimals from $1 up and three significant figures below $1: `$17.31`, `$6.87`, `$0.895`,
+   `$0.186`). The sort stays exact; the underline still opens the full inputs.
+2. **Compare's head was the odd one out.** An eyebrow, a serif slogan and a three-line
+   description before the picker, while Charts, Benchmarks and Benchmaxxing are title + one
+   line. → fixed in this pass (**F-52**, Fable, surgical: "Compare" + one line).
+3. **"Radar axes · 6 / 8 selected" is a stray card** between the radar and the "strongest"
+   section; it belongs inside the radar card next to "Show exact radar values". → **F-51**
+   `[mechanical]`, delegated to Kimi K3 in this pass (see the Done log / ledger for the result).
+4. **Benchmaxxing per-model report: the right column is a 300 px card over ~400 px of nothing**
+   at 1440 (`desktop_light-benchmaxxing-full.png`). → **F-50** `[mechanical]`.
+5. **One spelling split:** the table said "Domain specialisation", the card "Domain
+   specialization". → fixed in this pass (American spelling, matching the rest of the site).
+
+## Decisions in pass 7
+
+1. **R5.2 stays literal (cost-descending Simple).** Looking at the fresh Simple screen, row 1
+   is the dearest model (Claude Fable 5, 94.0, $17.31) above a cheaper and stronger row 2 (Claude
+   Fable 5.1, 99.8, $14.17). That is what "über den Preis absteigend sortiert" says; the value map
+   beside the table makes the trade-off visible, and one click on the Adjusted Cost header flips
+   it. Recorded for X7 so Florian can overrule.
+2. **R3.1 stands** as decided in pass 1 and defended in pass 6; nothing in pass 7 changes it.
+3. **F-22 stands** as re-specified in pass 6: 7 labelled full-opacity points = 7 ranked rows, the
+   other 13 points of the pool dimmed below the line (`desktop_light-simple.png`).
+4. **No new [judgment] work is opened.** The remaining open directives (F-50, F-51) are
+   mechanical; if Kimi returns nothing usable, the next Codex Luna iteration takes them (Codex at
+   72 % at 18:07, below the 75 % warn line).
 
 ---
 
@@ -101,50 +104,32 @@ asked for.
 
 ## Directives (open)
 
-> **Status 2026-09-13 pass 6 (Fable):** F-42 and F-45 (Codex, `f7fb2a2`) verified live in this
-> pass and moved to the Done log. F-46 and F-47 were fixed by Fable in this pass. The remaining
-> backlog is three items; F-44 and F-43 are `[judgment]` layout work for Claude Opus 5 or Codex
-> Luna (Codex at 71 % of its window at 16:07 — below the 75 % warn line, so either engine), F-48
-> is `[mechanical]`.
+> **Status 2026-09-13 pass 7 (Fable):** F-43 and F-44 (Codex, `6508c5f`) and F-48 (Codex,
+> `7c275c4`) verified live in this pass and moved to the Done log. F-49 and F-52 were fixed by
+> Fable in this pass (surgical). Two `[mechanical]` items remain.
 
-### F-44 `[judgment]` Compare: one picker row, one radar caption, ≤ 4,000 px
-*Where:* `components/CompareView.tsx`.
-*What:* the "Build your comparison" sidebar becomes a single **picker row** above the content:
-up to four compact model chips (colour dot · name · ×) plus one "Add a model" combobox that
-searches; the "Benchmark sheet ↗" link moves into each chip's hover/expand. The radar's
-three-line caption ("Each version uses its measured catalog minimum → 0 …") becomes an (i) next to
-the "Benchmark radar" title; the axis table under the radar stays a closed disclosure (F-35).
-"Where each model is strongest" stays first after the radar. The "View radar ↓ / Full benchmark
-table ↓" jump links go.
-**Phone (added pass 6):** at 390 px the picker row is the two chips + the combobox, ≤ 160 px tall;
-the radar (or the "strongest" cards) starts within 900 px of the top. Today the four stacked
-"Model A … D" cards push the first chart to ~2,100 px.
-*Accept:* `/compare` with the default two models is ≤ 4,000 px at 1440 px and ≤ 7,000 px at
-390 px; the picker is one row at 1440 px and ≤ 160 px at 390 px; first chart top ≤ 900 px at
-390 px; removing and adding a model works by keyboard; no regression in `bin/verify-f35.mjs`.
+### F-51 `[mechanical]` Compare: fold "Radar axes" into the radar card
+*Where:* `components/BenchmarkCompare.tsx` (the `<details className="bh-panel …">Radar axes · n / 8
+selected</details>` block right after `<BenchmarkRadar …/>`), `components/BenchmarkRadar.tsx`.
+*What:* remove the standalone panel; render the same `<details>` (same summary text, same
+"Choose 3–8 axes…" paragraph, same checkbox grid and handlers) *inside* the radar card, directly
+after "Show exact radar values" and before "How to read this chart", styled like those two
+(`mt-4 text-sm`, no `bh-panel`). Pass it in as a prop/slot; no behavioural change.
+*Accept:* `/compare` shows exactly one `bh-panel` between the picker and "Where each model is
+strongest" (the radar card); the summary "Radar axes · 6 / 8 selected" is inside it; toggling an
+axis checkbox still re-draws the radar; page height ≤ 3,900 px at 1440 and ≤ 5,200 px at 390;
+`bin/verify-f44.mjs` and `bin/verify-f35.mjs` still pass.
 
-### F-43 `[judgment]` Benchmaxxing radar: show the measured shape, not the missing one
-*Where:* `components/BenchmaxxingReport.tsx` (radar, sector labels, legend line).
-*What:*
-- **Default = measured axes only.** The radar's axes are the benchmarks this model has a result
-  for (29 for Gemini 3.1 Pro Preview today), ordered clockwise by topic; the 214-axis view stays
-  behind a toggle **"Show all 214 axes"** (off by default).
-- **Every topic with ≥ 2 measured axes is its own sector** with its own label and a light tint
-  from the topic palette; topics with one measured axis are grouped as "Other" *and* listed in
-  the legend line as now. No sector may cover more than 50 % of the ring unless it has more than
-  half of the axes.
-- **Line:** one closed polygon through the measured axes of each topic (topic-local, as F-07),
-  sectors separated by a 2° gap; within a topic the polygon is filled `accent/15`. Dots stay.
-- **Signal card** unchanged. Under the radar, replace the two-line note with one sentence:
-  *"Axes are the n benchmarks this model has results for, grouped clockwise by topic; a jagged
-  outline inside one topic is the Benchmaxxing pattern."*
-**Phone (added pass 6):** at 390 px the 214-spoke default is a solid grey disc with blue
-slivers (`mobile_*-benchmaxxing-full.png`); the measured-axes default fixes this without extra work.
-*Accept:* `/benchmaxxing` default radar has exactly as many spokes as "measured" in the selector
-(29/214 → 29); ≥ 5 labelled sectors for that model; the toggle shows 214; at 390 px labels stay
-≥ 10 px (F-33 holds); the topic-local polygons render for each sector with ≥ 2 axes.
-
----
+### F-50 `[mechanical]` Benchmaxxing report: fill the right column
+*Where:* `components/BenchmaxxingReport.tsx` (the `lg:grid-cols-[minmax(0,1fr)_300px]` grid and the
+"Advanced details: topic groups and method" `<details>` below it).
+*What:* at `lg` and up, move the "Advanced details: topic groups and method" disclosure into the
+right column, directly under the Benchmaxxing-signal card (`aside`), so the column reads: signal
+card → topic-groups disclosure. Its body switches to a single column there (`grid-cols-1`, not
+`md:grid-cols-2`). Below `lg` nothing changes (card, then disclosure, stacked as today).
+*Accept:* at 1440 the right column's bottom edge is within 120 px of the radar's bottom edge
+(today the gap is ~400 px); at 390 the order is radar → caption → signal card → disclosure, as
+today; no text change.
 
 ## Design system notes (apply while touching any file above)
 
@@ -169,6 +154,9 @@ slivers (`mobile_*-benchmaxxing-full.png`); the measured-axes default fixes this
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 6 (17:30 UTC, live `2cf4080`):** verified F-42, F-45 (Codex); fixed F-46 phone (i) overflow
+  and F-47 error boundary; opened F-48. Decisions: R3.1 line 2 final (fallback recorded for X7),
+  R5.3 floor 85 applied as ≥ 85, F-22 map = pool with ranked rows full-opacity.
 - **Pass 5 (15:30 UTC, live `3d7af32`):** verified F-31 … F-38 (Codex); fixed F-39 (log axis, 46/138
   overlapping ticks → 0); opened F-40 slider leak, F-41 hatch rule, F-42 phone captions, F-43 radar,
   F-44 Compare, F-45 small cuts. Decisions: log axis with pinned free routes stays (R5.10); hatch
@@ -238,3 +226,8 @@ slivers (`mobile_*-benchmaxxing-full.png`); the measured-axes default fixes this
 | F-46 phone table columns 42 / 27 / 31 % so the Adjusted Cost (i) stays inside the card | pass 6 (Fable, surgical) | `ux-evidence/fable-20260913-pass6/checks/verification-F46-F47.json` | needs a non-Fable verifier: (i) right edge ≤ table right edge at 390 in Simple and Advanced |
 | F-47 route error boundary (`app/error.tsx`) | pass 6 (Fable, surgical) | same | needs a non-Fable verifier: `/models/<bad-id>` or a thrown client error renders the branded panel with nav intact |
 | F-48 Benchmarks head card merged and first result brought into the first screen | `7c275c4` (Codex Luna) | `/opt/benchmarkheaven/state/ux-evidence/iter31-f48-live/verification-f48.json`, plus canonical/legacy F-27 screenshots and verification | **implemented; pending independent verification:** one panel, compact Category/Benchmark selectors, text Primary source link, one description/coverage paragraph, and results count aligned with filters; first row 561 px desktop / 837 px phone on both hosts |
+| F-43 Benchmaxxing radar defaults to measured axes, labelled topic sectors, "Show all n axes" toggle | `6508c5f` (Codex Luna) | `ux-evidence/fable-20260913-pass7/checks/verification-F43-F44.json`, `…/desktop_light-benchmaxxing-full.png` | **verified by Fable (pass 7):** 29 spokes = 29 measured at 1440 and 390, toggle present and off, 7 sector labels |
+| F-44 Compare picker row, radar (i), no jump links | `6508c5f` (Codex Luna) | same | **verified by Fable (pass 7):** 3,967 px / 5,233 px; combobox on the chip line at 1440, chips ≤ 160 px at 390; first chart 555 / 858 px; 0 jump links; keyboard remove buttons present |
+| F-48 Benchmarks head card merged | `7c275c4` (Codex Luna) | `ux-evidence/fable-20260913-pass7/desktop_light-benchmarks.png`, `mobile_light-benchmarks.png` | **verified by Fable (pass 7):** one panel, selectors on one row at 1440, text Primary-source link, one paragraph, first ranked row at ~560 px desktop |
+| F-49 cost precision: 2 decimals ≥ $1, 3 significant figures < $1 | pass 7 (Fable, surgical, `components/PriceValue.tsx`) | `ux-evidence/fable-20260913-pass7/after/` once live | needs a non-Fable verifier: no `$` value in Simple/Advanced/model page shows > 3 decimals |
+| F-52 Compare head: "Compare" + one line, no eyebrow | pass 7 (Fable, surgical, `app/compare/page.tsx`) | same | needs a non-Fable verifier |
