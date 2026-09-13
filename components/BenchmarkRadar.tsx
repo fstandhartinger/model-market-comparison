@@ -1,4 +1,5 @@
 import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
+import type { ReactNode } from 'react';
 import { InfoTip } from './InfoTip';
 
 export const SERIES_COLORS = ['var(--radar-1, #5b9dff)', 'var(--radar-2, #7ee0c0)', 'var(--radar-3, #f5b65b)', 'var(--radar-4, #cc9aff)'];
@@ -6,7 +7,7 @@ const DASHES = ['', '9 4', '3 4', '12 4 2 4'];
 const position = (i: number, n: number, radius: number) => ({ x: Number((360 + Math.sin(i * Math.PI * 2 / n) * radius).toFixed(3)), y: Number((245 - Math.cos(i * Math.PI * 2 / n) * radius).toFixed(3)) });
 const format = (n: number) => Number(n.toFixed(3)).toLocaleString('en-US');
 
-export function BenchmarkRadar({ view, axes, picks }: { view: BenchmarkView; axes: ViewAxis[]; picks: string[] }) {
+export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel }: { view: BenchmarkView; axes: ViewAxis[]; picks: string[]; axesPicker?: ReactNode; axesPickerLabel?: string }) {
   const series = picks.map((id) => ({ id, name: view.models.find((m) => m.id === id)?.name || id,
     values: axes.map((a) => {
       const row = latestScores(a.scores).find((r) => r.modelId === id);
@@ -39,6 +40,7 @@ export function BenchmarkRadar({ view, axes, picks }: { view: BenchmarkView; axe
       </div>
       <details className="mt-4 text-sm"><summary>Show exact radar values</summary><div className="bh-table-wrap overflow-x-auto" tabIndex={0} role="region" aria-label="Radar values"><table className="bh-table w-full text-sm"><caption className="text-left bh-muted py-3">Radar values · normalized / 100, rounded to 3 decimals (exact native score). Missing or uninformative axes are never filled.</caption><thead><tr><th scope="col">Axis / version</th>{series.map((s, i) => <th scope="col" key={s.id}>{String.fromCharCode(65 + i)} · {s.name}</th>)}<th scope="col">Normalization range</th></tr></thead><tbody>{axes.map((a, i) => <tr key={a.id}><th scope="row" className="text-left font-normal">{i + 1}. {a.name}<div className="bh-muted text-xs">Version {a.version} · {a.cohort}</div></th>{series.map((s) => { const v = s.values[i]; return <td key={s.id} className="tabular">{v.normalized == null ? (v.row ? `Not plotted (${v.row.value} ${a.unit}; ${v.row.lowSample ? 'low sample' : 'no usable peer range'})` : 'No measured result') : `${format(v.normalized)} (${String(v.row!.value)} ${a.unit})`}</td>; })}<td className="text-xs bh-muted">{a.stats.n} measured configurations · {a.stats.min == null ? 'No range' : `${String(a.stats.min)}–${String(a.stats.max)} ${a.unit}`} · {a.higherBetter === false ? 'lower better' : a.higherBetter === true ? 'higher better' : 'direction unknown'}</td></tr>)}</tbody></table></div></details>
     </>}
+    {axesPicker != null && <details className="mt-4 text-sm"><summary>{axesPickerLabel}</summary>{axesPicker}</details>}
     <details className="mt-4 text-sm bh-muted"><summary>How to read this chart</summary><p className="mt-2">Formula: 100 × (value − minimum) / (maximum − minimum), or 100 minus that value for lower-is-better axes. Peers are independently measured, exactly matched catalog configurations; repeated source identities count once. Fewer than two peers, a constant range or unknown direction suppresses plotting. DesignArena results below 200 battles are excluded. Axes show version and published harness/configuration. Model prompts and test conditions can still differ; inspect the source before interpreting small differences. Ranges stay fixed when model selection changes. This chart does not change Composite.</p></details>
   </section>;
 }
