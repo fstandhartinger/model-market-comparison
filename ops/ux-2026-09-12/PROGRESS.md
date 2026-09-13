@@ -100,8 +100,8 @@ credited below, the rest is marked open.
 | E1 | ECI (general + software engineering) into the Composite, with scraping recipe in the update mechanism | verified | `ux-evidence/iter3-live/eci-verification.json` | Epoch AI source collected 264 general / 101 software rows; 130 families mapped conservatively, 134 source models retained unmatched. Composite is now seven equal native/percentile-normalized slots; source and H2 recompute provenance are documented. Awaiting independent-engine verification. |
 | E2 | Secondary/community benchmarks (Vals AI, CursorBench, Apprentice Bench, DeepSWE, FrontierBench, RealSWE, 2 X threads) — NOT in the Composite | open | — | check `data/raw/benchmarks/` and `bfeada7` first; Real-SWE looks already ingested |
 | E3 | Collection method order: official API/export → structured page data → static HTML → the page's own network calls | open | — | recipes go into the skills and the daily refresh. The R4.10 collector added this iteration already follows it (SSR HTML, robots-allowed, one request, self-verifying) |
-| P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | open | — | reviewer must be a different engine than the author |
-| P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | open | — | AA is the named reference comparator |
+| P1 | Requirements from both Telegram chats structured as a PRD, independently reviewed before the ledger is declared complete | in-progress | `ops/ux-2026-09-12/PRD.md`, `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json` | PRD drafted with exact R/H/B/E/P/X/C traceability, local digest and AA citations. Round 1 Nex review found TRACE-01/PROV-01/AA-CITE-01; repaired. Round 2 timed out without receipt; Kimi fallback is pending. |
+| P2 | Cited capability comparison against Artificial Analysis; close the gaps that matter | in-progress | `ops/ux-2026-09-12/PRD.md`, `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json` | Capability matrix now cites the allowed AA leaderboard, comparison, methodology and current-index URLs row by row; material gaps are prioritized, not claimed closed. |
 | P3 | Do not stop before P2 is achieved | open | — | |
 | P4 | Positioning claims only in a form the live coverage numbers support | implemented | `DESIGN-DIRECTIVES.md` §R3.1 | superlative "every benchmark result" removed; "most complete" is backed by the generated counts line under the H1; "only place … really costs you" is Florian's explicit ask — carry to X7 |
 | F1 | Gauntlet-loop quality: simple, elegant, intuitive, perfect UI, yet complete | in-progress | `DESIGN-DIRECTIVES.md`, `ux-evidence/iter12-f05-live/verification.json` | Fable pass judged against exactly this bar; F-05 now uses aligned score/cost magnitude bars and was live-checked by Codex, but independent verification and the remaining open directives are still required. |
@@ -592,3 +592,22 @@ Notes for whoever picks this up:
     set verified.
   - Codex quota remained below the 80% hard cap; no API-key billing was used and the temporary
     preview was stopped cleanly.
+
+- **2026-09-13 · iteration 13 · codex-luna** — P1/P2 PRD groundwork and independent review round.
+  - Added `ops/ux-2026-09-12/PRD.md` with traceable requirements across both authoritative
+    documents, explicit non-goals/constraints, measurable acceptance tests, local dataset
+    provenance, and a row-cited capability comparison against Artificial Analysis. The PRD
+    records that local data is 839 models / 75 registered IDs / 69 observed IDs / 13,924
+    observations / 3 retained states / 567 labelled estimates at dataset digest
+    `2870cdd2…be3bc`, generated `2026-09-13T02:32:18.438Z`.
+  - Independent Nex round 1 returned `revise` with three findings: incomplete exact-ID
+    traceability, missing baseline digest/provenance, and non-row-level AA citations. All three
+    were repaired; repaired PRD digest is `b9ee6ddc…f0bf`. Nex round 2 timed out without a
+    receipt; a Kimi K3 fallback review was started and is not yet accepted.
+  - Live readback: canonical and legacy hosts both returned HTTP 200 and revision `a790be1`,
+    with the current hero, Score, Adjusted Cost and Benchmaxxing strings. Gates in an isolated
+    worktree: `build-dataset` ✓, `npm test` 261/261 ✓, `npx tsc --noEmit -p .` ✓, `npm run build` ✓,
+    `git diff --check` ✓. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter13-prd/verification.json`.
+  - Quota samples: Codex 67% weekly, under the 80% cap; Claude was unavailable initially and
+    later measured at 20% after reset. No API-key billing used. P1/P2 stay in-progress pending
+    an independent final pass; R9.1, R6.3, E2/E3 and the remaining Fable/UI gaps remain open.
