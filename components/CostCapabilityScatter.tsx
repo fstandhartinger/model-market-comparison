@@ -98,7 +98,7 @@ function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: {
     placed.push({ l: slot.l, t: slot.t, r: slot.l + w, b: slot.t + LINE });
     out.push({ key: p.id, x: slot.l, y: slot.t + LINE - 2, text });
   }
-  return <g className="bh-point-labels">{out.map((l) => <text key={l.key} x={l.x} y={l.y} fill="rgb(var(--text))" fontSize={10}>{l.text}</text>)}</g>;
+  return <g className="bh-point-labels">{out.map((l) => <text key={l.key} x={l.x} y={l.y} fill="var(--text)" fontSize={10}>{l.text}</text>)}</g>;
 }
 
 /** F-26: the fixed phone scale, limited to the plotted domain so no tick sits off the plot. */

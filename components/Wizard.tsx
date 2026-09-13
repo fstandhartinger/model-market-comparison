@@ -81,8 +81,11 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   // The questionnaire never asks about the Composite, so it must not inherit Simple mode's
   // ≥ 85 default — that would quietly filter the result by a criterion the user was not
   // asked about. Capability is asked on step 3 and applied there instead.
-  const { setMinScore } = s;
-  useEffect(() => { setMinScore(0); }, [setMinScore]);
+  // Pass 4 (Fable): use resetMinScore, not setMinScore(0). setMinScore(0) marked the floor
+  // as user-touched, so Simple mode afterwards opened at 70 with 14 rows instead of its
+  // 85 default with 6 — the wizard leaked into the mode it never asked about.
+  const { resetMinScore } = s;
+  useEffect(() => { resetMinScore(); }, [resetMinScore]);
 
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const scope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
@@ -115,7 +118,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
     setCompany(null); setIntelMonths(null); setCodingMonths(null);
     s.setIsCompany(false); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
     s.setTeeOnly(false); s.setAllowDataTraining(false);
-    s.setMinIntelligence(null); s.setMinCoding(null); s.setMaxCost(null); s.setMinScore(0);
+    s.setMinIntelligence(null); s.setMinCoding(null); s.setMaxCost(null); s.resetMinScore();
     setStep(1);
   };
 
