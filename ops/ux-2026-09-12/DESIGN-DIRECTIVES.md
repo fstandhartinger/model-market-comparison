@@ -162,7 +162,7 @@ asked for.
 ## Directives (open)
 
 > **Status 2026-09-13 pass 5 (Fable):** F-31 … F-38 verified and moved to the Done log. F-39 was
-> fixed by Fable in this pass (see the Done log once live). The list below is the complete
+> fixed by Fable in this pass and is live (`64063b5`, Done log). The list below is the complete
 > remaining design backlog, ordered by value. F-40 and F-41 are `[judgment]` (state model and
 > evidence rule) and go to Codex Luna or Claude Opus 5; F-42 is `[mechanical]`; F-43 and F-44 are
 > `[judgment]` layout work. The Kimi/Nex UI delegations have produced no usable diff in the last
@@ -343,3 +343,4 @@ Live revision `0e7380c`, script `ops/ux-2026-09-12/bin/verify-directives-indep.m
 | F-32 exact vs attached Composite inputs, benchmark-count invariant | `e57fa3a` (Codex Luna) | same | **verified by Fable (pass 5):** `# benchmarks ≥ exact inputs` on all 101 rows; Opus 5 page says "2/7 exact inputs · 4 attached"; the hatch consequence is F-41 |
 | F-33 Benchmaxxing card self-height, HTML sector labels | `efa17f9` (Codex Luna) | same | **verified by Fable (pass 5):** card 326 px at 1440; labels 16 px tall at 390; no overflow |
 | F-34 Benchmarks page: one coverage line, a bar per result | `efa17f9` (Codex Luna) | same | **verified by Fable (pass 5):** coverage sentence present, no stat boxes, 25 bars, both widths |
+| F-39 Simple value map: log cost axis restored, free routes pinned at the left edge, round money ticks | `64063b5` (Fable, pass 5) | `ux-evidence/fable-20260913-pass5/after-F39/verification-F39.json` + screenshots | live on both hosts: 0 overlapping tick labels at 1440/390, light/dark (was 46/138); needs a non-Fable verifier |
