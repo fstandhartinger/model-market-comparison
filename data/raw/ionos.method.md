@@ -22,3 +22,23 @@ Only the **text/code (LLM + Code Models)** sections are captured. Embedding/rera
 - USD↔EUR pairs follow IONOS' own rounding (€0.15→$0.17, €0.65→$0.71, €0.10→$0.11, €0.30→$0.33, €0.80→$0.89, €0.60→$0.67, €3.60→$4.00) — do not recompute with a market FX rate.
 - `Mistral Small 24B Instruct` is kept under the historical snapshot name `Mistral Small 3.2`.
 - Model names on the price pages ("Llama 3.3 70B Instruct") differ from snapshot `model_name`s ("Llama 3.3 70B") — preserve the snapshot naming for diff stability.
+
+## Executable collector (2026-09-14)
+
+`scripts/fetch-ionos-catalog.mjs` (parser `lib/ionos-catalog.mjs`, tests `test/ionos-catalog.test.mjs`) runs as
+the non-fatal daily step `fetch-ionos-catalog`. It makes one GET each of `https://cloud.ionos.com/prices`
+(USD) and `https://cloud.ionos.de/preise` (EUR) with an identifying User-Agent; robots.txt of both hosts
+does not disallow these paths.
+
+- Reads every server-rendered `<table>` whose header names an input- and an output-token price, with the
+  preceding section heading (Large language models, Vision-Language Models, Code Models). Embedding,
+  reranker and image tables do not match and are out of scope. "New"/"Neu" badges are stripped from names.
+- USD fields come from the USD page as published (IONOS' own rounding, no FX). The EUR pair from the DE
+  page replaces the leading `€in/€out` label in `notes`; the curated rest of the note is kept. A model
+  missing from the DE page is recorded in `eur_missing` and its note says so.
+- Curated rows are matched by `catalog_name`, then by normalized name (parentheticals and "Instruct"
+  ignored), then by the page name appearing in the notes (e.g. `Mistral Small 3.2` ↔ "Mistral Small 24B
+  Instruct"). New rows are `mapping: derived`; rows no longer listed are dropped.
+- Fails closed (previous snapshot kept): no token tables, an unreadable price, one name listed twice with
+  different prices, or fewer than 50 % of the previous rows still listed.
+- First run on 2026-09-14 reproduced all nine 2026-09-08 rows with identical USD prices and EUR labels.
