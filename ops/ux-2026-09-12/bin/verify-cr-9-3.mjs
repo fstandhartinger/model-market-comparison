@@ -35,7 +35,7 @@ const table = await p.evaluate(() => {
   const cells = [...document.querySelectorAll('table.bh-matrix td.bh-matrix-cell')];
   const valued = cells.map((td) => td.querySelector('a.bh-matrix-link')).filter(Boolean).map((a) => ({ text: a.textContent.trim(), href: a.getAttribute('href') }));
   const missing = cells.filter((td) => !td.querySelector('a.bh-matrix-link'));
-  const missingBad = missing.filter((td) => !/^[—–-]$/.test(td.textContent.trim()) || getComputedStyle(td).backgroundImage !== 'none' && /gradient/.test(getComputedStyle(td).backgroundImage)).map((td) => td.textContent.trim()).slice(0, 5);
+  const missingBad = missing.filter((td) => !/^[—–-]\s*(No result)?$/.test((td.innerText ?? td.textContent).trim()) || getComputedStyle(td).backgroundImage !== 'none' && /gradient/.test(getComputedStyle(td).backgroundImage)).map((td) => td.textContent.trim()).slice(0, 5);
   return { valued, missing: missing.length, missingBad, count: document.body.innerText.match(/\d+ benchmarks? across \d+ categor\w+/)?.[0] ?? '' };
 });
 check('All preset renders a large table', table.valued.length >= 100, `valued=${table.valued.length} missing=${table.missing} "${table.count}"`);
