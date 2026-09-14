@@ -32,8 +32,9 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
           const pct = percentiles[a.id] ?? null;
           return <li key={a.id}>
             <details className="group">
-              <summary className="grid min-h-0 list-none grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-x-3 !min-h-0 !py-1.5 text-sm md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_6.5rem_5.5rem]">
-                <span className="min-w-0 truncate">
+              <summary className="grid min-h-0 list-none grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 !min-h-0 !py-1.5 text-sm md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_6.5rem_5.5rem]">
+                {/* F-69: below md the name takes its own line and wraps; identifying text never truncates (design-system rule). */}
+                <span className="col-span-2 min-w-0 md:col-span-1 md:truncate">
                   <span aria-hidden="true" className="bh-row-chevron mr-1 group-open:rotate-90">›</span>
                   <span className="font-medium">{a.name}</span>{versionSuffix(a.name, a.version) && <> <span className="bh-muted text-xs">{versionSuffix(a.name, a.version)}</span></>}
                 </span>

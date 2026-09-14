@@ -35,10 +35,10 @@ export function PriceValue({ price, compact = false, showEstimate = true }: { pr
       </div>
       {e && <>
         <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs tabular">
-          <dt>Input tokens/task (derived)</dt><dd>{e.inputs.input_tokens_per_task.toLocaleString("en-US", { maximumFractionDigits: 2 })}</dd>
-          <dt>Output tokens/task</dt><dd>{e.inputs.output_tokens_per_task?.toLocaleString("en-US", { maximumFractionDigits: 2 })}</dd>
-          <dt>Input:output ratio</dt><dd>{e.inputs.input_output_ratio?.toFixed(3)}:1</dd>
-          <dt>Cache-hit rate applied to input</dt><dd>{((e.inputs.cache_hit_rate ?? 0) * 100).toFixed(2)}%</dd>
+          <dt>Input tokens/task (derived)</dt><dd>{Math.round(e.inputs.input_tokens_per_task).toLocaleString("en-US")}</dd>
+          <dt>Output tokens/task</dt><dd>{e.inputs.output_tokens_per_task == null ? "—" : Math.round(e.inputs.output_tokens_per_task).toLocaleString("en-US")}</dd>
+          <dt>Input:output ratio</dt><dd>{e.inputs.input_output_ratio == null ? "—" : `${e.inputs.input_output_ratio.toFixed(1)}:1`}</dd>
+          <dt>Cache-hit rate applied to input</dt><dd>{((e.inputs.cache_hit_rate ?? 0) * 100).toFixed(1)}%</dd>
           <dt>Additional cache-write tokens</dt><dd>{e.inputs.cache_write_tokens}</dd>
           <dt>Input / output list $/1M</dt><dd>{priceNumber(e.inputs.input_per_1m)} / {priceNumber(e.inputs.output_per_1m)}</dd>
           <dt>Cache read / write $/1M</dt><dd>{priceNumber(e.inputs.cache_read_per_1m)} / {priceNumber(e.inputs.cache_write_per_1m)}</dd>
