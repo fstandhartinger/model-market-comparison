@@ -22,9 +22,14 @@ for (const host of hosts) {
   for (const [id, [count, unit, spot]] of Object.entries(expected)) {
     const api = await (await fetch(`${host}/api/benchmark-scores?benchmark_id=${encodeURIComponent(id)}&limit=500`)).json();
     const rows = api.observations ?? [];
-    const axisId = `${id}@@${encodeURIComponent('Published board')}@@${unit}`;
-    const view = await (await fetch(`${host}/api/benchmark-view?axis=${encodeURIComponent(axisId)}`)).json();
-    const axis = (view.axes ?? []).find((a) => a.id === axisId);
+    // Cohort axes: Vals publishes one board; FrontierCode is split per agent harness (never ranked across harnesses).
+    const base = await (await fetch(`${host}/api/benchmark-view?benchmark_id=${encodeURIComponent(id)}`)).json();
+    let axisRows = 0;
+    for (const a of (base.axes ?? []).filter((x) => x.id.startsWith(`${id}@@`) && x.id.endsWith(`@@${unit}`))) {
+      const v = await (await fetch(`${host}/api/benchmark-view?axis=${encodeURIComponent(a.id)}`)).json();
+      axisRows += (v.axes ?? []).find((x) => x.id === a.id)?.scores?.length ?? 0;
+    }
+    const axis = { scores: { length: axisRows } };
     const spotRow = spot && rows.find((r) => r.subject.source_id === spot[0]);
     const r = { api_total: api.total, api_rows: rows.length, axis_rows: axis?.scores?.length ?? null, units: [...new Set(rows.map((o) => o.unit))],
       bases: [...new Set(rows.map((o) => o.source_basis ?? o.basis))], joined: rows.filter((o) => o.subject.model_id).length,

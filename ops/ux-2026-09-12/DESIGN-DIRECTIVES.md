@@ -96,6 +96,23 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 > evidence `…/fable-20260914-pass10/verify-21aa63f-{canonical,legacy}/`). The specs below are kept
 > for the independent verifier; F-58, F-59, F-62, F-63 and F-64 need a non-Fable, non-Kimi engine to
 > set `verified`.
+>
+> **Update 2026-09-14 iteration 47 (claude-opus):** F-58…F-64 verified live on `21aa63f`, both hosts,
+> 1440/390, light/dark (`ux-evidence/iter47-indep/`; see the done log).
+
+### Candidate for Fable (not yet a directive) — boards with only unmatched source identities open empty
+*Found:* iteration 47, after Vals Index v2 and FrontierCode 1.1 went live (`ed9b78a`).
+*Facts:* E2 benchmarks keep their source labels (`identity_policy: source_label`; Vals slugs carry a
+published compute effort, and no effort may be inferred), so none of their rows join a catalog model.
+`/benchmarks` starts on "Measured only" with "Include unmatched source identities" unticked, so
+selecting **Vals Index v2** shows "0 of 846 catalog configurations have a result · 0 results" and the
+generic empty state, although 56 ranked rows exist. With "All · prefer measured" and the checkbox
+ticked it ranks correctly (`ux-evidence/iter47-e2/ui/`, 88/88; screenshot
+`canonical-desktop_light-vals.png` shows the empty default).
+*Decision needed from Fable:* how such a board should open (e.g. include unmatched identities
+automatically when the selected cohort has no matched rows, with a one-line label), or whether the
+empty state should instead offer a one-click "Show the 56 source results". Separate data follow-up,
+not a design question: a reviewed Vals alias table (slug + published effort → exact catalog configuration).
 
 ### F-63 `[mechanical]` Theme-aware tracks on Charts
 *Where:* `components/ChartsBoard.tsx` (`MobileBars` track `div`, and the open-vs-closed strip
