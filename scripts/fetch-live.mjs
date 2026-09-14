@@ -5,7 +5,7 @@
 import { mkdir, readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { enrichArtificialAnalysis } from "../lib/aa-metadata.mjs";
+import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-metadata.mjs";
 import { parseArtificialAnalysisMetadata } from "../lib/aa-rsc.mjs";
 import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
@@ -112,6 +112,13 @@ async function fetchArtificialAnalysis() {
     metadata_endpoint: "https://artificialanalysis.ai/leaderboards/models",
     collected_at: new Date().toISOString().slice(0, 10),
     count: models.length,
+    metadata_sync: {
+      api_count: apiModels.length,
+      leaderboard_count: metadata.size,
+      missing_model_ids: missing.map((model) => model.id),
+      max_allowed_rollout_lag: MAX_METADATA_ROLLOUT_LAG,
+      note: "Missing leaderboard metadata is explicit and remains null; only a bounded publication lag is tolerated.",
+    },
     models,
   };
   const efficiency = await refreshAaEfficiency({ target: join(RAW, "aa-efficiency.json"), evidenceDir: process.env.BH_EVIDENCE_DIR });

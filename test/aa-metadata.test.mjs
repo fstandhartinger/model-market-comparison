@@ -1,6 +1,6 @@
 import test from "node:test";
 import assert from "node:assert/strict";
-import { enrichArtificialAnalysis } from "../lib/aa-metadata.mjs";
+import { enrichArtificialAnalysis, MAX_METADATA_ROLLOUT_LAG } from "../lib/aa-metadata.mjs";
 
 test("a newly published API model keeps scores with explicitly unknown metadata", () => {
   const api = [{ id: "known", name: "Known" }, { id: "new", name: "Muse Spark 1.3 (max)", model_creator: { name: "Meta" }, evaluations: { artificial_analysis_intelligence_index: 52 } }];
@@ -20,7 +20,9 @@ test("broken leaderboard parsing or widespread drift cannot replace a good snaps
   const metadata = new Map([["known", { isOpenWeights: false }]]);
   const api = ["known", "a", "b", "c"].map((id) => ({ id, name: id }));
   assert.equal(enrichArtificialAnalysis(api, metadata).missing.length, 3);
-  assert.throws(() => enrichArtificialAnalysis([...api, { id: "d" }], metadata), /missing=4/);
+  const withinRolloutLag = [...api, { id: "d" }];
+  assert.equal(enrichArtificialAnalysis(withinRolloutLag, metadata).missing.length, MAX_METADATA_ROLLOUT_LAG);
+  assert.throws(() => enrichArtificialAnalysis([...withinRolloutLag, { id: "e" }], metadata), /missing=5/);
 });
 
 test("slug metadata joins UUID API rows; retained fields keep their original provenance across refreshes", () => {

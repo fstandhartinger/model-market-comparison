@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-14 — Bounded Artificial Analysis publication lag
+
+The live collector now records API-versus-leaderboard counts and missing metadata model IDs
+in each Artificial Analysis snapshot. A maximum of four missing leaderboard rows is tolerated
+for a short publication lag; missing metadata stays explicitly null and a fifth row still fails
+closed. The 2026-09-14 refresh reached this gate successfully, then stopped at an independent
+OpenRouter endpoint-removal review, so no partial dataset was published.
+
 ## 2026-09-13 — Honest positioning and Simple threshold (R3.1, R5.3)
 
 The landing claim now stays source-linked and coverage-qualified: Benchmark Heaven presents
