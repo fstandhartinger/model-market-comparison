@@ -1,13 +1,12 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 12: 2026-09-14 ~11:20 UTC**, against live revision `975334b` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass12/` — 80 screenshots +
-`metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple incl. moved slider,
-Advanced incl. the cost-inputs modal, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks,
-Charts; `errors` empty in all four contexts, no overflow at 390 on any page) plus
-`verify-f67-f68/` (live check of this pass's two fixes, `bin/verify-f67-f68.mjs`). The Filters
-overlay was not re-shot: `GlobalFilters.tsx` / `ShortlistControls.tsx` are unchanged since `f98a23d`
-(pass 8 evidence stands). Earlier passes: `…/fable-20260914-pass11/` … `…/fable-20260913/`.
+**Pass 13: 2026-09-14 ~12:30 UTC**, against live revision `bf5b821` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass13/` — 80-shot base matrix
+(`metrics.json`: `errors` empty in all four contexts, no overflow at 390 on any page) plus a supplemental
+run (`SUPP=1`, `metrics-supp.json`): the Filters overlay at both widths, the Guided results step, and the
+five E2 boards (Vals, ApprenticeBench, FrontierCode, CursorBench, Real-SWE). Script:
+`bin/shoot-fable-pass13.mjs`. Pass-13 fixes: `verify-f69-f71/` (`bin/verify-f69-f71.mjs`).
+Earlier passes: `…/fable-20260914-pass12/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -20,74 +19,95 @@ written, leave it open and write why under it. Fable decides, others implement.
 
 **Delegation hint.** `[mechanical]` directives are safe for `bin/delegate.sh --kimi` (clear
 spec, no numbers to invent) with a 20-minute cap; `[judgment]` ones need Claude Opus 5 or Codex
-Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11 and iteration 17:
-Kimi K3 stalls on one-file TSX edits (reads, no diff); surgical TSX changes are faster done by the
-reviewing engine directly.
+Luna. Every delegated diff is reviewed before it lands. Record from passes 8, 11, 12 and iterations
+17/50: Kimi K3 stalls on one-file TSX edits (reads, no diff); surgical TSX changes are faster done by
+the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 12 (2026-09-14)
+## Verdict on the live site — pass 13 (2026-09-14)
 
-**At the bar, on every page, at both widths and in both themes.** Pass 12 is the first pass whose
-fresh 80-shot matrix found no page that misses the bar: Simple opens on the two-line claim, the
-counts line, two sliders with their histograms, the value map with its Pareto line and seven ranked
-rows; Advanced is one toolbar row and the full catalog with the seven-slot coverage dots under each
-score; Guided asks one question per step and step 3 uses the "best model of N months ago" floors;
-Benchmaxxing leads with the ten strongest signals and the per-model many-axis radar with topic
-sectors; the model page leads with the Composite and its radar (phone: Composite card first) and
-the benchmark sheet by category; Charts, Compare and Benchmarks (AA Intelligence Index, 641 rows,
-"Measured only") read as in pass 11; dark mode is the same design in other colours everywhere.
+**At the bar on every page at 1440, and at 390 with one exception: the phone model page.** The base
+matrix repeats pass 12's picture — Simple opens on the two-line claim, the counts line, two sliders
+with histograms, the value map with the Pareto line and seven ranked rows; Advanced is one toolbar row
+and the full catalog with coverage pips; Guided asks one question per step and lands on a results
+view that names the answers as chips; Benchmaxxing leads with the ten strongest signals and the
+many-axis radar; Compare, Benchmarks and Charts read as in pass 12; dark mode is the same design in
+other colours everywhere. The three views the pass-12 script had silently skipped were shot this time
+(see "script" below) and are fine: the Filters overlay is four labelled groups and a "More settings"
+disclosure at both widths; the Guided results step shows answers → sliders → map → table; the E2 boards
+open with rows and one notice line each.
 
-Two residues, both small and both about a name being lost at 390 — the one thing a ranked list must
-never lose:
+Findings, ordered by value:
 
-1. **The best model has no name on the phone value map.** At 390 the frontier's top point (Claude
-   Fable 5.1, 99.4) sits on the top edge of the plot; all four label slots of the F-17 placer fail
-   (right and above leave the plot, below and left hit the GPT-6 Astra dot), so the label is dropped
-   while GPT-6 Astra, Kimi K3 and GLM-5.3 are named (`mobile_light-simple.png`). → **F-67**, surgical
-   (Fable, landed `5e974fe`).
-2. **Benchmaxxing truncates the model name on phones.** "Qwen3.5 122B …" and "Qwen3.6 35B A…" differ
-   only in the cut-off part (`mobile_dark-benchmaxxing.png`); the name cell had an unconditional
-   `truncate` (the overview table already wraps on phones since F-14/F-56). → **F-68**, surgical
-   (Fable, landed `5e974fe`).
+1. **Phone model page truncates benchmark names** (`mobile_light-model-full.png`, crop
+   `checks/crop-model-sheet.png`): "Terminal-Be…" twice (v2.1 and v4.0 — indistinguishable), "SciCode (A…",
+   "AA Coding In…", "DesignArena …" twice, "Humanity's …". Breaks the pass-12 rule "identifying text never
+   truncates below `md`". → **F-69**, surgical (Fable, landed `f23f5f9`).
+2. **The Pareto line runs through the two top labels on the phone value map** ("Claude Fable 5.1", "GPT-6
+   Astra", `mobile_light-simple.png`). F-67 found the slot; the line still crosses the glyphs. → **F-70**, a
+   text halo, surgical (Fable, landed `f23f5f9`).
+3. **The cost-inputs modal shows fractional tokens** — "Input tokens/task (derived) 6,938,474.87",
+   "88.829:1", "87.39 %" (`desktop_light-advanced-row-expanded.png`). Tokens are counts. → **F-71**,
+   surgical (Fable, landed `f23f5f9`).
+4. **Charts · "Cheapest models" is a linear bar chart over a 120× range**: 13 of 16 bars are slivers of
+   ≤ 8 px, the cheap end — the point of the card — is unreadable, while the value map beside it uses a
+   log axis (`desktop_light-charts-full.png`, `mobile_light-charts-full.png`). → **F-72**, open,
+   `[judgment]` for the next work iteration (spec below).
+5. **E2 boards repeat "not matched to a catalog model" under every row** although the notice line above
+   the table already says none is matched (`desktop_light-benchmarks-vals.png`,
+   `desktop_dark-benchmarks-frontiercode.png`). → **F-73**, open, `[mechanical]`, low.
 
-Also noted, not a design finding: the pass-11 shoot script did not capture the E2 boards on
-`/benchmarks` because the page's first `<select>` is now *Category*; `shoot-fable-pass12.mjs` selects
-from the second one (and adds CursorBench and Real-SWE). F-65 itself is unchanged and still awaits
-its non-Fable verifier (`bin/verify-f65.mjs`).
+Not findings, checked: the visible "Skip to main content" box in `mobile_light-guided-5-full.png` is a
+full-page-capture artifact — after the wizard the skip link's computed transform is still
+`translateY(-93.6px)`, `document.activeElement` is `body`, and the viewport shot shows nothing
+(`checks/skipcheck2.mjs` in the evidence folder). Guided step 4 prints "$0.360" — three
+significant digits, the F-49 rule; consistent with "$0.955", stays.
 
-Not opened, on purpose (re-judged with fresh eyes, same conclusions as passes 8–11):
+**Script (not a design finding, but it changes what earlier passes could claim):** the committed
+`shoot-fable-pass12.mjs` had a same-line comment that swallowed `const opts`, so its E2-board block threw
+`opts is not defined` in every context; the Filters button was looked up as `/^Filters/` while its
+accessible name is "Open filters and settings"; and the wizard loop stopped before the results step
+because the last button reads "See the models →". Pass 12's evidence folder does contain board shots, so
+that run used an uncommitted edit; from pass 13 on the committed script is the one that produced the
+evidence. Rule: `metrics.json` must show no `*-err` keys before a pass claims a page was shot.
 
-- **Score bars run 0–100** in the tables and in the Charts leaderboard although the visible range is
-  78.8–99.4. A bar encodes length; a truncated baseline would make a 3-point gap look like a
-  doubling. The value map, the Pareto line and the numbers carry the differences. Stays.
-- The **Compare radar** at 1440 is a 640 px hexagon in a full-width card (F-62). Larger would push the
-  axis labels apart from the data; stays.
-- The **cost-inputs modal** stays dense (pass-8 decision: it is the audit trail behind one number).
-- **Simple lists the priciest model first** (R5.2, literal) — see the standing question for Florian.
-- The **Benchmaxxing radar** labels topic sectors, not the 29 individual axes (hover names them);
-  29 labels around a 480 px ring would overlap. Stays.
+Not opened, on purpose (re-judged with fresh eyes, same conclusions as passes 8–12):
 
-## Decisions in pass 12
+- **Score bars run 0–100** in the tables and the Charts leaderboard although the visible range is
+  78.8–99.4. A bar encodes length; a truncated baseline would make a 3-point gap look like a doubling.
+  The value map, the Pareto line and the numbers carry the differences. Stays.
+- **Simple lists the priciest model first** (R5.2, literal) — the standing question for Florian.
+- The **cost-inputs modal stays dense** (pass-8 decision: it is the audit trail behind one number);
+  F-71 only fixes the number formats.
+- The **model page leads with the provider table on the left and the Composite on the right** at 1440
+  (F-08b); on phones the Composite comes first (F-60). Both key messages are in the first screen. Stays.
+- "7 models pass **of 16** · 9 below your score line · **show all 16**" carries two links to the same
+  place. Harmless redundancy; stays until the next copy pass.
 
-1. **R3.1 stands** (pass-8 wording, verified by three engines and the P4 gate). No change.
+## Decisions in pass 13
+
+1. **R3.1 stands** (pass-8 wording; verified by three engines and the P4 gate). No change.
 2. **R5.2 stays literal** (cost-descending Simple); the question stays in the X7 Telegram list.
-3. **F-67 label placement rule:** eight slots — right, above, below, left, then the four corner-aligned
-   variants — and labels may use the chart's top margin (`headroom`, 20 px at a 22 px margin). Priority
-   order is unchanged (frontier first, then by score), so the extra slots only ever rescue a label that
-   would otherwise be dropped; they never move a label that already had a place. Rejected: a leader line
-   (one more mark on a 358 px plot) and shrinking the phone font below 10 px.
-4. **F-68:** wrap, do not truncate, any *identifying* text below `md`; ellipsis is acceptable only for
-   secondary text (org, notes). This generalises F-14/F-56 and is now a design-system rule below.
-5. **X4:** in the design authority's judgment the live UI meets Florian's bar at 1440 and 390, light and
-   dark, with F-67/F-68 live. What remains for X4 is procedural — a non-Fable engine verifying F-65,
-   F-66, F-67 and F-68 (`bin/verify-f65.mjs`, `bin/verify-f67-f68.mjs`) — not design residue.
-6. **Next design pass** is only needed after a UI-touching iteration (E2 X-thread boards, R9.1 has no
-   UI). Its matrix script is `bin/shoot-fable-pass12.mjs` as is.
+3. **F-69 layout rule:** below `md`, a benchmark-sheet row is two lines — the name (wrapping) on the
+   first, bar · percentile · value on the second. At `md` and above the four-column single line stays.
+   Rejected: a smaller font (10 px names on a phone) and abbreviating benchmark names (the version
+   suffix *is* the identifying part).
+4. **F-70 halo rule:** every SVG point label gets `paint-order: stroke` with a 3 px stroke in the card
+   surface colour (`var(--surface)`), so a line may pass under a label but never through its glyphs.
+   Added to the design-system notes.
+5. **F-72 form rule:** a quantity that spans more than ~20× is not drawn as a linear bar. Use a log
+   position mark (dot on a track) with round money ticks, as the value map already does.
+6. **X4:** in the design authority's judgment the live UI meets Florian's bar at 1440 and 390, light
+   and dark, once F-69–F-71 are live (checked below); F-72 is an improvement to one Charts card, not a
+   bar failure. What remains for X4 is procedural (non-Fable verification of F-66, F-69, F-70, F-71)
+   plus F-72.
+7. **Next design pass** only after a UI-touching iteration (F-72 or E2 UI). Matrix script:
+   `bin/shoot-fable-pass13.mjs` (base) + `SUPP=1` (extras).
 
 ---
 
-## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–12)
+## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–13)
 
 > **Every AI model benchmark we can find, in one place.**
 > **And what each model really costs you.**
@@ -105,40 +125,68 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 ## Directives (open)
 
-> **Status 2026-09-14 pass 12 (Fable), end of pass:** nothing open for implementers. F-67 and F-68
-> landed in `5e974fe` (live check: see the done log). Four directives await a **non-Fable verifier**
-> to set `verified` in the ledger: F-65 and F-66 (`bin/verify-f65.mjs`; F-66 needs a forced client
-> error in a dev build), F-67 and F-68 (`bin/verify-f67-f68.mjs`, both hosts). Their specs are kept
-> below in acceptance form only; the full F-65 spec is in the pass-11 file history (`975334b`).
->
-> **Update iteration 49 (claude-opus, independent verifier):** F-58–F-62, F-65, F-67, F-68 verified live
-> on both hosts at `70b49fb` (`ux-evidence/iter49-indep/`). **F-66 not verified:** pass-11 `metrics.json`
-> has no `errors` key and no forced client error was rendered live; it stays `implemented`.
+> **Status 2026-09-14 pass 13 (Fable), end of pass:** **F-72** and **F-73** open for implementers
+> (F-72 first). F-69, F-70, F-71 landed in `f23f5f9` and were live-checked by Fable
+> (`verify-f69-f71/verification.json`); they need a **non-Fable verifier** to set `verified`, as do
+> F-65/F-66 from pass 11 (F-65 verified by claude-opus in iteration 49; F-66 still needs a forced client
+> error in a dev build).
 
-### F-65 `[verify only]` Boards never open empty — acceptance
-On `/benchmarks?benchmark=vals-index-code-migration::2`, `…=cursorbench::4.0`,
-`…=apprenticebench-cua::snapshot-2026-09-14` and `…=frontiercode::1.1` the ranking table has ≥ 1 row on
-first load with no clicks, no "0 of " coverage sentence, no "No results in this view", exactly one notice
-line, Evidence select "All · prefer measured" and (where unmatched rows exist) the checkbox ticked; on
-`/benchmarks` (AA Intelligence Index) "Measured only", 641 results, no notice line; the strings
-"unmatched source identit" / "Unmatched source identity" appear nowhere on `/benchmarks`; no overflow at 390.
+### F-72 `[judgment]` Charts · "Cheapest models" as a log-position dot plot
+*Where:* `components/ChartsBoard.tsx` — the `Cheapest models` `<Panel>` (desktop `BarChart`, phone
+`MobileBars`); `DotStrip` in the same file already has the log positioning (`pos()` with `log`).
+*What:* replace the length encoding with a position encoding on a log axis, at both widths.
+- Desktop: one row per model (26 px), sorted ascending as today; a muted track (`rgb(var(--line)/.5)`)
+  across the plot width, a 7 px accent dot at the log position, the value label to the right of the dot
+  (`priceNumber`), the org dot + short name in the 205 px left column as today. X axis: log, domain from
+  the cheapest to the priciest value padded to round money ticks — the same tick set the value map uses
+  (`$0.1 $0.3 $1 $3 $10 $30`, only those inside the domain), muted vertical gridlines at the ticks, an
+  "Adjusted cost · log scale" caption bottom-right (as on the Score-vs-cost card). Implement with recharts
+  `ScatterChart` (`XAxis scale="log"`, `YAxis type="category"`) or a small SVG — either is fine; no bar,
+  no `Bar` component, no fill from zero.
+- Phone (`MobileBars` with a `log` prop): keep the name + value line; the second line becomes a track
+  with a dot at the log position instead of a filled bar. Free/zero values: pin at the left edge, as the
+  value map does (F-39).
+- Tooltip and the keyboard-accessible table below the card stay as they are.
+*Accept (`bin/verify-f72.mjs`, both hosts, 1440/390, light/dark):* on `/charts` the card contains no
+`.recharts-bar-rectangle` and no phone fill bar; at 1440 the marks of the three cheapest rows differ in
+x by ≥ 10 px pairwise (0.198 → 0.388 → 0.867 are ≥ 1.9× apart); every x tick label is one of
+`$0.1 $0.3 $1 $3 $10 $30 $100`; the caption says "log scale"; no overflow at 390; `metrics` `errors`
+empty.
+
+### F-73 `[mechanical]` E2 boards: say "not matched" once
+*Where:* `components/BenchmarkRanking.tsx` (row sub-line, line ~89: `'As named by the source · not
+matched to a catalog model'`).
+*What:* when *every* visible row is unmatched (the notice line above the table already says "none is
+matched to a catalog model yet"), the row sub-line is just "As named by the source" (+ harness/variant as
+today). On mixed boards (some rows matched) keep the full per-row text so the two kinds stay
+distinguishable.
+*Accept:* on `/benchmarks?benchmark=vals-index-code-migration::2` and `…=frontiercode::1.1` the string
+"not matched to a catalog model" appears exactly once (the notice line); on a mixed board it still
+appears under each unmatched row; no other text changes.
+
+### F-69 `[surgical, Fable — landed f23f5f9]` Phone benchmark sheet: names wrap
+*Where:* `components/BenchmarkSheet.tsx` (row `<summary>` grid; name span `col-span-2 md:col-span-1
+md:truncate`).
+*Accept (`bin/verify-f69-f71.mjs`, both hosts):* on `/models/claude-opus-5::high` at 390 no name span has
+`scrollWidth > clientWidth`, rows are two lines (≥ 40 px), no horizontal overflow; at 1440 rows stay one
+line (≤ 36 px).
+
+### F-70 `[surgical, Fable — landed f23f5f9]` Value-map label halo
+*Where:* `components/CostCapabilityScatter.tsx` (`PointLabels` `<text>`: `paintOrder="stroke"
+stroke="var(--surface)" strokeWidth={3} strokeLinejoin="round"`).
+*Accept (same script):* every `.bh-point-labels text` on `/` has `paint-order: stroke` and a non-`none`
+computed stroke, at both widths and themes.
+
+### F-71 `[surgical, Fable — landed f23f5f9]` Cost-inputs modal: counts are integers
+*Where:* `components/PriceValue.tsx` (`<dl>`: tokens `Math.round(…).toLocaleString`, ratio `toFixed(1)`,
+hit rate `toFixed(1)`).
+*Accept (same script):* opening the first price in the Simple table shows integer input and output token
+counts, a ratio like `88.8:1`, a hit rate like `87.4%`.
 
 ### F-66 `[verify only]` Error boundary Details — acceptance
 A forced client error renders the branded panel with a "Details" disclosure whose body is
-`error.name: error.message` (non-empty); `metrics.json` of every pass since 11 has an `errors` key.
-
-### F-67 `[surgical, Fable — landed 5e974fe]` The best model keeps its name on the value map
-*Where:* `components/CostCapabilityScatter.tsx` (`PointLabels`, compact chart margin).
-*What:* four corner-aligned slots after the existing four; `headroom` prop (20) lets a label extend into
-the chart's top margin, which is 22 px for the compact chart. Priority order unchanged.
-*Accept (`bin/verify-f67-f68.mjs`, both hosts, 1440/390, light/dark):* on `/` the highest-scoring row of
-the Simple table is named on the value map; no two labels overlap; every label stays inside the SVG; no
-horizontal overflow.
-
-### F-68 `[surgical, Fable — landed 5e974fe]` Benchmaxxing names wrap on phones
-*Where:* `components/BenchmaxxingOverview.tsx` (name cell `truncate` → `md:truncate`).
-*Accept (same script):* on `/benchmaxxing` at 390 no name cell has `scrollWidth > clientWidth`; no
-horizontal overflow; at 1440 the rows keep one line.
+`error.name: error.message` (non-empty); `metrics.json` of every pass since 11 has an `errors` key
+(pass 12 and 13: present and empty).
 
 ## Design system notes (apply while touching any file above)
 
@@ -157,9 +205,12 @@ horizontal overflow; at 1440 the rows keep one line.
   re-lay it out to fit 358 px or replace it with HTML bar rows (pass 9).
 - **Controls:** icon-only buttons are 40×40 with `aria-label` and `title`; popovers, not
   inline `<details>` boxes, for secondary filters.
-- **Names never truncate below `md`** (F-14, F-56, F-68): identifying text wraps; an ellipsis is
+- **Names never truncate below `md`** (F-14, F-56, F-68, F-69): identifying text wraps; an ellipsis is
   acceptable only for secondary text. On charts, a ranked point's label is dropped only after all
-  eight slots fail (F-67).
+  eight slots fail (F-67), and every SVG point label carries a 3 px `paint-order: stroke` halo in
+  `var(--surface)` (F-70) so lines pass under names, never through them.
+- **Quantities spanning > ~20× are never linear bars** (F-72): use a log-position mark (dot on a
+  track) with round money ticks, as the value map does.
 
 ---
 
@@ -167,6 +218,10 @@ horizontal overflow; at 1440 the rows keep one line.
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 12 (2026-09-14 11:20 UTC, live `975334b`):** at the bar on every page, both widths and themes; fixed F-67
+  (eight label slots + headroom so the frontier's top point keeps its name on phones) and F-68 (Benchmaxxing names
+  wrap at 390), Fable surgical `5e974fe`, verified by claude-opus (iteration 49). Rule added: names never truncate
+  below `md`. Decisions: R3.1 and R5.2 unchanged.
 - **Pass 11 (2026-09-14 09:10 UTC, live `4f8b690`):** core pages at the bar; the E2 boards opened on "No results"
   → F-65 automatic widening with one notice line and F-66 error-boundary Details (Fable, `72da684`; Kimi delegation
   produced no diff), live 168/168 per host. Rule: screenshot runs start ≥ 3 min after the revision flips.
@@ -279,3 +334,8 @@ horizontal overflow; at 1440 the rows keep one line.
 | F-66 error boundary Details disclosure (`app/error.tsx`); page-error capture in `bin/shoot-fable-pass11.mjs` | `72da684` (Fable) | deployed chunk `/_next/static/chunks/app/error-0301bee61d33e4e4.js` contains the summary and message expression; `/models/<bad-id>` is a 404, not the boundary | needs a non-Fable verifier (force a client error in a dev build and read the Details text) |
 | F-67 value-map labels: four corner-aligned slots + 20 px headroom in the compact chart's top margin (`PointLabels`, `CostCapabilityScatter.tsx`) | `5e974fe` (Fable, surgical) | `ux-evidence/fable-20260914-pass12/verify-f67-f68-{canonical,legacy}/verification.json` (`bin/verify-f67-f68.mjs`, 32/32 per host) + `*-simple.png` | live both hosts, 1440/390, light/dark: the highest-scoring Simple row (Claude Fable 5.1) is named on the map, no label overlap, all labels inside the SVG, no overflow; needs a non-Fable verifier |
 | F-68 Benchmaxxing name cell wraps below `md` (`truncate` → `md:truncate`) | `5e974fe` (Fable, surgical) | same + `*-benchmaxxing.png` | live both hosts: 0 of 10 name cells clipped at 390, single line at 1440, no overflow; needs a non-Fable verifier |
+| F-67 value map: eight label slots + 20 px headroom | `5e974fe` (Fable, pass 12) | `ux-evidence/fable-20260914-pass12/verify-f67-f68/`; `ux-evidence/iter49-indep/` | **verified by claude-opus (iteration 49)** |
+| F-68 Benchmaxxing names wrap below `md` | `5e974fe` (Fable, pass 12) | same | **verified by claude-opus (iteration 49)** |
+| F-69 phone benchmark sheet: two-line rows, names wrap | `f23f5f9` (Fable, pass 13) | `ux-evidence/fable-20260914-pass13/verify-f69-f71/verification.json` | live-checked by Fable (see ledger); needs a non-Fable verifier |
+| F-70 value-map label halo | `f23f5f9` (Fable, pass 13) | same | live-checked by Fable; needs a non-Fable verifier |
+| F-71 cost modal: integer tokens, one-decimal ratio and hit rate | `f23f5f9` (Fable, pass 13) | same | live-checked by Fable; needs a non-Fable verifier |
