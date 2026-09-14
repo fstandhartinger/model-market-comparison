@@ -4,7 +4,7 @@ import { useEffect, useMemo, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, resultHref, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { topModelIds, type MatrixFilterData } from "../lib/top-models";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
 
@@ -19,8 +19,9 @@ function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
   return <span className="bh-matrix-tag" data-tag={id} title={t.tip}>{t.label}<span className="sr-only">: {t.tip}</span></span>;
 }
 
-function cellHref(row: MatrixRow, modelId: string) {
-  return row.ranking ? `/benchmarks?benchmark=${encodeURIComponent(row.ranking)}` : `/models/${encodeURIComponent(modelId)}#benchmark-sheet`;
+/** CR-1.8: registry rows open the cell's detail page; model-row indices (Epoch ECI) open the model. */
+function cellHref(row: MatrixRow, modelId: string, ids: string[], pinned: boolean) {
+  return row.ranking ? resultHref(row.id, modelId, ids, pinned) : `/models/${encodeURIComponent(modelId)}`;
 }
 
 /** CR-1: release-style comparison — models as columns, benchmarks as rows, grouped by category. */
@@ -138,7 +139,7 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
                 {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                   {v == null
                     ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
-                    : <Link href={cellHref(row, ids[j])} className="bh-matrix-link">
+                    : <Link href={cellHref(row, ids[j], ids, pinned != null)} className="bh-matrix-link">
                       {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
                       <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}</span>
                       {win[j] && <span className="sr-only"> (best in row)</span>}

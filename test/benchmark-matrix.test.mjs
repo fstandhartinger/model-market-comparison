@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rowBars, rowWinners, formatValue, groupOf, buildBenchmarkMatrix, baseKey } from '../lib/benchmark-matrix.mjs';
+import { rowBars, rowWinners, formatValue, groupOf, buildBenchmarkMatrix, baseKey, resultHref } from '../lib/benchmark-matrix.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 
 const taxonomy = JSON.parse(readFileSync(new URL('../data/benchmark-taxonomy.json', import.meta.url)));
@@ -28,6 +28,17 @@ test('CR-1.6 winners: ties, lower-is-better, missing values, fewer than two valu
   assert.deepEqual(rowWinners([3, 1, 2], false), [false, true, false]);
   assert.deepEqual(rowWinners([5, null, null], true), [false, false, false]);
   assert.deepEqual(rowWinners([5, 7], null), [false, false]);
+});
+
+test('CR-1.8 resultHref round-trips axis, model, compared models and pin state', () => {
+  const href = resultHref('aa-lcr::1.1@@Published%20board@@fraction', 'gpt-6-astra::max', ['gpt-6-astra::max', 'claude-opus-5::max'], true);
+  const u = new URL(href, 'https://x.test');
+  assert.equal(u.pathname, '/benchmarks/result');
+  assert.equal(u.searchParams.get('axis'), 'aa-lcr::1.1@@Published%20board@@fraction');
+  assert.equal(u.searchParams.get('model'), 'gpt-6-astra::max');
+  assert.deepEqual(u.searchParams.get('models').split(','), ['gpt-6-astra::max', 'claude-opus-5::max']);
+  assert.equal(u.searchParams.get('pinned'), '1');
+  assert.equal(new URL(resultHref('a', 'b', ['b'], false), 'https://x.test').searchParams.get('pinned'), null);
 });
 
 test('formatValue keeps units honest', () => {

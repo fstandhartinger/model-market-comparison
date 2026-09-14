@@ -180,6 +180,20 @@ export default async function AboutPage() {
         repository README and <code>data/SCRAPING.md</code> for how each source is collected and
         refreshed.
       </p>
+
+      <h3 id="benchmark-tags" className="mt-6 mb-2 font-semibold">Benchmark tags and the comparison table</h3>
+      <p className="text-sm text-gray-400">
+        The Benchmarks table groups every benchmark into one category and tags its name. <strong>AA</strong> marks
+        results measured by Artificial Analysis; <strong>Arena</strong> marks human head-to-head votes scored as Elo.
+        <strong> Headline</strong>, <strong>Niche</strong> and <strong>Community</strong> describe prominence, not
+        quality: headline benchmarks are the ones model release posts and technical reports usually cite, niche ones
+        come from a company or research lab and are rarely cited, community ones are run by an independent person or
+        project. These tiers are editorial: one model drafted them, a different model reviewed them, and both the tags
+        and the categories live in <code>data/benchmark-taxonomy.json</code>. A table cell shows the latest published
+        result for that exact model configuration — measured results are preferred, a developer&apos;s own report is
+        marked †, and a missing result stays a dash. Bars compare values within one row only; the bold value is the
+        row&apos;s best, and ties are all bold.
+      </p>
     </div>
   );
 }

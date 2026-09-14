@@ -99,6 +99,25 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await p.getByRole('button', { name: 'Important', exact: true }).click(); await p.waitForTimeout(200);
   const broadImp = await p.evaluate(snapshot);
   check(`${tag} Important preset narrows a broad selection`, broad && broadImp.rows > 0 && broadImp.rows < broad.rows, `${broad?.rows} → ${broadImp.rows}`);
+  // CR-1.8: a cell opens its detail page; back restores the selection
+  const cell = p.locator('a.bh-matrix-link[href^="/benchmarks/result"]').first();
+  const cellText = (await cell.innerText()).replace(/\s+/g, ' ').trim().replace(/\s*\(best in row\)$/, '').replace('†', '');
+  await cell.click();
+  await p.waitForURL(/\/benchmarks\/result\?/, { timeout: 15000 });
+  await p.waitForLoadState('networkidle');
+  const detail = await p.evaluate(() => ({
+    h1: document.querySelector('h1')?.textContent ?? '', value: document.querySelector('[data-bh-result-value]')?.textContent ?? '',
+    source: [...document.querySelectorAll('main a[href^="http"]')].length, observed: /observed \d{4}-\d{2}-\d{2}/.test(document.body.innerText),
+    compared: document.querySelectorAll('table.bh-table tbody tr').length, others: document.querySelectorAll('[aria-labelledby="bh-result-others"] li').length,
+    overflow: document.documentElement.scrollWidth > innerWidth + 1,
+  }));
+  await p.screenshot({ path: `${OUT}/${tag}-detail.png`, fullPage: true });
+  check(`${tag} CR-1.8 detail page: number, source link, observed date, compared models, other results`, detail.h1 && detail.value && cellText.startsWith(detail.value) && detail.source >= 1 && detail.observed && detail.compared === 5 && detail.others >= 3 && !detail.overflow, JSON.stringify({ ...detail, cellText }));
+  await p.getByRole('link', { name: '← Back to the comparison' }).click();
+  await p.waitForURL(/\/benchmarks\?models=/, { timeout: 15000 });
+  await p.waitForTimeout(900);
+  const restored = await p.evaluate(snapshot);
+  check(`${tag} CR-1.8 back restores the compared models`, restored && restored.cols.length === 5 && restored.status.includes('your selection'), restored?.cols.map((x) => x.name).join(' | '));
   // Cell link → single-benchmark ranking still works
   await p.goto(BASE + '/benchmarks?benchmark=' + encodeURIComponent('aa-hle::snapshot-2026-09-10'), { waitUntil: 'networkidle' });
   await p.waitForTimeout(600);
