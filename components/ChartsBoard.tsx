@@ -69,9 +69,25 @@ function DotStrip({ label, groups, format, log }: { label: string; groups: { nam
   );
 }
 
+/** F-72: costs span > 100×, so they sit on a log axis padded to the value map's round money
+ *  ticks. Returns a 0–100 position; free/zero values are pinned at the left edge (F-39). */
+const MONEY_TICKS = [0.01, 0.03, 0.1, 0.3, 1, 3, 10, 30, 100, 300];
+function logScale(values: number[]) {
+  const positive = values.filter((v) => Number.isFinite(v) && v > 0);
+  const min = positive.length ? Math.min(...positive) : 1, max = positive.length ? Math.max(...positive) : 1;
+  let lo = [...MONEY_TICKS].reverse().find((t) => t <= min) ?? min / 1.25;
+  let hi = MONEY_TICKS.find((t) => t >= max) ?? max * 1.25;
+  if (lo >= hi) { lo = lo / 3; hi = hi * 3; }
+  const pos = (v: number) => (v > 0 ? Math.max(0, Math.min(100, 100 * (Math.log(v) - Math.log(lo)) / (Math.log(hi) - Math.log(lo)))) : 0);
+  return { pos, ticks: MONEY_TICKS.filter((t) => t >= lo && t <= hi) };
+}
+const moneyTick = (v: number) => `$${v}`;
+
 /** F-59: below md the 205 px category axis eats the recharts chart, so each bar chart is
- *  replaced by plain rows — org dot, name, value, and a 6 px bar proportional to the panel max. */
-function MobileBars({ rows, max, format }: { rows: { name: string; org: string; value: number }[]; max: number; format: (v: number) => string }) {
+ *  replaced by plain rows — org dot, name, value, and a 6 px bar proportional to the panel max.
+ *  F-72: with `log`, the second line is a track with a dot at the log position instead. */
+function MobileBars({ rows, max, format, log }: { rows: { name: string; org: string; value: number }[]; max: number; format: (v: number) => string; log?: boolean }) {
+  const scale = log ? logScale(rows.map((r) => r.value)) : null;
   return <>{rows.map((row, i) => (
     <div className="py-1.5" role="listitem" key={i}>
       <div className="flex items-center gap-2 text-[13px]">
@@ -79,9 +95,43 @@ function MobileBars({ rows, max, format }: { rows: { name: string; org: string; 
         <span className="min-w-0 flex-1 truncate">{row.name}</span>
         <span className="tabular text-gray-400">{format(row.value)}</span>
       </div>
-      <div className="mt-1 h-1.5 rounded bg-line"><div className="h-full rounded bg-accent/80" style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>
+      {scale
+        ? <div className="bh-cost-track relative mx-1 mt-1.5 h-0.5 rounded bg-line/50"><span className="bh-cost-dot absolute top-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" style={{ left: `${scale.pos(row.value)}%` }} /></div>
+        : <div className="mt-1 h-1.5 rounded bg-line"><div className="h-full rounded bg-accent/80" style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>}
     </div>
   ))}</>;
+}
+
+/** F-72: desktop "Cheapest models" — one 26 px row per model, org dot + name in a 205 px column,
+ *  a muted track with a 7 px accent dot at the log position and the value to its right. */
+function CostDotPlot({ rows, format, unit, label }: { rows: { name: string; org: string; value: number }[]; format: (v: number) => string; unit: string; label: string }) {
+  const { pos, ticks } = logScale(rows.map((r) => r.value));
+  return (
+    <div className="bh-cost-plot text-[11px]" role="list" aria-label="Cheapest models">
+      <div className="relative">
+        <div className="pointer-events-none absolute inset-y-0 left-[205px] right-16" aria-hidden>
+          {ticks.map((t) => <span key={t} className="absolute inset-y-0 w-px bg-line/40" style={{ left: `${pos(t)}%` }} />)}
+        </div>
+        {rows.map((row, i) => (
+          <div key={i} role="listitem" className="grid h-[26px] grid-cols-[205px_1fr_4rem] items-center" title={`${row.name} · ${row.org} · ${format(row.value)} ${unit}`} aria-label={`${row.name}: ${format(row.value)} ${unit}`}>
+            <span className="flex min-w-0 items-center gap-[5px] pr-2 text-[#9aa4b2]">
+              <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: orgColor(row.org) }} />
+              <span className="truncate">{row.name}</span>
+            </span>
+            <span className="bh-cost-track relative h-0.5 rounded bg-line/50">
+              <span className="bh-cost-dot absolute top-1/2 h-[7px] w-[7px] -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent" style={{ left: `${pos(row.value)}%` }} />
+              <span className="absolute top-1/2 -translate-y-1/2 whitespace-nowrap pl-2 tabular text-gray-400" style={{ left: `${pos(row.value)}%` }}>{format(row.value)}</span>
+            </span>
+            <span />
+          </div>
+        ))}
+      </div>
+      <div className="relative ml-[205px] mr-16 mt-1 h-4 text-gray-500" aria-hidden>
+        {ticks.map((t) => <span key={t} className="bh-cost-tick absolute -translate-x-1/2 tabular" style={{ left: `${pos(t)}%` }}>{moneyTick(t)}</span>)}
+      </div>
+      <div className="mt-1 text-right text-gray-500">{label} · log scale</div>
+    </div>
+  );
 }
 
 export function ChartsBoard({ data }: { data: ClientData }) {
@@ -126,7 +176,6 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     [pool, s.collapse, preferredId]);
 
   const leaderTick = useMemo(() => orgTick(new Map(leaderboard.map((d) => [d.name, d.org]))), [leaderboard]);
-  const cheapTick = useMemo(() => orgTick(new Map(cheapest.map((d) => [d.name, d.org]))), [cheapest]);
 
   const openVsClosed = useMemo(() => {
     const groups = { Open: pool.filter((x) => x.m.open_weights), Closed: pool.filter((x) => !x.m.open_weights) };
@@ -173,20 +222,11 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
         <Panel title={`Cheapest models — ${priceLabel(priceSettings)}`}>
           <div className="md:hidden" role="list" aria-label="Cheapest models">
-            <MobileBars rows={cheapest} max={Math.max(...cheapest.map((d) => d.value))} format={priceNumber} />
+            <MobileBars rows={cheapest} max={Math.max(...cheapest.map((d) => d.value))} format={priceNumber} log />
+            <p className="mt-1 text-right text-[11px] text-gray-500">{adjusted ? "Adjusted cost" : "Cost"} · log scale</p>
           </div>
           <div className="hidden md:block">
-            <ResponsiveContainer width="100%" height={Math.max(360, cheapest.length * 26)}>
-              <BarChart data={cheapest} layout="vertical" margin={{ left: 20, right: 64 }}>
-                <CartesianGrid stroke="#222932" horizontal={false} />
-                <XAxis type="number" stroke="#8a93a3" fontSize={11} tickFormatter={(v) => priceNumber(v)} />
-                <YAxis type="category" dataKey="name" width={205} tick={cheapTick} interval={0} />
-                <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => [`${priceNumber(v)} ${unitShort}`, priceLabel(priceSettings)]} />
-                <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
-                  <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => priceNumber(v)} />
-                </Bar>
-              </BarChart>
-            </ResponsiveContainer>
+            <CostDotPlot rows={cheapest} format={priceNumber} unit={unitShort} label={adjusted ? "Adjusted cost" : "Cost"} />
           </div>
           {/* The recharts tooltip is mouse-only, so every plotted price is also
               listed here with its exact inputs via the PriceValue expansion. */}
