@@ -17,6 +17,8 @@ export default function RouteError({ error, reset }: { error: Error & { digest?:
         <a href="/" className="bh-button">Back to the overview</a>
       </div>
       {error.digest && <p className="mt-3 text-[11px] text-gray-500">Reference {error.digest}</p>}
+      {/* F-66 (Fable pass 11): client errors carry no digest, so the panel names the error itself. */}
+      <details className="mt-3 text-left text-[11px] text-gray-500"><summary className="!min-h-0 cursor-pointer !py-0.5 text-center">Details</summary><p className="mt-1 max-w-full break-words font-mono">{error.name || 'Error'}: {error.message || 'no message'}</p></details>
     </section>
   );
 }

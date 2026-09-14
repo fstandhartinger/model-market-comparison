@@ -7,6 +7,7 @@ import { humanVersion, versionHeading } from '../lib/version-label';
 
 const finite = (n: unknown): n is number => typeof n === 'number' && Number.isFinite(n);
 const PAGE = 25;
+const NO_SCORES: ViewAxis['scores'] = [];
 
 /** F-27: the result reads first (value, unit, date); source link and evidence live in a per-row
  *  expand, so a phone table is Rank · Model · Result and a desktop page stays scannable. */
@@ -20,22 +21,36 @@ function ResultCell({ view, axis, row, topValue, compareHref }: { view: Benchmar
 
 export function BenchmarkRanking({ initialView, axisList }: { initialView: BenchmarkView; axisList: ViewAxis[] }) {
   const [view, setView] = useState(initialView), [benchmark, setBenchmark] = useState(initialView.axes[0].benchmarkId), [axisId, setAxisId] = useState(initialView.axes[0].id);
-  const [q, setQ] = useState(''), [basis, setBasis] = useState('measured'), [openOnly, setOpenOnly] = useState(false), [unmatched, setUnmatched] = useState(false), [limit, setLimit] = useState(PAGE), [category, setCategory] = useState('');
+  const [q, setQ] = useState(''), [openOnly, setOpenOnly] = useState(false), [limit, setLimit] = useState(PAGE), [category, setCategory] = useState('');
+  // F-65: evidence basis and "not matched" are *choices* that may be unset; unset means the automatic
+  // opening rule below (a board never opens empty). Changing the board resets both to automatic.
+  const [basisChoice, setBasisChoice] = useState<string | null>(null), [unmatchedChoice, setUnmatchedChoice] = useState<boolean | null>(null);
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
   const definitions = useMemo(() => [...new Map(axisList.map((a) => [a.benchmarkId, a])).values()].sort((a, b) => a.name.localeCompare(b.name)), [axisList]);
   const groups = axisList.filter((a) => a.benchmarkId === benchmark);
-  const changeBenchmark = (id: string) => { setBenchmark(id); const first = axisList.filter((a) => a.benchmarkId === id).sort((a, b) => b.stats.n - a.stats.n)[0]; if (first) setAxisId(first.id); };
+  const changeBenchmark = (id: string) => { setBenchmark(id); setBasisChoice(null); setUnmatchedChoice(null); const first = axisList.filter((a) => a.benchmarkId === id).sort((a, b) => b.stats.n - a.stats.n)[0]; if (first) setAxisId(first.id); };
   useEffect(() => { const id = new URLSearchParams(location.search).get('benchmark'); if (id && axisList.some((a) => a.benchmarkId === id)) changeBenchmark(id); }, [axisList]); // URL is initial navigation input.
   useEffect(() => {
     if (view.axes[0]?.id === axisId && !retry) return;
-    const controller = new AbortController(); setBusy(true); setError(''); setLimit(PAGE);
+    const controller = new AbortController(); setBusy(true); setError(''); setLimit(PAGE); setBasisChoice(null); setUnmatchedChoice(null);
     fetch(`/api/benchmark-view?axis=${encodeURIComponent(axisId)}`, { signal: controller.signal }).then((r) => { if (!r.ok) throw new Error('Benchmark results could not be loaded.'); return r.json(); }).then((v) => {
       setView(v); setBusy(false); history.replaceState(null, '', `/benchmarks?benchmark=${encodeURIComponent(v.axes[0].benchmarkId)}`);
     }).catch((e) => { if (e.name !== 'AbortError') { setError(e.message); setBusy(false); } });
     return () => controller.abort();
   }, [axisId, retry]);
   const axis = axisList.find((a) => a.id === axisId)!;
-  const allRows = view.axes[0]?.id === axisId ? latestScores(view.axes[0].scores, basis) : [];
+  const loadedScores = view.axes[0]?.id === axisId ? view.axes[0].scores : NO_SCORES;
+  const auto = useMemo(() => {
+    const measuredMatched = latestScores(loadedScores, 'measured').filter((r) => r.modelId).length;
+    if (measuredMatched > 0) return { basis: 'measured', unmatched: false };
+    const all = latestScores(loadedScores, 'all');
+    if (all.some((r) => r.modelId)) return { basis: 'all', unmatched: false };
+    if (all.length > 0) return { basis: 'all', unmatched: true };
+    return { basis: 'measured', unmatched: false };
+  }, [loadedScores]);
+  const basis = basisChoice ?? auto.basis, unmatched = unmatchedChoice ?? auto.unmatched;
+  const basisWidened = basisChoice == null && auto.basis !== 'measured', unmatchedWidened = unmatchedChoice == null && auto.unmatched;
+  const allRows = latestScores(loadedScores, basis);
   const models = new Map(view.models.map((m) => [m.id, m]));
   const rows = allRows.filter((r) => (unmatched || r.modelId) && (!openOnly || (r.modelId && models.get(r.modelId)?.open)) && `${r.modelId ? models.get(r.modelId)?.name : r.name} ${r.modelId ? models.get(r.modelId)?.org : ''}`.toLowerCase().includes(q.toLowerCase())).sort((a, b) => (axis.higherBetter === false ? a.value - b.value : b.value - a.value) || a.name.localeCompare(b.name));
   const matched = new Set(allRows.map((r) => r.modelId).filter(Boolean)).size;
@@ -65,13 +80,14 @@ export function BenchmarkRanking({ initialView, axisList }: { initialView: Bench
         <p className="bh-eyebrow">{axis.category}</p><h2 className="text-2xl font-semibold">{axis.name}</h2>
         <p className="bh-muted mt-1 text-sm">{versionHeading(axis.version)} · {axis.cohort} · <a href={axis.url} target="_blank" rel="noreferrer" className="bh-link text-accent">Primary source ↗</a></p>
       </div>
-      <p className="bh-muted mt-3 max-w-3xl text-sm">{axis.description} {axis.publicationScope ? `Public sample: ${axis.publicationScope.published_tasks} published tasks × ${axis.publicationScope.runs_per_task} runs × ${axis.publicationScope.configurations} configurations = ${axis.publicationScope.rollouts} rollouts. ${axis.publicationScope.note}` : axis.detailNote ? axis.detailNote : ''} <span role="status">{busy ? '…' : `${matched} of ${view.models.length} catalog configurations have a result · unit: ${axis.unit} · ${direction}`}</span></p>
-      <div className="mt-4 flex flex-wrap items-end gap-3"><label className="text-sm">Search models<input type="search" className="bh-input mt-1 block" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE); }} placeholder="Model or creator" /></label><label className="text-sm">Evidence<select className="bh-input mt-1 block" value={basis} onChange={(e) => { setBasis(e.target.value); setLimit(PAGE); }}><option value="measured">Measured only</option><option value="self_reported">Self-reported only</option><option value="all">All · prefer measured</option></select></label><label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={openOnly} onChange={(e) => setOpenOnly(e.target.checked)} />Open weights</label>{unmatchedCount > 0 ? <label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={unmatched} onChange={(e) => setUnmatched(e.target.checked)} />Include unmatched source identities</label> : null}<p role="status" className="bh-muted ml-auto text-sm">{busy ? 'Loading this benchmark…' : error || `${rows.length} results`}</p></div>
+      <p className="bh-muted mt-3 max-w-3xl text-sm">{axis.description} {axis.publicationScope ? `Public sample: ${axis.publicationScope.published_tasks} published tasks × ${axis.publicationScope.runs_per_task} runs × ${axis.publicationScope.configurations} configurations = ${axis.publicationScope.rollouts} rollouts. ${axis.publicationScope.note}` : axis.detailNote ? axis.detailNote : ''} <span role="status">{busy ? '…' : matched === 0 && rows.length > 0 ? `${rows.length} published results · not yet matched to catalog models · unit: ${axis.unit} · ${direction}` : `${matched} of ${view.models.length} catalog configurations have a result · unit: ${axis.unit} · ${direction}`}</span></p>
+      <div className="mt-4 flex flex-wrap items-end gap-3"><label className="text-sm">Search models<input type="search" className="bh-input mt-1 block" value={q} onChange={(e) => { setQ(e.target.value); setLimit(PAGE); }} placeholder="Model or creator" /></label><label className="text-sm">Evidence<select className="bh-input mt-1 block" value={basis} onChange={(e) => { setBasisChoice(e.target.value); setLimit(PAGE); }}><option value="measured">Measured only</option><option value="self_reported">Self-reported only</option><option value="all">All · prefer measured</option></select></label><label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={openOnly} onChange={(e) => setOpenOnly(e.target.checked)} />Open weights</label>{unmatchedCount > 0 ? <label className="flex min-h-11 items-center gap-2 text-sm"><input type="checkbox" checked={unmatched} onChange={(e) => setUnmatchedChoice(e.target.checked)} />Include results not matched to a catalog model</label> : null}<p role="status" className="bh-muted ml-auto text-sm">{busy ? 'Loading this benchmark…' : error || `${rows.length} results`}</p></div>
       {error && <button className="bh-button mt-3" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
+      {!busy && !error && (basisWidened || unmatchedWidened) && rows.length > 0 && <p role="status" className="bh-muted mt-3 text-sm">{basisWidened && unmatchedWidened ? 'Showing self-reported results, listed under the names the source publishes — none is matched to a catalog model yet.' : basisWidened ? 'Showing self-reported results too — no independent measurement exists for this board yet.' : `Listed under the names the source publishes — none of these ${rows.length} results is matched to a catalog model yet.`}</p>}
       {busy ? <div className="bh-empty min-h-80" aria-busy="true">Loading ranked results…</div> : rows.length ? <div className="bh-table-wrap overflow-x-auto" tabIndex={0} role="region" aria-label="Benchmark ranking table"><table className="bh-table w-full text-sm [&>tbody>tr>td]:!py-2 [&>tbody>tr>th]:!py-2 [&>thead>tr>th]:!py-2"><caption className="sr-only">{axis.name}, {humanVersion(axis.version).label}, {axis.cohort}. Rank is within the filtered results; ties share a rank.</caption><thead><tr><th scope="col">Rank</th><th scope="col">Model / configuration</th><th scope="col">Result</th></tr></thead><tbody>{rows.slice(0, limit).map((r, i) => {
         const m = r.modelId ? models.get(r.modelId) : null, rank = rows.findIndex((v) => v.value === r.value) + 1;
-        return <tr key={r.id}><td className="align-top tabular bh-muted">{axis.higherBetter == null ? '—' : rank}</td><th scope="row" className={`max-w-md text-left align-top ${i === 0 ? 'font-semibold' : 'font-medium'}`}>{m ? <Link href={`/models/${encodeURIComponent(m.id)}#benchmark-sheet`} className="hover:underline">{m.name}</Link> : r.name}<p className="bh-muted mt-1 text-xs font-normal">{m ? `${m.org}${m.open ? ' · open weights' : ''}` : 'Unmatched source identity; excluded from model coverage and radar peers'}{r.harness ? ` · harness ${r.harness}` : ''}{r.variant ? ` · ${r.variant}` : ''}</p></th><td className="align-top"><ResultCell view={view} axis={axis} row={r} topValue={topValue} compareHref={m ? `/compare?model=${encodeURIComponent(m.id)}` : undefined} /></td></tr>;
-      })}</tbody></table></div> : <div className="bh-empty min-h-56"><h3 className="font-semibold">No results in this view</h3><p className="mt-2">{axis.collection?.status !== 'collected' ? axis.collection?.reason : 'Try including self-reported results or unmatched source identities, or clear the model filters. Missing evidence is never a zero.'}</p><p className="mt-2 text-xs">Collection status: {axis.collection?.status || 'unknown'}</p></div>}
+        return <tr key={r.id}><td className="align-top tabular bh-muted">{axis.higherBetter == null ? '—' : rank}</td><th scope="row" className={`max-w-md text-left align-top ${i === 0 ? 'font-semibold' : 'font-medium'}`}>{m ? <Link href={`/models/${encodeURIComponent(m.id)}#benchmark-sheet`} className="hover:underline">{m.name}</Link> : r.name}<p className="bh-muted mt-1 text-xs font-normal">{m ? `${m.org}${m.open ? ' · open weights' : ''}` : 'As named by the source · not matched to a catalog model'}{r.harness ? ` · harness ${r.harness}` : ''}{r.variant ? ` · ${r.variant}` : ''}</p></th><td className="align-top"><ResultCell view={view} axis={axis} row={r} topValue={topValue} compareHref={m ? `/compare?model=${encodeURIComponent(m.id)}` : undefined} /></td></tr>;
+      })}</tbody></table></div> : <div className="bh-empty min-h-56"><h3 className="font-semibold">No results in this view</h3><p className="mt-2">{axis.collection?.status !== 'collected' ? axis.collection?.reason : q || openOnly ? 'No result matches your search or the open-weights filter.' : 'Nothing is published for this view yet. Missing evidence is never a zero.'}</p><p className="mt-2 text-xs">Collection status: {axis.collection?.status || 'unknown'}</p></div>}
       {rows.length > limit && <button className="bh-button mt-4" onClick={() => setLimit((n) => n + PAGE)}>Show more ({rows.length - limit} remaining)</button>}
       {!busy && (estimatedRows.length > 0 || incomparable.length > 0 || recompute.length > 0) && <section className="mt-8 border-t border-line pt-5" aria-label="Historic configurations">
         <h3 className="text-lg font-semibold">Historic configurations on this version</h3>

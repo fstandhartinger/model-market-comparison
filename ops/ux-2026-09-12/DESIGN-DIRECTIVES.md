@@ -1,13 +1,13 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 10: 2026-09-14 ~06:25 UTC**, against live revision `4b0d250` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass10/` — 80 screenshots +
+**Pass 11: 2026-09-14 ~09:10 UTC**, against live revision `4f8b690` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass11/` — 80 screenshots +
 `metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple incl. moved slider,
-Advanced incl. the cost-inputs modal, Guided 1–5, Benchmaxxing, model page, Compare, Benchmarks,
-Charts; no overflow and no page errors in any of the 80), `verify-21aa63f-{canonical,legacy}/`
-(`bin/verify-f63-f64.mjs`). The Filters overlay was not re-shot: no filter or settings component
-changed since pass 9's `checks/`.
-Earlier passes: `…/fable-20260914-pass9/` … `…/fable-20260913/`.
+Advanced incl. the cost-inputs modal, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks,
+Charts) plus `*-benchmarks-{vals,apprentice,frontiercode,cursorbench,realswe}.png` and `e2-boards.json`
+(the E2 boards in their default state, 1440 and 390, light). The Filters overlay was not re-shot:
+`GlobalFilters.tsx` / `ShortlistControls.tsx` are unchanged since `f98a23d` (pass 8 evidence stands).
+Earlier passes: `…/fable-20260914-pass10/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -24,56 +24,68 @@ Luna. Every delegated diff is reviewed before it lands.
 
 ---
 
-## Verdict on the live site — pass 10 (2026-09-14)
+## Verdict on the live site — pass 11 (2026-09-14)
 
-**At the bar, at both widths and in both themes.** Everything pass 9 opened is live: the phone
-Compare radar fits (316 px, six numbered axes, legend list, no panning), the phone Charts bars carry
-the value (longest 323 px, shortest 2.7 px), the phone model page leads with the Composite, no
-version token prints twice, the desktop radar is 640 px. Fable re-checked F-58/F-59 on both hosts
-at 06:22 after the review gate's a11y fix (`4b0d250`, rows are `listitem`s). The first screen of `/`
-is still the two-line claim, the counts line, two sliders with their histograms, the value map with
-its Pareto line and seven ranked rows; Guided is five questions that read as one gesture each;
-Benchmaxxing leads with the signal table; the model page leads with the Composite and its radar;
-Benchmarks and Charts hold. Dark mode is the same design in other colours — with one exception,
-below.
+**The core pages hold the bar; the new E2 boards do not.** Everything pass 10 verified is still
+live and unchanged in the 80-shot matrix (`metrics.json`: no overflow at 390 on any page, 7 Simple
+rows, 101 Advanced rows, 10 Benchmaxxing rows, 23 model-page rows, 38 Compare rows, Charts 32 bars).
+Simple opens on the two-line claim, the counts line, two sliders with histograms, the value map with
+its Pareto line and seven ranked rows; Advanced is one toolbar row and the full catalog; Guided is
+still one question per step; the model page leads with the Composite and its radar (phone: Composite
+card first); Charts, Compare and Benchmarks (AA Intelligence Index) read as before; dark mode is the
+same design in other colours on every page.
 
-What pass 10 measured that is *not* at the bar:
+What pass 11 measured that is *not* at the bar:
 
-1. **Light mode drops the bar tracks on phone Charts.** `MobileBars` drew its track with
-   `bg-white/[0.06]` and the open-vs-closed strip with `bg-white/[0.03]` — visible on dark, invisible
-   on light (`mobile_light-charts.png` vs `mobile_dark-charts.png`), so in light the bars float and the
-   remainder of the scale is gone. Also flagged by the 06:10 gate. → **F-63**, surgical (Fable).
-2. **The model page's key-message spot speaks jargon.** Next to "Composite" the card said
-   "2/7 exact inputs · 4 attached"; "attached" is a data-provenance term the reader meets only in the
-   sheet below. → **F-64**, surgical (Fable).
+1. **Every E2 board opens on "No results in this view".** Iterations 47–48 landed Vals Index v2 (11
+   identities), FrontierCode 1.1, CursorBench 4.0, Real-SWE and ApprenticeBench (4 boards) — but they
+   keep the names their source publishes, so no row joins a catalog model, and `/benchmarks` starts on
+   "Measured only" with unmatched rows hidden. Picking *Code Migration (Vals Index v2 subset)* shows
+   "0 of 846 catalog configurations have a result · 0 results" and the generic empty state, although
+   56 ranked rows exist; *CursorBench 4.0* does not even offer the "Include unmatched" checkbox because
+   its rows are self-reported, so the reader has to find two hidden switches (`desktop_light-benchmarks-
+   vals.png`, `…-cursorbench.png`, `mobile_light-benchmarks-vals.png`). A board that has results must
+   never open empty, and a zero is the opposite of a key message. → **F-65**, the one real defect of
+   this pass. Fable decides the opening rule below (it was the open candidate from pass 10).
+2. **The route error boundary is mute.** The pass-11 capture hit it once — the phone light-mode model
+   page rendered "This page hit an error while loading." (`mobile_light-model.png`) after the Guided →
+   Benchmaxxing sequence in the same browser context. Three exact-sequence re-runs and eight fresh loads
+   (`/tmp/repro-seq.mjs`, `/tmp/repro-model-err.mjs`) were clean, so it is a one-off, and F-47's branded
+   panel did its job. But the panel shows nothing that identifies the error (client errors carry no
+   `digest`), and the screenshot scripts do not record `pageerror`, so the cause is lost. → **F-66**,
+   surgical (Fable): a small "Details" disclosure with the error name and message, and page-error
+   capture in the screenshot matrix, so the next one-off is diagnosable from the evidence alone.
 
 Not opened, on purpose:
 
-- Score bars in the tables run 0–100, so 89.1 and 99.4 look alike. A zero baseline is the honest
-  encoding for a magnitude bar; the tabular number beside it carries the precision. Leave.
-- Simple lists the priciest model first (R5.2) — literal, as decided in passes 4–9.
-- Guided step 3 leaves the right half of the card empty at 1440. Two columns of pill rows would
-  break the "one question, one gesture" rhythm on phones; the empty space costs nothing.
-- The Simple value map at 390 suppresses two of seven point labels (F-17 collision rule); the ranked
-  rows directly below name them.
-- The cost-inputs modal stays dense (pass 8 decision); the Benchmaxxing signal bars stay nearly
-  equal because the top-10 signals are (26.2–28.8).
+- The cost-inputs modal (`desktop_light-advanced-row-expanded.png`) stays dense — pass-8 decision; it
+  is the audit trail behind one number, opened on purpose.
+- The model page's "Composite attachments" line with four (i) icons is the one place "attached" is
+  defined (F-64); it stays.
+- Simple lists the priciest model first (R5.2) — literal, as decided in passes 4–10.
+- Score bars run 0–100 (pass 10 reasoning); the empty right half of Guided step 3 at 1440 (pass 10).
 
-## Decisions in pass 10
+## Decisions in pass 11
 
-1. **R3.1 stands** (pass 8 wording; verified by claude-opus iteration 44, the codex-luna gate 02:00
-   and the claude-opus gate 06:10, which set P4 `verified`). No change.
+1. **R3.1 stands** (pass-8 wording, verified by three engines). No change.
 2. **R5.2 stays literal** (cost-descending Simple).
-3. **F-63 and F-64 fixed by Fable, not delegated**: two class tokens and one wording line — a
-   delegation round would cost more than the change (`21aa63f`).
-4. **X4 (UI meets the design bar):** in the design authority's judgment the live UI meets Florian's
-   bar at 1440 and 390, light and dark. The ledger row stays `open` only because the one-writer
-   rule requires a non-Fable, non-Kimi engine to verify F-58, F-59, F-62, F-63 and F-64 live
-   (`bin/verify-f58-f61.mjs`, `bin/verify-review-0610.mjs`, `bin/verify-f63-f64.mjs`).
+3. **Opening rule for boards without matched rows (F-65):** a board opens on the *narrowest* setting
+   that shows at least one row — measured-and-matched, then all-evidence-and-matched, then all rows as
+   named by the source — and says in one muted line which widening it applied. The user's explicit
+   choice always wins once made; changing the board resets to automatic. Rejected: an empty state with
+   a "Show the 56 source results" button (one more click for the key message, and the phone reader would
+   still meet a zero first) and ticking "unmatched" globally by default (it would blend source-named
+   rows into boards that do have matched rows).
+4. **F-65 is delegated** (`bin/delegate.sh --kimi`, one file, spec below); Fable reviews the diff,
+   runs the gates and verifies live with `bin/verify-f65.mjs`. **F-66 is done by Fable** (one component
+   and one screenshot script).
+5. **X4:** in the design authority's judgment the live UI meets Florian's bar at 1440 and 390, light and
+   dark, *except* for the E2 boards' opening state (F-65). Once F-65 is live and independently verified,
+   X4 has no open design residue.
 
 ---
 
-## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–10)
+## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–11)
 
 > **Every AI model benchmark we can find, in one place.**
 > **And what each model really costs you.**
@@ -91,47 +103,62 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 ## Directives (open)
 
-> **Status 2026-09-14 pass 10 (Fable), end of pass:** nothing open for implementers. F-63/F-64
-> landed in `21aa63f` and were live-checked by Fable on both hosts (`bin/verify-f63-f64.mjs`,
-> evidence `…/fable-20260914-pass10/verify-21aa63f-{canonical,legacy}/`). The specs below are kept
-> for the independent verifier; F-58, F-59, F-62, F-63 and F-64 need a non-Fable, non-Kimi engine to
-> set `verified`.
->
-> **Update 2026-09-14 iteration 47 (claude-opus):** F-58…F-64 verified live on `21aa63f`, both hosts,
-> 1440/390, light/dark (`ux-evidence/iter47-indep/`; see the done log).
+### F-65 `[mechanical, reviewed]` Boards never open empty: automatic widening with one notice line
+*Where:* `components/BenchmarkRanking.tsx` only.
+*What:*
+1. Replace the two user states `basis` (`'measured'`) and `unmatched` (`false`) by *choices* that may be
+   unset: `basisChoice: string | null` and `unmatchedChoice: boolean | null`, both `null` initially and
+   reset to `null` in `changeBenchmark()` and whenever `axisId` changes.
+2. Derive the automatic setting from the loaded axis (`view.axes[0]` when its `id === axisId`, using
+   `latestScores` from `lib/benchmark-view.mjs`):
+   - `measuredMatched = latestScores(scores, 'measured').filter(r => r.modelId).length`
+   - `allMatched = latestScores(scores, 'all').filter(r => r.modelId).length`
+   - `allAny = latestScores(scores, 'all').length`
+   - auto = `measuredMatched > 0` → `{ basis: 'measured', unmatched: false }`;
+     else `allMatched > 0` → `{ basis: 'all', unmatched: false }`;
+     else `allAny > 0` → `{ basis: 'all', unmatched: true }`;
+     else `{ basis: 'measured', unmatched: false }`.
+   - effective `basis = basisChoice ?? auto.basis`, `unmatched = unmatchedChoice ?? auto.unmatched`.
+     The Evidence `<select>` and the checkbox show and set the *effective* values (setting them writes
+     the choice). Everything downstream (rows, `topValue`, counts, estimates) uses the effective values.
+3. Notice line, rendered directly above the table (`<p role="status" className="bh-muted mt-3 text-sm">`),
+   only while a widening is automatic (the corresponding choice is `null` and auto differs from
+   `measured`/`false`):
+   - basis widened only: *"Showing self-reported results too — no independent measurement exists for
+     this board yet."*
+   - unmatched widened only: *"Listed under the names the source publishes — none of these
+     {rows.length} results is matched to a catalog model yet."*
+   - both: *"Showing self-reported results, listed under the names the source publishes — none is
+     matched to a catalog model yet."*
+4. Coverage sentence in the description paragraph: when `matched === 0 && rows.length > 0` it reads
+   *"{rows.length} published results · not yet matched to catalog models · unit: {unit} · {direction}"*
+   instead of "0 of N catalog configurations have a result …". Unchanged otherwise.
+5. Plain language: checkbox label "Include unmatched source identities" → **"Include results not matched
+   to a catalog model"**; row sub-line "Unmatched source identity; excluded from model coverage and radar
+   peers" → **"As named by the source · not matched to a catalog model"**; empty-state body (only reached
+   when no widening helps) → *"Nothing is published for this view yet. Missing evidence is never a
+   zero."*, and when `q` or `openOnly` is set: *"No result matches your search or the open-weights
+   filter."* The "Collection status" line stays.
+6. No other behaviour changes: AA Intelligence Index still opens on "Measured only" with 641 results and
+   no notice line; the `?benchmark=` URL handling, paging, estimates section and F-27/F-45/F-48 layout are
+   untouched. No new dependencies.
+*Accept (`bin/verify-f65.mjs`, both hosts, 1440 and 390, light and dark):* on
+`/benchmarks?benchmark=vals-index-code-migration::2`, `…=cursorbench::4.0`,
+`…=apprenticebench-cua::snapshot-2026-09-14` and `…=frontiercode::1.1` the ranking table has ≥ 1 row on
+first load with no clicks, the page contains no "0 of " coverage sentence and no "No results in this
+view", exactly one notice line is present, the Evidence select shows "All · prefer measured" and (where
+unmatched rows exist) the checkbox is ticked; on `/benchmarks` (AA Intelligence Index) the select shows
+"Measured only", 641 results, no notice line; the strings "unmatched source identit" and "Unmatched source
+identity" no longer appear anywhere on `/benchmarks`; no overflow at 390; `npm test`, `tsc` green.
 
-### Candidate for Fable (not yet a directive) — boards with only unmatched source identities open empty
-*Found:* iteration 47, after Vals Index v2 and FrontierCode 1.1 went live (`ed9b78a`).
-*Facts:* E2 benchmarks keep their source labels (`identity_policy: source_label`; Vals slugs carry a
-published compute effort, and no effort may be inferred), so none of their rows join a catalog model.
-`/benchmarks` starts on "Measured only" with "Include unmatched source identities" unticked, so
-selecting **Vals Index v2** shows "0 of 846 catalog configurations have a result · 0 results" and the
-generic empty state, although 56 ranked rows exist. With "All · prefer measured" and the checkbox
-ticked it ranks correctly (`ux-evidence/iter47-e2/ui/`, 88/88; screenshot
-`canonical-desktop_light-vals.png` shows the empty default).
-*Decision needed from Fable:* how such a board should open (e.g. include unmatched identities
-automatically when the selected cohort has no matched rows, with a one-line label), or whether the
-empty state should instead offer a one-click "Show the 56 source results". Separate data follow-up,
-not a design question: a reviewed Vals alias table (slug + published effort → exact catalog configuration).
-
-### F-63 `[mechanical]` Theme-aware tracks on Charts
-*Where:* `components/ChartsBoard.tsx` (`MobileBars` track `div`, and the open-vs-closed strip
-`div[role=img]`).
-*What:* the track behind each phone bar uses the design-system line token (`bg-line`) instead of
-`bg-white/[0.06]`; the open-vs-closed strip uses `bg-line/40` instead of `bg-white/[0.03]`. Nothing
-else changes (bar colour `bg-accent/80`, heights, radii).
-*Accept:* at 390 (`/charts`), light and dark, every visible bar-row track has a background that
-differs from the page background by ≥ 12 RGB units after alpha blending; at 1440 and 390 the
-open/closed strips likewise; no overflow; `npm test`, `tsc` green.
-
-### F-64 `[mechanical]` Composite coverage in plain language
-*Where:* `app/models/[id]/page.tsx` (the `<span>` beside the "Composite" heading).
-*What:* `"{coverage + attached} of 7 inputs"`, followed by `" · {attached} from the model family"`
-only when `composite_attached > 0` (`composite_attached` is already bounded so the total never
-exceeds 7). The sheet's "Composite attachments" note with its (i) explanations is unchanged and
-stays the place where "attached" is defined.
-*Accept:* on `/models/claude-opus-5%3A%3Ahigh` at 1440 and 390 the line reads "6 of 7 inputs · 4
-from the model family"; the string "exact inputs" no longer appears on the page.
+### F-66 `[surgical, Fable]` The error boundary says what happened; the matrix records page errors
+*Where:* `app/error.tsx`; `ops/ux-2026-09-12/bin/shoot-fable-pass11.mjs` (template for later passes).
+*What:* under the two buttons, a `<details>` with summary "Details" whose body is `error.name: error.message`
+(monospace, 11 px, muted, `max-w-full break-words`); the `Reference {digest}` line stays. The screenshot
+matrix registers `page.on('pageerror')` and console errors per context and writes them into
+`metrics.json` (`errors[tag]`), so an error-boundary shot always comes with the message that caused it.
+*Accept:* `/models/does-not-exist` and a forced client error render the branded panel with a "Details"
+disclosure containing a non-empty message; `metrics.json` of the next pass has an `errors` key.
 
 ## Design system notes (apply while touching any file above)
 
@@ -157,6 +184,9 @@ from the model family"; the string "exact inputs" no longer appears on the page.
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 10 (2026-09-14 06:25 UTC, live `4b0d250`):** at the bar at both widths and themes; fixed F-63 light-mode
+  Charts tracks and F-64 Composite coverage wording (Fable surgical, `21aa63f`); both verified by claude-opus
+  (iteration 47). Decisions: R3.1 and R5.2 unchanged; X4 judged met pending independent verification.
 - **Pass 9 (2026-09-14 03:40 UTC, live `4374f29`):** desktop at the bar; opened F-58 phone Compare radar, F-59
   phone Charts bar rows, F-62 desktop radar 640 px (Kimi K3 draft + Fable, `7b5320d`); fixed F-60 Composite-first
   phone model page and F-61 doubled version tokens (Fable, `9240da5`/`97e50a4`). New rule: no chart may require
