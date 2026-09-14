@@ -184,6 +184,22 @@
       "review_file": "ops/ux-2026-09-12/openrouter-withdrawal-critic-20260914.json",
       "review_sha256": "09598b4ceacda606f3935a939efda707c75368b5cdcad41a85320fbc6ba4b23c",
       "owner_acceptance": "2026-09-14 bounded review: fresh HTTP 200 primary response captured in ux-evidence/iter42-openrouter-withdrawal with 26 endpoint rows; local recomputation binds the complete prior/current identity digests and exactly the one OpenInference withdrawal. Independent Kimi K3 critic returned pass with no unresolved findings. This short-lived exception makes no permanent retirement inference; all other identity, HTTP, schema and pricing changes remain fatal."
+    },
+    {
+      "model_id": "moonshotai/kimi-k3",
+      "previous_identity_sha256": "9dbf59821fec0f50e9f5bc394ba80537937fcfd41a4e1ae4682ffb66490f1a51",
+      "current_identity_sha256": "2a0b1cf8814734524b10694497c375164af18110277b53e4013759e4de01967b",
+      "removed": [
+        "InferenceNet/inference-net/unknown"
+      ],
+      "expires_at": "2026-09-14T12:00:00Z",
+      "reviewed_at": "2026-09-14T03:33:03Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/moonshotai/kimi-k3/endpoints",
+      "primary_capture_sha256": "641280a24d15459a26ae24d374df83d5d5faa216ab4da3f25a7dd9ba8bd07955",
+      "review_file": "ops/ux-2026-09-12/openrouter-withdrawal-kimi-review-20260914-clean.json",
+      "review_sha256": "1a2e11935b7a7b93ca9c1c0b7a89d8e49e0a1339de0cd4a800ce56b22d1b0338",
+      "review_basis": "Direct primary HTTP 200 response captured 2026-09-14. The complete unique identity set is bound to the prior/current digests and the exact single withdrawal; the independent Kimi K3 review packet returned pass with zero unresolved findings. This is a short-lived source-list exception only; no permanent retirement inference; all other identity, HTTP, schema and pricing changes remain fatal.",
+      "owner_acceptance": "2026-09-14 bounded review: local recomputation found 19 current unique endpoint identities, exactly one prior-minus-current identity (InferenceNet/inference-net/unknown), no additions, valid prompt/completion pricing, and a matching response SHA-256. Approve only this exact withdrawal through the expiry above."
     }
   ]
 }

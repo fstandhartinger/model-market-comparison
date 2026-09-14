@@ -1,0 +1,20 @@
+{
+  "artifact_id": "openrouter-moonshotai-kimi-k3-withdrawal-2026-09-14",
+  "artifact_sha256": "641280a24d15459a26ae24d374df83d5d5faa216ab4da3f25a7dd9ba8bd07955",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "criterion 1: HTTP status 200 stated; current list contains exactly 19 endpoint rows, all string-unique",
+    "criterion 2: previous list contains exactly 20 rows; current set equals previous set minus exactly InferenceNet/inference-net/unknown; zero added identities",
+    "criterion 3: both owner-computed digests and the supplied response SHA-256 are present and well-formed",
+    "criterion 4: exception scoped to one model and one exact removal; no permanent-retirement inference"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "The supplied identity digests were not independently recomputed by the critic; owner-side recomputation is recorded in the packet.",
+    "The packet does not state an explicit expiry timestamp for the proposed exception; the owner approval supplies one."
+  ],
+  "missing_evidence": []
+}

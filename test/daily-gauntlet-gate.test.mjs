@@ -85,7 +85,7 @@ test('an oversized source is refused instead of silently truncated into a passin
   try {
     let called = false;
     const result = await reviewArtifact({ runDir: dir, artifactId: 'oversized', rows,
-      sources: [{ ...sources[0], content: 'x'.repeat(70_000) }], criteria: ['fixture'],
+      sources: [{ ...sources[0], content: 'x'.repeat(140_000) }], criteria: ['fixture'],
       runner: async () => { called = true; }, maxRounds: 1 });
     assert.equal(called, false); assert.equal(result.accepted, false);
     assert.match(result.errors.join(' '), /complete bounded extract/);

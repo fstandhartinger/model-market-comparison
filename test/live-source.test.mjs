@@ -49,9 +49,10 @@ test('endpoint approval selection ignores older approvals for the same model', (
   const two = { ...one, provider_name: 'Two', tag: 'two' };
   const current = [one, two];
   const currentDigest = endpointIdentityDigest(current);
-  const old = { model_id: 'fixture/model', current_identity_sha256: endpointIdentityDigest([one]) };
-  const fresh = { model_id: 'fixture/model', current_identity_sha256: currentDigest };
-  assert.equal(selectOpenRouterEndpointApproval([old, fresh], 'fixture/model', current), fresh);
+  const old = { model_id: 'fixture/model', current_identity_sha256: endpointIdentityDigest([one]), expires_at: '2026-01-01T00:00:00Z' };
+  const fresh = { model_id: 'fixture/model', current_identity_sha256: currentDigest, expires_at: '2026-01-03T00:00:00Z' };
+  assert.equal(selectOpenRouterEndpointApproval([old, fresh], 'fixture/model', current, { now: Date.parse('2026-01-02T00:00:00Z') }), fresh);
+  assert.equal(selectOpenRouterEndpointApproval([old, { ...fresh, expires_at: '2026-01-01T00:00:00Z' }], 'fixture/model', current, { now: Date.parse('2026-01-02T00:00:00Z') }), undefined);
   assert.equal(selectOpenRouterEndpointApproval([old], 'fixture/model', current), undefined);
   assert.equal(selectOpenRouterEndpointApproval([fresh], 'other/model', current), undefined);
 });

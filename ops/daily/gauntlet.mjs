@@ -25,7 +25,10 @@ export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex'
 // Hard bounds: at most 3 review rounds per artifact, bounded packets/sources.
 export const GAUNTLET_LIMITS = {
   maxRounds: 3,
-  sourceBytesCap: 65_536,
+  // OpenRouter Flight examples can legitimately contain a complete daily usage
+  // array in one model-page extract. Keep the packet bounded while allowing that
+  // source evidence to remain lossless; the enclosing packet remains capped at 256 KiB.
+  sourceBytesCap: 131_072,
   packetBytesCap: 262_144,
   batchRows: 60,
   batchBytesCap: 131_072,
@@ -87,6 +90,10 @@ function validateRows(rows) {
 export async function defaultRunner(args) {
   const state = process.env.BH_STATE;
   const failedFile = state ? join(state, 'unavailable-models.jsonl') : null;
+  const workerTimeout = Number(process.env.BH_WORKER_TIMEOUT || 180);
+  if (!Number.isInteger(workerTimeout) || workerTimeout < 1 || workerTimeout > 1800) {
+    throw new Error('BH_WORKER_TIMEOUT must be an integer from 1 to 1800 seconds');
+  }
   let failed = [];
   if (failedFile) {
     try { failed = (await readFile(failedFile, 'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse).map((r) => r.model); }
@@ -96,10 +103,10 @@ export async function defaultRunner(args) {
     // 16,384 completion tokens: on 2026-09-13 both DeepSeek producers spent all 8,192 on
     // reasoning for the 16.6k-token or_efficiency contract packet and never wrote an answer,
     // which blocked publication. 8,192 took ~40 s, so the 180 s deadline still holds.
-    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '16384', '--timeout', '180', ...args], {
+    const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '16384', '--timeout', String(workerTimeout), ...args], {
       cwd: REPO, env: { ...process.env, BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_MAX_PRICE_PER_1M: '4',
         BH_WORKER_EXCLUDE_MODELS: [...new Set([...failed, ...(process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean)])].join(',') },
-      maxBuffer: 4 * 1024 * 1024, timeout: 240_000,
+      maxBuffer: 4 * 1024 * 1024, timeout: (workerTimeout + 60) * 1000,
     });
     return { stdout, stderr };
   } catch (error) {

@@ -1356,3 +1356,21 @@ Notes for whoever picks this up:
   (timestamp-only diff restored). Limits at start: Claude week 46 %, session 35 %; Codex 74 %
   (not used). X3 stays `in-progress` (pass 9 done, its directives partly open); X4 stays `open`
   until F-58/F-59 are live and verified by a non-Fable engine.
+
+- **2026-09-14 · iteration 46 · codex-luna** — repaired two daily-refresh safety issues exposed by
+  the isolated R9.1 attempt. OpenRouter endpoint approval selection now requires an unexpired approval
+  for the exact current endpoint-set digest; the regression test covers both an older matching approval
+  and the all-expired case. The gauntlet worker timeout is configurable only within a bounded 1–1800
+  second range (default remains 180 seconds), and complete OpenRouter efficiency extracts may be up to
+  131,072 bytes while the enclosing packet remains capped at 256 KiB. The oversized-source test was
+  kept fail-closed by increasing its fixture above the new cap. A fresh Kimi-reviewed K3 withdrawal
+  approval for `moonshotai/kimi-k3` is exact-set bound, expires 2026-09-14T12:00Z, and is recorded in
+  `data/raw/source-change-approvals.json`; packet, review, source URL and body hash are in
+  `openrouter-withdrawal-{packet,kimi-review-20260914-clean}.json/md` and the external evidence receipt
+  under `/opt/benchmarkheaven/state/ux-evidence/iter46-openrouter-withdrawal/`.
+  The first complete dry-run reached all seven live contracts but exposed the stale 70 KiB test fixture;
+  the corrected clean dry-run then passed all 23 steps, all seven independent live contracts, 78 fresh
+  benchmark source receipts, dataset build, npm build, npm test 276/276, typecheck, prerender, top5 and
+  source validation. Evidence run: `/opt/benchmarkheaven-daily/runs/2026-09-14T04-26-39-216Z-3258522/`.
+  R9.1 is not marked deployed yet: the clean run was intentionally `--dry-run`; normal publication must
+  still run from a clean committed checkout and verify both public hosts before this row can close.
