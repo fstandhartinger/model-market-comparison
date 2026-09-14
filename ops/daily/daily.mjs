@@ -184,6 +184,13 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       console.warn(`WARN fetch-inceptron-catalog: keeping the previous snapshot`);
     }
     try {
+      await command('fetch-azure-foundry-catalog', process.execPath, ['scripts/fetch-azure-foundry-catalog.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-azure-foundry-catalog skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-azure-foundry-catalog: keeping the previous snapshot`);
+    }
+    try {
       await command('fetch-claude-api-catalog', process.execPath, ['scripts/fetch-claude-api-catalog.mjs']);
     } catch (error) {
       report.warnings = report.warnings || [];

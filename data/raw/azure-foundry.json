@@ -1,24 +1,34 @@
 {
   "source": "Azure AI Foundry",
   "region": "offer-specific (global, EU Data Zone, regional, or US Fireworks)",
-  "collected_at": "2026-09-08",
+  "collected_at": "2026-09-14",
   "method": "Azure Retail Prices API (prices.azure.com/api/retail/prices), paginated across six EU resource/billing regions and cross-checked against the model-retirement schedule (https://learn.microsoft.com/en-us/azure/foundry/openai/concepts/model-retirement-schedule, updated 2026-08-19) plus current model/region catalogs. Queries cover OpenAI/Models/AI Foundry plus the separate productName 'Azure Kimi'. Deployment scope is modeled per offer: Global meters use region=global and are not technically EU-resident; only documented Europe Data Zone or regional offers use an EU region. A company-specific policy overlay marks only the native Azure Direct DeepSeek V4 Pro and Kimi K2.7 Code Global routes as eu_policy_equivalent=true so they qualify for this application's EU filter without changing eu_hosted=false or claiming technical residency. Retired models are excluded even when stale Retail meters remain. GPT-5.6 Luna/Sol/Terra standard token meters were published (effective 2026-07-01), so those rows now carry the default short-context Standard prices; long-context prices are documented in notes. Fireworks offers use documented US hosting and eu_hosted=false. Standard uncached pay-as-you-go token meters only; batch, cached and provisioned-throughput meters are excluded. All prices are native USD from the API (currencyCode=USD); no currency conversion is applied. 2026-08-26 refresh sources: Retail Prices API (Foundry Models + Azure Kimi, swedencentral), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure (2026-08-20), https://learn.microsoft.com/en-us/azure/foundry/how-to/fireworks/enable-fireworks-models (2026-08-07), https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-from-partners (2026-07-24). Retail 'Azure Kimi' placeholder meters 'Model 6'/'Model 7' (eff. 2026-08-01, inconsistent in/out values) are ignored until a named product appears. grok-4.6 is in the catalog (Preview) but has no Retail meter yet, so no row. MAI-Cyber-1-Flash has Retail 'MAI Models' meters (0.60/3.50, eff. 2026-08-01) but Microsoft states it is available only to verified defenders through MDASH (Foundry private preview, not a standalone API; https://microsoft.ai/models/mai-cyber-1-flash/) and it is absent from the Azure-sold catalog, so no row. 2026-09-08: fetched all 1,619 matching swedencentral Retail rows across OpenAI/Models/AI Foundry/Azure Kimi (two pages), checked current lifecycle and region catalogs. GPT-6 Astra is now listed, but no named meter: added unpriced Global and EU Data Zone rows. Six older Fireworks models are GA but PTU-only per the current Fireworks catalog: their lingering token meters are excluded. Added Kimi K3 at $3.30/$16.50 using named Retail meters and explicit pay-per-token availability. Existing GPT-5.6 Sol Azure rates remain $5/$30 Global ($5.50/$33 DZ), despite different first-party/Copilot rates; no cross-provider price substitution.",
   "models": [
     {
       "model_name": "GPT-5",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global; DataZone EU in/out 1.375/11.0"
+      "notes": "Global; DataZone EU in/out 1.375/11.0",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5 Inpt Glbl 1M Tokens",
+        "output": "GPT 5 outpt Glbl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5 Mini",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2.0,
+      "output_per_1m_usd": 2,
       "region": "global",
-      "notes": "Global; DataZone EU in/out 0.275/2.2"
+      "notes": "Global; DataZone EU in/out 0.275/2.2",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5 Mini Inpt Glbl 1M Tokens",
+        "output": "GPT 5 Mini outpt Glbl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5 Nano",
@@ -26,87 +36,142 @@
       "input_per_1m_usd": 0.05,
       "output_per_1m_usd": 0.4,
       "region": "global",
-      "notes": "Global; DataZone EU in/out 0.055/0.44"
+      "notes": "Global; DataZone EU in/out 0.055/0.44",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5 Nano Inpt Glbl 1M Tokens",
+        "output": "GPT 5 Nano outpt Glbl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5 Pro",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 15.0,
-      "output_per_1m_usd": 120.0,
+      "input_per_1m_usd": 15,
+      "output_per_1m_usd": 120,
       "region": "global",
-      "notes": "Global; reasoning pro tier"
+      "notes": "Global; reasoning pro tier",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "gpt 5 pro inp glbl Tokens",
+        "output": "gpt 5 pro out glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-5 Codex",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "gpt-5-codex-inp-glbl Tokens",
+        "output": "gpt-5-codex-out-glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-5.1",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global; DataZone EU in/out 1.375/11.0"
+      "notes": "Global; DataZone EU in/out 1.375/11.0",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5.1 inp Gl 1M Tokens",
+        "output": "GPT 5.1 opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.1 Codex",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.1 codex inp Gl 1M Tokens",
+        "output": "5.1 codex opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.1 Codex Mini",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 2.0,
+      "output_per_1m_usd": 2,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.1 codex mini inp Gl 1M Tokens",
+        "output": "5.1 codex mini opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.1 Codex Max",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.1 codex max inp Gl 1M Tokens",
+        "output": "5.1 codex max opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.2",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
-      "output_per_1m_usd": 14.0,
+      "output_per_1m_usd": 14,
       "region": "global",
-      "notes": "Global. DZ meter is $1.925/$15.40, but GPT-5.2 is not listed in the current Europe Data Zone availability table; no EU-hosted row is created."
+      "notes": "Global. DZ meter is $1.925/$15.40, but GPT-5.2 is not listed in the current Europe Data Zone availability table; no EU-hosted row is created.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5.2 inp Gl 1M Tokens",
+        "output": "GPT 5.2 opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.2 Codex",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
-      "output_per_1m_usd": 14.0,
+      "output_per_1m_usd": 14,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.2 codex inp Gl 1M Tokens",
+        "output": "5.2 codex opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.3 Codex",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.75,
-      "output_per_1m_usd": 14.0,
+      "output_per_1m_usd": 14,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.3 codex inp Gl 1M Tokens",
+        "output": "5.3 codex opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.4",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.5,
-      "output_per_1m_usd": 15.0,
+      "output_per_1m_usd": 15,
       "region": "global",
-      "notes": "Global; DataZone EU in/out 2.75/16.5"
+      "notes": "Global; DataZone EU in/out 2.75/16.5",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.4 inp Gl 1M Tokens",
+        "output": "5.4 opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.4 Mini",
@@ -114,7 +179,12 @@
       "input_per_1m_usd": 0.75,
       "output_per_1m_usd": 4.5,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.4 mini Inp Gl 1M Tokens",
+        "output": "5.4 mini Opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.4 Nano",
@@ -122,31 +192,51 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 1.25,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.4 nano Inp Gl 1M Tokens",
+        "output": "5.4 nano Opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.4 Pro",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 30.0,
-      "output_per_1m_usd": 180.0,
+      "input_per_1m_usd": 30,
+      "output_per_1m_usd": 180,
       "region": "global",
-      "notes": "Global; reasoning pro tier"
+      "notes": "Global; reasoning pro tier",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.4 pro inp Gl 1M Tokens",
+        "output": "5.4 pro opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.5 (short context)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 30.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 30,
       "region": "global",
-      "notes": "Global; default short-context tier"
+      "notes": "Global; default short-context tier",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.5 ShortCo inp Gl 1M Tokens",
+        "output": "5.5 ShortCo opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.5 (long context)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 10.0,
-      "output_per_1m_usd": 45.0,
+      "input_per_1m_usd": 10,
+      "output_per_1m_usd": 45,
       "region": "global",
-      "notes": "Global; long-context tier"
+      "notes": "Global; long-context tier",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.5 LongCo inp Gl 1M Tokens",
+        "output": "5.5 LongCo opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.6 Luna",
@@ -155,33 +245,53 @@
       "output_per_1m_usd": 1.2,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Active GA model version 2026-07-09. Retail API '5.6 luna ShortCo Inp/Opt Std Gl' meters (eff. 2026-08-01): Global 0.20/1.20 (DZ 0.22/1.32). Default short-context tier; long-context Global in/out 0.40/1.80; cached short-context input 0.02. Long-context/cached figures corrected 2026-08-26 (previously 2.00/9.00 and 0.10)."
+      "notes": "Active GA model version 2026-07-09. Retail API '5.6 luna ShortCo Inp/Opt Std Gl' meters (eff. 2026-08-01): Global 0.20/1.20 (DZ 0.22/1.32). Default short-context tier; long-context Global in/out 0.40/1.80; cached short-context input 0.02. Long-context/cached figures corrected 2026-08-26 (previously 2.00/9.00 and 0.10).",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.6 luna ShortCo Inp Std Gl 1M Tokens",
+        "output": "5.6 luna ShortCo Opt Std Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.6 Sol",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 30.0,
+      "input_per_1m_usd": 4,
+      "output_per_1m_usd": 20,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Active GA model version 2026-07-09. Standard token meters published effective 2026-07-01 ('5.6 sol ShortCo Inp/Opt Std Gl'). Default short-context tier; long-context Global in/out 10.00/45.00; cached short-context input 0.50."
+      "notes": "Active GA model version 2026-07-09. Re-priced by Microsoft effective 2026-09-01 (was 5.00/30.00; Retail meters 5.6 sol ShortCo Inp/Opt Std Gl, read 2026-09-14). Default short-context tier; long-context Global in/out 8.00/30.00 (5.6 sol LongCo Std Gl). The cached-input price was not re-read.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.6 sol ShortCo Inp Std Gl 1M Tokens",
+        "output": "5.6 sol ShortCo Opt Std Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.6 Terra",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 2.0,
-      "output_per_1m_usd": 12.0,
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 12,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Active GA model version 2026-07-09. Retail API '5.6 terra ShortCo Inp/Opt Std Gl' meters (eff. 2026-08-01): Global 2.00/12.00 (DZ 2.20/13.20). Default short-context tier; long-context Global in/out 4.00/18.00; cached short-context input 0.20. Long-context/cached figures corrected 2026-08-26 (previously 5.00/22.50 and 0.25)."
+      "notes": "Active GA model version 2026-07-09. Retail API '5.6 terra ShortCo Inp/Opt Std Gl' meters (eff. 2026-08-01): Global 2.00/12.00 (DZ 2.20/13.20). Default short-context tier; long-context Global in/out 4.00/18.00; cached short-context input 0.20. Long-context/cached figures corrected 2026-08-26 (previously 5.00/22.50 and 0.25).",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.6 terra ShortCo Inp Std Gl 1M Tokens",
+        "output": "5.6 terra ShortCo Opt Std Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-chat-latest",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 30.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 30,
       "region": "global",
-      "notes": "Global; rolling chat-latest, current documented model version 2026-08-06 (Preview, retires 2026-12-02). Retail meters 'chat-latest 08062026' Global 5/30 (DZ 6/36, cached 0.50)."
+      "notes": "Global; rolling chat-latest, current documented model version 2026-08-06 (Preview, retires 2026-12-02). Retail meters 'chat-latest 08062026' Global 5/30 (DZ 6/36, cached 0.50).",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "chat-latest 08062026 inp Gl 1M Tokens",
+        "output": "chat-latest 08062026 opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "gpt-oss-120B",
@@ -189,7 +299,12 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "global",
-      "notes": "Global; open-weight"
+      "notes": "Global; open-weight",
+      "retail_meters": {
+        "product": "Azure OpenAI OSS Models",
+        "input": "gpt-oss-120B Inp glbl Tokens",
+        "output": "gpt-oss-120B Outp glbl Tokens"
+      }
     },
     {
       "model_name": "o4-mini",
@@ -197,39 +312,64 @@
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 4.4,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI Reasoning",
+        "input": "o4-mini 0416 Inp glbl Tokens",
+        "output": "o4-mini 0416 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "codex-mini",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 6.0,
+      "output_per_1m_usd": 6,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure OpenAI Reasoning",
+        "input": "codex mini inp glbl Tokens",
+        "output": "codex mini out glbl Tokens"
+      }
     },
     {
       "model_name": "o3-deep-research",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 10.0,
-      "output_per_1m_usd": 40.0,
+      "input_per_1m_usd": 10,
+      "output_per_1m_usd": 40,
       "region": "global",
-      "notes": "Global; deep research"
+      "notes": "Global; deep research",
+      "retail_meters": {
+        "product": "Azure OpenAI Reasoning",
+        "input": "o3-deep research 0626-inp-glbl 1M Tokens",
+        "output": "o3-deep research 0626-out-glbl 1M Tokens"
+      }
     },
     {
       "model_name": "o3",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 2.0,
-      "output_per_1m_usd": 8.0,
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 8,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o3 0416 Inp glbl Tokens",
+        "output": "o3 0416 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "o3-pro",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 20.0,
-      "output_per_1m_usd": 80.0,
+      "input_per_1m_usd": 20,
+      "output_per_1m_usd": 80,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o3-pro Inp glbl Tokens",
+        "output": "o3-pro Outp glbl Tokens"
+      }
     },
     {
       "model_name": "o3-mini",
@@ -237,15 +377,25 @@
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 4.4,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o3 mini 0131 input glbl Tokens",
+        "output": "o3 mini 0131 output glbl Tokens"
+      }
     },
     {
       "model_name": "o1",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 15.0,
-      "output_per_1m_usd": 60.0,
+      "input_per_1m_usd": 15,
+      "output_per_1m_usd": 60,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o1 1217 Inp glbl Tokens",
+        "output": "o1 1217 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "o1-mini",
@@ -253,23 +403,38 @@
       "input_per_1m_usd": 1.1,
       "output_per_1m_usd": 4.4,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o1 mini input glbl Tokens",
+        "output": "o1 mini output glbl Tokens"
+      }
     },
     {
       "model_name": "o1-pro",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 150.0,
-      "output_per_1m_usd": 600.0,
+      "input_per_1m_usd": 150,
+      "output_per_1m_usd": 600,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o1-pro Inp glbl Tokens",
+        "output": "o1-pro Outp glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-4.1",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 2.0,
-      "output_per_1m_usd": 8.0,
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 8,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4.1 Inp glbl Tokens",
+        "output": "gpt 4.1 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-4.1 Mini",
@@ -277,7 +442,12 @@
       "input_per_1m_usd": 0.4,
       "output_per_1m_usd": 1.6,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4.1 mini Inp glbl Tokens",
+        "output": "gpt 4.1 mini Outp glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-4.1 Nano",
@@ -285,15 +455,25 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.4,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4.1 nano Inp glbl Tokens",
+        "output": "gpt 4.1 nano Outp glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-4o (2024-11-20)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.5,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4o 1120 Inp glbl Tokens",
+        "output": "gpt 4o 1120 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "GPT-4o mini",
@@ -301,7 +481,12 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt-4o-mini-0718-Inp-glbl Tokens",
+        "output": "gpt-4o-mini-0718-Outp-glbl Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V4 Pro",
@@ -312,7 +497,12 @@
       "route_type": "azure_direct",
       "eu_hosted": false,
       "eu_policy_equivalent": true,
-      "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee."
+      "notes": "Azure Direct Global deployment; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee.",
+      "retail_meters": {
+        "product": "Azure Deepseek Models",
+        "input": "V4 Pro Inp glbl Tokens",
+        "output": "V4 Pro Outp glbl Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V4 Flash",
@@ -320,7 +510,12 @@
       "input_per_1m_usd": 0.19,
       "output_per_1m_usd": 0.51,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Deepseek Models",
+        "input": "V4 Flash Inp glbl Tokens",
+        "output": "V4 Flash Outp glbl Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V3.2",
@@ -328,7 +523,12 @@
       "input_per_1m_usd": 0.58,
       "output_per_1m_usd": 1.68,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Deepseek Models",
+        "input": "V3.2 Inp glbl Tokens",
+        "output": "V3.2 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V3.2 Speciale",
@@ -336,7 +536,12 @@
       "input_per_1m_usd": 0.58,
       "output_per_1m_usd": 1.68,
       "region": "global",
-      "notes": "Azure Direct Global standard token meter. A $0.64/$1.85 DZ meter exists, but the current Europe Data Zone table does not list this model; no EU-hosted offer is inferred from the meter alone."
+      "notes": "Azure Direct Global standard token meter. A $0.64/$1.85 DZ meter exists, but the current Europe Data Zone table does not list this model; no EU-hosted offer is inferred from the meter alone.",
+      "retail_meters": {
+        "product": "Azure Deepseek Models",
+        "input": "V3.2 SP Inp glbl Tokens",
+        "output": "V3.2 SP Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Grok 4.3",
@@ -344,7 +549,12 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Global. A $1.375/$2.75 DZ meter exists, but the current Europe Data Zone table does not list Grok; no EU-hosted offer is inferred from the meter alone. | 2026-07-30: Retail API meter is labeled \"Grok 4.2\" at identical price; catalog/blog call the product Grok 4.3. Kept as 4.3 (meter labels lag product names)."
+      "notes": "Global. A $1.375/$2.75 DZ meter exists, but the current Europe Data Zone table does not list Grok; no EU-hosted offer is inferred from the meter alone. | 2026-07-30: Retail API meter is labeled \"Grok 4.2\" at identical price; catalog/blog call the product Grok 4.3. Kept as 4.3 (meter labels lag product names).",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "4.3 Inp Glbl Tokens",
+        "output": "4.3 Outp Glbl Tokens"
+      }
     },
     {
       "model_name": "Grok 4.20 Reasoning",
@@ -352,7 +562,12 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Azure Direct Global standard token meter. Distinct reasoning deployment. The current Europe Data Zone table does not list Grok."
+      "notes": "Azure Direct Global standard token meter. Distinct reasoning deployment. The current Europe Data Zone table does not list Grok.",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "Grok 4.2 Inp glbl Tokens",
+        "output": "Grok 4.2 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Grok 4.20 Non-Reasoning",
@@ -360,7 +575,12 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Azure Direct Global standard token meter. Distinct non-reasoning deployment. The current Europe Data Zone table does not list Grok."
+      "notes": "Azure Direct Global standard token meter. Distinct non-reasoning deployment. The current Europe Data Zone table does not list Grok.",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "Grok 4.2 Inp glbl Tokens",
+        "output": "Grok 4.2 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Grok 4.1 Fast Reasoning",
@@ -368,15 +588,25 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.5,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "Grok 4.1 Inp Glbl Tokens",
+        "output": "Grok 4.1 Outp Glbl Tokens"
+      }
     },
     {
       "model_name": "Grok 4",
       "provider_org": "xAI",
-      "input_per_1m_usd": 3.0,
-      "output_per_1m_usd": 15.0,
+      "input_per_1m_usd": 3,
+      "output_per_1m_usd": 15,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "Grok-4 Inp glbl Tokens",
+        "output": "Grok-4 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Grok 4.1 Fast Non-Reasoning",
@@ -384,7 +614,12 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.5,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "Grok 4.1 Inp Glbl Tokens",
+        "output": "Grok 4.1 Outp Glbl Tokens"
+      }
     },
     {
       "model_name": "Grok Code Fast 1",
@@ -392,7 +627,12 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 1.5,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure Grok Models",
+        "input": "Code Fast 1 Inp glbl Tokens",
+        "output": "Code Fast 1 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Llama 3.3 70B",
@@ -400,15 +640,25 @@
       "input_per_1m_usd": 0.71,
       "output_per_1m_usd": 0.71,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Llama Models",
+        "input": "Llama 3.3 70B Inp glbl Tokens",
+        "output": "Llama 3.3 70B Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Llama 4 Maverick 17B",
       "provider_org": "Meta",
       "input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 1.0,
+      "output_per_1m_usd": 1,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Llama Models",
+        "input": "Llama 4 Maverick 17B Inp glbl Tokens",
+        "output": "Llama 4 Maverick 17B Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Mistral Large 3",
@@ -416,7 +666,12 @@
       "input_per_1m_usd": 0.5,
       "output_per_1m_usd": 1.5,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Mistral Models",
+        "input": "Large 3 Inp glbl Tokens",
+        "output": "Large 3 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Mistral Medium 3.5",
@@ -424,7 +679,12 @@
       "input_per_1m_usd": 1.5,
       "output_per_1m_usd": 7.5,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Azure Mistral Models",
+        "input": "MM3.5 Inp glbl Tokens",
+        "output": "MM3.5 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Codestral",
@@ -432,15 +692,25 @@
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 0.9,
       "region": "global",
-      "notes": "Global; coding"
+      "notes": "Global; coding",
+      "retail_meters": {
+        "product": "Azure Mistral Models",
+        "input": "Codestral Inp glbl Tokens",
+        "output": "Codestral Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Cohere Command A",
       "provider_org": "Cohere",
       "input_per_1m_usd": 2.5,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
-      "notes": "Global"
+      "notes": "Global",
+      "retail_meters": {
+        "product": "Cohere Models",
+        "input": "Command A Inp Glbl Tokens",
+        "output": "Command A Outp Glbl Tokens"
+      }
     },
     {
       "model_name": "Cohere Command A Plus",
@@ -448,16 +718,26 @@
       "input_per_1m_usd": 0.8,
       "output_per_1m_usd": 3.2,
       "region": "global",
-      "notes": "Azure Direct Global standard token meter, effective 2026-07-01. A $0.88/$3.52 DZ meter exists, but the current Europe Data Zone table does not list Command A Plus. Catalog id Cohere-command-a-plus-05-2026, Preview, retirement listed 2026-10-13."
+      "notes": "Azure Direct Global standard token meter, effective 2026-07-01. A $0.88/$3.52 DZ meter exists, but the current Europe Data Zone table does not list Command A Plus. Catalog id Cohere-command-a-plus-05-2026, Preview, retirement listed 2026-10-13.",
+      "retail_meters": {
+        "product": "Cohere Models",
+        "input": "Command A Plus Inp Glbl 1M Tokens",
+        "output": "Command A Plus Outp Glbl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5 (EU Data Zone)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.375,
-      "output_per_1m_usd": 11.0,
+      "output_per_1m_usd": 11,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5 Inpt DZone 1M Tokens",
+        "output": "GPT 5 outpt DZone 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5 Mini (EU Data Zone)",
@@ -466,7 +746,12 @@
       "output_per_1m_usd": 2.2,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5 Mini Inpt DZone 1M Tokens",
+        "output": "GPT 5 Mini outpt DZone 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5 Nano (EU Data Zone)",
@@ -475,16 +760,26 @@
       "output_per_1m_usd": 0.44,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5 Nano Inpt DZone 1M Tokens",
+        "output": "GPT 5 Nano outpt DZone 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.1 (EU Data Zone)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 1.375,
-      "output_per_1m_usd": 11.0,
+      "output_per_1m_usd": 11,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5.1 inp Dz 1M Tokens",
+        "output": "GPT 5.1 opt Dz 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.4 (EU Data Zone)",
@@ -493,25 +788,40 @@
       "output_per_1m_usd": 16.5,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.4 inp Dz 1M Tokens",
+        "output": "5.4 opt Dz 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.5 (short context) (EU Data Zone)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 5.5,
-      "output_per_1m_usd": 33.0,
+      "output_per_1m_usd": 33,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone default short-context offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone default short-context offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.5 ShortCo inp Dz 1M Tokens",
+        "output": "5.5 ShortCo opt Dz 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.5 (long context) (EU Data Zone)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 11.0,
+      "input_per_1m_usd": 11,
       "output_per_1m_usd": 49.5,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone long-context offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone long-context offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.5 LongCo inp Dz 1M Tokens",
+        "output": "5.5 LongCo opt Dz 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-4.1 (EU Data Zone)",
@@ -520,7 +830,12 @@
       "output_per_1m_usd": 8.8,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4.1 Inp Data Zone Tokens",
+        "output": "gpt 4.1 Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "GPT-4.1 Mini (EU Data Zone)",
@@ -529,7 +844,12 @@
       "output_per_1m_usd": 1.76,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4.1 mini Inp Data Zone Tokens",
+        "output": "gpt 4.1 mini Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "GPT-4.1 Nano (EU Data Zone)",
@@ -538,16 +858,26 @@
       "output_per_1m_usd": 0.44,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4.1 nano Inp Data Zone Tokens",
+        "output": "gpt 4.1 nano Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "GPT-4o (2024-11-20) (EU Data Zone)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 2.75,
-      "output_per_1m_usd": 11.0,
+      "output_per_1m_usd": 11,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4o 1120 Inp Data Zone Tokens",
+        "output": "gpt 4o 1120 Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "GPT-4o Mini (EU Data Zone)",
@@ -556,16 +886,26 @@
       "output_per_1m_usd": 0.66,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "gpt 4o mini 0718 Inp Data Zone Tokens",
+        "output": "gpt 4o mini 0718 Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "o1 (EU Data Zone)",
       "provider_org": "OpenAI",
       "input_per_1m_usd": 16.5,
-      "output_per_1m_usd": 66.0,
+      "output_per_1m_usd": 66,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o1 1217 Inp Data Zone Tokens",
+        "output": "o1 1217 Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "o3 (EU Data Zone)",
@@ -574,7 +914,12 @@
       "output_per_1m_usd": 8.8,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o3 0416 Inp Data Zone Tokens",
+        "output": "o3 0416 Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "o3-mini (EU Data Zone)",
@@ -583,7 +928,12 @@
       "output_per_1m_usd": 4.84,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI",
+        "input": "o3 mini 0131 input Data Zone Tokens",
+        "output": "o3 mini 0131 output Data Zone Tokens"
+      }
     },
     {
       "model_name": "o4-mini (EU Data Zone)",
@@ -592,7 +942,12 @@
       "output_per_1m_usd": 4.84,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure OpenAI Reasoning",
+        "input": "o4-mini 0416 Inp Data Zone Tokens",
+        "output": "o4-mini 0416 Outp Data Zone Tokens"
+      }
     },
     {
       "model_name": "Mistral Large 3 (EU Data Zone)",
@@ -601,7 +956,12 @@
       "output_per_1m_usd": 1.65,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure Mistral Models",
+        "input": "Large 3 Inp Dzone Tokens",
+        "output": "Large 3 Outp Dzone Tokens"
+      }
     },
     {
       "model_name": "Mistral Medium 3.5 (EU Data Zone)",
@@ -610,7 +970,12 @@
       "output_per_1m_usd": 8.25,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone.",
+      "retail_meters": {
+        "product": "Azure Mistral Models",
+        "input": "MM3.5 Inp DZ Tokens",
+        "output": "MM3.5 Outp DZ Tokens"
+      }
     },
     {
       "model_name": "GPT-5.6 Luna (EU Data Zone)",
@@ -619,16 +984,26 @@
       "output_per_1m_usd": 1.32,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Corrected 2026-08-26 from 1.10/6.60 to the Retail API '5.6 luna ShortCo Inp/Opt Std DZ' meters (eff. 2026-08-01): 0.22/1.32. Default short-context tier; long-context DZ in/out 0.44/1.98; cached short-context input 0.022."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Corrected 2026-08-26 from 1.10/6.60 to the Retail API '5.6 luna ShortCo Inp/Opt Std DZ' meters (eff. 2026-08-01): 0.22/1.32. Default short-context tier; long-context DZ in/out 0.44/1.98; cached short-context input 0.022.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.6 luna ShortCo Inp Std DZ 1M Tokens",
+        "output": "5.6 luna ShortCo Opt Std DZ 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.6 Sol (EU Data Zone)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 5.5,
-      "output_per_1m_usd": 33.0,
+      "input_per_1m_usd": 4.4,
+      "output_per_1m_usd": 22,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Standard token meters published effective 2026-07-01. Default short-context tier; long-context DZ in/out 11.00/49.50."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Re-priced by Microsoft effective 2026-09-01 (was 5.50/33.00; Retail meters 5.6 sol ShortCo Inp/Opt Std DZ, read 2026-09-14). Default short-context tier; long-context DZ in/out 8.80/33.00.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.6 sol ShortCo Inp Std DZ 1M Tokens",
+        "output": "5.6 sol ShortCo Opt Std DZ 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-5.6 Terra (EU Data Zone)",
@@ -637,7 +1012,12 @@
       "output_per_1m_usd": 13.2,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Corrected 2026-08-26 from 2.75/16.50 to the Retail API '5.6 terra ShortCo Inp/Opt Std DZ' meters (eff. 2026-08-01, labels no longer swapped): 2.20/13.20. Default short-context tier; long-context DZ in/out 4.40/19.80; cached short-context input 0.22."
+      "notes": "Azure Direct EU Data Zone offer; processing remains within the EU data zone. Corrected 2026-08-26 from 2.75/16.50 to the Retail API '5.6 terra ShortCo Inp/Opt Std DZ' meters (eff. 2026-08-01, labels no longer swapped): 2.20/13.20. Default short-context tier; long-context DZ in/out 4.40/19.80; cached short-context input 0.22.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "5.6 terra ShortCo Inp Std DZ 1M Tokens",
+        "output": "5.6 terra ShortCo Opt Std DZ 1M Tokens"
+      }
     },
     {
       "model_name": "Phi-4",
@@ -646,7 +1026,12 @@
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
       "eu_hosted": true,
-      "notes": "Regional (swedencentral); no Global tier"
+      "notes": "Regional (swedencentral); no Global tier",
+      "retail_meters": {
+        "product": "Azure Phi Models",
+        "input": "Phi-4-Input Tokens",
+        "output": "Phi-4-Output Tokens"
+      }
     },
     {
       "model_name": "Phi-4 Mini",
@@ -655,7 +1040,12 @@
       "output_per_1m_usd": 0.3,
       "region": "swedencentral",
       "eu_hosted": true,
-      "notes": "Regional (swedencentral)"
+      "notes": "Regional (swedencentral)",
+      "retail_meters": {
+        "product": "Azure Phi Models",
+        "input": "Phi-4-Mini-Input Tokens",
+        "output": "Phi-4-Mini-Output Tokens"
+      }
     },
     {
       "model_name": "Phi-4 Reasoning",
@@ -664,7 +1054,12 @@
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
       "eu_hosted": true,
-      "notes": "Regional (swedencentral); reasoning"
+      "notes": "Regional (swedencentral); reasoning",
+      "retail_meters": {
+        "product": "Azure Phi Models",
+        "input": "Phi-4-reasoning-Input Tokens",
+        "output": "Phi-4-reasoning-Output Tokens"
+      }
     },
     {
       "model_name": "Phi-4 Reasoning Plus",
@@ -673,7 +1068,12 @@
       "output_per_1m_usd": 0.5,
       "region": "swedencentral",
       "eu_hosted": true,
-      "notes": "Regional (swedencentral); reasoning"
+      "notes": "Regional (swedencentral); reasoning",
+      "retail_meters": {
+        "product": "Azure Phi Models",
+        "input": "Phi-4-reasoning-plus-input Tokens",
+        "output": "Phi-4-reasoning-plus-output Tokens"
+      }
     },
     {
       "model_name": "Phi-4 Mini Reasoning",
@@ -682,35 +1082,55 @@
       "output_per_1m_usd": 0.3,
       "region": "swedencentral",
       "eu_hosted": true,
-      "notes": "Regional (swedencentral); reasoning"
+      "notes": "Regional (swedencentral); reasoning",
+      "retail_meters": {
+        "product": "Azure Phi Models",
+        "input": "Phi-4-mini-reasoning-Input Tokens",
+        "output": "Phi-4-mini-reasoning-Output Tokens"
+      }
     },
     {
       "model_name": "Kimi K2.5 Thinking (Azure Direct)",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.6,
-      "output_per_1m_usd": 3.0,
+      "output_per_1m_usd": 3,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Native Azure Kimi product, Global deployment. Retail DZ meter is $0.66/$3.30; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.10/1M."
+      "notes": "Native Azure Kimi product, Global deployment. Retail DZ meter is $0.66/$3.30; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.10/1M.",
+      "retail_meters": {
+        "product": "Azure Kimi",
+        "input": "K2.5 Thinking Inp glbl Tokens",
+        "output": "K2.5 Thinking Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Kimi K2.6 Thinking (Azure Direct)",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.95,
-      "output_per_1m_usd": 4.0,
+      "output_per_1m_usd": 4,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Native Azure Kimi product, Global deployment. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.16/1M."
+      "notes": "Native Azure Kimi product, Global deployment. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.16/1M.",
+      "retail_meters": {
+        "product": "Azure Kimi",
+        "input": "K2.6 Thinking Inp glbl Tokens",
+        "output": "K2.6 Thinking Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Kimi K2.7 Code (Azure Direct)",
       "provider_org": "Moonshot AI",
       "input_per_1m_usd": 0.95,
-      "output_per_1m_usd": 4.0,
+      "output_per_1m_usd": 4,
       "region": "global",
       "eu_hosted": false,
       "eu_policy_equivalent": true,
-      "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M."
+      "notes": "Native Azure Kimi product, Global deployment, effective 2026-07-01; inference may occur outside the EU. Included by this application's EU filter under a company-specific legal/business equivalence policy; this is not a technical EU data-residency guarantee. Retail DZ meter is $1.045/$5.00; current Europe Data Zone deployment availability is not documented. Cached Global input is $0.19/1M.",
+      "retail_meters": {
+        "product": "Azure Kimi",
+        "input": "K2.7 Code Inp glbl Tokens",
+        "output": "K2.7 Code Outp glbl Tokens"
+      }
     },
     {
       "model_name": "Kimi K2.6 Thinking (Fireworks)",
@@ -719,7 +1139,12 @@
       "output_per_1m_usd": 4.4,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Azure Fireworks Models partner offer. Fireworks inference is available only in documented US deployment regions and is excluded from the Azure EU Data Boundary."
+      "notes": "Azure Fireworks Models partner offer. Fireworks inference is available only in documented US deployment regions and is excluded from the Azure EU Data Boundary.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW Kimi K2.6 Inp DZ Tokens",
+        "output": "FW Kimi K2.6 Outp DZ Tokens"
+      }
     },
     {
       "model_name": "Kimi K2.7 Code (Fireworks)",
@@ -728,7 +1153,12 @@
       "output_per_1m_usd": 4.4,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-07-01; cached input is $0.21/1M. US deployment only and excluded from the Azure EU Data Boundary."
+      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-07-01; cached input is $0.21/1M. US deployment only and excluded from the Azure EU Data Boundary.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW Kimi K2.7 Code Inp DZ Tokens",
+        "output": "FW Kimi K2.7 Code Opt DZ Tokens"
+      }
     },
     {
       "model_name": "GLM 5.2 (Fireworks)",
@@ -737,7 +1167,12 @@
       "output_per_1m_usd": 4.84,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-07-01; cached input is $0.15/1M. US deployment only and excluded from the Azure EU Data Boundary."
+      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-07-01; cached input is $0.15/1M. US deployment only and excluded from the Azure EU Data Boundary.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW GLM 5.2 Inp DZ Tokens",
+        "output": "FW GLM 5.2 Outp DZ Tokens"
+      }
     },
     {
       "model_name": "MiniMax M3 (Fireworks)",
@@ -746,7 +1181,12 @@
       "output_per_1m_usd": 1.32,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-06-01; cached input is $0.066/1M. US deployment only and excluded from the Azure EU Data Boundary. | Renamed 2026-07-31 (was \"MiniMax M2.7 (Fireworks)\"): Retail API has no M2.7 meter; the $0.33/$1.32 + cache $0.066 meters are \"FW MiniMax 3\" (effective 2026-06-01, M3 day-0 at M2.7 parity per Fireworks)."
+      "notes": "Azure Fireworks Models pay-per-token offer, effective 2026-06-01; cached input is $0.066/1M. US deployment only and excluded from the Azure EU Data Boundary. | Renamed 2026-07-31 (was \"MiniMax M2.7 (Fireworks)\"): Retail API has no M2.7 meter; the $0.33/$1.32 + cache $0.066 meters are \"FW MiniMax 3\" (effective 2026-06-01, M3 day-0 at M2.7 parity per Fireworks).",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW MiniMax 3 Inp DZ Tokens",
+        "output": "FW MiniMax 3 Outp DZ Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V4 Pro (Fireworks)",
@@ -755,13 +1195,18 @@
       "output_per_1m_usd": 3.828,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Fireworks partner alternative to the Azure Direct Global offer. US deployment only and excluded from the Azure EU Data Boundary."
+      "notes": "Fireworks partner alternative to the Azure Direct Global offer. US deployment only and excluded from the Azure EU Data Boundary.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW DeepSeek-V4-Pro Inp DZ Tokens",
+        "output": "FW DeepSeek-V4-Pro Outp DZ Tokens"
+      }
     },
     {
       "model_name": "Claude Opus 5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 25.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 25,
       "region": "us",
       "notes": "GA on Microsoft Foundry (Global Standard / DZ-US only, NO EU deployment). Billed via Azure Marketplace Claude Consumption Units (100 CCU = $1), ~$5/$25 — not in the Retail Prices API."
     },
@@ -771,15 +1216,25 @@
       "input_per_1m_usd": 3.3,
       "output_per_1m_usd": 16.5,
       "region": "us",
-      "notes": "Via Fireworks on Foundry (US-served, outside EU Data Boundary). 2026-08-26: Retail API 'FW Kimi K3 Inp/Opt DZ' meters now published (eff. 2026-08-01) at 3.30/16.50, cached 0.33 — confirms the launch-blog price."
+      "notes": "Via Fireworks on Foundry (US-served, outside EU Data Boundary). 2026-08-26: Retail API 'FW Kimi K3 Inp/Opt DZ' meters now published (eff. 2026-08-01) at 3.30/16.50, cached 0.33 — confirms the launch-blog price.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW Kimi K3 Inp DZ Tokens",
+        "output": "FW Kimi K3 Opt DZ Tokens"
+      }
     },
     {
       "model_name": "GPT-5.2 Pro",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": 21.0,
-      "output_per_1m_usd": 168.0,
+      "input_per_1m_usd": 21,
+      "output_per_1m_usd": 168,
       "region": "swedencentral",
-      "notes": "Global $21/$168; DZ $23.10/$184.80. Retail API meters since 2025-12."
+      "notes": "Global $21/$168; DZ $23.10/$184.80. Retail API meters since 2025-12.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT5",
+        "input": "GPT 5.2 pro inp Gl 1M Tokens",
+        "output": "GPT 5.2 pro opt Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GLM 5.2 Fast (Fireworks)",
@@ -787,7 +1242,12 @@
       "input_per_1m_usd": 2.31,
       "output_per_1m_usd": 7.26,
       "region": "us",
-      "notes": "Added 2026-08-26: Fireworks DZ meters eff. 08-01, cache 0.231; US-served"
+      "notes": "Added 2026-08-26: Fireworks DZ meters eff. 08-01, cache 0.231; US-served",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW GLM 5.2 Fast Inp DZ Tokens",
+        "output": "FW GLM 5.2 Fast Outp DZ Tokens"
+      }
     },
     {
       "model_name": "Nemotron 3 Ultra (Fireworks)",
@@ -795,7 +1255,12 @@
       "input_per_1m_usd": 0.66,
       "output_per_1m_usd": 2.64,
       "region": "us",
-      "notes": "Added 2026-08-26: Fireworks DZ meters eff. 08-01"
+      "notes": "Added 2026-08-26: Fireworks DZ meters eff. 08-01",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW NVIDIA Nemotron 3U Inp DZ Tokens",
+        "output": "FW NVIDIA Nemotron 3U Opt DZ Tokens"
+      }
     },
     {
       "model_name": "Nemotron 3.5 Lightning (Fireworks)",
@@ -803,7 +1268,12 @@
       "input_per_1m_usd": 0.06,
       "output_per_1m_usd": 0.22,
       "region": "us",
-      "notes": "Added 2026-08-26: Fireworks DZ meters eff. 08-01"
+      "notes": "Added 2026-08-26: Fireworks DZ meters eff. 08-01",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW NVIDIA Nemotron 3.5 LN In DZ Tokens",
+        "output": "FW NVIDIA Nemotron 3.5 LN Opt DZ Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V4 Flash 0731",
@@ -812,7 +1282,12 @@
       "output_per_1m_usd": 1.32,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Added 2026-08-26. Azure Direct Global, catalog id DeepSeek-V4-Flash-0731 (version 2026-07-31, Preview, retirement 2026-12-03; listed as replacement for DeepSeek-V4-Flash). Retail meters 'V4 Flash 0731 Inp/Outp glbl' eff. 2026-08-01: 0.44/1.32 (DZ 0.484/1.452)."
+      "notes": "Added 2026-08-26. Azure Direct Global, catalog id DeepSeek-V4-Flash-0731 (version 2026-07-31, Preview, retirement 2026-12-03; listed as replacement for DeepSeek-V4-Flash). Retail meters 'V4 Flash 0731 Inp/Outp glbl' eff. 2026-08-01: 0.44/1.32 (DZ 0.484/1.452).",
+      "retail_meters": {
+        "product": "Azure Deepseek Models",
+        "input": "V4 Flash 0731 Inp glbl Tokens",
+        "output": "V4 Flash 0731 Outp glbl Tokens"
+      }
     },
     {
       "model_name": "DeepSeek-V4 Flash (Fireworks)",
@@ -821,7 +1296,12 @@
       "output_per_1m_usd": 0.31,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Added 2026-08-26. Azure Fireworks Models pay-per-token DZ meters 'FW Deepseek-v4-Flash In/Opt DZ' eff. 2026-08-01: 0.15/0.31, cached input 0.03. US deployment only, excluded from the Azure EU Data Boundary. (Fireworks catalog doc of 2026-08-07 still lists FW-DeepSeek-V4-Flash as PTU-only; meters indicate pay-per-token is now offered.)"
+      "notes": "Added 2026-08-26. Azure Fireworks Models pay-per-token DZ meters 'FW Deepseek-v4-Flash In/Opt DZ' eff. 2026-08-01: 0.15/0.31, cached input 0.03. US deployment only, excluded from the Azure EU Data Boundary. (Fireworks catalog doc of 2026-08-07 still lists FW-DeepSeek-V4-Flash as PTU-only; meters indicate pay-per-token is now offered.)",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW Deepseek-v4-Flash In DZ Tokens",
+        "output": "FW Deepseek-v4-Flash Opt DZ Tokens"
+      }
     },
     {
       "model_name": "Inkling (Fireworks)",
@@ -830,34 +1310,54 @@
       "output_per_1m_usd": 4.46,
       "region": "us",
       "eu_hosted": false,
-      "notes": "Added 2026-08-26 on the strength of Retail meters only: Azure Fireworks Models pay-per-token DZ meters 'FW Inkling In/Opt DZ' eff. 2026-08-01: 1.10/4.46, cached input 0.19. Not yet listed in the Fireworks-on-Foundry catalog doc (updated 2026-08-07) nor the model-retirement schedule (2026-08-19); treat as meter-only until a catalog entry appears. Open-weight 975B MoE (41B active) from Thinking Machines Lab, released 2026-07-15. US deployment only, excluded from the Azure EU Data Boundary."
+      "notes": "Added 2026-08-26 on the strength of Retail meters only: Azure Fireworks Models pay-per-token DZ meters 'FW Inkling In/Opt DZ' eff. 2026-08-01: 1.10/4.46, cached input 0.19. Not yet listed in the Fireworks-on-Foundry catalog doc (updated 2026-08-07) nor the model-retirement schedule (2026-08-19); treat as meter-only until a catalog entry appears. Open-weight 975B MoE (41B active) from Thinking Machines Lab, released 2026-07-15. US deployment only, excluded from the Azure EU Data Boundary.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW Inkling In DZ Tokens",
+        "output": "FW Inkling Opt DZ Tokens"
+      }
     },
     {
       "model_name": "MAI-Thinking-1",
       "provider_org": "Microsoft",
-      "input_per_1m_usd": 2.0,
-      "output_per_1m_usd": 8.0,
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 8,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Added 2026-08-26. Microsoft first-party reasoning model, Preview, Global Standard (256K context). Retail 'MAI Models' meters 'MAI-Thinking-1 Inp/Opt glbl 1M Tokens' eff. 2026-08-01: 2.00/8.00, cached input 0.20. No DZ meter."
+      "notes": "Added 2026-08-26. Microsoft first-party reasoning model, Preview, Global Standard (256K context). Retail 'MAI Models' meters 'MAI-Thinking-1 Inp/Opt glbl 1M Tokens' eff. 2026-08-01: 2.00/8.00, cached input 0.20. No DZ meter.",
+      "retail_meters": {
+        "product": "MAI Models",
+        "input": "MAI-Thinking-1 Inp glbl 1M Tokens",
+        "output": "MAI-Thinking-1 Opt glbl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-6 Astra",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 10,
+      "output_per_1m_usd": 50,
       "region": "global",
       "eu_hosted": false,
-      "notes": "2026-09-08: GPT-6 Astra (2026-09-03) listed in official current model and Global/Data Zone Standard region catalogs. No named Astra token meter in the checked Sweden-central Retail API pages; unpriced pending authoritative Azure rate. OpenRouter Azure routes remain separate offers with their own prices."
+      "notes": "GPT-6 Astra (2026-09-03) listed in official current model and Global/Data Zone Standard region catalogs (checked 2026-09-08). Named Retail meters 6-astra ShortCo Inp/Opt Std Gl appeared after that check, effective 2026-09-01, and price this row since 2026-09-14. Default short-context tier; long-context Global in/out 20.00/75.00. OpenRouter Azure routes remain separate offers with their own prices.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT6",
+        "input": "6-astra ShortCo Inp Std Gl 1M Tokens",
+        "output": "6-astra ShortCo Opt Std Gl 1M Tokens"
+      }
     },
     {
       "model_name": "GPT-6 Astra (EU Data Zone)",
       "provider_org": "OpenAI",
-      "input_per_1m_usd": null,
-      "output_per_1m_usd": null,
+      "input_per_1m_usd": 12,
+      "output_per_1m_usd": 60,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "2026-09-08: GPT-6 Astra (2026-09-03) listed in official current model and Global/Data Zone Standard region catalogs. No named Astra token meter in the checked Sweden-central Retail API pages; unpriced pending authoritative Azure rate. OpenRouter Azure routes remain separate offers with their own prices."
+      "notes": "GPT-6 Astra (2026-09-03) listed in official current model and Global/Data Zone Standard region catalogs (checked 2026-09-08). Named Retail meters 6-astra ShortCo Inp/Opt Std DZ appeared after that check, effective 2026-09-01, and price this row since 2026-09-14. Default short-context tier; long-context DZ in/out 24.00/90.00.",
+      "retail_meters": {
+        "product": "Azure OpenAI GPT6",
+        "input": "6-astra ShortCo Inp Std DZ 1M Tokens",
+        "output": "6-astra ShortCo Opt Std DZ 1M Tokens"
+      }
     },
     {
       "model_name": "Kimi K3 (Fireworks)",
@@ -866,7 +1366,86 @@
       "output_per_1m_usd": 16.5,
       "region": "us",
       "eu_hosted": false,
-      "notes": "2026-09-08: official Fireworks catalog explicitly supports pay-per-token for FW-Kimi-K3. Named Retail meters FW Kimi K3 Inp/Opt DZ Tokens are $0.0033/$0.0165 per 1K. US hosting remains separate from DZ billing."
+      "notes": "2026-09-08: official Fireworks catalog explicitly supports pay-per-token for FW-Kimi-K3. Named Retail meters FW Kimi K3 Inp/Opt DZ Tokens are $0.0033/$0.0165 per 1K. US hosting remains separate from DZ billing.",
+      "retail_meters": {
+        "product": "Azure Fireworks Models",
+        "input": "FW Kimi K3 Inp DZ Tokens",
+        "output": "FW Kimi K3 Opt DZ Tokens"
+      }
+    }
+  ],
+  "lifecycle_checked_at": "2026-09-08",
+  "meters_checked_at": "2026-09-14",
+  "retail_collection": "scripts/fetch-azure-foundry-catalog.mjs (2026-09-14): 12 pages, 8590 Retail items across swedencentral, westeurope, francecentral, germanywestcentral, polandcentral, spaincentral; each row's named Standard input/output meters re-read (1K meters x 1000), first billing region by that order. Rows are never added by the script; lifecycle and Europe Data Zone availability keep lifecycle_checked_at.",
+  "response_sha256": "3c1dc5b5c92ce0dc772f3473e757d4dbee2470519ade521b509247430b98d143",
+  "diff": {
+    "removed": [],
+    "price_changed": [],
+    "suspicious": [],
+    "unmetered": [
+      "Claude Opus 5"
+    ],
+    "new_meters": [
+      "Azure Fireworks Models · FW GLM 5.3 DZ Inp Tokens = 2.1 (effective 2026-09-01)",
+      "Azure Fireworks Models · FW GLM 5.3 DZ Opt Tokens = 6.6 (effective 2026-09-01)",
+      "Azure Fireworks Models · FW GLM 5.3 Inp Tokens = 1.75 (effective 2026-09-01)",
+      "Azure Fireworks Models · FW GLM 5.3 Opt Tokens = 5.5 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Inp DZ L Tokens = 4.8 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Inp DZ Tokens = 2.4 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Inp Glbl L Tokens = 4 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Inp Glbl Tokens = 2 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Outp DZ L Tokens = 14.4 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Outp DZ Tokens = 7.2 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Outp Glbl L Tokens = 12 (effective 2026-09-01)",
+      "Azure Grok Models · 4.6 Outp Glbl Tokens = 6 (effective 2026-09-01)"
+    ],
+    "products": [
+      "Azure Deepseek Models",
+      "Azure Fireworks Models",
+      "Azure Grok Models",
+      "Azure Kimi",
+      "Azure Llama Models",
+      "Azure Mistral Models",
+      "Azure OpenAI",
+      "Azure OpenAI GPT5",
+      "Azure OpenAI GPT6",
+      "Azure OpenAI OSS Models",
+      "Azure OpenAI Reasoning",
+      "Azure Phi Models",
+      "Cohere Models",
+      "MAI Models"
+    ]
+  },
+  "ignored_meter_bases": [
+    {
+      "product": "Azure Kimi",
+      "base": "Model 6",
+      "reason": "Unnamed placeholder meters (effective 2026-08-01) with inconsistent input/output values; ignored until a named product appears (2026-08-26 audit)."
+    },
+    {
+      "product": "Azure Kimi",
+      "base": "Model 7",
+      "reason": "Unnamed placeholder meters (effective 2026-08-01) with inconsistent input/output values; ignored until a named product appears (2026-08-26 audit)."
+    },
+    {
+      "product": "MAI Models",
+      "base": "MAI-Cyber-1-Flash",
+      "reason": "Available only to verified defenders through MDASH, not a standalone API and absent from the Azure-sold catalog (2026-08-26 audit)."
+    },
+    {
+      "product": "Azure OpenAI GPT5",
+      "base": "chat-latest 07012026",
+      "reason": "Superseded chat-latest snapshot; GPT-chat-latest carries the current 08062026 version."
+    },
+    {
+      "product": "Azure OpenAI GPT5",
+      "base": "chat-latest 05282026",
+      "reason": "Superseded chat-latest snapshot; GPT-chat-latest carries the current 08062026 version."
+    },
+    {
+      "product": "Azure OpenAI GPT5",
+      "base": "chat-latest 05052026",
+      "reason": "Superseded chat-latest snapshot; GPT-chat-latest carries the current 08062026 version."
     }
   ]
 }

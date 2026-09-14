@@ -1,5 +1,22 @@
 # Azure AI Foundry pricing — how to re-fetch / update
 
+> **Executable collector since 2026-09-14:** `node scripts/fetch-azure-foundry-catalog.mjs` (daily,
+> non-fatal step `fetch-azure-foundry-catalog`). Each curated row names its exact Retail meters in
+> `retail_meters` (`product`, `input`, `output`); the script re-reads only those meters over the six EU
+> billing regions (first region by the preference order below), converts 1K meters to per-1M, and
+> writes `collected_at` / `meters_checked_at`. It fails closed on an empty response, an unreadable
+> price or when fewer than half of the mapped rows still find their meters. A row whose input meter
+> exceeds its output meter keeps its previous prices (`diff.suspicious`, the swapped-label case). It
+> **never adds rows**: unmapped Standard token meters effective within the last 90 days are listed in
+> `diff.new_meters` for a human, because deployability and Europe Data Zone availability need the
+> lifecycle and region documentation (`lifecycle_checked_at`, currently 2026-09-08). Claude Opus 5 has
+> no Retail token meter (Marketplace CCU billing) and is carried unchanged (`diff.unmetered`).
+>
+> **2026-09-14 first run:** all 101 mapped rows found their meters. Real changes: GPT-5.6 Sol re-priced
+> effective 2026-09-01 (Global 5.00/30.00 → 4.00/20.00, DZ 5.50/33.00 → 4.40/22.00); GPT-6 Astra now
+> has named Standard meters (Global 10.00/50.00, DZ 12.00/60.00; long context 20/75 and 24/90). New
+> meters not yet added (lifecycle check pending): Grok 4.6 (Global 2.00/6.00), FW GLM 5.3.
+
 > **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
 > and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
 > Earlier dated collection notes below are historical, not current prices.

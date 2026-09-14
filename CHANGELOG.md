@@ -4,6 +4,27 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-14 — Azure AI Foundry collector; Epoch ECI result pages; AA unrated Elo in history (R9.1, CR-1.8, F-78)
+
+No data location, route or public API field was removed.
+
+- **`data/raw/azure-foundry.json`** is now refreshed daily by `scripts/fetch-azure-foundry-catalog.mjs`
+  (Azure Retail Prices API, native USD). New fields: per row `retail_meters` (`product`, `input`,
+  `output` — the exact Retail meters that price the row); top level `meters_checked_at`,
+  `lifecycle_checked_at` (lifecycle and EU Data Zone availability stay a documented manual check, now
+  2026-09-08), `ignored_meter_bases` (meters deliberately not offered, with reasons), `retail_collection`,
+  `response_sha256` and `diff` (removed rows, price changes, suspicious meters, uncovered new meters).
+  `/api/meta` dates `azure_foundry` 2026-09-14.
+- **Price changes from the source:** GPT-5.6 Sol on Azure 5.00/30.00 → 4.00/20.00 USD per 1M tokens
+  (Global) and 5.50/33.00 → 4.40/22.00 (EU Data Zone), effective 2026-09-01. GPT-6 Astra's two Azure rows
+  were unpriced and now carry 10.00/50.00 (Global) and 12.00/60.00 (EU Data Zone).
+- **`/benchmarks/result`** now also accepts the Epoch ECI row ids (`epoch_eci::snapshot-<date>`,
+  `epoch_eci_software::snapshot-<date>`), so every comparison-table cell opens a page with its source
+  and date. Software ECI is labelled as our refit of Epoch AI's published results.
+- **`benchmark_results.historical`:** retained history states no longer turn Artificial Analysis'
+  unrated placeholder (Elo 0) into bridged estimates — 56 AA-Briefcase estimates removed
+  (`counts.estimated` 233 → 177).
+
 ## 2026-09-14 — Optional accounts (Sign in with Google), privacy, terms and Impressum (CR-5)
 
 No data location, field or public API response changed. New, all same-origin only (no public CORS):
