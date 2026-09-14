@@ -198,6 +198,13 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       console.warn(`WARN fetch-aws-bedrock-catalog: keeping the previous snapshot`);
     }
     try {
+      await command('fetch-google-vertex-catalog', process.execPath, ['scripts/fetch-google-vertex-catalog.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-google-vertex-catalog skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-google-vertex-catalog: keeping the previous snapshot`);
+    }
+    try {
       await command('fetch-claude-api-catalog', process.execPath, ['scripts/fetch-claude-api-catalog.mjs']);
     } catch (error) {
       report.warnings = report.warnings || [];

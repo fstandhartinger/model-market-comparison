@@ -4,6 +4,31 @@
 > and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
 > Earlier dated collection notes below are historical, not current prices.
 
+## Executable collector (since 2026-09-14)
+
+`scripts/fetch-google-vertex-catalog.mjs` + `lib/google-vertex-catalog.mjs`, non-fatal daily step
+`fetch-google-vertex-catalog`. The browser steps under "How to refresh" are no longer needed: one plain GET of
+the pricing page (robots.txt allows it) now returns every table in the server-rendered HTML, including the
+partner sections and all seven Claude region panes (Material tab buttons with `track-metadata-eventdetail`
+labels + `role="tabpanel"` panels; the old `<devsite-selector>`/`data-tab` markup is gone).
+
+Each row carries a `price_ref`: `section` (the heading above the table), `pane` (the tab the table sits in:
+"Standard Model" for Gemini 3, "Standard" for Gemini 2.5, "Global" / "EU Multi-Region (EU)" / "europe-west 1"
+for Claude), `label` (the model cell, footnote asterisks removed, e.g. "Opus 5", "Gemini 3.8 Flash through
+December 31, 2026") and, for Gemini 3, `region` ("Global" / "Non-global"). Priority and Flex/Batch tables are
+skipped. The input price is the text input row (never "Input (audio)"), the output price the text output row;
+conflicting duplicates make a row unreadable.
+
+The script never adds rows. A row whose reference is missing or unreadable keeps its prices and
+`price_checked_at`; the run fails closed below 50 % readable rows or when the Claude panes disappear.
+`diff.unreferenced` lists models priced in tracked sections that no row references (curation hints).
+
+First run 2026-09-14: 68/69 rows confirmed, no price changes. **Gemini 3 Flash** stays at its 2026-09-08 check:
+the standard table lists only its input rows (the output row exists only in the Priority and Flex/Batch tables).
+Added by hand from the same page, then confirmed by the collector: **Grok 4.6** ($2/$6, global) and **GLM-5.2**
+($1.40/$4.40, global). Google's US Multi-Region Claude pane lists "Input" twice for Claude Fable 5 with no output
+row; that pane is not referenced.
+
 **Collected:** 2026-07-22 (comprehensive live re-scrape)
 **Output:** `google-vertex.json` (same shape as `aws-bedrock.json`) — 59 offer rows / 44 current model families
 

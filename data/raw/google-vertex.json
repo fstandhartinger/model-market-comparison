@@ -1,25 +1,39 @@
 {
   "source": "Google Vertex AI",
   "region": "offer-specific (global, EU multi-region, or European regional endpoint)",
-  "collected_at": "2026-09-08",
+  "collected_at": "2026-09-14",
   "method": "2026-09-08: checked current official pricing tables at https://cloud.google.com/vertex-ai/generative-ai/pricing. Added Gemini 3.8 Flash, Gemini Omni 1.1 Flash, Claude Fable 5.1 Global/EU, and cheaper Opus 5 Global route. Existing native USD prices unchanged. Gemini Flash 3.6/3.7/3.8 promotion ends 2026-12-31; Sonnet 5 $2/$10 remains standard. EU Claude rows follow the explicit EU Multi-Region pricing selector; no non-global Gemini row is assumed EU-resident. Existing model identity and modality exclusions retained.",
   "models": [
     {
       "model_name": "Gemini 3.1 Pro",
       "provider_org": "Google",
-      "input_per_1m_usd": 2.0,
-      "output_per_1m_usd": 12.0,
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 12,
       "region": "global",
-      "notes": "Preview. Standard <=200K tier; >200K is $4/$18. Current Standard PayGo documentation exposes no EU-resident route, so this remains Global and does not qualify for EU-only filtering. Cached input $0.20 (<=200K), $0.40 (>200K)."
+      "notes": "Preview. Standard <=200K tier; >200K is $4/$18. Current Standard PayGo documentation exposes no EU-resident route, so this remains Global and does not qualify for EU-only filtering. Cached input $0.20 (<=200K), $0.40 (>200K).",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.1 Pro Preview",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.5 Flash",
       "provider_org": "Google",
       "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 9.0,
+      "output_per_1m_usd": 9,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Standard PayGo price. Global processing location is uncontrolled. The separate EU route is $1.65/$9.90. Cached input $0.15."
+      "notes": "Global Standard PayGo price. Global processing location is uncontrolled. The separate EU route is $1.65/$9.90. Cached input $0.15.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.5 Flash",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.5 Flash",
@@ -28,7 +42,14 @@
       "output_per_1m_usd": 9.9,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU multi-region Standard PayGo price, in effect from 2026-07-01; ML processing remains in the EU. Global is $1.50/$9.00. Cached input $0.165. From Gemini 3.5, function declarations count as input tokens."
+      "notes": "EU multi-region Standard PayGo price, in effect from 2026-07-01; ML processing remains in the EU. Global is $1.50/$9.00. Cached input $0.165. From Gemini 3.5, function declarations count as input tokens.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.5 Flash",
+        "pane": "Standard Model",
+        "region": "Non-global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.6 Flash",
@@ -37,7 +58,14 @@
       "output_per_1m_usd": 3.75,
       "region": "global",
       "eu_hosted": false,
-      "notes": "GA (released 2026-07-21). Flat pricing across context tiers. Intro price $0.75/$3.75 through 2026-12-31 via 50% promotional credits; list $1.50/$7.50 from 2027-01-01. Pricing page (2026-08-26) now also lists a Non-global route at $0.825/$4.125 (list $1.65/$8.25), kept in-row rather than as a separate EU offer. Cached input $0.075 (intro) / $0.15 (list). Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "GA (released 2026-07-21). Flat pricing across context tiers. Intro price $0.75/$3.75 through 2026-12-31 via 50% promotional credits; list $1.50/$7.50 from 2027-01-01. Pricing page (2026-08-26) now also lists a Non-global route at $0.825/$4.125 (list $1.65/$8.25), kept in-row rather than as a separate EU offer. Cached input $0.075 (intro) / $0.15 (list). Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.6 Flash through December 31, 2026",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.5 Flash-Lite",
@@ -46,7 +74,14 @@
       "output_per_1m_usd": 2.5,
       "region": "global",
       "eu_hosted": false,
-      "notes": "GA (released 2026-07-21; retirement 2027-07-21 or later). Global Standard PayGo price; Global processing location is uncontrolled. The separate EU route is $0.33/$2.75. Cached input $0.03."
+      "notes": "GA (released 2026-07-21; retirement 2027-07-21 or later). Global Standard PayGo price; Global processing location is uncontrolled. The separate EU route is $0.33/$2.75. Cached input $0.03.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.5 Flash-Lite",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.5 Flash-Lite",
@@ -55,15 +90,29 @@
       "output_per_1m_usd": 2.75,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "Non-global Standard PayGo price via the documented eu multi-region route; model docs list Standard PayGo Multi-region us/eu with EU ML processing. Global is $0.30/$2.50. Cached input $0.033."
+      "notes": "Non-global Standard PayGo price via the documented eu multi-region route; model docs list Standard PayGo Multi-region us/eu with EU ML processing. Global is $0.30/$2.50. Cached input $0.033.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.5 Flash-Lite",
+        "pane": "Standard Model",
+        "region": "Non-global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3 Flash",
       "provider_org": "Google",
       "input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 3.0,
+      "output_per_1m_usd": 3,
       "region": "global",
-      "notes": "Preview (labeled 'Gemini 3 Flash Preview'). Text/image/video input; audio input is $1/1M. No non-global surcharge shown; Global applies. Cached input $0.05 (text/image/video)."
+      "notes": "Preview (labeled 'Gemini 3 Flash Preview'). Text/image/video input; audio input is $1/1M. No non-global surcharge shown; Global applies. Cached input $0.05 (text/image/video).",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3 Flash Preview",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-08"
     },
     {
       "model_name": "Gemini 3.1 Flash-Lite",
@@ -72,7 +121,14 @@
       "output_per_1m_usd": 1.5,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Standard PayGo price. Global processing location is uncontrolled. The separate EU route is $0.275/$1.65. Cached input $0.025."
+      "notes": "Global Standard PayGo price. Global processing location is uncontrolled. The separate EU route is $0.275/$1.65. Cached input $0.025.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.1 Flash-Lite",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.1 Flash-Lite",
@@ -81,34 +137,58 @@
       "output_per_1m_usd": 1.65,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU multi-region Standard PayGo price, in effect from 2026-07-01; ML processing remains in the EU. Global is $0.25/$1.50. Audio input $0.55; cached input $0.0275."
+      "notes": "EU multi-region Standard PayGo price, in effect from 2026-07-01; ML processing remains in the EU. Global is $0.25/$1.50. Audio input $0.55; cached input $0.0275.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.1 Flash-Lite",
+        "pane": "Standard Model",
+        "region": "Non-global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini Omni Flash",
       "provider_org": "Google",
       "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 9.0,
+      "output_per_1m_usd": 9,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Renamed 2026-08-26 from 'Gemini Omni Flash Preview': pricing page and model docs now list it as 'Gemini Omni Flash'. Multimodal text/image/video/audio input, text output at $1.50/$9.00; video output $17.50/1M tokens is not represented. Only a single (Global) route is priced; no EU processing guarantee. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "Renamed 2026-08-26 from 'Gemini Omni Flash Preview': pricing page and model docs now list it as 'Gemini Omni Flash'. Multimodal text/image/video/audio input, text output at $1.50/$9.00; video output $17.50/1M tokens is not represented. Only a single (Global) route is priced; no EU processing guarantee. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Gemini Omni",
+        "label": "Gemini Omni Flash, Gemini Omni 1.1 Flash"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 2.5 Pro",
       "provider_org": "Google",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global standard tier <=200K input tokens; >200K is $2.50/$15. Global processing location is uncontrolled. Cached input $0.125 (<=200K) / $0.25 (>200K)."
+      "notes": "Global standard tier <=200K input tokens; >200K is $2.50/$15. Global processing location is uncontrolled. Cached input $0.125 (<=200K) / $0.25 (>200K).",
+      "price_ref": {
+        "section": "Gemini 2.5",
+        "label": "Gemini 2.5 Pro",
+        "pane": "Standard"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 2.5 Pro",
       "provider_org": "Google",
       "input_per_1m_usd": 1.25,
-      "output_per_1m_usd": 10.0,
+      "output_per_1m_usd": 10,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU-resident online-prediction route at the same base <=200K price as Global; Google's data-residency matrix confirms EU ML processing. >200K is $2.50/$15."
+      "notes": "EU-resident online-prediction route at the same base <=200K price as Global; Google's data-residency matrix confirms EU ML processing. >200K is $2.50/$15.",
+      "price_ref": {
+        "section": "Gemini 2.5",
+        "label": "Gemini 2.5 Pro",
+        "pane": "Standard"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 2.5 Flash",
@@ -117,7 +197,13 @@
       "output_per_1m_usd": 2.5,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global route; processing location is uncontrolled. Text/image/video input; audio input is $1/1M. Cached input $0.03."
+      "notes": "Global route; processing location is uncontrolled. Text/image/video input; audio input is $1/1M. Cached input $0.03.",
+      "price_ref": {
+        "section": "Gemini 2.5",
+        "label": "Gemini 2.5 Flash",
+        "pane": "Standard"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 2.5 Flash",
@@ -126,7 +212,13 @@
       "output_per_1m_usd": 2.5,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU-resident online-prediction route at the same price as Global; Google's data-residency matrix confirms EU ML processing. Audio input is $1/1M; cached input $0.03."
+      "notes": "EU-resident online-prediction route at the same price as Global; Google's data-residency matrix confirms EU ML processing. Audio input is $1/1M; cached input $0.03.",
+      "price_ref": {
+        "section": "Gemini 2.5",
+        "label": "Gemini 2.5 Flash",
+        "pane": "Standard"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 2.5 Flash Lite",
@@ -135,7 +227,13 @@
       "output_per_1m_usd": 0.4,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global route; processing location is uncontrolled. Text/image/video input; audio input is $0.30/1M. Cached input $0.01."
+      "notes": "Global route; processing location is uncontrolled. Text/image/video input; audio input is $0.30/1M. Cached input $0.01.",
+      "price_ref": {
+        "section": "Gemini 2.5",
+        "label": "Gemini 2.5 Flash Lite",
+        "pane": "Standard"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 2.5 Flash Lite",
@@ -144,52 +242,88 @@
       "output_per_1m_usd": 0.4,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU-resident online-prediction route at the same price as Global; Google's data-residency matrix confirms EU ML processing. Audio input is $0.30/1M; cached input $0.01."
+      "notes": "EU-resident online-prediction route at the same price as Global; Google's data-residency matrix confirms EU ML processing. Audio input is $0.30/1M; cached input $0.01.",
+      "price_ref": {
+        "section": "Gemini 2.5",
+        "label": "Gemini 2.5 Flash Lite",
+        "pane": "Standard"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Sonnet 5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 2.0,
-      "output_per_1m_usd": 10.0,
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 10,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global rate $2/$10 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3/$15 standard afterwards - re-verify in September). Global processing location is uncontrolled. Cache hit $0.20; batch $1/$5. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "Global rate $2/$10 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3/$15 standard afterwards - re-verify in September). Global processing location is uncontrolled. Cache hit $0.20; batch $1/$5. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Sonnet 5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Sonnet 5",
       "provider_org": "Anthropic",
       "input_per_1m_usd": 2.2,
-      "output_per_1m_usd": 11.0,
+      "output_per_1m_usd": 11,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU Multi-Region rate $2.20/$11 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3.30/$16.50 standard afterwards - re-verify in September). Cache hit $0.22; batch $1.10/$5.50. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "EU Multi-Region rate $2.20/$11 as listed on the pricing page 2026-08-26 (the page currently shows no promotional end date; an earlier collection recorded this as promotional through 2026-08-31 with $3.30/$16.50 standard afterwards - re-verify in September). Cache hit $0.22; batch $1.10/$5.50. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "EU Multi-Region (EU)",
+        "label": "Claude Sonnet 5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Fable 5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 10.0,
-      "output_per_1m_usd": 50.0,
+      "input_per_1m_usd": 10,
+      "output_per_1m_usd": 50,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $1; batch $5/$25."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $1; batch $5/$25.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Fable 5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Fable 5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 11.0,
-      "output_per_1m_usd": 55.0,
+      "input_per_1m_usd": 11,
+      "output_per_1m_usd": 55,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU Multi-Region Model Garden rate. Cache hit $1.10; batch $5.50/$27.50."
+      "notes": "EU Multi-Region Model Garden rate. Cache hit $1.10; batch $5.50/$27.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "EU Multi-Region (EU)",
+        "label": "Claude Fable 5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.8",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 25.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 25,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Opus 4.8"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.8",
@@ -198,16 +332,28 @@
       "output_per_1m_usd": 27.5,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU Multi-Region Model Garden rate. Cache hit $0.55; batch $2.75/$13.75."
+      "notes": "EU Multi-Region Model Garden rate. Cache hit $0.55; batch $2.75/$13.75.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "EU Multi-Region (EU)",
+        "label": "Claude Opus 4.8"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.7",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 25.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 25,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Opus 4.7"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.7",
@@ -216,16 +362,28 @@
       "output_per_1m_usd": 27.5,
       "region": "eu",
       "eu_hosted": true,
-      "notes": "EU Multi-Region Model Garden rate. Cache hit $0.55; batch $2.75/$13.75."
+      "notes": "EU Multi-Region Model Garden rate. Cache hit $0.55; batch $2.75/$13.75.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "EU Multi-Region (EU)",
+        "label": "Claude Opus 4.7"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.6",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 25.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 25,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Opus 4.6"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.6",
@@ -234,16 +392,28 @@
       "output_per_1m_usd": 27.5,
       "region": "europe-west1",
       "eu_hosted": true,
-      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.55; batch $2.75/$13.75."
+      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.55; batch $2.75/$13.75.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "europe-west 1",
+        "label": "Claude Opus 4.6"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 5.0,
-      "output_per_1m_usd": 25.0,
+      "input_per_1m_usd": 5,
+      "output_per_1m_usd": 25,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.50; batch $2.50/$12.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Opus 4.5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.5",
@@ -252,16 +422,28 @@
       "output_per_1m_usd": 27.5,
       "region": "europe-west1",
       "eu_hosted": true,
-      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.55; batch $2.75/$13.75."
+      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.55; batch $2.75/$13.75.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "europe-west 1",
+        "label": "Claude Opus 4.5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Sonnet 4.6",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 3.0,
-      "output_per_1m_usd": 15.0,
+      "input_per_1m_usd": 3,
+      "output_per_1m_usd": 15,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.30; batch $1.50/$7.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.30; batch $1.50/$7.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Sonnet 4.6"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Sonnet 4.6",
@@ -270,16 +452,28 @@
       "output_per_1m_usd": 16.5,
       "region": "europe-west1",
       "eu_hosted": true,
-      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.33; batch $1.65/$8.25."
+      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.33; batch $1.65/$8.25.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "europe-west 1",
+        "label": "Claude Sonnet 4.6"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Sonnet 4.5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 3.0,
-      "output_per_1m_usd": 15.0,
+      "input_per_1m_usd": 3,
+      "output_per_1m_usd": 15,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.30; batch $1.50/$7.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.30; batch $1.50/$7.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Sonnet 4.5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Sonnet 4.5",
@@ -288,16 +482,28 @@
       "output_per_1m_usd": 16.5,
       "region": "europe-west1",
       "eu_hosted": true,
-      "notes": "EU-hosted europe-west1 Model Garden rate; >200K long-context tier is $6.60/$24.75. Cache hit $0.33; batch $1.65/$8.25."
+      "notes": "EU-hosted europe-west1 Model Garden rate; >200K long-context tier is $6.60/$24.75. Cache hit $0.33; batch $1.65/$8.25.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "europe-west 1",
+        "label": "Claude Sonnet 4.5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Haiku 4.5",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 1.0,
-      "output_per_1m_usd": 5.0,
+      "input_per_1m_usd": 1,
+      "output_per_1m_usd": 5,
       "region": "global",
       "eu_hosted": false,
-      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.10; batch $0.50/$2.50."
+      "notes": "Global Model Garden route; processing location is uncontrolled. Cache hit $0.10; batch $0.50/$2.50.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Haiku 4.5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Haiku 4.5",
@@ -306,15 +512,26 @@
       "output_per_1m_usd": 5.5,
       "region": "europe-west1",
       "eu_hosted": true,
-      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.11; batch $0.55/$2.75."
+      "notes": "EU-hosted europe-west1 Model Garden rate. Cache hit $0.11; batch $0.55/$2.75.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "europe-west 1",
+        "label": "Claude Haiku 4.5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 4.1",
       "provider_org": "Anthropic",
-      "input_per_1m_usd": 15.0,
-      "output_per_1m_usd": 75.0,
+      "input_per_1m_usd": 15,
+      "output_per_1m_usd": 75,
       "region": "global",
-      "notes": "Model Garden partner model. Listed under 'Models with uniform pricing across all regions' (no EU surcharge). No >200K tier (N/A). Cache hit $1.50. Batch $7.50 in / $37.50 out."
+      "notes": "Model Garden partner model. Listed under 'Models with uniform pricing across all regions' (no EU surcharge). No >200K tier (N/A). Cache hit $1.50. Batch $7.50 in / $37.50 out.",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "label": "Claude Opus 4.1"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Grok 4.3",
@@ -322,7 +539,12 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Model Garden partner model. <=200K input tier; >200K is $2.50 in / $5.00 out. No EU regional differentiation listed. Cache hit $0.20 (<=200K) / $0.40 (>200K)."
+      "notes": "Model Garden partner model. <=200K input tier; >200K is $2.50 in / $5.00 out. No EU regional differentiation listed. Cache hit $0.20 (<=200K) / $0.40 (>200K).",
+      "price_ref": {
+        "section": "xAI's Grok models",
+        "label": "Grok 4.3"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Grok 4.20 Reasoning",
@@ -330,7 +552,12 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Model Garden partner model. <=200K input tier; >200K is $2.50 in / $5.00 out. Cache hit $0.20 (<=200K) / $0.40 (>200K)."
+      "notes": "Model Garden partner model. <=200K input tier; >200K is $2.50 in / $5.00 out. Cache hit $0.20 (<=200K) / $0.40 (>200K).",
+      "price_ref": {
+        "section": "xAI's Grok models",
+        "label": "Grok 4.20 Reasoning"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Grok 4.20 Non-Reasoning",
@@ -338,7 +565,12 @@
       "input_per_1m_usd": 1.25,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Model Garden partner model. <=200K input tier; >200K is $2.50 in / $5.00 out. Cache hit $0.20 (<=200K) / $0.40 (>200K)."
+      "notes": "Model Garden partner model. <=200K input tier; >200K is $2.50 in / $5.00 out. Cache hit $0.20 (<=200K) / $0.40 (>200K).",
+      "price_ref": {
+        "section": "xAI's Grok models",
+        "label": "Grok 4.20 Non-Reasoning"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Grok 4.1 Fast Reasoning",
@@ -346,7 +578,12 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.5,
       "region": "global",
-      "notes": "Model Garden partner model. Flat pricing (no >200K tier listed). Cache hit $0.05."
+      "notes": "Model Garden partner model. Flat pricing (no >200K tier listed). Cache hit $0.05.",
+      "price_ref": {
+        "section": "xAI's Grok models",
+        "label": "Grok 4.1 Fast Reasoning"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Grok 4.1 Fast Non-Reasoning",
@@ -354,7 +591,12 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.5,
       "region": "global",
-      "notes": "Model Garden partner model. Flat pricing (no >200K tier listed). Cache hit $0.05."
+      "notes": "Model Garden partner model. Flat pricing (no >200K tier listed). Cache hit $0.05.",
+      "price_ref": {
+        "section": "xAI's Grok models",
+        "label": "Grok 4.1 Fast Non-Reasoning"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "DeepSeek-V3.2",
@@ -362,7 +604,12 @@
       "input_per_1m_usd": 0.56,
       "output_per_1m_usd": 1.68,
       "region": "global",
-      "notes": "Model Garden partner model. Cache hit $0.056. Batch $0.28 in / $0.84 out. NOTE: no DeepSeek-V4 is offered on Vertex as of 2026-08-26 (DeepSeek-OCR was added but is not a text LLM)."
+      "notes": "Model Garden partner model. Cache hit $0.056. Batch $0.28 in / $0.84 out. NOTE: no DeepSeek-V4 is offered on Vertex as of 2026-08-26 (DeepSeek-OCR was added but is not a text LLM).",
+      "price_ref": {
+        "section": "Deepseek's models",
+        "label": "DeepSeek-V3.2"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "DeepSeek-V3.1",
@@ -370,7 +617,12 @@
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 1.7,
       "region": "global",
-      "notes": "Model Garden partner model. Cache hit $0.06. Batch $0.30 in / $0.85 out."
+      "notes": "Model Garden partner model. Cache hit $0.06. Batch $0.30 in / $0.85 out.",
+      "price_ref": {
+        "section": "Deepseek's models",
+        "label": "DeepSeek-V3.1"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "DeepSeek-R1 (0528)",
@@ -378,7 +630,12 @@
       "input_per_1m_usd": 1.35,
       "output_per_1m_usd": 5.4,
       "region": "global",
-      "notes": "Model Garden partner model. Batch $0.675 in / $2.70 out."
+      "notes": "Model Garden partner model. Batch $0.675 in / $2.70 out.",
+      "price_ref": {
+        "section": "Deepseek's models",
+        "label": "DeepSeek-R1 (0528)"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "MiniMax-M2",
@@ -386,7 +643,12 @@
       "input_per_1m_usd": 0.3,
       "output_per_1m_usd": 1.2,
       "region": "global",
-      "notes": "Model Garden partner model. Cache hit $0.03. NOTE: no MiniMax-M3 is offered on Vertex as of 2026-08-26."
+      "notes": "Model Garden partner model. Cache hit $0.03. NOTE: no MiniMax-M3 is offered on Vertex as of 2026-08-26.",
+      "price_ref": {
+        "section": "MiniMax's models",
+        "label": "MiniMax-M2"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Kimi-K2-Thinking",
@@ -394,15 +656,25 @@
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 2.5,
       "region": "global",
-      "notes": "Model Garden partner model (Moonshot section). Cache hit $0.06. NOTE: no Kimi K2.7 is offered on Vertex as of 2026-08-26."
+      "notes": "Model Garden partner model (Moonshot section). Cache hit $0.06. NOTE: no Kimi K2.7 is offered on Vertex as of 2026-08-26.",
+      "price_ref": {
+        "section": "Moonshot's models",
+        "label": "Kimi-K2-Thinking"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "GLM-5",
       "provider_org": "Z.ai",
-      "input_per_1m_usd": 1.0,
+      "input_per_1m_usd": 1,
       "output_per_1m_usd": 3.2,
       "region": "global",
-      "notes": "Model Garden partner model (GLM section). Listed as 'GLM-5 *'. Cache hit $0.10. NOTE: no GLM-5.2 is offered on Vertex as of 2026-08-26 - GLM-5 is the newest GLM on the page (alongside GLM-4.7)."
+      "notes": "Model Garden partner model (GLM section). Listed as 'GLM-5 *'. Cache hit $0.10. NOTE: no GLM-5.2 is offered on Vertex as of 2026-08-26 - GLM-5 is the newest GLM on the page (alongside GLM-4.7).",
+      "price_ref": {
+        "section": "GLM's models",
+        "label": "GLM-5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "GLM-4.7",
@@ -410,7 +682,12 @@
       "input_per_1m_usd": 0.6,
       "output_per_1m_usd": 2.2,
       "region": "global",
-      "notes": "Model Garden partner model (GLM section)."
+      "notes": "Model Garden partner model (GLM section).",
+      "price_ref": {
+        "section": "GLM's models",
+        "label": "GLM-4.7"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Qwen3-Next-80B-Thinking",
@@ -418,7 +695,12 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 1.2,
       "region": "global",
-      "notes": "Model Garden partner model."
+      "notes": "Model Garden partner model.",
+      "price_ref": {
+        "section": "Qwen's models",
+        "label": "Qwen3-Next-80B-Thinking"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Qwen3-Next-80B-Instruct",
@@ -426,7 +708,12 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 1.2,
       "region": "global",
-      "notes": "Model Garden partner model."
+      "notes": "Model Garden partner model.",
+      "price_ref": {
+        "section": "Qwen's models",
+        "label": "Qwen3-Next-80B-Instruct"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Qwen3-Coder-480B-A35B-Instruct",
@@ -434,7 +721,12 @@
       "input_per_1m_usd": 0.22,
       "output_per_1m_usd": 1.8,
       "region": "global",
-      "notes": "Model Garden partner model. Cache hit $0.022. Batch $0.11 in / $0.90 out."
+      "notes": "Model Garden partner model. Cache hit $0.022. Batch $0.11 in / $0.90 out.",
+      "price_ref": {
+        "section": "Qwen's models",
+        "label": "Qwen3-Coder-480B-A35B-Instruct"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Qwen3-235B-A22B-Instruct-2507",
@@ -442,7 +734,12 @@
       "input_per_1m_usd": 0.22,
       "output_per_1m_usd": 0.88,
       "region": "global",
-      "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out."
+      "notes": "Model Garden partner model. Batch $0.11 in / $0.44 out.",
+      "price_ref": {
+        "section": "Qwen's models",
+        "label": "Qwen3-235B-A22B-Instruct-2507"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "gpt-oss-120b",
@@ -450,7 +747,12 @@
       "input_per_1m_usd": 0.09,
       "output_per_1m_usd": 0.36,
       "region": "global",
-      "notes": "Model Garden partner model (open-weight). Batch is half price ($0.045 in / $0.18 out)."
+      "notes": "Model Garden partner model (open-weight). Batch is half price ($0.045 in / $0.18 out).",
+      "price_ref": {
+        "section": "OpenAI's models",
+        "label": "gpt-oss-120b"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "gpt-oss-20b",
@@ -458,7 +760,12 @@
       "input_per_1m_usd": 0.07,
       "output_per_1m_usd": 0.25,
       "region": "global",
-      "notes": "Model Garden partner model (open-weight). Cache hit $0.007. Batch $0.035 in / $0.125 out."
+      "notes": "Model Garden partner model (open-weight). Cache hit $0.007. Batch $0.035 in / $0.125 out.",
+      "price_ref": {
+        "section": "OpenAI's models",
+        "label": "gpt-oss-20b"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Llama 4 Maverick",
@@ -466,7 +773,12 @@
       "input_per_1m_usd": 0.35,
       "output_per_1m_usd": 1.15,
       "region": "global",
-      "notes": "Model Garden partner model (MaaS pay-as-you-go). Batch $0.175 in / $0.575 out."
+      "notes": "Model Garden partner model (MaaS pay-as-you-go). Batch $0.175 in / $0.575 out.",
+      "price_ref": {
+        "section": "Meta's Llama models",
+        "label": "Llama 4 Maverick"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Llama 4 Scout",
@@ -474,7 +786,12 @@
       "input_per_1m_usd": 0.25,
       "output_per_1m_usd": 0.7,
       "region": "global",
-      "notes": "Model Garden partner model (MaaS pay-as-you-go). Batch $0.125 in / $0.35 out."
+      "notes": "Model Garden partner model (MaaS pay-as-you-go). Batch $0.125 in / $0.35 out.",
+      "price_ref": {
+        "section": "Meta's Llama models",
+        "label": "Llama 4 Scout"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Llama 3.3 70B",
@@ -482,16 +799,26 @@
       "input_per_1m_usd": 0.72,
       "output_per_1m_usd": 0.72,
       "region": "global",
-      "notes": "Model Garden partner model (MaaS pay-as-you-go). Batch $0.36 in / $0.36 out."
+      "notes": "Model Garden partner model (MaaS pay-as-you-go). Batch $0.36 in / $0.36 out.",
+      "price_ref": {
+        "section": "Meta's Llama models",
+        "label": "Llama 3.3 70B"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Mistral Medium 3",
       "provider_org": "Mistral",
       "input_per_1m_usd": 0.4,
-      "output_per_1m_usd": 2.0,
+      "output_per_1m_usd": 2,
       "region": "europe-west4",
       "eu_hosted": true,
-      "notes": "Model Garden partner model (MaaS pay-as-you-go). Official regional endpoint; Google documents EU multi-region ML processing for requests sent to europe-west4."
+      "notes": "Model Garden partner model (MaaS pay-as-you-go). Official regional endpoint; Google documents EU multi-region ML processing for requests sent to europe-west4.",
+      "price_ref": {
+        "section": "Mistral AI’s models",
+        "label": "Mistral Medium 3"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Mistral Small 3.1 (25.03)",
@@ -500,7 +827,12 @@
       "output_per_1m_usd": 0.3,
       "region": "europe-west4",
       "eu_hosted": true,
-      "notes": "Model Garden partner model. Official regional endpoint; Google documents EU multi-region ML processing for requests sent to europe-west4."
+      "notes": "Model Garden partner model. Official regional endpoint; Google documents EU multi-region ML processing for requests sent to europe-west4.",
+      "price_ref": {
+        "section": "Mistral AI’s models",
+        "label": "Mistral Small 3.1 (25.03)"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Codestral 2",
@@ -509,7 +841,12 @@
       "output_per_1m_usd": 0.9,
       "region": "europe-west4",
       "eu_hosted": true,
-      "notes": "Model Garden partner model (MaaS pay-as-you-go). Official regional endpoint; Google documents EU multi-region ML processing for requests sent to europe-west4."
+      "notes": "Model Garden partner model (MaaS pay-as-you-go). Official regional endpoint; Google documents EU multi-region ML processing for requests sent to europe-west4.",
+      "price_ref": {
+        "section": "Mistral AI’s models",
+        "label": "Codestral 2"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 5",
@@ -517,7 +854,13 @@
       "input_per_1m_usd": 5.5,
       "output_per_1m_usd": 27.5,
       "region": "eu",
-      "notes": "Verified 2026-08-26 on the pricing page: EU Multi-Region $5.50/$27.50 (Global $5/$25). Cache hit $0.55; batch $2.75/$13.75. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "Verified 2026-08-26 on the pricing page: EU Multi-Region $5.50/$27.50 (Global $5/$25). Cache hit $0.55; batch $2.75/$13.75. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "EU Multi-Region (EU)",
+        "label": "Opus 5"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.7 Flash",
@@ -525,7 +868,14 @@
       "input_per_1m_usd": 0.75,
       "output_per_1m_usd": 3.75,
       "region": "global",
-      "notes": "Verified 2026-08-26: Global intro price $0.75/$3.75 through 2026-12-31 via 50% promotional credits; list $1.50/$7.50 from 2027-01-01. Non-global route $0.825/$4.125 (list $1.65/$8.25). Cached input $0.075 (intro) / $0.15 (list). Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "Verified 2026-08-26: Global intro price $0.75/$3.75 through 2026-12-31 via 50% promotional credits; list $1.50/$7.50 from 2027-01-01. Non-global route $0.825/$4.125 (list $1.65/$8.25). Cached input $0.075 (intro) / $0.15 (list). Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.7 Flash through December 31, 2026",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemma 4 26B",
@@ -533,7 +883,12 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "global",
-      "notes": "Verified 2026-08-26: Google open model served as MaaS (Gemma-4-26B-A4B-IT), $0.15/$0.60, cache hit $0.015. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing"
+      "notes": "Verified 2026-08-26: Google open model served as MaaS (Gemma-4-26B-A4B-IT), $0.15/$0.60, cache hit $0.015. Source: https://cloud.google.com/vertex-ai/generative-ai/pricing",
+      "price_ref": {
+        "section": "Gemma",
+        "label": "Gemma 4 26B"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini 3.8 Flash",
@@ -541,16 +896,28 @@
       "input_per_1m_usd": 0.75,
       "output_per_1m_usd": 3.75,
       "region": "global",
-      "notes": "2026-09-08: explicit current pricing-page model; Global route. Promotional $0.75/$3.75 through 2026-12-31; standard $1.50/$7.50 from 2027-01-01. Non-global price is 10% higher; no EU residency inferred."
+      "notes": "2026-09-08: explicit current pricing-page model; Global route. Promotional $0.75/$3.75 through 2026-12-31; standard $1.50/$7.50 from 2027-01-01. Non-global price is 10% higher; no EU residency inferred.",
+      "price_ref": {
+        "section": "Gemini 3",
+        "label": "Gemini 3.8 Flash through December 31, 2026",
+        "pane": "Standard Model",
+        "region": "Global"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Gemini Omni 1.1 Flash",
       "provider_org": "Google",
       "input_per_1m_usd": 1.5,
-      "output_per_1m_usd": 9.0,
+      "output_per_1m_usd": 9,
       "region": "global",
       "eu_hosted": false,
-      "notes": "2026-09-08: explicit current pricing-page model; Global route. Text input/output $1.50/$9.00; video output separate."
+      "notes": "2026-09-08: explicit current pricing-page model; Global route. Text input/output $1.50/$9.00; video output separate.",
+      "price_ref": {
+        "section": "Gemini Omni",
+        "label": "Gemini Omni Flash, Gemini Omni 1.1 Flash"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Fable 5.1",
@@ -560,7 +927,13 @@
       "region": "global",
       "eu_hosted": false,
       "notes": "2026-09-08: official Claude pricing selector, Global; 1M context, standard input/output tier. 5.1 cache hit $0.25 global / $0.275 EU.",
-      "cache_read_per_1m_usd": 0.25
+      "cache_read_per_1m_usd": 0.25,
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Claude Fable 5.1"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Fable 5.1",
@@ -570,7 +943,13 @@
       "region": "eu",
       "eu_hosted": true,
       "notes": "2026-09-08: official Claude pricing selector, EU Multi-Region (eu); 1M context, standard input/output tier. 5.1 cache hit $0.25 global / $0.275 EU.",
-      "cache_read_per_1m_usd": 0.275
+      "cache_read_per_1m_usd": 0.275,
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "EU Multi-Region (EU)",
+        "label": "Claude Fable 5.1"
+      },
+      "price_checked_at": "2026-09-14"
     },
     {
       "model_name": "Claude Opus 5",
@@ -579,7 +958,65 @@
       "output_per_1m_usd": 25,
       "region": "global",
       "notes": "2026-09-08: official Global selector $5/$25, no EU residency guarantee.",
-      "eu_hosted": false
+      "eu_hosted": false,
+      "price_ref": {
+        "section": "Anthropic’s Claude models",
+        "pane": "Global",
+        "label": "Opus 5"
+      },
+      "price_checked_at": "2026-09-14"
+    },
+    {
+      "model_name": "Grok 4.6",
+      "provider_org": "xAI",
+      "input_per_1m_usd": 2,
+      "output_per_1m_usd": 6,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Added 2026-09-14 from the xAI section of the pricing page (standard table). <=200K tier; >200K is $4/$12. Cache hit $0.50 (<=200K). Global endpoint: processing location uncontrolled, not EU-hosted.",
+      "price_ref": {
+        "section": "xAI's Grok models",
+        "label": "Grok 4.6"
+      },
+      "price_checked_at": "2026-09-14"
+    },
+    {
+      "model_name": "GLM-5.2",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 1.4,
+      "output_per_1m_usd": 4.4,
+      "region": "global",
+      "eu_hosted": false,
+      "notes": "Added 2026-09-14 from the GLM section of the pricing page (standard table). Cached input $0.14. Global endpoint: processing location uncontrolled, not EU-hosted.",
+      "price_ref": {
+        "section": "GLM's models",
+        "label": "GLM-5.2"
+      },
+      "price_checked_at": "2026-09-14"
     }
-  ]
+  ],
+  "price_collection": "scripts/fetch-google-vertex-catalog.mjs (2026-09-14): one GET of https://cloud.google.com/gemini-enterprise-agent-platform/generative-ai/pricing (server-rendered); each row's price_ref (section heading, Claude region pane, model label, Gemini 3 Region column) re-read from the standard on-demand table (Priority and Flex/Batch tables ignored). 68/69 rows confirmed today; rows not listed or unreadable on the page keep their prices and price_checked_at. Rows are never added by the script.",
+  "response_sha256": "acd8533c89f833d94e1e9d862bc0d578920e8cb5ed83c2c20cf0830057691ee5",
+  "diff": {
+    "price_changed": [],
+    "unlisted": [],
+    "unreadable": [
+      "Gemini 3 Flash [global] (Gemini 3 / Standard Model / Gemini 3 Flash Preview / Global: no output price row)"
+    ],
+    "suspicious": [],
+    "unmapped": [],
+    "unreferenced": [
+      "Gemini 3 / Gemini 3.8 Flash Starting January 1, 2027",
+      "Gemini 3 / Gemini 3.7 Flash starting January 1, 2027",
+      "Gemini 3 / Gemini 3.6 Flash starting January 1, 2027",
+      "Gemini 3 / Gemini 3.1 Flash-Lite Image (Nano Banana 2 Lite)",
+      "Gemini 3 / Gemini 3.1 Flash Image (Nano Banana 2)",
+      "Gemini 3 / Gemini 3 Pro Image (Nano Banana Pro)",
+      "Gemini 2.5 / Gemini 2.5 Pro Computer Use-Preview",
+      "Gemini 2.5 / Gemini 2.5 Flash Image",
+      "Gemini 2.5 / Gemini 2.5 Flash Live API",
+      "Deepseek's models / DeepSeek-OCR",
+      "Mistral AI’s models / Mistral OCR (25.05)"
+    ]
+  }
 }
