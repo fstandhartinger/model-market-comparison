@@ -169,6 +169,21 @@
       "review_file": "ops/rebuild-2026-09/evidence/phase-08/deepseek-v4-pro-endpoint-review-20260913.json",
       "review_sha256": "e9ab1fb2d86df22634276cd21426f8585f9276d964244140546cebf5ee6627d4",
       "owner_acceptance": "2026-09-13 bounded review: response sha256 e616b39be6f8f7e96054f8c213dd56a75678b690a83e00b8c90dfb78d3e91ade and captured gzip sha256 f5828cfc22b243a00fde721b94c441bb86a1139988c02ecf9e37dee53b97ed78 were recomputed locally; response status 200, all 16 endpoint objects have valid provider identity and prompt/completion prices, and unique identity hashes/delta were recomputed locally. Different-family AA-qualified critic deepseek/deepseek-v4-flash-0731 returned approve with no errors. This short-lived exception makes no permanent retirement inference; all other changes remain fatal."
+    },
+    {
+      "model_id": "z-ai/glm-5.3-flash",
+      "previous_identity_sha256": "6463dcad83f7f331e1697012193efb9a57800eb19fba30d188b9618af7598c98",
+      "current_identity_sha256": "f6f12ed21d421e8ef6f255fa5942cafc88db48ebf21158ae12b9016eca45ac12",
+      "removed": [
+        "OpenInference/open-inference/fp4/fp4"
+      ],
+      "expires_at": "2026-09-14T12:00:00Z",
+      "reviewed_at": "2026-09-14T00:57:30Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints",
+      "primary_capture_sha256": "15f7e3fa8965162a0656d91b1d35b6df2bbd70755c14927bc3f6fea6aaff66ff",
+      "review_file": "ops/ux-2026-09-12/openrouter-withdrawal-critic-20260914.json",
+      "review_sha256": "09598b4ceacda606f3935a939efda707c75368b5cdcad41a85320fbc6ba4b23c",
+      "owner_acceptance": "2026-09-14 bounded review: fresh HTTP 200 primary response captured in ux-evidence/iter42-openrouter-withdrawal with 26 endpoint rows; local recomputation binds the complete prior/current identity digests and exactly the one OpenInference withdrawal. Independent Kimi K3 critic returned pass with no unresolved findings. This short-lived exception makes no permanent retirement inference; all other identity, HTTP, schema and pricing changes remain fatal."
     }
   ]
 }

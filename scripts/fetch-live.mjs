@@ -11,7 +11,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource } from '../lib/live-source.mjs';
+import { assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -228,7 +228,11 @@ async function fetchOpenRouter() {
       endpoints = [];
       endpointStatus = { status: 'not_published', http_status: 404, url: endpointUrl, collected_at: new Date().toISOString() };
     }
-    try { assertOpenRouterEndpointCoverage(previousById.get(id)?.endpoints, endpoints, { approval: sourceApprovals.find((a) => a.model_id === id) }); }
+    // Several bounded approvals may coexist for a model. Select only the receipt
+    // bound to this complete current identity set; an older approval must never
+    // mask a newer withdrawal (or make a different change look reviewed).
+    const endpointApproval = selectOpenRouterEndpointApproval(sourceApprovals, id, endpoints);
+    try { assertOpenRouterEndpointCoverage(previousById.get(id)?.endpoints, endpoints, { approval: endpointApproval }); }
     catch (error) { throw new Error(`${id}: ${error.message}`); }
     done++;
     if (done % 50 === 0) console.log(`    ${done}/${models.length}`);

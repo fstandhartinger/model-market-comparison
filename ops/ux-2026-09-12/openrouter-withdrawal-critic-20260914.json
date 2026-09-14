@@ -1,0 +1,20 @@
+{
+  "artifact_id": "openrouter-z-ai-glm-5.3-flash-withdrawal-2026-09-14",
+  "artifact_sha256": "f6f12ed21d421e8ef6f255fa5942cafc88db48ebf21158ae12b9016eca45ac12",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "27 prior rows - 1 removed + 0 added = 26 current rows; both snapshots have unique identities",
+    "fresh HTTP 200 receipt, complete prior/current identity hashes, and exactly one removed identity",
+    "independent live re-fetch: HTTP 200, 26 endpoint rows, no OpenInference endpoint, valid prompt/completion prices",
+    "scope is one endpoint withdrawal on one model; no permanent-retirement claim"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "OpenRouter response bodies contain volatile telemetry, so body hashes can differ between close live reads while identity sets remain equal",
+    "non-identity price/status fields are outside this identity-withdrawal approval scope"
+  ],
+  "missing_evidence": []
+}

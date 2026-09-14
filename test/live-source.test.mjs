@@ -5,7 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
-import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest } from '../lib/live-source.mjs';
+import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
 
 test('catalog shrink, empty, malformed and duplicate identities fail before publication', () => {
   const previous = [{ id: 'one' }, { id: 'two' }];
@@ -42,6 +42,18 @@ test('reviewed withdrawal exception expires and binds both complete endpoint ide
   assert.throws(() => assertOpenRouterEndpointCoverage(previous, current, { approval, now: Date.parse('2026-01-03') }));
   assert.throws(() => assertOpenRouterEndpointCoverage(previous, [one], { approval, now: Date.parse('2026-01-01') }));
   assert.throws(() => assertOpenRouterEndpointCoverage(previous, [one, { ...two, pricing: null }], { approval, now: Date.parse('2026-01-01') }));
+});
+
+test('endpoint approval selection ignores older approvals for the same model', () => {
+  const one = { provider_name: 'One', tag: 'one', pricing: { prompt: '1', completion: '1' } };
+  const two = { ...one, provider_name: 'Two', tag: 'two' };
+  const current = [one, two];
+  const currentDigest = endpointIdentityDigest(current);
+  const old = { model_id: 'fixture/model', current_identity_sha256: endpointIdentityDigest([one]) };
+  const fresh = { model_id: 'fixture/model', current_identity_sha256: currentDigest };
+  assert.equal(selectOpenRouterEndpointApproval([old, fresh], 'fixture/model', current), fresh);
+  assert.equal(selectOpenRouterEndpointApproval([old], 'fixture/model', current), undefined);
+  assert.equal(selectOpenRouterEndpointApproval([fresh], 'other/model', current), undefined);
 });
 
 test('source evidence retains exact primary response bytes without transport credentials', async () => {

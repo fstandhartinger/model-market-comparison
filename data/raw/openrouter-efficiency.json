@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-13T23:23:56.731Z",
+  "collected_at": "2026-09-14T00:59:14.046Z",
   "models": {
     "moonshotai/kimi-k3": {
       "or_model_id": "moonshotai/kimi-k3",
@@ -3981,6 +3981,777 @@
         "basis": "measured",
         "status": "available"
       }
+    },
+    "anthropic/claude-opus-4.6": {
+      "or_model_id": "anthropic/claude-opus-4.6",
+      "model_permaslug": "anthropic/claude-4.6-opus-20260205",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "endpoint_tag": "claude-on-aws",
+          "provider": "Claude Platform on AWS",
+          "endpoint_id": "ce1eca0d-578f-455f-8bad-f0f7e914d80a",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.74695291336151,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Claude Platform on AWS",
+          "source_provider_slug": "claude-on-aws",
+          "total_tokens": 424080478
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "endpoint_tag": "azure/global",
+          "provider": "Azure",
+          "endpoint_id": "5bc0e1b6-d533-4cd1-ad21-20009af0a6d7",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Azure",
+          "source_provider_slug": "azure",
+          "total_tokens": 15102
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "8dba71f8-55ed-4f21-bdc3-0d46b9e3f247",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.3596985172065983,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 34843560
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "endpoint_tag": "amazon-bedrock",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "a8708fb9-08ea-43bb-a3b1-165c87ef09df",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.432838893419049,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 34726509
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "endpoint_tag": "anthropic",
+          "provider": "Anthropic",
+          "endpoint_id": "c926c048-563e-44b0-8434-95965bee924c",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.7201054244267865,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Anthropic",
+          "source_provider_slug": "anthropic",
+          "total_tokens": 36437690
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.6",
+          "endpoint_tag": "google-vertex/europe",
+          "provider": "Google",
+          "endpoint_id": "cf1bf458-2a55-4b88-bdca-56db673fe847",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (Europe)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 79889
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-13",
+            "total_prompt_tokens": 11953321439,
+            "total_completion_tokens": 238803021,
+            "count": 392289
+          },
+          {
+            "date": "2026-09-12",
+            "total_prompt_tokens": 13595704849,
+            "total_completion_tokens": 340944959,
+            "count": 492230
+          },
+          {
+            "date": "2026-09-11",
+            "total_prompt_tokens": 34128457483,
+            "total_completion_tokens": 497667366,
+            "count": 878130
+          },
+          {
+            "date": "2026-09-10",
+            "total_prompt_tokens": 17661673127,
+            "total_completion_tokens": 342040477,
+            "count": 470679
+          },
+          {
+            "date": "2026-09-09",
+            "total_prompt_tokens": 18752101154,
+            "total_completion_tokens": 355906423,
+            "count": 452006
+          },
+          {
+            "date": "2026-09-08",
+            "total_prompt_tokens": 16917942664,
+            "total_completion_tokens": 360116804,
+            "count": 481213
+          },
+          {
+            "date": "2026-09-07",
+            "total_prompt_tokens": 16677400991,
+            "total_completion_tokens": 375789246,
+            "count": 523035
+          }
+        ],
+        "total_prompt_tokens": 129686601707,
+        "total_completion_tokens": 2511268296,
+        "total_requests": 3689582,
+        "input_output_ratio": 51.641874312500775
+      },
+      "source_updated_at": "2026-09-14T00:58:04.889Z",
+      "window": {
+        "start_date": "2026-09-07",
+        "end_date": "2026-09-13"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/anthropic/claude-opus-4.6",
+        "collected_at": "2026-09-14T00:59:16.395Z",
+        "basis": "measured"
+      },
+      "response_sha256": "945cd7011d08a273b5c779103db1e5b9bdf64b72bc985570e318b3eccfffcc46",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 6,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-07 00:00:00",
+          "last": "2026-09-14 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4.6-opus-20260205&variant=standard&shape=v7",
+          "collected_at": "2026-09-14T00:59:18.323Z",
+          "basis": "measured"
+        },
+        "response_sha256": "873f9fd6d9234b4d83881d1c272b700a92afba0b3dd5c69992bce7365ef49258"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4.6-opus-20260205&variant=standard&shape=v7",
+        "collected_at": "2026-09-14T00:59:18.323Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "anthropic/claude-opus-4.7": {
+      "or_model_id": "anthropic/claude-opus-4.7",
+      "model_permaslug": "anthropic/claude-4.7-opus-20260416",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "claude-on-aws",
+          "provider": "Claude Platform on AWS",
+          "endpoint_id": "4238074b-5a44-4a05-bc84-987fdad85582",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.5754532410340926,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Claude Platform on AWS",
+          "source_provider_slug": "claude-on-aws",
+          "total_tokens": 49467147
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "azure/global",
+          "provider": "Azure",
+          "endpoint_id": "f67303a6-c606-43f3-a1c4-1f48a569c5a5",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Azure",
+          "source_provider_slug": "azure",
+          "total_tokens": 262633
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "29c5b0a7-b6ed-4f4d-8ef4-ea650f535c5f",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.1481934260285612,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 27000451
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "amazon-bedrock/global",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "0fa65117-00d9-4835-808d-9b68041d9ce4",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.3681484635227529,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (Global)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 9717096
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "anthropic",
+          "provider": "Anthropic",
+          "endpoint_id": "71784905-0c14-4c62-851a-c998ae9a222c",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.6267493275569951,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Anthropic",
+          "source_provider_slug": "anthropic",
+          "total_tokens": 159222715
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "google-vertex/us",
+          "provider": "Google",
+          "endpoint_id": "5d1c1ece-f4e8-473f-9c92-80e754886436",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "amazon-bedrock/eu-west-1",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "202e9449-eb0e-490a-ac07-722e15dcc4e6",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 189897
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.7",
+          "endpoint_tag": "google-vertex/europe",
+          "provider": "Google",
+          "endpoint_id": "2b609378-53d9-4b23-9219-3804d5f33e95",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-13",
+            "total_prompt_tokens": 4381900755,
+            "total_completion_tokens": 228023840,
+            "count": 545279
+          },
+          {
+            "date": "2026-09-12",
+            "total_prompt_tokens": 5238925878,
+            "total_completion_tokens": 195734189,
+            "count": 563253
+          },
+          {
+            "date": "2026-09-11",
+            "total_prompt_tokens": 54791677731,
+            "total_completion_tokens": 536050642,
+            "count": 767200
+          },
+          {
+            "date": "2026-09-10",
+            "total_prompt_tokens": 10656739619,
+            "total_completion_tokens": 248825627,
+            "count": 336825
+          },
+          {
+            "date": "2026-09-09",
+            "total_prompt_tokens": 10225104969,
+            "total_completion_tokens": 221719917,
+            "count": 292704
+          },
+          {
+            "date": "2026-09-08",
+            "total_prompt_tokens": 10551306202,
+            "total_completion_tokens": 254165846,
+            "count": 382555
+          },
+          {
+            "date": "2026-09-07",
+            "total_prompt_tokens": 11784381486,
+            "total_completion_tokens": 347076857,
+            "count": 640243
+          }
+        ],
+        "total_prompt_tokens": 107630036640,
+        "total_completion_tokens": 2031596918,
+        "total_requests": 3528059,
+        "input_output_ratio": 52.97804681942326
+      },
+      "source_updated_at": "2026-09-14T00:58:49.937Z",
+      "window": {
+        "start_date": "2026-09-07",
+        "end_date": "2026-09-13"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/anthropic/claude-opus-4.7",
+        "collected_at": "2026-09-14T00:59:20.327Z",
+        "basis": "measured"
+      },
+      "response_sha256": "4a41cdf99f169fc935bd7e531e95a415c717b344732b0f750795b7933af7e5fe",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 6,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-07 00:00:00",
+          "last": "2026-09-14 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4.7-opus-20260416&variant=standard&shape=v7",
+          "collected_at": "2026-09-14T00:59:22.280Z",
+          "basis": "measured"
+        },
+        "response_sha256": "f15926fe5588bf17092b5fa227b45bb409904ec5504893fcc908c6a755ae11cc"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4.7-opus-20260416&variant=standard&shape=v7",
+        "collected_at": "2026-09-14T00:59:22.280Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "anthropic/claude-opus-4.8": {
+      "or_model_id": "anthropic/claude-opus-4.8",
+      "model_permaslug": "anthropic/claude-4.8-opus-20260528",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "claude-on-aws",
+          "provider": "Claude Platform on AWS",
+          "endpoint_id": "e48efef9-391a-4329-9154-49ff7b3499e2",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.8017134849785706,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Claude Platform on AWS",
+          "source_provider_slug": "claude-on-aws",
+          "total_tokens": 501844253
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "azure/us",
+          "provider": "Azure",
+          "endpoint_id": "3e89c112-69b4-4ea4-b2f6-bea421af6dc6",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.43625117444409645,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Azure (US)",
+          "source_provider_slug": "azure",
+          "total_tokens": 1602536
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "azure/global",
+          "provider": "Azure",
+          "endpoint_id": "c2bb6b96-c319-4e78-b0ea-42308136dd67",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "amazon-bedrock",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "c17fb1eb-dbda-4889-971f-1f15f517da90",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.8080759572261874,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (3)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 54229849
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "37ca59bb-cb63-4806-a46e-7ad51de3ec2f",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.6962212484007702,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 122045335
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "anthropic",
+          "provider": "Anthropic",
+          "endpoint_id": "dfc0e5bd-d703-4fe2-a7bb-655eb95d5441",
+          "cache_read_per_1m": 0.5,
+          "cache_write_per_1m": 6.25,
+          "cache_hit_rate": 0.9237741214766244,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Anthropic (2)",
+          "source_provider_slug": "anthropic",
+          "total_tokens": 420550868
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "amazon-bedrock/us",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "36d8aabe-fe9f-4d66-a1dd-d40ff2d211c1",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "google-vertex/us",
+          "provider": "Google",
+          "endpoint_id": "6827ffe6-2ece-4f5b-b4e5-a66f899da8b6",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "amazon-bedrock/eu-west-1",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "82bbe0e6-ec8a-48c2-9593-86c3ccb86e54",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (2)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 7722
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "google-vertex/europe",
+          "provider": "Google",
+          "endpoint_id": "31ea1e5f-504e-4f9a-9156-3e8c9ed288e5",
+          "cache_read_per_1m": 0.55,
+          "cache_write_per_1m": 6.875,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        },
+        {
+          "or_model_id": "anthropic/claude-opus-4.8",
+          "endpoint_tag": "anthropic/fast",
+          "provider": "Anthropic",
+          "endpoint_id": "34c7c6ba-4cb1-4aa1-a940-bda19245da16",
+          "cache_read_per_1m": 1,
+          "cache_write_per_1m": 12.5,
+          "cache_hit_rate": 0.6861405892041431,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Anthropic (1)",
+          "source_provider_slug": "anthropic",
+          "total_tokens": 47650983
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-13",
+            "total_prompt_tokens": 28324460250,
+            "total_completion_tokens": 707518399,
+            "count": 614407
+          },
+          {
+            "date": "2026-09-12",
+            "total_prompt_tokens": 45798437644,
+            "total_completion_tokens": 799734665,
+            "count": 761614
+          },
+          {
+            "date": "2026-09-11",
+            "total_prompt_tokens": 64002286117,
+            "total_completion_tokens": 1260806711,
+            "count": 1207909
+          },
+          {
+            "date": "2026-09-10",
+            "total_prompt_tokens": 99742756680,
+            "total_completion_tokens": 1852020929,
+            "count": 1637216
+          },
+          {
+            "date": "2026-09-09",
+            "total_prompt_tokens": 69375322387,
+            "total_completion_tokens": 1185752124,
+            "count": 1147424
+          },
+          {
+            "date": "2026-09-08",
+            "total_prompt_tokens": 51056176228,
+            "total_completion_tokens": 867121562,
+            "count": 828434
+          },
+          {
+            "date": "2026-09-07",
+            "total_prompt_tokens": 55747081878,
+            "total_completion_tokens": 1309140613,
+            "count": 1083819
+          }
+        ],
+        "total_prompt_tokens": 414046521184,
+        "total_completion_tokens": 7982095003,
+        "total_requests": 7280823,
+        "input_output_ratio": 51.871910949241304
+      },
+      "source_updated_at": "2026-09-14T00:58:26.388Z",
+      "window": {
+        "start_date": "2026-09-07",
+        "end_date": "2026-09-13"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/anthropic/claude-opus-4.8",
+        "collected_at": "2026-09-14T00:59:24.286Z",
+        "basis": "measured"
+      },
+      "response_sha256": "c6bcb2e97443c6d868e13a2a3b9e75db878cd6102d1db9610b18d272b8e6363b",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 7,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-07 00:00:00",
+          "last": "2026-09-14 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4.8-opus-20260528&variant=standard&shape=v7",
+          "collected_at": "2026-09-14T00:59:26.608Z",
+          "basis": "measured"
+        },
+        "response_sha256": "8618deb36fef3208a4ee981e70120dd0ca50fe49b2ddd6fa55a73bdcfc3e46a8"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4.8-opus-20260528&variant=standard&shape=v7",
+        "collected_at": "2026-09-14T00:59:26.608Z",
+        "basis": "measured",
+        "status": "available"
+      }
+    },
+    "anthropic/claude-sonnet-4": {
+      "or_model_id": "anthropic/claude-sonnet-4",
+      "model_permaslug": "anthropic/claude-4-sonnet-20250522",
+      "variant": "standard",
+      "endpoints": [
+        {
+          "or_model_id": "anthropic/claude-sonnet-4",
+          "endpoint_tag": "amazon-bedrock/eu-west-1",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "6fa7a335-1c7d-444a-a20f-a2c67fc4011b",
+          "cache_read_per_1m": 0.3,
+          "cache_write_per_1m": 3.75,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (1)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 273
+        },
+        {
+          "or_model_id": "anthropic/claude-sonnet-4",
+          "endpoint_tag": "google-vertex/global",
+          "provider": "Google",
+          "endpoint_id": "3a66dd68-b711-4d75-bbea-56012edd68bb",
+          "cache_read_per_1m": 0.3,
+          "cache_write_per_1m": 3.75,
+          "cache_hit_rate": 0.8119436241860412,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (Global)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 18962882
+        },
+        {
+          "or_model_id": "anthropic/claude-sonnet-4",
+          "endpoint_tag": "google-vertex/europe",
+          "provider": "Google",
+          "endpoint_id": "a35a9a4d-ee64-4a06-ae63-60502277a15a",
+          "cache_read_per_1m": 0.3,
+          "cache_write_per_1m": 3.75,
+          "cache_hit_rate": 0,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Google Vertex (Europe)",
+          "source_provider_slug": "google-vertex",
+          "total_tokens": 1192
+        },
+        {
+          "or_model_id": "anthropic/claude-sonnet-4",
+          "endpoint_tag": "amazon-bedrock",
+          "provider": "Amazon Bedrock",
+          "endpoint_id": "b2abae2d-f225-48ce-8672-cb1d08da5d7d",
+          "cache_read_per_1m": 0.3,
+          "cache_write_per_1m": 3.75,
+          "cache_hit_rate": 0.5382944350813365,
+          "cache_status": "available",
+          "cache_note": "OpenRouter reported cacheHitRate as a fraction. Underlying numerator/denominator and exact summary interval are not published in this response.",
+          "source_provider_name": "Amazon Bedrock (2)",
+          "source_provider_slug": "amazon-bedrock",
+          "total_tokens": 64652257
+        },
+        {
+          "or_model_id": "anthropic/claude-sonnet-4",
+          "endpoint_tag": "google-vertex",
+          "provider": "Google",
+          "endpoint_id": "5e3f0568-c089-416a-ab7b-6c432999b571",
+          "cache_read_per_1m": 0.3,
+          "cache_write_per_1m": 3.75,
+          "cache_hit_rate": null,
+          "cache_status": "not_in_effective_pricing",
+          "cache_note": "The provider table statistics publish latency/throughput/uptime; no verified endpoint cache-hit observation in this payload."
+        }
+      ],
+      "usage": {
+        "status": "available",
+        "daily": [
+          {
+            "date": "2026-09-13",
+            "total_prompt_tokens": 1973745965,
+            "total_completion_tokens": 65156457,
+            "count": 210116
+          },
+          {
+            "date": "2026-09-12",
+            "total_prompt_tokens": 1822632722,
+            "total_completion_tokens": 66430989,
+            "count": 217648
+          },
+          {
+            "date": "2026-09-11",
+            "total_prompt_tokens": 2230514784,
+            "total_completion_tokens": 97910504,
+            "count": 289940
+          },
+          {
+            "date": "2026-09-10",
+            "total_prompt_tokens": 2676055990,
+            "total_completion_tokens": 115389318,
+            "count": 392616
+          },
+          {
+            "date": "2026-09-09",
+            "total_prompt_tokens": 2658550559,
+            "total_completion_tokens": 118192211,
+            "count": 428649
+          },
+          {
+            "date": "2026-09-08",
+            "total_prompt_tokens": 2472435963,
+            "total_completion_tokens": 113784834,
+            "count": 342545
+          },
+          {
+            "date": "2026-09-07",
+            "total_prompt_tokens": 2370747817,
+            "total_completion_tokens": 100494994,
+            "count": 293394
+          }
+        ],
+        "total_prompt_tokens": 16204683800,
+        "total_completion_tokens": 677359307,
+        "total_requests": 2174908,
+        "input_output_ratio": 23.923320507353715
+      },
+      "source_updated_at": "2026-09-14T00:58:28.704Z",
+      "window": {
+        "start_date": "2026-09-07",
+        "end_date": "2026-09-13"
+      },
+      "provenance": {
+        "source": "OpenRouter model-page usage",
+        "url": "https://openrouter.ai/anthropic/claude-sonnet-4",
+        "collected_at": "2026-09-14T00:59:28.613Z",
+        "basis": "measured"
+      },
+      "response_sha256": "c506cb15098823753daefc7a7fb5bd2ed75fc1499172de725cc48d47ac6ee3bb",
+      "cache": {
+        "unjoined": [],
+        "returned_summaries": 4,
+        "summary_window": null,
+        "chart_date_range": {
+          "first": "2026-09-07 00:00:00",
+          "last": "2026-09-14 00:00:00"
+        },
+        "provenance": {
+          "source": "OpenRouter effective pricing statistics",
+          "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4-sonnet-20250522&variant=standard&shape=v7",
+          "collected_at": "2026-09-14T00:59:30.546Z",
+          "basis": "measured"
+        },
+        "response_sha256": "d3805ecbdcfba046e155aa62d5029846fc7b06df760d4ef07c0e2a7137d85bad"
+      },
+      "cache_attempt": {
+        "source": "OpenRouter effective pricing statistics",
+        "url": "https://openrouter.ai/api/frontend/v1/stats/effective-pricing?permaslug=anthropic%2Fclaude-4-sonnet-20250522&variant=standard&shape=v7",
+        "collected_at": "2026-09-14T00:59:30.546Z",
+        "basis": "measured",
+        "status": "available"
+      }
     }
   },
   "attempts": {
@@ -4151,6 +4922,34 @@
       "collected_at": "2026-09-13T23:24:12.183Z",
       "status": "fetch_or_parse_failed",
       "reason": "OpenRouter provider table query missing"
+    },
+    "anthropic/claude-opus-4.6": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/anthropic/claude-opus-4.6",
+      "collected_at": "2026-09-14T00:59:16.395Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "anthropic/claude-opus-4.7": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/anthropic/claude-opus-4.7",
+      "collected_at": "2026-09-14T00:59:20.327Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "anthropic/claude-opus-4.8": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/anthropic/claude-opus-4.8",
+      "collected_at": "2026-09-14T00:59:24.286Z",
+      "status": "available",
+      "http_status": 200
+    },
+    "anthropic/claude-sonnet-4": {
+      "source": "OpenRouter model page",
+      "url": "https://openrouter.ai/anthropic/claude-sonnet-4",
+      "collected_at": "2026-09-14T00:59:28.613Z",
+      "status": "available",
+      "http_status": 200
     }
   },
   "rankings": {
@@ -4159,219 +4958,219 @@
         "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 3587481498903,
-        "total_completion_tokens": 55638849981,
-        "total_requests": 48772120,
-        "input_output_ratio": 64.4779951441858
-      },
-      {
-        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "variant": "standard",
-        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1964331364894,
-        "total_completion_tokens": 32215604807,
-        "total_requests": 25134559,
-        "input_output_ratio": 60.974530096891996
-      },
-      {
-        "model_permaslug": "google/gemini-3.8-flash-20260902",
-        "variant": "standard",
-        "variant_permaslug": "google/gemini-3.8-flash-20260902",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 2516154461908,
-        "total_completion_tokens": 44913398177,
-        "total_requests": 50343272,
-        "input_output_ratio": 56.02235778268308
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 4858419280780,
+        "total_completion_tokens": 79316973724,
+        "total_requests": 75222539,
+        "input_output_ratio": 61.253210412261645
       },
       {
         "model_permaslug": "xiaomi/mimo-v2.5-20260422",
         "variant": "standard",
         "variant_permaslug": "xiaomi/mimo-v2.5-20260422",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 6855555562916,
-        "total_completion_tokens": 55547840611,
-        "total_requests": 91262465,
-        "input_output_ratio": 123.41713894740332
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 7708871168787,
+        "total_completion_tokens": 62810126875,
+        "total_requests": 102112433,
+        "input_output_ratio": 122.732934199108
+      },
+      {
+        "model_permaslug": "google/gemini-3.8-flash-20260902",
+        "variant": "standard",
+        "variant_permaslug": "google/gemini-3.8-flash-20260902",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 2509941687741,
+        "total_completion_tokens": 45656250190,
+        "total_requests": 51225142,
+        "input_output_ratio": 54.97476637471966
+      },
+      {
+        "model_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "variant": "standard",
+        "variant_permaslug": "meta/muse-spark-1.3-contributor-20260902",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1948475137971,
+        "total_completion_tokens": 31115222031,
+        "total_requests": 25227582,
+        "input_output_ratio": 62.6212834357968
       },
       {
         "model_permaslug": "upstage/solar-pro4-20260810",
         "variant": "standard",
         "variant_permaslug": "upstage/solar-pro4-20260810",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1707925888032,
-        "total_completion_tokens": 16648780873,
-        "total_requests": 26582847,
-        "input_output_ratio": 102.58564282035884
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1695276020727,
+        "total_completion_tokens": 17459484649,
+        "total_requests": 26718866,
+        "input_output_ratio": 97.09771249314038
       },
       {
         "model_permaslug": "openai/gpt-5.6-luna-20260709",
         "variant": "standard",
         "variant_permaslug": "openai/gpt-5.6-luna-20260709",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 15922652998271,
-        "total_completion_tokens": 517019167641,
-        "total_requests": 760348607,
-        "input_output_ratio": 30.797026483411024
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 17713744274490,
+        "total_completion_tokens": 466325410846,
+        "total_requests": 723701849,
+        "input_output_ratio": 37.98580103613486
       },
       {
         "model_permaslug": "tencent/hy4-preview-20260827",
         "variant": "standard",
         "variant_permaslug": "tencent/hy4-preview-20260827",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 17050790613833,
-        "total_completion_tokens": 151977664075,
-        "total_requests": 146047893,
-        "input_output_ratio": 112.19274041097609
-      },
-      {
-        "model_permaslug": "anthropic/claude-sonnet-5-20260630",
-        "variant": "standard",
-        "variant_permaslug": "anthropic/claude-sonnet-5-20260630",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1355453542229,
-        "total_completion_tokens": 21126550601,
-        "total_requests": 26704401,
-        "input_output_ratio": 64.15877195612052
-      },
-      {
-        "model_permaslug": "minimax/minimax-m3-20260531",
-        "variant": "standard",
-        "variant_permaslug": "minimax/minimax-m3-20260531",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1440973469775,
-        "total_completion_tokens": 23954035693,
-        "total_requests": 28487357,
-        "input_output_ratio": 60.15577033627325
-      },
-      {
-        "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
-        "variant": "free",
-        "variant_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 3595420450035,
-        "total_completion_tokens": 18538690151,
-        "total_requests": 28676105,
-        "input_output_ratio": 193.94145005660275
-      },
-      {
-        "model_permaslug": "z-ai/glm-5.3-flash-20260826",
-        "variant": "standard",
-        "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 11599537450999,
-        "total_completion_tokens": 354228873812,
-        "total_requests": 297861138,
-        "input_output_ratio": 32.74588354746944
-      },
-      {
-        "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
-        "variant": "standard",
-        "variant_permaslug": "deepseek/deepseek-v4-flash-20260731",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 11265722724065,
-        "total_completion_tokens": 375922634125,
-        "total_requests": 527171443,
-        "input_output_ratio": 29.968194786374518
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 16669753795260,
+        "total_completion_tokens": 146305027457,
+        "total_requests": 141531751,
+        "input_output_ratio": 113.93835252967878
       },
       {
         "model_permaslug": "deepseek/deepseek-v4-pro-20260423",
         "variant": "standard",
         "variant_permaslug": "deepseek/deepseek-v4-pro-20260423",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1176955530229,
-        "total_completion_tokens": 75533293476,
-        "total_requests": 48376463,
-        "input_output_ratio": 15.581943750446506
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1227890377817,
+        "total_completion_tokens": 86620736171,
+        "total_requests": 49958836,
+        "input_output_ratio": 14.175478437322365
       },
       {
-        "model_permaslug": "z-ai/glm-5.3-20260816",
+        "model_permaslug": "anthropic/claude-sonnet-5-20260630",
         "variant": "standard",
-        "variant_permaslug": "z-ai/glm-5.3-20260816",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 2582990888625,
-        "total_completion_tokens": 62775307282,
-        "total_requests": 36646774,
-        "input_output_ratio": 41.14660685007334
+        "variant_permaslug": "anthropic/claude-sonnet-5-20260630",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1355756418978,
+        "total_completion_tokens": 20808863408,
+        "total_requests": 26590665,
+        "input_output_ratio": 65.1528337898925
       },
       {
-        "model_permaslug": "openai/gpt-5.6-sol-20260709",
+        "model_permaslug": "minimax/minimax-m3-20260531",
         "variant": "standard",
-        "variant_permaslug": "openai/gpt-5.6-sol-20260709",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1620578760046,
-        "total_completion_tokens": 20431805126,
-        "total_requests": 31566399,
-        "input_output_ratio": 79.31647497869739
+        "variant_permaslug": "minimax/minimax-m3-20260531",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1435819426709,
+        "total_completion_tokens": 25004258384,
+        "total_requests": 28874748,
+        "input_output_ratio": 57.42299590168081
       },
       {
-        "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
-        "variant": "standard",
-        "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 4233036782019,
-        "total_completion_tokens": 232070643923,
-        "total_requests": 479409408,
-        "input_output_ratio": 18.24029403487803
+        "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
+        "variant": "free",
+        "variant_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604:free",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 3541914195753,
+        "total_completion_tokens": 18631027664,
+        "total_requests": 28260424,
+        "input_output_ratio": 190.10836437095207
       },
       {
-        "model_permaslug": "anthropic/claude-opus-5-20260723",
+        "model_permaslug": "z-ai/glm-5.3-flash-20260826",
         "variant": "standard",
-        "variant_permaslug": "anthropic/claude-opus-5-20260723",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1373995388889,
-        "total_completion_tokens": 27248844946,
-        "total_requests": 19137816,
-        "input_output_ratio": 50.42398647032178
-      },
-      {
-        "model_permaslug": "z-ai/glm-5.2-20260616",
-        "variant": "standard",
-        "variant_permaslug": "z-ai/glm-5.2-20260616",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1846551519077,
-        "total_completion_tokens": 44418524587,
-        "total_requests": 50472421,
-        "input_output_ratio": 41.57165363429094
+        "variant_permaslug": "z-ai/glm-5.3-flash-20260826",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 11560015148855,
+        "total_completion_tokens": 329749937047,
+        "total_requests": 283688185,
+        "input_output_ratio": 35.056913891714636
       },
       {
         "model_permaslug": "tencent/hy3-20260706",
         "variant": "standard",
         "variant_permaslug": "tencent/hy3-20260706",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 3581415907549,
-        "total_completion_tokens": 59386976740,
-        "total_requests": 63473294,
-        "input_output_ratio": 60.306419086269855
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 3735988218974,
+        "total_completion_tokens": 61490332848,
+        "total_requests": 65173706,
+        "input_output_ratio": 60.75732632980071
+      },
+      {
+        "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
+        "variant": "standard",
+        "variant_permaslug": "deepseek/deepseek-v4-flash-20260731",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 11193761375232,
+        "total_completion_tokens": 369113569836,
+        "total_requests": 513564942,
+        "input_output_ratio": 30.32606300604303
+      },
+      {
+        "model_permaslug": "openai/gpt-5.6-sol-20260709",
+        "variant": "standard",
+        "variant_permaslug": "openai/gpt-5.6-sol-20260709",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1623477967110,
+        "total_completion_tokens": 20291836197,
+        "total_requests": 30416972,
+        "input_output_ratio": 80.00645931441234
+      },
+      {
+        "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
+        "variant": "standard",
+        "variant_permaslug": "deepseek/deepseek-v4-flash-20260423",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 4130520896708,
+        "total_completion_tokens": 227209887589,
+        "total_requests": 473144441,
+        "input_output_ratio": 18.179318429045217
+      },
+      {
+        "model_permaslug": "z-ai/glm-5.3-20260816",
+        "variant": "standard",
+        "variant_permaslug": "z-ai/glm-5.3-20260816",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 2464463462029,
+        "total_completion_tokens": 55850991529,
+        "total_requests": 34873489,
+        "input_output_ratio": 44.12568863257074
       },
       {
         "model_permaslug": "moonshotai/kimi-k3-20260715",
         "variant": "standard",
         "variant_permaslug": "moonshotai/kimi-k3-20260715",
-        "date": "2026-09-12 00:00:00",
-        "total_prompt_tokens": 1462165737399,
-        "total_completion_tokens": 21863834443,
-        "total_requests": 24710257,
-        "input_output_ratio": 66.87599749307158
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1448068612893,
+        "total_completion_tokens": 23475953029,
+        "total_requests": 24771442,
+        "input_output_ratio": 61.683059729425736
+      },
+      {
+        "model_permaslug": "z-ai/glm-5.2-20260616",
+        "variant": "standard",
+        "variant_permaslug": "z-ai/glm-5.2-20260616",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1687970351744,
+        "total_completion_tokens": 44414631283,
+        "total_requests": 48127990,
+        "input_output_ratio": 38.00482640480868
+      },
+      {
+        "model_permaslug": "anthropic/claude-opus-5-20260723",
+        "variant": "standard",
+        "variant_permaslug": "anthropic/claude-opus-5-20260723",
+        "date": "2026-09-13 00:00:00",
+        "total_prompt_tokens": 1218749516899,
+        "total_completion_tokens": 24580757058,
+        "total_requests": 16816241,
+        "input_output_ratio": 49.581447553599595
       }
     ],
     "window": {
-      "start_date": "2026-09-06",
-      "end_date": "2026-09-12"
+      "start_date": "2026-09-07",
+      "end_date": "2026-09-13"
     },
     "provenance": {
       "source": "OpenRouter weekly model rankings",
       "url": "https://openrouter.ai/rankings?view=week",
-      "collected_at": "2026-09-13T23:23:57.241Z",
+      "collected_at": "2026-09-14T00:59:14.386Z",
       "basis": "measured"
     },
-    "response_sha256": "fc2a4e5dc3636574733e38171270af64209e1e4f4c08a7362461e8055ec68ce2"
+    "response_sha256": "34037289e969cb40ae8eefe0032f3c8e8d0507c50d4a0b09580c1ad71ef1b2c0"
   },
   "rankings_attempt": {
     "source": "OpenRouter weekly model rankings",
     "url": "https://openrouter.ai/rankings?view=week",
-    "collected_at": "2026-09-13T23:23:57.241Z",
+    "collected_at": "2026-09-14T00:59:14.386Z",
     "basis": "measured",
     "status": "available"
   },
@@ -4379,8 +5178,8 @@
     "catalog_models": 445,
     "eligible_page_models": 314,
     "pages_selected": 4,
-    "pages_succeeded_this_run": 3,
-    "retained_model_pages": 23,
+    "pages_succeeded_this_run": 4,
+    "retained_model_pages": 27,
     "policy": "At most four model pages per normal daily run, oldest-attempt first; explicit initial batches capped at twelve. Per-observation dates are retained."
   }
 }

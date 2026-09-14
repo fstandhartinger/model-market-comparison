@@ -81,7 +81,7 @@ credited below, the rest is marked open.
 | R7.2 | Favicon / apple-touch / og from the new logo | verified | `ux-evidence/review-20260913T110002Z/asset-status.txt` | Current canonical and legacy hosts return HTTP 200 for manifest, icon, Apple touch icon and OG PNG; generator/assets remain in source |
 | R7.3 | Dark-mode logo variant, switched with the theme | verified | `ux-evidence/review-20260913T110002Z/fable-canonical-fixed2/{desktop_light-simple,desktop_dark-simple}.png` | Current live light/dark screenshots show the theme-switched mark; BrandMark reads theme CSS variables |
 | R8.1 | Release-post-style benchmark comparisons and listings | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260913T075003Z-r81-postfix-canonical/verification.json`, `…-legacy/verification.json` | **Codex independent gate:** both hosts show seven measured-only category snapshot cards, a full comparison table and 14 best cells; mobile has a dedicated table scroll region but no page-level horizontal overflow. Missing/low-sample values remain gaps in the rendered table |
-| R9.1 | Full fresh data run, every live source dated today | open | `/opt/benchmarkheaven/state/ux-evidence/iter41-aa-lag-20260914/verification.json`; `/opt/benchmarkheaven-daily/runs/2026-09-14T00-27-01-297Z-2126450/reports/summary.txt` | 2026-09-14 dry-run: AA (650 API / 646 leaderboard rows, four explicit K2 Horizon metadata lag rows) and DesignArena passed after the bounded lag fix; OpenRouter then failed closed on the unapproved removal `OpenInference/open-inference/fp4/fp4` from `z-ai/glm-5.3-flash`. No new dataset was published and stale curated source dates remain. |
+| R9.1 | Full fresh data run, every live source dated today | open | `/opt/benchmarkheaven/state/ux-evidence/iter42-openrouter-withdrawal/refresh-result.json`; `/opt/benchmarkheaven/state/ux-evidence/iter41-aa-lag-20260914/verification.json` | 2026-09-14 scoped OpenRouter + efficiency refresh now succeeds after an expiring, independently reviewed one-identity withdrawal approval; dataset rebuilt to 841/657/91/2832. R9.1 remains open because curated vendor catalogs/provider metadata still retain original 2026-09-08/07-12 dates and the full all-source run has not completed. |
 | H1 | Historical snapshots of all benchmark scores | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` plus `iter20/h1h2-indep/verification.json` | Claude's independent verification remains valid; Codex rechecked the current live hosts, retained state/API shape and current six headline IDs. |
 | H2 | Bridged comparison via anchor models, uncertainty reported | verified | `ux-evidence/review-20260913T110002Z/iter20-{canonical,legacy}/verification.json` plus `iter20/h1h2-indep/verification.json` | Claude's independent verification remains valid; Codex rechecked current live uncertainty labels and the 266/266 chain/headline tests. |
 | H3 | UI filter "better than model X in category Y" | verified | `ux-evidence/iter14-indep-review/h3-functional.json`, `h3-1440.png`, `h3-390.png` — **independent verification (claude-opus, iteration 14; implementer codex-luna):** live `0e7380c`, Advanced 16 rows → reference GLM-5.3-Flash + "Coding median · 13 benchmarks" → 9 rows, status names "measured" and "Missing values stay unknown and are excluded", no overflow at 1440/390. Original evidence: | `/opt/benchmarkheaven/state/ux-evidence/iter10-h3/verification.json` | Advanced-only folded filter supports exact benchmarks and category medians; measured values win, explicit bridge estimates are marked approximate, and missing values stay unknown. Live on both hosts in desktop/mobile light/dark; independent-engine verification remains required. |
@@ -1254,3 +1254,17 @@ Notes for whoever picks this up:
   `npm run build` (21 pages), and `git diff --check`. R9.1 remains open until the full refresh
   completes and all source-date requirements are met; the OpenRouter withdrawal requires an
   independent, expiring approval before the next attempt.
+
+- **2026-09-14 · iteration 42 · codex-luna** — repaired OpenRouter approval resolution and
+  completed the scoped live refresh. Multiple historical approvals for one model are now
+  resolved only by the complete current endpoint-set digest; an older approval cannot mask a
+  newer withdrawal. Added a regression test covering the duplicate-model approval case.
+  Kimi K3 independently reviewed the exact `z-ai/glm-5.3-flash` withdrawal and returned pass;
+  the bounded approval expires at 2026-09-14T12:00Z and names only
+  `OpenInference/open-inference/fp4/fp4`. OpenRouter, OpenRouter-efficiency and Chutes-efficiency
+  refreshes completed; the dataset rebuild reports 841 models, 657 families, 91 providers and
+  2,832 offers. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter42-openrouter-withdrawal/`.
+  Full gates passed: `npm test` 276/276, score validator, `npx tsc --noEmit -p .`, `npm run build`,
+  `node scripts/build-dataset.mjs` and `git diff --check`. R9.1 stays open because the other
+  curated vendor/provider source snapshots were intentionally not redated or refreshed in this
+  scoped run; no full all-source freshness claim is made.
