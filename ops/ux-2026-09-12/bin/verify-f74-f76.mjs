@@ -44,14 +44,18 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   }
   check(`${tag} F-75 result actions are single-line`, g.btns.length === 3 && g.btns.every((x) => x.h <= 46), JSON.stringify(g.btns));
   check(`${tag} no horizontal overflow`, g.sw <= vp.width, `scrollWidth=${g.sw}`);
-  // F-76: Real-SWE board's evaluation-group select.
-  await go('/benchmarks');
-  const sel = p.locator('select').nth(1);
-  const opts = await sel.locator('option').allTextContents();
-  const o = opts.find((t) => /real-?swe/i.test(t));
-  if (o) { await sel.selectOption({ label: o }); await p.waitForTimeout(800); }
-  const f76 = await p.evaluate(() => [...document.querySelectorAll('select option')].map((x) => x.textContent).filter((t) => /measured catalog peers/.test(t)));
-  check(`${tag} F-76 no "0 measured catalog peers" option`, !!o && !f76.some((t) => /\b0 measured/.test(t)), `real-swe=${!!o} peers-options=${JSON.stringify(f76)}`);
+  // F-76: Real-SWE board's evaluation-group select. Since CR-1.1 the Benchmarks tab opens the
+  // comparison matrix, so the single-benchmark board is reached directly via ?benchmark=….
+  await go('/benchmarks?benchmark=' + encodeURIComponent('realswe::snapshot-2026-09-12'));
+  await p.waitForTimeout(1200);
+  const f76 = await p.evaluate(() => {
+    const sels = [...document.querySelectorAll('select')];
+    const bench = sels.find((s) => /realswe/i.test(s.value));
+    const cohort = sels.find((s) => [...s.options].some((o) => /claude code|codex cli|gemini cli/i.test(o.textContent)));
+    return { board: !!bench, peers: [...(cohort?.options ?? [])].map((o) => o.textContent) };
+  });
+  check(`${tag} F-76 Real-SWE board loads behind ?benchmark= (matrix landing since CR-1.1)`, f76.board, `board=${f76.board}`);
+  check(`${tag} F-76 no "0 measured catalog peers" option`, f76.board && !f76.peers.some((t) => /\b0 measured/.test(t)), `peers=${JSON.stringify(f76.peers)}`);
   check(`${tag} no page errors`, errors.length === 0, errors.join(' | ').slice(0, 300));
   await c.close();
 }
