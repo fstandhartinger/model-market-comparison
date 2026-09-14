@@ -3,10 +3,10 @@ import { getDataset } from "./data";
 import { getBenchmarkView } from "./benchmark-data";
 import { buildBenchmarkMatrix, type BenchmarkMatrix } from "./benchmark-matrix.mjs";
 import { clientData } from "./client-model";
-import { isEuOffer } from "./cost";
+import { DEFAULT_PRICE_SETTINGS, isEuOffer, offerPrice, priceContext } from "./cost";
 import { selectableModels } from "./variants";
 import type { Dataset } from "./types";
-import type { MatrixFilterData, MatrixOffer } from "./top-models";
+import type { MatrixFilterData, MatrixModel, MatrixOffer } from "./top-models";
 
 let cached: { dataset: Dataset; value: { matrix: BenchmarkMatrix; filterData: MatrixFilterData } } | undefined;
 
@@ -24,10 +24,17 @@ export async function getBenchmarkMatrixPage() {
     composite_coverage: m.composite_coverage, benchmark_count: m.benchmark_count, family_alive: alive.has(m.family_key),
   }));
   const offers: Record<string, MatrixOffer[]> = {};
+  const byId = new Map(cd.models.map((m) => [m.id, m]));
   for (const m of models) {
     const seen = new Set<string>();
-    offers[m.id] = (cd.offersByModel[m.id] ?? []).map((o) => ({ key: o.key, tee: !!o.tee, eu_hosted: isEuOffer(o), data_private: o.data_private }))
+    // CR-2.4 "Best value": each route's adjusted $/task at the default adjusted settings, so the
+    // client can take the cheapest route inside the active scope exactly as modelPrice does.
+    const context = priceContext(byId.get(m.id)!, cd, DEFAULT_PRICE_SETTINGS);
+    offers[m.id] = (cd.offersByModel[m.id] ?? []).map((o) => ({ key: o.key, tee: !!o.tee, eu_hosted: isEuOffer(o), data_private: o.data_private, cost: offerPrice(o, context).value }))
       .filter((o) => { const k = JSON.stringify(o); if (seen.has(k)) return false; seen.add(k); return true; });
+    const source = byId.get(m.id)!;
+    const reference = offerPrice({ key: "AA reference", source: "", provider: "", platform: "Artificial Analysis", region: "unspecified", input_per_1m: source.aa_ref_input, output_per_1m: source.aa_ref_output }, context).value;
+    (m as MatrixModel).ref_cost = reference;
   }
   const providers = cd.providers.map((p) => ({ key: p.key, provider: p.provider, country: p.country ?? null, non_us: p.non_us }));
   const value = { matrix, filterData: { models, offers, providers } };

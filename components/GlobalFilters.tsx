@@ -6,6 +6,9 @@ import { useSettings } from "./SettingsContext";
 import { ScoreSelect, Toggle, ProviderFilter, ModelFilter, NumFilter, type FamilyOption } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { defaultMinFor, DEFAULT_BLEND, FIXED_BLENDS } from "../lib/cost";
+import { SETTINGS_DEFAULTS } from "../lib/settings-state";
+import { FILTER_PRESETS, matchingFilterPreset, pickFilters, resolveFilterPatch } from "../lib/presets.mjs";
+import { PresetMenu, usePresetStore } from "./PresetMenu";
 
 /** R4.1: the bar is grouped instead of being one long row of equal-looking toggles.
  *  What almost everyone changes (score, min score, price basis) sits on the first line;
@@ -22,6 +25,17 @@ function Section({ title, hint, children }: { title: string; hint?: string; chil
       <div className="flex flex-wrap items-center gap-2">{children}</div>
     </div>
   );
+}
+
+function FilterPresets() {
+  const s = useSettings();
+  const { store } = usePresetStore();
+  const floor = (score: string) => defaultMinFor(score as Parameters<typeof defaultMinFor>[0]);
+  const activeId = matchingFilterPreset(s, SETTINGS_DEFAULTS, floor, store.filters);
+  return <PresetMenu kind="filters" label="Presets" noun="filters" fallback={s.userFiltersActive ? "Custom" : "None"} ours={FILTER_PRESETS} activeId={activeId} align="right" direction="up"
+    onOurs={(id) => s.applyFilters(resolveFilterPatch(FILTER_PRESETS.find((p) => p.id === id)!.patch, SETTINGS_DEFAULTS, floor))}
+    onYours={(p) => s.applyFilters(resolveFilterPatch(p.value as Record<string, unknown>, SETTINGS_DEFAULTS, floor))}
+    current={pickFilters(s)} />;
 }
 
 export function GlobalFilters({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
@@ -161,6 +175,8 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           {s.resultCount != null ? `Show ${s.resultCount} models` : "Show results"}
         </button>
         {active && <button type="button" onClick={reset} className="inline-flex min-h-10 items-center rounded-md border border-line px-3 text-sm text-gray-400 hover:text-gray-200">Reset</button>}
+        {/* CR-4.1: filter presets — ours and yours — in the same control as model and row presets (CR-4.2). */}
+        <div className="ml-auto"><FilterPresets /></div>
       </div>
       </div>
     </div>

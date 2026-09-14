@@ -4,14 +4,16 @@ import { useEffect, useMemo, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, resultHref, chartRows, IMPORTANT_TAGS, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
-import { BenchmarkBars, seriesColor, seriesLetter } from "./BenchmarkBars";
-import { topModelIds, type MatrixFilterData } from "../lib/top-models";
+import { rowBars, rowWinners, formatValue, resultHref, chartRows, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { MODEL_PRESETS, ROW_PRESETS, modelsForPreset, rowFilter } from "../lib/presets.mjs";
+import { filteredCandidates, type MatrixFilterData } from "../lib/top-models";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
+import { BenchmarkBars, seriesColor, seriesLetter } from "./BenchmarkBars";
+import { PresetMenu } from "./PresetMenu";
 
-type Preset = "all" | "important" | "complete";
-const PRESETS: [Preset, string][] = [["all", "All"], ["important", "Important"], ["complete", "Full coverage"]];
 const MIN_MODELS = 2, MAX_MODELS = 10;
+const ROW_IDS = new Set(ROW_PRESETS.map((p) => p.id));
+const MODEL_IDS = new Set(MODEL_PRESETS.map((p) => p.id));
 
 function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
   const t = tags[id];
@@ -24,26 +26,69 @@ function cellHref(row: MatrixRow, modelId: string, ids: string[], pinned: boolea
   return row.ranking ? resultHref(row.id, modelId, ids, pinned) : `/models/${encodeURIComponent(modelId)}`;
 }
 
+/** CR-3.1: the custom row checklist — one toggle per category, and the benchmarks inside it. */
+function RowPicker({ rows, groups, selected, onChange }: { rows: MatrixRow[]; groups: Matrix["groups"]; selected: Set<string>; onChange: (keys: string[]) => void }) {
+  const set = (keys: string[], on: boolean) => { const n = new Set(selected); keys.forEach((k) => on ? n.add(k) : n.delete(k)); onChange([...n]); };
+  return <details className="bh-rowpicker rounded-xl border border-line/70 px-3 py-2">
+    <summary className="cursor-pointer text-sm font-medium">Choose rows <span className="bh-muted font-normal tabular">({selected.size} of {new Set(rows.map((r) => r.key)).size})</span></summary>
+    <div className="mt-2 grid gap-x-6 gap-y-3 sm:grid-cols-2 xl:grid-cols-3">
+      {groups.map((g) => {
+        const keys = [...new Set(rows.filter((r) => r.group === g.id).map((r) => r.key))];
+        if (!keys.length) return null;
+        const on = keys.filter((k) => selected.has(k)).length;
+        return <fieldset key={g.id} className="min-w-0">
+          <legend className="w-full">
+            <label className="flex min-h-11 items-center gap-2 text-sm font-semibold">
+              <input type="checkbox" checked={on === keys.length} ref={(el) => { if (el) el.indeterminate = on > 0 && on < keys.length; }} onChange={(e) => set(keys, e.target.checked)} />
+              {g.label} <span className="bh-muted text-xs font-normal tabular">{on}/{keys.length}</span>
+            </label>
+          </legend>
+          <details><summary className="bh-muted cursor-pointer pl-6 text-xs">Benchmarks</summary>
+            <ul className="grid gap-0.5 pl-6">{keys.map((k) => { const r = rows.find((x) => x.key === k)!; return <li key={k}>
+              <label className="flex min-h-9 items-center gap-2 text-sm"><input type="checkbox" checked={selected.has(k)} onChange={(e) => set([k], e.target.checked)} /><span className="truncate">{r.name}</span></label>
+            </li>; })}</ul>
+          </details>
+        </fieldset>;
+      })}
+    </div>
+  </details>;
+}
+
 /** CR-1: release-style comparison — models as columns, benchmarks as rows, grouped by category. */
 export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filterData: MatrixFilterData }) {
   const s = useSettings();
   const [count, setCount] = useState(5);
-  // null = automatic top-N from the filters (CR-1.2); a list = the user's own columns.
+  // null = a model preset computed from the filters (CR-1.2, CR-2.4); a list = the user's own columns.
   const [pinned, setPinned] = useState<string[] | null>(null);
-  const [preset, setPreset] = useState<Preset>("all");
+  const [modelPreset, setModelPreset] = useState("top");
+  const [savedModels, setSavedModels] = useState<string | null>(null);
+  // A built-in row preset id, or a list of benchmark keys (custom / saved).
+  const [rowSel, setRowSel] = useState<string | string[]>("all");
+  const [savedRows, setSavedRows] = useState<string | null>(null);
   const [closed, setClosed] = useState<Set<string>>(new Set());
   const [q, setQ] = useState("");
   const modelsById = useMemo(() => new Map(filterData.models.map((m) => [m.id, m])), [filterData]);
 
+  // CR-2.5: ?models=, ?set= (model preset), ?rows= (row preset id or benchmark keys).
   useEffect(() => {
     const p = new URLSearchParams(location.search);
     const ids = (p.get("models") ?? "").split(",").filter((id) => modelsById.has(id));
     if (ids.length) setPinned(ids.slice(0, MAX_MODELS));
+    const set = p.get("set");
+    if (set && MODEL_IDS.has(set)) setModelPreset(set);
+    const rows = p.get("rows");
+    if (rows) setRowSel(ROW_IDS.has(rows) ? rows : rows.split(",").filter(Boolean));
   }, [modelsById]);
+  const writeUrl = (patch: Record<string, string | null>) => {
+    const u = new URL(location.href);
+    for (const [k, v] of Object.entries(patch)) if (v) u.searchParams.set(k, v); else u.searchParams.delete(k);
+    history.replaceState(history.state, "", u);
+  };
 
   const { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining } = s;
-  const auto = useMemo(() => topModelIds(filterData, { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining }, count),
-    [filterData, score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining, count]);
+  const candidates = useMemo(() => filteredCandidates(filterData, { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining }),
+    [filterData, score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining]);
+  const auto = useMemo(() => modelsForPreset(modelPreset, candidates, score, count), [modelPreset, candidates, score, count]);
   const ids = pinned ?? auto;
   // Release tables name the model, not its effort setting: strip the variant parenthetical, and
   // keep it only when two compared columns would otherwise read the same.
@@ -53,27 +98,21 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
     return ids.map((id, j) => short.filter((x) => x === short[j]).length > 1 ? (modelsById.get(id)?.display_name ?? id) : short[j]);
   }, [ids, modelsById, preferred]);
 
-  const writeUrl = (next: string[] | null) => {
-    const u = new URL(location.href);
-    if (next) u.searchParams.set("models", next.join(",")); else u.searchParams.delete("models");
-    history.replaceState(history.state, "", u);
-  };
-  const pin = (next: string[]) => { setPinned(next); writeUrl(next); };
-  const reset = () => { setPinned(null); writeUrl(null); };
+  const pin = (next: string[]) => { setPinned(next); setSavedModels(null); writeUrl({ models: next.join(","), set: null }); };
+  const useModelPreset = (id: string) => { setPinned(null); setModelPreset(id); setSavedModels(null); writeUrl({ models: null, set: id === "top" ? null : id }); };
+  const reset = () => useModelPreset("top");
   const remove = (id: string) => pin(ids.filter((x) => x !== id));
   const add = (id: string) => { if (!ids.includes(id) && ids.length < MAX_MODELS) pin([...ids, id]); setQ(""); };
+  const chooseRows = (sel: string | string[], savedId: string | null = null) => { setRowSel(sel); setSavedRows(savedId); writeUrl({ rows: sel === "all" ? null : Array.isArray(sel) ? sel.join(",") : sel }); };
 
   const lookups = useMemo(() => ids.map((id) => new Map((matrix.values[id] ?? []).map(([i, v, b]) => [i, [v, b] as const]))), [ids, matrix]);
-  const visible = useMemo(() => matrix.rows.map((row, i) => ({ row, vals: lookups.map((m) => m.get(i)?.[0] ?? null), basis: lookups.map((m) => m.get(i)?.[1] ?? null) }))
-    .filter(({ row, vals }) => {
-      const n = vals.filter((v) => v != null).length;
-      if (n === 0) return false;
-      if (preset === "important") return row.group === "indices" || row.tags.some((t) => IMPORTANT_TAGS.has(t));
-      if (preset === "complete") return n === ids.length;
-      return true;
-    }), [matrix, lookups, preset, ids.length]);
+  const match = useMemo(() => rowFilter(rowSel), [rowSel]);
+  const withValues = useMemo(() => matrix.rows.map((row, i) => ({ row, vals: lookups.map((m) => m.get(i)?.[0] ?? null), basis: lookups.map((m) => m.get(i)?.[1] ?? null) }))
+    .filter(({ vals }) => vals.some((v) => v != null)), [matrix, lookups]);
+  const visible = useMemo(() => withValues.filter(({ row, vals }) => match(row, vals.filter((v) => v != null).length, ids.length)), [withValues, match, ids.length]);
   const chart = useMemo(() => chartRows(matrix.rows, lookups.map((m) => new Map([...m].map(([i, [v]]) => [i, v])))), [matrix, lookups]);
   const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id) })).filter((g) => g.rows.length);
+  const selectedKeys = useMemo(() => new Set(visible.map((v) => v.row.key)), [visible]);
   const matches = useMemo(() => {
     const t = q.trim().toLowerCase();
     if (!t) return [];
@@ -81,36 +120,44 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
       .sort((a, b) => b.benchmark_count - a.benchmark_count || a.display_name.localeCompare(b.display_name)).slice(0, 8);
   }, [q, filterData, ids]);
   const toggle = (id: string) => setClosed((c) => { const n = new Set(c); if (n.has(id)) n.delete(id); else n.add(id); return n; });
+  const presetName = MODEL_PRESETS.find((p) => p.id === modelPreset)?.name ?? "";
+  const modelsActive = pinned ? savedModels : modelPreset;
+  const rowsActive = Array.isArray(rowSel) ? savedRows : rowSel;
 
   return <section aria-label="Benchmark comparison" className="space-y-4">
     <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
       <p className="text-sm" role="status">
         <span className="font-semibold tabular">{visible.length}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
-        <span className="bh-muted"> · {pinned ? "your selection" : `top ${ids.length} by ${SCORE_SHORT_LABELS[score]} under your filters`}</span>
+        <span className="bh-muted"> · {pinned ? "your selection" : modelPreset === "top" ? `top ${ids.length} by ${SCORE_SHORT_LABELS[score]} under your filters` : `${presetName} · ${ids.length} under your filters`}</span>
       </p>
       <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
         {pinned
-          ? <button type="button" className="bh-button" onClick={reset}>Reset to top {count}</button>
-          : <label className="flex items-center gap-2 text-sm">Models<select className="bh-input !py-2" value={count} onChange={(e) => setCount(Number(e.target.value))}>{Array.from({ length: MAX_MODELS - MIN_MODELS + 1 }, (_, i) => i + MIN_MODELS).map((n) => <option key={n} value={n}>{n}</option>)}</select></label>}
-        <div role="group" aria-label="Benchmark rows" className="flex gap-1 rounded-lg border border-line p-0.5">
-          {PRESETS.map(([p, label]) => <button key={p} type="button" aria-pressed={preset === p} onClick={() => setPreset(p)}
-            className={`h-9 min-h-0 rounded-md px-3 text-sm ${preset === p ? "bg-accent text-ink" : "text-gray-300"}`}>{label}</button>)}
-        </div>
+          ? <button type="button" className="bh-button !min-h-9 !py-1.5 text-sm" onClick={reset}>Reset to top {count}</button>
+          : <label className="flex items-center gap-2 text-sm">Models<select className="bh-input !py-1.5" value={count} onChange={(e) => setCount(Number(e.target.value))}>{Array.from({ length: MAX_MODELS - MIN_MODELS + 1 }, (_, i) => i + MIN_MODELS).map((n) => <option key={n} value={n}>{n}</option>)}</select></label>}
+        <PresetMenu kind="models" label="Models" ours={MODEL_PRESETS.map((p) => p.id === "top" ? { ...p, name: `Frontier top ${count}` } : p)} activeId={modelsActive}
+          onOurs={useModelPreset} onYours={(p) => { const keep = (p.value as string[]).filter((id) => modelsById.has(id)).slice(0, MAX_MODELS); if (keep.length) { pin(keep); setSavedModels(p.id); } }} current={ids} />
+        <PresetMenu kind="rows" label="Rows" ours={ROW_PRESETS} activeId={rowsActive} align="right"
+          onOurs={(id) => chooseRows(id)} onYours={(p) => chooseRows(p.value as string[], p.id)} current={[...selectedKeys]} />
       </div>
     </div>
 
-    {ids.length < MAX_MODELS && <div className="relative w-full max-w-xs">
-      <input id="bh-matrix-add" type="search" role="combobox" aria-label="Add a model to the comparison" aria-expanded={matches.length > 0} aria-controls="bh-matrix-add-list" autoComplete="off"
-        className="bh-input block w-full !py-2" placeholder="+ Add a model" value={q} onChange={(e) => setQ(e.target.value)}
-        onKeyDown={(e) => { if (e.key === "Enter" && matches[0]) { e.preventDefault(); add(matches[0].id); } if (e.key === "Escape") setQ(""); }} />
-      {matches.length > 0 && <ul id="bh-matrix-add-list" role="listbox" className="absolute left-0 right-0 top-full z-20 mt-1 grid gap-0.5 rounded-xl border border-line bg-panel p-1 shadow-lg">
-        {matches.map((m) => <li key={m.id} role="option" aria-selected={false}><button type="button" className="flex min-h-11 w-full items-center justify-between gap-3 rounded-md px-3 text-left text-sm hover:bg-accent/10" onClick={() => add(m.id)}>
-          <span className="font-medium">{m.display_name}</span><span className="bh-muted text-xs">{m.org} · {m.benchmark_count} benchmarks</span></button></li>)}
-      </ul>}
-    </div>}
+    <div className="flex flex-wrap items-start gap-3">
+      {ids.length < MAX_MODELS && <div className="relative w-full max-w-xs">
+        <input id="bh-matrix-add" type="search" role="combobox" aria-label="Add a model to the comparison" aria-expanded={matches.length > 0} aria-controls="bh-matrix-add-list" autoComplete="off"
+          className="bh-input block w-full !py-2" placeholder="+ Add a model" value={q} onChange={(e) => setQ(e.target.value)}
+          onKeyDown={(e) => { if (e.key === "Enter" && matches[0]) { e.preventDefault(); add(matches[0].id); } if (e.key === "Escape") setQ(""); }} />
+        {matches.length > 0 && <ul id="bh-matrix-add-list" role="listbox" className="absolute left-0 right-0 top-full z-20 mt-1 grid gap-0.5 rounded-xl border border-line bg-panel p-1 shadow-lg">
+          {matches.map((m) => <li key={m.id} role="option" aria-selected={false}><button type="button" className="flex min-h-11 w-full items-center justify-between gap-3 rounded-md px-3 text-left text-sm hover:bg-accent/10" onClick={() => add(m.id)}>
+            <span className="font-medium">{m.display_name}</span><span className="bh-muted text-xs">{m.org} · {m.benchmark_count} benchmarks</span></button></li>)}
+        </ul>}
+      </div>}
+      <div className="min-w-0 flex-1 basis-72"><RowPicker rows={withValues.map((v) => v.row)} groups={matrix.groups} selected={selectedKeys} onChange={(keys) => chooseRows(keys)} /></div>
+    </div>
 
     {ids.length === 0
-      ? <div className="bh-empty min-h-56"><h3 className="font-semibold">No model passes your filters</h3><p className="mt-2">Widen the filters, or add a model above.</p></div>
+      ? <div className="bh-empty min-h-56"><h3 className="font-semibold">No model passes your filters</h3><p className="mt-2">Widen the filters, pick another model list, or add a model above.</p></div>
+      : visible.length === 0
+      ? <div className="bh-empty min-h-40"><h3 className="font-semibold">No benchmark matches these rows</h3><p className="mt-2">Pick another row preset, or tick categories under “Choose rows”.</p></div>
       : <div className="bh-matrix-wrap" role="region" aria-label="Benchmark results by model" tabIndex={0}>
         <table className="bh-matrix">
           <caption className="sr-only">Benchmark results for the compared models, grouped by category. Bold marks the best result in each row; the bar behind a value shows it relative to the other values in its row.</caption>

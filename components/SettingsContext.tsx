@@ -53,6 +53,8 @@ interface SettingsCtx extends SettingsState {
   setFamilies: (k: string[]) => void;
   setPriceMode: (m: PriceMode) => void;
   setInputWeight: (n: number) => void;
+  /** CR-4.1: replace every filter key at once with a resolved preset (lib/presets.mjs). */
+  applyFilters: (filters: Record<string, unknown>) => void;
   excludedSet: Set<string> | null; // null = nothing excluded
   familySet: Set<string> | null;   // null = all
 }
@@ -151,6 +153,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setFamilies: (families) => setState((s) => ({ ...s, families })),
     setPriceMode: (priceMode) => setState((s) => ({ ...s, priceMode })),
     setInputWeight: (inputWeight) => setState((s) => isBlendValue(inputWeight) ? { ...s, inputWeight } : s),
+    // Sanitised like a stored payload, so a saved preset from an older build cannot wedge the UI.
+    applyFilters: (filters) => setState((s) => ({ ...s, ...sanitizeSettings({ ...s, ...filters, advancedMinScore: filters.advancedMinScore ?? s.advancedMinScore }) })),
     excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,
   }), [state, advancedView, filtersOpen, resultCount, openFilters, closeFilters, toggleFilters]);
