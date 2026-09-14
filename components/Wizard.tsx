@@ -239,11 +239,12 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
             <p className="bh-eyebrow">Your answers</p>
             <h2 className="mt-1 text-lg font-semibold">Models that fit</h2>
           </div>
-          <div className="flex gap-2">
+          {/* F-75: on phones the actions take their own full-width row and wrap between buttons, never inside one. */}
+          <div className="flex w-full flex-wrap gap-2 md:w-auto">
             {/* F-10: "Change answers" is the primary action; leaving for Advanced is secondary. */}
-            <button type="button" onClick={() => setStep(4)} className="rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-ink">← Change answers</button>
-            <button type="button" onClick={restart} className="rounded-md border border-line px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">Start over</button>
-            <button type="button" onClick={onFinish} className="px-2 py-1.5 text-sm text-gray-500 underline-offset-2 hover:text-gray-200 hover:underline">Open in Advanced</button>
+            <button type="button" onClick={() => setStep(4)} className="whitespace-nowrap rounded-md bg-accent px-3 py-1.5 text-sm font-medium text-ink">← Change answers</button>
+            <button type="button" onClick={restart} className="whitespace-nowrap rounded-md border border-line px-3 py-1.5 text-sm text-gray-400 hover:text-gray-200">Start over</button>
+            <button type="button" onClick={onFinish} className="whitespace-nowrap px-2 py-1.5 text-sm text-gray-500 underline-offset-2 hover:text-gray-200 hover:underline">Open in Advanced</button>
           </div>
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5 text-xs">

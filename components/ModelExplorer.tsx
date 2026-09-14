@@ -15,6 +15,7 @@ import { ShortlistControls } from "./ShortlistControls";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
+import { capShortlist } from "../lib/shortlist.mjs";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
 const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: string; dp: number }[] = [
@@ -160,7 +161,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       }
       return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
     });
-    return limit ? r.slice(0, limit) : r;
+    if (!limit || r.length <= limit) return r;
+    // F-74: the cap is decided apart from the display order — Pareto line first, then the
+    // highest scores — so a cost-descending list (R5.2) never drops its cheapest member.
+    const keep = capShortlist(r.map((x) => ({ id: x.m.id, cost: x.price.value, score: x.sc })), limit);
+    return r.filter((x) => keep.has(x.m.id));
   }, [matching, sort, asc, limit]);
 
   // F-18: the Filters sheet's primary button reads "Show N models" for the ranking on screen.

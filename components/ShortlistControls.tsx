@@ -189,7 +189,7 @@ export function ShortlistControls({
             <button type="button" data-bh-filters-toggle onClick={openFilters} title="These models are what your filters allow — open the filters"
               className="min-h-0 text-accent underline decoration-dotted underline-offset-2">of {pool}</button>
             {" "}· {Math.max(0, pool - matching)} below your score line
-              {matching > limit && <> · the {limit} most expensive are listed</>}</>}
+              {matching > limit && <> · {limit} shown: the Pareto line first, then the highest scores</>}</>}
           {(minScore > 0 || maxCost != null) && (
             <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }} className="ml-2 text-accent underline underline-offset-2">
               show all {pool}
