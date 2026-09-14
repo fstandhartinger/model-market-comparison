@@ -1,8 +1,34 @@
 # T-Systems AI Foundation Services / LLM Hub — data collection method
 
-> **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
-> and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
-> Earlier dated collection notes below are historical, not current prices.
+> **Refreshed daily since 2026-09-14 by `scripts/fetch-t-systems-catalog.mjs`** (last manual audit:
+> 2026-09-08, see [September refresh audit](../research/refresh-2026-09-08.md)). The adjacent
+> JSON's `method`/`collected_at` hold current values. Earlier dated notes below are historical.
+
+## Executable collector (R9.1, 2026-09-14)
+
+`scripts/fetch-t-systems-catalog.mjs` + `lib/t-systems-catalog.mjs` (tests in
+`test/t-systems-catalog.test.mjs`), non-fatal daily step `fetch-t-systems-catalog` in
+`ops/daily/daily.mjs`. GETs of `/models/llms/` and `/models/coding/` (docs host robots.txt:
+`Allow: /`) and the ECB daily reference XML.
+
+- Columns located by header text (Model, Provider, Cloud, Input, Output, Context, In €/M, Out €/M,
+  Cached €/M, Plans); rows whose cell count differs (the "No models match…" filler) are ignored.
+- Prices are native EUR; `—`, `n/a` or empty = no price. Plan `Test` → `status: "preview"` (prices
+  stay null, as before); otherwise `active`. `Cached €/M` → `cache_read_per_1m_eur`/`_usd`.
+- Both tables are merged by model name; a model listed in both must carry identical prices/cloud.
+  Names are keyed with `≤`/`>` preserved, so the Gemini ≤200k / >200k tiers never merge.
+- **Audited hosting fields are kept for known models** (`hosting_class`, `server_location`,
+  `is_externally_hosted`, `eu_hosted`). Only a new model derives them from the Cloud column:
+  `Telekom…` → `sovereign_germany`; `Azure…` → `routed_azure_eu`; `GCP…` (including Claude's
+  "GCP / Azure") → `routed_gcp_eu`, the precedent of every audited Claude row. Unknown cloud text on a
+  new model fails the run. New models get `mapping: "derived"`.
+- USD = EUR × ECB rate, cents; rows no longer listed are dropped; fewer than half of the previous
+  models → fail closed.
+
+First run 2026-09-14 (ECB 1.1592 of 2026-09-11): 31 models. All 30 previous rows kept with identical
+EUR prices and hosting fields; USD moved by FX cents only; the six Telekom-hosted priced models gained
+their listed cached price (€0.03–€0.225); **GLM 5.3 Flash** added as a `preview` row (plan Test, no
+prices), like Qwen 3.8 27B.
 
 **Date collected:** 2026-07-22 (previous: 2026-07-12)
 **Output:** `data/raw/t-systems-llm-hub.json`
