@@ -166,3 +166,27 @@ plain HTML but fetch fine with curl and a browser User-Agent (verified
    usage terms are separate from API model pricing.
 7. Validate the JSON and confirm every numerical price maps directly to an
    official table entry or documented multiplier.
+
+## Executable collector (2026-09-14)
+
+`scripts/fetch-claude-api-catalog.mjs` (parser `lib/claude-api-catalog.mjs`, tests `test/claude-api-catalog.test.mjs`)
+runs as the non-fatal daily step `fetch-claude-api-catalog`. Three GETs with an identifying User-Agent:
+`platform.claude.com/docs/en/about-claude/pricing` and `…/model-deprecations` (robots.txt disallows only
+`/api/`), and `claude.com/pricing` (robots.txt allows all). All three are server-rendered.
+
+- `models[]`: the pricing page's model table (base input, 5m/1h cache writes, cache hits, output) and its
+  batch table, matched by model name. Rows labelled "retired" there, or `Retired` in the deprecations
+  lifecycle table, are excluded and listed in `excluded`. `lifecycle_status` and `tentative_retirement` come
+  from the lifecycle table by API model id; curated ids, aliases, availability and notes are kept. A name
+  that is new to the snapshot gets `mapping: derived` and a name-derived `model_id` marked as such.
+- `pricing_modifiers`: 5m/1h cache-write multipliers are derived from the table and must be uniform; the
+  cache-hit default and exception ("0.025x … standard 0.1x"), the batch discount and the US-only
+  `inference_geo` multiplier are read from the page prose. Missing prose fails the run.
+- `claude_code_enterprise`: only the seat price is re-read, from the Enterprise line "Seat price + usage at
+  API rates | $20 | /seat" on claude.com/pricing → `seat_and_usage_checked_at`. Minimum seats, sales-assisted
+  options and the legacy-seat note are not on that page; they keep `other_terms_checked_at` (2026-09-08)
+  and are not re-dated.
+- Fails closed: missing price or batch table, unreadable price, a callable row without a batch price,
+  inconsistent write multipliers, or fewer than 50 % of previous rows still listed.
+- First run 2026-09-14: all 13 callable rows and every modifier reproduced the 2026-09-08 snapshot exactly;
+  four retired rows excluded (Opus 4.1, Opus 4, Sonnet 4, Haiku 3.5); tentative retirement dates added.
