@@ -3,7 +3,20 @@
 First-party Chutes inference offers, refreshed from the live model catalog and verified
 against the corresponding public Chute pricing metadata on **2026-07-22**.
 
-## Refresh
+## Automated daily refresh (since 2026-09-14)
+
+`node scripts/fetch-chutes-catalog.mjs` (parser `lib/chutes-catalog.mjs`, tests
+`test/chutes-catalog.test.mjs`) runs as the non-fatal `fetch-chutes-catalog` step of
+`ops/daily/daily.mjs`. One unauthenticated GET of `https://llm.chutes.ai/v1/models` (public; the
+host serves no robots.txt). Prices are rounded to six significant digits to remove float noise.
+Curated `model_name` / `provider_org` / notes are carried over by exact `tee_model_id`; a new id
+gets a derived name (vendor prefix, `-TEE` and quant suffix removed) plus `mapping: "derived"`.
+The snapshot records `response_sha256` and a `diff` (added / removed / price_changed). The run
+fails closed — previous snapshot untouched — on an empty payload, a row without numeric
+input/output USD price or `confidential_compute` flag, or when fewer than half of the previous ids
+are still listed. The per-chute price cross-check below stays a manual audit step.
+
+## Manual refresh (historical)
 
 ```bash
 curl -s https://llm.chutes.ai/v1/models \

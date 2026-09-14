@@ -110,6 +110,10 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 > to set `verified` in the ledger: F-65 and F-66 (`bin/verify-f65.mjs`; F-66 needs a forced client
 > error in a dev build), F-67 and F-68 (`bin/verify-f67-f68.mjs`, both hosts). Their specs are kept
 > below in acceptance form only; the full F-65 spec is in the pass-11 file history (`975334b`).
+>
+> **Update iteration 49 (claude-opus, independent verifier):** F-58–F-62, F-65, F-67, F-68 verified live
+> on both hosts at `70b49fb` (`ux-evidence/iter49-indep/`). **F-66 not verified:** pass-11 `metrics.json`
+> has no `errors` key and no forced client error was rendered live; it stays `implemented`.
 
 ### F-65 `[verify only]` Boards never open empty — acceptance
 On `/benchmarks?benchmark=vals-index-code-migration::2`, `…=cursorbench::4.0`,
