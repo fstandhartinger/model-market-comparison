@@ -1,41 +1,43 @@
 {
-  "source": "Scaleway Generative APIs",
+  "source": "Scaleway Generative APIs — scaleway.com/en/pricing/model-as-a-service (first-party, public)",
   "region": "eu (Paris)",
-  "collected_at": "2026-09-08",
-  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1622 published 2026-09-07 (latest available on 2026-09-08).",
-  "method": "Scaleway Generative APIs pricing page (https://www.scaleway.com/en/pricing/model-as-a-service/), re-checked 2026-09-08. EU-sovereign Paris region, ZDR by default. Catalog and native EUR prices unchanged since 2026-08-26: 12 priced text/vision LLMs (embeddings qwen3-embedding-8b, bge-multilingual-gemma2 and whisper-large-v3 audio excluded). None of the newest frontier models (GPT-6 Astra, GLM-5.3, Qwen3.8 Max, Kimi K3, MiniMax M3, Claude Opus/Sonnet/Fable 5, Grok 4.6, DeepSeek V4 Pro) are offered. USD fields refreshed at ECB EUR/USD 1.1622 (2026-09-07) and rounded to two decimals.",
+  "collected_at": "2026-09-14",
+  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1592 published 2026-09-11 (latest available on 2026-09-14).",
+  "method": "scripts/fetch-scaleway-catalog.mjs: one GET of the pricing page, reading the page's own structured catalog (__NEXT_DATA__ … catalogProducts.generativeApis.models); fr-par perMillionTokens input/output (and cached input) EUR prices from {units,nanos}; models without the chat task or without both token prices (embeddings, audio transcription) omitted; USD = EUR × ECB daily reference rate, rounded to cents; curated names kept by API slug; new slugs mapping=derived. EU-sovereign Paris region, ZDR by default. See scaleway.method.md.",
   "models": [
     {
       "model_name": "GLM 5.2",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 2.09,
-      "output_per_1m_usd": 6.39,
+      "output_per_1m_usd": 6.38,
       "region": "eu",
-      "notes": "€1.80/€5.50; glm-5.2"
+      "api_model_id": "glm-5.2",
+      "context_length": 256000,
+      "status": "preview",
+      "notes": "€1.80/€5.50; glm-5.2; status preview"
     },
     {
-      "model_name": "Llama 3.3 70B",
-      "provider_org": "Meta",
-      "input_per_1m_usd": 1.05,
-      "output_per_1m_usd": 1.05,
+      "model_name": "DeepSeek V4 Flash 0731",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.46,
+      "output_per_1m_usd": 0.93,
+      "cache_read_per_1m_usd": 0.09,
       "region": "eu",
-      "notes": "€0.90/€0.90; llama-3.3-70b-instruct"
-    },
-    {
-      "model_name": "Qwen3 235B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.87,
-      "output_per_1m_usd": 2.61,
-      "region": "eu",
-      "notes": "€0.75/€2.25; qwen3-235b-a22b-instruct-2507"
+      "api_model_id": "deepseek-v4-flash-0731",
+      "context_length": 256000,
+      "status": "preview",
+      "notes": "€0.40/€0.80 (cached €0.08); deepseek-v4-flash-0731; status preview"
     },
     {
       "model_name": "Qwen 3.5 397B",
       "provider_org": "Alibaba",
       "input_per_1m_usd": 0.7,
-      "output_per_1m_usd": 4.18,
+      "output_per_1m_usd": 4.17,
       "region": "eu",
-      "notes": "€0.60/€3.60; qwen3.5-397b-a17b"
+      "api_model_id": "qwen3.5-397b-a17b",
+      "context_length": 250000,
+      "status": "general_availability",
+      "notes": "€0.60/€3.60; qwen3.5-397b-a17b; vision+text; status general_availability"
     },
     {
       "model_name": "Qwen 3.6 35B",
@@ -43,47 +45,10 @@
       "input_per_1m_usd": 0.29,
       "output_per_1m_usd": 1.74,
       "region": "eu",
-      "notes": "€0.25/€1.50; qwen3.6-35b-a3b"
-    },
-    {
-      "model_name": "Qwen3 Coder 30B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.23,
-      "output_per_1m_usd": 0.93,
-      "region": "eu",
-      "notes": "€0.20/€0.80; qwen3-coder-30b-a3b-instruct"
-    },
-    {
-      "model_name": "Mistral Small 3.2",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.17,
-      "output_per_1m_usd": 0.41,
-      "region": "eu",
-      "notes": "€0.15/€0.35; mistral-small-3.2-24b-instruct-2506"
-    },
-    {
-      "model_name": "Mistral Medium 3.5",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 1.74,
-      "output_per_1m_usd": 8.72,
-      "region": "eu",
-      "notes": "€1.50/€7.50; mistral-medium-3.5-128b"
-    },
-    {
-      "model_name": "Pixtral 12B",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.23,
-      "output_per_1m_usd": 0.23,
-      "region": "eu",
-      "notes": "€0.20/€0.20; pixtral-12b-2409; vision+text"
-    },
-    {
-      "model_name": "gpt-oss-120b",
-      "provider_org": "OpenAI",
-      "input_per_1m_usd": 0.17,
-      "output_per_1m_usd": 0.7,
-      "region": "eu",
-      "notes": "€0.15/€0.60; gpt-oss-120b"
+      "api_model_id": "qwen3.6-35b-a3b",
+      "context_length": 256000,
+      "status": "general_availability",
+      "notes": "€0.25/€1.50; qwen3.6-35b-a3b; vision+text; status general_availability"
     },
     {
       "model_name": "Gemma 4 26B",
@@ -91,16 +56,99 @@
       "input_per_1m_usd": 0.29,
       "output_per_1m_usd": 0.58,
       "region": "eu",
-      "notes": "€0.25/€0.50; gemma-4-26b-a4b-it"
+      "api_model_id": "gemma-4-26b-a4b-it",
+      "context_length": 256000,
+      "status": "preview",
+      "notes": "€0.25/€0.50; gemma-4-26b-a4b-it; vision+text; status preview"
     },
     {
-      "model_name": "DeepSeek V4 Flash 0731",
-      "provider_org": "DeepSeek",
-      "input_per_1m_usd": 0.46,
+      "model_name": "Mistral Medium 3.5",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 1.74,
+      "output_per_1m_usd": 8.69,
+      "region": "eu",
+      "api_model_id": "mistral-medium-3.5-128b",
+      "context_length": 256000,
+      "status": "preview",
+      "notes": "€1.50/€7.50; mistral-medium-3.5-128b; vision+text; status preview"
+    },
+    {
+      "model_name": "Llama 3.3 70B",
+      "provider_org": "Meta",
+      "input_per_1m_usd": 1.04,
+      "output_per_1m_usd": 1.04,
+      "region": "eu",
+      "api_model_id": "llama-3.3-70b-instruct",
+      "context_length": 128000,
+      "status": "general_availability",
+      "notes": "€0.90/€0.90; llama-3.3-70b-instruct; status general_availability"
+    },
+    {
+      "model_name": "Qwen3 235B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.87,
+      "output_per_1m_usd": 2.61,
+      "region": "eu",
+      "api_model_id": "qwen3-235b-a22b-instruct-2507",
+      "context_length": 250000,
+      "status": "general_availability",
+      "notes": "€0.75/€2.25; qwen3-235b-a22b-instruct-2507; status general_availability"
+    },
+    {
+      "model_name": "Qwen3 Coder 30B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.23,
       "output_per_1m_usd": 0.93,
       "region": "eu",
-      "notes": "€0.40/€0.80 (cached €0.08); deepseek-v4-flash-0731; added 2026-08-26"
+      "api_model_id": "qwen3-coder-30b-a3b-instruct",
+      "context_length": 128000,
+      "status": "end_of_new_features",
+      "notes": "€0.20/€0.80; qwen3-coder-30b-a3b-instruct; status end_of_new_features"
+    },
+    {
+      "model_name": "Pixtral 12B",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.23,
+      "output_per_1m_usd": 0.23,
+      "region": "eu",
+      "api_model_id": "pixtral-12b-2409",
+      "context_length": 128000,
+      "status": "end_of_new_features",
+      "notes": "€0.20/€0.20; pixtral-12b-2409; vision+text; status end_of_new_features"
+    },
+    {
+      "model_name": "Mistral Small 3.2",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.41,
+      "region": "eu",
+      "api_model_id": "mistral-small-3.2-24b-instruct-2506",
+      "context_length": 128000,
+      "status": "general_availability",
+      "notes": "€0.15/€0.35; mistral-small-3.2-24b-instruct-2506; vision+text; status general_availability"
+    },
+    {
+      "model_name": "gpt-oss-120b",
+      "provider_org": "OpenAI",
+      "input_per_1m_usd": 0.17,
+      "output_per_1m_usd": 0.7,
+      "region": "eu",
+      "api_model_id": "gpt-oss-120b",
+      "context_length": 128000,
+      "status": "general_availability",
+      "notes": "€0.15/€0.60; gpt-oss-120b; status general_availability"
     }
   ],
-  "fx_eur_usd": 1.1622
+  "fx_eur_usd": 1.1592,
+  "response_sha256": "ca46b5f4d403f932d824dde31fee0fea72ca65ea622f3b949c379a13c0c516a1",
+  "skipped": [
+    "whisper-large-v3",
+    "qwen3-embedding-8b",
+    "bge-multilingual-gemma2"
+  ],
+  "diff": {
+    "added": [],
+    "removed": [],
+    "eur_price_changed": []
+  }
 }

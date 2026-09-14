@@ -1,7 +1,33 @@
 # Scaleway Generative APIs — data collection method
 
-**Date collected:** 2026-07-22
+**Date collected:** refreshed daily by `scripts/fetch-scaleway-catalog.mjs` (first automated run
+2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, 2026-07-12)
 **Output:** `data/raw/scaleway.json`
+
+## Update 2026-09-14 — executable collector (R9.1)
+
+`scripts/fetch-scaleway-catalog.mjs` + `lib/scaleway-catalog.mjs` (tests in
+`test/scaleway-catalog.test.mjs`) run as the non-fatal daily step `fetch-scaleway-catalog` in
+`ops/daily/daily.mjs`. It no longer scrapes the HTML table: the pricing page ships its own
+structured catalog in `__NEXT_DATA__` at
+`props.pageProps.externalData["templates.pricing-page"].catalogProducts.generativeApis.models`
+(E3 step 2 — structured data in the page). Neither the page nor the ECB XML is disallowed by
+robots.txt.
+
+- Per model: `apiId`, `tasks`, `status`, `contextWindow`, and `regions[region=fr-par]` with
+  `inputTokenPrice` / `outputTokenPrice` / optional `inputCachedTokenPrice`
+  `.perMillionTokens.value = {currencyCode: "EUR", units, nanos}` → EUR = units + nanos/1e9.
+  Batch prices (`perMillionTokensBatch`) are not used. A non-EUR currency fails the run.
+- Scope by structure: the `chat` task and both token prices. Embeddings (input only) and
+  `whisper-large-v3` (per audio minute) drop out and are listed in `skipped`.
+- FX: ECB daily reference XML, EUR/USD in [0.7, 1.7] or the run fails; USD = EUR × rate, cents.
+- `notes` keep the audited `€in/€out[ (cached €c)]; api-slug; …` format — build-dataset takes the
+  Scaleway family identity from the second segment, so do not reorder it. Curated names are kept by
+  slug; new slugs get `mapping: "derived"`. Fewer than half of the previous slugs → fail closed.
+
+First run 2026-09-14 (ECB 1.1592 of 2026-09-11): all 12 models, names and EUR prices identical to
+2026-09-08; only USD cents moved with the rate (e.g. GLM 5.2 output 6.39 → 6.38), and DeepSeek V4
+Flash 0731 now carries its listed cached-input price (€0.08 → $0.09).
 
 > Note: this method file was first written on 2026-07-22. Earlier refreshes (2026-07-12)
 > documented the method only inside the JSON's `method` field.
