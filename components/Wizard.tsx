@@ -258,7 +258,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
           <Chip on={s.maxCost != null}>{s.maxCost != null ? `≤ ${money(s.maxCost)} per task` : "No budget limit"}</Chip>
         </div>
       </div>
-      <ModelExplorer data={data} simple guided limit={15} defaultSort="cost" defaultAsc={false} />
+      <ModelExplorer data={data} simple guided limit={15} />
     </div>
   );
 }

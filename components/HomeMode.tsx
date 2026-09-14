@@ -34,12 +34,11 @@ export function HomeMode({ data }: { data: ClientData }) {
       <p className="bh-muted hidden text-xs sm:block">{HINT[mode]}</p>
     </div>
     {mode === 'guided' && <Wizard data={data} onFinish={() => setMode('advanced')} />}
-    {/* The key remounts the table when the mode changes: defaultSort/defaultAsc seed
-        useState, so without it Advanced would inherit Simple's cost sort. */}
-    {/* R5.2: Simple lists the featured shortlist sorted by adjusted cost DESCENDING —
-        Florian's wording ("über den Preis absteigend sortiert") taken literally. Advanced
-        keeps the score-first default from R1.1. */}
+    {/* The key remounts the table when the mode changes, so a sort chosen in one mode does
+        not leak into the other. */}
+    {/* CR-8.1 (Florian 2026-09-14, supersedes R5.2's price order): both modes open sorted by
+        score, highest first — the ModelExplorer default. */}
     {mode !== 'guided' && <ModelExplorer key={mode} data={data} simple={!advanced}
-      limit={advanced ? undefined : 15} defaultSort={advanced ? undefined : "cost"} defaultAsc={advanced ? undefined : false} />}
+      limit={advanced ? undefined : 15} />}
   </section>;
 }

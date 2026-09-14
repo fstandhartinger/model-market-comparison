@@ -163,7 +163,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     });
     if (!limit || r.length <= limit) return r;
     // F-74: the cap is decided apart from the display order — Pareto line first, then the
-    // highest scores — so a cost-descending list (R5.2) never drops its cheapest member.
+    // highest scores — so a list sorted by score or by cost never drops its cheapest member.
     const keep = capShortlist(r.map((x) => ({ id: x.m.id, cost: x.price.value, score: x.sc })), limit);
     return r.filter((x) => keep.has(x.m.id));
   }, [matching, sort, asc, limit]);

@@ -59,11 +59,13 @@ export function Nav() {
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <FilterButton />
+          {/* CR-6.1: below lg the header carries Filters · Benchmarks · More, Benchmarks left of More. */}
+          <Link href="/benchmarks" aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 lg:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
           <div className="relative lg:hidden">
             <details>
-              <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent">Menu</summary>
+              <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent sm:px-2.5">More</summary>
               <div className="absolute right-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">
-                {LINKS.filter(([href]) => href !== "/radar").map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
+                {LINKS.filter(([href]) => href !== "/radar" && href !== "/benchmarks").map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
               </div>
             </details>
           </div>
