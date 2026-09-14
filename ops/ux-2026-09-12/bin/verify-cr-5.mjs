@@ -1,6 +1,7 @@
 // Acceptance for CR-5.1 – CR-5.5 (accounts): legal pages, account API guards, no public CORS on account
 // routes, signed-out toast on saving a preset, and — when SESSION_SECRET and ACCOUNTS_DATABASE_URL are
-// given (local runs only) — a signed-in session minted with our own AUTH_SECRET to check the first-sign-in
+// given (locally, or live from Sandy where the accounts DB listens on 127.0.0.1) — a signed-in session
+// minted with our own AUTH_SECRET to check the first-sign-in
 // merge, sync across two browsers (presets and settings) and "delete my account and data".
 // Usage: [SESSION_SECRET=… ACCOUNTS_DATABASE_URL=…] node verify-cr-5.mjs <base> <outdir>
 import { createRequire } from 'node:module';
@@ -39,6 +40,9 @@ if (enabled) {
   const prov = await fetch(`${BASE}/api/auth/providers`);
   const provBody = prov.ok ? await prov.json() : {};
   check('auth providers list Google only', prov.ok && Object.keys(provBody).join() === 'google', Object.keys(provBody).join());
+  // The 16:42 deploy shipped https://localhost:3000 callbacks; Google must be sent back to the host the visitor used.
+  const cb = provBody.google?.callbackUrl ?? '';
+  check('auth Google callback is on the visited host', cb === `${new URL(BASE).origin}/api/auth/callback/google`, cb);
 }
 
 // ── Pages and signed-out UI, per context ──────────────────────────────────────────────────────
