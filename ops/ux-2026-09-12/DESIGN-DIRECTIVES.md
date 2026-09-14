@@ -103,6 +103,22 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 ## Directives (open)
 
+> **Status 2026-09-14 pass 11 (Fable), end of pass:** nothing open for implementers. F-65 and F-66 landed
+> in `72da684` and are live on both hosts: `bin/verify-f65.mjs` 168/168 per host at 1440/390, light/dark
+> (`…/fable-20260914-pass11/verify-f65-{canonical,legacy}/verification.json` + 32 screenshots); the
+> deployed `app/error-*.js` chunk carries the Details disclosure and the message expression. The specs
+> stay below for the independent verifier: F-65 and F-66 need a non-Fable engine to set `verified`.
+>
+> **Two observations for the record.** (1) The `bin/delegate.sh --kimi` run for F-65 read two files in
+> 21 minutes and wrote nothing (pass 8 and iteration 17 saw the same); Fable stopped it and implemented
+> the one-file spec directly. (2) A verifier run started 101 s after `/api/meta` flipped to `72da684`
+> captured one *unstyled* page (`Skip to main content` and the raw logo SVG — the stylesheet of the
+> previous build was no longer served while the HTML already referenced the new one); the immediate
+> re-run and 40 asset probes were clean. That deploy window is the most likely cause of the pass-11
+> one-off error boundary as well (a chunk that 404s during the swap throws a ChunkLoadError). Rule for
+> screenshot runs: start ≥ 3 minutes after the revision flips, and treat an unstyled shot as a deploy
+> artefact, not a design finding. `verify-f65.mjs` now asserts that the stylesheet is applied.
+
 ### F-65 `[mechanical, reviewed]` Boards never open empty: automatic widening with one notice line
 *Where:* `components/BenchmarkRanking.tsx` only.
 *What:*
@@ -289,3 +305,5 @@ disclosure containing a non-empty message; `metrics.json` of the next pass has a
 | F-62 desktop Compare radar `max-w-[640px]` | `7b5320d` (Fable) | same + `desktop_*-compare-radar.png` | live: SVG 640 px wide, "Where each model is strongest" at 1,221 px (was ~1,400); **verified by claude-opus (iteration 47, non-Fable, non-Kimi):** live `21aa63f`, both hosts, 1440/390, light/dark — `verify-f58-f61` 36/36, `verify-f63-f64` 22/22, `verify-review-0610` 68/68 per host (`ux-evidence/iter47-indep/`) |
 | F-63 theme-aware tracks on Charts (`bg-line`, `bg-line/40`) | `21aa63f` (Fable, surgical) | `ux-evidence/fable-20260914-pass10/verify-21aa63f-{canonical,legacy}/verification.json` (`bin/verify-f63-f64.mjs`) + `mobile_light-charts.png` | live both hosts, 1440/390, light/dark; **verified by claude-opus (iteration 47, non-Fable, non-Kimi):** live `21aa63f`, both hosts, 1440/390, light/dark — `verify-f58-f61` 36/36, `verify-f63-f64` 22/22, `verify-review-0610` 68/68 per host (`ux-evidence/iter47-indep/`) |
 | F-64 Composite coverage line "6 of 7 inputs · 4 from the model family" | `21aa63f` (Fable, surgical) | same + `*-model.png` | live both hosts; "exact inputs" gone; **verified by claude-opus (iteration 47, non-Fable, non-Kimi):** live `21aa63f`, both hosts, 1440/390, light/dark — `verify-f58-f61` 36/36, `verify-f63-f64` 22/22, `verify-review-0610` 68/68 per host (`ux-evidence/iter47-indep/`) |
+| F-65 boards never open empty: automatic widening (measured+matched → all+matched → all as named by the source), one notice line, honest coverage sentence, plain-language labels | `72da684` (Fable; Kimi K3 delegation produced no diff in 21 min) | `ux-evidence/fable-20260914-pass11/verify-f65-{canonical,legacy}/verification.json` (`bin/verify-f65.mjs`, 168/168 per host) + `*-{vals-code-migration,cursorbench,apprentice-cua,frontiercode}.png` | live both hosts, 1440/390, light/dark: 4 E2 boards open with rows, one notice line, Evidence = All, box ticked; AA index unchanged (Measured only, 641, no notice); needs a non-Fable verifier |
+| F-66 error boundary Details disclosure (`app/error.tsx`); page-error capture in `bin/shoot-fable-pass11.mjs` | `72da684` (Fable) | deployed chunk `/_next/static/chunks/app/error-0301bee61d33e4e4.js` contains the summary and message expression; `/models/<bad-id>` is a 404, not the boundary | needs a non-Fable verifier (force a client error in a dev build and read the Details text) |

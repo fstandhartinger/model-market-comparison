@@ -24,9 +24,11 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     const txt = document.body.innerText;
     const sel = [...document.querySelectorAll('select')].map((s) => s.options[s.selectedIndex]?.text || '');
     const boxes = [...document.querySelectorAll('input[type=checkbox]')].map((i) => ({ label: i.closest('label')?.innerText.trim(), checked: i.checked }));
-    return { rows: document.querySelectorAll('table tbody tr').length, txt, sel, boxes, status: [...document.querySelectorAll('[role=status]')].map((e) => e.innerText.trim()), sw: document.documentElement.scrollWidth, vw: window.innerWidth };
+    const panel = document.querySelector('.bh-panel'); const styled = !!panel && parseFloat(getComputedStyle(panel).borderRadius || '0') > 0 && !/Times/i.test(getComputedStyle(document.body).fontFamily);
+    return { styled, rows: document.querySelectorAll('table tbody tr').length, txt, sel, boxes, status: [...document.querySelectorAll('[role=status]')].map((e) => e.innerText.trim()), sw: document.documentElement.scrollWidth, vw: window.innerWidth };
   });
   await go('/benchmarks'); let s = await state();
+  check(`${tag} AA index: stylesheet applied`, s.styled);
   check(`${tag} AA index: Measured only`, s.sel.some((t) => /Measured only/.test(t)), s.sel.join(' | '));
   check(`${tag} AA index: 641 results`, /641 results/.test(s.txt), s.status.join(' | '));
   check(`${tag} AA index: no widening notice`, !/Showing self-reported|Listed under the names/.test(s.txt));
@@ -34,6 +36,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   for (const bd of BOARDS) {
     await go(`/benchmarks?benchmark=${encodeURIComponent(bd.q)}`); s = await state();
     await p.screenshot({ path: `${OUT}/${tag}-${bd.key}.png` });
+    check(`${tag} ${bd.key}: stylesheet applied`, s.styled);
     check(`${tag} ${bd.key}: >=1 row on first load`, s.rows >= 1, `rows=${s.rows}`);
     check(`${tag} ${bd.key}: no "0 of" coverage sentence`, !/\b0 of \d+ catalog/.test(s.txt));
     check(`${tag} ${bd.key}: no "No results in this view"`, !/No results in this view/.test(s.txt));
