@@ -1,12 +1,12 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 7: 2026-09-13 ~20:10 UTC**, against live revision `dea90cb` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260913-pass7/` — 80 screenshots +
+**Pass 8: 2026-09-14 ~01:30 UTC**, against live revision `54872fc` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass8/` — 80 screenshots +
 `metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple incl. moved slider,
-Advanced incl. expanded row, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks, Charts),
-`checks/` (Filters overlay at both widths incl. "More settings", `verification-F43-F44.json`),
-`delegate-f51.{log,md}` (the Kimi delegation record for F-51).
-Earlier passes: `…/fable-20260913-pass6/`, `-pass5/`, `-pass4/`, `-pass3/`, `-pass2/`, `…/fable-20260913/`.
+Advanced incl. the cost-inputs modal, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks,
+Charts), `checks/` (Filters overlay + "More settings" at both widths, hero line counts),
+`delegate-f54-f56-f57.{log,md}` (the Kimi delegation record).
+Earlier passes: `…/fable-20260913-pass7/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -23,113 +23,142 @@ Luna. Every delegated diff is reviewed before it lands.
 
 ---
 
-## Verdict on the live site — pass 7 (2026-09-13)
+## Verdict on the live site — pass 8 (2026-09-14)
 
-**The site meets the bar on every surface.** Nothing on the first screen of any page fails
-Florian's four tests any more; what is left is polish, and all of it is small.
+**The product is in good shape; the first screen is not.** Every inner surface (Simple card,
+Advanced, Filters overlay, Guided, Benchmaxxing, model page, Compare, Benchmarks, Charts) still
+meets the bar at both widths and in both themes. What broke since pass 7 is the one thing a
+visitor reads first: the hero. Iteration 35 (Codex) replaced the pass-1 claim with *"A complete,
+source-linked collection of AI model benchmarks. Realistic modeled cost per task, grounded in
+provider prices, caching, and token efficiency."* That is a methodology sentence, not a claim:
+three lines at 1440 (with "efficiency." alone on the third), four lines at 390, 26 words where
+the pass-1 claim had 18, and the footer repeats it word for word. It fails "key messages first"
+and "very expressive" on the first screen of every page. Codex was right that "the only place"
+is not provable (P4); it was wrong to answer with a disclaimer. Fixed in this pass (**F-53**,
+Fable, surgical) — see the R3.1 decision below.
 
-What pass 7 confirmed live (both widths, both themes):
+What pass 8 confirmed live (both widths, both themes):
 
-- **Simple** answers the question on the first screen: two sliders with histograms, the value
-  map with 7 labelled points for the 7 ranked rows, the table right below (1,243 px total at
-  1440; 1,606 px at 390). Dark mode is clean.
-- **Advanced** opens on 101 rows, one toolbar row, pips on every row; the phone version has
-  search + Refine and three columns with the (i) inside the card (F-46 holds).
-- **Filters overlay** is four titled groups (Ranking · Price basis · Regional settings · Data
-  confidentiality) with the rare options behind "More settings"; 20:1 is the default blend;
-  Chinese-provider exclusion is off; the phone sheet is the same content stacked.
-- **Guided** is the calmest surface on the site; step 3's "No floor · 1 mo … 6 mo" chips are
-  exactly the "best model that existed n months ago" idea, made tangible.
-- **Benchmaxxing (F-43 ✔ verified):** the radar now draws exactly the 29 measured spokes for
-  Gemini 3.1 Pro Preview, with seven labelled topic sectors and topic-local polygons; the
-  Agentic sector visibly saw-tooths, which is the whole point. 29 spokes at both widths, the
-  "Show all 217 axes" toggle is off by default (`checks/verification-F43-F44.json`).
-- **Compare (F-44 ✔ verified):** one picker row (two chips + combobox on one line at 1440,
-  chips stacked and ≤ 160 px at 390), no jump links, 3,967 px / 5,233 px, first chart at 555 /
-  858 px. All inside the F-44 bounds.
-- **Model page** is a release post: headline Composite + mini radar, nine category panels of
-  bar rows, one "Unusual results" panel, the rest folded. 2,443 / 4,089 px.
-- **Benchmarks (F-48 ✔ verified):** one head panel, Category + Benchmark selectors on one row,
-  text "Primary source ↗", one description paragraph, first ranked row inside the first screen
-  at 1440.
+- **Simple:** two sliders with histograms, value map with 7 labelled points for 7 ranked rows,
+  table right below, 1,284 px at 1440 / 1,622 px at 390. Dark is clean.
+- **Advanced:** 101 rows, one toolbar row, coverage pips; phone has search + Refine and the
+  three-column card. The cost-inputs modal (underlined price) is dense but it is the *inputs*
+  view — that is the right place for density.
+- **Filters overlay:** four titled groups, rare options behind "More settings", 20:1 default,
+  Chinese exclusion off, "I'm buying for a company" in Data confidentiality. Phone sheet stacks
+  the same content.
+- **Guided:** calm; step 3's "No floor · 1 mo … 6 mo" chips read well.
+- **Benchmaxxing:** F-50 holds (right column = signal card + topic-groups disclosure, 40 px gap
+  to the radar's bottom edge). 29 measured spokes, seven sectors, saw-tooth visible.
+- **Model page:** release-post layout, 2,443 / 4,105 px. **Charts:** four cards, one accent.
+- **Compare / Benchmarks:** within F-44 / F-48 bounds (3,871 / 5,125 px; first ranked row in the
+  first screen at 1440).
 
-**What still falls short, in order of damage (all small):**
+**What still falls short, in order of damage:**
 
-1. **Cost precision was noise.** The table printed `$0.89512` next to `$17.308` and the model
-   page `$4.378 /task`; five significant figures on a modeled estimate over-promise and make the
-   column ragged. → fixed in this pass (**F-49**, Fable, surgical: `priceNumber` now prints two
-   decimals from $1 up and three significant figures below $1: `$17.31`, `$6.87`, `$0.895`,
-   `$0.186`). The sort stays exact; the underline still opens the full inputs.
-2. **Compare's head was the odd one out.** An eyebrow, a serif slogan and a three-line
-   description before the picker, while Charts, Benchmarks and Benchmaxxing are title + one
-   line. → fixed in this pass (**F-52**, Fable, surgical: "Compare" + one line).
-3. **"Radar axes · 6 / 8 selected" is a stray card** between the radar and the "strongest"
-   section; it belongs inside the radar card next to "Show exact radar values". → **F-51**
-   `[mechanical]`, delegated to Kimi K3 in this pass (see the Done log / ledger for the result).
-4. **Benchmaxxing per-model report: the right column is a 300 px card over ~400 px of nothing**
-   at 1440 (`desktop_light-benchmaxxing-full.png`). → **F-50** `[mechanical]`.
-5. **One spelling split:** the table said "Domain specialisation", the card "Domain
-   specialization". → fixed in this pass (American spelling, matching the rest of the site).
+1. **Hero** — described above. → **F-53** done in this pass.
+2. **Internal version strings leak into the UI.** The model page prints `snapshot-2026-09-10`
+   after every AA benchmark name (15 times on Opus 5), the Compare radar writes
+   `v: 2026-09-10 snapshot` under each axis, and the Benchmarks selector says
+   `AA Intelligence Index · snapshot-2026-09-13 (unversioned)` with the description *"No verified
+   semantic version was supplied."* That is registry vocabulary, not product copy. → **F-54**
+   `[mechanical]`, delegated to Kimi K3 in this pass.
+3. **Phone table breaks names mid-token:** "GLM-" / "5.3", "Claude Fable" / "5.1 ★" because the
+   ★ and the `open` badge sit inline after the name at 390. → **F-56** `[mechanical]`, delegated.
+4. **Model page title is cut on phones** ("Claude Opus 5 (Adaptive R…") and the full name never
+   appears. → **F-57** `[mechanical]`, delegated.
+5. **(i) icons differ by theme:** filled grey chip in light, outlined ring in dark. One style.
+   → **F-55** `[mechanical]`.
 
-## Decisions in pass 7
+## Decisions in pass 8
 
-1. **R5.2 stays literal (cost-descending Simple).** Looking at the fresh Simple screen, row 1
-   is the dearest model (Claude Fable 5, 94.0, $17.31) above a cheaper and stronger row 2 (Claude
-   Fable 5.1, 99.8, $14.17). That is what "über den Preis absteigend sortiert" says; the value map
-   beside the table makes the trade-off visible, and one click on the Adjusted Cost header flips
-   it. Recorded for X7 so Florian can overrule.
-2. **R3.1 stands** as decided in pass 1 and defended in pass 6; nothing in pass 7 changes it.
-3. **F-22 stands** as re-specified in pass 6: 7 labelled full-opacity points = 7 ranked rows, the
-   other 13 points of the pool dimmed below the line (`desktop_light-simple.png`).
-4. **No new [judgment] work is opened.** The remaining open directives (F-50, F-51) are
-   mechanical; if Kimi returns nothing usable, the next Codex Luna iteration takes them (Codex at
-   72 % at 18:07, below the 75 % warn line).
+1. **R3.1 re-decided (final unless Florian overrules):**
+   > **Every AI model benchmark we can find, in one place.**
+   > **And what each model really costs you.**
+   Line 2 accent-coloured; the generated counts line stays underneath as the proof
+   (14,010 results · 77 benchmarks · 841 models). Why this wording: Florian asked for (a) "the
+   most comprehensive, most complete collection … on the planet" and (b) "the only site that
+   lets you see realistically what a model actually costs you". P4 (same author, via Hermes)
+   allows positioning claims only in a form the live numbers support, and the pass-7 review
+   correctly noted that Artificial Analysis also publishes a cost per task, so "only" is not
+   provable. "Every … we can find" carries the completeness ambition without an unprovable
+   comparative — it promises effort, and the counts line shows the result. "Really costs you"
+   carries the realism claim (providers, caching, token efficiency) without "only"; the Adjusted
+   Cost (i) and the methodology page explain it. The footer no longer repeats the hero; it is
+   one factual sentence about sources. Metadata, OG description/alt, Twitter card and the OG
+   artwork carry the same two lines. Recorded for X7: if Florian wants the superlative back,
+   the honest form is "The most complete collection of AI model benchmarks we know of."
+2. **R5.2 stays literal** (cost-descending Simple), as in passes 4–7.
+3. **The cost-inputs modal stays dense.** It is the audit trail behind an underlined price; a
+   reader who opens it wants every input. No directive.
+4. **No new [judgment] work is opened.** Everything open is mechanical.
 
 ---
 
-## R3.1 — Hero claim (decided in pass 1, confirmed in pass 2)
+## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8)
 
-> **The most complete collection of AI model benchmarks.**
-> **And the only place that shows what each model really costs you.**
+> **Every AI model benchmark we can find, in one place.**
+> **And what each model really costs you.**
 
 Line 2 accent-coloured. The muted counts line underneath is generated from the dataset.
-"Every benchmark result" is not used anywhere (hero, meta, OG, footer). Rejected: Florian's
-draft ("All benchmark results for every model, in one place. The most realistic cost estimate
-for each model.") — "all" over-reaches (P4) and "most realistic" is weaker than the "only" he
-asked for.
-
----
+Rejected: Florian's draft ("All benchmark results for every model, in one place. The most
+realistic cost estimate for each model.") — "all … every" over-reaches (P4); the pass-1 wording
+("The most complete collection … the only place …") — "only" is not provable against Artificial
+Analysis' cost per task (review gate 2026-09-13 20:50); the iteration-35 wording ("A complete,
+source-linked collection … grounded in provider prices, caching, and token efficiency.") — a
+methodology sentence, three lines, repeated in the footer.
 
 ---
 
 ## Directives (open)
 
-> **Status 2026-09-13 pass 7 (Fable):** F-43 and F-44 (Codex, `6508c5f`) and F-48 (Codex,
-> `7c275c4`) verified live in this pass and moved to the Done log. F-49 and F-52 were fixed by
-> Fable in this pass (surgical). Two `[mechanical]` items remain.
+> **Status 2026-09-14 pass 8 (Fable):** F-53 fixed by Fable (surgical). F-54, F-56, F-57
+> delegated to Kimi K3 in an isolated worktree (`.worktrees/pass8`); if the delegation returns
+> nothing usable they stay open here for the next Codex Luna / Claude Opus iteration. F-55 open.
 
-### F-51 `[mechanical]` Compare: fold "Radar axes" into the radar card
-*Where:* `components/BenchmarkCompare.tsx` (the `<details className="bh-panel …">Radar axes · n / 8
-selected</details>` block right after `<BenchmarkRadar …/>`), `components/BenchmarkRadar.tsx`.
-*What:* remove the standalone panel; render the same `<details>` (same summary text, same
-"Choose 3–8 axes…" paragraph, same checkbox grid and handlers) *inside* the radar card, directly
-after "Show exact radar values" and before "How to read this chart", styled like those two
-(`mt-4 text-sm`, no `bh-panel`). Pass it in as a prop/slot; no behavioural change.
-*Accept:* `/compare` shows exactly one `bh-panel` between the picker and "Where each model is
-strongest" (the radar card); the summary "Radar axes · 6 / 8 selected" is inside it; toggling an
-axis checkbox still re-draws the radar; page height ≤ 3,900 px at 1440 and ≤ 5,200 px at 390;
-`bin/verify-f44.mjs` and `bin/verify-f35.mjs` still pass.
+### F-54 `[mechanical]` Version labels for humans
+*Where:* new `lib/version-label.ts` (`humanVersion(version)` → `{ kind: 'snapshot' | 'semantic',
+label, date? }`), `components/BenchmarkSheet.tsx` (~line 37), `components/BenchmarkRadar.tsx`
+(~line 28, the second `tspan`), `components/BenchmarkRanking.tsx` (select options, ~lines 60–77),
+`components/BenchmarkEvidence.tsx` (~28, ~84, ~103), `lib/benchmark-view.mjs` (~146, the AA
+description string).
+*What:* data and ids stay exactly as they are (`family::snapshot-YYYY-MM-DD (unversioned)`).
+Presentation: a snapshot version renders as `published YYYY-MM-DD`; a semantic version as `v1.1`.
+On the model-page sheet, snapshot rows show *no* version after the name (the date column already
+has it); semantic rows keep `v…`. The Compare radar drops the `v: … snapshot` sublabel for
+snapshot axes. The Benchmarks selector reads `AA Intelligence Index · published 2026-09-13`; its
+head line `Published 2026-09-13 · Published board · Primary source ↗`; the AA description becomes
+"Artificial Analysis publishes this board without a version number; we keep the date each result
+was retained."
+*Accept:* no visible text on `/`, `/models/<id>`, `/compare`, `/benchmarks` contains
+`snapshot-` or `(unversioned)` or "No verified semantic version"; `/benchmarks` selector shows
+"· published 2026-…"; semantic versions (`1.0.1`, `2.1`) still appear on the sheet; `npm test`
+and the registry validator untouched and green.
 
-### F-50 `[mechanical]` Benchmaxxing report: fill the right column
-*Where:* `components/BenchmaxxingReport.tsx` (the `lg:grid-cols-[minmax(0,1fr)_300px]` grid and the
-"Advanced details: topic groups and method" `<details>` below it).
-*What:* at `lg` and up, move the "Advanced details: topic groups and method" disclosure into the
-right column, directly under the Benchmaxxing-signal card (`aside`), so the column reads: signal
-card → topic-groups disclosure. Its body switches to a single column there (`grid-cols-1`, not
-`md:grid-cols-2`). Below `lg` nothing changes (card, then disclosure, stacked as today).
-*Accept:* at 1440 the right column's bottom edge is within 120 px of the radar's bottom edge
-(today the gap is ~400 px); at 390 the order is radar → caption → signal card → disclosure, as
-today; no text change.
+### F-56 `[mechanical]` Phone table: names wrap only at spaces, badges on the org line
+*Where:* `components/ModelExplorer.tsx` (name cell, ~lines 386–400).
+*What:* each whitespace-separated token of the display name is wrapped in
+`<span class="whitespace-nowrap">`; below `md` the ★ marker and the `open` / `deprecated` badges
+move onto the org line under the name (at `md` and up they stay inline after the name). No text
+change.
+*Accept:* at 390 in Simple and Advanced no name cell contains a line break inside a token
+("GLM-5.3", "Fable 5.1" intact); badges visible on the org line; at 1440 unchanged.
+
+### F-57 `[mechanical]` Model page title wraps on phones
+*Where:* `app/models/[id]/page.tsx` (~line 71).
+*What:* `className="text-xl font-bold md:truncate md:text-2xl"` — wrap below `md`, truncate from
+`md` up.
+*Accept:* at 390 `/models/claude-opus-5%3A%3Ahigh` shows the full display name (no `…`), no
+horizontal overflow; at 1440 one line as today.
+
+### F-55 `[mechanical]` One (i) style in both themes
+*Where:* `components/InfoTip.tsx` and its classes in `app/globals.css`.
+*What:* the trigger is a 16 px circle with a 1 px `currentColor` border at 55 % opacity, no
+fill, the "i" in the current text colour at 10 px/600, in *both* themes (today: filled grey chip
+in light, outlined ring in dark). Hover/focus: border at 100 %, accent colour. Hit area stays
+≥ 24 px via padding. No markup change.
+*Accept:* screenshots of the Score (i) at 1440 light and dark differ only in colour values, not
+in shape; `getComputedStyle` background is transparent in both themes.
 
 ## Design system notes (apply while touching any file above)
 
@@ -154,6 +183,9 @@ today; no text change.
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 7 (2026-09-13 20:10 UTC, live `dea90cb`):** verified F-43, F-44, F-48 (Codex); fixed F-49 cost
+  precision and F-52 Compare head; opened F-50, F-51. Decisions: R5.2 literal, R3.1 pass-1 wording stood
+  (superseded in pass 8 after the 20:50 review gate), F-22 map = pool.
 - **Pass 6 (17:30 UTC, live `2cf4080`):** verified F-42, F-45 (Codex); fixed F-46 phone (i) overflow
   and F-47 error boundary; opened F-48. Decisions: R3.1 line 2 final (fallback recorded for X7),
   R5.3 floor 85 applied as ≥ 85, F-22 map = pool with ranked rows full-opacity.
@@ -234,3 +266,4 @@ today; no text change.
 | F-49 + F-52 independent check | — | `ux-evidence/iter34-f49-f52/live-{canonical,legacy}/verification.json` (`bin/verify-f49-f52.mjs`) | **verified by claude-opus (iteration 34):** 18/18 per host at 1440/390; Simple `$17.31`/`$14.17`/`$0.895`, 606 Advanced price cells and 25 model-page prices with no over-precise figure; Compare H1 "Compare", no eyebrow, one line, no overflow |
 | F-51 radar axes inside the radar card | `2d9c834` (Kimi K3 → Nex fallback draft in `.worktrees/f51`, reviewed, typed and integrated by Claude Opus 5) | `ux-evidence/iter34-f50-f51/live-{canonical,legacy}/verification.json` (`bin/verify-f50-f51.mjs`); `f44-*`, `f35-*` regressions | live both hosts, 1440/390, light/dark: exactly one panel between picker and "strongest", summary inside it, order exact values → axes → how to read, axis toggle re-draws, heights within bounds; `verify-f44`/`verify-f35` 0 fails. Needs a non-Claude-Opus verifier |
 | F-50 topic-groups disclosure in the right column | `3d32e8c` (Codex Luna) | `/opt/benchmarkheaven/state/ux-evidence/iter36-f50-live-{canonical,legacy}/verification.json` (`bin/verify-f50-f51.mjs`) | **implemented; pending independent verification:** at 1440 the right column stretches with the radar grid row and the collapsed disclosure fills the remaining height (radar bottom 1,761, column bottom 1,801; 40 px gap); at 390 the radar → signal → disclosure order remains stacked, with no overflow. Both hosts pass 42/42 in light/dark. |
+| F-53 hero claim re-decided (R3.1): "Every AI model benchmark we can find, in one place. / And what each model really costs you." in `app/page.tsx`, metadata + footer in `app/layout.tsx`, OG artwork regenerated via `scripts/build-brand-assets.mjs --png` | pass 8 (Fable, surgical) | `ux-evidence/fable-20260914-pass8/after/` once live | needs a non-Fable verifier: H1 is exactly two lines at 1440 and ≤ 3 at 390, footer does not repeat the H1, `og:description` matches
