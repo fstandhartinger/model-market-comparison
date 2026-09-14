@@ -4,7 +4,7 @@ import Link from 'next/link';
 import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import { BenchmarkRadar, SERIES_COLORS } from './BenchmarkRadar';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
-import { humanVersion, versionHeading } from '../lib/version-label';
+import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 
 const nativeValue = (value: number, unit: string | null) => {
   const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
@@ -125,7 +125,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
               <th scope="row" className="max-w-xs text-left align-top font-medium">
                 <button type="button" className="flex w-full items-start gap-1 text-left" aria-expanded={expanded} aria-controls={`comparison-evidence-${encodeURIComponent(a.id)}`} onClick={() => setExpandedRows((old) => { const next = new Set(old); if (next.has(a.id)) next.delete(a.id); else next.add(a.id); return next; })}>
                   <span aria-hidden="true" className={`bh-row-chevron mt-0.5 shrink-0 ${expanded ? 'rotate-90' : ''}`}>›</span>
-                  <span><span className="text-accent hover:underline">{a.name}</span><span className="bh-muted mt-1 block text-xs">{humanVersion(a.version).label} · {a.cohort}</span></span>
+                  <span><span className="text-accent hover:underline">{a.name}</span><span className="bh-muted mt-1 block text-xs">{[versionSuffix(a.name, a.version) ?? (humanVersion(a.version).kind === 'snapshot' ? humanVersion(a.version).label : null), a.cohort].filter(Boolean).join(' · ')}</span></span>
                 </button>
               </th>
               {cells.map(({ id, row, normalized }) => {
