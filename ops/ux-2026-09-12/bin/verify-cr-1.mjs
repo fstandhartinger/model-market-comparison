@@ -77,7 +77,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await pickRows(p, 'Full coverage only');
   const full = await p.evaluate(snapshot);
   check(`${tag} Full coverage preset: no missing cells`, full.rows > 0 && full.missing === 0, `${full.rows} rows, ${full.missing} missing`);
-  await p.getByRole('button', { name: 'All', exact: true }).click(); await p.waitForTimeout(200);
+  await pickRows(p, 'All');
   // CR-2.1 remove and add, CR-2.3 reset
   const second = s.cols[1].name;
   await p.getByRole('button', { name: `Remove ${second} from the comparison` }).click(); await p.waitForTimeout(300);

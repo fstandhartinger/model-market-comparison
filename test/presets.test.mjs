@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {
   savePreset, renamePreset, deletePreset, mergePresets, sanitizeStore, uniqueName,
-  ROW_PRESETS, rowFilter, modelsForPreset, MODEL_PRESETS, FILTER_PRESETS, pickFilters, resolveFilterPatch, matchingFilterPreset,
+  ROW_PRESETS, rowFilter, modelsForPreset, MODEL_PRESETS, FILTER_PRESETS, pickFilters, resolveFilterPatch, matchingFilterPreset, encodeFilters, decodeFilters,
 } from '../lib/presets.mjs';
 
 test('CR-4.2 save: trims the name, ignores empty names, same name updates instead of duplicating', () => {
@@ -100,4 +100,16 @@ test('CR-4.1 filter presets: built-ins resolve over the defaults and are recogni
   assert.equal(matchingFilterPreset({ ...state, openOnly: true }, defaults, floor), null);
   const custom = [{ id: 'c1', name: 'Mine', value: pickFilters({ ...defaults, openOnly: true, teeOnly: true }), updatedAt: 0 }];
   assert.equal(matchingFilterPreset({ ...defaults, openOnly: true, teeOnly: true }, defaults, floor, custom), 'c1');
+});
+
+test('CR-2.5 filters in the URL: only changed keys, round trip, junk dropped', () => {
+  const defaults = { score: 'composite', featured: true, featuredTouched: false, euHostedOnly: false, maxCost: null, advancedMinScore: 0, providersExcluded: [], inputWeight: 20, minScore: 86 };
+  assert.equal(encodeFilters(defaults, defaults), '');
+  const state = { ...defaults, euHostedOnly: true, maxCost: 2.5, providersExcluded: ['OpenRouter::A|B', 'x;y'], score: 'aa_coding_index', minScore: 50 };
+  const text = encodeFilters(state, defaults);
+  assert.ok(!text.includes('minScore'), "Simple's slider is not a filter");
+  assert.deepEqual(decodeFilters(text), { score: 'aa_coding_index', euHostedOnly: true, maxCost: 2.5, providersExcluded: ['OpenRouter::A|B', 'x;y'] });
+  assert.deepEqual(decodeFilters(encodeFilters({ ...defaults, featured: false, maxCost: null }, { ...defaults, maxCost: 3 })), { featured: false, maxCost: null });
+  assert.deepEqual(decodeFilters('euHostedOnly:yes;maxCost:abc;hack:1;teeOnly:1;families:%E0%A4%A'), { teeOnly: true });
+  assert.deepEqual(decodeFilters(null), {});
 });

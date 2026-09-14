@@ -24,6 +24,7 @@ export default async function BenchmarksPage({ searchParams }: { searchParams: P
   return <div>
     <header className="bh-page-head"><h1 className="text-3xl font-bold tracking-tight">Every benchmark, side by side.</h1><p className="bh-muted mt-3 max-w-2xl">The strongest models under your filters, across {matrix.rows.length} benchmark results in {matrix.groups.length} categories — each value with its source.</p></header>
     {tabs}
-    <BenchmarkMatrix matrix={matrix} filterData={filterData} />
+    {/* CR-1.11: the shared-URL selection is part of the first render, so the table does not re-layout after hydration. */}
+    <BenchmarkMatrix matrix={matrix} filterData={filterData} initial={{ models: typeof params.models === 'string' ? params.models : null, set: typeof params.set === 'string' ? params.set : null, rows: typeof params.rows === 'string' ? params.rows : null }} />
   </div>;
 }

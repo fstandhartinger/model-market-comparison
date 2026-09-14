@@ -1,11 +1,12 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
 import { rowBars, rowWinners, formatValue, resultHref, chartRows, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
-import { MODEL_PRESETS, ROW_PRESETS, modelsForPreset, rowFilter } from "../lib/presets.mjs";
+import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
+import { SETTINGS_DEFAULTS } from "../lib/settings-state";
 import { filteredCandidates, type MatrixFilterData } from "../lib/top-models";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
 import { BenchmarkBars, seriesColor, seriesLetter } from "./BenchmarkBars";
@@ -55,15 +56,19 @@ function RowPicker({ rows, groups, selected, onChange }: { rows: MatrixRow[]; gr
 }
 
 /** CR-1: release-style comparison — models as columns, benchmarks as rows, grouped by category. */
-export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filterData: MatrixFilterData }) {
+export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matrix; filterData: MatrixFilterData; initial?: { models: string | null; set: string | null; rows: string | null } }) {
   const s = useSettings();
   const [count, setCount] = useState(5);
   // null = a model preset computed from the filters (CR-1.2, CR-2.4); a list = the user's own columns.
-  const [pinned, setPinned] = useState<string[] | null>(null);
-  const [modelPreset, setModelPreset] = useState("top");
+  // CR-1.11: seeded from the URL the server saw, so the first render already has these columns.
+  const [pinned, setPinned] = useState<string[] | null>(() => {
+    const ids = (initial?.models ?? "").split(",").filter((id) => filterData.models.some((m) => m.id === id));
+    return ids.length ? ids.slice(0, MAX_MODELS) : null;
+  });
+  const [modelPreset, setModelPreset] = useState(() => initial?.set && MODEL_IDS.has(initial.set) ? initial.set : "top");
   const [savedModels, setSavedModels] = useState<string | null>(null);
   // A built-in row preset id, or a list of benchmark keys (custom / saved).
-  const [rowSel, setRowSel] = useState<string | string[]>("all");
+  const [rowSel, setRowSel] = useState<string | string[]>(() => !initial?.rows ? "all" : ROW_IDS.has(initial.rows) ? initial.rows : initial.rows.split(",").filter(Boolean));
   const [savedRows, setSavedRows] = useState<string | null>(null);
   const [closed, setClosed] = useState<Set<string>>(new Set());
   const [q, setQ] = useState("");
@@ -86,6 +91,23 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
   };
 
   const { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining } = s;
+  // CR-2.5: ?f= carries the filters that differ from the defaults. Applied once, after stored settings
+  // have loaded (a child effect runs before the provider's hydration and would be overwritten).
+  const fromUrl = useRef(false);
+  const { hydrated, applyFilters } = s;
+  useEffect(() => {
+    if (!hydrated || fromUrl.current) return;
+    fromUrl.current = true;
+    const f = new URLSearchParams(location.search).get("f");
+    if (f != null) applyFilters({ ...pickFilters(SETTINGS_DEFAULTS), ...decodeFilters(f) });
+  }, [hydrated, applyFilters]);
+  const filterCode = encodeFilters(s, SETTINGS_DEFAULTS);
+  useEffect(() => {
+    if (!hydrated || !fromUrl.current) return;
+    const u = new URL(location.href);
+    if (filterCode) u.searchParams.set("f", filterCode); else u.searchParams.delete("f");
+    if (u.href !== location.href) history.replaceState(history.state, "", u);
+  }, [filterCode, hydrated]);
   const candidates = useMemo(() => filteredCandidates(filterData, { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining }),
     [filterData, score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining]);
   const auto = useMemo(() => modelsForPreset(modelPreset, candidates, score, count), [modelPreset, candidates, score, count]);

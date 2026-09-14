@@ -23,4 +23,6 @@ export const FILTER_KEYS: string[];
 export const FILTER_PRESETS: { id: string; name: string; hint?: string; patch: Record<string, unknown> }[];
 export function pickFilters(state: object): Record<string, unknown>;
 export function resolveFilterPatch(patch: Record<string, unknown>, defaults: object, scoreDefault: (score: string) => number): Record<string, unknown>;
+export function encodeFilters(state: object, defaults: object): string;
+export function decodeFilters(text: string | null | undefined): Record<string, unknown>;
 export function matchingFilterPreset(state: object, defaults: object, scoreDefault: (score: string) => number, custom?: SavedPreset<Record<string, unknown>>[]): string | null;
