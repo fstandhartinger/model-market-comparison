@@ -2275,6 +2275,198 @@
         "https://cognition.com/frontiercode",
         "https://cognition.com/data/frontiercode-leaderboard/data.json"
       ]
+    },
+    {
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "parser": {
+        "kind": "vite_board_runs",
+        "board": "cua",
+        "require_header": [
+          "Rank",
+          "Model",
+          "Harness",
+          "Reasoning effort",
+          "Cumulative success rate",
+          "Cost per task",
+          "Tokens per task"
+        ],
+        "require_n": 100,
+        "name_field": "name",
+        "id_field": "id",
+        "harness_field": "harness",
+        "value_field": "passed",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "ApprenticeBench CUA board ships its rows as literals in the page's own Vite module bundle; values stay separate by the published model x harness x reasoning-effort label and never enter the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/apprenticebench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Row literals in the page's own Vite module bundle (E3 step 2: structured data shipped with the page)",
+        "locator": "Board map {cua:{runs:VAR,note:...},api:{runs:VAR,note:...}} in the module bundle; parse each {model,org,passed,n,cost,tokens,harness,effort[,tag]} literal of the cua runs array; value = passed (cumulative success rate percent) per row.",
+        "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+        "notes": "A computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring. The minified module URL changes every deploy and is discovered from the page capture. The page's best human tester (51%, $7.21/task) is not a model row. Cost and tokens are auxiliary unless collected under their own identity."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+      "source": {
+        "page_url": "https://apprenticebench.com/",
+        "follow_module_script": true,
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.",
+      "basis": "measured",
+      "minimum_rows": 29,
+      "source_urls": [
+        "https://apprenticebench.com/",
+        "https://neocognition.io/blog/apprentice-bench/"
+      ]
+    },
+    {
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "parser": {
+        "kind": "vite_board_runs",
+        "board": "cua",
+        "require_header": [
+          "Rank",
+          "Model",
+          "Harness",
+          "Reasoning effort",
+          "Cumulative success rate",
+          "Cost per task",
+          "Tokens per task"
+        ],
+        "require_n": 100,
+        "name_field": "name",
+        "id_field": "id",
+        "harness_field": "harness",
+        "value_field": "cost",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "ApprenticeBench publishes a separate USD cost per task next to the CUA score; it is not a capability score and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/apprenticebench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Row literals in the page's own Vite module bundle (E3 step 2: structured data shipped with the page)",
+        "locator": "Board map {cua:{runs:VAR,note:...},api:{runs:VAR,note:...}} in the module bundle; parse each {model,org,passed,n,cost,tokens,harness,effort[,tag]} literal of the cua runs array; value = cost (USD per task) per row.",
+        "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+        "notes": "Cost prices the mean per-task tokens (cache reads, fresh input, cache writes and output) at list rates. The page's best human tester (51%, $7.21/task) is not a model row; cost is not folded into the score or Composite."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+      "source": {
+        "page_url": "https://apprenticebench.com/",
+        "follow_module_script": true,
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.",
+      "basis": "measured",
+      "minimum_rows": 29,
+      "source_urls": [
+        "https://apprenticebench.com/",
+        "https://neocognition.io/blog/apprentice-bench/"
+      ]
+    },
+    {
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "parser": {
+        "kind": "vite_board_runs",
+        "board": "api",
+        "require_header": [
+          "Rank",
+          "Model",
+          "Harness",
+          "Reasoning effort",
+          "Cumulative success rate",
+          "Cost per task",
+          "Tokens per task"
+        ],
+        "require_n": 100,
+        "name_field": "name",
+        "id_field": "id",
+        "harness_field": "harness",
+        "value_field": "passed",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "ApprenticeBench API board ships its rows as literals in the page's own Vite module bundle; values stay separate by the published model x harness x reasoning-effort label and never enter the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/apprenticebench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Row literals in the page's own Vite module bundle (E3 step 2: structured data shipped with the page)",
+        "locator": "Board map {cua:{runs:VAR,note:...},api:{runs:VAR,note:...}} in the module bundle; parse each {model,org,passed,n,cost,tokens,harness,effort[,tag]} literal of the api runs array; value = passed (cumulative success rate percent) per row.",
+        "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+        "notes": "The same 100-task accounts-payable job as the CUA board, completed with dedicated application API calls instead of the screen interface. The minified module URL changes every deploy and is discovered from the page capture. The page's best human tester (51%, $7.21/task) is not a model row. Cost and tokens are auxiliary unless collected under their own identity."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+      "source": {
+        "page_url": "https://apprenticebench.com/",
+        "follow_module_script": true,
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.",
+      "basis": "measured",
+      "minimum_rows": 27,
+      "source_urls": [
+        "https://apprenticebench.com/",
+        "https://neocognition.io/blog/apprentice-bench/"
+      ]
+    },
+    {
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "parser": {
+        "kind": "vite_board_runs",
+        "board": "api",
+        "require_header": [
+          "Rank",
+          "Model",
+          "Harness",
+          "Reasoning effort",
+          "Cumulative success rate",
+          "Cost per task",
+          "Tokens per task"
+        ],
+        "require_n": 100,
+        "name_field": "name",
+        "id_field": "id",
+        "harness_field": "harness",
+        "value_field": "cost",
+        "plain_text_names": true
+      },
+      "status": "collected",
+      "reason": "ApprenticeBench publishes a separate USD cost per task next to the API-board score; it is not a capability score and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/apprenticebench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Row literals in the page's own Vite module bundle (E3 step 2: structured data shipped with the page)",
+        "locator": "Board map {cua:{runs:VAR,note:...},api:{runs:VAR,note:...}} in the module bundle; parse each {model,org,passed,n,cost,tokens,harness,effort[,tag]} literal of the api runs array; value = cost (USD per task) per row.",
+        "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+        "notes": "Cost prices the mean per-task tokens (cache reads, fresh input, cache writes and output) at list rates. The page's best human tester (51%, $7.21/task) is not a model row; cost is not folded into the score or Composite."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the seven-column leaderboard header literal, the cua/api board map and n == 100 on every run; a different task count or a new header is a new identity.",
+      "source": {
+        "page_url": "https://apprenticebench.com/",
+        "follow_module_script": true,
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.",
+      "basis": "measured",
+      "minimum_rows": 27,
+      "source_urls": [
+        "https://apprenticebench.com/",
+        "https://neocognition.io/blog/apprentice-bench/"
+      ]
     }
   ]
 }

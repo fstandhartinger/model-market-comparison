@@ -364118,6 +364118,2694 @@
       ]
     },
     {
+      "id": "public:f72b12a2c8410c3eeebad25a",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5-1|Claude Code|max",
+        "name": "claude-fable-5-1 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 72,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 0; claude-fable-5-1|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5-1\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":72,\"cost\":18.23,\"tokens\":36910000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:07db4e70329680da7357e755",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-6-astra|Codex|max",
+        "name": "gpt-6-astra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 68,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 1; gpt-6-astra|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-6-astra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":68,\"cost\":20.51,\"tokens\":14850000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a39f3597b568bfd9ad0101b9",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-6-astra|Codex|xhigh",
+        "name": "gpt-6-astra · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 61,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 2; gpt-6-astra|Codex|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-6-astra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":61,\"cost\":14.37,\"tokens\":11160000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b48c2f07520f07c95b35eebd",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5-1|Claude Code|xhigh",
+        "name": "claude-fable-5-1 · Claude Code · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 59,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 3; claude-fable-5-1|Claude Code|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5-1\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"xhigh\",\"n\":100,\"passed\":59,\"cost\":13.87,\"tokens\":25940000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:18d594f0d64b79e3c63e58c5",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|xhigh",
+        "name": "claude-fable-5 · Claude Code · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 43,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 4; claude-fable-5|Claude Code|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"xhigh\",\"n\":100,\"passed\":43,\"cost\":33.1,\"tokens\":23560000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:41275b06325f0d308df4d629",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-5|Claude Code|max",
+        "name": "claude-opus-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 36,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 5; claude-opus-5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-opus-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":36,\"cost\":20.07,\"tokens\":30160000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d867cb8511f6cc99cfc03496",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|high",
+        "name": "claude-fable-5 · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 35,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 6; claude-fable-5|Claude Code|high; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":35,\"cost\":28.36,\"tokens\":22110000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:28165fd12c03df447a2c6eaf",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|max",
+        "name": "claude-fable-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 34,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 7; claude-fable-5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":34,\"cost\":28.68,\"tokens\":21170000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:faaa3acdc86fe15f17e5c6eb",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|max",
+        "name": "gpt-5.6-sol · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 26,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 8; gpt-5.6-sol|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":26,\"cost\":8.68,\"tokens\":15090000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:63113331ee476daed28bfe67",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.8-flash|Claude Code|max",
+        "name": "gemini-3.8-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 24,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 9; gemini-3.8-flash|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gemini-3.8-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":24,\"cost\":4.1,\"tokens\":37840000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:048ecc0fa2e8bd7a29b70b5c",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|medium",
+        "name": "claude-fable-5 · Claude Code · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 23,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 10; claude-fable-5|Claude Code|medium; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"medium\",\"n\":100,\"passed\":23,\"cost\":21.86,\"tokens\":16470000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b1f72f5a36152f53f2419b90",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|high",
+        "name": "gpt-5.6-sol · Codex · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 20,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 11; gpt-5.6-sol|Codex|high; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"high\",\"n\":100,\"passed\":20,\"cost\":6.08,\"tokens\":10540000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:948cc2506e503a254481e27f",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.5|Codex|xhigh",
+        "name": "gpt-5.5 · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 20,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 12; gpt-5.5|Codex|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.5\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":20,\"cost\":12.68,\"tokens\":16780000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1700685196edc3104d2cd96f",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|low",
+        "name": "claude-fable-5 · Claude Code · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 19,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 13; claude-fable-5|Claude Code|low; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"low\",\"n\":100,\"passed\":19,\"cost\":18.13,\"tokens\":15180000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0b81f4bf5cd089ca92c5cc21",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|xhigh",
+        "name": "gpt-5.6-sol · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 19,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 14; gpt-5.6-sol|Codex|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":19,\"cost\":6.62,\"tokens\":11000000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:09ec45adaabccaffaa269ab9",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "grok-4.6|Claude Code|max",
+        "name": "grok-4.6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 13,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 15; grok-4.6|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"grok-4.6\",\"org\":\"xai\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":13,\"cost\":35.79,\"tokens\":48500000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:56ede12be3eba29ca67264ba",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "kimi-k3|Claude Code|max",
+        "name": "kimi-k3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 18,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 16; kimi-k3|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"kimi-k3\",\"org\":\"moonshot\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":18,\"cost\":25.83,\"tokens\":51140000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:03fe8fc217293330707767e1",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-sonnet-5|Claude Code|max",
+        "name": "claude-sonnet-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 16,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 17; claude-sonnet-5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-sonnet-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":16,\"cost\":14.62,\"tokens\":63970000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b89db251297098eb568dc6eb",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-terra|Codex|max",
+        "name": "gpt-5.6-terra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 16,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 18; gpt-5.6-terra|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-terra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":16,\"cost\":6.15,\"tokens\":21950000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7299b10386bbff9351217900",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.3|Claude Code|max",
+        "name": "muse-spark-1.3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 19,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 19; muse-spark-1.3|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"muse-spark-1.3\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":19,\"cost\":7.93,\"tokens\":35900000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9cd3f3fb1368d6744c9dfcd9",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.7-flash|Claude Code|max",
+        "name": "gemini-3.7-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 16,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 20; gemini-3.7-flash|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gemini-3.7-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":16,\"cost\":3.92,\"tokens\":29730000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2f8cf034f211497c0d2ab1b7",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.4|Codex|xhigh",
+        "name": "gpt-5.4 · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 11,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 21; gpt-5.4|Codex|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.4\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":11,\"cost\":5.95,\"tokens\":15770000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6606fbfa3efdcfe20e38962b",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|medium",
+        "name": "gpt-5.6-sol · Codex · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 10,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 22; gpt-5.6-sol|Codex|medium; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n\":100,\"passed\":10,\"cost\":5.1,\"tokens\":9670000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:556d737da38214a5f49fb4dd",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-7|Claude Code|max",
+        "name": "claude-opus-4-7 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 23; claude-opus-4-7|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-opus-4-7\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":7,\"cost\":26.04,\"tokens\":45810000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4a1e7724d057feeb86411e48",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-luna|Codex|max",
+        "name": "gpt-5.6-luna · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 24; gpt-5.6-luna|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-luna\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":7,\"cost\":0.77,\"tokens\":30130000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fdbe623846edc4466e792823",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-6|Claude Code|max",
+        "name": "claude-opus-4-6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 25; claude-opus-4-6|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-opus-4-6\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":5,\"cost\":23.68,\"tokens\":41490000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a5775a476d4747d334b1aba8",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|low",
+        "name": "gpt-5.6-sol · Codex · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 4,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 26; gpt-5.6-sol|Codex|low; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"low\",\"n\":100,\"passed\":4,\"cost\":3.9,\"tokens\":7280000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c06abdbf77312defe61e3fed",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-sonnet-4-6|Claude Code|max",
+        "name": "claude-sonnet-4-6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 27; claude-sonnet-4-6|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-sonnet-4-6\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":2,\"cost\":14.68,\"tokens\":42870000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5f5c5b027998a9bc175e327f",
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|none",
+        "name": "gpt-5.6-sol · Codex · none",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 0,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 28; gpt-5.6-sol|Codex|none; field passed"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"none\",\"n\":100,\"passed\":0,\"cost\":3.09,\"tokens\":6210000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:29fd22007f346829ea990bed",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5-1|Claude Code|max",
+        "name": "claude-fable-5-1 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 18.23,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 0; claude-fable-5-1|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5-1\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":72,\"cost\":18.23,\"tokens\":36910000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0e2ef09876c46983ad09cd04",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-6-astra|Codex|max",
+        "name": "gpt-6-astra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 20.51,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 1; gpt-6-astra|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-6-astra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":68,\"cost\":20.51,\"tokens\":14850000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f46fc045b8a2647b208a1344",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-6-astra|Codex|xhigh",
+        "name": "gpt-6-astra · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 14.37,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 2; gpt-6-astra|Codex|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-6-astra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":61,\"cost\":14.37,\"tokens\":11160000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6d875f9ee49d1de441c9a59b",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5-1|Claude Code|xhigh",
+        "name": "claude-fable-5-1 · Claude Code · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 13.87,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 3; claude-fable-5-1|Claude Code|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5-1\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"xhigh\",\"n\":100,\"passed\":59,\"cost\":13.87,\"tokens\":25940000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:da5ac3712bd25126e2b3db2d",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|xhigh",
+        "name": "claude-fable-5 · Claude Code · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 33.1,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 4; claude-fable-5|Claude Code|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"xhigh\",\"n\":100,\"passed\":43,\"cost\":33.1,\"tokens\":23560000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:42dd3bcd5d7fb16b1e78e0e4",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-5|Claude Code|max",
+        "name": "claude-opus-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 20.07,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 5; claude-opus-5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-opus-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":36,\"cost\":20.07,\"tokens\":30160000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ccb0cb6a5fce32474f494972",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|high",
+        "name": "claude-fable-5 · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 28.36,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 6; claude-fable-5|Claude Code|high; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":35,\"cost\":28.36,\"tokens\":22110000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5ccf6acbf6a75feb117bd4c7",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|max",
+        "name": "claude-fable-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 28.68,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 7; claude-fable-5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":34,\"cost\":28.68,\"tokens\":21170000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6e85450379af9c29f11682d3",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|max",
+        "name": "gpt-5.6-sol · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 8.68,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 8; gpt-5.6-sol|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":26,\"cost\":8.68,\"tokens\":15090000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9a0324a4b87bab8581ee5624",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.8-flash|Claude Code|max",
+        "name": "gemini-3.8-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 4.1,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 9; gemini-3.8-flash|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gemini-3.8-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":24,\"cost\":4.1,\"tokens\":37840000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a4cb0d8ed58eeab85d74e462",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|medium",
+        "name": "claude-fable-5 · Claude Code · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 21.86,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 10; claude-fable-5|Claude Code|medium; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"medium\",\"n\":100,\"passed\":23,\"cost\":21.86,\"tokens\":16470000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:49939c7dc32358d75b1f30df",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|high",
+        "name": "gpt-5.6-sol · Codex · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 6.08,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 11; gpt-5.6-sol|Codex|high; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"high\",\"n\":100,\"passed\":20,\"cost\":6.08,\"tokens\":10540000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:649ace09d21d101c669820e7",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.5|Codex|xhigh",
+        "name": "gpt-5.5 · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 12.68,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 12; gpt-5.5|Codex|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.5\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":20,\"cost\":12.68,\"tokens\":16780000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:95845af72bfc997b1afe25a9",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|low",
+        "name": "claude-fable-5 · Claude Code · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 18.13,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 13; claude-fable-5|Claude Code|low; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"low\",\"n\":100,\"passed\":19,\"cost\":18.13,\"tokens\":15180000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b57fa820b2eb62bde9de3326",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|xhigh",
+        "name": "gpt-5.6-sol · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 6.62,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 14; gpt-5.6-sol|Codex|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":19,\"cost\":6.62,\"tokens\":11000000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f87220f1bf3134fd5771f03d",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "grok-4.6|Claude Code|max",
+        "name": "grok-4.6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 35.79,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 15; grok-4.6|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"grok-4.6\",\"org\":\"xai\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":13,\"cost\":35.79,\"tokens\":48500000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:60f55eb2609e512a2a8fd23d",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "kimi-k3|Claude Code|max",
+        "name": "kimi-k3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 25.83,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 16; kimi-k3|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"kimi-k3\",\"org\":\"moonshot\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":18,\"cost\":25.83,\"tokens\":51140000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f419bba16fa882ee48c24d02",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-sonnet-5|Claude Code|max",
+        "name": "claude-sonnet-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 14.62,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 17; claude-sonnet-5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-sonnet-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":16,\"cost\":14.62,\"tokens\":63970000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5dd1da17bff17201f93df09d",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-terra|Codex|max",
+        "name": "gpt-5.6-terra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 6.15,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 18; gpt-5.6-terra|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-terra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":16,\"cost\":6.15,\"tokens\":21950000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7723318f8e3092b96475704a",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.3|Claude Code|max",
+        "name": "muse-spark-1.3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 7.93,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 19; muse-spark-1.3|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"muse-spark-1.3\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":19,\"cost\":7.93,\"tokens\":35900000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ef93aae13ba8153208cd641f",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.7-flash|Claude Code|max",
+        "name": "gemini-3.7-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 3.92,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 20; gemini-3.7-flash|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gemini-3.7-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":16,\"cost\":3.92,\"tokens\":29730000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4cf455f9fa6b41687fbc568a",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.4|Codex|xhigh",
+        "name": "gpt-5.4 · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 5.95,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 21; gpt-5.4|Codex|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.4\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":11,\"cost\":5.95,\"tokens\":15770000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d70f4748aa2c4f2d534c975f",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|medium",
+        "name": "gpt-5.6-sol · Codex · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 5.1,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 22; gpt-5.6-sol|Codex|medium; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"medium\",\"n\":100,\"passed\":10,\"cost\":5.1,\"tokens\":9670000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9fcd3f96f32bb79291f871a6",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-7|Claude Code|max",
+        "name": "claude-opus-4-7 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 26.04,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 23; claude-opus-4-7|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-opus-4-7\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":7,\"cost\":26.04,\"tokens\":45810000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a44ede5bf85c206de7dc47a3",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-luna|Codex|max",
+        "name": "gpt-5.6-luna · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 0.77,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 24; gpt-5.6-luna|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-luna\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":7,\"cost\":0.77,\"tokens\":30130000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:227515594b7acada1c590e0d",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-6|Claude Code|max",
+        "name": "claude-opus-4-6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 23.68,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 25; claude-opus-4-6|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-opus-4-6\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":5,\"cost\":23.68,\"tokens\":41490000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fd3b2c91f1d88a1284cc0664",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|low",
+        "name": "gpt-5.6-sol · Codex · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 3.9,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 26; gpt-5.6-sol|Codex|low; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"low\",\"n\":100,\"passed\":4,\"cost\":3.9,\"tokens\":7280000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2ba31e07dc7098dbc5fb7009",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-sonnet-4-6|Claude Code|max",
+        "name": "claude-sonnet-4-6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 14.68,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 27; claude-sonnet-4-6|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"claude-sonnet-4-6\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":2,\"cost\":14.68,\"tokens\":42870000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0d62cf88020340f884e4132e",
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|none",
+        "name": "gpt-5.6-sol · Codex · none",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 3.09,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 28; gpt-5.6-sol|Codex|none; field cost"
+      },
+      "protocol": "ApprenticeBench CUA board (snapshot 2026-09-14); computer-use agent operates the Odoo ERP through its screens across 100 sequential accounts-payable tasks with diminishing mentoring; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"cua\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"none\",\"n\":100,\"passed\":0,\"cost\":3.09,\"tokens\":6210000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a429bcd2b45cc921de742b9e",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5-1|Claude Code|max",
+        "name": "claude-fable-5-1 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 70,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 0; claude-fable-5-1|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-fable-5-1\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":70,\"cost\":6.95,\"tokens\":5330000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9666307ee9eb92083983c8f0",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-6-astra|Codex|max",
+        "name": "gpt-6-astra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 65,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 1; gpt-6-astra|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-6-astra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":65,\"cost\":9.62,\"tokens\":6520000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:94c7896de6437537dd418232",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-5|Claude Code|max",
+        "name": "claude-opus-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 49,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 2; claude-opus-5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-opus-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":49,\"cost\":5.28,\"tokens\":4540000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:06a1d4d8d482fa0fce6b9304",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|max",
+        "name": "claude-fable-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 45,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 3; claude-fable-5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":45,\"cost\":7.33,\"tokens\":2870000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8285b50f30b2d58586c5af04",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "grok-4.6|Claude Code|max",
+        "name": "grok-4.6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 45,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 4; grok-4.6|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"grok-4.6\",\"org\":\"xai\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":45,\"cost\":1.44,\"tokens\":1960000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:191d35c114a376653789373c",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "grok-4.5|Claude Code|max",
+        "name": "grok-4.5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 38,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 5; grok-4.5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"grok-4.5\",\"org\":\"xai\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":38,\"cost\":0.83,\"tokens\":1670000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d12575fd77e8d4adb9771e47",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.8-flash|Claude Code|high",
+        "name": "gemini-3.8-flash · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 34,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 6; gemini-3.8-flash|Claude Code|high; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gemini-3.8-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":34,\"cost\":1.13,\"tokens\":5680000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:02bd83756bb64cb328f13bf2",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.7-flash|Claude Code|high",
+        "name": "gemini-3.7-flash · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 32,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 7; gemini-3.7-flash|Claude Code|high; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gemini-3.7-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":32,\"cost\":0.61,\"tokens\":3660000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:74dec1ef9b0881941b75e45a",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|max",
+        "name": "gpt-5.6-sol · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 30,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 8; gpt-5.6-sol|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":30,\"cost\":2.04,\"tokens\":3150000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cc0c6112fd81dde43271d89f",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-8|Claude Code|max",
+        "name": "claude-opus-4-8 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 28,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 9; claude-opus-4-8|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-opus-4-8\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":28,\"cost\":4.59,\"tokens\":2700000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3cf2503ee1b6174cf885a94e",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.5|Codex|xhigh",
+        "name": "gpt-5.5 · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 27,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 10; gpt-5.5|Codex|xhigh; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.5\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":27,\"cost\":2.82,\"tokens\":2850000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:74bfb6d790c28258b457cba4",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-sonnet-5|Claude Code|max",
+        "name": "claude-sonnet-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 26,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 11; claude-sonnet-5|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-sonnet-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":26,\"cost\":1.91,\"tokens\":3930000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3ac5d102649b9fb527ce9389",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "kimi-k3|Claude Code|max",
+        "name": "kimi-k3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 25,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 12; kimi-k3|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"kimi-k3\",\"org\":\"moonshot\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":25,\"cost\":1.59,\"tokens\":2330000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b9f8fb64f1c87ac47e3302a8",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "qwen3.8-max|Claude Code|max",
+        "name": "qwen3.8-max · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 24,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 13; qwen3.8-max|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"qwen3.8-max\",\"org\":\"alibaba\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":24,\"cost\":1.39,\"tokens\":2630000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cac611c8ee579099577b7837",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.3|Claude Code|max",
+        "name": "muse-spark-1.3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 24,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 14; muse-spark-1.3|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"muse-spark-1.3\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":24,\"cost\":0.57,\"tokens\":2000000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:687a61d1567b94f3c2d08367",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-terra|Codex|max",
+        "name": "gpt-5.6-terra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 21,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 15; gpt-5.6-terra|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.6-terra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":21,\"cost\":1.13,\"tokens\":3450000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:17bf8b8a29cc84c7f906cf7e",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "deepseek-v4-pro|Claude Code|max",
+        "name": "deepseek-v4-pro · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 21,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 16; deepseek-v4-pro|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"deepseek-v4-pro\",\"org\":\"deepseek\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":21,\"cost\":0.46,\"tokens\":3400000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e54c1f5008052665677e58fa",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "glm-5.3-flash|Claude Code|max",
+        "name": "glm-5.3-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 21,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 17; glm-5.3-flash|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"glm-5.3-flash\",\"org\":\"zhipu\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":21,\"cost\":0.07,\"tokens\":2860000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cd9e21f321190790c78570ff",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.2|Claude Code|max",
+        "name": "muse-spark-1.2 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 19,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 18; muse-spark-1.2|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"muse-spark-1.2\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":19,\"cost\":2.38,\"tokens\":3420000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8d9fc802622cdd464655972e",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "deepseek-v4-flash|Claude Code|max",
+        "name": "deepseek-v4-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 18,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 19; deepseek-v4-flash|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"deepseek-v4-flash\",\"org\":\"deepseek\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":18,\"cost\":0.07,\"tokens\":2120000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:26d818cae021f438574b653c",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "glm-5.2|Claude Code|max",
+        "name": "glm-5.2 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 17,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 20; glm-5.2|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"glm-5.2\",\"org\":\"zhipu\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":17,\"cost\":0.6,\"tokens\":2260000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ec04b1dafbc71c3454da3dba",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-7|Claude Code|max",
+        "name": "claude-opus-4-7 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 14,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 21; claude-opus-4-7|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-opus-4-7\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":14,\"cost\":2.42,\"tokens\":1970000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:132ed3d48da911efe3c5d784",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-luna|Codex|max",
+        "name": "gpt-5.6-luna · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 13,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 22; gpt-5.6-luna|Codex|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.6-luna\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":13,\"cost\":0.16,\"tokens\":4150000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:27b913086ff774f5edf6bef8",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.6-flash|Claude Code|high",
+        "name": "gemini-3.6-flash · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 12,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 23; gemini-3.6-flash|Claude Code|high; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gemini-3.6-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":12,\"cost\":0.46,\"tokens\":2300000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:47d9a04114009a824b22d753",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.1|Claude Code|max",
+        "name": "muse-spark-1.1 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 12,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 24; muse-spark-1.1|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"muse-spark-1.1\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":12,\"cost\":0.9,\"tokens\":2610000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b4ad5daf36dad94b140b90cd",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "kimi-k2.6|Claude Code|max",
+        "name": "kimi-k2.6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 10,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 25; kimi-k2.6|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"kimi-k2.6\",\"org\":\"moonshot\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":10,\"cost\":0.69,\"tokens\":3170000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:85dcda31f72590fbd188d2c3",
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "qwen3.8-flash|Claude Code|max",
+        "name": "qwen3.8-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 10,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 26; qwen3.8-flash|Claude Code|max; field passed"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; each row is one model x harness x reasoning-effort configuration with cumulative success rate percent; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"qwen3.8-flash\",\"org\":\"alibaba\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":10,\"cost\":0.16,\"tokens\":5290000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ae2db5b1a9da31a69f73cf24",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5-1|Claude Code|max",
+        "name": "claude-fable-5-1 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 6.95,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 0; claude-fable-5-1|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-fable-5-1\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":70,\"cost\":6.95,\"tokens\":5330000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8fdcafd1a767858313286da6",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-6-astra|Codex|max",
+        "name": "gpt-6-astra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 9.62,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 1; gpt-6-astra|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-6-astra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":65,\"cost\":9.62,\"tokens\":6520000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:003e515f6f112577275ee7b6",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-5|Claude Code|max",
+        "name": "claude-opus-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 5.28,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 2; claude-opus-5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-opus-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":49,\"cost\":5.28,\"tokens\":4540000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d0a1101320c8df2d3cee9b4d",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-fable-5|Claude Code|max",
+        "name": "claude-fable-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 7.33,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 3; claude-fable-5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-fable-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":45,\"cost\":7.33,\"tokens\":2870000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:08efc32f9ba2000d97091876",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "grok-4.6|Claude Code|max",
+        "name": "grok-4.6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 1.44,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 4; grok-4.6|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"grok-4.6\",\"org\":\"xai\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":45,\"cost\":1.44,\"tokens\":1960000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:245af65ec2e51fbd7e071573",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "grok-4.5|Claude Code|max",
+        "name": "grok-4.5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.83,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 5; grok-4.5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"grok-4.5\",\"org\":\"xai\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":38,\"cost\":0.83,\"tokens\":1670000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7f1d14084d28637b6ba1dd21",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.8-flash|Claude Code|high",
+        "name": "gemini-3.8-flash · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 1.13,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 6; gemini-3.8-flash|Claude Code|high; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gemini-3.8-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":34,\"cost\":1.13,\"tokens\":5680000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:31a510bd7b02f695cfb569ea",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.7-flash|Claude Code|high",
+        "name": "gemini-3.7-flash · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.61,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 7; gemini-3.7-flash|Claude Code|high; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gemini-3.7-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":32,\"cost\":0.61,\"tokens\":3660000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f9b85bcc7c3bbf7e0d76a5f1",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-sol|Codex|max",
+        "name": "gpt-5.6-sol · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 2.04,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 8; gpt-5.6-sol|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.6-sol\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":30,\"cost\":2.04,\"tokens\":3150000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0187327355fd85d1e176c09b",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-8|Claude Code|max",
+        "name": "claude-opus-4-8 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 4.59,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 9; claude-opus-4-8|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-opus-4-8\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":28,\"cost\":4.59,\"tokens\":2700000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:91b9848f682cb4ca4b9c76ef",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.5|Codex|xhigh",
+        "name": "gpt-5.5 · Codex · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 2.82,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 10; gpt-5.5|Codex|xhigh; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.5\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"xhigh\",\"n\":100,\"passed\":27,\"cost\":2.82,\"tokens\":2850000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4a586c8fc7823f8adaa9918e",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-sonnet-5|Claude Code|max",
+        "name": "claude-sonnet-5 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 1.91,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 11; claude-sonnet-5|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-sonnet-5\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":26,\"cost\":1.91,\"tokens\":3930000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f765f9696c67aa8351f30122",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "kimi-k3|Claude Code|max",
+        "name": "kimi-k3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 1.59,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 12; kimi-k3|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"kimi-k3\",\"org\":\"moonshot\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":25,\"cost\":1.59,\"tokens\":2330000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8bf89845330d8be953d34f39",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "qwen3.8-max|Claude Code|max",
+        "name": "qwen3.8-max · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 1.39,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 13; qwen3.8-max|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"qwen3.8-max\",\"org\":\"alibaba\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":24,\"cost\":1.39,\"tokens\":2630000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:af4ca81563d6e666de5170dd",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.3|Claude Code|max",
+        "name": "muse-spark-1.3 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.57,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 14; muse-spark-1.3|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"muse-spark-1.3\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":24,\"cost\":0.57,\"tokens\":2000000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:77523f17b1fdf496a9118173",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-terra|Codex|max",
+        "name": "gpt-5.6-terra · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 1.13,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 15; gpt-5.6-terra|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.6-terra\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":21,\"cost\":1.13,\"tokens\":3450000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0e13bc4ae2fdc50722f3a384",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "deepseek-v4-pro|Claude Code|max",
+        "name": "deepseek-v4-pro · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.46,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 16; deepseek-v4-pro|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"deepseek-v4-pro\",\"org\":\"deepseek\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":21,\"cost\":0.46,\"tokens\":3400000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4156029920aed01f5bdc0d31",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "glm-5.3-flash|Claude Code|max",
+        "name": "glm-5.3-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.07,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 17; glm-5.3-flash|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"glm-5.3-flash\",\"org\":\"zhipu\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":21,\"cost\":0.07,\"tokens\":2860000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b9d82ff521e98c9c9f64605b",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.2|Claude Code|max",
+        "name": "muse-spark-1.2 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 2.38,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 18; muse-spark-1.2|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"muse-spark-1.2\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":19,\"cost\":2.38,\"tokens\":3420000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f3318c74b828c750cd741105",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "deepseek-v4-flash|Claude Code|max",
+        "name": "deepseek-v4-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.07,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 19; deepseek-v4-flash|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"deepseek-v4-flash\",\"org\":\"deepseek\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":18,\"cost\":0.07,\"tokens\":2120000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f5283347400287b72e1b026d",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "glm-5.2|Claude Code|max",
+        "name": "glm-5.2 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.6,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 20; glm-5.2|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"glm-5.2\",\"org\":\"zhipu\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":17,\"cost\":0.6,\"tokens\":2260000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:76307fb0c7b984bfb85459e4",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "claude-opus-4-7|Claude Code|max",
+        "name": "claude-opus-4-7 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 2.42,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 21; claude-opus-4-7|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"claude-opus-4-7\",\"org\":\"anthropic\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":14,\"cost\":2.42,\"tokens\":1970000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:75fb5792b4d62eb846075f0c",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gpt-5.6-luna|Codex|max",
+        "name": "gpt-5.6-luna · Codex · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 0.16,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 22; gpt-5.6-luna|Codex|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gpt-5.6-luna\",\"org\":\"openai\",\"harness\":\"Codex\",\"effort\":\"max\",\"n\":100,\"passed\":13,\"cost\":0.16,\"tokens\":4150000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2ee8c2de84bd3e8419dfe5b9",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "gemini-3.6-flash|Claude Code|high",
+        "name": "gemini-3.6-flash · Claude Code · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.46,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 23; gemini-3.6-flash|Claude Code|high; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"gemini-3.6-flash\",\"org\":\"google\",\"harness\":\"Claude Code\",\"effort\":\"high\",\"n\":100,\"passed\":12,\"cost\":0.46,\"tokens\":2300000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6ec58714ef8e7e123b16f69e",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "muse-spark-1.1|Claude Code|max",
+        "name": "muse-spark-1.1 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.9,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 24; muse-spark-1.1|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"muse-spark-1.1\",\"org\":\"meta\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":12,\"cost\":0.9,\"tokens\":2610000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:80854552185a173326aba7d4",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "kimi-k2.6|Claude Code|max",
+        "name": "kimi-k2.6 · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.69,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 25; kimi-k2.6|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"kimi-k2.6\",\"org\":\"moonshot\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":10,\"cost\":0.69,\"tokens\":3170000.0}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1ef18dcdbb548cd43d7ba668",
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "subject": {
+        "source_id": "qwen3.8-flash|Claude Code|max",
+        "name": "qwen3.8-flash · Claude Code · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 0.16,
+      "unit": "USD",
+      "basis": "measured",
+      "source": {
+        "url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+        "retrieved_at": "2026-09-14T08:10:57.931660+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-14-apprenticebench/8b07652a1a512ea7c680.gz",
+        "sha256": "8b07652a1a512ea7c68038f59e0f64940dbf576fc3a6aa7c824db81e0d918c35",
+        "locator": "vite_board_runs; source row 26; qwen3.8-flash|Claude Code|max; field cost"
+      },
+      "protocol": "ApprenticeBench API board (snapshot 2026-09-14); agent completes the same 100 sequential accounts-payable tasks in the Odoo ERP with diminishing mentoring via dedicated application API calls; published USD cost per task per model x harness x reasoning-effort configuration; not a Composite input; the page's human baseline (51%, $7.21/task) is not a model row; tokens per task is the mean of cache reads, fresh input, cache writes and output priced at list rates.; source row: {\"board\":\"api\",\"model\":\"qwen3.8-flash\",\"org\":\"alibaba\",\"harness\":\"Claude Code\",\"effort\":\"max\",\"n\":100,\"passed\":10,\"cost\":0.16,\"tokens\":5290000.0}",
+      "comparison_key": null
+    },
+    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
       "benchmark_id": "tau2-bench::2",
       "subject": {
@@ -373870,6 +376558,30 @@
       "status": "collected",
       "source_url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
       "reason": "98 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "apprenticebench-cua::snapshot-2026-09-14",
+      "status": "collected",
+      "source_url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+      "reason": "29 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "apprenticebench-cua-cost::snapshot-2026-09-14",
+      "status": "collected",
+      "source_url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+      "reason": "29 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "apprenticebench-api::snapshot-2026-09-14",
+      "status": "collected",
+      "source_url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+      "reason": "27 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "apprenticebench-api-cost::snapshot-2026-09-14",
+      "status": "collected",
+      "source_url": "https://apprenticebench.com/assets/index-CwoZhdR2.js",
+      "reason": "27 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

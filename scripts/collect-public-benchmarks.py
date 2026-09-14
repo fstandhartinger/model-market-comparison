@@ -215,6 +215,38 @@ def parse(source,spec,load_source):
             means=[sum(numeric(row[k]) for k in ks)/len(ks) for ks in categories.values()]
             row['value']={'grok-3-thinking':72,'grok-3':58}.get(row['model'],float(f'{sum(means)/len(means):.2f}'))
             row['derivation']={'formula':'Mean of seven category means, rounded to the published 2 decimals; source Grok-3 Thinking=72 and Grok-3=58 overrides retained.', 'inputs':inputs}
+    elif kind=='vite_board_runs':
+        # Row literals ship inside the page's own Vite module bundle. Minified
+        # variable names change every deploy, so identity anchors are only the
+        # leaderboard header literal, the cua/api board-map shape and n per row.
+        header=json.dumps(spec['require_header'],separators=(',',':'))
+        if header not in source:raise ValueError('Leaderboard header literal changed')
+        maps=re.findall(r'([\w$]+)=\{cua:\{runs:([\w$]+),note:[\w$]+\},api:\{runs:([\w$]+),note:[\w$]+\}\}',source)
+        if len(maps)!=1:raise ValueError('Board map missing or ambiguous')
+        if spec['board'] not in ('cua','api'):raise ValueError('Unknown board: '+str(spec['board']))
+        var=maps[0][1] if spec['board']=='cua' else maps[0][2]
+        starts=list(re.finditer(r'(?<![\w$.])'+re.escape(var)+r'=\[',source))
+        if len(starts)!=1:raise ValueError('Board array missing or ambiguous')
+        end=source.find(']',starts[0].end())
+        if end<0:raise ValueError('Board array not terminated')
+        body=source[starts[0].end():end]
+        if not re.fullmatch(r'\{[^{}]*\}(,\{[^{}]*\})*',body):raise ValueError('Board array contains non-literal content')
+        allowed={'model','org','passed','n','cost','tokens','harness','effort','tag'};required={'model','passed','n','cost','tokens','harness','effort'}
+        pair=r'([a-z]+):("(?:[^"\\]|\\.)*"|-?(?:\d+(?:\.\d+)?|\.\d+)(?:e[+-]?\d+)?)'
+        for index,found in enumerate(re.finditer(r'\{([^{}]*)\}',body)):
+            fields={}
+            if not re.fullmatch(pair+'(,'+pair+')*',found[1]):raise ValueError('Row literal schema changed')
+            for key,literal in re.findall(pair,found[1]):
+                if key not in allowed:raise ValueError('Unexpected row key: '+key)
+                if key in fields:raise ValueError('Duplicate row key: '+key)
+                fields[key]=json.loads(literal) if literal.startswith('"') else float(literal) if any(c in literal for c in '.eE') else int(literal)
+            if not required.issubset(fields):raise ValueError('Row misses required fields: '+str(sorted(required-set(fields))))
+            if fields['n']!=spec['require_n']:raise ValueError('Task count changed: '+repr(fields['n']))
+            if 'human' in fields['model'].lower():raise ValueError('Human baseline row is not a model result: '+fields['model'])
+            rows.append({'name':f"{fields['model']} · {fields['harness']} · {fields['effort']}",'id':f"{fields['model']}|{fields['harness']}|{fields['effort']}",
+                'passed':fields['passed'],'cost':fields['cost'],'tokens':fields['tokens'],'harness':fields['harness'],'source_row':index,
+                'context':{'board':spec['board'],'model':fields['model'],'org':fields.get('org'),'harness':fields['harness'],'effort':fields['effort'],
+                    'n':fields['n'],'passed':fields['passed'],'cost':fields['cost'],'tokens':fields['tokens']}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

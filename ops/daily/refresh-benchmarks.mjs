@@ -35,6 +35,9 @@ export async function refreshBenchmarks({ runDir } = {}) {
   const fail = (id, error) => { const reason = error.message ?? String(error); checks.push({ id, status: 'retained_after_failure', reason }); console.error(`BENCHMARK RETAINED ${id}: ${reason}`); };
   const urls = new Map();
   const add = (source) => {
+    // Vite SPA pages pin a hashed module bundle; only the stable page is queued,
+    // and the bundle is discovered from its capture receipt.
+    if (source?.page_url && source.follow_module_script) { urls.set(source.page_url, { url: source.page_url, follow_module_script: true }); return; }
     if (!source?.url || !source.url.startsWith('https://')) return;
     if (/(^|\.)(x\.com|twitter\.com)$/.test(new URL(source.url).hostname)) return;
     urls.set(source.url, source.url === 'https://uncommon-sandpiper-321.convex.cloud/api/query'
@@ -47,6 +50,10 @@ export async function refreshBenchmarks({ runDir } = {}) {
   const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
   const captured = new Map();
   for (const receipt of live) if (receipt.status === 200 && urls.has(receipt.url)) {
+    // A page whose bundle hash changes every deploy is never satisfied by a
+    // reused receipt of the page alone; it always re-runs the follow logic.
+    const wanted = urls.get(receipt.url);
+    if (wanted && typeof wanted === 'object' && wanted.follow_module_script) continue;
     const target = join(evidenceDir, `${receipt.sha256.slice(0, 20)}.gz`);
     await cp(receipt.file, target); captured.set(receipt.url, { ...receipt, file: target }); urls.delete(receipt.url);
   }
@@ -55,6 +62,12 @@ export async function refreshBenchmarks({ runDir } = {}) {
   await writeFile(join(temporary, 'capture.log'), capture.stdout + capture.stderr);
   for (const receipt of await json(join(evidenceDir, 'manifest.json'))) captured.set(receipt.url, receipt);
   const current = (source) => {
+    if (source.page_url && source.follow_module_script) {
+      // The current source is the bundle discovered from this run's page capture.
+      const receipt = [...captured.values()].find((r) => r.discovered_from === source.page_url && r.status === 200);
+      if (!receipt) throw new Error(`Primary source unavailable: ${source.page_url}: discovered module script capture missing or failed`);
+      return { ...source, ...receipt, fetched_at: receipt.retrieved_at };
+    }
     const receipt = captured.get(source.url);
     if (receipt?.status !== 200) throw new Error(`Primary source unavailable: ${source.url}: ${receipt?.reason ?? receipt?.status ?? 'manual authenticated source'}`);
     return { ...source, ...receipt, fetched_at: receipt.retrieved_at ?? receipt.fetched_at };
