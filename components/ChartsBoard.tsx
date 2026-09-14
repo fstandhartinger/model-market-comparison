@@ -73,7 +73,7 @@ function DotStrip({ label, groups, format, log }: { label: string; groups: { nam
  *  replaced by plain rows — org dot, name, value, and a 6 px bar proportional to the panel max. */
 function MobileBars({ rows, max, format }: { rows: { name: string; org: string; value: number }[]; max: number; format: (v: number) => string }) {
   return <>{rows.map((row, i) => (
-    <div className="py-1.5" key={i}>
+    <div className="py-1.5" role="listitem" key={i}>
       <div className="flex items-center gap-2 text-[13px]">
         <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: orgColor(row.org) }} />
         <span className="min-w-0 flex-1 truncate">{row.name}</span>
