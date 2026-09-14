@@ -69,6 +69,21 @@ function DotStrip({ label, groups, format, log }: { label: string; groups: { nam
   );
 }
 
+/** F-59: below md the 205 px category axis eats the recharts chart, so each bar chart is
+ *  replaced by plain rows — org dot, name, value, and a 6 px bar proportional to the panel max. */
+function MobileBars({ rows, max, format }: { rows: { name: string; org: string; value: number }[]; max: number; format: (v: number) => string }) {
+  return <>{rows.map((row, i) => (
+    <div className="py-1.5" key={i}>
+      <div className="flex items-center gap-2 text-[13px]">
+        <span className="h-2 w-2 shrink-0 rounded-full" style={{ background: orgColor(row.org) }} />
+        <span className="min-w-0 flex-1 truncate">{row.name}</span>
+        <span className="tabular text-gray-400">{format(row.value)}</span>
+      </div>
+      <div className="mt-1 h-1.5 rounded bg-white/[0.06]"><div className="h-full rounded bg-accent/80" style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>
+    </div>
+  ))}</>;
+}
+
 export function ChartsBoard({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
@@ -138,31 +153,41 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
       <div className="grid gap-6 xl:grid-cols-2">
         <Panel title={`Capability leaderboard — ${SCORE_SHORT_LABELS[score]}`}>
-          <ResponsiveContainer width="100%" height={Math.max(360, leaderboard.length * 26)}>
-            <BarChart data={leaderboard} layout="vertical" margin={{ left: 20, right: 44 }}>
-              <CartesianGrid stroke="#222932" horizontal={false} />
-              <XAxis type="number" stroke="#8a93a3" fontSize={11} domain={isElo ? ["dataMin - 20", "dataMax"] : [0, "auto"]} />
-              <YAxis type="category" dataKey="name" width={205} tick={leaderTick} interval={0} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
-              <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
-                <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="md:hidden" role="list" aria-label="Capability leaderboard">
+            <MobileBars rows={leaderboard} max={isElo ? Math.max(...leaderboard.map((d) => d.value)) : 100} format={(v) => v.toFixed(isElo ? 0 : 1)} />
+          </div>
+          <div className="hidden md:block">
+            <ResponsiveContainer width="100%" height={Math.max(360, leaderboard.length * 26)}>
+              <BarChart data={leaderboard} layout="vertical" margin={{ left: 20, right: 44 }}>
+                <CartesianGrid stroke="#222932" horizontal={false} />
+                <XAxis type="number" stroke="#8a93a3" fontSize={11} domain={isElo ? ["dataMin - 20", "dataMax"] : [0, "auto"]} />
+                <YAxis type="category" dataKey="name" width={205} tick={leaderTick} interval={0} />
+                <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} />
+                <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
+                  <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => v.toFixed(isElo ? 0 : 1)} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
         </Panel>
 
         <Panel title={`Cheapest models — ${priceLabel(priceSettings)}`}>
-          <ResponsiveContainer width="100%" height={Math.max(360, cheapest.length * 26)}>
-            <BarChart data={cheapest} layout="vertical" margin={{ left: 20, right: 64 }}>
-              <CartesianGrid stroke="#222932" horizontal={false} />
-              <XAxis type="number" stroke="#8a93a3" fontSize={11} tickFormatter={(v) => priceNumber(v)} />
-              <YAxis type="category" dataKey="name" width={205} tick={cheapTick} interval={0} />
-              <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => [`${priceNumber(v)} ${unitShort}`, priceLabel(priceSettings)]} />
-              <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
-                <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => priceNumber(v)} />
-              </Bar>
-            </BarChart>
-          </ResponsiveContainer>
+          <div className="md:hidden" role="list" aria-label="Cheapest models">
+            <MobileBars rows={cheapest} max={Math.max(...cheapest.map((d) => d.value))} format={priceNumber} />
+          </div>
+          <div className="hidden md:block">
+            <ResponsiveContainer width="100%" height={Math.max(360, cheapest.length * 26)}>
+              <BarChart data={cheapest} layout="vertical" margin={{ left: 20, right: 64 }}>
+                <CartesianGrid stroke="#222932" horizontal={false} />
+                <XAxis type="number" stroke="#8a93a3" fontSize={11} tickFormatter={(v) => priceNumber(v)} />
+                <YAxis type="category" dataKey="name" width={205} tick={cheapTick} interval={0} />
+                <Tooltip cursor={{ fill: "#ffffff08" }} contentStyle={tip} labelStyle={tipLabel} itemStyle={tipItem} formatter={(v: number) => [`${priceNumber(v)} ${unitShort}`, priceLabel(priceSettings)]} />
+                <Bar dataKey="value" fill={BAR_FILL} fillOpacity={0.8} radius={[0, 4, 4, 0]}>
+                  <LabelList dataKey="value" position="right" fill="#8a93a3" fontSize={11} formatter={(v: number) => priceNumber(v)} />
+                </Bar>
+              </BarChart>
+            </ResponsiveContainer>
+          </div>
           {/* The recharts tooltip is mouse-only, so every plotted price is also
               listed here with its exact inputs via the PriceValue expansion. */}
           <details className="mt-3">
