@@ -94,9 +94,12 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 ## Directives (open)
 
-> **Status 2026-09-14 pass 9 (Fable):** F-60 and F-61 fixed by Fable (surgical). F-58 and F-59
-> delegated to Kimi K3 in an isolated worktree (`.worktrees/pass9`); if the delegation returns
-> nothing usable they stay open here for the next Claude Opus / Codex Luna iteration. F-62 open.
+> **Status 2026-09-14 pass 9 (Fable), end of pass:** nothing open. F-60/F-61 fixed by Fable
+> (`9240da5`, `97e50a4`); F-58/F-59 drafted by Kimi K3 in `.worktrees/pass9` (returned a clean diff
+> in ~7 minutes), reviewed and adjusted by Fable, landed with F-62 in `7b5320d`. Live on both hosts,
+> `bin/verify-f58-f61.mjs` 36/36 per host at 1440/390, light/dark
+> (`ux-evidence/fable-20260914-pass9/verify-7b5320d-{canonical,legacy}/`). The specs below are kept
+> for the independent verifier; F-58/F-59/F-62 need a non-Fable, non-Kimi engine to set `verified`.
 
 ### F-58 `[mechanical]` Compare radar fits the phone
 *Where:* `components/BenchmarkRadar.tsx` (the `<svg className="mx-auto block w-full min-w-[620px]
@@ -253,3 +256,8 @@ sits ≥ 180 px higher than today (it is at ~1,400 px now); labels stay unclippe
 | F-54 human version labels (`lib/version-label.ts`; also BenchmaxxExplorer, BenchmaxxingReport and Compare rows, which the spec did not list) | `84cdff7` (Claude Opus; the Kimi K3 delegation produced no diff) | `/opt/benchmarkheaven/state/ux-evidence/review-20260914T020001Z/f53-f57-{canonical,legacy}/`, `/opt/benchmarkheaven/state/ux-evidence/review-20260914T020001Z/f54-f56-{canonical,legacy}/` | **verified by codex-luna (non-implementer):** both hosts, 1440/390, light/dark; no `snapshot-`/`(unversioned)`/"No verified semantic version" on `/`, model page, `/compare`, `/benchmarks`; published and semantic labels render correctly. |
 | F-56 phone names wrap only at spaces, badges on the org line | `84cdff7` (Claude Opus) | same | **verified by codex-luna (non-implementer):** both hosts, 390/1440, light/dark; no name token spans line boxes, badges are on the org line on phones and inline on desktop, and there is no overflow. |
 | F-57 model page title wraps on phones | `84cdff7` (Claude Opus) | `/opt/benchmarkheaven/state/ux-evidence/review-20260914T020001Z/f53-f57-{canonical,legacy}/` | **verified by codex-luna (non-implementer):** both hosts, 390/1440, light/dark; the full Claude Opus 5 title is readable on the phone model page and the page remains contained. |
+| F-60 phone model page: Composite card before the provider table (`order-first lg:order-none`) | `9240da5` (Fable, surgical) | `ux-evidence/fable-20260914-pass9/verify-1dc6b69-{canonical,legacy}/verification.json`, re-run on `7b5320d` | live both hosts: Composite h2 at 260 px vs providers at 703 px at 390; side by side (212/212) at 1440; needs a non-Fable verifier |
+| F-61 no doubled version tokens (`versionSuffix()` in `lib/version-label.ts`; BenchmarkSheet, BenchmarkRadar, BenchmarkEvidence, BenchmarkCompare) | `9240da5` + `97e50a4` (Fable, surgical) | `ux-evidence/fable-20260914-pass9/verify-7b5320d-{canonical,legacy}/verification.json` | live both hosts: no `vX vX` on the model page or `/compare` at 1440/390, light/dark; needs a non-Fable verifier |
+| F-58 compact phone radar (numbered axes, legend list, no horizontal scroll) | `7b5320d` (Kimi K3 draft via `bin/delegate.sh --kimi`, reviewed/adjusted by Fable) | same + `mobile_*-compare-radar.png` | live both hosts: SVG 316×316 in a 316 px region, 6 numbered axes + 6-entry list, scroll hint gone, desktop SVG keeps named labels; needs a non-Fable, non-Kimi verifier |
+| F-59 HTML bar rows on Charts below `md` (`MobileBars`) | `7b5320d` (Kimi K3 draft, reviewed by Fable) | same + `mobile_*-charts.png` | live both hosts: recharts hidden at 390, two lists of 16 rows, longest bar 323 px, shortest 2.7 px; desktop recharts unchanged (32 bars, first 368 px); needs a non-Fable, non-Kimi verifier |
+| F-62 desktop Compare radar `max-w-[640px]` | `7b5320d` (Fable) | same + `desktop_*-compare-radar.png` | live: SVG 640 px wide, "Where each model is strongest" at 1,221 px (was ~1,400); needs a non-Fable verifier |
