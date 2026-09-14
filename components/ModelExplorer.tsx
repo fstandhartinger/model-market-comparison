@@ -49,7 +49,7 @@ function MagnitudeBar({ frac, tone, thin, children }: { frac: number; tone: "sco
   );
 }
 
-export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, guided }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean; guided?: boolean }) {
+export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, guided, onRowsChange }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean; guided?: boolean; /** CR-7.1: the model ids on screen, in display order. */ onRowsChange?: (ids: string[]) => void }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
@@ -172,6 +172,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const { setResultCount } = s;
   useEffect(() => { setResultCount(rows.length); }, [rows.length, setResultCount]);
   useEffect(() => () => setResultCount(null), [setResultCount]);
+  const rowKey = rows.map((x) => x.m.id).join(",");
+  useEffect(() => { onRowsChange?.(rowKey ? rowKey.split(",") : []); }, [rowKey, onRowsChange]);
 
   // F-28: the Evidence button is highlighted only when a toggle differs from this mode's default
   // (Advanced's default already leaves task tokens unmeasured, so that is not a user filter).

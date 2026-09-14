@@ -4,6 +4,8 @@ import { HomeMode } from "../components/HomeMode";
 import { getBenchmarkView } from "../lib/benchmark-data";
 import { benchmaxxingSignals } from "../lib/benchmax.mjs";
 import { buildBenchmarkComparison } from "../lib/benchmark-comparison.mjs";
+import { getBenchmarkMatrixPage } from "../lib/benchmark-matrix-data";
+import { importantMatrix } from "../lib/benchmark-matrix.mjs";
 
 
 export default async function Home() {
@@ -20,6 +22,8 @@ export default async function Home() {
   const benchmarks = ds.benchmark_results?.registry?.length ?? 0;
   const results = ds.benchmark_results?.observations?.length ?? 0;
   const updated = String(ds.generated_at ?? "").slice(0, 10) || "n/a";
+  // CR-7.1: the simple Benchmarks section gets only the "Important" rows, not the full matrix.
+  const benchMatrix = importantMatrix((await getBenchmarkMatrixPage()).matrix);
 
   return (
     <div>
@@ -32,7 +36,7 @@ export default async function Home() {
         </p>
       </section>
 
-      <HomeMode data={data} />
+      <HomeMode data={data} matrix={benchMatrix} />
     </div>
   );
 }

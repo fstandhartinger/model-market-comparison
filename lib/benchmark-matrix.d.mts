@@ -34,4 +34,5 @@ export interface ChartScale { kind: 'bar' | 'log' | 'position'; domain: [number,
 export function chartScale(values: (number | null)[], unit: string): ChartScale | null;
 export function chartRows(rows: MatrixRow[], columns: Map<number, number | null>[]): { row: MatrixRow; vals: (number | null)[] }[];
 export const IMPORTANT_TAGS: Set<string>;
+export function importantMatrix(matrix: BenchmarkMatrix, modelIds?: string[] | null): BenchmarkMatrix;
 export function buildBenchmarkMatrix(view: unknown, ds: unknown, taxonomy: unknown): BenchmarkMatrix;

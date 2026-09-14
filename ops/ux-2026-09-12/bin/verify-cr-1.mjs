@@ -10,6 +10,8 @@ await fs.mkdir(OUT, { recursive: true });
 const b = await chromium.launch();
 const results = [];
 const check = (name, ok, detail) => { results.push({ name, ok: !!ok, detail }); console.log(`${ok ? 'PASS' : 'FAIL'} ${name} ${detail ?? ''}`); };
+// Since d3cee65 (CR-3.1) the row presets live in the Rows preset menu.
+const pickRows = async (p, name) => { await p.locator('.bh-preset[data-preset-kind="rows"] > button').click(); await p.locator('.bh-preset[data-preset-kind="rows"] [role="dialog"]').getByRole('button', { name: new RegExp('^' + name) }).click(); await p.waitForTimeout(200); };
 const snapshot = () => {
   const table = document.querySelector('table.bh-matrix');
   if (!table) return null;
@@ -69,10 +71,10 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   check(`${tag} CR-1.3 groups collapse`, collapsed.rows < before && await p.locator('tr.bh-matrix-group button').first().getAttribute('aria-expanded') === 'false', `${before} → ${collapsed.rows}`);
   await p.locator('tr.bh-matrix-group button').first().click();
   // Presets
-  await p.getByRole('button', { name: 'Important', exact: true }).click(); await p.waitForTimeout(200);
+  await pickRows(p, 'Important');
   const imp = await p.evaluate(snapshot);
   check(`${tag} Important preset keeps rows`, imp.rows > 0 && imp.rows <= before, `${imp.rows}`);
-  await p.getByRole('button', { name: 'Full coverage', exact: true }).click(); await p.waitForTimeout(200);
+  await pickRows(p, 'Full coverage only');
   const full = await p.evaluate(snapshot);
   check(`${tag} Full coverage preset: no missing cells`, full.rows > 0 && full.missing === 0, `${full.rows} rows, ${full.missing} missing`);
   await p.getByRole('button', { name: 'All', exact: true }).click(); await p.waitForTimeout(200);
@@ -96,7 +98,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const broad = await p.evaluate(snapshot);
   await p.screenshot({ path: `${OUT}/${tag}-broad-full.png`, fullPage: true });
   check(`${tag} CR-1.7 broad selection shows AA, Headline, Niche and Community tags`, broad && ['aa', 'headline', 'niche', 'community'].every((t) => broad.tagSet.includes(t)), broad?.tagSet.join(','));
-  await p.getByRole('button', { name: 'Important', exact: true }).click(); await p.waitForTimeout(200);
+  await pickRows(p, 'Important');
   const broadImp = await p.evaluate(snapshot);
   check(`${tag} Important preset narrows a broad selection`, broad && broadImp.rows > 0 && broadImp.rows < broad.rows, `${broad?.rows} → ${broadImp.rows}`);
   // CR-1.8: a cell opens its detail page; back restores the selection

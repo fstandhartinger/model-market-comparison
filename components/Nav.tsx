@@ -34,6 +34,17 @@ function FilterButton() {
   );
 }
 
+/** CR-7.3: in Simple mode the home page carries its own Benchmarks section — the header button jumps
+ *  there instead of leaving the page. Anywhere else (Advanced, Guided, other pages) it opens the full tab. */
+function jumpToSimpleBenchmarks(e: React.MouseEvent<HTMLAnchorElement>, path: string) {
+  if (path !== "/" || e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return;
+  const section = document.getElementById("benchmarks");
+  if (!section) return;
+  e.preventDefault();
+  section.scrollIntoView({ behavior: window.matchMedia("(prefers-reduced-motion: reduce)").matches ? "auto" : "smooth", block: "start" });
+  section.focus({ preventScroll: true });
+}
+
 export function Nav() {
   const path = usePathname();
   const { filtersOpen } = useSettings();
@@ -48,6 +59,7 @@ export function Nav() {
               <Link
                 key={href}
                 href={href}
+                onClick={href === "/benchmarks" ? (e) => jumpToSimpleBenchmarks(e, path) : undefined}
                 aria-current={active ? 'page' : undefined}
                 className={`inline-flex min-h-10 items-center rounded-md px-2.5 ${active ? "border-b-2 border-accent text-accent" : "text-gray-300 hover:bg-accent/5"}`}
               >
@@ -60,7 +72,7 @@ export function Nav() {
         <div className="ml-auto flex items-center gap-1">
           <FilterButton />
           {/* CR-6.1: below lg the header carries Filters · Benchmarks · More, Benchmarks left of More. */}
-          <Link href="/benchmarks" aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 lg:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
+          <Link href="/benchmarks" onClick={(e) => jumpToSimpleBenchmarks(e, path)} aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 lg:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
           <div className="relative lg:hidden">
             <details>
               <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent sm:px-2.5">More</summary>

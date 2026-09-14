@@ -15,7 +15,7 @@ const scoreOrder = () => {
   const ths = [...document.querySelectorAll('thead th')];
   const idx = ths.findIndex((th) => /^Score/i.test(th.innerText.trim()));
   const sort = idx >= 0 ? ths[idx].getAttribute('aria-sort') : null;
-  const vals = [...document.querySelectorAll('tbody tr')].map((tr) => {
+  const vals = [...(ths[idx]?.closest('table') ?? document).querySelectorAll('tbody tr')] /* iteration 53: scoped to the ranking table — Simple now has a second (benchmarks) table */.map((tr) => {
     const td = tr.children[idx];
     const m = td?.innerText.match(/\d+(\.\d+)?/);
     return m ? Number(m[0]) : null;

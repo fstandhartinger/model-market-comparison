@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rowBars, rowWinners, formatValue, groupOf, buildBenchmarkMatrix, baseKey, resultHref, chartScale, chartRows } from '../lib/benchmark-matrix.mjs';
+import { rowBars, rowWinners, formatValue, groupOf, buildBenchmarkMatrix, baseKey, resultHref, chartScale, chartRows, importantMatrix } from '../lib/benchmark-matrix.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 
 const taxonomy = JSON.parse(readFileSync(new URL('../data/benchmark-taxonomy.json', import.meta.url)));
@@ -62,6 +62,23 @@ test('CR-1.9 chart rows: important rows only, at least two values', () => {
   ];
   const cols = [new Map([[0, 70], [1, 5], [2, 50], [3, 1]]), new Map([[0, 60], [1, 6], [2, null]])];
   assert.deepEqual(chartRows(rows, cols).map((r) => r.row), [rows[0]]);
+});
+
+test('CR-7.1 importantMatrix keeps Important rows only, re-indexes values, optionally per model', () => {
+  const matrix = {
+    version: 't', tags: {}, generatedAt: 'x',
+    groups: [{ id: 'indices', label: 'I' }, { id: 'coding', label: 'C' }, { id: 'math', label: 'M' }],
+    rows: [
+      { id: 'r0', group: 'indices', tags: [] }, { id: 'r1', group: 'coding', tags: ['niche'] },
+      { id: 'r2', group: 'coding', tags: ['headline'] }, { id: 'r3', group: 'math', tags: ['community'] },
+    ],
+    values: { a: [[0, 1, 0], [1, 2, 0], [2, 3, 1]], b: [[1, 5, 0], [3, 6, 0]], c: [[2, 7, 0]] },
+  };
+  const slim = importantMatrix(matrix);
+  assert.deepEqual(slim.rows.map((r) => r.id), ['r0', 'r2']);
+  assert.deepEqual(slim.groups.map((g) => g.id), ['indices', 'coding']);
+  assert.deepEqual(slim.values, { a: [[0, 1, 0], [1, 3, 1]], c: [[1, 7, 0]] });
+  assert.deepEqual(Object.keys(importantMatrix(matrix, ['c']).values), ['c']);
 });
 
 test('CR-1.6 winners: ties, lower-is-better, missing values, fewer than two values', () => {
