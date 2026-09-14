@@ -4,6 +4,25 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-14 — Google Vertex collector; provider metadata cross-check (R9.1)
+
+No data location, route or public API field was removed.
+
+- **`data/raw/google-vertex.json`** is now refreshed daily by `scripts/fetch-google-vertex-catalog.mjs`
+  (one GET of the server-rendered public pricing page). New fields: per row `price_ref` (`section`,
+  `label`, and `pane`/`region` where the page has them) and `price_checked_at`; top level
+  `price_collection`, `response_sha256` and `diff` (price changes, unlisted, unreadable, suspicious and
+  unreferenced page rows). 68 of 69 rows confirmed with no price change; Gemini 3 Flash keeps its
+  2026-09-08 check (the page has no output row for it). Added from the same page: Grok 4.6 (2.00/6.00 USD
+  per 1M tokens, global) and GLM-5.2 (1.40/4.40, global). `/api/meta` dates `google_vertex` 2026-09-14.
+- **`data/raw/provider-meta.json`** stays hand-curated. `scripts/check-provider-meta.mjs` (daily, after the
+  OpenRouter data-policy fetch) cross-checks `country` against OpenRouter's provider table and never
+  changes a curated value. New fields: `judgments_checked_at` (date of the last first-party check of
+  `eu_hosted`, `non_us`, `hyperscaler` and notes, 2026-07-12), `country_disputes` (explained disagreements
+  with OpenRouter, e.g. Cohere in Canada, Zhipu/Moonshot/MiniMax listed there under Singapore entities) and
+  `openrouter_crosscheck`. `collected_at`, and with it `sources.provider_meta`, is now the date of the
+  OpenRouter table checked against; `source_status.provider_meta` states both dates.
+
 ## 2026-09-14 — Azure AI Foundry collector; Epoch ECI result pages; AA unrated Elo in history (R9.1, CR-1.8, F-78)
 
 No data location, route or public API field was removed.

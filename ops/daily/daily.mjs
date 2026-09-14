@@ -111,6 +111,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       report.warnings.push(`fetch-data-policy skipped: ${error.message.slice(0, 300)}`);
       console.warn(`WARN fetch-data-policy: keeping the previous snapshot`);
     }
+    // R9.1: provider-meta is hand-curated; its date comes from a cross-check of `country` against the table
+    // just fetched (dated by that table). New disagreements exit non-zero → a warning, curated values stay.
+    try {
+      await command('check-provider-meta', process.execPath, ['scripts/check-provider-meta.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`check-provider-meta: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN check-provider-meta: see the step log`);
+    }
     // R9.1: curated provider catalogs get executable collectors one by one. Non-fatal for the
     // same reason as the data policy: the collector fails closed and the old date stays visible.
     try {

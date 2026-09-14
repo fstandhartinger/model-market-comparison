@@ -147,6 +147,12 @@ is the actual last collection date of the retained v1.4 snapshot, not today's da
 explains this separation. The v1.5 raw rows carry exact source IDs, components and
 provenance; they will enter versioned benchmark views in phases 04–06.
 
+`sources.provider_meta` (since 2026-09-14) dates the daily cross-check of the curated
+`country` field against OpenRouter's provider table, i.e. the date of the table it read.
+The judgment fields (`eu_hosted`, `non_us`, `hyperscaler`, notes) keep their own date in
+`data/raw/provider-meta.json` → `judgments_checked_at`; `source_status.provider_meta.note`
+states both. Known, explained country disagreements live in `country_disputes`.
+
 `models[].aa_metadata.retained_fields` records `source`, `collected_at` and `reason`
 for each metadata field retained from an older AA publication after the current
 leaderboard stopped providing it. A snapshot refresh does not advance those field dates.

@@ -1259,6 +1259,13 @@ async function build() {
         version: currentCodingAgents.version, status: "collected_separately", count: currentCodingAgents.count,
         path: "data/raw/aa-coding-agents-v1.5.json", url: currentCodingAgents.endpoint,
       },
+      provider_meta: {
+        version: "curated", status: providerMeta.openrouter_crosscheck ? "curated_country_crosschecked" : "curated",
+        collected_at: providerMeta.collected_at, count: Object.keys(pmeta).length, path: "data/raw/provider-meta.json",
+        note: providerMeta.openrouter_crosscheck
+          ? `country cross-checked against OpenRouter's provider table (${providerMeta.collected_at}): ${providerMeta.openrouter_crosscheck.agree} agree, ${providerMeta.openrouter_crosscheck.explained.length} explained disputes, ${providerMeta.openrouter_crosscheck.disagreements.length} open, ${providerMeta.openrouter_crosscheck.not_listed.length + providerMeta.openrouter_crosscheck.no_headquarters.length} not checkable there. eu_hosted, non_us, hyperscaler and notes are first-party judgments last checked ${providerMeta.judgments_checked_at}.`
+          : "Hand-curated; no mechanical cross-check recorded.",
+      },
       epoch_eci: {
         version: epochEci.definition_version, status: "collected", collected_at: epochEci.collected_at,
         count: epochEci.counts?.general_models ?? epochEci.models?.length ?? 0,

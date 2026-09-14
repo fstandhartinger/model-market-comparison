@@ -1,6 +1,32 @@
 {
-  "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata (refreshed 2026-07-12)",
-  "collected_at": "2026-07-12",
+  "source": "Hand-curated provider metadata from first-party sources and OpenRouter provider metadata. Judgments (eu_hosted, non_us, hyperscaler, notes) last checked 2026-07-12 (judgments_checked_at); collected_at dates the daily mechanical cross-check of country against OpenRouter's provider table (scripts/check-provider-meta.mjs, openrouter_crosscheck).",
+  "collected_at": "2026-09-14",
+  "country_disputes": {
+    "Cohere": {
+      "openrouter": "United States",
+      "reason": "Cohere Inc. is headquartered in Toronto, Canada; OpenRouter lists its US office."
+    },
+    "Z.AI": {
+      "openrouter": "Singapore",
+      "reason": "OpenRouter lists the Singapore contracting entity; the parent company Zhipu AI is headquartered in Beijing, China."
+    },
+    "Moonshot AI": {
+      "openrouter": "Singapore",
+      "reason": "OpenRouter lists the Singapore contracting entity; Moonshot AI is headquartered in Beijing, China."
+    },
+    "Minimax": {
+      "openrouter": "Singapore",
+      "reason": "OpenRouter lists the Singapore contracting entity; MiniMax is headquartered in Shanghai, China."
+    },
+    "SiliconFlow": {
+      "openrouter": "Singapore",
+      "reason": "OpenRouter lists the Singapore contracting entity; SiliconFlow is headquartered in Beijing, China."
+    },
+    "Seed": {
+      "openrouter": "Singapore",
+      "reason": "OpenRouter lists the Singapore contracting entity; ByteDance Seed belongs to ByteDance, headquartered in Beijing, China."
+    }
+  },
   "notes": "eu_hosted = the provider runs inference on EU-located servers (the explicit set the product cares about: the hyperscalers' EU regions + EU-native providers). Offer-level eu_policy_equivalent is a separate company-specific filter classification and is not technical residency. non_us = the operating company is not headquartered in the United States. country is the company HQ. These flags drive the global EU and Non-US filters. Keyed by exact provider NAME. OpenRouter aliases do not inherit region guarantees from similarly named first-party catalogs. hyperscaler=true marks the big-cloud managed catalogs/routes.",
   "providers": {
     "AWS Bedrock": {
@@ -577,5 +603,88 @@
       "url": "https://inference.net/terms-of-service/",
       "note": "Inference R&D, Inc. identifies a San Francisco, California address in its terms. Its public material describes global/private/hybrid deployment but gives no EU residency guarantee for the OpenRouter-routed endpoint; conservatively excluded from EU-hosted and non-US filters. Privacy policy says customer data is not sold or used to train models."
     }
+  },
+  "judgments_checked_at": "2026-07-12",
+  "openrouter_crosscheck": {
+    "checked_against": "data/raw/openrouter-data-policy.json retrieved 2026-09-14T05:14:46.238Z",
+    "field": "country vs OpenRouter headquarters",
+    "agree": 45,
+    "explained": [
+      {
+        "provider": "Cohere",
+        "curated": "Canada",
+        "openrouter": "United States"
+      },
+      {
+        "provider": "Z.AI",
+        "curated": "China",
+        "openrouter": "Singapore"
+      },
+      {
+        "provider": "Moonshot AI",
+        "curated": "China",
+        "openrouter": "Singapore"
+      },
+      {
+        "provider": "Minimax",
+        "curated": "China",
+        "openrouter": "Singapore"
+      },
+      {
+        "provider": "SiliconFlow",
+        "curated": "China",
+        "openrouter": "Singapore"
+      },
+      {
+        "provider": "Seed",
+        "curated": "China",
+        "openrouter": "Singapore"
+      }
+    ],
+    "disagreements": [],
+    "no_headquarters": [
+      "Ambient",
+      "Darkbloom",
+      "Poolside",
+      "Relace",
+      "Liquid",
+      "Inception",
+      "AkashML",
+      "DigitalOcean",
+      "Upstage",
+      "StepFun",
+      "Makora",
+      "Thinking Machines"
+    ],
+    "not_listed": [
+      "AWS Bedrock",
+      "Azure AI Foundry",
+      "Google Vertex AI",
+      "Nebius",
+      "Scaleway",
+      "IONOS",
+      "TensorX",
+      "OVHcloud",
+      "STACKIT",
+      "T-Systems LLM Hub",
+      "TrustedRouter",
+      "Inflection",
+      "Mancer 2",
+      "ModelRun",
+      "xAI",
+      "Google",
+      "Sakana AI",
+      "Novita",
+      "WandB",
+      "Infermatic",
+      "Io Net",
+      "Clarifai",
+      "AI21",
+      "Reka",
+      "Alibaba",
+      "Baidu",
+      "Tencent",
+      "InferenceNet"
+    ]
   }
 }
