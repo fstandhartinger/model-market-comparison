@@ -41,9 +41,9 @@ for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile',
   await p.screenshot({ path: `${OUT}/${kind}-advanced.png` });
   // F-33 Benchmaxxing
   await go('/benchmaxxing');
-  const bmx = await p.evaluate(() => { const aside = [...document.querySelectorAll('aside')].find((a) => /Benchmaxxing signal/i.test(a.innerText)); const labels = ['Writing', 'Agentic', 'Coding'].map((t) => { const el = [...document.querySelectorAll('span')].find((e) => e.textContent.trim() === t && e.closest('.relative')); return { t, h: el ? Math.round(el.getBoundingClientRect().height) : null }; }); return { asideH: aside ? Math.round(aside.getBoundingClientRect().height) : null, labels, sw: document.documentElement.scrollWidth }; });
+  const bmx = await p.evaluate(() => { const aside = [...document.querySelectorAll('aside')].find((a) => /Benchmaxxing signal/i.test(a.innerText)); const labels = [...document.querySelectorAll('.pointer-events-none span')].map((el) => ({ t: el.textContent.trim(), h: Math.round(el.getBoundingClientRect().height) })).filter((x) => x.t); return { asideH: aside ? Math.round(aside.getBoundingClientRect().height) : null, labels, sw: document.documentElement.scrollWidth }; });
   if (kind === 'desktop') expect('desktop/F-33 signal card ≤ 360 px', bmx.asideH != null && bmx.asideH <= 360, bmx.asideH);
-  if (kind === 'mobile') expect('mobile/F-33 sector labels ≥ 10 px', bmx.labels.every((l) => l.h != null && l.h >= 10), bmx.labels);
+  if (kind === 'mobile') expect('mobile/F-33 at least five data-driven sector labels ≥ 10 px', bmx.labels.length >= 5 && bmx.labels.every((l) => l.h >= 10), bmx.labels);
   expect(`${kind}/F-33 no horizontal overflow`, bmx.sw <= vp.width + 1, bmx.sw);
   // F-34 Benchmarks
   await go('/benchmarks');
