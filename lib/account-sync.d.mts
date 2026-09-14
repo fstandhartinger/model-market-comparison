@@ -8,4 +8,6 @@ export declare function planPresetSync(input: { account: unknown; local: unknown
 export declare function planSettingsSync(input: { accountSettings: unknown; localSettings: unknown }): { apply: Record<string, unknown> | null; push: boolean };
 export declare function parseAccountPatch(body: unknown): { presets?: PresetStore; settings?: Record<string, unknown> } | null;
 export declare function sameOrigin(headers: { get(name: string): string | null }): boolean;
+export declare const PUBLIC_HOSTS: string[];
+export declare function publicOrigin(headers: { get(name: string): string | null }): string | null;
 export declare function isJsonRequest(headers: { get(name: string): string | null }): boolean;

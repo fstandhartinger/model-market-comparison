@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import fs from 'node:fs';
-import { planPresetSync, planSettingsSync, parseAccountPatch, sameOrigin, isJsonRequest, MAX_SETTINGS_CHARS } from '../lib/account-sync.mjs';
+import { planPresetSync, planSettingsSync, parseAccountPatch, sameOrigin, publicOrigin, isJsonRequest, MAX_SETTINGS_CHARS } from '../lib/account-sync.mjs';
 import { ACCOUNTS_SCHEMA_SQL } from '../lib/accounts-schema.mjs';
 
 const headers = (h) => ({ get: (k) => h[k.toLowerCase()] ?? null });
@@ -76,4 +76,12 @@ test('CR-5.2 the committed migration and the runtime schema are identical', () =
   // CR-5.5: nothing beyond id, email, name and avatar is stored about a person.
   const userCols = sql.match(/CREATE TABLE IF NOT EXISTS bh_users \(([\s\S]*?)\);/)[1].split('\n').map((l) => l.trim().split(' ')[0]).filter(Boolean);
   assert.deepEqual(userCols, ['id', 'google_sub', 'email', 'name', 'image', 'created_at', 'last_sign_in_at']);
+});
+
+test('CR-5.1 sign-in callbacks use the visitor host only when it is one of ours', () => {
+  assert.equal(publicOrigin(headers({ host: 'benchmarkheaven.com' })), 'https://benchmarkheaven.com');
+  assert.equal(publicOrigin(headers({ 'x-forwarded-host': 'Model-Market-Comparison.app.mintapis.com, proxy', host: 'localhost:3000' })), 'https://model-market-comparison.app.mintapis.com');
+  assert.equal(publicOrigin(headers({ host: 'localhost:3000' })), null);
+  assert.equal(publicOrigin(headers({ 'x-forwarded-host': 'evil.example', host: 'benchmarkheaven.com' })), null);
+  assert.equal(publicOrigin(headers({})), null);
 });
