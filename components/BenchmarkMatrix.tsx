@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, resultHref, chartRows, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, cellHref, chartRows, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
 import { filteredCandidates, type MatrixFilterData } from "../lib/top-models";
@@ -22,11 +22,6 @@ function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
   const t = tags[id];
   if (!t) return null;
   return <span className="bh-matrix-tag" data-tag={id} title={t.tip}>{t.label}<span className="sr-only">: {t.tip}</span></span>;
-}
-
-/** CR-1.8: registry rows open the cell's detail page; model-row indices (Epoch ECI) open the model. */
-function cellHref(row: MatrixRow, modelId: string, ids: string[], pinned: boolean) {
-  return row.ranking ? resultHref(row.id, modelId, ids, pinned) : `/models/${encodeURIComponent(modelId)}`;
 }
 
 /** CR-3.1: the custom row checklist — one toggle per category, and the benchmarks inside it. */
@@ -151,7 +146,8 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
   return <section aria-label="Benchmark comparison" className="space-y-4">
     <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
       <p className="text-sm" role="status">
-        <span className="font-semibold tabular">{visible.length}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
+        <span className="font-semibold tabular">{selectedKeys.size}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
+        {visible.length !== selectedKeys.size && <span className="bh-muted"> in <span className="tabular">{visible.length}</span> rows</span>}
         <span className="bh-muted"> · {pinned ? "your selection" : modelPreset === "top" ? `top ${ids.length} by ${SCORE_SHORT_LABELS[score]} under your filters` : `${presetName} · ${ids.length} under your filters`}</span>
       </p>
       <div className="flex flex-wrap items-center gap-2 sm:ml-auto">

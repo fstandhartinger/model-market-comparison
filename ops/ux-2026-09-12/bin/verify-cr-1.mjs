@@ -55,8 +55,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   check(`${tag} CR-1.2 opens with the top 5 of the filter selection`, s.cols.length === 5 && /top 5 by .+ under your filters/.test(s.status), `${s.cols.length} cols · ${s.status}`);
   check(`${tag} CR-1.1 column headers: vendor above, model name`, s.cols.every((x) => x.org && x.name), JSON.stringify(s.cols));
   check(`${tag} CR-1.3 grouped by category with ≥ 8 group headers`, s.groups.length >= 8, s.groups.join(' | '));
-  const m = s.status.match(/(\d+) benchmarks across (\d+) categories/);
-  check(`${tag} CR-1.4 visible count matches the rows shown (every benchmark with a value)`, m && Number(m[1]) === s.rows && s.rows >= 25, s.status);
+  // F-77: the toolbar counts benchmarks (as "Choose rows" does); when a benchmark shows several harness
+  // cohorts it adds "in N rows", and N must equal the rows rendered.
+  const m = s.status.match(/(\d+) benchmarks across (\d+) categories(?: in (\d+) rows)?/);
+  const chooser = await p.locator('.bh-rowpicker summary').first().textContent().catch(() => '');
+  const chosen = chooser?.match(/\((\d+) of \d+\)/);
+  check(`${tag} CR-1.4 / F-77 toolbar counts benchmarks like the row chooser, and rows match the table`, m && s.rows >= 25 && Number(m[3] ?? m[1]) === s.rows && chosen && Number(chosen[1]) === Number(m[1]), `${s.status} · chooser "${chooser?.trim()}" · rows ${s.rows}`);
   check(`${tag} CR-1.4 AA Intelligence Index and AA component rows present`, s.names.includes('AA Intelligence Index') && s.names.some((n) => /GPQA Diamond \(AA\)/.test(n)) && s.names.some((n) => /Humanity's Last Exam \(AA/.test(n)), '');
   check(`${tag} CR-1.1 short column names (no effort parenthetical on a unique model)`, s.cols.every((x) => x.name.length <= 40), s.cols.map((x) => x.name).join(' | '));
   check(`${tag} CR-1.5 data bars present, none on missing cells, subtle (alpha ≤ .25)`, s.bars > 0 && s.barsOnMissing === 0 && s.maxBarAlpha > 0 && s.maxBarAlpha <= 0.25, `bars=${s.bars} missing=${s.missing} alpha=${s.maxBarAlpha}`);

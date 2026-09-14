@@ -2,7 +2,7 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
-import { formatValue, resultHref, rowBars, rowWinners, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { formatValue, cellHref, rowBars, rowWinners, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 
 const COLUMNS = 5;
@@ -62,7 +62,7 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
               {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                 {v == null
                   ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
-                  : <Link href={row.ranking ? resultHref(row.id, ids[j], ids, true) : `/models/${encodeURIComponent(ids[j])}`} className="bh-matrix-link">
+                  : <Link href={cellHref(row, ids[j], ids, true)} className="bh-matrix-link">
                     {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
                     <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}</span>
                     {win[j] && <span className="sr-only"> (best in row)</span>}
