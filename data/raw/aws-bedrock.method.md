@@ -1,5 +1,23 @@
 # AWS Bedrock pricing — how to (re)fetch & update
 
+> **Executable collector since 2026-09-14:** `node scripts/fetch-aws-bedrock-catalog.mjs` (daily, non-fatal
+> step `fetch-aws-bedrock-catalog`). Each curated row names its exact Price List meters in `price_meters`
+> (`offer`, `region`, `input`, `output` usagetypes, plus `service` for Marketplace-billed models). Two public
+> bulk offers are read: **`AmazonBedrock`** (first-party and open models; legacy `EUC1-NovaLite-input-tokens`
+> style or `…-mantle-input-tokens-standard`) and **`AmazonBedrockFoundationModels`** (Anthropic and Writer,
+> keyed by `servicename`, e.g. "Claude Opus 5 (Amazon Bedrock Edition)"; EU Geo profile meters
+> `EUC1-MP:EUC1_input_tokens_standard-Units` for Claude 4.7+ and `…_InputTokenCount-Units` for older Claude,
+> Global profile `…_input_tokens_global_standard-Units`). This second offer is also what the pricing page's
+> awsstatic `meteredUnitMaps` feed resolves to (its rate codes are these SKUs), so the Anthropic gap-fill
+> no longer needs the page. The script loads only the indexes the mapping uses, re-reads the named meters,
+> never adds rows, fails closed on a missing index, an unreadable price or when fewer than half of the mapped
+> rows find their meters, and keeps previous prices when input exceeds output. **Not in any public Price
+> List:** GPT-5.4, GPT-5.5 and GPT-5.6 Luna/Sol/Terra (Bedrock Mantle) — carried unchanged with
+> `unmetered_checked_at` (2026-09-08) and listed in `diff.unmetered`.
+>
+> **2026-09-14 first run:** Price List version `20260911124408`; all 75 metered rows found their meters and
+> every price equals the 2026-09-08 snapshot.
+
 > **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
 > and the adjacent JSON's `method`/`collected_at` for current values and exclusions.
 > Earlier dated collection notes below are historical, not current prices.

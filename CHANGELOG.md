@@ -15,6 +15,12 @@ No data location, route or public API field was removed.
   2026-09-08), `ignored_meter_bases` (meters deliberately not offered, with reasons), `retail_collection`,
   `response_sha256` and `diff` (removed rows, price changes, suspicious meters, uncovered new meters).
   `/api/meta` dates `azure_foundry` 2026-09-14.
+- **`data/raw/aws-bedrock.json`** is now refreshed daily by `scripts/fetch-aws-bedrock-catalog.mjs` (AWS
+  Price List bulk API: `AmazonBedrock` and `AmazonBedrockFoundationModels`). New fields: per row
+  `price_meters` (`offer`, `region`, `input`, `output`, and `service` for Marketplace-billed models); top
+  level `meters_checked_at`, `unmetered_checked_at` (the five Bedrock Mantle GPT-5.x rows, which no public
+  Price List carries, still 2026-09-08), `price_list_versions`, `price_list_collection`, `response_sha256`
+  and `diff`. No Bedrock price changed; `/api/meta` dates `aws_bedrock` 2026-09-14.
 - **Price changes from the source:** GPT-5.6 Sol on Azure 5.00/30.00 → 4.00/20.00 USD per 1M tokens
   (Global) and 5.50/33.00 → 4.40/22.00 (EU Data Zone), effective 2026-09-01. GPT-6 Astra's two Azure rows
   were unpriced and now carry 10.00/50.00 (Global) and 12.00/60.00 (EU Data Zone).
