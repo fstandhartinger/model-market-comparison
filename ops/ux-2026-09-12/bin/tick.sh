@@ -37,8 +37,15 @@ if [ -z "$(git -C "$REPO" status --porcelain 2>/dev/null)" ]; then
   git -C "$REPO" pull --ff-only -q origin main 2>/dev/null || echo "$(date -u +%FT%TZ) note: ff-only pull skipped"
 fi
 
-# Finished?
-if grep -q '^ALL-ACCEPTED' "$WS/PROGRESS.md" 2>/dev/null; then
+# Finished? Since CR-20260914 every CR- ledger row must exist and be verified as well; a premature
+# ALL-ACCEPTED line does not end the workstream while change requests are outstanding.
+cr_total=0; cr_unverified=0
+if [ -f "$WS/04-CR-BRIEF.md" ]; then
+  read -r cr_total cr_unverified < <(awk -F'|' '/^\| *CR-[0-9]/ {t++; st=""; for (i=2;i<=NF;i++) {f=$i; gsub(/[ *`]/,"",f); if (f ~ /^(open|in-progress|implemented|verified)$/) {st=f; break}} if (st != "verified") u++} END {print t+0, u+0}' "$WS/PROGRESS.md" 2>/dev/null || echo "0 0")
+fi
+if grep -q '^ALL-ACCEPTED' "$WS/PROGRESS.md" 2>/dev/null && [ -f "$WS/04-CR-BRIEF.md" ] && { [ "$cr_total" -eq 0 ] || [ "$cr_unverified" -gt 0 ]; }; then
+  echo "$(date -u +%FT%TZ) ALL-ACCEPTED present but CR rows total=$cr_total unverified=$cr_unverified — not finishing"
+elif grep -q '^ALL-ACCEPTED' "$WS/PROGRESS.md" 2>/dev/null; then
   date -u +%FT%TZ > "$STATE/finished"
   bash /opt/benchmarkheaven/bin/notify.sh "🏁 Benchmark Heaven UX-Workstream: alle Anforderungen live verifiziert (ALL-ACCEPTED). Details: $WS/PROGRESS.md" || true
   exit 0
@@ -54,7 +61,8 @@ role=work
 # Something claims to be complete, or 3 work iterations since the last gate -> review gate.
 if grep -q 'CLAIM-ALL-DONE' "$WS/PROGRESS.md" 2>/dev/null && [ "$last_role" != review ]; then role=review
 elif [ "${works_since_review:-0}" -ge 3 ]; then role=review
-elif [ "${works_since_design:-0}" -ge 2 ] && [ "$last_role" != design ]; then role=design
+# Florian 2026-09-14: Fable 5.1 sparingly — design gate after 6 work iterations (was 2).
+elif [ "${works_since_design:-0}" -ge 6 ] && [ "$last_role" != design ]; then role=design
 fi
 
 case "$role" in
