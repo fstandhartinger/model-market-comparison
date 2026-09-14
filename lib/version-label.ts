@@ -16,3 +16,13 @@ export function versionHeading(version: string): string {
   const v = humanVersion(version);
   return v.kind === "snapshot" ? `Published ${v.date}` : `Version ${version.replace(/^v/i, "")}`;
 }
+
+/** F-61: the version as a suffix after a benchmark name — or nothing when the name already
+ *  carries it ("AA-LCR v1.1", "GDPval-AA v2", "Terminal-Bench v4.0 (AA)") or the version is a
+ *  retention snapshot (the date column says that). Word-bounded so "v2" does not hide inside "v2.1". */
+export function versionSuffix(name: string, version: string): string | null {
+  const v = humanVersion(version);
+  if (v.kind === "snapshot") return null;
+  const escaped = v.label.replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+  return new RegExp(`(^|[\\s(])${escaped}(?=$|[\\s)])`, "i").test(name) ? null : v.label;
+}

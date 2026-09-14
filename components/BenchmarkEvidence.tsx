@@ -1,6 +1,6 @@
 import type { BenchmarkView, ViewAxis, ViewScore } from '../lib/benchmark-view.mjs';
 import { ANOMALY_POLICY, profileAnomalies } from '../lib/benchmark-view.mjs';
-import { humanVersion } from '../lib/version-label';
+import { humanVersion, versionSuffix } from '../lib/version-label';
 
 const fmt = (n: number | null | undefined, digits = 5): string =>
   n == null || !Number.isFinite(n) ? 'unavailable' : String(Number(n.toFixed(digits)));
@@ -82,7 +82,7 @@ export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId
                 <span className={strong ? 'bh-badge bh-positive' : 'bh-badge bh-negative'}>
                   {strong ? 'unusually strong' : 'unusually weak'}
                 </span>{' '}
-                <span className="font-medium">{axis ? `${axis.name} ${humanVersion(axis.version).label}` : f.axisId}</span>
+                <span className="font-medium">{axis ? [axis.name, versionSuffix(axis.name, axis.version) ?? (humanVersion(axis.version).kind === 'snapshot' ? humanVersion(axis.version).label : null)].filter(Boolean).join(' ') : f.axisId}</span>
                 <details className="mt-1">
                   <summary className="cursor-pointer bh-muted">Why</summary>
                   <div className="bh-muted space-y-1 text-xs">

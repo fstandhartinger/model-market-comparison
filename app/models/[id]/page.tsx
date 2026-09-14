@@ -87,7 +87,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
 
         {/* F-08b: the Composite as the headline, its inputs as a six-axis percentile radar,
             and the native numbers as a caption strip. */}
-        <section className="card min-w-0 p-4" aria-label="Composite and its inputs">
+        <section className="card order-first min-w-0 p-4 lg:order-none" aria-label="Composite and its inputs">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="font-semibold">Composite</h2>
             <span className="text-xs text-gray-500">{clientModel.composite_coverage}/7 exact inputs{Object.keys(clientModel.composite_attachments).length ? ` · ${Object.keys(clientModel.composite_attachments).length} attached` : ""}</span>

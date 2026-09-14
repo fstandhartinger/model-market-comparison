@@ -3,7 +3,7 @@ import type { BenchmarkView } from '../lib/benchmark-view.mjs';
 import { latestScores } from '../lib/benchmark-view.mjs';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
 import { InfoTip } from './InfoTip';
-import { humanVersion } from '../lib/version-label';
+import { humanVersion, versionSuffix } from '../lib/version-label';
 import type { CompositeAttachment, CompositeSlot } from '../lib/client-model';
 
 const nativeValue = (value: number, unit: string | null) => {
@@ -35,7 +35,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
               <summary className="grid min-h-0 list-none grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-x-3 !min-h-0 !py-1.5 text-sm md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_6.5rem_5.5rem]">
                 <span className="min-w-0 truncate">
                   <span aria-hidden="true" className="bh-row-chevron mr-1 group-open:rotate-90">›</span>
-                  <span className="font-medium">{a.name}</span>{humanVersion(a.version).kind === 'semantic' && <> <span className="bh-muted text-xs">{humanVersion(a.version).label}</span></>}
+                  <span className="font-medium">{a.name}</span>{versionSuffix(a.name, a.version) && <> <span className="bh-muted text-xs">{versionSuffix(a.name, a.version)}</span></>}
                 </span>
                 <span className="flex min-w-0 items-center gap-2">
                   {pct != null
@@ -47,7 +47,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
               </summary>
               <div className="space-y-3 pb-3 pl-5">
                 <p className="bh-muted text-xs">
-                  <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {humanVersion(a.version).label} ↗</Link>
+                  <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {versionSuffix(a.name, a.version) ?? humanVersion(a.version).label} ↗</Link>
                   {a.cohort ? ` · ${a.cohort}` : ''}{a.description ? ` — ${a.description}` : ''}
                 </p>
                 {rows.map((r) => <SourceScore key={r.id} view={view} axis={a} row={r} />)}

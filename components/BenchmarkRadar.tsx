@@ -1,7 +1,7 @@
 import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import type { ReactNode } from 'react';
 import { InfoTip } from './InfoTip';
-import { humanVersion, versionHeading } from '../lib/version-label';
+import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 
 export const SERIES_COLORS = ['var(--radar-1, #5b9dff)', 'var(--radar-2, #7ee0c0)', 'var(--radar-3, #f5b65b)', 'var(--radar-4, #cc9aff)'];
 const DASHES = ['', '9 4', '3 4', '12 4 2 4'];
@@ -26,7 +26,7 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
             const p = position(i, axes.length, 150), label = position(i, axes.length, 193), anchor = label.x < 340 ? 'end' : label.x > 380 ? 'start' : 'middle';
             const short = axis.name.replace('Artificial Analysis ', 'AA ').replace(/\s+\(AA.*?\)/, '');
             return <g key={axis.id}><line x1="360" y1="245" x2={p.x} y2={p.y} stroke="var(--radar-grid, #526071)" strokeOpacity="0.6" />
-              <text x={label.x} y={label.y - 4} textAnchor={anchor} fill="currentColor" fontSize="11" fontWeight="600"><tspan x={label.x}>{i + 1}. {short.length > 22 ? short.slice(0, 21) + '…' : short}</tspan>{humanVersion(axis.version).kind === 'semantic' && <tspan x={label.x} dy="16" fontWeight="400" fontSize="10">{humanVersion(axis.version).label}</tspan>}</text></g>;
+              <text x={label.x} y={label.y - 4} textAnchor={anchor} fill="currentColor" fontSize="11" fontWeight="600"><tspan x={label.x}>{i + 1}. {short.length > 22 ? short.slice(0, 21) + '…' : short}</tspan>{versionSuffix(short, axis.version) && <tspan x={label.x} dy="16" fontWeight="400" fontSize="10">{versionSuffix(short, axis.version)}</tspan>}</text></g>;
           })}
           {series.map((s, si) => <g key={s.id}>
             {s.values.map((v, i) => {
