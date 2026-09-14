@@ -90,7 +90,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         <section className="card order-first min-w-0 p-4 lg:order-none" aria-label="Composite and its inputs">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="font-semibold">Composite</h2>
-            <span className="text-xs text-gray-500">{clientModel.composite_coverage}/7 exact inputs{Object.keys(clientModel.composite_attachments).length ? ` · ${Object.keys(clientModel.composite_attachments).length} attached` : ""}</span>
+            <span className="text-xs text-gray-500">{clientModel.composite_coverage + clientModel.composite_attached} of 7 inputs{clientModel.composite_attached ? ` · ${clientModel.composite_attached} from the model family` : ""}</span>
           </div>
           <p className="text-4xl font-bold tabular">{num(clientModel.scores.composite)}</p>
           <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />

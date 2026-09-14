@@ -55,7 +55,7 @@ function DotStrip({ label, groups, format, log }: { label: string; groups: { nam
         return (
           <div key={g.name} className="grid grid-cols-[5rem_1fr] items-center gap-2 pt-4">
             <span className="text-xs text-gray-400">{g.name} <span className="text-gray-600">({vals.length})</span></span>
-            <div className="relative h-6 rounded bg-white/[0.03]" role="img" aria-label={`${g.name}: ${vals.length} models${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
+            <div className="relative h-6 rounded bg-line/40" role="img" aria-label={`${g.name}: ${vals.length} models${mean != null ? `, mean ${format(mean)}` : ", no values"}`}>
               {vals.map((v, i) => <span key={i} className="absolute top-1/2 h-2 w-2 -translate-x-1/2 -translate-y-1/2 rounded-full bg-accent/50" style={{ left: `${pos(v)}%` }} />)}
               {mean != null && <>
                 <span className="absolute top-0 h-6 w-0.5 -translate-x-1/2 bg-gray-400" style={{ left: `${pos(mean)}%` }} />
@@ -79,7 +79,7 @@ function MobileBars({ rows, max, format }: { rows: { name: string; org: string; 
         <span className="min-w-0 flex-1 truncate">{row.name}</span>
         <span className="tabular text-gray-400">{format(row.value)}</span>
       </div>
-      <div className="mt-1 h-1.5 rounded bg-white/[0.06]"><div className="h-full rounded bg-accent/80" style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>
+      <div className="mt-1 h-1.5 rounded bg-line"><div className="h-full rounded bg-accent/80" style={{ width: `${Math.max(0.5, 100 * row.value / max)}%` }} /></div>
     </div>
   ))}</>;
 }
