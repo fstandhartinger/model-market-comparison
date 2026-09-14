@@ -9,6 +9,10 @@
   --surface: #171e29; --text: #edf2f8; --muted: #adb9ca; --control-border: #74869e;
   --negative: #ffafbc; --radar-1: #6caeff; --radar-2: #67e0c1;
   --radar-3: #ffc56f; --radar-4: #d0acff; --radar-grid: #8c9ab0;
+  /* CR-1.9: categorical slots for compared models (dataviz reference order, validated on #171e29:
+     adjacent CVD ΔE 8.4, normal 19.3, all ≥ 3:1). Columns 9–10 take the neutral mark. */
+  --series-1: #3987e5; --series-2: #d95926; --series-3: #199e70; --series-4: #c98500;
+  --series-5: #d55181; --series-6: #008300; --series-7: #9085e9; --series-8: #e66767; --series-other: #7d8897;
   /* R7.3: the mark's own palette, lifted for the dark page so it keeps the visual weight
      it has on white. Light values are sampled from Florian's artwork. */
   --brand-from: #2a68ff; --brand-to: #5ae6ff; --brand-ray: #ffd95c; --brand-stair: #ffffff;
@@ -21,6 +25,10 @@
   --surface: #fff; --text: #182639; --muted: #4c5e75; --control-border: #718198;
   --negative: #b91c3a; --radar-1: #1d4eb9; --radar-2: #046d5b;
   --radar-3: #914509; --radar-4: #7433b7; --radar-grid: #61758f;
+  /* CR-1.9: validated on #fff (adjacent CVD ΔE 9.1, normal 19.6); three slots sit below 3:1, so
+     every mark carries a visible letter and value. */
+  --series-1: #2a78d6; --series-2: #eb6834; --series-3: #1baf7a; --series-4: #eda100;
+  --series-5: #e87ba4; --series-6: #008300; --series-7: #4a3aa7; --series-8: #e34948; --series-other: #8a96a8;
   --brand-from: #0951fd; --brand-to: #2ddbfd; --brand-ray: #fed432; --brand-stair: #f2f7fd;
   --brand-word: #0a5fd8;
 }
@@ -83,6 +91,15 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-matrix-group th { padding: 0; background: rgb(var(--accent) / .035); text-align: left; }
 .bh-matrix-group button { position: sticky; left: 0; display: inline-flex; min-height: 40px; align-items: center; gap: 8px; padding: 0 12px; font-size: 13px; font-weight: 650; color: var(--text); }
 .bh-matrix-group svg { transition: transform .15s; }
+.bh-matrix-accent { display: flex; justify-content: flex-end; align-items: center; gap: 5px; margin-bottom: 4px; font-size: 10px; font-weight: 700; color: var(--muted); }
+.bh-matrix-accent::after { content: ""; width: 16px; height: 4px; border-radius: 2px; background: var(--swatch); }
+/* CR-1.9: headline small multiples — letter · track · value; bars 12 px with a 4 px data end, dots ring the surface. */
+.bh-bars-key { width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; }
+.bh-bars-row { display: grid; grid-template-columns: 12px minmax(0, 1fr) 4.25rem; align-items: center; gap: 8px; min-height: 22px; }
+.bh-bars-track { position: relative; display: block; height: 12px; border-left: 1px solid rgb(var(--line)); }
+[data-kind="log"] .bh-bars-track, [data-kind="position"] .bh-bars-track { border-left: 0; background: linear-gradient(rgb(var(--line) / .7), rgb(var(--line) / .7)) center / 100% 1px no-repeat; }
+.bh-bars-bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
+.bh-bars-dot { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 999px; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--surface); }
 @media (min-width: 768px) {
   .bh-matrix-stub { min-width: 20rem; max-width: 20rem; padding: 12px 16px; }
   .bh-matrix-model { min-width: 7.5rem; padding: 34px 12px 12px; }

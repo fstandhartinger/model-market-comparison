@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { rowBars, rowWinners, formatValue, groupOf, buildBenchmarkMatrix, baseKey, resultHref } from '../lib/benchmark-matrix.mjs';
+import { rowBars, rowWinners, formatValue, groupOf, buildBenchmarkMatrix, baseKey, resultHref, chartScale, chartRows } from '../lib/benchmark-matrix.mjs';
 import { buildBenchmarkView } from '../lib/benchmark-view.mjs';
 
 const taxonomy = JSON.parse(readFileSync(new URL('../data/benchmark-taxonomy.json', import.meta.url)));
@@ -21,6 +21,47 @@ test('CR-1.5 bars: Elo uses min–max with a floor, direction-aware', () => {
   const [cheap, dear] = rowBars([-1, 3], false, 'points');
   assert.equal(cheap, 1);
   assert.ok(dear < 0.2);
+});
+
+test('CR-1.9 chart scale: fixed 0–100 % bars, nice ceiling for points, none when empty', () => {
+  const f = chartScale([0.5, 0.25, null], 'fraction');
+  assert.equal(f.kind, 'bar');
+  assert.deepEqual(f.domain, [0, 1]);
+  assert.deepEqual(f.positions, [0.5, 0.25, null]);
+  assert.deepEqual(chartScale([40, 80], 'percent').domain, [0, 100]);
+  const p = chartScale([61.2, 73.9], 'points');
+  assert.deepEqual(p.domain, [0, 100]);
+  assert.equal(chartScale([null, null], 'points'), null);
+});
+
+test('CR-1.9 chart scale: > 20× spread becomes a log position, zeros pinned left', () => {
+  const s = chartScale([0.1, 30, 0, null], 'USD');
+  assert.equal(s.kind, 'log');
+  assert.deepEqual(s.domain, [0.1, 100]);
+  assert.equal(s.positions[0], 0);
+  assert.equal(s.positions[2], 0);
+  assert.equal(s.positions[3], null);
+  assert.ok(Math.abs(s.positions[1] - Math.log(300) / Math.log(1000)) < 1e-9);
+  assert.equal(chartScale([1, 20], 'USD').kind, 'bar');
+});
+
+test('CR-1.9 chart scale: Elo is a position between the padded row min and max, never from zero', () => {
+  const s = chartScale([1200, 1300, null], 'Elo');
+  assert.equal(s.kind, 'position');
+  assert.ok(s.domain[0] > 1000 && s.domain[0] < 1200 && s.domain[1] > 1300);
+  assert.ok(s.positions[0] > 0 && s.positions[0] < s.positions[1] && s.positions[1] < 1);
+  const flat = chartScale([1250, 1250], 'Elo');
+  assert.equal(flat.positions[0], flat.positions[1]);
+  assert.ok(chartScale([-1, 3], 'points').kind === 'position');
+});
+
+test('CR-1.9 chart rows: important rows only, at least two values', () => {
+  const rows = [
+    { group: 'indices', tags: [] }, { group: 'coding', tags: ['niche'] },
+    { group: 'coding', tags: ['headline'] }, { group: 'math', tags: ['aa'] },
+  ];
+  const cols = [new Map([[0, 70], [1, 5], [2, 50], [3, 1]]), new Map([[0, 60], [1, 6], [2, null]])];
+  assert.deepEqual(chartRows(rows, cols).map((r) => r.row), [rows[0]]);
 });
 
 test('CR-1.6 winners: ties, lower-is-better, missing values, fewer than two values', () => {

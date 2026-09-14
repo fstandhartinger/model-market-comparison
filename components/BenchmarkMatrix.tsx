@@ -4,13 +4,13 @@ import { useEffect, useMemo, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, resultHref, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, resultHref, chartRows, IMPORTANT_TAGS, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { BenchmarkBars, seriesColor, seriesLetter } from "./BenchmarkBars";
 import { topModelIds, type MatrixFilterData } from "../lib/top-models";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
 
 type Preset = "all" | "important" | "complete";
 const PRESETS: [Preset, string][] = [["all", "All"], ["important", "Important"], ["complete", "Full coverage"]];
-const IMPORTANT_TAGS = new Set(["headline", "aa", "arena"]);
 const MIN_MODELS = 2, MAX_MODELS = 10;
 
 function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
@@ -72,6 +72,7 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
       if (preset === "complete") return n === ids.length;
       return true;
     }), [matrix, lookups, preset, ids.length]);
+  const chart = useMemo(() => chartRows(matrix.rows, lookups.map((m) => new Map([...m].map(([i, [v]]) => [i, v])))), [matrix, lookups]);
   const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id) })).filter((g) => g.rows.length);
   const matches = useMemo(() => {
     const t = q.trim().toLowerCase();
@@ -116,6 +117,7 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
           <thead><tr>
             <th scope="col" className="bh-matrix-stub">Benchmark</th>
             {ids.map((id, j) => { const m = modelsById.get(id); return <th key={id} scope="col" className={`bh-matrix-model ${j === 0 ? "bh-matrix-lead" : ""}`}>
+              <span className="bh-matrix-accent" style={{ ["--swatch" as string]: seriesColor(j) }} aria-hidden="true">{seriesLetter(j)}</span>
               <span className="bh-matrix-org">{m?.org}</span>
               <span className="bh-matrix-name"><Link href={`/models/${encodeURIComponent(id)}`} title={m?.display_name} className="hover:underline">{names[j]}</Link></span>
               {ids.length > 1 && <button type="button" className="bh-matrix-remove" aria-label={`Remove ${names[j]} from the comparison`} onClick={() => remove(id)}>×</button>}
@@ -150,6 +152,7 @@ export function BenchmarkMatrix({ matrix, filterData }: { matrix: Matrix; filter
           </tbody>; })}
         </table>
       </div>}
+    {ids.length > 1 && <BenchmarkBars rows={chart} ids={ids} names={names} />}
     <p className="bh-muted text-xs">Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source.</p>
   </section>;
 }

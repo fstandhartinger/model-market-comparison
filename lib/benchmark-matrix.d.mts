@@ -30,4 +30,8 @@ export function formatValue(value: number | null, unit: string): string;
 export function resultHref(axisId: string, modelId: string, models: string[], pinned: boolean): string;
 export function groupOf(key: string, category: string | null, taxonomy: unknown): string;
 export function rowTags(key: string, maintainer: string | null, taxonomy: unknown): string[];
+export interface ChartScale { kind: 'bar' | 'log' | 'position'; domain: [number, number]; positions: (number | null)[] }
+export function chartScale(values: (number | null)[], unit: string): ChartScale | null;
+export function chartRows(rows: MatrixRow[], columns: Map<number, number | null>[]): { row: MatrixRow; vals: (number | null)[] }[];
+export const IMPORTANT_TAGS: Set<string>;
 export function buildBenchmarkMatrix(view: unknown, ds: unknown, taxonomy: unknown): BenchmarkMatrix;
