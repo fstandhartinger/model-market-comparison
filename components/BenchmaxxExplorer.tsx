@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
+import { humanVersion } from '../lib/version-label';
 
 type ModelOpt = { id: string; name: string; org: string };
 type AxisOpt = { id: string; name: string; version: string; cohort: string; unit: string; n: number };
@@ -70,7 +71,7 @@ function ModelPredictions({ data }: { data: ModelResponse }) {
                 <tr key={p.target.axisId}>
                   <th scope="row" className="max-w-sm text-left align-top font-medium">
                     {p.target.name}
-                    <p className="bh-muted mt-1 text-xs font-normal">{p.target.version} · {p.target.cohort} · {p.target.unit}</p>
+                    <p className="bh-muted mt-1 text-xs font-normal">{humanVersion(p.target.version).label} · {p.target.cohort} · {p.target.unit}</p>
                     <p className="bh-muted mt-1 text-xs font-normal">
                       Observed cohort range {p.target.observedRange ? `${fmt(p.target.observedRange[0])}–${fmt(p.target.observedRange[1])} ${p.target.unit}` : '—'}
                     </p>
@@ -79,7 +80,7 @@ function ModelPredictions({ data }: { data: ModelResponse }) {
                   <td className="min-w-44 align-top"><EstimateCell p={p} unit={p.target.unit} /></td>
                   <td className="align-top"><EvidenceCell n={p.n} r={p.r} r2={p.r2} /></td>
                   <td className="max-w-sm align-top text-sm">{p.predictor.name}
-                    <p className="bh-muted mt-1 text-xs">{p.predictor.version} · measured value {fmt(p.predictorValue)} {p.predictor.unit}</p>
+                    <p className="bh-muted mt-1 text-xs">{humanVersion(p.predictor.version).label} · measured value {fmt(p.predictorValue)} {p.predictor.unit}</p>
                   </td>
                 </tr>
               ))}
@@ -101,7 +102,7 @@ function AxisPredictions({ data }: { data: AxisResponse }) {
     <div className="mt-5">
       <div className="my-3 flex flex-wrap items-center gap-3 text-sm">
         <span className="bh-badge">Target</span>
-        <span>{data.axis.name} · {data.axis.version} · {data.axis.cohort} · {data.axis.unit}</span>
+        <span>{data.axis.name} · {humanVersion(data.axis.version).label} ·{data.axis.cohort} · {data.axis.unit}</span>
         <span className="bh-muted text-xs">Observed cohort range {data.axis.observedRange ? `${fmt(data.axis.observedRange[0])}–${fmt(data.axis.observedRange[1])} ${data.axis.unit}` : '—'}</span>
         {data.axis.publishedRange ? <span className="bh-muted text-xs">Documented score range {fmt(data.axis.publishedRange[0])}–{fmt(data.axis.publishedRange[1])} {data.axis.unit}; impossible points are omitted, not clamped.</span> : null}
       </div>
@@ -112,7 +113,7 @@ function AxisPredictions({ data }: { data: AxisResponse }) {
       {data.predictions.length ? (
         <div className="bh-table-wrap" tabIndex={0}>
           <table className="bh-table w-full text-sm">
-            <caption className="sr-only">Estimated (not measured) results for {data.axis.name} {data.axis.version} for catalog models without a recorded result.</caption>
+            <caption className="sr-only">Estimated (not measured) results for {data.axis.name} {humanVersion(data.axis.version).label} for catalog models without a recorded result.</caption>
             <thead>
               <tr>
                 <th scope="col">Model</th>
@@ -131,7 +132,7 @@ function AxisPredictions({ data }: { data: AxisResponse }) {
                   <td className="min-w-44 align-top"><EstimateCell p={p} unit={data.axis.unit} /></td>
                   <td className="align-top"><EvidenceCell n={p.n} r={p.r} r2={p.r2} /></td>
                   <td className="max-w-sm align-top text-sm">{p.predictor.name}
-                    <p className="bh-muted mt-1 text-xs">{p.predictor.version} · measured value {fmt(p.predictorValue)} {p.predictor.unit}</p>
+                    <p className="bh-muted mt-1 text-xs">{humanVersion(p.predictor.version).label} · measured value {fmt(p.predictorValue)} {p.predictor.unit}</p>
                   </td>
                 </tr>
               ))}
@@ -235,7 +236,7 @@ export function BenchmaxxExplorer({ models, axes }: { models: ModelOpt[]; axes: 
             <label htmlFor="bm-axis-select" className="text-sm">Benchmark and version</label>
             <select id="bm-axis-select" className="bh-input mt-1 w-full" value={axisId} onChange={(e) => setAxisId(e.target.value)}>
               {visibleAxes.slice(0, 200).map((a) => (
-                <option key={a.id} value={a.id}>{a.name} · {a.version} · {a.cohort}</option>
+                <option key={a.id} value={a.id}>{a.name} · {humanVersion(a.version).label} · {a.cohort}</option>
               ))}
             </select>
             {visibleAxes.length > 200 ? <p className="bh-muted mt-1 text-xs">First 200 matches shown — type to narrow the list.</p> : null}

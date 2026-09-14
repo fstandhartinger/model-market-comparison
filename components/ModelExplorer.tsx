@@ -383,18 +383,22 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
               return (
               <Fragment key={m.id}>
               <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
-                {/* F-14: on phones the name and badges may wrap (md:truncate restores the
-                    single-line look at md), and the org moves here as an 11 px muted line. */}
+                {/* F-14: on phones the name may wrap (md:truncate restores the single-line look
+                    at md), and the org moves here as an 11 px muted line. F-56: the name wraps only
+                    at spaces ("GLM-5.3" stays whole) and below md the badges sit on the org line. */}
                 <td className="px-3 py-2 md:truncate">
                   <span aria-hidden="true" className={`bh-row-chevron mr-1 ${isOpen ? "is-open" : ""}`}>›</span>
-                  <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{collapsedName(m, s.collapse, preferredId)}</Link>
-                  {m.open_weights && <span className="ml-2 rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
-                  {m.deprecated && <span className="ml-1 rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
-                  {m.featured && !simple && <span className="ml-1 text-[10px] text-warn" title="Featured model">★</span>}
+                  <Link href={`/models/${encodeURIComponent(m.id)}`} onClick={(e) => e.stopPropagation()} className="font-medium hover:text-accent">{String(collapsedName(m, s.collapse, preferredId)).split(" ").map((token, i) => <Fragment key={i}>{i > 0 && " "}<span className="whitespace-nowrap">{token}</span></Fragment>)}</Link>
+                  {m.open_weights && <span className="ml-2 hidden rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2 md:inline">open</span>}
+                  {m.deprecated && <span className="ml-1 hidden rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 md:inline">deprecated</span>}
+                  {m.featured && !simple && <span className="ml-1 hidden text-[10px] text-warn md:inline" title="Featured model">★</span>}
                   {m.benchmaxxing_signal && <span className="bh-badge bh-alert ml-2" title={`Benchmaxxing signal ${m.benchmaxxing_score?.toFixed(1)} — topic-local inconsistency flag, not evidence of intent`}>Benchmaxxing signal</span>}
-                  <span className="mt-0.5 flex items-center gap-1.5 text-[11px] text-gray-500 md:hidden">
+                  <span className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11px] text-gray-500 md:hidden">
                     <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: orgColor(m.org) }} />
                     {m.org}
+                    {m.featured && !simple && <span className="text-[10px] text-warn" title="Featured model">★</span>}
+                    {m.open_weights && <span className="rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2">open</span>}
+                    {m.deprecated && <span className="rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300">deprecated</span>}
                   </span>
                 </td>
                 <td className="hidden truncate px-3 py-2 md:table-cell"><span className="inline-flex items-center gap-1.5"><span className="inline-block h-2 w-2 rounded-full" style={{ background: orgColor(m.org) }} />{m.org}</span></td>

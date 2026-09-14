@@ -4,6 +4,7 @@ import Link from 'next/link';
 import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import { BenchmarkRadar, SERIES_COLORS } from './BenchmarkRadar';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
+import { humanVersion, versionHeading } from '../lib/version-label';
 
 const nativeValue = (value: number, unit: string | null) => {
   const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
@@ -92,7 +93,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
       <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} models selected. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
       {error && <button className="bh-button" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
     </section>
-    <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} axesPickerLabel={`Radar axes · ${axesIds.length} / 8 selected`} axesPicker={<><p className="bh-muted mt-2 text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{view.axes.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">Version {a.version} · {a.cohort} · {a.stats.n} measured peers</span></span></label>)}</div></>} /></div>
+    <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} axesPickerLabel={`Radar axes · ${axesIds.length} / 8 selected`} axesPicker={<><p className="bh-muted mt-2 text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{view.axes.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">{versionHeading(a.version)} · {a.cohort} · {a.stats.n} measured peers</span></span></label>)}</div></>} /></div>
     {displayPicks.length > 0 && <section className="bh-panel p-5" aria-label="Benchmark category snapshots">
       <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">RELEASE-STYLE SNAPSHOT</p><h2 className="text-xl font-semibold">Where each model is strongest</h2></div><span className="bh-badge">Measured results only</span></div>
       <p className="bh-muted mt-2 max-w-3xl text-sm">Each card averages the selected model&apos;s independently measured benchmark positions within one topic. The 0–100 scale is relative to the collected peer range for each exact benchmark; it is not a new score and missing results are excluded.</p>
@@ -124,7 +125,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
               <th scope="row" className="max-w-xs text-left align-top font-medium">
                 <button type="button" className="flex w-full items-start gap-1 text-left" aria-expanded={expanded} aria-controls={`comparison-evidence-${encodeURIComponent(a.id)}`} onClick={() => setExpandedRows((old) => { const next = new Set(old); if (next.has(a.id)) next.delete(a.id); else next.add(a.id); return next; })}>
                   <span aria-hidden="true" className={`bh-row-chevron mt-0.5 shrink-0 ${expanded ? 'rotate-90' : ''}`}>›</span>
-                  <span><span className="text-accent hover:underline">{a.name}</span><span className="bh-muted mt-1 block text-xs">{a.version} · {a.cohort}</span></span>
+                  <span><span className="text-accent hover:underline">{a.name}</span><span className="bh-muted mt-1 block text-xs">{humanVersion(a.version).label} · {a.cohort}</span></span>
                 </button>
               </th>
               {cells.map(({ id, row, normalized }) => {
@@ -135,7 +136,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
                 </td>;
               })}
             </tr>
-            {expanded && <tr key={`${a.id}-evidence`} id={`comparison-evidence-${encodeURIComponent(a.id)}`}><td colSpan={displayPicks.length + 1} className="bg-[rgb(var(--line)/.08)]"><div className="p-3"><p className="mb-3 text-xs"><Link className="text-accent underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {a.version} ↗</Link><span className="bh-muted"> · {a.cohort} · {a.unit} · {a.higherBetter == null ? 'direction unknown' : a.higherBetter ? 'higher better' : 'lower better'}</span></p><div className="grid gap-3 md:grid-cols-2">{cells.map(({ id, row }) => <div key={id} className="min-w-0 rounded-lg border border-line p-3"><p className="bh-muted mb-2 text-xs font-semibold">{String.fromCharCode(65 + displayPicks.indexOf(id))} · {view.models.find((m) => m.id === id)?.name || id}</p>{row ? <SourceScore view={view} axis={a} row={row} /> : <MissingCell view={view} axis={a} modelId={id} />}</div>)}</div></div></td></tr>}
+            {expanded && <tr key={`${a.id}-evidence`} id={`comparison-evidence-${encodeURIComponent(a.id)}`}><td colSpan={displayPicks.length + 1} className="bg-[rgb(var(--line)/.08)]"><div className="p-3"><p className="mb-3 text-xs"><Link className="text-accent underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {humanVersion(a.version).label} ↗</Link><span className="bh-muted"> · {a.cohort} · {a.unit} · {a.higherBetter == null ? 'direction unknown' : a.higherBetter ? 'higher better' : 'lower better'}</span></p><div className="grid gap-3 md:grid-cols-2">{cells.map(({ id, row }) => <div key={id} className="min-w-0 rounded-lg border border-line p-3"><p className="bh-muted mb-2 text-xs font-semibold">{String.fromCharCode(65 + displayPicks.indexOf(id))} · {view.models.find((m) => m.id === id)?.name || id}</p>{row ? <SourceScore view={view} axis={a} row={row} /> : <MissingCell view={view} axis={a} modelId={id} />}</div>)}</div></div></td></tr>}
           </Fragment>;
         })}</tbody>;
       })}</table></div>}

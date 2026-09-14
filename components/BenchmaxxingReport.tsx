@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
+import { humanVersion } from '../lib/version-label';
 
 type Model = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean };
@@ -59,7 +60,7 @@ function Radar({ axes }: { axes: Axis[] }) {
       const angle = -Math.PI / 2 + (i / axes.length) * Math.PI * 2;
       const [x, y] = polar(angle, r);
       const [tx, ty] = polar(angle, axis.missing ? r - 1 : inner);
-      return <g key={axis.id}>{axis.missing ? <line x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity=".25" /> : <line x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity=".62" />}<title>{`${axis.category}: ${axis.name} ${axis.version}${axis.missing ? ' — no measured score' : ` — ${axis.nativeValue} ${axis.unit}; percentile ${axis.value?.toFixed(1)}`}`}</title></g>;
+      return <g key={axis.id}>{axis.missing ? <line x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity=".25" /> : <line x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity=".62" />}<title>{`${axis.category}: ${axis.name} ${humanVersion(axis.version).label}${axis.missing ? ' — no measured score' : ` — ${axis.nativeValue} ${axis.unit}; percentile ${axis.value?.toFixed(1)}`}`}</title></g>;
     })}
     {topicSegments.map((points, i) => <polyline key={i} points={points.join(' ')} fill="none" stroke="#35a7ff" strokeWidth="2" strokeLinejoin="round" />)}
     {axes.map((axis, i) => { if (axis.value == null) return null; const [x, y] = point(axis, i); return <circle key={axis.id} cx={x} cy={y} r="5" fill="#35a7ff" stroke="var(--surface, #161b22)" strokeWidth="1.5"><title>{`${axis.category} · ${axis.name}: ${axis.nativeValue} ${axis.unit}; percentile ${axis.value.toFixed(1)}${axis.observedDate ? `; observed ${axis.observedDate}` : ''}`}</title></circle>; })}

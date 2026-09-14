@@ -68,7 +68,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       <div className="mt-2 flex flex-col gap-1 md:flex-row md:items-center md:gap-3">
         <div className="flex min-w-0 items-center gap-3">
           <span className="inline-block h-3 w-3 shrink-0 rounded-full" style={{ background: orgColor(model.org) }} />
-          <h1 className="truncate text-2xl font-bold">{model.display_name}</h1>
+          {/* F-57: wraps on phones so the full name is readable; one truncated line from md. */}
+          <h1 className="text-xl font-bold md:truncate md:text-2xl">{model.display_name}</h1>
         </div>
         {(model.open_weights || model.deprecated || model.featured) && <div className="flex flex-wrap gap-2">
           {model.open_weights && <span className="rounded bg-accent2/15 px-2 py-0.5 text-xs text-accent2">open weights</span>}

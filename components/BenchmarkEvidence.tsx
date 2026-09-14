@@ -1,5 +1,6 @@
 import type { BenchmarkView, ViewAxis, ViewScore } from '../lib/benchmark-view.mjs';
 import { ANOMALY_POLICY, profileAnomalies } from '../lib/benchmark-view.mjs';
+import { humanVersion } from '../lib/version-label';
 
 const fmt = (n: number | null | undefined, digits = 5): string =>
   n == null || !Number.isFinite(n) ? 'unavailable' : String(Number(n.toFixed(digits)));
@@ -25,7 +26,7 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
       <details className="w-full">
         <summary className="cursor-pointer">Evidence</summary>
         <div className="bh-muted mt-1 space-y-1 break-words text-xs">
-          <div>Axis: {axis.name} · {axis.version} · {axis.cohort}</div>
+          <div>Axis: {axis.name} · {humanVersion(axis.version).label} · {axis.cohort}</div>
           <div>Exact value: <code>{String(row.value)}</code> {axis.unit}</div>
           {row.confidenceInterval ? <div>{Math.round(row.confidenceInterval.level * 100)}% confidence interval: {row.confidenceInterval.lower} to {row.confidenceInterval.upper} {axis.unit}</div> : null}
           {row.costPerRollout != null ? <div>Published mean cost: {row.costPerRollout} USD per rollout</div> : null}
@@ -81,7 +82,7 @@ export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId
                 <span className={strong ? 'bh-badge bh-positive' : 'bh-badge bh-negative'}>
                   {strong ? 'unusually strong' : 'unusually weak'}
                 </span>{' '}
-                <span className="font-medium">{axis ? `${axis.name} ${axis.version}` : f.axisId}</span>
+                <span className="font-medium">{axis ? `${axis.name} ${humanVersion(axis.version).label}` : f.axisId}</span>
                 <details className="mt-1">
                   <summary className="cursor-pointer bh-muted">Why</summary>
                   <div className="bh-muted space-y-1 text-xs">
@@ -100,7 +101,7 @@ export function AnomalySummary({ view, modelId }: { view: BenchmarkView; modelId
         <h4 className="text-sm font-medium">Protocol-compatible measured/vendor divergences</h4>
         {divs.length ? (
           <ul className="space-y-3">{divs.map((d) => { const axis = view.axes.find((a) => a.benchmarkId === d.benchmark_id); return <li key={d.id} className="rounded border border-line p-3 text-sm">
-            <strong>{axis?.name || d.benchmark_id} · version {axis?.version || d.benchmark_id.split('::')[1]}</strong>
+            <strong>{axis?.name || d.benchmark_id} · {humanVersion(axis?.version || d.benchmark_id.split('::')[1]).label}</strong>
             <p>Self-reported {fmt(d.self_reported_value)} − measured {fmt(d.measured_value)} = {fmt(d.delta)} {d.unit} ({d.relative_percent == null ? 'relative difference undefined: measured value is zero' : `${fmt(d.relative_percent)}% relative difference`}).</p>
             <details><summary>Pair evidence</summary><p className="break-words text-xs">{d.formula} · Protocol: {d.comparison_key}</p><ul>{d.source_urls.map((url, i) => <li key={url+i}><a className="text-accent underline" href={url}>Source {i+1} ↗</a> · {d.source_dates[i]}</li>)}</ul><p className="break-words text-xs">Observation IDs: {d.self_reported_id}; {d.measured_id}</p></details>
           </li>; })}</ul>

@@ -3,6 +3,7 @@ import type { BenchmarkView } from '../lib/benchmark-view.mjs';
 import { latestScores } from '../lib/benchmark-view.mjs';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
 import { InfoTip } from './InfoTip';
+import { humanVersion } from '../lib/version-label';
 import type { CompositeAttachment, CompositeSlot } from '../lib/client-model';
 
 const nativeValue = (value: number, unit: string | null) => {
@@ -34,7 +35,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
               <summary className="grid min-h-0 list-none grid-cols-[minmax(0,1fr)_minmax(0,1fr)_auto] items-center gap-x-3 !min-h-0 !py-1.5 text-sm md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_6.5rem_5.5rem]">
                 <span className="min-w-0 truncate">
                   <span aria-hidden="true" className="bh-row-chevron mr-1 group-open:rotate-90">›</span>
-                  <span className="font-medium">{a.name}</span> <span className="bh-muted text-xs">{a.version}</span>
+                  <span className="font-medium">{a.name}</span>{humanVersion(a.version).kind === 'semantic' && <> <span className="bh-muted text-xs">{humanVersion(a.version).label}</span></>}
                 </span>
                 <span className="flex min-w-0 items-center gap-2">
                   {pct != null
@@ -46,7 +47,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
               </summary>
               <div className="space-y-3 pb-3 pl-5">
                 <p className="bh-muted text-xs">
-                  <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {a.version} ↗</Link>
+                  <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {humanVersion(a.version).label} ↗</Link>
                   {a.cohort ? ` · ${a.cohort}` : ''}{a.description ? ` — ${a.description}` : ''}
                 </p>
                 {rows.map((r) => <SourceScore key={r.id} view={view} axis={a} row={r} />)}
@@ -59,7 +60,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
     </div>
     {!axes.length && <div className="bh-empty">No verified benchmark observation is attached to this exact configuration yet. Provider pricing can still be available.</div>}
     <AnomalyPanel view={view} modelId={modelId} />
-    <details className="bh-panel p-5"><summary className="font-medium">Missing coverage · {absent.length} benchmark versions</summary><p className="bh-muted my-3 text-sm">No result does not mean a zero, or that the model was never tested. Collection failures and disputed versions retain their distinct status.</p><ul className="grid gap-3 md:grid-cols-2">{absent.map((a) => { const missing = view.missing.find((m) => m.model_id === modelId && m.benchmark_id === a.benchmarkId); return <li key={a.benchmarkId} className="rounded border border-line p-3 text-sm"><Link className="text-accent" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} · {a.version}</Link><p className="bh-muted mt-1 text-xs">{missing ? `${missing.status.replaceAll('_', ' ')}: ${missing.reason}` : a.collection && a.collection.status !== 'collected' ? `${a.collection.status.replaceAll('_', ' ')}: ${a.collection.reason}` : 'Unknown: no published result matched to this configuration.'}</p></li>; })}</ul></details>
+    <details className="bh-panel p-5"><summary className="font-medium">Missing coverage · {absent.length} benchmark versions</summary><p className="bh-muted my-3 text-sm">No result does not mean a zero, or that the model was never tested. Collection failures and disputed versions retain their distinct status.</p><ul className="grid gap-3 md:grid-cols-2">{absent.map((a) => { const missing = view.missing.find((m) => m.model_id === modelId && m.benchmark_id === a.benchmarkId); return <li key={a.benchmarkId} className="rounded border border-line p-3 text-sm"><Link className="text-accent" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} · {humanVersion(a.version).label}</Link><p className="bh-muted mt-1 text-xs">{missing ? `${missing.status.replaceAll('_', ' ')}: ${missing.reason}` : a.collection && a.collection.status !== 'collected' ? `${a.collection.status.replaceAll('_', ' ')}: ${a.collection.reason}` : 'Unknown: no published result matched to this configuration.'}</p></li>; })}</ul></details>
   </section>;
 }
 
