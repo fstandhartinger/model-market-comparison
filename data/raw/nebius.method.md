@@ -1,7 +1,31 @@
 # Nebius (Token Factory) pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/nebius.json`
-**Last collected:** 2026-07-22 (prior: 2026-07-12, 2026-07-06, 2026-07-01)
+**Last collected:** refreshed daily by `scripts/fetch-nebius-catalog.mjs` (first automated run
+2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, …)
+
+## Update 2026-09-14 — executable collector (R9.1)
+`scripts/fetch-nebius-catalog.mjs` + `lib/nebius-catalog.mjs` (tests in
+`test/nebius-catalog.test.mjs`) now do the refresh and run as the non-fatal daily step
+`fetch-nebius-catalog` in `ops/daily/daily.mjs`. One unauthenticated GET of
+`/api/public/models_info`, which `tokenfactory.nebius.com/robots.txt` explicitly allows
+(everything else on that host is disallowed — do not fetch other paths).
+
+- Prices: `flavors[].input_price_per_million_tokens` / `output_price_per_million_tokens`, native USD.
+- Region: `flavors[].regions[].country_code` — EU member state → `eu`, `US` → `us`, `UK` → `uk`
+  (UK is not EU). An unknown country code or a multi-region flavor fails the run.
+- Scope: embeddings and other non-chat types (and zero output price) are omitted, listed in `skipped`.
+- Identity: exact `model_id` (older curated rows carried it as `id <model_id>` inside `notes`).
+  Curated `model_name`/`provider_org` are kept; new ids get a derived name and `mapping: "derived"`.
+- `status` is kept per row; a non-`active` status (e.g. `error`) is written to `notes` rather than
+  dropping an offer that is still listed and priced.
+- Fails closed (previous snapshot untouched) on a non-array payload, missing prices, or if fewer
+  than half of the previous ids are still listed. `diff` records added / removed / price / region changes.
+
+First run 2026-09-14: 24 catalog entries → 23 rows (embedding skipped). All 21 previous rows
+reproduced with identical name, org, prices and region; added `deepseek-ai/DeepSeek-V4-Pro-0813`
+($1.32/$3.96, us-north1) and `zai-org/GLM-5.3` ($1.40/$4.40, us-north1). Kimi-K2.6 and
+Nemotron-3-Ultra-550b report `status: "error"` and are kept with that status.
 
 ## Update 2026-07-22
 Refreshed via the same unauthenticated structured endpoint
