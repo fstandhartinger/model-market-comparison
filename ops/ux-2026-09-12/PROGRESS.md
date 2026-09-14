@@ -199,8 +199,10 @@ credited below, the rest is marked open.
   filters leave open with that endpoint's cache prices — hence "really costs **you**". Kept.
   Exclusivity-free fallback if he dislikes "only": *"And the only place that prices each model
   the way you would actually buy it."*
-- **R5.3** "Score >85" is a default of **85 applied as ≥ 85** (Fable pass 6). A default of 86
-  would be arbitrary; the caption says "Minimum Capability Score 85". He may set another number.
+- **R5.3** "Score >85" is live as a default of **86** (D2 stored 86 so a clean page is not shown
+  as modified; the caption says "Minimum Capability Score 86"). Fable pass 6 had written "85 applied
+  as ≥ 85" — for integer scores that is the same set of rows, and pass 9 (Fable) confirmed the
+  caption states what the slider does. He may set another number.
 - **F-22 / R5.5** The Simple value map deliberately shows the whole featured pool — passing
   models as full labelled points, the rest dimmed — so the reader sees what the sliders cut.
 - **R4.4 (new, consequential)** "Roughly the top 20 of the AA Index charts" is implemented as
