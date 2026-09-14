@@ -4707,7 +4707,10 @@
       "scoring": {
         "metric": "CursorBench score",
         "unit": "percent",
-        "range": [0, 100],
+        "range": [
+          0,
+          100
+        ],
         "higher_better": true,
         "notes": "Cursor publishes one score percentage per model and reasoning-effort configuration; this secondary benchmark is not a Composite input."
       },
@@ -4769,7 +4772,10 @@
       "scoring": {
         "metric": "Cost per task",
         "unit": "USD",
-        "range": [0, null],
+        "range": [
+          0,
+          null
+        ],
         "higher_better": false,
         "notes": "Cost is a separate published metric, not a capability score and not a Composite input; it may reflect the source's adjusted pricing note."
       },

@@ -1,5 +1,5 @@
 {
-  "collected_at": "2026-09-14T00:59:30.628Z",
+  "collected_at": "2026-09-14T05:14:44.650Z",
   "window": {
     "start_date": "2026-09-07",
     "end_date": "2026-09-13"
@@ -217,7 +217,7 @@
       "chute_id": "221e52ad-2d0a-5f0a-b309-984381532b04",
       "name": "[private]",
       "date": "2026-09-13",
-      "total_requests": 48,
+      "total_requests": 49,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -273,7 +273,7 @@
       "chute_id": "3ed2b12b-5f9d-570c-bf85-64ae20e80153",
       "name": "[private]",
       "date": "2026-09-13",
-      "total_requests": 651,
+      "total_requests": 652,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -281,7 +281,7 @@
       "chute_id": "41221b3c-3fa2-5547-8c14-1fbd57745afe",
       "name": "[private]",
       "date": "2026-09-13",
-      "total_requests": 730,
+      "total_requests": 731,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -353,7 +353,7 @@
       "chute_id": "59d72972-1ad2-5c84-80fc-79c632f5fec0",
       "name": "[private]",
       "date": "2026-09-13",
-      "total_requests": 71,
+      "total_requests": 72,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -457,7 +457,15 @@
       "chute_id": "7ba55926-36fe-53d6-9f55-cd9bf3594969",
       "name": "[private]",
       "date": "2026-09-13",
-      "total_requests": 582,
+      "total_requests": 583,
+      "total_input_tokens": 0,
+      "total_output_tokens": 0
+    },
+    {
+      "chute_id": "7bebd155-09fc-5688-b0e8-de6d0cf1e9dd",
+      "name": "[private]",
+      "date": "2026-09-13",
+      "total_requests": 1,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1025,7 +1033,7 @@
       "chute_id": "3ed2b12b-5f9d-570c-bf85-64ae20e80153",
       "name": "[private]",
       "date": "2026-09-12",
-      "total_requests": 663,
+      "total_requests": 664,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1033,7 +1041,7 @@
       "chute_id": "41221b3c-3fa2-5547-8c14-1fbd57745afe",
       "name": "[private]",
       "date": "2026-09-12",
-      "total_requests": 566,
+      "total_requests": 567,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1129,7 +1137,7 @@
       "chute_id": "59d72972-1ad2-5c84-80fc-79c632f5fec0",
       "name": "[private]",
       "date": "2026-09-12",
-      "total_requests": 71,
+      "total_requests": 72,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1225,7 +1233,7 @@
       "chute_id": "7ba55926-36fe-53d6-9f55-cd9bf3594969",
       "name": "[private]",
       "date": "2026-09-12",
-      "total_requests": 263,
+      "total_requests": 264,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1761,7 +1769,7 @@
       "chute_id": "3ed2b12b-5f9d-570c-bf85-64ae20e80153",
       "name": "[private]",
       "date": "2026-09-11",
-      "total_requests": 653,
+      "total_requests": 654,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1769,7 +1777,7 @@
       "chute_id": "41221b3c-3fa2-5547-8c14-1fbd57745afe",
       "name": "[private]",
       "date": "2026-09-11",
-      "total_requests": 5,
+      "total_requests": 6,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -1873,7 +1881,7 @@
       "chute_id": "59d72972-1ad2-5c84-80fc-79c632f5fec0",
       "name": "[private]",
       "date": "2026-09-11",
-      "total_requests": 44,
+      "total_requests": 45,
       "total_input_tokens": 0,
       "total_output_tokens": 0
     },
@@ -5317,9 +5325,9 @@
   },
   "input_output_ratio": 20.862046596668637,
   "coverage": {
-    "returned_rows": 663,
+    "returned_rows": 664,
     "included_rows": 115,
-    "excluded_rows": 548,
+    "excluded_rows": 549,
     "included_chutes": 18,
     "days": 7,
     "selection": "Chute/day rows with both total_input_tokens > 0 and total_output_tokens > 0; includes anonymized [private] aggregates.",
@@ -5328,23 +5336,23 @@
   "provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-07&end_date=2026-09-13",
-    "collected_at": "2026-09-14T00:59:30.628Z",
+    "collected_at": "2026-09-14T05:14:44.650Z",
     "basis": "self_reported"
   },
   "ratio_provenance": {
     "source": "Chutes LLM usage statistics",
     "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-07&end_date=2026-09-13",
-    "collected_at": "2026-09-14T00:59:30.628Z",
+    "collected_at": "2026-09-14T05:14:44.650Z",
     "basis": "derived",
     "formula": "sum(total_input_tokens) / sum(total_output_tokens)",
     "scope": "Global Chutes token-positive chute/day usage, not a coding-agent-only cohort."
   },
-  "response_sha256": "931d1fd071f9cc3ca0e3c617b84cb3e89fe376d06bf3861d9047048ae1def91a",
+  "response_sha256": "103730db82bbeeb047d5c5b45538043fbc90ef2edb5dc2d5697163488efd132a",
   "attempts": [
     {
       "source": "Chutes LLM usage statistics",
       "url": "https://api.chutes.ai/invocations/stats/llm?start_date=2026-09-07&end_date=2026-09-13",
-      "collected_at": "2026-09-14T00:59:30.628Z",
+      "collected_at": "2026-09-14T05:14:44.650Z",
       "status": "available",
       "http_status": 200
     }
