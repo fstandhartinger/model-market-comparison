@@ -5,6 +5,18 @@
 
 ## Authoritative source
 
+**Update 2026-09-14 — executable collector (R9.1).** `scripts/fetch-tensorx-catalog.mjs` +
+`lib/tensorx-catalog.mjs` (tests in `test/tensorx-catalog.test.mjs`) refresh `tensorx.json` as the
+non-fatal daily step `fetch-tensorx-catalog` in `ops/daily/daily.mjs` (robots.txt: `Allow: /`,
+only `/wp-admin/` disallowed). One GET; columns are located by header text (Model Name, Context,
+Input Price, Cache Read, Output Price), so a column reorder cannot shift prices. Rows without both
+token prices (the embedding) go to `skipped`. The `provider/slug` is stored as `api_model_id`, not
+`model_id` (build-dataset would use `model_id` as the family identity); curated names are matched by
+`api_model_id` or the normalized slug tail, new slugs get `mapping: "derived"`, and rows no longer
+in the table are dropped. Duplicate slugs, unreadable prices or fewer than half of the previous rows
+fail closed. First run 2026-09-14: 17 of 18 rows unchanged; `deepseek/deepseek-v4.1-flash` added
+($0.50 / $1.50, cache $0.13, 1M); DeepSeek V3.2 no longer listed and removed.
+
 Use the server-rendered first-party table at `https://tensorx.ai/pricing/`. It explicitly
 labels prices as USD per 1 million tokens and supplies separate **Input Price**, **Cache
 Read**, and **Output Price** columns. On 2026-07-22 the table contained 26 model rows: 25
