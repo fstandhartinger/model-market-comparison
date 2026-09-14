@@ -282,3 +282,16 @@ catalog checkpoint identity; effort aliases are never inferred. Rows remain quer
 `GET /api/benchmark-scores?benchmark_id=...` and include the exact source hash and HTML-table
 locator. The collection plan captures only the robots-allowed `/cursorbench` page, requires the
 CursorBench 4.0 version heading, and does not call Cursor's disallowed `/api/` paths.
+
+### Vals Index v2 and FrontierCode 1.1 (secondary, non-Composite)
+
+Same shape and query path as CursorBench. **Vals AI** (independent evaluator, basis `measured`):
+`vals-index::2` and its seven components `vals-index-finance-agent::2`, `vals-index-emb::2`,
+`vals-index-terminal-bench-2.1::2`, `vals-index-vibe-code-bench::2`, `vals-index-code-migration::2`,
+`vals-index-legal-research::2`, `vals-index-hlab::2` (percent, higher is better, 56 model slugs each),
+plus `vals-index-cost::2` (USD per test, lower is better, 55 rows). `subject.source_id` is the Vals
+model slug; `protocol` carries the row's stderr, latency, effort and provider verbatim. **Cognition
+FrontierCode 1.1 Main** (`self_reported`, owner-approved after a critic review):
+`frontiercode::1.1` (percent; `basis: "derived"`, `source_basis: "self_reported"`, ×100 from the
+published fraction, input kept in `derivation.inputs`) and `frontiercode-cost::1.1` (mean USD per
+rollout). `subject.source_id` is `"<model>|<effort>"` and `subject.harness` the source harness.

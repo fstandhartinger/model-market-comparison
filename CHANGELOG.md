@@ -4,6 +4,25 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-14 — Vals Index v2 and FrontierCode 1.1 secondary benchmarks (E2)
+
+Eleven new registry identities, all non-Composite, with the page captures and robots files under
+`data/raw/benchmarks/daily-evidence/2026-09-13-{vals-index,frontiercode}/`:
+
+- **Vals AI (independent evaluator, `measured`):** `vals-index::2` plus its seven published
+  components `vals-index-{finance-agent,emb,terminal-bench-2.1,vibe-code-bench,code-migration,legal-research,hlab}::2`
+  (percent, 56 models each) and `vals-index-cost::2` (USD per test, 55 models; Nemotron 3 Ultra has
+  no published cost and is recorded as rejected, not zero). Parsed from the page's own Astro island
+  props (new collector kind `astro_props`, version guard "Vals Index" v2). Vals' Terminal-Bench 2.1
+  run is its own identity and never joins the AA or Harbor Terminal-Bench rows.
+- **Cognition FrontierCode 1.1 Main (`self_reported`):** `frontiercode::1.1` (score, stored ×100
+  from the published fraction as `derived`) and `frontiercode-cost::1.1` (mean USD per rollout),
+  98 model × effort runs each, parsed from the leaderboard page's own `data.json` (new collector
+  kind `effort_runs_json`). Every row passed a different-family critic review before approval.
+
+Model labels stay source labels (`subject.model_id: null`); no catalog join or effort inference.
+No existing field, observation or URL changed.
+
 ## 2026-09-14 — Bounded Artificial Analysis publication lag
 
 The live collector now records API-versus-leaderboard counts and missing metadata model IDs

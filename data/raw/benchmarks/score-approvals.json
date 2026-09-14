@@ -15254,6 +15254,2750 @@
       "review_row": 13,
       "verdict": "accepted",
       "evidence_locator": "ops/ux-2026-09-12/research/cursorbench-cost-4.0-batch3-review.json; coverage_checked row 13; html_table; source row 43; GPT-5.6 Luna Low; field value"
+    },
+    {
+      "id": "public:1d6098f72ac799c8932419d4",
+      "observation_sha256": "5c9cbd3e8f0bba4e754648584b0ba222c136e714296cd6d3b426bb39a148d1f3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:1d6098f72ac799c8932419d4; effort_runs_json; source row 0; SWE-2|medium; field new_score"
+    },
+    {
+      "id": "public:63d319c37383bb1594706cf4",
+      "observation_sha256": "5018ad07bbd18f0d78f95921ea2b0312079c8073367c365f221c5a446a7ea919",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:63d319c37383bb1594706cf4; effort_runs_json; source row 1; SWE-2|high; field new_score"
+    },
+    {
+      "id": "public:42e47ba4283a92d1af9b2146",
+      "observation_sha256": "0a9e0a97f47ce2c8b28a8fb71ff3fcfa3c4466826f8c90933a9f439ddd07ab1a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:42e47ba4283a92d1af9b2146; effort_runs_json; source row 2; SWE-2|max; field new_score"
+    },
+    {
+      "id": "public:613e6b4efb09ef5e4cf82764",
+      "observation_sha256": "609cb873d3b4cd665cb26634ec228abc02a99be969bd238d39b45d09aa9464be",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:613e6b4efb09ef5e4cf82764; effort_runs_json; source row 3; Claude Fable 5|low; field new_score"
+    },
+    {
+      "id": "public:4e39b3bf31c9da301f940259",
+      "observation_sha256": "6264275f8588485eb7698307f596f8322b0cc2020ae3d8e011b27ee4b708ca01",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:4e39b3bf31c9da301f940259; effort_runs_json; source row 4; Claude Fable 5|medium; field new_score"
+    },
+    {
+      "id": "public:5fbf3fd60b0ee8f7f9f388b9",
+      "observation_sha256": "cf19635f41206b4ec06b65b6cff19c7447ef64b19402a2bca4d1e488280a8465",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:5fbf3fd60b0ee8f7f9f388b9; effort_runs_json; source row 5; Claude Fable 5|high; field new_score"
+    },
+    {
+      "id": "public:bda62e97ad9172902d2462eb",
+      "observation_sha256": "dc7d4fe8b3c168b6857c0b8a44497b282ce01ea6226550df506f9eed01937bb8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:bda62e97ad9172902d2462eb; effort_runs_json; source row 6; Claude Fable 5|xhigh; field new_score"
+    },
+    {
+      "id": "public:6d9430cf01c99bf99b14f491",
+      "observation_sha256": "5d8fc289dabfebbf94656346d0023acb74fd0627d49438a8e5ec13a4efde2ff8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:6d9430cf01c99bf99b14f491; effort_runs_json; source row 7; Claude Fable 5|max; field new_score"
+    },
+    {
+      "id": "public:091cc069bace1afd28cdb54a",
+      "observation_sha256": "1c488ca40a40fba7548c165ef86b97f3b33b4b8d7cddf66d2363fab8b68da93b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:091cc069bace1afd28cdb54a; effort_runs_json; source row 8; GPT-5.6 Sol|low; field new_score"
+    },
+    {
+      "id": "public:3dd6aedd2c3850ede384cc09",
+      "observation_sha256": "e67db90a724686b7da927f5c31f23b0bcbd5bc9737f2a3b29174ae854b273fb9",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:3dd6aedd2c3850ede384cc09; effort_runs_json; source row 9; GPT-5.6 Sol|medium; field new_score"
+    },
+    {
+      "id": "public:f3b21c6e2923cf13cac41beb",
+      "observation_sha256": "8b251b378dfe954666a2dfa7f6ec136d0c58d3b06e1f97a100f509d66b471701",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:f3b21c6e2923cf13cac41beb; effort_runs_json; source row 10; GPT-5.6 Sol|high; field new_score"
+    },
+    {
+      "id": "public:510e42788ac5e6ed9dc022e3",
+      "observation_sha256": "2e5f7801075909c9b523e00d886aa1cf1697df9f0a783bd6ba5d12434f8c2529",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:510e42788ac5e6ed9dc022e3; effort_runs_json; source row 11; GPT-5.6 Sol|xhigh; field new_score"
+    },
+    {
+      "id": "public:29a6e6bb13a31c85ed10c6b0",
+      "observation_sha256": "14548a2928f68b8f9904be0c5db87ec270e799bc9368a40b1c6d8fd18110953f",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:29a6e6bb13a31c85ed10c6b0; effort_runs_json; source row 12; GPT-5.6 Sol|max; field new_score"
+    },
+    {
+      "id": "public:07c5ba6ad4db2bb3245d7aea",
+      "observation_sha256": "ae42bd2f4d9242910a5ae78b6cd03040257162a2df32e7d79f5000d0980f5a26",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:07c5ba6ad4db2bb3245d7aea; effort_runs_json; source row 13; Claude Opus 4.8|low; field new_score"
+    },
+    {
+      "id": "public:130a6b2976aa5cb3db5774db",
+      "observation_sha256": "a8084d95ab95285df906cdde22da64708d6021e6c99d5207af8212d2ebff01be",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:130a6b2976aa5cb3db5774db; effort_runs_json; source row 14; Claude Opus 4.8|medium; field new_score"
+    },
+    {
+      "id": "public:738d575457ed88257fdc43bd",
+      "observation_sha256": "5d9caa8b987e25f5548464d6cc1111a1d0e21c406c895dc5231a1335120f4417",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:738d575457ed88257fdc43bd; effort_runs_json; source row 15; Claude Opus 4.8|high; field new_score"
+    },
+    {
+      "id": "public:091d14d930e657020ccf4582",
+      "observation_sha256": "99b7ec3aac9800417c8447ba8dbfc173810e1dab88fd514125e89cd7a0f9e30d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:091d14d930e657020ccf4582; effort_runs_json; source row 16; Claude Opus 4.8|xhigh; field new_score"
+    },
+    {
+      "id": "public:5f94cf7aa08ae4d41038ca28",
+      "observation_sha256": "b6a0cfd9ece30a6115f5b08e18edd06a0f3590bd548fae7cd70533d3c3484778",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:5f94cf7aa08ae4d41038ca28; effort_runs_json; source row 17; Claude Opus 4.8|max; field new_score"
+    },
+    {
+      "id": "public:d5654f4acfd3f9d8519a8bdb",
+      "observation_sha256": "dac87b5a66864bb3f6794a455feca70ca76951b1207dd49ade4825e1d0ae7ef9",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:d5654f4acfd3f9d8519a8bdb; effort_runs_json; source row 18; GPT-5.5|low; field new_score"
+    },
+    {
+      "id": "public:45453859667e4bef50d05810",
+      "observation_sha256": "4e34a2e3c95c1ef68549d2c47131de0018533d51d7df513626e89eb1538db126",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json",
+      "review_sha256": "289a4d183c8f5e8130447f42c6e65e1023feb02dc17f08f4a250b24cc1f65f76",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch1-review.json; coverage_checked public:45453859667e4bef50d05810; effort_runs_json; source row 19; GPT-5.5|medium; field new_score"
+    },
+    {
+      "id": "public:1b569d8b5230b7417fea4bdd",
+      "observation_sha256": "4d2985864574ae30375b600f6d3e43ee83157f4838c41b421638b2ddb9cd33c4",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:1b569d8b5230b7417fea4bdd; effort_runs_json; source row 20; GPT-5.5|high; field new_score"
+    },
+    {
+      "id": "public:33027575ebebfd99bc82b68e",
+      "observation_sha256": "67ba028a834389cf2a6c22ced1364dc9ca4c7117da9d9407e2e13c12365d8e2e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:33027575ebebfd99bc82b68e; effort_runs_json; source row 21; GPT-5.5|xhigh; field new_score"
+    },
+    {
+      "id": "public:1ed22acf6e77baa2e8e68528",
+      "observation_sha256": "68d89d93d37b0559343034c4ac4d2f7424668dbeefa049e2e7f1612a957a5f90",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:1ed22acf6e77baa2e8e68528; effort_runs_json; source row 22; Grok 4.5|low; field new_score"
+    },
+    {
+      "id": "public:e28e6540bf384a97d8ee3f9f",
+      "observation_sha256": "58d02510f1e774a98e96e3da71f74e597d1a0279e2f1f000d65b253c5fe1cb66",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:e28e6540bf384a97d8ee3f9f; effort_runs_json; source row 23; Grok 4.5|medium; field new_score"
+    },
+    {
+      "id": "public:ddcc1d473c6757d59b3ce715",
+      "observation_sha256": "8b9f7a54361c316d71136956ec30bfab28a8b10bce8e71717fe9870f4f2713f3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:ddcc1d473c6757d59b3ce715; effort_runs_json; source row 24; Grok 4.5|high; field new_score"
+    },
+    {
+      "id": "public:50ca79d2dfa4a8abe0ce6d7c",
+      "observation_sha256": "adc80655dc665b4f68eba06d09dca1dc3430d928201913e02f19b10cab9b1976",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:50ca79d2dfa4a8abe0ce6d7c; effort_runs_json; source row 25; Grok 4.6|low; field new_score"
+    },
+    {
+      "id": "public:68893d8eb32be417c3f25f42",
+      "observation_sha256": "f7b0fd85ebf0b7119edd8915ef5e5a6f1c1e1d9e865a49630e57b8f190312cd6",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:68893d8eb32be417c3f25f42; effort_runs_json; source row 26; Grok 4.6|medium; field new_score"
+    },
+    {
+      "id": "public:9795554b478f57853bce5516",
+      "observation_sha256": "74d80be50d38a4a49d2a3f5e995e03a12c8264d7d579573047c593a417d47507",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:9795554b478f57853bce5516; effort_runs_json; source row 27; Grok 4.6|high; field new_score"
+    },
+    {
+      "id": "public:62648f1270bfa44daac51929",
+      "observation_sha256": "f19873ec719fc67ebd948f6f09ab5e21aec51e3536ab97a665c2c013f4882848",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:62648f1270bfa44daac51929; effort_runs_json; source row 28; Claude Sonnet 5|low; field new_score"
+    },
+    {
+      "id": "public:f79e57ef2eb09255cc41c48d",
+      "observation_sha256": "f0f265222dbcf7e7b662ee998afa003c6cbe99b78efade0f5846c9432e01b728",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:f79e57ef2eb09255cc41c48d; effort_runs_json; source row 29; Claude Sonnet 5|medium; field new_score"
+    },
+    {
+      "id": "public:1d4cae05780c6e1885c1db96",
+      "observation_sha256": "4e9423acdcc61181a4979e5a1e94b13aaa123c63d27f9ea83ddaceef69c95f1f",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:1d4cae05780c6e1885c1db96; effort_runs_json; source row 30; Claude Sonnet 5|high; field new_score"
+    },
+    {
+      "id": "public:d0a78902a80dd25b8cf046e5",
+      "observation_sha256": "929e0369b430abf2ed051be29e493c454c84671b7404677ad40040753df2dc1d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:d0a78902a80dd25b8cf046e5; effort_runs_json; source row 31; Claude Sonnet 5|xhigh; field new_score"
+    },
+    {
+      "id": "public:b8745a560a032573811e29b6",
+      "observation_sha256": "9e882a774aab2d71c842dffdb10d810fa9a9c9fcc5d35271d96dc2979de5875e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:b8745a560a032573811e29b6; effort_runs_json; source row 32; Claude Sonnet 5|max; field new_score"
+    },
+    {
+      "id": "public:1f980287c09950311752a56f",
+      "observation_sha256": "fd5928e90635513d5ac24acdae49dc80f801560e71247c8ff8d72602821db0d8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:1f980287c09950311752a56f; effort_runs_json; source row 33; GPT-5.6 Terra|low; field new_score"
+    },
+    {
+      "id": "public:2630aef74d9c1cd649538cc1",
+      "observation_sha256": "a7f1a10af0c6116b7c059c34e3ee57d93a14ee10832a61352bc9f5a3507adb5b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:2630aef74d9c1cd649538cc1; effort_runs_json; source row 34; GPT-5.6 Terra|medium; field new_score"
+    },
+    {
+      "id": "public:9ec1047a8bf0515e7a4b23a3",
+      "observation_sha256": "69a3d28036aee464e8bf0c6540dbbfb5e8a4256df8ddfd9215e29aa18bc76284",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:9ec1047a8bf0515e7a4b23a3; effort_runs_json; source row 35; GPT-5.6 Terra|high; field new_score"
+    },
+    {
+      "id": "public:2a771f4cfff2b5f95952bf35",
+      "observation_sha256": "54e19bcc4cefcfcb69b53357b967446c67cd7be96e3f55ef1d1cea3291c20d26",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:2a771f4cfff2b5f95952bf35; effort_runs_json; source row 36; GPT-5.6 Terra|xhigh; field new_score"
+    },
+    {
+      "id": "public:edfdf3d65550f3e21b0e377c",
+      "observation_sha256": "1a81effe12ec5c4fd77327d4d7a1315d07af36626d0349130f30f37f1f85dfa3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:edfdf3d65550f3e21b0e377c; effort_runs_json; source row 37; GPT-5.6 Terra|max; field new_score"
+    },
+    {
+      "id": "public:e0a6726eb3392dc53d1f26d6",
+      "observation_sha256": "799065f3fa900b00f1b70d413c909f0e153afddfb59b8eddd63f8ad8f6aabbf3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:e0a6726eb3392dc53d1f26d6; effort_runs_json; source row 38; GPT-5.6 Luna|low; field new_score"
+    },
+    {
+      "id": "public:5d5a6504ad9b2f6536cbe0dc",
+      "observation_sha256": "541737f789b7596f023bebc147a74008680d96c910859dbdc11dc826252b801f",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json",
+      "review_sha256": "796bb42de958682d97936559812d116c20db0a0df8f875cb9764613b91a87dc6",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch2-review.json; coverage_checked public:5d5a6504ad9b2f6536cbe0dc; effort_runs_json; source row 39; GPT-5.6 Luna|medium; field new_score"
+    },
+    {
+      "id": "public:d07e6dea66bbe691d0c89b56",
+      "observation_sha256": "374ca00b686a8fd899212d16c677c06b9693a154b02b295a0d300816dd4bb738",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:d07e6dea66bbe691d0c89b56; effort_runs_json; source row 60; Claude Opus 5|max; field new_score"
+    },
+    {
+      "id": "public:b5a046f4f16e9ebc7c81d72a",
+      "observation_sha256": "d49d53327afbb516bd628473d8b9f61aaddf6a649da3e06344d32c152d1ed119",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:b5a046f4f16e9ebc7c81d72a; effort_runs_json; source row 61; SWE-1.6|none; field new_score"
+    },
+    {
+      "id": "public:8b41a6cb9563ef1720e3f14d",
+      "observation_sha256": "b6875d7eda682b972049184e5de12919ac214daaeee1b5cb697f0b8a254229eb",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:8b41a6cb9563ef1720e3f14d; effort_runs_json; source row 62; Kimi K3|none; field new_score"
+    },
+    {
+      "id": "public:70fe94cbc4e510c951ea4c6c",
+      "observation_sha256": "4cf5156f455f2d2a8519ff3aff1b45b4127547691ffefae22a26407c202f120d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:70fe94cbc4e510c951ea4c6c; effort_runs_json; source row 63; Gemini 3.6 Flash|low; field new_score"
+    },
+    {
+      "id": "public:6709f53d22d0361cecb719de",
+      "observation_sha256": "d367bd4dca7018c2cd358f7935cfe710e2601985fdcac5f7a6a2b6bf419e0d6d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:6709f53d22d0361cecb719de; effort_runs_json; source row 64; Gemini 3.6 Flash|medium; field new_score"
+    },
+    {
+      "id": "public:9cfba8552eaabde43f0c3e40",
+      "observation_sha256": "3d43813f662a3ad9704ba08901db901c805db1534d44bfee5701e348e839f0f7",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:9cfba8552eaabde43f0c3e40; effort_runs_json; source row 65; Gemini 3.6 Flash|high; field new_score"
+    },
+    {
+      "id": "public:4769c6fe17d1ebb0e77603a1",
+      "observation_sha256": "a78ffcb7f895f64714362896318eb6559314bdb3fd581f51ce6c70fdf7535212",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:4769c6fe17d1ebb0e77603a1; effort_runs_json; source row 66; Gemini 3.7 Flash|low; field new_score"
+    },
+    {
+      "id": "public:a26164f8ea5650fd02909dbe",
+      "observation_sha256": "bd377a3a0e8a837343af39270fd1caa961f173d84c9946a1c2fc950d5df13df2",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:a26164f8ea5650fd02909dbe; effort_runs_json; source row 67; Gemini 3.7 Flash|medium; field new_score"
+    },
+    {
+      "id": "public:836d75dd3745fcb42f54e2f0",
+      "observation_sha256": "a7e84911985c4611aa6d82be5a9321b821850949d5f5118b1ee09c801ee8dc67",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:836d75dd3745fcb42f54e2f0; effort_runs_json; source row 68; Gemini 3.7 Flash|high; field new_score"
+    },
+    {
+      "id": "public:72d317c6d5b911b40688f920",
+      "observation_sha256": "4babf7bdcbc5feb91ed2ac9a19fb0c63d4440ab974ce97e5de770a818469aa1b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:72d317c6d5b911b40688f920; effort_runs_json; source row 69; GPT-5.4-mini|low; field new_score"
+    },
+    {
+      "id": "public:2517d409968152ad6b80389b",
+      "observation_sha256": "1de071ef258b00d3e19fc5ddab4a8ddbaa10bf61e321a098b9a954387e8afbd0",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:2517d409968152ad6b80389b; effort_runs_json; source row 70; GPT-5.4-mini|medium; field new_score"
+    },
+    {
+      "id": "public:d7dd07f68ada27a378a0cd68",
+      "observation_sha256": "ae1bce78e0b7338b54122f41ea0bf785d3b2261ba03e34ed38522c03628e4199",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:d7dd07f68ada27a378a0cd68; effort_runs_json; source row 71; GPT-5.4-mini|high; field new_score"
+    },
+    {
+      "id": "public:83b5f6573e777bb7ba6b25f1",
+      "observation_sha256": "df05deb8f1995acf416e87a35d0c77a4b3ec6be22248a08ce036ae0bf1e3d554",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:83b5f6573e777bb7ba6b25f1; effort_runs_json; source row 72; GPT-5.4-mini|xhigh; field new_score"
+    },
+    {
+      "id": "public:36aec613f1c254642d6074de",
+      "observation_sha256": "f5a4298eeee3a9f12224c8cfe999c45e46dd7f0e6f3977fca7ef37402949dd8b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:36aec613f1c254642d6074de; effort_runs_json; source row 73; Claude Opus 4.6|low; field new_score"
+    },
+    {
+      "id": "public:8f20a1f58f3222f79a6922c5",
+      "observation_sha256": "b02745f0a3b3649c935798d146566695a6dfa7246fbdd1ce58be4bf210691a86",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:8f20a1f58f3222f79a6922c5; effort_runs_json; source row 74; Claude Opus 4.6|medium; field new_score"
+    },
+    {
+      "id": "public:4d1ddb94cdddd62a407a743e",
+      "observation_sha256": "daa565d88d78be73d939305c1b1a0617e6030bc48503f6103c8d6ca7a100a8ec",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:4d1ddb94cdddd62a407a743e; effort_runs_json; source row 75; Claude Opus 4.6|high; field new_score"
+    },
+    {
+      "id": "public:61417465f88bb3adf683708f",
+      "observation_sha256": "71e11bc693b9a3ca2ba4037e3cda7dafc47770ce18ede7cc4a78f4396e3d35b3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:61417465f88bb3adf683708f; effort_runs_json; source row 76; Claude Sonnet 4.6|low; field new_score"
+    },
+    {
+      "id": "public:df19b290f2a7a1fafda473f4",
+      "observation_sha256": "0a2853ddc6724d9a80c88a7227fccbe298706d558c0bad1976e1f2d44c4ff20e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:df19b290f2a7a1fafda473f4; effort_runs_json; source row 77; Claude Sonnet 4.6|medium; field new_score"
+    },
+    {
+      "id": "public:a9fd6b56e8f3247d2087602a",
+      "observation_sha256": "987c80cc41216515b15abcb237e7af532223bb5e523c206996c4180059131b4d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:a9fd6b56e8f3247d2087602a; effort_runs_json; source row 78; Claude Sonnet 4.6|high; field new_score"
+    },
+    {
+      "id": "public:44e3ba3e8337184af044c424",
+      "observation_sha256": "92aad5ff7845097f8942679821c2d00119a94c458242565243e4c0c313342e24",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json",
+      "review_sha256": "31ed5c19e58b7b084d87a40a492130089751873202c6c42338bce3bd2fffba4a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch4-review.json; coverage_checked public:44e3ba3e8337184af044c424; effort_runs_json; source row 79; Claude Sonnet 4.6|max; field new_score"
+    },
+    {
+      "id": "public:7ef865d4e9113b5d5ad5a833",
+      "observation_sha256": "b20f12400aaf891855927da01c3cf6328e37d1aade64bdd62e703e39fe7a58e4",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:7ef865d4e9113b5d5ad5a833; effort_runs_json; source row 80; DeepSeek V4 Flash 0731|high; field new_score"
+    },
+    {
+      "id": "public:8bb51fffc818a90b67f2d20e",
+      "observation_sha256": "4b1b42ee73e4fc852f27ce57e4b5cd6b2ffc381387e51d1e7cb1e0b7574cfa37",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:8bb51fffc818a90b67f2d20e; effort_runs_json; source row 81; Mistral 3.5 Medium|none; field new_score"
+    },
+    {
+      "id": "public:b6a509adb468a21f38c2705f",
+      "observation_sha256": "f87a2868a1adfdf9b1628b320e0370b178687281b9258b9cda21508889b50c2e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:b6a509adb468a21f38c2705f; effort_runs_json; source row 82; Claude Fable 5.1|low; field new_score"
+    },
+    {
+      "id": "public:86528b68db529f29be36a231",
+      "observation_sha256": "d27e5eb092267f102e9ff398a42f133800f33267696b9a2e8e0650bcc78e8476",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:86528b68db529f29be36a231; effort_runs_json; source row 83; Claude Fable 5.1|medium; field new_score"
+    },
+    {
+      "id": "public:f470403a9101df336bbdec3d",
+      "observation_sha256": "b7fc0558a5df133493996d64bf39abaed9e0727aa748ea4c9f537a055a90323e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:f470403a9101df336bbdec3d; effort_runs_json; source row 84; Claude Fable 5.1|high; field new_score"
+    },
+    {
+      "id": "public:acfbfb0bf5678a5ab807f093",
+      "observation_sha256": "ccb5997d19cac729e941b070e32a599df84a8e466e2b96fc677423ac60daab19",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:acfbfb0bf5678a5ab807f093; effort_runs_json; source row 85; Claude Fable 5.1|xhigh; field new_score"
+    },
+    {
+      "id": "public:de686b9cca2c1bf30d7760f5",
+      "observation_sha256": "0bb2fbf6f84612afa6bef5f60a694daeafad73a334f32e09da350ac06cfbc7d8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:de686b9cca2c1bf30d7760f5; effort_runs_json; source row 86; Claude Fable 5.1|max; field new_score"
+    },
+    {
+      "id": "public:1430aaff6e761384ff0b7b9a",
+      "observation_sha256": "623c4b315a8430e9a0bf2368f94c368ffc39441c16a24b36fb3a32e7c18e1380",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:1430aaff6e761384ff0b7b9a; effort_runs_json; source row 87; DeepSeek V4 Pro 0813|high; field new_score"
+    },
+    {
+      "id": "public:1b6bdd85691f18efbd325797",
+      "observation_sha256": "2f1f6b598d7771eed7be24ed1fb76f00aafdc326113a42251bfaf7e1dfebf1ba",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:1b6bdd85691f18efbd325797; effort_runs_json; source row 88; GLM 5.3|max; field new_score"
+    },
+    {
+      "id": "public:1581c2cbadfb6a7b6ee9d1d8",
+      "observation_sha256": "2da732b0e008e6ea12b24bc0146d66acd2ddaddbc195c40a40cfa8fcf7e6bcfe",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:1581c2cbadfb6a7b6ee9d1d8; effort_runs_json; source row 89; GLM 5.3 Flash|max; field new_score"
+    },
+    {
+      "id": "public:ca0990471c350c4b34ff605f",
+      "observation_sha256": "e6e065b6758d324e636d971d8807eff90fedcaa2aadd8dfa0790f0568ad158d4",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:ca0990471c350c4b34ff605f; effort_runs_json; source row 90; Nemotron 3 Ultra|none; field new_score"
+    },
+    {
+      "id": "public:a6ad18f8ba1424f12edf5436",
+      "observation_sha256": "0a2ce1b0243c9702f0c36b969d56a37977d1077493e4f6ddab7abdb1faac030e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:a6ad18f8ba1424f12edf5436; effort_runs_json; source row 91; Gemini 3.8 Flash|medium; field new_score"
+    },
+    {
+      "id": "public:1745705733d5bd916b4fde6e",
+      "observation_sha256": "e13a09220ba5353728898b66bc07d9b2b284590b3fee0b47f47cf215e3ef172a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:1745705733d5bd916b4fde6e; effort_runs_json; source row 92; Gemini 3.8 Flash|high; field new_score"
+    },
+    {
+      "id": "public:af7c8c7bd9e5255a2e8f1956",
+      "observation_sha256": "a58e09821e404b4ac16f8c31467c2022342647cd63d26d62e2ece4958f063ed7",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:af7c8c7bd9e5255a2e8f1956; effort_runs_json; source row 93; GPT-6 Astra|low; field new_score"
+    },
+    {
+      "id": "public:439086190c468d9c8f000420",
+      "observation_sha256": "3326e21a655a4b1be3db17cd4555bcf0ae6af1af0933118661a225ed810f0376",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:439086190c468d9c8f000420; effort_runs_json; source row 94; GPT-6 Astra|medium; field new_score"
+    },
+    {
+      "id": "public:eee1bb4cf7339a7f0787eadf",
+      "observation_sha256": "9c7e55a1f5802b00af8a2662028a2bb2b8bcb28edfbeaeb6c0ba2d115dc0cb13",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:eee1bb4cf7339a7f0787eadf; effort_runs_json; source row 95; GPT-6 Astra|high; field new_score"
+    },
+    {
+      "id": "public:10b3ff905e16d57de59473c9",
+      "observation_sha256": "48ae99c68af0d0013a5365994ef5d4563a763fb6a9d0e9eadef69ed1515e8656",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:10b3ff905e16d57de59473c9; effort_runs_json; source row 96; GPT-6 Astra|xhigh; field new_score"
+    },
+    {
+      "id": "public:ef020a7d41ace07a04e285db",
+      "observation_sha256": "47b028f948d2599ebf152b01b1f2fa8da9580b7bf6dda12470ed465c52253793",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json",
+      "review_sha256": "3d7efe50f3543c6c5af44db6529bc5fa06cf970278859acfe37567372b27add1",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch5-review.json; coverage_checked public:ef020a7d41ace07a04e285db; effort_runs_json; source row 97; GPT-6 Astra|max; field new_score"
+    },
+    {
+      "id": "public:d92cc5665e71bd3277ce43d7",
+      "observation_sha256": "c54eb2c94b1d8aa146dc286003c2873d932b20aca4e47934f41a4f66f02b2cbb",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:d92cc5665e71bd3277ce43d7; effort_runs_json; source row 40; GPT-5.6 Luna|high; field new_score"
+    },
+    {
+      "id": "public:4e668147f8fb3900750ed6d2",
+      "observation_sha256": "9c06f464e552b866cf74f583973e00a74ef3fdaa94bd835aa169407fa2b57160",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:4e668147f8fb3900750ed6d2; effort_runs_json; source row 41; GPT-5.6 Luna|xhigh; field new_score"
+    },
+    {
+      "id": "public:d74e241d1dcc60c69bd5f1d1",
+      "observation_sha256": "799f6486c07f29fccb97fa0a00f34b0d37d3ec435c365e838bf8c846515f0ad1",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:d74e241d1dcc60c69bd5f1d1; effort_runs_json; source row 42; GPT-5.6 Luna|max; field new_score"
+    },
+    {
+      "id": "public:e2f75ce6a316c3fae607dd62",
+      "observation_sha256": "c5d4b0c787ebbf80ddcf0dfa6ee2a09a0a7a7dd5f1bc081ab13adb3de0290401",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:e2f75ce6a316c3fae607dd62; effort_runs_json; source row 43; SWE-1.7|none; field new_score"
+    },
+    {
+      "id": "public:3cb50b484edd0bf848b26674",
+      "observation_sha256": "fa0eb73a1332cf16821e53a84e3aae3a3408036092ba36f27d57c91df442583b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:3cb50b484edd0bf848b26674; effort_runs_json; source row 44; Claude Opus 4.7|low; field new_score"
+    },
+    {
+      "id": "public:a3b48e6b454814f58db74da8",
+      "observation_sha256": "621c9532e2c49624f581f09600a65b78aa9cdab4f0afdec877b22a4ec7d93a25",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:a3b48e6b454814f58db74da8; effort_runs_json; source row 45; Claude Opus 4.7|medium; field new_score"
+    },
+    {
+      "id": "public:e5f1118ce276bd165541507d",
+      "observation_sha256": "d12c7ba537ae28b0d8488a59cf46544d16f14ade844e91e5fd1f4c4418e4e492",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:e5f1118ce276bd165541507d; effort_runs_json; source row 46; Claude Opus 4.7|high; field new_score"
+    },
+    {
+      "id": "public:563f1671a5dfd00f0b87f60c",
+      "observation_sha256": "154403ac8041d71aab199f11dcf01653a1a974f2913c37583eb8458cf27bef11",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:563f1671a5dfd00f0b87f60c; effort_runs_json; source row 47; Claude Opus 4.7|xhigh; field new_score"
+    },
+    {
+      "id": "public:3ac8d9e0b6deb51855d1c08a",
+      "observation_sha256": "a5dc2ce95ff46ace4dfa7ce906f7a83d81d685d2a2051a2b74a850aad05fb3ea",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:3ac8d9e0b6deb51855d1c08a; effort_runs_json; source row 48; Claude Opus 4.7|max; field new_score"
+    },
+    {
+      "id": "public:8fbc67097d026e4050a3c88e",
+      "observation_sha256": "25e607663e5cb9155f9246d8522dda1ba5c60fbf6e16d026ee6bd5dadf925ec8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:8fbc67097d026e4050a3c88e; effort_runs_json; source row 49; Kimi K2.7|none; field new_score"
+    },
+    {
+      "id": "public:ef5caed4933cbade0ac86015",
+      "observation_sha256": "223aa4dcfbfa471cde4b2fcad5a85db9dfcdb3bc29deb69d8736a067cddcbb92",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:ef5caed4933cbade0ac86015; effort_runs_json; source row 50; Composer 2.5|none; field new_score"
+    },
+    {
+      "id": "public:c6588a22a71d076dd0289cb1",
+      "observation_sha256": "3b20012c7f1e2ce66e51d4cc824a40d71de7a95805c7bd7669d5cc0fe0a9c106",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:c6588a22a71d076dd0289cb1; effort_runs_json; source row 51; GLM 5.2|none; field new_score"
+    },
+    {
+      "id": "public:73f22d23950766013f22c00d",
+      "observation_sha256": "0489a8ce7a2ff3e29cf5a55ca13b0d5a7502188b3d926b22a564d8d0d715894c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:73f22d23950766013f22c00d; effort_runs_json; source row 52; DeepSeek V4 Pro|none; field new_score"
+    },
+    {
+      "id": "public:3996d0e4bc1e08debf3743d4",
+      "observation_sha256": "9f9b770e4fe3a619d7578feefe1ee0495a65ebd0d60da1ed8c7f6b9390ec32a0",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:3996d0e4bc1e08debf3743d4; effort_runs_json; source row 53; MiniMax M3|none; field new_score"
+    },
+    {
+      "id": "public:39eddf14cd0b7e3b9f1d4994",
+      "observation_sha256": "6beeb94c3ce920aa98a31b520a1aa1b4953611725d9c4795a22d4672c1843322",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:39eddf14cd0b7e3b9f1d4994; effort_runs_json; source row 54; Inkling|0.99; field new_score"
+    },
+    {
+      "id": "public:242de2f06423a627ed2416dc",
+      "observation_sha256": "00203fb72bc64397f1bc1dc44e6dddbd4d1e5c30fd004d73d6527c73c57275aa",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:242de2f06423a627ed2416dc; effort_runs_json; source row 55; Qwen 3.7 Plus|none; field new_score"
+    },
+    {
+      "id": "public:9d121057da6d9c863ed6358e",
+      "observation_sha256": "a5a4180b102e64e183f1cc15005d10116c9b95ca68cec90fc7d16706f88b4649",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:9d121057da6d9c863ed6358e; effort_runs_json; source row 56; Claude Opus 5|low; field new_score"
+    },
+    {
+      "id": "public:edb750c30d7f08dbe6398378",
+      "observation_sha256": "9520e4830b14f93eaa3b15c0b9bb2605c38d5f28d154a0f81c94c5f598db42bb",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:edb750c30d7f08dbe6398378; effort_runs_json; source row 57; Claude Opus 5|medium; field new_score"
+    },
+    {
+      "id": "public:3ed08720e1026a688fffc645",
+      "observation_sha256": "6808ce8aaad5b42769f7d93384ba1bff4aacd6858ca915234d10a789f299edb8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:3ed08720e1026a688fffc645; effort_runs_json; source row 58; Claude Opus 5|high; field new_score"
+    },
+    {
+      "id": "public:43b34bf870b56ecd64d08332",
+      "observation_sha256": "af93ff70e0790560e67b1fb3c52c8931bf39c24c80804791cd54d3bc384990da",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json",
+      "review_sha256": "93dfa8a48c05f0ff2d935fa7c3d6fad729968c252e7304cad40ec7296728610a",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-1.1-batch3-review.json; coverage_checked public:43b34bf870b56ecd64d08332; effort_runs_json; source row 59; Claude Opus 5|xhigh; field new_score"
+    },
+    {
+      "id": "public:3fda971b1a92ab94f83a20e9",
+      "observation_sha256": "0f78520996d159c0bc6fb6b2f121c01a1d05f33e44dd31bb804270651d4a40cf",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:3fda971b1a92ab94f83a20e9; effort_runs_json; source row 0; SWE-2|medium; field cost"
+    },
+    {
+      "id": "public:1916079dca417b9d6c1b3425",
+      "observation_sha256": "8ac677075c0c168e6cb39e810a886423bfa27510cef69aba4a1c9319e40db2fb",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:1916079dca417b9d6c1b3425; effort_runs_json; source row 1; SWE-2|high; field cost"
+    },
+    {
+      "id": "public:479b671f893199e6c480e725",
+      "observation_sha256": "6b2f73c8766c8b170c697c0aa08ee14d59a9a697d34595918594ad19c3ff305d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:479b671f893199e6c480e725; effort_runs_json; source row 2; SWE-2|max; field cost"
+    },
+    {
+      "id": "public:574fe9057345c6f7a82457b8",
+      "observation_sha256": "28fea13360a17d6536c5a7abbbff65c41ee3b45318714b4f898946692baf2172",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:574fe9057345c6f7a82457b8; effort_runs_json; source row 3; Claude Fable 5|low; field cost"
+    },
+    {
+      "id": "public:8bc99682e3e546153756fb84",
+      "observation_sha256": "d4305b130d7caefeaf7dd49552fef76dbb8615e863620e4213e909d1e28043e9",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:8bc99682e3e546153756fb84; effort_runs_json; source row 4; Claude Fable 5|medium; field cost"
+    },
+    {
+      "id": "public:64190e46b66455421ffc78c6",
+      "observation_sha256": "77fcc485de467ccae8fb26f88d89ba748ef7922dc49e5a8ffa9839156e883629",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:64190e46b66455421ffc78c6; effort_runs_json; source row 5; Claude Fable 5|high; field cost"
+    },
+    {
+      "id": "public:bb6204c58f10f1306cbfb9d7",
+      "observation_sha256": "ab0b0712fd56d7185c409fc8271295b768d716aedd9172f643e8d8dcc45b94fc",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:bb6204c58f10f1306cbfb9d7; effort_runs_json; source row 6; Claude Fable 5|xhigh; field cost"
+    },
+    {
+      "id": "public:54df0209f91a917ad411a80f",
+      "observation_sha256": "53cbb3fb70dc31e29de7ebf7f8ef122f7f3c092f168883493774c61b2b7e301a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:54df0209f91a917ad411a80f; effort_runs_json; source row 7; Claude Fable 5|max; field cost"
+    },
+    {
+      "id": "public:2554bb71930dff7f5ec08613",
+      "observation_sha256": "7d16b4dd0a24728eb5924a5d416f0f4da74ecfea6380573365c9d262fc5d19b0",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:2554bb71930dff7f5ec08613; effort_runs_json; source row 8; GPT-5.6 Sol|low; field cost"
+    },
+    {
+      "id": "public:7510701b7e46b2582a99e6c6",
+      "observation_sha256": "47077156f697412b7b3779136b29025327f9b9fde3cdf4342e5b73b99040d47e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:7510701b7e46b2582a99e6c6; effort_runs_json; source row 9; GPT-5.6 Sol|medium; field cost"
+    },
+    {
+      "id": "public:108313ba4e9a0b1d8b46e5e6",
+      "observation_sha256": "209a4b25c0db4905122c75002b8c2c59924a4ae76e6b8b4cb27411bb8ed2ec9f",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:108313ba4e9a0b1d8b46e5e6; effort_runs_json; source row 10; GPT-5.6 Sol|high; field cost"
+    },
+    {
+      "id": "public:691f7379f978d0ed4767138d",
+      "observation_sha256": "3ccfed3670f230e7e56df81f51c4152feca4c4f5ca313cc7bb0516551fd83e2a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:691f7379f978d0ed4767138d; effort_runs_json; source row 11; GPT-5.6 Sol|xhigh; field cost"
+    },
+    {
+      "id": "public:76000da1148a3c8a15ee739f",
+      "observation_sha256": "44cc10ca5465a9e45ea2d21f85edbbf9e3a4cb6884eb4817925ec20d5f102534",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:76000da1148a3c8a15ee739f; effort_runs_json; source row 12; GPT-5.6 Sol|max; field cost"
+    },
+    {
+      "id": "public:f790a0f32f1c1dab10ee3b5f",
+      "observation_sha256": "f7d11eba17c759ccb8577b3de006ff76501271deaedcb6c9498738b466ff0dae",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:f790a0f32f1c1dab10ee3b5f; effort_runs_json; source row 13; Claude Opus 4.8|low; field cost"
+    },
+    {
+      "id": "public:d8e9ad4624ea90341364fa01",
+      "observation_sha256": "0b1afb5dd0135ad8bc957fd92fe2cc22829c6299203601a2468725d96d630e5e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:d8e9ad4624ea90341364fa01; effort_runs_json; source row 14; Claude Opus 4.8|medium; field cost"
+    },
+    {
+      "id": "public:cfb545da2139c7c0faa4a1fd",
+      "observation_sha256": "f97f474307d9bca434b1da0398a99e88e54920734ec69bebcce762879248cd2c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:cfb545da2139c7c0faa4a1fd; effort_runs_json; source row 15; Claude Opus 4.8|high; field cost"
+    },
+    {
+      "id": "public:de59ecc1d8ac39df8ce68ccc",
+      "observation_sha256": "9d857851e1eb2cf76552db9fd0ffd32b5188fb5b1c97d7c1f9a2f742e7d4fff1",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:de59ecc1d8ac39df8ce68ccc; effort_runs_json; source row 16; Claude Opus 4.8|xhigh; field cost"
+    },
+    {
+      "id": "public:c708d53d1173bbce39208007",
+      "observation_sha256": "15f5c60c0aba34903de40c79bad1de05b673dd57fe45a556f56e153f710b824a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:c708d53d1173bbce39208007; effort_runs_json; source row 17; Claude Opus 4.8|max; field cost"
+    },
+    {
+      "id": "public:65ed85648973aa1aa2730d45",
+      "observation_sha256": "df4942a5221fa1935971a37411c1b8bc7026d200fa3a30316325a01222a21fa6",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:65ed85648973aa1aa2730d45; effort_runs_json; source row 18; GPT-5.5|low; field cost"
+    },
+    {
+      "id": "public:620fcb405f213fb2547df297",
+      "observation_sha256": "7215e8c9de4be34bf14adadb2d34393bf0ce7fc116729216965912e1cf56e08a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json",
+      "review_sha256": "3bd85546a35e4254e5dc7f03b5ca18f64af70b89b2937f03cffa6a6666c63605",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch1-review.json; coverage_checked public:620fcb405f213fb2547df297; effort_runs_json; source row 19; GPT-5.5|medium; field cost"
+    },
+    {
+      "id": "public:ccc2e7b40b8f158bf45875a4",
+      "observation_sha256": "b90946001146fa3f528572d90da03f3ccac0514d9b09eee9d43c6f7cdfeda70c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:ccc2e7b40b8f158bf45875a4; effort_runs_json; source row 20; GPT-5.5|high; field cost"
+    },
+    {
+      "id": "public:52563a15ec9f9ac81c0bcfaf",
+      "observation_sha256": "c9c91326b682110344eb35c812df06fb426d9425a9a45e574e75aa7ed5e1f1e4",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:52563a15ec9f9ac81c0bcfaf; effort_runs_json; source row 21; GPT-5.5|xhigh; field cost"
+    },
+    {
+      "id": "public:ab90588ba60b214c46b2ba5f",
+      "observation_sha256": "7336bed7aa8a83798767e14ddea7d752698b0446a1e07b0f82b6662a5a3eaaff",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:ab90588ba60b214c46b2ba5f; effort_runs_json; source row 22; Grok 4.5|low; field cost"
+    },
+    {
+      "id": "public:7c9085a02978a50b40ef9910",
+      "observation_sha256": "cbf6a6944dd148a2612b39b9e11de7e556e0df0f567c119a5ea7f2ccd008f8e3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:7c9085a02978a50b40ef9910; effort_runs_json; source row 23; Grok 4.5|medium; field cost"
+    },
+    {
+      "id": "public:8b93619169b43fcea4a2f4f1",
+      "observation_sha256": "fd5765cf77e896f3967b33cb79e0f331532e9c98fda1a537fa7df6364ff113c0",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:8b93619169b43fcea4a2f4f1; effort_runs_json; source row 24; Grok 4.5|high; field cost"
+    },
+    {
+      "id": "public:f244e9225ab1c99ac30ddbae",
+      "observation_sha256": "065018bd85d86614b350071f1ecad3cb17e0c902d0c661a87dd2332fbb082067",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:f244e9225ab1c99ac30ddbae; effort_runs_json; source row 25; Grok 4.6|low; field cost"
+    },
+    {
+      "id": "public:418ff0457ce43eb2a52cad90",
+      "observation_sha256": "089cf91433294d09cb3b19fc2237da584c26505fcd015d67d6732daf93043ca4",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:418ff0457ce43eb2a52cad90; effort_runs_json; source row 26; Grok 4.6|medium; field cost"
+    },
+    {
+      "id": "public:5495690dada827039f412a7c",
+      "observation_sha256": "95812b4700425e1e0a499648082a664915f8904923802d170bfcad5914e07415",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:5495690dada827039f412a7c; effort_runs_json; source row 27; Grok 4.6|high; field cost"
+    },
+    {
+      "id": "public:61d2383ccc11d694eb93ec00",
+      "observation_sha256": "2f01a1c8707f437fcc8b5b742ac40d52c312b2959f0098e94c9a1d59a4037f0e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:61d2383ccc11d694eb93ec00; effort_runs_json; source row 28; Claude Sonnet 5|low; field cost"
+    },
+    {
+      "id": "public:a834f909880b333ca0ce725f",
+      "observation_sha256": "6021b6bf42f05b22aed550f96cc31649732ee26a2190b160e9431b4954b6962d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:a834f909880b333ca0ce725f; effort_runs_json; source row 29; Claude Sonnet 5|medium; field cost"
+    },
+    {
+      "id": "public:eeac108edd3f811a78924e3d",
+      "observation_sha256": "26e00f7b77e3d5f91cfd6512faa7afe3e60eb67c18bcf2db1e30f4ad9ac4a80b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:eeac108edd3f811a78924e3d; effort_runs_json; source row 30; Claude Sonnet 5|high; field cost"
+    },
+    {
+      "id": "public:8a6db0226bff3db9bdcda9c1",
+      "observation_sha256": "10a60994dae34348349655ea931079d819df3c7128c04d534cf2f0c780392095",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:8a6db0226bff3db9bdcda9c1; effort_runs_json; source row 31; Claude Sonnet 5|xhigh; field cost"
+    },
+    {
+      "id": "public:22e59f2e05c295e3f37012da",
+      "observation_sha256": "d18a1b454ed3e08f07f38823eed6917a255aa3a90a4711f1e426f88bfd92fb5c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:22e59f2e05c295e3f37012da; effort_runs_json; source row 32; Claude Sonnet 5|max; field cost"
+    },
+    {
+      "id": "public:3480e0d1f1531def6d3f70b5",
+      "observation_sha256": "89297ec5e0343fe209153dd6ba7cd4825d5745a0b4a67e1b41e536ec243ac8d8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:3480e0d1f1531def6d3f70b5; effort_runs_json; source row 33; GPT-5.6 Terra|low; field cost"
+    },
+    {
+      "id": "public:4d25798d8b496f98d5a89259",
+      "observation_sha256": "e105cc23e7b3ae3681a43e37f352979a7ecc15ad9d621138f3e5b6f931d28e11",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:4d25798d8b496f98d5a89259; effort_runs_json; source row 34; GPT-5.6 Terra|medium; field cost"
+    },
+    {
+      "id": "public:941f8ce5a1956af0a3bf5439",
+      "observation_sha256": "ef9f97a3eaaa1a5b2e53c1bf0ba02cde37cad24e111e413ca39625aab88cfdd3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:941f8ce5a1956af0a3bf5439; effort_runs_json; source row 35; GPT-5.6 Terra|high; field cost"
+    },
+    {
+      "id": "public:ffde9eef95e7e559a9a265c4",
+      "observation_sha256": "cd0b6667532b40e659012d86e49e9217e1ca33d7b433b593782bf56ac739205c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:ffde9eef95e7e559a9a265c4; effort_runs_json; source row 36; GPT-5.6 Terra|xhigh; field cost"
+    },
+    {
+      "id": "public:aa095d602328cdbfb663a246",
+      "observation_sha256": "303d0d733d02da1005ae316b67dd6e2d8ffdc01d9b5855a211c1bf776066cd7c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:aa095d602328cdbfb663a246; effort_runs_json; source row 37; GPT-5.6 Terra|max; field cost"
+    },
+    {
+      "id": "public:868fa70b97888edbef04ebc7",
+      "observation_sha256": "0283cedfb87e105a826c55a99c3c75f266e95dd053f40cb9b86014e94d396573",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:868fa70b97888edbef04ebc7; effort_runs_json; source row 38; GPT-5.6 Luna|low; field cost"
+    },
+    {
+      "id": "public:522116da6b4ae5404dd653d6",
+      "observation_sha256": "ced2d9e598d12302fc1789846b9ce942ec70a67f63b610d9831d4404ec941cbe",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json",
+      "review_sha256": "9ff9630167c644b1a10f2e83344baf22b6997bdcd143a821974abe3995895b5d",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch2-review.json; coverage_checked public:522116da6b4ae5404dd653d6; effort_runs_json; source row 39; GPT-5.6 Luna|medium; field cost"
+    },
+    {
+      "id": "public:ed40f123c0adfbfeaf0e73f4",
+      "observation_sha256": "582df204025470fc4cde3804ba886d4955df6d02ad08bedf029032214880b518",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:ed40f123c0adfbfeaf0e73f4; effort_runs_json; source row 40; GPT-5.6 Luna|high; field cost"
+    },
+    {
+      "id": "public:ad9019b25b325a506a20cef8",
+      "observation_sha256": "e020e43a3f6d8e7b92851658274c68ae40839de5f68482a9c50e49e571b95ce3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:ad9019b25b325a506a20cef8; effort_runs_json; source row 41; GPT-5.6 Luna|xhigh; field cost"
+    },
+    {
+      "id": "public:cbdd6849fcaa33fed8e086d3",
+      "observation_sha256": "1b85ab725188756078e9bf1f750fe917d374d754a500bc64ccca3c1c29ee56dd",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:cbdd6849fcaa33fed8e086d3; effort_runs_json; source row 42; GPT-5.6 Luna|max; field cost"
+    },
+    {
+      "id": "public:73cef103cd041764f84603ca",
+      "observation_sha256": "54a77e6df312d68536c1b198ddbf2205110caad61704bc740008aa48a015ac08",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:73cef103cd041764f84603ca; effort_runs_json; source row 43; SWE-1.7|none; field cost"
+    },
+    {
+      "id": "public:b9d9e3b120595aac5269b0fb",
+      "observation_sha256": "c0f2af58b7c83a3f87d9957b1f20e279ff6ad20c5f4683dcf5d488c9485d5d57",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:b9d9e3b120595aac5269b0fb; effort_runs_json; source row 44; Claude Opus 4.7|low; field cost"
+    },
+    {
+      "id": "public:69e63f62a959ec7fdf1ed25d",
+      "observation_sha256": "fcfe5d3a084cfee256505abe8d27f60dc9cbbed7124a4fe87d4379ba4bbb112e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:69e63f62a959ec7fdf1ed25d; effort_runs_json; source row 45; Claude Opus 4.7|medium; field cost"
+    },
+    {
+      "id": "public:686ea1a54e83813c500bfdb7",
+      "observation_sha256": "a54d2a7b13f4ee58d041739cf6160f5f60e30178ca66adc3d3ff661925ecb0b1",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:686ea1a54e83813c500bfdb7; effort_runs_json; source row 46; Claude Opus 4.7|high; field cost"
+    },
+    {
+      "id": "public:a31e5d89c0170eebf1e0ce97",
+      "observation_sha256": "903996ec76a8cbed0b035a00dcd9c255dc57d57833c59ac666dbeeb177933131",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:a31e5d89c0170eebf1e0ce97; effort_runs_json; source row 47; Claude Opus 4.7|xhigh; field cost"
+    },
+    {
+      "id": "public:39edab2b21e9db063b8416c8",
+      "observation_sha256": "80aedd5d20a7355033149a1d9dfc0932aa297c00ea444463a6e8eb79f3393240",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:39edab2b21e9db063b8416c8; effort_runs_json; source row 48; Claude Opus 4.7|max; field cost"
+    },
+    {
+      "id": "public:4d90eb64e7eed548235bd8b3",
+      "observation_sha256": "e6941776f3eb81a68188d612b1f281d586350d1e1f8c9dfc90ece6ec6c555f6b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:4d90eb64e7eed548235bd8b3; effort_runs_json; source row 49; Kimi K2.7|none; field cost"
+    },
+    {
+      "id": "public:a3e55637ac0ab6c731510f81",
+      "observation_sha256": "d8ec77ffcc572d38440a9811fff2774291b59c0c366d2446ce9dd6f8bf8d679b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:a3e55637ac0ab6c731510f81; effort_runs_json; source row 50; Composer 2.5|none; field cost"
+    },
+    {
+      "id": "public:71da7580a40fba066cb5b550",
+      "observation_sha256": "9ab37032992bc33b3b8eae3ebf00e1e91699de010a4eeda92a02dec957544cb2",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:71da7580a40fba066cb5b550; effort_runs_json; source row 51; GLM 5.2|none; field cost"
+    },
+    {
+      "id": "public:87b10816902badb4f1dc3e98",
+      "observation_sha256": "79b1bd8473b0178de413065d91d67e8b46f49397ff4ca6fc8c159c1c00436172",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:87b10816902badb4f1dc3e98; effort_runs_json; source row 52; DeepSeek V4 Pro|none; field cost"
+    },
+    {
+      "id": "public:a43cb05fbb16ee66dcd0c7c2",
+      "observation_sha256": "902a5e81106992add5bdadbd5cbee07eba242f91c01d4985ad8430bab83af9ff",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:a43cb05fbb16ee66dcd0c7c2; effort_runs_json; source row 53; MiniMax M3|none; field cost"
+    },
+    {
+      "id": "public:ca3e5760b557bf8324788649",
+      "observation_sha256": "72d4a2bec253ddc8990a32966100d2affc094f6b9161b9bbfe1671d68e27cdfc",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:ca3e5760b557bf8324788649; effort_runs_json; source row 54; Inkling|0.99; field cost"
+    },
+    {
+      "id": "public:75754d2c8755149dfd3f2d5a",
+      "observation_sha256": "3b1ecade8fa1510341956cbd4bf0178ae28653fcd1a7d065e5b08b6ec750a4fa",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:75754d2c8755149dfd3f2d5a; effort_runs_json; source row 55; Qwen 3.7 Plus|none; field cost"
+    },
+    {
+      "id": "public:5571428df80d6042365f50d7",
+      "observation_sha256": "69ff705b1d89aba30851f5b745f4e110a84b3001ef5193dec36a73918a3139f5",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:5571428df80d6042365f50d7; effort_runs_json; source row 56; Claude Opus 5|low; field cost"
+    },
+    {
+      "id": "public:b6f28d774b4348d58d112604",
+      "observation_sha256": "79bbc0c5a4b006275a3a6b32b0a2ee9f658a671c6016033a34ac82371fd16f81",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:b6f28d774b4348d58d112604; effort_runs_json; source row 57; Claude Opus 5|medium; field cost"
+    },
+    {
+      "id": "public:e4ae63b6d8c86732b7577083",
+      "observation_sha256": "eb05fa10bebfaf0591d1089a5ecc0aa812900ca87bced314ceecc71466baf370",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:e4ae63b6d8c86732b7577083; effort_runs_json; source row 58; Claude Opus 5|high; field cost"
+    },
+    {
+      "id": "public:73a5ad8f174d7314e5430d5b",
+      "observation_sha256": "d470332db49b3a7a6898315961b26c5b7ab88ccc8241b646a40e7949c57f158c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json",
+      "review_sha256": "73c75ac0a362fa676fa30447cd9391b382c333a9112512e035519504da241220",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch3-review.json; coverage_checked public:73a5ad8f174d7314e5430d5b; effort_runs_json; source row 59; Claude Opus 5|xhigh; field cost"
+    },
+    {
+      "id": "public:81d1a0cc8a474da0e5c04f23",
+      "observation_sha256": "43a29b59c8e3280813a6303b8ff123f516d867f4b42b3a24c205689807ff64ee",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:81d1a0cc8a474da0e5c04f23; effort_runs_json; source row 60; Claude Opus 5|max; field cost"
+    },
+    {
+      "id": "public:7dd7546ac0cb8d712d79fcf7",
+      "observation_sha256": "ce30214d180a897590236c9496d151e9679744b995e9b9cf224abd9ffbe1767e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:7dd7546ac0cb8d712d79fcf7; effort_runs_json; source row 61; SWE-1.6|none; field cost"
+    },
+    {
+      "id": "public:d8e3c65e746fbc5fd842f157",
+      "observation_sha256": "2ea0c43d8323423e7a410c0ac563c52b3df4a44f7a9a57d3410df794463f61b3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:d8e3c65e746fbc5fd842f157; effort_runs_json; source row 62; Kimi K3|none; field cost"
+    },
+    {
+      "id": "public:8d2b11137a2e810d7303251a",
+      "observation_sha256": "4f34e57b5b02db309ad1fe672d5d96b83173e514999df12e0923352d0491bc40",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:8d2b11137a2e810d7303251a; effort_runs_json; source row 63; Gemini 3.6 Flash|low; field cost"
+    },
+    {
+      "id": "public:3165f59bd01f8fe4b02d5909",
+      "observation_sha256": "e11e80af02af8eb029e610e47d95827735c21abd9af4f31e48d2f2b5de7795aa",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:3165f59bd01f8fe4b02d5909; effort_runs_json; source row 64; Gemini 3.6 Flash|medium; field cost"
+    },
+    {
+      "id": "public:7706002552b8279a6a3ecdfb",
+      "observation_sha256": "aff4d69936c656669a95a963732ed4d67cb687993dd09377ce94bf84618fad2c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:7706002552b8279a6a3ecdfb; effort_runs_json; source row 65; Gemini 3.6 Flash|high; field cost"
+    },
+    {
+      "id": "public:3bb23160a22d8cf05300e828",
+      "observation_sha256": "2ab31a0a882d9574fe155ee7912cee733ef6e7bccc0459eea373fbce1b81546b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:3bb23160a22d8cf05300e828; effort_runs_json; source row 66; Gemini 3.7 Flash|low; field cost"
+    },
+    {
+      "id": "public:ee1df676839331ad82027a2f",
+      "observation_sha256": "59c74db597094ce1c86d28e1767cdba1940ef128fc32be935c449ce573866d2b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:ee1df676839331ad82027a2f; effort_runs_json; source row 67; Gemini 3.7 Flash|medium; field cost"
+    },
+    {
+      "id": "public:79d3da482d76ba20fcae3a93",
+      "observation_sha256": "6faf01c77d2a3092d0cba37ada169dd5bcce564e3aa8801f7b4bf0dc266d893a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:79d3da482d76ba20fcae3a93; effort_runs_json; source row 68; Gemini 3.7 Flash|high; field cost"
+    },
+    {
+      "id": "public:c6518bb5cebaa0186d6bcb1b",
+      "observation_sha256": "82c147e41e5bdb803a8a86605e493b53f390f5778a5886175008d1348bb71919",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:c6518bb5cebaa0186d6bcb1b; effort_runs_json; source row 69; GPT-5.4-mini|low; field cost"
+    },
+    {
+      "id": "public:22179767d1b7654bed0e636a",
+      "observation_sha256": "46c17c212128eaa97ad4d871c6e70c629007fab11a19a7f4fb8c7b21e40a3179",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:22179767d1b7654bed0e636a; effort_runs_json; source row 70; GPT-5.4-mini|medium; field cost"
+    },
+    {
+      "id": "public:80e14ec1fd7b8ee67b41db8e",
+      "observation_sha256": "c894a1ab3119b9e3885c523c12d2700f6c887606a30645a223e1a8cf358901f4",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:80e14ec1fd7b8ee67b41db8e; effort_runs_json; source row 71; GPT-5.4-mini|high; field cost"
+    },
+    {
+      "id": "public:b02021b865fbabc1d5627726",
+      "observation_sha256": "7e48e48c9e64dff02d950dc39623f4d94f5fbd342004209d05881d8ad4bf5bf8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:b02021b865fbabc1d5627726; effort_runs_json; source row 72; GPT-5.4-mini|xhigh; field cost"
+    },
+    {
+      "id": "public:2a6eb6a74cf990c2d4d61a4f",
+      "observation_sha256": "0452944f13b801168577ea2c0b29fa2dc2ca800dd00c872afa113a2e7ecf9614",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:2a6eb6a74cf990c2d4d61a4f; effort_runs_json; source row 73; Claude Opus 4.6|low; field cost"
+    },
+    {
+      "id": "public:517b704e96dc4a10c44a9ced",
+      "observation_sha256": "7f42e94ed7542297d3941c5abb7890cb054f724be79b6108e2a21a4752b3a333",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:517b704e96dc4a10c44a9ced; effort_runs_json; source row 74; Claude Opus 4.6|medium; field cost"
+    },
+    {
+      "id": "public:f248c8d82b705b97ac97d68d",
+      "observation_sha256": "81f2868155b7fe31d2c06dbffbb3d6a4740fae4bff27c194e5da8a88fd889e36",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:f248c8d82b705b97ac97d68d; effort_runs_json; source row 75; Claude Opus 4.6|high; field cost"
+    },
+    {
+      "id": "public:50633407b31a9bcb035ea317",
+      "observation_sha256": "65cd4fd95ad812829e7a477695e04383648f05abbe87db1b7af472c9c7377bd6",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:50633407b31a9bcb035ea317; effort_runs_json; source row 76; Claude Sonnet 4.6|low; field cost"
+    },
+    {
+      "id": "public:aee470a826e251c79cad012a",
+      "observation_sha256": "5b479fc100b19de4a9746a52876ed6c3a6c141813a80d0e6639c33fde3d8a7fd",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:aee470a826e251c79cad012a; effort_runs_json; source row 77; Claude Sonnet 4.6|medium; field cost"
+    },
+    {
+      "id": "public:77a1f3b2905b72f4ad27928c",
+      "observation_sha256": "a9c7a68254ede08a49a2f80e02d75361a7776045d19a14cafafce435050b1f6e",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 19,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:77a1f3b2905b72f4ad27928c; effort_runs_json; source row 78; Claude Sonnet 4.6|high; field cost"
+    },
+    {
+      "id": "public:15a8edb4c54cccbd565a8f6d",
+      "observation_sha256": "2337a12d87f228fb4be4cfd6a67e424ea12cdca455d041722bb076ee2c7144b6",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json",
+      "review_sha256": "b3fad65948c5fc99beb964f1437cad93b2c9e61f512642333057cbf14eedc282",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-artifact.json",
+      "review_row": 20,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch4-review.json; coverage_checked public:15a8edb4c54cccbd565a8f6d; effort_runs_json; source row 79; Claude Sonnet 4.6|max; field cost"
+    },
+    {
+      "id": "public:bf77ba4431ec7609be5d20aa",
+      "observation_sha256": "40bf2656dd0c2f54ab610e390cf61df31844e30777fe63f52af6f72910121e42",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 1,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:bf77ba4431ec7609be5d20aa; effort_runs_json; source row 80; DeepSeek V4 Flash 0731|high; field cost"
+    },
+    {
+      "id": "public:827241b8047f9bc418e0fbfb",
+      "observation_sha256": "6b72badbbb7bf5072e31af0ea764b5d4d8f4e05bc9bd2064b5751e3b385ea082",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 2,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:827241b8047f9bc418e0fbfb; effort_runs_json; source row 81; Mistral 3.5 Medium|none; field cost"
+    },
+    {
+      "id": "public:f656c1fa16ab167bc5d83eb0",
+      "observation_sha256": "067ee0ad18a08a0ffb85399bf856ab2d667550e80627fcc60f4bef9245400c41",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 3,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:f656c1fa16ab167bc5d83eb0; effort_runs_json; source row 82; Claude Fable 5.1|low; field cost"
+    },
+    {
+      "id": "public:fc59aa9a42f172470e3e90e0",
+      "observation_sha256": "e99c467aecfb5d28d6b0f79d83f6cabb45cc0cec52a408e8a5c37b1248568f37",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 4,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:fc59aa9a42f172470e3e90e0; effort_runs_json; source row 83; Claude Fable 5.1|medium; field cost"
+    },
+    {
+      "id": "public:989e708536e9ef5c06b7a2fb",
+      "observation_sha256": "55c4ff1b7910e3405479da97486d16047b436e363634461742e52f01be32da90",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 5,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:989e708536e9ef5c06b7a2fb; effort_runs_json; source row 84; Claude Fable 5.1|high; field cost"
+    },
+    {
+      "id": "public:4e43c926bc31428753ccfc79",
+      "observation_sha256": "d4f676ea456311ea9e0e745e6098cd6532d203e2db93083c5ddd09ebee8a513d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 6,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:4e43c926bc31428753ccfc79; effort_runs_json; source row 85; Claude Fable 5.1|xhigh; field cost"
+    },
+    {
+      "id": "public:e423921bab01cf64f2ae07f3",
+      "observation_sha256": "8ee6848d41330a4ea92fd241e149746725f8252ccb4fd35c992bac0e14caf1f9",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 7,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:e423921bab01cf64f2ae07f3; effort_runs_json; source row 86; Claude Fable 5.1|max; field cost"
+    },
+    {
+      "id": "public:49f0fa47cd401b5b20bbf3e6",
+      "observation_sha256": "b380594897bb3e4bf102cbf830ab1502fc9dd7fcb4e657967201d199d574b0f8",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 8,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:49f0fa47cd401b5b20bbf3e6; effort_runs_json; source row 87; DeepSeek V4 Pro 0813|high; field cost"
+    },
+    {
+      "id": "public:96aac6ffa067052b7f5d7e51",
+      "observation_sha256": "391a5f4798ddb4a706931c67bbe81d17b991f465ea02900fcef990353b87092c",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 9,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:96aac6ffa067052b7f5d7e51; effort_runs_json; source row 88; GLM 5.3|max; field cost"
+    },
+    {
+      "id": "public:0f57aea5a77a1fe227468582",
+      "observation_sha256": "2575bf93a2ee04a1145c65d98a42b60db8381a4bf84896f242712ad236c78240",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 10,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:0f57aea5a77a1fe227468582; effort_runs_json; source row 89; GLM 5.3 Flash|max; field cost"
+    },
+    {
+      "id": "public:bc7ef9a5f4a2804111428283",
+      "observation_sha256": "5a12f1a92d72fb8254770f82fab525f3f2b15b8bc6aacc4a4e6cac84c2a05e24",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 11,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:bc7ef9a5f4a2804111428283; effort_runs_json; source row 90; Nemotron 3 Ultra|none; field cost"
+    },
+    {
+      "id": "public:f08831f9ecce5faaa9cdc3ce",
+      "observation_sha256": "6cddf3166f2b33704133b89fd0b3d903d1fa1e99d3997d9a6592d7e6f260706d",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 12,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:f08831f9ecce5faaa9cdc3ce; effort_runs_json; source row 91; Gemini 3.8 Flash|medium; field cost"
+    },
+    {
+      "id": "public:8cc99086c4d2bb5d474a7379",
+      "observation_sha256": "99919a6f19d65faaf7bb50c761b13c1991e8dea3f8a7aeeb18322ffdaa24580b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 13,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:8cc99086c4d2bb5d474a7379; effort_runs_json; source row 92; Gemini 3.8 Flash|high; field cost"
+    },
+    {
+      "id": "public:b8d988957f058e3fe9de8cdc",
+      "observation_sha256": "7a7d39e1e52b99a7da620daae938bea44cd3ceffd78a8ab4735bfb50ac91b8e1",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 14,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:b8d988957f058e3fe9de8cdc; effort_runs_json; source row 93; GPT-6 Astra|low; field cost"
+    },
+    {
+      "id": "public:9d0d3c836032da33f5970782",
+      "observation_sha256": "289fa13eaada0fab1e7a2b36e4a2c062e03f9d37da79936d22793d36d1d7f07b",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 15,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:9d0d3c836032da33f5970782; effort_runs_json; source row 94; GPT-6 Astra|medium; field cost"
+    },
+    {
+      "id": "public:2d8987dea872c1a92fe82631",
+      "observation_sha256": "514eca039c57d0070565234acc7b3b55b7a0d0d416084768f6d39c5ac81abb6a",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 16,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:2d8987dea872c1a92fe82631; effort_runs_json; source row 95; GPT-6 Astra|high; field cost"
+    },
+    {
+      "id": "public:1d2e4995d95db391fc1149c1",
+      "observation_sha256": "58896138b991d728145bb3f76bc1050c6043ef7aa6f7f79303ee31db93f70b48",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 17,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:1d2e4995d95db391fc1149c1; effort_runs_json; source row 96; GPT-6 Astra|xhigh; field cost"
+    },
+    {
+      "id": "public:5c00c91fc2f5340c916bea4b",
+      "observation_sha256": "5eb2cedd561f957fccaefcd193ba28e59fa788aa3b969da7581f221bce1792a3",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "anthropic/claude-opus-5"
+      ],
+      "review_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json",
+      "review_sha256": "4e18c3b182a9b41ab8eabfe9a5cc609d0bb56626a40350209ca9592a0cd50980",
+      "artifact_file": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-artifact.json",
+      "review_row": 18,
+      "verdict": "accepted",
+      "evidence_locator": "ops/ux-2026-09-12/research/frontiercode-cost-1.1-batch5-review.json; coverage_checked public:5c00c91fc2f5340c916bea4b; effort_runs_json; source row 97; GPT-6 Astra|max; field cost"
     }
   ]
 }

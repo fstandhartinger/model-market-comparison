@@ -1657,9 +1657,16 @@
         "name_column": 1,
         "value_column": 2,
         "width": 6,
-        "header_contains": ["Model", "Score", "Cost"],
+        "header_contains": [
+          "Model",
+          "Score",
+          "Cost"
+        ],
         "header_rows": 1,
-        "context_fields": ["tokens_per_task", "steps_per_task"]
+        "context_fields": [
+          "tokens_per_task",
+          "steps_per_task"
+        ]
       },
       "status": "collected",
       "reason": "CursorBench 4.0 server-rendered leaderboard; score values are kept separate by the published model/effort label and never enter the Composite.",
@@ -1681,7 +1688,9 @@
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.",
       "basis": "self_reported",
       "minimum_rows": 43,
-      "source_urls": ["https://cursor.com/cursorbench"]
+      "source_urls": [
+        "https://cursor.com/cursorbench"
+      ]
     },
     {
       "benchmark_id": "cursorbench-cost::4.0",
@@ -1693,9 +1702,16 @@
         "name_column": 1,
         "value_column": 3,
         "width": 6,
-        "header_contains": ["Model", "Score", "Cost"],
+        "header_contains": [
+          "Model",
+          "Score",
+          "Cost"
+        ],
         "header_rows": 1,
-        "context_fields": ["tokens_per_task", "steps_per_task"]
+        "context_fields": [
+          "tokens_per_task",
+          "steps_per_task"
+        ]
       },
       "status": "collected",
       "reason": "CursorBench 4.0 publishes a separate USD cost-per-task value; it is not a score and never enters the Composite.",
@@ -1717,7 +1733,548 @@
       "protocol": "CursorBench 4.0; published cost per task in USD for each model-effort configuration; score, tokens and steps are retained as context and are not converted into cost.",
       "basis": "self_reported",
       "minimum_rows": 43,
-      "source_urls": ["https://cursor.com/cursorbench"]
+      "source_urls": [
+        "https://cursor.com/cursorbench"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.overall",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component overall; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-finance-agent::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.finance_agent",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.finance_agent, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component finance_agent; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-emb::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.emb",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.emb, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component emb; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-terminal-bench-2.1::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.terminal_bench_2_1",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.terminal_bench_2_1, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component terminal_bench_2_1; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-vibe-code-bench::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.vibe_code_bench",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.vibe_code_bench, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component vibe_code_bench; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-code-migration::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.code_migration",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.code_migration, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component code_migration; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-legal-research::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.legal_research",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.legal_research, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component legal_research; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-hlab::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.legal_agent_benchmark",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes this score itself as an independent evaluator; secondary benchmark, never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.legal_agent_benchmark, one entry per model slug; field accuracy. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), component legal_agent_benchmark; accuracy in percent, higher is better; each row is one model slug with its published compute/reasoning effort.",
+      "basis": "measured",
+      "minimum_rows": 56,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "vals-index-cost::2",
+      "parser": {
+        "kind": "astro_props",
+        "component": "/_astro/BenchmarkView.",
+        "row_path": "benchmarkView.tasks.overall",
+        "require": {
+          "benchmarkView.metadata.benchmark": "Vals Index",
+          "benchmarkView.metadata.version": "2"
+        },
+        "name_field": "name",
+        "value_field": "cost_per_test",
+        "plain_text_names": true,
+        "context_keys": [
+          "accuracy",
+          "stderr",
+          "cost_per_test",
+          "latency",
+          "compute_effort",
+          "reasoning_effort",
+          "max_output_tokens",
+          "provider"
+        ]
+      },
+      "status": "collected",
+      "reason": "Vals AI publishes a USD cost per test next to the index score; it is not a score and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/vals-index-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "Astro island props embedded in the server-rendered page",
+        "locator": "Astro island BenchmarkView props (decoded [type, value] pairs): benchmarkView.tasks.overall, one entry per model slug; field cost_per_test. Guard benchmarkView.metadata.version == \"2\".",
+        "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+        "notes": "robots.txt allows the whole site (User-agent: * / Allow: /). One page request; no API call, no JavaScript execution. The index version is part of the identity: a new Vals Index version or component set is a new registry identity. Model slugs stay source labels; no catalog join or effort inference."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+      "source": {
+        "url": "https://www.vals.ai/benchmarks/vals_index",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-vals-index/36d323b86dd8c014b0db.gz",
+        "sha256": "36d323b86dd8c014b0dbda7c34eef5fe6735593dbd7696baaee2906bfd8f6749",
+        "retrieved_at": "2026-09-13T20:31:43.399165+00:00"
+      },
+      "protocol": "Vals Index v2 (updated 2026-09-10), overall; published cost per test in USD per model slug; accuracy and latency retained as context, not converted.",
+      "basis": "measured",
+      "minimum_rows": 55,
+      "source_urls": [
+        "https://www.vals.ai/benchmarks/vals_index"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "main",
+        "require": {
+          "subsets.main": 100
+        },
+        "name_field": "name",
+        "value_field": "new_score",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "scale": 100,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes the board and its own SWE models; values are self_reported, multiplied by 100 from the published fraction; never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].main.new_score (fraction; the rendered leaderboard shows it ×100 as \"Score\")",
+        "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); Score = weighted aggregate of rubric items, blocking-criteria failures receive 0, unfair internet use zeroed; one row per model and published reasoning effort with the source harness.",
+      "basis": "self_reported",
+      "minimum_rows": 98,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
+    },
+    {
+      "benchmark_id": "frontiercode-cost::1.1",
+      "parser": {
+        "kind": "effort_runs_json",
+        "row_path": "v1_1",
+        "subset": "main",
+        "require": {
+          "subsets.main": 100
+        },
+        "name_field": "name",
+        "value_field": "cost",
+        "id_field": "id",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "context_keys": [
+          "new_score",
+          "correct",
+          "flagged_rate",
+          "cost",
+          "tokens"
+        ],
+        "method_source": {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "Cognition publishes a USD cost per rollout next to the score; self_reported, not a score and never a Composite input.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON data file requested by the leaderboard page",
+        "locator": "v1_1.data[model][effort].main.cost (the rendered leaderboard: \"Cost ($): the mean USD spend per rollout\")",
+        "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.",
+      "basis": "self_reported",
+      "minimum_rows": 98,
+      "source_urls": [
+        "https://cognition.com/frontiercode",
+        "https://cognition.com/data/frontiercode-leaderboard/data.json"
+      ]
     }
   ]
 }

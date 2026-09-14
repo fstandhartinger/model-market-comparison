@@ -39,6 +39,24 @@ with tempfile.TemporaryDirectory() as t:
  try: m.collect({'entries':[spec]},registry,root)
  except ValueError as e: assert 'digest changed' in str(e)
  else: raise AssertionError('unreviewed source accepted')
+import html as h
+props={'view':[0,{'metadata':[0,{'version':[0,'2']}],'tasks':[0,{'overall':[0,{'lab/a':[0,{'accuracy':[0,0],'cost_per_test':[0,1.5]}],'lab/b':[0,{'accuracy':[0,71.2],'cost_per_test':[0,None]}]}]}]}],'tags':[1,[[0,'x']]]}
+page='<astro-island component-url="/_astro/Other.js" props="{}"></astro-island><astro-island component-url="/_astro/BenchmarkView.X.js" props="'+h.escape(json.dumps(props))+'"></astro-island>'
+astro={'kind':'astro_props','component':'/_astro/BenchmarkView.','row_path':'view.tasks.overall','require':{'view.metadata.version':'2'},'context_keys':['cost_per_test']}
+rows=m.parse(page,astro,None);assert [(r['name'],r['accuracy'],r['context']['cost_per_test']) for r in rows]==[('lab/a',0,1.5),('lab/b',71.2,None)]
+for bad in [dict(astro,require={'view.metadata.version':'3'}), dict(astro,component='/_astro/Missing.')]:
+ try: m.parse(page,bad,None)
+ except ValueError: pass
+ else: raise AssertionError('changed Astro source accepted')
+try: m.parse(page.replace(h.escape('[0, 71.2]'),h.escape('[3, "2026-01-01"]')),astro,None)
+except ValueError: pass
+else: raise AssertionError('non-plain Astro encoding accepted')
+runs=json.dumps({'v1_1':{'harness':{'A':'cli'},'subsets':{'main':100},'data':{'A':{'low':{'main':{'new_score':0,'cost':2}},'max':{'extended':{'new_score':0.9}}}}}})
+effort={'kind':'effort_runs_json','row_path':'v1_1','subset':'main','require':{'subsets.main':100},'context_keys':['cost']}
+rows=m.parse(runs,effort,None);assert [(r['id'],r.get('new_score'),r['harness']) for r in rows]==[('A|low',0,'cli'),('A|max',None,'cli')]
+try: m.parse(runs,dict(effort,require={'subsets.main':150}),None)
+except ValueError: pass
+else: raise AssertionError('changed task count accepted')
 print('parser boundary checks passed')
 `], { encoding: 'utf8' });
   assert.match(output, /parser boundary checks passed/);

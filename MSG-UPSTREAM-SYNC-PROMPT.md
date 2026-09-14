@@ -41,8 +41,10 @@ dated registry and history-only AA/ECI/DesignArena headline states so bridged co
 remain reproducible after a source drops an older model.
 
 The upstream benchmark registry may also contain secondary, non-Composite sources such as
-CursorBench 4.0. Preserve their exact versioned IDs, source captures, `self_reported` basis,
-43-row model/effort labels and unmatched source identities; never map an effort label to a
+CursorBench 4.0, Vals Index v2 (nine `vals-index*::2` IDs, `measured`) and FrontierCode 1.1
+(`frontiercode::1.1`, `frontiercode-cost::1.1`, `self_reported`). Preserve their exact versioned
+IDs, source captures, basis, model/effort labels and unmatched source identities, and keep the
+collector kinds `astro_props` and `effort_runs_json` with the plan; never map an effort label to a
 catalog model by name alone and never fold these rows into the Composite. Keep the robots-aware
 collection recipe and provenance files with the data sync.
 

@@ -1,0 +1,685 @@
+{
+  "artifact_id": "frontiercode-cost-1.1-batch4-2026-09-13",
+  "observations": [
+    {
+      "id": "public:81d1a0cc8a474da0e5c04f23",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Opus 5|max",
+        "name": "Claude Opus 5 · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 11.416,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 60; Claude Opus 5|max; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 5\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.4804,\"correct\":0.5333,\"flagged_rate\":0.0101,\"cost\":11.416,\"tokens\":98266.8}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:7dd7546ac0cb8d712d79fcf7",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "SWE-1.6|none",
+        "name": "SWE-1.6 · none",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 0.4891,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 61; SWE-1.6|none; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"SWE-1.6\",\"effort\":\"none\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.0939,\"correct\":0.1045,\"flagged_rate\":0,\"cost\":0.4891,\"tokens\":19812.5}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:d8e3c65e746fbc5fd842f157",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Kimi K3|none",
+        "name": "Kimi K3 · none",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 3.8167,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 62; Kimi K3|none; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Kimi K3\",\"effort\":\"none\",\"subset\":\"main\",\"harness\":\"mini-swe-agent\",\"new_score\":0.4417,\"correct\":0.4891,\"flagged_rate\":0.0021,\"cost\":3.8167,\"tokens\":53607.2}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:8d2b11137a2e810d7303251a",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Gemini 3.6 Flash|low",
+        "name": "Gemini 3.6 Flash · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 2.2986,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 63; Gemini 3.6 Flash|low; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Gemini 3.6 Flash\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.2282,\"correct\":0.2565,\"flagged_rate\":0,\"cost\":2.2986,\"tokens\":23960.4}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:3165f59bd01f8fe4b02d5909",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Gemini 3.6 Flash|medium",
+        "name": "Gemini 3.6 Flash · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 4.037,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 64; Gemini 3.6 Flash|medium; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Gemini 3.6 Flash\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.3437,\"correct\":0.389,\"flagged_rate\":0,\"cost\":4.037,\"tokens\":46744.3}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:7706002552b8279a6a3ecdfb",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Gemini 3.6 Flash|high",
+        "name": "Gemini 3.6 Flash · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 4.2131,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 65; Gemini 3.6 Flash|high; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Gemini 3.6 Flash\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.3369,\"correct\":0.382,\"flagged_rate\":0,\"cost\":4.2131,\"tokens\":48297.8}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:3bb23160a22d8cf05300e828",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Gemini 3.7 Flash|low",
+        "name": "Gemini 3.7 Flash · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 1.7538,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 66; Gemini 3.7 Flash|low; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Gemini 3.7 Flash\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.3691,\"correct\":0.415,\"flagged_rate\":0,\"cost\":1.7538,\"tokens\":31587.4}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:ee1df676839331ad82027a2f",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Gemini 3.7 Flash|medium",
+        "name": "Gemini 3.7 Flash · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 1.8227,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 67; Gemini 3.7 Flash|medium; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Gemini 3.7 Flash\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.4359,\"correct\":0.489,\"flagged_rate\":0,\"cost\":1.8227,\"tokens\":51067.4}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:79d3da482d76ba20fcae3a93",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Gemini 3.7 Flash|high",
+        "name": "Gemini 3.7 Flash · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "chisel"
+      },
+      "value": 2.1184,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 68; Gemini 3.7 Flash|high; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Gemini 3.7 Flash\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"chisel\",\"new_score\":0.4223,\"correct\":0.473,\"flagged_rate\":0,\"cost\":2.1184,\"tokens\":57506.3}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:c6518bb5cebaa0186d6bcb1b",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "GPT-5.4-mini|low",
+        "name": "GPT-5.4-mini · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 0.3642,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 69; GPT-5.4-mini|low; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-5.4-mini\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.0925,\"correct\":0.106,\"flagged_rate\":0,\"cost\":0.3642,\"tokens\":12065.7}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:22179767d1b7654bed0e636a",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "GPT-5.4-mini|medium",
+        "name": "GPT-5.4-mini · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 0.7833,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 70; GPT-5.4-mini|medium; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-5.4-mini\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.2078,\"correct\":0.2373,\"flagged_rate\":0,\"cost\":0.7833,\"tokens\":34721.2}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:80e14ec1fd7b8ee67b41db8e",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "GPT-5.4-mini|high",
+        "name": "GPT-5.4-mini · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 0.9537,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 71; GPT-5.4-mini|high; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-5.4-mini\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.2308,\"correct\":0.263,\"flagged_rate\":0.001,\"cost\":0.9537,\"tokens\":46438.8}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:b02021b865fbabc1d5627726",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "GPT-5.4-mini|xhigh",
+        "name": "GPT-5.4-mini · xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": "codex"
+      },
+      "value": 1.5201,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 72; GPT-5.4-mini|xhigh; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"GPT-5.4-mini\",\"effort\":\"xhigh\",\"subset\":\"main\",\"harness\":\"codex\",\"new_score\":0.2704,\"correct\":0.308,\"flagged_rate\":0,\"cost\":1.5201,\"tokens\":90933.3}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:2a6eb6a74cf990c2d4d61a4f",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Opus 4.6|low",
+        "name": "Claude Opus 4.6 · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 2.101,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 73; Claude Opus 4.6|low; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 4.6\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.1831,\"correct\":0.2054,\"flagged_rate\":0.003,\"cost\":2.101,\"tokens\":14888.4}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:517b704e96dc4a10c44a9ced",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Opus 4.6|medium",
+        "name": "Claude Opus 4.6 · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 2.7941,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 74; Claude Opus 4.6|medium; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 4.6\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.2367,\"correct\":0.265,\"flagged_rate\":0.001,\"cost\":2.7941,\"tokens\":19836.5}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:f248c8d82b705b97ac97d68d",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Opus 4.6|high",
+        "name": "Claude Opus 4.6 · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 3.9796,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 75; Claude Opus 4.6|high; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Opus 4.6\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.2664,\"correct\":0.297,\"flagged_rate\":0.001,\"cost\":3.9796,\"tokens\":26676.8}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:50633407b31a9bcb035ea317",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6|low",
+        "name": "Claude Sonnet 4.6 · low",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 1.6481,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 76; Claude Sonnet 4.6|low; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Sonnet 4.6\",\"effort\":\"low\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.1503,\"correct\":0.1691,\"flagged_rate\":0,\"cost\":1.6481,\"tokens\":21707.6}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:aee470a826e251c79cad012a",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6|medium",
+        "name": "Claude Sonnet 4.6 · medium",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 2.3012,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 77; Claude Sonnet 4.6|medium; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Sonnet 4.6\",\"effort\":\"medium\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.211,\"correct\":0.239,\"flagged_rate\":0,\"cost\":2.3012,\"tokens\":33357.3}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:77a1f3b2905b72f4ad27928c",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6|high",
+        "name": "Claude Sonnet 4.6 · high",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 2.6993,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 78; Claude Sonnet 4.6|high; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Sonnet 4.6\",\"effort\":\"high\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.2347,\"correct\":0.265,\"flagged_rate\":0,\"cost\":2.6993,\"tokens\":41108.9}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:15a8edb4c54cccbd565a8f6d",
+      "benchmark_id": "frontiercode-cost::1.1",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6|max",
+        "name": "Claude Sonnet 4.6 · max",
+        "model_id": null,
+        "variant": null,
+        "harness": "claude-code"
+      },
+      "value": 2.8979,
+      "unit": "USD",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://cognition.com/data/frontiercode-leaderboard/data.json",
+        "retrieved_at": "2026-09-13T20:31:37.884619+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/124169fc88fe23ad8be8.gz",
+        "sha256": "124169fc88fe23ad8be831bc6746003ecd3c872308ba50ea713ee30c7de5064a",
+        "locator": "effort_runs_json; source row 79; Claude Sonnet 4.6|max; field cost"
+      },
+      "protocol": "FrontierCode 1.1 Main (100 tasks); mean USD spend per rollout per model and published reasoning effort; score, pass rate, flag rate and tokens retained as context.; source row: {\"model\":\"Claude Sonnet 4.6\",\"effort\":\"max\",\"subset\":\"main\",\"harness\":\"claude-code\",\"new_score\":0.2431,\"correct\":0.275,\"flagged_rate\":0.002,\"cost\":2.8979,\"tokens\":44191.7}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://cognition.com/frontiercode",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-13-frontiercode/f2f055237ae1ea2192dc.gz",
+          "sha256": "f2f055237ae1ea2192dc8f64a5a09c932affa90a1c2c3dc2b827d7aa17cfb917",
+          "retrieved_at": "2026-09-13T20:31:40.605644+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    }
+  ]
+}

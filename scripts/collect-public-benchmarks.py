@@ -91,6 +91,41 @@ def parse(source,spec,load_source):
             if len(cells)!=spec['width']:continue # Detail/footnote rows have a distinct width.
             for column,label in spec.get('value_columns',[[spec['value_column'],None]]):
                 rows.append({'name':cells[spec['name_column']],'value':cells[column], 'source_row':index,'context':{'cells':cells,'configuration':label,'value_column':column}})
+    elif kind=='astro_props':
+        # Astro serialises island props as [type, value] pairs; only plain values (0) and arrays (1) are decoded.
+        islands=[m.group(0) for m in re.finditer(r'<astro-island\b[^>]*>',source) if spec['component'] in m.group(0)]
+        if len(islands)!=1:raise ValueError('Astro island missing or ambiguous: '+spec['component'])
+        props=re.search(r'\sprops="([^"]*)"',islands[0])
+        if not props:raise ValueError('Astro island has no props')
+        def astro(v):
+            if not (isinstance(v,list) and len(v)==2 and isinstance(v[0],int)):raise ValueError('Unsupported Astro prop encoding')
+            if v[0]==1:return [astro(x) for x in v[1]]
+            if v[0]!=0:return {'$astro_type':v[0]} # Dates, maps, URLs etc. are never score cells; rows containing them are rejected below.
+            return {k:astro(x) for k,x in v[1].items()} if isinstance(v[1],dict) else v[1]
+        # Top-level props may be raw literals; everything below them is pair-encoded.
+        value={k:astro(v) if isinstance(v,list) and len(v)==2 and isinstance(v[0],int) else v for k,v in json.loads(html.unescape(props[1])).items()}
+        for path,expected in spec.get('require',{}).items():
+            if at(value,path)!=expected:raise ValueError(f'Source version guard failed: {path}')
+        board=at(value,spec['row_path'])
+        if not isinstance(board,dict):raise ValueError('Astro row map changed')
+        for index,(key,fields) in enumerate(board.items()):
+            if not isinstance(fields,dict) or any(isinstance(x,(dict,list)) for x in fields.values()):raise ValueError('Astro row schema changed')
+            rows.append({**fields,'name':key,'source_row':index,'context':{'task':spec['row_path'].rsplit('.',1)[-1],**{k:fields.get(k) for k in spec.get('context_keys',[])}}})
+    elif kind=='effort_runs_json':
+        # {data: {model: {effort: {subset: {...}}}}}; one row per published model and effort, never averaged.
+        board=at(json.loads(source),spec.get('row_path',''))
+        for path,expected in spec.get('require',{}).items():
+            if at(board,path)!=expected:raise ValueError(f'Source version guard failed: {path}')
+        if not isinstance(board.get('data'),dict):raise ValueError('Run map changed')
+        index=0
+        for model,efforts in board['data'].items():
+            if not isinstance(efforts,dict):raise ValueError('Run schema changed')
+            for effort,subsets in efforts.items():
+                leaf=subsets.get(spec['subset']) if isinstance(subsets,dict) else None
+                fields=leaf if isinstance(leaf,dict) else {}
+                rows.append({spec.get('value_field','value'):None,**fields,'name':f'{model} · {effort}','id':f'{model}|{effort}','harness':(board.get('harness') or {}).get(model),'source_row':index,
+                    'context':{'model':model,'effort':effort,'subset':spec['subset'],'harness':(board.get('harness') or {}).get(model),**{k:fields.get(k) for k in spec.get('context_keys',[])}}})
+                index+=1
     elif kind=='markdown_table':
         lines=source.splitlines();start=next((i for i,l in enumerate(lines) if spec['header_contains'] in l and l.strip().startswith('|')),None)
         if start is None:raise ValueError('Markdown table header changed')
