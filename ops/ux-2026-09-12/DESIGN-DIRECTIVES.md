@@ -1,12 +1,13 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 9: 2026-09-14 ~03:40 UTC**, against live revision `4374f29` (https://benchmarkheaven.com).
-Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass9/` — 80 screenshots +
+**Pass 10: 2026-09-14 ~06:25 UTC**, against live revision `4b0d250` (https://benchmarkheaven.com).
+Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260914-pass10/` — 80 screenshots +
 `metrics.json` (desktop 1440×1000 and mobile 390×844, light and dark: Simple incl. moved slider,
-Advanced incl. the cost-inputs modal, Guided 1–4, Benchmaxxing, model page, Compare, Benchmarks,
-Charts), `checks/` (Filters overlay + "More settings" at both widths and themes, Compare radar
-geometry, Charts bar geometry, `extra.json`).
-Earlier passes: `…/fable-20260914-pass8/` … `…/fable-20260913/`.
+Advanced incl. the cost-inputs modal, Guided 1–5, Benchmaxxing, model page, Compare, Benchmarks,
+Charts; no overflow and no page errors in any of the 80), `verify-21aa63f-{canonical,legacy}/`
+(`bin/verify-f63-f64.mjs`). The Filters overlay was not re-shot: no filter or settings component
+changed since pass 9's `checks/`.
+Earlier passes: `…/fable-20260914-pass9/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -23,60 +24,56 @@ Luna. Every delegated diff is reviewed before it lands.
 
 ---
 
-## Verdict on the live site — pass 9 (2026-09-14)
+## Verdict on the live site — pass 10 (2026-09-14)
 
-**Desktop is at the bar; the phone is not yet, on two pages.** Everything pass 8 opened is live
-and verified (F-53 hero, F-54 version labels, F-55 one (i) style, F-56 phone name wrapping, F-57
-phone title). At 1440, light and dark, every surface reads the way Florian asked: the first
-screen of `/` is the two-line claim, the counts line, the two sliders with their histograms, the
-value map with the Pareto line, and seven ranked rows. Advanced, the Filters overlay (four titled
-groups, rare options behind "More settings", 20:1 default), Guided 1–4, Benchmaxxing (signal table
-first, the 29-spoke radar and signal card below), the model page (providers + Composite radar,
-then the release-post sheet), Benchmarks, Charts and Compare all hold at both widths without
-overflow. Dark mode is the same design in other colours, which is the test.
+**At the bar, at both widths and in both themes.** Everything pass 9 opened is live: the phone
+Compare radar fits (316 px, six numbered axes, legend list, no panning), the phone Charts bars carry
+the value (longest 323 px, shortest 2.7 px), the phone model page leads with the Composite, no
+version token prints twice, the desktop radar is 640 px. Fable re-checked F-58/F-59 on both hosts
+at 06:22 after the review gate's a11y fix (`4b0d250`, rows are `listitem`s). The first screen of `/`
+is still the two-line claim, the counts line, two sliders with their histograms, the value map with
+its Pareto line and seven ranked rows; Guided is five questions that read as one gesture each;
+Benchmaxxing leads with the signal table; the model page leads with the Composite and its radar;
+Benchmarks and Charts hold. Dark mode is the same design in other colours — with one exception,
+below.
 
-What pass 9 measured that is *not* at the bar:
+What pass 10 measured that is *not* at the bar:
 
-1. **Compare radar on phones is half a chart.** The SVG is fixed at `min-w-[620px]` inside a
-   316 px scroll region (`checks/extra.json`: `svgW 620, wrapW 316`), so the visitor sees axes
-   6 and 5, a clipped "1. GPQA D" and has to pan to find the rest. The page even tells them to
-   scroll. A chart that needs panning is not a chart. → **F-58** `[mechanical]`.
-2. **Charts bars on phones carry no information.** The category axis is 209 px of a 324 px
-   chart; the longest bar (99.8) is 55 px, so the leaderboard's sixteen bars all look the same
-   length and the cheapest-models chart is a column of ticks with prices beside them. The
-   numbers are legible, the bars are decoration. → **F-59** `[mechanical]`.
-3. **Model page on phones leads with the provider table, not the score.** At 390 the "Top 5
-   cheapest providers" table (five rows, ~380 px) comes before the Composite headline and radar;
-   the key message is second. At 1440 they sit side by side, which is right. → **F-60**
-   `[mechanical]`, surgical (Fable, this pass).
-4. **Version tokens print twice** where a benchmark name already carries its version:
-   "AA-LCR v1.1 v1.1", "GDPval-AA v2 v2", "Terminal-Bench v2.1 (AA) v2.1", "Terminal-Bench v4.0
-   (AA) v4.0" on the model sheet, and "3. AA-LCR v1.1 / v1.1" under the Compare radar axis. F-54
-   made versions human; this is its one residue. → **F-61** `[mechanical]`, surgical (Fable).
-5. **Desktop Compare radar is oversized for six axes:** 900×625 px for six spokes pushes the
-   release-style snapshot cards, which carry more information, below the fold. → **F-62**
-   `[mechanical]`, low priority.
+1. **Light mode drops the bar tracks on phone Charts.** `MobileBars` drew its track with
+   `bg-white/[0.06]` and the open-vs-closed strip with `bg-white/[0.03]` — visible on dark, invisible
+   on light (`mobile_light-charts.png` vs `mobile_dark-charts.png`), so in light the bars float and the
+   remainder of the scale is gone. Also flagged by the 06:10 gate. → **F-63**, surgical (Fable).
+2. **The model page's key-message spot speaks jargon.** Next to "Composite" the card said
+   "2/7 exact inputs · 4 attached"; "attached" is a data-provenance term the reader meets only in the
+   sheet below. → **F-64**, surgical (Fable).
 
-Not opened, on purpose: the cost-inputs modal stays dense (pass 8 decision); the Benchmaxxing
-signal bars in the top-10 table are nearly equal because the top-10 signals *are* nearly equal
-(26.1–28.8 on a 0-based scale) — that is honest; the Simple score histogram's dimmed left half is
-the cut the slider makes, not a contrast bug.
+Not opened, on purpose:
 
-## Decisions in pass 9
+- Score bars in the tables run 0–100, so 89.1 and 99.4 look alike. A zero baseline is the honest
+  encoding for a magnitude bar; the tabular number beside it carries the precision. Leave.
+- Simple lists the priciest model first (R5.2) — literal, as decided in passes 4–9.
+- Guided step 3 leaves the right half of the card empty at 1440. Two columns of pill rows would
+  break the "one question, one gesture" rhythm on phones; the empty space costs nothing.
+- The Simple value map at 390 suppresses two of seven point labels (F-17 collision rule); the ranked
+  rows directly below name them.
+- The cost-inputs modal stays dense (pass 8 decision); the Benchmaxxing signal bars stay nearly
+  equal because the top-10 signals are (26.2–28.8).
 
-1. **R3.1 stands** as decided in pass 8 (verified live by claude-opus, iteration 44, and by the
-   codex-luna gate 02:00 UTC). No change.
-2. **R5.2 stays literal** (cost-descending Simple), as in passes 4–8.
-3. **R5.3:** the live default is 86, i.e. the literal "Score > 85" (D2 made 86 the stored default
-   so a clean page is not shown as modified). Pass 6 wrote "85 applied as ≥ 85"; the two are the
-   same set of rows for integer scores but the caption must say what it does — it says 86. Fine.
-   `PROGRESS.md` interpretation updated to match.
-4. **Phone-first rule for charts (new design-system note):** below `md`, no chart may require
-   horizontal panning; it is either re-laid out to fit 358 px or replaced by HTML bar rows.
+## Decisions in pass 10
+
+1. **R3.1 stands** (pass 8 wording; verified by claude-opus iteration 44, the codex-luna gate 02:00
+   and the claude-opus gate 06:10, which set P4 `verified`). No change.
+2. **R5.2 stays literal** (cost-descending Simple).
+3. **F-63 and F-64 fixed by Fable, not delegated**: two class tokens and one wording line — a
+   delegation round would cost more than the change (`21aa63f`).
+4. **X4 (UI meets the design bar):** in the design authority's judgment the live UI meets Florian's
+   bar at 1440 and 390, light and dark. The ledger row stays `open` only because the one-writer
+   rule requires a non-Fable, non-Kimi engine to verify F-58, F-59, F-62, F-63 and F-64 live
+   (`bin/verify-f58-f61.mjs`, `bin/verify-review-0610.mjs`, `bin/verify-f63-f64.mjs`).
 
 ---
 
-## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed pass 9)
+## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–10)
 
 > **Every AI model benchmark we can find, in one place.**
 > **And what each model really costs you.**
@@ -94,52 +91,30 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 ## Directives (open)
 
-> **Status 2026-09-14 pass 9 (Fable), end of pass:** nothing open. F-60/F-61 fixed by Fable
-> (`9240da5`, `97e50a4`); F-58/F-59 drafted by Kimi K3 in `.worktrees/pass9` (returned a clean diff
-> in ~7 minutes), reviewed and adjusted by Fable, landed with F-62 in `7b5320d`. Live on both hosts,
-> `bin/verify-f58-f61.mjs` 36/36 per host at 1440/390, light/dark
-> (`ux-evidence/fable-20260914-pass9/verify-7b5320d-{canonical,legacy}/`). The specs below are kept
-> for the independent verifier; F-58/F-59/F-62 need a non-Fable, non-Kimi engine to set `verified`.
+> **Status 2026-09-14 pass 10 (Fable), end of pass:** nothing open for implementers. F-63/F-64
+> landed in `21aa63f` and were live-checked by Fable on both hosts (`bin/verify-f63-f64.mjs`,
+> evidence `…/fable-20260914-pass10/verify-21aa63f-{canonical,legacy}/`). The specs below are kept
+> for the independent verifier; F-58, F-59, F-62, F-63 and F-64 need a non-Fable, non-Kimi engine to
+> set `verified`.
 
-### F-58 `[mechanical]` Compare radar fits the phone
-*Where:* `components/BenchmarkRadar.tsx` (the `<svg className="mx-auto block w-full min-w-[620px]
-max-w-[900px]" viewBox="0 0 720 500">` block and the "Scroll the chart horizontally" paragraph).
-*What:* render two SVGs from the same `series`/`axes` data and switch by breakpoint with classes,
-no JS media query: (1) the existing desktop SVG gets `hidden md:block` and loses nothing else;
-(2) a compact SVG with `md:hidden`, `viewBox="0 0 360 360"`, centre (180,180), grid radius 120,
-label radius 148, the same polygons/lines/circles scaled (`position()` takes centre and radius
-as parameters or a second helper is added), and **axis labels are the axis number only**
-(`{i + 1}`, fontSize 13, fontWeight 600, `textAnchor="middle"`, `dominantBaseline="middle"`).
-Under the compact SVG, an `<ol className="md:hidden …">` lists `1. <short name>` (+ semantic
-version via `versionSuffix`, see F-61) one per line, 12 px, so the numbers resolve without
-panning. Remove the `min-w-[620px]` and the `bh-radar-scroll overflow-x-auto` wrapper's scroll
-role for the compact chart (the wrapper may stay for the desktop SVG). Delete the "Scroll the
-chart horizontally" paragraph. The `aria-label` text and the exact-values table stay as they are.
-*Accept:* at 390 (`/compare` with the default two models) the radar region's `scrollWidth ===
-clientWidth`, the compact SVG is ≤ 358 px wide, six numbered labels are visible inside it, and
-the numbered list under it has six entries with full names; at 1440 the desktop SVG is unchanged
-(900×625, named labels). `npm test`, `tsc` green.
+### F-63 `[mechanical]` Theme-aware tracks on Charts
+*Where:* `components/ChartsBoard.tsx` (`MobileBars` track `div`, and the open-vs-closed strip
+`div[role=img]`).
+*What:* the track behind each phone bar uses the design-system line token (`bg-line`) instead of
+`bg-white/[0.06]`; the open-vs-closed strip uses `bg-line/40` instead of `bg-white/[0.03]`. Nothing
+else changes (bar colour `bg-accent/80`, heights, radii).
+*Accept:* at 390 (`/charts`), light and dark, every visible bar-row track has a background that
+differs from the page background by ≥ 12 RGB units after alpha blending; at 1440 and 390 the
+open/closed strips likewise; no overflow; `npm test`, `tsc` green.
 
-### F-59 `[mechanical]` Charts bars readable on phones
-*Where:* `components/ChartsBoard.tsx` (the two `<ResponsiveContainer>` bar charts in the
-"Capability leaderboard" and "Cheapest models" panels; `orgTick`).
-*What:* below `md`, replace each recharts bar chart with HTML bar rows (keep recharts from `md`
-up via `hidden md:block` / `md:hidden` wrappers — the data arrays are already computed). One row
-per model: line 1 = 8 px org dot + name (13 px, truncate with `…` at the container edge) and the
-value right-aligned in `tabular` (leaderboard: `toFixed(1)` or `0` for Elo; cheapest:
-`priceNumber(v)`); line 2 = a 6 px bar, `bg-accent/80`, `rounded`, width = `value / max × 100 %`
-(leaderboard: max = 100 for percentile-style scores, `dataMax` for Elo; cheapest: max = the
-largest plotted price, linear). Rows 34 px apart. The cheapest chart keeps its "Plotted model
-costs" details table underneath at all widths.
-*Accept:* at 390 (`/charts`), the first leaderboard bar is ≥ 240 px wide and bars differ visibly
-between 99.8 and 79.3; the cheapest chart's $24.06 bar is ≥ 240 px and $0.198 is ≥ 2 px; no
-horizontal overflow; at 1440 both recharts charts are unchanged (first bar 368 px, axis 205 px).
-
-### F-62 `[mechanical]` Desktop Compare radar sized for its axis count
-*Where:* `components/BenchmarkRadar.tsx` (desktop SVG classes).
-*What:* `max-w-[900px]` → `max-w-[640px]` (viewBox unchanged, so 640×444 at 1440). Nothing else.
-*Accept:* at 1440 the radar SVG is ≤ 640 px wide and the "Where each model is strongest" heading
-sits ≥ 180 px higher than today (it is at ~1,400 px now); labels stay unclipped.
+### F-64 `[mechanical]` Composite coverage in plain language
+*Where:* `app/models/[id]/page.tsx` (the `<span>` beside the "Composite" heading).
+*What:* `"{coverage + attached} of 7 inputs"`, followed by `" · {attached} from the model family"`
+only when `composite_attached > 0` (`composite_attached` is already bounded so the total never
+exceeds 7). The sheet's "Composite attachments" note with its (i) explanations is unchanged and
+stays the place where "attached" is defined.
+*Accept:* on `/models/claude-opus-5%3A%3Ahigh` at 1440 and 390 the line reads "6 of 7 inputs · 4
+from the model family"; the string "exact inputs" no longer appears on the page.
 
 ## Design system notes (apply while touching any file above)
 
@@ -165,6 +140,10 @@ sits ≥ 180 px higher than today (it is at ~1,400 px now); labels stay unclippe
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 9 (2026-09-14 03:40 UTC, live `4374f29`):** desktop at the bar; opened F-58 phone Compare radar, F-59
+  phone Charts bar rows, F-62 desktop radar 640 px (Kimi K3 draft + Fable, `7b5320d`); fixed F-60 Composite-first
+  phone model page and F-61 doubled version tokens (Fable, `9240da5`/`97e50a4`). New rule: no chart may require
+  horizontal panning below `md`. Decisions: R3.1 and R5.2 unchanged; R5.3 default 86 documented.
 - **Pass 8 (2026-09-14 01:30 UTC, live `54872fc`):** re-decided the hero (F-53, Fable surgical); opened
   F-54 version labels, F-55 one (i) style, F-56 phone name wrapping, F-57 phone title — all landed in
   `84cdff7` and verified by claude-opus / codex-luna. Decisions: R5.2 literal, cost-inputs modal stays dense.
@@ -261,3 +240,5 @@ sits ≥ 180 px higher than today (it is at ~1,400 px now); labels stay unclippe
 | F-58 compact phone radar (numbered axes, legend list, no horizontal scroll) | `7b5320d` (Kimi K3 draft via `bin/delegate.sh --kimi`, reviewed/adjusted by Fable) | same + `mobile_*-compare-radar.png` | live both hosts: SVG 316×316 in a 316 px region, 6 numbered axes + 6-entry list, scroll hint gone, desktop SVG keeps named labels; needs a non-Fable, non-Kimi verifier |
 | F-59 HTML bar rows on Charts below `md` (`MobileBars`) | `7b5320d` (Kimi K3 draft, reviewed by Fable) | same + `mobile_*-charts.png` | live both hosts: recharts hidden at 390, two lists of 16 rows, longest bar 323 px, shortest 2.7 px; desktop recharts unchanged (32 bars, first 368 px); needs a non-Fable, non-Kimi verifier |
 | F-62 desktop Compare radar `max-w-[640px]` | `7b5320d` (Fable) | same + `desktop_*-compare-radar.png` | live: SVG 640 px wide, "Where each model is strongest" at 1,221 px (was ~1,400); needs a non-Fable verifier |
+| F-63 theme-aware tracks on Charts (`bg-line`, `bg-line/40`) | `21aa63f` (Fable, surgical) | `ux-evidence/fable-20260914-pass10/verify-21aa63f-{canonical,legacy}/verification.json` (`bin/verify-f63-f64.mjs`) + `mobile_light-charts.png` | live both hosts, 1440/390, light/dark; needs a non-Fable engine to set `verified` |
+| F-64 Composite coverage line "6 of 7 inputs · 4 from the model family" | `21aa63f` (Fable, surgical) | same + `*-model.png` | live both hosts; "exact inputs" gone; needs a non-Fable engine to set `verified` |
