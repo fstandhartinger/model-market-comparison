@@ -1,0 +1,267 @@
+{
+  "version": "2026-09-14",
+  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score.",
+  "groups": [
+    {
+      "id": "indices",
+      "label": "Composite indices",
+      "categories": []
+    },
+    {
+      "id": "coding",
+      "label": "Coding",
+      "categories": [
+        "Coding"
+      ]
+    },
+    {
+      "id": "agentic",
+      "label": "Agentic & tool use",
+      "categories": [
+        "Agentic",
+        "Tool-use"
+      ]
+    },
+    {
+      "id": "reasoning",
+      "label": "General reasoning & knowledge",
+      "categories": [
+        "Reasoning",
+        "Knowledge"
+      ]
+    },
+    {
+      "id": "math",
+      "label": "Math",
+      "categories": [
+        "Math"
+      ]
+    },
+    {
+      "id": "science",
+      "label": "Science",
+      "categories": [
+        "Science"
+      ]
+    },
+    {
+      "id": "long-context",
+      "label": "Long context",
+      "categories": [
+        "Long-context"
+      ]
+    },
+    {
+      "id": "instruction",
+      "label": "Instruction following",
+      "categories": [
+        "Instruction-following"
+      ]
+    },
+    {
+      "id": "vision",
+      "label": "Multimodal & vision",
+      "categories": [
+        "Vision"
+      ]
+    },
+    {
+      "id": "design",
+      "label": "Design & UI",
+      "categories": []
+    },
+    {
+      "id": "writing",
+      "label": "Writing & roleplay",
+      "categories": [
+        "Writing",
+        "Roleplay"
+      ]
+    },
+    {
+      "id": "safety",
+      "label": "Safety & refusals",
+      "categories": [
+        "Safety/Alignment",
+        "Uncensored"
+      ]
+    },
+    {
+      "id": "efficiency",
+      "label": "Cost & efficiency",
+      "categories": [
+        "Efficiency"
+      ]
+    },
+    {
+      "id": "other",
+      "label": "Other",
+      "categories": [
+        "Other"
+      ]
+    }
+  ],
+  "group_overrides": {
+    "aa_intelligence_index": "indices",
+    "aa_coding_index": "indices",
+    "aa-coding-agent-index": "indices",
+    "aa-omniscience": "indices",
+    "vals-index": "indices",
+    "epoch_eci": "indices",
+    "epoch_eci_software": "indices",
+    "frontend": "design",
+    "fullstack": "design"
+  },
+  "arena_keys": [
+    "frontend",
+    "fullstack"
+  ],
+  "aa_keys": [
+    "aa_intelligence_index",
+    "aa_coding_index"
+  ],
+  "descriptions": {
+    "aa_intelligence_index": "Artificial Analysis' headline aggregate of its independent evaluations.",
+    "aa_coding_index": "Artificial Analysis' aggregate of its coding evaluations.",
+    "frontend": "Human head-to-head votes on generated front-end designs (Elo).",
+    "fullstack": "Human head-to-head votes on generated full-stack apps (Elo)."
+  },
+  "model_field_rows": [
+    {
+      "key": "epoch_eci",
+      "field": "epoch_eci",
+      "name": "Epoch Capabilities Index (ECI)",
+      "maintainer": "Epoch AI",
+      "source": "epoch_eci",
+      "unit": "points",
+      "url": "https://epoch.ai/eci",
+      "description": "Epoch AI's index that places many benchmarks on one capability scale."
+    },
+    {
+      "key": "epoch_eci_software",
+      "field": "epoch_eci_software",
+      "name": "Epoch Software ECI",
+      "maintainer": "Epoch AI",
+      "source": "epoch_eci",
+      "unit": "points",
+      "url": "https://epoch.ai/eci",
+      "description": "Epoch AI's capability index over software-engineering benchmarks."
+    }
+  ],
+  "tags": {
+    "aa": {
+      "label": "AA",
+      "tip": "Measured by Artificial Analysis, the independent lab behind the AA Intelligence Index."
+    },
+    "arena": {
+      "label": "Arena",
+      "tip": "Human head-to-head votes, scored as Elo."
+    },
+    "headline": {
+      "label": "Headline",
+      "tip": "Widely cited in model release posts and technical reports."
+    },
+    "niche": {
+      "label": "Niche",
+      "tip": "A specialised benchmark from a company or research lab, rarely cited in release posts."
+    },
+    "community": {
+      "label": "Community",
+      "tip": "Run by an independent individual or community project."
+    }
+  },
+  "tiers": {
+    "aa-aime": "headline",
+    "aa-analystagent": "niche",
+    "aa-apex-agents": "niche",
+    "aa-automationbench": "niche",
+    "aa-briefcase": "niche",
+    "aa-coding-agent-index": "headline",
+    "aa-critpt": "niche",
+    "aa-enterpriseops-gym": "niche",
+    "aa-gdp-pdf": "niche",
+    "aa-gdpval": "niche",
+    "aa-gpqa-diamond": "headline",
+    "aa-harvey-lab": "niche",
+    "aa-hle": "headline",
+    "aa-ifbench": "headline",
+    "aa-itbench": "niche",
+    "aa-lcr": "headline",
+    "aa-livecodebench": "headline",
+    "aa-mlcr": "niche",
+    "aa-mmmu-pro": "headline",
+    "aa-omniscience": "niche",
+    "aa-scicode": "niche",
+    "aa-tau2-telecom": "headline",
+    "aa-tau3-banking": "headline",
+    "aa-terminal-bench": "headline",
+    "aa-terminal-bench-hard": "headline",
+    "aa_coding_index": "headline",
+    "aa_intelligence_index": "headline",
+    "aider-polyglot": "headline",
+    "apprenticebench-api": "niche",
+    "apprenticebench-api-cost": "niche",
+    "apprenticebench-cua": "niche",
+    "apprenticebench-cua-cost": "niche",
+    "arc-agi": "headline",
+    "buzzbench": "community",
+    "critpt": "niche",
+    "cursorbench": "niche",
+    "cursorbench-cost": "niche",
+    "eq-bench": "community",
+    "eqbench-creative-writing": "community",
+    "eqbench-judgemark": "community",
+    "eqbench-longform-writing": "community",
+    "eqbench-slop-score": "community",
+    "frontend": "headline",
+    "frontiercode": "niche",
+    "frontiercode-cost": "niche",
+    "fullstack": "headline",
+    "helmet": "niche",
+    "hle": "headline",
+    "ifbench": "headline",
+    "japanese-rp-bench-aratako": "community",
+    "japanese-rp-bench-tegnike": "community",
+    "livebench": "niche",
+    "longbench": "niche",
+    "mazur-creative-story-writing": "community",
+    "mazur-divergent-thinking": "community",
+    "mazur-elimination-game": "community",
+    "mmmu": "headline",
+    "otis-mock-aime": "niche",
+    "pingpong-english": "community",
+    "realswe": "niche",
+    "realswe-cost": "niche",
+    "rp-bench-community": "community",
+    "ruler": "niche",
+    "scicode": "niche",
+    "simple-bench": "community",
+    "slop-index": "community",
+    "slopbench": "community",
+    "spiral-bench": "community",
+    "swe-bench-multilingual": "niche",
+    "swe-bench-multimodal": "niche",
+    "swe-bench-pro-public": "headline",
+    "swe-bench-verified": "headline",
+    "tau2-bench": "headline",
+    "tau3-banking": "headline",
+    "tau3-voice": "headline",
+    "terminal-bench": "headline",
+    "towards-ai-editorial-writing": "community",
+    "ugi": "community",
+    "ugi-natint": "community",
+    "ugi-willingness": "community",
+    "ugi-writing": "community",
+    "vals-index": "niche",
+    "vals-index-code-migration": "niche",
+    "vals-index-cost": "niche",
+    "vals-index-emb": "niche",
+    "vals-index-finance-agent": "niche",
+    "vals-index-hlab": "niche",
+    "vals-index-legal-research": "niche",
+    "vals-index-terminal-bench-2.1": "headline",
+    "vals-index-vibe-code-bench": "niche",
+    "vending-bench": "headline",
+    "weirdml": "community"
+  }
+}

@@ -1,0 +1,48 @@
+import type { ClientModel, ClientOffer } from "./client-model";
+import type { ScoreKey } from "./types";
+import { hasScoreEvidence } from "./client-model";
+import { createOfferScope, offerMatchesScope } from "./cost";
+import { preferredVariantIds } from "./variants";
+
+/** CR-1.2: the slim model record the Benchmarks page ships instead of the full client catalog. */
+export type MatrixModel = Pick<ClientModel, "id" | "family_key" | "family_name" | "display_name" | "org" | "variant" | "open_weights" | "featured" | "deprecated" | "scores" | "composite_coverage" | "benchmark_count"> & {
+  /** Same family rule as `selectableModels` (computed over the whole catalog on the server). */
+  family_alive: boolean;
+};
+export type MatrixOffer = Pick<ClientOffer, "key" | "tee" | "eu_hosted" | "data_private">;
+export interface MatrixFilterData {
+  models: MatrixModel[];
+  offers: Record<string, MatrixOffer[]>;
+  providers: { key: string; provider: string; country?: string | null; non_us?: boolean }[];
+}
+export interface TopModelSettings {
+  score: ScoreKey;
+  hideDeprecated: boolean;
+  collapse: boolean;
+  openOnly: boolean;
+  featured: boolean;
+  familySet: Set<string> | null;
+  excludedSet: Set<string> | null;
+  excludeChinese: boolean;
+  euHostedOnly: boolean;
+  nonUsOnly: boolean;
+  teeOnly: boolean;
+  allowDataTraining: boolean;
+}
+
+/** The top-N catalog configurations by the active score under the global filters — the same
+ *  rules the overview applies before its shortlist sliders: hide deprecated families, one
+ *  variant per family, open weights, Featured, families, score evidence, and at least one
+ *  provider route inside the regional / confidentiality / data-policy scope. */
+export function topModelIds(data: MatrixFilterData, s: TopModelSettings, n: number): string[] {
+  const scope = createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining);
+  let r = s.hideDeprecated ? data.models.filter((m) => m.family_alive) : data.models;
+  const preferred = preferredVariantIds(r as unknown as ClientModel[], s.score);
+  if (s.collapse) r = r.filter((m) => !preferred.has(m.family_key) || preferred.get(m.family_key) === m.id);
+  if (s.openOnly) r = r.filter((m) => m.open_weights);
+  if (s.featured) r = r.filter((m) => m.featured);
+  if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
+  r = r.filter((m) => hasScoreEvidence(m as unknown as ClientModel, s.score) && m.scores[s.score] != null);
+  r = r.filter((m) => (data.offers[m.id] ?? []).some((o) => offerMatchesScope(o as ClientOffer, scope)));
+  return [...r].sort((a, b) => (b.scores[s.score]! - a.scores[s.score]!) || a.id.localeCompare(b.id)).slice(0, n).map((m) => m.id);
+}
