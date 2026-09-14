@@ -21,7 +21,8 @@ function Rows({ rows, maxScore }: { rows: BenchmaxxingOverviewRow[]; maxScore: n
   return <>
     {rows.map((row) => <tr key={row.id}>
       <th scope="row" className="!py-2 text-left align-middle font-medium">
-        <span className="block truncate leading-5">{row.name}</span>
+        {/* F-67: phones wrap the name (two Qwen rows differed only in the truncated part); md:truncate keeps the desktop single line. */}
+        <span className="block leading-5 md:truncate">{row.name}</span>
         <span className="bh-muted block text-[11px] font-normal leading-4">{row.org}</span>
       </th>
       <td className="!py-2 align-middle">

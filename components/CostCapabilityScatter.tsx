@@ -63,10 +63,12 @@ type LabelPoint = { x: number; y: number; name: string; id: string };
 type AxisMap = Record<string, { scale: (v: number) => number }>;
 
 /** F-17: greedy, collision-free point labels. `labels` arrive in priority order (frontier
- *  first, then by score). Each tries right of its dot, then above, below and left; a label
- *  that would leave the plot, overlap a placed label or cover another dot is dropped and
- *  the dot stays. On a narrow plot (phones) only frontier members are named. */
-function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: { left: number; top: number; width: number; height: number }; labels: LabelPoint[]; dots: { x: number; y: number }[]; frontier: Set<string> }) {
+ *  first, then by score). Each tries right of its dot, then above, below and left, then the
+ *  four corner-aligned variants (F-67); a label that would leave the plot, overlap a placed
+ *  label or cover another dot is dropped and the dot stays. `headroom` lets a label use the
+ *  chart's top margin, so the best model — sitting on the top edge — keeps its name.
+ *  On a narrow plot (phones) only frontier members are named. */
+function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: { left: number; top: number; width: number; height: number }; labels: LabelPoint[]; dots: { x: number; y: number }[]; frontier: Set<string>; headroom?: number }) {
   const xAxis = props.xAxisMap && Object.values(props.xAxisMap)[0];
   const yAxis = props.yAxisMap && Object.values(props.yAxisMap)[0];
   const o = props.offset;
@@ -87,10 +89,15 @@ function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: {
       { l: cx - w / 2, t: cy - 8 - LINE },
       { l: cx - w / 2, t: cy + 8 },
       { l: cx - 8 - w, t: cy - LINE / 2 },
+      { l: cx - w, t: cy - 8 - LINE },
+      { l: cx, t: cy - 8 - LINE },
+      { l: cx - w, t: cy + 8 },
+      { l: cx, t: cy + 8 },
     ];
+    const top = o.top - (props.headroom ?? 0);
     const slot = slots.find(({ l, t }) => {
       const r = l + w, b = t + LINE;
-      if (l < o.left || r > o.left + o.width || t < o.top || b > o.top + o.height) return false;
+      if (l < o.left || r > o.left + o.width || t < top || b > o.top + o.height) return false;
       if (placed.some((q) => l < q.r && q.l < r && t < q.b && q.t < b)) return false;
       return !dots.some((d) => !(Math.abs(d.cx - cx) < 0.5 && Math.abs(d.cy - cy) < 0.5) && d.cx > l - 4 && d.cx < r + 4 && d.cy > t - 4 && d.cy < b + 4);
     });
@@ -210,7 +217,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       </div>
       <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
         <ResponsiveContainer width="100%" height="100%">
-          <ScatterChart margin={{ top: 8, right: 16, bottom: 4, left: 0 }}>
+          <ScatterChart margin={{ top: 22, right: 16, bottom: 4, left: 0 }}>
             <CartesianGrid stroke="#222932" />
             {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
                 data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
@@ -223,7 +230,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             <Scatter data={failing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false} />
             <Scatter data={passing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false}
               onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
-            <Customized component={<PointLabels labels={labels} dots={compactPoints} frontier={frontierIds} />} />
+            <Customized component={<PointLabels labels={labels} dots={compactPoints} frontier={frontierIds} headroom={20} />} />
           </ScatterChart>
         </ResponsiveContainer>
       </div>
