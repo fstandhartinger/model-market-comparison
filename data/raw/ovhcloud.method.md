@@ -1,7 +1,27 @@
 # OVHcloud AI Endpoints — data collection method
 
-**Date collected:** 2026-07-22 (previous: 2026-07-12)
+**Date collected:** refreshed daily by `scripts/fetch-ovhcloud-catalog.mjs` (first automated run
+2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, 2026-07-12)
 **Output:** `data/raw/ovhcloud.json`
+
+## Executable collector (R9.1, 2026-09-14)
+
+`scripts/fetch-ovhcloud-catalog.mjs` + `lib/ovhcloud-catalog.mjs` (tests in
+`test/ovhcloud-catalog.test.mjs`), non-fatal daily step `fetch-ovhcloud-catalog` in
+`ops/daily/daily.mjs`. One GET of the catalog (no robots.txt rule covers it) plus the ECB daily XML.
+
+- Cards are split on `data-tc-clic="public-cloud::ai-endpoints::link-discover-catalog-ai-endpoints-<slug>"`;
+  title from `h3.Models_modelTitle__*`, each price from `h2.Models_priceMain__*` ("0.4<!-- -->€")
+  paired with the following unit span ("/Mtoken(input)", "/Mtoken(output)").
+- Scope by structure: only cards with both an input- and an output-token EUR price. Embeddings,
+  guards, Whisper (per second), image generation and TTS carry other units and land in `skipped`.
+- Curated rows are kept by `model_id` (= card title) or normalized name; the card slug is added as
+  `catalog_slug`; new cards get `mapping: "derived"`. Duplicate cards must agree; unreadable prices,
+  a missing FX rate or fewer than half of the previous models fail closed.
+- USD = EUR × ECB rate, cents; `currency_note` and `usd_normalization` are rewritten each run.
+
+First run 2026-09-14 (ECB 1.1592 of 2026-09-11): 20 cards → 8 models, all with identical EUR prices;
+USD moved by FX cents only; 12 non-token cards skipped.
 
 ## Scope and authoritative sources
 
