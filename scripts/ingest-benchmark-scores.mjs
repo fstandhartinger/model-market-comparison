@@ -50,6 +50,15 @@ for (const mapping of registry.aa_field_map) {
     if (value === undefined || value === null) {
       continue;
     }
+    // AA writes an unrated model as { elo: 0, lower95ci: 0, upper95ci: 0 }; a real rating always has an
+    // interval. That placeholder is missing, never a measured Elo of 0 (CR-9.3).
+    if (mapping.field.endsWith('.elo') && value === 0) {
+      const parent = mapping.field.split('.').slice(0, -1).reduce((v, k) => v?.[k], row.fields);
+      if (parent?.lower95ci === 0 && parent?.upper95ci === 0) {
+        rejected.push({ benchmark_id: entry.id, source_id: row.source_id, reason: 'Unrated placeholder (Elo 0 with a 0–0 interval); raw value retained only in aa-observed-fields.json.' });
+        continue;
+      }
+    }
     observations.push({ id: `aa:${row.source_id}:${mapping.field}`, benchmark_id: entry.id,
       subject: { source_id: row.source_id, name: row.name, model_id: model?.id ?? null, variant: row.variant, harness: null },
       value, unit: entry.scoring.unit, basis: 'measured', source,

@@ -89,14 +89,17 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const tableMs = Date.now() - t0;
   await m.waitForLoadState('networkidle');
   await m.waitForTimeout(1500);
+  // Load CLS is read before the scripted interaction: element.click() is not user input, so the collapse
+  // and reopen below would be counted as layout shifts a real click never produces (review gate 213002Z).
+  const loadCls = await m.evaluate(() => Number(window.__cls.toFixed(4)));
   // Interaction jank: collapse and reopen every group, switch presets.
   const g0 = Date.now();
   await m.evaluate(async () => { for (const btn of document.querySelectorAll('tr.bh-matrix-group button')) btn.click(); await new Promise((res) => requestAnimationFrame(() => res())); for (const btn of document.querySelectorAll('tr.bh-matrix-group button')) btn.click(); await new Promise((res) => requestAnimationFrame(() => res())); });
   const toggleMs = Date.now() - g0;
   const perf = await m.evaluate(() => ({ cls: Number(window.__cls.toFixed(4)), longTasks: window.__long, rows: document.querySelectorAll('table.bh-matrix tbody tr:not(.bh-matrix-group)').length, cells: document.querySelectorAll('table.bh-matrix td').length }));
-  metrics[tag] = { ...perf, tableMs, toggleMs, models: ten.length };
+  metrics[tag] = { ...perf, loadCls, clsAfterScriptedToggles: perf.cls, tableMs, toggleMs, models: ten.length };
   await m.screenshot({ path: `${OUT}/${tag}-ten-models.png` });
-  check(`${tag} CR-1.11 ten models × All rows: CLS < 0.1`, ten.length === 10 && perf.cls < 0.1, JSON.stringify(metrics[tag]));
+  check(`${tag} CR-1.11 ten models × All rows: CLS < 0.1`, ten.length === 10 && loadCls < 0.1, JSON.stringify(metrics[tag]));
   check(`${tag} CR-1.11 no long task ≥ 200 ms after load, collapsing/reopening all groups < 500 ms`, perf.longTasks.every((d) => d < 200) && toggleMs < 500, `long tasks ${perf.longTasks.join(',') || 'none'} · toggle ${toggleMs} ms`);
   await c3.close(); await c4.close();
 }
