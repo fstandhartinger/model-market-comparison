@@ -1,7 +1,7 @@
 {
   "source": "GitHub Copilot (current usage-based billing plus annual-plan legacy request billing)",
-  "collected_at": "2026-09-08",
-  "method": "2026-09-08: parsed official models-and-pricing HTML tables; intersected with current supported-model catalog, retained separate long-context/fast-mode tiers and Gemini Flash promotion through 2026-12-31. Sonnet 5 $2/$10 is now permanent; obsolete September increase removed. Legacy request table is independently checked, never synthesized for new models. Legacy official table now has 19 rows; removed delisted entries and added MAI-Code-1.1-Flash 0.25x. No legacy multiplier invented for Astra/Fable 5.1.",
+  "collected_at": "2026-09-14",
+  "method": "scripts/fetch-github-copilot-catalog.mjs (2026-09-14): current_models[] = the intersection of the supported-models catalog table (https://docs.github.com/en/copilot/reference/ai-models/supported-models) and the per-token pricing tables (https://docs.github.com/en/copilot/reference/copilot-billing/models-and-pricing), matched by exact name after footnote markers are removed; Default and Long context tiers are folded into one row (long_context carries the threshold and higher price); promotion end dates come from the pricing footnotes. models[] = the legacy annual-plan multiplier table (https://docs.github.com/en/copilot/reference/copilot-billing/request-based-billing-legacy/model-multipliers-for-annual-plans) with effective USD per request = multiplier × per_premium_request_usd; the page's \"subject to change\" list sets the note. Plan allowances (plans[]) are documented on separate billing pages and keep plans_checked_at. See github-copilot.method.md.",
   "pricing_model": "ai_credits_per_token_with_legacy_per_premium_request",
   "ai_credit_usd": 0.01,
   "per_premium_request_usd": 0.04,
@@ -64,7 +64,7 @@
       "category": "Lightweight",
       "input_per_1m_usd": 0.25,
       "cached_input_per_1m_usd": 0.025,
-      "output_per_1m_usd": 2.0
+      "output_per_1m_usd": 2
     },
     {
       "model_name": "GPT-5.3-Codex",
@@ -73,7 +73,7 @@
       "category": "Powerful",
       "input_per_1m_usd": 1.75,
       "cached_input_per_1m_usd": 0.175,
-      "output_per_1m_usd": 14.0
+      "output_per_1m_usd": 14
     },
     {
       "model_name": "GPT-5.4",
@@ -82,9 +82,9 @@
       "category": "Versatile",
       "input_per_1m_usd": 2.5,
       "cached_input_per_1m_usd": 0.25,
-      "output_per_1m_usd": 15.0,
+      "output_per_1m_usd": 15,
       "long_context": {
-        "input_per_1m_usd": 5.0,
+        "input_per_1m_usd": 5,
         "cached_input_per_1m_usd": 0.5,
         "output_per_1m_usd": 22.5,
         "threshold_input_tokens_gt": 272000
@@ -113,13 +113,13 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 5.0,
+      "input_per_1m_usd": 5,
       "cached_input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 30.0,
+      "output_per_1m_usd": 30,
       "long_context": {
-        "input_per_1m_usd": 10.0,
-        "cached_input_per_1m_usd": 1.0,
-        "output_per_1m_usd": 45.0,
+        "input_per_1m_usd": 10,
+        "cached_input_per_1m_usd": 1,
+        "output_per_1m_usd": 45,
         "threshold_input_tokens_gt": 272000
       }
     },
@@ -145,15 +145,15 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 4.0,
+      "input_per_1m_usd": 4,
       "cached_input_per_1m_usd": 0.4,
-      "cache_write_per_1m_usd": 5.0,
-      "output_per_1m_usd": 20.0,
+      "cache_write_per_1m_usd": 5,
+      "output_per_1m_usd": 20,
       "long_context": {
-        "input_per_1m_usd": 8.0,
+        "input_per_1m_usd": 8,
         "cached_input_per_1m_usd": 0.8,
-        "cache_write_per_1m_usd": 10.0,
-        "output_per_1m_usd": 30.0,
+        "cache_write_per_1m_usd": 10,
+        "output_per_1m_usd": 30,
         "threshold_input_tokens_gt": 272000
       }
     },
@@ -162,15 +162,15 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 2.0,
+      "input_per_1m_usd": 2,
       "cached_input_per_1m_usd": 0.2,
       "cache_write_per_1m_usd": 2.5,
-      "output_per_1m_usd": 12.0,
+      "output_per_1m_usd": 12,
       "long_context": {
-        "input_per_1m_usd": 4.0,
+        "input_per_1m_usd": 4,
         "cached_input_per_1m_usd": 0.4,
-        "cache_write_per_1m_usd": 5.0,
-        "output_per_1m_usd": 18.0,
+        "cache_write_per_1m_usd": 5,
+        "output_per_1m_usd": 18,
         "threshold_input_tokens_gt": 272000
       }
     },
@@ -179,108 +179,108 @@
       "provider_org": "OpenAI",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 10.0,
-      "cached_input_per_1m_usd": 1.0,
+      "input_per_1m_usd": 10,
+      "cached_input_per_1m_usd": 1,
       "cache_write_per_1m_usd": 12.5,
-      "output_per_1m_usd": 50.0,
+      "output_per_1m_usd": 50,
       "long_context": {
-        "input_per_1m_usd": 20.0,
-        "cached_input_per_1m_usd": 2.0,
-        "cache_write_per_1m_usd": 25.0,
-        "output_per_1m_usd": 75.0,
+        "input_per_1m_usd": 20,
+        "cached_input_per_1m_usd": 2,
+        "cache_write_per_1m_usd": 25,
+        "output_per_1m_usd": 75,
         "threshold_input_tokens_gt": 272000
       }
-    },
-    {
-      "model_name": "Claude Haiku 4.5",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 1.0,
-      "cached_input_per_1m_usd": 0.1,
-      "cache_write_per_1m_usd": 1.25,
-      "output_per_1m_usd": 5.0
-    },
-    {
-      "model_name": "Claude Sonnet 4.6",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 3.0,
-      "cached_input_per_1m_usd": 0.3,
-      "cache_write_per_1m_usd": 3.75,
-      "output_per_1m_usd": 15.0
-    },
-    {
-      "model_name": "Claude Opus 4.7",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.0,
-      "cached_input_per_1m_usd": 0.5,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.0
-    },
-    {
-      "model_name": "Claude Opus 4.8",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.0,
-      "cached_input_per_1m_usd": 0.5,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.0
-    },
-    {
-      "model_name": "Claude Opus 5",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 5.0,
-      "cached_input_per_1m_usd": 0.5,
-      "cache_write_per_1m_usd": 6.25,
-      "output_per_1m_usd": 25.0
-    },
-    {
-      "model_name": "Claude Sonnet 5",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 2.0,
-      "cached_input_per_1m_usd": 0.2,
-      "cache_write_per_1m_usd": 2.5,
-      "output_per_1m_usd": 10.0
-    },
-    {
-      "model_name": "Claude Opus 4.8 (fast mode) (preview)",
-      "provider_org": "Anthropic",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 10.0,
-      "cached_input_per_1m_usd": 1.0,
-      "cache_write_per_1m_usd": 12.5,
-      "output_per_1m_usd": 50.0,
-      "feature_status": "research preview"
     },
     {
       "model_name": "Claude Fable 5",
       "provider_org": "Anthropic",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 10.0,
-      "cached_input_per_1m_usd": 1.0,
+      "input_per_1m_usd": 10,
+      "cached_input_per_1m_usd": 1,
       "cache_write_per_1m_usd": 12.5,
-      "output_per_1m_usd": 50.0
+      "output_per_1m_usd": 50
     },
     {
       "model_name": "Claude Fable 5.1",
       "provider_org": "Anthropic",
       "release_status": "GA",
       "category": "Powerful",
-      "input_per_1m_usd": 10.0,
+      "input_per_1m_usd": 10,
       "cached_input_per_1m_usd": 0.25,
       "cache_write_per_1m_usd": 12.5,
-      "output_per_1m_usd": 50.0
+      "output_per_1m_usd": 50
+    },
+    {
+      "model_name": "Claude Haiku 4.5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 1,
+      "cached_input_per_1m_usd": 0.1,
+      "cache_write_per_1m_usd": 1.25,
+      "output_per_1m_usd": 5
+    },
+    {
+      "model_name": "Claude Opus 4.7",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5,
+      "cached_input_per_1m_usd": 0.5,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25
+    },
+    {
+      "model_name": "Claude Opus 4.8",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5,
+      "cached_input_per_1m_usd": 0.5,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25
+    },
+    {
+      "model_name": "Claude Opus 4.8 (fast mode) (preview)",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 10,
+      "cached_input_per_1m_usd": 1,
+      "cache_write_per_1m_usd": 12.5,
+      "output_per_1m_usd": 50,
+      "feature_status": "research preview"
+    },
+    {
+      "model_name": "Claude Opus 5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 5,
+      "cached_input_per_1m_usd": 0.5,
+      "cache_write_per_1m_usd": 6.25,
+      "output_per_1m_usd": 25
+    },
+    {
+      "model_name": "Claude Sonnet 4.6",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 3,
+      "cached_input_per_1m_usd": 0.3,
+      "cache_write_per_1m_usd": 3.75,
+      "output_per_1m_usd": 15
+    },
+    {
+      "model_name": "Claude Sonnet 5",
+      "provider_org": "Anthropic",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 2,
+      "cached_input_per_1m_usd": 0.2,
+      "cache_write_per_1m_usd": 2.5,
+      "output_per_1m_usd": 10
     },
     {
       "model_name": "Gemini 3.5 Flash",
@@ -289,7 +289,7 @@
       "category": "Lightweight",
       "input_per_1m_usd": 1.5,
       "cached_input_per_1m_usd": 0.15,
-      "output_per_1m_usd": 9.0
+      "output_per_1m_usd": 9
     },
     {
       "model_name": "Gemini 3.6 Flash",
@@ -325,15 +325,6 @@
       "notes": "Official promotional token rates through December 31, 2026; no post-promotion rate inferred."
     },
     {
-      "model_name": "MAI-Code-1-Flash",
-      "provider_org": "Microsoft",
-      "release_status": "GA",
-      "category": "Lightweight",
-      "input_per_1m_usd": 0.75,
-      "cached_input_per_1m_usd": 0.075,
-      "output_per_1m_usd": 4.5
-    },
-    {
       "model_name": "MAI-Code-1.1-Flash",
       "provider_org": "Microsoft",
       "release_status": "GA",
@@ -343,17 +334,35 @@
       "output_per_1m_usd": 1.2
     },
     {
+      "model_name": "Kimi K2.7 Code",
+      "provider_org": "Moonshot AI",
+      "release_status": "GA",
+      "category": "Versatile",
+      "input_per_1m_usd": 0.95,
+      "cached_input_per_1m_usd": 0.19,
+      "output_per_1m_usd": 4
+    },
+    {
+      "model_name": "Kimi K3",
+      "provider_org": "Moonshot AI",
+      "release_status": "GA",
+      "category": "Powerful",
+      "input_per_1m_usd": 3,
+      "cached_input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 15
+    },
+    {
       "model_name": "Grok 4.5",
       "provider_org": "xAI",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 2.0,
+      "input_per_1m_usd": 2,
       "cached_input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 6.0,
+      "output_per_1m_usd": 6,
       "long_context": {
-        "input_per_1m_usd": 4.0,
-        "cached_input_per_1m_usd": 1.0,
-        "output_per_1m_usd": 12.0,
+        "input_per_1m_usd": 4,
+        "cached_input_per_1m_usd": 1,
+        "output_per_1m_usd": 12,
         "threshold_input_tokens_gt": 200000
       }
     },
@@ -362,33 +371,15 @@
       "provider_org": "xAI",
       "release_status": "GA",
       "category": "Versatile",
-      "input_per_1m_usd": 2.0,
+      "input_per_1m_usd": 2,
       "cached_input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 6.0,
+      "output_per_1m_usd": 6,
       "long_context": {
-        "input_per_1m_usd": 4.0,
-        "cached_input_per_1m_usd": 1.0,
-        "output_per_1m_usd": 12.0,
+        "input_per_1m_usd": 4,
+        "cached_input_per_1m_usd": 1,
+        "output_per_1m_usd": 12,
         "threshold_input_tokens_gt": 200000
       }
-    },
-    {
-      "model_name": "Kimi K2.7 Code",
-      "provider_org": "Moonshot AI",
-      "release_status": "GA",
-      "category": "Versatile",
-      "input_per_1m_usd": 0.95,
-      "cached_input_per_1m_usd": 0.19,
-      "output_per_1m_usd": 4.0
-    },
-    {
-      "model_name": "Kimi K3",
-      "provider_org": "Moonshot AI",
-      "release_status": "GA",
-      "category": "Powerful",
-      "input_per_1m_usd": 3.0,
-      "cached_input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 15.0
     }
   ],
   "legacy_scope": "Existing annual Copilot Pro and Copilot Pro+ subscribers who explicitly remained on request-based billing after June 1, 2026.",
@@ -404,35 +395,35 @@
     {
       "model_name": "Claude Opus 4.7",
       "provider_org": "Anthropic",
-      "premium_request_multiplier": 27.0,
+      "premium_request_multiplier": 27,
       "effective_usd_per_request": 1.08,
       "notes": "Legacy annual-plan multiplier."
     },
     {
       "model_name": "Claude Opus 4.8",
       "provider_org": "Anthropic",
-      "premium_request_multiplier": 27.0,
+      "premium_request_multiplier": 27,
       "effective_usd_per_request": 1.08,
       "notes": "Legacy annual-plan multiplier."
     },
     {
       "model_name": "Claude Sonnet 4.6",
       "provider_org": "Anthropic",
-      "premium_request_multiplier": 9.0,
+      "premium_request_multiplier": 9,
       "effective_usd_per_request": 0.36,
       "notes": "GitHub marks this multiplier as subject to change."
     },
     {
       "model_name": "Gemini 3 Pro",
       "provider_org": "Google",
-      "premium_request_multiplier": 6.0,
+      "premium_request_multiplier": 6,
       "effective_usd_per_request": 0.24,
       "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
     },
     {
       "model_name": "Gemini 3.5 Flash",
       "provider_org": "Google",
-      "premium_request_multiplier": 14.0,
+      "premium_request_multiplier": 14,
       "effective_usd_per_request": 0.56,
       "notes": "Legacy annual-plan multiplier."
     },
@@ -453,14 +444,14 @@
     {
       "model_name": "GPT-5.1",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 3.0,
+      "premium_request_multiplier": 3,
       "effective_usd_per_request": 0.12,
       "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
     },
     {
       "model_name": "GPT-5.1-Codex",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 3.0,
+      "premium_request_multiplier": 3,
       "effective_usd_per_request": 0.12,
       "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
     },
@@ -474,35 +465,35 @@
     {
       "model_name": "GPT-5.1-Codex-Max",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 3.0,
+      "premium_request_multiplier": 3,
       "effective_usd_per_request": 0.12,
       "notes": "Legacy annual-plan model; not in the current usage-based supported-model catalog."
     },
     {
       "model_name": "GPT-5.3-Codex",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 6.0,
+      "premium_request_multiplier": 6,
       "effective_usd_per_request": 0.24,
       "notes": "Legacy annual-plan multiplier."
     },
     {
       "model_name": "GPT-5.4",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 6.0,
+      "premium_request_multiplier": 6,
       "effective_usd_per_request": 0.24,
       "notes": "Legacy annual-plan multiplier."
     },
     {
       "model_name": "GPT-5.4 mini",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 6.0,
+      "premium_request_multiplier": 6,
       "effective_usd_per_request": 0.24,
       "notes": "GitHub marks this multiplier as subject to change."
     },
     {
       "model_name": "GPT-5.5",
       "provider_org": "OpenAI",
-      "premium_request_multiplier": 57.0,
+      "premium_request_multiplier": 57,
       "effective_usd_per_request": 2.28,
       "notes": "Legacy annual-plan multiplier."
     },
@@ -512,13 +503,6 @@
       "premium_request_multiplier": 0.33,
       "effective_usd_per_request": 0.0132,
       "notes": "Legacy annual-plan multiplier."
-    },
-    {
-      "model_name": "MAI-Code-1-Flash",
-      "provider_org": "Microsoft",
-      "premium_request_multiplier": 0.33,
-      "effective_usd_per_request": 0.0132,
-      "notes": "GitHub identifies this as a promotional multiplier and publishes no end date."
     },
     {
       "model_name": "MAI-Code-1.1-Flash",
@@ -535,5 +519,192 @@
       "effective_usd_per_review": 0.52,
       "notes": "Legacy annual request billing only. Under current usage-based billing, code review consumes model tokens in AI credits plus GitHub Actions minutes; no fixed 13x charge applies."
     }
-  ]
+  ],
+  "plans_checked_at": "2026-09-08",
+  "retirement_history": [
+    {
+      "name": "MAI-Code-1-Flash",
+      "retirement_date": "2026-09-10",
+      "alternative": "MAI-Code-1.1-Flash"
+    },
+    {
+      "name": "Claude Opus 4.5",
+      "retirement_date": "2026-09-01",
+      "alternative": "Claude Opus 5"
+    },
+    {
+      "name": "Claude Opus 4.6",
+      "retirement_date": "2026-09-01",
+      "alternative": "Claude Opus 5"
+    },
+    {
+      "name": "Claude Sonnet 4.5",
+      "retirement_date": "2026-09-01",
+      "alternative": "Claude Sonnet 5"
+    },
+    {
+      "name": "Claude Sonnet 4.6",
+      "retirement_date": "2026-09-01",
+      "alternative": "Claude Sonnet 5"
+    },
+    {
+      "name": "Gemini 3.1 Pro",
+      "retirement_date": "2026-09-01",
+      "alternative": "Gemini 3.6 Flash"
+    },
+    {
+      "name": "Raptor mini",
+      "retirement_date": "2026-09-01",
+      "alternative": "MAI-Code-1.1-Flash"
+    },
+    {
+      "name": "Gemini 2.5 Pro",
+      "retirement_date": "2026-07-31",
+      "alternative": "Gemini 3.1 Pro"
+    },
+    {
+      "name": "Gemini 3 Flash",
+      "retirement_date": "2026-07-31",
+      "alternative": "Gemini 3.6 Flash"
+    },
+    {
+      "name": "Claude Opus 4.6 (fast mode) (preview)",
+      "retirement_date": "2026-06-29",
+      "alternative": "Claude Opus 4.8 (fast mode) (preview)"
+    },
+    {
+      "name": "GPT-4.1",
+      "retirement_date": "2026-06-01",
+      "alternative": "GPT-5.5"
+    },
+    {
+      "name": "GPT-5.2",
+      "retirement_date": "2026-06-01",
+      "alternative": "GPT-5.5"
+    },
+    {
+      "name": "GPT-5.2-Codex",
+      "retirement_date": "2026-06-01",
+      "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "Grok Code Fast 1",
+      "retirement_date": "2026-05-15",
+      "alternative": "GPT-5 mini"
+    },
+    {
+      "name": "Claude Sonnet 4",
+      "retirement_date": "2026-05-01",
+      "alternative": "Claude Sonnet 4.6"
+    },
+    {
+      "name": "GPT-5.1",
+      "retirement_date": "2026-04-15",
+      "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "GPT-5.1-Codex",
+      "retirement_date": "2026-04-01",
+      "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "GPT-5.1-Codex-Max",
+      "retirement_date": "2026-04-01",
+      "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "GPT-5.1-Codex-Mini",
+      "retirement_date": "2026-04-01",
+      "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "Gemini 3 Pro",
+      "retirement_date": "2026-03-26",
+      "alternative": "Gemini 3.1 Pro"
+    },
+    {
+      "name": "Claude Opus 4.1",
+      "retirement_date": "2026-02-17",
+      "alternative": "Claude Opus 4.6"
+    },
+    {
+      "name": "GPT-5",
+      "retirement_date": "2026-02-17",
+      "alternative": "GPT-5.5"
+    },
+    {
+      "name": "GPT-5-Codex",
+      "retirement_date": "2026-02-17",
+      "alternative": "GPT-5.3-Codex"
+    },
+    {
+      "name": "Claude Sonnet 3.5",
+      "retirement_date": "2025-11-06",
+      "alternative": "Claude Haiku 4.5"
+    },
+    {
+      "name": "Claude Opus 4",
+      "retirement_date": "2025-10-23",
+      "alternative": "Claude Opus 4.6"
+    },
+    {
+      "name": "Claude Sonnet 3.7",
+      "retirement_date": "2025-10-23",
+      "alternative": "Claude Sonnet 4.6"
+    },
+    {
+      "name": "Claude Sonnet 3.7 Thinking",
+      "retirement_date": "2025-10-23",
+      "alternative": "Claude Sonnet 4.6"
+    },
+    {
+      "name": "Gemini 2.0 Flash",
+      "retirement_date": "2025-10-23",
+      "alternative": "Gemini 2.5 Pro"
+    },
+    {
+      "name": "o1-mini",
+      "retirement_date": "2025-10-23",
+      "alternative": "GPT-5 mini"
+    },
+    {
+      "name": "o3",
+      "retirement_date": "2025-10-23",
+      "alternative": "GPT-5.5"
+    },
+    {
+      "name": "o3-mini",
+      "retirement_date": "2025-10-23",
+      "alternative": "GPT-5 mini"
+    },
+    {
+      "name": "o4-mini",
+      "retirement_date": "2025-10-23",
+      "alternative": "GPT-5 mini"
+    }
+  ],
+  "supported_without_price": [],
+  "priced_not_supported": [
+    "Claude Sonnet 4"
+  ],
+  "retirement_overlap": [
+    "Claude Sonnet 4.6 (2026-09-01)"
+  ],
+  "response_sha256": {
+    "supported": "1c0ebb83aa3e106a679b2c7bf0f198e4c3dd3db7b51c74cb43b77de2801f1fa8",
+    "pricing": "adc87ef104ecdd435525693e789b5fa49f6255bb5d216b142d182b6e697c28ee",
+    "multipliers": "72ad65e43991fa8a9855e99b2da466ae4a1673da90be6cd32004697d81640b54"
+  },
+  "diff": {
+    "current_added": [],
+    "current_removed": [
+      "MAI-Code-1-Flash"
+    ],
+    "current_price_changed": [],
+    "legacy_added": [],
+    "legacy_removed": [
+      "MAI-Code-1-Flash"
+    ],
+    "legacy_multiplier_changed": []
+  }
 }

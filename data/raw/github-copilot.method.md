@@ -134,3 +134,29 @@ exactly 25 rows with unchanged multipliers, $0.04 overage, 10% auto-selection
 discount, and the subject-to-change / promotional flags on Claude Sonnet 4.6,
 GPT-5.4 mini, and MAI-Code-1-Flash. All prices in this source are USD; no EUR
 conversion applies.
+
+## Executable collector (2026-09-14)
+
+`scripts/fetch-github-copilot-catalog.mjs` (parser `lib/github-copilot-catalog.mjs`, tests
+`test/github-copilot-catalog.test.mjs`) runs as the non-fatal daily step `fetch-github-copilot-catalog`.
+Three GETs of server-rendered GitHub Docs pages with an identifying User-Agent (docs.github.com robots.txt
+allows all): supported-models, models-and-pricing, model-multipliers-for-annual-plans.
+
+- Footnote markers are `<sup><a data-footnote-ref>` elements and are removed by element, never by a
+  trailing-digit rule ("Claude Opus 5" must stay "Claude Opus 5"); their footnote text is attached to the row.
+- `current_models[]`: supported catalog ∩ pricing tables by exact name, in catalog order. `Default` and
+  `Long context` tiers fold into one row (`long_context` with `threshold_input_tokens_gt`); "Not applicable"
+  cache writes are omitted; promotion end dates come from the pricing footnote. Supported-but-unpriced and
+  priced-but-unsupported names are recorded (`supported_without_price`, `priced_not_supported` — on
+  2026-09-14 Claude Sonnet 4 is priced but not supported). The retirement history table is stored as
+  `retirement_history`; a name both supported and in that history is listed in `retirement_overlap`
+  (2026-09-14: Claude Sonnet 4.6, dated 2026-09-01) and is kept, following the intersection rule.
+- `models[]` (legacy): the multiplier table; `effective_usd_per_request` = multiplier ×
+  `per_premium_request_usd`; notes follow the page's "subject to change" list; the auto-selection discount
+  is read from the page.
+- `plans[]` are documented on the usage-based billing pages, which this collector does not fetch; they keep
+  `plans_checked_at` (2026-09-08) and are not re-dated.
+- Fails closed: missing tables, the "1 AI credit = $0.01 USD" statement missing, unreadable price or
+  multiplier, unknown tier, duplicate rows, or fewer than 50 % of previous rows in either array.
+- First run 2026-09-14: 28 current and 18 legacy rows reproduced the 2026-09-08 snapshot field for field;
+  **MAI-Code-1-Flash** removed from both (retired 2026-09-10, successor MAI-Code-1.1-Flash).

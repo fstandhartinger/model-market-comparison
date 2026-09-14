@@ -330,8 +330,12 @@ test("privacy routing is not mislabeled as trusted execution", () => {
 
 test("current Copilot token catalog and legacy request table stay distinct", () => {
   assert.ok(copilot.collected_at >= "2026-09-08");
-  assert.equal(copilot.current_models.length, 29);
-  assert.equal(copilot.models.length, 19);
+  // The daily collector (R9.1) follows GitHub's catalog, so counts move with real retirements
+  // (MAI-Code-1-Flash, 2026-09-10); assert a sane, duplicate-free catalog instead of a literal count.
+  assert.ok(copilot.current_models.length >= 20, `current_models: ${copilot.current_models.length}`);
+  assert.ok(copilot.models.length >= 10, `legacy models: ${copilot.models.length}`);
+  assert.equal(new Set(copilot.current_models.map((row) => row.model_name)).size, copilot.current_models.length);
+  assert.equal(new Set(copilot.models.map((row) => row.model_name)).size, copilot.models.length);
 
   const model = (family) => ds.models.find((row) => row.family_key === family);
   assert.deepEqual(

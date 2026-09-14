@@ -22,7 +22,15 @@ for (const [name, vp, mobile] of [['desktop', { width: 1440, height: 1000 }, fal
   for (const t of targets) {
     const p = await ctx.newPage();
     p.on('pageerror', (e) => errors.push(`${name} ${t.slug}: ${e.message}`));
-    const res = await p.goto(`${BASE}/models/${t.slug}`, { waitUntil: 'networkidle' });
+    // networkidle occasionally never settles on one host right after a deploy flip (curl returns
+    // 200 in < 1 s); fall back to "load" plus a settle delay instead of aborting the whole run.
+    let res;
+    try { res = await p.goto(`${BASE}/models/${t.slug}`, { waitUntil: 'networkidle', timeout: 45000 }); }
+    catch (e) {
+      check(`${name} /models/${t.slug} networkidle fallback used`, true, e.message.split('\n')[0]);
+      res = await p.goto(`${BASE}/models/${t.slug}`, { waitUntil: 'load', timeout: 60000 });
+      await p.waitForTimeout(2500);
+    }
     check(`${name} /models/${t.slug} HTTP 200`, res.status() === 200, res.status());
     // The full offer list sits in the collapsed "Token offers by platform" disclosure; open it like a user.
     const offers = p.locator('main details:has(summary:has-text("Token offers by platform"))').first();
