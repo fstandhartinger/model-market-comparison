@@ -25,8 +25,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   // F-69: every benchmark name in the model page's sheet is fully visible (no clip, no ellipsis).
   await go('/models/claude-opus-5%3A%3Ahigh');
   const s = await p.evaluate(() => {
-    const sums = [...document.querySelectorAll('details > summary')].filter((x) => x.closest('#benchmark-sheet') || x.querySelector('.bh-row-chevron'));
-    const cells = sums.map((x) => x.querySelector('span') ).filter(Boolean);
+    // Benchmark rows are the chevron summaries; the sheet's nested "Evidence"/"Why" disclosures are not rows.
+    const sums = [...document.querySelectorAll('#benchmark-sheet details > summary')].filter((x) => x.querySelector('.bh-row-chevron'));
+    const cells = sums.map((x) => x.querySelector('span')).filter(Boolean);
     const named = sums.map((x) => [...x.querySelectorAll('span')].sort((a, b) => b.textContent.length - a.textContent.length)[0]).filter(Boolean);
     const clipped = named.filter((n) => n.scrollWidth > n.clientWidth + 1 || (getComputedStyle(n).textOverflow === 'ellipsis' && getComputedStyle(n).overflow !== 'visible' && n.scrollWidth > n.clientWidth));
     const hs = sums.map((x) => x.getBoundingClientRect().height);
@@ -77,8 +78,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
 
   // F-66: a forced client error (the Charts page chunk replaced by a throwing script during a
   // client-side navigation) renders the branded panel with a non-empty Details disclosure.
-  await go('/');
+  // The route is set before loading `/`, because desktop prefetches the visible Charts link.
   await p.route(/\/_next\/static\/chunks\/app\/charts\/page-[^/]+\.js$/, (r) => r.fulfill({ status: 200, contentType: 'application/javascript', body: 'throw new Error("review-gate forced client error");' }));
+  await go('/');
   const link = p.locator('nav a[href="/charts"]').first();
   if (await link.isVisible().catch(() => false)) await link.click(); else await p.evaluate(() => document.querySelector('a[href="/charts"]')?.click());
   await p.waitForTimeout(2500);
