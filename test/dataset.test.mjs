@@ -14,6 +14,7 @@ const codingAgents = JSON.parse(await readFile(join(__dirname, "..", "data", "ra
 const copilot = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "github-copilot.json"), "utf8"));
 const claude = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "claude-code.json"), "utf8"));
 const epochEci = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "epoch-eci.json"), "utf8"));
+const inceptron = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "inceptron.json"), "utf8"));
 
 const REQUIRED = [
   "gpt-5.5", "gpt-5.4", "gpt-5.5-mini", "gpt-5.4-mini",
@@ -297,10 +298,13 @@ test("context-price tiers and distinct managed routes survive dataset deduplicat
 
 test("audited July provider prices survive the merged dataset", () => {
   const find = (family, provider) => ds.models.find((model) => model.family_key === family)?.offers.find((offer) => offer.provider === provider);
-  // Inceptron re-prices frequently; re-verified 2026-07-14 against api.inceptron.io.
+  // Inceptron re-prices intraday and is refreshed by the daily collector (R9.1), so the merged
+  // offer must equal the snapshot row rather than a literal that the next run would break.
+  const glm52 = inceptron.models.find((model) => model.model_name === "GLM 5.2");
+  assert.ok(glm52 && glm52.input_per_1m_usd > 0 && glm52.output_per_1m_usd > 0);
   assert.deepEqual(
     [find("glm-5.2", "Inceptron")?.input_per_1m, find("glm-5.2", "Inceptron")?.output_per_1m],
-    [1.25, 2.99], // 2026-09-08: Inceptron native API re-priced GLM 5.2
+    [glm52.input_per_1m_usd, glm52.output_per_1m_usd],
   );
   assert.deepEqual(
     [find("deepseek-v3.1", "AWS Bedrock")?.input_per_1m, find("deepseek-v3.1", "AWS Bedrock")?.output_per_1m],

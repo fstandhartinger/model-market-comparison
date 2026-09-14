@@ -176,6 +176,13 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       report.warnings.push(`fetch-stackit-catalog skipped: ${error.message.slice(0, 300)}`);
       console.warn(`WARN fetch-stackit-catalog: keeping the previous snapshot`);
     }
+    try {
+      await command('fetch-inceptron-catalog', process.execPath, ['scripts/fetch-inceptron-catalog.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-inceptron-catalog skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-inceptron-catalog: keeping the previous snapshot`);
+    }
     await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 3_600_000);
     await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 3_600_000);
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');

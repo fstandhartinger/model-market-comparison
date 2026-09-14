@@ -113,3 +113,25 @@ endpoints as of 2026-06-23.
 4. **Provider metadata (HQ / datacenters / data policy):**
    `https://openrouter.ai/api/v1/providers` -> entry with
    `slug == "inceptron"`.
+
+## Executable collector (2026-09-14)
+
+`scripts/fetch-inceptron-catalog.mjs` (parser `lib/inceptron-catalog.mjs`, tests `test/inceptron-catalog.test.mjs`)
+runs as the non-fatal daily step `fetch-inceptron-catalog`: one GET of `https://api.inceptron.io/v1/models`
+with an identifying User-Agent (`api.inceptron.io` serves no robots.txt; `www.inceptron.io/robots.txt`
+allows all).
+
+- Included: models with text output, the `chat` feature and both `pricing.prompt` and `pricing.completion`.
+- USD per token × 1e6, **four decimal places** (the meters are not whole cents; DeepSeek V4 Flash input
+  is $0.064). `input_cache_reads` → `cache_read_per_1m_usd`; zero cache-write prices are omitted.
+- Curated rows are matched by `api_model_id`, then by the API id in their notes, then by name, and keep
+  their notes unchanged — `build-dataset` reads the "model id …" phrase in the notes as the offer identity,
+  so the collector writes the id to `api_model_id`, never `model_id`. New ids are `mapping: derived`.
+- Fails closed: no `data` array, unreadable price, duplicate id, two ids mapping to one curated row, or
+  fewer than 50 % of previous rows still listed.
+- **Prices move intraday.** First run 2026-09-14 13:35 UTC: GLM 5.2 1.0998/2.9905 (cache 0.18), GLM 5.3
+  1.0204/4.1098 (0.1871), Kimi K2.6 0.6113/3.2444 (0.0859), Kimi K2.7 Code 0.7062/3.21 (0.18), DeepSeek V4
+  Flash 0731 0.064/0.1734 (0.0102). All five equal OpenRouter's live Inceptron endpoints
+  (`/api/v1/models/{slug}/endpoints`) at the same minute; OpenRouter's 05:14 UTC snapshot of the same day
+  already showed different values for Kimi K2.6 and DeepSeek V4 Flash. The snapshot is therefore dated by
+  collection time, and a price difference to an older row is not by itself a parser error.
