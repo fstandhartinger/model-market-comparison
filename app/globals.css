@@ -97,6 +97,11 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-preset-icon { display: inline-flex; min-height: 36px !important; width: 36px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 6px; color: var(--muted); font-size: 18px; line-height: 1; }
 .bh-preset-icon:hover, .bh-preset-icon:focus-visible { color: rgb(var(--accent)); background: rgb(var(--accent) / .1); }
 @media (max-width: 1023.98px) { .bh-preset-icon { min-height: 44px !important; width: 44px; } }
+/* CR-2.2: chart points are buttons — pointer, a visible keyboard focus ring, a hover lift. */
+.bh-pick-point { cursor: pointer; outline: none; }
+.bh-pick-point[aria-disabled="true"] { cursor: not-allowed; }
+.bh-pick-point:hover circle:last-of-type, .bh-pick-point:focus-visible circle:last-of-type { stroke: rgb(var(--accent)); stroke-width: 2.5; }
+.bh-pick-point:focus-visible circle:first-of-type { stroke: rgb(var(--accent)); stroke-width: 2; stroke-dasharray: 3 2; }
 /* CR-1.9: headline small multiples — letter · track · value; bars 12 px with a 4 px data end, dots ring the surface. */
 .bh-bars-key { width: 12px; height: 12px; flex-shrink: 0; border-radius: 3px; }
 .bh-bars-row { display: grid; grid-template-columns: 12px minmax(0, 1fr) 4.25rem; align-items: center; gap: 8px; min-height: 22px; }

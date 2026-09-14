@@ -11,6 +11,8 @@ import { filteredCandidates, type MatrixFilterData } from "../lib/top-models";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
 import { BenchmarkBars, seriesColor, seriesLetter } from "./BenchmarkBars";
 import { PresetMenu } from "./PresetMenu";
+import { PickFromChart } from "./PickFromChart";
+import { toggleColumn } from "../lib/pick-chart.mjs";
 
 const MIN_MODELS = 2, MAX_MODELS = 10;
 const ROW_IDS = new Set(ROW_PRESETS.map((p) => p.id));
@@ -173,6 +175,14 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
             <span className="font-medium">{m.display_name}</span><span className="bh-muted text-xs">{m.org} · {m.benchmark_count} benchmarks</span></button></li>)}
         </ul>}
       </div>}
+      <details className="bh-pickpanel w-full rounded-xl border border-line/70 px-3 py-2 lg:order-last">
+        <summary className="cursor-pointer text-sm font-medium">Pick from chart <span className="bh-muted font-normal">· score against cost, narrowed by two sliders</span></summary>
+        <div className="mt-3">
+          <PickFromChart candidates={candidates} score={score} scoreLabel={SCORE_SHORT_LABELS[score]} ids={ids} max={MAX_MODELS}
+            nameOf={(id) => { const m = modelsById.get(id); return m ? collapsedName(m, true, preferred) : id; }}
+            onToggle={(id) => { const next = toggleColumn(ids, id, MAX_MODELS); if (next) pin(next); }} />
+        </div>
+      </details>
       <div className="min-w-0 flex-1 basis-72"><RowPicker rows={withValues.map((v) => v.row)} groups={matrix.groups} selected={selectedKeys} onChange={(keys) => chooseRows(keys)} /></div>
     </div>
 
