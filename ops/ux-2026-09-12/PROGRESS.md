@@ -1264,6 +1264,9 @@ Notes for whoever picks this up:
   `OpenInference/open-inference/fp4/fp4`. OpenRouter, OpenRouter-efficiency and Chutes-efficiency
   refreshes completed; the dataset rebuild reports 841 models, 657 families, 91 providers and
   2,832 offers. Evidence: `/opt/benchmarkheaven/state/ux-evidence/iter42-openrouter-withdrawal/`.
+  Commit `86611e8` deployed as Coolify deployment `dt9nnlqocvbroystugzvqsok`; both public hosts
+  now serve that exact revision. Live health/meta readback and real Playwright desktop/mobile,
+  light/dark checks pass 84/84 with no failures in `live-readback.json` and the two host receipts.
   Full gates passed: `npm test` 276/276, score validator, `npx tsc --noEmit -p .`, `npm run build`,
   `node scripts/build-dataset.mjs` and `git diff --check`. R9.1 stays open because the other
   curated vendor/provider source snapshots were intentionally not redated or refreshed in this
