@@ -4,6 +4,7 @@ import { usePathname } from "next/navigation";
 import { BrandMark } from './BrandMark';
 import { ThemeToggle } from './ThemeToggle';
 import { useSettings } from './SettingsContext';
+import { AccountButton, AccountMenuLink } from './AccountButton';
 
 const LINKS = [
   ["/", "Overview"],
@@ -78,9 +79,11 @@ export function Nav() {
               <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent sm:px-2.5">More</summary>
               <div className="absolute right-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">
                 {LINKS.filter(([href]) => href !== "/radar" && href !== "/benchmarks").map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
+                <AccountMenuLink className={`border-t border-line/70 rounded-md px-3 py-3 ${path === "/account" ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} />
               </div>
             </details>
           </div>
+          <AccountButton />
           <ThemeToggle />
         </div>
       </div>

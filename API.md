@@ -93,7 +93,9 @@ Dataset `generated_at`, `counts`, per-source collection dates, whether the data 
 Versioned operations receipt: last successful and attempted daily run, source dates, and source ages calculated at request time. `refresh_claim: "none"` means this endpoint never turns a failed attempt into a freshness claim.
 
 ### `GET /api/health`
-`{ "ok": true, "db": true|false }` — liveness + whether a database is wired.
+`{ "ok": true, "db": true|false, "accounts": true|false }` — liveness, whether a dataset database is wired, and whether optional sign-in is configured with a reachable accounts database.
+
+`/api/account` and `/api/auth/*` belong to the site's optional accounts (2026-09-14). They are same-origin only, send no CORS headers and are not part of this data API.
 
 ## Pricing / score conventions
 - Token prices are **USD per 1M tokens**, input and output separately. EUR-native snapshots retain the original EUR fields and store the audited ECB conversion rate/date used for USD normalization. An active catalog row may have `null` prices when the provider publishes no per-model rate. Context tiers, OpenRouter endpoint tiers, and managed routes such as Azure Direct versus Fireworks remain separate offers. Current GitHub Copilot usage is token-metered and converted to AI Credits at $0.01/credit; its `current` rates stay on the separate Copilot product axis. `multiplier` / `usd_per_request` apply only to eligible legacy annual Pro/Pro+ request billing.

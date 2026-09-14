@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import { Nav } from "../components/Nav";
 import { SettingsProvider } from "../components/SettingsContext";
+import { AccountProvider } from "../components/AccountContext";
 import { GlobalFilters } from "../components/GlobalFilters";
 import { getDataset } from "../lib/data";
 import type { ProviderInfo, FamilyOption } from "../lib/client-model";
@@ -39,6 +40,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
       <body>
         <a href="#main-content" className="skip-link">Skip to main content</a>
         <SettingsProvider>
+          <AccountProvider>
           <Nav />
           <GlobalFilters providers={providers} families={families} />
           <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>
@@ -46,11 +48,12 @@ export default async function RootLayout({ children }: { children: React.ReactNo
           <footer className="bh-footer mx-auto max-w-[1400px] px-4 py-5 text-xs text-gray-500">
             <div className="mb-2 flex flex-wrap items-center justify-between gap-x-4 gap-y-1">
               <span className="bh-wordmark text-base">Benchmark Heaven</span>
-              <div className="flex flex-wrap gap-4"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a></div>
+              <div className="flex flex-wrap gap-4"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/impressum">Impressum</a></div>
             </div>
             <p>Benchmark results with their source and date, and a modeled cost per task that accounts for provider prices, caching and token efficiency.
               Data from OpenRouter, Artificial Analysis, Epoch AI, DesignArena, benchmark maintainers and provider catalogs.</p>
           </footer>
+          </AccountProvider>
         </SettingsProvider>
       </body>
     </html>

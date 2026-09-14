@@ -1,6 +1,7 @@
 "use client";
 import { useCallback, useEffect, useId, useRef, useState } from "react";
 import { deletePreset, renamePreset, sanitizeStore, savePreset, STORE_KEY, type PresetKind, type PresetStore, type SavedPreset } from "../lib/presets.mjs";
+import { useAccount } from "./AccountContext";
 
 const EVENT = "bh-presets";
 const empty: PresetStore = { models: [], rows: [], filters: [] };
@@ -48,6 +49,8 @@ export function PresetMenu({ kind, label, ours, activeId, onOurs, onYours, curre
   fallback?: string;
 }) {
   const { store, save, rename, remove } = usePresetStore();
+  const { status: accountStatus, suggestSignIn } = useAccount();
+  const signedIn = accountStatus === "signed-in";
   const [open, setOpen] = useState(false);
   const [name, setName] = useState("");
   const [editing, setEditing] = useState<string | null>(null);
@@ -68,7 +71,7 @@ export function PresetMenu({ kind, label, ours, activeId, onOurs, onYours, curre
   }, [open]);
 
   const item = (selected: boolean) => `flex min-h-11 w-full min-w-0 flex-col items-start justify-center rounded-md px-3 py-1.5 text-left text-sm hover:bg-accent/10 ${selected ? "bg-accent/15 font-semibold" : ""}`;
-  const submit = () => { const n = name.trim(); if (!n) return; save(kind, n, current); setName(""); setSaved(n); };
+  const submit = () => { const n = name.trim(); if (!n) return; save(kind, n, current); setName(""); setSaved(n); suggestSignIn(); };
 
   return <div ref={box} className="bh-preset relative" data-preset-kind={kind}>
     <button type="button" className="bh-button !min-h-9 !py-1.5 text-sm" aria-expanded={open} aria-controls={panelId} onClick={() => { setOpen(!open); setSaved(null); }}>
@@ -106,7 +109,9 @@ export function PresetMenu({ kind, label, ours, activeId, onOurs, onYours, curre
         <input aria-label={`Name for the current ${noun}`} placeholder={`Save current ${noun} as…`} className="bh-input min-w-0 flex-1 !py-1.5 text-sm" value={name} maxLength={60} onChange={(e) => { setName(e.target.value); setSaved(null); }} />
         <button type="submit" className="bh-button !min-h-9 !px-3 text-sm" disabled={!name.trim()}>Save</button>
       </form>
-      <p className="bh-muted px-2 pt-1.5 text-[11px]" role="status">{saved ? `Saved “${saved}” in this browser.` : "Saved presets stay in this browser."}</p>
+      <p className="bh-muted px-2 pt-1.5 text-[11px]" role="status">{signedIn
+        ? (saved ? `Saved “${saved}” to your account.` : "Saved presets sync to your account.")
+        : (saved ? `Saved “${saved}” in this browser.` : "Saved presets stay in this browser.")}</p>
     </div>}
   </div>;
 }

@@ -55,6 +55,10 @@ interface SettingsCtx extends SettingsState {
   setInputWeight: (n: number) => void;
   /** CR-4.1: replace every filter key at once with a resolved preset (lib/presets.mjs). */
   applyFilters: (filters: Record<string, unknown>) => void;
+  /** CR-5.2: the persisted settings alone (what the account stores). */
+  settingsState: SettingsState;
+  /** CR-5.2: adopt the account's stored settings, sanitised like a stored payload. */
+  replaceSettings: (raw: Record<string, unknown>) => void;
   /** True once stored settings have been read; URL-driven settings must wait for it (CR-2.5). */
   hydrated: boolean;
   excludedSet: Set<string> | null; // null = nothing excluded
@@ -157,6 +161,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setInputWeight: (inputWeight) => setState((s) => isBlendValue(inputWeight) ? { ...s, inputWeight } : s),
     // Sanitised like a stored payload, so a saved preset from an older build cannot wedge the UI.
     applyFilters: (filters) => setState((s) => ({ ...s, ...sanitizeSettings({ ...s, ...filters, advancedMinScore: filters.advancedMinScore ?? s.advancedMinScore }) })),
+    settingsState: state,
+    replaceSettings: (raw) => setState((s) => ({ ...s, ...sanitizeSettings(raw) })),
     hydrated,
     excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,

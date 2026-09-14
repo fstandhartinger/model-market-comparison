@@ -4,6 +4,21 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-14 — Optional accounts (Sign in with Google), privacy, terms and Impressum (CR-5)
+
+No data location, field or public API response changed. New, all same-origin only (no public CORS):
+
+- `GET|PUT|DELETE /api/account` — the signed-in visitor's saved presets and settings; `DELETE` removes
+  the account and its data. Not a data API: it answers `{ "enabled": false }` where accounts are off.
+- `/api/auth/*` — Auth.js sign-in routes (Google only).
+- Pages `/account`, `/privacy`, `/terms`, `/impressum`.
+- `GET /api/health` gains `accounts` (true when sign-in is configured and its database answers).
+
+Accounts use their own database via `ACCOUNTS_DATABASE_URL` (schema `db/accounts/001_init.sql`), never
+`DATABASE_URL`, which keeps meaning the optional dataset database. Forks without the four account
+variables (`AUTH_SECRET`, `AUTH_GOOGLE_ID`, `AUTH_GOOGLE_SECRET`, `ACCOUNTS_DATABASE_URL`) run exactly as
+before, with presets kept in the browser.
+
 ## 2026-09-14 — Vals Index v2 and FrontierCode 1.1 secondary benchmarks (E2)
 
 Eleven new registry identities, all non-Composite, with the page captures and robots files under
