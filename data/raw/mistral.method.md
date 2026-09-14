@@ -1,7 +1,28 @@
 # Mistral AI (La Plateforme) pricing — how to (re)fetch & update
 
 **Output file:** `data/raw/mistral.json`
-**Last collected:** 2026-07-22 (prior: 2026-07-12)
+**Last collected:** refreshed daily by `scripts/fetch-mistral-catalog.mjs` (first automated run
+2026-09-14; manual refreshes before: 2026-09-08, 2026-08-26, 2026-07-22, 2026-07-12)
+
+## Update 2026-09-14 — executable collector (R9.1)
+`scripts/fetch-mistral-catalog.mjs` + `lib/mistral-catalog.mjs` (tests in
+`test/mistral-catalog.test.mjs`) now do the refresh as the non-fatal daily step
+`fetch-mistral-catalog` in `ops/daily/daily.mjs`. One GET of <https://mistral.ai/pricing/api>
+(`robots.txt`: `Allow: /`); no browser needed.
+
+- Each model is a `<mistral-block-card-model>`; the API id is the copy button's `data-text`.
+- A card is a chat/text model only if it has both an `Input (/M tokens)` (Voxtral: `Text Input
+  (per min / per M tok)`) and an `Output (/M tokens)` USD price. OCR (per 1000 pages),
+  embeddings, classifiers, TTS/transcription and unpriced Labs endpoints (Leanstral) drop out by
+  that rule — the scope below is enforced by structure, not by a name list.
+- `Cached input (/M tokens)` → `cache_read_per_1m_usd` (today only GLM 5.2: $0.14).
+- Hero tiles repeat catalog cards; duplicates must carry identical prices or the run fails.
+- Curated rows are matched by `api_model_id` (not `model_id`, which build-dataset would use as the family identity — aliases such as `mistral-large-latest` would become fake families), else by normalized name ("Ministral 3 (3B)" =
+  "Ministral 3 3B"); new cards get `mapping: "derived"`. Fewer than half of the previous models
+  still listed → fail closed, previous snapshot untouched.
+
+First run 2026-09-14: all 9 rows reproduced with identical names, orgs and prices; no additions
+or removals.
 
 ## Update 2026-07-22
 First standalone method file (previously the method lived only in the JSON's

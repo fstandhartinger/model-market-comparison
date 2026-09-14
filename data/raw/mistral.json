@@ -1,16 +1,18 @@
 {
-  "source": "Mistral AI (La Plateforme)",
+  "source": "Mistral AI (La Plateforme) — mistral.ai/pricing/api (first-party, public)",
   "region": "eu (France)",
-  "collected_at": "2026-09-08",
-  "method": "Mistral first-party API pricing at https://mistral.ai/pricing/api, parsed from the server-rendered page on 2026-07-22; prices are native USD. Mistral hosts data in the EU by default unless the explicit US API endpoint is selected. This file includes all 15 currently priced chat/text models (including Voxtral Small's text-token axis), while excluding embeddings, classifiers, OCR-only, transcription-only, TTS, and temporary free Labs endpoints (e.g. Leanstral, free for a limited period as of 2026-07-22). Verified 2026-07-22: all 15 models and prices unchanged vs 2026-07-12. Re-verified 2026-08-26 against https://mistral.ai/pricing/api and https://docs.mistral.ai/getting-started/models: all 9 rows (8 Mistral chat/text models + third-party GLM 5.2) unchanged; no new chat models launched Jul-Aug 2026; Leanstral 1.5 still a free Labs endpoint (excluded). Re-verified 2026-09-08 against https://mistral.ai/pricing/api, https://docs.mistral.ai/getting-started/models and https://docs.mistral.ai/resources/changelogs: all 9 rows and prices unchanged; only Aug/Sep change on La Plateforme is OCR 4.1 GA (non-chat, excluded); GLM 5.2 remains the sole third-party chat model (no GLM-5.3, Kimi K3, DeepSeek V4, Qwen3.8 or other frontier models offered); Leanstral 1.5 still free Labs (retires 2026-09-30, excluded).",
+  "collected_at": "2026-09-14",
+  "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page; every <mistral-block-card-model> with both an 'Input (/M tokens)' and an 'Output (/M tokens)' USD price and an API id is a chat/text model (OCR per 1000 pages, embeddings, classifiers, TTS/transcription and unpriced Labs endpoints drop out); 'Cached input' becomes cache_read_per_1m_usd; duplicate cards must agree; curated names kept by API id or normalized name; new ids mapping=derived. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
   "models": [
     {
-      "model_name": "Mistral Large 3",
-      "provider_org": "Mistral",
-      "input_per_1m_usd": 0.5,
-      "output_per_1m_usd": 1.5,
+      "model_name": "GLM 5.2",
+      "provider_org": "Z.ai",
+      "input_per_1m_usd": 1.4,
+      "output_per_1m_usd": 4.4,
       "region": "eu",
-      "notes": "open-weight"
+      "notes": "Added 2026-08-26: mistral.ai/pricing/api third-party zai-glm-5-2, cached 0.14",
+      "cache_read_per_1m_usd": 0.14,
+      "api_model_id": "zai-glm-5-2"
     },
     {
       "model_name": "Mistral Medium 3.5",
@@ -18,7 +20,8 @@
       "input_per_1m_usd": 1.5,
       "output_per_1m_usd": 7.5,
       "region": "eu",
-      "notes": "open-weight, Modified MIT; 256k context"
+      "notes": "open-weight, Modified MIT; 256k context",
+      "api_model_id": "mistral-medium-latest"
     },
     {
       "model_name": "Mistral Small 4",
@@ -26,15 +29,17 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.6,
       "region": "eu",
-      "notes": "Apache-2.0"
+      "notes": "Apache-2.0",
+      "api_model_id": "mistral-small-latest"
     },
     {
-      "model_name": "Codestral",
+      "model_name": "Mistral Large 3",
       "provider_org": "Mistral",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 0.9,
+      "input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 1.5,
       "region": "eu",
-      "notes": "Premier coding model"
+      "notes": "open-weight",
+      "api_model_id": "mistral-large-latest"
     },
     {
       "model_name": "Voxtral Small",
@@ -42,7 +47,17 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.4,
       "region": "eu",
-      "notes": "open-weight audio+text chat model; audio input $0.004/min"
+      "notes": "open-weight audio+text chat model; audio input $0.004/min",
+      "api_model_id": "voxtral-small-latest"
+    },
+    {
+      "model_name": "Codestral",
+      "provider_org": "Mistral",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 0.9,
+      "region": "eu",
+      "notes": "Premier coding model",
+      "api_model_id": "codestral-latest"
     },
     {
       "model_name": "Ministral 3 3B",
@@ -50,7 +65,8 @@
       "input_per_1m_usd": 0.1,
       "output_per_1m_usd": 0.1,
       "region": "eu",
-      "notes": "open-weight edge model"
+      "notes": "open-weight edge model",
+      "api_model_id": "ministral-3b-latest"
     },
     {
       "model_name": "Ministral 3 8B",
@@ -58,7 +74,8 @@
       "input_per_1m_usd": 0.15,
       "output_per_1m_usd": 0.15,
       "region": "eu",
-      "notes": "open-weight edge model"
+      "notes": "open-weight edge model",
+      "api_model_id": "ministral-8b-latest"
     },
     {
       "model_name": "Ministral 3 14B",
@@ -66,15 +83,14 @@
       "input_per_1m_usd": 0.2,
       "output_per_1m_usd": 0.2,
       "region": "eu",
-      "notes": "open-weight edge model"
-    },
-    {
-      "model_name": "GLM 5.2",
-      "provider_org": "Z.ai",
-      "input_per_1m_usd": 1.4,
-      "output_per_1m_usd": 4.4,
-      "region": "eu",
-      "notes": "Added 2026-08-26: mistral.ai/pricing/api third-party zai-glm-5-2, cached 0.14"
+      "notes": "open-weight edge model",
+      "api_model_id": "ministral-14b-latest"
     }
-  ]
+  ],
+  "response_sha256": "f5804925ecffb9d3476fb92aea19096a9c6285177e18f5b42acb951ebfcc9dd4",
+  "diff": {
+    "added": [],
+    "removed": [],
+    "price_changed": []
+  }
 }
