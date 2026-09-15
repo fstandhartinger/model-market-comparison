@@ -263,6 +263,19 @@ export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
   designarena_fullstack: "DesignArena Full-Stack Elo",
 };
 
+/** Pass 17 (Fable): the names the score pickers show — the same short names the radar and tables use,
+ *  never the source-prefixed registry labels ("ArtificialAnalysis — …"). */
+export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
+  composite: "Benchmark Heaven Main Composite Score",
+  aa_intelligence_index: "AA Intelligence Index",
+  aa_coding_index: "AA Coding Index",
+  aa_coding_agent: "AA Coding Agent Index v1.4",
+  epoch_eci: "Epoch ECI",
+  epoch_eci_software: "Epoch Software ECI",
+  designarena_fullstack: "DesignArena Full-Stack (Elo)",
+  designarena_frontend: "DesignArena Frontend (Elo)",
+};
+
 export const SCORE_LABELS: Record<ScoreKey, string> = {
   composite: "Composite (coverage-neutral, dominance-safe percentiles, 0–100)",
   aa_coding_index: "ArtificialAnalysis — Coding Index",

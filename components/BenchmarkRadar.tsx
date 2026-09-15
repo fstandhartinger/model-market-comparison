@@ -31,11 +31,11 @@ function seriesFor(view: BenchmarkView, axes: ViewAxis[], picks: string[]): Seri
 
 function SimpleRadar({ axes, series, variant, label, zoom }: { axes: ViewAxis[]; series: Series[]; variant: 'desktop' | 'mobile'; label: string; zoom: boolean }) {
   const [active, setActive] = useState<RadarActive>(null);
-  const d = variant === 'desktop' ? { w: 720, h: 500, cx: 360, cy: 245, R: 150, L: 193 } : { w: 360, h: 360, cx: 180, cy: 180, R: 120, L: 148 };
+  const d = variant === 'desktop' ? { w: 900, h: 600, cx: 450, cy: 295, R: 205, L: 256 } : { w: 360, h: 360, cx: 180, cy: 180, R: 120, L: 148 };
   // CR-19.2: zoomed to the compared models' shared window unless the full 0–100 scale is chosen.
   const win = zoom ? radarWindow(series.flatMap((s) => s.points.map((p) => p.value))) : radarWindow([]);
   const at = (s: number, i: number) => { const p = position(d.cx, d.cy, i, axes.length, d.R * (windowRadius(series[s]?.points[i]?.value ?? win.floor, win) ?? 0)); return [p.x, p.y] as const; };
-  return <div className={`relative mx-auto w-full ${variant === 'desktop' ? 'hidden max-w-[640px] md:block' : 'block max-w-[360px] md:hidden'}`} onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
+  return <div className={`relative mx-auto w-full ${variant === 'desktop' ? 'hidden max-w-[820px] md:block' : 'block max-w-[360px] md:hidden'}`} onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
     <svg className="block w-full" viewBox={`0 0 ${d.w} ${d.h}`} role="group" aria-label={label}>
       {win.rings.map((v, k) => <g key={k}><polygon fill="none" stroke="var(--radar-grid, #526071)" strokeOpacity="0.6" points={axes.map((_, i) => { const p = position(d.cx, d.cy, i, axes.length, d.R * (k + 1) / 4); return `${p.x},${p.y}`; }).join(' ')} /><text x={d.cx + 5} y={d.cy - d.R * (k + 1) / 4 + 13} fill="currentColor" fontSize="10" data-radar-ring>{Math.round(v)}</text></g>)}
       {win.floor > 0 && <text x={d.cx + 5} y={d.cy + 4} fill="currentColor" fontSize="10" data-radar-floor>{win.floor}</text>}
@@ -44,7 +44,7 @@ function SimpleRadar({ axes, series, variant, label, zoom }: { axes: ViewAxis[];
         const short = shortName(axis.name), suffix = versionSuffix(short, axis.version);
         return <g key={axis.id}><line x1={d.cx} y1={d.cy} x2={p.x} y2={p.y} stroke="var(--radar-grid, #526071)" strokeOpacity="0.6" />
           {variant === 'desktop'
-            ? <text x={l.x} y={l.y - 4} textAnchor={l.x < d.cx - 20 ? 'end' : l.x > d.cx + 20 ? 'start' : 'middle'} fill="currentColor" fontSize="11" fontWeight="600"><tspan x={l.x}>{i + 1}. {short.length > 22 ? short.slice(0, 21) + '…' : short}</tspan>{suffix && <tspan x={l.x} dy="16" fontWeight="400" fontSize="10">{suffix}</tspan>}</text>
+            ? <text x={l.x} y={l.y - 4} textAnchor={l.x < d.cx - 20 ? 'end' : l.x > d.cx + 20 ? 'start' : 'middle'} fill="currentColor" fontSize="11" fontWeight="600"><tspan x={l.x}>{i + 1}. {short.length > 30 ? short.slice(0, 29) + '…' : short}</tspan>{suffix && <tspan x={l.x} dy="16" fontWeight="400" fontSize="10">{suffix}</tspan>}</text>
             : <text x={l.x} y={l.y} textAnchor="middle" dominantBaseline="middle" fill="currentColor" fontSize="13" fontWeight="600">{i + 1}</text>}</g>;
       })}
       {series.map((s, si) => <g key={s.id}>

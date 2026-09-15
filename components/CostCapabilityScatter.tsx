@@ -71,6 +71,15 @@ function useNarrow(): boolean {
   return narrow;
 }
 
+/** Pass 17 (Fable): a 200 px phone map shows three Y ticks — floor, the round tick nearest the middle, top. */
+function phoneYTicks(domain: [number, number], ticks: number[]): number[] {
+  const [lo, hi] = domain, mid = (lo + hi) / 2;
+  const inner = ticks.filter((t) => t > lo && t < hi);
+  if (!inner.length) return [lo, hi];
+  const m = inner.reduce((b, t) => (Math.abs(t - mid) < Math.abs(b - mid) ? t : b), inner[0]);
+  return [lo, m, hi];
+}
+
 /** F-17: round Y ticks (multiples of 5, or 10 on a wide range) from a floor up to `max`. */
 function niceTicks(min: number, max: number): { domain: [number, number]; ticks: number[] } {
   const step = max - min > 25 ? 10 : 5;
@@ -239,7 +248,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
                 data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
             <XAxis type="number" dataKey="x" name="Adjusted cost" reversed={COST_AXIS.reversed} scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
-            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? [yCompact.domain[0], yCompact.domain[1]] : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
+            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? phoneYTicks(yCompact.domain, yCompact.ticks) : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-compact" />} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />

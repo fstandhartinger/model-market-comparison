@@ -28,7 +28,7 @@ function BetaTag() {
       onClick={() => setOpen((o) => !o)}
       // Keyboard focus opens the note; a tap also focuses the button, and opening there would let the click close it again.
       onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) setOpen(true); }} onBlur={() => setOpen(false)}>
-      BETA<span className="hidden sm:inline"> — Work in progress</span>
+      BETA<span className="hidden sm:inline sm:ml-1">— Work in progress</span>
     </button>
     {open && <span id="bh-beta-note" role="tooltip" className="absolute left-0 top-full z-50 mt-2 w-60 rounded-lg border border-line bg-[var(--surface)] p-2.5 text-xs font-normal text-[var(--text)] shadow-xl">{BETA_NOTE}</span>}
   </span>;
@@ -97,7 +97,7 @@ export function Nav() {
               </Link>
             );
           })}
-          <details className="relative"><summary className="flex min-h-10 cursor-pointer items-center rounded-md px-2.5 text-gray-300">More ▾</summary><div className="absolute left-0 top-full z-30 mt-2 grid w-64 max-w-full gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></details>
+          <details className="relative"><summary className="flex min-h-10 cursor-pointer items-center rounded-md px-2.5 text-gray-300">More ▾</summary><div className="absolute left-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></details>
         </nav>
         <div className="ml-auto flex items-center gap-1">
           <FilterButton />

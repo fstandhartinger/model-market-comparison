@@ -22,7 +22,7 @@ function LabelPicker({ label, name, options, value, onChange }: { label: React.R
       onClick={() => setOpen((o) => !o)} className="inline-flex min-h-0 items-center gap-1 whitespace-nowrap text-left hover:text-accent">
       {label}<span aria-hidden="true" className="text-[10px] text-gray-400">▼</span>
     </button>
-    {open && <span role="menu" aria-label={name} className="absolute left-0 top-full z-40 mt-1 w-64 rounded-lg border border-line bg-[var(--surface)] p-1 text-sm shadow-xl">
+    {open && <span role="menu" aria-label={name} className="absolute left-0 top-full z-40 mt-1 w-64 max-w-[calc(100vw-2.5rem)] whitespace-normal rounded-lg border border-line bg-[var(--surface)] p-1 text-sm shadow-xl">
       {options.map((o) => <button key={o.id} type="button" role="menuitemradio" aria-checked={o.id === value} data-choice={o.id}
         onClick={() => { onChange(o.id); setOpen(false); }}
         className={`block w-full rounded-md px-2.5 py-1.5 text-left ${o.id === value ? "bg-accent/15 font-semibold text-accent" : "hover:bg-accent/5"}`}>{o.label}</button>)}

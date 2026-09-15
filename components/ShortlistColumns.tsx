@@ -1,9 +1,9 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useEffect, useMemo, useState } from "react";
 import Link from "next/link";
 import type { ClientData } from "../lib/client-model";
 import { hasScoreEvidence } from "../lib/client-model";
-import { SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
+import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { formatValue, shortlistColumns } from "../lib/benchmark-matrix.mjs";
 import { seriesColor } from "./BenchmarkBars";
 import { AaCredit } from "./AaCredit";
@@ -17,6 +17,15 @@ const CHART_SCORES: ScoreKey[] = ["composite", "aa_intelligence_index", "aa_codi
  *  high → low, values on the columns. The table's five columns keep their colours here. */
 export function ShortlistColumns({ data, ids, tableIds, names }: { data: ClientData; ids: string[]; tableIds: string[]; names: Map<string, string> }) {
   const [score, setScore] = useState<ScoreKey>("composite");
+  // Pass 17 (Fable): below md the chart is re-laid out as bar rows (name · bar · value) so every model is
+  // visible without horizontal panning; the columns stay for wider screens.
+  const [rows, setRows] = useState(false);
+  useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767.98px)");
+    const apply = () => setRows(mq.matches);
+    apply(); mq.addEventListener("change", apply);
+    return () => mq.removeEventListener("change", apply);
+  }, []);
   const byId = useMemo(() => new Map(data.models.map((m) => [m.id, m])), [data]);
   const elo = score.startsWith("designarena");
   const unit = elo ? "Elo" : "points";
@@ -33,25 +42,43 @@ export function ShortlistColumns({ data, ids, tableIds, names }: { data: ClientD
       <label className="text-xs">
         <span className="sr-only">Score shown in the chart</span>
         <select className="bh-input py-1 text-xs" value={score} onChange={(e) => setScore(e.target.value as ScoreKey)} data-shortlist-score>
-          {CHART_SCORES.map((k) => <option key={k} value={k}>{k === "composite" ? "Main Composite Score" : SCORE_SHORT_LABELS[k]}</option>)}
+          {CHART_SCORES.map((k) => <option key={k} value={k}>{k === "composite" ? "Main Composite Score" : SCORE_PICKER_LABELS[k]}</option>)}
         </select>
       </label>
     </div>
-    <div className="mt-3 overflow-x-auto" role="img" aria-label={`${label}: ${columns.map((c) => `${names.get(c.id) ?? c.id} ${c.noData ? "no data" : formatValue(c.value as number, unit)}`).join(", ")}`}>
-      <div className="flex h-44 min-w-full items-end gap-1.5" style={{ width: `max(100%, ${columns.length * 2.6}rem)` }} aria-hidden="true">
-        {columns.map((c) => {
-          const j = tableIds.indexOf(c.id);
-          return <div key={c.id} className="flex h-full min-w-[2.2rem] flex-1 flex-col items-center justify-end" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
-            <span className="mb-0.5 text-[10px] font-semibold tabular">{c.noData ? "" : formatValue(c.value as number, unit)}</span>
-            {c.noData
-              ? <span className="bh-muted flex h-full w-full items-end justify-center rounded-t border border-dashed border-line pb-1 text-[9px]">no data</span>
-              : <span className="w-full rounded-t" style={{ height: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
-          </div>;
-        })}
-      </div>
-      <div className="mt-1 flex min-w-full gap-1.5" style={{ width: `max(100%, ${columns.length * 2.6}rem)` }} aria-hidden="true">
-        {columns.map((c) => <Link key={c.id} href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} className="min-w-[2.2rem] flex-1 truncate text-center text-[9.5px] leading-tight hover:underline" title={names.get(c.id)} style={{ writingMode: columns.length > 12 ? "vertical-rl" : undefined, maxHeight: "6.5rem" }}>{names.get(c.id)}</Link>)}
-      </div>
+    <div className={rows ? "mt-3" : "mt-3 overflow-x-auto"} role="img" aria-label={`${label}: ${columns.map((c) => `${names.get(c.id) ?? c.id} ${c.noData ? "no data" : formatValue(c.value as number, unit)}`).join(", ")}`}>
+      {rows
+        ? <div className="space-y-1" aria-hidden="true">
+          {columns.map((c) => {
+            const j = tableIds.indexOf(c.id);
+            return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
+              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular">{c.noData ? "" : formatValue(c.value as number, unit)}</span>
+              <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} className="order-1 w-[38%] shrink-0 hover:underline">{names.get(c.id)}</Link>
+              <span className="order-2 flex h-3.5 flex-1 items-center">
+                {c.noData
+                  ? <span className="bh-muted text-[9px]">no data</span>
+                  : <span className="block rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, height: "100%", background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
+              </span>
+            </div>;
+          })}
+        </div>
+        : <>
+          <div className="flex h-44 min-w-full items-end gap-1.5" style={{ width: `max(100%, ${columns.length * 2.6}rem)` }} aria-hidden="true">
+            {columns.map((c) => {
+              const j = tableIds.indexOf(c.id);
+              return <div key={c.id} className="flex h-full min-w-[2.2rem] flex-1 flex-col items-center justify-end" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
+                <span className="mb-0.5 text-[10px] font-semibold tabular">{c.noData ? "" : formatValue(c.value as number, unit)}</span>
+                {c.noData
+                  ? <span className="bh-muted flex h-full w-full items-end justify-center rounded-t border border-dashed border-line pb-1 text-[9px]">no data</span>
+                  : <span className="w-full rounded-t" style={{ height: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
+              </div>;
+            })}
+          </div>
+          {/* Names read bottom-to-top (the plotting convention) once there are too many columns for horizontal text. */}
+          <div className="mt-1 flex min-w-full gap-1.5" style={{ width: `max(100%, ${columns.length * 2.6}rem)` }} aria-hidden="true">
+            {columns.map((c) => <Link key={c.id} href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} className="min-w-[2.2rem] flex-1 truncate text-center text-[9.5px] leading-tight hover:underline" title={names.get(c.id)} style={columns.length > 12 ? { writingMode: "vertical-rl", transform: "rotate(180deg)", maxHeight: "8rem", textAlign: "left" } : undefined}>{names.get(c.id)}</Link>)}
+          </div>
+        </>}
     </div>
     {domain && kind === "position" && <p className="bh-muted mt-1 text-[11px]">Scale {Math.round(domain[0])}–{Math.round(domain[1])} Elo; column heights are positions, not multiples.</p>}
   </figure>;

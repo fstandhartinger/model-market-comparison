@@ -2,7 +2,7 @@
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, isThinComposite, type ClientData } from "../lib/client-model";
-import { SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
+import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
@@ -322,7 +322,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             // CR-32.1/32.2: pickers at the two slider labels drive the same global settings as Options.
             const costChoices = costMeasureChoices(FIXED_BLENDS, s.inputWeight);
             return {
-              scoreChoices: SIMPLE_SCORE_CHOICES.map((k) => ({ id: k, label: k === "composite" ? "Benchmark Heaven Main Composite Score" : SCORE_LABELS[k as ScoreKey] })),
+              scoreChoices: SIMPLE_SCORE_CHOICES.map((k) => ({ id: k, label: SCORE_PICKER_LABELS[k as ScoreKey] })),
               onScore: (id: string) => s.setScore(id as ScoreKey),
               costChoices, costChoice: activeCostMeasure(costChoices, s.priceMode, s.inputWeight),
               onCost: (id: string) => { const c = costChoices.find((x) => x.id === id); if (!c) return; if (c.patch.inputWeight != null) s.setInputWeight(c.patch.inputWeight); s.setPriceMode(c.patch.priceMode); s.setSimpleMaxCost(null); },

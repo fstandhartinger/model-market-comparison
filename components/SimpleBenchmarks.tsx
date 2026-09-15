@@ -93,7 +93,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
     <ShortlistColumns data={data} ids={listIds} tableIds={ids} names={new Map(listIds.map((id) => { const m = byId.get(id); return [id, m ? collapsedName(m, true, preferred) : id]; }))} />
     {ids.length > 0 && visible.length > 0 && <div className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
       <table className="bh-matrix">
-        <caption className="sr-only">Headline benchmark results for the top models of your shortlist. Bold marks the best result in each row.</caption>
+        <caption className="sr-only">Benchmark results for the top models of your shortlist. Bold marks the best result in each row.</caption>
         <thead><tr>
           <th scope="col" className="bh-matrix-stub">Benchmark</th>
           {ids.map((id, j) => { const m = byId.get(id); return <th key={id} scope="col" className={`bh-matrix-model !pt-3 ${j === 0 ? "bh-matrix-lead" : ""}`}>
@@ -108,7 +108,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
           {g.rows.map(({ row, vals, basis }) => {
             const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter), odd = rowOutliers(vals, row.higherBetter);
             return <tr key={row.id}>
-              <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench">{row.name}<InfoTip title={row.name} label={`the ${row.name} benchmark`}>{row.description || "What this benchmark measures is not described by its publisher yet."}<span className="mt-2 block">{scoreTypeText(row)}</span></InfoTip></span>{row.cohort && <span className="bh-matrix-sub">{row.cohort}</span>}</th>
+              <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}<InfoTip title={row.name} label={`the ${row.name} benchmark`}>{row.description || "What this benchmark measures is not described by its publisher yet."}<span className="mt-2 block">{scoreTypeText(row)}</span></InfoTip></span>{row.cohort && <span className="bh-matrix-sub">{row.cohort}</span>}</th>
               {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                 {v == null
                   ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
@@ -124,6 +124,6 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Every benchmark with a result for at least one of these models. <AaCredit />. Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
+    <p className="bh-muted mt-2 text-xs">Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets. <AaCredit />.</p>
   </section>;
 }
