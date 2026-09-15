@@ -78,7 +78,10 @@ for (const version of ['1.4', '1.5']) {
     // Legacy results were already attached by an audited exact harness/model join.
     const legacy = version === '1.4' ? models.filter((m) => m.coding_agent_results?.some((r) => r.source_model_name === row.model_name && r.harness === row.harness && Math.abs(r.score / 100 - row.score) < 1e-12)) : [];
     const exact = exactNames.get(row.model_name) || [];
-    const model = (legacy.length === 1 ? legacy : exact.length === 1 ? exact : [])[0];
+    // The dataset build joins AA's short agent labels ("Opus 5 (max)") to the catalog
+    // configuration and keeps the label as source_model_name; a unique label reuses it.
+    const agentName = models.filter((m) => m.coding_agent_results?.some((r) => r.source_model_name === row.model_name));
+    const model = (legacy.length === 1 ? legacy : exact.length === 1 ? exact : agentName.length === 1 ? agentName : [])[0];
     observations.push({ id: `aa-coding:${version}:${row.source_id ?? index}`, benchmark_id,
       subject: { source_id: row.source_id ?? `${row.model_name}/${row.harness}`, name: row.model_name,
         model_id: model?.id ?? null, variant: model?.variant ?? null, harness: row.harness },

@@ -127,7 +127,7 @@ const FAMILY_ALIASES = {
   // AA's Coding Agent Index drops the "Claude" prefix (e.g. "Opus 4.8", "Sonnet 4.6").
   "opus-4.8": "claude-opus-4.8", "opus-4.7": "claude-opus-4.7", "opus-4.6": "claude-opus-4.6", "opus-4.5": "claude-opus-4.5",
   "sonnet-5": "claude-sonnet-5", "sonnet-4.6": "claude-sonnet-4.6", "sonnet-4.5": "claude-sonnet-4.5",
-  "fable-5": "claude-fable-5", "haiku-4.5": "claude-haiku-4.5",
+  "opus-5": "claude-opus-5", "fable-5": "claude-fable-5", "fable-5.1": "claude-fable-5.1", "haiku-4.5": "claude-haiku-4.5",
   // Provider-prefixed product labels from managed-cloud catalogs must join the
   // benchmark/OpenRouter family rather than creating a second model.
   "cohere-command-a": "command-a",
@@ -949,6 +949,7 @@ async function build() {
       // AA labels the Fable harness run by its documented Opus fallback path;
       // it is still the Claude Fable 5 max product/configuration.
       "fable-5-with-fallback": "claude-fable-5",
+      "fable-5.1-with-fallback": "claude-fable-5.1",
     };
     const familyKey = codingAgentFamilyAliases[normalizedAgent.familyKey] || normalizedAgent.familyKey;
     const org = normalizedAgent.org;
@@ -975,10 +976,20 @@ async function build() {
     const tenths = sorted.length % 2 ? sorted[mid] : Math.round((sorted[mid - 1] + sorted[mid]) / 2);
     return tenths / 10;
   };
+  // A configuration only the Coding Agent feed knows is named like its catalog siblings
+  // ("Claude Opus 4.7 (Adaptive Reasoning, Medium Effort)"), not by AA's short agent label.
+  const EFFORT_VARIANTS = new Set(["low", "medium", "high", "xhigh", "max"]);
+  const SIBLING_EFFORT_NAME = /^(.*) \(Adaptive Reasoning, \w+ Effort(, [^)]*)?\)$/;
   for (const [modelId, results] of agentResults) {
     const row = models.get(modelId);
     row.coding_agent_results = results;
     row.benchmarks.aa_coding_agent_index = medianToTenth(results.map((result) => result.score));
+    if (row.aa_model_id || row.display_name !== results[0].source_model_name) continue;
+    const sibling = [...models.values()].find((m) => m.family_key === row.family_key && m.aa_model_id && SIBLING_EFFORT_NAME.test(m.display_name));
+    if (!sibling) continue;
+    const [, base, suffix = ""] = sibling.display_name.match(SIBLING_EFFORT_NAME);
+    if (EFFORT_VARIANTS.has(row.variant)) row.display_name = `${base} (Adaptive Reasoning, ${row.variant[0].toUpperCase()}${row.variant.slice(1)} Effort${suffix})`;
+    else if (row.variant === "non-reasoning") row.display_name = `${base} (Non-reasoning)`;
   }
 
   const routeAliases = (route) => new Set([
