@@ -39,3 +39,15 @@ test('CR-33.1/33.2: shortlist columns sort high → low, keep models without a v
   assert.ok(elo.columns[1].height > 0 && elo.columns[1].height < elo.columns[0].height, 'Elo bars are positions, not from zero');
   assert.deepEqual(shortlistColumns([{ id: 'z', value: null }], 'points').columns.map((c) => c.noData), [true]);
 });
+
+import { matrixForModels } from '../lib/benchmark-matrix.mjs';
+test('CR-28.1: the model-scoped matrix keeps every row any of those models has, re-indexed, and reports the catalog size', () => {
+  const matrix = { groups: [{ id: 'g1' }, { id: 'g2' }, { id: 'g3' }], rows: [{ id: 'r0', group: 'g1' }, { id: 'r1', group: 'g2' }, { id: 'r2', group: 'g3' }, { id: 'r3', group: 'g2' }],
+    values: { a: [[0, 50, 0], [3, 7, 1]], b: [[3, 9, 0]], c: [[2, 1, 0]] } };
+  const out = matrixForModels(matrix, ['a', 'b']);
+  assert.deepEqual(out.rows.map((r) => r.id), ['r0', 'r3']);
+  assert.deepEqual(out.values, { a: [[0, 50, 0], [1, 7, 1]], b: [[1, 9, 0]] });
+  assert.deepEqual(out.groups.map((g) => g.id), ['g1', 'g2']);
+  assert.equal(out.catalogRows, 4);
+  assert.deepEqual(matrixForModels(matrix, []).rows, []);
+});

@@ -16,12 +16,25 @@ const NOTE_KEY = "bh.simpleBenchmarksNote.v1";
 
 /** CR-7.1 / CR-7.2: Simple mode's second section — the headline benchmarks for the top of the list above,
  *  clearly marked as the simple version, with the full comparison one click away. */
-export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matrix; data: ClientData; ids: string[] }) {
+export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { matrix: Matrix; data: ClientData; ids: string[] }) {
   const { score } = useSettings();
   const byId = useMemo(() => new Map(data.models.map((m) => [m.id, m])), [data]);
   // F-82: the same column names as the full comparison — the model, not its effort setting.
   const preferred = useMemo(() => preferredVariantIds(data.models, score), [data, score]);
-  const ids = useMemo(() => listIds.filter((id) => matrix.values[id]?.length).slice(0, COLUMNS), [listIds, matrix]);
+  // CR-28.1: the headline rows render first (shipped with the page); the full list of every benchmark these
+  // models have is fetched for exactly these models and replaces them.
+  const [fullMatrix, setFullMatrix] = useState<{ key: string; matrix: Matrix & { catalogRows?: number } } | null>(null);
+  const candidateIds = useMemo(() => listIds.filter((id) => headline.values[id]?.length || fullMatrix?.matrix.values[id]?.length).slice(0, COLUMNS), [listIds, headline, fullMatrix]);
+  const fetchKey = listIds.slice(0, COLUMNS).join(",");
+  useEffect(() => {
+    if (!fetchKey) return;
+    let live = true;
+    fetch(`/api/benchmark-matrix?models=${encodeURIComponent(fetchKey)}`).then((r) => r.ok ? r.json() : null)
+      .then((j) => { if (live && j?.matrix) setFullMatrix({ key: fetchKey, matrix: j.matrix }); }).catch(() => { /* keep headline rows */ });
+    return () => { live = false; };
+  }, [fetchKey]);
+  const matrix: Matrix & { catalogRows?: number } = fullMatrix && fullMatrix.key === fetchKey ? fullMatrix.matrix : headline;
+  const ids = useMemo(() => candidateIds.filter((id) => matrix.values[id]?.length), [candidateIds, matrix]);
   const [note, setNote] = useState(false);
   // CR-7.2: on small screens say once that the full version is built for larger screens.
   useEffect(() => {
@@ -47,7 +60,7 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
 
   const lookups = useMemo(() => ids.map((id) => new Map((matrix.values[id] ?? []).map(([i, v, b]) => [i, [v, b] as const]))), [ids, matrix]);
   const visible = useMemo(() => matrix.rows.map((row, i) => ({ row, vals: lookups.map((m) => m.get(i)?.[0] ?? null), basis: lookups.map((m) => m.get(i)?.[1] ?? null) }))
-    .filter(({ vals }) => vals.filter((v) => v != null).length >= Math.min(2, ids.length)), [matrix, lookups, ids.length]);
+    .filter(({ vals }) => vals.some((v) => v != null)), [matrix, lookups]);
   const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id) })).filter((g) => g.rows.length);
   const valuesFor = (key: typeof score) => ids.map((id) => { const m = byId.get(id); return m && hasScoreEvidence(m, key) ? m.scores[key] ?? null : null; });
   const full = `/benchmarks${ids.length ? `?${new URLSearchParams({ models: ids.join(",") })}` : ""}`;
@@ -58,7 +71,9 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
         <p className="bh-eyebrow">Simple view</p>
         <h2 id="bh-simple-bench-title" className="text-2xl font-bold tracking-tight">Benchmarks for your shortlist</h2>
         <p className="bh-muted mt-1 max-w-2xl text-sm">
-          {ids.length ? <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{visible.length}</span> results side by side.</> : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
+          {ids.length ? (matrix.catalogRows
+            ? <>Every benchmark with a result for the top {ids.length} of your list above: <span className="tabular" data-bench-count>{visible.length}</span> of the <span className="tabular" data-catalog-count>{matrix.catalogRows}</span> benchmark results we track.</>
+            : <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{visible.length}</span> results side by side (loading the full list…).</>) : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
         </p>
       </div>
       <span className="relative inline-flex">
@@ -106,6 +121,6 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Headline benchmarks with a result for at least two of these models. Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
+    <p className="bh-muted mt-2 text-xs">Every benchmark with a result for at least one of these models. Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
   </section>;
 }
