@@ -1,6 +1,6 @@
 {
   "version": "2026-09-16",
-  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0\u2013100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite. 2026-09-16: OpenRouter's own reproducible runs (CR-34.2) enter as their own registry families; their -cost families are the measured spend of the same run and sit under Cost & efficiency.",
+  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0\u2013100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite. 2026-09-16: OpenRouter's own reproducible runs (CR-34.2) enter as their own registry families; their -cost families are the measured spend of the same run and sit under Cost & efficiency. All of them are tier 'niche': release posts cite Artificial Analysis' GPQA Diamond and tau2-Bench, not OpenRouter's own re-runs, and the Simple table must not show two different GPQA numbers side by side.",
   "groups": [
     {
       "id": "indices",
@@ -244,7 +244,7 @@
     "mazur-divergent-thinking": "community",
     "mazur-elimination-game": "community",
     "mmmu": "headline",
-    "openrouter-gpqa-diamond": "headline",
+    "openrouter-gpqa-diamond": "niche",
     "openrouter-gpqa-diamond-cost": "niche",
     "openrouter-search-browsecomp": "niche",
     "openrouter-search-browsecomp-cost": "niche",
@@ -254,7 +254,7 @@
     "openrouter-search-hle-cost": "niche",
     "openrouter-search-widesearch": "niche",
     "openrouter-search-widesearch-cost": "niche",
-    "openrouter-tau2-bench-airline": "headline",
+    "openrouter-tau2-bench-airline": "niche",
     "openrouter-tau2-bench-airline-cost": "niche",
     "otis-mock-aime": "niche",
     "pingpong-english": "community",
