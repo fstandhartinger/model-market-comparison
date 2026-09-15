@@ -1,4 +1,5 @@
-// CR-35.1 (Artificial Analysis attribution on every AA surface) and CR-35.2 (BETA — Work in progress tag).
+// CR-35.1 (Artificial Analysis attribution on every AA surface), CR-35.2 (BETA — Work in progress tag) and
+// CR-35.4 (Epoch AI CC BY credit on every Epoch surface, citation on /about).
 // Live at 1440/390, light/dark. Usage: node verify-cr-35.mjs <base> <outdir>
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
@@ -11,6 +12,8 @@ const goto = async (page, url) => { for (let a = 1; ; a++) { try { return await 
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
 const settle = async (page) => { await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1800); };
 const AA = 'https://artificialanalysis.ai/';
+const EPOCH = 'https://epoch.ai/eci', CCBY = 'https://creativecommons.org/licenses/by/4.0/';
+const epochCredits = (page, scope) => page.evaluate(({ scope, EPOCH, CCBY }) => [...document.querySelectorAll(`${scope} [data-epoch-credit]`)].filter((el) => [...el.querySelectorAll('a')].some((a) => a.href === EPOCH) && [...el.querySelectorAll('a')].some((a) => a.href === CCBY)).length, { scope, EPOCH, CCBY });
 const credits = (page, scope) => page.evaluate(({ scope, AA }) => [...document.querySelectorAll(`${scope} [data-aa-credit] a`)].filter((a) => a.href === AA && /Artificial Analysis/.test(a.textContent)).length, { scope, AA });
 
 const browser = await chromium.launch();
@@ -37,6 +40,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
 
   // CR-35.1 on the home page: footer, value map, column chart, Simple table footnote, score tooltip.
   check(`${tag} CR-35.1 footer credit (linked)`, (await credits(page, 'footer')) >= 1, '');
+  check(`${tag} CR-35.4 footer Epoch AI (CC BY) credit with licence link`, (await epochCredits(page, 'footer')) >= 1, '');
+  check(`${tag} CR-35.4 value map and column chart carry the Epoch credit`, (await epochCredits(page, '.bh-value-map')) >= 1 && (await epochCredits(page, '[data-shortlist-columns]')) >= 1, '');
   check(`${tag} CR-35.1 value map credit`, (await credits(page, '.bh-value-map')) >= 1, '');
   check(`${tag} CR-35.1 shortlist column chart credit`, (await credits(page, '[data-shortlist-columns]')) >= 1, '');
   check(`${tag} CR-35.1 Simple benchmark table credit`, (await credits(page, '#benchmarks')) >= 1, '');
@@ -50,6 +55,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   for (const [path, scope, label] of [['/compare', '#benchmark-radar', 'compare radar'], ['/benchmarks', 'main', 'benchmarks matrix'], ['/benchmaxxing', '.bh-page-head', 'Benchmaxxing page'], ['/about', 'main', 'about/method'], ['/models/' + encodeURIComponent('gpt-6-astra::high'), 'main', 'model page']]) {
     await goto(page, `${BASE}${path}`); await settle(page);
     check(`${tag} CR-35.1 ${label} credit`, (await credits(page, scope)) >= 1 && (await credits(page, 'footer')) >= 1, path);
+    if (label === 'compare radar' || label === 'model page') check(`${tag} CR-35.4 ${label} Epoch credit`, (await epochCredits(page, scope)) >= 1, path);
+    if (label === 'about/method') check(`${tag} CR-35.4 /about carries Epoch's recommended citation`, /Epoch AI, .Epoch Capabilities Index.\. Published online at epoch\.ai/.test(await page.locator('[data-epoch-citation]').innerText().catch(() => '')), '');
   }
   check(`${tag} no page errors`, !errors.length, errors);
   await context.close();
