@@ -28,7 +28,7 @@ function BetaTag() {
       onClick={() => setOpen((o) => !o)}
       // Keyboard focus opens the note; a tap also focuses the button, and opening there would let the click close it again.
       onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) setOpen(true); }} onBlur={() => setOpen(false)}>
-      BETA<span className="hidden sm:inline sm:ml-1">— Work in progress</span>
+      BETA<span className="hidden sm:inline">&nbsp;— Work in progress</span>
     </button>
     {open && <span id="bh-beta-note" role="tooltip" className="absolute left-0 top-full z-50 mt-2 w-60 rounded-lg border border-line bg-[var(--surface)] p-2.5 text-xs font-normal text-[var(--text)] shadow-xl">{BETA_NOTE}</span>}
   </span>;
