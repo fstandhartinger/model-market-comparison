@@ -221,3 +221,20 @@ Laptop Claude Code chat, 15 Sep 2026 ~16:00 UTC, verbatim (typos kept):
 > also, when in simple mode the "Benchmarks" link in the header is clicked and we have scrolled to the benchmarks table - or alternatively when the user has scrolled tothat benchmark table manually, I'd like to have a brief note popping up, attention seeking, for a short moment, and then disappear, saying "this is a simplified list" next to the button "Open the full comparison".
 >
 > also can we please have an (i) next to each of the benchmark names in that benchmark table? with a tooltip (mae sure z-index and opacity of the tooltip is right) that quickly explains what the tooltip is about and what type of scores thi benchmark delivers?
+
+
+## CR-20260915h — Simple view: score and cost pickers at the sliders, shorter (i) texts, value-map Y axis range + chart settings
+Laptop Claude Code chat, 15 Sep 2026 ~16:10 UTC, verbatim (typos kept; "MA adjusted cost" = "Max adjusted cost", "chat" = "chart"):
+
+> oh and one more thing: the place in the simple view, where the "Minimum Capability Score" is shown: provide a dropdown there (just show a small arrow triangle pointing downwards next to the text) and there a popup for selecting another score should come up, e.g. one of the other composites (like we have in that benchmark table in the category sections) and also some selected other scores like AA Intelligence Index, AA Coding Index, the two main ECI ones, the most important DesignArena ones etc.
+> And similar for the MA adjusted cost / task: there also we should offer that the user can select other cost measurements, e.g. plain cost per million tokens.
+> And: the tooltip text in the (i') next to Max adjusted cost: make the text way shorter and simpler, better to understand, e.g. bullet points. Similar for the other (i) tooltip for the capability score.
+> By the way: the Y axis of that pareto chart always seems to go up to 100 - I think we don't have to do that for scores where the highest value is well below 100. We might offer a small cogwheel button for the chat to configure that kind of options though
+
+
+## CR-20260915i — Shortlist column chart; Main Composite row always first
+Laptop Claude Code chat, 15 Sep 2026 ~16:20 UTC, verbatim:
+
+> and one more thing: above the table of the "Benchmarks for your shortlist" section lets show one bar chart (actually a column chart) showing all these models with the "Benchmark Heaven Score (Main Composite Score)" and just to clarify: the top row in the table should always be the Main Composite Score one, not depending on which Score is currently selected in the filters (future Options) section. But: if another score is selected there than the Main Composite Score, then add another row with the selected one right below the Main Composite Score row. And for that new Column Chart: Lets again add a dropdown selector there for choosing the type of Score to have the diagram displayed for.
+
+Note: this supersedes CR-12.1's behaviour where the top row showed 'the current selected score'.

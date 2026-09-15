@@ -260,3 +260,23 @@ still-open rows from section 2 per the priority rule in section 0.
 |---|---|---|
 | CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual scrolling — a brief, attention-seeking note 'This is a simplified list' pops up next to the 'Open the full comparison' button, stays a short moment (~3–4 s) and disappears; at most once per page visit (don't nag on every scroll) | IntersectionObserver-based; works for header link and manual scroll; respects prefers-reduced-motion (no animation, still shown); not covering the button; mobile 390 px + desktop, light/dark; test |
 | CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the benchmark measures and what type of score it delivers (e.g. % solved, Elo, index 0–100, fraction), sourced from the taxonomy descriptions | Every row has an (i) with non-empty text; tooltip opaque, above sticky headers/columns and the table (correct z-index), keyboard- and tap-accessible; no clipping at table edges |
+
+
+## 11. CR-20260915h checklist — score/cost pickers, shorter tooltips, value-map axis + settings
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-32.1 | Simple view: the 'Minimum Capability Score' label gets a small downward triangle; clicking opens a compact popup to pick the score: Benchmark Heaven Main Composite (default), the category composites (same as the category rows in the Simple benchmark table, e.g. Coding), and selected scores: AA Intelligence Index, AA Coding Index, Epoch ECI, Epoch Software ECI, the most important DesignArena scores. The choice drives the slider, table sort/score row, value map and label (CR-29 wording adapts) | Keyboard/tap accessible popup, opaque, correct z-index; selection persists like other settings; slider range/default adapt to the score's scale (CR-18 rule applies per score); test |
+| CR-32.2 | Simple view: the 'Max adjusted cost / task' label gets the same triangle picker to choose the cost measure: adjusted cost per task (default), plain blended cost per million tokens, input and output price per million tokens (and any other existing price modes). Choice drives the cap slider, table cost column and value-map X axis consistently | Units/labels correct everywhere; test for each mode |
+| CR-32.3 | Rewrite the (i) tooltips next to 'Max adjusted cost' and 'Minimum Capability Score' to be much shorter and simpler, as 2–4 short bullet points in plain language (details can link to the methodology/Sources) | Each tooltip ≤ ~50 words; reviewed for clarity; opaque, correct z-index |
+| CR-32.4 | Value map Y axis: don't always run to 100 — fit the range to the plotted scores (sensible padding, rounded ticks) when the highest value is well below 100; scale-aware for Elo-style scores | Test with a score whose max is ~70: axis top < 100; points never clipped |
+| CR-32.5 | Small cogwheel button on the value map opening chart settings, e.g. Y axis: fit to data / full 0–100 scale, labels on/off, Pareto line on/off (reuse existing toggles where present) | Settings persist; accessible; design gate review |
+
+
+## 12. CR-20260915i checklist — shortlist column chart, Main Composite row first
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-33.1 | 'Benchmarks for your shortlist' section: a column chart above the table showing all shortlist models' Benchmark Heaven Score (Main Composite Score), sorted high→low, values labelled, same model order/colours as the table where sensible | Renders desktop + 390 px (horizontal scroll or compact labels), light/dark, accessible (aria/table fallback); updates with filters |
+| CR-33.2 | The column chart has its own small score dropdown (same score list as CR-32.1: Main Composite default, category composites, AA Intelligence/Coding, Epoch ECI + Software ECI, key DesignArena scores); models without a value for that score are shown as 'no data', not zero | Test per score; Elo-style axis handled; no fake zeros |
+| CR-33.3 | Simple benchmark table: the top row is ALWAYS the Benchmark Heaven Score (Main Composite Score), independent of the score selected in Filters/Options. If a different score is selected there, a second highlighted row with that selected score appears directly below it. (Supersedes CR-12.1's 'current selected score' subtitle behaviour.) | Test: composite selected → 1 row; other score selected → composite row + selected row; labels correct; same in Benchmarks tab and Advanced details where CR-12.1 applied |

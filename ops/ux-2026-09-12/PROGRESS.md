@@ -234,9 +234,9 @@ credited below, the rest is marked open.
 | CR-17.1 | EU-hosted filter: Claude via AWS Bedrock EU (per model, cited) | verified | `/opt/benchmarkheaven/state/ux-evidence/iter68-cr-17/{canonical,legacy}/verification.json` (`bin/verify-cr-17.mjs`, 22/22 per host); `test/eu-hosted.test.mjs`; audit `/home/flori/jobs/benchmarkheaven-eu-hosting-audit-20260915/` | **Iteration 68 (claude-opus), `3cab196`, live at build `VuwMNgohtDwNGkHsTgbOQ`:** already correct — Claude Sonnet 5, Opus 5, Opus 4.7/4.8, Sonnet 4.6, Haiku 4.5 pass via the Bedrock eu. geo profile; Fable 5/5.1 are US/Global-only on Bedrock (Fable 5.1 passes only via Google Vertex AI EU multi-region). No data change; guard test. Live 22/22 per host (API offers + (i) + guided hint at 1440/390, light/dark; the first run's filter-panel locator was wrong and is fixed). Needs a non-claude-opus verifier. **Verified by review gate 20260915T150001Z (opencode-kimi, non-implementer):** `bin/verify-cr-17.mjs` **22/22 per host** live on both hosts, 1440/390, light/dark (`ux-evidence/review-20260915T150001Z/cr-17/{canonical,legacy}/verification.json`); guard test `test/eu-hosted.test.mjs` green. |
 | CR-17.2 | EU-hosted filter: OpenAI via Azure AI Foundry EU deployments (per model, cited) | verified | same as CR-17.1 | Microsoft's region table (captured 2026-09-15, re-read table by table): GPT-6 Astra Data Zone Standard/Provisioned **US only** → its "EU Data Zone" row removed; DeepSeek-V4-Flash (2026-04-23) Data Zone Standard in 7 EU regions → added at 0.21/0.56 (Retail DZ meters). GPT-5.6, o3, GPT-4o EU DZ rows confirmed. Offers 2,863 → 2,861; CHANGELOG + method note. Live 22/22 per host. **Verified by review gate 20260915T150001Z (opencode-kimi, non-implementer):** `bin/verify-cr-17.mjs` **22/22 per host** live on both hosts, 1440/390, light/dark (`ux-evidence/review-20260915T150001Z/cr-17/{canonical,legacy}/verification.json`); guard test `test/eu-hosted.test.mjs` green. |
 | CR-17.3 | EU-hosted definition stated plainly and applied consistently | verified | same as CR-17.1 | (i) beside "EU-hosted only" + guided hint: in-EU inference (EU region, EU geo profile, Europe Data Zone, or an audited all-EU provider fleet — Mistral, Scaleway, IONOS, TensorX, Inceptron, NextBit per provider-meta), never Global / billing / control plane alone; Florian's own 2026-07-12 company-policy equivalents (Azure Global DeepSeek V4 Pro, Kimi K2.7 Code) kept per R4.7 "same logic" and disclosed. Guard test asserts no other Global route passes. Live 22/22 per host. **Verified by review gate 20260915T150001Z (opencode-kimi, non-implementer):** `bin/verify-cr-17.mjs` **22/22 per host** live on both hosts, 1440/390, light/dark (`ux-evidence/review-20260915T150001Z/cr-17/{canonical,legacy}/verification.json`); guard test `test/eu-hosted.test.mjs` green. |
-| CR-18.1 | Simple min-score default derived so the cheapest top model is on the Pareto line | open | — | — |
-| CR-18.2 | Derived default never below 65 (0–100 scores) | open | — | — |
-| CR-18.3 | Table/map consistency, reset, manual override, no pool feedback loop | open | — | — |
+| CR-18.1 | Simple min-score default derived so the cheapest top model is on the Pareto line | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | iter 71 claude-opus `07b65fd`: `derivedMinScore` (lib/value-map.mjs) from Simple's pre-cut pool; live 60/60 per host (default 69 = floor(DeepSeek V4 Flash score), cheapest model on the Pareto line) |
+| CR-18.2 | Derived default never below 65 (0–100 scores) | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | floor 65 for Composite; Elo boards keep fixed default; unit test (cheapest at 50 → 65) |
+| CR-18.3 | Table/map consistency, reset, manual override, no pool feedback loop | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | table + map read one `minScoreSimple`; hand-set value wins + persists; untouched → derived again; Advanced unchanged — all live-checked |
 | CR-19.1 | Compare radar tooltips get an opaque, theme-aware background (no see-through text) in light and dark | open | — | — |
 | CR-19.2 | Compare radar scaling makes differences between two strong models visible: axis range adapts to the two select | open | — | — |
 | CR-19.3 | Default compare radar axes: replace DesignArena Frontend with DesignArena Full-Stack (Fable 5.1 must have a va | open | — | — |
@@ -258,14 +258,22 @@ credited below, the rest is marked open.
 | CR-27.1 | Research and, if it qualifies, add trustedtokens.eu as a provider (models, prices, hosting region, company cou | open | — | — |
 | CR-28.1 | Overview start page benchmark list shows all benchmarks we have (not only 22) | open | — | — |
 | CR-28.2 | DesignArena Frontend and Full-Stack values for GPT-6 Astra (and any other missing models present on DesignAren | open | — | — |
-| CR-29.1 | Simple mode minimum-score slider label reads 'Minimum Capability Score' with '(Benchmark Heaven Main Composite | open | — | — |
-| CR-29.2 | The slider filters on exactly the same score shown in the top 'Benchmark Heaven Score' row of the Simple bench | open | — | — |
+| CR-29.1 | Simple mode minimum-score slider label reads 'Minimum Capability Score' with '(Benchmark Heaven Main Composite | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | two-line label + aria name + (i) title "(Benchmark Heaven Main Composite Score)"; live both hosts, 1440/390 light/dark |
+| CR-29.2 | The slider filters on exactly the same score shown in the top 'Benchmark Heaven Score' row of the Simple bench | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | slider filters on `s.score`, the same key as the Score row (`data-score=composite`); rows all ≥ slider value live |
 | CR-29.3 | Simple benchmark results table: in each benchmark row, a small tag marks scores that are outstandingly good or | open | — | — |
 | CR-30.1 | Ingest the verified self-reported scores from `/home/flori/jobs/bh-self-reported-scout-20260915/self-reported- | open | — | — |
 | CR-30.2 | Add the top new benchmarks from `BENCHMARK-CANDIDATES.md` (prefer ones with an independent leaderboard) to the | open | — | — |
 | CR-30.3 | Benchmark lists/tables show the new benchmarks (Overview all-benchmarks list, Benchmarks tab, compare) with se | open | — | — |
 | CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual s | open | — | — |
 | CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the ben | open | — | — |
+| CR-32.1 | Simple view: the 'Minimum Capability Score' label gets a small downward triangle; clicking opens a compact pop | open | — | — |
+| CR-32.2 | Simple view: the 'Max adjusted cost / task' label gets the same triangle picker to choose the cost measure: ad | open | — | — |
+| CR-32.3 | Rewrite the (i) tooltips next to 'Max adjusted cost' and 'Minimum Capability Score' to be much shorter and sim | open | — | — |
+| CR-32.4 | Value map Y axis: don't always run to 100 — fit the range to the plotted scores (sensible padding, rounded tic | open | — | — |
+| CR-32.5 | Small cogwheel button on the value map opening chart settings, e.g. Y axis: fit to data / full 0–100 scale, la | open | — | — |
+| CR-33.1 | 'Benchmarks for your shortlist' section: a column chart above the table showing all shortlist models' Benchmar | open | — | — |
+| CR-33.2 | The column chart has its own small score dropdown (same score list as CR-32.1: Main Composite default, categor | open | — | — |
+| CR-33.3 | Simple benchmark table: the top row is ALWAYS the Benchmark Heaven Score (Main Composite Score), independent o | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1895,3 +1903,11 @@ CR-31.1/31.2 join priority group 2 (quick visible fixes), next to CR-29.3 (same 
   - **Q&A documented in the review file:** CSV question (JSON pipeline; no CSV stage in a review gate;
     today's daily runs 06:28/06:40/07:03; after-ux service stays stopped) and the "cullet/bounces quick"
     question (word absent from the project; read as pacing-vs-deploy-speed + CR-18 note).
+
+
+## PRIORITY addendum 2026-09-15 ~16:10 UTC (laptop supervisor)
+CR-32 touches the same Simple sliders as CR-18/CR-29: design them together (score picker + data-driven default + two-line label). CR-32.3 and CR-32.4 are quick fixes (group 2); CR-32.1/32.2/32.5 go with group 3. CR-32.1's score list should reuse CR-25.6 (category composites in the score dropdown).
+
+
+## PRIORITY addendum 2026-09-15 ~16:20 UTC (laptop supervisor)
+CR-33.3 (Main Composite row always first + selected-score row below) changes CR-12.1 and belongs with the CR-18/CR-29/CR-32 slider-and-score work — do it in the same pass. CR-33.1/33.2 (column chart with score dropdown) go with group 3 and share the score list component with CR-32.1.
