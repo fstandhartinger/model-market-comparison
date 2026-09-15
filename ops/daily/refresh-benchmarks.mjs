@@ -44,7 +44,11 @@ export async function refreshBenchmarks({ runDir } = {}) {
       ? { url: source.url, method: 'POST', body: { path: 'runs:getLeaderboard', args: {}, format: 'json' } } : source.url);
   };
   for (const entry of registry.entries) { add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
-  for (const spec of plan.entries) { add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source']) add(spec.parser?.[key]); }
+  for (const spec of plan.entries) {
+    add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source']) add(spec.parser?.[key]);
+    // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
+    for (const run of spec.parser?.runs ?? []) add(run);
+  }
   for (const row of vendor.observations) add(row.source);
   // AA's model page was already fetched by efficiency; never fetch it again.
   const live = (await readFile(join(runDir, 'sources', 'live-manifest.jsonl'), 'utf8')).trim().split('\n').map(JSON.parse);
@@ -153,6 +157,7 @@ export async function refreshBenchmarks({ runDir } = {}) {
     try {
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
       for (const key of ['method_source', 'categories_source', 'frontend_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);
+      if (spec.parser.runs) proposed.parser.runs = spec.parser.runs.map(current);
       const onePlan = join(temporary, `plan-${index}.json`), output = join(temporary, `public-${index}.json`);
       await put(onePlan, { schema_version: 1, entries: [proposed] });
       await exec('python3', ['ops/daily/public-candidate.py', onePlan, output], { timeout: 60_000, maxBuffer: 2_000_000 });
@@ -170,7 +175,8 @@ export async function refreshBenchmarks({ runDir } = {}) {
       // Joining happens in the offline ingestion draft before fingerprints are
       // issued, so approval binds exactly the final published observation.
       for (const row of changed) {
-        changedIds.add(row.id); evidenceById.set(row.id, [{ ...proposed.source, locator: row.source.locator,
+        const rowSource = proposed.parser.runs?.find((run) => run.url === row.source.url) ?? proposed.source;
+        changedIds.add(row.id); evidenceById.set(row.id, [{ ...rowSource, locator: row.source.locator,
           content: JSON.stringify({ native_source_row: evidence[row.id], protocol: proposed.protocol, registry: { id: entry.id, version: entry.version, scoring: entry.scoring } }) }, ...protocolSources]);
       }
       publicRows = publicRows.filter((r) => r.benchmark_id !== spec.benchmark_id).concat(candidate.observations.map((r) => changedIds.has(r.id) ? r : old.get(r.id)));
