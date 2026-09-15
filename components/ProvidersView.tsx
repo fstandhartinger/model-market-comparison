@@ -4,7 +4,7 @@ import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/clie
 import { SCORE_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { num, orgColor } from "../lib/format";
-import { rankedOffers, createOfferScope, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
+import { rankedOffers, scopeFromSettings, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
 import { DataBar } from "./ui";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -59,7 +59,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
   const [mode, setMode] = useState<Mode>("model");
@@ -70,6 +70,7 @@ export function ProvidersView({ data }: { data: ClientData }) {
 
   const eligible = (m: ClientModel) => {
     if (s.openOnly && !m.open_weights) return false;
+    if (s.labAllowed && !s.labAllowed(m.org)) return false;
     if (s.featured && !m.featured) return false;
     if (s.familySet && !s.familySet.has(m.family_key)) return false;
     // A composite without benchmark evidence is the neutral fallback 50, not a
@@ -94,14 +95,14 @@ export function ProvidersView({ data }: { data: ClientData }) {
       if (!previous || (m.scores[score] ?? -Infinity) > (previous.scores[score] ?? -Infinity)) fams.set(m.family_key, m);
     }
     return [...fams.values()];
-  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.advancedMinScore]);
+  }, [data, candidates, score, scorePeersOnly, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, s.advancedMinScore]);
 
   const modelOptions = useMemo(
     () => (s.collapse ? collapseModels(candidates, preferredId) : candidates)
       .filter((m) => rankedOffers(data.offersByModel[m.id], offerScope, priceContext(m, data, priceSettings)).length)
       .filter((m) => eligible(m))
       .sort((a, b) => (b.scores[score] ?? -Infinity) - (a.scores[score] ?? -Infinity)),
-    [data, candidates, score, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.advancedMinScore]
+    [data, candidates, score, offerScope, preferredId, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, s.advancedMinScore]
   );
   const defaultModel = modelOptions.find((m) => m.family_key === "kimi-k2.6" && m.variant !== "non-reasoning")
     || modelOptions.find((m) => m.family_key === "kimi-k2.6") || modelOptions[0];

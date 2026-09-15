@@ -2,7 +2,7 @@
 
 import { useMemo } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
-import { offerPrice, priceContext, priceLabel, createOfferScope, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
+import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
 import { usdPerM } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -22,8 +22,8 @@ export function ModelDetailOffers({
 }) {
   const s = useSettings();
   const scope = useMemo(
-    () => createOfferScope(s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
-    [s.excludedSet, s.excludeChinese, providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining],
+    () => scopeFromSettings(s, providers),
+    [s.excludedSet, s.hostedIn, s.providerBasedIn, providers, s.allowDataTraining],
   );
   const ctx = useMemo(() => priceContext(model, { ...pricingData, models: [model], offersByModel: { [model.id]: offers }, offersByFamily: {}, providers, families: [] }, s), [model, pricingData, offers, providers, s.priceMode, s.inputWeight]);
   const ranked = useMemo(() => rankedOffers(offers, scope, ctx), [offers, scope, ctx]);

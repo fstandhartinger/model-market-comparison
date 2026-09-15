@@ -6,7 +6,7 @@ import {
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import { orgColor } from "../lib/format";
-import { modelPrice, scopedCatalogOffers, createOfferScope, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
+import { modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { NumFilter } from "./ui";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -138,7 +138,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const [maxCost, setMaxCost] = useState("");
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
@@ -148,6 +148,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
     let base = candidates;
     if (s.collapse) base = collapseModels(base, preferredId);
     if (s.openOnly) base = base.filter((m) => m.open_weights);
+    if (s.labAllowed) base = base.filter((m) => s.labAllowed!(m.org));
     if (s.featured) base = base.filter((m) => m.featured);
     if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
     return base
@@ -163,7 +164,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
       // A composite with zero evidence is the neutral fallback 50, not a
       // measured score — it cannot satisfy a positive min-score filter.
       .filter((x) => (s.advancedMinScore > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.advancedMinScore : true));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.advancedMinScore, maxCost, preferredId]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, s.advancedMinScore, maxCost, preferredId]);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)

@@ -2,8 +2,9 @@
 import { useEffect, useMemo, useState } from "react";
 import type { ClientData, ClientModel } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
+import { REGION_BUCKETS } from "../lib/regions.mjs";
 import { ModelExplorer } from "./ModelExplorer";
-import { modelPrice, createOfferScope, type PriceSettings } from "../lib/cost";
+import { modelPrice, scopeFromSettings, type PriceSettings } from "../lib/cost";
 
 /** R5.6 — the guided alternative to the filter bar: one question per page, each mapped to
  *  a filter that already exists, so the questionnaire is a different way into the same
@@ -74,6 +75,10 @@ function Choice({ label, hint, on, onClick }: { label: string; hint?: string; on
 
 export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => void }) {
   const s = useSettings();
+  const euOnly = s.hostedIn.length === 1 && s.hostedIn[0] === "EU";
+  const noUs = !s.providerBasedIn.includes("US"), noChina = !s.providerBasedIn.includes("China");
+  // Toggle one provider-company bucket; releasing the last one would empty every view, so it resets to all instead.
+  const flip = (list: string[], b: string) => { const next = list.includes(b) ? list.filter((x) => x !== b) : [...list, b]; return next.length ? next : [...REGION_BUCKETS]; };
   const [step, setStep] = useState(1);
   const [company, setCompany] = useState<Answer>(null);
   const [intelMonths, setIntelMonths] = useState<number | null>(null);
@@ -90,8 +95,8 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   useEffect(() => { setAdvancedMinScore(0); }, []);
 
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const scope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
-    [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  const scope = useMemo(() => scopeFromSettings(s, data.providers),
+    [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
 
   /** Budget page: real quartiles of what a task costs today, so the choices are anchored in
    *  the catalogue instead of in round numbers we made up. */
@@ -118,7 +123,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
 
   const restart = () => {
     setCompany(null); setIntelMonths(null); setCodingMonths(null);
-    s.setIsCompany(false); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
+    s.setIsCompany(false); s.setHostedIn([...REGION_BUCKETS]); s.setProviderBasedIn([...REGION_BUCKETS]);
     s.setTeeOnly(false); s.setAllowDataTraining(false);
     s.setMinIntelligence(null); s.setMinCoding(null); s.setMaxCost(null); s.setAdvancedMinScore(0);
     setStep(1);
@@ -147,11 +152,12 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   if (step === 1) return (
     <Page step={1} total={5} title="Does your data need to stay somewhere specific?" onNext={() => setStep(2)}
       lead="Each answer removes provider routes from every figure on the site — the prices you then see are the prices of the routes you are allowed to use."
-      skip={() => { s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false); setStep(2); }}>
+      skip={() => { s.setHostedIn([...REGION_BUCKETS]); s.setProviderBasedIn([...REGION_BUCKETS]); setStep(2); }}>
+      {/* CR-25.4: the three plain questions write the same positive lists the Options panel shows as chips. */}
       <div className="grid gap-3 sm:grid-cols-2">
-        <Choice label="EU-hosted only" on={s.euHostedOnly} hint="Inference inside the EU: an EU region, EU geo profile or EU Data Zone — no Global routes" onClick={() => s.setEuHostedOnly(!s.euHostedOnly)} />
-        <Choice label="Non-US providers only" on={s.nonUsOnly} hint="Excludes providers whose company is US-based" onClick={() => s.setNonUsOnly(!s.nonUsOnly)} />
-        <Choice label="No Chinese providers" on={s.excludeChinese} hint="Excludes the providers, not the models they serve" onClick={() => s.setExcludeChinese(!s.excludeChinese)} />
+        <Choice label="EU-hosted only" on={euOnly} hint="Inference inside the EU: an EU region, EU geo profile or EU Data Zone — no Global routes" onClick={() => s.setHostedIn(euOnly ? [...REGION_BUCKETS] : ["EU"])} />
+        <Choice label="Non-US providers only" on={noUs} hint="Excludes providers whose company is US-based" onClick={() => s.setProviderBasedIn(flip(s.providerBasedIn, "US"))} />
+        <Choice label="No Chinese providers" on={noChina} hint="Excludes the providers, not the models they serve" onClick={() => s.setProviderBasedIn(flip(s.providerBasedIn, "China"))} />
       </div>
       <p className="mt-4 text-xs text-gray-500">
         Providers that train on or retain your prompts are already excluded by default, on every
@@ -253,9 +259,9 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
         </div>
         <div className="mt-3 flex flex-wrap gap-1.5 text-xs">
           <Chip on={company === "yes"}>{company === "yes" ? "Buying for a company" : company === "no" ? "Buying for myself" : "Company: no answer"}</Chip>
-          {s.euHostedOnly && <Chip on>EU-hosted only</Chip>}
-          {s.nonUsOnly && <Chip on>Non-US providers</Chip>}
-          {s.excludeChinese && <Chip on>No Chinese providers</Chip>}
+          {euOnly && <Chip on>EU-hosted only</Chip>}
+          {noUs && <Chip on>Non-US providers</Chip>}
+          {noChina && <Chip on>No Chinese providers</Chip>}
           <Chip on={s.minIntelligence != null}>{s.minIntelligence != null ? `Intelligence ≥ ${s.minIntelligence}` : "No intelligence floor"}</Chip>
           <Chip on={s.minCoding != null}>{s.minCoding != null ? `Coding ≥ ${s.minCoding}` : "No coding floor"}</Chip>
           <Chip on={s.maxCost != null}>{s.maxCost != null ? `≤ ${money(s.maxCost)} per task` : "No budget limit"}</Chip>

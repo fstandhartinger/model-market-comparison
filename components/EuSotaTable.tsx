@@ -5,7 +5,7 @@ import { useMemo } from "react";
 import { hasScoreEvidence, type ClientData, type ClientModel, type ClientOffer } from "../lib/client-model";
 import {
   offerPrice, priceContext, priceLabel,
-  createOfferScope,
+  createScope,
   scopedCatalogOffers,
 } from "../lib/cost";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
@@ -32,16 +32,8 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
   // provider/model restriction still composes with the mandatory exact-offer
   // residency or explicit company-policy equivalence check.
   const offerScope = useMemo(
-    () => createOfferScope(
-      s.excludedSet,
-      s.excludeChinese,
-      data.providers,
-      true,
-      s.nonUsOnly,
-      s.teeOnly,
-      !s.allowDataTraining,
-    ),
-    [s.excludedSet, s.excludeChinese, data.providers, s.nonUsOnly, s.teeOnly, s.allowDataTraining],
+    () => createScope(s.excludedSet, data.providers, { hostedIn: ["EU"], providerBasedIn: s.providerBasedIn }, !s.allowDataTraining),
+    [s.excludedSet, s.providerBasedIn, data.providers, s.allowDataTraining],
   );
 
   const rows = entries.reduce<SotaRow[]>((result, entry) => {
@@ -53,6 +45,7 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
       return result;
     }
     if (s.openOnly && !model.open_weights) return result;
+    if (s.labAllowed && !s.labAllowed(model.org)) return result;
     if (s.featured && !model.featured) return result;
     if (s.familySet && !s.familySet.has(model.family_key)) return result;
     const score = model.scores[s.score];
@@ -63,7 +56,7 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
     // to explain that no EU route exists), explicit global provider/TEE/Non-US
     // restrictions behave like the other comparison views and remove a model
     // when no exact offer survives.
-    if ((s.teeOnly || s.nonUsOnly || s.excludedSet) && offers.length === 0) return result;
+    if ((!s.providerBasedIn.includes("US") || s.excludedSet) && offers.length === 0) return result;
     result.push({
       entry,
       model,

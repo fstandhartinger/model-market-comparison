@@ -5,7 +5,7 @@ import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/clie
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import type { ScoreKey } from "../lib/types";
 import { num, orgColor } from "../lib/format";
-import { modelPrice, rankedOffers, scopedCatalogOffers, createOfferScope, priceContext, priceLabel, type OfferScope, type PriceResult, type PriceSettings } from "../lib/cost";
+import { modelPrice, rankedOffers, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type OfferScope, type PriceResult, type PriceSettings } from "../lib/cost";
 import { DataBar } from "./ui";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -25,7 +25,7 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
 export function CompareView({ data }: { data: ClientData }) {
   const s = useSettings();
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
@@ -38,13 +38,14 @@ export function CompareView({ data }: { data: ClientData }) {
     });
     if (s.collapse) r = collapseModels(r, preferredId);
     if (s.openOnly) r = r.filter((m) => m.open_weights);
+    if (s.labAllowed) r = r.filter((m) => s.labAllowed!(m.org));
     if (s.featured) r = r.filter((m) => m.featured);
     if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
     // Composite without evidence is the neutral fallback 50 and must not meet a
     // positive minimum; other scores keep the existing null/value policy.
     if (s.advancedMinScore > 0) r = r.filter((m) => hasScoreEvidence(m, s.score) && m.scores[s.score] != null && (m.scores[s.score] as number) >= s.advancedMinScore);
     return r.sort((a, b) => (b.scores[s.score] ?? -Infinity) - (a.scores[s.score] ?? -Infinity));
-  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.advancedMinScore, preferredId]);
+  }, [data, candidates, offerScope, s.score, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, s.advancedMinScore, preferredId]);
 
   const visibleModels = useMemo(() => {
     if (!q.trim()) return models;

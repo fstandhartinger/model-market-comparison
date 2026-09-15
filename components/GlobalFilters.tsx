@@ -1,12 +1,14 @@
 "use client";
-import { useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { usePathname } from "next/navigation";
-import type { ProviderInfo } from "../lib/client-model";
+import type { FamilyOption, ProviderInfo } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
-import { ScoreSelect, Toggle, ProviderFilter, ModelFilter, NumFilter, type FamilyOption } from "./ui";
+import { ScoreSelect, Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
+import { MultiCombobox, type ComboItem } from "./MultiCombobox";
 import { defaultMinFor, DEFAULT_BLEND, FIXED_BLENDS } from "../lib/cost";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
+import { REGION_BUCKETS, labBucket } from "../lib/regions.mjs";
 import { FILTER_PRESETS, matchingFilterPreset, pickFilters, resolveFilterPatch } from "../lib/presets.mjs";
 import { PresetMenu, usePresetStore } from "./PresetMenu";
 
@@ -15,14 +17,40 @@ import { PresetMenu, usePresetStore } from "./PresetMenu";
  *  regional and confidentiality choices get their own labelled sections; and the rarely
  *  used switches move behind "More settings" (R4.3 / R4.5 / R4.11), so the page stops
  *  presenting fourteen equally loud options at once. */
-function Section({ title, hint, children }: { title: string; hint?: string; children: React.ReactNode }) {
+function Section({ title, hint, children, stack }: { title: string; hint?: string; children: React.ReactNode; stack?: boolean }) {
   return (
     <div className="min-w-0">
       <div className="mb-1.5 flex items-baseline gap-2">
         <span className="text-[11px] font-semibold uppercase tracking-wide text-gray-500">{title}</span>
         {hint && <span className="text-[11px] text-gray-600">{hint}</span>}
       </div>
-      <div className="flex flex-wrap items-center gap-2">{children}</div>
+      <div className={stack ? "space-y-2" : "flex flex-wrap items-center gap-2"}>{children}</div>
+    </div>
+  );
+}
+
+const EU_DEFINITION_ID = "bh-eu-hosted-definition";
+
+/** F-94 / CR-25.4: one regional axis — a label and four toggle chips, all pressed by default. The last pressed
+ *  chip cannot be released (a row with nothing in it would empty every view without saying why). */
+function RegionRow({ label, value, set }: { label: string; value: string[]; set: (v: string[]) => void }) {
+  return (
+    <div className="flex flex-wrap items-center gap-x-3 gap-y-1.5">
+      <span className="w-full text-sm text-gray-400 sm:w-48">{label}</span>
+      <div className="flex flex-wrap gap-1.5" role="group" aria-label={label}>
+        {REGION_BUCKETS.map((b) => {
+          const on = value.includes(b), last = on && value.length === 1;
+          return (
+            <button key={b} type="button" aria-pressed={on} aria-label={`${label} ${b}`}
+              aria-describedby={label === "Hosted in" && b === "EU" ? EU_DEFINITION_ID : undefined}
+              title={last ? "At least one stays selected" : undefined}
+              onClick={() => { if (!last) set(on ? value.filter((x) => x !== b) : [...value, b]); }}
+              className={`min-h-8 rounded-md border px-3 text-sm ${on ? "border-accent/60 bg-accent/15 text-accent" : "border-line text-gray-400"}`}>
+              {on ? "✓ " : ""}{b}
+            </button>
+          );
+        })}
+      </div>
     </div>
   );
 }
@@ -38,6 +66,13 @@ function FilterPresets() {
     current={pickFilters(s)} />;
 }
 
+/** An inclusion list where empty means "all": toggling from "all" keeps everything but the one item. */
+const toggleInclusion = (list: string[], all: string[], k: string) => {
+  const next = list.length ? (list.includes(k) ? list.filter((x) => x !== k) : [...list, k]) : all.filter((x) => x !== k);
+  return next.length === all.length ? [] : next;
+};
+const countLabel = (n: number, total: number) => (n === total ? "All" : `${n} of ${total}`);
+
 export function GlobalFilters({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
   const s = useSettings();
   const path = usePathname();
@@ -45,15 +80,16 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   const panel = useRef<HTMLDivElement>(null);
   const { filtersOpen, closeFilters } = s;
   // F-18: an overlay, not a page push. Escape and a click outside close it; focus moves into
-  // the panel on open and back to whatever opened it on close.
+  // the panel on open and back to whatever opened it on close. A combobox list is rendered
+  // outside the panel and handles its own Escape and outside clicks.
   useEffect(() => {
     if (!filtersOpen) return;
     const opener = document.activeElement as HTMLElement | null;
     panel.current?.focus();
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") closeFilters(); };
+    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape" && !e.defaultPrevented) closeFilters(); };
     const onDown = (e: PointerEvent) => {
       const t = e.target as Element | null;
-      if (!t || panel.current?.contains(t) || t.closest("[data-bh-filters-toggle]")) return;
+      if (!t || panel.current?.contains(t) || t.closest("[data-bh-filters-toggle]") || t.closest("[data-bh-combobox]")) return;
       closeFilters();
     };
     document.addEventListener("keydown", onKey);
@@ -64,13 +100,21 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
       opener?.focus?.();
     };
   }, [filtersOpen, closeFilters]);
+
+  const familyKeys = useMemo(() => families.map((f) => f.key), [families]);
+  const familyItems = useMemo<ComboItem[]>(() => families.map((f) => ({ key: f.key, label: f.name, sub: f.org })), [families]);
+  const providerKeys = useMemo(() => providers.map((p) => p.key), [providers]);
+  const providerItems = useMemo<ComboItem[]>(() => providers.map((p) => ({ key: p.key, label: p.provider, sub: p.platform === p.provider ? undefined : p.platform })), [providers]);
+  const labs = useMemo(() => [...new Set(families.map((f) => f.org))].sort((a, b) => a.localeCompare(b)), [families]);
+  const labItems = useMemo<ComboItem[]>(() => labs.map((org) => ({ key: org, label: org, sub: labBucket(org) })), [labs]);
+
   if (path === "/benchmarks" || path === "/radar") return null;
   const active = s.userFiltersActive;
   // F-16: on the Advanced home view the toggle shows what that view applies (off until set).
   const featuredShown = path === "/" && s.advancedView ? s.featuredAdvanced : s.featured;
   const reset = () => {
-    s.setProvidersExcluded([]); s.setFamilies([]); s.resetFeatured(); s.setCollapse(true);
-    s.setHideDeprecated(true); s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false);
+    s.setProvidersExcluded([]); s.setFamilies([]); s.setLabs([]); s.resetFeatured(); s.setCollapse(true);
+    s.setHideDeprecated(true); s.setHostedIn([...REGION_BUCKETS]); s.setProviderBasedIn([...REGION_BUCKETS]); s.setLabBasedIn([...REGION_BUCKETS]);
     s.setOpenOnly(false); s.setTeeOnly(false); s.setAllowDataTraining(false); s.setIsCompany(false);
     s.setMaxCost(null); s.setMinIntelligence(null); s.setMinCoding(null);
     s.resetMinScore(); s.setSimpleMaxCost(null); s.setAdvancedMinScore(0); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
@@ -82,6 +126,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   const onMinScore = (v: string) => simpleFloor
     ? (v === "" ? s.resetMinScore() : s.setMinScore(parseFloat(v) || 0))
     : s.setAdvancedMinScore(parseFloat(v) || 0);
+  const excluded = s.providersExcluded;
 
   return (
     // F-18: zero-height anchor under the header. Desktop: a right-aligned popover over the
@@ -91,7 +136,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
       <div ref={panel} id="global-filters" role="dialog" aria-label="Options" tabIndex={-1}
         className="fixed inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-2xl border-t border-line bg-panel shadow-xl outline-none lg:absolute lg:inset-x-auto lg:bottom-auto lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:top-2 lg:max-h-[calc(100vh-90px)] lg:w-[min(960px,calc(100vw-2rem))] lg:rounded-xl lg:border">
 
-      <div className="min-h-0 space-y-4 overflow-y-auto px-4 pb-4 pt-4">
+      <div className="min-h-0 space-y-3 overflow-y-auto px-4 pb-3 pt-3">
         <Section title="Ranking">
           <ScoreSelect value={s.score} onChange={s.setScore} />
           <NumFilter label="Min score" value={minScoreField} onChange={onMinScore} placeholder="any" />
@@ -105,7 +150,6 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
               tracked model. <a className="text-accent" href="/about#featured">The current list</a>.
             </InfoTip>
           </span>
-          <ModelFilter families={families} selected={s.familySet ?? new Set()} setSelected={(set) => s.setFamilies([...set])} />
         </Section>
 
         <Section title="Price basis">
@@ -130,27 +174,48 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
               those plans and shows business seats instead. API prices are the same for everyone.
             </InfoTip>
           </span>
-          <ProviderFilter providers={providers} excluded={s.excludedSet ?? new Set()} setExcluded={(set) => s.setProvidersExcluded([...set])} />
         </Section>
 
-        <Section title="Regional settings" hint="where the model is served from, and by whom">
-          <Toggle label="Exclude Chinese providers" on={s.excludeChinese} set={s.setExcludeChinese} />
-          <span className="inline-flex items-center">
-            <Toggle label="EU-hosted only" on={s.euHostedOnly} set={s.setEuHostedOnly} />
-            {/* CR-17.3: one plain definition, applied per offer to every provider. */}
-            <InfoTip title="EU-hosted only" label="the EU-hosted filter">
-              Keeps only routes whose inference runs inside the EU: an EU region, AWS Bedrock&apos;s EU
-              cross-region (geo) profiles, Azure&apos;s Europe Data Zone, or a provider whose entire public
-              fleet is documented as EU-hosted (such as Mistral&apos;s EU API, Scaleway or IONOS), each checked
-              per model against the provider&apos;s documentation. Global deployments do not count, and neither does an EU
-              billing region, an EU company or an EU control plane on its own. One disclosed company-policy
-              exception stays in: Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code, marked
-              &ldquo;EU equivalent&rdquo;, where inference may occur outside the EU.
-            </InfoTip>
-          </span>
-          <Toggle label="Non-US provider only" on={s.nonUsOnly} set={s.setNonUsOnly} />
+        {/* CR-25.5 / CR-36.3 (F-94): three identical compact comboboxes; lab = the company that trained the model,
+            provider = the company that serves it. */}
+        <Section title="Models, providers and labs" stack>
+          <div className="grid gap-2 md:grid-cols-3">
+            <MultiCombobox label="Models" items={familyItems} active={s.families.length > 0}
+              summary={countLabel(s.families.length || familyKeys.length, familyKeys.length)}
+              isChecked={(k) => !s.families.length || s.families.includes(k)}
+              toggle={(k) => s.setFamilies(toggleInclusion(s.families, familyKeys, k))}
+              all={() => s.setFamilies([])} only={(k) => s.setFamilies([k])} />
+            <MultiCombobox label="Providers" items={providerItems} active={excluded.length > 0}
+              summary={countLabel(providerKeys.length - excluded.length, providerKeys.length)}
+              isChecked={(k) => !excluded.includes(k)}
+              toggle={(k) => s.setProvidersExcluded(excluded.includes(k) ? excluded.filter((x) => x !== k) : [...excluded, k])}
+              all={() => s.setProvidersExcluded([])} only={(k) => s.setProvidersExcluded(providerKeys.filter((x) => x !== k))} />
+            <MultiCombobox label="Labs" items={labItems} active={s.labs.length > 0}
+              summary={countLabel(s.labs.length || labs.length, labs.length)}
+              isChecked={(k) => !s.labs.length || s.labs.includes(k)}
+              toggle={(k) => s.setLabs(toggleInclusion(s.labs, labs, k))}
+              all={() => s.setLabs([])} only={(k) => s.setLabs([k])} />
+          </div>
         </Section>
 
+        {/* CR-25.4 (F-94): positively worded, the same shape for all three axes, no (i). */}
+        <Section title="Regional" stack>
+          <RegionRow label="Hosted in" value={s.hostedIn} set={s.setHostedIn} />
+          <RegionRow label="Provider company based in" value={s.providerBasedIn} set={s.setProviderBasedIn} />
+          <RegionRow label="Model lab based in" value={s.labBasedIn} set={s.setLabBasedIn} />
+          <p className="text-[11px] text-gray-600">Hosting = where inference runs; company = where the provider or lab is registered.</p>
+          {/* CR-17.3: the plain EU definition stays available to assistive tech on the EU hosting chip. */}
+          <p id={EU_DEFINITION_ID} className="sr-only">
+            EU hosting means the route&apos;s inference runs inside the EU: an EU region, AWS Bedrock&apos;s EU cross-region
+            (geo) profiles, Azure&apos;s Europe Data Zone, or a provider whose entire public fleet is documented as EU-hosted,
+            each checked per model against the provider&apos;s documentation. Global deployments do not count, and neither
+            does an EU billing region, an EU company or an EU control plane on its own. One disclosed company-policy
+            exception stays in, marked &ldquo;EU equivalent&rdquo;.
+          </p>
+        </Section>
+
+        {/* At lg the two short blocks share a line (same reading order), so the panel fits a laptop screen (F-94: ≤ 600 px). */}
+        <div className="grid gap-3 lg:grid-cols-2 lg:items-start">
         <Section title="Data confidentiality" hint="what the provider may do with your prompts">
           <span className="inline-flex items-center">
             <Toggle label="Trains or keeps your data" on={s.allowDataTraining} set={s.setAllowDataTraining} />
@@ -173,6 +238,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
           </div>
           <p className="mt-2 text-[11px] text-gray-600">Evidence requirements (benchmark evidence, priced provider, measured task tokens) sit above the table they apply to.</p>
         </details>
+        </div>
 
         <p className="text-[11px] text-gray-600">Applies to price views &amp; model offers; benchmark evidence stays unfiltered.</p>
       </div>

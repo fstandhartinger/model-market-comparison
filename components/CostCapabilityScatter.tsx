@@ -9,7 +9,7 @@ import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/clie
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import { scoreChartLabel } from "../lib/score-label";
 import { orgColor } from "../lib/format";
-import { modelPrice, createOfferScope, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
+import { modelPrice, scopeFromSettings, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { Toggle } from "./ui";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -141,7 +141,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
   // CR-32.5: the compact map's own chart settings (cogwheel), persisted per browser.
@@ -169,6 +169,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     if (only) pool = pool.filter((m) => only.has(m.id));
     if (s.collapse) pool = collapseModels(pool, preferredId);
     if (s.openOnly) pool = pool.filter((m) => m.open_weights);
+    if (s.labAllowed) pool = pool.filter((m) => s.labAllowed!(m.org));
     if (s.featured && !only) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     if (measuredOnly && s.priceMode === "adjusted") pool = pool.filter((m) => {
@@ -180,7 +181,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0)
       .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
         pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, maxCost, preferredId, measuredOnly, s.priceMode, idKey]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, minScore, maxCost, preferredId, measuredOnly, s.priceMode, idKey]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;

@@ -8,7 +8,8 @@ import ts from "typescript";
 const source = await readFile(new URL("../lib/cost.ts", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
-}).outputText.replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`);
+}).outputText.replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`)
+  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`);
 const cost = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 
 // Exercise the real Dataset -> client projection -> shared offer scope as one
@@ -290,4 +291,29 @@ test('2026-09-15 typical cache-hit baseline replaces 0 % only where no endpoint 
   assert.equal(plain.value, cost.offerPrice(noReadPrice, cost.priceContext(model, { ...data, efficiency: { ...data.efficiency, openrouter_endpoints: {} } }, adjusted)).value, 'no cache-read price: the baseline changes nothing');
   // Deterministic for a dataset.
   assert.equal(cost.offerPrice(route, cost.priceContext(model, data, adjusted)).value, withBaseline.value);
+});
+
+test("CR-25.4: the positive regional lists give exactly the former switches' results on the real providers", () => {
+  const provs = dataset.providers.map((p) => ({ key: `${p.platform}::${p.provider}`, provider: p.provider, non_us: p.non_us, country: p.country, eu_hosted: p.eu_hosted }));
+  for (const excludeChinese of [false, true]) for (const nonUsOnly of [false, true]) for (const euHostedOnly of [false, true]) {
+    const old = cost.effectiveAllowed(null, excludeChinese, provs, euHostedOnly, nonUsOnly);
+    const scope = cost.createOfferScope(null, excludeChinese, provs, euHostedOnly, nonUsOnly);
+    assert.deepEqual(scope.allowed && [...scope.allowed].sort(), old && [...old].sort(), JSON.stringify({ excludeChinese, nonUsOnly, euHostedOnly }));
+    assert.equal(scope.euHostedOnly, euHostedOnly);
+  }
+});
+
+test("CR-25.4: 'Hosted in' filters per offer by hosting bucket; EU needs EU evidence", () => {
+  const provs = [{ key: "P::P", provider: "P", non_us: false }];
+  const us = { key: "P::P", region: "us-east-1" }, eu = { key: "P::P", region: "eu-west-1", eu_hosted: true }, global = { key: "P::P", region: "global" };
+  const onlyUs = cost.createScope(null, provs, { hostedIn: ["US"] });
+  assert.deepEqual([us, eu, global].map((o) => cost.offerMatchesScope(o, onlyUs)), [true, false, false]);
+  const noUs = cost.createScope(null, provs, { hostedIn: ["China", "EU", "Other"] });
+  assert.deepEqual([us, eu, global].map((o) => cost.offerMatchesScope(o, noUs)), [false, true, true]);
+  const all = cost.createScope(null, provs, { hostedIn: ["China", "EU", "US", "Other"], providerBasedIn: ["China", "EU", "US", "Other"] });
+  assert.equal(all.allowed, null);
+  assert.equal(all.restricted, false);
+  assert.equal(cost.providerBucket({ key: "x", provider: "SiliconFlow", non_us: true }), "China");
+  assert.equal(cost.providerBucket({ key: "x", provider: "Nebius", non_us: true, country: "Netherlands" }), "EU");
+  assert.equal(cost.providerBucket({ key: "x", provider: "Ambient", non_us: false, country: null }), "US", "the non-US flag decides, as before");
 });

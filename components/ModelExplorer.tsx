@@ -5,7 +5,7 @@ import { hasScoreEvidence, isThinComposite, type ClientData } from "../lib/clien
 import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
-import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
+import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, scopeFromSettings, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
 import { Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
@@ -58,7 +58,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const s = useSettings();
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
-  const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
+  const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   // R1.1: the table opens sorted by the score column, highest first.
   const [sort, setSort] = useState<SortKey>(defaultSort ?? "score");
   const [asc, setAsc] = useState(defaultSort === "cost" ? defaultAsc ?? true : false);
@@ -134,6 +134,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     });
     if (s.collapse) r = r.filter((x) => !preferredId.has(x.m.family_key) || preferredId.get(x.m.family_key) === x.m.id);
     if (s.openOnly) r = r.filter((x) => x.m.open_weights);
+    if (s.labAllowed) r = r.filter((x) => s.labAllowed!(x.m.org));
     if (featuredOnly) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
     if (org) r = r.filter((x) => x.m.org === org);
@@ -155,7 +156,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     // one row each; with variants expanded the cap keeps the best-ranked families' rows.
     if (expandSimple) r = topCandidates(r, (x) => x.m, SIMPLE_LIMIT);
     return r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, expandSimple, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, expandSimple, s.familySet, s.openOnly, s.labAllowed, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
 
   // CR-18: while Simple's floor is untouched it defaults to the score of the cheapest model the value
   // map plots from this pre-cut pool, so that model is on the Pareto line. Computed before the cut, so

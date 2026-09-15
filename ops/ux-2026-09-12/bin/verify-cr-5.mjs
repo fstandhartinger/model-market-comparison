@@ -163,16 +163,16 @@ if (enabled && SECRET && DBURL) {
   // The Filters sheet is not rendered on /benchmarks (GlobalFilters returns null there); change a setting on "/".
   await pa.goto(`${BASE}/`, { waitUntil: 'networkidle' });
   await pa.locator('header button[aria-controls="global-filters"]').first().click();
-  await pa.locator('#global-filters').getByRole('button', { name: 'Exclude Chinese providers' }).click();
+  await pa.locator('#global-filters').getByRole('button', { name: 'Provider company based in China', exact: true }).click(); // CR-25.4: the former 'Exclude Chinese providers' switch
   await pa.waitForTimeout(2500);
   data = await accountPresets();
   check('CR-5.2 browser A preset saved to the account', data?.presets?.models?.some((p) => p.name === 'Synced from A'));
-  check('CR-5.2 browser A setting saved to the account', data?.settings?.excludeChinese === true, `excludeChinese=${data?.settings?.excludeChinese}`);
+  check('CR-5.2 browser A setting saved to the account', Array.isArray(data?.settings?.providerBasedIn) && !data.settings.providerBasedIn.includes('China'), `providerBasedIn=${JSON.stringify(data?.settings?.providerBasedIn)}`);
   await pb.reload({ waitUntil: 'networkidle' });
   await pb.waitForTimeout(2500);
   const bState = await pb.evaluate(() => ({ presets: JSON.parse(localStorage.getItem('bh.presets.v1') ?? '{}').models?.map((p) => p.name) ?? [], settings: JSON.parse(localStorage.getItem('mmc.settings.v9') ?? '{}') }));
   check('CR-5.2 browser B receives the preset saved in A', bState.presets.includes('Synced from A'), bState.presets.join(','));
-  check('CR-5.2 browser B receives the setting changed in A', bState.settings.excludeChinese === true);
+  check('CR-5.2 browser B receives the setting changed in A', Array.isArray(bState.settings.providerBasedIn) && !bState.settings.providerBasedIn.includes('China'));
   await pb.screenshot({ path: `${OUT}/${B.name}-signed-in-synced.png` });
 
   // CR-5.5: delete my account and data.

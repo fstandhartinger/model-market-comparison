@@ -4,3 +4,8 @@ export declare function countryBucket(country: string | null | undefined): Regio
 export declare function hostingBucket(offer: { region?: string | null } | null | undefined, euHosted: boolean): RegionBucket;
 export declare function regionStateFromLegacy(s?: { euHostedOnly?: boolean; excludeChinese?: boolean; nonUsOnly?: boolean }): { hostedIn: RegionBucket[]; providerBasedIn: RegionBucket[]; labBasedIn: RegionBucket[] };
 export declare function allRegions(list: readonly string[] | null | undefined): boolean;
+export declare function sanitizeRegionList(list: unknown): RegionBucket[] | null;
+export declare function migrateLegacyRegions<T>(raw: T): T;
+export declare const LAB_COUNTRIES: Readonly<Record<string, string>>;
+export declare function labBucket(org: string | null | undefined): RegionBucket;
+export declare function labFilter(labs: readonly string[] | null | undefined, labBasedIn: readonly string[] | null | undefined): ((org: string) => boolean) | null;

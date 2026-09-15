@@ -46,17 +46,11 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   });
   await page.locator('#global-filters').waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
   check(`${tag} filter panel opens`, await page.locator('#global-filters').isVisible(), '');
-  const trigger = page.locator('#global-filters').getByRole('button', { name: 'About the EU-hosted filter' }).first();
-  let text = '';
-  if (mobile) {
-    await trigger.click(); await page.waitForTimeout(300);
-    text = await page.locator('dialog[open]').last().innerText().catch(() => '');
-  } else {
-    await trigger.focus(); await page.waitForTimeout(300);
-    const id = await trigger.getAttribute('aria-describedby');
-    text = id ? await page.locator(`[id="${id}"]`).innerText().catch(() => '') : '';
-  }
-  check(`${tag} CR-17.3 the EU-hosted (i) states the definition: in-EU inference, Global / billing / control plane do not count, equivalents disclosed`,
+  // CR-25.4 removed the (i) beside EU-hosted; the same definition is the "Hosted in EU" chip's accessible description.
+  const chip = page.locator('#global-filters').getByRole('button', { name: 'Hosted in EU', exact: true }).first();
+  const id = await chip.getAttribute('aria-describedby').catch(() => null);
+  const text = id ? await page.locator(`[id="${id}"]`).textContent().catch(() => '') ?? '' : '';
+  check(`${tag} CR-17.3 the EU hosting definition (chip description since CR-25.4) states the definition: in-EU inference, Global / billing / control plane do not count, equivalents disclosed`,
     /inference runs inside the EU/.test(text) && /Europe Data Zone/.test(text) && /Global deployments do not count/.test(text) && /control plane/.test(text) && /EU equivalent/.test(text), text.slice(0, 260));
   await page.screenshot({ path: `${OUT}/${tag}-eu-definition.png` });
   if (!mobile) await page.keyboard.press('Escape'); else await page.keyboard.press('Escape');

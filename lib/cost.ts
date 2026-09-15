@@ -1,6 +1,7 @@
 import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
 import { effectiveCost, fixedCost, cacheHitBaseline, FIXED_BLENDS, DEFAULT_BLEND, type EffectiveCostResult, type CacheHitBaseline } from "./effective-cost.mjs";
+import { REGION_BUCKETS, allRegions, countryBucket, hostingBucket, regionStateFromLegacy } from "./regions.mjs";
 export { FIXED_BLENDS, DEFAULT_BLEND };
 
 export type PriceMode = "adjusted" | "raw";
@@ -167,6 +168,9 @@ export interface RankedOffer extends ClientOffer { blended: number; price: Price
 
 export interface OfferScope {
   allowed: Set<string> | null;
+  /** CR-25.4 "Hosted in": the hosting buckets an offer's inference may run in; null = all. */
+  hostedIn?: string[] | null;
+  /** True when "Hosted in" is exactly EU (the former EU-hosted-only switch). */
   euHostedOnly: boolean;
   teeOnly: boolean;
   /** R4.10: drop routes whose provider does NOT survive OpenRouter's own
@@ -199,6 +203,7 @@ export function offerMatchesScope(offer: ClientOffer, selection: OfferSelection)
   if (selection.allowed && !selection.allowed.has(offer.key)) return false;
   if (selection.teeOnly && !offer.tee) return false;
   if (selection.euHostedOnly && !isEuOffer(offer)) return false;
+  if (selection.hostedIn && !selection.hostedIn.includes(hostingBucket(offer, isEuOffer(offer)))) return false;
   if (selection.privateDataOnly && offer.data_private === false) return false;
   return true;
 }
@@ -336,10 +341,54 @@ export function effectiveAllowed(
   return base;
 }
 
+/** CR-25.4 "Provider company based in": the same rules the former switches applied, so default users and
+ *  migrated settings see identical results — China = the Chinese-provider rule (name or country), US = every
+ *  provider not flagged non-US, then EU by registered country; anything else (or unknown) is Other. */
+export function providerBucket(p: ProviderFlag): string {
+  if (chineseProviderKeys([p]).size) return "China";
+  if (!p.non_us) return "US";
+  return countryBucket(p.country) === "EU" ? "EU" : "Other";
+}
+
+export interface RegionSelection { hostedIn?: readonly string[] | null; providerBasedIn?: readonly string[] | null }
+
 /** Build the one offer scope shared by every interactive view. Provider-level
- * flags choose candidate providers; offer-level flags/regions then prevent a
- * US/UK/global route from leaking through merely because that provider also has
- * some EU capacity. */
+ * choices (blocklist, provider company country) pick candidate providers; the
+ * per-offer hosting bucket then prevents a US/UK/global route from leaking through
+ * merely because that provider also has some EU capacity. */
+export function createScope(
+  excluded: Set<string> | null,
+  providers: ProviderFlag[],
+  regions: RegionSelection = {},
+  privateDataOnly = false,
+  teeOnly = false,
+): OfferScope {
+  const hostedIn = regions.hostedIn && !allRegions(regions.hostedIn) ? REGION_BUCKETS.filter((b) => regions.hostedIn!.includes(b)) : null;
+  const basedIn = regions.providerBasedIn && !allRegions(regions.providerBasedIn) ? new Set(regions.providerBasedIn) : null;
+  let allowed: Set<string> | null = null;
+  if (excluded?.size || basedIn || hostedIn) {
+    allowed = new Set(providers.filter((p) => !basedIn || basedIn.has(providerBucket(p))).map((p) => p.key));
+    if (excluded) for (const k of excluded) allowed.delete(k);
+  }
+  return {
+    allowed,
+    hostedIn,
+    euHostedOnly: !!hostedIn && hostedIn.length === 1 && hostedIn[0] === "EU",
+    teeOnly,
+    privateDataOnly,
+    restricted: !!(excluded?.size || basedIn || hostedIn || teeOnly || privateDataOnly),
+  };
+}
+
+/** The settings-shaped entry point every view uses. */
+export function scopeFromSettings(
+  s: { excludedSet: Set<string> | null; hostedIn: readonly string[]; providerBasedIn: readonly string[]; allowDataTraining: boolean },
+  providers: ProviderFlag[],
+): OfferScope {
+  return createScope(s.excludedSet, providers, s, !s.allowDataTraining);
+}
+
+/** The pre-CR-25.4 signature (switches), kept for the tests that pin its behaviour; maps onto `createScope`. */
 export function createOfferScope(
   excluded: Set<string> | null,
   excludeChinese: boolean,
@@ -349,13 +398,7 @@ export function createOfferScope(
   teeOnly = false,
   privateDataOnly = false,
 ): OfferScope {
-  return {
-    allowed: effectiveAllowed(excluded, excludeChinese, providers, euHostedOnly, nonUsOnly),
-    euHostedOnly,
-    teeOnly,
-    privateDataOnly,
-    restricted: !!(excluded?.size || excludeChinese || euHostedOnly || nonUsOnly || teeOnly || privateDataOnly),
-  };
+  return createScope(excluded, providers, regionStateFromLegacy({ euHostedOnly, excludeChinese, nonUsOnly }), privateDataOnly, teeOnly);
 }
 
 // Provider-filter presets (point 5).

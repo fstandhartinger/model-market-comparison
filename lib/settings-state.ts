@@ -1,5 +1,6 @@
 import type { ScoreKey } from "./types";
 import { DEFAULT_BLEND, DEFAULT_SCORE, FIXED_BLENDS, SCORE_OPTIONS, type PriceMode } from "./cost";
+import { REGION_BUCKETS, allRegions, migrateLegacyRegions, sanitizeRegionList } from "./regions.mjs";
 
 /** The persisted settings. Pure data plus the load/migration rules, so they are testable
  *  without React (components/SettingsContext.tsx wraps this in a context). */
@@ -8,9 +9,11 @@ export interface SettingsState {
   collapse: boolean;       // one variant per GPT/Claude family
   featured: boolean;
   hideDeprecated: boolean; // hide benchmark-source rows marked deprecated (on by default)
-  excludeChinese: boolean;  // hide Chinese-based inference providers (not their models)
-  euHostedOnly: boolean;    // only exact offers hosted in the EU or explicitly policy-equivalent
-  nonUsOnly: boolean;       // only providers whose company is not US-based
+  // CR-25.4: regional choices, positively worded — the buckets China / EU / US / Other that stay in (all by default).
+  hostedIn: string[];        // where an offer's inference runs (EU needs per-offer EU evidence)
+  providerBasedIn: string[]; // where the inference provider company is registered
+  labBasedIn: string[];      // where the lab that trained the model is registered
+  labs: string[];            // CR-25.5: selected labs (model `org`); empty = all
   openOnly: boolean;        // only open-weights models (off by default)
   // F-40: the score floor and the cost cap are split by mode. Simple's pair is written only by
   // Simple's two sliders and read only by Simple's list and map; every other view (Advanced,
@@ -39,7 +42,7 @@ export interface SettingsState {
   inputWeight: number;     // raw mode's fixed input:output blend; persists while adjusted
 }
 
-export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, excludeChinese: false, euHostedOnly: false, nonUsOnly: false, openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 export const isBlendValue = (n: number) => BLEND_VALUES.has(n);
@@ -48,7 +51,8 @@ export const isBlendValue = (n: number) => BLEND_VALUES.has(n);
  *  back to the defaults so a corrupted or stale payload cannot wedge the UI. */
 export function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (!input || typeof input !== "object") return {};
-  const raw = input as Record<string, unknown>;
+  // CR-25.4: a payload with the former EU-hosted / exclude-Chinese / non-US switches maps onto the positive lists.
+  const raw = migrateLegacyRegions(input as Record<string, unknown>) as Record<string, unknown>;
   const out: Partial<SettingsState> = {};
   const bool = (v: unknown): v is boolean => typeof v === "boolean";
   const strArr = (v: unknown): v is string[] => Array.isArray(v) && v.every((x) => typeof x === "string");
@@ -58,9 +62,8 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (bool(raw.featured)) out.featured = raw.featured;
   out.featuredTouched = raw.featuredTouched === true && out.featured != null;
   if (bool(raw.hideDeprecated)) out.hideDeprecated = raw.hideDeprecated;
-  if (bool(raw.excludeChinese)) out.excludeChinese = raw.excludeChinese;
-  if (bool(raw.euHostedOnly)) out.euHostedOnly = raw.euHostedOnly;
-  if (bool(raw.nonUsOnly)) out.nonUsOnly = raw.nonUsOnly;
+  for (const k of ["hostedIn", "providerBasedIn", "labBasedIn"] as const) { const list = sanitizeRegionList(raw[k]); if (list) out[k] = list; }
+  if (strArr(raw.labs)) out.labs = raw.labs;
   if (bool(raw.openOnly)) out.openOnly = raw.openOnly;
   if (typeof raw.minScore === "number" && Number.isFinite(raw.minScore) && raw.minScore >= 0) out.minScore = raw.minScore;
   out.minScoreTouched = raw.minScoreTouched === true && out.minScore != null;
@@ -90,8 +93,8 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
 
 /** Filters shared by every view (providers, families, evidence scope, pricing). */
 function sharedFiltersActive(s: SettingsState): boolean {
-  return !!(s.providersExcluded.length || s.families.length || s.featuredTouched || !s.collapse || !s.hideDeprecated
-    || s.excludeChinese || s.euHostedOnly || s.nonUsOnly || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
+  return !!(s.providersExcluded.length || s.families.length || s.labs.length || s.featuredTouched || !s.collapse || !s.hideDeprecated
+    || !allRegions(s.hostedIn) || !allRegions(s.providerBasedIn) || !allRegions(s.labBasedIn) || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
     || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND);
 }
 

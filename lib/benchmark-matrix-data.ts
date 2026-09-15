@@ -30,7 +30,7 @@ export async function getBenchmarkMatrixPage() {
     // CR-2.4 "Best value": each route's adjusted $/task at the default adjusted settings, so the
     // client can take the cheapest route inside the active scope exactly as modelPrice does.
     const context = priceContext(byId.get(m.id)!, cd, DEFAULT_PRICE_SETTINGS);
-    offers[m.id] = (cd.offersByModel[m.id] ?? []).map((o) => ({ key: o.key, tee: !!o.tee, eu_hosted: isEuOffer(o), data_private: o.data_private, cost: offerPrice(o, context).value }))
+    offers[m.id] = (cd.offersByModel[m.id] ?? []).map((o) => ({ key: o.key, tee: !!o.tee, eu_hosted: isEuOffer(o), data_private: o.data_private, region: o.region, cost: offerPrice(o, context).value }))
       .filter((o) => { const k = JSON.stringify(o); if (seen.has(k)) return false; seen.add(k); return true; });
     const source = byId.get(m.id)!;
     const reference = offerPrice({ key: "AA reference", source: "", provider: "", platform: "Artificial Analysis", region: "unspecified", input_per_1m: source.aa_ref_input, output_per_1m: source.aa_ref_output }, context).value;

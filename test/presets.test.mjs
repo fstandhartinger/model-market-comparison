@@ -88,28 +88,32 @@ test('CR-2.4 model presets: open, EU, coding, value and one flagship per lab, in
 });
 
 test('CR-4.1 filter presets: built-ins resolve over the defaults and are recognised when active', () => {
-  const defaults = { score: 'composite', featured: true, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, euHostedOnly: false, openOnly: false, advancedMinScore: 0, maxCost: null, minScore: 86 };
+  const defaults = { score: 'composite', featured: true, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, hostedIn: ['China', 'EU', 'US', 'Other'], providerBasedIn: ['China', 'EU', 'US', 'Other'], labBasedIn: ['China', 'EU', 'US', 'Other'], labs: [], openOnly: false, advancedMinScore: 0, maxCost: null, minScore: 86 };
   const floor = (s) => (s === 'composite' ? 85 : 50);
   assert.deepEqual(FILTER_PRESETS.map((p) => p.id), ['company-eu', 'privacy', 'cheapest-capable', 'open', 'frontier']);
   const cheap = resolveFilterPatch(FILTER_PRESETS.find((p) => p.id === 'cheapest-capable').patch, defaults, floor);
   assert.equal(cheap.advancedMinScore, 85);
   assert.equal(cheap.featuredTouched, true);
   assert.equal('minScore' in pickFilters(defaults), false, "Simple's slider is not part of a filter preset");
-  const state = { ...defaults, ...resolveFilterPatch({ isCompany: true, euHostedOnly: true }, defaults, floor) };
+  const state = { ...defaults, ...resolveFilterPatch({ isCompany: true, hostedIn: ['EU'] }, defaults, floor) };
   assert.equal(matchingFilterPreset(state, defaults, floor), 'company-eu');
+  // CR-25.4: a custom preset saved with the former switch resolves to the same state.
+  assert.equal(matchingFilterPreset({ ...defaults, ...resolveFilterPatch({ isCompany: true, euHostedOnly: true }, defaults, floor) }, defaults, floor), 'company-eu');
   assert.equal(matchingFilterPreset({ ...state, openOnly: true }, defaults, floor), null);
   const custom = [{ id: 'c1', name: 'Mine', value: pickFilters({ ...defaults, openOnly: true, isCompany: true }), updatedAt: 0 }];
   assert.equal(matchingFilterPreset({ ...defaults, openOnly: true, isCompany: true }, defaults, floor, custom), 'c1');
 });
 
 test('CR-2.5 filters in the URL: only changed keys, round trip, junk dropped', () => {
-  const defaults = { score: 'composite', featured: true, featuredTouched: false, euHostedOnly: false, maxCost: null, advancedMinScore: 0, providersExcluded: [], inputWeight: 20, minScore: 86 };
+  const defaults = { score: 'composite', featured: true, featuredTouched: false, hostedIn: ['China', 'EU', 'US', 'Other'], providerBasedIn: ['China', 'EU', 'US', 'Other'], labBasedIn: ['China', 'EU', 'US', 'Other'], labs: [], maxCost: null, advancedMinScore: 0, providersExcluded: [], inputWeight: 20, minScore: 86 };
   assert.equal(encodeFilters(defaults, defaults), '');
-  const state = { ...defaults, euHostedOnly: true, maxCost: 2.5, providersExcluded: ['OpenRouter::A|B', 'x;y'], score: 'aa_coding_index', minScore: 50 };
+  const state = { ...defaults, hostedIn: ['EU'], maxCost: 2.5, providersExcluded: ['OpenRouter::A|B', 'x;y'], score: 'aa_coding_index', minScore: 50 };
   const text = encodeFilters(state, defaults);
   assert.ok(!text.includes('minScore'), "Simple's slider is not a filter");
-  assert.deepEqual(decodeFilters(text), { score: 'aa_coding_index', euHostedOnly: true, maxCost: 2.5, providersExcluded: ['OpenRouter::A|B', 'x;y'] });
+  assert.deepEqual(decodeFilters(text), { score: 'aa_coding_index', hostedIn: ['EU'], maxCost: 2.5, providersExcluded: ['OpenRouter::A|B', 'x;y'] });
   assert.deepEqual(decodeFilters(encodeFilters({ ...defaults, featured: false, maxCost: null }, { ...defaults, maxCost: 3 })), { featured: false, maxCost: null });
   assert.deepEqual(decodeFilters('euHostedOnly:yes;maxCost:abc;hack:1;teeOnly:1;openOnly:1;families:%E0%A4%A'), { openOnly: true }, 'CR-25.2: teeOnly is no longer a filter key');
   assert.deepEqual(decodeFilters(null), {});
+  // CR-25.4: links shared before the regional chips keep opening the same view.
+  assert.deepEqual(decodeFilters('euHostedOnly:1;excludeChinese:1;nonUsOnly:1;openOnly:1'), { openOnly: true, hostedIn: ['EU'], providerBasedIn: ['EU', 'Other'] });
 });

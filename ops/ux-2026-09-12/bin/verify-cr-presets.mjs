@@ -176,7 +176,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const toggles = await p.evaluate(() => Object.fromEntries([...document.querySelectorAll('#global-filters [aria-pressed], #global-filters input[type="checkbox"], #global-filters [role="switch"]')].map((el) => [(el.getAttribute('aria-label') || el.closest('label')?.textContent || el.textContent || '').trim(), el.getAttribute('aria-pressed') ?? el.getAttribute('aria-checked') ?? String(el.checked)])));
   const label = await p.locator('.bh-preset[data-preset-kind="filters"] > button').textContent();
   const on = (re) => Object.entries(toggles).some(([k, v]) => re.test(k) && v === 'true');
-  check(`${tag} CR-4.1 applying "Company, EU-hosted only" sets both toggles and the menu names it`, on(/EU-hosted only/) && on(/company/i) && /Company, EU-hosted only/.test(label), label);
+  check(`${tag} CR-4.1 applying "Company, EU-hosted only" sets both toggles and the menu names it`, on(/^Hosted in EU$/) && !on(/^Hosted in US$/) && on(/buying for a company/i) && /Company, EU-hosted only/.test(label), label);
   dlg = await openMenu(p, 'filters');
   await dlg.getByRole('button', { name: /^Privacy strict/ }).click();
   await p.waitForTimeout(400);
@@ -184,7 +184,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const on2 = (re) => Object.entries(t2).some(([k, v]) => re.test(k) && v === 'true');
   // CR-25.2 removed 'Strong confidential guarantees'; Privacy strict is now EU-hosted + no training/retention, and it
   // replaces (not merges with) the previous preset — the company toggle from 'Company, EU-hosted only' goes off.
-  check(`${tag} CR-4.1 "Privacy strict" replaces the previous preset (EU on, company off, no confidential filter)`, on2(/EU-hosted only/) && !on2(/company/i) && !Object.keys(t2).some((k) => /Strong confidential/.test(k)), JSON.stringify(t2));
+  check(`${tag} CR-4.1 "Privacy strict" replaces the previous preset (EU on, company off, no confidential filter)`, on2(/^Hosted in EU$/) && !on2(/^Hosted in US$/) && !on2(/buying for a company/i) && !Object.keys(t2).some((k) => /Strong confidential/.test(k)), JSON.stringify(t2));
   const reset = p.locator('#global-filters').getByRole('button', { name: 'Reset', exact: true });
   if (await reset.count()) await reset.click();
   check(`${tag} no page errors, no horizontal overflow`, errors.length === 0 && !(await p.evaluate(() => document.documentElement.scrollWidth > innerWidth + 1)), errors.join(' | '));

@@ -90,7 +90,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
     history.replaceState(history.state, "", u);
   };
 
-  const { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining } = s;
+  const { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, hostedIn, providerBasedIn, labAllowed, allowDataTraining } = s;
   // CR-2.5: ?f= carries the filters that differ from the defaults. Applied once, after stored settings
   // have loaded (a child effect runs before the provider's hydration and would be overwritten).
   const fromUrl = useRef(false);
@@ -108,8 +108,8 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
     if (filterCode) u.searchParams.set("f", filterCode); else u.searchParams.delete("f");
     if (u.href !== location.href) history.replaceState(history.state, "", u);
   }, [filterCode, hydrated]);
-  const candidates = useMemo(() => filteredCandidates(filterData, { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining }),
-    [filterData, score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, excludeChinese, euHostedOnly, nonUsOnly, teeOnly, allowDataTraining]);
+  const candidates = useMemo(() => filteredCandidates(filterData, { score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, hostedIn, providerBasedIn, labAllowed, allowDataTraining }),
+    [filterData, score, hideDeprecated, collapse, openOnly, featured, familySet, excludedSet, hostedIn, providerBasedIn, labAllowed, allowDataTraining]);
   const auto = useMemo(() => modelsForPreset(modelPreset, candidates, score, count), [modelPreset, candidates, score, count]);
   const ids = pinned ?? auto;
   // Release tables name the model, not its effort setting: strip the variant parenthetical, and

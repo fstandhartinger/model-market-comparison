@@ -3,15 +3,21 @@ import { createContext, useCallback, useContext, useEffect, useMemo, useState } 
 import type { ScoreKey } from "../lib/types";
 import { defaultMinFor, type PriceMode } from "../lib/cost";
 import { advancedFiltersActive, anyFiltersActive, isBlendValue, sanitizeSettings, SETTINGS_DEFAULTS, type SettingsState } from "../lib/settings-state";
+import { labFilter, sanitizeRegionList } from "../lib/regions.mjs";
 
 interface SettingsCtx extends SettingsState {
   setScore: (s: ScoreKey) => void;
   setCollapse: (b: boolean) => void;
   setFeatured: (b: boolean) => void;
   setHideDeprecated: (b: boolean) => void;
-  setExcludeChinese: (b: boolean) => void;
-  setEuHostedOnly: (b: boolean) => void;
-  setNonUsOnly: (b: boolean) => void;
+  /** CR-25.4: the regional bucket lists (China / EU / US / Other that stay in). */
+  setHostedIn: (b: string[]) => void;
+  setProviderBasedIn: (b: string[]) => void;
+  setLabBasedIn: (b: string[]) => void;
+  /** CR-25.5: selected labs; empty = all. */
+  setLabs: (k: string[]) => void;
+  /** Model-level lab predicate (Labs picker + "Model lab based in"); null = nothing restricted. */
+  labAllowed: ((org: string) => boolean) | null;
   setOpenOnly: (b: boolean) => void;
   /** Simple's score floor (F-40: written only by Simple's slider). */
   setMinScore: (n: number) => void;
@@ -130,6 +136,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const closeFilters = useCallback(() => setFiltersOpen(false), []);
   const toggleFilters = useCallback(() => setFiltersOpen((o) => !o), []);
 
+  // A stable predicate while the lab choices are unchanged, so views can list it as a memo dependency.
+  const labAllowed = useMemo(() => labFilter(state.labs, state.labBasedIn), [state.labs, state.labBasedIn]);
+
   const value = useMemo<SettingsCtx>(() => ({
     ...state,
     // A new score is a new scale: both floors go back to their defaults.
@@ -145,9 +154,11 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     userFiltersActive: anyFiltersActive(state),
     advancedFiltersActive: advancedFiltersActive(state),
     setHideDeprecated: (hideDeprecated) => setState((s) => ({ ...s, hideDeprecated })),
-    setExcludeChinese: (excludeChinese) => setState((s) => ({ ...s, excludeChinese })),
-    setEuHostedOnly: (euHostedOnly) => setState((s) => ({ ...s, euHostedOnly })),
-    setNonUsOnly: (nonUsOnly) => setState((s) => ({ ...s, nonUsOnly })),
+    setHostedIn: (list) => setState((s) => ({ ...s, hostedIn: sanitizeRegionList(list) ?? s.hostedIn })),
+    setProviderBasedIn: (list) => setState((s) => ({ ...s, providerBasedIn: sanitizeRegionList(list) ?? s.providerBasedIn })),
+    setLabBasedIn: (list) => setState((s) => ({ ...s, labBasedIn: sanitizeRegionList(list) ?? s.labBasedIn })),
+    setLabs: (labs) => setState((s) => ({ ...s, labs })),
+    labAllowed,
     setOpenOnly: (openOnly) => setState((s) => ({ ...s, openOnly })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore, minScoreTouched: true })),
     resetMinScore: () => setState((s) => ({ ...s, minScore: defaultMinFor(s.score), minScoreTouched: false })),
@@ -172,7 +183,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     hydrated,
     excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,
-  }), [state, hydrated, advancedView, filtersOpen, resultCount, openFilters, closeFilters, toggleFilters, untouchedMin]);
+  }), [state, hydrated, advancedView, filtersOpen, resultCount, openFilters, closeFilters, toggleFilters, untouchedMin, labAllowed]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

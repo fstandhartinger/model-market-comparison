@@ -4,7 +4,7 @@ import type { ClientData, ClientOffer, ProviderInfo } from "../lib/client-model"
 import { SCORE_LABELS } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { useSettings } from "./SettingsContext";
-import { createOfferScope, rankedOffers, scopedCatalogOffers, scoreOf, offerPrice, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
+import { createScope, rankedOffers, scopedCatalogOffers, scoreOf, offerPrice, priceContext, priceLabel, type PriceSettings, type PriceResult } from "../lib/cost";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { collapseModels, preferredVariantIds, selectableModels } from "../lib/variants";
 
@@ -22,10 +22,11 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   const preferredId = useMemo(() => preferredVariantIds(candidates, s.score), [candidates, s.score]);
   const [euOnly, setEuOnly] = useState(false);
   const [showEmpty, setShowEmpty] = useState(false);
-  const effectiveEuOnly = s.euHostedOnly || euOnly;
+  const globalEuOnly = s.hostedIn.length === 1 && s.hostedIn[0] === "EU";
+  const effectiveEuOnly = globalEuOnly || euOnly;
   const offerScope = useMemo(
-    () => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining),
-    [s.excludedSet, s.excludeChinese, data.providers, effectiveEuOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining],
+    () => createScope(s.excludedSet, data.providers, { hostedIn: euOnly ? ["EU"] : s.hostedIn, providerBasedIn: s.providerBasedIn }, !s.allowDataTraining),
+    [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, euOnly, s.allowDataTraining],
   );
 
   // Match the global collapse switch exactly: either one score-preferred variant
@@ -34,6 +35,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
     const collapsed = s.collapse ? collapseModels(candidates, preferredId) : candidates;
     return collapsed.filter((model) => {
       if (s.openOnly && !model.open_weights) return false;
+      if (s.labAllowed && !s.labAllowed(model.org)) return false;
       if (s.featured && !model.featured) return false;
       if (s.familySet && !s.familySet.has(model.family_key)) return false;
       const score = scoreOf(model, s.score);
@@ -41,7 +43,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
       // a measured score — it must not satisfy a positive min-score filter.
       return !(s.advancedMinScore > 0 && (score == null || score < s.advancedMinScore || (s.score === "composite" && model.composite_coverage <= 0)));
     });
-  }, [candidates, preferredId, s.collapse, s.openOnly, s.featured, s.familySet, s.advancedMinScore, s.score]);
+  }, [candidates, preferredId, s.collapse, s.openOnly, s.labAllowed, s.featured, s.familySet, s.advancedMinScore, s.score]);
 
   // Per-provider model count over the FILTERED model rows (so the directory count matches the
   // list you actually see when you click through).
@@ -73,7 +75,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
   const providers = useMemo(() => {
     let r = data.providers.map((p) => ({ ...p, model_count: provCounts.get(p.key) ?? 0 }));
     if (offerScope.allowed) r = r.filter((p) => offerScope.allowed!.has(p.key));
-    if (offerScope.euHostedOnly || offerScope.teeOnly) r = r.filter((p) => scopeCapableKeys.has(p.key));
+    if (offerScope.hostedIn || offerScope.teeOnly) r = r.filter((p) => scopeCapableKeys.has(p.key));
     if (!showEmpty) r = r.filter((p) => p.model_count > 0);
     return r;
   }, [data.providers, provCounts, offerScope, scopeCapableKeys, showEmpty]);
@@ -153,7 +155,7 @@ export function ProviderExplorer({ data }: { data: ClientData }) {
         </div>
         <div className="mb-2 flex flex-wrap items-center gap-x-3 gap-y-1 text-[11px]">
           <label className="flex cursor-pointer items-center gap-1 text-gray-400">
-            <input type="checkbox" checked={effectiveEuOnly} disabled={s.euHostedOnly} onChange={(e) => setEuOnly(e.target.checked)} className="accent-emerald-500" />
+            <input type="checkbox" checked={effectiveEuOnly} disabled={globalEuOnly} onChange={(e) => setEuOnly(e.target.checked)} className="accent-emerald-500" />
             EU-hosted / approved equivalent only
           </label>
           <label className="flex cursor-pointer items-center gap-1 text-gray-400">

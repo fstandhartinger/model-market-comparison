@@ -1,7 +1,7 @@
 import type { ClientModel, ClientOffer } from "./client-model";
 import type { ScoreKey } from "./types";
 import { hasScoreEvidence } from "./client-model";
-import { createOfferScope, offerMatchesScope } from "./cost";
+import { scopeFromSettings, offerMatchesScope } from "./cost";
 import { preferredVariantIds } from "./variants";
 import type { PresetCandidate } from "./presets.mjs";
 
@@ -13,7 +13,7 @@ export type MatrixModel = Pick<ClientModel, "id" | "family_key" | "family_name" 
   ref_cost?: number | null;
 };
 /** `cost`: the route's adjusted $/task at the default adjusted settings (CR-2.4 Best value). */
-export type MatrixOffer = Pick<ClientOffer, "key" | "tee" | "eu_hosted" | "data_private"> & { cost?: number | null };
+export type MatrixOffer = Pick<ClientOffer, "key" | "tee" | "eu_hosted" | "data_private" | "region"> & { cost?: number | null };
 export interface MatrixFilterData {
   models: MatrixModel[];
   offers: Record<string, MatrixOffer[]>;
@@ -27,10 +27,9 @@ export interface TopModelSettings {
   featured: boolean;
   familySet: Set<string> | null;
   excludedSet: Set<string> | null;
-  excludeChinese: boolean;
-  euHostedOnly: boolean;
-  nonUsOnly: boolean;
-  teeOnly: boolean;
+  hostedIn: readonly string[];
+  providerBasedIn: readonly string[];
+  labAllowed: ((org: string) => boolean) | null;
   allowDataTraining: boolean;
 }
 
@@ -40,11 +39,12 @@ export interface TopModelSettings {
  *  confidentiality / data-policy scope. Each carries its cheapest in-scope adjusted cost and
  *  whether any route is EU-hosted, for the model presets (CR-2.4). */
 export function filteredCandidates(data: MatrixFilterData, s: TopModelSettings): (MatrixModel & PresetCandidate)[] {
-  const scope = createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining);
+  const scope = scopeFromSettings(s, data.providers);
   let r = s.hideDeprecated ? data.models.filter((m) => m.family_alive) : data.models;
   const preferred = preferredVariantIds(r as unknown as ClientModel[], s.score);
   if (s.collapse) r = r.filter((m) => !preferred.has(m.family_key) || preferred.get(m.family_key) === m.id);
   if (s.openOnly) r = r.filter((m) => m.open_weights);
+  if (s.labAllowed) r = r.filter((m) => s.labAllowed!(m.org));
   if (s.featured) r = r.filter((m) => m.featured);
   if (s.familySet) r = r.filter((m) => s.familySet!.has(m.family_key));
   r = r.filter((m) => hasScoreEvidence(m as unknown as ClientModel, s.score) && m.scores[s.score] != null);

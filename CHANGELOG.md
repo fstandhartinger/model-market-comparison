@@ -4,6 +4,23 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Options panel: positive regional choices, Labs filter (CR-25.4 / CR-25.5 / CR-36.3)
+
+No data location, route, public API field or dataset value changed. App settings only:
+
+- **Regional choices are positive lists** — "Hosted in", "Provider company based in" and "Model lab
+  based in", each over China / EU / US / Other, all selected by default. They replace the switches
+  "EU-hosted only", "Exclude Chinese providers" and "Non-US provider only" with identical results
+  (a unit test compares both on every provider in the dataset). Stored settings, saved filter presets
+  and account settings carrying the old switches are migrated on load.
+- **Shared links:** the `?f=` filter code now writes `hostedIn:EU`, `providerBasedIn:…`,
+  `labBasedIn:…` and `labs:…`; links with the old `euHostedOnly:1`, `excludeChinese:1` and
+  `nonUsOnly:1` keys still open the same view.
+- **Model lab country** (`LAB_COUNTRIES` in `lib/regions.mjs`) lists only labs whose home country is
+  well documented; every other lab counts as Other, never guessed.
+- Models, Providers and the new Labs picker are compact searchable lists; the provider quick-pick
+  links of the old dropdown are gone (the filter presets cover those cases).
+
 ## 2026-09-15 — New raw capture: OpenRouter Benchmarks API (CR-34.1; no values displayed yet)
 
 No data location, route, public API field or benchmark value changed; `data/dataset.json` is
