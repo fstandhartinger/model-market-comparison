@@ -164,3 +164,60 @@ Evidence: Hermes started an official-documentation audit at 13:17 UTC (/home/flo
 Laptop Claude Code chat, 15 Sep 2026 ~15:00 UTC, verbatim (context: Florian asked why the green Pareto line stops at GLM-5.3 in Simple's value map; answer: the frontier only uses models passing the minimum-score slider, default 86):
 
 > ah I get it, it's because siof the minimum capability score slider. let's pre-default that slider value to a value that make the very rigtmost but top (on y axis) model be part of the line. (but don't put the capability value slider lower than 65)
+
+
+## CR-20260915d — Compare, Benchmaxxing, per-model report, More menu, overview cost cell, Options dialog, Charts value map, providers, full benchmark list, data checks
+Laptop Claude Code chat, 15 Sep 2026 ~15:20 UTC, verbatim (typos kept):
+
+> some layout issues in the compare section:
+> - tooltips on radar values is transparent/seethrough
+> - we have to chant ghe scaing of the exes of the radar somehow, because otherwise for models like fable 5.1 and GPT-6 astra its almost no visual difference (I don't knw, maybe adjust the scale depending on the two models values? we could skip the 0-25 points section as its almost irrelevant for new models.
+> - DesignArena Frontend is not ideal there, Fable 5.1 is missing there and that model is super important, let's use DesignArena Full-Stack instead
+> - for "Full benchmark comparison" section: columns for the models must be same width
+> - in the Benchmaxxing tab don't show multiple reasoning variants of one model. it would look weird if one model is marked as "benchmaxxed" while another reasoning variant of the same model (same weights, same training run in the ai lab) is not
+> - in this benchmaxxing table change the signal bar (the yellow one) so that differences can be seen stronger (I think currently the max value existing is something like 30? lets reduce it based on the values that are actually existing in the list.
+> - in PER-MODEL REPORT: this AA Coding Agent Index value of zero for Muse Spark 1.3 can't be right (see third image). also: lets put one sentence there somehow: the more jagged, the more benchmaxxed. and: can we remove these radial lines for all the axes of this radial charts with the many axes= or at least make these less visible? the bright gray looks too high contrast on darkmode background.
+> - the More menu pops up in the wrong spot, fix that
+> - in the overview section in the table of the model score and cost comparisons in the cost cells if it says something like "↓
+> 11× cheaper" the bubble curently breaks the layout (it moxes the cost bar lower, let's have that "↓
+> 11× cheaper" left of the price not below it.
+> - in filter section lets remove that "✓ Strong confidential guarantees" filter, I think it's not a well agreed on perspecive
+> - also in filter section "✓ I'm buying for a company
+> i" in my opinion doesn't fit nicely into the "Data Confidentiality" section.
+> - in the regional settings let'S harmonize the way we show the filtering for the three regions and get rid of the (i) for EU-hosted. I think we should make it postively expressed instead of negatively: Hosted in "China", "EU", "US", "Other" and by default all of them are checked. and then additionally add filter featuers like inference provider company based in: "China", "EU", "US", "Other" and the same for model lab located in "China", "EU", "US", "Other"
+> I also thing Models dropdown and Provides dropdowns are placed weirdly in this filter dialog, let's put these into an extra section: Models and Providers and add a third axis Labs (labs are the companies that trained a model, Providers are the inference provider companies, sometimes the same as the lab)
+> In the score dropdown add the category composite scores like e.g. Coding
+> - the cost vs Capability diagram must be improved a lot, take all of the advacements we made for the pareto diagram on the overview page and add them here (including labels within the chart) and add some more convenience features and easy score selection.
+> - the "Filters" should maybe be renamed from Filters to Options? Because things like the Score selector is not really a filter, it's a choice
+> - let's see if we can add trustedtokens.eu to the provider list
+> - in the benchmarks list in the overview start page, show all of the benchmarks we have, not only 22. by the way for GPT-6 Astra I saw that the DesignArena Frontend and Full-Stack values are missing even though I know they exist on designarenas page. try to improve that and start extra agents that doublecheck if all the scraped values are correct
+
+Florian attached three screenshots (described here because agents can't see them):
+1. Compare tab radar tooltip for axis "DesignArena Full-Stack · published 2026-09-14": GPT-6 Astra (high) 1350 Elo · 100/100 within the measured range 995–1350 Elo; Claude Fable 5.1 (Adaptive Reasoning, High E…) 1342 Elo · 98/100. The tooltip box has a transparent background: radar grid lines and the axis label "7. Humanity's Last Exam" show through the text, making it hard to read.
+2. Compare radar with 8 axes (1 AA Intelligence Index, 2 AA Coding Index, 3 Epoch ECI, 4 Epoch Software ECI, 5 DesignArena Frontend, 6 DesignArena Full-Stack, 7 Humanity's Last Exam, 8 Terminal-Bench v4.0), rings 25/50/75/100 on a 0–100 scale. Fable 5.1 (solid blue) and GPT-6 Astra (dashed green) overlap almost everywhere (both ~55–60 on AA Intelligence, ~75 AA Coding, ~88 Epoch ECI, ~90 Epoch Software ECI); on DesignArena Frontend only GPT-6 Astra has a point near 100 — Fable 5.1 has no value there, so its polygon cuts across.
+3. Per-model report tooltip: "Artificial Analysis Coding Agent Index v1.4 · v1.4 — Muse Spark 1.3 (xhigh) 0.641775036414302 fraction · percentile 0.0 · observed 2026-09-09" — an unformatted raw fraction and a percentile of 0.0, plotted as zero on the radar.
+Supervisor note: a separate read-only data-verification job (`/home/flori/jobs/bh-data-verification-20260915/`) checks scraped values (incl. GPT-6 Astra DesignArena, Muse Spark 1.3 AA Coding Agent Index, trustedtokens.eu); apply its verified corrections (CORRECTIONS.json) through the normal data pipeline with provenance.
+
+
+## CR-20260915e — Simple slider label = Benchmark Heaven Main Composite Score; outlier tags in the Simple benchmark table
+Laptop Claude Code chat, 15 Sep 2026 ~15:40 UTC, verbatim (typos kept):
+
+> one more thing: the simple mode slider for capability score by default shows up as "Minimum Capability Score (Composite)" - can we brand it (and its tooltip behind the i) more as  "Minimum Capability Score 
+> (Benchmark Heaven Main Composite Score)" and "((Benchmark Heaven Main Composite Score)" is in the second line, and we use the scor that we also have in the top row of the Simple View Benchmark results table.
+> Oh and in that table: let's mark scores that are outstatndingly well or bad in comparison to the other models in the same row with a small tag, each.
+
+
+## CR-20260915f — More benchmarks: self-reported scores from release papers
+Laptop Claude Code chat, 15 Sep 2026 ~15:50 UTC, verbatim:
+
+> also can we please try to find more benchmarks? go through all the technical release papers of these models and scrape extensively which self reported scores they report, try to find more benchmarks we can include in our app - work should be mostly done on the sandy hetzner of course, but I really want to stress that point
+
+Supervisor note: research runs as job `/home/flori/jobs/bh-self-reported-scout-20260915/` (Opus 5 + Kimi K3 workers, no repo edits). The loop ingests its verified output.
+
+
+## CR-20260915g — Simple benchmark table: 'simplified list' hint; (i) per benchmark
+Laptop Claude Code chat, 15 Sep 2026 ~16:00 UTC, verbatim (typos kept):
+
+> also, when in simple mode the "Benchmarks" link in the header is clicked and we have scrolled to the benchmarks table - or alternatively when the user has scrolled tothat benchmark table manually, I'd like to have a brief note popping up, attention seeking, for a short moment, and then disappear, saying "this is a simplified list" next to the button "Open the full comparison".
+>
+> also can we please have an (i) next to each of the benchmark names in that benchmark table? with a tooltip (mae sure z-index and opacity of the tooltip is right) that quickly explains what the tooltip is about and what type of scores thi benchmark delivers?

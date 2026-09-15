@@ -207,3 +207,56 @@ still-open rows from section 2 per the priority rule in section 0.
 | CR-18.1 | While the user hasn't touched the slider (`minScoreTouched=false`), Simple's minimum-score default is derived from the data instead of the fixed 86 (`lib/cost.ts defaultMinFor`): take the models Simple's value map would plot under the current filters *before* the minimum-score cut (same pool, price mode, offer scope, collapse; points with a positive price on the log axis), find the cheapest one (rightmost; if several share the lowest cost, the one with the highest score), and set the default to its score rounded down to the slider step, so that model passes and is on the green Pareto line | Unit test with a fixture: default equals the rightmost-top model's score; that model is in `paretoFrontier` of passing points; the line reaches the right edge of the plotted cloud |
 | CR-18.2 | Floor: the derived default is never below 65 (for the 0–100 composite/index scores). Elo-style scores (Design Arena) keep their own existing default logic | Test: a cheapest model scoring 50 yields default 65 |
 | CR-18.3 | Table and value map use the same derived value (no mismatch between rows shown and points passing); the slider shows it; 'reset' returns to the derived default; a value the user set by hand still wins and is still persisted; the model pool itself does not shrink/grow in a loop when the default changes (compute from the pre-cut pool) | Live check on both hosts, desktop + 390 px, light/dark: line reaches the rightmost top model in Simple; touching the slider still overrides; Advanced/Guided unchanged |
+
+
+## 7. CR-20260915d checklist — Compare, Benchmaxxing, report, More menu, cost cell, Options, Charts map, providers, benchmark list
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-19.1 | Compare radar tooltips get an opaque, theme-aware background (no see-through text) in light and dark | Screenshot check on both themes; contrast ≥ 4.5:1 |
+| CR-19.2 | Compare radar scaling makes differences between two strong models visible: axis range adapts to the two selected models' values (e.g. no 0–25 dead zone; a sensible per-axis or shared window around the pair's values), with the scale shown honestly (ring labels reflect the window) | Fable 5.1 vs GPT-6 Astra shows visibly different shapes; test for window computation; no misleading zero; single-model and missing-value cases handled |
+| CR-19.3 | Default compare radar axes: replace DesignArena Frontend with DesignArena Full-Stack (Fable 5.1 must have a value on every default axis where data exists); no duplicate DesignArena axes | Default axis list test; Fable 5.1 and GPT-6 Astra both have points on all default axes (or a documented gap) |
+| CR-20.1 | Full benchmark comparison: model columns have equal widths | Visual check desktop/mobile; table-layout fixed or equivalent |
+| CR-21.1 | Benchmaxxing tab shows one row per model (weights/training run), not multiple reasoning variants; the benchmaxxing verdict is computed/displayed per model so variants can't disagree | Test: variants collapse to one row; chosen representative documented |
+| CR-21.2 | Benchmaxxing signal bar (yellow) scales to the actual maximum value present in the list (not a fixed max), so differences are clearly visible | Bar width = value / max(list); max shown; test |
+| CR-22.1 | Per-model report: fix AA Coding Agent Index value for Muse Spark 1.3 (raw fraction 0.64 shown as percentile 0.0 / zero). Values must be converted to the axis's scale consistently; tooltip formats numbers (no 15-digit raw fractions) | Regression test with this model; tooltip shows a formatted value; no zero plotted for a real value |
+| CR-22.2 | Per-model report: add one plain sentence near the radar: 'The more jagged the shape, the more benchmaxxed the model looks.' (wording may be polished) | Copy present, accessible |
+| CR-22.3 | Radar charts with many axes: remove the radial spoke lines or make them much subtler (low-contrast on dark mode) | Design check light/dark |
+| CR-23.1 | Mobile header 'More' menu opens anchored to its button (currently pops up in the wrong spot) | Check 390 px and tablet widths, both themes; no overflow |
+| CR-24.1 | Overview table cost cells: the '↓ 11× cheaper' (and 'pricier') tag sits left of the price on the same line, not below it, so the cost bar stays aligned | Visual check desktop/mobile; row height unchanged |
+| CR-25.1 | Rename 'Filters' to 'Options' everywhere (button, dialog title, docs) since it also holds choices like the score | Copy check; no stale 'Filters' labels |
+| CR-25.2 | Remove the 'Strong confidential guarantees' filter | Absent in UI, state migrated, no dead code paths |
+| CR-25.3 | Move 'I'm buying for a company' out of the 'Data Confidentiality' section to a better-fitting place | Design pass decides placement; documented |
+| CR-25.4 | Regional settings harmonized and positively expressed: 'Hosted in: China / EU / US / Other' (all checked by default); plus 'Inference provider company based in: China / EU / US / Other' and 'Model lab based in: China / EU / US / Other'; remove the (i) on EU-hosted. Existing EU-hosted/non-US/exclude-Chinese behaviour maps onto these without changing results for default users | Tests for mapping + defaults; data for provider/lab country present or documented as Other |
+| CR-25.5 | New Options section 'Models and Providers' holding the Models dropdown, the Providers dropdown and a new Labs dropdown (lab = company that trained the model; provider = inference company) | UI check; Labs filter works with collapse/variants |
+| CR-25.6 | Score dropdown includes the category composite scores (e.g. Coding) as selectable scores | Selecting a category score updates table, map and sort consistently |
+| CR-26.1 | Charts tab cost-vs-capability diagram gets all the Overview value-map improvements (reversed cost axis, attractive quadrant, Pareto line, in-chart labels with collision handling, 30-model logic where it applies) plus more convenience: easy score selection directly on the chart, and other sensible controls (e.g. min score/max cost, label toggle, hover details) | Parity checklist vs Overview map; design gate review |
+| CR-27.1 | Research and, if it qualifies, add trustedtokens.eu as a provider (models, prices, hosting region, company country) with provenance | Evidence in data-verification job or own intake; no invented numbers |
+| CR-28.1 | Overview start page benchmark list shows all benchmarks we have (not only 22) | Count equals catalog count; grouping/perf acceptable |
+| CR-28.2 | DesignArena Frontend and Full-Stack values for GPT-6 Astra (and any other missing models present on DesignArena) are ingested; the data-verification job's corrections are applied with provenance | Values present with source/date; verification report linked |
+
+
+## 8. CR-20260915e checklist — slider branding, outlier tags
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-29.1 | Simple mode minimum-score slider label reads 'Minimum Capability Score' with '(Benchmark Heaven Main Composite Score)' on a second line (instead of 'Minimum Capability Score (Composite)'); its (i) tooltip is rebranded the same way | Copy check desktop/390 px, light/dark; label wraps as two lines, no overflow |
+| CR-29.2 | The slider filters on exactly the same score shown in the top 'Benchmark Heaven Score' row of the Simple benchmark results table (same key, same value per model); when another score is selected, label/tooltip name that score consistently | Test: slider score key == score row key; values match for sample models |
+| CR-29.3 | Simple benchmark results table: in each benchmark row, a small tag marks scores that are outstandingly good or bad compared with the other models in that row (e.g. 'top' / 'low'), one tag per cell at most, based on a transparent rule (e.g. clear gap vs the row's other values, not just the max/min), accessible (not colour-only), not cluttering rows with few models | Unit test for the rule; visual check; tooltip explains the rule |
+
+
+## 9. CR-20260915f checklist — self-reported scores and more benchmarks (after the research job's RESULT.md exists)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-30.1 | Ingest the verified self-reported scores from `/home/flori/jobs/bh-self-reported-scout-20260915/self-reported-scores.jsonl` with full provenance (source URL, page/table, date, setting), clearly labelled 'self-reported' in the product and never averaged into independent measurements without that label | Registry/dataset gates pass; every value has source+date+basis; UI shows the self-reported label; test |
+| CR-30.2 | Add the top new benchmarks from `BENCHMARK-CANDIDATES.md` (prefer ones with an independent leaderboard) to the taxonomy and category composites, in the job's recommended order | Each new benchmark: description, official URL, category, saturation note; composites documented |
+| CR-30.3 | Benchmark lists/tables show the new benchmarks (Overview all-benchmarks list, Benchmarks tab, compare) with self-reported vs independent distinguishable | Visual check; counts match catalog |
+
+
+## 10. CR-20260915g checklist — simplified-list hint, benchmark (i) tooltips
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual scrolling — a brief, attention-seeking note 'This is a simplified list' pops up next to the 'Open the full comparison' button, stays a short moment (~3–4 s) and disappears; at most once per page visit (don't nag on every scroll) | IntersectionObserver-based; works for header link and manual scroll; respects prefers-reduced-motion (no animation, still shown); not covering the button; mobile 390 px + desktop, light/dark; test |
+| CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the benchmark measures and what type of score it delivers (e.g. % solved, Elo, index 0–100, fraction), sourced from the taxonomy descriptions | Every row has an (i) with non-empty text; tooltip opaque, above sticky headers/columns and the table (correct z-index), keyboard- and tap-accessible; no clipping at table edges |
