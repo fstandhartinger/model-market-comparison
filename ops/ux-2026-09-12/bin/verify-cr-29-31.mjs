@@ -72,8 +72,12 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     await trigger.hover(); await page.waitForTimeout(300);
     const tip = page.locator('[role=tooltip]').last();
     tipText = await tip.innerText().catch(() => '');
-    const st = await tip.evaluate((el) => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el); const top = document.elementFromPoint(r.left + r.width / 2, r.top + 10); return { z: Number(cs.zIndex), bg: cs.backgroundColor, onTop: el.contains(top), inView: r.left >= 0 && r.right <= innerWidth && r.top >= 0 }; }).catch(() => null);
-    tipOk = /Score:/.test(tipText) && tipText.length > 40 && st && st.z >= 100 && st.onTop && st.inView && !/rgba\(.*, 0\)/.test(st.bg);
+    // The tooltip is pointer-events:none, so elementFromPoint cannot see it; "above sticky headers and the table"
+    // is checked as: portalled to <body>, fixed, z-index >= 100. Attachment: within 24 px of its (i).
+    const tb = await trigger.boundingBox();
+    const st = await tip.evaluate((el, t) => { const r = el.getBoundingClientRect(), cs = getComputedStyle(el); const gap = t ? Math.min(Math.abs(r.top - (t.y + t.height)), Math.abs(t.y - r.bottom)) : 999; return { z: Number(cs.zIndex), position: cs.position, portalled: el.parentElement === document.body, bg: cs.backgroundColor, gap: Math.round(gap), inView: r.left >= 0 && r.right <= innerWidth && r.top >= 0 && r.bottom <= innerHeight }; }, tb).catch(() => null);
+    tipOk = /Score:/.test(tipText) && tipText.length > 40 && st && st.z >= 100 && st.portalled && st.position === 'fixed' && st.gap <= 24 && st.inView && !/rgba\(.*, 0\)/.test(st.bg);
+    if (!tipOk) tipText = `${JSON.stringify(st)} ${tipText.replace(/\n/g, ' ')}`;
     await page.screenshot({ path: `${OUT}/${tag}-info.png` });
   }
   check(`${tag} CR-31.2 (i) explains the benchmark and its score type; opaque, on top, not clipped`, tipOk, tipText.slice(0, 200));
