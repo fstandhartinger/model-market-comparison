@@ -476,14 +476,14 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                     </span>}
                   </MagnitudeBar>;
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="flex items-center justify-end gap-1.5 whitespace-nowrap">{(() => {
+                <td className="bh-cost-cell px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="bh-cost-line flex items-center justify-end gap-1.5 whitespace-nowrap">{(() => {
                   const v = valueById.get(m.id);
                   if (!v) return null;
                   const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
                   const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
                   const why = `About ${ratio} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score among the ${v.n} priced models shown (log cost fitted against score).`;
                   // CR-24.1: the tag sits left of the price on the same line, so the cost bar keeps its row height.
-                  // Florian 2026-09-15 (directive 10): phones in portrait show the compact "↓11×"; the words stay in the tooltip and for screen readers.
+                  // Florian 2026-09-15 (directive 10): below 1024 px (where the words overflow the cell) the tag is the compact "↓11×"; the words stay in the tooltip and for screen readers.
                   return <span className="bh-value-tag" data-kind={v.kind} title={`${words}. ${why}`}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span><span className="bh-vt-full">{words}</span><span className="bh-vt-compact" aria-hidden="true">{ratio}</span><span className="sr-only">{words}: {why}</span></span>;
                 })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>

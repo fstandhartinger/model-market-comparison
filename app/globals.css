@@ -157,12 +157,20 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-value-tag { display: inline-flex; align-items: center; gap: 2px; margin-top: 0; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 600; line-height: 16px; white-space: nowrap; }
 .bh-value-tag[data-kind="cheap"] { color: rgb(var(--accent2)); background: rgb(var(--accent2) / .13); }
 .bh-value-tag[data-kind="pricey"] { color: rgb(var(--warn)); background: rgb(var(--warn) / .13); }
-/* Directive 10 (2026-09-15): on phones in portrait the tag is "↓11×" — no words, no space; desktop and tablet unchanged. */
+/* Directive 10 (2026-09-15): the compact tag "↓11×" — no words, no space. Measured 2026-09-15: below 1024 px (phones,
+   768/834 tablets, landscape phones) the full "↓ 11× cheaper" spills out of the cost cell and at 768 covers the score,
+   so the compact form applies there; from 1024 px up the full text fits and stays unchanged. */
 .bh-value-tag .bh-vt-compact { display: none; }
-@media (max-width: 639px) and (orientation: portrait) {
+@media (max-width: 1023px) {
   .bh-value-tag { gap: 0; padding: 0 4px; }
   .bh-value-tag .bh-vt-full { display: none; }
   .bh-value-tag .bh-vt-compact { display: inline; }
+}
+/* At 320 px even the compact tag plus the price is wider than the cost cell's content box: less cell padding (the
+   score column keeps its own right padding) and a 2 px gap keep the tag inside its own cell. */
+@media (max-width: 639px) {
+  .bh-cost-cell { padding-left: 0; padding-right: 6px; }
+  .bh-cost-line { gap: 2px; }
 }
 .bh-table-wrap { max-width: 100%; overflow-x: auto; border: 1px solid rgb(var(--line)); border-radius: 10px; }
 .bh-bounded-table { height: 1100px; max-height: 1100px; contain: layout paint; }
