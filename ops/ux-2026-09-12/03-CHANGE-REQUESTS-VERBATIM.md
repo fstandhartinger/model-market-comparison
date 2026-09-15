@@ -150,3 +150,11 @@ section existed. They remain useful as more detailed, implementation-oriented br
 - `/home/flori/benchmarkheaven-subscription-costs-20260915/REQUEST.md` — subscription-cost
   modeling. Correctly uses the updated 09:34 framing as the product rule and folds in the
   09:11 pass's extra-usage-charges nuance as an edge case rather than the default formula.
+
+
+## CR-20260915b — EU-hosted filter: AWS Bedrock (Claude) and Azure Foundry (OpenAI)
+Hermes Telegram chat, 15 Sep 2026 13:16 UTC, verbatim:
+
+> regarding benchmark heaven: doublecheck the eu hosted filter stuff, as far as I know AWS Bedrock offers the Claude models in EU hosted (maybe not Fable 5/5.1, unsure about that, but the others I belive) and Azure Foundry offers the OpenAI models EU hosted.
+
+Evidence: Hermes started an official-documentation audit at 13:17 UTC (/home/flori/jobs/benchmarkheaven-eu-hosting-audit-20260915). Use its findings per exact model and region (EU endpoint vs. EU data processing vs. EU control plane); verify anything it doesn't cover yourself.

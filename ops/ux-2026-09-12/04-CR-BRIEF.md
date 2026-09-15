@@ -189,3 +189,12 @@ same convention as section 2.
 
 **Suggested order:** CR-10, CR-11 → CR-12 → CR-13 → CR-14 → CR-15 → CR-16, interleaved with the
 still-open rows from section 2 per the priority rule in section 0.
+
+
+## 5. CR-20260915b checklist — EU-hosted filter
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-17.1 | The EU-hosted filter includes Claude models available via AWS Bedrock with EU in-region processing (per exact model; Fable 5/5.1 only if officially offered in an EU region) | Each included model cites the official AWS doc/region list with date; no model included on provider name alone |
+| CR-17.2 | The EU-hosted filter includes OpenAI models available via Azure AI Foundry EU deployments (data zone EU / EU regions) | Per model and deployment type, cited with date; global-only deployments are not counted as EU-hosted |
+| CR-17.3 | The filter's definition of 'EU-hosted' is stated plainly (in-region inference/data processing, not just an EU control plane or billing entity) and applied consistently to all providers | Tooltip/help text reviewed; existing EU providers re-checked against the same rule |

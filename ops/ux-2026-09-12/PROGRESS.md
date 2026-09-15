@@ -231,6 +231,9 @@ credited below, the rest is marked open.
 | CR-16.1 | ChatGPT Plus/Pro and Claude Pro/Max are never presented as universally business-safe API equivalents; commercial-use eligibility is provider | open | — | — |
 | CR-16.2 | API pricing stays the default comparison everywhere; a small "Subscription costs may differ" note with a collapsible explanation is added, n | open | — | — |
 | CR-16.3 | Optional assumption-based estimate: effective cost/task = monthly subscription cost ÷ completed tasks per month, editable, explicitly labele | open | — | — |
+| CR-17.1 | EU-hosted filter: Claude via AWS Bedrock EU (per model, cited) | open | — | — |
+| CR-17.2 | EU-hosted filter: OpenAI via Azure AI Foundry EU deployments (per model, cited) | open | — | — |
+| CR-17.3 | EU-hosted definition stated plainly and applied consistently | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
