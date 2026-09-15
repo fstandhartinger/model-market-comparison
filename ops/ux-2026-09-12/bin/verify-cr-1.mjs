@@ -83,12 +83,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   check(`${tag} F-83 only one panel open at a time`, o1.pick && !o1.rows && o2.rows && !o2.pick && o3.pick && !o3.rows && !o4.pick && !o4.rows, JSON.stringify([o1, o2, o3, o4]));
   check(`${tag} CR-1.1 column headers: vendor above, model name`, s.cols.every((x) => x.org && x.name), JSON.stringify(s.cols));
   check(`${tag} CR-1.3 grouped by category with ≥ 8 group headers`, s.groups.length >= 8, s.groups.join(' | '));
-  // F-77: the toolbar counts benchmarks (as "Choose rows" does); when a benchmark shows several harness
-  // cohorts it adds "in N rows", and N must equal the rows rendered.
-  const m = s.status.match(/(\d+) benchmarks across (\d+) categories(?: in (\d+) rows)?/);
+  // F-77: the toolbar counts benchmarks (as "Choose rows" does). F-85: it no longer adds a second "in N rows"
+  // total; a benchmark split into harness cohorts adds rows, so the table has rows ≥ benchmarks.
+  const m = s.status.match(/(\d+) benchmarks across (\d+) categories/);
   const chooser = await p.locator('.bh-rowpicker summary').first().textContent().catch(() => '');
   const chosen = chooser?.match(/\((\d+) of \d+\)/);
-  check(`${tag} CR-1.4 / F-77 toolbar counts benchmarks like the row chooser, and rows match the table`, m && s.rows >= 25 && Number(m[3] ?? m[1]) === s.rows && chosen && Number(chosen[1]) === Number(m[1]), `${s.status} · chooser "${chooser?.trim()}" · rows ${s.rows}`);
+  check(`${tag} CR-1.4 / F-77 toolbar counts benchmarks like the row chooser, and rows match the table`, m && s.rows >= 25 && s.rows >= Number(m[1]) && chosen && Number(chosen[1]) === Number(m[1]), `${s.status} · chooser "${chooser?.trim()}" · rows ${s.rows}`);
   check(`${tag} CR-1.4 AA Intelligence Index and AA component rows present`, s.names.includes('AA Intelligence Index') && s.names.some((n) => /GPQA Diamond \(AA\)/.test(n)) && s.names.some((n) => /Humanity's Last Exam \(AA/.test(n)), '');
   check(`${tag} CR-1.1 short column names (no effort parenthetical on a unique model)`, s.cols.every((x) => x.name.length <= 40), s.cols.map((x) => x.name).join(' | '));
   check(`${tag} CR-1.5 data bars present, none on missing cells, subtle (alpha ≤ .25)`, s.bars > 0 && s.barsOnMissing === 0 && s.maxBarAlpha > 0 && s.maxBarAlpha <= 0.25, `bars=${s.bars} missing=${s.missing} alpha=${s.maxBarAlpha}`);

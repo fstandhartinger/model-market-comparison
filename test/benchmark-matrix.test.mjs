@@ -11,6 +11,9 @@ test('CR-1.5 bars: proportional for ratio units, inverted for lower-is-better, n
   assert.deepEqual(rowBars([2, 4], false, 'USD'), [1, 0.5]);
   assert.deepEqual(rowBars([1, 2], null, 'percent'), [null, null]);
   assert.deepEqual(rowBars([null, null], true, 'percent'), [null, null]);
+  // F-84: fewer than two values → no bar (nothing to compare against)
+  assert.deepEqual(rowBars([67, null, null], true, 'percent'), [null, null, null]);
+  assert.deepEqual(rowBars([null, 157.6], true, 'points'), [null, null]);
 });
 
 test('CR-1.5 bars: Elo uses min–max with a floor, direction-aware', () => {

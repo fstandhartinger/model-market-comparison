@@ -161,7 +161,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <p className="text-sm" role="status">
         <span className="font-semibold tabular">{selectedKeys.size}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
-        {visible.length !== selectedKeys.size && <span className="bh-muted"> in <span className="tabular">{visible.length}</span> rows</span>}
+        {/* F-85: no second total here — a benchmark split into harness cohorts shows the cohort on its own rows. */}
         <span className="bh-muted"> · {pinned ? "your selection" : modelPreset === "top" ? <>top {countSelect} by {SCORE_SHORT_LABELS[score]} under your filters</> : <>{presetName} · {countSelect} under your filters</>}</span>
       </p>
       <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
