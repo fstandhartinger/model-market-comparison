@@ -3,6 +3,7 @@ import { Fragment, useEffect, useMemo, useState } from 'react';
 import Link from 'next/link';
 import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
 import { BenchmarkRadar, SERIES_COLORS } from './BenchmarkRadar';
+import { defaultRadarAxes } from '../lib/radar.mjs';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
 import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 import { SpeedTable } from './SpeedContext';
@@ -24,7 +25,8 @@ export function MissingCell({ view, axis, modelId }: { view: BenchmarkView; axis
 export function BenchmarkCompare({ initialView, initialPicks, standalone = false }: { initialView: BenchmarkView; initialPicks: string[]; standalone?: boolean }) {
   const [view, setView] = useState(initialView), [picks, setPicks] = useState(initialPicks);
   const [addSearch, setAddSearch] = useState(''), [axisSearch, setAxisSearch] = useState('');
-  const defaults = initialView.axes.filter((a) => ['aa_coding_index', 'aa_intelligence_index', 'aa-gpqa-diamond', 'aa-hle', 'aa-scicode', 'aa-lcr'].includes(a.family)).map((a) => a.id).slice(0, 6);
+  // CR-14.4: current, unsaturated default axes (AA indices, Epoch ECI, DesignArena, HLE, Terminal-Bench).
+  const defaults = useMemo(() => defaultRadarAxes([...initialView.axes, ...(initialView.indexAxes ?? [])]), [initialView]);
   const [axesIds, setAxes] = useState(defaults), [showEmpty, setShowEmpty] = useState(false), [category, setCategory] = useState('');
   const [expandedRows, setExpandedRows] = useState<Set<string>>(new Set());
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
@@ -45,7 +47,8 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     return () => controller.abort();
   }, [picks, retry, loadedKey]);
   const modelOptions = useMemo(() => [...view.models].sort((a, b) => a.name.localeCompare(b.name) || a.org.localeCompare(b.org)), [view.models]);
-  const selectedAxes = axesIds.map((id) => view.axes.find((a) => a.id === id)).filter((a): a is ViewAxis => !!a);
+  const radarPool = useMemo(() => [...view.axes, ...(view.indexAxes ?? [])], [view]);
+  const selectedAxes = axesIds.map((id) => radarPool.find((a) => a.id === id)).filter((a): a is ViewAxis => !!a);
   const displayPicks = loadedKey !== picks.join('|') ? loadedKey.split('|').filter(Boolean) : picks;
   const visibleAxes = view.axes.filter((a) => (!category || a.category === category) && (!axisSearch || `${a.name} ${a.version} ${a.cohort}`.toLowerCase().includes(axisSearch.toLowerCase())) && (showEmpty || a.scores.some((r) => r.modelId && displayPicks.includes(r.modelId))));
   const categories = [...new Set(view.axes.map((a) => a.category))].sort();
@@ -94,7 +97,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
       <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} models selected. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
       {error && <button className="bh-button" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
     </section>
-    <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} axesPickerLabel={`Radar axes · ${axesIds.length} / 8 selected`} axesPicker={<><p className="bh-muted mt-2 text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{view.axes.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">{versionHeading(a.version)} · {a.cohort} · {a.stats.n} measured peers</span></span></label>)}</div></>} /></div>
+    <div className="min-w-0" aria-busy={busy}><BenchmarkRadar view={view} axes={selectedAxes} picks={displayPicks} axesPickerLabel={`Radar axes · ${axesIds.length} / 8 selected`} axesPicker={<><div className="mt-2 flex flex-wrap items-center justify-between gap-2"><p className="bh-muted text-sm">Choose 3–8 axes. Every option names one benchmark version and evaluation group. Unmeasured selections remain empty.</p><button type="button" className="bh-button px-3" disabled={axesIds.join('|') === defaults.join('|')} onClick={() => setAxes(defaults)}>Reset to recommended axes</button></div><div className="bh-collapsible-grid mt-4 grid max-h-80 gap-2 overflow-y-auto">{radarPool.map((a) => <label key={a.id} className="flex items-start gap-2 rounded p-2 text-sm hover:bg-accent/5"><input type="checkbox" className="mt-1" checked={axesIds.includes(a.id)} disabled={axesIds.length >= 8 && !axesIds.includes(a.id)} onChange={(e) => setAxes((old) => e.target.checked ? [...old, a.id].slice(0, 8) : old.filter((id) => id !== a.id))} /><span>{a.name}<span className="bh-muted block text-xs">{versionHeading(a.version)} · {a.cohort} · {a.stats.n} measured peers</span></span></label>)}</div></>} /></div>
     {displayPicks.length > 0 && <section className="bh-panel p-5" aria-label="Benchmark category snapshots">
       <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">RELEASE-STYLE SNAPSHOT</p><h2 className="text-xl font-semibold">Where each model is strongest</h2></div><span className="bh-badge">Measured results only</span></div>
       <p className="bh-muted mt-2 max-w-3xl text-sm">Each card averages the selected model&apos;s independently measured benchmark positions within one topic. The 0–100 scale is relative to the collected peer range for each exact benchmark; it is not a new score and missing results are excluded.</p>
