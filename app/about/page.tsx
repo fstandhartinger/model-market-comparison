@@ -152,20 +152,27 @@ export default async function AboutPage() {
 
       <h3 id="subscriptions" className="mt-6 mb-2 font-semibold">Subscriptions and company use</h3>
       <p className="text-sm text-gray-400">
-        Below the ranking, &ldquo;Would a subscription be cheaper?&rdquo; lists flat-rate plans with the
-        monthly list price from each vendor&apos;s own pricing page. We read the vendors&apos; terms
-        ourselves: Anthropic&apos;s consumer terms (Claude Pro/Max) say &ldquo;Non-commercial use
-        only&rdquo;, and Google says &ldquo;Only personal Google Accounts can sign up for Google AI
-        plans&rdquo;, so with &ldquo;I&apos;m buying for a company&rdquo; set those plans are hidden
-        and business seats are shown instead. Cursor&apos;s terms explicitly allow use on behalf of an
-        entity. GitHub steers organisations to Copilot Business without forbidding individual plans,
-        so that stays &ldquo;unclear&rdquo;. OpenAI and xAI refuse automated reads of their pages; we
-        do not work around that, so their prices and terms are marked as not collected. No vendor
-        publishes how many tasks a plan includes (GitHub publishes a credit allowance in dollars), so
-        we never turn a monthly price into a per-task price. Instead we show the break-even point —
-        the plan&apos;s price divided by the adjusted API cost per task of that vendor&apos;s
-        best-scoring model in your current view. The plan is only cheaper if its unpublished quota
-        reaches that number of tasks a month.
+        Every cost ranking on this site uses API prices; that is the clean baseline. Subscriptions
+        such as ChatGPT Plus/Pro or Claude Pro/Max are a separate topic, in the folded note
+        &ldquo;Subscription costs may differ&rdquo; below the ranking. They can make the effective cost
+        per task much lower for heavy users, but they are not fixed token bundles: session, weekly and
+        other limits vary and are mostly unpublished, so their effective cost per task depends on how
+        much you use them and is never a universal number. They are not universally business-safe
+        equivalents of API access either: account sharing, resale and automation are restricted, rate
+        limits apply, and commercial-use eligibility depends on the provider, the plan, the region and
+        the contract. We read the terms served to us (EEA): Anthropic&apos;s consumer terms (Claude
+        Pro/Max) say &ldquo;Non-commercial use only&rdquo;, and Google says &ldquo;Only personal Google
+        Accounts can sign up for Google AI plans&rdquo;, so with &ldquo;buying for a company&rdquo; set
+        those plans are set aside and business seats are shown instead; Team, Enterprise and API access
+        are the safer commercial categories. Cursor&apos;s terms explicitly allow use on behalf of an
+        entity. GitHub steers organisations to Copilot Business without forbidding individual plans, so
+        that is flagged as depending on plan and contract. OpenAI and xAI refuse automated reads of their
+        pages; we do not work around that, so their prices and terms are marked as not collected. For
+        a plan whose price we have, you can estimate its cost per task yourself: (monthly fee + any
+        extra usage charges) ÷ the tasks you complete per month. Every input is your assumption and the
+        result is labelled as a subscription estimate, apart from API costs. The plan list also shows the
+        break-even point — the plan&apos;s price divided by the adjusted API cost per task of that
+        vendor&apos;s best-scoring model in your view.
       </p>
 
       <h3 id="identity" className="mt-6 mb-2 font-semibold">Matching models to prices</h3>

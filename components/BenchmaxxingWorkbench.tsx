@@ -1,6 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
-import { BenchmaxxingOverview, presetRows, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "./BenchmaxxingOverview";
+import { BenchmaxxingOverview } from "./BenchmaxxingOverview";
+import { presetRows, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
 import { BenchmaxxingReport, type BenchmaxxingModel, type BenchmaxxingReportData } from "./BenchmaxxingReport";
 
 /** CR-15.2/15.4 (Florian 2026-09-15): master-detail. The table (a changeable preset, Featured by

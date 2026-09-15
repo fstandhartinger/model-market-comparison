@@ -9,9 +9,10 @@ import { modelPrice, createOfferScope, type PriceSettings } from "../lib/cost";
  *  a filter that already exists, so the questionnaire is a different way into the same
  *  model, never a second opinion about the data.
  *
- *  Page order follows Florian's: company → privacy and region → minimum capability →
- *  budget → results. Every page can be skipped; skipping means "no requirement", never a
- *  silently applied default. */
+ *  Page order: privacy and region → minimum capability → budget → company → results. Florian's
+ *  2026-09-12 order opened with the company question; his 2026-09-15 subscription notes (CR-16.2,
+ *  newer, wins) make subscriptions a secondary topic, so that optional question comes last.
+ *  Every page can be skipped; skipping means "no requirement", never a silently applied default. */
 
 type Answer = "yes" | "no" | null;
 
@@ -123,26 +124,30 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
     setStep(1);
   };
 
-  if (step === 1) return (
-    <Page step={1} total={5} title="Are you buying for a company?" onNext={() => setStep(2)}
-      lead="It changes which plans are open to you. Consumer subscriptions — ChatGPT Plus/Pro, Claude Pro/Max and the like — are sold to individuals; a company normally needs a business plan or API access."
-      skip={() => { setCompany(null); s.setIsCompany(false); setStep(2); }}>
+  // CR-16.2 (Florian 2026-09-15): subscriptions are a secondary topic, so the company question is
+  // the last, optional page instead of the opening one. Its answer only affects the subscription note.
+  if (step === 4) return (
+    <Page step={4} total={5} title="Buying for a company?" onBack={() => setStep(3)} onNext={() => setStep(5)} nextLabel="See the models →"
+      lead="Optional, and only about subscriptions: the costs in every ranking are API prices, the same for everyone. Whether a business may use a consumer plan such as ChatGPT Plus/Pro or Claude Pro/Max depends on the provider, the plan, the region and the contract."
+      skip={() => { setCompany(null); s.setIsCompany(false); setStep(5); }}>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Choice label="Yes, for a company or team" on={company === "yes"} hint="Consumer subscriptions are set aside"
+        <Choice label="Yes, for a company or team" on={company === "yes"} hint="Consumer plans whose terms restrict business use are set aside"
           onClick={() => { setCompany("yes"); s.setIsCompany(true); }} />
-        <Choice label="No, for myself" on={company === "no"} hint="Every plan stays in scope"
+        <Choice label="No, for myself" on={company === "no"} hint="Every plan stays in the subscription note"
           onClick={() => { setCompany("no"); s.setIsCompany(false); }} />
       </div>
       <p className="mt-4 text-xs text-gray-500">
-        Hides Claude Pro/Max and Google AI plans, whose terms rule out business use.
+        In the terms served to us (EEA), Anthropic&apos;s consumer terms say non-commercial use only and Google AI
+        plans are for personal accounts only, so those are set aside. Team, Enterprise and API access are the
+        safer commercial categories.
       </p>
     </Page>
   );
 
-  if (step === 2) return (
-    <Page step={2} total={5} title="Does your data need to stay somewhere specific?" onBack={() => setStep(1)} onNext={() => setStep(3)}
+  if (step === 1) return (
+    <Page step={1} total={5} title="Does your data need to stay somewhere specific?" onNext={() => setStep(2)}
       lead="Each answer removes provider routes from every figure on the site — the prices you then see are the prices of the routes you are allowed to use."
-      skip={() => { s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false); s.setTeeOnly(false); setStep(3); }}>
+      skip={() => { s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false); s.setTeeOnly(false); setStep(2); }}>
       <div className="grid gap-3 sm:grid-cols-2">
         <Choice label="EU-hosted only" on={s.euHostedOnly} hint="Only routes served from the EU" onClick={() => s.setEuHostedOnly(!s.euHostedOnly)} />
         <Choice label="Non-US providers only" on={s.nonUsOnly} hint="Excludes providers whose company is US-based" onClick={() => s.setNonUsOnly(!s.nonUsOnly)} />
@@ -156,11 +161,11 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
     </Page>
   );
 
-  if (step === 3) return (
-    <Page step={3} total={5} title="How capable does the model have to be?" onBack={() => setStep(2)}
-      onNext={() => { applyCapability(); setStep(4); }}
+  if (step === 2) return (
+    <Page step={2} total={5} title="How capable does the model have to be?" onBack={() => setStep(1)}
+      onNext={() => { applyCapability(); setStep(3); }}
       lead="Rather than asking for a number on a scale nobody has a feel for, pick a point in time: “at least as good as the best model I could have used back then”."
-      skip={() => { setIntelMonths(null); setCodingMonths(null); s.setMinIntelligence(null); s.setMinCoding(null); setStep(4); }}>
+      skip={() => { setIntelMonths(null); setCodingMonths(null); s.setMinIntelligence(null); s.setMinCoding(null); setStep(3); }}>
       <div className="grid gap-6 sm:grid-cols-2">
         <div>
           <p className="text-sm font-medium text-gray-200">General intelligence</p>
@@ -209,10 +214,10 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
     </Page>
   );
 
-  if (step === 4) return (
-    <Page step={4} total={5} title="What may one task cost?" onBack={() => setStep(3)} onNext={() => setStep(5)} nextLabel="See the models →"
+  if (step === 3) return (
+    <Page step={3} total={5} title="What may one task cost?" onBack={() => setStep(2)} onNext={() => setStep(4)}
       lead="Adjusted cost per task: the provider we would route you to, its prices and caching, and how many tokens this model needs to finish the job."
-      skip={() => { s.setMaxCost(null); setStep(5); }}>
+      skip={() => { s.setMaxCost(null); setStep(4); }}>
       {costTiers ? (
         <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
           <Choice label={`Up to ${money(costTiers.p25)}`} hint="The cheaper quarter of the shortlist" on={s.maxCost === costTiers.p25} onClick={() => s.setMaxCost(costTiers.p25)} />

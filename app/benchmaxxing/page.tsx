@@ -4,7 +4,7 @@ import { clientData } from '../../lib/client-model';
 import { getBenchmarkView } from '../../lib/benchmark-data';
 import { BENCHMAXX_MIN_COMPARISONS, BENCHMAXX_MIN_TOPICS, benchmaxxingPrior, benchmaxxingSignals, scoreBenchmaxxing } from '../../lib/benchmax.mjs';
 import { BenchmaxxingWorkbench } from '../../components/BenchmaxxingWorkbench';
-import { presetRows, type BenchmaxxingOverviewRow } from '../../components/BenchmaxxingOverview';
+import { presetRows, type BenchmaxxingOverviewRow } from '../../lib/benchmaxxing-presets';
 
 export const metadata: Metadata = {
   title: 'Benchmaxxing — benchmark consistency signal',

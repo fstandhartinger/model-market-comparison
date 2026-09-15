@@ -3,35 +3,10 @@
 import { InfoTip } from "./InfoTip";
 import { SIGNAL_WARN, SignalValue } from "./SignalValue";
 
-export type BenchmaxxingOverviewRow = {
-  id: string;
-  name: string;
-  org: string;
-  score: number;
-  comparisons: number;
-  topics: number;
-  measured: number;
-  total: number;
-  domainSpecialization: number | null;
-  composite: number | null;
-  featured: boolean;
-  tagged: boolean;
-};
+import { BENCHMAXXING_PRESETS, presetRows, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
 
-/** CR-15.2: the table's model list is a named, changeable preset. Featured (current top models by
- *  Composite) is the default; the strongest signals and every scored model stay one click away. */
-export type BenchmaxxingPreset = "featured" | "signals" | "all";
-export const BENCHMAXXING_PRESETS: { key: BenchmaxxingPreset; label: string; heading: string }[] = [
-  { key: "featured", label: "Featured models", heading: "Today’s featured models" },
-  { key: "signals", label: "Strongest signals", heading: "The strongest unevenness signals" },
-  { key: "all", label: "All scored", heading: "Every scored model" },
-];
-export function presetRows(rows: BenchmaxxingOverviewRow[], preset: BenchmaxxingPreset): BenchmaxxingOverviewRow[] {
-  const bySignal = (a: BenchmaxxingOverviewRow, b: BenchmaxxingOverviewRow) => b.score - a.score || b.comparisons - a.comparisons || a.name.localeCompare(b.name);
-  if (preset === "featured") return rows.filter((r) => r.featured).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));
-  if (preset === "signals") return rows.filter((r) => r.tagged).sort(bySignal);
-  return [...rows].sort(bySignal);
-}
+/** CR-15.2: the table's model list is a named, changeable preset (lib/benchmaxxing-presets). Featured
+ *  (current top models by Composite) is the default; strongest signals and every scored model stay one click away. */
 
 // F-24: the Signal keeps its 4 px magnitude bar in the Benchmaxxing orange; CR-15.3 turns values above
 // the warning threshold into a pill. CR-15.4: a row is the master — selecting it drives the report below.

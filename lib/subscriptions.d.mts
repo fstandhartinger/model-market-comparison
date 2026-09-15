@@ -41,6 +41,8 @@ export interface SubscriptionViewPlan extends SubscriptionPlan {
 export const COMPANY_USE: CompanyUse[];
 export function validateCatalog(catalog: SubscriptionCatalog): string[];
 export function companyUse(catalog: SubscriptionCatalog, plan: SubscriptionPlan): CompanyUse;
+export function subscriptionEstimate(input: { usdPerMonth: number; extraUsd?: number; tasksPerMonth: number }): number | null;
+export function estimablePlans<T extends SubscriptionPlan>(plans: T[]): T[];
 export function subscriptionView(
   catalog: SubscriptionCatalog,
   opts?: { isCompany?: boolean; rows?: SubscriptionRow[] },
