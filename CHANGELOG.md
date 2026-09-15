@@ -4,6 +4,19 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — New `/api/benchmark-matrix`; Benchmaxxing verdict per model family
+
+No data location, route or public API field was removed; no benchmark value changed.
+
+- **New route** `GET /api/benchmark-matrix?models=<ids>` (see API.md): the comparison matrix for up to ten models.
+- **`/api/benchmaxxing?report=`**: an axis percentile now needs a cohort of at least three model families. Axes whose
+  exact cohort holds fewer (e.g. two effort variants of one model on a single harness) return `value: null`,
+  `missing: true` instead of a mechanical 0 or 100. Scored models 178 before and after; the tagged set is unchanged.
+- **Benchmaxxing score and tag shown per model** (Overview, Benchmaxxing page) are the model family's: one
+  representative variant (most measured axes) carries the score, and the tag covers every variant of a tagged family.
+- **Settings / share URLs:** `teeOnly` ('Strong confidential guarantees') is no longer a filter key; a stored or
+  shared `teeOnly` is ignored. The offer-level `tee` flag in the dataset is unchanged.
+
 ## 2026-09-15 — FrontierCode, CursorBench and SWE-Bench Pro results joined to catalog models
 
 No data location, route or public API field was removed; no benchmark value changed. 110 self-reported

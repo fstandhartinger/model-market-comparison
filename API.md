@@ -27,6 +27,14 @@ The data is served from Postgres when `DATABASE_URL` is configured, otherwise fr
 All exact versioned registry entries, source/metric definitions, collection status and
 per-benchmark coverage. No family-only version aliases are accepted.
 
+### `GET /api/benchmark-matrix`
+
+`?models=<id>,<id>,…` (1–10 catalog model ids; 400 without). Returns `{ matrix }`: the release-style comparison
+matrix restricted to those models — `rows` (every benchmark with a result for at least one of them, re-indexed),
+`groups`, `values[modelId] = [[rowIndex, value, basis], …]` (`basis` 0 = measured, 1 = self-reported) and
+`catalogRows` (the full matrix's row count). Cached 5 minutes, CORS open. Added 2026-09-15 for the start page's
+benchmark table (CR-28.1).
+
 ### `GET /api/benchmark-scores`
 
 Filters: `benchmark_id`, `model_id`, `basis` (`measured`, `self_reported`, `derived`),
