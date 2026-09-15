@@ -15,6 +15,10 @@ for (const [hn, base] of Object.entries(hosts)) for (const [kind, vp] of Object.
   const ctx = await b.newContext({ viewport: vp, colorScheme: scheme });
   const p = await ctx.newPage(); const errors = []; p.on('pageerror', (e) => errors.push(String(e)));
   await p.goto(`${base}/benchmarks`, { waitUntil: 'networkidle', timeout: 90_000 });
+  // CR-1.1: `/benchmarks` opens on the model-release-style comparison matrix; the ranking boards live
+  // behind the "One benchmark" tab (or a `?benchmark=<id>` deep link). Enter that view first.
+  await p.getByRole('link', { name: /^One benchmark$/ }).click();
+  await p.waitForSelector('label:has-text("Benchmark and version") select', { timeout: 60_000 });
   const bench = p.locator('label:has-text("Benchmark and version") select');
   const options = await bench.locator('option').evaluateAll((os) => os.map((o) => ({ value: o.value, text: o.textContent.trim() })));
   for (const [key, re, cohorts] of [['vals', /^Vals Index\b(?!.*(Finance|EMB|Terminal|Vibe|Migration|Legal|HLAB|cost))/i, 1], ['frontiercode', /^FrontierCode\b(?!.*cost)/i, 7]]) {
@@ -32,7 +36,7 @@ for (const [hn, base] of Object.entries(hosts)) for (const [kind, vp] of Object.
     const defaultRows = (await count()).rows;
     check('info', `${tag} ${key} default view rows (recorded, not gated)`, true, `rows=${defaultRows}`);
     await p.locator('label:has-text("Evidence") select').selectOption('all');
-    await p.getByLabel('Include unmatched source identities').check();
+    await p.locator('label:has-text("not matched") input[type=checkbox]').check();
     await p.waitForTimeout(800);
     const m = await count();
     check('E2-UI', `${tag} ${key} ranked rows shown with All evidence + unmatched identities`, m.rows > 0, `rows=${m.rows}`);
