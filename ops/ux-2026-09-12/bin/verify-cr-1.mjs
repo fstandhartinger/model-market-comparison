@@ -37,7 +37,11 @@ const snapshot = () => {
   const stub = table.querySelector('tbody th.bh-matrix-stub');
   const wrap = document.querySelector('.bh-matrix-wrap');
   return { cols, rows: rows.length, rowsWithTwo, rowsWithWinner, barsOnMissing, maxBarAlpha, status, groups, names, tagSet: [...new Set(tags)],
-    bars: table.querySelectorAll('.bh-matrix-bar').length, missing: table.querySelectorAll('.bh-matrix-missing').length,
+    bars: table.querySelectorAll('.bh-matrix-bar').length,
+    // Missing cells that the row presets promise away, i.e. only in benchmark data rows: the synthesized
+    // hero score row (CR-12.1) and the category-composite group headers (CR-12.3) may honestly show
+    // "no score"/"no composite" and are not benchmark rows ("Full coverage only" governs data rows only).
+    missing: rows.reduce((n, tr) => n + (tr.classList.contains('bh-matrix-hero') ? 0 : tr.querySelectorAll('.bh-matrix-missing').length), 0),
     stubSticky: stub ? getComputedStyle(stub).position : null, docOverflow: document.documentElement.scrollWidth > innerWidth + 1,
     wrapScrolls: wrap ? wrap.scrollWidth > wrap.clientWidth : false, url: location.search };
 };

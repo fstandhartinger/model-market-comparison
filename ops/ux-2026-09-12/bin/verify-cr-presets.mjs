@@ -21,7 +21,9 @@ const state = () => {
   const status = statusClone?.textContent.replace(/\s+/g, ' ').trim() ?? '';
   const cols = table ? [...table.querySelectorAll('thead th.bh-matrix-model .bh-matrix-name a')].map((a) => decodeURIComponent(a.getAttribute('href').replace('/models/', ''))) : [];
   const orgs = table ? [...table.querySelectorAll('thead th.bh-matrix-model .bh-matrix-org')].map((x) => x.textContent.trim()) : [];
-  const rows = table ? [...table.querySelectorAll('tbody tr:not(.bh-matrix-group)')].map((tr) => ({
+  // Benchmark data rows only: the hero ScoreRow (CR-12.1, .bh-matrix-hero) and the category-composite
+  // group headers (CR-12.3, .bh-matrix-group) are synthesized rows without a .bh-matrix-bench stub.
+  const rows = table ? [...table.querySelectorAll('tbody tr:not(.bh-matrix-group):not(.bh-matrix-hero)')].map((tr) => ({
     name: tr.querySelector('.bh-matrix-bench').childNodes[0].textContent,
     tags: [...tr.querySelectorAll('.bh-matrix-tag')].map((t) => t.dataset.tag),
     filled: tr.querySelectorAll('td .bh-matrix-link').length, cells: tr.querySelectorAll('td').length,
