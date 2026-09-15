@@ -61,3 +61,15 @@ test('H3 discloses how a bridged reference was reached: snapshot, anchors, hops,
   assert.equal(category.approximateCount, 1);
   assert.equal(bridgeDisclosure(category), 'approximated: 1 of 1 benchmark in this median is a bridged estimate from retained results');
 });
+
+test('F-86: comparison labels are unique — version where versions differ, else the cohort', () => {
+  const split = (id, version, cohort) => ({ ...axis(id, 'Coding', true, [row(`${id}1`, 'x', 10), row(`${id}2`, 'y', 90)]), name: 'Agent Index', version, cohort });
+  const view = { axes: [split('a', '1.4', 'Claude Code'), split('b', '1.4', 'Codex'), split('c', '1.5', 'Codex'), split('d', '1.6', 'Codex')].map((a) => ({ ...a, name: a.id === 'a' || a.id === 'b' ? 'Agent Index v1.4' : 'Agent Index' })),
+    models: [], sources: [], divergences: [], missing: [], generatedAt: '2026-09-15', registryCount: 1, legacyDate: '2026-09-15' };
+  const labels = buildBenchmarkComparison(view).axes.map((a) => a.label);
+  assert.equal(new Set(labels).size, labels.length);
+  assert.deepEqual(labels, [
+    'Agent Index v1.4 · Coding · points · Claude Code', 'Agent Index v1.4 · Coding · points · Codex',
+    'Agent Index · Coding · points · v1.5', 'Agent Index · Coding · points · v1.6',
+  ]);
+});

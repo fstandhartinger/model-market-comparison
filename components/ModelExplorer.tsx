@@ -92,10 +92,25 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const [comparisonMetric, setComparisonMetric] = useState("");
   const comparisonMetrics = useMemo(() => [
     ...(data.comparison?.categories ?? []).map((category) => ({ id: `category:${category.id}`, label: `${category.label} · ${category.benchmarkCount} benchmarks`, values: category.values })),
-    ...(data.comparison?.axes ?? []).map((axis) => ({ id: `axis:${axis.id}`, label: `${axis.name} · ${axis.category} · ${axis.unit}`, values: axis.values })),
+    ...(data.comparison?.axes ?? []).map((axis) => ({ id: `axis:${axis.id}`, label: axis.label, values: axis.values })),
   ], [data.comparison]);
   const chosenComparisonMetric = comparisonMetrics.find((metric) => metric.id === comparisonMetric) ?? null;
   const comparisonReference = chosenComparisonMetric?.values[comparisonTarget] ?? null;
+  // F-86: once a reference is chosen, only metrics it can answer are selectable; they come
+  // first in the existing order, the rest follow disabled and say why.
+  const metricOptions = useMemo(() => {
+    if (!comparisonTarget) return comparisonMetrics.map((metric) => ({ id: metric.id, text: metric.label, disabled: false }));
+    const options = comparisonMetrics.map((metric) => {
+      const value = metric.values[comparisonTarget];
+      return { id: metric.id, text: `${metric.label}${!value ? " · no result for this model" : value.approximate ? " · bridged" : ""}`, disabled: !value };
+    });
+    return [...options.filter((o) => !o.disabled), ...options.filter((o) => o.disabled)];
+  }, [comparisonMetrics, comparisonTarget]);
+  // Reference models without a value in any metric stay choosable but sit last.
+  const [comparableReferences, otherReferences] = useMemo(() => {
+    const answered = new Set((data.comparison?.axes ?? []).flatMap((axis) => Object.keys(axis.values)));
+    return [candidates.filter((m) => answered.has(m.id)), candidates.filter((m) => !answered.has(m.id))];
+  }, [candidates, data.comparison]);
 
   // The pool is everything the current filters allow BEFORE the two shortlist limits
   // (min score, max cost) are applied. Simple mode's histograms describe this pool, so
@@ -217,13 +232,15 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       <label className="min-w-0 text-xs text-gray-400">Reference model
         <select aria-label="Reference model" value={comparisonTarget} onChange={(e) => setComparisonTarget(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
           <option value="">Choose a model…</option>
-          {candidates.map((model) => <option key={model.id} value={model.id}>{model.display_name} · {model.org}</option>)}
+          {comparableReferences.map((model) => <option key={model.id} value={model.id}>{model.display_name} · {model.org}</option>)}
+          {otherReferences.length > 0 && comparableReferences.length > 0 && <option disabled value="__none">— no comparable results —</option>}
+          {otherReferences.map((model) => <option key={model.id} value={model.id}>{model.display_name} · {model.org}</option>)}
         </select>
       </label>
       <label className="min-w-0 text-xs text-gray-400">Benchmark or category
         <select aria-label="Benchmark or category" value={comparisonMetric} onChange={(e) => setComparisonMetric(e.target.value)} className="mt-1 block w-full min-w-0 rounded-md border border-line bg-ink px-2 py-1.5 text-sm">
           <option value="">Choose a comparison…</option>
-          {comparisonMetrics.map((metric) => <option key={metric.id} value={metric.id}>{metric.label}</option>)}
+          {metricOptions.map((metric) => <option key={metric.id} value={metric.id} disabled={metric.disabled}>{metric.text}</option>)}
         </select>
       </label>
     </div>
