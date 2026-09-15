@@ -45,7 +45,9 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
   // simplified list, next to the full-comparison button — once per page visit.
   const [hint, setHint] = useState(false);
   const hinted = useRef(false);
-  const [tableEl, setTableEl] = useState<HTMLDivElement | null>(null);
+  // Observed element: the section itself (its top holds the button), not the table — the column chart above the
+  // table (CR-33.1) pushed the table below the observed band after the header link's scroll on phones.
+  const [tableEl, setTableEl] = useState<HTMLElement | null>(null);
   useEffect(() => {
     if (!tableEl || hinted.current || typeof IntersectionObserver === "undefined") return;
     let timer: ReturnType<typeof setTimeout> | undefined;
@@ -66,7 +68,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
   const valuesFor = (key: typeof score) => ids.map((id) => { const m = byId.get(id); return m && hasScoreEvidence(m, key) ? m.scores[key] ?? null : null; });
   const full = `/benchmarks${ids.length ? `?${new URLSearchParams({ models: ids.join(",") })}` : ""}`;
 
-  return <section id="benchmarks" tabIndex={-1} aria-labelledby="bh-simple-bench-title" className="mt-10 scroll-mt-20 outline-none">
+  return <section ref={setTableEl} id="benchmarks" tabIndex={-1} aria-labelledby="bh-simple-bench-title" className="mt-10 scroll-mt-20 outline-none">
     <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
       <div>
         <p className="bh-eyebrow">Simple view</p>
@@ -89,7 +91,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
 
     {/* CR-33.1: every shortlisted model's score as columns, above the table. */}
     <ShortlistColumns data={data} ids={listIds} tableIds={ids} names={new Map(listIds.map((id) => { const m = byId.get(id); return [id, m ? collapsedName(m, true, preferred) : id]; }))} />
-    {ids.length > 0 && visible.length > 0 && <div ref={setTableEl} className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
+    {ids.length > 0 && visible.length > 0 && <div className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
       <table className="bh-matrix">
         <caption className="sr-only">Headline benchmark results for the top models of your shortlist. Bold marks the best result in each row.</caption>
         <thead><tr>
