@@ -93,5 +93,6 @@ test('live dataset: ECI index axes exist outside view.axes (Benchmaxxing unchang
   assert.deepEqual(picks.map((id) => family.get(id).family), expected);
   const selected = selectBenchmarkView(view, picks);
   assert.ok(selected.indexAxes.every((a) => a.scores.every((r) => picks.includes(r.modelId))));
-  assert.equal(defaultRadarAxes([...selected.axes, ...selected.indexAxes]).length, 8);
+  // CR-19.3: one DesignArena axis (Full-Stack), so seven default axes.
+  assert.equal(defaultRadarAxes([...selected.axes, ...selected.indexAxes]).length, 7);
 });

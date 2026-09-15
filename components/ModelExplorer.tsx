@@ -464,14 +464,15 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                     </span>}
                   </MagnitudeBar>;
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span>{(() => {
+                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="flex items-center justify-end gap-1.5 whitespace-nowrap">{(() => {
                   const v = valueById.get(m.id);
                   if (!v) return null;
                   const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
                   const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
                   const why = `About ${ratio} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score among the ${v.n} priced models shown (log cost fitted against score).`;
-                  return <span className="block text-right"><span className="bh-value-tag" data-kind={v.kind} title={why}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span>{words}<span className="sr-only">: {why}</span></span></span>;
-                })()}</MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                  // CR-24.1: the tag sits left of the price on the same line, so the cost bar keeps its row height.
+                  return <span className="bh-value-tag" data-kind={v.kind} title={why}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span>{words}<span className="sr-only">: {why}</span></span>;
+                })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>

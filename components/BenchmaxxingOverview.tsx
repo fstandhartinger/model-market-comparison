@@ -23,12 +23,13 @@ function Rows({ rows, maxScore, selected, onSelect }: { rows: BenchmaxxingOvervi
           </button>
         </th>
         <td className="!py-2 align-middle">
-          {row.score > SIGNAL_WARN ? <SignalValue score={row.score} /> : <div className="bh-magnitude-bar bh-magnitude-warn !text-left">
+          {/* CR-21.2: the bar spans 0 → the highest signal in this list, so differences stay visible. */}
+          <div className="bh-magnitude-bar bh-magnitude-warn !text-left" data-signal-frac={(row.score / maxScore).toFixed(4)}>
             <div className="bh-magnitude-track" aria-hidden="true">
               <div className="bh-magnitude-fill" style={{ width: `${Math.max(0, Math.min(1, row.score / maxScore)) * 100}%` }} />
             </div>
             <span className="relative z-[1] block"><SignalValue score={row.score} /></span>
-          </div>}
+          </div>
         </td>
         <td className="hidden !py-2 align-middle tabular md:table-cell">{row.comparisons} in {row.topics} topics</td>
         <td className="!py-2 align-middle tabular">{row.measured}/{row.total}<span className="hidden sm:inline"> ({((row.measured / Math.max(1, row.total)) * 100).toFixed(0)}%)</span></td>
@@ -52,7 +53,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
 }) {
   const listed = presetRows(rows, preset);
   const visible = showAll ? listed : listed.slice(0, 10);
-  const maxScore = Math.max(1e-9, ...rows.map((row) => row.score));
+  const maxScore = Math.max(1e-9, ...listed.map((row) => row.score));
   const heading = BENCHMAXXING_PRESETS.find((p) => p.key === preset)!.heading;
   return <section className="bh-panel p-5" aria-label="Benchmaxxing overview">
     <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
@@ -72,7 +73,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, adjusted for coverage, 0–100. Above {SIGNAL_WARN} it is shown as a warning: results jump strongly between related benchmarks. That is where today&apos;s tag starts (the top 10 % of scored models). It is a screening flag, not proof of leakage or intent.</InfoTip></th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, adjusted for coverage, 0–100. Above {SIGNAL_WARN} it is shown as a warning: results jump strongly between related benchmarks. That is where today&apos;s tag starts (the top 10 % of scored models). It is a screening flag, not proof of leakage or intent. The bar runs from 0 to the highest signal in this list.</InfoTip><span className="bh-muted block text-[10px] font-normal" data-signal-max>bar 0–{maxScore.toFixed(1)}</span></th>
           <th scope="col" className="hidden text-left md:table-cell">Related comparisons</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>

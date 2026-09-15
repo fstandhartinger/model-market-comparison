@@ -32,7 +32,7 @@ export function RadarTip({ active, axes, series, at, width, height }: { active: 
   const [x, y] = at(active.s, active.i);
   const left = Math.max(22, Math.min(78, (x / width) * 100)), top = (y / height) * 100, below = top < 30;
   const rows = [pointed, ...series.filter((s) => s !== pointed)];
-  return <div role="status" className="pointer-events-none absolute z-10 w-max max-w-[18rem] rounded-lg border border-line bg-[rgb(var(--surface,22_27_34))] px-3 py-2 text-left text-xs shadow-lg"
+  return <div role="status" className="pointer-events-none absolute z-10 w-max max-w-[18rem] rounded-lg border border-line bg-[var(--surface,#171e29)] opacity-100 px-3 py-2 text-left text-xs shadow-lg"
     style={{ left: `${left}%`, top: `${top}%`, transform: below ? 'translate(-50%, 16px)' : 'translate(-50%, calc(-100% - 16px))' }}>
     <p className="font-semibold">{axis.name}{humanVersion(axis.version).label ? <span className="bh-muted font-normal"> · {humanVersion(axis.version).label}</span> : null}</p>
     <ul className="mt-1 space-y-1">{rows.map((s) => <li key={s.id} className={s === pointed ? 'font-semibold' : ''}>
@@ -91,7 +91,7 @@ export function TopicRadar({ axes, series, label }: { axes: RadarAxisMeta[]; ser
       {axes.map((axis, i) => {
         const missing = series.every((s) => s.points[i]?.value == null);
         const [x, y] = polar(angleOf(i), r), [tx, ty] = polar(angleOf(i), missing ? r - 1 : inner);
-        return <line key={axis.id} x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity={missing ? '.25' : '.62'} />;
+        return <line key={axis.id} x1={tx} y1={ty} x2={x} y2={y} stroke="currentColor" strokeWidth="1" opacity={missing ? '.06' : '.14'} />;
       })}
       {series.map((s) => runs(s).map((points, k) => <polyline key={`${s.id}-${k}`} points={points.join(' ')} fill="none" stroke={s.color} strokeWidth="2" strokeDasharray={s.dash} strokeLinejoin="round" />))}
       {series.map((s, si) => s.points.map((p, i) => { if (p.value == null) return null; const [x, y] = at(si, i); return <circle key={`${s.id}-${i}`} cx={x} cy={y} r={active?.s === si && active?.i === i ? 7 : 5} fill={s.color} stroke="var(--surface, #161b22)" strokeWidth="1.5" pointerEvents="none" />; }))}

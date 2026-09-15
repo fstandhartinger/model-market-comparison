@@ -59,7 +59,8 @@ const catalogAxis = (id, category, entries) => axis(id, category, Object.fromEnt
 
 test('scoreBenchmaxxing refuses a score below the comparison and topic floor', () => {
   // 5 measured axes in one topic: 4 comparisons, 1 topic -> not scored.
-  const axes = Array.from({ length: 5 }, (_, i) => axis(`code-${i}`, 'Coding', { smooth: 50 + i, jagged: i % 2 ? 10 : 90 }));
+  // A third family keeps each axis a real cohort (CR-22.1: percentiles need >= 3 model families).
+  const axes = Array.from({ length: 5 }, (_, i) => axis(`code-${i}`, 'Coding', { smooth: 50 + i, jagged: i % 2 ? 10 : 90, peer: 40 + i }));
   const out = scoreBenchmaxxing(view(axes), 'jagged');
   assert.equal(out.status, 'insufficient-coverage');
   assert.equal(out.score, null);

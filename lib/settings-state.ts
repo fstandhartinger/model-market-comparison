@@ -64,7 +64,8 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (bool(raw.openOnly)) out.openOnly = raw.openOnly;
   if (typeof raw.minScore === "number" && Number.isFinite(raw.minScore) && raw.minScore >= 0) out.minScore = raw.minScore;
   out.minScoreTouched = raw.minScoreTouched === true && out.minScore != null;
-  if (bool(raw.teeOnly)) out.teeOnly = raw.teeOnly;
+  // CR-25.2: "Strong confidential guarantees" was removed; a stored true is migrated to off.
+  if (raw.teeOnly !== undefined) out.teeOnly = false;
   if (bool(raw.allowDataTraining)) out.allowDataTraining = raw.allowDataTraining;
   if (bool(raw.isCompany)) out.isCompany = raw.isCompany;
   if (limit(raw.minIntelligence)) out.minIntelligence = raw.minIntelligence as number | null;

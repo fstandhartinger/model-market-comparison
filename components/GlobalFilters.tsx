@@ -88,7 +88,7 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
     // page. Phones: a bottom sheet over a dimmed page, with a sticky footer.
     <div className="relative z-40" hidden={!filtersOpen}>
       <div className="fixed inset-0 bg-black/40 lg:hidden" aria-hidden="true" />
-      <div ref={panel} id="global-filters" role="dialog" aria-label="Filters and settings" tabIndex={-1}
+      <div ref={panel} id="global-filters" role="dialog" aria-label="Options" tabIndex={-1}
         className="fixed inset-x-0 bottom-0 flex max-h-[85vh] flex-col rounded-t-2xl border-t border-line bg-panel shadow-xl outline-none lg:absolute lg:inset-x-auto lg:bottom-auto lg:right-[max(1rem,calc((100vw-1400px)/2+1rem))] lg:top-2 lg:max-h-[calc(100vh-90px)] lg:w-[min(960px,calc(100vw-2rem))] lg:rounded-xl lg:border">
 
       <div className="min-h-0 space-y-4 overflow-y-auto px-4 pb-4 pt-4">
@@ -120,6 +120,16 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
               {FIXED_BLENDS.map((b) => <option key={b.value} value={b.value}>{b.label}</option>)}
             </select>
           </span>
+          {/* CR-25.3: the company question changes which subscription plans are shown next to API costs, so it sits with the price basis. */}
+          <span className="inline-flex items-center">
+            <Toggle label="I'm buying for a company" on={s.isCompany} set={s.setIsCompany} />
+            <InfoTip title="Buying for a company" label="the company setting">
+              Some consumer subscriptions are for personal use only: Anthropic&apos;s terms for
+              Claude Pro/Max say &ldquo;Non-commercial use only&rdquo; and Google AI plans are open to
+              personal accounts only. With this on, the subscription list under the ranking hides
+              those plans and shows business seats instead. API prices are the same for everyone.
+            </InfoTip>
+          </span>
           <ProviderFilter providers={providers} excluded={s.excludedSet ?? new Set()} setExcluded={(set) => s.setProvidersExcluded([...set])} />
         </Section>
 
@@ -143,13 +153,6 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
 
         <Section title="Data confidentiality" hint="what the provider may do with your prompts">
           <span className="inline-flex items-center">
-            <Toggle label="Strong confidential guarantees" on={s.teeOnly} set={s.setTeeOnly} />
-            <InfoTip title="Strong confidential guarantees" label="the confidential guarantees filter">
-              Keeps only routes that run inside a Trusted Execution Environment, where the operator
-              cannot read your prompts even in principle.
-            </InfoTip>
-          </span>
-          <span className="inline-flex items-center">
             <Toggle label="Trains or keeps your data" on={s.allowDataTraining} set={s.setAllowDataTraining} />
             <InfoTip title="Trains or keeps your data" label="the data-training filter">
               Off by default, which means providers that train on or retain your prompts are removed
@@ -157,15 +160,6 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
               “Does not train” and “Zero retention”. Turn this on to include the others as well.
               Providers OpenRouter does not list — several European hosts among them — have no
               published verdict and are kept, marked unknown rather than assumed either way.
-            </InfoTip>
-          </span>
-          <span className="inline-flex items-center">
-            <Toggle label="I'm buying for a company" on={s.isCompany} set={s.setIsCompany} />
-            <InfoTip title="Buying for a company" label="the company setting">
-              Some consumer subscriptions are for personal use only: Anthropic&apos;s terms for
-              Claude Pro/Max say &ldquo;Non-commercial use only&rdquo; and Google AI plans are open to
-              personal accounts only. With this on, the subscription list under the ranking hides
-              those plans and shows business seats instead. API prices are the same for everyone.
             </InfoTip>
           </span>
         </Section>

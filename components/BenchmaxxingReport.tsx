@@ -2,6 +2,7 @@
 import { useEffect, useMemo, useState } from 'react';
 import { TopicRadar } from './TopicRadar';
 import { SignalValue } from './SignalValue';
+import { formatRadarValue } from '../lib/radar.mjs';
 
 export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean };
@@ -42,7 +43,7 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
   const radarAxes = showAllAxes ? allAxes : allAxes.filter((a) => byId.some((m) => { const x = m.get(a.id); return x && !x.missing; }));
   const series = shown.map((s, k) => ({ id: s.id, name: s.name, color: SERIES[k].color, dash: SERIES[k].dash, points: radarAxes.map((a) => {
     const x = byId[k].get(a.id);
-    return { value: x && !x.missing ? x.value : null, label: !x || x.missing || x.value == null ? 'No measured score' : `${x.nativeValue} ${x.unit} · percentile ${x.value.toFixed(1)}${x.observedDate ? ` · observed ${x.observedDate}` : ''}` };
+    return { value: x && !x.missing ? x.value : null, label: !x || x.missing || x.value == null ? 'No measured score' : `${formatRadarValue(x.nativeValue, x.unit)} · percentile ${Math.round(x.value)}${x.observedDate ? ` · observed ${x.observedDate}` : ''}` };
   }) }));
   const title = shown.length ? shown.map((s) => s.name).join(' vs ') : 'Select a model in the table above';
   return <section className="bh-panel mt-6 p-5" aria-label="Per-model Benchmaxxing report" aria-live="polite">
@@ -56,6 +57,7 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
           {compare ? <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Chart legend">{series.map((s, k) => <li key={s.id} className="flex items-center gap-2"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg>{String.fromCharCode(65 + k)} · {s.name}</li>)}</ul> : <span className="bh-muted text-xs">{radarAxes.length} measured axes shown{showAllAxes ? ` · ${allAxes.length} total` : ''}</span>}
           <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={showAllAxes} onChange={(e) => setShowAllAxes(e.target.checked)} />Show all {allAxes.length} axes</label>
         </div>
+        <p className="mb-2 text-sm font-medium" data-jagged-note>The more jagged the shape, the more benchmaxxed the model looks.</p>
         <TopicRadar axes={radarAxes} series={series} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value." />
         <p className="bh-muted text-xs">Axes are the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic; a jagged outline inside one topic is the Benchmaxxing pattern.</p>
       </div>

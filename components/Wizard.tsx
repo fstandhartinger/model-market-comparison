@@ -147,16 +147,15 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   if (step === 1) return (
     <Page step={1} total={5} title="Does your data need to stay somewhere specific?" onNext={() => setStep(2)}
       lead="Each answer removes provider routes from every figure on the site — the prices you then see are the prices of the routes you are allowed to use."
-      skip={() => { s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false); s.setTeeOnly(false); setStep(2); }}>
+      skip={() => { s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false); setStep(2); }}>
       <div className="grid gap-3 sm:grid-cols-2">
         <Choice label="EU-hosted only" on={s.euHostedOnly} hint="Inference inside the EU: an EU region, EU geo profile or EU Data Zone — no Global routes" onClick={() => s.setEuHostedOnly(!s.euHostedOnly)} />
         <Choice label="Non-US providers only" on={s.nonUsOnly} hint="Excludes providers whose company is US-based" onClick={() => s.setNonUsOnly(!s.nonUsOnly)} />
         <Choice label="No Chinese providers" on={s.excludeChinese} hint="Excludes the providers, not the models they serve" onClick={() => s.setExcludeChinese(!s.excludeChinese)} />
-        <Choice label="Strong confidential guarantees" on={s.teeOnly} hint="Only routes inside a trusted execution environment" onClick={() => s.setTeeOnly(!s.teeOnly)} />
       </div>
       <p className="mt-4 text-xs text-gray-500">
         Providers that train on or retain your prompts are already excluded by default, on every
-        page. You can let them back in under Filters &amp; settings → Data confidentiality.
+        page. You can let them back in under Options → Data confidentiality.
       </p>
     </Page>
   );
@@ -257,7 +256,6 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
           {s.euHostedOnly && <Chip on>EU-hosted only</Chip>}
           {s.nonUsOnly && <Chip on>Non-US providers</Chip>}
           {s.excludeChinese && <Chip on>No Chinese providers</Chip>}
-          {s.teeOnly && <Chip on>Confidential compute</Chip>}
           <Chip on={s.minIntelligence != null}>{s.minIntelligence != null ? `Intelligence ≥ ${s.minIntelligence}` : "No intelligence floor"}</Chip>
           <Chip on={s.minCoding != null}>{s.minCoding != null ? `Coding ≥ ${s.minCoding}` : "No coding floor"}</Chip>
           <Chip on={s.maxCost != null}>{s.maxCost != null ? `≤ ${money(s.maxCost)} per task` : "No budget limit"}</Chip>
