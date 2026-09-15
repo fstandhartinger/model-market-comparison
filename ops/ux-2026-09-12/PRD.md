@@ -97,7 +97,7 @@ The current public index page also exposes benchmark, token-use, and cost views:
 | Per-benchmark evidence | AA exposes benchmark rows and methodology, with current-version changes documented ([current index](https://artificialanalysis.ai/evaluations/artificial-analysis-intelligence-index)). | Benchmark Heaven retains 75 benchmark identities, observed values, evidence links, and write-once states. | Finish E2/E3 source coverage and make version/date/basis visible wherever comparison is made. |
 | Price realism | AA reports per-task cost and provider/token/cache methodology for its Intelligence Index ([methodology](https://artificialanalysis.ai/methodology/intelligence-benchmarking)). | Benchmark Heaven models the selected provider route, cache efficiency/prices, and model token efficiency in adjusted cost. | Finish R9.1 refresh and R6.3 subscription treatment; label modeled versus measured costs. |
 | Provider choice | AA's public leaderboard exposes model/provider comparisons and provider-facing entries ([leaderboard](https://artificialanalysis.ai/leaderboards/models/)). | Benchmark Heaven filters offers by region, confidentiality, data-policy snapshot, and cost. | Keep unknown policy states explicit and cite the public policy snapshot. |
-| Historical comparability | AA publishes current index methodology and version context ([methodology](https://artificialanalysis.ai/methodology/intelligence-benchmarking)). | Benchmark Heaven retains snapshots and has anchor-based ratio/rank bridges, including multi-hop fixtures. | Obtain a real multi-hop production case or retain the honest “no current multi-hop” state; never fabricate one. |
+| Historical comparability | AA publishes current index methodology and version context ([methodology](https://artificialanalysis.ai/methodology/intelligence-benchmarking)). | Benchmark Heaven retains snapshots and has anchor-based ratio/rank bridges, including multi-hop fixtures. **2026-09-15 (iteration 65):** a real retained case is live — Opus 4.7 (medium) and Fable 5 are no longer on AA Coding Agent Index v1.5 and are bridged from v1.4 through 8 anchor models; Advanced → "Better than a model" says where a bridged reference came from, its anchors, hops and spread (category medians: how many of their benchmarks are bridged). Estimates for configurations still published under a changed catalog key (87 rows) were removed. | Keep the honest “no current multi-hop” state until a source produces one; never fabricate one. |
 | Speed, latency, context | AA leads with output speed (tokens/s), latency (TTFT) and context window on both the leaderboard and the five-model comparison ([leaderboard](https://artificialanalysis.ai/leaderboards/models/), [comparison tool](https://artificialanalysis.ai/models/comparisons)). | **Closed 2026-09-15 (iteration 60):** output speed, time to first token and context window come from the same AA API v2 read that already feeds the dataset (`aa_speed`, `aa_metadata.context_window_tokens`, dated `sources.artificialanalysis`). They are shown on every model page and in Compare's "Speed and context" table, labelled as AA medians with the read date. AA's `0 / 0` for models it has not speed-tested (460 of 650 rows) is now null, never "0 t/s". Still not a ranking or filter dimension, on purpose: AA's speed is a model-level median, not the speed of the provider route the user's filters choose for the adjusted cost. | Keep speed as displayed evidence; revisit a speed filter only if per-provider speed with provenance becomes available. (Review finding P2-GAP-01, 2026-09-13.) |
 | Decision UX | AA gives leaderboard and side-by-side model comparison views ([leaderboard](https://artificialanalysis.ai/leaderboards/models/), [comparison tool](https://artificialanalysis.ai/models/comparisons)). | Benchmark Heaven adds Simple/Guided/Advanced modes, a value map, evidence-aware filters, and Benchmaxxing. | Complete the Fable directives: first-screen recommendations, compact navigation, readable radar, and no jargon on the surface. |
 
@@ -116,8 +116,9 @@ The current public index page also exposes benchmark, token-use, and cost views:
    subscription prices. Remaining: OpenAI and xAI terms/prices are unreadable to automated
    clients and stay "not collected".
 3a. **Speed and latency:** closed 2026-09-15 as displayed evidence (model page + Compare), see P2-GAP-01 above.
-4. **Historical product surface:** connect H1/H2 to the H3 UI for category references,
-   show path/uncertainty, and add a real retained example once a source supplies it.
+4. **Historical product surface:** closed 2026-09-15 (iteration 65) — H3 category and single-benchmark
+   references use the retained bridges, the status line shows origin/anchors/hops/spread, and the real
+   retained example is Opus 4.7 (medium) on AA Coding Agent Index v1.5 (see the matrix row above).
 5. **Governance:** independently review this PRD, update API/changelog/fork-sync
    docs, run the gauntlet on material code/data changes, and only then perform X6/X7.
 
@@ -140,8 +141,9 @@ The current public index page also exposes benchmark, token-use, and cost views:
   compression remains a documented limitation.
 - The R4.4 featured rule is currently exactly the top 20 AA families (deprecated
   excluded, pins documented), superseding the older Gemini exclusion. R4.10 treats
-  unknown provider policy as kept and labelled; Chutes is an explicit pass. R5.2
-  keeps the literal cost-descending Simple default. These interpretations are carried
+  unknown provider policy as kept and labelled; Chutes is an explicit pass. R5.2's
+  literal cost-descending Simple default was superseded on 2026-09-14 by Florian's newer
+  instruction (CR-8.1): score descending in Simple and Advanced. These interpretations are carried
   to X7 for Florian to overrule.
 
 ## Review contract
