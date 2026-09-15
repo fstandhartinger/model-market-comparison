@@ -237,20 +237,20 @@ credited below, the rest is marked open.
 | CR-18.1 | Simple min-score default derived so the cheapest top model is on the Pareto line | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | iter 71 claude-opus `07b65fd`: `derivedMinScore` (lib/value-map.mjs) from Simple's pre-cut pool; live 60/60 per host (default 69 = floor(DeepSeek V4 Flash score), cheapest model on the Pareto line) |
 | CR-18.2 | Derived default never below 65 (0–100 scores) | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | floor 65 for Composite; Elo boards keep fixed default; unit test (cheapest at 50 → 65) |
 | CR-18.3 | Table/map consistency, reset, manual override, no pool feedback loop | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | table + map read one `minScoreSimple`; hand-set value wins + persists; untouched → derived again; Advanced unchanged — all live-checked |
-| CR-19.1 | Compare radar tooltips get an opaque, theme-aware background (no see-through text) in light and dark | open | — | — |
-| CR-19.2 | Compare radar scaling makes differences between two strong models visible: axis range adapts to the two select | open | — | — |
-| CR-19.3 | Default compare radar axes: replace DesignArena Frontend with DesignArena Full-Stack (Fable 5.1 must have a va | open | — | — |
-| CR-20.1 | Full benchmark comparison: model columns have equal widths | open | — | — |
-| CR-21.1 | Benchmaxxing tab shows one row per model (weights/training run), not multiple reasoning variants; the benchmax | open | — | — |
+| CR-19.1 | Compare radar tooltips get an opaque, theme-aware background (no see-through text) in light and dark | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: radar tooltip on opaque theme surface (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-19.2 | Compare radar scaling makes differences between two strong models visible: axis range adapts to the two select | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-2-21-1/` | iter 71 claude-opus: shared zoom window from the pair, rings/centre labelled, Full 0–100 toggle (`f2967b4`); live canonical 41/41 · legacy 41/41 |
+| CR-19.3 | Default compare radar axes: replace DesignArena Frontend with DesignArena Full-Stack (Fable 5.1 must have a va | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: default axes: DesignArena Full-Stack only (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-20.1 | Full benchmark comparison: model columns have equal widths | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: fixed table layout, equal model columns (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-21.1 | Benchmaxxing tab shows one row per model (weights/training run), not multiple reasoning variants; the benchmax | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-2-21-1/` | iter 71 claude-opus: one row + one verdict per model family, Overview shares it (`f2967b4`); live canonical 41/41 · legacy 41/41 |
 | CR-21.2 | Benchmaxxing signal bar (yellow) scales to the actual maximum value present in the list (not a fixed max), so  | open | — | — |
-| CR-22.1 | Per-model report: fix AA Coding Agent Index value for Muse Spark 1.3 (raw fraction 0.64 shown as percentile 0. | open | — | — |
-| CR-22.2 | Per-model report: add one plain sentence near the radar: 'The more jagged the shape, the more benchmaxxed the  | open | — | — |
-| CR-22.3 | Radar charts with many axes: remove the radial spoke lines or make them much subtler (low-contrast on dark mod | open | — | — |
-| CR-23.1 | Mobile header 'More' menu opens anchored to its button (currently pops up in the wrong spot) | open | — | — |
-| CR-24.1 | Overview table cost cells: the '↓ 11× cheaper' (and 'pricier') tag sits left of the price on the same line, no | open | — | — |
-| CR-25.1 | Rename 'Filters' to 'Options' everywhere (button, dialog title, docs) since it also holds choices like the sco | open | — | — |
-| CR-25.2 | Remove the 'Strong confidential guarantees' filter | open | — | — |
-| CR-25.3 | Move 'I'm buying for a company' out of the 'Data Confidentiality' section to a better-fitting place | open | — | — |
+| CR-22.1 | Per-model report: fix AA Coding Agent Index value for Muse Spark 1.3 (raw fraction 0.64 shown as percentile 0. | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: percentiles need ≥ 3 families; tooltip formats native value (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-22.2 | Per-model report: add one plain sentence near the radar: 'The more jagged the shape, the more benchmaxxed the  | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: 'The more jagged the shape, the more benchmaxxed the model looks.' (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-22.3 | Radar charts with many axes: remove the radial spoke lines or make them much subtler (low-contrast on dark mod | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: spokes at 14 % opacity (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-23.1 | Mobile header 'More' menu opens anchored to its button (currently pops up in the wrong spot) | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: desktop More anchored to its button (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-24.1 | Overview table cost cells: the '↓ 11× cheaper' (and 'pricier') tag sits left of the price on the same line, no | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: value tag left of the price, one line (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-25.1 | Rename 'Filters' to 'Options' everywhere (button, dialog title, docs) since it also holds choices like the sco | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: Filters → Options in header, dialog, wizard copy (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-25.2 | Remove the 'Strong confidential guarantees' filter | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: confidential filter removed; stored true migrates off; preset updated (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
+| CR-25.3 | Move 'I'm buying for a company' out of the 'Data Confidentiality' section to a better-fitting place | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: company toggle moved to Price basis (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
 | CR-25.4 | Regional settings harmonized and positively expressed: 'Hosted in: China / EU / US / Other' (all checked by de | open | — | — |
 | CR-25.5 | New Options section 'Models and Providers' holding the Models dropdown, the Providers dropdown and a new Labs  | open | — | — |
 | CR-25.6 | Score dropdown includes the category composite scores (e.g. Coding) as selectable scores | open | — | — |
@@ -277,9 +277,12 @@ credited below, the rest is marked open.
 | CR-34.1 | Add a collector for `GET https://openrouter.ai/api/v1/benchmarks` to the data pipeline (raw capture with as_of | open | — | — |
 | CR-34.2 | New independent benchmarks from OpenRouter's own runs: GPQA Diamond (OpenRouter run), τ²-Bench Verified Airlin | open | — | — |
 | CR-34.3 | Use OpenRouter's measured `avg_cost_per_task` as an additional, clearly labelled cost signal (e.g. in cost mod | open | — | — |
-| CR-34.4 | Add Artificial Analysis Agentic Index (from this API or AA directly) to the taxonomy, category composites (Age | open | — | — |
+| CR-34.4 | Add Artificial Analysis Agentic Index (from this API or AA directly) to the taxonomy, category composites (Age | open (ON HOLD: AA permission pending, see CR-35.3) | — | — |
 | CR-34.5 | Use the API's DesignArena rows to fill gaps and cross-check existing DesignArena values (categories: website,  | open | — | — |
 | CR-34.6 | Evaluate OpenRouter's media benchmarks (Image, Video) and whether they fit the product; document the decision | open | — | — |
+| CR-35.1 | Attribute Artificial Analysis wherever AA data is shown: a visible 'Data: Artificial Analysis' (linked to http | open | — | — |
+| CR-35.2 | A prominent 'BETA — Work in progress' tag in the site header (next to the logo/name) on all pages, plus a shor | open | — | — |
+| CR-35.3 | Hold: do not add new Artificial Analysis-derived metrics (CR-34.4 Agentic Index) until Florian reports AA's an | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1921,3 +1924,7 @@ CR-33.3 (Main Composite row always first + selected-score row below) changes CR-
 
 ## PRIORITY addendum 2026-09-15 ~16:30 UTC (laptop supervisor)
 CR-34 (OpenRouter Benchmarks API) belongs with the data group (CR-28/CR-30) — Florian wants more benchmarks; do CR-34.1/34.2/34.4 early in that group since the API is structured and cheap to ingest. Mechanical mapping/verification work can go to Kimi K3 workers.
+
+
+## PRIORITY 2026-09-15 ~16:40 UTC (laptop supervisor) — legal/attribution first
+CR-35.1 (Artificial Analysis attribution on every surface) and CR-35.2 (BETA — Work in progress tag) come FIRST in the next work iteration, before any other open row, because the AA terms require attribution. CR-34.4 is on hold until Florian hears back from Artificial Analysis.
