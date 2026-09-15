@@ -271,3 +271,11 @@ Laptop Claude Code chat, 15 Sep 2026 ~17:00 UTC, verbatim (typos kept):
 > Actually the dropdown for model selectio nshould be polished, and have better usability. improve ux and ui.
 >
 > also model dropdown and provider dropdown in the optios panel are too bix, they can't be fully shown. revamp how these dropdowns are structured and sized, improve ux here
+
+
+## CR-20260915m — More benchmarks from Lumina Bench into the scraper/updater
+Laptop Claude Code chat, 15 Sep 2026 ~18:10 UTC, verbatim:
+
+> I found a lot of additional benchmarks, let's include what we don't have already into our scraper and updater: https://luminabench.com/
+
+Supervisor check 15 Sep ~18:10 UTC: Lumina Bench is an aggregator (435 benchmark families, 321 with results, 15,598 sourced result records, methodology 2.3; many families imported from BenchLM as `benchlm-*`). robots.txt allows all. Public **data ledger** (updated 1 Sep 2026): https://luminabench.com/downloads/luminabench-ledger-manifest.json, -benchmark-definitions.{csv,json}, -benchmark-results.{csv,json} (12 MB), -sources.{csv,json} (873 sources with fields url, sourceType, authority, publishedAt, retrievedAt, **licence, attribution, redistributionStatus**, verificationStatus), -models, -model-configurations, -operations, -image/-video/-voice, full ZIP/XLSX. No site-wide data licence found. => Use Lumina as a discovery and provenance index; take values from primary sources (or from Lumina only where the source's licence/redistribution status allows and Lumina is credited). Intake job: /home/flori/jobs/bh-lumina-intake-20260915/.

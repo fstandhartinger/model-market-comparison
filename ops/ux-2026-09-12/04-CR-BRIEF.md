@@ -26,9 +26,9 @@ evidence under `/opt/benchmarkheaven/state/ux-evidence/`.
   page once CR-1 to CR-3 are implemented. Bulk mechanical work (row metadata, tag
   classification drafts, copy for benchmark descriptions, test fixtures) goes to free models via
   `bin/delegate.sh` — verify their output, never ship an unverified number or tag.
-- **Model-economy and secret rules stay as they are** (`/home/flori/.hermes/model-economy-policy.md`,
-  `RELAYMODELS.md`): no secrets, env values, cookies or OAuth client secrets in any prompt, log
-  or commit.
+- **Model-economy and secret rules stay as they are** (`/home/flori/.hermes/model-economy-policy.md`):
+  no secrets, env values, cookies or OAuth client secrets in any prompt, log or commit.
+  RelayModels removed 15 Sep 2026 (Florian: not trusted) — don't use it.
 
 ## 1. Conflict resolved
 
@@ -312,3 +312,12 @@ still-open rows from section 2 per the priority rule in section 0.
 | CR-36.1 | Compare tab 'Add models' search: redesign the dropdown — clean list with lab logo/name, model name, release date and main score, keyboard navigation (↑↓ Enter Esc), highlighted match text, grouping by lab or relevance, recent/top suggestions when empty, clear selected state, no overflow/clipping, opaque with correct z-index, good on mobile (full-width sheet) | Design gate review; keyboard + screen reader check; 390 px and desktop, light/dark |
 | CR-36.2 | Compare picker lists one entry per model (weights/training run), not every reasoning variant. For each benchmark the compared value is the highest score among that model's reasoning variants; the tooltip/cell names the variant and setting that produced it (e.g. 'best of variants: xhigh'), so best-of is never hidden. Cost uses a clearly stated variant (e.g. the one behind the main composite) — never mixes best-of scores with a cheaper variant's cost silently | Test: variants collapse; per-benchmark max chosen; variant label shown; consistent with CR-21.1 (Benchmaxxing one row per model) |
 | CR-36.3 | Options panel: revamp the Models and Providers dropdowns (and the new Labs one from CR-25.5) — they are too big and get cut off. Use a compact, searchable multi-select (combobox/popover with max height and internal scroll, chips for selected items with '+N more', select all/none, grouped lists), sized to the panel, fully visible on desktop and mobile | Nothing clipped at any viewport; long lists scroll inside the popover; keyboard accessible; design gate review |
+
+
+## 16. CR-20260915m checklist — Lumina Bench benchmarks (after the intake job's RESULT.md exists)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-37.1 | Add every Lumina Bench benchmark family we don't have yet (from the intake job's verified `NEW-BENCHMARKS.md` / staged data) to the taxonomy, categories and composites, with description, official URL and source | Count of added benchmarks documented; each with primary source + licence status; no duplicates of existing ones under other names |
+| CR-37.2 | Scraper/updater: add a daily collector for Lumina's data ledger as a discovery + provenance feed (manifest hash change → diff new benchmarks/results), and collectors for the primary sources behind the new benchmarks; values reach the dataset only with source, date, basis and a licence that allows display (credit Lumina where its data is used directly) | Collector in the daily refresh with fail-closed gates; SCRAPING.md documents sources + licences; attribution shown |
+| CR-37.3 | Results for the new benchmarks shown across the site (full benchmark list, Benchmarks tab, compare, category scores) with self-reported vs independent distinction (as CR-30) | Live check; counts match |
