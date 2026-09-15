@@ -110,6 +110,7 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 > **Status 2026-09-15 pass 17 (Fable), end of pass:** open for implementers: **F-94, F-95, F-96, F-98** (design for the
 > pending CR-25.4/25.5/36.3, CR-36.1/36.2, CR-26.1 and CR-38.2/38.3 — take them together with those rows) and **F-97**, **F-99** (surgical copy/placement).
+> **Iteration 73 (claude-opus):** F-94 landed (`808ef9e`; one deviation: the provider quick-pick links were dropped, they squeezed the list) and F-96 landed (`95fd086`), both live-checked by the implementer (`verify-cr-25-36` 76/76, `verify-cr-26-1` 56/56 per host) — they need a non-claude verifier and the next Fable pass. F-95, F-97, F-98, F-99 stay open.
 > F-87…F-93 landed (`cadbe88`, `992fa97`) and were live-checked by Fable (`fable-20260915-pass17/after/`); they need a
 > non-Fable verifier (`verify-f87-f93.mjs`). F-86 was landed by iteration 66 and verified by claude-opus.
 
