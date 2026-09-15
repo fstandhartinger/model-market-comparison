@@ -285,6 +285,9 @@ credited below, the rest is marked open.
 | CR-35.3 | Hold: do not add new Artificial Analysis-derived metrics (CR-34.4 Agentic Index) until Florian reports AA's an | open | — | — |
 | CR-35.4 | Epoch AI attribution (CC-BY): wherever Epoch data is shown (Epoch ECI, Epoch Software ECI, other Epoch-run ben | open | — | — |
 | CR-35.5 | For benchmark rows taken from Epoch's hub that Epoch sourced from external projects, record and display the or | open | — | — |
+| CR-36.1 | Compare tab 'Add models' search: redesign the dropdown — clean list with lab logo/name, model name, release da | open | — | — |
+| CR-36.2 | Compare picker lists one entry per model (weights/training run), not every reasoning variant. For each benchma | open | — | — |
+| CR-36.3 | Options panel: revamp the Models and Providers dropdowns (and the new Labs one from CR-25.5) — they are too bi | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1934,3 +1937,7 @@ CR-35.1 (Artificial Analysis attribution on every surface) and CR-35.2 (BETA —
 
 ## PRIORITY addendum 2026-09-15 ~16:50 UTC (laptop supervisor)
 CR-35.4/35.5 (Epoch AI CC-BY attribution) are part of the attribution pass: do them together with CR-35.1/35.2 first. Unlike Artificial Analysis, Epoch data is explicitly allowed with attribution — no hold.
+
+
+## PRIORITY addendum 2026-09-15 ~17:00 UTC (laptop supervisor)
+CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared variant-collapsing helper. CR-36.3 goes together with CR-25.5 (Models/Providers/Labs section). Both CR-36.1 and CR-36.3 need a design gate (Fable) look. Group 3.
