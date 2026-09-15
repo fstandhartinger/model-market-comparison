@@ -5,6 +5,7 @@ import { latestScores, normalize, type BenchmarkView, type ViewAxis } from '../l
 import { BenchmarkRadar, SERIES_COLORS } from './BenchmarkRadar';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
 import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
+import { SpeedTable } from './SpeedContext';
 
 const nativeValue = (value: number, unit: string | null) => {
   const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
@@ -106,6 +107,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
         </li>)}</ul>
       </article>)}</div></div>}
     </section>}
+    <SpeedTable date={view.speedDate} rows={displayPicks.map((id, slot) => { const m = view.models.find((model) => model.id === id); return { id, name: m?.name || id, color: SERIES_COLORS[slot], facts: { outputTps: m?.outputTps, ttftS: m?.ttftS, contextTokens: m?.contextTokens } }; })} />
     <section className="bh-panel p-5" id="full-comparison" aria-busy={busy} aria-label="Full benchmark comparison">
       <p className="bh-eyebrow">EVERY COLLECTED BENCHMARK</p><h2 className="text-xl font-semibold">{standalone ? 'The numbers behind the profile' : 'Full benchmark comparison'}</h2>
       <p className="bh-muted mt-2 text-sm">Native units; versions and evaluation groups remain separate. Measured results take priority over vendor claims, then the latest observation. A tinted cell marks the best measured relative position in that row; small differences are not evidence of significance.</p>

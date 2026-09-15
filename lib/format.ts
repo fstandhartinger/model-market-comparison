@@ -12,6 +12,18 @@ export function num(v: number | null | undefined, digits = 1): string {
   return v.toFixed(digits);
 }
 
+/** Context window in tokens: 1,048,576 → "1M", 256,000 → "256K". */
+export function contextTokens(v: number | null | undefined): string {
+  if (v == null) return "—";
+  return v >= 1e6 ? `${Number((v / 1e6).toFixed(1))}M` : `${Math.round(v / 1e3)}K`;
+}
+
+/** Seconds: one decimal below 10 s, whole seconds above. */
+export function seconds(v: number | null | undefined): string {
+  if (v == null) return "—";
+  return `${v.toFixed(v < 10 ? 1 : 0)} s`;
+}
+
 /** AA benchmark sub-scores are 0–1 fractions; show as %. */
 export function pct(v: number | null | undefined): string {
   if (v == null) return "—";

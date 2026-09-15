@@ -12,6 +12,7 @@ import { scoreVersion } from '../../../lib/score-label';
 import { percentileFor } from '../../../lib/benchmax.mjs';
 import { MiniRadar } from '../../../components/MiniRadar';
 import { InfoTip } from '../../../components/InfoTip';
+import { SpeedLine } from '../../../components/SpeedContext';
 import type { ScoreKey } from '../../../lib/types';
 
 /** Mid-rank percentile of `value` among every model with a value on that input (0–100). */
@@ -80,6 +81,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       <div className="mt-1 text-sm text-gray-400">
         {model.org}{model.release_date ? ` · released ${model.release_date}` : ""} · {offers.length} offers
       </div>
+      <SpeedLine facts={{ outputTps: model.aa_speed?.output_tps, ttftS: model.aa_speed?.ttft_s, contextTokens: model.aa_metadata?.context_window_tokens }} date={ds.sources.artificialanalysis} />
       {model.manual_notes && <p className="mt-2 max-w-3xl text-xs text-warn/90">{model.manual_notes}</p>}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
@@ -100,9 +102,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
                 {axis.label} <b className="ml-1 font-semibold tabular text-gray-200">{axis.native}</b>
                 {axis.note && <InfoTip title={`${axis.label} attachment`} label={`the ${axis.label} attachment note`}>{axis.note}</InfoTip>}
               </span>
-            ))}
-            {model.aa_speed?.output_tps != null && <span className="whitespace-nowrap">Output <b className="font-semibold tabular text-gray-200">{num(model.aa_speed.output_tps, 0)}</b> t/s</span>}
-          </p>
+            ))}          </p>
           <p className="mt-1 text-center text-[11px] text-gray-500">Radar: percentile among all models measured on each input; a gap means not measured.</p>
           {model.benchmark_override_note && (
             <p className="mt-3 border-t border-line/50 pt-2 text-xs text-warn/90">⚠ {model.benchmark_override_note}</p>

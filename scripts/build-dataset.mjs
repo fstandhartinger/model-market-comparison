@@ -6,6 +6,7 @@ import { readFile, writeFile } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import { aaSpeed } from "../lib/aa-speed.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -606,7 +607,8 @@ async function build() {
         output_per_1m: num(pr.price_1m_output_tokens),
         blended_3to1: num(pr.price_1m_blended_3_to_1),
       },
-      aa_speed: { output_tps: num(m.median_output_tokens_per_second), ttft_s: num(m.median_time_to_first_token_seconds) },
+      // AA's 0 / 0 marks "not speed-tested"; it must not render as "0 t/s".
+      aa_speed: aaSpeed(m),
       offers: [],
       designarena: {},
       copilot: null,

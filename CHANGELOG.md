@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Speed and context shown; AA "not speed-tested" zeros become null (P2)
+
+No data location, route or public API field was removed.
+
+- **`models[].aa_speed.output_tps` and `models[].aa_speed.ttft_s`** are now `null` when Artificial Analysis
+  has not speed-tested a model. AA's API sends `0` for both fields on those models (460 of 650 AA rows on
+  2026-09-14, always as a pair); earlier datasets copied the zeros. Consumers that treated `0` as a
+  measurement should treat `null` as "not measured". No other model field changed.
+- **`GET /api/benchmark-view`**: each `models[]` entry gains `outputTps`, `ttftS` and `contextTokens`
+  (from `aa_speed` and `aa_metadata.context_window_tokens`, `null` when unknown), and the view gains
+  `speedDate` (= `sources.artificialanalysis`). Additive.
+- UI: model pages show output speed, time to first token and context window under the title (moved out of
+  the Composite card); Compare has a "Speed and context" table for the selected models.
+
 ## 2026-09-14 — Google Vertex collector; provider metadata cross-check (R9.1)
 
 No data location, route or public API field was removed.

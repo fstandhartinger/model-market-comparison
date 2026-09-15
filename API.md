@@ -303,3 +303,12 @@ FrontierCode 1.1 Main** (`self_reported`, owner-approved after a critic review):
 `frontiercode::1.1` (percent; `basis: "derived"`, `source_basis: "self_reported"`, ×100 from the
 published fraction, input kept in `derivation.inputs`) and `frontiercode-cost::1.1` (mean USD per
 rollout). `subject.source_id` is `"<model>|<effort>"` and `subject.harness` the source harness.
+
+### Speed and context (2026-09-15)
+
+`models[].aa_speed` = `{ output_tps, ttft_s }`: Artificial Analysis' median output tokens per second and
+seconds to first token, from the same API v2 read as the AA scores (`sources.artificialanalysis`). Both
+are `null` when AA has not speed-tested the model — AA sends `0 / 0` for those, and the dataset no longer
+copies the zeros. `models[].aa_metadata.context_window_tokens` is AA's context window. `GET
+/api/benchmark-view` mirrors them per model as `outputTps`, `ttftS`, `contextTokens`, plus `speedDate`.
+These are model-level figures, not per provider route, and are not part of the Composite or any filter.
