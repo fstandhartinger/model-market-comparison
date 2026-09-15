@@ -1991,15 +1991,35 @@ CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared
     against public facts, no error found. Saved as `lab-countries.draft.json`; **not ingested** — next iteration verifies
     each `source_url` before it becomes `data/lab-countries.json`. TSX work stayed with Opus (memory: Kimi stalls on component edits).
 
+- **2026-09-15 · Fable pass 17 · claude-fable · design (what changed since pass 16: iteration 71's batch)** —
+  Live `4e126b6` on both hosts at start; 96 shots (`bin/shoot-fable-pass17.mjs`) + supplementary shots under
+  `/opt/benchmarkheaven/state/ux-evidence/fable-20260915-pass17/`, 0 page errors. Verdict in `DESIGN-DIRECTIVES.md`
+  ("pass 17"): the batch is at the bar in substance; seven small findings, all fixed surgically by Fable —
+  F-87 desktop More menu (256 px, was clamped to 63 px), F-88 BETA tag spacing, F-89 short picker names
+  (`SCORE_PICKER_LABELS`) + menu inside the phone, F-90 three phone Y ticks, F-91 desktop compare radar at chart size
+  (900×600, R 205), F-92 inline (i) in the Simple table + footnote without the repeated intro, F-93 shortlist chart as
+  bar rows below `md` (no panning) and bottom-to-top names at `md`+ — commits `cadbe88`, `992fa97`. Gates: npm test
+  461/461, tsc clean, build-dataset timestamp-only. Live acceptance `bin/verify-f87-f93.mjs` (runner claude-fable):
+  **38/38 canonical, 38/38 legacy**, evidence `fable-20260915-pass17/after/{canonical,legacy}/verification.json`.
+  Fable implemented these itself (surgical; Kimi stalls on TSX per the record), so they need a **non-Fable verifier**.
+  New directives for the pending rows, design given up front: F-94 (Options regional rows + models/providers/labs
+  comboboxes, with CR-25.4/25.5/36.3), F-95 (Compare picker, with CR-36.1/36.2), F-96 (Charts value map parity,
+  CR-26.1), F-97 (Benchmaxxing Signal sub-label copy), F-98 (Saturated/Judged tags, with CR-38.2/38.3).
+  Decisions (Florian may overrule): pickers use the site's short names; the shortlist chart is bar rows on phones
+  (pass-9 rule) and the column chart at `md`+ — for X7; X4 judged met at pass 17 pending the non-Fable verification;
+  next Fable pass only after CR-25.4/25.5/36 land. The supervisor's uncommitted edits found in the tree (RelayModels
+  removal + free-worker routing `a8ed81c`; CR-20260915n seed `8801e1f`) were landed as found, docs/runner only.
+  Limits at end: see `state/ux/history.log`.
+
 ## Handover — next work iteration (written 2026-09-15, iteration 71)
 0. **Not done this iteration (open):** CR-25.4–25.6, CR-26.1, CR-27.1, CR-28.2, CR-30.x, CR-34.x, CR-35.3 (hold), CR-35.5, CR-36.x.
    Supervisor's 17:20 note (data verification finished, 11 corrections) matches item 5 below.
-1. **Review gate first** for everything above (non-claude engine): `bin/verify-cr-18-29.mjs`, `verify-cr-19-25.mjs`,
+1. **Review gate first** for everything above (non-claude engine): `bin/verify-f87-f93.mjs` (Fable pass 17, sets F-87…F-93 verified), `bin/verify-cr-18-29.mjs`, `verify-cr-19-25.mjs`,
    `verify-cr-19-2-21-1.mjs`, `verify-cr-29-31.mjs`, `verify-cr-32-33.mjs`, `verify-cr-32-1-2.mjs`, `verify-cr-28-1.mjs`,
    `verify-cr-35.mjs`. Updated older harnesses this iteration: verify-cr-6-8 (Options), verify-cr-presets (Privacy strict), verify-cr-2-5-perf (isCompany seed).
    Older verifiers that asserted CR-12.1's "top row = selected score" or 'Filters' labels are superseded by CR-33.3 and
    CR-25.1 — fix the harness, not the product.
-2. **CR-25.4 / CR-25.5 (regional + Labs).** Groundwork is tested in `lib/regions.mjs`. Wiring plan: settings
+2. **CR-25.4 / CR-25.5 (regional + Labs) — design is in `DESIGN-DIRECTIVES.md` F-94 (and F-95 for CR-36, F-96 for CR-26.1, F-98 for CR-38.2/38.3); implement to those specs.** Groundwork is tested in `lib/regions.mjs`. Wiring plan: settings
    `hostedIn`, `providerBasedIn`, `labBasedIn` (bucket arrays, default all four) + `labs` (org list); migrate stored
    `euHostedOnly/excludeChinese/nonUsOnly` with `regionStateFromLegacy`; replace the repeated
    `createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining)`
