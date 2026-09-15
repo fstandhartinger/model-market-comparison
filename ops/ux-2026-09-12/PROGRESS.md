@@ -1941,3 +1941,6 @@ CR-35.4/35.5 (Epoch AI CC-BY attribution) are part of the attribution pass: do t
 
 ## PRIORITY addendum 2026-09-15 ~17:00 UTC (laptop supervisor)
 CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared variant-collapsing helper. CR-36.3 goes together with CR-25.5 (Models/Providers/Labs section). Both CR-36.1 and CR-36.3 need a design gate (Fable) look. Group 3.
+
+## PRIORITY addendum 2026-09-15 ~17:20 UTC (laptop supervisor) — data verification finished
+`/home/flori/jobs/bh-data-verification-20260915/RESULT.md` + `CORRECTIONS.json` (11 corrections) are ready for CR-28.2/CR-27.1. Main root cause: DesignArena and Epoch results attach once per family to a representative chosen by `scripts/build-dataset.mjs familyRepresentativeVariantOrder()` (GPT list lacks 'max'), while the UI shows the variant picked by `lib/variants.ts preferredVariantIds()` — 12/40 top families mismatch, so values look missing. Second: two DesignArena rows collapsing to one family key drop one (GPT-5.6 Sol xhigh). Third: Muse Spark 1.3 percentile 0 = a 2-row harness peer group. Also: LMArena has no pipeline tracking; trustedtokens.eu confirmed (TNG, Germany). Fix the variant-attachment mismatch structurally together with CR-36.2 (one entry per model, best of variants) — it is the same concept.
