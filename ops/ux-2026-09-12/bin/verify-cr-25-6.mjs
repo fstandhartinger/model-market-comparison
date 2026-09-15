@@ -103,6 +103,15 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   await page.reload(); await settle(page);
   check(`${tag} CR-25.6 the chosen category score persists like other settings`, /Coding/.test(await page.locator('[data-min-score-sub]').first().innerText().catch(() => '')), '');
 
+  // CR-25.6's own wording: the Options panel's Score dropdown lists the category composites.
+  const optBtn = page.locator('header button[data-bh-filters-toggle]').first();
+  await optBtn.click(); await page.locator('#global-filters').waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
+  const optScores = await page.locator('#global-filters select[aria-label="Score"] option').allInnerTexts();
+  check(`${tag} CR-25.6 the Options panel's Score dropdown lists the category composites`,
+    ['Coding', 'Agentic & tool use', 'Science', 'Long context'].every((n) => optScores.includes(n)), optScores);
+  await page.screenshot({ path: `${OUT}/${tag}-options-score.png` });
+  await page.keyboard.press('Escape'); await page.waitForTimeout(400);
+
   // The shortlist column chart offers it too (CR-33.2).
   const chartScores = await page.locator('[data-shortlist-score] option').allInnerTexts();
   check(`${tag} CR-33.2 the shortlist column chart offers the category composites`, CATEGORIES.every((k) => chartScores.some((t) => /category composite/.test(t))) && chartScores.some((t) => /^Coding/.test(t)), chartScores);

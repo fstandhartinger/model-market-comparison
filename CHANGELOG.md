@@ -4,6 +4,15 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Category scores as selectable scores (CR-25.6)
+
+**New dataset fields, nothing moved or removed.** `models[].category_scores` (`cat_coding`,
+`cat_agentic`, `cat_science`, `cat_long_context`, 0–100) and `dataset.category_scores` (the anchor
+benchmarks behind them). The four keys also work as `GET /api/models?score=…`. A model only gets a
+category score when it has a result on every anchor benchmark of that category, so the key is missing
+rather than averaged over a smaller set; anchors count at their newest published version. See API.md
+and `/about#category-scores`.
+
 ## 2026-09-15 — Options panel: positive regional choices, Labs filter (CR-25.4 / CR-25.5 / CR-36.3)
 
 No data location, route, public API field or dataset value changed. App settings only:
