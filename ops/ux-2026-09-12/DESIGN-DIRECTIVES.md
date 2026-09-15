@@ -1,11 +1,11 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 15: 2026-09-15 ~00:30 UTC**, the one targeted CR-1.10 pass on the new Benchmarks page, against live
-revision `15d1a78` (https://benchmarkheaven.com). Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260915-pass15/`
-— 64 shots + `metrics.json` (`/benchmarks` default, `?rows=important`, Rows and Models menus, Pick from chart,
-Choose rows, the bar chart, a cell detail page, Simple landing with its Benchmarks section; 1440/390 × light/dark;
-`crop-*.png` are enlargements). Script: `bin/shoot-fable-pass15.mjs`. Pass-15 fixes live-checked in `after/`.
-Earlier passes: `…/fable-20260914-pass14/` … `…/fable-20260913/`.
+**Pass 16: 2026-09-15 ~04:30 UTC**, the "what changed since pass 15" pass (Florian: Fable sparingly), against live
+revision `3dac13e` (https://benchmarkheaven.com). Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260915-pass16/`
+— 60 shots + `metrics.json` (`/benchmarks` after F-83, the One-benchmark BullshitBench board, the Advanced "Better
+than a model" panel with the retained Opus 4.7 reference, the model page with speed/context, Simple, Guided,
+Benchmaxxing; 1440/390 × light/dark). Script: `bin/shoot-fable-pass16.mjs`. Pass-16 fixes live-checked in `after/`.
+Earlier passes: `…/fable-20260915-pass15/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -24,85 +24,64 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 15 (2026-09-15), the CR-1.10 pass on the Benchmarks page
+## Verdict on the live site — pass 16 (2026-09-15), what changed since pass 15
 
-**The page is right in substance and close to the bar; it is not yet "excellent" because the table — the key
-message — starts too far down and its bars read as blocks, not as subtle data bars.** What is right: the
-release-style layout (vendor small, model large, lettered colour swatches that the chart reuses, a faintly tinted
-lead column), the grouped rows with collapsible category headers, bold winners, direction-aware bars, the tag
-pills, every cell a link to a provenance page that shows the number, basis, date, source and the same benchmark
-for the other compared models, the Rows/Models preset menus ("ours" and "yours" separated, saved-in-this-browser
-note), the Pick-from-chart panel (the value map with two sliders, lettered points), and the headline bar chart —
-twelve small multiples then "Show all 20", each with the row's own scale (0–100 %, points ceiling, Elo as a
-position between padded min and max, exactly the F-72 rule), readable at 390 as stacked panels. Dark mode is the
-same design in other colours. No page is wider than 390 px on phones; the table scrolls inside its own container
-with a sticky stub. No page or console errors in 64 shots.
+**The Benchmarks page is now at the bar: the table is the first thing on the screen, the bars are bands, and
+every page shot in this pass is clean at both widths and both themes — no overflow, no page errors.** What
+changed and holds: F-83 landed as specified (at 1440 the first value sits at y = 516, at 390 the table header
+at y = 522 with the first value inside the viewport; status + presets on row 1, the three column/row controls
+as one boxless line on row 2; header sentence without a count). The One-benchmark boards for the new E2 sources
+(BullshitBench V1/V2, BU Bench) are plain and honest: category eyebrow, one description line, the notice
+"independently measured results … not matched to a catalog model yet", ranked rows with a single accent bar.
+The model page's new speed/context line ("Output 53 tokens/s · First token 9.8 s · Context 1M tokens" + one (i))
+is one quiet line under the title — exactly the right weight. Simple, Guided, Benchmaxxing unchanged and at
+the bar. The R3.1 hero stands.
 
-Findings, ordered by value:
+Findings, ordered by value (all small; the page is right in substance):
 
-1. **At 390 the first screen shows no number at all.** H1, sentence, view tabs, status line, a count select, two
-   preset buttons, an "Add a model" input and two full-width bordered disclosure boxes fill 690 px before the
-   table header appears (`mobile_light-benchmarks.png`); at 1440 the first value sits at y ≈ 650
-   (`desktop_light-benchmarks.png`). Six control rows before the content is the opposite of "key messages first".
-   → **F-83** `[judgment]` (open, for the work loop): one status row, one control row, table.
-2. **The data bars were blocks.** `.bh-matrix-bar` stretched from 11 px below the top to 11 px above the bottom
-   of the cell, and a phone stub with a three-line name, tags, cohort and a two-line description makes a 160 px
-   row — so every value sat in a 140 px grey slab (`crop-mobile-table.png`). Excel's data bar is a band behind
-   the number. → **F-79**, surgical (Fable, `313e24c`): a fixed 22 px band, vertically centred; below `md` the
-   stub drops the clamped description (at 9.5 rem it read "Artificial Analysis' h…"), the name and tags carry
-   the row and the detail page has the full text.
-3. **Two composite rows were labelled "Artificial Analysis Coding Agent Index v1.4/v1.5"** beside "AA Intelligence
-   Index" and "AA Coding Index" — three lines on a phone for the same vendor prefix. → **F-80**, surgical
-   (Fable, `313e24c`): row labels shorten the prefix to "AA "; the registry name is untouched.
-4. **Single-result rows sat among the comparable ones.** Under "Composite indices" the order was AA Intelligence,
-   AA Coding, Codex v1.4 (one value), Codex v1.5 (one value), AA-Omniscience, ECI (one), Software ECI (one): four
-   rows of dashes between the rows the five models can actually be compared on. Florian wants the extensive
-   "All" list (it stays the default); the eye should still land on comparisons first. → **F-81**, surgical
-   (Fable, `313e24c`): inside a category, rows with ≥ 2 values among the compared models come first, then the
-   single-result rows, build order otherwise (stable).
-5. **The Simple-mode Benchmarks section named its columns with the full variant string** — "Claude Fable 5.1
-   (Adaptive Reasoning, Max Effort, Default Fallback)" over three lines at 1440 and six at 390
-   (`crop-desktop-simple-s2.png`, `crop-mobile-simple-s2.png`) — because it stripped only "(max|high|…)" suffixes
-   while the full table uses `collapsedName()`. → **F-82**, surgical (Fable, `313e24c`): same helper, same
-   names, full name in `title`.
-6. **The header sentence counts "up to 59 benchmarks in 13 categories" while the status line right under it says
-   "29 benchmarks across 9 categories"** — two different totals on one screen (matrix size vs. rows with a value
-   for the compared models). Folded into **F-83**: the sentence loses its count; the status line is the count.
+1. **A single value in a row wore a full-width bar.** ECI 157.6 (Kimi K3 only), Software ECI 161.7, Coding Agent
+   Index v1.4/v1.5 (one value each) — `rowBars` normalises over the row, so the only value is the row maximum and
+   gets a 100 % band. It reads as "best of the row" where there is nothing to compare, and it is the loudest thing
+   in the single-result block that F-81 pushed to the end of each group. → **F-84**, surgical (Fable, `ec80831`):
+   fewer than two values → no bar, the same threshold `rowWinners` already uses.
+2. **Two totals on the first line again.** The status line read "29 benchmarks across 9 categories in 31 rows ·
+   top 5 by Composite under your filters": 29 ≠ 31 is a puzzle to a first-time visitor (two benchmarks are split
+   into harness cohorts). The cohort is named on the rows themselves; the second total added nothing. → **F-85**,
+   surgical (Fable, `ec80831`): the " in N rows" span is gone; `verify-cr-1` now asserts rows ≥ benchmarks.
+3. **The "Better than a model" panel lets you choose a comparison that cannot work.** With the retained
+   reference "Claude Opus 4.7 (…)" chosen, the "Benchmark or category" select still lists all 70 metrics; picking
+   one without a value for that reference yields "This reference has no comparable result for that choice, so
+   the filter is inactive." The user has to guess through 70 entries to find the handful that work. Five of the
+   70 labels are also identical (the same benchmark name · category · unit for two registry versions), so two
+   entries cannot be told apart. → **F-86** `[judgment → claude-opus]`, open below: options without a value for
+   the chosen reference are disabled and say so; colliding labels carry the version.
+4. **Transient, not a finding:** one context (desktop dark, `/`) logged a single `502` for a sub-resource; six
+   re-loads (light/dark × 3) returned no 5xx. Recorded in `metrics.json`; nothing to fix.
 
-Not findings, checked: the lead column's tint is deliberately faint (accent at 5.5 %) — the reference's solid
-blue column would fight the data bars, and the bold winner already marks the leader; stays. Bars are 0-based for
-percentages and points (the standing rule: a truncated baseline turns a 3-point gap into a doubling) and
-min–max with a floor for Elo, which the chart's "position between lowest and highest" makes explicit; stays.
-The chart follows the table (the table is the deliverable; the chart is "additionally"); stays. Tags: "AA" +
-"Headline" on the index rows are two pills, not three; stays. The cell detail page is plain and complete —
-number, unit, direction, basis chip, observed date, source link, Evidence disclosure, the compared models with
-the same fields — nothing to add.
+Not findings, checked: at 390 the status line wraps with the count select at the start of line 2 ("… · top / [5]
+by Composite under your filters") — acceptable, the select is the only control in that sentence; the Reference
+model select lists 552 catalog variants on a phone — a native `<select>`, the platform picker handles it; the
+Refine sheet's "Better than a model" block matches the desktop popover.
 
-**Harness, recorded honestly:** `?rows=important` via URL rendered the same 40 rows as the default in the
-matrix count (`metrics.json`, `*-benchmarks-important`); the preset is applied client-side after hydration and
-the screenshot was taken 800 ms after `networkidle`, so this is most likely timing in my script, not a product
-defect — the Rows menu opened by click shows "Important · indices and headline benchmarks" and CR-3.1 was
-verified live by gate 230002Z with `verify-cr-e2e`. Not re-run; if the work loop touches the row presets, add a
-URL round-trip assertion for `?rows=important` to `verify-cr-1.mjs`.
-
-## Decisions in pass 15
+## Decisions in pass 16
 
 1. **R3.1 stands.** No change.
-2. **"All" stays the default row preset** (Florian: "make sure this table is extensive … show off how many
-   benchmarks we have"); readability comes from order (F-81) and compactness (F-79, F-83), not from hiding rows.
-3. **Below `md` a matrix stub carries name, tags and cohort only** (F-79). The one-line description is a desktop
-   affordance; on a 9.5 rem stub it is noise. CR-1.1's "name + one-line description underneath" is met at ≥ 768 px.
-4. **Row labels use the site's short vendor prefix** ("AA …") everywhere in the matrix (F-80); the registry
-   keeps the official full name and the detail page shows it.
-5. **CR-1.10 status:** the design pass has run; F-79–F-82 are live and Fable-checked (`after/`), they need a
-   non-Fable verifier; **F-83 is open for the work loop** (claude-opus). CR-1.10 becomes `verified` when F-83 is
-   implemented and a non-implementing engine has checked F-79–F-83 live at 1440/390, light/dark.
-6. **Next Fable pass:** none scheduled. Florian asked for one targeted pass on this page; the work loop
-   verifies F-83 against the *Accept* line below, no further Fable round is needed for it.
+2. **A data bar needs two values** (F-84) — rule added to the design-system notes. Bars stay row-normalised
+   (Excel convention: the row's best is the full band); percentages are not re-based to 0–100 in the table
+   because the chart already shows absolute scales.
+3. **One total per line** (F-85): the status line counts benchmarks and categories; the rows chooser counts rows
+   it offers; nothing counts table rows.
+4. **F-86 goes to the work loop**, not to Fable: it touches the comparison data shape (which reference has which
+   values) and the P2 follow-up already lists the duplicate labels and the empty-table case.
+5. **CR-1.10 stays `verified`**; F-84/F-85 are refinements after the acceptance, live-checked by Fable
+   (`after/`), and need a non-Fable verifier like every Fable-landed change. **X4 (UI meets the design bar):
+   judged met at pass 16** for every page shot; the ledger row stays with its owner until X6.
+6. **Next Fable pass:** none scheduled. Florian asked for Fable sparingly; the remaining open work (P2 governance,
+   X6/X7) is not design work. A further pass only if a CR lands that changes a page's layout.
 
 ---
 
-## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–14)
+## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–16)
 
 > **Every AI model benchmark we can find, in one place.**
 > **And what each model really costs you.**
@@ -120,58 +99,51 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 
 ## Directives (open)
 
-> **Status 2026-09-15 pass 15 (Fable), end of pass:** **one directive open for implementers: F-83.** F-79–F-82
-> landed in `313e24c` and were live-checked by Fable (`fable-20260915-pass15/after/`); they need a **non-Fable
-> verifier** to set `verified`.
+> **Status 2026-09-15 pass 16 (Fable), end of pass:** **one directive open for implementers: F-86.** F-84 and F-85
+> landed in `ec80831` and were live-checked by Fable (`fable-20260915-pass16/after/`); they need a **non-Fable
+> verifier** to set `verified` (`node ops/ux-2026-09-12/bin/verify-cr-1.mjs <base> <out>` covers both: bars
+> present, none on missing cells, status line without "in N rows", rows ≥ benchmarks).
 
-### F-83 `[judgment → claude-opus]` Benchmarks page: the table starts within the first screen
-*Where:* `components/BenchmarkMatrix.tsx` (the two blocks above the table), `app/benchmarks/page.tsx` (header
-sentence), `app/globals.css` (`.bh-pickpanel`, `.bh-rowpicker`).
+### F-86 `[judgment → claude-opus]` "Better than a model": only offer comparisons the reference can answer
+*Where:* `components/ModelExplorer.tsx` (`comparisonMetrics`, `comparisonPanel`), `lib/benchmark-comparison.mjs`
+(labels), `test/benchmark-comparison.test.mjs` (or the nearest existing test file).
 *What:*
-1. **Header sentence without a count:** "The strongest models under your filters, side by side on every benchmark
-   with a published result — each value with its source." The status line keeps the live count (CR-1.4).
-2. **Row 1 = status + presets.** The count select moves *into* the status sentence: "29 benchmarks across 9
-   categories · top **[5 ▾]** by Composite under your filters" (the `<select>` styled inline, `aria-label="Number
-   of models"`); the separate "Models 5" label disappears. When models are pinned the sentence reads "… · your
-   selection" and the "Reset to top 5" button stays where it is. `Models: Frontier top 5 ▾` and `Rows: All ▾` stay
-   on the right of this row.
-3. **Row 2 = the three ways to change columns and rows, as one wrapping line, no boxes:** `[+ Add a model]`
-   (the search input, `max-w-[13rem]`), `▸ Pick from chart`, `▸ Choose rows (29 of 29)`. The two `<details>`
-   render their `summary` as plain text buttons (min-height 44 px, no border, no background, same 14 px as the
-   status line, chevron rotates when open); the "· score against cost, narrowed by two sliders" hint moves inside
-   the open panel as its first muted line. When a `details` is open it takes the full row width
-   (`details[open] { flex-basis: 100%; }`) and its panel keeps the current bordered-card look; only the closed
-   state loses the box. Only one of the two panels may be open at a time (opening one closes the other).
-4. Nothing else moves: view tabs, table, chart, small print unchanged.
-*Accept (`bin/verify-cr-1.mjs` gains these assertions; both hosts, 1440/390, light/dark):* at 390 the table's
-`thead` top is ≤ 560 px from the page top and the first value cell is inside the 844 px viewport without
-scrolling; at 1440 the first value cell's top is ≤ 520 px; the header sentence contains no digit; the status line
-contains the `<select>` and no other element on the page reads "Models" followed by a select; the closed
-disclosures have no border (computed `border-width: 0`); opening "Pick from chart" closes "Choose rows" and vice
-versa; all existing `verify-cr-1` checks still pass (92/92 per host).
+1. **Disable what cannot work.** Once a reference model is chosen, every option in "Benchmark or category"
+   whose `values[comparisonTarget]` is missing renders `disabled` with the suffix " · no result for this model";
+   options with a bridged (approximate) value get the suffix " · bridged". The enabled options come first, in the
+   existing order (category medians, then benchmarks); disabled ones follow. With no reference chosen the list is
+   unchanged. If the currently selected metric becomes unavailable after a reference change, keep it selected
+   (the existing "no comparable result" status line stays as the fallback) — do not silently clear it.
+2. **No two options with the same label.** Where two axes share `name · category · unit`, append the registry
+   version (`axis.version`, e.g. " · v1.4") to both; if the versions are equal too, append the cohort. Today 5 of
+   70 labels collide. Unit test: `buildBenchmarkComparison` output has unique labels for a fixture with two
+   versions of one benchmark.
+3. **Reference list, cheap win:** the "Reference model" select keeps every catalog model (retained references
+   like Opus 4.7 must stay choosable), but models with **no** value in any metric go last under a disabled
+   separator option "— no comparable results —". No other change to that select.
+4. Nothing else moves: the popover width, the Refine sheet block, the status sentence, "Clear comparison".
+5. **Naming, while there:** the retained reference is labelled "Opus 4.7 (medium)" beside "Claude Opus 4.7 (Adaptive
+   Reasoning, Max Effort)" — the harness-only catalog entry should carry the catalog convention ("Claude Opus 4.7
+   (Adaptive Reasoning, Medium Effort)"), which is the P2 row's "duplicate harness-only catalog ids" follow-up; fix it
+   there, not in the component.
+*Accept (both hosts, 1440 popover and 390 Refine sheet, light/dark; `verify-p2-history.mjs` gains the assertions):*
+after choosing the retained reference `claude-opus-4.7::medium` (today labelled "Opus 4.7 (medium)") the metric select has ≥ 1 enabled and ≥ 1
+disabled option; every disabled option's text ends with "no result for this model"; the enabled option whose
+label starts with "AA Coding Agent Index v1.5" (or the registry name) selects and the status line shows a value
+with the bridge disclosure; all option labels are unique; `npm test` and `tsc` green; `verify-cr-1` 92/92 per
+host unchanged.
 
-### F-79 `[surgical, Fable — landed 313e24c]` Data bar as a band; phone stub without description
-*Where:* `app/globals.css` (`.bh-matrix-bar`: `top: 50%; height: 22px; transform: translateY(-50%)`; below
-`md`: `.bh-matrix-desc { display: none }`).
-*Accept:* at 390 every `.bh-matrix-bar` is 22 px tall and no `.bh-matrix-desc` is rendered; at 1440 the
-description is one line as before; bars stay behind the number, text contrast unchanged.
+### F-84 `[surgical, Fable — landed ec80831]` No data bar on a single-value row
+*Where:* `lib/benchmark-matrix.mjs` (`rowBars`: `present.length < 2` → all `null`), `test/benchmark-matrix.test.mjs`.
+*Accept:* on `/benchmarks` (All preset, top 5) every row with exactly one value shows the number without a
+`.bh-matrix-bar`; rows with ≥ 2 values keep their bars; `verify-cr-1` CR-1.5 check (bars > 0, none on missing
+cells, alpha ≤ .25) still passes at 1440/390, light/dark, both hosts.
 
-### F-80 `[surgical, Fable — landed 313e24c]` "AA " prefix on the Coding Agent Index rows
-*Where:* `lib/benchmark-matrix.mjs` (`name: axis.name.replace(/^Artificial Analysis /, 'AA ')`).
-*Accept:* no matrix row label starts with "Artificial Analysis"; the detail page and registry still carry the
-full name; `test/benchmark-matrix.test.mjs` green.
-
-### F-81 `[surgical, Fable — landed 313e24c]` Comparable rows first inside a category
-*Where:* `components/BenchmarkMatrix.tsx` (`groups` memo: stable sort by "≥ 2 values among the compared
-models" first).
-*Accept:* with the default top 5, in every category no single-value row precedes a row with two or more values;
-the "Full coverage only" preset is unaffected; row count unchanged.
-
-### F-82 `[surgical, Fable — landed 313e24c]` Simple-mode Benchmarks section uses the collapsed model names
-*Where:* `components/SimpleBenchmarks.tsx` (`collapsedName(m, true, preferredVariantIds(data.models, score))`,
-full name in `title`).
-*Accept:* on `/` (Simple) no column header of the Benchmarks section contains "(Adaptive" or "Effort"; the
-header row is ≤ 110 px tall at 1440 and ≤ 150 px at 390.
+### F-85 `[surgical, Fable — landed ec80831]` Status line without the second total
+*Where:* `components/BenchmarkMatrix.tsx` (status `<p role="status">`), `ops/ux-2026-09-12/bin/verify-cr-1.mjs`.
+*Accept:* the status line matches `/^\d+ benchmarks across \d+ categories · /` and contains no "rows"; the
+rendered table has ≥ as many rows as the benchmark count; the rows chooser still reads "(N of N)" with N equal
+to the status line's benchmark count; F-83's four assertions unchanged.
 
 ## Design system notes (apply while touching any file above)
 
@@ -201,6 +173,10 @@ header row is ≤ 110 px tall at 1440 and ≤ 150 px at 390.
 - **A data bar is a band, not a fill** (F-79): behind the number, fixed height (22 px), never the row height.
 - **Comparison tables: comparable rows first** (F-81): inside a group, rows with two or more values among the
   compared columns precede single-value rows; the "show everything" default stays.
+- **A data bar needs two values** (F-84): a row with a single result shows the number only; a lone band is
+  "best of one" and misleads.
+- **One total per line** (F-85): a status line counts one thing; secondary totals (rows, cohorts) live where the
+  thing itself is shown.
 - **The content starts within the first screen** (F-83): on a phone the first data cell of a page's main table
   is inside the 844 px viewport; controls collapse into two rows before they push it out.
 
@@ -212,6 +188,14 @@ header row is ≤ 110 px tall at 1440 and ≤ 150 px at 390.
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 15 (2026-09-15 00:30 UTC, live `15d1a78`), the CR-1.10 pass on the Benchmarks page:** right in substance,
+  not yet excellent — the table started too far down and the bars were blocks. Fixed F-79 (22 px band, phone stub
+  without description), F-80 ("AA " prefix), F-81 (comparable rows first), F-82 (collapsed names in the Simple
+  section), Fable `313e24c`, verified by claude-opus (iteration 61, `4dbd631`); opened F-83 (status + presets on
+  row 1, boxless controls on row 2, header sentence without a count), landed by claude-opus `5f8dd9e`/`962cc48`/
+  `c650bdd`, verified by gate 012002Z (opencode-kimi). Decisions: "All" stays the default row preset; the phone stub
+  carries name, tags and cohort only; CR-1.10 verified once F-83 was checked. Rules added: a data bar is a band;
+  comparable rows first; content starts within the first screen.
 - **Pass 14 (2026-09-14 14:00 UTC, live `42da12c`):** at the bar on every page, both widths and themes; fixed F-74
   (shortlist cap keeps the Pareto line, then score), F-75 (Guided actions wrap between buttons), F-76 (no zero-peer
   option text), Fable `e33635b`; verified F-72/F-73 (claude-opus). Rule added: a cap never decides by the display
@@ -346,8 +330,10 @@ header row is ≤ 110 px tall at 1440 and ≤ 150 px at 390.
 | F-74 shortlist cap keeps the Pareto line, then the highest scores; caption renamed | `e33635b` (Fable, pass 14) | `ux-evidence/fable-20260914-pass14/verify-f74-f76/{canonical,legacy}/verification.json` (36/36 per host), `…/pre-deploy/` (old build: GLM-5.3-Flash missing) | live-checked by Fable; needs a non-Fable verifier |
 | F-75 Guided result actions wrap between buttons, never inside one | `e33635b` (Fable, pass 14) | same | live-checked by Fable; needs a non-Fable verifier |
 | F-76 evaluation-group option without a zero-peer count | `e33635b` (Fable, pass 14) | same | live-checked by Fable; needs a non-Fable verifier |
-| F-79 matrix data bar as a 22 px band; phone stub without the clamped description | `313e24c` (Fable, pass 15) | `ux-evidence/fable-20260915-pass15/after/{canonical,legacy}/verification.json` (40/40 per host) | live-checked by Fable; needs a non-Fable verifier |
-| F-80 matrix row labels "AA Coding Agent Index v1.4/v1.5" (short vendor prefix) | `313e24c` (Fable, pass 15) | same | live-checked by Fable; needs a non-Fable verifier |
-| F-81 comparable rows first inside a category | `313e24c` (Fable, pass 15) | same | live-checked by Fable; needs a non-Fable verifier |
-| F-82 Simple-mode Benchmarks section: collapsed model names in the column headers | `313e24c` (Fable, pass 15) | same | live-checked by Fable; needs a non-Fable verifier |
-
+| F-79 matrix data bar as a 22 px band; phone stub without the clamped description | `313e24c` (Fable, pass 15) | `ux-evidence/fable-20260915-pass15/after/{canonical,legacy}/verification.json` (40/40 per host); `ux-evidence/iter61-verify-962cc48/` | **verified by claude-opus (iteration 61, `4dbd631`)** |
+| F-80 matrix row labels "AA Coding Agent Index v1.4/v1.5" (short vendor prefix) | `313e24c` (Fable, pass 15) | same | **verified by claude-opus (iteration 61, `4dbd631`)** |
+| F-81 comparable rows first inside a category | `313e24c` (Fable, pass 15) | same | **verified by claude-opus (iteration 61, `4dbd631`)** |
+| F-82 Simple-mode Benchmarks section: collapsed model names in the column headers | `313e24c` (Fable, pass 15) | same | **verified by claude-opus (iteration 61, `4dbd631`)** |
+| F-83 Benchmarks page: status + presets on row 1, boxless column/row controls on row 2, header sentence without a count | `5f8dd9e` + `962cc48` + `c650bdd` (claude-opus, iterations 60–61) | `ux-evidence/review-20260915T012002Z/verify-cr-1/` (108/108 per host incl. the four F-83 assertions); pass 16 re-shot: first value y = 516 at 1440, thead y = 522 at 390 | **verified by review gate 012002Z (opencode-kimi)**; re-checked by Fable in pass 16 |
+| F-84 no data bar on a single-value matrix row | `ec80831` (Fable, pass 16) | `ux-evidence/fable-20260915-pass16/after/{canonical,legacy}/verification.json` | live-checked by Fable; needs a non-Fable verifier |
+| F-85 matrix status line without the second "in N rows" total | `ec80831` (Fable, pass 16) | same | live-checked by Fable; needs a non-Fable verifier |
