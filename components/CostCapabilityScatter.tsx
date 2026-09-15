@@ -17,6 +17,7 @@ import { preferredVariantIds, collapseModels, collapsedName, selectableModels } 
 import { paretoFrontier } from "../lib/pareto.mjs";
 import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
 import { AaCredit } from "./AaCredit";
+import { EpochCredit } from "./EpochCredit";
 
 type PlotOffset = { left: number; top: number; width: number; height: number };
 
@@ -217,7 +218,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
     return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="relative flex items-center justify-end gap-2 lg:mb-1">
-        <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /></span>
+        <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /> · <EpochCredit /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
           className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
           <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="3.2" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>

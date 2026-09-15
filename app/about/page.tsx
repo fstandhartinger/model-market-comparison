@@ -1,5 +1,6 @@
 import { getDataset } from "../../lib/data";
 import { AaCredit } from '../../components/AaCredit';
+import { EpochCredit } from '../../components/EpochCredit';
 
 
 export default async function AboutPage() {
@@ -114,6 +115,8 @@ export default async function AboutPage() {
       </p>
 
       <h3 id="score" className="mt-6 mb-2 font-semibold">The composite score</h3>
+      {/* CR-35.4: Epoch AI's recommended citation (CC BY). */}
+      <p className="mb-2 text-xs text-gray-500" data-epoch-citation>Epoch ECI and Software Engineering ECI: Epoch AI, &lsquo;Epoch Capabilities Index&rsquo;. Published online at epoch.ai. Retrieved from &lsquo;https://epoch.ai/eci&rsquo; [online resource]. Accessed 2026-09-15. <EpochCredit /></p>
       <p className="text-sm text-gray-400">
         Benchmarks are not on a common scale, so we do not average raw scores. Each model&apos;s
         result on a benchmark becomes its <b>percentile</b> among all models measured on that same

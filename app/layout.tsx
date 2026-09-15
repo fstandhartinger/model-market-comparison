@@ -7,6 +7,7 @@ import { GlobalFilters } from "../components/GlobalFilters";
 import { getDataset } from "../lib/data";
 import type { ProviderInfo, FamilyOption } from "../lib/client-model";
 import { AaCredit } from "../components/AaCredit";
+import { EpochCredit } from "../components/EpochCredit";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://benchmarkheaven.com"),
@@ -52,7 +53,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
               <div className="flex flex-wrap gap-4"><a href="/about">Sources &amp; methodology</a><a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md">Public API</a><a href="https://github.com/fstandhartinger/model-market-comparison">GitHub</a><a href="/privacy">Privacy</a><a href="/terms">Terms</a><a href="/impressum">Impressum</a></div>
             </div>
             <p>Benchmark results with their source and date, and a modeled cost per task that accounts for provider prices, caching and token efficiency.
-              Data from OpenRouter, Artificial Analysis, Epoch AI, DesignArena, benchmark maintainers and provider catalogs. <AaCredit /></p>
+              Data from OpenRouter, Artificial Analysis, Epoch AI, DesignArena, benchmark maintainers and provider catalogs. <AaCredit /> · <EpochCredit /></p>
           </footer>
           </AccountProvider>
         </SettingsProvider>

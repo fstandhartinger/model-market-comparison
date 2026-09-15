@@ -1,5 +1,6 @@
 import type { ScoreKey } from "../lib/types";
 import { AaCredit } from "./AaCredit";
+import { EpochCredit } from "./EpochCredit";
 
 /** R1.4: the plain-language explanation of the Adjusted Cost column. It names the four
  *  things the number accounts for and avoids the "Chutes global fallback" phrasing that
@@ -26,7 +27,7 @@ const COMPOSITE_TIP = (
       <li>Each counts as the model’s rank among measured models.</li>
       <li>Missing results are never counted as good; thin records are shown hatched.</li>
     </ul>
-    <a className="mt-2 inline-block text-accent underline" href="/about#score">How we calculate</a> <AaCredit className="mt-1 block text-gray-400" />
+    <a className="mt-2 inline-block text-accent underline" href="/about#score">How we calculate</a> <AaCredit className="mt-1 block text-gray-400" /> <EpochCredit className="block text-gray-400" />
   </>
 );
 
@@ -37,7 +38,7 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
     return <>An Elo rating from head-to-head DesignArena duels, published by DesignArena. It moves as new duels are played, so it is a live ranking rather than a fixed test score, and it is only comparable within the same board.</>;
   }
   if (score === "epoch_eci" || score === "epoch_eci_software") {
-    return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table.</>;
+    return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table. <EpochCredit className="mt-1 block text-gray-400" /></>;
   }
   return <>Published by Artificial Analysis, shown on their scale exactly as reported — we do not rescale it. The index version and the date we read it are printed under the table, because Artificial Analysis re-bases these indices from time to time. <AaCredit className="mt-1 block text-gray-400" /></>;
 }
