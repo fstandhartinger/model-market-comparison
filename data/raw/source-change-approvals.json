@@ -13,16 +13,22 @@
     "owner_acceptance": "Operator reviewed the captured primary API response and leaderboard HTML during the 2026-09-12 daily-refresh remediation; approve only this exact withdrawal for a bounded rerun."
   },
   "openrouter_catalog": {
-    "previous_identity_sha256": "acf5085377c9e3d7ce67d983b7c5bbd1c6ea73ed01587090c7c1569092df3e60",
-    "current_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",
+    "previous_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",
+    "current_identity_sha256": "51f2d9c92260732159c73ac7639c1a3a08d43124db0986d964a8301a086c6388",
     "removed": [
-      "~openai/gpt-latest"
+      "google/gemini-2.5-pro-preview-05-06",
+      "openai/gpt-4-turbo-preview"
     ],
-    "expires_at": "2026-09-14T18:45:16Z",
-    "reviewed_at": "2026-09-12T18:45:16Z",
+    "expires_at": "2026-09-16T05:00:00Z",
+    "reviewed_at": "2026-09-15T06:38:29Z",
     "primary_url": "https://openrouter.ai/api/v1/models",
-    "review_basis": "A direct primary API response contained 445 unique IDs against 439 prior accepted IDs: exactly ~openai/gpt-latest was absent and seven IDs were added. This exception binds both full identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
-    "owner_acceptance": "Operator reviewed the captured primary catalog identity transition during the 2026-09-12 daily-refresh remediation; approve only this exact withdrawal for a bounded rerun."
+    "primary_capture_sha256": "128223bf01b1c07c57600462658ba9139e59a8a19089d53b3bc02afa6df13675",
+    "supporting_captures": {
+      "https://openrouter.ai/api/v1/models/google/gemini-2.5-pro-preview-05-06/endpoints": "a22ae55a38addc7ac73b513615c380122e1a6675dde92abb36d5a65e157eb489",
+      "https://openrouter.ai/api/v1/models/openai/gpt-4-turbo-preview/endpoints": "2eba2a4d5aea9470a1740f122d79a2bfc1afe344b87ed0dc1810e39322f1c6b0"
+    },
+    "review_basis": "Three primary catalog responses (06:29:44Z CDN hit, 06:30:01Z CDN miss, 06:38:29Z captured) each contained the same 445 unique IDs. Against the 445 IDs accepted on 2026-09-14, exactly google/gemini-2.5-pro-preview-05-06 and openai/gpt-4-turbo-preview are absent and ~deepseek/deepseek-flash-latest and ~deepseek/deepseek-pro-latest were added, so this is not a partial response. The gemini preview endpoint resource now resolves to google/gemini-2.5-pro (a distinct GA model already in the catalog; its web page redirects there), so it is retired as an alias, not a factual rename for benchmark joins. The gpt-4-turbo-preview resource still resolves but lists 0 endpoints (1 OpenAI endpoint on 2026-09-14): retired without providers. Historical benchmark observations are retained. This exception binds both full identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
+    "owner_acceptance": "Operator-delegated repair agent reviewed the captured primary catalog and endpoint responses during the 2026-09-15 daily-refresh repair (ops/daily-repair-2026-09-15/EVIDENCE.md); approve only these two exact withdrawals for a bounded rerun."
   },
   "openrouter_endpoints": [
     {

@@ -22,6 +22,29 @@ test('catalog withdrawal requires an unexpired review bound to both complete ide
   assert.throws(() => assertApprovedIdentityCoverage(previous, [{ id: 'one' }, { id: 'two' }], (r) => r.id, 'fixture', { approval, now: Date.parse('2026-01-01') }));
 });
 
+test('catalog approval names every withdrawal: an approved retirement cannot mask another loss', () => {
+  const previous = [{ id: 'keep' }, { id: 'google/gemini-2.5-pro-preview-05-06' }, { id: 'openai/gpt-4-turbo-preview' }];
+  const current = [{ id: 'keep' }, { id: '~deepseek/deepseek-flash-latest' }];
+  const id = (r) => r.id, now = Date.parse('2026-09-15T12:00:00Z');
+  const approval = { expires_at: '2026-09-16T05:00:00Z', previous_identity_sha256: identityDigest(previous, id), current_identity_sha256: identityDigest(current, id), removed: ['openai/gpt-4-turbo-preview', 'google/gemini-2.5-pro-preview-05-06'] };
+  assert.doesNotThrow(() => assertApprovedIdentityCoverage(previous, current, id, 'fixture', { approval, now }));
+  assert.throws(() => assertApprovedIdentityCoverage(previous, current, id, 'fixture', { approval: { ...approval, removed: ['openai/gpt-4-turbo-preview'] }, now }), /1 prior identities absent|2 prior identities absent/);
+  assert.throws(() => assertApprovedIdentityCoverage(previous, current, id, 'fixture', { approval: { ...approval, removed: [...approval.removed, 'keep'] }, now }));
+  assert.throws(() => assertApprovedIdentityCoverage(previous, current.slice(1), id, 'fixture', { approval, now }), /partial response or removal/);
+  // Once the retirement is the accepted snapshot, a later unexpected loss fails closed.
+  assert.throws(() => assertApprovedIdentityCoverage(current, [{ id: 'keep' }], id, 'fixture', { approval, now }), /~deepseek\/deepseek-flash-latest/);
+});
+
+test('committed collection-wide approvals are exact, bounded and evidenced', async () => {
+  const approvals = JSON.parse(await readFile(new URL('../data/raw/source-change-approvals.json', import.meta.url), 'utf8'));
+  for (const a of [approvals.aa_models, approvals.openrouter_catalog].filter(Boolean)) {
+    for (const key of ['previous_identity_sha256', 'current_identity_sha256']) assert.match(a[key], /^[0-9a-f]{64}$/);
+    assert.ok(Array.isArray(a.removed) && a.removed.length && new Set(a.removed).size === a.removed.length);
+    assert.ok(Date.parse(a.expires_at) > Date.parse(a.reviewed_at) && Date.parse(a.expires_at) - Date.parse(a.reviewed_at) <= 3 * 86400000);
+    assert.ok(a.primary_url && a.review_basis && a.owner_acceptance);
+  }
+});
+
 test('explicit empty endpoints permitted only without prior known providers', () => {
   const e = { provider_name: 'Synthetic', tag: 'synthetic/default', pricing: { prompt: '0.000001', completion: '0' } };
   assert.doesNotThrow(() => assertOpenRouterEndpointCoverage([], []));
