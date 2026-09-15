@@ -27,5 +27,14 @@
     "chunk_file": "data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc.gz",
     "chunk_sha256": "a60e0495495d6e7419aa93f86498ca12c1a7a2a2d293a97008120e09e90d2fdc",
     "chunk_file_sha256": "1805df1d3684c1b394923b71fde0453dad65a95d3a8626b3269fe4ede7ffeb29"
+  },
+  "openrouter_benchmarks": {
+    "source_url": "https://openrouter.ai/benchmarks",
+    "api_url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+    "snapshot_date": "2026-09-15",
+    "retrieved_at": "2026-09-15T23:29:03.209Z",
+    "source_file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+    "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+    "note": "Hash of the decompressed source=openrouter&include_run_config=true response; ingestion refuses the rows when data/raw/openrouter-benchmarks.json no longer carries exactly this capture."
   }
 }

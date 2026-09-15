@@ -208,7 +208,8 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       composite_coverage: 0,
       composite_attached: 0,
       composite_attachments: {},
-      benchmark_count: ds.benchmark_results?.coverage?.by_model?.[m.id]?.available ?? 0,
+      benchmark_count: ds.benchmark_results?.coverage?.by_model?.[m.id]?.capability_available
+        ?? ds.benchmark_results?.coverage?.by_model?.[m.id]?.available ?? 0,
       offer_count: (offersByModel[m.id] || []).length,
       aa_ref_input: m.aa_reference_price?.input_per_1m ?? null,
       aa_ref_output: m.aa_reference_price?.output_per_1m ?? null,

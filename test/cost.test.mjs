@@ -164,7 +164,9 @@ test('Composite coverage separates exact inputs from family- or product-attached
   assert.ok(fable);
   // 2026-09-15: DeepSWE (via Epoch AI) and FrontierCode 1.1 (reviewed identity join) add exact results to its one
   // Composite input; the FrontierCode cost board stays unjoined, so no cost metric counts as a benchmark.
-  assert.equal(fable.benchmark_count, 3);
+  // 2026-09-16 (CR-34.2): OpenRouter's own GPQA Diamond and τ²-Bench Airline runs attach to this family
+  // representative. Their measured avg_cost_per_task boards are `Efficiency` and stay out of #benchmarks.
+  assert.equal(fable.benchmark_count, 5);
   assert.equal(fable.composite_coverage, 1);
   assert.ok(fable.composite_attachments.aa_coding_index);
   assert.ok(fable.composite_attachments.aa_intelligence_index);

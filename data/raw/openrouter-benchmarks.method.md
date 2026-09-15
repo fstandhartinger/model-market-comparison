@@ -51,3 +51,42 @@ one fail-closed switch away from dropping the source.
 **Fail-closed gates:** non-JSON, missing `meta.as_of`, a row without `model_permaslug`, an
 unknown row source or `benchmark_type`, an implausible score, a duplicate identity, < 100
 own-run rows or < 500 total rows each refuse the capture; the previous snapshot stays.
+
+---
+
+## 2026-09-16 — ingestion of the own-run rows (CR-34.2 / CR-34.3)
+
+The own-run call is now `GET /api/v1/benchmarks?source=openrouter&include_run_config=true` and its
+rows are kept separately as `own_data`. `include_run_config` is documented for the search
+benchmarks and publishes the lane each row ran in (`max_agent_turns`, `reasoning_effort`,
+`temperature`).
+
+**Registry.** Six score boards and six cost boards, all `snapshot-2026-09-15`:
+`openrouter-gpqa-diamond`, `openrouter-tau2-bench-airline`, `openrouter-search-browsecomp`,
+`openrouter-search-dsqa`, `openrouter-search-hle`, `openrouter-search-widesearch`, each with a
+`…-cost` twin in category `Efficiency`. OpenRouter's GPQA Diamond and τ²-Bench runs are **separate
+registry identities** from Artificial Analysis' same-named boards and are never merged with them.
+
+**Identity.** `model_permaslug` is an exact OpenRouter model id and resolves to a catalog family
+through the OpenRouter offers the catalog already carries (`or_canonical_slug` / `or_model_id`);
+a slug two families claim, or a slug with no OpenRouter offer, joins nothing.
+- GPQA Diamond and τ²-Bench rows state **no** reasoning effort. They are family-scoped evidence and
+  attach exactly once to the deterministic family representative (`lib/family-representative.mjs`),
+  with a protocol note saying so — the same rule as Epoch ECI and DesignArena.
+- Search rows state the effort. It must exist as a catalog configuration; otherwise the row stays
+  unjoined. No effort is ever guessed or mapped onto a neighbouring one.
+- When several permaslugs of one family publish the same board, the newest `last_run_timestamp`
+  represents the family; an exact tie represents nothing.
+
+**Values.** `accuracy` / `primary_score` are stored as fractions in 0–1. `accuracy_stddev` and
+`total_tasks` travel with the observation and are shown beside the value. `avg_cost_per_task` is a
+**separate USD observation** on the `-cost` board, displayed as "measured by OpenRouter" — it is a
+cost signal beside the score, never an input to Benchmark Heaven's adjusted cost model, and cost
+boards are excluded from the "#benchmarks" count (`coverage.capability_available`).
+
+**Freshness.** Ingestion reads the locked capture
+(`data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/…gz`), not the daily-refreshed
+live snapshot, so a dated registry identity and its bytes stay the same pair. The daily collector
+keeps refreshing `data/raw/openrouter-benchmarks.json` and reports capture drift as
+`openrouter-benchmarks: source_changed_retained`, parking that day's capture in the run's evidence
+folder for a reviewed version rotation.

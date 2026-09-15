@@ -152,6 +152,25 @@ export async function refreshBenchmarks({ runDir } = {}) {
   await cp('data/raw/aa-coding-agents-v1.5.json', codingFile);
   lock.coding['1.5'] = { file: codingFile, sha256: sha256(await readFile(codingFile)) };
   checks.push({ id: 'aa-coding-agent-index::1.5', status: 'updated', rows: coding.rows.length });
+  // CR-34.2/34.3: OpenRouter's own runs are a dated snapshot board, like Real-SWE and DeepSWE:
+  // their ingested values stay bound to the registry-dated capture in the ingestion lock, and a
+  // newer capture becomes a new dated registry identity in a reviewed change, never a silent
+  // rewrite of an existing one. The daily therefore does not move the lock. It does park today's
+  // capture in the repo's dated evidence folder and report drift, so that rotation has its
+  // evidence in hand and nobody has to guess whether the board moved.
+  try {
+    const ownUrl = 'https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true';
+    const receipt = live.find((r) => r.url === ownUrl && r.status === 200);
+    if (!receipt) throw new Error('no successful own-run capture in this run');
+    const locked = lock.openrouter_benchmarks?.source_sha256 ?? null;
+    const changed = receipt.sha256 !== locked;
+    if (changed) await cp(receipt.file, join(evidenceDir, 'openrouter-benchmarks-own.json.gz'));
+    const snapshot = await json('data/raw/openrouter-benchmarks.json');
+    checks.push({ id: 'openrouter-benchmarks', status: changed ? 'source_changed_retained' : 'checked_unchanged',
+      rows: (snapshot.own_data ?? []).length, locked_snapshot: lock.openrouter_benchmarks?.snapshot_date ?? null,
+      reason: changed ? 'Today\'s capture differs from the locked one; values stay on the locked dated identity until a reviewed registry rotation. Capture parked in this run\'s evidence folder.' : 'Identical to the locked capture.',
+      source: sourceRef(receipt, 'source=openrouter own-run rows') });
+  } catch (error) { fail('openrouter-benchmarks', error); }
   // Public recipes run one benchmark at a time. Failed or shrinking candidates
   // retain that benchmark's prior rows and dates; they cannot erase good data.
   let publicRows = [...oldPublic.observations];

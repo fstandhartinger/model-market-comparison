@@ -5,6 +5,11 @@ import { humanVersion, versionSuffix } from '../lib/version-label';
 const fmt = (n: number | null | undefined, digits = 5): string =>
   n == null || !Number.isFinite(n) ? 'unavailable' : String(Number(n.toFixed(digits)));
 
+// CR-34.3: the measured spend of a published run, never Benchmark Heaven's adjusted cost model.
+// Real-SWE publishes it per rollout; OpenRouter's own runs publish it per task.
+const isOpenRouterRun = (axis: ViewAxis) => axis.benchmarkId.startsWith('openrouter-');
+const costLabel = (axis: ViewAxis) => (isOpenRouterRun(axis) ? 'per task (measured by OpenRouter)' : 'per rollout');
+
 export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: ViewAxis; row: ViewScore }) {
   const src = view.sources[row.source];
   const legacy = row.id.startsWith('legacy:');
@@ -16,7 +21,9 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
       <span className="font-semibold tabular-nums">{fmt(row.value)} {axis.unit}</span>
       <span className={flagClass}>{flag}</span>
       {row.confidenceInterval ? <span className="bh-muted">{Math.round(row.confidenceInterval.level * 100)}% CI {fmt(row.confidenceInterval.lower, 1)}–{fmt(row.confidenceInterval.upper, 1)} {axis.unit}</span> : null}
-      {row.costPerRollout != null ? <span className="bh-muted">· {fmt(row.costPerRollout, 2)} USD/rollout</span> : null}
+      {row.publishedStddev != null ? <span className="bh-muted">± {fmt(row.publishedStddev, 3)} sd</span> : null}
+      {row.sampleSize != null ? <span className="bh-muted">· {row.sampleSize} tasks</span> : null}
+      {row.costPerRollout != null ? <span className="bh-muted">· {fmt(row.costPerRollout, 2)} USD {costLabel(axis)}</span> : null}
       {divergence && <span className="bh-badge bh-alert">Vendor − measured: {fmt(divergence.delta)} {divergence.unit}</span>}
       {row.lowSample ? <span className="bh-alert">low sample</span> : null}
       {row.battles != null ? <span className="bh-muted">{row.battles} battles</span> : null}
@@ -29,7 +36,9 @@ export function SourceScore({ view, axis, row }: { view: BenchmarkView; axis: Vi
           <div>Axis: {axis.name} · {humanVersion(axis.version).label} · {axis.cohort}</div>
           <div>Exact value: <code>{String(row.value)}</code> {axis.unit}</div>
           {row.confidenceInterval ? <div>{Math.round(row.confidenceInterval.level * 100)}% confidence interval: {row.confidenceInterval.lower} to {row.confidenceInterval.upper} {axis.unit}</div> : null}
-          {row.costPerRollout != null ? <div>Published mean cost: {row.costPerRollout} USD per rollout</div> : null}
+          {row.publishedStddev != null ? <div>Published standard deviation: {row.publishedStddev} {axis.unit}</div> : null}
+          {row.sampleSize != null ? <div>Tasks evaluated: {row.sampleSize}</div> : null}
+          {row.costPerRollout != null ? <div>Published mean cost: {row.costPerRollout} USD {costLabel(axis)}{isOpenRouterRun(axis) ? ` — measured by OpenRouter on ${axis.name}` : ''}</div> : null}
           {row.harness ? <div>Evaluation harness: {row.harness}</div> : null}
           <div>Observed: {row.date} · publication date: {src?.published || 'not recorded'}</div>
           <div>Observation id: <code>{row.id}</code></div>

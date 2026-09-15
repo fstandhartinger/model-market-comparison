@@ -27,19 +27,24 @@ try {
     if (!response.ok) throw new Error(`OpenRouter benchmarks HTTP ${response.status}`);
     return response.text();
   };
-  const ownText = await get(`${api}?source=openrouter`, "own");
+  // include_run_config=true is documented for the search benchmarks: it publishes the lane
+  // configuration (agent turn budget, reasoning effort, temperature) each row was run with.
+  // That effort is what lets a search row join an exact catalog configuration instead of a family.
+  const ownUrl = `${api}?source=openrouter&include_run_config=true`;
+  const ownText = await get(ownUrl, "own");
   const own = parseBenchmarksResponse(ownText, "own");
+  validateBenchmarksRows(own.data, { minTotalRows: 100 });
   const allText = await get(api, "all");
   const all = parseBenchmarksResponse(allText, "all");
   const { ownRows, aaRows, daRows } = validateBenchmarksRows(all.data);
 
   const collected_at = new Date().toISOString().slice(0, 10);
-  await captureLiveSource(`${api}?source=openrouter`, ownText);
+  await captureLiveSource(ownUrl, ownText);
   await captureLiveSource(api, allText);
   await writeJSONAtomic(target, {
     source: "OpenRouter Benchmarks — openrouter.ai/benchmarks (documented public API, api key from the environment)",
     collected_at,
-    method: `scripts/fetch-openrouter-benchmarks.mjs (${collected_at}): two authenticated GETs of /api/v1/benchmarks (source=openrouter and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as "Required attribution when republishing this data" (per-source). Display attribution: "OpenRouter Benchmarks" linked to openrouter.ai/benchmarks.`,
+    method: `scripts/fetch-openrouter-benchmarks.mjs (${collected_at}): two authenticated GETs of /api/v1/benchmarks (source=openrouter&include_run_config=true, kept as own_data, and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as "Required attribution when republishing this data" (per-source). Display attribution: "OpenRouter Benchmarks" linked to openrouter.ai/benchmarks.`,
     terms: own.meta.citation || "source=openrouter rows: attribute to OpenRouter (openrouter.ai/benchmarks); attribution format documented per source in the API's meta.citation",
     as_of: all.meta.as_of,
     own_as_of: own.meta.as_of,
@@ -50,6 +55,8 @@ try {
       models: all.meta.model_count,
     },
     response_sha256: createHash("sha256").update(allText).digest("hex"),
+    own_response_sha256: createHash("sha256").update(ownText).digest("hex"),
+    own_data: own.data,
     data: all.data,
   });
   console.log(`OpenRouter Benchmarks: ${all.data.length} rows for ${all.meta.model_count} models (own ${ownRows}, AA ${aaRows}, DesignArena ${daRows}), as_of ${all.meta.as_of}`);

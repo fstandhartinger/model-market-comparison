@@ -7,6 +7,7 @@ import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { aaSpeed } from "../lib/aa-speed.mjs";
+import { deterministicFamilyRepresentative } from "../lib/family-representative.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -381,44 +382,6 @@ const BARE_BENCHMARK_VARIANT_TARGETS = new Map([
   ["glm-5.1", "reasoning"],
   ["glm-5.2", "max"],
 ]);
-
-// Keep this in lock-step with the collapsed Overview's deterministic display
-// policy. Intelligence.ai publishes product/family ids rather than effort ids,
-// so one family representative must own that evidence exactly once. Selecting
-// by variant priority (instead of whichever source row happened to be inserted
-// first) keeps refreshes stable and makes the attached evidence visible on the
-// same row used by the default Overview.
-function familyRepresentativeVariantOrder(familyKey) {
-  if (familyKey.startsWith("gpt-")) {
-    return ["high", "medium", "xhigh", "low", "minimal", "non-reasoning", "default"];
-  }
-  if (familyKey.startsWith("claude-")) {
-    return ["reasoning", "high", "max", "adaptive", "xhigh", "medium", "low", "default", "non-reasoning"];
-  }
-  return ["reasoning", "max", "high", "adaptive", "xhigh", "medium", "low", "default", "non-reasoning"];
-}
-
-function hasCompositeBenchmarkEvidence(row) {
-  const benchmarks = row.benchmarks || {};
-  return benchmarks.aa_coding_index != null
-    || benchmarks.aa_coding_agent_index != null
-    || benchmarks.aa_intelligence_index != null;
-}
-
-function deterministicFamilyRepresentative(familyKey, familyRows) {
-  const active = familyRows.filter((row) => row.deprecated !== true);
-  const lifecycleCandidates = active.length ? active : familyRows;
-  const measured = lifecycleCandidates.filter(hasCompositeBenchmarkEvidence);
-  const candidates = measured.length ? measured : lifecycleCandidates;
-  const order = familyRepresentativeVariantOrder(familyKey);
-  return [...candidates].sort((a, b) => {
-    const aRank = order.indexOf(a.variant);
-    const bRank = order.indexOf(b.variant);
-    const normalizedARank = aRank < 0 ? order.length : aRank;
-    const normalizedBRank = bRank < 0 ? order.length : bRank;
-    return normalizedARank - normalizedBRank || a.id.localeCompare(b.id);
-  })[0];
-}
 
 function attachEpochEci(modelRows, epochEci) {
   const rowsByFamily = new Map();

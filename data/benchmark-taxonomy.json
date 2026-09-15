@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-15",
-  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0–100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite.",
+  "version": "2026-09-16",
+  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0\u2013100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite. 2026-09-16: OpenRouter's own reproducible runs (CR-34.2) enter as their own registry families; their -cost families are the measured spend of the same run and sit under Cost & efficiency.",
   "groups": [
     {
       "id": "indices",
@@ -179,7 +179,7 @@
     },
     "aa_input": {
       "label": "AA index input",
-      "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source’s own published results."
+      "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source\u2019s own published results."
     }
   },
   "tiers": {
@@ -216,10 +216,14 @@
     "apprenticebench-cua": "niche",
     "apprenticebench-cua-cost": "niche",
     "arc-agi": "headline",
+    "bu-bench-v1": "niche",
+    "bullshitbench-v1": "community",
+    "bullshitbench-v2": "community",
     "buzzbench": "community",
     "critpt": "niche",
     "cursorbench": "niche",
     "cursorbench-cost": "niche",
+    "deepswe": "niche",
     "eq-bench": "community",
     "eqbench-creative-writing": "community",
     "eqbench-judgemark": "community",
@@ -240,6 +244,18 @@
     "mazur-divergent-thinking": "community",
     "mazur-elimination-game": "community",
     "mmmu": "headline",
+    "openrouter-gpqa-diamond": "headline",
+    "openrouter-gpqa-diamond-cost": "niche",
+    "openrouter-search-browsecomp": "niche",
+    "openrouter-search-browsecomp-cost": "niche",
+    "openrouter-search-dsqa": "niche",
+    "openrouter-search-dsqa-cost": "niche",
+    "openrouter-search-hle": "niche",
+    "openrouter-search-hle-cost": "niche",
+    "openrouter-search-widesearch": "niche",
+    "openrouter-search-widesearch-cost": "niche",
+    "openrouter-tau2-bench-airline": "headline",
+    "openrouter-tau2-bench-airline-cost": "niche",
     "otis-mock-aime": "niche",
     "pingpong-english": "community",
     "realswe": "niche",
@@ -251,6 +267,9 @@
     "slop-index": "community",
     "slopbench": "community",
     "spiral-bench": "community",
+    "swe-atlas-qna": "niche",
+    "swe-atlas-refactoring": "niche",
+    "swe-atlas-test-writing": "niche",
     "swe-bench-multilingual": "niche",
     "swe-bench-multimodal": "niche",
     "swe-bench-pro-public": "headline",
@@ -274,14 +293,7 @@
     "vals-index-terminal-bench-2.1": "headline",
     "vals-index-vibe-code-bench": "niche",
     "vending-bench": "headline",
-    "weirdml": "community",
-    "bullshitbench-v1": "community",
-    "bullshitbench-v2": "community",
-    "bu-bench-v1": "niche",
-    "deepswe": "niche",
-    "swe-atlas-qna": "niche",
-    "swe-atlas-test-writing": "niche",
-    "swe-atlas-refactoring": "niche"
+    "weirdml": "community"
   },
   "aa_input_keys": [
     "deepswe",

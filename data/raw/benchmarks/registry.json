@@ -1,6 +1,6 @@
 {
   "schema_version": 1,
-  "verified_at": "2026-09-10",
+  "verified_at": "2026-09-15",
   "entries": [
     {
       "id": "aa-aime::2025",
@@ -6310,6 +6310,762 @@
           "sha256": "50081f06240a924132e8abd67e31f0e5dd61f08ffcbcc876d3a88aa95fd4788a",
           "fetched_at": "2026-09-15T09:17:52Z",
           "excerpt": "User-Agent: * Allow: / — /leaderboard/ pages are permitted (Disallow: /api/, /studio, /draft/, /maintenance)."
+        }
+      ]
+    },
+    {
+      "id": "openrouter-gpqa-diamond::snapshot-2026-09-15",
+      "name": "GPQA Diamond (OpenRouter run)",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-gpqa-diamond",
+      "category": "Science",
+      "one_sentence_description": "Graduate-level science questions that resist retrieval and reward careful reasoning. (OpenRouter's own reproducible run, as published on openrouter.ai/benchmarks.)",
+      "scoring": {
+        "metric": "Accuracy over the published task set, as run by OpenRouter",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Native unit is a fraction in 0–1; never convert to percent before storage. This is OpenRouter's own run and is a separate implementation from any same-named board of another maintainer (notably Artificial Analysis' GPQA Diamond and τ²-Bench): the values must stay in separate registry identities and must never be merged or compared as one board. Published standard deviation and task count travel with each observation. The row states no reasoning effort, so it is family-scoped evidence and attaches once to the deterministic family representative."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; items with benchmark_type=gpqa_diamond; read accuracy, accuracy_stddev, total_tasks, avg_cost_per_task, last_run_timestamp and the exact model_permaslug.",
+        "version_guard": "OpenRouter publishes no version number for these boards; meta.as_of and the dated capture are the version. Verify the captured response hash before reading results.",
+        "notes": "Documented API access under its published rate contract (30/min, 500/day), never site scraping. meta.citation requires attribution when republishing: display as \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks. Artificial Analysis and DesignArena rows of the same endpoint are cross-check context only and are never ingested here."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim is published by OpenRouter; retained without asserting that the board is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: 131 rows with benchmark_type \"gpqa-diamond\"-family, each carrying model_permaslug, accuracy, total_tasks, avg_cost_per_task and last_run_timestamp. openrouter.ai/benchmarks describes this board as: \"Graduate-level science questions that resist retrieval and reward careful reasoning.\""
+        }
+      ]
+    },
+    {
+      "id": "openrouter-gpqa-diamond-cost::snapshot-2026-09-15",
+      "name": "GPQA Diamond (OpenRouter run) — measured cost per task",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-gpqa-diamond-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Mean USD OpenRouter actually spent per task while running GPQA Diamond for this configuration.",
+      "scoring": {
+        "metric": "avg_cost_per_task: mean USD per task of that exact run",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Measured spend of OpenRouter's own run at the prices and routing of that run — a cost signal beside the score, never a replacement for Benchmark Heaven's adjusted cost model and never an input to it. Comparable only within the same board and lane."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; field avg_cost_per_task of the same row that carries the score.",
+        "version_guard": "Same dated capture as the score board; verify the captured response hash before reading results.",
+        "notes": "Cost is stored as its own observation so a quality value never silently carries a price. Displayed as \"measured by OpenRouter\"."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "A measured cost cannot saturate; recorded for schema completeness."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: every gpqa-diamond row publishes avg_cost_per_task in USD beside its score and total_tasks."
+        }
+      ]
+    },
+    {
+      "id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
+      "name": "τ²-Bench Airline (OpenRouter run)",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-tau2-bench-airline",
+      "category": "Agentic",
+      "one_sentence_description": "Multi-turn service agents making tool calls under strict policy constraints. (OpenRouter's own reproducible run, as published on openrouter.ai/benchmarks.)",
+      "scoring": {
+        "metric": "Accuracy over the published task set, as run by OpenRouter",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Native unit is a fraction in 0–1; never convert to percent before storage. This is OpenRouter's own run and is a separate implementation from any same-named board of another maintainer (notably Artificial Analysis' GPQA Diamond and τ²-Bench): the values must stay in separate registry identities and must never be merged or compared as one board. Published standard deviation and task count travel with each observation. The row states no reasoning effort, so it is family-scoped evidence and attaches once to the deterministic family representative."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; items with benchmark_type=tau_bench_verified_airline; read accuracy, accuracy_stddev, total_tasks, avg_cost_per_task, last_run_timestamp and the exact model_permaslug.",
+        "version_guard": "OpenRouter publishes no version number for these boards; meta.as_of and the dated capture are the version. Verify the captured response hash before reading results.",
+        "notes": "Documented API access under its published rate contract (30/min, 500/day), never site scraping. meta.citation requires attribution when republishing: display as \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks. Artificial Analysis and DesignArena rows of the same endpoint are cross-check context only and are never ingested here."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim is published by OpenRouter; retained without asserting that the board is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: 123 rows with benchmark_type \"tau2-bench-airline\"-family, each carrying model_permaslug, accuracy, total_tasks, avg_cost_per_task and last_run_timestamp. openrouter.ai/benchmarks describes this board as: \"Multi-turn service agents making tool calls under strict policy constraints.\""
+        }
+      ]
+    },
+    {
+      "id": "openrouter-tau2-bench-airline-cost::snapshot-2026-09-15",
+      "name": "τ²-Bench Airline (OpenRouter run) — measured cost per task",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-tau2-bench-airline-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Mean USD OpenRouter actually spent per task while running τ²-Bench Airline for this configuration.",
+      "scoring": {
+        "metric": "avg_cost_per_task: mean USD per task of that exact run",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Measured spend of OpenRouter's own run at the prices and routing of that run — a cost signal beside the score, never a replacement for Benchmark Heaven's adjusted cost model and never an input to it. Comparable only within the same board and lane."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; field avg_cost_per_task of the same row that carries the score.",
+        "version_guard": "Same dated capture as the score board; verify the captured response hash before reading results.",
+        "notes": "Cost is stored as its own observation so a quality value never silently carries a price. Displayed as \"measured by OpenRouter\"."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "A measured cost cannot saturate; recorded for schema completeness."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: every tau2-bench-airline row publishes avg_cost_per_task in USD beside its score and total_tasks."
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-browsecomp::snapshot-2026-09-15",
+      "name": "BrowseComp (OpenRouter search run)",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-browsecomp",
+      "category": "Knowledge",
+      "one_sentence_description": "Hard-to-locate facts on the live web, scored on persistent multi-step research. (OpenRouter's own reproducible run, as published on openrouter.ai/benchmarks.)",
+      "scoring": {
+        "metric": "Published primary metric of the search lane (accuracy), as run by OpenRouter",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Native unit is a fraction in 0–1; never convert to percent before storage. This is OpenRouter's own run and is a separate implementation from any same-named board of another maintainer (notably Artificial Analysis' GPQA Diamond and τ²-Bench): the values must stay in separate registry identities and must never be merged or compared as one board. Published standard deviation and task count travel with each observation. A search row is published per lane (search engine and surface) together with its run configuration (agent turn budget, reasoning effort, temperature) via include_run_config=true; the stated reasoning effort is what joins the row to an exact catalog configuration."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; items with benchmark_type=search_browsecomp; read primary_score, accuracy_stddev, total_tasks, avg_cost_per_task, last_run_timestamp, search_engine, search_surface, run_config and the exact model_permaslug.",
+        "version_guard": "OpenRouter publishes no version number for these boards; meta.as_of and the dated capture are the version. Verify the captured response hash before reading results.",
+        "notes": "Documented API access under its published rate contract (30/min, 500/day), never site scraping. meta.citation requires attribution when republishing: display as \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks. Artificial Analysis and DesignArena rows of the same endpoint are cross-check context only and are never ingested here."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim is published by OpenRouter; retained without asserting that the board is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: 4 rows with benchmark_type \"search-browsecomp\"-family, each carrying model_permaslug, primary_score, total_tasks, avg_cost_per_task and last_run_timestamp, plus search_engine, search_surface and run_config (max_agent_turns, reasoning_effort, temperature). openrouter.ai/benchmarks describes this board as: \"Hard-to-locate facts on the live web, scored on persistent multi-step research.\""
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-browsecomp-cost::snapshot-2026-09-15",
+      "name": "BrowseComp (OpenRouter search run) — measured cost per task",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-browsecomp-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Mean USD OpenRouter actually spent per task while running BrowseComp for this configuration.",
+      "scoring": {
+        "metric": "avg_cost_per_task: mean USD per task of that exact run",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Measured spend of OpenRouter's own run at the prices and routing of that run — a cost signal beside the score, never a replacement for Benchmark Heaven's adjusted cost model and never an input to it. Comparable only within the same board and lane."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; field avg_cost_per_task of the same row that carries the score.",
+        "version_guard": "Same dated capture as the score board; verify the captured response hash before reading results.",
+        "notes": "Cost is stored as its own observation so a quality value never silently carries a price. Displayed as \"measured by OpenRouter\"."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "A measured cost cannot saturate; recorded for schema completeness."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: every search-browsecomp row publishes avg_cost_per_task in USD beside its score and total_tasks."
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-dsqa::snapshot-2026-09-15",
+      "name": "DeepSearchQA (OpenRouter search run)",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-dsqa",
+      "category": "Knowledge",
+      "one_sentence_description": "Questions whose answers are lists, scored for exhaustive retrieval with no padding. (OpenRouter's own reproducible run, as published on openrouter.ai/benchmarks.)",
+      "scoring": {
+        "metric": "Published primary metric of the search lane (accuracy), as run by OpenRouter",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Native unit is a fraction in 0–1; never convert to percent before storage. This is OpenRouter's own run and is a separate implementation from any same-named board of another maintainer (notably Artificial Analysis' GPQA Diamond and τ²-Bench): the values must stay in separate registry identities and must never be merged or compared as one board. Published standard deviation and task count travel with each observation. A search row is published per lane (search engine and surface) together with its run configuration (agent turn budget, reasoning effort, temperature) via include_run_config=true; the stated reasoning effort is what joins the row to an exact catalog configuration."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; items with benchmark_type=search_dsqa; read primary_score, accuracy_stddev, total_tasks, avg_cost_per_task, last_run_timestamp, search_engine, search_surface, run_config and the exact model_permaslug.",
+        "version_guard": "OpenRouter publishes no version number for these boards; meta.as_of and the dated capture are the version. Verify the captured response hash before reading results.",
+        "notes": "Documented API access under its published rate contract (30/min, 500/day), never site scraping. meta.citation requires attribution when republishing: display as \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks. Artificial Analysis and DesignArena rows of the same endpoint are cross-check context only and are never ingested here."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim is published by OpenRouter; retained without asserting that the board is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: 4 rows with benchmark_type \"search-dsqa\"-family, each carrying model_permaslug, primary_score, total_tasks, avg_cost_per_task and last_run_timestamp, plus search_engine, search_surface and run_config (max_agent_turns, reasoning_effort, temperature). openrouter.ai/benchmarks describes this board as: \"Questions whose answers are lists, scored for exhaustive retrieval with no padding.\""
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-dsqa-cost::snapshot-2026-09-15",
+      "name": "DeepSearchQA (OpenRouter search run) — measured cost per task",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-dsqa-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Mean USD OpenRouter actually spent per task while running DeepSearchQA for this configuration.",
+      "scoring": {
+        "metric": "avg_cost_per_task: mean USD per task of that exact run",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Measured spend of OpenRouter's own run at the prices and routing of that run — a cost signal beside the score, never a replacement for Benchmark Heaven's adjusted cost model and never an input to it. Comparable only within the same board and lane."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; field avg_cost_per_task of the same row that carries the score.",
+        "version_guard": "Same dated capture as the score board; verify the captured response hash before reading results.",
+        "notes": "Cost is stored as its own observation so a quality value never silently carries a price. Displayed as \"measured by OpenRouter\"."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "A measured cost cannot saturate; recorded for schema completeness."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: every search-dsqa row publishes avg_cost_per_task in USD beside its score and total_tasks."
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-hle::snapshot-2026-09-15",
+      "name": "HLE (OpenRouter search run)",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-hle",
+      "category": "Knowledge",
+      "one_sentence_description": "Humanity's Last Exam as a search benchmark: expert questions answered with live search. (OpenRouter's own reproducible run, as published on openrouter.ai/benchmarks.)",
+      "scoring": {
+        "metric": "Published primary metric of the search lane (accuracy), as run by OpenRouter",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Native unit is a fraction in 0–1; never convert to percent before storage. This is OpenRouter's own run and is a separate implementation from any same-named board of another maintainer (notably Artificial Analysis' GPQA Diamond and τ²-Bench): the values must stay in separate registry identities and must never be merged or compared as one board. Published standard deviation and task count travel with each observation. A search row is published per lane (search engine and surface) together with its run configuration (agent turn budget, reasoning effort, temperature) via include_run_config=true; the stated reasoning effort is what joins the row to an exact catalog configuration."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; items with benchmark_type=search_hle; read primary_score, accuracy_stddev, total_tasks, avg_cost_per_task, last_run_timestamp, search_engine, search_surface, run_config and the exact model_permaslug.",
+        "version_guard": "OpenRouter publishes no version number for these boards; meta.as_of and the dated capture are the version. Verify the captured response hash before reading results.",
+        "notes": "Documented API access under its published rate contract (30/min, 500/day), never site scraping. meta.citation requires attribution when republishing: display as \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks. Artificial Analysis and DesignArena rows of the same endpoint are cross-check context only and are never ingested here."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim is published by OpenRouter; retained without asserting that the board is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: 2 rows with benchmark_type \"search-hle\"-family, each carrying model_permaslug, primary_score, total_tasks, avg_cost_per_task and last_run_timestamp, plus search_engine, search_surface and run_config (max_agent_turns, reasoning_effort, temperature). openrouter.ai/benchmarks describes this board as: \"Humanity's Last Exam as a search benchmark: expert questions answered with live search.\""
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-hle-cost::snapshot-2026-09-15",
+      "name": "HLE (OpenRouter search run) — measured cost per task",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-hle-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Mean USD OpenRouter actually spent per task while running HLE for this configuration.",
+      "scoring": {
+        "metric": "avg_cost_per_task: mean USD per task of that exact run",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Measured spend of OpenRouter's own run at the prices and routing of that run — a cost signal beside the score, never a replacement for Benchmark Heaven's adjusted cost model and never an input to it. Comparable only within the same board and lane."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; field avg_cost_per_task of the same row that carries the score.",
+        "version_guard": "Same dated capture as the score board; verify the captured response hash before reading results.",
+        "notes": "Cost is stored as its own observation so a quality value never silently carries a price. Displayed as \"measured by OpenRouter\"."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "A measured cost cannot saturate; recorded for schema completeness."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: every search-hle row publishes avg_cost_per_task in USD beside its score and total_tasks."
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-widesearch::snapshot-2026-09-15",
+      "name": "WideSearch (OpenRouter search run)",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-widesearch",
+      "category": "Knowledge",
+      "one_sentence_description": "Fill an entire table; answer-item accuracy scores partial matches. (OpenRouter's own reproducible run, as published on openrouter.ai/benchmarks.)",
+      "scoring": {
+        "metric": "Published primary metric of the search lane (f1_by_item or accuracy; the exact metric travels with each row), as run by OpenRouter",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Native unit is a fraction in 0–1; never convert to percent before storage. This is OpenRouter's own run and is a separate implementation from any same-named board of another maintainer (notably Artificial Analysis' GPQA Diamond and τ²-Bench): the values must stay in separate registry identities and must never be merged or compared as one board. Published standard deviation and task count travel with each observation. A search row is published per lane (search engine and surface) together with its run configuration (agent turn budget, reasoning effort, temperature) via include_run_config=true; the stated reasoning effort is what joins the row to an exact catalog configuration."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; items with benchmark_type=search_widesearch; read primary_score, accuracy_stddev, total_tasks, avg_cost_per_task, last_run_timestamp, search_engine, search_surface, run_config and the exact model_permaslug.",
+        "version_guard": "OpenRouter publishes no version number for these boards; meta.as_of and the dated capture are the version. Verify the captured response hash before reading results.",
+        "notes": "Documented API access under its published rate contract (30/min, 500/day), never site scraping. meta.citation requires attribution when republishing: display as \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks. Artificial Analysis and DesignArena rows of the same endpoint are cross-check context only and are never ingested here."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No saturation claim is published by OpenRouter; retained without asserting that the board is unsaturated."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: 4 rows with benchmark_type \"search-widesearch\"-family, each carrying model_permaslug, primary_score, total_tasks, avg_cost_per_task and last_run_timestamp, plus search_engine, search_surface and run_config (max_agent_turns, reasoning_effort, temperature). openrouter.ai/benchmarks describes this board as: \"Fill an entire table; answer-item accuracy scores partial matches.\""
+        }
+      ]
+    },
+    {
+      "id": "openrouter-search-widesearch-cost::snapshot-2026-09-15",
+      "name": "WideSearch (OpenRouter search run) — measured cost per task",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "family": "openrouter-search-widesearch-cost",
+      "category": "Efficiency",
+      "one_sentence_description": "Mean USD OpenRouter actually spent per task while running WideSearch for this configuration.",
+      "scoring": {
+        "metric": "avg_cost_per_task: mean USD per task of that exact run",
+        "unit": "USD",
+        "range": [
+          0,
+          null
+        ],
+        "higher_better": false,
+        "notes": "Measured spend of OpenRouter's own run at the prices and routing of that run — a cost signal beside the score, never a replacement for Benchmark Heaven's adjusted cost model and never an input to it. Comparable only within the same board and lane."
+      },
+      "maintainer": "OpenRouter",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://openrouter.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://openrouter.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Canonical results publication with the maintainer's own benchmark descriptions"
+        },
+        {
+          "url": "https://openrouter.ai/docs/api/api-reference/benchmarks/list-benchmarks",
+          "type": "official_leaderboard",
+          "role": "Documented API contract, field semantics and the attribution requirement (meta.citation)"
+        }
+      ],
+      "how_to_collect": {
+        "command": "BH_EVIDENCE_DIR=data/raw/benchmarks/daily-evidence/<date>-openrouter-benchmarks node scripts/fetch-openrouter-benchmarks.mjs && node scripts/ingest-benchmark-scores.mjs",
+        "format": "JSON (documented public API, Bearer key from the environment)",
+        "locator": "GET /api/v1/benchmarks?source=openrouter&include_run_config=true; field avg_cost_per_task of the same row that carries the score.",
+        "version_guard": "Same dated capture as the score board; verify the captured response hash before reading results.",
+        "notes": "Cost is stored as its own observation so a quality value never silently carries a price. Displayed as \"measured by OpenRouter\"."
+      },
+      "update_cadence": {
+        "source_schedule": "OpenRouter states a \"last run\" date per board and re-runs boards as models are added; no promised interval is published.",
+        "check_recommendation": "Daily with the rest of the refresh (our policy, not a maintainer promise); the API allows 30 requests/minute and 500/day."
+      },
+      "saturated": {
+        "value": false,
+        "note": "A measured cost cannot saturate; recorded for schema completeness."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://openrouter.ai/api/v1/benchmarks?source=openrouter&include_run_config=true",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
+          "sha256": "45b48c251783386d25b7c6eb6bbbe91ec5251987510af4df70864341dc04f6d0",
+          "source_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+          "fetched_at": "2026-09-15T23:29:03.209Z",
+          "excerpt": "source=openrouter capture: every search-widesearch row publishes avg_cost_per_task in USD beside its score and total_tasks."
         }
       ]
     }

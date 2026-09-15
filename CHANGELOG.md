@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — OpenRouter's own benchmark runs and their measured cost (CR-34.2 / CR-34.3)
+
+**New benchmark boards, new coverage field; nothing moved or removed.** Twelve versioned registry
+entries at `snapshot-2026-09-15`: OpenRouter's own GPQA Diamond and τ²-Bench Airline runs and the
+four search boards (BrowseComp, DeepSearchQA, HLE, WideSearch), each with a `…-cost` twin in
+category `Efficiency` carrying OpenRouter's measured `avg_cost_per_task` in USD. These are separate
+registry identities from Artificial Analysis' same-named boards and are never merged with them.
+
+Observations now may carry `published_stddev` and `sample_size`; `benchmark_results.coverage.by_model`
+gains `capability_available` and `total_capability_benchmarks`, which exclude `Efficiency` (cost)
+boards — that pair is what the product's "#benchmarks" column counts. `available` is unchanged.
+`data/raw/openrouter-benchmarks.json` gains `own_data` and `own_response_sha256` (the
+`include_run_config=true` own-run response). See `data/raw/openrouter-benchmarks.method.md`.
+
 ## 2026-09-15 — Category scores as selectable scores (CR-25.6)
 
 **New dataset fields, nothing moved or removed.** `models[].category_scores` (`cat_coding`,

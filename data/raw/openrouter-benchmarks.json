@@ -1,7 +1,7 @@
 {
   "source": "OpenRouter Benchmarks — openrouter.ai/benchmarks (documented public API, api key from the environment)",
   "collected_at": "2026-09-15",
-  "method": "scripts/fetch-openrouter-benchmarks.mjs (2026-09-15): two authenticated GETs of /api/v1/benchmarks (source=openrouter and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as \"Required attribution when republishing this data\" (per-source). Display attribution: \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks.",
+  "method": "scripts/fetch-openrouter-benchmarks.mjs (2026-09-15): two authenticated GETs of /api/v1/benchmarks (source=openrouter&include_run_config=true, kept as own_data, and unfiltered). Terms evaluated 2026-09-15 — see openrouter-benchmarks.method.md: the payload's meta.citation is documented as \"Required attribution when republishing this data\" (per-source). Display attribution: \"OpenRouter Benchmarks\" linked to openrouter.ai/benchmarks.",
   "terms": "Source: OpenRouter evals (openrouter.ai) via OpenRouter (openrouter.ai/rankings).",
   "as_of": "2026-09-15T12:01:46.949Z",
   "own_as_of": "2026-09-12T20:43:55.432Z",
@@ -13,7 +13,3070 @@
     "design_arena_rows": 1102,
     "models": 250
   },
-  "response_sha256": "94b68a2a4a6f875077cc6e3cc3b0959db286bb42a15523dabee9495f07812c1f",
+  "response_sha256": "4abc361ee71a34922976da26169cee2f7284005a461fed393d8226c60cc4d015",
+  "own_response_sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
+  "own_data": [
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.1-pro-preview-20260219",
+      "display_name": "Google: Gemini 3.1 Pro Preview",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.944444,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.20185933333333334,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T17:51:04.719Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-6-astra-20260903",
+      "display_name": "OpenAI: GPT-6 Astra",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9436415317919074,
+      "accuracy_stddev": 0.0020135000000000014,
+      "avg_cost_per_task": 0.09933485549132949,
+      "total_tasks": 346,
+      "last_run_timestamp": "2026-09-06T03:05:46.155Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.7-flash-20260813",
+      "display_name": "Google: Gemini 3.7 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.942761,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.030509156565656566,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:25:46.082Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.5-20260423",
+      "display_name": "OpenAI: GPT-5.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9377104999999999,
+      "accuracy_stddev": 0.005050499999999958,
+      "avg_cost_per_task": 0.30815713636363634,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:20:32.033Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol-pro-20260709",
+      "display_name": "OpenAI: GPT-5.6 Sol Pro",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.93771,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.4446258484848485,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T08:45:01.642Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "x-ai/grok-4.6-20260810",
+      "display_name": "SpaceXAI: Grok 4.6",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.93266,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.12205839393939394,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:22:57.685Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.6-flash-20260721",
+      "display_name": "Google: Gemini 3.6 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.928451,
+      "accuracy_stddev": 0.004209000000000018,
+      "avg_cost_per_task": 0.06683859343434344,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:57:17.668Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.5-flash-20260519",
+      "display_name": "Google: Gemini 3.5 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.927609,
+      "accuracy_stddev": 0.003367000000000009,
+      "avg_cost_per_task": 0.14183102777777779,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T18:06:42.346Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol-20260709",
+      "display_name": "OpenAI: GPT-5.6 Sol",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9191915,
+      "accuracy_stddev": 0.005050500000000013,
+      "avg_cost_per_task": 0.07126612626262625,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:21:08.334Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k3-20260715",
+      "display_name": "MoonshotAI: Kimi K3",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9148334010152284,
+      "accuracy_stddev": 0.010655130433530873,
+      "avg_cost_per_task": 0.14653788747884938,
+      "total_tasks": 1182,
+      "last_run_timestamp": "2026-09-05T08:24:46.774Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m3-20260531",
+      "display_name": "MiniMax: MiniMax M3",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9059070658227848,
+      "accuracy_stddev": 0.020874750156023157,
+      "avg_cost_per_task": 0.029752568776371315,
+      "total_tasks": 2370,
+      "last_run_timestamp": "2026-09-12T16:09:56.754Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.4-20260305",
+      "display_name": "OpenAI: GPT-5.4",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9031985,
+      "accuracy_stddev": 0.000841499999999995,
+      "avg_cost_per_task": 0.14676221212121213,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:54:59.196Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna-pro-20260709",
+      "display_name": "OpenAI: GPT-5.6 Luna Pro",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.9031985,
+      "accuracy_stddev": 0.004208500000000004,
+      "avg_cost_per_task": 0.043649184343434344,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:21:17.284Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
+      "display_name": "DeepSeek: DeepSeek V4.1 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.902357,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0315255303030303,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-12T08:51:43.557Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-fable-5.1-20260831",
+      "display_name": "Anthropic: Claude Fable 5.1",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8998314999999999,
+      "accuracy_stddev": 0.009259499999999976,
+      "avg_cost_per_task": 0.1267015404040404,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-12T08:53:39.345Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.8-opus-20260528",
+      "display_name": "Anthropic: Claude Opus 4.8",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8959033333333333,
+      "accuracy_stddev": 0.01478602182994315,
+      "avg_cost_per_task": 0.20041322053872054,
+      "total_tasks": 1188,
+      "last_run_timestamp": "2026-09-12T08:51:38.958Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-pro-20260813",
+      "display_name": "DeepSeek: DeepSeek V4 Pro 0813",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8932791428571428,
+      "accuracy_stddev": 0.018452513097136667,
+      "avg_cost_per_task": 0.12524765450861197,
+      "total_tasks": 987,
+      "last_run_timestamp": "2026-09-12T09:07:13.756Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.7-opus-20260416",
+      "display_name": "Anthropic: Claude Opus 4.7",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8905759088937094,
+      "accuracy_stddev": 0.007745890844802291,
+      "avg_cost_per_task": 0.22131488141720893,
+      "total_tasks": 1383,
+      "last_run_timestamp": "2026-09-12T08:53:51.471Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "amazon/nova-micro-v1",
+      "display_name": "Amazon: Nova Micro 1.0",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.890572,
+      "accuracy_stddev": 0.006734000000000018,
+      "avg_cost_per_task": 0.21863568181818183,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:30:25.730Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-terra-20260709",
+      "display_name": "OpenAI: GPT-5.6 Terra",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8897304999999999,
+      "accuracy_stddev": 0.005892499999999967,
+      "avg_cost_per_task": 0.0318945303030303,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:38:25.421Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-vision-exp-20260821",
+      "display_name": "DeepSeek: DeepSeek V4 Flash Vision Exp",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8843993333333334,
+      "accuracy_stddev": 0.005204189359438132,
+      "avg_cost_per_task": 0.021635565656565655,
+      "total_tasks": 594,
+      "last_run_timestamp": "2026-09-12T08:50:55.974Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3-flash-preview-20251217",
+      "display_name": "Google: Gemini 3 Flash Preview",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8829965,
+      "accuracy_stddev": 0.000841499999999995,
+      "avg_cost_per_task": 0.13198183333333333,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:57:36.744Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.2-20251211",
+      "display_name": "OpenAI: GPT-5.2",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.878788,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.13332395959595958,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T08:50:28.136Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna-20260709",
+      "display_name": "OpenAI: GPT-5.6 Luna",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8771039999999999,
+      "accuracy_stddev": 0.006734000000000018,
+      "avg_cost_per_task": 0.007407005050505051,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:50:43.967Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-opus-5-20260723",
+      "display_name": "Anthropic: Claude Opus 5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8703703333333335,
+      "accuracy_stddev": 0.02120598298174888,
+      "avg_cost_per_task": 0.12700054377104378,
+      "total_tasks": 1188,
+      "last_run_timestamp": "2026-09-12T08:51:32.240Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
+      "display_name": "DeepSeek: DeepSeek V4 Flash 0423",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8664091764705881,
+      "accuracy_stddev": 0.014732502891207791,
+      "avg_cost_per_task": 0.003573225787284611,
+      "total_tasks": 3366,
+      "last_run_timestamp": "2026-08-22T17:16:03.168Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.5-opus-20251124",
+      "display_name": "Anthropic: Claude Opus 4.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8650391666666667,
+      "accuracy_stddev": 0.009494314200556513,
+      "avg_cost_per_task": 0.8428752398989899,
+      "total_tasks": 1188,
+      "last_run_timestamp": "2026-09-12T08:53:14.276Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-small-20260730",
+      "display_name": "Thinking Machines: Inkling Small",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.86447825,
+      "accuracy_stddev": 0.009634269104997005,
+      "avg_cost_per_task": 0.025357030303030305,
+      "total_tasks": 792,
+      "last_run_timestamp": "2026-09-12T08:53:36.548Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-pro-20260423",
+      "display_name": "DeepSeek: DeepSeek V4 Pro 0423",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8643639115417018,
+      "accuracy_stddev": 0.014757024377299852,
+      "avg_cost_per_task": 0.04002094074698118,
+      "total_tasks": 3561,
+      "last_run_timestamp": "2026-08-29T19:37:04.387Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.1-20251113",
+      "display_name": "OpenAI: GPT-5.1",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8619525,
+      "accuracy_stddev": 0.005050499999999958,
+      "avg_cost_per_task": 0.223144601010101,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:23:04.034Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.3-20260816",
+      "display_name": "Z.ai: GLM 5.3",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8602693333333334,
+      "accuracy_stddev": 0.018493035523917886,
+      "avg_cost_per_task": 0.11692115488215488,
+      "total_tasks": 594,
+      "last_run_timestamp": "2026-09-12T08:51:47.070Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5-2025-08-07",
+      "display_name": "OpenAI: GPT-5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.860269,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.20759804545454547,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:31:11.391Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.8-2.4t-a95b-20260812",
+      "display_name": "Qwen: Qwen3.8 2.4T A95B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8597079999999999,
+      "accuracy_stddev": 0.01169067810978757,
+      "avg_cost_per_task": 0.07337777441077442,
+      "total_tasks": 594,
+      "last_run_timestamp": "2026-09-12T08:52:09.477Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-397b-a17b-20260216",
+      "display_name": "Qwen: Qwen3.5 397B A17B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8589856042216361,
+      "accuracy_stddev": 0.022745485097766183,
+      "avg_cost_per_task": 0.03739281288478453,
+      "total_tasks": 4548,
+      "last_run_timestamp": "2026-08-29T19:19:13.521Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.3-flash-20260826",
+      "display_name": "Z.ai: GLM 5.3 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8580246666666667,
+      "accuracy_stddev": 0.01772806243094703,
+      "avg_cost_per_task": 0.009000570707070707,
+      "total_tasks": 594,
+      "last_run_timestamp": "2026-09-12T08:54:53.230Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.2-20260616",
+      "display_name": "Z.ai: GLM 5.2",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8564754649681527,
+      "accuracy_stddev": 0.02660930031062136,
+      "avg_cost_per_task": 0.07435770403397028,
+      "total_tasks": 2355,
+      "last_run_timestamp": "2026-09-12T08:51:40.647Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.6-opus-20260205",
+      "display_name": "Anthropic: Claude Opus 4.6",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8529739999999999,
+      "accuracy_stddev": 0.011195323383746734,
+      "avg_cost_per_task": 0.7459393897306398,
+      "total_tasks": 1188,
+      "last_run_timestamp": "2026-09-12T08:55:37.569Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m2.1",
+      "display_name": "MiniMax: MiniMax M2.1",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8519052115523464,
+      "accuracy_stddev": 0.013404331939818352,
+      "avg_cost_per_task": 0.016832729001203365,
+      "total_tasks": 4155,
+      "last_run_timestamp": "2026-08-01T17:57:47.536Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
+      "display_name": "DeepSeek: DeepSeek V4 Flash 0731",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8507293333333333,
+      "accuracy_stddev": 0.026056377086787954,
+      "avg_cost_per_task": 0.007893697811447813,
+      "total_tasks": 1188,
+      "last_run_timestamp": "2026-09-12T08:51:55.750Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2.5-0127",
+      "display_name": "MoonshotAI: Kimi K2.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8491226880382775,
+      "accuracy_stddev": 0.030813672538542027,
+      "avg_cost_per_task": 0.07232893971291866,
+      "total_tasks": 3135,
+      "last_run_timestamp": "2026-08-29T18:42:20.541Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m2.7-20260318",
+      "display_name": "MiniMax: MiniMax M2.7",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8426295476381106,
+      "accuracy_stddev": 0.018915505208741832,
+      "avg_cost_per_task": 0.02623110034694422,
+      "total_tasks": 3747,
+      "last_run_timestamp": "2026-08-29T19:06:57.766Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "xiaomi/mimo-v2.5-pro-20260422",
+      "display_name": "Xiaomi: MiMo-V2.5-Pro",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8421140212765957,
+      "accuracy_stddev": 0.009082400225160749,
+      "avg_cost_per_task": 0.023578880445795345,
+      "total_tasks": 1974,
+      "last_run_timestamp": "2026-09-12T10:12:26.508Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m2.5-20260211",
+      "display_name": "MiniMax: MiniMax M2.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8414075126536513,
+      "accuracy_stddev": 0.022108573391159597,
+      "avg_cost_per_task": 0.0148124528802121,
+      "total_tasks": 4149,
+      "last_run_timestamp": "2026-08-29T18:05:36.579Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-5-fable-20260609",
+      "display_name": "Anthropic: Claude Fable 5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8381434285714285,
+      "accuracy_stddev": 0.03992448749418668,
+      "avg_cost_per_task": 0.1699400144300144,
+      "total_tasks": 1386,
+      "last_run_timestamp": "2026-09-12T08:51:28.701Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-122b-a10b-20260224",
+      "display_name": "Qwen: Qwen3.5-122B-A10B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8372214946619218,
+      "accuracy_stddev": 0.034741684832744535,
+      "avg_cost_per_task": 0.05026086239620403,
+      "total_tasks": 2529,
+      "last_run_timestamp": "2026-09-12T09:22:26.359Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.4-mini-20260317",
+      "display_name": "OpenAI: GPT-5.4 Mini",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8367000000000001,
+      "accuracy_stddev": 0.006734000000000018,
+      "avg_cost_per_task": 0.06203523232323233,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:49:43.168Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.5-flash-lite-20260721",
+      "display_name": "Google: Gemini 3.5 Flash Lite",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.835017,
+      "accuracy_stddev": 0,
+      "avg_cost_per_task": 0.036737896464646466,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:49:40.120Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemma-4-31b-it-20260402",
+      "display_name": "Google: Gemma 4 31B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8344652224938874,
+      "accuracy_stddev": 0.01975287567409165,
+      "avg_cost_per_task": 0.003750411572942135,
+      "total_tasks": 3681,
+      "last_run_timestamp": "2026-08-29T19:56:51.477Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2-thinking-20251106",
+      "display_name": "MoonshotAI: Kimi K2 Thinking",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8343995892514393,
+      "accuracy_stddev": 0.03430703499807839,
+      "avg_cost_per_task": 0.046086053103007056,
+      "total_tasks": 3126,
+      "last_run_timestamp": "2026-08-01T17:53:10.275Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.8-flash-20260826",
+      "display_name": "Qwen: Qwen3.8 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8333329999999999,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.003982064102564103,
+      "total_tasks": 156,
+      "last_run_timestamp": "2026-09-09T15:03:02.824Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2.6-20260420",
+      "display_name": "MoonshotAI: Kimi K2.6",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8329946475964793,
+      "accuracy_stddev": 0.03338342053015737,
+      "avg_cost_per_task": 0.11301010663507109,
+      "total_tasks": 2954,
+      "last_run_timestamp": "2026-08-29T18:43:32.988Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-20260715",
+      "display_name": "Thinking Machines: Inkling",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.83186025,
+      "accuracy_stddev": 0.00926631761745195,
+      "avg_cost_per_task": 0.09763598611111111,
+      "total_tasks": 792,
+      "last_run_timestamp": "2026-09-12T08:50:54.630Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.7-20251222",
+      "display_name": "Z.ai: GLM 4.7",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8316436094890514,
+      "accuracy_stddev": 0.025974208767498574,
+      "avg_cost_per_task": 0.04628958515815085,
+      "total_tasks": 4932,
+      "last_run_timestamp": "2026-08-30T00:30:19.495Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.1-20260406",
+      "display_name": "Z.ai: GLM 5.1",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8293436084942087,
+      "accuracy_stddev": 0.026842406617328486,
+      "avg_cost_per_task": 0.11662821698841698,
+      "total_tasks": 3885,
+      "last_run_timestamp": "2026-08-29T18:14:11.455Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.5-sonnet-20250929",
+      "display_name": "Anthropic: Claude Sonnet 4.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8251562857142857,
+      "accuracy_stddev": 0.014879833790491518,
+      "avg_cost_per_task": 0.31610685642135644,
+      "total_tasks": 1386,
+      "last_run_timestamp": "2026-09-12T08:54:39.602Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.8-27b-20260814",
+      "display_name": "Qwen: Qwen3.8 27B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8215487499999999,
+      "accuracy_stddev": 0.015566767573504139,
+      "avg_cost_per_task": 0.0348474053030303,
+      "total_tasks": 792,
+      "last_run_timestamp": "2026-09-12T08:51:31.162Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
+      "display_name": "NVIDIA: Nemotron 3 Ultra",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8215312538860104,
+      "accuracy_stddev": 0.022946010202695863,
+      "avg_cost_per_task": 0.08296633678756477,
+      "total_tasks": 579,
+      "last_run_timestamp": "2026-06-30T21:35:33.459Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v3.2-20251201",
+      "display_name": "DeepSeek: DeepSeek V3.2",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.82114464,
+      "accuracy_stddev": 0.021280355931008303,
+      "avg_cost_per_task": 0.004206017171717171,
+      "total_tasks": 4950,
+      "last_run_timestamp": "2026-08-29T19:12:36.104Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-35b-a3b-20260224",
+      "display_name": "Qwen: Qwen3.5-35B-A3B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8172956315789474,
+      "accuracy_stddev": 0.03759420939202785,
+      "avg_cost_per_task": 0.018308193779904305,
+      "total_tasks": 3762,
+      "last_run_timestamp": "2026-08-29T19:18:38.408Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "xiaomi/mimo-v2-flash-20251210",
+      "display_name": "Xiaomi: MiMo-V2-Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8162392307692308,
+      "accuracy_stddev": 0.03601540705171317,
+      "avg_cost_per_task": 0.003321210178710178,
+      "total_tasks": 2574,
+      "last_run_timestamp": "2026-06-13T08:37:07.102Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2.7-code-20260612",
+      "display_name": "MoonshotAI: Kimi K2.7 Code",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8142335420827389,
+      "accuracy_stddev": 0.17280701604869197,
+      "avg_cost_per_task": 0.07942258487874466,
+      "total_tasks": 2103,
+      "last_run_timestamp": "2026-09-12T08:51:45.897Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-sonnet-5-20260630",
+      "display_name": "Anthropic: Claude Sonnet 5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8136899609544469,
+      "accuracy_stddev": 0.03361492924646573,
+      "avg_cost_per_task": 0.16211004193781636,
+      "total_tasks": 1383,
+      "last_run_timestamp": "2026-09-12T08:53:16.452Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.6-35b-a3b-20260415",
+      "display_name": "Qwen: Qwen3.6 35B A3B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8052485524861877,
+      "accuracy_stddev": 0.04182327307703254,
+      "avg_cost_per_task": 0.0375815211786372,
+      "total_tasks": 2172,
+      "last_run_timestamp": "2026-09-12T16:19:19.439Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.3-chat-20260303",
+      "display_name": "OpenAI: GPT-5.3 Chat",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.804714,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.024081237373737373,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T08:38:11.900Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta/muse-glimmer-30b-20260810",
+      "display_name": "Meta: Muse Glimmer 30B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8037036,
+      "accuracy_stddev": 0.01616856308519715,
+      "avg_cost_per_task": 0.023109099999999997,
+      "total_tasks": 990,
+      "last_run_timestamp": "2026-09-12T08:53:59.752Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v3.1-terminus",
+      "display_name": "DeepSeek: DeepSeek V3.1 Terminus",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8032688993902439,
+      "accuracy_stddev": 0.02769181364212175,
+      "avg_cost_per_task": 0.009867783790650408,
+      "total_tasks": 3936,
+      "last_run_timestamp": "2026-08-29T18:21:38.666Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.1-flash-lite-20260507",
+      "display_name": "Google: Gemini 3.1 Flash Lite",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8013465,
+      "accuracy_stddev": 0.005050500000000013,
+      "avg_cost_per_task": 0.041531338383838386,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:50:00.305Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.6-27b-20260422",
+      "display_name": "Qwen: Qwen3.6 27B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.8005225850622406,
+      "accuracy_stddev": 0.04568701496067049,
+      "avg_cost_per_task": 0.07200119087136929,
+      "total_tasks": 2169,
+      "last_run_timestamp": "2026-09-12T16:54:45.597Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-235b-a22b-thinking-2507",
+      "display_name": "Qwen: Qwen3 235B A22B Thinking 2507",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7999517180043381,
+      "accuracy_stddev": 0.03323958171352034,
+      "avg_cost_per_task": 0.028858541094239572,
+      "total_tasks": 4149,
+      "last_run_timestamp": "2026-08-22T17:09:41.940Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-2.5-pro",
+      "display_name": "Google: Gemini 2.5 Pro",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7988215,
+      "accuracy_stddev": 0.010942500000000022,
+      "avg_cost_per_task": 0.25381196717171717,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:22:15.928Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.2-chat-20251211",
+      "display_name": "OpenAI: GPT-5.2 Chat",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.79798,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.03602157070707071,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T08:32:36.352Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5-mini-2025-08-07",
+      "display_name": "OpenAI: GPT-5 Mini",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7962965,
+      "accuracy_stddev": 0.008417500000000022,
+      "avg_cost_per_task": 0.044405648989898995,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T18:00:27.682Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-chat-v3.1",
+      "display_name": "DeepSeek: DeepSeek V3.1",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7928710351728319,
+      "accuracy_stddev": 0.035613747985540636,
+      "avg_cost_per_task": 0.010201798463715385,
+      "total_tasks": 4947,
+      "last_run_timestamp": "2026-08-30T00:18:59.365Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-r1-0528",
+      "display_name": "DeepSeek: R1 0528",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7893801326219512,
+      "accuracy_stddev": 0.01295139062842288,
+      "avg_cost_per_task": 0.03486109476626016,
+      "total_tasks": 3936,
+      "last_run_timestamp": "2026-08-29T19:47:52.368Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v3.2-exp",
+      "display_name": "DeepSeek: DeepSeek V3.2 Exp",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7888251558317401,
+      "accuracy_stddev": 0.03183674019061693,
+      "avg_cost_per_task": 0.004413868387507966,
+      "total_tasks": 3138,
+      "last_run_timestamp": "2026-08-01T18:07:34.003Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5-20260211",
+      "display_name": "Z.ai: GLM 5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7859751167002013,
+      "accuracy_stddev": 0.06046117739911878,
+      "avg_cost_per_task": 0.07098338184663536,
+      "total_tasks": 4473,
+      "last_run_timestamp": "2026-08-29T18:23:09.250Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.6",
+      "display_name": "Z.ai: GLM 4.6",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.785631409638554,
+      "accuracy_stddev": 0.04249180558192592,
+      "avg_cost_per_task": 0.03580307469879518,
+      "total_tasks": 3735,
+      "last_run_timestamp": "2026-08-29T18:19:18.341Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.4-nano-20260317",
+      "display_name": "OpenAI: GPT-5.4 Nano",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7794614999999999,
+      "accuracy_stddev": 0.0016835000000000044,
+      "avg_cost_per_task": 0.013140674242424242,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:51:03.252Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-9b-20260310",
+      "display_name": "Qwen: Qwen3.5-9B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7788700589887642,
+      "accuracy_stddev": 0.024299753025646936,
+      "avg_cost_per_task": 0.005397083333333333,
+      "total_tasks": 2136,
+      "last_run_timestamp": "2026-09-12T20:43:55.432Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4-sonnet-20250522",
+      "display_name": "Anthropic: Claude Sonnet 4",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7668349999999999,
+      "accuracy_stddev": 0.01935999999999999,
+      "avg_cost_per_task": 0.2670539015151515,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:19:59.945Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "xiaomi/mimo-v2.5-20260422",
+      "display_name": "Xiaomi: MiMo-V2.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7668169148936171,
+      "accuracy_stddev": 0.053587367069901595,
+      "avg_cost_per_task": 0.010489795615731785,
+      "total_tasks": 1551,
+      "last_run_timestamp": "2026-09-12T09:07:23.668Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "stepfun/step-3.7-flash-20260528",
+      "display_name": "StepFun: Step 3.7 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.765993,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.08016306060606061,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-07-18T08:29:23.765Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2-0905",
+      "display_name": "MoonshotAI: Kimi K2 0905",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7592592857142858,
+      "accuracy_stddev": 0.017839206710535765,
+      "avg_cost_per_task": 0.009826953823953825,
+      "total_tasks": 2772,
+      "last_run_timestamp": "2026-08-01T17:45:27.258Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "mistralai/mistral-small-2603",
+      "display_name": "Mistral: Mistral Small 4",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7575759999999999,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.014556641414141414,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:30:26.223Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-oss-120b",
+      "display_name": "OpenAI: gpt-oss-120b",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7493782527075812,
+      "accuracy_stddev": 0.028699053688207896,
+      "avg_cost_per_task": 0.007139869554753309,
+      "total_tasks": 4155,
+      "last_run_timestamp": "2026-08-29T19:17:18.768Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openrouter/auto-beta",
+      "display_name": "Auto Router (Beta)",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7474749999999999,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.06105609090909091,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-07-20T23:10:40.731Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-coder-next-2025-02-03",
+      "display_name": "Qwen: Qwen3 Coder Next",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7463525,
+      "accuracy_stddev": 0.013479678966050276,
+      "avg_cost_per_task": 0.010016893658810323,
+      "total_tasks": 3564,
+      "last_run_timestamp": "2026-08-29T18:11:58.511Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-235b-a22b-07-25",
+      "display_name": "Qwen: Qwen3 235B A22B Instruct 2507",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7437804049955398,
+      "accuracy_stddev": 0.021163113088383194,
+      "avg_cost_per_task": 0.003550038358608385,
+      "total_tasks": 3363,
+      "last_run_timestamp": "2026-08-29T18:12:05.151Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemma-4-26b-a4b-it-20260403",
+      "display_name": "Google: Gemma 4 26B A4B ",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7393956351351351,
+      "accuracy_stddev": 0.03984266574715486,
+      "avg_cost_per_task": 0.00809140793918919,
+      "total_tasks": 3552,
+      "last_run_timestamp": "2026-08-29T19:32:52.576Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "inclusionai/ling-3.0-flash-20260723",
+      "display_name": "inclusionAI: Ling 3.0 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.729592,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0030441326530612246,
+      "total_tasks": 196,
+      "last_run_timestamp": "2026-09-01T13:20:55.717Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-2.5-flash",
+      "display_name": "Google: Gemini 2.5 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7272725,
+      "accuracy_stddev": 0.005050499999999958,
+      "avg_cost_per_task": 0.058774820707070706,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:49:53.883Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.5-haiku-20251001",
+      "display_name": "Anthropic: Claude Haiku 4.5",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.723905857142857,
+      "accuracy_stddev": 0.008198222462889138,
+      "avg_cost_per_task": 0.1910607683982684,
+      "total_tasks": 1386,
+      "last_run_timestamp": "2026-09-12T08:51:37.951Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5-nano-2025-08-07",
+      "display_name": "OpenAI: GPT-5 Nano",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.708754,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.01329097474747475,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T18:00:29.373Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-next-80b-a3b-instruct-2509",
+      "display_name": "Qwen: Qwen3 Next 80B A3B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7076071061946904,
+      "accuracy_stddev": 0.019313703381830465,
+      "avg_cost_per_task": 0.007015815500134085,
+      "total_tasks": 3729,
+      "last_run_timestamp": "2026-08-29T18:42:28.455Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-vl-235b-a22b-instruct",
+      "display_name": "Qwen: Qwen3 VL 235B A22B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.7049911764705882,
+      "accuracy_stddev": 0.01828311467941453,
+      "avg_cost_per_task": 0.006265460487225194,
+      "total_tasks": 3366,
+      "last_run_timestamp": "2026-08-29T18:14:24.357Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemma-4-26b-a4b-it-20260403:free",
+      "display_name": "Gemma 4 26B A4B IT (free)",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.684722,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": null,
+      "total_tasks": 120,
+      "last_run_timestamp": "2026-08-04T05:36:23.551Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "nvidia/nemotron-3.5-lightning-20260807",
+      "display_name": "NVIDIA: Nemotron 3.5 Lightning",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.677958512195122,
+      "accuracy_stddev": 0.019391205446993246,
+      "avg_cost_per_task": 0.01080079268292683,
+      "total_tasks": 738,
+      "last_run_timestamp": "2026-09-12T11:55:37.235Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-oss-20b",
+      "display_name": "OpenAI: gpt-oss-20b",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6648336694162438,
+      "accuracy_stddev": 0.026647604616882706,
+      "avg_cost_per_task": 0.006456725676818949,
+      "total_tasks": 4728,
+      "last_run_timestamp": "2026-08-29T21:14:10.017Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-4-maverick-17b-128e-instruct",
+      "display_name": "Meta: Llama 4 Maverick",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6566732189349114,
+      "accuracy_stddev": 0.013404939721861693,
+      "avg_cost_per_task": 0.002109493885601578,
+      "total_tasks": 2535,
+      "last_run_timestamp": "2026-08-29T19:49:56.943Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-vl-30b-a3b-instruct",
+      "display_name": "Qwen: Qwen3 VL 30B A3B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6491229011553274,
+      "accuracy_stddev": 0.020458732508495402,
+      "avg_cost_per_task": 0.005758204535729568,
+      "total_tasks": 2337,
+      "last_run_timestamp": "2026-09-12T09:21:18.862Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4.1-2025-04-14",
+      "display_name": "OpenAI: GPT-4.1",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6489900000000001,
+      "accuracy_stddev": 0.01599299999999998,
+      "avg_cost_per_task": 0.015694313131313132,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:20:53.165Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.5-air",
+      "display_name": "Z.ai: GLM 4.5 Air",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6468489002535927,
+      "accuracy_stddev": 0.06873292388246043,
+      "avg_cost_per_task": 0.012618942800788955,
+      "total_tasks": 3549,
+      "last_run_timestamp": "2026-08-01T18:25:56.196Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4.1-mini-2025-04-14",
+      "display_name": "OpenAI: GPT-4.1 Mini",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6414145,
+      "accuracy_stddev": 0.001683499999999949,
+      "avg_cost_per_task": 0.004025537878787879,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:49:44.421Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-30b-a3b-instruct-2507",
+      "display_name": "Qwen: Qwen3 30B A3B Instruct 2507",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6378163182423436,
+      "accuracy_stddev": 0.020050764225779696,
+      "avg_cost_per_task": 0.0014251371504660456,
+      "total_tasks": 4506,
+      "last_run_timestamp": "2026-08-29T19:32:59.441Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "nvidia/nemotron-3-nano-30b-a3b",
+      "display_name": "NVIDIA: Nemotron 3 Nano 30B A3B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6158278186779867,
+      "accuracy_stddev": 0.03508758885671368,
+      "avg_cost_per_task": 0.012944736810187991,
+      "total_tasks": 1649,
+      "last_run_timestamp": "2026-09-12T16:18:35.377Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-coder-480b-a35b-07-25",
+      "display_name": "Qwen: Qwen3 Coder 480B A35B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6138156578581363,
+      "accuracy_stddev": 0.03128315116469867,
+      "avg_cost_per_task": 0.002071764487714418,
+      "total_tasks": 4314,
+      "last_run_timestamp": "2026-08-29T18:47:46.000Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-32b-04-28",
+      "display_name": "Qwen: Qwen3 32B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6119099904153354,
+      "accuracy_stddev": 0.018499407692846533,
+      "avg_cost_per_task": 0.004559978434504793,
+      "total_tasks": 3756,
+      "last_run_timestamp": "2026-08-29T19:52:22.642Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-30b-a3b-04-28",
+      "display_name": "Qwen: Qwen3 30B A3B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.6117054705882354,
+      "accuracy_stddev": 0.021589738897469325,
+      "avg_cost_per_task": 0.003909876411170528,
+      "total_tasks": 3366,
+      "last_run_timestamp": "2026-08-01T18:08:49.019Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-chat-v3",
+      "display_name": "DeepSeek: DeepSeek V3",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.609428,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0023919898989898988,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:27:58.636Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-14b-04-28",
+      "display_name": "Qwen: Qwen3 14B",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.594276,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.002775611111111111,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:31:26.819Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-chat-v3-0324",
+      "display_name": "DeepSeek: DeepSeek V3 0324",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5767835180722893,
+      "accuracy_stddev": 0.11488998007127417,
+      "avg_cost_per_task": 0.001997228341939185,
+      "total_tasks": 3486,
+      "last_run_timestamp": "2026-08-29T20:57:58.443Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-2.5-flash-lite",
+      "display_name": "Google: Gemini 2.5 Flash Lite",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5496635000000001,
+      "accuracy_stddev": 0.007575500000000013,
+      "avg_cost_per_task": 0.017014479797979796,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:51:18.914Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.6-sonnet-20260217",
+      "display_name": "Anthropic: Claude Sonnet 4.6",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5432101666666667,
+      "accuracy_stddev": 0.006274198047471019,
+      "avg_cost_per_task": 0.6117355909090908,
+      "total_tasks": 1188,
+      "last_run_timestamp": "2026-09-12T08:55:05.141Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-coder-30b-a3b-instruct",
+      "display_name": "Qwen: Qwen3 Coder 30B A3B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5202023333333333,
+      "accuracy_stddev": 0.0023810642345154617,
+      "avg_cost_per_task": 0.0035723956228956226,
+      "total_tasks": 594,
+      "last_run_timestamp": "2026-08-15T08:46:42.897Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o-2024-08-06",
+      "display_name": "OpenAI: GPT-4o (2024-08-06)",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.516835,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.018182969696969697,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:20:49.450Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-vl-8b-instruct",
+      "display_name": "Qwen: Qwen3 VL 8B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5164041115075825,
+      "accuracy_stddev": 0.01765990013118984,
+      "avg_cost_per_task": 0.004024284567350581,
+      "total_tasks": 3363,
+      "last_run_timestamp": "2026-08-01T18:08:24.732Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.7-flash-20260119",
+      "display_name": "Z.ai: GLM 4.7 Flash",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5157350329192546,
+      "accuracy_stddev": 0.0398352853845512,
+      "avg_cost_per_task": 0.008774558178053832,
+      "total_tasks": 4830,
+      "last_run_timestamp": "2026-08-30T00:11:29.373Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4.1-nano-2025-04-14",
+      "display_name": "OpenAI: GPT-4.1 Nano",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.5092595,
+      "accuracy_stddev": 0.009259499999999976,
+      "avg_cost_per_task": 0.0008195479797979797,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:50:32.282Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o-2024-05-13",
+      "display_name": "OpenAI: GPT-4o (2024-05-13)",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.506734,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0237055303030303,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T08:34:23.935Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o",
+      "display_name": "OpenAI: GPT-4o",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.503367,
+      "accuracy_stddev": 0.008418000000000037,
+      "avg_cost_per_task": 0.013204560606060607,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:20:22.396Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-3.3-70b-instruct",
+      "display_name": "Meta: Llama 3.3 70B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.4920415454545455,
+      "accuracy_stddev": 0.024429012799105164,
+      "avg_cost_per_task": 0.0007948849862258953,
+      "total_tasks": 4356,
+      "last_run_timestamp": "2026-08-29T18:24:23.944Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen-2.5-72b-instruct",
+      "display_name": "Qwen2.5 72B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.4461280000000001,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0009776919191919191,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T14:15:49.249Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen2.5-vl-72b-instruct",
+      "display_name": "Qwen: Qwen2.5 VL 72B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.4444445,
+      "accuracy_stddev": 0.015151500000000012,
+      "avg_cost_per_task": 0.0015239469696969696,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:21:35.512Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o-mini",
+      "display_name": "OpenAI: GPT-4o-mini",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.4335015,
+      "accuracy_stddev": 0.009259500000000004,
+      "avg_cost_per_task": 0.0010084242424242425,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T17:49:46.133Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen-2.5-7b-instruct",
+      "display_name": "Qwen: Qwen2.5 7B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.328283,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0005318181818181818,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T08:36:11.581Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "mistralai/mistral-nemo",
+      "display_name": "Mistral: Mistral Nemo",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.3156760930232559,
+      "accuracy_stddev": 0.020895107938223238,
+      "avg_cost_per_task": 0.00008417894056847546,
+      "total_tasks": 1548,
+      "last_run_timestamp": "2026-07-18T09:08:52.364Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-3.1-8b-instruct",
+      "display_name": "Meta: Llama 3.1 8B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.2891191578947368,
+      "accuracy_stddev": 0.027951613519499915,
+      "avg_cost_per_task": 0.0006532387028176503,
+      "total_tasks": 3762,
+      "last_run_timestamp": "2026-08-29T18:21:00.168Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "sao10k/l3-lunaris-8b",
+      "display_name": "Sao10K: Llama 3 8B Lunaris",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.26936,
+      "accuracy_stddev": 0.00673399999999999,
+      "avg_cost_per_task": 0.0000632449494949495,
+      "total_tasks": 396,
+      "last_run_timestamp": "2026-09-01T13:21:46.100Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "inclusionai/ling-3.0-flash-fin-20260827",
+      "display_name": "inclusionAI: Ling 3.0 Flash Fin",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.19696999999999998,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0190694696969697,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-03T21:14:17.509Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-3.2-3b-instruct",
+      "display_name": "Meta: Llama 3.2 3B Instruct",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.116162,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.0001537979797979798,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-08-01T09:03:02.970Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.1-flash-lite-image-20260630",
+      "display_name": "Google: Nano Banana 2 Lite (Gemini 3.1 Flash Lite Image)",
+      "benchmark_type": "gpqa_diamond",
+      "accuracy": 0.102694,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.018059262626262628,
+      "total_tasks": 198,
+      "last_run_timestamp": "2026-09-01T13:21:37.702Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.7-flash-20260813",
+      "display_name": "Google: Gemini 3.7 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.805556,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.07709047916666667,
+      "total_tasks": 48,
+      "last_run_timestamp": "2026-08-15T00:15:15.845Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-5-fable-20260609",
+      "display_name": "Anthropic: Claude Fable 5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.8022221666666667,
+      "accuracy_stddev": 0.029731236432505713,
+      "avg_cost_per_task": 0.9649561966666667,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:10:01.056Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-opus-5-20260723",
+      "display_name": "Anthropic: Claude Opus 5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7955556666666667,
+      "accuracy_stddev": 0.022662232683966114,
+      "avg_cost_per_task": 0.4986309000000001,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:00:58.117Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "amazon/nova-micro-v1",
+      "display_name": "Amazon: Nova Micro 1.0",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7866669999999999,
+      "accuracy_stddev": 0.020000000000000018,
+      "avg_cost_per_task": 1.2795196199999999,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T13:03:28.251Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-397b-a17b-20260216",
+      "display_name": "Qwen: Qwen3.5 397B A17B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7849382962962963,
+      "accuracy_stddev": 0.03585945443679812,
+      "avg_cost_per_task": 0.09882785185185182,
+      "total_tasks": 1350,
+      "last_run_timestamp": "2026-08-29T16:14:58.275Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.3-20260816",
+      "display_name": "Z.ai: GLM 5.3",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7833334999999999,
+      "accuracy_stddev": 0.01666650000000003,
+      "avg_cost_per_task": 0.09767603,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-12T08:03:29.492Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-fable-5.1-20260831",
+      "display_name": "Anthropic: Claude Fable 5.1",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.78,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.69255894,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-09-12T08:11:07.994Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-pro-20260813",
+      "display_name": "DeepSeek: DeepSeek V4 Pro 0813",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.77666675,
+      "accuracy_stddev": 0.011055139582452127,
+      "avg_cost_per_task": 0.106240135,
+      "total_tasks": 200,
+      "last_run_timestamp": "2026-09-12T08:11:06.451Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3-flash-preview-20251217",
+      "display_name": "Google: Gemini 3 Flash Preview",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.773333,
+      "accuracy_stddev": 0.019999999999999962,
+      "avg_cost_per_task": 0.12487065999999998,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:31:27.257Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "stepfun/step-3.7-flash-20260528",
+      "display_name": "StepFun: Step 3.7 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.773333,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.02012318,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-07-18T08:04:46.147Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-122b-a10b-20260224",
+      "display_name": "Qwen: Qwen3.5-122B-A10B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7706665,
+      "accuracy_stddev": 0.03542759125667451,
+      "avg_cost_per_task": 0.14769515,
+      "total_tasks": 500,
+      "last_run_timestamp": "2026-09-12T08:11:12.196Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.5-opus-20251124",
+      "display_name": "Anthropic: Claude Opus 4.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7700001666666666,
+      "accuracy_stddev": 0.026317372097891714,
+      "avg_cost_per_task": 0.5335405666666666,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:11:04.282Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "nvidia/nemotron-3-ultra-550b-a55b-20260604",
+      "display_name": "NVIDIA: Nemotron 3 Ultra",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7688889999999999,
+      "accuracy_stddev": 0.008314764498569207,
+      "avg_cost_per_task": 0.10034226,
+      "total_tasks": 150,
+      "last_run_timestamp": "2026-06-30T19:14:03.389Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.8-27b-20260814",
+      "display_name": "Qwen: Qwen3.8 27B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7688889999999999,
+      "accuracy_stddev": 0.02997968036298364,
+      "avg_cost_per_task": 0.07988768666666667,
+      "total_tasks": 150,
+      "last_run_timestamp": "2026-09-12T08:04:36.728Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.7-opus-20260416",
+      "display_name": "Anthropic: Claude Opus 4.7",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7688888333333334,
+      "accuracy_stddev": 0.015234820417021306,
+      "avg_cost_per_task": 0.4111358866666667,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:11:04.195Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4.1-flash-20260910",
+      "display_name": "DeepSeek: DeepSeek V4.1 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7666669999999999,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.02757796,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-09-12T08:09:51.979Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol-pro-20260709",
+      "display_name": "OpenAI: GPT-5.6 Sol Pro",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7666669999999999,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 1.86423468,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T08:05:35.224Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.8-2.4t-a95b-20260812",
+      "display_name": "Qwen: Qwen3.8 2.4T A95B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7666669999999999,
+      "accuracy_stddev": 0,
+      "avg_cost_per_task": 0.23817594,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-12T08:03:29.925Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-sonnet-5-20260630",
+      "display_name": "Anthropic: Claude Sonnet 5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7666666666666667,
+      "accuracy_stddev": 0.019999777779321017,
+      "avg_cost_per_task": 0.19860886333333333,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:11:32.343Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol-20260709",
+      "display_name": "OpenAI: GPT-5.6 Sol",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7666665,
+      "accuracy_stddev": 0.00666650000000002,
+      "avg_cost_per_task": 0.21096532,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:59:37.360Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.8-opus-20260528",
+      "display_name": "Anthropic: Claude Opus 4.8",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7622224999999999,
+      "accuracy_stddev": 0.02024535916986082,
+      "avg_cost_per_task": 0.49730242333333335,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:03:29.392Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemma-4-31b-it-20260402",
+      "display_name": "Google: Gemma 4 31B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7610441927710843,
+      "accuracy_stddev": 0.04002571797891325,
+      "avg_cost_per_task": 0.016136098393574293,
+      "total_tasks": 996,
+      "last_run_timestamp": "2026-08-29T16:33:19.761Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-pro-20260423",
+      "display_name": "DeepSeek: DeepSeek V4 Pro 0423",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7601780858778625,
+      "accuracy_stddev": 0.02811995722322186,
+      "avg_cost_per_task": 0.0422277356870229,
+      "total_tasks": 1048,
+      "last_run_timestamp": "2026-08-29T16:25:15.306Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "x-ai/grok-4.6-20260810",
+      "display_name": "SpaceXAI: Grok 4.6",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.76,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.35068044,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-09-01T12:41:31.788Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.6-opus-20260205",
+      "display_name": "Anthropic: Claude Opus 4.6",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7566666666666667,
+      "accuracy_stddev": 0.02487022613934627,
+      "avg_cost_per_task": 0.48374035000000004,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:12:03.222Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.5-flash-lite-20260721",
+      "display_name": "Google: Gemini 3.5 Flash Lite",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7566665,
+      "accuracy_stddev": 0.01666650000000003,
+      "avg_cost_per_task": 0.10920926999999998,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:23:16.205Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.1-20251113",
+      "display_name": "OpenAI: GPT-5.1",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7566665,
+      "accuracy_stddev": 0.043333500000000025,
+      "avg_cost_per_task": 0.42697405000000005,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:41:24.474Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.4-20260305",
+      "display_name": "OpenAI: GPT-5.4",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7566665,
+      "accuracy_stddev": 0.0033334999999999892,
+      "avg_cost_per_task": 0.29550982,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:30:15.770Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.6-sonnet-20260217",
+      "display_name": "Anthropic: Claude Sonnet 4.6",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7533335,
+      "accuracy_stddev": 0.016777321555699352,
+      "avg_cost_per_task": 0.3243119666666667,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:02:22.591Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.5-20260423",
+      "display_name": "OpenAI: GPT-5.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7533335,
+      "accuracy_stddev": 0.026666500000000037,
+      "avg_cost_per_task": 0.5044717400000001,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:41:31.807Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.1-pro-preview-20260219",
+      "display_name": "Google: Gemini 3.1 Pro Preview",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.753333,
+      "accuracy_stddev": 0.020000000000000018,
+      "avg_cost_per_task": 0.36418883999999996,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:31:47.883Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.3-flash-20260826",
+      "display_name": "Z.ai: GLM 5.3 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.753333,
+      "accuracy_stddev": 0.020000000000000018,
+      "avg_cost_per_task": 0.0057111,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-12T08:11:04.852Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5-20260211",
+      "display_name": "Z.ai: GLM 5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7531111,
+      "accuracy_stddev": 0.04246072456859398,
+      "avg_cost_per_task": 0.03647687066666666,
+      "total_tasks": 1500,
+      "last_run_timestamp": "2026-08-29T16:11:46.640Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-20260423",
+      "display_name": "DeepSeek: DeepSeek V4 Flash 0423",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7513043478260869,
+      "accuracy_stddev": 0.033096829546845286,
+      "avg_cost_per_task": 0.008512693043478257,
+      "total_tasks": 1150,
+      "last_run_timestamp": "2026-08-29T16:33:30.698Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.2-20260616",
+      "display_name": "Z.ai: GLM 5.2",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7487834854014599,
+      "accuracy_stddev": 0.02712862984784687,
+      "avg_cost_per_task": 0.037571085766423366,
+      "total_tasks": 548,
+      "last_run_timestamp": "2026-09-12T08:04:48.780Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.5-flash-20260519",
+      "display_name": "Google: Gemini 3.5 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7466665,
+      "accuracy_stddev": 0.00666650000000002,
+      "avg_cost_per_task": 0.42183384,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:30:52.780Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.6-27b-20260422",
+      "display_name": "Qwen: Qwen3.6 27B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.746,
+      "accuracy_stddev": 0.04737084898331464,
+      "avg_cost_per_task": 0.10047301400000004,
+      "total_tasks": 500,
+      "last_run_timestamp": "2026-09-12T16:00:19.594Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-5.1-20260406",
+      "display_name": "Z.ai: GLM 5.1",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.741310121657754,
+      "accuracy_stddev": 0.03587492024844407,
+      "avg_cost_per_task": 0.05652380882352941,
+      "total_tasks": 1496,
+      "last_run_timestamp": "2026-08-29T16:07:02.345Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "xiaomi/mimo-v2.5-pro-20260422",
+      "display_name": "Xiaomi: MiMo-V2.5-Pro",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.740970120743034,
+      "accuracy_stddev": 0.039617228444469736,
+      "avg_cost_per_task": 0.028042730650154796,
+      "total_tasks": 646,
+      "last_run_timestamp": "2026-09-12T08:14:28.300Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-vision-exp-20260821",
+      "display_name": "DeepSeek: DeepSeek V4 Flash Vision Exp",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.74,
+      "accuracy_stddev": 0,
+      "avg_cost_per_task": 0.03223685,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-12T08:11:04.681Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2.6-20260420",
+      "display_name": "MoonshotAI: Kimi K2.6",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7368888666666666,
+      "accuracy_stddev": 0.02741899242706698,
+      "avg_cost_per_task": 0.06124634666666667,
+      "total_tasks": 750,
+      "last_run_timestamp": "2026-08-29T16:16:50.461Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-terra-20260709",
+      "display_name": "OpenAI: GPT-5.6 Terra",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7333335,
+      "accuracy_stddev": 0.013333499999999998,
+      "avg_cost_per_task": 0.09979016999999998,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:57:13.483Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta/muse-glimmer-30b-20260810",
+      "display_name": "Meta: Muse Glimmer 30B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.73333325,
+      "accuracy_stddev": 0.034960136029304874,
+      "avg_cost_per_task": 0.040343395,
+      "total_tasks": 200,
+      "last_run_timestamp": "2026-09-12T08:11:07.317Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.2-20251211",
+      "display_name": "OpenAI: GPT-5.2",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7333330000000001,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.2412942,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T08:06:12.346Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-35b-a3b-20260224",
+      "display_name": "Qwen: Qwen3.5-35B-A3B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7320534407345576,
+      "accuracy_stddev": 0.08235625560821445,
+      "avg_cost_per_task": 0.05528514190317194,
+      "total_tasks": 1198,
+      "last_run_timestamp": "2026-08-29T16:07:02.358Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.7-20251222",
+      "display_name": "Z.ai: GLM 4.7",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7302221666666667,
+      "accuracy_stddev": 0.04441331687762378,
+      "avg_cost_per_task": 0.03671269466666667,
+      "total_tasks": 1500,
+      "last_run_timestamp": "2026-08-30T00:01:02.154Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.5-sonnet-20250929",
+      "display_name": "Anthropic: Claude Sonnet 4.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.73,
+      "accuracy_stddev": 0.033054343582450206,
+      "avg_cost_per_task": 0.33205801999999995,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:11:05.711Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.6-flash-20260721",
+      "display_name": "Google: Gemini 3.6 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.73,
+      "accuracy_stddev": 0.0033330000000000304,
+      "avg_cost_per_task": 0.23651355,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:31:43.526Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-20260731",
+      "display_name": "DeepSeek: DeepSeek V4 Flash 0731",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7277778333333333,
+      "accuracy_stddev": 0.05867872456128278,
+      "avg_cost_per_task": 0.008205536666666666,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:07:22.590Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-3.1-flash-lite-20260507",
+      "display_name": "Google: Gemini 3.1 Flash Lite",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7233330000000001,
+      "accuracy_stddev": 0.010000000000000009,
+      "avg_cost_per_task": 0.09717974,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:23:14.324Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v3.2-20251201",
+      "display_name": "DeepSeek: DeepSeek V3.2",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7208390774550484,
+      "accuracy_stddev": 0.026448651572433705,
+      "avg_cost_per_task": 0.02294072475795297,
+      "total_tasks": 1446,
+      "last_run_timestamp": "2026-08-29T16:11:34.927Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2.7-code-20260612",
+      "display_name": "MoonshotAI: Kimi K2.7 Code",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.71833325,
+      "accuracy_stddev": 0.03301232794508995,
+      "avg_cost_per_task": 0.066529865,
+      "total_tasks": 600,
+      "last_run_timestamp": "2026-09-12T08:09:13.085Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.6-35b-a3b-20260415",
+      "display_name": "Qwen: Qwen3.6 35B A3B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7138482279411765,
+      "accuracy_stddev": 0.07586826274514885,
+      "avg_cost_per_task": 0.04276263051470588,
+      "total_tasks": 544,
+      "last_run_timestamp": "2026-09-12T16:00:19.613Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna-pro-20260709",
+      "display_name": "OpenAI: GPT-5.6 Luna Pro",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7133335,
+      "accuracy_stddev": 0.013333499999999998,
+      "avg_cost_per_task": 0.06446003,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:41:25.939Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2.5-0127",
+      "display_name": "MoonshotAI: Kimi K2.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7115942173913044,
+      "accuracy_stddev": 0.026826809314493945,
+      "avg_cost_per_task": 0.02940764695652173,
+      "total_tasks": 1150,
+      "last_run_timestamp": "2026-08-29T16:33:11.545Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m2.7-20260318",
+      "display_name": "MiniMax: MiniMax M2.7",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7110792363896848,
+      "accuracy_stddev": 0.04266601421056426,
+      "avg_cost_per_task": 0.01819265616045845,
+      "total_tasks": 1396,
+      "last_run_timestamp": "2026-08-29T16:13:12.597Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m3-20260531",
+      "display_name": "MiniMax: MiniMax M3",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7100103498452012,
+      "accuracy_stddev": 0.06171978848754056,
+      "avg_cost_per_task": 0.02347099226006192,
+      "total_tasks": 646,
+      "last_run_timestamp": "2026-09-12T16:00:25.640Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k3-20260715",
+      "display_name": "MoonshotAI: Kimi K3",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7093334,
+      "accuracy_stddev": 0.0204828947622156,
+      "avg_cost_per_task": 0.344536976,
+      "total_tasks": 250,
+      "last_run_timestamp": "2026-08-29T08:27:34.878Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.5-air",
+      "display_name": "Z.ai: GLM 4.5 Air",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7085714285714285,
+      "accuracy_stddev": 0.03564331276032871,
+      "avg_cost_per_task": 0.013843334285714286,
+      "total_tasks": 1050,
+      "last_run_timestamp": "2026-08-01T17:39:06.362Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openrouter/auto-beta",
+      "display_name": "Auto Router (Beta)",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.706667,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.2407015,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-07-22T00:25:39.534Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna-20260709",
+      "display_name": "OpenAI: GPT-5.6 Luna",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.706667,
+      "accuracy_stddev": 0,
+      "avg_cost_per_task": 0.00934721,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:30:15.713Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "xiaomi/mimo-v2.5-20260422",
+      "display_name": "Xiaomi: MiMo-V2.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.7066666666666667,
+      "accuracy_stddev": 0.02351773693761087,
+      "avg_cost_per_task": 0.008253893333333333,
+      "total_tasks": 450,
+      "last_run_timestamp": "2026-09-12T08:12:27.875Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5-mini-2025-08-07",
+      "display_name": "OpenAI: GPT-5 Mini",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6966669999999999,
+      "accuracy_stddev": 0.02999999999999997,
+      "avg_cost_per_task": 0.12995234,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:23:14.439Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v3.1-terminus",
+      "display_name": "DeepSeek: DeepSeek V3.1 Terminus",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6905262631578948,
+      "accuracy_stddev": 0.04059878293462567,
+      "avg_cost_per_task": 0.03949246210526315,
+      "total_tasks": 950,
+      "last_run_timestamp": "2026-08-29T16:22:37.842Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2-thinking-20251106",
+      "display_name": "MoonshotAI: Kimi K2 Thinking",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6870273595113437,
+      "accuracy_stddev": 0.10813120837921905,
+      "avg_cost_per_task": 0.04462695549738221,
+      "total_tasks": 1146,
+      "last_run_timestamp": "2026-08-01T17:38:27.943Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "xiaomi/mimo-v2-flash-20251210",
+      "display_name": "Xiaomi: MiMo-V2-Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.685,
+      "accuracy_stddev": 0.06062177826491071,
+      "avg_cost_per_task": 0.005530857500000001,
+      "total_tasks": 800,
+      "last_run_timestamp": "2026-06-13T09:16:25.647Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3.5-9b-20260310",
+      "display_name": "Qwen: Qwen3.5-9B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6843537673469388,
+      "accuracy_stddev": 0.054670257011011004,
+      "avg_cost_per_task": 0.025357189795918365,
+      "total_tasks": 490,
+      "last_run_timestamp": "2026-09-12T16:00:19.594Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5-2025-08-07",
+      "display_name": "OpenAI: GPT-5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.683673530612245,
+      "accuracy_stddev": 0.03777750000000002,
+      "avg_cost_per_task": 0.6821915918367347,
+      "total_tasks": 98,
+      "last_run_timestamp": "2026-09-01T12:56:59.816Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemma-4-26b-a4b-it-20260403",
+      "display_name": "Google: Gemma 4 26B A4B ",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6826308620689655,
+      "accuracy_stddev": 0.039302124463935585,
+      "avg_cost_per_task": 0.01650072318007663,
+      "total_tasks": 1044,
+      "last_run_timestamp": "2026-08-29T16:12:10.466Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4-sonnet-20250522",
+      "display_name": "Anthropic: Claude Sonnet 4",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.68,
+      "accuracy_stddev": 0.019999999999999962,
+      "avg_cost_per_task": 0.33301777,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:41:24.616Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v3.2-exp",
+      "display_name": "DeepSeek: DeepSeek V3.2 Exp",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6781170744274809,
+      "accuracy_stddev": 0.04274816779954069,
+      "avg_cost_per_task": 0.05630726812977101,
+      "total_tasks": 1048,
+      "last_run_timestamp": "2026-08-01T17:38:07.305Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-4.5-haiku-20251001",
+      "display_name": "Anthropic: Claude Haiku 4.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6777776666666667,
+      "accuracy_stddev": 0.03303554389677208,
+      "avg_cost_per_task": 0.11871550333333335,
+      "total_tasks": 300,
+      "last_run_timestamp": "2026-09-12T08:10:40.508Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-20260715",
+      "display_name": "Thinking Machines: Inkling",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6733333333333333,
+      "accuracy_stddev": 0.03569427799459675,
+      "avg_cost_per_task": 0.07989151333333332,
+      "total_tasks": 150,
+      "last_run_timestamp": "2026-09-12T08:00:57.271Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.2-chat-20251211",
+      "display_name": "OpenAI: GPT-5.2 Chat",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.673333,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.1116277,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T08:05:57.504Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.4-nano-20260317",
+      "display_name": "OpenAI: GPT-5.4 Nano",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.67,
+      "accuracy_stddev": 0.003332999999999975,
+      "avg_cost_per_task": 0.03314721,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:29:39.925Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m2.1",
+      "display_name": "MiniMax: MiniMax M2.1",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.665641,
+      "accuracy_stddev": 0.03574327943823845,
+      "avg_cost_per_task": 0.014684812307692306,
+      "total_tasks": 1300,
+      "last_run_timestamp": "2026-08-01T17:38:10.364Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.6",
+      "display_name": "Z.ai: GLM 4.6",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.656111125,
+      "accuracy_stddev": 0.1108538760551146,
+      "avg_cost_per_task": 0.03725507083333334,
+      "total_tasks": 1200,
+      "last_run_timestamp": "2026-08-29T16:11:23.421Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-oss-120b",
+      "display_name": "OpenAI: gpt-oss-120b",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6413925007153075,
+      "accuracy_stddev": 0.033822952229576826,
+      "avg_cost_per_task": 0.013056145922746783,
+      "total_tasks": 1398,
+      "last_run_timestamp": "2026-08-29T16:25:26.695Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "minimax/minimax-m2.5-20260211",
+      "display_name": "MiniMax: MiniMax M2.5",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6413793448275862,
+      "accuracy_stddev": 0.04757347466978795,
+      "avg_cost_per_task": 0.016055082758620692,
+      "total_tasks": 1450,
+      "last_run_timestamp": "2026-08-29T16:11:34.887Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.4-mini-20260317",
+      "display_name": "OpenAI: GPT-5.4 Mini",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.63,
+      "accuracy_stddev": 0.050000000000000044,
+      "avg_cost_per_task": 0.09203941,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:23:15.998Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "nvidia/nemotron-3.5-lightning-20260807",
+      "display_name": "NVIDIA: Nemotron 3.5 Lightning",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.629252,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.020000938775510204,
+      "total_tasks": 49,
+      "last_run_timestamp": "2026-09-12T08:00:57.697Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "z-ai/glm-4.7-flash-20260119",
+      "display_name": "Z.ai: GLM 4.7 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6190476635514018,
+      "accuracy_stddev": 0.0626101323695206,
+      "avg_cost_per_task": 0.008164642189586116,
+      "total_tasks": 1498,
+      "last_run_timestamp": "2026-08-30T00:01:02.161Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-2.5-pro",
+      "display_name": "Google: Gemini 2.5 Pro",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6133335,
+      "accuracy_stddev": 0.00666650000000002,
+      "avg_cost_per_task": 0.22014136,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:57:05.201Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-235b-a22b-thinking-2507",
+      "display_name": "Qwen: Qwen3 235B A22B Thinking 2507",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6120178694362017,
+      "accuracy_stddev": 0.04152377144081941,
+      "avg_cost_per_task": 0.059373140207715135,
+      "total_tasks": 1348,
+      "last_run_timestamp": "2026-08-22T16:01:40.197Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "thinkingmachines/inkling-small-20260730",
+      "display_name": "Thinking Machines: Inkling Small",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.608889,
+      "accuracy_stddev": 0.03142665378305492,
+      "avg_cost_per_task": 0.04707244,
+      "total_tasks": 150,
+      "last_run_timestamp": "2026-09-12T08:12:24.929Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-chat-v3.1",
+      "display_name": "DeepSeek: DeepSeek V3.1",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.6023433644189383,
+      "accuracy_stddev": 0.1053638576401378,
+      "avg_cost_per_task": 0.059112026542324246,
+      "total_tasks": 1394,
+      "last_run_timestamp": "2026-08-30T00:01:02.157Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-coder-next-2025-02-03",
+      "display_name": "Qwen: Qwen3 Coder Next",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.5835713928571429,
+      "accuracy_stddev": 0.06528289776336049,
+      "avg_cost_per_task": 0.024457957857142866,
+      "total_tasks": 1400,
+      "last_run_timestamp": "2026-08-29T16:43:55.088Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-2.5-flash",
+      "display_name": "Google: Gemini 2.5 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.5766665,
+      "accuracy_stddev": 0.0033334999999999892,
+      "avg_cost_per_task": 0.028599199999999998,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:31:45.195Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "inclusionai/ling-3.0-flash-20260723",
+      "display_name": "inclusionAI: Ling 3.0 Flash",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.573333,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.012256119999999999,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-07T00:00:02.467Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "moonshotai/kimi-k2-0905",
+      "display_name": "MoonshotAI: Kimi K2 0905",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.5528659065108514,
+      "accuracy_stddev": 0.0523743456440163,
+      "avg_cost_per_task": 0.11301946911519196,
+      "total_tasks": 1198,
+      "last_run_timestamp": "2026-08-01T17:38:23.537Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-r1-0528",
+      "display_name": "DeepSeek: R1 0528",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.5447935043630018,
+      "accuracy_stddev": 0.05815285860928078,
+      "avg_cost_per_task": 0.08438295375218151,
+      "total_tasks": 1146,
+      "last_run_timestamp": "2026-08-29T16:25:50.849Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "nvidia/nemotron-3-nano-30b-a3b",
+      "display_name": "NVIDIA: Nemotron 3 Nano 30B A3B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.5180952857142856,
+      "accuracy_stddev": 0.02753675754184519,
+      "avg_cost_per_task": 0.024855254285714282,
+      "total_tasks": 350,
+      "last_run_timestamp": "2026-09-12T16:00:19.599Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-oss-20b",
+      "display_name": "OpenAI: gpt-oss-20b",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.5142517672209026,
+      "accuracy_stddev": 0.02522134894822571,
+      "avg_cost_per_task": 0.02337072446555819,
+      "total_tasks": 842,
+      "last_run_timestamp": "2026-08-29T16:33:29.988Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4.1-2025-04-14",
+      "display_name": "OpenAI: GPT-4.1",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.48666650000000006,
+      "accuracy_stddev": 0.00666650000000002,
+      "avg_cost_per_task": 0.12261337999999998,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:53:49.436Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5-nano-2025-08-07",
+      "display_name": "OpenAI: GPT-5 Nano",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.47619069387755103,
+      "accuracy_stddev": 0.04472200000000001,
+      "avg_cost_per_task": 0.042756918367346936,
+      "total_tasks": 98,
+      "last_run_timestamp": "2026-09-01T17:27:02.043Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "google/gemini-2.5-flash-lite",
+      "display_name": "Google: Gemini 2.5 Flash Lite",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.473333,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.023663,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T17:39:14.289Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-next-80b-a3b-instruct-2509",
+      "display_name": "Qwen: Qwen3 Next 80B A3B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.4696295925925926,
+      "accuracy_stddev": 0.03580162306403446,
+      "avg_cost_per_task": 0.014975554814814817,
+      "total_tasks": 1350,
+      "last_run_timestamp": "2026-08-29T16:22:50.200Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-coder-480b-a35b-07-25",
+      "display_name": "Qwen: Qwen3 Coder 480B A35B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.4666666296296296,
+      "accuracy_stddev": 0.05167164770910579,
+      "avg_cost_per_task": 0.0480178237037037,
+      "total_tasks": 1350,
+      "last_run_timestamp": "2026-08-29T16:33:30.427Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o",
+      "display_name": "OpenAI: GPT-4o",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.46333349999999995,
+      "accuracy_stddev": 0.0166665,
+      "avg_cost_per_task": 0.20313888,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:41:31.668Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.3-chat-20260303",
+      "display_name": "OpenAI: GPT-5.3 Chat",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.46,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.09873096,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T08:05:59.441Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-235b-a22b-07-25",
+      "display_name": "Qwen: Qwen3 235B A22B Instruct 2507",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.4585714285714286,
+      "accuracy_stddev": 0.04149422958025832,
+      "avg_cost_per_task": 0.01808942214285714,
+      "total_tasks": 1400,
+      "last_run_timestamp": "2026-08-29T16:33:39.618Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o-2024-08-06",
+      "display_name": "OpenAI: GPT-4o (2024-08-06)",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.4466665,
+      "accuracy_stddev": 0.013333499999999998,
+      "avg_cost_per_task": 0.20957163,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:58:37.172Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-4-maverick-17b-128e-instruct",
+      "display_name": "Meta: Llama 4 Maverick",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.44642858482142855,
+      "accuracy_stddev": 0.022519182833890147,
+      "avg_cost_per_task": 0.04059176116071428,
+      "total_tasks": 448,
+      "last_run_timestamp": "2026-08-29T16:33:29.885Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4.1-mini-2025-04-14",
+      "display_name": "OpenAI: GPT-4.1 Mini",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.44,
+      "accuracy_stddev": 0.013332999999999984,
+      "avg_cost_per_task": 0.02857548,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:30:53.043Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-30b-a3b-04-28",
+      "display_name": "Qwen: Qwen3 30B A3B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.43714290476190476,
+      "accuracy_stddev": 0.06119001000389397,
+      "avg_cost_per_task": 0.014972639047619045,
+      "total_tasks": 1050,
+      "last_run_timestamp": "2026-08-01T17:38:32.120Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "mistralai/mistral-small-2603",
+      "display_name": "Mistral: Mistral Small 4",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.43666650000000007,
+      "accuracy_stddev": 0.023333500000000007,
+      "avg_cost_per_task": 0.014376880000000002,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T13:02:23.335Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-coder-30b-a3b-instruct",
+      "display_name": "Qwen: Qwen3 Coder 30B A3B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.4311113333333333,
+      "accuracy_stddev": 0.006285236475706817,
+      "avg_cost_per_task": 0.023601506666666664,
+      "total_tasks": 150,
+      "last_run_timestamp": "2026-08-15T08:02:48.904Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-chat-v3-0324",
+      "display_name": "DeepSeek: DeepSeek V3 0324",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.43019198778359513,
+      "accuracy_stddev": 0.038397605891026206,
+      "avg_cost_per_task": 0.041623628272251315,
+      "total_tasks": 1146,
+      "last_run_timestamp": "2026-08-29T16:11:46.632Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-14b-04-28",
+      "display_name": "Qwen: Qwen3 14B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.423333,
+      "accuracy_stddev": 0.010000000000000009,
+      "avg_cost_per_task": 0.02960835,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:41:25.851Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-32b-04-28",
+      "display_name": "Qwen: Qwen3 32B",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.42131615736766814,
+      "accuracy_stddev": 0.0994110540544118,
+      "avg_cost_per_task": 0.015165419170243203,
+      "total_tasks": 1398,
+      "last_run_timestamp": "2026-08-29T16:16:50.456Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-vl-235b-a22b-instruct",
+      "display_name": "Qwen: Qwen3 VL 235B A22B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.40690475,
+      "accuracy_stddev": 0.04376999387677835,
+      "avg_cost_per_task": 0.03466928571428572,
+      "total_tasks": 1400,
+      "last_run_timestamp": "2026-08-29T16:11:10.099Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o-2024-05-13",
+      "display_name": "OpenAI: GPT-4o (2024-05-13)",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.4,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 1.1315643,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T08:06:02.002Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-3.3-70b-instruct",
+      "display_name": "Meta: Llama 3.3 70B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.3873744949784792,
+      "accuracy_stddev": 0.03598314461170236,
+      "avg_cost_per_task": 0.01234852367288379,
+      "total_tasks": 1394,
+      "last_run_timestamp": "2026-08-29T16:14:38.085Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-chat-v3",
+      "display_name": "DeepSeek: DeepSeek V3",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.38333349999999994,
+      "accuracy_stddev": 0.0033334999999999892,
+      "avg_cost_per_task": 0.07100836,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T12:58:37.380Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-30b-a3b-instruct-2507",
+      "display_name": "Qwen: Qwen3 30B A3B Instruct 2507",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.37728396296296296,
+      "accuracy_stddev": 0.033909076179822396,
+      "avg_cost_per_task": 0.016055785925925922,
+      "total_tasks": 1350,
+      "last_run_timestamp": "2026-08-29T16:10:20.675Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-vl-30b-a3b-instruct",
+      "display_name": "Qwen: Qwen3 VL 30B A3B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.3467153284671533,
+      "accuracy_stddev": 0.03203894209982647,
+      "avg_cost_per_task": 0.07335140693430657,
+      "total_tasks": 548,
+      "last_run_timestamp": "2026-09-12T08:10:14.296Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen3-vl-8b-instruct",
+      "display_name": "Qwen: Qwen3 VL 8B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.32819441666666666,
+      "accuracy_stddev": 0.0451948698166402,
+      "avg_cost_per_task": 0.019855432500000002,
+      "total_tasks": 1200,
+      "last_run_timestamp": "2026-08-01T17:38:36.457Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "meta-llama/llama-3.1-8b-instruct",
+      "display_name": "Meta: Llama 3.1 8B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.31393936363636366,
+      "accuracy_stddev": 0.06547146035664246,
+      "avg_cost_per_task": 0.006050438181818182,
+      "total_tasks": 1100,
+      "last_run_timestamp": "2026-08-22T16:04:58.329Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4o-mini",
+      "display_name": "OpenAI: GPT-4o-mini",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.27,
+      "accuracy_stddev": 0.03,
+      "avg_cost_per_task": 0.02140288,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:29:05.378Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen-2.5-72b-instruct",
+      "display_name": "Qwen2.5 72B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.26041658333333334,
+      "accuracy_stddev": 0.01347799999999999,
+      "avg_cost_per_task": 0.07850963541666667,
+      "total_tasks": 96,
+      "last_run_timestamp": "2026-09-01T12:59:55.605Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "mistralai/mistral-nemo",
+      "display_name": "Mistral: Mistral Nemo",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.18712804910714284,
+      "accuracy_stddev": 0.063489276040705,
+      "avg_cost_per_task": 0.019668446428571427,
+      "total_tasks": 448,
+      "last_run_timestamp": "2026-07-18T08:04:09.749Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "qwen/qwen-2.5-7b-instruct",
+      "display_name": "Qwen: Qwen2.5 7B Instruct",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.166667,
+      "accuracy_stddev": null,
+      "avg_cost_per_task": 0.016978299999999998,
+      "total_tasks": 50,
+      "last_run_timestamp": "2026-08-01T08:06:07.057Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-4.1-nano-2025-04-14",
+      "display_name": "OpenAI: GPT-4.1 Nano",
+      "benchmark_type": "tau_bench_verified_airline",
+      "accuracy": 0.1033335,
+      "accuracy_stddev": 0.003333499999999996,
+      "avg_cost_per_task": 0.0070183400000000005,
+      "total_tasks": 100,
+      "last_run_timestamp": "2026-09-01T17:31:46.301Z"
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-opus-5",
+      "display_name": "Claude Opus 5",
+      "benchmark_type": "search_browsecomp",
+      "primary_metric": "accuracy",
+      "primary_score": 0.8924368823529413,
+      "total_tasks": 595,
+      "avg_cost_per_task": 2.362899736134454,
+      "avg_latency_per_task_ms": 140773.74453781513,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T03:36:13.159Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol",
+      "display_name": "GPT-5.6-Sol",
+      "benchmark_type": "search_browsecomp",
+      "primary_metric": "accuracy",
+      "primary_score": 0.8243670000000001,
+      "total_tasks": 632,
+      "avg_cost_per_task": 0.5028527816455696,
+      "avg_latency_per_task_ms": 115870.25,
+      "search_engine": "perplexity",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T00:51:21.328Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-0731",
+      "display_name": "Deepseek V4 Flash 0731",
+      "benchmark_type": "search_browsecomp",
+      "primary_metric": "accuracy",
+      "primary_score": 0.77,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.07649624000000001,
+      "avg_latency_per_task_ms": 135422.98,
+      "search_engine": "perplexity",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T10:55:08.930Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna",
+      "display_name": "GPT-5.6-Luna",
+      "benchmark_type": "search_browsecomp",
+      "primary_metric": "accuracy",
+      "primary_score": 0.74,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.09858238,
+      "avg_latency_per_task_ms": 111189.6,
+      "search_engine": "perplexity",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T05:36:23.702Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "xhigh",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-opus-5",
+      "display_name": "Claude Opus 5",
+      "benchmark_type": "search_dsqa",
+      "primary_metric": "accuracy",
+      "primary_score": 0.887391,
+      "total_tasks": 300,
+      "avg_cost_per_task": 0.7882165633333333,
+      "avg_latency_per_task_ms": 143767.81333333332,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-14T21:13:31.975Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol",
+      "display_name": "GPT-5.6-Sol",
+      "benchmark_type": "search_dsqa",
+      "primary_metric": "accuracy",
+      "primary_score": 0.88378,
+      "total_tasks": 450,
+      "avg_cost_per_task": 0.8521226622222222,
+      "avg_latency_per_task_ms": 130880.1888888889,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-14T20:37:57.151Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna",
+      "display_name": "GPT-5.6-Luna",
+      "benchmark_type": "search_dsqa",
+      "primary_metric": "accuracy",
+      "primary_score": 0.874766,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.10504530000000001,
+      "avg_latency_per_task_ms": 100178.74,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T05:36:03.250Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "xhigh",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-0731",
+      "display_name": "Deepseek V4 Flash 0731",
+      "benchmark_type": "search_dsqa",
+      "primary_metric": "accuracy",
+      "primary_score": 0.816547,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.09063391,
+      "avg_latency_per_task_ms": 98765,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T10:52:16.895Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol",
+      "display_name": "GPT-5.6-Sol",
+      "benchmark_type": "search_hle",
+      "primary_metric": "accuracy",
+      "primary_score": 0.71,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.70518885,
+      "avg_latency_per_task_ms": 85213.49,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T12:00:02.287Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-opus-5",
+      "display_name": "Claude Opus 5",
+      "benchmark_type": "search_hle",
+      "primary_metric": "accuracy",
+      "primary_score": 0.67319,
+      "total_tasks": 511,
+      "avg_cost_per_task": 0.40724371037182,
+      "avg_latency_per_task_ms": 124923.79256360079,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-17T06:04:35.667Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-sol",
+      "display_name": "GPT-5.6-Sol",
+      "benchmark_type": "search_widesearch",
+      "primary_metric": "f1_by_item",
+      "primary_score": 0.84049,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.83365428,
+      "avg_latency_per_task_ms": 135725.25,
+      "search_engine": "perplexity",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T00:50:53.051Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "openai/gpt-5.6-luna",
+      "display_name": "GPT-5.6-Luna",
+      "benchmark_type": "search_widesearch",
+      "primary_metric": "f1_by_item",
+      "primary_score": 0.834223,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.16628389,
+      "avg_latency_per_task_ms": 164892,
+      "search_engine": "perplexity",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T05:37:04.176Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "xhigh",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "deepseek/deepseek-v4-flash-0731",
+      "display_name": "Deepseek V4 Flash 0731",
+      "benchmark_type": "search_widesearch",
+      "primary_metric": "f1_by_item",
+      "primary_score": 0.771289,
+      "total_tasks": 100,
+      "avg_cost_per_task": 0.10469292,
+      "avg_latency_per_task_ms": 118587.16,
+      "search_engine": "perplexity",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-11T10:51:14.371Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    },
+    {
+      "source": "openrouter",
+      "model_permaslug": "anthropic/claude-opus-5",
+      "display_name": "Claude Opus 5",
+      "benchmark_type": "search_widesearch",
+      "primary_metric": "f1_by_item",
+      "primary_score": 0.6725280000000001,
+      "total_tasks": 100,
+      "avg_cost_per_task": 1.36199698,
+      "avg_latency_per_task_ms": 217914.03,
+      "search_engine": "parallel",
+      "search_surface": "server-tool",
+      "last_run_timestamp": "2026-08-17T05:48:07.078Z",
+      "run_config": {
+        "max_agent_turns": 25,
+        "reasoning_effort": "high",
+        "temperature": null
+      }
+    }
+  ],
   "data": [
     {
       "source": "artificial-analysis",
@@ -284,8 +3347,8 @@
       "coding_index": 68.8,
       "agentic_index": 42.3,
       "pricing": {
-        "prompt": "0.00000096",
-        "completion": "0.00000288"
+        "prompt": "0.0000011913",
+        "completion": "0.0000035739"
       }
     },
     {
@@ -548,7 +3611,7 @@
       "coding_index": 52,
       "agentic_index": 27.9,
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -785,8 +3848,8 @@
       "coding_index": 43.4,
       "agentic_index": 6.7,
       "pricing": {
-        "prompt": "0.00000039",
-        "completion": "0.00000097"
+        "prompt": "0.00000027",
+        "completion": "0.00000076"
       }
     },
     {
@@ -1022,8 +4085,8 @@
       "coding_index": 20.7,
       "agentic_index": 1.4,
       "pricing": {
-        "prompt": "0.00000005",
-        "completion": "0.0000002"
+        "prompt": "0.000000029",
+        "completion": "0.00000014"
       }
     },
     {
@@ -9401,7 +12464,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -9422,7 +12485,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -9443,7 +12506,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -9674,7 +12737,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -13076,7 +16139,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -13349,7 +16412,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -16649,7 +19712,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -17561,7 +20624,7 @@
         "total": 12057
       },
       "pricing": {
-        "prompt": "0.0000001",
+        "prompt": "0.00000007",
         "completion": "0.00000025"
       }
     },
@@ -23369,8 +26432,8 @@
         "total": 471
       },
       "pricing": {
-        "prompt": "0.00000005",
-        "completion": "0.0000002"
+        "prompt": "0.000000029",
+        "completion": "0.00000014"
       }
     },
     {
@@ -24158,8 +27221,8 @@
         "total": 471
       },
       "pricing": {
-        "prompt": "0.00000005",
-        "completion": "0.0000002"
+        "prompt": "0.000000029",
+        "completion": "0.00000014"
       }
     },
     {
@@ -24753,7 +27816,7 @@
     {
       "source": "openrouter",
       "model_permaslug": "anthropic/claude-opus-5-20260723",
-      "display_name": "Claude Opus 5",
+      "display_name": "Anthropic: Claude Opus 5",
       "benchmark_type": "gpqa_diamond",
       "accuracy": 0.8703703333333335,
       "accuracy_stddev": 0.02120598298174888,
@@ -25952,7 +29015,7 @@
     {
       "source": "openrouter",
       "model_permaslug": "anthropic/claude-opus-5-20260723",
-      "display_name": "Claude Opus 5",
+      "display_name": "Anthropic: Claude Opus 5",
       "benchmark_type": "tau_bench_verified_airline",
       "accuracy": 0.7955556666666667,
       "accuracy_stddev": 0.022662232683966114,

@@ -105,7 +105,9 @@ test('actual source adapter keeps all version identities, values and dated legac
   const selected = selectBenchmarkView(view, ['gpt-5.6-sol::high']);
   assert.ok(selected.axes.flatMap((a) => a.scores).every((r) => r.modelId === 'gpt-5.6-sol::high'));
   assert.deepEqual(selected.axes.map((a) => a.stats), view.axes.map((a) => a.stats), 'peers independent of selection');
-  assert.ok(JSON.stringify(selected).length < 500_000, 'initial benchmark payload bounded to selected models');
+  // Guards against shipping the whole matrix instead of the selected model's rows (that is megabytes).
+  // The ceiling tracks the registry: 2026-09-16 raised from 500 KB with CR-34.2's twelve OpenRouter boards.
+  assert.ok(JSON.stringify(selected).length < 540_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
 

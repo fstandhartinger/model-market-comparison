@@ -7,6 +7,7 @@ import { writeJSONAtomic } from '../lib/snapshot.mjs';
 import { validateBenchmarkScores } from '../lib/benchmark-scores.mjs';
 import { verifyScoreEvidence } from '../lib/benchmark-score-evidence.mjs';
 import { parseRealSwe, buildRealSweSnapshot } from '../lib/realswe.mjs';
+import { buildOpenRouterBenchmarkObservations, BENCHMARK_IDS as OPENROUTER_BENCHMARKS } from '../lib/openrouter-benchmark-scores.mjs';
 const read = async (p) => JSON.parse(await readFile(p, 'utf8'));
 const hash = (s) => createHash('sha256').update(s).digest('hex');
 const registry = await read('data/raw/benchmarks/registry.json');
@@ -123,6 +124,31 @@ for (const version of ['1.4', '1.5']) {
     reason: 'Hash-bound page and dataset chunk parsed offline; eight model-harness configurations on a published ten-task sample (8 x 10 x 8 = 640 rollouts), each value reconciled against the individual rollout outcomes.' });
   collections.push({ benchmark_id: realswe.costId, status: 'collected', source_url: spec.source_url,
     reason: 'Published mean cost per rollout from the source Pareto view; recorded with per-configuration provider-usage provenance and explicit lower-bound flags.' });
+}
+// CR-34.2 / CR-34.3: OpenRouter's own reproducible runs. The capture is hash-bound to the lock,
+// so ingestion is offline and deterministic; a refreshed capture needs a reviewed lock update.
+{
+  const spec = lock.openrouter_benchmarks;
+  // Read the locked capture itself, not the daily-refreshed live snapshot: the dated registry
+  // identity and the bytes behind it must stay the same pair. A newer capture becomes a new
+  // dated identity in a reviewed change (ops/daily/refresh-benchmarks.mjs reports the drift).
+  const captureBytes = gunzipSync(await readFile(spec.source_file));
+  if (hash(captureBytes) !== spec.source_sha256) throw new Error('OpenRouter benchmarks evidence file no longer matches the locked capture');
+  const snapshot = JSON.parse(captureBytes.toString('utf8'));
+  const version = `snapshot-${spec.snapshot_date}`;
+  const or = buildOpenRouterBenchmarkObservations(snapshot, models, {
+    url: spec.source_url, retrieved_at: spec.retrieved_at, published_at: null,
+    sha256: spec.source_sha256, file: spec.source_file,
+  }, version);
+  observations.push(...or.observations);
+  // A row whose permaslug resolves to no catalog offer never becomes an observation.
+  // A row whose published effort is not a catalog configuration does become an observation,
+  // unjoined — it stays visible as an unmatched source identity instead of silently vanishing.
+  rejected.push(...or.rejected);
+  for (const family of Object.values(OPENROUTER_BENCHMARKS)) for (const id of [`${family}::${version}`, `${family}-cost::${version}`]) {
+    collections.push({ benchmark_id: id, status: 'collected', source_url: spec.source_url,
+      reason: `OpenRouter's own runs from its documented public Benchmarks API, captured ${spec.retrieved_at.slice(0, 10)} and hash-bound to the ingestion lock. Attribution: OpenRouter Benchmarks.` });
+  }
 }
 for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/benchmarks/vendor-candidates.json']) {
   let raw;

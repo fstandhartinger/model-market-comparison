@@ -237,11 +237,11 @@
         "value_field": "value"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
+      "reason": "No safely attributable current result parsed from captured evidence. README '## Leaderboard' table: extract the 'Challenge Accuracy\u00b9' column per model; footnote 1 defines the metric as average accuracy over 5 runs \u00d7 70 test challenges.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "Markdown",
-        "locator": "README '## Leaderboard' table: extract the 'Challenge Accuracy¹' column per model; footnote 1 defines the metric as average accuracy over 5 runs × 70 test challenges.",
+        "locator": "README '## Leaderboard' table: extract the 'Challenge Accuracy\u00b9' column per model; footnote 1 defines the metric as average accuracy over 5 runs \u00d7 70 test challenges.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -287,7 +287,7 @@
         "sha256": "188d8ea4a393978063a6c24dff6c92ce185169827038bfa558091212a68c29d8",
         "retrieved_at": "2026-09-10T23:12:08.627024+00:00"
       },
-      "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley–Terry fit, normalised against anchor models)",
+      "protocol": "Ranked Elo score from blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel (soft Bradley\u2013Terry fit, normalised against anchor models)",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -498,11 +498,11 @@
         "value_field": "value"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+      "reason": "No safely attributable current result parsed from captured evidence. README \u8a55\u4fa1\u7d50\u679c table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "Markdown",
-        "locator": "README 評価結果 table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
+        "locator": "README \u8a55\u4fa1\u7d50\u679c table; column 'Overall Average' per target_model_name (average of the 4 judge models' evaluation values across criteria)",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -532,11 +532,11 @@
         "value_field": "value"
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
+      "reason": "No safely attributable current result parsed from captured evidence. README \u6700\u65b0\u306e\u53cd\u5fa9\u8a55\u4fa1\u7d50\u679c table; columns \u9806\u4f4d, \u30e2\u30c7\u30eb, Major-free\u7387, Major\u7387, RP Summary (95% CI), 1\u4f4d\u78ba\u7387 per model",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "Markdown",
-        "locator": "README 最新の反復評価結果 table; columns 順位, モデル, Major-free率, Major率, RP Summary (95% CI), 1位確率 per model",
+        "locator": "README \u6700\u65b0\u306e\u53cd\u5fa9\u8a55\u4fa1\u7d50\u679c table; columns \u9806\u4f4d, \u30e2\u30c7\u30eb, Major-free\u7387, Major\u7387, RP Summary (95% CI), 1\u4f4d\u78ba\u7387 per model",
         "version_guard": "Verify the published version 2 before reading results.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -742,7 +742,7 @@
         "sha256": "788ec3eb6fa034a82b22760f95eb04a514aa0c15e1c15d134fc350a59d1696f0",
         "fetched_at": "2026-09-10T21:53:04Z"
       },
-      "protocol": "TrueSkill mean (μ), with σ uncertainty reported separately",
+      "protocol": "TrueSkill mean (\u03bc), with \u03c3 uncertainty reported separately",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1263,11 +1263,11 @@
         "header_rows": 1
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the \u03c4\u00b2-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "Select the τ²-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "locator": "Select the \u03c4\u00b2-bench board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
         "version_guard": "Verify the published version 2 before reading results.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1303,11 +1303,11 @@
         "header_rows": 1
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the \u03c4\u00b3-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "Select the τ³-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "locator": "Select the \u03c4\u00b3-Banking board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
         "version_guard": "Require tau2-bench package >=1.0.1 with the verified 1.0.1 banking task corrections; a later grading/task change needs a new identity. Do not import pre-fix scores.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1343,11 +1343,11 @@
         "header_rows": 1
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+      "reason": "No safely attributable current result parsed from captured evidence. Select the \u03c4\u00b3-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "HTML/embedded data",
-        "locator": "Select the τ³-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
+        "locator": "Select the \u03c4\u00b3-Voice board and follow its full leaderboard link; preserve domain, text/voice mode, simulator, retrieval pipeline and task release. Never combine the three displayed boards.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1428,7 +1428,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "NatInt 💡",
+        "value_field": "NatInt \ud83d\udca1",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1437,11 +1437,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt \ud83d\udca1'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt 💡'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'NatInt \ud83d\udca1'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1453,7 +1453,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "NatInt 💡 published composite",
+      "protocol": "NatInt \ud83d\udca1 published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1466,7 +1466,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "W/10 👍",
+        "value_field": "W/10 \ud83d\udc4d",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1475,11 +1475,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 \ud83d\udc4d'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 👍'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'W/10 \ud83d\udc4d'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1491,7 +1491,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "W/10 👍 published composite",
+      "protocol": "W/10 \ud83d\udc4d published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1504,7 +1504,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "Writing ✍️",
+        "value_field": "Writing \u270d\ufe0f",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1513,11 +1513,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing \u270d\ufe0f'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing ✍️'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'Writing \u270d\ufe0f'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1529,7 +1529,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "Writing ✍️ published composite",
+      "protocol": "Writing \u270d\ufe0f published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -1542,7 +1542,7 @@
         "kind": "csv",
         "name_field": "author/model_name",
         "plain_text_names": true,
-        "value_field": "UGI 🏆",
+        "value_field": "UGI \ud83c\udfc6",
         "context_fields": [
           "Prompt Template",
           "Test Date",
@@ -1551,11 +1551,11 @@
         ]
       },
       "status": "collected",
-      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
+      "reason": "No safely attributable current result parsed from captured evidence. GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI \ud83c\udfc6'. Preserve model identity and do not substitute its subordinate columns.",
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json CAPTURE_DIR; review protocol; update candidate collection plan source receipt; python3 scripts/collect-public-benchmarks.py CANDIDATE.json",
         "format": "CSV",
-        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI 🏆'. Preserve model identity and do not substitute its subordinate columns.",
+        "locator": "GET the linked raw/main/ugi-leaderboard-data.csv; select exact CSV header 'UGI \ud83c\udfc6'. Preserve model identity and do not substitute its subordinate columns.",
         "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
         "notes": "Check robots.txt and the shared source cooldown first; stop on 403, 429, challenges or unexpected content. This command captures the source; the locator specifies the extraction. Score ingestion and model matching are phase 05."
       },
@@ -1567,7 +1567,7 @@
         "sha256": "4154635c4557af4b4eebbeaab6970bdf8296aef44e46f6193fdb4976cd8fe7f2",
         "fetched_at": "2026-09-10T22:04:13Z"
       },
-      "protocol": "UGI 🏆 published composite",
+      "protocol": "UGI \ud83c\udfc6 published composite",
       "basis": "measured",
       "minimum_rows": 1,
       "source_urls": [
@@ -2203,9 +2203,9 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/frontiercode-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
         "format": "JSON data file requested by the leaderboard page",
-        "locator": "v1_1.data[model][effort].main.new_score (fraction; the rendered leaderboard shows it ×100 as \"Score\")",
+        "locator": "v1_1.data[model][effort].main.new_score (fraction; the rendered leaderboard shows it \u00d7100 as \"Score\")",
         "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
-        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model \u00d7 published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
       "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
@@ -2258,7 +2258,7 @@
         "format": "JSON data file requested by the leaderboard page",
         "locator": "v1_1.data[model][effort].main.cost (the rendered leaderboard: \"Cost ($): the mean USD spend per rollout\")",
         "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
-        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model × published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
+        "notes": "The leaderboard page loads its own https://cognition.com/data/frontiercode-leaderboard/data.json (E3 step 4: the page's own request, fetched directly once); robots.txt allows everything except /downloads/. Rows are model \u00d7 published reasoning effort; the harness is the source's per-model harness. Cognition runs the board and ships its own SWE models, so every row is self_reported and needs a different-family critic review."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
       "version_guard": "Require data.json key v1_1 with subsets.main == 100 and the page text \"FrontierCode 1.1\". FrontierCode 1.0 (before unfair-internet-use zeroing) and the Extended subset are different identities.",
@@ -2512,11 +2512,11 @@
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
         "format": "CSV",
         "locator": "GET data/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 55 attempts).",
-        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
         "notes": "Whether a model rejects the broken premise of 55 deliberately nonsensical prompts (V1 question set) instead of answering them confidently."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
       "source": {
         "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/latest/leaderboard.csv",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/2605907319773e0e5858.gz",
@@ -2575,11 +2575,11 @@
         "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
         "format": "CSV",
         "locator": "GET data/v2/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 100 attempts).",
-        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
         "notes": "Whether a model rejects the broken premise of 100 deliberately nonsensical prompts (V2 question set) instead of answering them confidently."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,\u2026,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
       "source": {
         "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/v2/latest/leaderboard.csv",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/0c866538642eab944f67.gz",
@@ -2727,7 +2727,7 @@
         ]
       },
       "status": "collected",
-      "reason": "Datacurve runs DeepSWE itself (measured); Epoch AI republishes the rows under CC-BY 4.0. Rows are model × published reasoning effort.",
+      "reason": "Datacurve runs DeepSWE itself (measured); Epoch AI republishes the rows under CC-BY 4.0. Rows are model \u00d7 published reasoning effort.",
       "recipe": {
         "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip deepswe_external.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-coding/epoch-deepswe_external.csv.gz; python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "CSV member of a ZIP archive",
@@ -2768,12 +2768,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "HTML with embedded Next.js flight data",
-        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
-        "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) \u2014 the \"Performance Comparison\" table",
+        "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
         "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
       "source": {
         "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
@@ -2805,12 +2805,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "HTML with embedded Next.js flight data",
-        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
-        "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) \u2014 the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
         "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
       "source": {
         "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
@@ -2842,12 +2842,12 @@
       "recipe": {
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "HTML with embedded Next.js flight data",
-        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
-        "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) \u2014 the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
         "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
       },
       "cadence": "daily, at most one capture per source; stop on access restrictions",
-      "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 \u2192 500 for newer models). A changed task set, judge or metric needs a new identity.",
       "source": {
         "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
         "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
@@ -2860,6 +2860,78 @@
       "source_urls": [
         "https://labs.scale.com/leaderboard/sweatlas-refactoring"
       ]
+    },
+    {
+      "benchmark_id": "openrouter-gpqa-diamond::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-gpqa-diamond-cost::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-tau2-bench-airline-cost::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-browsecomp::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-browsecomp-cost::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-dsqa::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-dsqa-cost::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-hle::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-hle-cost::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-widesearch::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "openrouter-search-widesearch-cost::snapshot-2026-09-15",
+      "refresh": "manual",
+      "status": "collected",
+      "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
     }
   ]
 }
