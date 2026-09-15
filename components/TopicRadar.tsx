@@ -15,7 +15,10 @@ export function RadarHit({ cx, cy, s, i, active, setActive, label }: { cx: numbe
   const on = active?.s === s && active?.i === i;
   return <circle cx={cx} cy={cy} r={12} fill="transparent" tabIndex={0} role="button" aria-label={label} aria-pressed={on}
     className="cursor-pointer outline-none focus-visible:[stroke:currentColor] focus-visible:[stroke-width:2]"
-    onMouseEnter={() => setActive({ s, i })} onMouseLeave={() => setActive(null)} onFocus={() => setActive({ s, i })} onBlur={() => setActive(null)}
+    // Hover only for real mice: after a tap, browsers send compatibility mouseleave events that would
+    // close the tooltip the tap just opened. Touch uses focus and click instead.
+    onPointerEnter={(e) => { if (e.pointerType === 'mouse') setActive({ s, i }); }} onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }}
+    onFocus={() => setActive({ s, i })} onBlur={() => setActive(null)}
     onClick={(e) => { e.stopPropagation(); setActive({ s, i }); }} onKeyDown={(e) => { if (e.key === 'Escape') setActive(null); }} />;
 }
 
@@ -81,7 +84,7 @@ export function TopicRadar({ axes, series, label }: { axes: RadarAxisMeta[]; ser
     return out;
   });
   const otherNames = singletonTopics.map(([topic]) => topic);
-  return <div className="overflow-hidden"><div className="relative mx-auto w-full max-w-[640px]" onMouseLeave={() => setActive(null)} onClick={() => setActive(null)}>
+  return <div className="overflow-hidden"><div className="relative mx-auto w-full max-w-[640px]" onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
     <svg viewBox={`0 0 ${size} ${size}`} role="group" aria-label={label} className="mx-auto block h-auto w-full">
       {[25, 50, 75, 100].map((n) => <circle key={n} cx={c} cy={c} r={r * n / 100} fill="none" stroke="currentColor" opacity=".12" />)}
       {sectors.map((sector) => <path key={sector.topic} d={sector.path} fill={sector.eligible ? TOPIC_COLORS[sector.topicIndex % TOPIC_COLORS.length] : 'var(--line, #526071)'} opacity={sector.eligible ? '.35' : '.18'} />)}

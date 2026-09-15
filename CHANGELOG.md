@@ -4,6 +4,25 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Compare radar, value tags, Benchmaxxing master-detail, subscription note
+
+No data location, route or public API field was removed; no dataset value changed.
+
+- **`GET /api/benchmark-view`** gains an additive `indexAxes` array: Epoch ECI and Epoch Software ECI as
+  dated snapshot axes (`epoch_eci::snapshot-<date>`, `epoch_eci_software::snapshot-<date>`, unit `ECI`),
+  filtered to the requested models like `axes`. They are kept out of `axes` on purpose, so the Benchmaxxing
+  signal and the full comparison, which iterate `axes`, are unchanged.
+- **/compare and /radar** open on the two most capable current families by AA Intelligence Index (derived from
+  data). The radar draws each benchmark on its own scale (0–100 indices, percentages, registry ranges); only
+  open-ended Elo / ECI use the measured range. New default axes; a Detailed topic radar toggle.
+- **Overview Cost cell:** a small "cheaper" / "pricier" tag for models ≥2× off the typical cost for their score
+  among the rows shown (robust line of log cost against score). Presentation only.
+- **/benchmaxxing:** the table is a preset (Featured by default); the report follows the selected row (`?model=`,
+  one or two ids for compare mode); signals above 25 render as a warning pill.
+- **Subscriptions:** API pricing stays the baseline; the subscription panel is a folded "Subscription costs may
+  differ" note with an assumption-based estimate ((monthly fee + extra usage) ÷ tasks per month). Guided mode
+  asks the optional company question last.
+
 ## 2026-09-15 — Coding benchmarks, Benchmark Heaven score row, typical cache-hit baseline
 
 No data location, route or public API field was removed.
