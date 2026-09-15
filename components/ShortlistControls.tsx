@@ -183,7 +183,7 @@ export function ShortlistControls({
        <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
         <div className="grid grid-cols-1 gap-3 self-start sm:grid-cols-2 lg:grid-cols-1 lg:gap-2">
           <Row
-            title={<>{scoreChoices && onScore ? <LabelPicker name="Capability score" label={label.title} options={scoreChoices} value={score} onChange={onScore} /> : <span>{label.title}</span>}<InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This is the same score as the Benchmark Heaven Score row of the benchmark table below, and it follows the active score selector.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
+            title={<>{scoreChoices && onScore ? <LabelPicker name="Capability score" label={label.title} options={scoreChoices} value={score} onChange={onScore} /> : <span>{label.title}</span>}<InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">Same score as the table&apos;s top row.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
           >
             <div className="relative mt-1">

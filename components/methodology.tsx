@@ -22,7 +22,7 @@ const COMPOSITE_TIP = (
     <ul className="list-disc space-y-1 pl-4">
       <li>One 0–100 capability number per model.</li>
       <li>Averages seven major benchmarks and indices, including Artificial Analysis and Epoch AI’s ECI.</li>
-      <li>Each counts as the model’s rank among all measured models, so hard and easy tests weigh the same.</li>
+      <li>Each counts as the model’s rank among measured models.</li>
       <li>Missing results are never counted as good; thin records are shown hatched.</li>
     </ul>
     <a className="mt-2 inline-block text-accent underline" href="/about#score">How we calculate</a>
