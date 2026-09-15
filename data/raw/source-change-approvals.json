@@ -206,6 +206,111 @@
       "review_sha256": "1a2e11935b7a7b93ca9c1c0b7a89d8e49e0a1339de0cd4a800ce56b22d1b0338",
       "review_basis": "Direct primary HTTP 200 response captured 2026-09-14. The complete unique identity set is bound to the prior/current digests and the exact single withdrawal; the independent Kimi K3 review packet returned pass with zero unresolved findings. This is a short-lived source-list exception only; no permanent retirement inference; all other identity, HTTP, schema and pricing changes remain fatal.",
       "owner_acceptance": "2026-09-14 bounded review: local recomputation found 19 current unique endpoint identities, exactly one prior-minus-current identity (InferenceNet/inference-net/unknown), no additions, valid prompt/completion pricing, and a matching response SHA-256. Approve only this exact withdrawal through the expiry above."
+    },
+    {
+      "model_id": "deepseek/deepseek-chat-v3-0324",
+      "previous_identity_sha256": "cf2d6077b4225c978d08d91a77eaf36dd5dcea227e42a01a568d74ff5743ceb9",
+      "current_identity_sha256": "f85e08560e1f89e5c82b4b0489ebd7933453cb83fd013f05ee3ced4f373e8135",
+      "removed": [
+        "Crusoe/crusoe/bf16/bf16"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-chat-v3-0324/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 0dc7b675df38… plus two cache-busted repeats) gave the identical identity set: 4 -> 3 endpoints, exactly Crusoe/crusoe/bf16/bf16 absent, while that provider still serves 6 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "deepseek/deepseek-v4-flash-0731",
+      "previous_identity_sha256": "0f92ed1c36c2628f709b6a95943daca5de2cfffde54e658a826a09b43800f45e",
+      "current_identity_sha256": "80bd59879bb1f8b91574bc222b7689d4113e3ba8a0df155791e7cb07df13d6fb",
+      "removed": [
+        "Parasail/parasail/fp8/fp8"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4-flash-0731/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 9594846781b8… plus two cache-busted repeats) gave the identical identity set: 28 -> 27 endpoints, exactly Parasail/parasail/fp8/fp8 absent, while that provider still serves 37 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "deepseek/deepseek-v4.1-flash",
+      "previous_identity_sha256": "332269645ad43617faa0f219e1db83c6505ee8b61da2947d9616c743fa22f007",
+      "current_identity_sha256": "728189e7c72a6c65ace8ccb0e7f3b7a2cb6d6313fa1381395949f67a054e1f22",
+      "removed": [
+        "Io Net/io-net/fp8/fp8"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4.1-flash/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 6a28c89b1081… plus two cache-busted repeats) gave the identical identity set: 16 -> 17 endpoints, exactly Io Net/io-net/fp8/fp8 absent, while that provider still serves 4 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "meta-llama/llama-3.3-70b-instruct",
+      "previous_identity_sha256": "bd8352d44d5354b8702344222a185acf5735a98ae0af1f6b867b53d38b4dbc5f",
+      "current_identity_sha256": "8c3e7cac5fba0993b5fdf9320e46ba02b9456f810cb3cab473656c792164b120",
+      "removed": [
+        "Crusoe/crusoe/bf16/bf16"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/meta-llama/llama-3.3-70b-instruct/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 f8c86a5523ff… plus two cache-busted repeats) gave the identical identity set: 12 -> 11 endpoints, exactly Crusoe/crusoe/bf16/bf16 absent, while that provider still serves 6 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "tencent/hy3",
+      "previous_identity_sha256": "d4b95b42d61a1d2b42a4231b8b74d07e8fe212ce479f89f283faee3d2917ebe0",
+      "current_identity_sha256": "546fa8b2f9758b49699ab9706cb47ff68fd22272687751fccbd670669fce8522",
+      "removed": [
+        "DeepInfra/deepinfra/fp8/fp8"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/tencent/hy3/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 2321996bec33… plus two cache-busted repeats) gave the identical identity set: 6 -> 6 endpoints, exactly DeepInfra/deepinfra/fp8/fp8 absent, while that provider still serves 77 other models, so this is a model-specific withdrawal, not a partial response or provider outage. The model keeps a DeepInfra fp4 endpoint; that is a new identity, not a replacement for the withdrawn fp8 endpoint. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "z-ai/glm-5.1",
+      "previous_identity_sha256": "4d51f5ba15e49afabd1568cd12c6ff3fad8b48259324f335ed98ff20358c2d93",
+      "current_identity_sha256": "3298d091720fc04df23a783c5dfccce2c4ab26e807e2ecff1cd3ee8ee0767097",
+      "removed": [
+        "Crusoe/crusoe/fp8/fp8"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.1/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 eaa760661cc7… plus two cache-busted repeats) gave the identical identity set: 15 -> 14 endpoints, exactly Crusoe/crusoe/fp8/fp8 absent, while that provider still serves 6 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "z-ai/glm-5.2",
+      "previous_identity_sha256": "c9589bedf02f2d2267f7d136566e1434376098f51d568ac43227afde4974a14d",
+      "current_identity_sha256": "9f4a0e7af45f0fc7544aa9bc56c97b06f030447a651d455579bea952f3dc7214",
+      "removed": [
+        "Crusoe/crusoe/fp8/fp8"
+      ],
+      "expires_at": "2026-09-16T05:00:00Z",
+      "review_file": "ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json",
+      "review_sha256": "39aebe3396c43da85d4022ad441a8b45bdb1259720cf5c28cf84e7aec23be099",
+      "owner_acceptance": "Operator-delegated repair agent reviewed the full 445-model endpoint probe of 2026-09-15 (ops/daily-repair-2026-09-15/endpoints/EVIDENCE.md); approve only this exact withdrawal for a bounded rerun. No permanent retirement inference; historical observations retained.",
+      "reviewed_at": "2026-09-15T07:00:51Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.2/endpoints",
+      "review_basis": "Three HTTP 200 primary responses (sha256 e46def5503ab… plus two cache-busted repeats) gave the identical identity set: 33 -> 32 endpoints, exactly Crusoe/crusoe/fp8/fp8 absent, while that provider still serves 6 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
     }
   ]
 }

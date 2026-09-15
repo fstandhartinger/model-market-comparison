@@ -5,6 +5,7 @@ import { tmpdir } from 'node:os';
 import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
+import { createHash } from 'node:crypto';
 import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
 
 test('catalog shrink, empty, malformed and duplicate identities fail before publication', () => {
@@ -43,6 +44,49 @@ test('committed collection-wide approvals are exact, bounded and evidenced', asy
     assert.ok(Date.parse(a.expires_at) > Date.parse(a.reviewed_at) && Date.parse(a.expires_at) - Date.parse(a.reviewed_at) <= 3 * 86400000);
     assert.ok(a.primary_url && a.review_basis && a.owner_acceptance);
   }
+});
+
+test('committed 2026-09-15 endpoint approvals replay against their captured primary responses and nothing else', async () => {
+  const dir = new URL('../ops/daily-repair-2026-09-15/endpoints/', import.meta.url);
+  const reviewBytes = await readFile(new URL('endpoint-withdrawal-review.json', dir));
+  const review = JSON.parse(reviewBytes);
+  const approvals = JSON.parse(await readFile(new URL('../data/raw/source-change-approvals.json', import.meta.url), 'utf8')).openrouter_endpoints
+    .filter((a) => a.review_file === 'ops/daily-repair-2026-09-15/endpoints/endpoint-withdrawal-review.json');
+  assert.equal(approvals.length, review.withdrawals.length);
+  // Provider names contain no slash; tags may (`io-net/fp8`), quantization is the last segment.
+  const row = (id) => { const a = id.indexOf('/'), b = id.lastIndexOf('/'); return { provider_name: id.slice(0, a), tag: id.slice(a + 1, b), quantization: id.slice(b + 1) || null }; };
+  for (const a of approvals) {
+    assert.equal(a.review_sha256, createHash('sha256').update(reviewBytes).digest('hex'));
+    const w = review.withdrawals.find((x) => x.model_id === a.model_id);
+    assert.ok(w && w.repeats_identical_digest && w.removed.length === 1);
+    assert.deepEqual(a.removed, w.removed);
+    assert.ok(Date.parse(a.expires_at) - Date.parse(a.reviewed_at) <= 3 * 86400000);
+    const current = JSON.parse(gunzipSync(await readFile(new URL(`evidence/${w.primary_sha256}.gz`, dir)))).data.endpoints;
+    const previous = w.prior_identities.map(row);
+    const now = Date.parse(a.reviewed_at);
+    assert.equal(endpointIdentityDigest(previous), a.previous_identity_sha256);
+    assert.equal(selectOpenRouterEndpointApproval(approvals, a.model_id, current, { now }), a);
+    assert.equal(selectOpenRouterEndpointApproval(approvals.filter((x) => x !== a), a.model_id, current, { now }), undefined);
+    assert.doesNotThrow(() => assertOpenRouterEndpointCoverage(previous, current, { approval: a, now }));
+    assert.throws(() => assertOpenRouterEndpointCoverage(previous, current, { now }), /1 prior identities absent/);
+    assert.throws(() => assertOpenRouterEndpointCoverage(previous, current, { approval: a, now: Date.parse(a.expires_at) }));
+    // A second, unreviewed loss changes the current digest and cannot inherit the approval.
+    const kept = current.find((e) => !w.added_not_replacements.includes(`${e.provider_name}/${e.tag}/${e.quantization ?? ''}`));
+    const shrunk = current.filter((e) => e.provider_name !== kept.provider_name || e.tag !== kept.tag || e.quantization !== kept.quantization);
+    assert.equal(selectOpenRouterEndpointApproval(approvals, a.model_id, shrunk, { now }), undefined);
+    assert.throws(() => assertOpenRouterEndpointCoverage(previous, shrunk, { approval: a, now }), /partial response or removal/);
+  }
+});
+
+test('a same-provider quantization change is a withdrawal plus an addition, never a silent replacement', () => {
+  const fp8 = { provider_name: 'DeepInfra', tag: 'deepinfra/fp8', quantization: 'fp8', pricing: { prompt: '1', completion: '1' } };
+  const fp4 = { ...fp8, tag: 'deepinfra/fp4', quantization: 'fp4' };
+  const other = { ...fp8, provider_name: 'Other', tag: 'other', quantization: null };
+  assert.throws(() => assertOpenRouterEndpointCoverage([fp8, other], [fp4, other]), /DeepInfra\/deepinfra\/fp8\/fp8/);
+  const approval = { expires_at: '2026-09-16T05:00:00Z', previous_identity_sha256: endpointIdentityDigest([fp8, other]), current_identity_sha256: endpointIdentityDigest([fp4, other]), removed: ['DeepInfra/deepinfra/fp8/fp8'] };
+  assert.doesNotThrow(() => assertOpenRouterEndpointCoverage([fp8, other], [fp4, other], { approval, now: Date.parse('2026-09-15T12:00:00Z') }));
+  // Removing only the addition's identity from the approval does not cover the fp8 loss.
+  assert.throws(() => assertOpenRouterEndpointCoverage([fp8, other], [fp4, other], { approval: { ...approval, removed: ['DeepInfra/deepinfra/fp4/fp4'] }, now: Date.parse('2026-09-15T12:00:00Z') }));
 });
 
 test('explicit empty endpoints permitted only without prior known providers', () => {

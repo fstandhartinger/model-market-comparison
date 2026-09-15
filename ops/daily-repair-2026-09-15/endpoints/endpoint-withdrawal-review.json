@@ -1,0 +1,283 @@
+{
+ "probed_at": "2026-09-15T07:00:50.988Z",
+ "prior_snapshot": "data/raw/openrouter.json collected_at 2026-09-14 (commit 3b58d83)",
+ "catalog": {
+  "n": 445,
+  "sha256": "128223bf01b1c07c57600462658ba9139e59a8a19089d53b3bc02afa6df13675"
+ },
+ "models_probed": 445,
+ "models_with_absent_prior_identities": 7,
+ "method": "Every catalog model endpoint resource fetched once (HTTP 200 for all 445); models with absent prior identities re-fetched twice more ~3 s apart with a cache-busting query. All three responses per flagged model produced the same identity digest. Missing providers checked for continued service on other models.",
+ "withdrawals": [
+  {
+   "model_id": "deepseek/deepseek-chat-v3-0324",
+   "http_status": 200,
+   "resolved_data_id": "deepseek/deepseek-chat-v3-0324",
+   "primary_sha256": "0dc7b675df3808c48d414c85b63cb556ae1fc52edbeadd6ec3fe073e269414ae",
+   "repeat_sha256": [
+    "04c030cee80fb29a42cfa0d914b0ff16254b7decb72aebc16545fae35fcf7013",
+    "d4846509b81417e831f8499c03bbb1d7c035ff1387133963f080297e4206da47"
+   ],
+   "prior_endpoint_count": 4,
+   "current_endpoint_count": 3,
+   "removed": [
+    "Crusoe/crusoe/bf16/bf16"
+   ],
+   "added_not_replacements": [],
+   "previous_identity_sha256": "cf2d6077b4225c978d08d91a77eaf36dd5dcea227e42a01a568d74ff5743ceb9",
+   "current_identity_sha256": "f85e08560e1f89e5c82b4b0489ebd7933453cb83fd013f05ee3ced4f373e8135",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 6,
+   "prior_identities": [
+    "Crusoe/crusoe/bf16/bf16",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "GMICloud/gmicloud/fp8/fp8",
+    "SiliconFlow/siliconflow/fp8/fp8"
+   ]
+  },
+  {
+   "model_id": "deepseek/deepseek-v4-flash-0731",
+   "http_status": 200,
+   "resolved_data_id": "deepseek/deepseek-v4-flash-0731",
+   "primary_sha256": "9594846781b8f76c534a8bd7ae30dbe5e260fc8366e552a35725f9a6ee9d3660",
+   "repeat_sha256": [
+    "9594846781b8f76c534a8bd7ae30dbe5e260fc8366e552a35725f9a6ee9d3660",
+    "9594846781b8f76c534a8bd7ae30dbe5e260fc8366e552a35725f9a6ee9d3660"
+   ],
+   "prior_endpoint_count": 28,
+   "current_endpoint_count": 27,
+   "removed": [
+    "Parasail/parasail/fp8/fp8"
+   ],
+   "added_not_replacements": [],
+   "previous_identity_sha256": "0f92ed1c36c2628f709b6a95943daca5de2cfffde54e658a826a09b43800f45e",
+   "current_identity_sha256": "80bd59879bb1f8b91574bc222b7689d4113e3ba8a0df155791e7cb07df13d6fb",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 37,
+   "prior_identities": [
+    "Alibaba/alibaba/unknown",
+    "AtlasCloud/atlas-cloud/fp4/fp4",
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fp8/fp8",
+    "Cloudflare/cloudflare/unknown",
+    "CoreWeave/coreweave/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DigitalOcean/digitalocean/unknown",
+    "Fireworks/fireworks/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Inceptron/inceptron/fp4/fp4",
+    "Makora/makora/unknown",
+    "Mancer 2/mancer/fp8/fp8",
+    "Morph/morph/bf16/bf16",
+    "NextBit/nextbit/fp8/fp8",
+    "Novita/novita/fp8/fp8",
+    "OpenInference/open-inference/fp8/fp8",
+    "Parasail/parasail/fp8/fp8",
+    "Phala/phala/unknown",
+    "Reka/reka/fp4/fp4",
+    "Relace/relace/fp4/fp4",
+    "Sail Research/sail-research/fp4/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/unknown",
+    "Wafer/wafer/fast/unknown"
+   ]
+  },
+  {
+   "model_id": "deepseek/deepseek-v4.1-flash",
+   "http_status": 200,
+   "resolved_data_id": "deepseek/deepseek-v4.1-flash",
+   "primary_sha256": "6a28c89b10813d47c31b102898d16a7b37d533318f4dff36840c805f54499eda",
+   "repeat_sha256": [
+    "6a28c89b10813d47c31b102898d16a7b37d533318f4dff36840c805f54499eda",
+    "6a28c89b10813d47c31b102898d16a7b37d533318f4dff36840c805f54499eda"
+   ],
+   "prior_endpoint_count": 16,
+   "current_endpoint_count": 17,
+   "removed": [
+    "Io Net/io-net/fp8/fp8"
+   ],
+   "added_not_replacements": [
+    "Phala/phala/unknown",
+    "Reka/reka/fp4/fp4"
+   ],
+   "previous_identity_sha256": "332269645ad43617faa0f219e1db83c6505ee8b61da2947d9616c743fa22f007",
+   "current_identity_sha256": "728189e7c72a6c65ace8ccb0e7f3b7a2cb6d6313fa1381395949f67a054e1f22",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 4,
+   "prior_identities": [
+    "Alibaba/alibaba/unknown",
+    "BaseTen/baseten/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "DeepSeek/deepseek/unknown",
+    "Fireworks/fireworks/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Io Net/io-net/fp8/fp8",
+    "Modal/modal/unknown",
+    "Morph/morph/fp8/fp8",
+    "Novita/novita/fp8/fp8",
+    "Parasail/parasail/fp8/fp8",
+    "Relace/relace/fp4/fp4",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/fp8/fp8",
+    "Wafer/wafer/unknown"
+   ]
+  },
+  {
+   "model_id": "meta-llama/llama-3.3-70b-instruct",
+   "http_status": 200,
+   "resolved_data_id": "meta-llama/llama-3.3-70b-instruct",
+   "primary_sha256": "f8c86a5523ffbdef49c7b836583377f9d6b567201be3f61bbf08fc7a0be33a69",
+   "repeat_sha256": [
+    "95202270fc65e11924f3f92715fda0a366401ee92bfc77d4ed31d1c304b93c7f",
+    "f8c86a5523ffbdef49c7b836583377f9d6b567201be3f61bbf08fc7a0be33a69"
+   ],
+   "prior_endpoint_count": 12,
+   "current_endpoint_count": 11,
+   "removed": [
+    "Crusoe/crusoe/bf16/bf16"
+   ],
+   "added_not_replacements": [],
+   "previous_identity_sha256": "bd8352d44d5354b8702344222a185acf5735a98ae0af1f6b867b53d38b4dbc5f",
+   "current_identity_sha256": "8c3e7cac5fba0993b5fdf9320e46ba02b9456f810cb3cab473656c792164b120",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 6,
+   "prior_identities": [
+    "AkashML/akashml/fp8/fp8",
+    "Cloudflare/cloudflare/fp8/fp8",
+    "CoreWeave/coreweave/fp16/fp16",
+    "Crusoe/crusoe/bf16/bf16",
+    "DeepInfra/deepinfra/turbo/fp8",
+    "Google/google-vertex/unknown",
+    "Google/google-vertex/us-central1/unknown",
+    "Groq/groq/unknown",
+    "Novita/novita/bf16/bf16",
+    "Parasail/parasail/fp8/fp8",
+    "SambaNova/sambanova-turbo/unknown",
+    "Together/together/unknown"
+   ]
+  },
+  {
+   "model_id": "tencent/hy3",
+   "http_status": 200,
+   "resolved_data_id": "tencent/hy3",
+   "primary_sha256": "2321996bec3387fe780d279b6d343ab9e51d2db3f9ce8fe1bfd01d08599176ff",
+   "repeat_sha256": [
+    "cf1526bb0e3a08eff23cf818bc7b4544e0f474fa6d22231134a52ebd78f5b674",
+    "2321996bec3387fe780d279b6d343ab9e51d2db3f9ce8fe1bfd01d08599176ff"
+   ],
+   "prior_endpoint_count": 6,
+   "current_endpoint_count": 6,
+   "removed": [
+    "DeepInfra/deepinfra/fp8/fp8"
+   ],
+   "added_not_replacements": [
+    "DeepInfra/deepinfra/fp4/fp4"
+   ],
+   "previous_identity_sha256": "d4b95b42d61a1d2b42a4231b8b74d07e8fe212ce479f89f283faee3d2917ebe0",
+   "current_identity_sha256": "546fa8b2f9758b49699ab9706cb47ff68fd22272687751fccbd670669fce8522",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 77,
+   "prior_identities": [
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "DeepInfra/deepinfra/fp8/fp8",
+    "GMICloud/gmicloud/bf16/bf16",
+    "Novita/novita/unknown",
+    "Phala/phala/unknown",
+    "Tencent/tencent/fp8/fp8"
+   ]
+  },
+  {
+   "model_id": "z-ai/glm-5.1",
+   "http_status": 200,
+   "resolved_data_id": "z-ai/glm-5.1",
+   "primary_sha256": "eaa760661cc729b7e2d743a4c641d669dea53f551ba1c34299c33e02782ce601",
+   "repeat_sha256": [
+    "eaa760661cc729b7e2d743a4c641d669dea53f551ba1c34299c33e02782ce601",
+    "eaa760661cc729b7e2d743a4c641d669dea53f551ba1c34299c33e02782ce601"
+   ],
+   "prior_endpoint_count": 15,
+   "current_endpoint_count": 14,
+   "removed": [
+    "Crusoe/crusoe/fp8/fp8"
+   ],
+   "added_not_replacements": [],
+   "previous_identity_sha256": "4d51f5ba15e49afabd1568cd12c6ff3fad8b48259324f335ed98ff20358c2d93",
+   "current_identity_sha256": "3298d091720fc04df23a783c5dfccce2c4ab26e807e2ecff1cd3ee8ee0767097",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 6,
+   "prior_identities": [
+    "Alibaba/alibaba/fp8/fp8",
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "Baidu/baidu/fp8/fp8",
+    "Chutes/chutes/fp8/fp8",
+    "Crusoe/crusoe/fp8/fp8",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "Friendli/friendli/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Nebius/nebius/fp8/fp8",
+    "Novita/novita/fp8/fp8",
+    "Phala/phala/unknown",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Venice/venice/fp8/fp8",
+    "Z.AI/z-ai/fp8/fp8"
+   ]
+  },
+  {
+   "model_id": "z-ai/glm-5.2",
+   "http_status": 200,
+   "resolved_data_id": "z-ai/glm-5.2",
+   "primary_sha256": "e46def5503ab38d1c2a99bd28dca2a342da66e152140c290af20ab26413b4130",
+   "repeat_sha256": [
+    "733b507cef5ee69af6ad8dff8d44319edda0629de24ebdaa7fd64df409855c9b",
+    "e46def5503ab38d1c2a99bd28dca2a342da66e152140c290af20ab26413b4130"
+   ],
+   "prior_endpoint_count": 33,
+   "current_endpoint_count": 32,
+   "removed": [
+    "Crusoe/crusoe/fp8/fp8"
+   ],
+   "added_not_replacements": [],
+   "previous_identity_sha256": "c9589bedf02f2d2267f7d136566e1434376098f51d568ac43227afde4974a14d",
+   "current_identity_sha256": "9f4a0e7af45f0fc7544aa9bc56c97b06f030447a651d455579bea952f3dc7214",
+   "repeats_identical_digest": true,
+   "removed_provider_still_serving_other_models": 6,
+   "prior_identities": [
+    "Alibaba/alibaba/fast/fp8",
+    "Alibaba/alibaba/fp8/fp8",
+    "Ambient/ambient/fp8/fp8",
+    "AtlasCloud/atlas-cloud/fp8/fp8",
+    "Baidu/baidu/fast/fp4",
+    "Baidu/baidu/fp8/fp8",
+    "BaseTen/baseten/fast/fp8",
+    "BaseTen/baseten/fp8/fp8",
+    "Cloudflare/cloudflare/unknown",
+    "CoreWeave/coreweave/fp4/fp4",
+    "Crusoe/crusoe/fp8/fp8",
+    "Decart/decart/fast/fp4",
+    "DeepInfra/deepinfra/fp4/fp4",
+    "DigitalOcean/digitalocean/unknown",
+    "Fireworks/fireworks/fast-us/unknown",
+    "Fireworks/fireworks/fast/unknown",
+    "Fireworks/fireworks/unknown",
+    "Friendli/friendli/unknown",
+    "GMICloud/gmicloud/fp8/fp8",
+    "Inceptron/inceptron/fp4/fp4",
+    "Mistral/mistral/eu/unknown",
+    "Mistral/mistral/unknown",
+    "Mistral/mistral/zdr/unknown",
+    "Novita/novita/fp8/fp8",
+    "Parasail/parasail/fp4/fp4",
+    "Phala/phala/fp8/fp8",
+    "SiliconFlow/siliconflow/fp8/fp8",
+    "StreamLake/streamlake/fp8/fp8",
+    "Together/together/unknown",
+    "Venice/venice/fp8/fp8",
+    "Z.AI/z-ai/fp8/fp8"
+   ]
+  }
+ ]
+}
