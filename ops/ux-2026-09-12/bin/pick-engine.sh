@@ -35,8 +35,13 @@ codex_ok=1
 [ "$X_AUTH" = chatgpt ] || codex_ok=0
 python3 -c "import sys; w=float(sys.argv[1]); sys.exit(0 if w==w and w<$CODEX_START_MAX else 1)" "$X_WEEK" || codex_ok=0
 
+# Free workers (15 Sep 2026): ~/bin/llm-health ranks Chutes Kimi K3, Chutes Qwen3.8 27B, OpenRouter GLM-5.3-Flash,
+# OpenRouter DeepSeek-V4.1-Flash and OpenRouter Nex free (Chutes only below 75% utilization). The engine names stay:
+# opencode-kimi runs the best healthy free model, opencode-nex the second best (iterate.sh).
 kimi_ok=1
-if [ -f "$STATE/kimi-cooldown-until" ] && [ "$now" -lt "$(cat "$STATE/kimi-cooldown-until")" ]; then kimi_ok=0; fi
+"$HOME/bin/llm-health" best --rank 0 >/dev/null 2>&1; fw_rc=$?
+if [ "$fw_rc" = 2 ]; then kimi_ok=0   # health file fresh and no free model healthy
+elif [ ! -s "$HOME/.llm-health.json" ] && [ -f "$STATE/kimi-cooldown-until" ] && [ "$now" -lt "$(cat "$STATE/kimi-cooldown-until")" ]; then kimi_ok=0; fi
 
 echo "limits: claude session=$C_SESS week=$C_WEEK ($C_ERR) | codex week=$X_WEEK auth=$X_AUTH | claude_ok=$claude_ok codex_ok=$codex_ok kimi_ok=$kimi_ok" >&2
 

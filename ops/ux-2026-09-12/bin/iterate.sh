@@ -84,11 +84,17 @@ case "$ENGINE" in
     EFFORT=high; [ "$ROLE" = review ] && EFFORT=xhigh
     run_with_codex_cap timeout 10800 codex exec --dangerously-bypass-approvals-and-sandbox \
       -m "${BH_CODEX_MODEL:-gpt-5.6-luna}" -c model_reasoning_effort="$EFFORT" -c tools.web_search=true -C "$REPO" "$PROMPT" < /dev/null; rc=$? ;;
-  opencode-kimi)
-    timeout 10800 opencode run -m chutes/moonshotai/Kimi-K3-TEE "$PROMPT" >> "$LOG" 2>&1; rc=$?
-    if [ $rc -ne 0 ] && [ "$(stat -c%s "$LOG")" -lt 20000 ]; then echo "$(( $(date +%s) + 1800 ))" > "$STATE/kimi-cooldown-until"; fi ;;
-  opencode-nex)
-    timeout 10800 opencode run -m "${BH_NEX_MODEL:-openrouter/nex-agi/nex-n2.5-pro:free}" "$PROMPT" >> "$LOG" 2>&1; rc=$? ;;
+  opencode-kimi|opencode-nex)
+    # Best (kimi) or second-best (nex) healthy free model from ~/bin/llm-health; pinned default if the monitor is down.
+    if [ "$ENGINE" = opencode-kimi ]; then FW_RANK=0; FW_DEFAULT=chutes/moonshotai/Kimi-K3-TEE
+    else FW_RANK=1; FW_DEFAULT="${BH_NEX_MODEL:-openrouter/nex-agi/nex-n2.5-pro:free}"; fi
+    FW_MODEL=$("$HOME/bin/llm-health" best --rank "$FW_RANK" 2>/dev/null) || FW_MODEL="$FW_DEFAULT"
+    echo "=== free worker model: $FW_MODEL ===" >> "$LOG"
+    timeout 10800 opencode run -m "$FW_MODEL" "$PROMPT" >> "$LOG" 2>&1; rc=$?
+    if [ $rc -ne 0 ] && [ "$(stat -c%s "$LOG")" -lt 20000 ]; then
+      "$HOME/bin/llm-health" record "$FW_MODEL" fail --kind "exit $rc" --source benchmarkheaven-ux >/dev/null 2>&1
+      [ "$ENGINE" = opencode-kimi ] && echo "$(( $(date +%s) + 1800 ))" > "$STATE/kimi-cooldown-until"
+    fi ;;
 esac
 
 echo "=== $(date -u +%FT%TZ) $ROLE $ENGINE end rc=$rc ===" >> "$LOG"

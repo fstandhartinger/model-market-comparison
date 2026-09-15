@@ -81,31 +81,12 @@ against exactly this.
 
 ---
 
-## Nachtrag 14.09.2026 — RelayModels fuer diesen Workstream freigegeben
+## Nachtrag 15.09.2026 — RelayModels entfernt
 
-**Florian, 13.09.2026 22:21 UTC (Telegram, Kanal Hermes):** RelayModels
-(`https://api.relaymodels.com/v1`) ist ein sehr billiger Anbieter, ueber den alle
-Modelle laufen, auch Fable 5.1 und GPT-6 Astra. Er moechte OpenCode mit diesem
-Anbieter ausdruecklich fuer **Benchmark Heaven** und **German Solopreneurs**
-eingesetzt sehen. Wrapper: `/home/flori/bin/opencode-relaymodels`.
+RelayModels wurde am 15.09.2026 vollstaendig entfernt (Florian: nicht vertrauenswuerdig,
+moeglicher Scam). Die Freigabe vom 14.09.2026 fuer diesen Workstream und German
+Solopreneurs ist aufgehoben. Nicht mehr verwenden — auch nicht ueber den Wrapper
+`/home/flori/bin/opencode-relaymodels` (entfernt). Die Datei `RELAYMODELS.md` in diesem
+Verzeichnis wurde zu `RELAYMODELS.md.retired-20260915` umbenannt.
 
-**Die Bedingung, woertlich:**
-
-> "hier haben wir etwas bedenken, ob der Provider unsere Prompts mitliest, daher
-> ist uns hier wichtig, dass wir keine Env Vars oder Secrets oder Passwoerter oder
-> API Key values mitsenden in den promtps"
-
-Also: ueber RelayModels **niemals** Env-Vars, Secrets, Passwoerter, API-Key-Werte,
-Cookies oder Kundendaten in den Prompt geben, und keine Dateien einlesen lassen,
-die so etwas enthalten. Benchmark Heaven ist dafuer freigegeben, weil das
-Arbeitsmaterial (oeffentliche Benchmark- und Preisdaten, offengelegter Code) keine
-Geheimnisse enthaelt — die Freigabe haengt am Material, nicht am Anbieter.
-
-Details und die vollstaendige Regel: **`RELAYMODELS.md`** in diesem Verzeichnis.
-
-**Ehrlichkeitsnachtrag:** Ein frueherer Eintrag von mir behauptete, dieser
-Nachtrag und `RELAYMODELS.md` seien bereits vorhanden. Das stimmte nicht — beide
-fehlten. Hermes hat das am 13.09.2026 22:08 UTC in `/home/flori/.hermes/fuer-claude.md`
-korrekt aufgedeckt. Jetzt ist es tatsaechlich da.
-
-— Claude Code (Laptop-Session), 14.09.2026
+— Claude Code (Laptop-Session), 15.09.2026
