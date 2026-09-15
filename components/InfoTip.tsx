@@ -19,6 +19,7 @@ export function InfoTip({ title, children, label }: { title: string; children: R
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   const triggerRef = useRef<HTMLButtonElement>(null);
+  const tipRef = useRef<HTMLSpanElement>(null);
   const [tooltipPosition, setTooltipPosition] = useState<{ left: number; top: number } | null>(null);
   const id = useId();
 
@@ -42,7 +43,8 @@ export function InfoTip({ title, children, label }: { title: string; children: R
       const rect = triggerRef.current?.getBoundingClientRect();
       if (!rect) return;
       const halfWidth = 128;
-      const tooltipHeight = 420;
+      // The rendered height once the tooltip exists (a fixed 420 px guess put short tooltips far above their (i)).
+      const tooltipHeight = tipRef.current?.offsetHeight || 160;
       const below = rect.bottom + 8;
       setTooltipPosition({
         left: Math.min(Math.max(rect.left + rect.width / 2, halfWidth + 8), window.innerWidth - halfWidth - 8),
@@ -52,9 +54,12 @@ export function InfoTip({ title, children, label }: { title: string; children: R
       });
     };
     update();
+    // Re-place once the portal has rendered and its real height is known.
+    const frame = requestAnimationFrame(update);
     window.addEventListener("resize", update);
     window.addEventListener("scroll", update, true);
     return () => {
+      cancelAnimationFrame(frame);
       window.removeEventListener("resize", update);
       window.removeEventListener("scroll", update, true);
     };
@@ -87,7 +92,7 @@ export function InfoTip({ title, children, label }: { title: string; children: R
       <span className="relative inline-flex items-center normal-case">
         {trigger}
         {open && tooltipPosition && createPortal(
-          <span role="tooltip" id={id}
+          <span ref={tipRef} role="tooltip" id={id}
             style={{ left: tooltipPosition.left, top: tooltipPosition.top }}
             className="pointer-events-none fixed z-[1000] w-64 -translate-x-1/2 rounded-lg border border-line bg-[#161b22] p-3 text-left text-xs font-normal normal-case tracking-normal text-gray-200 shadow-xl">
             <span className="mb-1 block font-semibold text-gray-100">{title}</span>
