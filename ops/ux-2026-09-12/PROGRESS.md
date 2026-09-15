@@ -260,12 +260,12 @@ credited below, the rest is marked open.
 | CR-28.2 | DesignArena Frontend and Full-Stack values for GPT-6 Astra (and any other missing models present on DesignAren | open | — | — |
 | CR-29.1 | Simple mode minimum-score slider label reads 'Minimum Capability Score' with '(Benchmark Heaven Main Composite | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | two-line label + aria name + (i) title "(Benchmark Heaven Main Composite Score)"; live both hosts, 1440/390 light/dark |
 | CR-29.2 | The slider filters on exactly the same score shown in the top 'Benchmark Heaven Score' row of the Simple bench | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | slider filters on `s.score`, the same key as the Score row (`data-score=composite`); rows all ≥ slider value live |
-| CR-29.3 | Simple benchmark results table: in each benchmark row, a small tag marks scores that are outstandingly good or | open | — | — |
+| CR-29.3 | Simple benchmark results table: in each benchmark row, a small tag marks scores that are outstandingly good or | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-29-31/` | iter 71 claude-opus: top/low outlier tags, transparent rule in tooltip + footnote (`5b8159f`); live canonical 48/48 · legacy 48/48 (after 4c6366c hint observer and fe29860 tooltip placement; first run 44/48) |
 | CR-30.1 | Ingest the verified self-reported scores from `/home/flori/jobs/bh-self-reported-scout-20260915/self-reported- | open | — | — |
 | CR-30.2 | Add the top new benchmarks from `BENCHMARK-CANDIDATES.md` (prefer ones with an independent leaderboard) to the | open | — | — |
 | CR-30.3 | Benchmark lists/tables show the new benchmarks (Overview all-benchmarks list, Benchmarks tab, compare) with se | open | — | — |
-| CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual s | open | — | — |
-| CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the ben | open | — | — |
+| CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual s | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-29-31/` | iter 71 claude-opus: 'This is a simplified list' once per visit, IntersectionObserver, reduced-motion safe (`5b8159f`); live canonical 48/48 · legacy 48/48 (after 4c6366c hint observer and fe29860 tooltip placement; first run 44/48) |
+| CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the ben | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-29-31/` | iter 71 claude-opus: (i) per benchmark: description + score type, portalled tooltip (`5b8159f`); live canonical 48/48 · legacy 48/48 (after 4c6366c hint observer and fe29860 tooltip placement; first run 44/48) |
 | CR-32.1 | Simple view: the 'Minimum Capability Score' label gets a small downward triangle; clicking opens a compact pop | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-1-2/` | iter 71 claude-opus: score picker at the slider label (category composites follow with CR-25.6) (`24485b3`); live canonical 40/40 · legacy 40/40 |
 | CR-32.2 | Simple view: the 'Max adjusted cost / task' label gets the same triangle picker to choose the cost measure: ad | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-1-2/` | iter 71 claude-opus: cost-measure picker: adjusted / blended / input / output (`24485b3`); live canonical 40/40 · legacy 40/40 |
 | CR-32.3 | Rewrite the (i) tooltips next to 'Max adjusted cost' and 'Minimum Capability Score' to be much shorter and sim | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: both tooltips 4 short bullets + method link (`1f8cfb5`, `72bd9fa`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
@@ -1944,3 +1944,93 @@ CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared
 
 ## PRIORITY addendum 2026-09-15 ~17:20 UTC (laptop supervisor) — data verification finished
 `/home/flori/jobs/bh-data-verification-20260915/RESULT.md` + `CORRECTIONS.json` (11 corrections) are ready for CR-28.2/CR-27.1. Main root cause: DesignArena and Epoch results attach once per family to a representative chosen by `scripts/build-dataset.mjs familyRepresentativeVariantOrder()` (GPT list lacks 'max'), while the UI shows the variant picked by `lib/variants.ts preferredVariantIds()` — 12/40 top families mismatch, so values look missing. Second: two DesignArena rows collapsing to one family key drop one (GPT-5.6 Sol xhigh). Third: Muse Spark 1.3 percentile 0 = a 2-row harness peer group. Also: LMArena has no pipeline tracking; trustedtokens.eu confirmed (TNG, Germany). Fix the variant-attachment mismatch structurally together with CR-36.2 (one entry per model, best of variants) — it is the same concept.
+
+- **2026-09-15 · iteration 71 · claude-opus · work (CR-18, CR-19…25, CR-28.1, CR-29, CR-31, CR-32, CR-33, CR-35 + groundwork)** —
+  Limits at start (`limits.py --json`, 16:10 UTC): Claude session 23 % / week 27 %; Codex 80 % weekly (stale, not used).
+  No foreign writer: the only other repo edits were the laptop supervisor's uncommitted request seeds (CR-32/33 at
+  ~16:10–16:20, CR-34 at ~16:30), each landed as found in a docs-only commit (`1fe2157`, `ec894d3`).
+  Gates at every push: build-dataset 838/658/91/2,861 (timestamp-only diff restored), npm test 444 → 461 passing,
+  tsc clean. Every live run: both hosts, 1440/390, light/dark, runner claude-opus, evidence under
+  `/opt/benchmarkheaven/state/ux-evidence/iter71-*`.
+  - **Commits:** `07b65fd` CR-18 + CR-29.1/29.2 · `b3a76ec` CR-19.1/19.3, CR-20.1, CR-21.2, CR-22.1–22.3, CR-23.1, CR-24.1,
+    CR-25.1–25.3 · `5b8159f` CR-29.3, CR-31.1/31.2 · `f2967b4` CR-19.2, CR-21.1 · `1f8cfb5` CR-32.3/32.4, CR-33.3 ·
+    `959da71` CR-32.5, CR-33.1/33.2 · `7e74914` CR-21.2 visible-rows fix · `24485b3` CR-32.1/32.2 · `abe2c31` CR-28.1 ·
+    `d0885eb` CR-25.4 groundwork (lib/regions.mjs, no UI) · `72bd9fa` CR-32.3 trim · `738432c` CR-35.1/35.2 (AA credit on
+    every AA surface, BETA tag) · `4c6366c` CR-31.1 hint observes the section (the CR-33.1 chart pushed the table out of
+    the observed band on phones) · `fe29860` InfoTip placed by rendered height (short tooltips floated ~400 px above
+    their (i)) · `96818a6` CR-35.4 Epoch AI (CC BY) credit + citation · harness/docs `563b107`, `65aff23`, `f8f6c53` (X5:
+    API.md `/api/benchmark-matrix`, CHANGELOG) and the supervisor seeds `1fe2157`, `ec894d3`, `895a1b2`, `d1ca569`, `a806be3`.
+  - **Live results:** verify-cr-18-29 **60/60** per host · verify-cr-19-25 **49/53** per host (all failures CR-21.2's bar scale → fixed `7e74914`, re-checked inside cr-32-33) · verify-cr-19-2-21-1 **41/41** · verify-cr-29-31 44/48 → **48/48** after fixes · verify-cr-32-33 **44/44** · verify-cr-32-1-2 **40/40** · verify-cr-28-1 **10/10** · verify-cr-35 first run 48/72 (20 = CR-35.4 not yet deployed, 4 = phone BETA tap/overflow → fixed `c9b97d7`); CR35_PLACEHOLDER. Gates at the last push: 461/461 tests, tsc clean, build-dataset timestamp-only.
+  - **Decisions (Florian may overrule):** (1) CR-18: the derived default and its 65 floor apply to the Composite; other
+    0–100 indices use the derived value without the 65 floor (AA indices top out near 60, a 65 floor would empty the
+    list); Elo boards keep 1000. (2) CR-22.1 root cause: percentiles came from a two-variant cohort (Muse Spark 1.3
+    max/xhigh on one harness → 100/0); percentiles now need ≥ 3 model families. Measured on the dataset: 178 scored
+    models before and after, top-10 % tag set unchanged, median |Δ| 0.01. (3) CR-21.1: one Benchmaxxing row per model
+    family, represented by its best-covered scored variant; the tag share is taken over families and a tagged family
+    tags every variant (Overview uses the same function). (4) CR-25.2: 'Strong confidential guarantees' removed; a
+    stored true migrates to off; the 'Privacy strict' preset became EU-hosted + no training/retention. (5) CR-25.3:
+    'I'm buying for a company' moved to Price basis (it changes which subscription plans sit next to API costs).
+    (6) CR-19.2: shared zoom window for the pair (floor = lowest plotted position − 10, rounded down to 5, max 50),
+    rings labelled with window values, centre labelled, sentence + 'Full 0–100 scale' toggle. (7) CR-29.3 rule: ≥ 4
+    results; best/worst tagged only when its gap to the next result is ≥ 2× the spread of the results in between and
+    ≥ 10 % of the row's spread. (8) CR-28.1: the home page (already ~7.9 MB) does not ship the full matrix; the table
+    fetches `/api/benchmark-matrix?models=` for its five models. (9) CR-32.3 trimmed the shared ADJUSTED_COST_TIP and
+    COMPOSITE_TIP, so the table-header (i) texts are shorter too.
+  - **Harness defects fixed (not product):** transient `ERR_NETWORK_CHANGED` → retrying navigation in the new
+    verifiers; a phone tap on overlapping radar points → focus; the hidden desktop Benchmarks link → visible filter.
+  - **Delegation:** Kimi K3 drafted lab HQ countries for the 79 orgs (`iter71-cr-25-4/lab-countries.kimi.json`) —
+    79 of 79 orgs returned (US 30, China 21, EU 3, Other 25; individuals without a country); 16 rows spot-checked
+    against public facts, no error found. Saved as `lab-countries.draft.json`; **not ingested** — next iteration verifies
+    each `source_url` before it becomes `data/lab-countries.json`. TSX work stayed with Opus (memory: Kimi stalls on component edits).
+
+## Handover — next work iteration (written 2026-09-15, iteration 71)
+0. **Not done this iteration (open):** CR-25.4–25.6, CR-26.1, CR-27.1, CR-28.2, CR-30.x, CR-34.x, CR-35.3 (hold), CR-35.5, CR-36.x.
+   Supervisor's 17:20 note (data verification finished, 11 corrections) matches item 5 below.
+1. **Review gate first** for everything above (non-claude engine): `bin/verify-cr-18-29.mjs`, `verify-cr-19-25.mjs`,
+   `verify-cr-19-2-21-1.mjs`, `verify-cr-29-31.mjs`, `verify-cr-32-33.mjs`, `verify-cr-32-1-2.mjs`, `verify-cr-28-1.mjs`,
+   `verify-cr-35.mjs`. Updated older harnesses this iteration: verify-cr-6-8 (Options), verify-cr-presets (Privacy strict), verify-cr-2-5-perf (isCompany seed).
+   Older verifiers that asserted CR-12.1's "top row = selected score" or 'Filters' labels are superseded by CR-33.3 and
+   CR-25.1 — fix the harness, not the product.
+2. **CR-25.4 / CR-25.5 (regional + Labs).** Groundwork is tested in `lib/regions.mjs`. Wiring plan: settings
+   `hostedIn`, `providerBasedIn`, `labBasedIn` (bucket arrays, default all four) + `labs` (org list); migrate stored
+   `euHostedOnly/excludeChinese/nonUsOnly` with `regionStateFromLegacy`; replace the repeated
+   `createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining)`
+   call (≈12 sites) with one `scopeFromSettings(s, providers)` helper that adds hosting and company buckets per offer;
+   lab bucket filters models by org → country (Kimi draft, spot-check against official pages before ingesting as
+   `data/lab-countries.json` with source URLs). Options: 'Hosted in', 'Inference provider company based in', 'Model
+   lab based in' (checkbox rows, no (i)); new 'Models and Providers' section with Models, Providers and Labs dropdowns.
+   Test: default users' results identical before/after.
+3. **CR-25.6 (category composites as scores; feeds CR-32.1 and CR-33.2 pickers).** Needs a written method before
+   code: per model, per taxonomy group (coding, agentic, reasoning, math, …) the mean percentile over the group's
+   0–100-compatible benchmarks it has, only with ≥ 3 results, never filled; `ScoreKey` gains `category_<group>` (49
+   references to `ScoreKey`); labels, sanitizer, `defaultMinFor`, `scoreTip`, API `?score=`. Critic round on the method.
+4. **CR-26.1** Charts cost-vs-capability parity with the Simple value map (reversed axis, quadrant, Pareto,
+   in-chart labels, 30-model logic, fitted Y/cogwheel) — take a design gate.
+5. **CR-28.2** (`/home/flori/jobs/bh-data-verification-20260915/CORRECTIONS.json`): DesignArena registry names
+   carry effort labels ("GPT-6 Astra (xhigh)", "Muse Spark 1.3 (xhigh)", "GPT-5.6 Sol (Medium)") that
+   `scripts/build-dataset.mjs` discards; attach per `detectVariant(display_name)` when that variant exists and stop
+   dropping the second row of a family (GPT-5.6 Sol xhigh data loss). Moving Astra's values to `::xhigh` will NOT make
+   them appear on the collapsed `::max` column Florian looks at — decide (with a critic) between a labelled
+   sibling-variant fallback in the matrix and leaving the gap. Fable 5.1 has no DesignArena Web Apps row upstream.
+6. **CR-27.1 trustedtokens.eu** qualifies (TNG Technology Consulting GmbH, inference in Germany, public EUR
+   per-token prices, B2B-only, subscription credit). `/models` is an Astro page whose catalog is not in the static
+   HTML: find the page's own data request (normal browser session) or parse the rendered DOM; mirror
+   `lib/tensorx-catalog.mjs` + T-Systems' ECB EUR→USD (`lib/t-systems-catalog.mjs`); write the collector directly.
+7. **CR-34** (OpenRouter Benchmarks API; data group) — **terms gate first.** Checked 2026-09-15 16:53 UTC:
+   `GET https://openrouter.ai/api/v1/benchmarks` answers 401 without a key (robots.txt allows `/` except `/seo/`).
+   OpenRouter's Terms (https://openrouter.ai/terms) prohibit using "scripts, robots or any other means or processes
+   (such as crawlers …) to scrape or copy any information on the Site or the Services", in the same list as
+   "developing a competing service". Using the documented API with our key is not site scraping, but republishing
+   its benchmark rows (OpenRouter's own runs, and third-party AA/DesignArena rows it relays) on Benchmark Heaven is a
+   redistribution question. Before any value ships: look for a data licence/attribution statement on
+   openrouter.ai/benchmarks or the API docs; if none, prefer the primary sources (AA Agentic Index from Artificial
+   Analysis, DesignArena from designarena.ai) and put OpenRouter's own runs (GPQA/τ²/search, avg_cost_per_task) to
+   Florian as a decision in X7 instead of ingesting them. Key only from the environment, never in prompts or logs.
+8. **CR-35.5** (Epoch hub rows Epoch sourced from external projects): add a provenance field Epoch-run vs external
+   and list rows whose original licence is unclear, instead of showing them silently. **CR-35.3** hold stays: no new
+   AA-derived metric until Florian reports Artificial Analysis' answer.
+9. **CR-36** (Compare picker + Options dropdowns): one picker entry per model with best-of-variants values that name
+   the variant (reuse `benchmaxxingFamilySignals`' family grouping idea), keyboard combobox with lab, release date and
+   main score; Options Models/Providers(/Labs) as compact searchable multi-selects with chips and internal scroll —
+   do it together with CR-25.5 (Labs) and take a design gate.
+10. **CR-30** waits for `/home/flori/jobs/bh-self-reported-scout-20260915/RESULT.md` (not present at 16:50 UTC).
