@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Historical estimates: no false drop-outs; bridge disclosed in "better than model X"
+
+No data location, route or public API field was removed.
+
+- **Correction:** `benchmark_results.historical.estimates` held 87 `estimated` rows for configurations that are
+  still published. Older retained states had matched them to a catalog id the current matcher no longer assigns
+  (e.g. GPT-6 Astra (Non-reasoning) on 15 AA boards), so their keys differed and they read "no longer published".
+  A retained row is now skipped when its source identity (the `source:` key or the AA model UUID in its locator)
+  is on the current board with the same harness and effort. `counts.estimated` 177 → 90; `not_comparable`
+  unchanged at 482. Every removed row was checked against the current board.
+- Advanced → "better than model X": when the reference value is bridged, the status line now says which
+  snapshot (or older version) it came from, how many anchor models and hops the bridge used, and the anchor
+  spread; for a category median it says how many of its benchmarks are bridged.
+
 ## 2026-09-15 — BU Bench V1 (Browser Use) added as a secondary benchmark (E2)
 
 No data location, route or public API field was removed.

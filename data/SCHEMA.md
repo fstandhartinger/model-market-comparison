@@ -208,7 +208,10 @@ time, content hash, count, benchmark ids); full row bodies live in the store.
 
 A value absent from the current snapshot but present in an older **dated state** or an
 older **benchmark version of the same family** is bridged through configurations
-measured on both sides:
+measured on both sides. "Absent" is decided by source identity too: a retained row whose
+source id (its `source:` model key, or the AA model UUID in `source_locator`) is still on the
+current board with the same harness and effort is identity churn, not a drop-out, and gets no
+estimate:
 
     r_b = value_new(b) / value_old(b)
     aggregate = median(r_b)          # requires >= 3 bridges

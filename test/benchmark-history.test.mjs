@@ -309,3 +309,21 @@ test('model key keeps catalog identity, harness and effort apart', () => {
   assert.notEqual(modelKey(base), modelKey({ subject: { model_id: 'm::default', harness: 'Cursor CLI', variant: null } }));
   assert.notEqual(modelKey(base), modelKey({ subject: { model_id: 'm::default', harness: null, variant: 'high' } }));
 });
+
+test('identity churn is not a drop-out: a retained row whose source UUID is still published gets no estimate', () => {
+  const uuid = '21a0a2f6-bc72-40d2-80db-ea4e66b02b90';
+  const bridges = ['b1', 'b2', 'b3', 'b4'];
+  // Old state matched the row to a catalog id; the current matcher leaves it unmatched (source id only).
+  const old = [...bridges.map((id) => observation(id, 1)),
+    observation('churn', 0.6, 'bench::1', { source: { url: 'https://example.org/results', retrieved_at: '2026-09-01', published_at: null, file: 'fixture.json', locator: `model UUID ${uuid}; score` } }),
+    observation('gone', 0.4)];
+  const live = [...bridges.map((id) => observation(id, 1)),
+    observation('churn-now', 0.61, 'bench::1', { subject: { model_id: null, source_id: uuid, name: 'Model churn', harness: null, variant: null } })];
+  const estimates = datedEstimates(live, registry([registryEntry('bench::1')]), [state('S1', '2026-09-01T00:00:00.000Z', old)]);
+  assert.deepEqual(estimates.map((e) => e.subject_name), [title('gone')], 'only the configuration that really left the board is estimated');
+  // A different harness of the same source identity is a different configuration and stays estimable.
+  const otherHarness = [...bridges.map((id) => observation(id, 1)),
+    observation('churn-now', 0.61, 'bench::1', { subject: { model_id: null, source_id: uuid, name: 'Model churn', harness: 'Other CLI', variant: null } })];
+  const again = datedEstimates(otherHarness, registry([registryEntry('bench::1')]), [state('S1', '2026-09-01T00:00:00.000Z', old)]);
+  assert.ok(again.some((e) => e.subject_name === title('churn')));
+});

@@ -16,6 +16,7 @@ import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 import { capShortlist } from "../lib/shortlist.mjs";
+import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
 const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: string; dp: number }[] = [
@@ -228,7 +229,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     </div>
     {comparisonTarget && comparisonMetric && <p role="status" className="mt-2 text-xs text-gray-500">
       {comparisonReference
-        ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(1)}</b> for this reference{comparisonReference.approximate ? " (approximated from a retained bridge)" : " (measured)"}. Missing values stay unknown and are excluded; {matching.length} models currently qualify.</>
+        ? <>Showing models above <b className="text-gray-300">{comparisonReference.value.toFixed(1)}</b> for this reference{comparisonReference.approximate ? ` (${bridgeDisclosure(comparisonReference)})` : " (measured)"}. Missing values stay unknown and are excluded; {matching.length} models currently qualify.</>
         : <>This reference has no comparable result for that choice, so the filter is inactive. Missing values stay unknown.</>}
     </p>}
     {(comparisonTarget || comparisonMetric) && <button type="button" className="mt-2 text-xs text-accent underline" onClick={() => { setComparisonTarget(""); setComparisonMetric(""); }}>Clear comparison</button>}
