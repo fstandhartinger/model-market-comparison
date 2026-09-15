@@ -294,3 +294,7 @@ details[open] > .bh-collapsible-grid { display: grid; }
 }
 @keyframes bh-hint-pop { 0% { opacity: 0; scale: .85; } 8% { opacity: 1; scale: 1.06; } 14% { scale: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
 @media (prefers-reduced-motion: reduce) { .bh-simplified-hint { animation: none; } }
+
+/* CR-33.3: the selected score's row sits under the Main Composite row, highlighted more quietly. */
+.bh-matrix-hero.bh-matrix-hero-selected th, .bh-matrix-hero.bh-matrix-hero-selected td { background: linear-gradient(rgb(var(--accent2) / .08), rgb(var(--accent2) / .08)), var(--surface); border-bottom: 1px solid rgb(var(--accent2) / .45); }
+.bh-matrix-hero.bh-matrix-hero-selected .bh-matrix-stub { box-shadow: inset 3px 0 0 rgb(var(--accent2)), 1px 0 0 rgb(var(--line) / .55); }

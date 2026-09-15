@@ -5,7 +5,7 @@ import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
 import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
-import { ScoreRow, CategoryHeader } from "./ScoreRows";
+import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
 import { filteredCandidates, type MatrixFilterData } from "../lib/top-models";
@@ -140,7 +140,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
   const selectedKeys = useMemo(() => new Set(visible.map((v) => v.row.key)), [visible]);
   // 2026-09-15: the selected score, with the same evidence rule as the candidate filter (a Composite
   // with no observed slot is the neutral fallback, not a score).
-  const scoreValues = ids.map((id) => { const m = modelsById.get(id); const v = m?.scores[score]; return v != null && (score !== "composite" || (m!.composite_coverage ?? 0) > 0) ? v : null; });
+  const valuesFor = (key: typeof score) => ids.map((id) => { const m = modelsById.get(id); const v = m?.scores[key]; return v != null && (key !== "composite" || (m!.composite_coverage ?? 0) > 0) ? v : null; });
   const matches = useMemo(() => {
     const t = q.trim().toLowerCase();
     if (!t) return [];
@@ -216,7 +216,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
               {ids.length > 1 && <button type="button" className="bh-matrix-remove" aria-label={`Remove ${names[j]} from the comparison`} onClick={() => remove(id)}>×</button>}
             </th>; })}
           </tr></thead>
-          <tbody><ScoreRow score={score} values={scoreValues} /></tbody>
+          <tbody><ScoreRowPair score={score} valuesFor={valuesFor} /></tbody>
           {groups.map((g) => { const open = !closed.has(g.id); return <tbody key={g.id}>
             <CategoryHeader columns={ids.length} composite={categoryComposite(g.rows, ids.length)} label={
               <button type="button" aria-expanded={open} onClick={() => toggle(g.id)}>

@@ -5,27 +5,27 @@ import type { ScoreKey } from "../lib/types";
  *  the long inline paragraph used (R1.5). The full derivation lives on /about (R1.6). */
 export const ADJUSTED_COST_TIP = (
   <>
-    Every adjusted cost is a modeled estimate: it describes what one task actually costs you,
-    not a headline price per million tokens. It combines
-    the provider we would route you to, that provider’s prices, how much of your input it
-    serves from cache and what cache reads and writes cost there, and how many tokens this
-    particular model needs to finish the task. A verbose model on a cheap provider can cost
-    more than a terse model on an expensive one; this column shows that. A small “cheaper” or
-    “pricier” tag marks a model that costs at least twice less or more than is typical for its
-    score among the models currently shown.
+    {/* CR-32.3: short and plain; the full method lives on /about. */}
+    <ul className="list-disc space-y-1 pl-4">
+      <li>What one typical task costs you, in US dollars.</li>
+      <li>Uses the cheapest provider your options allow, with its prices and cache discounts.</li>
+      <li>Counts how many tokens this model really needs per task.</li>
+      <li>“cheaper” / “pricier” tags: about 2× off the typical cost for that score.</li>
+    </ul>
+    <a className="mt-2 inline-block text-accent underline" href="/about#adjusted-cost">How we calculate</a>
   </>
 );
 
 const COMPOSITE_TIP = (
   <>
-    A single 0–100 number per model. Seven equally weighted capability slots — including
-    Epoch AI’s general ECI and Software Engineering ECI — are each turned into the model’s
-    percentile among all models measured on it, and those percentiles are averaged, so a
-    hard benchmark and an easy one count the same. Models measured on fewer benchmarks are
-    not rewarded for the gaps: missing slots are filled with the model’s own mean and then
-    adjusted so a thin record cannot overtake a fuller one it never beat. Attached values come
-    from the same model family when a configuration was not measured itself; the model page
-    marks them. Scores built on fewer than three of the seven inputs are shown hatched.
+    {/* CR-32.3: short and plain; the full method lives on /about. */}
+    <ul className="list-disc space-y-1 pl-4">
+      <li>One 0–100 capability number per model.</li>
+      <li>Averages seven major benchmarks and indices, including Artificial Analysis and Epoch AI’s ECI.</li>
+      <li>Each counts as the model’s rank among all measured models, so hard and easy tests weigh the same.</li>
+      <li>Missing results are never counted as good; thin records are shown hatched.</li>
+    </ul>
+    <a className="mt-2 inline-block text-accent underline" href="/about#score">How we calculate</a>
   </>
 );
 

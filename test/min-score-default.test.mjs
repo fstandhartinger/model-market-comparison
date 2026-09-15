@@ -43,3 +43,15 @@ test('CR-29.1: slider label names the Main Composite Score on its second line, e
   assert.deepEqual(minScoreLabel('composite', 'Composite'), { title: 'Minimum Capability Score', sub: 'Benchmark Heaven Main Composite Score' });
   assert.equal(minScoreLabel('aa_intelligence_index', 'AA Intelligence').sub, 'AA Intelligence');
 });
+
+import { valueMapYDomain } from '../lib/value-map.mjs';
+test('CR-32.4: Y axis fits the plotted scores; 100 only when the best score is near it; Elo scale-aware', () => {
+  const low = valueMapYDomain([41.2, 55.0, 68.7]);
+  assert.ok(low.domain[1] < 100 && low.domain[1] >= 68.7, `top ${low.domain[1]}`);
+  assert.ok(low.domain[0] <= 41.2, 'points never clipped at the bottom');
+  assert.equal(low.ticks[low.ticks.length - 1], low.domain[1]);
+  assert.equal(valueMapYDomain([72, 99.5]).domain[1], 100);
+  assert.equal(valueMapYDomain([41, 68], { full: true }).domain[1], 100, 'cogwheel full scale keeps 100');
+  const elo = valueMapYDomain([1171, 1350], { elo: true });
+  assert.ok(elo.domain[0] <= 1171 && elo.domain[1] >= 1350 && elo.domain[1] < 1500, JSON.stringify(elo));
+});

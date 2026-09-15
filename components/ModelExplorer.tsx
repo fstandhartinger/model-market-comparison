@@ -488,14 +488,21 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                         </div>
                         <table className="w-full text-xs">
                           <tbody>
-                            {/* 2026-09-15: the product's own selected score heads the benchmark list. */}
-                            <tr className="bh-score-mini" data-score={score}>
+                            {/* CR-33.3: the Main Composite Score always heads the list; a different selected score follows. */}
+                            <tr className="bh-score-mini" data-score="composite">
                               <th scope="row" className="py-1 pr-2 text-left font-normal">
                                 <span className="block text-[13px] font-bold text-gray-200">Benchmark Heaven Score</span>
+                                <span className="block text-[10px] text-gray-500">Main Composite Score</span>
+                              </th>
+                              <td className="py-1 text-right text-base font-bold tabular">{m.scores.composite != null && hasScoreEvidence(m, "composite") ? num(m.scores.composite, 1) : <span className="text-gray-600">—<span className="sr-only">No score with benchmark evidence</span></span>}</td>
+                            </tr>
+                            {score !== "composite" && <tr className="bh-score-mini" data-score={score} data-score-role="selected">
+                              <th scope="row" className="py-1 pr-2 text-left font-normal">
+                                <span className="block text-[13px] font-bold text-gray-200">{SCORE_SHORT_LABELS[score]}</span>
                                 <span className="block text-[10px] text-gray-500">{scoreRowSubtitle(score)}</span>
                               </th>
                               <td className="py-1 text-right text-base font-bold tabular">{sc != null && hasEvidence ? num(sc, score.startsWith("designarena") ? 0 : 1) : <span className="text-gray-600">—<span className="sr-only">No score with benchmark evidence</span></span>}</td>
-                            </tr>
+                            </tr>}
                             {SCORE_ROWS.map((sr) => {
                               const v = m.scores[sr.key];
                               return (

@@ -10,14 +10,17 @@ export function scoreRowSubtitle(score: ScoreKey): string {
   return subtitleFor(score, SCORE_SHORT_LABELS[score]);
 }
 
-export function ScoreRow({ score, values }: { score: ScoreKey; values: (number | null)[] }) {
+/** CR-33.3 (Florian 2026-09-15): the first row is ALWAYS the Main Composite Score; when the settings select
+ *  another score, that score follows as a second highlighted row (`role="selected"`). */
+export function ScoreRow({ score, values, role = "main" }: { score: ScoreKey; values: (number | null)[]; role?: "main" | "selected" }) {
   const elo = score.startsWith("designarena");
   const bars = rowBars(values, true, elo ? "Elo" : "points"), win = rowWinners(values, true);
-  return <tr className="bh-matrix-hero" data-score={score}>
+  return <tr className={`bh-matrix-hero${role === "selected" ? " bh-matrix-hero-selected" : ""}`} data-score={score} data-score-role={role}>
     <th scope="row" className="bh-matrix-stub">
-      <span className="bh-hero-label">Benchmark Heaven Score</span>
-      <span className="bh-hero-sub">{scoreRowSubtitle(score)}</span>
-      <Link href="/about#score" className="bh-hero-source">How it’s calculated<span className="sr-only"> (Benchmark Heaven score methodology)</span></Link>
+      {role === "main"
+        ? <><span className="bh-hero-label">Benchmark Heaven Score</span><span className="bh-hero-sub">Main Composite Score</span>
+          <Link href="/about#score" className="bh-hero-source">How it’s calculated<span className="sr-only"> (Benchmark Heaven score methodology)</span></Link></>
+        : <><span className="bh-hero-label">{SCORE_SHORT_LABELS[score]}</span><span className="bh-hero-sub">Selected score</span></>}
     </th>
     {values.map((v, j) => <td key={j} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
       {v == null
@@ -29,6 +32,14 @@ export function ScoreRow({ score, values }: { score: ScoreKey; values: (number |
         </span>}
     </td>)}
   </tr>;
+}
+
+/** CR-33.3: the Main Composite row, plus the selected score's row when it is not the Composite. */
+export function ScoreRowPair({ score, valuesFor }: { score: ScoreKey; valuesFor: (key: ScoreKey) => (number | null)[] }) {
+  return <>
+    <ScoreRow score="composite" values={valuesFor("composite")} />
+    {score !== "composite" && <ScoreRow score={score} values={valuesFor(score)} role="selected" />}
+  </>;
 }
 
 /** A category header that is also that category's composite (see `categoryComposite`). */

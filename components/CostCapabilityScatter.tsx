@@ -15,7 +15,7 @@ import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { paretoFrontier } from "../lib/pareto.mjs";
-import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, labelCandidates, placeLabels } from "../lib/value-map.mjs";
+import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
 
 type PlotOffset = { left: number; top: number; width: number; height: number };
 
@@ -191,7 +191,8 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const isElo = score.startsWith("designarena");
   const ys = (compact ? compactPoints : points).map((p) => p.y);
   const yMin = ys.length ? Math.min(...ys) : 80;
-  const yCompact = niceTicks(Math.min(yMin - 3, 80), 100);
+  // CR-32.4: the compact map's Y axis fits the plotted scores (100 only when the best is >= 90; Elo-aware).
+  const yCompact = valueMapYDomain(ys, { elo: isElo });
   // F-11: the full chart's Y axis follows the data (floor(min − 3) → 100, at least 20 wide)
   // so the points use the plot instead of huddling at the top of 0–100. F-17: round ticks.
   const yFull = niceTicks(Math.max(0, Math.min(Math.floor(yMin - 3), 80)), 100);
@@ -219,7 +220,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
                 data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
             <XAxis type="number" dataKey="x" name="Adjusted cost" reversed={COST_AXIS.reversed} scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
-            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? [yCompact.domain[0], 100] : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
+            <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? [yCompact.domain[0], yCompact.domain[1]] : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-compact" />} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />

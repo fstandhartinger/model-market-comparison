@@ -12,3 +12,4 @@ export declare function expandedCandidateFamilies(models: { family_key: string; 
 export declare const DERIVED_MIN_SCORE_FLOOR: number;
 export declare function derivedMinScore(points: readonly { x: number; y: number }[] | null | undefined, opts?: { score?: string; step?: number; floor?: number }): number | null;
 export declare function minScoreLabel(score: string, shortLabel: string): { title: string; sub: string };
+export declare function valueMapYDomain(values: readonly number[] | null | undefined, opts?: { elo?: boolean; full?: boolean }): { domain: [number, number]; ticks: number[] };

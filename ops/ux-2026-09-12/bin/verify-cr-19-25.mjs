@@ -70,7 +70,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const axesText = await page.locator('#benchmark-radar').innerText().catch(() => '');
   check(`${tag} CR-19.3 default radar axes include DesignArena Full-Stack and not Frontend`, /Full-Stack/.test(axesText) && !/DesignArena Frontend/.test(axesText), axesText.slice(0, 300));
   const hit = page.locator('#benchmark-radar svg [role=button]').filter({ visible: true }).first();
-  if (mobile) await hit.tap().catch(() => hit.click()); else await hit.focus();
+  // Focus opens the same tooltip as a tap (RadarHit onFocus); a physical tap can land on an overlapping point.
+  await hit.focus().catch(() => hit.dispatchEvent('click'));
   await page.waitForTimeout(400);
   const bg = await page.locator('#benchmark-radar [role=status]').first().evaluate((el) => getComputedStyle(el).backgroundColor).catch(() => null);
   check(`${tag} CR-19.1 radar tooltip background is opaque`, bg && alpha(bg) === 1 && bg !== 'rgba(0, 0, 0, 0)', bg);
