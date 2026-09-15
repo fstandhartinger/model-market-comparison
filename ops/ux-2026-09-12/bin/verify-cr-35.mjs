@@ -30,7 +30,9 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const beta = page.locator('header [data-beta-tag]');
   const geo = await page.evaluate(() => { const b = document.querySelector('header [data-beta-tag]'); const h = document.querySelector('header'); if (!b) return null; const r = b.getBoundingClientRect(); return { text: b.textContent, left: r.left, right: r.right, vw: innerWidth, headerOverflow: h.scrollWidth > h.clientWidth + 1, docOverflow: document.documentElement.scrollWidth > innerWidth + 1 }; });
   check(`${tag} CR-35.2 BETA tag visible in the header without overflow`, geo && /^BETA/.test(geo.text) && (mobile || /Work in progress/.test(geo.text)) && geo.right <= geo.vw && !geo.headerOverflow && !geo.docOverflow, geo);
-  if (mobile) await beta.click(); else await beta.hover();
+  // tap() sends touch pointer events; click() in a touch-emulated context still sends mouse events, whose hover
+  // handler opens the note before the click toggles it — not what a phone does.
+  if (mobile) await beta.tap(); else await beta.hover();
   await page.waitForTimeout(300);
   const note = await page.locator('#bh-beta-note').innerText().catch(() => '');
   const noteBg = await page.locator('#bh-beta-note').evaluate((el) => getComputedStyle(el).backgroundColor).catch(() => '');
