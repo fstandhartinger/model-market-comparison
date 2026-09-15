@@ -18,7 +18,11 @@ const check = (name, ok, detail) => { results.push({ name, ok: !!ok, detail }); 
 const view = () => {
   const cols = [...document.querySelectorAll('table.bh-matrix thead th.bh-matrix-model .bh-matrix-name a')].map((a) => decodeURIComponent(a.getAttribute('href').replace('/models/', '')));
   const rows = document.querySelectorAll('table.bh-matrix tbody tr:not(.bh-matrix-group)').length;
-  const status = document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]')?.textContent.replace(/\s+/g, ' ').trim();
+  // F-83: the status holds the count <select>; read its value, not every option's text.
+  const el = document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]');
+  const clone = el?.cloneNode(true);
+  clone?.querySelectorAll('select').forEach((x, i) => x.replaceWith(el.querySelectorAll('select')[i].value));
+  const status = clone?.textContent.replace(/\s+/g, ' ').trim();
   return { cols, rows, status, search: location.search };
 };
 const observe = () => {

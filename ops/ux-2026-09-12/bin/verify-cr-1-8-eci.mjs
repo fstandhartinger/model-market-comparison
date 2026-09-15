@@ -26,7 +26,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme);
   await p.waitForTimeout(900);
   const counts = await p.evaluate(() => ({
-    status: document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]')?.textContent.replace(/\s+/g, ' ').trim() ?? '',
+    // F-83: the status holds the count <select>; its option texts would otherwise run into the sentence.
+    status: (() => { const el = document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]'); if (!el) return ''; const c = el.cloneNode(true); c.querySelectorAll('select').forEach((x, i) => x.replaceWith(el.querySelectorAll('select')[i].value)); return c.textContent.replace(/\s+/g, ' ').trim(); })(),
     chooser: document.querySelector('.bh-rowpicker summary')?.textContent.replace(/\s+/g, ' ').trim() ?? '',
     rows: document.querySelectorAll('table.bh-matrix tbody tr:not(.bh-matrix-group)').length,
   }));

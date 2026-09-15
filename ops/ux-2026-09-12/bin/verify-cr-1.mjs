@@ -26,7 +26,11 @@ const snapshot = () => {
     barsOnMissing += cells.filter((td) => td.querySelector('.bh-matrix-missing') && td.querySelector('.bh-matrix-bar')).length;
     for (const bar of tr.querySelectorAll('.bh-matrix-bar')) { const m = getComputedStyle(bar).backgroundColor.match(/[\d.]+\)$/); if (m) maxBarAlpha = Math.max(maxBarAlpha, parseFloat(m[0])); }
   }
-  const status = document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]')?.textContent.replace(/\s+/g, ' ').trim() ?? '';
+  // F-83: the status holds the count <select>; read its value, not every option's text.
+  const statusEl = document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]');
+  const statusClone = statusEl?.cloneNode(true);
+  statusClone?.querySelectorAll('select').forEach((x, i) => x.replaceWith(statusEl.querySelectorAll('select')[i].value));
+  const status = statusClone?.textContent.replace(/\s+/g, ' ').trim() ?? '';
   const groups = [...table.querySelectorAll('tr.bh-matrix-group button')].map((x) => x.textContent.trim());
   const names = rows.map((tr) => tr.querySelector('th .bh-matrix-bench')?.childNodes[0]?.textContent ?? '');
   const tags = [...table.querySelectorAll('.bh-matrix-tag')].map((t) => t.dataset.tag);
@@ -53,6 +57,30 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   check(`${tag} CR-1.1 tab opens on the comparison table`, s != null, s ? '' : 'no table.bh-matrix');
   if (!s) { await c.close(); continue; }
   check(`${tag} CR-1.2 opens with the top 5 of the filter selection`, s.cols.length === 5 && /top 5 by .+ under your filters/.test(s.status), `${s.cols.length} cols · ${s.status}`);
+  // F-83: the table starts within the first screen; one status row, one box-less control row.
+  const f83 = await p.evaluate(() => {
+    const top = (el) => el ? el.getBoundingClientRect().top + scrollY : null;
+    const first = document.querySelector('table.bh-matrix tbody td.bh-matrix-cell .bh-matrix-link');
+    const status = document.querySelector('section[aria-label="Benchmark comparison"] [role="status"]');
+    return { thead: top(document.querySelector('table.bh-matrix thead')), firstTop: top(first), firstBottom: first ? first.getBoundingClientRect().bottom + scrollY : null,
+      sentence: document.querySelector('.bh-page-head p')?.textContent ?? '', statusSelect: !!status?.querySelector('select[aria-label="Number of models"]'),
+      modelsLabel: [...document.querySelectorAll('label')].some((l) => /^\s*Models/.test(l.textContent) && l.querySelector('select')),
+      borders: ['.bh-pickpanel', '.bh-rowpicker'].map((c) => { const d = document.querySelector(`details${c}`); return d && !d.open ? getComputedStyle(d).borderTopWidth : 'missing-or-open'; }) };
+  });
+  if (kind === 'mobile') check(`${tag} F-83 thead ≤ 560 px and first value inside the 844 px viewport`, f83.thead != null && f83.thead <= 560 && f83.firstBottom != null && f83.firstBottom <= 844, JSON.stringify(f83));
+  else check(`${tag} F-83 first value ≤ 520 px from the top`, f83.firstTop != null && f83.firstTop <= 520, JSON.stringify(f83));
+  check(`${tag} F-83 header sentence has no digit; count select inside the status; no "Models" select label`, !/\d/.test(f83.sentence) && f83.statusSelect && !f83.modelsLabel, JSON.stringify(f83));
+  check(`${tag} F-83 closed disclosures have no border`, f83.borders.every((w) => w === '0px'), f83.borders.join(','));
+  const openState = () => p.evaluate(() => ({ pick: document.querySelector('details.bh-pickpanel')?.open, rows: document.querySelector('details.bh-rowpicker')?.open }));
+  await p.locator('details.bh-pickpanel > summary').click(); await p.waitForTimeout(300);
+  const o1 = await openState();
+  await p.locator('details.bh-rowpicker > summary').click(); await p.waitForTimeout(300);
+  const o2 = await openState();
+  await p.locator('details.bh-pickpanel > summary').click(); await p.waitForTimeout(300);
+  const o3 = await openState();
+  await p.locator('details.bh-pickpanel > summary').click(); await p.waitForTimeout(300);
+  const o4 = await openState();
+  check(`${tag} F-83 only one panel open at a time`, o1.pick && !o1.rows && o2.rows && !o2.pick && o3.pick && !o3.rows && !o4.pick && !o4.rows, JSON.stringify([o1, o2, o3, o4]));
   check(`${tag} CR-1.1 column headers: vendor above, model name`, s.cols.every((x) => x.org && x.name), JSON.stringify(s.cols));
   check(`${tag} CR-1.3 grouped by category with ≥ 8 group headers`, s.groups.length >= 8, s.groups.join(' | '));
   // F-77: the toolbar counts benchmarks (as "Choose rows" does); when a benchmark shows several harness

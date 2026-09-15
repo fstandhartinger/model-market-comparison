@@ -25,10 +25,10 @@ function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
 }
 
 /** CR-3.1: the custom row checklist — one toggle per category, and the benchmarks inside it. */
-function RowPicker({ rows, groups, selected, onChange }: { rows: MatrixRow[]; groups: Matrix["groups"]; selected: Set<string>; onChange: (keys: string[]) => void }) {
+function RowPicker({ rows, groups, selected, onChange, open, onToggle }: { rows: MatrixRow[]; groups: Matrix["groups"]; selected: Set<string>; onChange: (keys: string[]) => void; open: boolean; onToggle: (e: React.SyntheticEvent<HTMLDetailsElement>) => void }) {
   const set = (keys: string[], on: boolean) => { const n = new Set(selected); keys.forEach((k) => on ? n.add(k) : n.delete(k)); onChange([...n]); };
-  return <details className="bh-rowpicker rounded-xl border border-line/70 px-3 py-2">
-    <summary className="cursor-pointer text-sm font-medium">Choose rows <span className="bh-muted font-normal tabular">({selected.size} of {new Set(rows.map((r) => r.key)).size})</span></summary>
+  return <details className="bh-rowpicker bh-disclosure" open={open} onToggle={onToggle}>
+    <summary>Choose rows <span className="bh-muted font-normal tabular">({selected.size} of {new Set(rows.map((r) => r.key)).size})</span></summary>
     <div className="mt-2 grid gap-x-6 gap-y-3 sm:grid-cols-2 xl:grid-cols-3">
       {groups.map((g) => {
         const keys = [...new Set(rows.filter((r) => r.group === g.id).map((r) => r.key))];
@@ -69,6 +69,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
   const [savedRows, setSavedRows] = useState<string | null>(null);
   const [closed, setClosed] = useState<Set<string>>(new Set());
   const [q, setQ] = useState("");
+  const [panel, setPanel] = useState<"pick" | "rows" | null>(null);
   const modelsById = useMemo(() => new Map(filterData.models.map((m) => [m.id, m])), [filterData]);
 
   // CR-2.5: ?models=, ?set= (model preset), ?rows= (row preset id or benchmark keys).
@@ -147,17 +148,24 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
   const modelsActive = pinned ? savedModels : modelPreset;
   const rowsActive = Array.isArray(rowSel) ? savedRows : rowSel;
 
-  return <section aria-label="Benchmark comparison" className="space-y-4">
-    <div className="flex flex-wrap items-end gap-x-4 gap-y-3">
+  // F-83: the count select sits inside the status sentence, so the table starts within the first screen.
+  const countSelect = <select className="bh-inline-select tabular" aria-label="Number of models" value={count} onChange={(e) => setCount(Number(e.target.value))}>
+    {Array.from({ length: MAX_MODELS - MIN_MODELS + 1 }, (_, i) => i + MIN_MODELS).map((n) => <option key={n} value={n}>{n}</option>)}</select>;
+  // F-83: only one of the two panels is open at a time.
+  const panelToggle = (id: "pick" | "rows") => (e: React.SyntheticEvent<HTMLDetailsElement>) => {
+    const isOpen = e.currentTarget.open;
+    setPanel((p) => isOpen ? id : p === id ? null : p);
+  };
+
+  return <section aria-label="Benchmark comparison" className="space-y-3">
+    <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <p className="text-sm" role="status">
         <span className="font-semibold tabular">{selectedKeys.size}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
         {visible.length !== selectedKeys.size && <span className="bh-muted"> in <span className="tabular">{visible.length}</span> rows</span>}
-        <span className="bh-muted"> · {pinned ? "your selection" : modelPreset === "top" ? `top ${ids.length} by ${SCORE_SHORT_LABELS[score]} under your filters` : `${presetName} · ${ids.length} under your filters`}</span>
+        <span className="bh-muted"> · {pinned ? "your selection" : modelPreset === "top" ? <>top {countSelect} by {SCORE_SHORT_LABELS[score]} under your filters</> : <>{presetName} · {countSelect} under your filters</>}</span>
       </p>
       <div className="flex flex-wrap items-center gap-2 sm:ml-auto">
-        {pinned
-          ? <button type="button" className="bh-button !min-h-9 !py-1.5 text-sm" onClick={reset}>Reset to top {count}</button>
-          : <label className="flex items-center gap-2 text-sm">Models<select className="bh-input !py-1.5" value={count} onChange={(e) => setCount(Number(e.target.value))}>{Array.from({ length: MAX_MODELS - MIN_MODELS + 1 }, (_, i) => i + MIN_MODELS).map((n) => <option key={n} value={n}>{n}</option>)}</select></label>}
+        {pinned && <button type="button" className="bh-button !min-h-9 !py-1.5 text-sm" onClick={reset}>Reset to top {count}</button>}
         <PresetMenu kind="models" label="Models" ours={MODEL_PRESETS.map((p) => p.id === "top" ? { ...p, name: `Frontier top ${count}` } : p)} activeId={modelsActive}
           onOurs={useModelPreset} onYours={(p) => { const keep = (p.value as string[]).filter((id) => modelsById.has(id)).slice(0, MAX_MODELS); if (keep.length) { pin(keep); setSavedModels(p.id); } }} current={ids} />
         <PresetMenu kind="rows" label="Rows" ours={ROW_PRESETS} activeId={rowsActive} align="right"
@@ -165,8 +173,9 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
       </div>
     </div>
 
-    <div className="flex flex-wrap items-start gap-3">
-      {ids.length < MAX_MODELS && <div className="relative w-full max-w-xs">
+    {/* F-83: the three ways to change columns and rows, one wrapping line; an open panel takes the full width. */}
+    <div className="flex flex-wrap items-center gap-x-5 gap-y-1">
+      {ids.length < MAX_MODELS && <div className="relative w-full max-w-[13rem]">
         <input id="bh-matrix-add" type="search" role="combobox" aria-label="Add a model to the comparison" aria-expanded={matches.length > 0} aria-controls="bh-matrix-add-list" autoComplete="off"
           className="bh-input block w-full !py-2" placeholder="+ Add a model" value={q} onChange={(e) => setQ(e.target.value)}
           onKeyDown={(e) => { if (e.key === "Enter" && matches[0]) { e.preventDefault(); add(matches[0].id); } if (e.key === "Escape") setQ(""); }} />
@@ -175,15 +184,16 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
             <span className="font-medium">{m.display_name}</span><span className="bh-muted text-xs">{m.org} · {m.benchmark_count} benchmarks</span></button></li>)}
         </ul>}
       </div>}
-      <details className="bh-pickpanel w-full rounded-xl border border-line/70 px-3 py-2 lg:order-last">
-        <summary className="cursor-pointer text-sm font-medium">Pick from chart <span className="bh-muted font-normal">· score against cost, narrowed by two sliders</span></summary>
+      <details className="bh-pickpanel bh-disclosure" open={panel === "pick"} onToggle={panelToggle("pick")}>
+        <summary>Pick from chart</summary>
+        <p className="bh-muted text-sm">Score against cost, narrowed by two sliders.</p>
         <div className="mt-3">
           <PickFromChart candidates={candidates} score={score} scoreLabel={SCORE_SHORT_LABELS[score]} ids={ids} max={MAX_MODELS}
             nameOf={(id) => { const m = modelsById.get(id); return m ? collapsedName(m, true, preferred) : id; }}
             onToggle={(id) => { const next = toggleColumn(ids, id, MAX_MODELS); if (next) pin(next); }} />
         </div>
       </details>
-      <div className="min-w-0 flex-1 basis-72"><RowPicker rows={withValues.map((v) => v.row)} groups={matrix.groups} selected={selectedKeys} onChange={(keys) => chooseRows(keys)} /></div>
+      <RowPicker rows={withValues.map((v) => v.row)} groups={matrix.groups} selected={selectedKeys} onChange={(keys) => chooseRows(keys)} open={panel === "rows"} onToggle={panelToggle("rows")} />
     </div>
 
     {ids.length === 0

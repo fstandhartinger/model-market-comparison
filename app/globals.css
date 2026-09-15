@@ -156,6 +156,14 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 summary { cursor: pointer; padding-top: 10px; padding-bottom: 10px; }
 summary::marker { color: rgb(var(--accent)); }
 details[open] > summary { margin-bottom: 8px; }
+/* F-83: closed disclosures above the matrix are plain text buttons; only an open one becomes a card on its own row. */
+.bh-disclosure { border: 0 solid rgb(var(--line) / .7); border-radius: 14px; }
+.bh-disclosure > summary { display: inline-flex; align-items: center; gap: 8px; padding-top: 0; padding-bottom: 0; list-style: none; font-size: 14px; font-weight: 500; }
+.bh-disclosure > summary::-webkit-details-marker { display: none; }
+.bh-disclosure > summary::before { content: ""; border-block: 4.5px solid transparent; border-left: 6px solid rgb(var(--accent)); transition: transform .15s ease; }
+.bh-disclosure[open] { flex-basis: 100%; border-width: 1px; padding: 0 12px 12px; }
+.bh-disclosure[open] > summary::before { transform: rotate(90deg); }
+.bh-inline-select { min-height: 32px; margin: 0 2px; border: 1px solid var(--control-border); border-radius: 6px; padding: 2px 4px; background: rgb(var(--ink)); color: var(--text); font: inherit; font-weight: 600; }
 /* Tailwind's display utilities can outrank the browser rule that hides closed
    <details> contents. Keep folded secondary panels out of document height. */
 details:not([open]) > .bh-collapsible-grid { display: none !important; }
