@@ -55,6 +55,17 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     scope = p.getByRole('dialog', { name: 'Refine the ranking' });
   }
   await scope.getByLabel('Reference model').selectOption(REF);
+  // F-86: only comparisons the reference can answer are selectable; labels are unique.
+  const opts = await scope.getByLabel('Benchmark or category').locator('option').evaluateAll((os) => os.slice(1).map((o) => ({ text: o.textContent.trim(), disabled: o.disabled })));
+  const enabled = opts.filter((o) => !o.disabled), disabled = opts.filter((o) => o.disabled);
+  check('f86', `${tag} metric select has enabled and disabled options`, enabled.length >= 1 && disabled.length >= 1, `enabled=${enabled.length} disabled=${disabled.length}`);
+  check('f86', `${tag} every disabled option says "no result for this model"`, disabled.every((o) => o.text.endsWith('no result for this model')));
+  check('f86', `${tag} enabled options precede disabled ones`, opts.findIndex((o) => o.disabled) === enabled.length);
+  const bare = opts.map((o) => o.text.replace(/ · (no result for this model|bridged)$/, ''));
+  check('f86', `${tag} all metric labels are unique`, new Set(bare).size === bare.length, `n=${bare.length} unique=${new Set(bare).size}`);
+  const refs = await scope.getByLabel('Reference model').locator('option').evaluateAll((os) => os.map((o) => ({ v: o.value, t: o.textContent.trim(), disabled: o.disabled })));
+  const sep = refs.findIndex((o) => o.disabled && /no comparable results/.test(o.t));
+  check('f86', `${tag} reference select keeps ${REF} choosable and puts models without results after a separator`, refs.some((o) => o.v === REF && !o.disabled) && (sep === -1 || refs.findIndex((o) => o.v === REF) < sep), `sep=${sep} of ${refs.length}`);
   const status = scope.locator('p[role="status"]');
   const statusFor = async (metricValue) => { await scope.getByLabel('Benchmark or category').selectOption(metricValue); await p.waitForTimeout(400); return (await status.textContent())?.replace(/\s+/g, ' ').trim() ?? ''; };
 

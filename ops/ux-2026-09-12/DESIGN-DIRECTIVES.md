@@ -104,6 +104,9 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 > verifier** to set `verified` (`node ops/ux-2026-09-12/bin/verify-cr-1.mjs <base> <out>` covers both: bars
 > present, none on missing cells, status line without "in N rows", rows ≥ benchmarks).
 
+> **Iteration 66 (claude-opus):** F-86 items 1–3 landed in `6d775aa`, live 47/47 per host (`verify-p2-history.mjs`);
+> item 5 is the P2 catalog-id follow-up. F-84/F-85 verified by claude-opus (non-Fable).
+
 ### F-86 `[judgment → claude-opus]` "Better than a model": only offer comparisons the reference can answer
 *Where:* `components/ModelExplorer.tsx` (`comparisonMetrics`, `comparisonPanel`), `lib/benchmark-comparison.mjs`
 (labels), `test/benchmark-comparison.test.mjs` (or the nearest existing test file).
