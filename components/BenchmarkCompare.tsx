@@ -7,6 +7,7 @@ import { defaultRadarAxes } from '../lib/radar.mjs';
 import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
 import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 import { SpeedTable } from './SpeedContext';
+import { ComparePicker } from './ComparePicker';
 
 const nativeValue = (value: number, unit: string | null) => {
   const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
@@ -24,7 +25,7 @@ export function MissingCell({ view, axis, modelId }: { view: BenchmarkView; axis
 
 export function BenchmarkCompare({ initialView, initialPicks, standalone = false }: { initialView: BenchmarkView; initialPicks: string[]; standalone?: boolean }) {
   const [view, setView] = useState(initialView), [picks, setPicks] = useState(initialPicks);
-  const [addSearch, setAddSearch] = useState(''), [axisSearch, setAxisSearch] = useState('');
+  const [axisSearch, setAxisSearch] = useState('');
   // CR-14.4: current, unsaturated default axes (AA indices, Epoch ECI, DesignArena, HLE, Terminal-Bench).
   const defaults = useMemo(() => defaultRadarAxes([...initialView.axes, ...(initialView.indexAxes ?? [])]), [initialView]);
   const [axesIds, setAxes] = useState(defaults), [showEmpty, setShowEmpty] = useState(false), [category, setCategory] = useState('');
@@ -32,21 +33,29 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
   const [busy, setBusy] = useState(false), [error, setError] = useState(''), [retry, setRetry] = useState(0);
   const [loadedKey, setLoadedKey] = useState(initialPicks.join('|'));
   useEffect(() => {
-    const q = new URLSearchParams(location.search), incoming = q.getAll('model').filter((id) => initialView.models.some((m) => m.id === id));
+    // CR-36.2: a shared link may name any reasoning variant; it opens as that model's single entry.
+    const repOf = new Map((initialView.families ?? []).flatMap((f) => f.variants.map((v) => [v, f.id] as const)));
+    const incoming = new URLSearchParams(location.search).getAll('model').map((id) => repOf.get(id)).filter((id): id is string => !!id);
     if (incoming.length) setPicks([...new Set(incoming)].slice(0, 4));
-  }, [initialView.models]);
+  }, [initialView.families]);
   useEffect(() => {
     if (picks.join('|') === loadedKey && !retry) return;
     const controller = new AbortController();
     setBusy(true); setError('');
     const q = new URLSearchParams(); picks.forEach((id) => q.append('model', id));
-    fetch(`/api/benchmark-view?${q}`, { signal: controller.signal }).then((r) => { if (!r.ok) throw new Error('Benchmark data could not be loaded.'); return r.json(); }).then((data) => {
-      setView(data); setLoadedKey(picks.join('|')); setBusy(false);
+    fetch(`/api/benchmark-view?${q}&collapse=1`, { signal: controller.signal }).then((r) => { if (!r.ok) throw new Error('Benchmark data could not be loaded.'); return r.json(); }).then((data) => {
+      setView((old) => ({ ...data, families: data.families ?? old.families })); setLoadedKey(picks.join('|')); setBusy(false);
       history.replaceState(null, '', `${location.pathname}${picks.length ? `?${q}` : ''}`);
     }).catch((e) => { if (e.name !== 'AbortError') { setError(e.message); setBusy(false); } });
     return () => controller.abort();
   }, [picks, retry, loadedKey]);
-  const modelOptions = useMemo(() => [...view.models].sort((a, b) => a.name.localeCompare(b.name) || a.org.localeCompare(b.org)), [view.models]);
+  // CR-36.2: which variant stands behind each best-of value, per selected model (chip tooltip).
+  const variantSummary = useMemo(() => new Map(picks.map((id) => {
+    const counts = new Map<string, number>();
+    for (const a of [...view.axes, ...(view.indexAxes ?? [])]) { const r = latestScores(a.scores, 'all').find((row) => row.modelId === id); if (r?.variantLabel && (r.bestOf ?? 0) > 1) counts.set(r.variantLabel, (counts.get(r.variantLabel) ?? 0) + 1); }
+    const n = view.models.find((m) => m.id === id)?.variantCount ?? 1;
+    return [id, n > 1 ? `Best of ${n} reasoning variants, per benchmark. Values from: ${[...counts].sort((x, y) => y[1] - x[1]).map(([v, c]) => `${v} (${c})`).join(', ') || '—'}` : ''] as const;
+  })), [picks, view]);
   const radarPool = useMemo(() => [...view.axes, ...(view.indexAxes ?? [])], [view]);
   const selectedAxes = axesIds.map((id) => radarPool.find((a) => a.id === id)).filter((a): a is ViewAxis => !!a);
   const displayPicks = loadedKey !== picks.join('|') ? loadedKey.split('|').filter(Boolean) : picks;
@@ -64,35 +73,21 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
     return { name, axes, models };
   }).filter((snapshot) => snapshot.axes.length && snapshot.models.some((model) => model.measured));
 
-  const addModel = () => {
-    const needle = addSearch.trim().toLowerCase();
-    if (!needle || picks.length >= 4) return;
-    const chosen = modelOptions.find((m) => m.id.toLowerCase() === needle || `${m.name} · ${m.org}`.toLowerCase() === needle || m.name.toLowerCase() === needle);
-    if (!chosen || picks.includes(chosen.id)) return;
-    setPicks((old) => [...old, chosen.id].slice(0, 4));
-    setAddSearch('');
-  };
-
   return <div className="space-y-6">
     <section className="bh-panel p-4 sm:p-5" aria-label="Model selection">
       <div className="flex flex-wrap items-center justify-between gap-2"><h2 className="text-lg font-semibold">Compare models</h2><span className="bh-badge">{picks.length} / 4 selected</span></div>
-      <p className="bh-muted mt-1 text-sm">Choose exact reasoning configurations; benchmark evidence stays visible regardless of price filters.</p>
+      <p className="bh-muted mt-1 text-sm">One entry per model: each benchmark shows the best of its reasoning variants and names the variant. Benchmark evidence stays visible regardless of price filters.</p>
       <div className="mt-3 flex flex-wrap items-center gap-2" role="list" aria-label="Selected models">
         {picks.map((id, slot) => {
           const chosen = view.models.find((m) => m.id === id);
           if (!chosen) return null;
           return <div key={id} role="listitem" className="flex min-w-0 max-w-full items-center gap-1.5 rounded-lg border border-line px-2 py-1.5 text-sm" style={{ borderLeft: `3px solid ${SERIES_COLORS[slot]}` }}>
             <span className="bh-muted shrink-0 text-[10px] font-bold">{String.fromCharCode(65 + slot)}</span><span className="h-2 w-2 shrink-0 rounded-full" style={{ background: SERIES_COLORS[slot] }} />
-            <Link className="min-w-0 max-w-[12rem] truncate font-medium text-accent hover:underline" href={`/models/${encodeURIComponent(chosen.id)}#benchmark-sheet`} title={`${chosen.name} — open benchmark sheet`}>{chosen.name}</Link>
+            <Link className="min-w-0 max-w-[12rem] truncate font-medium text-accent hover:underline" href={`/models/${encodeURIComponent(chosen.id)}#benchmark-sheet`} title={[`${chosen.name} — open benchmark sheet`, variantSummary.get(id)].filter(Boolean).join('\n')} data-variant-summary={variantSummary.get(id) || undefined}>{chosen.name}</Link>{(chosen.variantCount ?? 1) > 1 && <span className="bh-muted shrink-0 text-[10px]" title={variantSummary.get(id)}>best of {chosen.variantCount}</span>}
             <button type="button" className="ml-1 min-h-0 rounded px-1 text-lg leading-none text-gray-400 hover:text-accent" onClick={() => setPicks((old) => old.filter((pick) => pick !== chosen.id))} aria-label={`Remove ${chosen.name}`}>×</button>
           </div>;
         })}
-        <form className="flex min-w-[min(100%,16rem)] flex-1 items-center gap-2 sm:max-w-sm" onSubmit={(event) => { event.preventDefault(); addModel(); }}>
-          <label className="sr-only" htmlFor="compare-add-model">Add a model</label>
-          <input id="compare-add-model" list="compare-model-options" role="combobox" aria-expanded="false" aria-controls="compare-model-options" className="bh-input min-w-0 flex-1" value={addSearch} onChange={(e) => setAddSearch(e.target.value)} placeholder={picks.length >= 4 ? 'Four models selected' : 'Add a model…'} disabled={picks.length >= 4} />
-          <datalist id="compare-model-options">{modelOptions.filter((m) => !picks.includes(m.id)).map((m) => <option key={m.id} value={`${m.name} · ${m.org}`} />)}</datalist>
-          <button type="submit" className="bh-button shrink-0 px-3" disabled={picks.length >= 4 || !addSearch.trim()}>Add</button>
-        </form>
+        <ComparePicker families={view.families ?? []} picks={picks} onPick={(id) => setPicks((old) => old.includes(id) ? old : [...old, id].slice(0, 4))} />
       </div>
       <div role="status" className="min-h-6 pt-2 text-sm bh-muted">{busy ? 'Updating benchmark evidence; results still show the previous models…' : error ? error : `${picks.length} models selected. ${visibleAxes.length} evaluation rows in the full comparison.`}</div>
       {error && <button className="bh-button" onClick={() => setRetry((n) => n + 1)}>Retry loading</button>}
@@ -137,7 +132,7 @@ export function BenchmarkCompare({ initialView, initialPicks, standalone = false
                 const bestInRow = best != null && normalized != null && Math.abs(normalized - best) < 0.000001;
                 return <td key={id} className={`min-w-36 align-top ${bestInRow ? 'bg-accent2/10' : ''}`}>
                   {bestInRow && <span className="sr-only">Best measured relative position in this row. </span>}
-                  {row ? <><span className={`block tabular-nums ${bestInRow ? 'font-bold' : 'font-semibold'}`}>{nativeValue(row.value, a.unit)}</span><span className="mt-1 block h-1 w-full overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: normalized == null ? '0%' : `${Math.max(2, normalized)}%` }} /></span>{normalized != null && <span className="sr-only">Catalog percentile {Math.round(normalized)}.</span>}</> : <span className="block text-xl tabular-nums">—</span>}
+                  {row ? <><span className={`block tabular-nums ${bestInRow ? 'font-bold' : 'font-semibold'}`}>{nativeValue(row.value, a.unit)}</span>{row.variantLabel && (row.bestOf ?? 0) > 1 && <span className="bh-muted block truncate text-[11px]" title={`Best of ${row.bestOf} measured reasoning variants on this benchmark: ${row.variantLabel}`} data-best-variant>best of variants: {row.variantLabel}</span>}<span className="mt-1 block h-1 w-full overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: normalized == null ? '0%' : `${Math.max(2, normalized)}%` }} /></span>{normalized != null && <span className="sr-only">Catalog percentile {Math.round(normalized)}.</span>}</> : <span className="block text-xl tabular-nums">—</span>}
                 </td>;
               })}
             </tr>

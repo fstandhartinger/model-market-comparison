@@ -108,3 +108,45 @@ test('actual source adapter keeps all version identities, values and dated legac
   assert.ok(JSON.stringify(selected).length < 500_000, 'initial benchmark payload bounded to selected models');
   assert.equal(JSON.stringify(ds), before);
 });
+
+// CR-36.2: one Compare entry per model; each benchmark takes the best of its reasoning variants and names it.
+import { compareFamilies, selectFamilyBenchmarkView } from '../lib/benchmark-view.mjs';
+function familyFixture() {
+  const models = [
+    { id: 'fable::max', name: 'Claude Fable 5.1 (Adaptive Reasoning, Max Effort)', org: 'Anthropic', family: 'fable', variant: 'max', released: '2026-09-01' },
+    { id: 'fable::high', name: 'Claude Fable 5.1 (Adaptive Reasoning, High Effort)', org: 'Anthropic', family: 'fable', variant: 'high', released: '2026-09-01' },
+    { id: 'astra::xhigh', name: 'GPT-6 Astra (xhigh)', org: 'OpenAI', family: 'astra', variant: 'xhigh', released: '2026-09-03' },
+    { id: 'old', name: 'Opus 4.7 (medium)', org: 'Anthropic', family: 'opus47', variant: 'medium', historical: true, deprecated: true },
+  ];
+  const aa = { id: 'aa', family: 'aa_intelligence_index', higherBetter: true, scores: [row('fable::max', 53, { modelId: 'fable::max' }), row('fable::high', 51, { modelId: 'fable::high' }), row('astra::xhigh', 52, { modelId: 'astra::xhigh' })] };
+  const swe = { id: 'swe', family: 'swe', higherBetter: true, scores: [row('s1', 70, { modelId: 'fable::max' }), row('s2', 74, { modelId: 'fable::high' }), row('s3', 99, { modelId: 'fable::high', basis: 'self_reported', derived: true })] };
+  const cost = { id: 'cost', family: 'cost', higherBetter: false, scores: [row('c1', 2, { modelId: 'fable::max' }), row('c2', 3, { modelId: 'fable::high' })] };
+  const unknown = { id: 'unk', family: 'unk', higherBetter: null, scores: [row('u1', 5, { modelId: 'fable::high' }), row('u2', 9, { modelId: 'fable::max' })] };
+  return { models, axes: [aa, swe, cost, unknown], indexAxes: [], missing: [{ model_id: 'fable::high', benchmark_id: 'x' }, { model_id: 'fable::max', benchmark_id: 'y' }] };
+}
+test('compare families: one entry per model, representative = strongest current variant, variant detail dropped from the name', () => {
+  const fams = compareFamilies(familyFixture());
+  assert.equal(fams.length, 3);
+  const fable = fams.find((f) => f.family === 'fable');
+  assert.deepEqual([fable.id, fable.name, fable.score, fable.variants.length, fable.current], ['fable::max', 'Claude Fable 5.1', 53, 2, true]);
+  assert.equal(fams.find((f) => f.family === 'astra').name, 'GPT-6 Astra');
+  assert.equal(fams.find((f) => f.family === 'opus47').current, false);
+});
+test('family view: best-of per benchmark, direction-aware, measured before claims, variant named, one entry per picked model', () => {
+  const view = selectFamilyBenchmarkView(familyFixture(), ['fable::high', 'fable::max', 'astra::xhigh']);
+  assert.deepEqual(view.picks, ['fable::max', 'astra::xhigh']);
+  const rows = (id) => view.axes.find((a) => a.id === id).scores.filter((r) => r.modelId === 'fable::max');
+  // Higher-better: the high variant's measured 74 beats max's 70; its self-reported 99 travels along but is not measured.
+  assert.equal(latestScores(rows('swe'))[0].value, 74);
+  assert.equal(latestScores(rows('swe'))[0].variantLabel, 'high');
+  assert.equal(latestScores(rows('swe'))[0].bestOf, 2);
+  // Lower-better: 2 (max) wins.
+  assert.equal(latestScores(rows('cost'))[0].value, 2);
+  assert.equal(latestScores(rows('cost'))[0].variantId, 'fable::max');
+  // Unknown direction: no "best" — the representative's own row.
+  assert.equal(latestScores(rows('unk'))[0].value, 9);
+  // No variant row survives under its own id; the representative carries the family name.
+  assert.ok(view.axes.every((a) => a.scores.every((r) => r.modelId !== 'fable::high')));
+  assert.equal(view.models.find((m) => m.id === 'fable::max').name, 'Claude Fable 5.1');
+  assert.deepEqual(view.missing.map((m) => m.model_id), ['fable::max']);
+});

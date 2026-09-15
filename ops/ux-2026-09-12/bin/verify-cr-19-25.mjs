@@ -85,7 +85,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     const fracs = [...document.querySelectorAll('[data-signal-frac]')].filter((el) => el.offsetParent).map((el) => Number(el.getAttribute('data-signal-frac')));
     return { n: fracs.length, max: Math.max(...fracs), label: document.querySelector('[data-signal-max]')?.textContent || '' };
   });
-  check(`${tag} CR-21.2 signal bar scale ends at the list's highest signal (a bar reaches 100 %)`, bars.n > 0 && Math.abs(bars.max - 1) < 1e-3 && /bar 0–\d/.test(bars.label), bars);
+  check(`${tag} CR-21.2 signal bar scale ends at the list's highest signal (a bar reaches 100 %)`, bars.n > 0 && Math.abs(bars.max - 1) < 1e-3 && /bars scaled to [\d.]+, the list's highest/.test(bars.label), bars);
   const note = await page.locator('[data-jagged-note]').first().innerText().catch(() => '');
   check(`${tag} CR-22.2 report says the more jagged, the more benchmaxxed`, /more jagged the shape, the more benchmaxxed/.test(note), note);
   const spokes = await page.evaluate(() => { const svg = [...document.querySelectorAll('section[aria-label="Per-model Benchmaxxing report"] svg')].find((s) => s.querySelectorAll('line').length > 10); return svg ? [...new Set([...svg.querySelectorAll('line')].map((l) => l.getAttribute('opacity')))] : null; });

@@ -36,9 +36,12 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
       const h = document.querySelector('[data-simplified-hint]').getBoundingClientRect();
       const b = [...document.querySelectorAll('#benchmarks a')].find((a) => /Open the full comparison/.test(a.textContent)).getBoundingClientRect();
       const overlap = !(h.right <= b.left || h.left >= b.right || h.bottom <= b.top || h.top >= b.bottom);
-      return { overlap, near: Math.hypot((h.left + h.right) / 2 - (b.left + b.right) / 2, (h.top + h.bottom) / 2 - (b.top + b.bottom) / 2), inView: h.left >= 0 && h.right <= innerWidth };
+      const p = document.querySelector('#bh-simple-bench-title')?.nextElementSibling?.getBoundingClientRect();
+      const coversIntro = !!p && !(h.right <= p.left || h.left >= p.right || h.bottom <= p.top || h.top >= p.bottom);
+      return { overlap, coversIntro, near: Math.hypot((h.left + h.right) / 2 - (b.left + b.right) / 2, (h.top + h.bottom) / 2 - (b.top + b.bottom) / 2), inView: h.left >= 0 && h.right <= innerWidth };
     });
     check(`${tag} CR-31.1 hint sits next to the button without covering it, inside the viewport`, !geo.overlap && geo.near < 260 && geo.inView, geo);
+    check(`${tag} F-99 hint does not cover the section intro`, !geo.coversIntro, geo);
     await page.screenshot({ path: `${OUT}/${tag}-hint.png` });
   }
   await page.waitForTimeout(4500);

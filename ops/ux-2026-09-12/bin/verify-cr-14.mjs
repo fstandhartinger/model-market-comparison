@@ -43,8 +43,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     && /DesignArena Frontend/.test(joined) && /DesignArena Full-Stack/.test(joined) && /Humanity/.test(joined) && /Terminal-Bench/.test(joined) && !/GPQA/.test(joined), axisNames);
 
   // CR-14.2 scaling: every drawn point sits at its announced position; fixed-scale positions equal the value.
-  const simpleSvg = mobile ? '#benchmark-radar svg[viewBox="0 0 360 360"]' : '#benchmark-radar svg[viewBox="0 0 720 500"]';
-  const geo = mobile ? await geometry(page, simpleSvg, 180, 180, 120) : await geometry(page, simpleSvg, 360, 245, 150);
+  const simpleSvg = mobile ? '#benchmark-radar svg[viewBox="0 0 360 360"]' : '#benchmark-radar svg[viewBox="0 0 900 600"]';
+  const geo = mobile ? await geometry(page, simpleSvg, 180, 180, 120) : await geometry(page, simpleSvg, 450, 295, 205);
   const off = geo.filter((g) => g.announced == null || Math.abs(g.announced - g.drawn) > 1.5);
   check(`${tag} CR-14.2 every point is drawn at its announced position (±1.5)`, geo.length >= 8 && !off.length, { points: geo.length, off: off.slice(0, 3) });
   const coding = geo.filter((g) => /AA Coding Index: [\d.]+ · \d+ on its 0–100 scale/.test(g.label));

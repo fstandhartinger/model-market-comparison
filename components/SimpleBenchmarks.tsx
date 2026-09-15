@@ -79,7 +79,8 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
             : <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{visible.length}</span> results side by side (loading the full list…).</>) : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
         </p>
       </div>
-      <span className="relative inline-flex">
+      {/* F-99: below md the hint is a full-width line under the button (CSS order), so it never covers the intro. */}
+      <span className="relative inline-flex max-md:w-full max-md:flex-col max-md:items-start max-md:gap-2">
         <span role="status" aria-live="polite" className="contents">{hint && <span className="bh-simplified-hint" data-simplified-hint>This is a simplified list</span>}</span>
         <Link href={full} className="bh-button text-sm font-semibold">Open the full comparison <span aria-hidden="true">→</span></Link>
       </span>

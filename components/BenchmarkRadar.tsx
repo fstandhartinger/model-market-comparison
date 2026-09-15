@@ -13,7 +13,7 @@ const DASHES = ['', '9 4', '3 4', '12 4 2 4'];
 const position = (cx: number, cy: number, i: number, n: number, radius: number) => ({ x: Number((cx + Math.sin(i * Math.PI * 2 / n) * radius).toFixed(3)), y: Number((cy - Math.cos(i * Math.PI * 2 / n) * radius).toFixed(3)) });
 const shortName = (name: string) => name.replace('Artificial Analysis ', 'AA ').replace(/\s+\(AA.*?\)/, '');
 
-type Cell = { native: number | null; scaled: RadarScaled | null };
+type Cell = { native: number | null; scaled: RadarScaled | null; variant?: string };
 type Series = RadarSeries & { cells: Cell[] };
 
 /** CR-14.2/14.3: each point sits on its metric's own scale and carries its exact value as a label. */
@@ -21,11 +21,11 @@ function seriesFor(view: BenchmarkView, axes: ViewAxis[], picks: string[]): Seri
   return picks.map((id, si) => {
     const cells = axes.map((a) => {
       const row = latestScores(a.scores).find((r) => r.modelId === id);
-      return { native: row?.value ?? null, scaled: row && !row.lowSample ? radarScale(row.value, a) : null };
+      return { native: row?.value ?? null, scaled: row && !row.lowSample ? radarScale(row.value, a) : null, variant: row?.bestOf && row.bestOf > 1 ? row.variantLabel : undefined };
     });
     return { id, name: view.models.find((m) => m.id === id)?.name || id, color: SERIES_COLORS[si], dash: DASHES[si] || undefined, cells,
       points: cells.map((c, i) => ({ value: c.scaled?.value ?? null,
-        label: c.scaled ? `${formatRadarValue(c.native, axes[i].unit)} · ${scaleNote(c.scaled, axes[i].unit)}` : c.native != null ? `${formatRadarValue(c.native, axes[i].unit)} · not plotted` : 'No measured result' })) };
+        label: (c.scaled ? `${formatRadarValue(c.native, axes[i].unit)} · ${scaleNote(c.scaled, axes[i].unit)}` : c.native != null ? `${formatRadarValue(c.native, axes[i].unit)} · not plotted` : 'No measured result') + (c.variant && c.native != null ? ` · best of variants: ${c.variant}` : '') })) };
   });
 }
 
