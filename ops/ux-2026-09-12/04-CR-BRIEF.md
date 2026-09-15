@@ -119,3 +119,73 @@ CR-8.1, CR-6.1 → CR-5.6 provisioning started in the background → CR-1.1–1.
 bars, winners, tags) + CR-2.1/2.3 → CR-1.8 detail page → CR-1.9 chart → CR-3.1, CR-2.4, CR-4.1
 with CR-4.2 → CR-2.2 pick-from-chart → CR-7.x simple sections → CR-5.1–5.5 accounts →
 one Fable pass (CR-1.10) → CR-1.11, CR-9.x close-out.
+
+## 4. CR-20260915 checklist
+
+Detailed task briefs already exist under `/home/flori/benchmarkheaven-*-20260915/REQUEST.md`
+(linked from `03-CHANGE-REQUESTS-VERBATIM.md`); the rows below are the short checklist form,
+same convention as section 2.
+
+### CR-10 — Landing tagline
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-10.1 | New header copy: "The most detailed cost–capability analysis in AI." / "Every model. Every Benchmark. Actual Costs." | Exact copy live (capitalization as Florian wrote it, see note in `03-CHANGE-REQUESTS-VERBATIM.md`); no unsubstantiated added claim; accessible, responsive |
+
+### CR-11 — Pareto chart: desirable-region emphasis + wider comparison set
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-11.1 | Invert the Pareto chart's X axis so the most attractive cost–capability region is top-right | Axis labels/direction re-checked for no misleading reversal; light/dark verified |
+| CR-11.2 | Diagonal green gradient in the top-right quarter only, transparent at that quarter's bottom-left edge to opaque green at the chart's top-right corner, behind the data | Contrast/readability preserved in light and dark; doesn't obscure points |
+| CR-11.3 | Small "most attractive quadrant" annotation top-right | No overlap with data/controls/legend/tooltips at desktop or mobile widths |
+| CR-11.4 | Chart and overview table include up to 30 models (was up to 15), selected by top score (AA Intelligence Index or ECI), relaxing only the "featured models" restriction, all other filters preserved, including Simple mode | Test: 30-model selection with filters preserved |
+| CR-11.5 | At most 15 models get a visible name label on the chart; the rest stay selectable/visible via existing interactions (table, tooltip) without crowding | Test: 15-label cap, no overlapping labels |
+
+### CR-12 — Benchmark table: Benchmark Heaven Score row, category composites, richer Coding
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-12.1 | New highlighted first row above all benchmarks, in Simple, Advanced and the Benchmarks tab, showing the current selected score, labeled "Benchmark Heaven Score" with a smaller second line "(Main Composite Score)" | Value matches the live selected composite exactly and updates with filters/settings; visually distinct from third-party benchmark rows |
+| CR-12.2 | Category headers (Composite indices, Coding, Agentic & tool use, …) visually emphasized (color and/or bolder/larger font) | Design pass reviewed; contrast requirements met in light/dark |
+| CR-12.3 | Each category header doubles as a composite score for that category, filled into the relevant score cells | Updates with filters; honestly excludes missing/incompatible data rather than fabricating an average |
+| CR-12.4 | Coding category broadened well beyond SciCode: add FrontierCode, CursorBench 4.0, DeepSWE v1.1, Terminal-Bench 4.0, SWE-Atlas-QnA, SWE-bench variants (Verified/Pro/Live), SWE-Lancer LiveCode, Codeforces, BigCodeBench and other credible sources found | New data-intake recipes added where justified; every value keeps source/date/basis; nothing invented where evidence is thin |
+
+### CR-13 — Cost-cell modal simplification
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-13.1 | Modal explains plainly that it combines AA tokens-per-task, OpenRouter cache-efficiency data, the cheapest filter-surviving provider, and the strongest benchmarked reasoning variant — shorter than today | Reviewed for length/readability; no loss of the true calculation basis |
+| CR-13.2 | Remove the "Assumptions and limitations" wall of text completely; do not replace with similar alarming boilerplate | Section absent; Sources section stays compact and present |
+| CR-13.3 | Use source-backed cache-hit rates/prices where available; fall back to a documented industry-typical baseline instead of assuming 0% cache-hit | Baseline is inspectable from Sources; deterministic |
+| CR-13.4 | Replace the linked text "Chutes LLM usage statistics" with "Proxied from public available LLM usage statistics from a inference provider [link]" (see wording note in `03-CHANGE-REQUESTS-VERBATIM.md` re: the grammar-corrected variant in the REQUEST.md brief) — only "[link]" is the interactive/underlined element | Visual check: surrounding text reads as ordinary body copy |
+
+### CR-14 — Compare tab defaults + Benchmark Radar
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-14.1 | Compare tab pre-populates with the two currently most capable models (currently Fable 5.1 and GPT-6 Astra) instead of a random pair | Not hard-coded as an eternal rule; follows current capability data; degrades gracefully if a model is unavailable |
+| CR-14.2 | Radar axis scaling fixed to be metric-aware (a 0–100 benchmark score of ~55 renders at ~half, not near-full) | Regression test using GPT-5.6 Sol / AA Coding Index (~55) as the case |
+| CR-14.3 | Hover/tap shows the exact score value | Keyboard-accessible tooltips |
+| CR-14.4 | Replace the current 6-axis default (drop saturated axes like GPQA Diamond) with a current, well-balanced set from AA Indices, ECI, important DesignArena measures, etc. | Selection documented; degrades gracefully when a model lacks a metric |
+| CR-14.5 | Toggle between the new simple radar and the Benchmaxxing screen's detailed/complex radar | Both work with filters, accessibility and performance intact |
+
+### CR-15 — Cost-cell value signal, Benchmaxxing defaults, signal-score styling, master-detail compare
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-15.1 | Overview table Cost cell highlights notably cheap or expensive models relative to their capability score (color and/or small tag) | Based on a transparent cost-vs-capability calculation respecting current filters; colour-blind-safe (text/icon redundancy) |
+| CR-15.2 | Benchmaxxing screen default model selection replaced with up-to-date top/featured models, as a named, changeable preset | Degrades gracefully if a featured model becomes unavailable |
+| CR-15.3 | Signal score becomes an expressive warning-style pill/tag when the score is above 25 (Florian's wording "Signal coli" — confirm exact product term before implementing) | Accessible (not colour-only); explains threshold on hover/focus/tap |
+| CR-15.4 | Per-model report loses its own model selector and instead reacts to the model selected in the table (master-detail); optional two-model side-by-side compare mode for that chart | Deep-link behaviour preserved; single-model report still works |
+
+### CR-16 — Subscription-cost modeling (ChatGPT Plus/Pro, Claude subscriptions)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-16.1 | ChatGPT Plus/Pro and Claude Pro/Max are never presented as universally business-safe API equivalents; commercial-use eligibility is provider/plan/region/contract-dependent (09:34 UTC wording is the product rule; supersedes the 09:11 UTC pass where they differ) | Copy reviewed against both quoted messages in `03-CHANGE-REQUESTS-VERBATIM.md` |
+| CR-16.2 | API pricing stays the default comparison everywhere; a small "Subscription costs may differ" note with a collapsible explanation is added, not the opening question in guided mode | Note is visually quiet; collapsible explanation covers utilization-dependence and account-sharing/resale/automation/rate-limit restrictions |
+| CR-16.3 | Optional assumption-based estimate: effective cost/task = monthly subscription cost ÷ completed tasks per month, editable, explicitly labeled as an assumption, never invented allowances | Only offered for explicitly supported subscription workflows; visibly distinct from API costs everywhere it appears |
+
+**Suggested order:** CR-10, CR-11 → CR-12 → CR-13 → CR-14 → CR-15 → CR-16, interleaved with the
+still-open rows from section 2 per the priority rule in section 0.

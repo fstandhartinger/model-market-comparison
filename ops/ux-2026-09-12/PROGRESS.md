@@ -205,6 +205,32 @@ credited below, the rest is marked open.
 | CR-9.1 | Tests: unit + E2E for the CR features | verified | — | Seeded 2026-09-14 from `04-CR-BRIEF.md` (iteration 52, claude-opus). **Review gate 213002Z:** the pieces exist but are not collected as the brief's E2E list: open tab → top 5 (`verify-cr-1`), change selection three ways (`verify-cr-1` ×/+, `verify-cr-2-2` pick from chart, `verify-cr-presets` presets), signed-out save → toast (`verify-cr-5`), share-URL round trip (`verify-cr-2-5-perf`); unit tests `benchmark-matrix`, `presets`, `account-sync`, `pick-chart`. All pass live on both hosts in this gate. Stays open until one E2E entry point lists them. **Verified by review gate 230002Z (opencode-kimi):** the one E2E entry point now exists — `bin/verify-cr-e2e.mjs` runs the four unit files (37/37: data bars, winner logic, category assignment, preset CRUD + local→account merge, pick-chart, auth routes) and the five live scripts covering the brief's E2E list (open tab → top 5; ×/+ ; pick from chart; presets; signed-out save → toast; share URL round trip). This gate's run: unit 37/37, per host 92/92, 38/38, 88/88, 41/41, 28/28 → ALL PASS both hosts, `cr-e2e/summary.json`.|
 | CR-9.2 | Gauntlet evidence: each CR row verified by a non-implementing engine, live, 1440/390, light/dark | verified | `/opt/benchmarkheaven/state/ux-evidence/review-20260915T012002Z/` (closing evidence); `review-20260914T230002Z/` (41 rows) | Seeded 2026-09-14 from `04-CR-BRIEF.md` (iteration 52, claude-opus). **Review gate 230002Z:** every completed CR row now has independent live evidence (`review-20260914T230002Z/`); stays open because CR-1.10 has no Fable pass yet. **Review gate 20260915T012002Z (opencode-kimi):** CR-1.10 verified (Fable pass 15 ran; F-79–F-83 all verified live by non-implementers — see the CR-1.10 row). Every CR row (CR-1.x, CR-2.x, CR-3.x, CR-4.x, CR-5.x, CR-6.1, CR-7.x, CR-8.1, CR-9.1, CR-9.3) now carries non-implementer live evidence at 1440/390, light/dark. |
 | CR-9.3 | No invented data in the comparison table | verified | — | Seeded 2026-09-14 from `04-CR-BRIEF.md` (iteration 52, claude-opus). **Review gate 213002Z:** new `bin/verify-cr-9-3.mjs` (live, All preset, 30 cells spread over the table → detail page shows the same value, basis, ISO date and an off-site source) plus an offline trace of those cells into `data/dataset.json` (`/opt/benchmarkheaven/state/ux-evidence/review-20260914T213002Z/trace-cells.py`). Found and fixed F-78 (unrated Briefcase placeholders shown as 0). Remaining gap: Epoch ECI cells (see CR-1.8). Stays open. **Iteration 58 (claude-opus) → implemented:** the ECI gap is closed (CR-1.8); `verify-cr-9-3` 33/33 on both hosts after `ad5752d` (`/opt/benchmarkheaven/state/ux-evidence/iter58-cr-1-8/{canonical,legacy}/verify-cr-9-3/`). Needs a non-claude-opus verifier. **Verified by review gate 230002Z (opencode-kimi):** `bin/verify-cr-9-3.mjs` 33/33 per host — 30 sampled cells each open a detail page with the same value, basis, ISO date and off-site source; missing cells shown as missing; the Llama 4 Maverick read-back (this gate) shows AA-Briefcase as "Unknown: no published result matched to this configuration", never 0 (F-78 residue holds in the bridged history).|
+| CR-10.1 | New header copy: "The most detailed cost–capability analysis in AI." / "Every model. Every Benchmark. Actual Costs." | open | — | — |
+| CR-11.1 | Invert the Pareto chart's X axis so the most attractive cost–capability region is top-right | open | — | — |
+| CR-11.2 | Diagonal green gradient in the top-right quarter only, transparent at that quarter's bottom-left edge to opaque green at the chart's top-rig | open | — | — |
+| CR-11.3 | Small "most attractive quadrant" annotation top-right | open | — | — |
+| CR-11.4 | Chart and overview table include up to 30 models (was up to 15), selected by top score (AA Intelligence Index or ECI), relaxing only the "fe | open | — | — |
+| CR-11.5 | At most 15 models get a visible name label on the chart; the rest stay selectable/visible via existing interactions (table, tooltip) without | open | — | — |
+| CR-12.1 | New highlighted first row above all benchmarks, in Simple, Advanced and the Benchmarks tab, showing the current selected score, labeled "Ben | open | — | — |
+| CR-12.2 | Category headers (Composite indices, Coding, Agentic & tool use, …) visually emphasized (color and/or bolder/larger font) | open | — | — |
+| CR-12.3 | Each category header doubles as a composite score for that category, filled into the relevant score cells | open | — | — |
+| CR-12.4 | Coding category broadened well beyond SciCode: add FrontierCode, CursorBench 4.0, DeepSWE v1.1, Terminal-Bench 4.0, SWE-Atlas-QnA, SWE-bench | open | — | — |
+| CR-13.1 | Modal explains plainly that it combines AA tokens-per-task, OpenRouter cache-efficiency data, the cheapest filter-surviving provider, and th | open | — | — |
+| CR-13.2 | Remove the "Assumptions and limitations" wall of text completely; do not replace with similar alarming boilerplate | open | — | — |
+| CR-13.3 | Use source-backed cache-hit rates/prices where available; fall back to a documented industry-typical baseline instead of assuming 0% cache-h | open | — | — |
+| CR-13.4 | Replace the linked text "Chutes LLM usage statistics" with "Proxied from public available LLM usage statistics from a inference provider [li | open | — | — |
+| CR-14.1 | Compare tab pre-populates with the two currently most capable models (currently Fable 5.1 and GPT-6 Astra) instead of a random pair | open | — | — |
+| CR-14.2 | Radar axis scaling fixed to be metric-aware (a 0–100 benchmark score of ~55 renders at ~half, not near-full) | open | — | — |
+| CR-14.3 | Hover/tap shows the exact score value | open | — | — |
+| CR-14.4 | Replace the current 6-axis default (drop saturated axes like GPQA Diamond) with a current, well-balanced set from AA Indices, ECI, important | open | — | — |
+| CR-14.5 | Toggle between the new simple radar and the Benchmaxxing screen's detailed/complex radar | open | — | — |
+| CR-15.1 | Overview table Cost cell highlights notably cheap or expensive models relative to their capability score (color and/or small tag) | open | — | — |
+| CR-15.2 | Benchmaxxing screen default model selection replaced with up-to-date top/featured models, as a named, changeable preset | open | — | — |
+| CR-15.3 | Signal score becomes an expressive warning-style pill/tag when the score is above 25 (Florian's wording "Signal coli" — confirm exact produc | open | — | — |
+| CR-15.4 | Per-model report loses its own model selector and instead reacts to the model selected in the table (master-detail); optional two-model side | open | — | — |
+| CR-16.1 | ChatGPT Plus/Pro and Claude Pro/Max are never presented as universally business-safe API equivalents; commercial-use eligibility is provider | open | — | — |
+| CR-16.2 | API pricing stays the default comparison everywhere; a small "Subscription costs may differ" note with a collapsible explanation is added, n | open | — | — |
+| CR-16.3 | Optional assumption-based estimate: effective cost/task = monthly subscription cost ÷ completed tasks per month, editable, explicitly labele | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1726,3 +1752,28 @@ Notes for whoever picks this up:
     audit passes. Limits at gate: Claude 14 % session / 17 % week; Codex 78 % weekly (never used here).
 
 ALL-ACCEPTED
+
+## REOPENED 2026-09-15 ~13:30 UTC — CR-20260915 (Florian's change requests of today)
+Directive from the laptop supervisor (Claude Code), at Florian's request: "is benchmark heaven work still
+running (according to all my change requests from today)? if not: start the agents (it's ok to use claude
+code with Opus 5 and some instruction to offload work to Kimi K3 via Chutes subagents)".
+The ALL-ACCEPTED line above covered CR-20260914 only. The CR-20260915 rows (CR-10.x … CR-16.x in
+`04-CR-BRIEF.md`, verbatim text in `03-CHANGE-REQUESTS-VERBATIM.md`) are open; the workstream is not done
+until each is verified live.
+1. **First work iteration:** a one-off job already implemented CR-10/11/12/13 (header, value map, 30 models,
+   score row, category composites, coding sources, simpler cost modal) on the unpushed local branch
+   `bh-benchmark-table-cost-modal-20260915` (commit `8c68a1d`, report
+   `/home/flori/benchmarkheaven-benchmark-table-cost-modal-20260915/RESULT.md`). Its fix-review critic round
+   never finished. Don't redo it: rebase on current main, run the review, fix, merge, push, verify live,
+   then set those CR rows' status.
+2. Then CR-14 (compare tab/radar), CR-15 (value signals/Benchmaxxing), CR-16 (subscription costs). Source
+   request notes: `/home/flori/benchmarkheaven-{compare-radar,value-benchmaxxing,subscription-costs,next-change-request}-20260915/REQUEST.md`
+   — the verbatim file wins where they differ.
+3. **Model use:** Opus 5 implements and decides. Offload mechanical sub-work (data collection, test writing,
+   source checks, screenshot audits) to Kimi K3 via Chutes: `opencode run -m chutes/moonshotai/Kimi-K3-TEE "<task>"`,
+   and verify their output. Fable only for the design gates.
+4. **Resources (new rule 15 Sep):** close every browser tab you open; check `~/bin/sandy-watchdog --status`
+   before builds/screenshot runs and wait if `critical` is non-empty. See `/home/flori/AGENTS.md` → "Server resources".
+5. Also still open, not part of the UX loop: the daily data refresh stopped fail-closed today
+   (`/home/flori/benchmarkheaven-daily-repair-20260915/RESULT.md`, `bh-daily-after-ux-once.service` failed).
+   Don't start a second daily run from here; mention its state in the report.
