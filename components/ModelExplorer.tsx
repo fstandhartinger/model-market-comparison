@@ -483,7 +483,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
                   const why = `About ${ratio} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score among the ${v.n} priced models shown (log cost fitted against score).`;
                   // CR-24.1: the tag sits left of the price on the same line, so the cost bar keeps its row height.
-                  return <span className="bh-value-tag" data-kind={v.kind} title={why}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span>{words}<span className="sr-only">: {why}</span></span>;
+                  // Florian 2026-09-15 (directive 10): phones in portrait show the compact "↓11×"; the words stay in the tooltip and for screen readers.
+                  return <span className="bh-value-tag" data-kind={v.kind} title={`${words}. ${why}`}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span><span className="bh-vt-full">{words}</span><span className="bh-vt-compact" aria-hidden="true">{ratio}</span><span className="sr-only">{words}: {why}</span></span>;
                 })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
