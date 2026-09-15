@@ -16,6 +16,19 @@
 > effective 2026-09-01 (Global 5.00/30.00 → 4.00/20.00, DZ 5.50/33.00 → 4.40/22.00); GPT-6 Astra now
 > has named Standard meters (Global 10.00/50.00, DZ 12.00/60.00; long context 20/75 and 24/90). New
 > meters not yet added (lifecycle check pending): Grok 4.6 (Global 2.00/6.00), FW GLM 5.3.
+>
+> **2026-09-15 EU Data Zone re-check (CR-17.2, Florian: "Azure Foundry offers the OpenAI models EU
+> hosted"):** Microsoft's region-availability page
+> (`learn.microsoft.com/…/models-sold-directly-by-azure-region-availability`, captured by the Hermes audit
+> `/home/flori/jobs/benchmarkheaven-eu-hosting-audit-20260915/evidence/6eb682a9e7cb.html` and re-read
+> table by table) lists **GPT-6 Astra** (2026-09-03) under Data Zone Standard and Data Zone Provisioned in
+> **US regions only**; in Europe it is Global Standard / Global Provisioned. The `6-astra … Std DZ` Retail
+> meters exist, but a DZ meter does not say *which* data zone, so the row "GPT-6 Astra (EU Data Zone)" was
+> **removed**: it passed the EU filter without EU Data Zone availability. **DeepSeek-V4-Flash** (2026-04-23)
+> is listed under Data Zone Standard in seven EU regions, so "DeepSeek-V4 Flash (EU Data Zone)" was **added**
+> with Retail meters `V4 Flash Inp/Outp DZ Tokens` (0.21/0.56 per 1M, eff. 2026-08-01);
+> DeepSeek-V4-Flash-0731 has no documented Data Zone availability and stays Global. Adding a DZ row still
+> requires this table check — the collector cannot tell EU from US data zones.
 
 > **Current audit: 2026-09-08.** See [September refresh audit](../research/refresh-2026-09-08.md)
 > and the adjacent JSON's `method`/`collected_at` for current values and exclusions.

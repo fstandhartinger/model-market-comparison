@@ -149,7 +149,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
       lead="Each answer removes provider routes from every figure on the site — the prices you then see are the prices of the routes you are allowed to use."
       skip={() => { s.setExcludeChinese(false); s.setEuHostedOnly(false); s.setNonUsOnly(false); s.setTeeOnly(false); setStep(2); }}>
       <div className="grid gap-3 sm:grid-cols-2">
-        <Choice label="EU-hosted only" on={s.euHostedOnly} hint="Only routes served from the EU" onClick={() => s.setEuHostedOnly(!s.euHostedOnly)} />
+        <Choice label="EU-hosted only" on={s.euHostedOnly} hint="Inference inside the EU: an EU region, EU geo profile or EU Data Zone — no Global routes" onClick={() => s.setEuHostedOnly(!s.euHostedOnly)} />
         <Choice label="Non-US providers only" on={s.nonUsOnly} hint="Excludes providers whose company is US-based" onClick={() => s.setNonUsOnly(!s.nonUsOnly)} />
         <Choice label="No Chinese providers" on={s.excludeChinese} hint="Excludes the providers, not the models they serve" onClick={() => s.setExcludeChinese(!s.excludeChinese)} />
         <Choice label="Strong confidential guarantees" on={s.teeOnly} hint="Only routes inside a trusted execution environment" onClick={() => s.setTeeOnly(!s.teeOnly)} />

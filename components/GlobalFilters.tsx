@@ -125,7 +125,19 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
 
         <Section title="Regional settings" hint="where the model is served from, and by whom">
           <Toggle label="Exclude Chinese providers" on={s.excludeChinese} set={s.setExcludeChinese} />
-          <Toggle label="EU-hosted only" on={s.euHostedOnly} set={s.setEuHostedOnly} />
+          <span className="inline-flex items-center">
+            <Toggle label="EU-hosted only" on={s.euHostedOnly} set={s.setEuHostedOnly} />
+            {/* CR-17.3: one plain definition, applied per offer to every provider. */}
+            <InfoTip title="EU-hosted only" label="the EU-hosted filter">
+              Keeps only routes whose inference runs inside the EU: an EU region, AWS Bedrock&apos;s EU
+              cross-region (geo) profiles, Azure&apos;s Europe Data Zone, or a provider whose entire public
+              fleet is documented as EU-hosted (such as Mistral&apos;s EU API, Scaleway or IONOS), each checked
+              per model against the provider&apos;s documentation. Global deployments do not count, and neither does an EU
+              billing region, an EU company or an EU control plane on its own. One disclosed company-policy
+              exception stays in: Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code, marked
+              &ldquo;EU equivalent&rdquo;, where inference may occur outside the EU.
+            </InfoTip>
+          </span>
           <Toggle label="Non-US provider only" on={s.nonUsOnly} set={s.setNonUsOnly} />
         </Section>
 

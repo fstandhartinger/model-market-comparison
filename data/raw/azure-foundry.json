@@ -518,6 +518,20 @@
       }
     },
     {
+      "model_name": "DeepSeek-V4 Flash (EU Data Zone)",
+      "provider_org": "DeepSeek",
+      "input_per_1m_usd": 0.21,
+      "output_per_1m_usd": 0.56,
+      "region": "eu",
+      "eu_hosted": true,
+      "notes": "Added 2026-09-15 (CR-17.2). Azure Direct EU Data Zone offer for DeepSeek-V4-Flash version 2026-04-23: Microsoft's region-availability page (https://learn.microsoft.com/en-us/azure/foundry/foundry-models/concepts/models-sold-directly-by-azure-region-availability, checked 2026-09-15) lists Data Zone Standard in francecentral, germanywestcentral, italynorth, polandcentral, spaincentral, swedencentral and westeurope; processing stays within the EU data zone. Retail meters 'V4 Flash Inp/Outp DZ Tokens' eff. 2026-08-01: 0.00021/0.00056 per 1K = 0.21/0.56 per 1M; cached DZ input 0.031 per 1M. DeepSeek-V4-Flash-0731 has no documented Data Zone availability and stays Global.",
+      "retail_meters": {
+        "product": "Azure Deepseek Models",
+        "input": "V4 Flash Inp DZ Tokens",
+        "output": "V4 Flash Outp DZ Tokens"
+      }
+    },
+    {
       "model_name": "DeepSeek-V3.2",
       "provider_org": "DeepSeek",
       "input_per_1m_usd": 0.58,
@@ -1343,20 +1357,6 @@
         "product": "Azure OpenAI GPT6",
         "input": "6-astra ShortCo Inp Std Gl 1M Tokens",
         "output": "6-astra ShortCo Opt Std Gl 1M Tokens"
-      }
-    },
-    {
-      "model_name": "GPT-6 Astra (EU Data Zone)",
-      "provider_org": "OpenAI",
-      "input_per_1m_usd": 12,
-      "output_per_1m_usd": 60,
-      "region": "eu",
-      "eu_hosted": true,
-      "notes": "GPT-6 Astra (2026-09-03) listed in official current model and Global/Data Zone Standard region catalogs (checked 2026-09-08). Named Retail meters 6-astra ShortCo Inp/Opt Std DZ appeared after that check, effective 2026-09-01, and price this row since 2026-09-14. Default short-context tier; long-context DZ in/out 24.00/90.00.",
-      "retail_meters": {
-        "product": "Azure OpenAI GPT6",
-        "input": "6-astra ShortCo Inp Std DZ 1M Tokens",
-        "output": "6-astra ShortCo Opt Std DZ 1M Tokens"
       }
     },
     {
