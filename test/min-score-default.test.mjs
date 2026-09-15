@@ -1,0 +1,45 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { derivedMinScore, minScoreLabel, DERIVED_MIN_SCORE_FLOOR } from '../lib/value-map.mjs';
+import { paretoFrontier } from '../lib/pareto.mjs';
+
+const pool = [
+  { id: 'astra', x: 2.4, y: 91.2 },
+  { id: 'fable', x: 1.9, y: 90.1 },
+  { id: 'mid', x: 0.6, y: 84.0 },
+  { id: 'glm', x: 0.31, y: 78.6 },
+  { id: 'flash', x: 0.08, y: 72.9 },
+  { id: 'free', x: 0, y: 99 },            // free routes are not on the log axis
+  { id: 'flash-low', x: 0.08, y: 70.2 },  // equally cheap, lower score: not the anchor
+];
+
+test('CR-18.1: default = score of the cheapest plotted model (ties: highest score), rounded down to the step', () => {
+  assert.equal(derivedMinScore(pool, { score: 'composite' }), 72);
+  assert.equal(derivedMinScore(pool, { score: 'composite', step: 5 }), 70);
+});
+
+test('CR-18.1: that model passes and sits on the Pareto line, which reaches the right edge of the cloud', () => {
+  const min = derivedMinScore(pool, { score: 'composite' });
+  const plotted = pool.filter((p) => p.x > 0);
+  const passing = plotted.filter((p) => p.y >= min);
+  const frontier = paretoFrontier(passing);
+  assert.ok(frontier.some((p) => p.id === 'flash'), 'cheapest top model on the frontier');
+  assert.equal(Math.min(...frontier.map((p) => p.x)), Math.min(...plotted.map((p) => p.x)), 'line reaches the cheapest plotted cost');
+});
+
+test('CR-18.2: never below 65 for the Composite; Elo boards keep their own default', () => {
+  assert.equal(DERIVED_MIN_SCORE_FLOOR, 65);
+  assert.equal(derivedMinScore([{ x: 0.01, y: 50 }, { x: 1, y: 90 }], { score: 'composite' }), 65);
+  assert.equal(derivedMinScore([{ x: 0.01, y: 1200 }], { score: 'designarena_fullstack' }), null);
+});
+
+test('CR-18.3: nothing plottable keeps the fixed default (null); input is not mutated', () => {
+  assert.equal(derivedMinScore([], { score: 'composite' }), null);
+  assert.equal(derivedMinScore([{ x: 0, y: 90 }, { x: NaN, y: 80 }], { score: 'composite' }), null);
+  const copy = JSON.stringify(pool); derivedMinScore(pool); assert.equal(JSON.stringify(pool), copy);
+});
+
+test('CR-29.1: slider label names the Main Composite Score on its second line, else the selected score', () => {
+  assert.deepEqual(minScoreLabel('composite', 'Composite'), { title: 'Minimum Capability Score', sub: 'Benchmark Heaven Main Composite Score' });
+  assert.equal(minScoreLabel('aa_intelligence_index', 'AA Intelligence').sub, 'AA Intelligence');
+});

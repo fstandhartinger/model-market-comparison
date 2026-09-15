@@ -17,8 +17,10 @@ interface SettingsCtx extends SettingsState {
   setMinScore: (n: number) => void;
   /** Back to Simple's untouched, score-aware default. */
   resetMinScore: () => void;
-  /** The score floor Simple applies: the hand-set value, else the score's default. */
+  /** The score floor Simple applies: the hand-set value, else the data-derived default (CR-18), else the score's fixed default. */
   minScoreSimple: number;
+  /** CR-18: Simple's table publishes the default it derived from its pre-cut pool, for the score it was derived for. */
+  setDerivedMinScore: (d: { score: ScoreKey; value: number | null } | null) => void;
   /** Advanced's score floor (F-40); 0 = none. Also read by Guided results, Charts, Compare, EU table. */
   setAdvancedMinScore: (n: number) => void;
   /** Simple's cost cap (F-40: written only by Simple's slider). */
@@ -121,6 +123,9 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
   const [advancedView, setAdvancedView] = useState(false);
   const [filtersOpen, setFiltersOpen] = useState(false);
   const [resultCount, setResultCount] = useState<number | null>(null);
+  // CR-18: not persisted — it is a function of today's data and filters, not a user choice.
+  const [derivedMin, setDerivedMinScore] = useState<{ score: ScoreKey; value: number | null } | null>(null);
+  const untouchedMin = derivedMin && derivedMin.score === state.score && derivedMin.value != null ? derivedMin.value : defaultMinFor(state.score);
   const openFilters = useCallback(() => setFiltersOpen(true), []);
   const closeFilters = useCallback(() => setFiltersOpen(false), []);
   const toggleFilters = useCallback(() => setFiltersOpen((o) => !o), []);
@@ -146,7 +151,8 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setOpenOnly: (openOnly) => setState((s) => ({ ...s, openOnly })),
     setMinScore: (minScore) => setState((s) => ({ ...s, minScore, minScoreTouched: true })),
     resetMinScore: () => setState((s) => ({ ...s, minScore: defaultMinFor(s.score), minScoreTouched: false })),
-    minScoreSimple: state.minScoreTouched ? state.minScore : defaultMinFor(state.score),
+    minScoreSimple: state.minScoreTouched ? state.minScore : untouchedMin,
+    setDerivedMinScore,
     setAdvancedMinScore: (advancedMinScore) => setState((s) => ({ ...s, advancedMinScore: Number.isFinite(advancedMinScore) && advancedMinScore > 0 ? advancedMinScore : 0 })),
     setSimpleMaxCost: (simpleMaxCost) => setState((s) => ({ ...s, simpleMaxCost })),
     setTeeOnly: (teeOnly) => setState((s) => ({ ...s, teeOnly })),
@@ -166,7 +172,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     hydrated,
     excludedSet: state.providersExcluded.length ? new Set(state.providersExcluded) : null,
     familySet: state.families.length ? new Set(state.families) : null,
-  }), [state, hydrated, advancedView, filtersOpen, resultCount, openFilters, closeFilters, toggleFilters]);
+  }), [state, hydrated, advancedView, filtersOpen, resultCount, openFilters, closeFilters, toggleFilters, untouchedMin]);
 
   return <Ctx.Provider value={value}>{children}</Ctx.Provider>;
 }

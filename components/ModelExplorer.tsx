@@ -16,7 +16,7 @@ import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 import { capShortlist } from "../lib/shortlist.mjs";
-import { SIMPLE_LIMIT, topCandidates } from "../lib/value-map.mjs";
+import { SIMPLE_LIMIT, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
 import { valueSignals } from "../lib/value-signal.mjs";
 import { scoreRowSubtitle } from "./ScoreRows";
 import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
@@ -155,6 +155,15 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     if (expandSimple) r = topCandidates(r, (x) => x.m, SIMPLE_LIMIT);
     return r;
   }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, expandSimple, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
+
+  // CR-18: while Simple's floor is untouched it defaults to the score of the cheapest model the value
+  // map plots from this pre-cut pool, so that model is on the Pareto line. Computed before the cut, so
+  // the pool cannot change with the default it produces. Table and map both read s.minScoreSimple.
+  const { setDerivedMinScore } = s;
+  const derivedFloor = useMemo(() => simplePair
+    ? derivedMinScore(pool.filter((x) => x.hasEvidence && x.sc != null).map((x) => ({ x: x.price.value ?? NaN, y: x.sc as number })), { score })
+    : null, [simplePair, pool, score]);
+  useEffect(() => { if (simplePair) setDerivedMinScore({ score, value: derivedFloor }); }, [simplePair, score, derivedFloor, setDerivedMinScore]);
 
   const matching = useMemo(() => {
     let r = pool;
@@ -419,7 +428,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
               });
               return (
               <Fragment key={m.id}>
-              <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}>
+              <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}
+                data-model-id={m.id} data-cost={price.value ?? undefined} data-score={hasEvidence && sc != null ? sc : undefined}>
                 {/* F-14: on phones the name may wrap (md:truncate restores the single-line look
                     at md), and the org moves here as an 11 px muted line. F-56: the name wraps only
                     at spaces ("GLM-5.3" stays whole) and below md the badges sit on the org line. */}

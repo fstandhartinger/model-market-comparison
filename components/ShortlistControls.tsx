@@ -4,6 +4,7 @@ import { useSettings } from "./SettingsContext";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import type { ScoreKey } from "../lib/types";
+import { minScoreLabel } from "../lib/value-map.mjs";
 
 /** R5.3–R5.5 — Simple mode's two questions, as sliders.
  *
@@ -11,7 +12,8 @@ import type { ScoreKey } from "../lib/types";
  *  ausgeben will, und dann bekommt er die liste der empfehlenswertesten Modelle."
  *
  *  R5.5 asks for the distribution to appear when a slider is moved. It is shown
- *  permanently instead: the score limit is already active at 86 on first paint, so a
+ *  permanently instead: the score limit is already active on first paint (CR-18: at the score of the
+ *  cheapest plotted model, so it sits on the Pareto line), so a
  *  histogram that only appeared on interaction would hide the very fact that the default
  *  is cutting the field — and the chart is the point ("viele Diagramme"). The cost
  *  histogram is binned on a log scale: adjusted task costs span three orders of magnitude,
@@ -112,6 +114,7 @@ export function ShortlistControls({
   map?: React.ReactNode;          // F-13: value-map node, rendered beside the sliders (lg) / between sliders and summary (below lg)
 }) {
   const { openFilters } = useSettings();
+  const label = minScoreLabel(score, scoreName);
   const scoreStats = useMemo(() => {
     const sorted = [...scores].sort((a, b) => a - b);
     return { sorted, min: Math.floor(sorted[0] ?? 0), max: Math.ceil(sorted[sorted.length - 1] ?? 100) };
@@ -152,12 +155,12 @@ export function ShortlistControls({
        <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
         <div className="grid grid-cols-1 gap-3 self-start sm:grid-cols-2 lg:grid-cols-1 lg:gap-2">
           <Row
-            title={<><span className="sm:hidden">Min. capability score</span><span className="hidden sm:inline">Minimum Capability Score</span> <span className="bh-muted text-[11px]">({scoreName})</span><InfoTip title={`Minimum capability score — ${scoreName}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This setting follows the active score selector.</span></InfoTip></>}
+            title={<><span>{label.title}</span><InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This is the same score as the Benchmark Heaven Score row of the benchmark table below, and it follows the active score selector.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
           >
             <div className="relative mt-1">
               <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
-              <input type="range" aria-label={`Minimum Capability Score (${scoreName})`}
+              <input type="range" aria-label={`${label.title} (${label.sub})`}
                 min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
                 onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
                 style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />

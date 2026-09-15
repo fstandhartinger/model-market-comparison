@@ -9,3 +9,6 @@ export declare function labelCandidates<T extends { id: string; y: number }>(poi
 export declare function placeLabels(args: { labels: { id: string; name: string; cx: number; cy: number }[]; dots: { cx: number; cy: number }[]; offset: { left: number; top: number; width: number; height: number }; frontier: Set<string>; headroom?: number; max?: number }): { key: string; x: number; y: number; text: string }[];
 export declare function topCandidates<T>(items: T[], modelOf: (item: T) => { id: string; family_key: string; scores?: { aa_intelligence_index?: number | null; epoch_eci?: number | null } }, n?: number): T[];
 export declare function expandedCandidateFamilies(models: { family_key: string; deprecated?: boolean; scores?: { aa_intelligence_index?: number | null; epoch_eci?: number | null } }[], n?: number): string[];
+export declare const DERIVED_MIN_SCORE_FLOOR: number;
+export declare function derivedMinScore(points: readonly { x: number; y: number }[] | null | undefined, opts?: { score?: string; step?: number; floor?: number }): number | null;
+export declare function minScoreLabel(score: string, shortLabel: string): { title: string; sub: string };
