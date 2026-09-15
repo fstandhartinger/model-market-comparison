@@ -274,6 +274,12 @@ credited below, the rest is marked open.
 | CR-33.1 | 'Benchmarks for your shortlist' section: a column chart above the table showing all shortlist models' Benchmar | open | — | — |
 | CR-33.2 | The column chart has its own small score dropdown (same score list as CR-32.1: Main Composite default, categor | open | — | — |
 | CR-33.3 | Simple benchmark table: the top row is ALWAYS the Benchmark Heaven Score (Main Composite Score), independent o | open | — | — |
+| CR-34.1 | Add a collector for `GET https://openrouter.ai/api/v1/benchmarks` to the data pipeline (raw capture with as_of | open | — | — |
+| CR-34.2 | New independent benchmarks from OpenRouter's own runs: GPQA Diamond (OpenRouter run), τ²-Bench Verified Airlin | open | — | — |
+| CR-34.3 | Use OpenRouter's measured `avg_cost_per_task` as an additional, clearly labelled cost signal (e.g. in cost mod | open | — | — |
+| CR-34.4 | Add Artificial Analysis Agentic Index (from this API or AA directly) to the taxonomy, category composites (Age | open | — | — |
+| CR-34.5 | Use the API's DesignArena rows to fill gaps and cross-check existing DesignArena values (categories: website,  | open | — | — |
+| CR-34.6 | Evaluate OpenRouter's media benchmarks (Image, Video) and whether they fit the product; document the decision | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1911,3 +1917,7 @@ CR-32 touches the same Simple sliders as CR-18/CR-29: design them together (scor
 
 ## PRIORITY addendum 2026-09-15 ~16:20 UTC (laptop supervisor)
 CR-33.3 (Main Composite row always first + selected-score row below) changes CR-12.1 and belongs with the CR-18/CR-29/CR-32 slider-and-score work — do it in the same pass. CR-33.1/33.2 (column chart with score dropdown) go with group 3 and share the score list component with CR-32.1.
+
+
+## PRIORITY addendum 2026-09-15 ~16:30 UTC (laptop supervisor)
+CR-34 (OpenRouter Benchmarks API) belongs with the data group (CR-28/CR-30) — Florian wants more benchmarks; do CR-34.1/34.2/34.4 early in that group since the API is structured and cheap to ingest. Mechanical mapping/verification work can go to Kimi K3 workers.
