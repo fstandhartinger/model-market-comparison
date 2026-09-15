@@ -10,7 +10,9 @@ export const ADJUSTED_COST_TIP = (
     the provider we would route you to, that provider’s prices, how much of your input it
     serves from cache and what cache reads and writes cost there, and how many tokens this
     particular model needs to finish the task. A verbose model on a cheap provider can cost
-    more than a terse model on an expensive one; this column shows that.
+    more than a terse model on an expensive one; this column shows that. A small “cheaper” or
+    “pricier” tag marks a model that costs at least twice less or more than is typical for its
+    score among the models currently shown.
   </>
 );
 

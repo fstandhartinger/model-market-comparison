@@ -17,6 +17,7 @@ import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 import { capShortlist } from "../lib/shortlist.mjs";
 import { SIMPLE_LIMIT, topCandidates } from "../lib/value-map.mjs";
+import { valueSignals } from "../lib/value-signal.mjs";
 import { scoreRowSubtitle } from "./ScoreRows";
 import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
 
@@ -275,6 +276,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     if (costRange.max === costRange.min) return 1;
     return Math.log(value / costRange.min) / Math.log(costRange.max / costRange.min);
   };
+  // CR-15.1: notably cheap / pricey for the score, judged only among the rows on screen (filters apply).
+  const valueById = useMemo(() => valueSignals(rows.map((x) => ({ id: x.m.id, score: x.sc, cost: x.price.value }))), [rows]);
 
   const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
   // F-14: Org, # benchmarks and # providers drop out on phones (hidden below md); their
@@ -451,7 +454,14 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                     </span>}
                   </MagnitudeBar>;
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span>{(() => {
+                  const v = valueById.get(m.id);
+                  if (!v) return null;
+                  const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
+                  const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
+                  const why = `About ${ratio} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score among the ${v.n} priced models shown (log cost fitted against score).`;
+                  return <span className="block text-right"><span className="bh-value-tag" data-kind={v.kind} title={why}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span>{words}<span className="sr-only">: {why}</span></span></span>;
+                })()}</MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>

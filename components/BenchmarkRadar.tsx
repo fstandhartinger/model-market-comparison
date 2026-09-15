@@ -31,7 +31,7 @@ function SimpleRadar({ axes, series, variant, label }: { axes: ViewAxis[]; serie
   const [active, setActive] = useState<RadarActive>(null);
   const d = variant === 'desktop' ? { w: 720, h: 500, cx: 360, cy: 245, R: 150, L: 193 } : { w: 360, h: 360, cx: 180, cy: 180, R: 120, L: 148 };
   const at = (s: number, i: number) => { const p = position(d.cx, d.cy, i, axes.length, d.R * (series[s]?.points[i]?.value ?? 0) / 100); return [p.x, p.y] as const; };
-  return <div className={`relative mx-auto w-full ${variant === 'desktop' ? 'hidden max-w-[640px] md:block' : 'block max-w-[360px] md:hidden'}`} onMouseLeave={() => setActive(null)}>
+  return <div className={`relative mx-auto w-full ${variant === 'desktop' ? 'hidden max-w-[640px] md:block' : 'block max-w-[360px] md:hidden'}`} onMouseLeave={() => setActive(null)} onClick={() => setActive(null)}>
     <svg className="block w-full" viewBox={`0 0 ${d.w} ${d.h}`} role="group" aria-label={label}>
       {[25, 50, 75, 100].map((v) => <g key={v}><polygon fill="none" stroke="var(--radar-grid, #526071)" strokeOpacity="0.6" points={axes.map((_, i) => { const p = position(d.cx, d.cy, i, axes.length, d.R * v / 100); return `${p.x},${p.y}`; }).join(' ')} /><text x={d.cx + 5} y={d.cy - d.R * v / 100 + 13} fill="currentColor" fontSize="10">{v}</text></g>)}
       {axes.map((axis, i) => {

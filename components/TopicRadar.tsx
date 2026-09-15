@@ -8,28 +8,34 @@ export type RadarPoint = { value: number | null; label: string };
 export type RadarSeries = { id: string; name: string; color: string; dash?: string; points: RadarPoint[] };
 export type RadarActive = { s: number; i: number } | null;
 
-/** CR-14.3: a focusable hit target per plotted point. Hover or keyboard focus shows the exact value;
- *  a tap toggles it (phones have no hover); Escape hides it. */
+/** CR-14.3: a focusable hit target per plotted point. Hover, keyboard focus or a tap shows the exact
+ *  values; Escape or a tap on the chart background hides them. A tap never toggles: touch fires
+ *  mouseenter before click, so a toggle would close the tooltip it just opened. */
 export function RadarHit({ cx, cy, s, i, active, setActive, label }: { cx: number; cy: number; s: number; i: number; active: RadarActive; setActive: (a: RadarActive) => void; label: string }) {
   const on = active?.s === s && active?.i === i;
   return <circle cx={cx} cy={cy} r={12} fill="transparent" tabIndex={0} role="button" aria-label={label} aria-pressed={on}
     className="cursor-pointer outline-none focus-visible:[stroke:currentColor] focus-visible:[stroke-width:2]"
     onMouseEnter={() => setActive({ s, i })} onMouseLeave={() => setActive(null)} onFocus={() => setActive({ s, i })} onBlur={() => setActive(null)}
-    onClick={(e) => { e.stopPropagation(); setActive(on ? null : { s, i }); }} onKeyDown={(e) => { if (e.key === 'Escape') setActive(null); }} />;
+    onClick={(e) => { e.stopPropagation(); setActive({ s, i }); }} onKeyDown={(e) => { if (e.key === 'Escape') setActive(null); }} />;
 }
 
-/** The tooltip, positioned over the SVG in viewBox percentages and kept inside the chart. */
+/** The tooltip, positioned over the SVG in viewBox percentages and kept inside the chart. It lists
+ *  every compared model's exact value on the axis (the pointed one first and bold), so points that
+ *  coincide — two models at 51 and 51.2 — never hide each other's numbers. */
 export function RadarTip({ active, axes, series, at, width, height }: { active: RadarActive; axes: RadarAxisMeta[]; series: RadarSeries[]; at: (s: number, i: number) => readonly [number, number]; width: number; height: number }) {
   if (!active) return null;
-  const s = series[active.s], axis = axes[active.i], point = s?.points[active.i];
-  if (!s || !axis || !point) return null;
+  const axis = axes[active.i], pointed = series[active.s];
+  if (!axis || !pointed?.points[active.i]) return null;
   const [x, y] = at(active.s, active.i);
-  const left = Math.max(18, Math.min(82, (x / width) * 100)), top = (y / height) * 100, below = top < 22;
-  return <div role="status" className="pointer-events-none absolute z-10 w-max max-w-[16rem] rounded-lg border border-line bg-[rgb(var(--surface,22_27_34))] px-3 py-2 text-left text-xs shadow-lg"
+  const left = Math.max(22, Math.min(78, (x / width) * 100)), top = (y / height) * 100, below = top < 30;
+  const rows = [pointed, ...series.filter((s) => s !== pointed)];
+  return <div role="status" className="pointer-events-none absolute z-10 w-max max-w-[18rem] rounded-lg border border-line bg-[rgb(var(--surface,22_27_34))] px-3 py-2 text-left text-xs shadow-lg"
     style={{ left: `${left}%`, top: `${top}%`, transform: below ? 'translate(-50%, 16px)' : 'translate(-50%, calc(-100% - 16px))' }}>
-    <p className="flex items-center gap-1.5 font-semibold"><span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: s.color }} />{s.name}</p>
-    <p className="bh-muted mt-0.5">{axis.name}{humanVersion(axis.version).label ? ` · ${humanVersion(axis.version).label}` : ''}</p>
-    <p className="mt-1 tabular">{point.label}</p>
+    <p className="font-semibold">{axis.name}{humanVersion(axis.version).label ? <span className="bh-muted font-normal"> · {humanVersion(axis.version).label}</span> : null}</p>
+    <ul className="mt-1 space-y-1">{rows.map((s) => <li key={s.id} className={s === pointed ? 'font-semibold' : ''}>
+      <span className="flex items-center gap-1.5"><span className="inline-block h-2 w-2 shrink-0 rounded-full" style={{ background: s.color }} /><span className="truncate">{s.name}</span></span>
+      <span className="tabular block pl-3.5">{s.points[active.i]?.label ?? 'No measured result'}</span>
+    </li>)}</ul>
   </div>;
 }
 
@@ -75,7 +81,7 @@ export function TopicRadar({ axes, series, label }: { axes: RadarAxisMeta[]; ser
     return out;
   });
   const otherNames = singletonTopics.map(([topic]) => topic);
-  return <div className="overflow-hidden"><div className="relative mx-auto w-full max-w-[640px]" onMouseLeave={() => setActive(null)}>
+  return <div className="overflow-hidden"><div className="relative mx-auto w-full max-w-[640px]" onMouseLeave={() => setActive(null)} onClick={() => setActive(null)}>
     <svg viewBox={`0 0 ${size} ${size}`} role="group" aria-label={label} className="mx-auto block h-auto w-full">
       {[25, 50, 75, 100].map((n) => <circle key={n} cx={c} cy={c} r={r * n / 100} fill="none" stroke="currentColor" opacity=".12" />)}
       {sectors.map((sector) => <path key={sector.topic} d={sector.path} fill={sector.eligible ? TOPIC_COLORS[sector.topicIndex % TOPIC_COLORS.length] : 'var(--line, #526071)'} opacity={sector.eligible ? '.35' : '.18'} />)}

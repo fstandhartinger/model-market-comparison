@@ -1,26 +1,68 @@
 "use client";
 import { useEffect, useMemo, useState } from 'react';
 import { TopicRadar } from './TopicRadar';
+import { SignalValue } from './SignalValue';
 
-type Model = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean };
+export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean };
-type Report = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number } };
+export type BenchmaxxingReportData = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number } };
 
-/** The shared topic radar with this report's single series (catalog percentiles). */
-function Radar({ axes, name }: { axes: Axis[]; name: string }) {
-  return <TopicRadar axes={axes} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value."
-    series={[{ id: 'report', name, color: '#35a7ff', points: axes.map((axis) => ({ value: axis.value,
-      label: axis.missing || axis.value == null ? 'No measured score' : `${axis.nativeValue} ${axis.unit} · percentile ${axis.value.toFixed(1)}${axis.observedDate ? ` · observed ${axis.observedDate}` : ''}` })) }]} />;
+const SERIES = [{ color: '#35a7ff', dash: undefined }, { color: '#f5b65b', dash: '7 4' }];
+
+function SignalCard({ name, slot, compare, report }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData }) {
+  return <aside className="rounded-xl border border-line p-4" style={compare ? { borderLeft: `3px solid ${SERIES[slot].color}` } : undefined}>
+    <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{compare ? `${String.fromCharCode(65 + slot)} · ` : ''}Benchmaxxing signal</p>
+    {compare && <p className="mt-1 truncate text-sm font-medium">{name}</p>}
+    {report.status === 'scored' ? <>
+      <p className="mt-2"><SignalValue score={report.score ?? 0} large /></p>
+      <p className="bh-muted mt-2 text-sm">Within-topic percentile spread, adjusted for coverage. Higher means more uneven results among related benchmarks.</p>
+      <dl className="mt-4 space-y-2 text-sm"><div><dt className="bh-muted">Related comparisons</dt><dd>{report.comparisons} in {report.topics} topics</dd></div><div><dt className="bh-muted">Measured coverage</dt><dd>{report.profile.measured}/{report.profile.total} axes ({(report.coverage * 100).toFixed(0)}%)</dd></div><div><dt className="bh-muted">Domain specialization</dt><dd>{report.domainSpecialization?.toFixed(1)} — disclosed, not added to the score</dd></div></dl>
+    </> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes, {report.comparisons} related comparisons in {report.topics} topics — a score needs {report.rule.minComparisons} in {report.rule.minTopics}. No score is synthesized from missing results.</p></>}
+  </aside>;
 }
 
-export function BenchmaxxingReport({ models, initial, initialModelId }: { models: Model[]; initial: Report | null; initialModelId?: string }) {
-  const [id, setId] = useState(initialModelId ?? models[0]?.id ?? ''); const [report, setReport] = useState<Report | null>(initial); const [loading, setLoading] = useState(false); const [showAllAxes, setShowAllAxes] = useState(false);
-  useEffect(() => { if (!id) return; setLoading(true); fetch(`/api/benchmaxxing?report=${encodeURIComponent(id)}`).then((r) => r.ok ? r.json() : Promise.reject()).then((x) => setReport(x.report)).catch(() => setReport(null)).finally(() => setLoading(false)); }, [id]);
-  useEffect(() => { setShowAllAxes(false); }, [id]);
-  const grouped = useMemo(() => report?.profile.axes.reduce<Record<string, Axis[]>>((out, axis) => { (out[axis.category] ||= []).push(axis); return out; }, {}) ?? {}, [report]);
-  const radarAxes = report ? (showAllAxes ? report.profile.axes : report.profile.axes.filter((axis) => !axis.missing)) : [];
-  return <section className="bh-panel mt-6 p-5" aria-label="Per-model Benchmaxxing report">
-    <div className="flex flex-wrap items-end justify-between gap-3"><div><p className="bh-eyebrow">PER-MODEL REPORT</p><h2 className="text-xl font-semibold">One anomaly score. The full shape beside it.</h2></div><label className="flex max-w-full min-w-0 flex-1 items-center text-sm sm:flex-none">Model <span className="bh-muted ml-1 text-xs">(<span className="text-warn">▲</span> = tagged)</span> <select value={id} onChange={(e) => setId(e.target.value)} className="ml-2 min-w-0 flex-1 rounded border border-line bg-ink p-2">{models.map((m) => <option key={m.id} value={m.id}>{m.tagged ? '▲ ' : ''}{m.name} — {m.org} · {m.coverageAxes}/{m.totalAxes} measured</option>)}</select></label></div>
-    {loading ? <p className="bh-muted mt-5">Calculating measured-score profile…</p> : !report ? <p className="bh-muted mt-5">Report unavailable.</p> : <div className="mt-5 grid grid-cols-1 gap-6 lg:grid-cols-[minmax(0,1fr)_300px]"><div><div className="mb-3 flex flex-wrap items-center justify-between gap-2"><span className="bh-muted text-xs">{radarAxes.length} measured axes shown{showAllAxes ? ` · ${report.profile.total} total` : ''}</span><label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={showAllAxes} onChange={(e) => setShowAllAxes(e.target.checked)} />Show all {report.profile.total} axes</label></div><Radar axes={radarAxes} name={models.find((m) => m.id === id)?.name ?? id} /><p className="bh-muted text-xs">Axes are the {radarAxes.length} benchmarks this model has results for, grouped clockwise by topic; a jagged outline inside one topic is the Benchmaxxing pattern.</p></div><div className="space-y-5 lg:flex lg:h-full lg:flex-col lg:gap-5 lg:space-y-0"><aside className="rounded-xl border border-line p-4"><p className="text-xs font-semibold uppercase tracking-wide text-gray-400">Benchmaxxing signal</p>{report.status === 'scored' ? <><p className="mt-2 text-5xl font-bold tabular">{report.score?.toFixed(1)}</p><p className="bh-muted mt-2 text-sm">Within-topic percentile spread, adjusted for coverage. Higher means more uneven results among related benchmarks.</p><dl className="mt-4 space-y-2 text-sm"><div><dt className="bh-muted">Related comparisons</dt><dd>{report.comparisons} in {report.topics} topics</dd></div><div><dt className="bh-muted">Measured coverage</dt><dd>{report.profile.measured}/{report.profile.total} axes ({(report.coverage * 100).toFixed(0)}%)</dd></div><div><dt className="bh-muted">Domain specialization</dt><dd>{report.domainSpecialization?.toFixed(1)} — disclosed, not added to the score</dd></div></dl></> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes, {report.comparisons} related comparisons in {report.topics} topics — a score needs {report.rule.minComparisons} in {report.rule.minTopics}. No score is synthesized from missing results.</p></>}</aside><details className="text-sm lg:min-h-0 lg:flex-1"><summary className="cursor-pointer font-medium">Advanced details: topic groups and method</summary><div className="bh-muted mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-1">{Object.entries(grouped).map(([topic, axes]) => <div key={topic}><b>{topic}</b><p>{axes.map((axis) => `${axis.name}${axis.missing ? ' (gap)' : ''}`).join(' · ')}</p></div>)}<p className="md:col-span-2 lg:col-span-1">Scores are percentile-normalized within each exact benchmark cohort, then only differences between measured axes within the same topic contribute to the anomaly signal. This is a descriptive inconsistency signal, not evidence that a benchmark leaked into training or that any training team acted improperly.</p></div></details></div></div>}
+/** CR-15.4: the report has no model selector of its own; it shows the row(s) selected in the table
+ *  above, and in compare mode draws both models on one topic radar with their signals side by side. */
+export function BenchmaxxingReport({ models, ids, initial, compare, onToggleCompare }: { models: BenchmaxxingModel[]; ids: string[]; initial: { id: string; report: BenchmaxxingReportData } | null; compare: boolean; onToggleCompare: () => void }) {
+  const [reports, setReports] = useState<Record<string, BenchmaxxingReportData | null>>(initial ? { [initial.id]: initial.report } : {});
+  const [loading, setLoading] = useState(false), [showAllAxes, setShowAllAxes] = useState(false);
+  useEffect(() => {
+    const missing = ids.filter((id) => !(id in reports));
+    if (!missing.length) return;
+    setLoading(true);
+    Promise.all(missing.map((id) => fetch(`/api/benchmaxxing?report=${encodeURIComponent(id)}`).then((r) => r.ok ? r.json() : null).then((x) => [id, x?.report ?? null] as const).catch(() => [id, null] as const)))
+      .then((entries) => setReports((old) => ({ ...old, ...Object.fromEntries(entries) }))).finally(() => setLoading(false));
+  }, [ids, reports]);
+  const shown = ids.map((id) => ({ id, name: models.find((m) => m.id === id)?.name ?? id, report: reports[id] }));
+  const ready = shown.length > 0 && shown.every((s) => s.report);
+  const grouped = useMemo(() => shown[0]?.report?.profile.axes.reduce<Record<string, Axis[]>>((out, axis) => { (out[axis.category] ||= []).push(axis); return out; }, {}) ?? {}, [shown[0]?.report]);
+  // Every profile lists the same axes in the same topic order; align by id all the same.
+  const byId = shown.map((s) => new Map((s.report?.profile.axes ?? []).map((a) => [a.id, a])));
+  const allAxes = shown[0]?.report?.profile.axes ?? [];
+  const radarAxes = showAllAxes ? allAxes : allAxes.filter((a) => byId.some((m) => { const x = m.get(a.id); return x && !x.missing; }));
+  const series = shown.map((s, k) => ({ id: s.id, name: s.name, color: SERIES[k].color, dash: SERIES[k].dash, points: radarAxes.map((a) => {
+    const x = byId[k].get(a.id);
+    return { value: x && !x.missing ? x.value : null, label: !x || x.missing || x.value == null ? 'No measured score' : `${x.nativeValue} ${x.unit} · percentile ${x.value.toFixed(1)}${x.observedDate ? ` · observed ${x.observedDate}` : ''}` };
+  }) }));
+  const title = shown.length ? shown.map((s) => s.name).join(' vs ') : 'Select a model in the table above';
+  return <section className="bh-panel mt-6 p-5" aria-label="Per-model Benchmaxxing report" aria-live="polite">
+    <div className="flex flex-wrap items-end justify-between gap-3">
+      <div className="min-w-0"><p className="bh-eyebrow">PER-MODEL REPORT</p><h2 className="text-xl font-semibold">{title}</h2><p className="bh-muted mt-1 text-sm">{compare ? 'Compare mode: A stays; select another row above to change B.' : 'Follows the row selected in the table above.'}</p></div>
+      <button type="button" className="bh-button min-h-9 px-3" aria-pressed={compare} onClick={onToggleCompare} disabled={!ids.length}>{compare ? 'Close side-by-side' : 'Compare side by side'}</button>
+    </div>
+    {!shown.length ? <p className="bh-muted mt-5">No model selected.</p> : loading && !ready ? <p className="bh-muted mt-5">Calculating measured-score profile…</p> : !ready ? <p className="bh-muted mt-5">Report unavailable.</p> : <div className={`mt-5 grid grid-cols-1 gap-6 ${compare ? '' : 'lg:grid-cols-[minmax(0,1fr)_300px]'}`}>
+      <div>
+        <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
+          {compare ? <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Chart legend">{series.map((s, k) => <li key={s.id} className="flex items-center gap-2"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg>{String.fromCharCode(65 + k)} · {s.name}</li>)}</ul> : <span className="bh-muted text-xs">{radarAxes.length} measured axes shown{showAllAxes ? ` · ${allAxes.length} total` : ''}</span>}
+          <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={showAllAxes} onChange={(e) => setShowAllAxes(e.target.checked)} />Show all {allAxes.length} axes</label>
+        </div>
+        <TopicRadar axes={radarAxes} series={series} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value." />
+        <p className="bh-muted text-xs">Axes are the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic; a jagged outline inside one topic is the Benchmaxxing pattern.</p>
+      </div>
+      <div className={compare ? 'grid gap-4 md:grid-cols-2' : 'space-y-5 lg:flex lg:h-full lg:flex-col lg:gap-5 lg:space-y-0'}>
+        {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} />)}
+        <details className={`text-sm ${compare ? 'md:col-span-2' : 'lg:min-h-0 lg:flex-1'}`}><summary className="cursor-pointer font-medium">Advanced details: topic groups and method</summary><div className="bh-muted mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-1">{Object.entries(grouped).map(([topic, axes]) => <div key={topic}><b>{topic}</b><p>{axes.map((axis) => `${axis.name}${axis.missing ? ' (gap)' : ''}`).join(' · ')}</p></div>)}<p className="md:col-span-2 lg:col-span-1">Scores are percentile-normalized within each exact benchmark cohort, then only differences between measured axes within the same topic contribute to the anomaly signal. This is a descriptive inconsistency signal, not evidence that a benchmark leaked into training or that any training team acted improperly.</p></div></details>
+      </div>
+    </div>}
   </section>;
 }

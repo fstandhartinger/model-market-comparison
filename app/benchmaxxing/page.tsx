@@ -3,8 +3,8 @@ import { getDataset } from '../../lib/data';
 import { clientData } from '../../lib/client-model';
 import { getBenchmarkView } from '../../lib/benchmark-data';
 import { BENCHMAXX_MIN_COMPARISONS, BENCHMAXX_MIN_TOPICS, benchmaxxingPrior, benchmaxxingSignals, scoreBenchmaxxing } from '../../lib/benchmax.mjs';
-import { BenchmaxxingReport } from '../../components/BenchmaxxingReport';
-import { BenchmaxxingOverview, type BenchmaxxingOverviewRow } from '../../components/BenchmaxxingOverview';
+import { BenchmaxxingWorkbench } from '../../components/BenchmaxxingWorkbench';
+import { presetRows, type BenchmaxxingOverviewRow } from '../../components/BenchmaxxingOverview';
 
 export const metadata: Metadata = {
   title: 'Benchmaxxing — benchmark consistency signal',
@@ -24,17 +24,20 @@ export default async function BenchmaxxingPage() {
   }).sort((a, b) => b.coverageAxes - a.coverageAxes || (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));
   const byId = new Map(models.map((m) => [m.id, m]));
   const scored = reports.map(([id, report]) => ({ model: byId.get(id), report })).filter((item): item is { model: (typeof models)[number]; report: ReturnType<typeof scoreBenchmaxxing> } => Boolean(item.model && item.report.status === 'scored'));
-  const overviewRows: BenchmaxxingOverviewRow[] = scored.filter(({ model }) => tagged.has(model.id)).sort((a, b) => (b.report.score ?? -Infinity) - (a.report.score ?? -Infinity) || b.report.comparisons - a.report.comparisons || a.model.name.localeCompare(b.model.name)).map(({ model, report }) => ({
+  // CR-15.2: every scored model reaches the client; the table's preset (Featured by default) chooses the list.
+  const featured = new Set(ds.models.filter((m) => m.featured).map((m) => m.id));
+  const overviewRows: BenchmaxxingOverviewRow[] = scored.map(({ model, report }) => ({
     id: model.id, name: model.name, org: model.org, score: report.score!, comparisons: report.comparisons, topics: report.topics,
     measured: report.profile.measured, total: report.profile.total, domainSpecialization: report.domainSpecialization,
+    composite: model.composite, featured: featured.has(model.id), tagged: tagged.has(model.id),
   }));
   const prior = benchmaxxingPrior(view);
-  const defaultModel = [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || b.coverageAxes - a.coverageAxes || a.name.localeCompare(b.name))[0] ?? models[0];
-  const initial = defaultModel ? scoreBenchmaxxing(view, defaultModel.id) : null;
+  // The report opens on the first row of the default Featured preset (the top current model by Composite).
+  const defaultModel = presetRows(overviewRows, 'featured')[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
+  const initial = defaultModel ? { id: defaultModel.id, report: scoreBenchmaxxing(view, defaultModel.id) } : null;
   return <>
     <header className="bh-page-head"><h1 className="text-3xl font-bold tracking-tight">Benchmaxxing</h1><p className="bh-muted mt-3 max-w-3xl">Which models are uneven inside a topic — strong on one coding benchmark, weak on the next?</p></header>
-    <BenchmaxxingOverview rows={overviewRows} taggedCount={tagged.size} minComparisons={BENCHMAXX_MIN_COMPARISONS} minTopics={BENCHMAXX_MIN_TOPICS} />
-    <BenchmaxxingReport models={models} initial={initial} initialModelId={defaultModel?.id} />
+    <BenchmaxxingWorkbench rows={overviewRows} models={models} initial={initial} taggedCount={tagged.size} minComparisons={BENCHMAXX_MIN_COMPARISONS} minTopics={BENCHMAXX_MIN_TOPICS} />
     <details id="method" className="bh-panel mt-6 scroll-mt-6 p-5"><summary className="cursor-pointer text-sm font-semibold">Advanced method, uncertainty and limitations</summary><div className="bh-muted mt-4 max-w-4xl space-y-3 text-sm"><p>Each exact benchmark cohort is percentile-normalized from measured results only. Missing scores remain gaps: they are not zeros and are not imputed.</p><p>Axes are grouped by the registry’s semantic topic. Within each topic we take the mean absolute percentile difference over all pairs of measured benchmarks, so the result does not depend on the order in which axes are drawn. Topics are combined weighted by their number of independent comparisons (measured benchmarks in the topic minus one). Cross-topic variation is disclosed as domain specialization but is not added to the score: being consistently strong in coding and weak in writing is specialization, not Benchmaxxing.</p><p>Coverage rule: a model is scored only with at least {BENCHMAXX_MIN_COMPARISONS} related comparisons spread over at least {BENCHMAXX_MIN_TOPICS} topics. Because a score built from few comparisons is noisier, every score is shrunk toward the catalog mean{prior.mean != null ? ` (${prior.mean.toFixed(1)})` : ''} by n / (n + k), where n is the model’s comparisons and k = {prior.shrink.toFixed(1)} is estimated from how much score variance falls as coverage grows (never below 2). This keeps sparse profiles from dominating the tag.</p><p>Known limitation: percentiles are bounded, so a model at the very top of most benchmarks has less room to vary than a mid-field model.</p><p>This analysis cannot establish leakage, contamination, or intent. It is a descriptive screening signal that should prompt users to inspect sources, benchmark design and per-axis evidence.</p></div></details>
   </>;
 }
