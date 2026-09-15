@@ -255,3 +255,19 @@ Laptop Claude Code chat, 15 Sep 2026 ~16:40 UTC, verbatim:
 > I'll write them to ask if I a allowed to do that
 
 Supervisor check 15 Sep ~16:40 UTC, https://artificialanalysis.ai/api-reference → 'Attribution & Sharing of Data': "Attribution is required for all use of our free API. Please provide attribution to https://artificialanalysis.ai/ . If you wish to include our logo in your materials, you can download our brand kit … Use of the API is subject to our Terms of Use and Data Platform Terms." Florian is asking Artificial Analysis for permission. Until he reports back: do NOT add new AA-derived metrics (CR-34.4 Agentic Index is ON HOLD), and don't remove existing AA values either — attribution now, decision later.
+
+
+### CR-20260915k addendum — Epoch AI (ECI) licence, checked 15 Sep 2026 ~16:50 UTC
+Florian: "can you check also ECI?"
+
+https://epoch.ai/benchmarks/eci (Citations): "Epoch AI's data is free to use, distribute, and reproduce provided the source and authors are credited under the Creative Commons Attribution license." Suggested citation: Epoch AI, 'Epoch Capabilities Index'. Published online at epoch.ai. Retrieved from 'https://epoch.ai/eci' [online resource]. Accessed <date>. https://epoch.ai/benchmarks (licence FAQ): same CC-BY statement, plus: "Benchmark questions and answers are the property of their respective creators. This hub also includes data sourced from external projects, which retains its original licensing. Users are responsible for complying with the license terms of the specific data they use, and should credit the original sources as indicated."
+=> ECI and Epoch-run results: allowed with attribution (no permission needed). Externally sourced rows in Epoch's hub: check and credit the original source.
+
+
+## CR-20260915l — Compare: polished model picker, one entry per model (best of its reasoning variants); Options panel dropdowns
+Laptop Claude Code chat, 15 Sep 2026 ~17:00 UTC, verbatim (typos kept):
+
+> For Compare models tabl when using the Add models search field: the doropdown looks weird, we need to make it more beautiful. also we should add one reasoning variant for each model only and take the highest score for each benchmark each we had or all these reasoning variants of each model.
+> Actually the dropdown for model selectio nshould be polished, and have better usability. improve ux and ui.
+>
+> also model dropdown and provider dropdown in the optios panel are too bix, they can't be fully shown. revamp how these dropdowns are structured and sized, improve ux here
