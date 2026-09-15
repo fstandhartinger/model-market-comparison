@@ -83,7 +83,8 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-matrix-cell { position: relative; height: 1px; padding: 0; vertical-align: middle; }
 .bh-matrix-link { position: relative; display: flex; height: 100%; min-height: 44px; align-items: center; justify-content: flex-end; padding: 8px 12px; color: var(--text); text-decoration: none; }
 .bh-matrix-link:hover { background: rgb(var(--accent) / .07); }
-.bh-matrix-bar { position: absolute; left: 3px; max-width: calc(100% - 6px); top: 11px; bottom: 11px; border-radius: 0 4px 4px 0; background: rgb(var(--accent) / .12); }
+/* F-79: the bar is a fixed 22 px band behind the number, never the full row height (tall stub rows on phones). */
+.bh-matrix-bar { position: absolute; left: 3px; max-width: calc(100% - 6px); top: 50%; height: 22px; transform: translateY(-50%); border-radius: 0 4px 4px 0; background: rgb(var(--accent) / .12); }
 .bh-matrix-bar.is-best { background: rgb(var(--accent) / .2); }
 [data-theme="dark"] .bh-matrix-bar { background: rgb(var(--accent) / .09); }
 [data-theme="dark"] .bh-matrix-bar.is-best { background: rgb(var(--accent) / .16); }
@@ -109,6 +110,8 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 [data-kind="log"] .bh-bars-track, [data-kind="position"] .bh-bars-track { border-left: 0; background: linear-gradient(rgb(var(--line) / .7), rgb(var(--line) / .7)) center / 100% 1px no-repeat; }
 .bh-bars-bar { position: absolute; left: 0; top: 0; bottom: 0; border-radius: 0 4px 4px 0; }
 .bh-bars-dot { position: absolute; top: 50%; width: 12px; height: 12px; border-radius: 999px; transform: translate(-50%, -50%); box-shadow: 0 0 0 2px var(--surface); }
+/* F-79: below md the 9.5 rem stub has no room for a description; the name and tags carry the row, the detail page has the text. */
+@media (max-width: 767.98px) { .bh-matrix-desc { display: none; } }
 @media (min-width: 768px) {
   .bh-matrix-stub { min-width: 20rem; max-width: 20rem; padding: 12px 16px; }
   .bh-matrix-model { min-width: 7.5rem; padding: 34px 12px 12px; }

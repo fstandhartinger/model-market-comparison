@@ -130,7 +130,11 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
     .filter(({ vals }) => vals.some((v) => v != null)), [matrix, lookups]);
   const visible = useMemo(() => withValues.filter(({ row, vals }) => match(row, vals.filter((v) => v != null).length, ids.length)), [withValues, match, ids.length]);
   const chart = useMemo(() => chartRows(matrix.rows, lookups.map((m) => new Map([...m].map(([i, [v]]) => [i, v])))), [matrix, lookups]);
-  const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id) })).filter((g) => g.rows.length);
+  // F-81: inside a category, rows the compared models can actually be compared on (two or more values) come
+  // first; rows with a single result keep their place after them. Stable, so the build order holds otherwise.
+  const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id)
+    .map((v, i) => ({ v, i, comparable: v.vals.filter((x) => x != null).length >= 2 ? 0 : 1 }))
+    .sort((a, b) => a.comparable - b.comparable || a.i - b.i).map(({ v }) => v) })).filter((g) => g.rows.length);
   const selectedKeys = useMemo(() => new Set(visible.map((v) => v.row.key)), [visible]);
   const matches = useMemo(() => {
     const t = q.trim().toLowerCase();

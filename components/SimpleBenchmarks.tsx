@@ -2,6 +2,8 @@
 import Link from "next/link";
 import { useEffect, useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
+import { useSettings } from "./SettingsContext";
+import { collapsedName, preferredVariantIds } from "../lib/variants";
 import { formatValue, cellHref, rowBars, rowWinners, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 
@@ -11,7 +13,10 @@ const NOTE_KEY = "bh.simpleBenchmarksNote.v1";
 /** CR-7.1 / CR-7.2: Simple mode's second section — the headline benchmarks for the top of the list above,
  *  clearly marked as the simple version, with the full comparison one click away. */
 export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matrix; data: ClientData; ids: string[] }) {
+  const { score } = useSettings();
   const byId = useMemo(() => new Map(data.models.map((m) => [m.id, m])), [data]);
+  // F-82: the same column names as the full comparison — the model, not its effort setting.
+  const preferred = useMemo(() => preferredVariantIds(data.models, score), [data, score]);
   const ids = useMemo(() => listIds.filter((id) => matrix.values[id]?.length).slice(0, COLUMNS), [listIds, matrix]);
   const [note, setNote] = useState(false);
   // CR-7.2: on small screens say once that the full version is built for larger screens.
@@ -50,7 +55,7 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
           {ids.map((id, j) => { const m = byId.get(id); return <th key={id} scope="col" className={`bh-matrix-model !pt-3 ${j === 0 ? "bh-matrix-lead" : ""}`}>
             <span className="bh-matrix-accent" style={{ ["--swatch" as string]: seriesColor(j) }} aria-hidden="true">{seriesLetter(j)}</span>
             <span className="bh-matrix-org">{m?.org}</span>
-            <span className="bh-matrix-name"><Link href={`/models/${encodeURIComponent(id)}`} className="hover:underline">{m?.display_name.replace(/\s*\((?:max|high|medium|low|xhigh|thinking|reasoning)[^)]*\)$/i, "") ?? id}</Link></span>
+            <span className="bh-matrix-name"><Link href={`/models/${encodeURIComponent(id)}`} title={m?.display_name} className="hover:underline">{m ? collapsedName(m, true, preferred) : id}</Link></span>
           </th>; })}
         </tr></thead>
         {groups.map((g) => <tbody key={g.id}>
