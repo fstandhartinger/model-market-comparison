@@ -280,3 +280,17 @@ details[open] > .bh-collapsible-grid { display: grid; }
   }
   .bh-advanced-toolbar details > summary { padding-top: 6px; padding-bottom: 6px; }
 }
+
+/* CR-29.3: outlier tags in the Simple benchmark table (text, not colour alone). */
+.bh-outlier-tag { position: relative; margin-left: 4px; display: inline-flex; align-items: center; border-radius: 999px; padding: 0 5px; font-size: 9.5px; font-weight: 700; line-height: 14px; text-transform: uppercase; letter-spacing: .03em; vertical-align: 1px; }
+.bh-outlier-tag[data-kind="top"] { color: rgb(var(--accent2)); background: rgb(var(--accent2) / .15); }
+.bh-outlier-tag[data-kind="low"] { color: rgb(var(--warn)); background: rgb(var(--warn) / .15); }
+/* CR-31.1: a short, attention-seeking note beside "Open the full comparison". */
+.bh-simplified-hint { position: absolute; right: calc(100% + 10px); top: 50%; transform: translateY(-50%); z-index: 20; white-space: nowrap; border-radius: 10px; padding: 6px 10px; font-size: 13px; font-weight: 650; color: rgb(var(--ink)); background: rgb(var(--accent)); box-shadow: 0 6px 20px rgb(0 0 0 / .25); animation: bh-hint-pop 3.8s ease both; pointer-events: none; }
+.bh-simplified-hint::after { content: ""; position: absolute; left: 100%; top: 50%; margin-top: -6px; border: 6px solid transparent; border-left-color: rgb(var(--accent)); }
+@media (max-width: 639.98px) {
+  .bh-simplified-hint { right: 0; top: auto; bottom: calc(100% + 10px); transform: none; }
+  .bh-simplified-hint::after { left: auto; right: 22px; top: 100%; margin-top: 0; border-left-color: transparent; border-top-color: rgb(var(--accent)); }
+}
+@keyframes bh-hint-pop { 0% { opacity: 0; scale: .85; } 8% { opacity: 1; scale: 1.06; } 14% { scale: 1; } 85% { opacity: 1; } 100% { opacity: 0; } }
+@media (prefers-reduced-motion: reduce) { .bh-simplified-hint { animation: none; } }

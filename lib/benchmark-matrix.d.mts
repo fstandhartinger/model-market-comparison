@@ -43,3 +43,8 @@ export function chartRows(rows: MatrixRow[], columns: Map<number, number | null>
 export const IMPORTANT_TAGS: Set<string>;
 export function importantMatrix(matrix: BenchmarkMatrix, modelIds?: string[] | null): BenchmarkMatrix;
 export function buildBenchmarkMatrix(view: unknown, ds: unknown, taxonomy: unknown): BenchmarkMatrix;
+export const OUTLIER_MIN_VALUES: number;
+export const OUTLIER_CORE_MULTIPLE: number;
+export const OUTLIER_MIN_SHARE: number;
+export function rowOutliers(values: (number | null)[], higherBetter: boolean | null): ("top" | "low" | null)[];
+export function scoreTypeText(row: { unit: string; higherBetter: boolean | null; range?: readonly (number | null)[] | null }): string;

@@ -1,10 +1,11 @@
 "use client";
 import Link from "next/link";
-import { useEffect, useMemo, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
-import { formatValue, cellHref, rowBars, rowWinners, categoryComposite, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { InfoTip } from "./InfoTip";
 import { hasScoreEvidence } from "../lib/client-model";
 import { ScoreRow, CategoryHeader } from "./ScoreRows";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
@@ -25,6 +26,22 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
   useEffect(() => {
     try { if (window.matchMedia("(max-width: 767.98px)").matches && !localStorage.getItem(NOTE_KEY)) setNote(true); } catch { /* storage blocked */ }
   }, []);
+  // CR-31.1: when the table first comes into view (header link or manual scroll), say briefly that this is a
+  // simplified list, next to the full-comparison button — once per page visit.
+  const [hint, setHint] = useState(false);
+  const hinted = useRef(false);
+  const [tableEl, setTableEl] = useState<HTMLDivElement | null>(null);
+  useEffect(() => {
+    if (!tableEl || hinted.current || typeof IntersectionObserver === "undefined") return;
+    let timer: ReturnType<typeof setTimeout> | undefined;
+    const io = new IntersectionObserver((entries) => {
+      if (hinted.current || !entries.some((e) => e.isIntersecting)) return;
+      hinted.current = true; io.disconnect(); setHint(true);
+      timer = setTimeout(() => setHint(false), 3800);
+    }, { rootMargin: "0px 0px -35% 0px" });
+    io.observe(tableEl);
+    return () => { io.disconnect(); if (timer) clearTimeout(timer); };
+  }, [tableEl]);
   const dismiss = () => { setNote(false); try { localStorage.setItem(NOTE_KEY, "1"); } catch { /* ignore */ } };
 
   const lookups = useMemo(() => ids.map((id) => new Map((matrix.values[id] ?? []).map(([i, v, b]) => [i, [v, b] as const]))), [ids, matrix]);
@@ -43,14 +60,17 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
           {ids.length ? <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{visible.length}</span> results side by side.</> : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
         </p>
       </div>
-      <Link href={full} className="bh-button text-sm font-semibold">Open the full comparison <span aria-hidden="true">→</span></Link>
+      <span className="relative inline-flex">
+        <span role="status" aria-live="polite" className="contents">{hint && <span className="bh-simplified-hint" data-simplified-hint>This is a simplified list</span>}</span>
+        <Link href={full} className="bh-button text-sm font-semibold">Open the full comparison <span aria-hidden="true">→</span></Link>
+      </span>
     </div>
     {note && <div role="note" className="mt-3 flex items-start gap-3 rounded-xl border border-line bg-panel px-3 py-2 text-sm">
       <p className="min-w-0 flex-1">This is the simple version. The full comparison — every benchmark, model and preset — works best on a larger screen.</p>
       <button type="button" className="bh-preset-icon" aria-label="Dismiss this note" onClick={dismiss}>×</button>
     </div>}
 
-    {ids.length > 0 && visible.length > 0 && <div className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
+    {ids.length > 0 && visible.length > 0 && <div ref={setTableEl} className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
       <table className="bh-matrix">
         <caption className="sr-only">Headline benchmark results for the top models of your shortlist. Bold marks the best result in each row.</caption>
         <thead><tr>
@@ -65,9 +85,9 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
         {groups.map((g) => <tbody key={g.id}>
           <CategoryHeader label={<span className="inline-flex min-h-8 items-center">{g.label}</span>} composite={categoryComposite(g.rows, ids.length)} columns={ids.length} />
           {g.rows.map(({ row, vals, basis }) => {
-            const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter);
+            const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter), odd = rowOutliers(vals, row.higherBetter);
             return <tr key={row.id}>
-              <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench">{row.name}</span>{row.cohort && <span className="bh-matrix-sub">{row.cohort}</span>}</th>
+              <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench">{row.name}<InfoTip title={row.name} label={`the ${row.name} benchmark`}>{row.description || "What this benchmark measures is not described by its publisher yet."}<span className="mt-2 block">{scoreTypeText(row)}</span></InfoTip></span>{row.cohort && <span className="bh-matrix-sub">{row.cohort}</span>}</th>
               {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                 {v == null
                   ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
@@ -75,6 +95,7 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
                     {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
                     <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}</span>
                     {win[j] && <span className="sr-only"> (best in row)</span>}
+                    {odd[j] && <span className="bh-outlier-tag" data-kind={odd[j]} title={odd[j] === "top" ? "Clearly ahead: its lead over the next model is at least twice the spread of the models in between" : "Clearly behind: its gap to the next model is at least twice the spread of the models in between"}>{odd[j]}<span className="sr-only">{odd[j] === "top" ? ": clearly ahead of the other models in this row" : ": clearly behind the other models in this row"}</span></span>}
                   </Link>}
               </td>)}
             </tr>;
@@ -82,6 +103,6 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Headline benchmarks with a result for at least two of these models. Bold is best in row; † marks a developer&apos;s own report; a dash means no published result. The first row is the score your settings select. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
+    <p className="bh-muted mt-2 text-xs">Headline benchmarks with a result for at least two of these models. Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is the score your settings select. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
   </section>;
 }
