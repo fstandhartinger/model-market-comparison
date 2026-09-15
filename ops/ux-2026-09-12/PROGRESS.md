@@ -234,6 +234,9 @@ credited below, the rest is marked open.
 | CR-17.1 | EU-hosted filter: Claude via AWS Bedrock EU (per model, cited) | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter68-cr-17/{canonical,legacy}/verification.json` (`bin/verify-cr-17.mjs`, 22/22 per host); `test/eu-hosted.test.mjs`; audit `/home/flori/jobs/benchmarkheaven-eu-hosting-audit-20260915/` | **Iteration 68 (claude-opus), `3cab196`, live at build `VuwMNgohtDwNGkHsTgbOQ`:** already correct — Claude Sonnet 5, Opus 5, Opus 4.7/4.8, Sonnet 4.6, Haiku 4.5 pass via the Bedrock eu. geo profile; Fable 5/5.1 are US/Global-only on Bedrock (Fable 5.1 passes only via Google Vertex AI EU multi-region). No data change; guard test. Live 22/22 per host (API offers + (i) + guided hint at 1440/390, light/dark; the first run's filter-panel locator was wrong and is fixed). Needs a non-claude-opus verifier. |
 | CR-17.2 | EU-hosted filter: OpenAI via Azure AI Foundry EU deployments (per model, cited) | implemented | same as CR-17.1 | Microsoft's region table (captured 2026-09-15, re-read table by table): GPT-6 Astra Data Zone Standard/Provisioned **US only** → its "EU Data Zone" row removed; DeepSeek-V4-Flash (2026-04-23) Data Zone Standard in 7 EU regions → added at 0.21/0.56 (Retail DZ meters). GPT-5.6, o3, GPT-4o EU DZ rows confirmed. Offers 2,863 → 2,861; CHANGELOG + method note. Live 22/22 per host. |
 | CR-17.3 | EU-hosted definition stated plainly and applied consistently | implemented | same as CR-17.1 | (i) beside "EU-hosted only" + guided hint: in-EU inference (EU region, EU geo profile, Europe Data Zone, or an audited all-EU provider fleet — Mistral, Scaleway, IONOS, TensorX, Inceptron, NextBit per provider-meta), never Global / billing / control plane alone; Florian's own 2026-07-12 company-policy equivalents (Azure Global DeepSeek V4 Pro, Kimi K2.7 Code) kept per R4.7 "same logic" and disclosed. Guard test asserts no other Global route passes. Live 22/22 per host. |
+| CR-18.1 | Simple min-score default derived so the cheapest top model is on the Pareto line | open | — | — |
+| CR-18.2 | Derived default never below 65 (0–100 scores) | open | — | — |
+| CR-18.3 | Table/map consistency, reset, manual override, no pool feedback loop | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1804,3 +1807,7 @@ until each is verified live.
   self-reported coding boards (FrontierCode, CursorBench, SWE-Bench Pro) stay unjoined until a critic re-approves
   their identities; daily refresh now has the 600 s worker timeout on main (the failed
   `bh-daily-after-ux-once.service` run was not restarted from here). `ALL-ACCEPTED` not appended.
+
+
+## PRIORITY 2026-09-15 ~15:00 UTC — CR-18 (laptop supervisor)
+Florian's new request CR-20260915c (rows CR-18.1–18.3 in `04-CR-BRIEF.md`) is small and user-visible: do it first in the next work iteration, then continue the review gate for CR-10…CR-17.

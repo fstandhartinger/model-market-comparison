@@ -158,3 +158,9 @@ Hermes Telegram chat, 15 Sep 2026 13:16 UTC, verbatim:
 > regarding benchmark heaven: doublecheck the eu hosted filter stuff, as far as I know AWS Bedrock offers the Claude models in EU hosted (maybe not Fable 5/5.1, unsure about that, but the others I belive) and Azure Foundry offers the OpenAI models EU hosted.
 
 Evidence: Hermes started an official-documentation audit at 13:17 UTC (/home/flori/jobs/benchmarkheaven-eu-hosting-audit-20260915). Use its findings per exact model and region (EU endpoint vs. EU data processing vs. EU control plane); verify anything it doesn't cover yourself.
+
+
+## CR-20260915c — Simple value map: default minimum score so the cheapest top model is on the Pareto line
+Laptop Claude Code chat, 15 Sep 2026 ~15:00 UTC, verbatim (context: Florian asked why the green Pareto line stops at GLM-5.3 in Simple's value map; answer: the frontier only uses models passing the minimum-score slider, default 86):
+
+> ah I get it, it's because siof the minimum capability score slider. let's pre-default that slider value to a value that make the very rigtmost but top (on y axis) model be part of the line. (but don't put the capability value slider lower than 65)
