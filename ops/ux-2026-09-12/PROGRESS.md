@@ -280,14 +280,17 @@ credited below, the rest is marked open.
 | CR-34.4 | Add Artificial Analysis Agentic Index (from this API or AA directly) to the taxonomy, category composites (Age | open (ON HOLD: AA permission pending, see CR-35.3) | — | — |
 | CR-34.5 | Use the API's DesignArena rows to fill gaps and cross-check existing DesignArena values (categories: website,  | open | — | — |
 | CR-34.6 | Evaluate OpenRouter's media benchmarks (Image, Video) and whether they fit the product; document the decision | open | — | — |
-| CR-35.1 | Attribute Artificial Analysis wherever AA data is shown: a visible 'Data: Artificial Analysis' (linked to http | open | — | — |
-| CR-35.2 | A prominent 'BETA — Work in progress' tag in the site header (next to the logo/name) on all pages, plus a shor | open | — | — |
+| CR-35.1 | Attribute Artificial Analysis wherever AA data is shown: a visible 'Data: Artificial Analysis' (linked to http | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-35/` | iter 71 claude-opus: AaCredit on footer, tooltips, cost modal, tables, value map, column chart, radar, model page, /about, Benchmaxxing (`738432c`); live canonical 72/72 · legacy 72/72 (after c9b97d7/e99d640 and the tap() harness fix) |
+| CR-35.2 | A prominent 'BETA — Work in progress' tag in the site header (next to the logo/name) on all pages, plus a shor | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-35/` | iter 71 claude-opus: BETA — Work in progress pill + note on hover/focus/tap; phone header fits (`738432c`, `c9b97d7`, `e99d640`); live canonical 72/72 · legacy 72/72 (after c9b97d7/e99d640 and the tap() harness fix) |
 | CR-35.3 | Hold: do not add new Artificial Analysis-derived metrics (CR-34.4 Agentic Index) until Florian reports AA's an | open | — | — |
-| CR-35.4 | Epoch AI attribution (CC-BY): wherever Epoch data is shown (Epoch ECI, Epoch Software ECI, other Epoch-run ben | open | — | — |
+| CR-35.4 | Epoch AI attribution (CC-BY): wherever Epoch data is shown (Epoch ECI, Epoch Software ECI, other Epoch-run ben | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-35/` | iter 71 claude-opus: Epoch AI (CC BY) credit on Epoch surfaces + recommended citation on /about (`96818a6`); live canonical 72/72 · legacy 72/72 (after c9b97d7/e99d640 and the tap() harness fix) |
 | CR-35.5 | For benchmark rows taken from Epoch's hub that Epoch sourced from external projects, record and display the or | open | — | — |
 | CR-36.1 | Compare tab 'Add models' search: redesign the dropdown — clean list with lab logo/name, model name, release da | open | — | — |
 | CR-36.2 | Compare picker lists one entry per model (weights/training run), not every reasoning variant. For each benchma | open | — | — |
 | CR-36.3 | Options panel: revamp the Models and Providers dropdowns (and the new Labs one from CR-25.5) — they are too bi | open | — | — |
+| CR-37.1 | Add every Lumina Bench benchmark family we don't have yet (from the intake job's verified `NEW-BENCHMARKS.md`  | open | — | — |
+| CR-37.2 | Scraper/updater: add a daily collector for Lumina's data ledger as a discovery + provenance feed (manifest has | open | — | — |
+| CR-37.3 | Results for the new benchmarks shown across the site (full benchmark list, Benchmarks tab, compare, category s | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1960,7 +1963,7 @@ CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared
     the observed band on phones) · `fe29860` InfoTip placed by rendered height (short tooltips floated ~400 px above
     their (i)) · `96818a6` CR-35.4 Epoch AI (CC BY) credit + citation · harness/docs `563b107`, `65aff23`, `f8f6c53` (X5:
     API.md `/api/benchmark-matrix`, CHANGELOG) and the supervisor seeds `1fe2157`, `ec894d3`, `895a1b2`, `d1ca569`, `a806be3`.
-  - **Live results:** verify-cr-18-29 **60/60** per host · verify-cr-19-25 **49/53** per host (all failures CR-21.2's bar scale → fixed `7e74914`, re-checked inside cr-32-33) · verify-cr-19-2-21-1 **41/41** · verify-cr-29-31 44/48 → **48/48** after fixes · verify-cr-32-33 **44/44** · verify-cr-32-1-2 **40/40** · verify-cr-28-1 **10/10** · verify-cr-35 first run 48/72 (20 = CR-35.4 not yet deployed, 4 = phone BETA tap/overflow → fixed `c9b97d7`); CR35_PLACEHOLDER. Gates at the last push: 461/461 tests, tsc clean, build-dataset timestamp-only.
+  - **Live results:** verify-cr-18-29 **60/60** per host · verify-cr-19-25 **49/53** per host (all failures CR-21.2's bar scale → fixed `7e74914`, re-checked inside cr-32-33) · verify-cr-19-2-21-1 **41/41** · verify-cr-29-31 44/48 → **48/48** after fixes · verify-cr-32-33 **44/44** · verify-cr-32-1-2 **40/40** · verify-cr-28-1 **10/10** · verify-cr-35 first run 48/72 (20 = CR-35.4 not yet deployed, 4 = phone BETA tap/overflow → fixed `c9b97d7`); after fixes verify-cr-35 **72/72** per host (17:51 UTC). Limits at end: Claude session 56 % / week 30 %; Codex not used. Gates at the last push: 461/461 tests, tsc clean, build-dataset timestamp-only.
   - **Decisions (Florian may overrule):** (1) CR-18: the derived default and its 65 floor apply to the Composite; other
     0–100 indices use the derived value without the 65 floor (AA indices top out near 60, a 65 floor would empty the
     list); Elo boards keep 1000. (2) CR-22.1 root cause: percentiles came from a two-variant cohort (Muse Spark 1.3
@@ -2034,3 +2037,7 @@ CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared
    main score; Options Models/Providers(/Labs) as compact searchable multi-selects with chips and internal scroll —
    do it together with CR-25.5 (Labs) and take a design gate.
 10. **CR-30** waits for `/home/flori/jobs/bh-self-reported-scout-20260915/RESULT.md` (not present at 16:50 UTC).
+
+
+## PRIORITY addendum 2026-09-15 ~18:10 UTC (laptop supervisor)
+CR-37 (Lumina Bench) joins the data group with CR-28/CR-30/CR-34. Merge the three research outputs (self-reported scout, OpenRouter API, Lumina intake) into one benchmark intake so the same benchmark isn't added twice under different names.
