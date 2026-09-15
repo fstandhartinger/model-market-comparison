@@ -25,7 +25,9 @@ function BetaTag() {
     // Hover only for real mice: on touch, mouseenter fires before click and the toggle would close the note it opened.
     onPointerEnter={(e) => { if (e.pointerType === "mouse") setOpen(true); }} onPointerLeave={(e) => { if (e.pointerType === "mouse") setOpen(false); }}>
     <button type="button" className="bh-beta-tag" aria-expanded={open} aria-describedby={open ? "bh-beta-note" : undefined} data-beta-tag
-      onClick={() => setOpen((o) => !o)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}>
+      onClick={() => setOpen((o) => !o)}
+      // Keyboard focus opens the note; a tap also focuses the button, and opening there would let the click close it again.
+      onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) setOpen(true); }} onBlur={() => setOpen(false)}>
       BETA<span className="hidden sm:inline"> — Work in progress</span>
     </button>
     {open && <span id="bh-beta-note" role="tooltip" className="absolute left-0 top-full z-50 mt-2 w-60 rounded-lg border border-line bg-[var(--surface)] p-2.5 text-xs font-normal text-[var(--text)] shadow-xl">{BETA_NOTE}</span>}
