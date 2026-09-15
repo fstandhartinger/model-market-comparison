@@ -21,7 +21,9 @@ function BetaTag() {
     document.addEventListener("pointerdown", down); document.addEventListener("keydown", key);
     return () => { document.removeEventListener("pointerdown", down); document.removeEventListener("keydown", key); };
   }, [open]);
-  return <span ref={box} className="relative ml-1 inline-flex shrink-0 items-center" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+  return <span ref={box} className="relative ml-1 inline-flex shrink-0 items-center"
+    // Hover only for real mice: on touch, mouseenter fires before click and the toggle would close the note it opened.
+    onPointerEnter={(e) => { if (e.pointerType === "mouse") setOpen(true); }} onPointerLeave={(e) => { if (e.pointerType === "mouse") setOpen(false); }}>
     <button type="button" className="bh-beta-tag" aria-expanded={open} aria-describedby={open ? "bh-beta-note" : undefined} data-beta-tag
       onClick={() => setOpen((o) => !o)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}>
       BETA<span className="hidden sm:inline"> — Work in progress</span>
@@ -53,7 +55,7 @@ function FilterButton() {
   const { filtersOpen, toggleFilters } = useSettings();
   return (
     <button type="button" data-bh-filters-toggle className={`bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2.5 text-sm hover:bg-accent/10 hover:text-accent ${filtersOpen ? "text-accent" : "text-gray-300"}`} aria-controls="global-filters" aria-expanded={filtersOpen} aria-label="Open options" onClick={toggleFilters}>
-      <svg aria-hidden="true" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+      <svg aria-hidden="true" className="hidden sm:block" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
       <span>Options</span>
     </button>
   );
@@ -75,7 +77,7 @@ export function Nav() {
   const { filtersOpen } = useSettings();
   return (
     <header className={`relative border-b border-line bg-panel ${filtersOpen ? "z-50" : ""}`}>
-      <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-2 px-4">
+      <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-1.5 px-3 sm:gap-2 sm:px-4">
         <Link href="/" aria-label="Benchmark Heaven home" className="bh-brand-link flex min-h-10 shrink-0 items-center gap-2.5"><BrandMark className="h-8 w-8 shrink-0" /><span className="bh-wordmark hidden sm:inline">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
         <BetaTag />
         <nav aria-label="Primary" className="relative ml-4 hidden flex-1 items-center gap-1 text-sm lg:flex">
