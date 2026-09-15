@@ -94,13 +94,6 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-matrix-group svg { transition: transform .15s; }
 .bh-matrix-accent { display: flex; justify-content: flex-end; align-items: center; gap: 5px; margin-bottom: 4px; font-size: 10px; font-weight: 700; color: var(--muted); }
 .bh-matrix-accent::after { content: ""; width: 16px; height: 4px; border-radius: 2px; background: var(--swatch); }
-/* F-83 at 1440: the first value within 520 px. Pointer widths only; touch widths keep their 40–44 px targets. */
-@media (min-width: 1024px) {
-  .bh-matrix-model { padding: 28px 10px 10px; }
-  .bh-matrix-remove { top: 0; }
-  .bh-matrix-accent { margin-bottom: 2px; }
-  .bh-matrix-group button { min-height: 32px; }
-}
 /* CR-4.2: rename / delete beside a saved preset; 44 px targets on touch widths. */
 .bh-preset-icon { display: inline-flex; min-height: 36px !important; width: 36px; flex-shrink: 0; align-items: center; justify-content: center; border-radius: 6px; color: var(--muted); font-size: 18px; line-height: 1; }
 .bh-preset-icon:hover, .bh-preset-icon:focus-visible { color: rgb(var(--accent)); background: rgb(var(--accent) / .1); }
@@ -124,6 +117,13 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
   .bh-matrix-model { min-width: 7.5rem; padding: 34px 12px 12px; }
   .bh-matrix-desc { -webkit-line-clamp: 1; }
   .bh-matrix-group button { padding: 0 16px; }
+}
+/* F-83 at 1440: the first value within 520 px. Pointer widths only; touch widths keep their 40–44 px targets. */
+@media (min-width: 1024px) {
+  .bh-matrix-model { padding: 28px 12px 10px; }
+  .bh-matrix-remove { top: 0; }
+  .bh-matrix-accent { margin-bottom: 2px; }
+  .bh-matrix-group button { min-height: 32px; }
 }
 .bh-button { display: inline-flex; min-height: 44px; align-items: center; justify-content: center; gap: 6px; border: 1px solid var(--control-border); border-radius: 8px; padding: 8px 12px; background: var(--surface); color: var(--text); text-decoration: none; font-weight: 500; cursor: pointer; }
 .bh-button:hover { background: rgb(var(--accent) / .1); }
