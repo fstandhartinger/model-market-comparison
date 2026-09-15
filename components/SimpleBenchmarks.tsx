@@ -9,6 +9,7 @@ import { InfoTip } from "./InfoTip";
 import { hasScoreEvidence } from "../lib/client-model";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
+import { ShortlistColumns } from "./ShortlistColumns";
 
 const COLUMNS = 5;
 const NOTE_KEY = "bh.simpleBenchmarksNote.v1";
@@ -70,6 +71,8 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
       <button type="button" className="bh-preset-icon" aria-label="Dismiss this note" onClick={dismiss}>×</button>
     </div>}
 
+    {/* CR-33.1: every shortlisted model's score as columns, above the table. */}
+    <ShortlistColumns data={data} ids={listIds} tableIds={ids} names={new Map(listIds.map((id) => { const m = byId.get(id); return [id, m ? collapsedName(m, true, preferred) : id]; }))} />
     {ids.length > 0 && visible.length > 0 && <div ref={setTableEl} className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
       <table className="bh-matrix">
         <caption className="sr-only">Headline benchmark results for the top models of your shortlist. Bold marks the best result in each row.</caption>

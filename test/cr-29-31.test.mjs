@@ -26,3 +26,16 @@ test('CR-31.2: every row gets a non-empty score-type sentence', () => {
   assert.match(scoreTypeText({ unit: 'USD', higherBetter: false }), /US dollars.*Lower is better/);
   assert.ok(scoreTypeText({ unit: '', higherBetter: null }).length > 10);
 });
+
+import { shortlistColumns } from '../lib/benchmark-matrix.mjs';
+test('CR-33.1/33.2: shortlist columns sort high → low, keep models without a value as no data (never zero), Elo on a position scale', () => {
+  const pts = shortlistColumns([{ id: 'a', value: 91.2 }, { id: 'b', value: null }, { id: 'c', value: 99.5 }, { id: 'd', value: 88 }], 'points');
+  assert.deepEqual(pts.columns.map((c) => c.id), ['c', 'a', 'd', 'b']);
+  assert.equal(pts.columns[3].noData, true);
+  assert.equal(pts.columns[3].height, null);
+  assert.ok(pts.columns[0].height > pts.columns[2].height);
+  const elo = shortlistColumns([{ id: 'x', value: 1350 }, { id: 'y', value: 1171 }], 'Elo');
+  assert.equal(elo.kind, 'position');
+  assert.ok(elo.columns[1].height > 0 && elo.columns[1].height < elo.columns[0].height, 'Elo bars are positions, not from zero');
+  assert.deepEqual(shortlistColumns([{ id: 'z', value: null }], 'points').columns.map((c) => c.noData), [true]);
+});

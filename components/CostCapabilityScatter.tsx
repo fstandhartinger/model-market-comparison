@@ -133,6 +133,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const offerScope = useMemo(() => createOfferScope(s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, !s.allowDataTraining), [s.excludedSet, s.excludeChinese, data.providers, s.euHostedOnly, s.nonUsOnly, s.teeOnly, s.allowDataTraining]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);
+  // CR-32.5: the compact map's own chart settings (cogwheel), persisted per browser.
+  const [mapPrefs, setMapPrefs] = useState<{ fullY: boolean; labels: boolean; pareto: boolean }>({ fullY: false, labels: true, pareto: true });
+  const [prefsOpen, setPrefsOpen] = useState(false);
+  useEffect(() => { try { const raw = localStorage.getItem("bh.valueMap.v1"); if (raw) { const v = JSON.parse(raw); setMapPrefs({ fullY: v.fullY === true, labels: v.labels !== false, pareto: v.pareto !== false }); } } catch { /* ignore */ } }, []);
+  const updatePrefs = (patch: Partial<typeof mapPrefs>) => setMapPrefs((old) => { const next = { ...old, ...patch }; try { localStorage.setItem("bh.valueMap.v1", JSON.stringify(next)); } catch { /* ignore */ } return next; });
   const narrow = useNarrow();
   // F-39 (Fable pass 5): the map keeps its logarithmic axis everywhere. A linear axis in
   // Simple crushed the sub-$3 field — where most of the shortlist sits — into a sliver with
@@ -192,7 +197,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const ys = (compact ? compactPoints : points).map((p) => p.y);
   const yMin = ys.length ? Math.min(...ys) : 80;
   // CR-32.4: the compact map's Y axis fits the plotted scores (100 only when the best is >= 90; Elo-aware).
-  const yCompact = valueMapYDomain(ys, { elo: isElo });
+  const yCompact = valueMapYDomain(ys, { elo: isElo, full: mapPrefs.fullY });
   // F-11: the full chart's Y axis follows the data (floor(min − 3) → 100, at least 20 wide)
   // so the points use the plot instead of huddling at the top of 0–100. F-17: round ticks.
   const yFull = niceTicks(Math.max(0, Math.min(Math.floor(yMin - 3), 80)), 100);
@@ -210,8 +215,20 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     const labels = labelCandidates(passing.filter((p) => !advanced || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY);
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
     return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
-      <div className="flex items-baseline justify-end gap-3 lg:mb-1">
+      <div className="relative flex items-center justify-end gap-2 lg:mb-1">
         <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`}</span>
+        <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
+          className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
+          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="3.2" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+        </button>
+        {prefsOpen && <div id="bh-value-map-settings" role="group" aria-label="Value map settings" tabIndex={-1}
+          onKeyDown={(e) => { if (e.key === "Escape") setPrefsOpen(false); }}
+          className="absolute right-0 top-full z-30 mt-1 w-56 space-y-2 rounded-lg border border-line bg-[var(--surface)] p-3 text-xs shadow-xl">
+          <label className="flex items-center justify-between gap-2"><span>Y axis: full 0–100 scale</span><input type="checkbox" checked={mapPrefs.fullY} onChange={(e) => updatePrefs({ fullY: e.target.checked })} data-pref="fullY" /></label>
+          <label className="flex items-center justify-between gap-2"><span>Model names</span><input type="checkbox" checked={mapPrefs.labels} onChange={(e) => updatePrefs({ labels: e.target.checked })} data-pref="labels" /></label>
+          <label className="flex items-center justify-between gap-2"><span>Pareto line</span><input type="checkbox" checked={mapPrefs.pareto} onChange={(e) => updatePrefs({ pareto: e.target.checked })} data-pref="pareto" /></label>
+          <button type="button" className="text-accent underline" onClick={() => setPrefsOpen(false)}>Done</button>
+        </div>}
       </div>
       <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
         <ResponsiveContainer width="100%" height="100%">
@@ -225,11 +242,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-compact" />} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
             {/* Only frontier members get the halo and the connecting line — not every point. */}
-            {showPareto && pareto.length > 0 && <Scatter data={pareto} line={pareto.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint" shape={ParetoHalo} legendType="none" isAnimationActive={false} />}
+            {mapPrefs.pareto && pareto.length > 0 && <Scatter data={pareto} line={pareto.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint" shape={ParetoHalo} legendType="none" isAnimationActive={false} />}
             <Scatter data={failing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false} />
             <Scatter data={passing} fill="rgb(var(--accent))" shape={CompactPointShape} legendType="none" isAnimationActive={false}
               onClick={(p) => p && router.push(`/models/${encodeURIComponent((p as { id: string }).id)}`)} style={{ cursor: "pointer" }} />
-            <Customized component={<PointLabels labels={labels} dots={compactPoints} frontier={frontierIds} headroom={20} />} />
+            {mapPrefs.labels && <Customized component={<PointLabels labels={labels} dots={compactPoints} frontier={frontierIds} headroom={20} />} />}
           </ScatterChart>
         </ResponsiveContainer>
       </div>

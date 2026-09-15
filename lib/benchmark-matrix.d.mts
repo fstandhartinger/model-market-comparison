@@ -48,3 +48,4 @@ export const OUTLIER_CORE_MULTIPLE: number;
 export const OUTLIER_MIN_SHARE: number;
 export function rowOutliers(values: (number | null)[], higherBetter: boolean | null): ("top" | "low" | null)[];
 export function scoreTypeText(row: { unit: string; higherBetter: boolean | null; range?: readonly (number | null)[] | null }): string;
+export function shortlistColumns<T extends { id: string; value: number | null }>(items: T[], unit: string): { columns: (T & { height: number | null; noData: boolean })[]; kind: 'bar' | 'log' | 'position' | null; domain: [number, number] | null };
