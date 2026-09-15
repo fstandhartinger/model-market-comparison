@@ -626,10 +626,19 @@ async function build() {
       });
       if (!designArenaByFamily.has(familyKey)) designArenaByFamily.set(familyKey, {});
       const entries = designArenaByFamily.get(familyKey);
-      // Keep the highest-battle entry if a board happens to publish aliases.
-      const prev = entries[board];
+      // 2026-09-16 (CR-28.2): the registry's display name sometimes states the exact effort
+      // Intelligence.ai tested ("GPT-6 Astra (xhigh)", "GPT-5.6 Sol (Medium)"). That is published
+      // identity, not a guess, so it is kept here and joins that exact catalog configuration at
+      // attachment time. Two efforts of one family therefore no longer overwrite each other —
+      // before this, `gpt-5.6-sol` (Medium) and `gpt-5.6-sol-xhigh` competed for one slot on
+      // battle count and the loser's result vanished.
+      const statedVariant = detectVariant(sourceDisplayName);
+      const key = statedVariant === "default" ? board : `${board}\u0000${statedVariant}`;
+      const prev = entries[key];
+      // Keep the highest-battle entry if a board happens to publish aliases of one configuration.
       if (!prev || (row.battles || 0) > (prev.battles || 0)) {
-        entries[board] = { elo: num(row.elo), winRate: num(row.winRate), battles: num(row.battles), modelId: row.modelId };
+        entries[key] = { board, statedVariant: statedVariant === "default" ? null : statedVariant,
+          entry: { elo: num(row.elo), winRate: num(row.winRate), battles: num(row.battles), modelId: row.modelId } };
       }
     }
   }
@@ -1080,17 +1089,36 @@ async function build() {
   // clone it across effort siblings and never create a hidden `::designarena`
   // row: either behavior makes the default Overview omit real source evidence.
   for (const [familyKey, entries] of designArenaByFamily) {
-    const fam = families.get(familyKey) || family(familyKey, guessOrg(familyKey));
+    families.get(familyKey) || family(familyKey, guessOrg(familyKey));
     const auditedVariant = BARE_BENCHMARK_VARIANT_TARGETS.get(familyKey);
     const familyRows = [...models.values()].filter((row) => row.family_key === familyKey);
-    let target = auditedVariant ? models.get(`${familyKey}::${auditedVariant}`) : null;
-    if (auditedVariant && !target) {
+    let fallback = auditedVariant ? models.get(`${familyKey}::${auditedVariant}`) : null;
+    if (auditedVariant && !fallback) {
       throw new Error(`Missing audited benchmark target: ${familyKey}::${auditedVariant}`);
     }
-    if (!target) target = deterministicFamilyRepresentative(familyKey, familyRows);
-    if (!target) throw new Error(`Missing family representative for Intelligence.ai evidence: ${familyKey}`);
-    target.designarena = entries;
-    target.designarena_attachment_note = `Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.`;
+    if (!fallback) fallback = deterministicFamilyRepresentative(familyKey, familyRows);
+    if (!fallback) throw new Error(`Missing family representative for Intelligence.ai evidence: ${familyKey}`);
+    // A board whose source row names an effort that exists as a catalog configuration is exact
+    // evidence for that configuration (CR-28.2). Everything else keeps the family-scoped rule:
+    // attached exactly once to the deterministic representative, never cloned across siblings and
+    // never on a hidden `::designarena` row, because both make the default Overview omit evidence.
+    const byTarget = new Map();
+    for (const { board, statedVariant, entry } of Object.values(entries)) {
+      const exact = statedVariant ? models.get(`${familyKey}::${statedVariant}`) ?? null : null;
+      const target = exact ?? fallback;
+      if (!byTarget.has(target.id)) byTarget.set(target.id, { target, boards: {}, exactVariants: new Set() });
+      const bucket = byTarget.get(target.id);
+      // Two source rows resolving to the same target and board: the better-sampled one wins.
+      const prior = bucket.boards[board];
+      if (!prior || (entry.battles || 0) > (prior.battles || 0)) bucket.boards[board] = entry;
+      if (exact) bucket.exactVariants.add(statedVariant);
+    }
+    for (const { target, boards, exactVariants } of byTarget.values()) {
+      target.designarena = boards;
+      target.designarena_attachment_note = exactVariants.size
+        ? `Intelligence.ai (formerly DesignArena) names the tested effort for this result in its own model registry (${[...exactVariants].sort().join(", ")}), so it is attached to ${target.id}, exactly that catalog configuration.`
+        : `Intelligence.ai (formerly DesignArena) publishes this result at product/family scope without an effort setting. It is attached exactly once to ${target.id}, the deterministic family representative used by collapsed comparisons; this does not assert that Intelligence.ai tested this specific effort setting.`;
+    }
   }
 
   let modelRows = [...models.values()];

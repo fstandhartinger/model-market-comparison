@@ -4,6 +4,18 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — DesignArena results sit on the effort the source actually names (CR-28.2)
+
+**Values move between configurations of the same family; no value changes.** Intelligence.ai's
+(DesignArena's) own model registry states the tested effort for some results — "GPT-6 Astra
+(xhigh)", "GPT-5.6 Sol (Medium)", "Muse Spark 1.3 (xhigh)". The build discarded that label and
+attached the result to a statically chosen family representative. It now joins exactly the catalog
+configuration the source names, and `designarena_attachment_note` says which of the two rules
+applied. Two published efforts of one family also no longer compete for one slot: GPT-5.6 Sol's
+xhigh board rows (Elo 1269 / 1278) were being dropped in favour of its Medium rows and are back.
+Downstream: `models[].designarena` appears on a different `id` for those families; nothing moved in
+the schema, and a family whose source row names no effort keeps the family-scoped rule unchanged.
+
 ## 2026-09-16 — OpenRouter's own benchmark runs and their measured cost (CR-34.2 / CR-34.3)
 
 **New benchmark boards, new coverage field; nothing moved or removed.** Twelve versioned registry

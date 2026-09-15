@@ -473,10 +473,35 @@ test("family-scoped Intelligence.ai evidence attaches once to deterministic Over
   assert.match(fable.designarena_attachment_note || "", /product\/family scope without an effort setting/i);
   assert.equal(ds.models.some((model) => model.id === "claude-fable-5::designarena"), false);
 
+  // 2026-09-16 (CR-28.2): a note is either family-scoped ("attached exactly once", no effort
+  // claimed) or exact, because Intelligence.ai's own registry names the tested effort. Nothing else.
   for (const attached of ds.models.filter((model) => model.designarena_attachment_note)) {
-    assert.match(attached.designarena_attachment_note, /attached exactly once/i, attached.id);
-    assert.match(attached.designarena_attachment_note, /does not assert.*specific effort setting/i, attached.id);
+    const note = attached.designarena_attachment_note;
+    if (/names the tested effort/i.test(note)) {
+      assert.match(note, new RegExp(`attached to ${attached.id.replace(/[.*+?^${}()|[\]\\]/g, '\\$&')}, exactly that catalog configuration`, 'i'), attached.id);
+      assert.match(note, /\((?:[a-z-]+, )*[a-z-]+\)/, attached.id);
+    } else {
+      assert.match(note, /attached exactly once/i, attached.id);
+      assert.match(note, /does not assert.*specific effort setting/i, attached.id);
+    }
   }
+
+  // The five source rows whose registry display name states an effort join that exact
+  // configuration, and two efforts of one family no longer overwrite each other on battle count.
+  const named = Object.entries(designArena.model_registry ?? {})
+    .filter(([, meta]) => /\((?:x\s?high|xhigh|max|high|medium|low|minimal)\)/i.test(meta?.display_name ?? ''));
+  assert.ok(named.length >= 3, 'the source still states efforts in its registry');
+  for (const [sourceId] of named) {
+    const owners = ds.models.filter((m) => Object.values(m.designarena ?? {}).some((b) => b?.modelId === sourceId));
+    assert.equal(owners.length, 1, `${sourceId} attaches exactly once`);
+    assert.match(owners[0].designarena_attachment_note, /names the tested effort/i, sourceId);
+  }
+  const astra = ds.models.find((m) => m.id === 'gpt-6-astra::xhigh');
+  assert.equal(astra?.designarena.frontend?.modelId, 'gpt-6-astra', 'GPT-6 Astra (xhigh) sits on ::xhigh');
+  assert.equal(ds.models.find((m) => m.id === 'gpt-6-astra::high')?.designarena.frontend, undefined);
+  // Both published GPT-5.6 Sol configurations survive; before CR-28.2 the smaller one was dropped.
+  assert.equal(ds.models.find((m) => m.id === 'gpt-5.6-sol::xhigh')?.designarena.frontend?.modelId, 'gpt-5.6-sol-xhigh');
+  assert.equal(ds.models.find((m) => m.id === 'gpt-5.6-sol::medium')?.designarena.frontend?.modelId, 'gpt-5.6-sol');
 
   assert.equal(ds.models.some((model) => model.variant === "designarena"), false);
   // AA can score a previously unmeasured preferred effort on a later refresh.
