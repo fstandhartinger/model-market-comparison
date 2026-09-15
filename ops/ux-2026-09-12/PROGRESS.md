@@ -242,7 +242,7 @@ credited below, the rest is marked open.
 | CR-19.3 | Default compare radar axes: replace DesignArena Frontend with DesignArena Full-Stack (Fable 5.1 must have a va | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: default axes: DesignArena Full-Stack only (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
 | CR-20.1 | Full benchmark comparison: model columns have equal widths | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: fixed table layout, equal model columns (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
 | CR-21.1 | Benchmaxxing tab shows one row per model (weights/training run), not multiple reasoning variants; the benchmax | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-2-21-1/` | iter 71 claude-opus: one row + one verdict per model family, Overview shares it (`f2967b4`); live canonical 41/41 · legacy 41/41 |
-| CR-21.2 | Benchmaxxing signal bar (yellow) scales to the actual maximum value present in the list (not a fixed max), so  | open | — | — |
+| CR-21.2 | Benchmaxxing signal bar (yellow) scales to the actual maximum value present in the list (not a fixed max), so  | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: bar 0 → highest signal among rows on screen (`b3a76ec`, `7e74914`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
 | CR-22.1 | Per-model report: fix AA Coding Agent Index value for Muse Spark 1.3 (raw fraction 0.64 shown as percentile 0. | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: percentiles need ≥ 3 families; tooltip formats native value (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
 | CR-22.2 | Per-model report: add one plain sentence near the radar: 'The more jagged the shape, the more benchmaxxed the  | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: 'The more jagged the shape, the more benchmaxxed the model looks.' (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
 | CR-22.3 | Radar charts with many axes: remove the radial spoke lines or make them much subtler (low-contrast on dark mod | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-19-25/` | iter 71 claude-opus: spokes at 14 % opacity (`b3a76ec`); live canonical 49/53 · legacy 49/53 (all 8 failures are CR-21.2's bar scale, fixed in 7e74914 and re-checked in iter71-cr-32-33) |
@@ -256,7 +256,7 @@ credited below, the rest is marked open.
 | CR-25.6 | Score dropdown includes the category composite scores (e.g. Coding) as selectable scores | open | — | — |
 | CR-26.1 | Charts tab cost-vs-capability diagram gets all the Overview value-map improvements (reversed cost axis, attrac | open | — | — |
 | CR-27.1 | Research and, if it qualifies, add trustedtokens.eu as a provider (models, prices, hosting region, company cou | open | — | — |
-| CR-28.1 | Overview start page benchmark list shows all benchmarks we have (not only 22) | open | — | — |
+| CR-28.1 | Overview start page benchmark list shows all benchmarks we have (not only 22) | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-28-1/` | iter 71 claude-opus: full benchmark list via /api/benchmark-matrix for the five models; honest N of M (`abe2c31`); live canonical 10/10 · legacy 10/10 |
 | CR-28.2 | DesignArena Frontend and Full-Stack values for GPT-6 Astra (and any other missing models present on DesignAren | open | — | — |
 | CR-29.1 | Simple mode minimum-score slider label reads 'Minimum Capability Score' with '(Benchmark Heaven Main Composite | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | two-line label + aria name + (i) title "(Benchmark Heaven Main Composite Score)"; live both hosts, 1440/390 light/dark |
 | CR-29.2 | The slider filters on exactly the same score shown in the top 'Benchmark Heaven Score' row of the Simple bench | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-18-29/` | slider filters on `s.score`, the same key as the Score row (`data-score=composite`); rows all ≥ slider value live |
@@ -266,14 +266,14 @@ credited below, the rest is marked open.
 | CR-30.3 | Benchmark lists/tables show the new benchmarks (Overview all-benchmarks list, Benchmarks tab, compare) with se | open | — | — |
 | CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual s | open | — | — |
 | CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the ben | open | — | — |
-| CR-32.1 | Simple view: the 'Minimum Capability Score' label gets a small downward triangle; clicking opens a compact pop | open | — | — |
-| CR-32.2 | Simple view: the 'Max adjusted cost / task' label gets the same triangle picker to choose the cost measure: ad | open | — | — |
-| CR-32.3 | Rewrite the (i) tooltips next to 'Max adjusted cost' and 'Minimum Capability Score' to be much shorter and sim | open | — | — |
-| CR-32.4 | Value map Y axis: don't always run to 100 — fit the range to the plotted scores (sensible padding, rounded tic | open | — | — |
-| CR-32.5 | Small cogwheel button on the value map opening chart settings, e.g. Y axis: fit to data / full 0–100 scale, la | open | — | — |
-| CR-33.1 | 'Benchmarks for your shortlist' section: a column chart above the table showing all shortlist models' Benchmar | open | — | — |
-| CR-33.2 | The column chart has its own small score dropdown (same score list as CR-32.1: Main Composite default, categor | open | — | — |
-| CR-33.3 | Simple benchmark table: the top row is ALWAYS the Benchmark Heaven Score (Main Composite Score), independent o | open | — | — |
+| CR-32.1 | Simple view: the 'Minimum Capability Score' label gets a small downward triangle; clicking opens a compact pop | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-1-2/` | iter 71 claude-opus: score picker at the slider label (category composites follow with CR-25.6) (`24485b3`); live canonical 40/40 · legacy 40/40 |
+| CR-32.2 | Simple view: the 'Max adjusted cost / task' label gets the same triangle picker to choose the cost measure: ad | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-1-2/` | iter 71 claude-opus: cost-measure picker: adjusted / blended / input / output (`24485b3`); live canonical 40/40 · legacy 40/40 |
+| CR-32.3 | Rewrite the (i) tooltips next to 'Max adjusted cost' and 'Minimum Capability Score' to be much shorter and sim | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: both tooltips 4 short bullets + method link (`1f8cfb5`, `72bd9fa`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
+| CR-32.4 | Value map Y axis: don't always run to 100 — fit the range to the plotted scores (sensible padding, rounded tic | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: fitted Y axis, 100 only when best ≥ 90, Elo-aware (`1f8cfb5`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
+| CR-32.5 | Small cogwheel button on the value map opening chart settings, e.g. Y axis: fit to data / full 0–100 scale, la | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: cogwheel: full Y scale / names / Pareto line, persisted (`959da71`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
+| CR-33.1 | 'Benchmarks for your shortlist' section: a column chart above the table showing all shortlist models' Benchmar | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: shortlist column chart above the table (`959da71`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
+| CR-33.2 | The column chart has its own small score dropdown (same score list as CR-32.1: Main Composite default, categor | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: chart score dropdown, no-data columns, Elo positions (`959da71`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
+| CR-33.3 | Simple benchmark table: the top row is ALWAYS the Benchmark Heaven Score (Main Composite Score), independent o | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter71-cr-32-33/` | iter 71 claude-opus: Main Composite row always first + selected-score row (`1f8cfb5`); live canonical 44/44 · legacy 44/44 (includes the CR-21.2 re-check after 7e74914 and the trimmed CR-32.3 tooltip) |
 | CR-34.1 | Add a collector for `GET https://openrouter.ai/api/v1/benchmarks` to the data pipeline (raw capture with as_of | open | — | — |
 | CR-34.2 | New independent benchmarks from OpenRouter's own runs: GPQA Diamond (OpenRouter run), τ²-Bench Verified Airlin | open | — | — |
 | CR-34.3 | Use OpenRouter's measured `avg_cost_per_task` as an additional, clearly labelled cost signal (e.g. in cost mod | open | — | — |
@@ -283,6 +283,8 @@ credited below, the rest is marked open.
 | CR-35.1 | Attribute Artificial Analysis wherever AA data is shown: a visible 'Data: Artificial Analysis' (linked to http | open | — | — |
 | CR-35.2 | A prominent 'BETA — Work in progress' tag in the site header (next to the logo/name) on all pages, plus a shor | open | — | — |
 | CR-35.3 | Hold: do not add new Artificial Analysis-derived metrics (CR-34.4 Agentic Index) until Florian reports AA's an | open | — | — |
+| CR-35.4 | Epoch AI attribution (CC-BY): wherever Epoch data is shown (Epoch ECI, Epoch Software ECI, other Epoch-run ben | open | — | — |
+| CR-35.5 | For benchmark rows taken from Epoch's hub that Epoch sourced from external projects, record and display the or | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -1928,3 +1930,7 @@ CR-34 (OpenRouter Benchmarks API) belongs with the data group (CR-28/CR-30) — 
 
 ## PRIORITY 2026-09-15 ~16:40 UTC (laptop supervisor) — legal/attribution first
 CR-35.1 (Artificial Analysis attribution on every surface) and CR-35.2 (BETA — Work in progress tag) come FIRST in the next work iteration, before any other open row, because the AA terms require attribution. CR-34.4 is on hold until Florian hears back from Artificial Analysis.
+
+
+## PRIORITY addendum 2026-09-15 ~16:50 UTC (laptop supervisor)
+CR-35.4/35.5 (Epoch AI CC-BY attribution) are part of the attribution pass: do them together with CR-35.1/35.2 first. Unlike Artificial Analysis, Epoch data is explicitly allowed with attribution — no hold.
