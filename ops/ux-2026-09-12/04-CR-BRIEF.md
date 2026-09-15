@@ -292,3 +292,12 @@ still-open rows from section 2 per the priority rule in section 0.
 | CR-34.4 | Add Artificial Analysis Agentic Index (from this API or AA directly) to the taxonomy, category composites (Agentic & tool use) and the score pickers | Values for ≥100 models; source/date shown |
 | CR-34.5 | Use the API's DesignArena rows to fill gaps and cross-check existing DesignArena values (categories: website, codecategories, uicomponent, dataviz, gamedev, 3d, svg, …); DesignArena's own site stays primary where they differ; GPT-6 Astra is also missing here — keep investigating via the data-verification job | Gap count before/after; conflicts listed, not silently overwritten |
 | CR-34.6 | Evaluate OpenRouter's media benchmarks (Image, Video) and whether they fit the product; document the decision | Decision note in the ledger |
+
+
+## 14. CR-20260915k checklist — AA attribution, BETA tag (PRIORITY: next work iteration)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-35.1 | Attribute Artificial Analysis wherever AA data is shown: a visible 'Data: Artificial Analysis' (linked to https://artificialanalysis.ai/) next to every AA-derived value/composite source — score rows and tooltips (AA Intelligence/Coding/Coding Agent Index, AA-based composite contributions), value map/charts using AA scores, cost model parts using AA tokens-per-task, the Sources/methodology page, and a site-wide footer credit. Logo only from AA's official brand kit, if used at all | Every UI surface showing AA-derived numbers has a visible linked credit (checklist of surfaces in the ledger); footer credit on all pages; light/dark, mobile |
+| CR-35.2 | A prominent 'BETA — Work in progress' tag in the site header (next to the logo/name) on all pages, plus a short one-line explanation on hover/tap ('This site is under construction; data and features change daily') | Visible on desktop and 390 px without crowding the header; accessible |
+| CR-35.3 | Hold: do not add new Artificial Analysis-derived metrics (CR-34.4 Agentic Index) until Florian reports AA's answer; keep existing AA values with attribution | CR-34.4 row marked on-hold with this reference |
