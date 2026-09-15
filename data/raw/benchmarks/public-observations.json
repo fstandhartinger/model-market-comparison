@@ -220715,6 +220715,3222 @@
           100
         ]
       }
+    },
+    {
+      "id": "public:cce743c8888a0b26e0b094ca",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-sol_max",
+        "name": "gpt-5-6-sol (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7266666666666667,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 0; gpt-5.6-sol_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.8584070796460178; 95% CI half-width=0.02829822249837175",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2ce074dcf183dab1494e9501",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-sol_xhigh",
+        "name": "gpt-5-6-sol (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7073170731707318,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 1; gpt-5.6-sol_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8584070796460178; 95% CI half-width=0.008191117217343103",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b154df65e779e9d6dc44e5f8",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-fable-5_xhigh",
+        "name": "claude-fable-5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6991150442477876,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 2; claude-fable-5_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8849557522123894; 95% CI half-width=0.03244917575471319",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dbcd5728f8a48480b9caca23",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-fable-5_max",
+        "name": "claude-fable-5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6972477064220184,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 3; claude-fable-5_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.84070796460177; 95% CI half-width=0.04033474250807936",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d75062dcc9c6f573376b9ca1",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-terra_max",
+        "name": "gpt-5-6-terra (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6962305986696231,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 4; gpt-5.6-terra_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.8849557522123894; 95% CI half-width=0.025569389504458404",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d2098e5401eb2cd075a5c077",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-sol_high",
+        "name": "gpt-5-6-sol (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6940133037694013,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 5; gpt-5.6-sol_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8672566371681416; 95% CI half-width=0.014321452203772357",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eac05e1d586f762a17021ae0",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-fable-5_high",
+        "name": "claude-fable-5 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6860465116279071,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 6; claude-fable-5_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8672566371681416; 95% CI half-width=0.011208427174303877",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e1faee16a9bedcaa85310d08",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-luna_max",
+        "name": "gpt-5-6-luna (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.671875,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 7; gpt-5.6-luna_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.9026548672566371; 95% CI half-width=0.03992001235671055",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a1a0b73397de26f667348110",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.5_xhigh",
+        "name": "gpt-5-5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6703539823008849,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 8; gpt-5.5_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8849557522123894; 95% CI half-width=0.06465646340908864",
+      "comparison_key": null
+    },
+    {
+      "id": "public:672606b39b3780ad9f08cf00",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.5_high",
+        "name": "gpt-5-5 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6438053097345133,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 9; gpt-5.5_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.9026548672566371; 95% CI half-width=0.031168426495054677",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6dd7fdf9f71f052b5e1999a7",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-sol_medium",
+        "name": "gpt-5-6-sol (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6106194690265486,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 10; gpt-5.6-sol_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.8053097345132745; 95% CI half-width=0.01583357649307215",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a9b1f847432003679af136bc",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-terra_xhigh",
+        "name": "gpt-5-6-terra (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6017699115044248,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 11; gpt-5.6-terra_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8053097345132745; 95% CI half-width=0.021242972019271257",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6f222b0e310128f922cc68cd",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-4-8_max",
+        "name": "claude-opus-4-8 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5897435897435898,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 12; claude-opus-4-8_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.7927927927927928; 95% CI half-width=0.01764815347429254",
+      "comparison_key": null
+    },
+    {
+      "id": "public:34602e11d0dd51ebfe6e9555",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-luna_xhigh",
+        "name": "gpt-5-6-luna (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5685840707964602,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 13; gpt-5.6-luna_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.7876106194690266; 95% CI half-width=0.021681017528097975",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f6d02d72429ef5e76b463e7a",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-4-8_xhigh",
+        "name": "claude-opus-4-8 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5436241610738255,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 14; claude-opus-4-8_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8053097345132745; 95% CI half-width=0.03713430628094476",
+      "comparison_key": null
+    },
+    {
+      "id": "public:93261710e253045872739281",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.5_medium",
+        "name": "gpt-5-5 (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5398230088495575,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 15; gpt-5.5_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.7787610619469026; 95% CI half-width=0.02553087495290979",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7867f382871fb62bba039ce1",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-sonnet-5_max",
+        "name": "claude-sonnet-5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5384615384615384,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 16; claude-sonnet-5_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.7876106194690266; 95% CI half-width=0.04236916470174386",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c1c2a5269f509f24b303d360",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-terra_high",
+        "name": "gpt-5-6-terra (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5376106194690266,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 17; gpt-5.6-terra_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8053097345132745; 95% CI half-width=0.043289704672135526",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2f0406d064fd764183008885",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "muse-spark-1.1",
+        "name": "muse-spark-1-1 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5331858407079646,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 18; muse-spark-1.1; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.7964601769911505; 95% CI half-width=0.030353424539337117",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a35d30dea2965ba255aa8537",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-4-8_high",
+        "name": "claude-opus-4-8 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5176991150442478,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 19; claude-opus-4-8_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.7787610619469026; 95% CI half-width=0.04561609145755844",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3d4d8bf10c264be80fdc041b",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.4-2026-03-05_xhigh",
+        "name": "gpt-5-4 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5176991150442478,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 20; gpt-5.4-2026-03-05_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.7787610619469026; 95% CI half-width=0.015021049567382833",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c7464eba93e2647da56651b1",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-sonnet-5_xhigh",
+        "name": "claude-sonnet-5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.49667405764966743,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 21; claude-sonnet-5_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.7522123893805309; 95% CI half-width=0.034545489916778645",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0dc7596088ea52a3d54d0acf",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-4-8_medium",
+        "name": "claude-opus-4-8 (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.48672566371681414,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 22; claude-opus-4-8_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.7610619469026548; 95% CI half-width=0.02239205861737452",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5f93bcb918decb85fadf0c25",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-sonnet-5_high",
+        "name": "claude-sonnet-5 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.4823008849557522,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 23; claude-sonnet-5_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.7964601769911505; 95% CI half-width=0.045063148702148406",
+      "comparison_key": null
+    },
+    {
+      "id": "public:48ed479dcffd0ca58a28a47c",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-sol_low",
+        "name": "gpt-5-6-sol (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.45353982300884954,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 24; gpt-5.6-sol_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.7168141592920354; 95% CI half-width=0.0238819467145892",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a87206718dae65b7beb9fe39",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-luna_high",
+        "name": "gpt-5-6-luna (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.4424778761061947,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 25; gpt-5.6-luna_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.7522123893805309; 95% CI half-width=0.029195672479165317",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f0af31c8361033840af27ad8",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "glm-5.2_max",
+        "name": "glm-5-2 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.4377777777777778,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 26; glm-5.2_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.7699115044247787; 95% CI half-width=0.01725629620580811",
+      "comparison_key": null
+    },
+    {
+      "id": "public:aca144d2b982c31ff89febde",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-4-8_low",
+        "name": "claude-opus-4-8 (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.4079822616407982,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 27; claude-opus-4-8_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.6814159292035398; 95% CI half-width=0.014635847585691517",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6f920137f11bf2617f794321",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "glm-5.2_high",
+        "name": "glm-5-2 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.36283185840707965,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 28; glm-5.2_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.6814159292035398; 95% CI half-width=0.047500729479216554",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e88e026c8a5a7aa6372a4742",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-terra_medium",
+        "name": "gpt-5-6-terra (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.3511111111111111,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 29; gpt-5.6-terra_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.6017699115044248; 95% CI half-width=0.03381964303406632",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ed4d65bff33890a60159da84",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "kimi-k2.7-code",
+        "name": "kimi-k2-7-code",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.3053097345132743,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 30; kimi-k2.7-code; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=; Runs=4; Pass@4=0.6106194690265486; 95% CI half-width=0.0050070165224609135",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5488c8688c431e14825f5f2f",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-sonnet-4-6_high",
+        "name": "claude-sonnet-4-6 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.29933481152993346,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 31; claude-sonnet-4-6_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.5663716814159292; 95% CI half-width=0.04092141269189136",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fbbd97a32773765b6817fbc9",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.5_low",
+        "name": "gpt-5-5 (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.26991150442477874,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 32; gpt-5.5_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.4778761061946903; 95% CI half-width=0.02294503222007181",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c6c9d25cff4a24103d9a5625",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-terra_low",
+        "name": "gpt-5-6-terra (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.24053452115812918,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 33; gpt-5.6-terra_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.4424778761061947; 95% CI half-width=0.007767613669447833",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3be05b6c4406b09075977733",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.1-pro-preview",
+        "name": "gemini-3-1-pro-preview (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.1172566371681416,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 34; gemini-3.1-pro-preview; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.2831858407079646; 95% CI half-width=0.01481095461108845",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a49fc8cb1c2e3742561891f7",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-luna_medium",
+        "name": "gpt-5-6-luna (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.11283185840707964,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 35; gpt-5.6-luna_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.2743362831858407; 95% CI half-width=0.008303197562056514",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b365913332b38a0421f64a54",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-5.6-luna_low",
+        "name": "gpt-5-6-luna (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.015486725663716814,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 36; gpt-5.6-luna_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.04424778761061947; 95% CI half-width=0.008303197562056514",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5286507eab875cd0c79f2fe4",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-5_max",
+        "name": "claude-opus-5 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7364864864864865,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 37; claude-opus-5_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.8849557522123894; 95% CI half-width=0.03872310426371729",
+      "comparison_key": null
+    },
+    {
+      "id": "public:844bd5e1093a3460fe05f276",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-5_xhigh",
+        "name": "claude-opus-5 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7315436241610739,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 38; claude-opus-5_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8584070796460178; 95% CI half-width=0.030609818216384643",
+      "comparison_key": null
+    },
+    {
+      "id": "public:80014b5dccb2a57472c81a46",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-5_high",
+        "name": "claude-opus-5 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7282850779510023,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 39; claude-opus-5_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8761061946902655; 95% CI half-width=0.019454321571601495",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d5148f86caefeee56a77c8d4",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-5_medium",
+        "name": "claude-opus-5 (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6890380313199106,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 40; claude-opus-5_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.8938053097345133; 95% CI half-width=0.011725586658930944",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dc4cda6ed0fa01094bff0916",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "kimi-k3_max",
+        "name": "kimi-k3 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6851441241685144,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 41; kimi-k3_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.8938053097345133; 95% CI half-width=0.045370140792823206",
+      "comparison_key": null
+    },
+    {
+      "id": "public:77ea0240a2645758ff8a6112",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-fable-5_medium",
+        "name": "claude-fable-5 (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6536697247706422,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 42; claude-fable-5_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.831858407079646; 95% CI half-width=0.044219288792381656",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a99577a66f9863d110ee6c5f",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-fable-5_low",
+        "name": "claude-fable-5 (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5958429561200924,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 43; claude-fable-5_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.8141592920353984; 95% CI half-width=0.027940054451297294",
+      "comparison_key": null
+    },
+    {
+      "id": "public:bc0a915f8f68f4b09882da22",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-opus-5_low",
+        "name": "claude-opus-5 (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5812917594654788,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 44; claude-opus-5_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.8495575221238939; 95% CI half-width=0.023306879466842727",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f3ec45cba49344202d5fa68a",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "grok-4.5_high",
+        "name": "grok-4-5 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5376106194690266,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 45; grok-4.5_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.7787610619469026; 95% CI half-width=0.0228080457287792",
+      "comparison_key": null
+    },
+    {
+      "id": "public:473dab9cd3cce8895682600d",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.6-flash_high",
+        "name": "gemini-3-6-flash (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.4668141592920354,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 46; gemini-3.6-flash_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.7522123893805309; 95% CI half-width=0.037048538992472776",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4cd57f10851b4acda123a277",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-sonnet-5_medium",
+        "name": "claude-sonnet-5 (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.3977777777777778,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 47; claude-sonnet-5_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.6460176991150443; 95% CI half-width=0.03127576206329727",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7b4824089fc10997f611ec7c",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.5-flash_medium",
+        "name": "gemini-3-5-flash (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.37389380530973454,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 48; gemini-3.5-flash_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.6637168141592921; 95% CI half-width=0.01787862506784315",
+      "comparison_key": null
+    },
+    {
+      "id": "public:eb3bf56a46512ff02158c73f",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "claude-sonnet-5_low",
+        "name": "claude-sonnet-5 (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.3051224944320713,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 49; claude-sonnet-5_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.5752212389380531; 95% CI half-width=0.011260175414427497",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0766e49d767f1d1047042b16",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "grok-4.6_medium",
+        "name": "grok-4-6 (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6747787610619469,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 50; grok-4.6_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.84070796460177; 95% CI half-width=0.0228080457287792",
+      "comparison_key": null
+    },
+    {
+      "id": "public:204ac86d793a7f37df8a75a1",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "grok-4.6_xhigh",
+        "name": "grok-4-6 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6674057649667405,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 51; grok-4.6_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8495575221238939; 95% CI half-width=0.021756842244050494",
+      "comparison_key": null
+    },
+    {
+      "id": "public:4b2e81680aaf1ee3e847a445",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "grok-4.6_high",
+        "name": "grok-4-6 (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6518847006651884,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 52; grok-4.6_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8495575221238939; 95% CI half-width=0.015336008186572951",
+      "comparison_key": null
+    },
+    {
+      "id": "public:266970300a47fb5745750b19",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "qwen3.8-max_xhigh",
+        "name": "qwen3-8-max (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5746102449888641,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 53; qwen3.8-max_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.831858407079646; 95% CI half-width=0.026627926725075454",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c75ff9b6b5226933e2ccd81a",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "grok-4.6_low",
+        "name": "grok-4-6 (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.41648106904231624,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 54; grok-4.6_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.6902654867256637; 95% CI half-width=0.023186517644299014",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3c9272ffc9d0f06f7bee252d",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.5-flash_high",
+        "name": "gemini-3-5-flash (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.3606194690265487,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 55; gemini-3.5-flash_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.6371681415929203; 95% CI half-width=0.03966303010520439",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5fcf8b90bcd35d9415906294",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.7-flash_medium",
+        "name": "gemini-3-7-flash (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6548672566371682,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 56; gemini-3.7-flash_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.831858407079646; 95% CI half-width=0.030865322764155222",
+      "comparison_key": null
+    },
+    {
+      "id": "public:95fb0dd374674cf28bcf56e8",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.7-flash_high",
+        "name": "gemini-3-7-flash (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6526548672566371,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 57; gemini-3.7-flash_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8230088495575221; 95% CI half-width=0.017878625067843174",
+      "comparison_key": null
+    },
+    {
+      "id": "public:251c671ce8514655ede3ee52",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.7-flash_low",
+        "name": "gemini-3-7-flash (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5376106194690266,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 58; gemini-3.7-flash_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.7787610619469026; 95% CI half-width=0.02589649081831869",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ccd1837e5321ec5943940b42",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "glm-5.3_max",
+        "name": "glm-5-3 (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6895787139689579,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 59; glm-5.3_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.8761061946902655; 95% CI half-width=0.030186512715587",
+      "comparison_key": null
+    },
+    {
+      "id": "public:bcadaf80d504be3f3a52c512",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "muse-spark-1.2_xhigh",
+        "name": "muse-spark-1-2 (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.5486725663716814,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 60; muse-spark-1.2_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8141592920353984; 95% CI half-width=0.02124297201927127",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7ff66f88d25e51bb1550f8d9",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.8-flash_high",
+        "name": "gemini-3-8-flash (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.738255033557047,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 61; gemini-3.8-flash_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8584070796460178; 95% CI half-width=0.014173132066358783",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d7ec7ec090cd5d79ce07893e",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gemini-3.8-flash_medium",
+        "name": "gemini-3-8-flash (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7101769911504425,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 62; gemini-3.8-flash_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.831858407079646; 95% CI half-width=0.02280804572877925",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a4afeb71f9918f2031bcee68",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "glm-5.3-flash_max",
+        "name": "glm-5-3-flash (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6339285714285714,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 63; glm-5.3-flash_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.8495575221238939; 95% CI half-width=0.04377970751693644",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9699227ab294d69fcfb783ac",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-6-astra_xhigh",
+        "name": "gpt-6-astra (xhigh)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7411504424778761,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 64; gpt-6-astra_xhigh; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=xhigh; Runs=4; Pass@4=0.8053097345132745; 95% CI half-width=0.02865396174075141",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cb76b2d94354de13a2636b10",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-6-astra_high",
+        "name": "gpt-6-astra (high)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7323008849557522,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 65; gpt-6-astra_high; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=high; Runs=4; Pass@4=0.8230088495575221; 95% CI half-width=0.03423496057873005",
+      "comparison_key": null
+    },
+    {
+      "id": "public:63cb674161a5ab52c03680aa",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-6-astra_max",
+        "name": "gpt-6-astra (max)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7323008849557522,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 66; gpt-6-astra_max; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=max; Runs=4; Pass@4=0.7964601769911505; 95% CI half-width=0.008303197562056526",
+      "comparison_key": null
+    },
+    {
+      "id": "public:40745a5007bf2a42a68c99de",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-6-astra_medium",
+        "name": "gpt-6-astra (medium)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.7278761061946902,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 67; gpt-6-astra_medium; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=medium; Runs=4; Pass@4=0.8230088495575221; 95% CI half-width=0.025896490818318695",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d7fe6326758e65dbb77b076e",
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "gpt-6-astra_low",
+        "name": "gpt-6-astra (low)",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-swe-agent"
+      },
+      "value": 0.6703539823008849,
+      "unit": "fraction",
+      "basis": "measured",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "retrieved_at": "2026-09-15T09:05:24Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "locator": "csv; source row 68; gpt-6-astra_low; field Pass@1"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness; Reasoning effort=low; Runs=4; Pass@4=0.7964601769911505; 95% CI half-width=0.013008610516858731",
+      "comparison_key": null
+    },
+    {
+      "id": "public:277d040cf17ae625d4208d93",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 5 (Claude Code) xHigh",
+        "name": "Opus 5 (Claude Code) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 63.17,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 0; Opus 5 (Claude Code) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.01; createdAt=2026-08-04T16:11:53.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fe303dba864985817c83ed4b",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Fable-5.1 (Claude Code) xHigh*",
+        "name": "Fable-5.1 (Claude Code) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 59.95,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 1; Fable-5.1 (Claude Code) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.85; createdAt=2026-03-02T20:57:11.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6249008352dfdf4dcc38ab67",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 6 Astra (Codex) xHigh*",
+        "name": "GPT 6 Astra (Codex) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 59.14,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 2; GPT 6 Astra (Codex) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.88; createdAt=2026-09-09T19:17:58.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:15976ca4ba99156f39137db3",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.8 (Claude Code) xhigh",
+        "name": "Opus 4.8 (Claude Code) xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 57.26,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 3; Opus 4.8 (Claude Code) xhigh; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.93; createdAt=2026-06-08T20:50:16.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:29efbf7fd8a76fc1e345ce1c",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GLM 5.2 (Mini-SWE-Agent)",
+        "name": "GLM 5.2 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 48.12,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 4; GLM 5.2 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.07; createdAt=2026-06-23T18:02:16.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:12b6477dc97b1d95fdcd17e2",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash (Mini-SWE-Agent)",
+        "name": "Gemini 3.8 Flash (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 47.04,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 5; Gemini 3.8 Flash (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.08; createdAt=2026-09-09T19:21:16.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:80a31c5cb6c81906919b4d30",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT-5.6-Sol (Codex) xHigh*",
+        "name": "GPT-5.6-Sol (Codex) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 46,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 6; GPT-5.6-Sol (Codex) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5; createdAt=2026-03-02T20:20:06.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b42cd6fc41eb1e07a9a3da18",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 5.5 (Codex) xHigh",
+        "name": "GPT 5.5 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 45.43,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 7; GPT 5.5 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.08; createdAt=2026-05-07T15:50:31.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b1e40cc195a6ebe0907022a5",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Muse Spark 1.1 (Mini-SWE-Agent) xHigh",
+        "name": "Muse Spark 1.1 (Mini-SWE-Agent) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 42.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 8; Muse Spark 1.1 (Mini-SWE-Agent) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.08; createdAt=2026-07-09T21:00:32.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a0984f30ac9908cc46cdac2e",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 5.4 (Codex) xHigh",
+        "name": "GPT 5.4 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 40.8,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 9; GPT 5.4 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.1; createdAt=2026-03-09T16:27:54.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1e7848bbb0f22b0874e3c77e",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.7 (Claude Code)",
+        "name": "Opus 4.7 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 40.32,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 10; Opus 4.7 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.06; createdAt=2026-06-18T17:51:11.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:433b6599a6d54e5df9e8ce11",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Fable-5 (Claude Code) xHigh*",
+        "name": "Fable-5 (Claude Code) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 39,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 11; Fable-5 (Claude Code) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5; createdAt=2026-03-02T20:20:06.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a6e9e9ee82f68776ed49b045",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gpt 5.4 xHigh (Mini-SWE-Agent)",
+        "name": "Gpt 5.4 xHigh (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 36.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 12; Gpt 5.4 xHigh (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.9; createdAt=2026-02-25T16:03:13.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:ef3552b8ebdc12f55328b7ac",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.6 (Claude Code)",
+        "name": "Opus 4.6 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 13; Opus 4.6 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:810fdc536802d3f3e9ce4179",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 5.3 (Codex) xHigh",
+        "name": "GPT 5.3 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 32.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 14; GPT 5.3 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.9; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:edbe1076fe5ecaeb98ce8952",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Sonnet 4.6 (Claude Code)",
+        "name": "Sonnet 4.6 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 31.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 15; Sonnet 4.6 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c7813dec263566f4fb2faf58",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.6 (Mini-SWE-Agent)",
+        "name": "Opus 4.6 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 30,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 16; Opus 4.6 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.9; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c681b3f366f69730eb4cc01b",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "DeepSeek V4 Pro (Mini-SWE-Agent)",
+        "name": "DeepSeek V4 Pro (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 27.15,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 17; DeepSeek V4 Pro (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.74; createdAt=2026-06-18T17:56:45.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c4e934dd62db3b6e9bf1adf7",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Muse Spark",
+        "name": "Muse Spark",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 24.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 18; Muse Spark; field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.6; createdAt=2026-04-08T16:46:30.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fc6f4e54887540ce3088f318",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Glm 5 (Mini-SWE-Agent)",
+        "name": "Glm 5 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 20.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 19; Glm 5 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.5; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fdbe5ed16867439b59c5f9fc",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini 3.1 Pro (Mini-SWE-Agent)",
+        "name": "Gemini 3.1 Pro (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 13.5,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 20; Gemini 3.1 Pro (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=3.9; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9f651cd084f1acc8241670bb",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Kimi K2.5 (Mini-SWE-Agent)",
+        "name": "Kimi K2.5 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 13.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 21; Kimi K2.5 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.1; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:cdb7a3a75c0d79316b7cbcf0",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Minimax M2.5 (Mini-SWE-Agent)",
+        "name": "Minimax M2.5 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 10.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 22; Minimax M2.5 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=3.5; createdAt=2026-02-25T21:44:30.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fd1d549763c71ff66ebc6b21",
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini 3 Flash (Mini-SWE-Agent)",
+        "name": "Gemini 3 Flash (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 8.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "retrieved_at": "2026-09-15T09:04:05Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "locator": "scale_swepro; source row 23; Gemini 3 Flash (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=3.3; createdAt=2026-02-25T16:03:18.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:564d8a5496a11b77e0a55a60",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Fable-5.1 (Claude Code) xHigh*",
+        "name": "Fable-5.1 (Claude Code) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 67.04,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 0; Fable-5.1 (Claude Code) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.33; createdAt=2026-09-02T19:02:52.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:6330de7ec6acbb40f9d7b2a8",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 5 (Claude Code) xHigh",
+        "name": "Opus 5 (Claude Code) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 62.22,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 1; Opus 5 (Claude Code) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.58; createdAt=2026-08-04T16:09:52.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9778761f6ecb97b3abd13a9e",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Fable-5 (Claude Code) xHigh*",
+        "name": "Fable-5 (Claude Code) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 55.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 2; Fable-5 (Claude Code) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.8; createdAt=2026-06-11T17:41:27.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1b1645cd7c6e1c397f0a31f8",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash (Mini-SWE-Agent)",
+        "name": "Gemini 3.8 Flash (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 53.7,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 3; Gemini 3.8 Flash (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.86; createdAt=2026-09-09T19:22:22.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e11f63065e53c73f93d57b3e",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 6 Astra (Codex) xHigh",
+        "name": "GPT 6 Astra (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 50.74,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 4; GPT 6 Astra (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.91; createdAt=2026-09-09T19:19:03.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:1caeb2203594f0c73cb5e0f6",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.8 (Claude Code) xhigh",
+        "name": "Opus 4.8 (Claude Code) xhigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 49.63,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 5; Opus 4.8 (Claude Code) xhigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.93; createdAt=2026-06-08T20:53:39.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:53c04b67ad6ffd7f9a0c549f",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT-5.6-Sol (Codex) xHigh*",
+        "name": "GPT-5.6-Sol (Codex) xHigh*",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 45.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 6; GPT-5.6-Sol (Codex) xHigh*; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6; createdAt=2026-07-28T19:54:06.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e38543d222f9a185ae1ee46a",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT-5.4 (Codex) xHigh",
+        "name": "GPT-5.4 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.36,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 7; GPT-5.4 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.04; createdAt=2026-03-26T18:24:53.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fd94b61e7cb1c43713c4c151",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT-5.5 (Codex) xHigh",
+        "name": "GPT-5.5 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 42.59,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 8; GPT-5.5 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.96; createdAt=2026-05-07T16:02:36.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7f400f64ba35b667c1079a15",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GLM 5.2 (Mini-SWE-Agent)",
+        "name": "GLM 5.2 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.48,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 9; GLM 5.2 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.96; createdAt=2026-06-23T18:03:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7a16e3368edaf24bec5ff538",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Muse Spark 1.1 (Mini-SWE-Agent) xHigh",
+        "name": "Muse Spark 1.1 (Mini-SWE-Agent) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 41.48,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 10; Muse Spark 1.1 (Mini-SWE-Agent) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.96; createdAt=2026-07-09T21:02:58.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9c3057bcc697e02edf3684e5",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT-5.4 (Mini-SWE) xHigh",
+        "name": "GPT-5.4 (Mini-SWE) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 40,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 11; GPT-5.4 (Mini-SWE) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d01355331e3898cf36875dea",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 5.3 (Codex) xHigh",
+        "name": "GPT 5.3 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 38.98,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 12; GPT 5.3 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.12; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:07f244d85448fed8b2f1d2fc",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.7 (Claude Code)",
+        "name": "Opus 4.7 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 38.52,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 13; Opus 4.7 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.93; createdAt=2026-06-18T17:53:34.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e030251bd6dc111a7ba30eef",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus-4.6 (Claude Code)",
+        "name": "Opus-4.6 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 36.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 14; Opus-4.6 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.63; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:03f1cdbc55433e91da375191",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus-4.6 (Mini-SWE)",
+        "name": "Opus-4.6 (Mini-SWE)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 36.08,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 15; Opus-4.6 (Mini-SWE); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.02; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:59ee5b3a6a16a1a3c132d5a2",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Sonnet-4.6 (Claude Code)",
+        "name": "Sonnet-4.6 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 31.76,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 16; Sonnet-4.6 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.24; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:fcf31989bea3b314f7d5a2e4",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Muse Spark",
+        "name": "Muse Spark",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 31.11,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 17; Muse Spark; field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.76; createdAt=2026-04-08T16:47:48.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:c8c970fb6f8d5dd7bffc8a9c",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini-3-Flash (Mini-SWE)",
+        "name": "Gemini-3-Flash (Mini-SWE)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 30.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 18; Gemini-3-Flash (Mini-SWE); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.8; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:39e8b652bcf683a636e371e9",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini-3.1-Pro (Mini-SWE)",
+        "name": "Gemini-3.1-Pro (Mini-SWE)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 29.84,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 19; Gemini-3.1-Pro (Mini-SWE); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.86; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0451f462c7cf4b8db76c9446",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Glm-5 (Mini-SWE)",
+        "name": "Glm-5 (Mini-SWE)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 28.74,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 20; Glm-5 (Mini-SWE); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.76; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2e658226edffa56ee7e2c2a0",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Deepseek V4 Pro (Mini-SWE-Agent)",
+        "name": "Deepseek V4 Pro (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 27.05,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 21; Deepseek V4 Pro (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.59; createdAt=2026-06-18T18:16:48.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a72548c853995e1491d2306a",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Kimi-K2.5 (Mini-SWE)",
+        "name": "Kimi-K2.5 (Mini-SWE)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 25.77,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 22; Kimi-K2.5 (Mini-SWE); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.63; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5c7a3e500b9beb23d029780e",
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Minimax-M2.5 (Mini-SWE)",
+        "name": "Minimax-M2.5 (Mini-SWE)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 18.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "retrieved_at": "2026-09-15T09:04:01Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "locator": "scale_swepro; source row 23; Minimax-M2.5 (Mini-SWE); field score"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.2; createdAt=2026-03-26T18:24:57.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:e03f75047843b5893c175011",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 6 Astra (Codex) xHigh",
+        "name": "GPT 6 Astra (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 59.05,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 0; GPT 6 Astra (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.43; createdAt=2026-09-09T19:16:22.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:083bb3f868e64c137c790b27",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Fable-5.1 (Claude Code) xHigh",
+        "name": "Fable-5.1 (Claude Code) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 56.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 1; Fable-5.1 (Claude Code) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.52; createdAt=2026-09-02T21:52:32.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:543aca32f9866deaf70bb3f6",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Fable-5 (Claude Code) xHigh",
+        "name": "Fable-5 (Claude Code) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 54.76,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 2; Fable-5 (Claude Code) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.76; createdAt=2026-06-11T17:55:16.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:aee0434b00b9e7297a622ba3",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus-4.7 (Claude Code)",
+        "name": "Opus-4.7 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 48.57,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 3; Opus-4.7 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.73; createdAt=2026-05-06T01:43:45.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:dabe1eac68256da85a734d4e",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus 4.8 (Claude Code)",
+        "name": "Opus 4.8 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 46.67,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 4; Opus 4.8 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.75; createdAt=2026-06-08T20:55:29.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:5eed74754486765298b85c6e",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT-5.5 (Codex) xHigh",
+        "name": "GPT-5.5 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.79,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 5; GPT-5.5 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.76; createdAt=2026-05-06T01:44:12.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:706a7ce6b130c231c5126c47",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini 3.8 Flash (Mini-SWE-Agent)",
+        "name": "Gemini 3.8 Flash (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.76,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 6; Gemini 3.8 Flash (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.76; createdAt=2026-09-09T19:20:25.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:59ff070465ff29b9e9ab1c71",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 5.4 (Codex) xHigh",
+        "name": "GPT 5.4 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 44.29,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 7; GPT 5.4 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.76; createdAt=2026-05-06T01:44:16.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2ebc84c5536dfd51eb8969af",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GLM 5.2 (Mini-SWE-Agent)",
+        "name": "GLM 5.2 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 42.38,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 8; GLM 5.2 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.76; createdAt=2026-06-23T18:05:19.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:32e25c8ed0bc8393481f033e",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "GPT 5.3 (Codex) xHigh",
+        "name": "GPT 5.3 (Codex) xHigh",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 42.38,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 9; GPT 5.3 (Codex) xHigh; field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.76; createdAt=2026-05-06T01:44:24.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:500fab744ded3a7d74e4d26e",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Opus-4.6 (Claude Code)",
+        "name": "Opus-4.6 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 35.58,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 10; Opus-4.6 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.82; createdAt=2026-05-06T01:44:36.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3d15134810c97d07707c907a",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini-3.1-Pro (Gemini CLI)",
+        "name": "Gemini-3.1-Pro (Gemini CLI)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 33.81,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 11; Gemini-3.1-Pro (Gemini CLI); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.64; createdAt=2026-05-06T01:44:38.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:08d5ba35bb7029f110113ced",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Sonnet-4.6 (Claude Code)",
+        "name": "Sonnet-4.6 (Claude Code)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 32.21,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 12; Sonnet-4.6 (Claude Code); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.77; createdAt=2026-05-06T01:44:41.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:0ac088537225e3ab95a975e3",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Glm-5 (Mini-SWE-Agent)",
+        "name": "Glm-5 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 24.24,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 13; Glm-5 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6.27; createdAt=2026-05-06T01:44:46.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:2154942ae7ac9dcfad99a980",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Kimi-K2.5 (Mini-SWE-Agent)",
+        "name": "Kimi-K2.5 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 20.95,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 14; Kimi-K2.5 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=6; createdAt=2026-05-06T01:44:50.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:01b41bede7296e32d2a615be",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Minimax-M2.5 (Mini-SWE-Agent)",
+        "name": "Minimax-M2.5 (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 19.52,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 15; Minimax-M2.5 (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=5.89; createdAt=2026-05-06T01:44:54.000Z; contaminationMessage=",
+      "comparison_key": null
+    },
+    {
+      "id": "public:f54d58cb2e824c343883a5fa",
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "subject": {
+        "source_id": "Gemini-3-Flash (Mini-SWE-Agent)",
+        "name": "Gemini-3-Flash (Mini-SWE-Agent)",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 10,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "retrieved_at": "2026-09-15T09:04:03Z",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "locator": "scale_swepro; source row 16; Gemini-3-Flash (Mini-SWE-Agent); field score"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.8; createdAt=2026-05-06T01:46:40.000Z; contaminationMessage=",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -221113,6 +224329,30 @@
       "status": "collected",
       "source_url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/README.md",
       "reason": "9 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "status": "collected",
+      "source_url": "https://epoch.ai/data/benchmark_data.zip",
+      "reason": "69 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "status": "collected",
+      "source_url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+      "reason": "24 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "status": "collected",
+      "source_url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+      "reason": "24 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "status": "collected",
+      "source_url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+      "reason": "17 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

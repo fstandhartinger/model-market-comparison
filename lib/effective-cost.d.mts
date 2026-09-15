@@ -22,4 +22,11 @@ export interface EffectiveCostResult {
   estimated: boolean;
 }
 export function effectiveCost(values?: EffectiveCostInputs): EffectiveCostResult;
+export const CACHE_BASELINE_MIN_ENDPOINTS: number;
+export const CACHE_BASELINE_MAX_AGE_DAYS: number;
+export interface CacheHitBaseline {
+  value: number; endpoints: number; basis: "derived"; source: string; url: string;
+  collected_from: string; collected_to: string; definition: string;
+}
+export function cacheHitBaseline(efficiency: unknown, generatedAt: string): CacheHitBaseline | null;
 export function fixedCost(input: number | null | undefined, output: number | null | undefined, inputWeight?: number): { value: number | null; assumptions: string[]; inputWeight: number };

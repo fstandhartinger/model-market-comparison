@@ -185,7 +185,9 @@ def parse(source,spec,load_source):
             try:record=json.loads(line.split(':',1)[1])
             except json.JSONDecodeError:continue
             scan(record)
-        if len(arrays)!=1 or 'swe_bench_pro_public' not in source:raise ValueError('SWE Pro public source identity changed')
+        # The same Scale Labs board shape serves several leaderboards; the plan names the page identity
+        # (SWE Atlas boards share navigation text, so their guard is the page title).
+        if len(arrays)!=1 or spec.get('require_text','swe_bench_pro_public') not in source:raise ValueError('Scale leaderboard source identity changed')
         rows=arrays[0]
     elif kind=='terminalbench':
         chunks=[]

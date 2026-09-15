@@ -23,6 +23,9 @@ const REPO = fileURLToPath(new URL('../../', import.meta.url));
 export const sha256 = (bytes) => createHash('sha256').update(bytes).digest('hex');
 
 // Hard bounds: at most 3 review rounds per artifact, bounded packets/sources.
+/** Seconds one producer/critic worker call may take when BH_WORKER_TIMEOUT is unset. */
+export const DEFAULT_WORKER_TIMEOUT_SECONDS = 600;
+
 export const GAUNTLET_LIMITS = {
   maxRounds: 3,
   // OpenRouter Flight examples can legitimately contain a complete daily usage
@@ -90,7 +93,9 @@ function validateRows(rows) {
 export async function defaultRunner(args) {
   const state = process.env.BH_STATE;
   const failedFile = state ? join(state, 'unavailable-models.jsonl') : null;
-  const workerTimeout = Number(process.env.BH_WORKER_TIMEOUT || 180);
+  // 2026-09-15: 180 s was never exercised unattended (the passing 09-14 runs used 600); DeepSeek critics
+  // reason for 120–310 s, so the scheduled run aborted a review that completes in ~121 s at 600.
+  const workerTimeout = Number(process.env.BH_WORKER_TIMEOUT || DEFAULT_WORKER_TIMEOUT_SECONDS);
   if (!Number.isInteger(workerTimeout) || workerTimeout < 1 || workerTimeout > 1800) {
     throw new Error('BH_WORKER_TIMEOUT must be an integer from 1 to 1800 seconds');
   }
@@ -102,7 +107,8 @@ export async function defaultRunner(args) {
   try {
     // 16,384 completion tokens: on 2026-09-13 both DeepSeek producers spent all 8,192 on
     // reasoning for the 16.6k-token or_efficiency contract packet and never wrote an answer,
-    // which blocked publication. 8,192 took ~40 s, so the 180 s deadline still holds.
+    // which blocked publication. Measured tail since then: producers up to ~310 s and DeepSeek critics
+    // 120–160 s (2026-09-14/15), which is why the unattended default is DEFAULT_WORKER_TIMEOUT_SECONDS (600 s).
     const { stdout, stderr } = await exec('bash', [WORKER_SH, '--max-tokens', '16384', '--timeout', String(workerTimeout), ...args], {
       cwd: REPO, env: { ...process.env, BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0', BH_WORKER_MAX_PRICE_PER_1M: '4',
         BH_WORKER_EXCLUDE_MODELS: [...new Set([...failed, ...(process.env.BH_WORKER_EXCLUDE_MODELS || '').split(',').filter(Boolean)])].join(',') },

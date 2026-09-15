@@ -6,10 +6,11 @@ import { ModelExplorer } from './ModelExplorer';
 import { useSettings } from './SettingsContext';
 import { Wizard } from './Wizard';
 import type { ClientData } from '../lib/client-model';
+import { SIMPLE_LIMIT } from '../lib/value-map.mjs';
 
 type Mode = 'simple' | 'guided' | 'advanced';
 const HINT: Record<Mode, string> = {
-  simple: 'Say how good and how cheap — get up to 15 recommended models',
+  simple: `Say how good and how cheap — compare up to ${SIMPLE_LIMIT} top models`,
   guided: 'Five short questions, then your shortlist',
   advanced: 'Full catalog, filters and comparison detail',
 };
@@ -43,7 +44,7 @@ export function HomeMode({ data, matrix }: { data: ClientData; matrix: Benchmark
     {/* CR-8.1 (Florian 2026-09-14, supersedes R5.2's price order): both modes open sorted by
         score, highest first — the ModelExplorer default. */}
     {mode !== 'guided' && <ModelExplorer key={mode} data={data} simple={!advanced}
-      limit={advanced ? undefined : 15} onRowsChange={advanced ? undefined : setShown} />}
+      limit={advanced ? undefined : SIMPLE_LIMIT} onRowsChange={advanced ? undefined : setShown} />}
     {mode === 'simple' && <SimpleBenchmarks matrix={matrix} data={data} ids={shown} />}
   </section>;
 }

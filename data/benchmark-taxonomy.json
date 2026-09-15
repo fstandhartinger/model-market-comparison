@@ -1,6 +1,6 @@
 {
-  "version": "2026-09-14",
-  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score.",
+  "version": "2026-09-15",
+  "note": "CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0–100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite.",
   "groups": [
     {
       "id": "indices",
@@ -110,7 +110,11 @@
     "epoch_eci": "indices",
     "epoch_eci_software": "indices",
     "frontend": "design",
-    "fullstack": "design"
+    "fullstack": "design",
+    "aa-terminal-bench": "coding",
+    "aa-terminal-bench-hard": "coding",
+    "terminal-bench": "coding",
+    "vals-index-terminal-bench-2.1": "coding"
   },
   "arena_keys": [
     "frontend",
@@ -124,7 +128,11 @@
     "aa_intelligence_index": "Artificial Analysis' headline aggregate of its independent evaluations.",
     "aa_coding_index": "Artificial Analysis' aggregate of its coding evaluations.",
     "frontend": "Human head-to-head votes on generated front-end designs (Elo).",
-    "fullstack": "Human head-to-head votes on generated full-stack apps (Elo)."
+    "fullstack": "Human head-to-head votes on generated full-stack apps (Elo).",
+    "deepswe": "Pass rate on original, long-horizon engineering tasks, run by Datacurve with the mini-swe-agent harness.",
+    "swe-atlas-qna": "How well an agent answers deep questions about a real codebase, graded against rubrics by Scale AI.",
+    "swe-atlas-test-writing": "Whether an agent writes production-grade tests for real repositories, graded by Scale AI.",
+    "swe-atlas-refactoring": "Whether an agent restructures production code while preserving its behaviour, graded by Scale AI."
   },
   "model_field_rows": [
     {
@@ -168,6 +176,10 @@
     "community": {
       "label": "Community",
       "tip": "Run by an independent individual or community project."
+    },
+    "aa_input": {
+      "label": "AA index input",
+      "tip": "A benchmark Artificial Analysis averages into its Coding Index (Terminal-Bench, SciCode) or Coding Agent Index v1.5 (DeepSWE, Terminal-Bench 4.0, SWE-Atlas-QnA). The row shows this source’s own published results."
     }
   },
   "tiers": {
@@ -265,6 +277,26 @@
     "weirdml": "community",
     "bullshitbench-v1": "community",
     "bullshitbench-v2": "community",
-    "bu-bench-v1": "niche"
+    "bu-bench-v1": "niche",
+    "deepswe": "niche",
+    "swe-atlas-qna": "niche",
+    "swe-atlas-test-writing": "niche",
+    "swe-atlas-refactoring": "niche"
+  },
+  "aa_input_keys": [
+    "deepswe",
+    "swe-atlas-qna",
+    "aa-terminal-bench",
+    "aa-scicode"
+  ],
+  "score_ranges": {
+    "aa_intelligence_index": [
+      0,
+      100
+    ],
+    "aa_coding_index": [
+      0,
+      100
+    ]
   }
 }

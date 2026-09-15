@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
-import type { PriceResult } from "../lib/cost";
+import { IO_PROXY_TEXT, type PriceResult, type PriceSource } from "../lib/cost";
 
 export function priceNumber(value: number | null | undefined): string {
   if (value == null) return "—";
@@ -10,51 +10,70 @@ export function priceNumber(value: number | null | undefined): string {
   return `$${value < 1 ? Number(value.toPrecision(3)).toString() : value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+const tokens = (n: number) => Math.round(n).toLocaleString("en-US");
+const percent = (x: number) => `${(x * 100).toFixed(x > 0 && x < 0.1 ? 1 : 0)}%`;
+
+function SourceLine({ source }: { source: PriceSource }) {
+  if (source.proxy) {
+    return <li><span className="text-gray-400">{source.label}: </span>{IO_PROXY_TEXT}{" "}
+      {source.url ? <a href={source.url} target="_blank" rel="noreferrer" className="text-accent underline" aria-label="[link] to the inference provider's public LLM usage statistics">[link]</a> : "[link]"}
+      {source.date && <span className="text-gray-400"> · {source.date.slice(0, 10)}</span>}</li>;
+  }
+  return <li><span className="text-gray-400">{source.label}: </span>
+    {source.url ? <a href={source.url} target="_blank" rel="noreferrer" className="text-accent underline">{source.source}</a> : source.source}
+    {source.date && <span className="text-gray-400"> · {source.date.slice(0, 24).replace(/T.*?(?= to |$)/g, "")}</span>}</li>;
+}
+
 /** Native modal: usable from keyboard/touch, outside table/chart overflow, with
- * Escape dismissal and browser-managed focus return. Contents mount on demand. */
-export function PriceValue({ price, compact = false, showEstimate = true }: { price: PriceResult; compact?: boolean; showEstimate?: boolean }) {
+ * Escape dismissal and browser-managed focus return. Contents mount on demand.
+ * `context` (overview table): the price is the cheapest route inside the active filters, for the
+ * model's representative variant (`strongest`) or for exactly the variant shown. */
+export function PriceValue({ price, compact = false, showEstimate = true, context }: { price: PriceResult; compact?: boolean; showEstimate?: boolean; context?: { cheapest: boolean; strongest: boolean } }) {
   const [open, setOpen] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
   useEffect(() => { if (open) dialog.current?.showModal(); }, [open]);
   const e = price.effective;
-  const assumedTask = !!e?.assumptions.some((note) => note.startsWith("AA tokens/task missing"));
+  const assumedTask = !!price.assumedTask;
+  const cache = price.cache;
   return <>
     <button type="button" onClick={(event) => { event.stopPropagation(); setOpen(true); }}
-      data-task-assumed={assumedTask || undefined} aria-haspopup="dialog" aria-label={`${priceNumber(price.value)} ${price.unit}: show cost inputs for ${price.model || "model"}, ${price.provider || "reference"}`}
-      title="Show cost inputs, sources and assumptions"
+      data-task-assumed={assumedTask || undefined} aria-haspopup="dialog" aria-label={`${priceNumber(price.value)} ${price.unit}: show how this cost is estimated for ${price.model || "model"}, ${price.provider || "reference"}`}
+      title="Show how this cost is estimated"
       className="inline-flex max-w-full flex-wrap items-baseline justify-end gap-x-1 rounded text-right tabular underline decoration-dotted underline-offset-4 focus-visible:outline focus-visible:outline-2 focus-visible:outline-accent">
       <span>{priceNumber(price.value)}</span>{!compact && <span className="text-[10px] font-normal text-gray-400">{price.unit === "$/task" ? "/task" : "/1M"}</span>}
       {price.assumptions.length > 0 && (assumedTask || showEstimate) && <span className="text-[10px] font-normal text-amber-300">{assumedTask ? "assumed task" : "est."}</span>}
     </button>
     {open && createPortal(<dialog ref={dialog} onClose={() => setOpen(false)} onClick={(event) => event.stopPropagation()}
-      aria-label="Cost inputs and assumptions"
-      className="m-auto max-h-[85vh] w-[min(620px,92vw)] overflow-y-auto rounded-xl border border-line bg-[#161b22] p-5 text-left text-sm text-gray-200 shadow-xl backdrop:bg-black/70">
+      aria-labelledby="bh-cost-title"
+      className="m-auto max-h-[85vh] w-[min(600px,92vw)] overflow-y-auto rounded-xl border border-line bg-[#161b22] p-5 text-left text-sm text-gray-200 shadow-xl backdrop:bg-black/70">
       <div className="mb-3 flex items-start justify-between gap-3">
-        <div><h2 className="font-semibold">{price.label}: {priceNumber(price.value)}</h2><p className="text-xs text-gray-400">{price.model} · {price.provider}</p></div>
+        <div><h2 id="bh-cost-title" className="font-semibold">{price.label}: {priceNumber(price.value)}</h2><p className="text-xs text-gray-400">{price.model} · {price.provider}</p></div>
         <button autoFocus type="button" className="rounded border border-line px-3 py-1 focus-visible:outline focus-visible:outline-accent" onClick={() => dialog.current?.close()}>Close</button>
       </div>
-      {e && <>
-        <dl className="grid grid-cols-2 gap-x-4 gap-y-1 text-xs tabular">
-          <dt>Input tokens/task (derived)</dt><dd>{Math.round(e.inputs.input_tokens_per_task).toLocaleString("en-US")}</dd>
-          <dt>Output tokens/task</dt><dd>{e.inputs.output_tokens_per_task == null ? "—" : Math.round(e.inputs.output_tokens_per_task).toLocaleString("en-US")}</dd>
-          <dt>Input:output ratio</dt><dd>{e.inputs.input_output_ratio == null ? "—" : `${e.inputs.input_output_ratio.toFixed(1)}:1`}</dd>
-          <dt>Cache-hit rate applied to input</dt><dd>{((e.inputs.cache_hit_rate ?? 0) * 100).toFixed(1)}%</dd>
-          <dt>Additional cache-write tokens</dt><dd>{e.inputs.cache_write_tokens}</dd>
-          <dt>Input / output list $/1M</dt><dd>{priceNumber(e.inputs.input_per_1m)} / {priceNumber(e.inputs.output_per_1m)}</dd>
-          <dt>Cache read / write $/1M</dt><dd>{priceNumber(e.inputs.cache_read_per_1m)} / {priceNumber(e.inputs.cache_write_per_1m)}</dd>
-          <dt>Equivalent $/1M workload tokens</dt><dd>{priceNumber(e.effective_cost_per_1m_tokens)}</dd>
+      {e ? <>
+        <p className="leading-relaxed">This is an estimate of what one typical task costs with this model. It combines:</p>
+        <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-relaxed" data-testid="cost-explanation">
+          <li>{assumedTask
+            ? <>Tokens per task: Artificial Analysis has no task measurement for this model, so an example task of {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens is used.</>
+            : <>Tokens per task from Artificial Analysis, to model how token-efficient the model is: {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens and about {tokens(e.inputs.input_tokens_per_task)} input tokens.</>}</li>
+          <li>{cache?.kind === "observed"
+            ? <>Cache-efficiency data from OpenRouter: {percent(cache.rate)} of input tokens are read from cache on this route.</>
+            : cache?.kind === "baseline"
+            ? <>Cache efficiency: this route has no OpenRouter measurement of its own, so the typical rate across OpenRouter routes, {percent(cache.rate)} of input tokens read from cache, is used.</>
+            : <>Cache efficiency: no cache data is available, so no cache discount is counted.</>}
+            {cache && cache.kind !== "none" && !cache.discounted && <> This provider publishes no cheaper cache-read price, so caching does not lower this cost.</>}</li>
+          {context?.cheapest !== false && <li>{context?.cheapest ? "The cheapest provider that survives your current filters" : "Provider"}: {price.provider}.</li>}
+          {context && <li>{context.strongest ? "The strongest reasoning variant of the model present in benchmark data" : "The exact model variant shown"}: {price.model}.</li>}
+        </ul>
+        <dl className="mt-3 grid grid-cols-2 gap-x-4 gap-y-1 border-t border-line/60 pt-3 text-xs tabular">
+          <dt className="text-gray-400">Input / output price per 1M tokens</dt><dd>{priceNumber(e.inputs.input_per_1m)} / {priceNumber(e.inputs.output_per_1m)}</dd>
+          <dt className="text-gray-400">Cache-read price per 1M tokens</dt><dd>{priceNumber(e.inputs.cache_read_per_1m)}</dd>
+          <dt className="text-gray-400">Input : output ratio</dt><dd>{e.inputs.input_output_ratio == null ? "—" : `${e.inputs.input_output_ratio.toFixed(1)} : 1`}</dd>
+          {e.terms && <><dt className="text-gray-400">Cost split</dt><dd>input {priceNumber(e.terms.uncached_input)} + cached {priceNumber(e.terms.cached_input)} + output {priceNumber(e.terms.output)}</dd></>}
         </dl>
-        <p className="mt-3 text-xs text-gray-300">USD/task = [input × (1 − hit) × input price + input × hit × cache-read price + additional writes × write price + output × output price] ÷ 1,000,000.</p>
-        {e.terms && <p className="mt-2 text-xs tabular">Terms (USD): uncached {priceNumber(e.terms.uncached_input)} + cached {priceNumber(e.terms.cached_input)} + writes {priceNumber(e.terms.cache_write)} + output {priceNumber(e.terms.output)}.</p>}
-        <p className="mt-2 text-xs text-gray-400">The equivalent divides cost by this model’s own input + output tokens; rankings use $/task so output verbosity still counts.</p>
-      </>}
-      {price.assumptions.length > 0 && <><h3 className="mt-4 font-semibold text-amber-300">Assumptions and limitations</h3><ul className="mt-1 list-disc space-y-1 pl-4 text-xs">{price.assumptions.map((note, i) => <li key={i}>{note}</li>)}</ul></>}
-      <h3 className="mt-4 font-semibold">Source inputs</h3>
-      <ul className="mt-1 space-y-2 text-xs">{price.sources.map((source, i) => <li key={i}>
-        <b>{source.label}: </b>{source.url ? <a href={source.url} target="_blank" rel="noreferrer" className="text-accent underline">{source.source}</a> : source.source}
-        {source.date && <> · {source.date}</>}{source.basis && <> · {source.basis}</>}
-        {source.note && <p className="text-gray-400">{source.note}</p>}
-      </li>)}</ul>
+      </> : <p className="leading-relaxed">This is the provider&apos;s published list price per million tokens, blended at the input : output mix chosen in your settings. It does not use task or cache data.</p>}
+      <h3 className="mt-4 font-semibold">Sources</h3>
+      <ul className="mt-1 space-y-1 text-xs" data-testid="cost-sources">{price.sources.map((source, i) => <SourceLine key={i} source={source} />)}</ul>
     </dialog>, document.body)}
   </>;
 }
@@ -62,10 +81,10 @@ export function PriceValue({ price, compact = false, showEstimate = true }: { pr
 /** R1.5: the long modelling paragraph that used to sit above the table is gone — the
  *  column now explains itself through its (i), and the full derivation lives on /about
  *  (R1.6). What stays here is only the one thing a reader needs at the table: every
- *  price is clickable and shows its own inputs, dates and assumptions. */
+ *  price is clickable and shows how it is estimated, with its sources. */
 export function PriceAssumptions({ inline = false }: { inline?: boolean }) {
   const text = <>
-    Click any underlined price for its exact inputs, sources, dates and assumptions.{" "}
+    Click any underlined price to see how it is estimated and where each input comes from.{" "}
     <a href="/about#adjusted-cost" className="text-accent underline underline-offset-2">How we calculate adjusted cost</a>.
   </>;
   // `inline` renders a <span> so the note can sit inside a single footnote paragraph

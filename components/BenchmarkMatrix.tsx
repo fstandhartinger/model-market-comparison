@@ -4,7 +4,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, cellHref, chartRows, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { ScoreRow, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
 import { filteredCandidates, type MatrixFilterData } from "../lib/top-models";
@@ -137,6 +138,9 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
     .map((v, i) => ({ v, i, comparable: v.vals.filter((x) => x != null).length >= 2 ? 0 : 1 }))
     .sort((a, b) => a.comparable - b.comparable || a.i - b.i).map(({ v }) => v) })).filter((g) => g.rows.length);
   const selectedKeys = useMemo(() => new Set(visible.map((v) => v.row.key)), [visible]);
+  // 2026-09-15: the selected score, with the same evidence rule as the candidate filter (a Composite
+  // with no observed slot is the neutral fallback, not a score).
+  const scoreValues = ids.map((id) => { const m = modelsById.get(id); const v = m?.scores[score]; return v != null && (score !== "composite" || (m!.composite_coverage ?? 0) > 0) ? v : null; });
   const matches = useMemo(() => {
     const t = q.trim().toLowerCase();
     if (!t) return [];
@@ -212,13 +216,13 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
               {ids.length > 1 && <button type="button" className="bh-matrix-remove" aria-label={`Remove ${names[j]} from the comparison`} onClick={() => remove(id)}>×</button>}
             </th>; })}
           </tr></thead>
+          <tbody><ScoreRow score={score} values={scoreValues} /></tbody>
           {groups.map((g) => { const open = !closed.has(g.id); return <tbody key={g.id}>
-            <tr className="bh-matrix-group"><th scope="colgroup" colSpan={ids.length + 1}>
+            <CategoryHeader columns={ids.length} composite={categoryComposite(g.rows, ids.length)} label={
               <button type="button" aria-expanded={open} onClick={() => toggle(g.id)}>
                 <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" className={open ? "rotate-90" : ""}><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <span>{g.label}</span><span className="bh-muted tabular text-xs font-normal">{g.rows.length}</span>
-              </button>
-            </th></tr>
+                <span>{g.label}</span><span className="bh-muted tabular text-xs font-normal">{g.rows.length}<span className="sr-only"> benchmarks</span></span>
+              </button>} />
             {open && g.rows.map(({ row, vals, basis }) => {
               const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter);
               return <tr key={row.id}>
@@ -242,6 +246,6 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
         </table>
       </div>}
     {ids.length > 1 && <BenchmarkBars rows={chart} ids={ids} names={names} />}
-    <p className="bh-muted text-xs">Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source.</p>
+    <p className="bh-muted text-xs">Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; Elo, native index scales and costs are left out.</p>
   </section>;
 }

@@ -8,6 +8,14 @@ Each registry version is distinct. Harnesses and source-record configuration/spl
 
 Existing AA Coding/Intelligence, Epoch general/Software Engineering ECI and DesignArena Frontend/Full-Stack scores are additive snapshot axes. Their source capture date is the identity because the captured catalog does not establish semantic versions. They do not become newly registered source benchmarks. Coding Agent v1.4 retains its September 9, 2026 source and its median-over-complete-harnesses Composite input. Current v1.5 is exposed separately. The Composite has seven equal percentile slots; ECI is source-published/refit on Epoch's native scale before percentile normalization.
 
+## Benchmark tables: score row and category composites (2026-09-15)
+
+The Simple view's benchmark table, the Benchmarks "Compare models" table and Advanced's expanded model details start with **Benchmark Heaven Score**: exactly the score the settings select. Its second line reads "Main Composite Score" only when that score is the Composite; any other selection is named as the selected score. A Composite without an observed slot (the neutral 50 fallback) shows a dash.
+
+Each category header is also that category's composite (`categoryComposite` in `lib/benchmark-matrix.mjs`). It averages the category's rows currently shown that (a) use a 0–100 scale with higher = better — fractions ×100, percents, or points registered with range [0, 100] — and (b) have a result for every compared model. At least two such rows are required; otherwise the cells show a dash. Elo, native index scales (ECI), costs and lower-is-better rows are never averaged, and a missing result is never filled in. The header's basis line and screen-reader text name the rows used, so the number changes with the compared models and the row selection.
+
+Source labels that are not catalog display names join only through the reviewed identity map (`data/raw/benchmarks/identity-map.json`, `lib/coding-identity.mjs`): measured observations whose label states the exact model and effort. Self-reported boards keep their approved identities; until a critic re-approves joined identities, FrontierCode, CursorBench and SWE-Bench Pro rows stay unmatched and do not appear in these tables.
+
 ## Radar normalization
 
 The radar uses only measured observations (including source-defined derivations from measured values), exactly matched to catalog configurations. Prefer the latest measured observation for each model in the chosen version/group; never select the highest score. Duplicate source identities count once in the peer range. DesignArena results with fewer than 200 battles are shown in native tables but excluded from the radar and peer statistics.

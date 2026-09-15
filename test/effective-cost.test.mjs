@@ -85,3 +85,30 @@ test('all fixed blends calculate independently of task/cache data and preserve f
   }
   assert.equal(fixedCost(2,12,-1).inputWeight,10);
 });
+
+import { cacheHitBaseline, CACHE_BASELINE_MIN_ENDPOINTS } from '../lib/effective-cost.mjs';
+
+const endpoint = (value, { stale = false, basis = 'measured', read = 0.1, at = '2026-09-10T00:00:00Z' } = {}) => ({
+  cache_hit_rate: { value, stale, basis, collected_at: at },
+  cache_read_per_1m: read == null ? null : { value: read },
+});
+const eff = (list) => ({ openrouter_endpoints: { m: Object.fromEntries(list.map((e, i) => [`t${i}`, e])) } });
+
+test('2026-09-15 cache baseline: median of fresh measured endpoints that bill cache reads', () => {
+  const list = Array.from({ length: 21 }, (_, i) => endpoint(i / 20));
+  list.push(endpoint(0.99, { stale: true }), endpoint(0.99, { read: null }), endpoint(0.99, { basis: 'assumed' }), endpoint(0.99, { at: '2026-07-01T00:00:00Z' }), endpoint(1.5));
+  const b = cacheHitBaseline(eff(list), '2026-09-15T05:00:00Z');
+  assert.equal(b.endpoints, 21);
+  assert.equal(b.value, 0.5);
+  assert.equal(b.basis, 'derived');
+  assert.match(b.definition, /Median cache-hit rate of 21 OpenRouter endpoints/);
+  // Even count: mean of the two middle values; deterministic.
+  const even = cacheHitBaseline(eff(Array.from({ length: 20 }, (_, i) => endpoint(i / 19))), '2026-09-15T05:00:00Z');
+  assert.equal(even.value, (9 / 19 + 10 / 19) / 2);
+});
+
+test('2026-09-15 cache baseline: a thin sample sets no norm', () => {
+  assert.equal(CACHE_BASELINE_MIN_ENDPOINTS, 20);
+  assert.equal(cacheHitBaseline(eff(Array.from({ length: 19 }, () => endpoint(0.7))), '2026-09-15T05:00:00Z'), null);
+  assert.equal(cacheHitBaseline(undefined, '2026-09-15T05:00:00Z'), null);
+});

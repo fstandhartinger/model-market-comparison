@@ -15,6 +15,25 @@ import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { paretoFrontier } from "../lib/pareto.mjs";
+import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, labelCandidates, placeLabels } from "../lib/value-map.mjs";
+
+type PlotOffset = { left: number; top: number; width: number; height: number };
+
+/** 2026-09-15: a restrained green wash over the top-right quarter — transparent at that quarter's
+ *  bottom-left, greener toward the chart's top-right corner — and the quadrant's small note in the
+ *  top margin. Rendered before the scatters, so every point and line draws on top of it. */
+function AttractiveQuadrant(props: { offset?: PlotOffset; gradientId: string; fontSize?: number }) {
+  const q = attractiveQuadrant(props.offset);
+  const note = annotationBox(props.offset, props.fontSize ?? 10);
+  if (!q || !note) return null;
+  return <g className="bh-quadrant" aria-hidden="true">
+    <defs><linearGradient id={props.gradientId} x1="0" y1="1" x2="1" y2="0">
+      <stop offset="0" className="bh-quadrant-from" /><stop offset="1" className="bh-quadrant-to" />
+    </linearGradient></defs>
+    <rect x={q.x} y={q.y} width={q.width} height={q.height} fill={`url(#${props.gradientId})`} pointerEvents="none" />
+    <text x={note.x} y={note.y} textAnchor="end" fontSize={props.fontSize ?? 10} className="bh-quadrant-note">{QUADRANT_NOTE}</text>
+  </g>;
+}
 
 function PointShape(props: { cx?: number; cy?: number; fill?: string; payload?: { open?: boolean } }) {
   const { cx, cy, fill, payload } = props;
@@ -73,38 +92,11 @@ function PointLabels(props: { xAxisMap?: AxisMap; yAxisMap?: AxisMap; offset?: {
   const yAxis = props.yAxisMap && Object.values(props.yAxisMap)[0];
   const o = props.offset;
   if (!xAxis || !yAxis || !o) return null;
-  const narrow = o.width < 400;
-  const LINE = 12, GLYPH = 6, MAX = 12;
-  const dots = props.dots.map((d) => ({ cx: xAxis.scale(d.x), cy: yAxis.scale(d.y) }));
-  const placed: { l: number; t: number; r: number; b: number }[] = [];
-  const out: { key: string; x: number; y: number; text: string }[] = [];
-  for (const p of props.labels) {
-    if (out.length >= MAX) break;
-    if (narrow && !props.frontier.has(p.id)) continue;
-    const text = p.name.length > 22 ? `${p.name.slice(0, 21)}…` : p.name;
-    if (!text) continue;
-    const cx = xAxis.scale(p.x), cy = yAxis.scale(p.y), w = text.length * GLYPH;
-    const slots = [
-      { l: cx + 8, t: cy - LINE / 2 },
-      { l: cx - w / 2, t: cy - 8 - LINE },
-      { l: cx - w / 2, t: cy + 8 },
-      { l: cx - 8 - w, t: cy - LINE / 2 },
-      { l: cx - w, t: cy - 8 - LINE },
-      { l: cx, t: cy - 8 - LINE },
-      { l: cx - w, t: cy + 8 },
-      { l: cx, t: cy + 8 },
-    ];
-    const top = o.top - (props.headroom ?? 0);
-    const slot = slots.find(({ l, t }) => {
-      const r = l + w, b = t + LINE;
-      if (l < o.left || r > o.left + o.width || t < top || b > o.top + o.height) return false;
-      if (placed.some((q) => l < q.r && q.l < r && t < q.b && q.t < b)) return false;
-      return !dots.some((d) => !(Math.abs(d.cx - cx) < 0.5 && Math.abs(d.cy - cy) < 0.5) && d.cx > l - 4 && d.cx < r + 4 && d.cy > t - 4 && d.cy < b + 4);
-    });
-    if (!slot) continue;
-    placed.push({ l: slot.l, t: slot.t, r: slot.l + w, b: slot.t + LINE });
-    out.push({ key: p.id, x: slot.l, y: slot.t + LINE - 2, text });
-  }
+  const out = placeLabels({
+    labels: props.labels.map((p) => ({ id: p.id, name: p.name, cx: xAxis.scale(p.x), cy: yAxis.scale(p.y) })),
+    dots: props.dots.map((d) => ({ cx: xAxis.scale(d.x), cy: yAxis.scale(d.y) })),
+    offset: o, frontier: props.frontier, headroom: props.headroom ?? 0, max: LABEL_LIMIT,
+  });
   return <g className="bh-point-labels">{out.map((l) => <text key={l.key} x={l.x} y={l.y} fill="var(--text)" fontSize={10} paintOrder="stroke" stroke="var(--surface)" strokeWidth={3} strokeLinejoin="round">{l.text}</text>)}</g>;
 }
 
@@ -132,7 +124,8 @@ function logTicks(min: number, max: number): number[] {
  *  Advanced's score minimum and keeps a readable height on phones. */
 /** `measuredOnly` (Simple): the map must plot exactly the pool the list ranks — models whose
  *  task-token usage is measured. Without it the map shows an "assumed task" point the list refuses. */
-export function CostCapabilityScatter({ data, compact = false, advanced = false, guided = false, measuredOnly = false }: { data: ClientData; compact?: boolean; advanced?: boolean; guided?: boolean; measuredOnly?: boolean }) {
+/** `ids` (Simple): the exact models the overview table considers; the map then plots only those. */
+export function CostCapabilityScatter({ data, compact = false, advanced = false, guided = false, measuredOnly = false, ids }: { data: ClientData; compact?: boolean; advanced?: boolean; guided?: boolean; measuredOnly?: boolean; ids?: string[] }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
@@ -153,11 +146,14 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
 
+  const idKey = ids?.join(",");
   const allPoints = useMemo(() => {
     let pool = candidates;
+    const only = idKey != null ? new Set(idKey ? idKey.split(",") : []) : null;
+    if (only) pool = pool.filter((m) => only.has(m.id));
     if (s.collapse) pool = collapseModels(pool, preferredId);
     if (s.openOnly) pool = pool.filter((m) => m.open_weights);
-    if (s.featured) pool = pool.filter((m) => m.featured);
+    if (s.featured && !only) pool = pool.filter((m) => m.featured);
     if (s.familySet) pool = pool.filter((m) => s.familySet!.has(m.family_key));
     if (measuredOnly && s.priceMode === "adjusted") pool = pool.filter((m) => {
       const tokens = m.token_efficiency?.aa.tokens_per_task;
@@ -168,7 +164,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
       .filter((x) => x.hasEvidence && x.sc != null && x.price.value != null && (x.price.value as number) >= 0)
       .map((x) => ({ x: x.price.value as number, y: x.sc as number, price: x.price, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, id: x.m.id, open: x.m.open_weights, z: 100,
         pass: (x.sc as number) >= minScore && (maxCost == null || (x.price.value as number) <= maxCost) }));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, maxCost, preferredId, measuredOnly, s.priceMode]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, minScore, maxCost, preferredId, measuredOnly, s.priceMode, idKey]);
 
   const points = useMemo(() => allPoints.filter((p) => (compact || p.pass) && (!logCostAxis || p.x > 0)), [allPoints, logCostAxis, compact]);
   const zeroCount = allPoints.filter((p) => p.x === 0).length;
@@ -208,12 +204,13 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     const failing = compactPoints.filter((p) => !p.pass);
     // Label priority: frontier members, then passing points by score. In Charts nothing is
     // cut by a score line, so only the frontier is named there.
-    const labels = [...passing].filter((p) => !advanced || frontierIds.has(p.id))
-      .sort((a, b) => Number(frontierIds.has(b.id)) - Number(frontierIds.has(a.id)) || b.y - a.y);
+    // 2026-09-15: at most LABEL_LIMIT names; unnamed points keep their tooltip and table row.
+    // Every candidate is offered in priority order; placement stops after LABEL_LIMIT names fit.
+    const labels = labelCandidates(passing.filter((p) => !advanced || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY);
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
-    return <div className="bh-value-map" aria-label="Score versus adjusted cost value map">
+    return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="flex items-baseline justify-end gap-3 lg:mb-1">
-        <span className="text-[11px] text-gray-500">{advanced ? "cheaper ← left · green line = Pareto frontier" : "Value map · cheaper ← left · green = Pareto"}</span>
+        <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`}</span>
       </div>
       <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
         <ResponsiveContainer width="100%" height="100%">
@@ -221,9 +218,10 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             <CartesianGrid stroke="#222932" />
             {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
                 data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
-            <XAxis type="number" dataKey="x" name="Adjusted cost" scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
+            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed={COST_AXIS.reversed} scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
             <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? [yCompact.domain[0], 100] : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
+            <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-compact" />} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
             {/* Only frontier members get the halo and the connecting line — not every point. */}
             {showPareto && pareto.length > 0 && <Scatter data={pareto} line={pareto.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint" shape={ParetoHalo} legendType="none" isAnimationActive={false} />}
@@ -246,7 +244,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <Toggle label="Pareto frontier" on={showPareto} set={setShowPareto} />
         <span className="ml-auto text-xs text-gray-500">
           {/* F-18: the count is what the filters allow, so it opens them. */}
-          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{points.length} models</button> · cost: cheaper ← left{offerScope.restricted ? " · provider-filtered" : ""}</span>
+          <button type="button" data-bh-filters-toggle onClick={s.openFilters} className="min-h-0 text-accent underline decoration-dotted underline-offset-2">{points.length} models</button> · cost: cheaper → right{offerScope.restricted ? " · provider-filtered" : ""}</span>
       </div>
 
       {logX && zeroCount > 0 && <p className="mb-2 text-xs text-amber-300">{zeroCount} zero-cost models cannot appear on a logarithmic axis; switch to linear or open the model price table. Frontier calculations include these models.</p>}
@@ -254,18 +252,19 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart accessibilityLayer={false} margin={{ top: 20, right: 40, bottom: 64, left: 30 }}>
             <CartesianGrid stroke="#222932" />
-            <XAxis type="number" dataKey="x" name="Cost" reversed
+            <XAxis type="number" dataKey="x" name="Cost" reversed={COST_AXIS.reversed}
               scale={logX ? "log" : "linear"}
               domain={logX ? [xMin * 0.85, xMax * 1.15] : [0, Math.max(1, xMax * 1.1)]}
               ticks={logX ? logTicks(xMin, xMax) : undefined}
               allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
               tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={12}>
-              <Label value={`cheaper ←    ·    more expensive → (lowest ${priceLabel(priceSettings)})`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
+              <Label value={costAxisCaption(`lowest ${priceLabel(priceSettings)}`)} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFull.domain} ticks={isElo ? undefined : yFull.ticks} allowDataOverflow={false}>
               <Label value={scoreChartLabel(score, data.sourceDates)} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />
+            <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-full" fontSize={11} />} />
             <Tooltip cursor={{ strokeDasharray: "3 3" }} content={<Dot />} />
             {showPareto && pareto.length > 0 && (
               <Scatter data={pareto} line={pareto.length > 1 ? { stroke: "#7ee0c0", strokeWidth: 2 } : false} lineType="joint"
@@ -288,7 +287,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         ))}
       </div>
       <p className="mt-3 text-xs text-gray-500">
-        Up is more capability; toward the <b>left</b> is better value. The
+        Up is more capability; toward the <b>right</b> is cheaper, so the shaded top-right quadrant holds the most attractive models. The
         <span className="text-accent2"> green Pareto frontier</span> marks and connects the best-value models —
         those no other model beats on both price and capability. Click any point to open the model detail.
       </p>

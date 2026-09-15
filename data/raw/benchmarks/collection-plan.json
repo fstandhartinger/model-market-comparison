@@ -2685,6 +2685,181 @@
       "source_urls": [
         "https://github.com/browser-use/benchmark"
       ]
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "refresh": "manual",
+      "parser": {
+        "kind": "csv",
+        "require_header": [
+          "Model version",
+          "Pass@1",
+          "Pass@4",
+          "Harness",
+          "Reasoning effort",
+          "Release date",
+          "Organization",
+          "Country",
+          "Training compute (FLOP)",
+          "Training compute notes",
+          "Name",
+          "95% CI half-width",
+          "Runs",
+          "Mean cost (USD)",
+          "Mean output tokens",
+          "Mean agent steps",
+          "Source",
+          "Notes"
+        ],
+        "require_values": {
+          "Harness": "mini-swe-agent"
+        },
+        "name_field": "Name",
+        "value_field": "Pass@1",
+        "id_field": "Model version",
+        "harness_field": "Harness",
+        "plain_text_names": true,
+        "context_fields": [
+          "Reasoning effort",
+          "Runs",
+          "Pass@4",
+          "95% CI half-width"
+        ]
+      },
+      "status": "collected",
+      "reason": "Datacurve runs DeepSWE itself (measured); Epoch AI republishes the rows under CC-BY 4.0. Rows are model × published reasoning effort.",
+      "recipe": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip deepswe_external.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-coding/epoch-deepswe_external.csv.gz; python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "deepswe_external.csv: one row per Model version (<model>_<effort>); value Pass@1; Harness; Reasoning effort",
+        "version_guard": "Exact CSV header, every row Harness = mini-swe-agent, and Epoch benchmark_metadata.csv still maps DeepSWE to deepswe_external.csv / Pass@1 / release 2026-05-26. The CSV carries no DeepSWE version, so this identity is dated: a changed DeepSWE task set or version needs a new identity after manual review of the DeepSWE changelog (the DeepSWE site blocks AI crawlers and is never collected automatically).",
+        "notes": "Manual snapshot, not part of the automatic daily refresh: Epoch publishes only a multi-benchmark ZIP (2.3 MB, changing with every Epoch update), the CSV has no DeepSWE version, and the maintainer site blocks AI crawlers. Refresh by hand with this recipe after checking the DeepSWE changelog, then rerun build-identity-map.mjs. CC-BY 4.0: attribute Epoch AI and Datacurve. Model labels are not catalog names; exact joins come from data/raw/benchmarks/identity-map.json (lib/coding-identity.mjs rules)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Exact CSV header, every row Harness = mini-swe-agent, and Epoch benchmark_metadata.csv still maps DeepSWE to deepswe_external.csv / Pass@1 / release 2026-05-26. The CSV carries no DeepSWE version, so this identity is dated: a changed DeepSWE task set or version needs a new identity after manual review of the DeepSWE changelog (the DeepSWE site blocks AI crawlers and is never collected automatically).",
+      "source": {
+        "url": "https://epoch.ai/data/benchmark_data.zip",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+        "sha256": "7f0ae5e4d772c99b10a8b29ee8e2760771b63fe7f561e90d5ba48a0fae52e686",
+        "retrieved_at": "2026-09-15T09:05:24Z"
+      },
+      "protocol": "DeepSWE as republished by Epoch AI (deepswe_external.csv); Pass@1 averaged over runs; mini-swe-agent harness",
+      "basis": "measured",
+      "minimum_rows": 60,
+      "source_urls": [
+        "https://epoch.ai/data/benchmark_data.zip"
+      ]
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "parser": {
+        "kind": "scale_swepro",
+        "require_text": "<title>Scale Labs Leaderboard: SWE Atlas - Codebase QnA</title>",
+        "name_field": "model",
+        "value_field": "score",
+        "context_fields": [
+          "confidenceInterval_upper",
+          "createdAt",
+          "contaminationMessage"
+        ]
+      },
+      "status": "collected",
+      "reason": "Scale AI runs every listed configuration itself (measured); the label keeps harness, effort and the refusal asterisk.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+        "sha256": "f9976a2773bb0f66df2f6523bcf84e9d5270ec2b2be7d1047a4a8cb3d0d43514",
+        "retrieved_at": "2026-09-15T09:04:05Z"
+      },
+      "protocol": "SWE Atlas Codebase QnA (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/sweatlas-qna"
+      ]
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "parser": {
+        "kind": "scale_swepro",
+        "require_text": "<title>SWE Atlas - Test Writing</title>",
+        "name_field": "model",
+        "value_field": "score",
+        "context_fields": [
+          "confidenceInterval_upper",
+          "createdAt",
+          "contaminationMessage"
+        ]
+      },
+      "status": "collected",
+      "reason": "Scale AI runs every listed configuration itself (measured); the label keeps harness, effort and the refusal asterisk.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+        "sha256": "f6008897ce2f81830734232200692dac2903bd0e71eaf930802f3dfdc7bda035",
+        "retrieved_at": "2026-09-15T09:04:01Z"
+      },
+      "protocol": "SWE Atlas Test Writing (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/sweatlas-tw"
+      ]
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "parser": {
+        "kind": "scale_swepro",
+        "require_text": "<title>SWE Atlas - Refactoring</title>",
+        "name_field": "model",
+        "value_field": "score",
+        "context_fields": [
+          "confidenceInterval_upper",
+          "createdAt",
+          "contaminationMessage"
+        ]
+      },
+      "status": "collected",
+      "reason": "Scale AI runs every listed configuration itself (measured); the label keeps harness, effort and the refusal asterisk.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+      "source": {
+        "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+        "sha256": "24dbd8957abbe2b9aff02f699540f7f261a8720a5627efb26e9d4c8619fd39bf",
+        "retrieved_at": "2026-09-15T09:04:03Z"
+      },
+      "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source",
+      "basis": "measured",
+      "minimum_rows": 15,
+      "source_urls": [
+        "https://labs.scale.com/leaderboard/sweatlas-refactoring"
+      ]
     }
   ]
 }

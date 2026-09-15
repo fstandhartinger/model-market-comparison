@@ -4,6 +4,27 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Coding benchmarks, Benchmark Heaven score row, typical cache-hit baseline
+
+No data location, route or public API field was removed.
+
+- **New registry identities (measured, secondary, never Composite inputs):** `deepswe::snapshot-2026-09-15`
+  (Datacurve's DeepSWE as republished by Epoch AI, CC-BY 4.0; Pass@1 fraction) and Scale AI's
+  `swe-atlas-qna`, `swe-atlas-test-writing`, `swe-atlas-refactoring` (`::snapshot-2026-09-15`, percent).
+  Captures and robots files: `data/raw/benchmarks/daily-evidence/2026-09-15-coding/`. The three SWE Atlas boards
+  join the daily refresh; DeepSWE is a reviewed manual snapshot (`refresh: "manual"` in the collection plan) that
+  the daily run neither fetches nor re-parses, because Epoch publishes it only inside a multi-benchmark ZIP.
+- **Reviewed identity map:** `data/raw/benchmarks/identity-map.json` joins those measured rows to catalog
+  configurations only where the source label states the exact model and effort (rules and tests:
+  `lib/coding-identity.mjs`). Rows without a stated effort, duplicate harness rows and unknown names stay
+  unmatched (`ops/benchmark-table-2026-09-15/identity-map-review.json`). Self-reported boards are untouched.
+- **Taxonomy 2026-09-15:** Terminal-Bench rows display under Coding; a new `aa_input` tag marks inputs to the
+  AA Coding / Coding Agent indices.
+- **Adjusted cost:** a route without its own usable cache-hit observation now uses the typical baseline
+  (median of fresh OpenRouter endpoints that publish a cache-read price) instead of 0 %; it changes cost only
+  where the route bills cheaper cache reads. Adjusted `$/task` values and cheapest-route choices can change.
+- **Daily refresh:** unattended producer/critic calls get 600 s (`BH_WORKER_TIMEOUT` default; was 180 s).
+
 ## 2026-09-15 — Catalog ids: AA Coding Agent "Opus 5 / Fable 5.1" rows join their catalog configurations
 
 No data location, route or public API field was removed.

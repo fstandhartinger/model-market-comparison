@@ -4,7 +4,9 @@ import { useEffect, useMemo, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
-import { formatValue, cellHref, rowBars, rowWinners, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { formatValue, cellHref, rowBars, rowWinners, categoryComposite, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { hasScoreEvidence } from "../lib/client-model";
+import { ScoreRow, CategoryHeader } from "./ScoreRows";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 
 const COLUMNS = 5;
@@ -29,6 +31,7 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
   const visible = useMemo(() => matrix.rows.map((row, i) => ({ row, vals: lookups.map((m) => m.get(i)?.[0] ?? null), basis: lookups.map((m) => m.get(i)?.[1] ?? null) }))
     .filter(({ vals }) => vals.filter((v) => v != null).length >= Math.min(2, ids.length)), [matrix, lookups, ids.length]);
   const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id) })).filter((g) => g.rows.length);
+  const scoreValues = ids.map((id) => { const m = byId.get(id); return m && hasScoreEvidence(m, score) ? m.scores[score] ?? null : null; });
   const full = `/benchmarks${ids.length ? `?${new URLSearchParams({ models: ids.join(",") })}` : ""}`;
 
   return <section id="benchmarks" tabIndex={-1} aria-labelledby="bh-simple-bench-title" className="mt-10 scroll-mt-20 outline-none">
@@ -58,8 +61,9 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
             <span className="bh-matrix-name"><Link href={`/models/${encodeURIComponent(id)}`} title={m?.display_name} className="hover:underline">{m ? collapsedName(m, true, preferred) : id}</Link></span>
           </th>; })}
         </tr></thead>
+        <tbody><ScoreRow score={score} values={scoreValues} /></tbody>
         {groups.map((g) => <tbody key={g.id}>
-          <tr className="bh-matrix-group"><th scope="colgroup" colSpan={ids.length + 1}><span className="inline-flex min-h-10 items-center px-3 text-[13px] font-semibold md:px-4">{g.label}</span></th></tr>
+          <CategoryHeader label={<span className="inline-flex min-h-8 items-center">{g.label}</span>} composite={categoryComposite(g.rows, ids.length)} columns={ids.length} />
           {g.rows.map(({ row, vals, basis }) => {
             const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter);
             return <tr key={row.id}>
@@ -78,6 +82,6 @@ export function SimpleBenchmarks({ matrix, data, ids: listIds }: { matrix: Matri
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Headline benchmarks with a result for at least two of these models. Bold is best in row; † marks a developer&apos;s own report; a dash means no published result. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
+    <p className="bh-muted mt-2 text-xs">Headline benchmarks with a result for at least two of these models. Bold is best in row; † marks a developer&apos;s own report; a dash means no published result. The first row is the score your settings select. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
   </section>;
 }

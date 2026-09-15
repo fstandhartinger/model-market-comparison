@@ -1,13 +1,18 @@
 import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
-import { effectiveCost, fixedCost, FIXED_BLENDS, DEFAULT_BLEND, type EffectiveCostResult } from "./effective-cost.mjs";
+import { effectiveCost, fixedCost, cacheHitBaseline, FIXED_BLENDS, DEFAULT_BLEND, type EffectiveCostResult, type CacheHitBaseline } from "./effective-cost.mjs";
 export { FIXED_BLENDS, DEFAULT_BLEND };
 
 export type PriceMode = "adjusted" | "raw";
 export interface PriceSettings { priceMode: PriceMode; inputWeight: number }
 export const DEFAULT_PRICE_SETTINGS: PriceSettings = { priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
 export interface PriceContext extends PriceSettings { model: ClientModel; data: ClientData }
-export interface PriceSource { label: string; source: string; url?: string; date?: string; basis?: string; note?: string }
+/** 2026-09-15: the exact wording shown for a proxied I/O-ratio source; only the "[link]" after it is a link. */
+export const IO_PROXY_TEXT = "Proxied from publicly available LLM usage statistics from an inference provider";
+/** `proxy`: the I/O ratio comes from a provider's global usage statistics, not from this model. */
+export interface PriceSource { label: string; source: string; url?: string; date?: string; basis?: string; note?: string; proxy?: boolean }
+/** How the cache-hit rate applied to input tokens was chosen, and whether the route bills cache reads below input. */
+export interface PriceCache { kind: "observed" | "baseline" | "none"; rate: number; discounted: boolean }
 export interface PriceResult {
   value: number | null;
   unit: "$/task" | "$/1M tokens";
@@ -17,6 +22,18 @@ export interface PriceResult {
   sources: PriceSource[];
   model?: string;
   provider?: string;
+  cache?: PriceCache;
+  /** True when the AA task-token measurement was missing and the 1,000-token example task was used. */
+  assumedTask?: boolean;
+}
+
+// The typical cache-hit rate is a property of one dataset build; compute it once per dataset.
+const baselines = new WeakMap<object, CacheHitBaseline | null>();
+function baselineFor(data: ClientData): CacheHitBaseline | null {
+  const efficiency = data.efficiency;
+  if (!efficiency) return null;
+  if (!baselines.has(efficiency)) baselines.set(efficiency, cacheHitBaseline(efficiency, data.generated_at));
+  return baselines.get(efficiency) ?? null;
 }
 export function priceContext(model: ClientModel, data: ClientData, settings: PriceSettings = DEFAULT_PRICE_SETTINGS): PriceContext {
   return { priceMode: settings.priceMode, inputWeight: settings.inputWeight, model, data };
@@ -77,6 +94,7 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   }
   if (ratio) {
     sources.push({ label: "Input/output ratio", source: ratio.source, url: ratio.url, date: ratio.collected_at, basis: ratio.basis,
+      proxy: ratio.fallback === true && ratio.source === data.efficiency?.global_io_ratio?.source,
       note: [ratio.scope, ratio.configuration_scope, ratio.window ? `${ratio.window.start_date} to ${ratio.window.end_date}` : ""].filter(Boolean).join("; ") });
     if (ratio.fallback || ratio.basis === "assumed") extra.push("I/O ratio assigned from fallback evidence; assumed for this model and task.");
   }
@@ -89,25 +107,42 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   const exactEndpoint = endpoint?.or_model_id === offer.or_model_id && endpoint?.endpoint_tag === offer.endpoint_tag
     && endpoint?.provider === offer.provider && !["ambiguous_endpoint_tag", "provider_identity_conflict"].includes(endpoint?.status || "") ? endpoint : undefined;
   const hit = exactEndpoint?.cache_hit_rate;
-  if (freshUsage(hit, data) && hit!.value <= 1) {
+  const observedHit = freshUsage(hit, data) && hit!.value <= 1;
+  // 2026-09-15: a route without its own usable observation gets the documented typical rate (median of
+  // OpenRouter endpoints that bill cache reads), not 0 %. It only lowers cost where the route publishes
+  // a cache-read price below its input price; otherwise cached input is charged at the input price.
+  const baseline = observedHit ? null : baselineFor(data);
+  if (observedHit) {
     sources.push({ label: "Cache-hit rate", source: hit!.source, url: hit!.url, date: hit!.collected_at, basis: hit!.basis, note: hit!.definition });
     extra.push("Reported endpoint cache-hit fraction applied to input tokens; denominator and summary interval are unpublished. This mapping is assumed.");
-  } else if (hit) extra.push("Unavailable, invalid or stale endpoint cache-hit observation ignored; no cache discount credited.");
-  if (endpoint && !exactEndpoint) extra.push("Conflicting/ambiguous endpoint identity ignored; no cache statistics borrowed.");
+  } else {
+    if (hit) extra.push("Unavailable, invalid or stale endpoint cache-hit observation ignored.");
+    if (baseline) {
+      sources.push({ label: "Cache-hit rate (typical baseline)", source: `Median of ${baseline.endpoints} OpenRouter endpoints`, url: baseline.url,
+        date: baseline.collected_from === baseline.collected_to ? baseline.collected_to : `${baseline.collected_from} to ${baseline.collected_to}`, basis: baseline.basis, note: baseline.definition });
+      extra.push(`No usable cache-hit observation for this route: typical baseline ${(baseline.value * 100).toFixed(1)}% applied (${baseline.definition})`);
+    } else extra.push("No usable cache-hit observation or baseline: no cache discount credited.");
+  }
+  if (endpoint && !exactEndpoint) extra.push("Conflicting/ambiguous endpoint identity ignored; no endpoint cache statistics borrowed.");
+  const appliedHit = observedHit ? hit!.value : baseline?.value ?? null;
   const result = effectiveCost({
     input_per_1m: offer.input_per_1m, output_per_1m: offer.output_per_1m,
     cache_read_per_1m: offer.cache_read_per_1m,
     cache_write_per_1m: offer.cache_write_per_1m,
     output_tokens_per_task: tokens && !tokens.stale ? tokens.value.output : null,
     input_output_ratio: ratio?.value,
-    cache_hit_rate: freshUsage(hit, data) ? hit!.value : null,
+    cache_hit_rate: appliedHit,
   });
+  const read = result.inputs.cache_read_per_1m, input = result.inputs.input_per_1m;
+  const cache: PriceCache = { kind: observedHit ? "observed" : baseline ? "baseline" : "none", rate: result.inputs.cache_hit_rate ?? 0,
+    discounted: typeof read === "number" && typeof input === "number" && read < input };
   extra.push("AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.");
   extra.push("Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled.");
   if (offer.estimated) extra.push("Catalog price is marked estimated by its source.");
   result.assumptions.push(...extra);
   result.estimated = true;
-  return { ...base, value: result.effective_cost_per_task, unit: "$/task", assumptions: result.assumptions, effective: result };
+  return { ...base, value: result.effective_cost_per_task, unit: "$/task", assumptions: result.assumptions, effective: result, cache,
+    assumedTask: !(tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0) };
 }
 
 export const SCORE_OPTIONS: ScoreKey[] = [

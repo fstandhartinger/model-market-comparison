@@ -29,6 +29,11 @@ for (const m of models) {
   }
 }
 const entryById = new Map(registry.entries.map((e) => [e.id, e]));
+// 2026-09-15: reviewed exact joins for measured boards whose labels are not catalog names
+// (lib/coding-identity.mjs). Critic approvals bind a self-reported row's full identity, so the map
+// may never touch one; a map entry whose catalog configuration no longer exists leaves the row unmatched.
+const identityMap = await read('data/raw/benchmarks/identity-map.json').catch((e) => { if (e.code === 'ENOENT') return { entries: [] }; throw e; });
+const identityJoin = new Map(identityMap.entries.map((e) => [`${e.benchmark_id}\0${e.source_id}`, e]));
 const preserveSourceIdentity = new Set(registry.entries
   .filter((e) => e.how_to_collect?.identity_policy === 'source_label')
   .map((e) => e.id));
@@ -143,6 +148,14 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
         subject.model_id = matches[0].id;
         observation.join_note = candidates.length === 1 ? 'Unique exact Hugging Face checkpoint URL in retained catalog metadata; source effort remains as published.'
           : 'Exact display name, unique default catalog configuration; no effort alias inference.';
+      }
+    }
+    const reviewed = identityJoin.get(`${observation.benchmark_id}\0${observation.subject.source_id}`);
+    if (reviewed && path.endsWith('public-observations.json') && observation.subject.model_id === null) {
+      if ((observation.source_basis ?? observation.basis) !== 'measured') throw new Error(`Identity map may only join measured observations: ${observation.id}`);
+      if (models.some((m) => m.id === reviewed.model_id)) {
+        observation.subject.model_id = reviewed.model_id;
+        observation.join_note = `Reviewed identity map ${identityMap.reviewed_at}: ${reviewed.rule}`;
       }
     }
     observations.push(observation);

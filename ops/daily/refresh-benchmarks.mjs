@@ -43,8 +43,12 @@ export async function refreshBenchmarks({ runDir } = {}) {
     urls.set(source.url, source.url === 'https://uncommon-sandpiper-321.convex.cloud/api/query'
       ? { url: source.url, method: 'POST', body: { path: 'runs:getLeaderboard', args: {}, format: 'json' } } : source.url);
   };
-  for (const entry of registry.entries) { add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
+  // 2026-09-15: a reviewed manual snapshot (e.g. a ZIP-only source whose maintainer site blocks crawlers)
+  // is never fetched by the daily run; its committed rows are retained unchanged.
+  const manual = new Set(plan.entries.filter((spec) => spec.refresh === 'manual').map((spec) => spec.benchmark_id));
+  for (const entry of registry.entries) { if (manual.has(entry.id)) continue; add({ url: entry.primary_url }); for (const source of entry.evidence ?? []) add(source); }
   for (const spec of plan.entries) {
+    if (manual.has(spec.benchmark_id)) continue;
     add(spec.source); for (const key of ['method_source', 'categories_source', 'frontend_source']) add(spec.parser?.[key]);
     // One-file-per-run sources (BU Bench): every run file is a primary source of its own row.
     for (const run of spec.parser?.runs ?? []) add(run);
@@ -154,6 +158,7 @@ export async function refreshBenchmarks({ runDir } = {}) {
   for (const [index, spec] of plan.entries.entries()) {
     const priorRows = oldPublic.observations.filter((r) => r.benchmark_id === spec.benchmark_id);
     if (!spec.parser) { checks.push({ id: spec.benchmark_id, status: spec.status, reason: spec.reason }); continue; }
+    if (manual.has(spec.benchmark_id)) { checks.push({ id: spec.benchmark_id, status: 'retained_manual_snapshot', rows: priorRows.length, reason: spec.reason }); continue; }
     try {
       const proposed = structuredClone(spec); proposed.source = current(spec.source);
       for (const key of ['method_source', 'categories_source', 'frontend_source']) if (spec.parser[key]) proposed.parser[key] = current(spec.parser[key]);

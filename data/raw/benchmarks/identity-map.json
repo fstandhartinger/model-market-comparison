@@ -1,0 +1,529 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-15",
+  "policy": "Exact joins for measured public boards whose labels are not catalog names. A label must state the exact model and an effort that exists as a catalog configuration; without an effort only a single-configuration family joins; a configuration listed more than once on one board joins neither row. Never applied to self-reported observations (their critic approvals bind the full identity). Rules: lib/coding-identity.mjs.",
+  "entries": [
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-sol_max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-sol_xhigh",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-fable-5_xhigh",
+      "model_id": "claude-fable-5::xhigh",
+      "rule": "label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-fable-5_max",
+      "model_id": "claude-fable-5::max",
+      "rule": "label states model claude-fable-5 and effort max; exact catalog configuration claude-fable-5::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-terra_max",
+      "model_id": "gpt-5.6-terra::max",
+      "rule": "label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-sol_high",
+      "model_id": "gpt-5.6-sol::high",
+      "rule": "label states model gpt-5.6-sol and effort high; exact catalog configuration gpt-5.6-sol::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-fable-5_high",
+      "model_id": "claude-fable-5::high",
+      "rule": "label states model claude-fable-5 and effort high; exact catalog configuration claude-fable-5::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-luna_max",
+      "model_id": "gpt-5.6-luna::max",
+      "rule": "label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.5_xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.5_high",
+      "model_id": "gpt-5.5::high",
+      "rule": "label states model gpt-5.5 and effort high; exact catalog configuration gpt-5.5::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-sol_medium",
+      "model_id": "gpt-5.6-sol::medium",
+      "rule": "label states model gpt-5.6-sol and effort medium; exact catalog configuration gpt-5.6-sol::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-terra_xhigh",
+      "model_id": "gpt-5.6-terra::xhigh",
+      "rule": "label states model gpt-5.6-terra and effort xhigh; exact catalog configuration gpt-5.6-terra::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-4-8_max",
+      "model_id": "claude-opus-4.8::max",
+      "rule": "label states model claude-opus-4.8 and effort max; exact catalog configuration claude-opus-4.8::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-luna_xhigh",
+      "model_id": "gpt-5.6-luna::xhigh",
+      "rule": "label states model gpt-5.6-luna and effort xhigh; exact catalog configuration gpt-5.6-luna::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-4-8_xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "rule": "label states model claude-opus-4.8 and effort xhigh; exact catalog configuration claude-opus-4.8::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.5_medium",
+      "model_id": "gpt-5.5::medium",
+      "rule": "label states model gpt-5.5 and effort medium; exact catalog configuration gpt-5.5::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-sonnet-5_max",
+      "model_id": "claude-sonnet-5::max",
+      "rule": "label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-terra_high",
+      "model_id": "gpt-5.6-terra::high",
+      "rule": "label states model gpt-5.6-terra and effort high; exact catalog configuration gpt-5.6-terra::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "muse-spark-1.1",
+      "model_id": "muse-spark-1.1::xhigh",
+      "rule": "label states model muse-spark-1.1 and effort xhigh; exact catalog configuration muse-spark-1.1::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-4-8_high",
+      "model_id": "claude-opus-4.8::high",
+      "rule": "label states model claude-opus-4.8 and effort high; exact catalog configuration claude-opus-4.8::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-sonnet-5_xhigh",
+      "model_id": "claude-sonnet-5::xhigh",
+      "rule": "label states model claude-sonnet-5 and effort xhigh; exact catalog configuration claude-sonnet-5::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-4-8_medium",
+      "model_id": "claude-opus-4.8::medium",
+      "rule": "label states model claude-opus-4.8 and effort medium; exact catalog configuration claude-opus-4.8::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-sonnet-5_high",
+      "model_id": "claude-sonnet-5::high",
+      "rule": "label states model claude-sonnet-5 and effort high; exact catalog configuration claude-sonnet-5::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-sol_low",
+      "model_id": "gpt-5.6-sol::low",
+      "rule": "label states model gpt-5.6-sol and effort low; exact catalog configuration gpt-5.6-sol::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-luna_high",
+      "model_id": "gpt-5.6-luna::high",
+      "rule": "label states model gpt-5.6-luna and effort high; exact catalog configuration gpt-5.6-luna::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "glm-5.2_max",
+      "model_id": "glm-5.2::max",
+      "rule": "label states model glm-5.2 and effort max; exact catalog configuration glm-5.2::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-4-8_low",
+      "model_id": "claude-opus-4.8::low",
+      "rule": "label states model claude-opus-4.8 and effort low; exact catalog configuration claude-opus-4.8::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-terra_medium",
+      "model_id": "gpt-5.6-terra::medium",
+      "rule": "label states model gpt-5.6-terra and effort medium; exact catalog configuration gpt-5.6-terra::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "kimi-k2.7-code",
+      "model_id": "kimi-k2.7-code::default",
+      "rule": "label names kimi-k2.7-code without an effort; the catalog has exactly one configuration, the default (kimi-k2.7-code::default)"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.5_low",
+      "model_id": "gpt-5.5::low",
+      "rule": "label states model gpt-5.5 and effort low; exact catalog configuration gpt-5.5::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-terra_low",
+      "model_id": "gpt-5.6-terra::low",
+      "rule": "label states model gpt-5.6-terra and effort low; exact catalog configuration gpt-5.6-terra::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-luna_medium",
+      "model_id": "gpt-5.6-luna::medium",
+      "rule": "label states model gpt-5.6-luna and effort medium; exact catalog configuration gpt-5.6-luna::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-5.6-luna_low",
+      "model_id": "gpt-5.6-luna::low",
+      "rule": "label states model gpt-5.6-luna and effort low; exact catalog configuration gpt-5.6-luna::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-5_max",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-5_xhigh",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-5_high",
+      "model_id": "claude-opus-5::high",
+      "rule": "label states model claude-opus-5 and effort high; exact catalog configuration claude-opus-5::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-5_medium",
+      "model_id": "claude-opus-5::medium",
+      "rule": "label states model claude-opus-5 and effort medium; exact catalog configuration claude-opus-5::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "kimi-k3_max",
+      "model_id": "kimi-k3::max",
+      "rule": "label states model kimi-k3 and effort max; exact catalog configuration kimi-k3::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-fable-5_medium",
+      "model_id": "claude-fable-5::medium",
+      "rule": "label states model claude-fable-5 and effort medium; exact catalog configuration claude-fable-5::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-fable-5_low",
+      "model_id": "claude-fable-5::low",
+      "rule": "label states model claude-fable-5 and effort low; exact catalog configuration claude-fable-5::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-opus-5_low",
+      "model_id": "claude-opus-5::low",
+      "rule": "label states model claude-opus-5 and effort low; exact catalog configuration claude-opus-5::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "grok-4.5_high",
+      "model_id": "grok-4.5::high",
+      "rule": "label states model grok-4.5 and effort high; exact catalog configuration grok-4.5::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.6-flash_high",
+      "model_id": "gemini-3.6-flash::high",
+      "rule": "label states model gemini-3.6-flash and effort high; exact catalog configuration gemini-3.6-flash::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-sonnet-5_medium",
+      "model_id": "claude-sonnet-5::medium",
+      "rule": "label states model claude-sonnet-5 and effort medium; exact catalog configuration claude-sonnet-5::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.5-flash_medium",
+      "model_id": "gemini-3.5-flash::medium",
+      "rule": "label states model gemini-3.5-flash and effort medium; exact catalog configuration gemini-3.5-flash::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "claude-sonnet-5_low",
+      "model_id": "claude-sonnet-5::low",
+      "rule": "label states model claude-sonnet-5 and effort low; exact catalog configuration claude-sonnet-5::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "grok-4.6_medium",
+      "model_id": "grok-4.6::medium",
+      "rule": "label states model grok-4.6 and effort medium; exact catalog configuration grok-4.6::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "grok-4.6_xhigh",
+      "model_id": "grok-4.6::xhigh",
+      "rule": "label states model grok-4.6 and effort xhigh; exact catalog configuration grok-4.6::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "grok-4.6_high",
+      "model_id": "grok-4.6::high",
+      "rule": "label states model grok-4.6 and effort high; exact catalog configuration grok-4.6::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "grok-4.6_low",
+      "model_id": "grok-4.6::low",
+      "rule": "label states model grok-4.6 and effort low; exact catalog configuration grok-4.6::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.5-flash_high",
+      "model_id": "gemini-3.5-flash::high",
+      "rule": "label states model gemini-3.5-flash and effort high; exact catalog configuration gemini-3.5-flash::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.7-flash_medium",
+      "model_id": "gemini-3.7-flash::medium",
+      "rule": "label states model gemini-3.7-flash and effort medium; exact catalog configuration gemini-3.7-flash::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.7-flash_high",
+      "model_id": "gemini-3.7-flash::high",
+      "rule": "label states model gemini-3.7-flash and effort high; exact catalog configuration gemini-3.7-flash::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.7-flash_low",
+      "model_id": "gemini-3.7-flash::low",
+      "rule": "label states model gemini-3.7-flash and effort low; exact catalog configuration gemini-3.7-flash::low"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "glm-5.3_max",
+      "model_id": "glm-5.3::max",
+      "rule": "label states model glm-5.3 and effort max; exact catalog configuration glm-5.3::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "muse-spark-1.2_xhigh",
+      "model_id": "muse-spark-1.2::xhigh",
+      "rule": "label states model muse-spark-1.2 and effort xhigh; exact catalog configuration muse-spark-1.2::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.8-flash_high",
+      "model_id": "gemini-3.8-flash::high",
+      "rule": "label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gemini-3.8-flash_medium",
+      "model_id": "gemini-3.8-flash::medium",
+      "rule": "label states model gemini-3.8-flash and effort medium; exact catalog configuration gemini-3.8-flash::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-6-astra_xhigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "rule": "label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-6-astra_high",
+      "model_id": "gpt-6-astra::high",
+      "rule": "label states model gpt-6-astra and effort high; exact catalog configuration gpt-6-astra::high"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-6-astra_max",
+      "model_id": "gpt-6-astra::max",
+      "rule": "label states model gpt-6-astra and effort max; exact catalog configuration gpt-6-astra::max"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-6-astra_medium",
+      "model_id": "gpt-6-astra::medium",
+      "rule": "label states model gpt-6-astra and effort medium; exact catalog configuration gpt-6-astra::medium"
+    },
+    {
+      "benchmark_id": "deepswe::snapshot-2026-09-15",
+      "source_id": "gpt-6-astra_low",
+      "model_id": "gpt-6-astra::low",
+      "rule": "label states model gpt-6-astra and effort low; exact catalog configuration gpt-6-astra::low"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "Opus 5 (Claude Code) xHigh",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "Fable-5.1 (Claude Code) xHigh*",
+      "model_id": "claude-fable-5.1::xhigh",
+      "rule": "label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "GPT 6 Astra (Codex) xHigh*",
+      "model_id": "gpt-6-astra::xhigh",
+      "rule": "label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "Opus 4.8 (Claude Code) xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "rule": "label states model claude-opus-4.8 and effort xhigh; exact catalog configuration claude-opus-4.8::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "GPT-5.6-Sol (Codex) xHigh*",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "GPT 5.5 (Codex) xHigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "Muse Spark 1.1 (Mini-SWE-Agent) xHigh",
+      "model_id": "muse-spark-1.1::xhigh",
+      "rule": "label states model muse-spark-1.1 and effort xhigh; exact catalog configuration muse-spark-1.1::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "Fable-5 (Claude Code) xHigh*",
+      "model_id": "claude-fable-5::xhigh",
+      "rule": "label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
+      "source_id": "Minimax M2.5 (Mini-SWE-Agent)",
+      "model_id": "minimax-m2.5::default",
+      "rule": "label names minimax-m2.5 without an effort; the catalog has exactly one configuration, the default (minimax-m2.5::default)"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "Fable-5.1 (Claude Code) xHigh*",
+      "model_id": "claude-fable-5.1::xhigh",
+      "rule": "label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "Opus 5 (Claude Code) xHigh",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "Fable-5 (Claude Code) xHigh*",
+      "model_id": "claude-fable-5::xhigh",
+      "rule": "label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "GPT 6 Astra (Codex) xHigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "rule": "label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "Opus 4.8 (Claude Code) xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "rule": "label states model claude-opus-4.8 and effort xhigh; exact catalog configuration claude-opus-4.8::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "GPT-5.6-Sol (Codex) xHigh*",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "GPT-5.5 (Codex) xHigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "Muse Spark 1.1 (Mini-SWE-Agent) xHigh",
+      "model_id": "muse-spark-1.1::xhigh",
+      "rule": "label states model muse-spark-1.1 and effort xhigh; exact catalog configuration muse-spark-1.1::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "source_id": "Minimax-M2.5 (Mini-SWE)",
+      "model_id": "minimax-m2.5::default",
+      "rule": "label names minimax-m2.5 without an effort; the catalog has exactly one configuration, the default (minimax-m2.5::default)"
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "source_id": "GPT 6 Astra (Codex) xHigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "rule": "label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "source_id": "Fable-5.1 (Claude Code) xHigh",
+      "model_id": "claude-fable-5.1::xhigh",
+      "rule": "label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "source_id": "Fable-5 (Claude Code) xHigh",
+      "model_id": "claude-fable-5::xhigh",
+      "rule": "label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "source_id": "GPT-5.5 (Codex) xHigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "source_id": "GPT 5.4 (Codex) xHigh",
+      "model_id": "gpt-5.4::xhigh",
+      "rule": "label states model gpt-5.4 and effort xhigh; exact catalog configuration gpt-5.4::xhigh"
+    },
+    {
+      "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "source_id": "Minimax-M2.5 (Mini-SWE-Agent)",
+      "model_id": "minimax-m2.5::default",
+      "rule": "label names minimax-m2.5 without an effort; the catalog has exactly one configuration, the default (minimax-m2.5::default)"
+    }
+  ]
+}

@@ -6044,6 +6044,274 @@
           "excerpt": "[{\"run_start\": \"813fa516\", \"tasks_completed\": 100, \"tasks_successful\": 68, \"total_steps\": 3947, \"total_duration\": 38950.713, \"total_cost\": 0.0}]"
         }
       ]
+    },
+    {
+      "id": "deepswe::snapshot-2026-09-15",
+      "name": "DeepSWE (Datacurve, via Epoch AI)",
+      "family": "deepswe",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "maintainer": "Datacurve",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://deepswe.datacurve.ai/",
+      "publication_urls": [
+        {
+          "url": "https://deepswe.datacurve.ai/",
+          "type": "official_leaderboard",
+          "role": "DeepSWE leaderboard and methodology (reference only; robots.txt blocks AI crawlers, never collected)"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub archive (CC-BY 4.0), member deepswe_external.csv"
+        }
+      ],
+      "update_cadence": {
+        "source_schedule": "Models added irregularly by the maintainer.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "category": "Coding",
+      "one_sentence_description": "Pass rate of coding agents on original, long-horizon software engineering tasks, run by Datacurve with the mini-swe-agent harness.",
+      "scoring": {
+        "metric": "Pass@1: mean pass rate over the published runs",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Independently run by Datacurve and republished by Epoch AI; Pass@4, run count and 95% CI half-width stay in the protocol. Epoch’s cost column is not used. An input to the AA Coding Agent Index v1.5, which runs its own copy; these are the maintainer’s results. Secondary benchmark, never a Composite input."
+      },
+      "how_to_collect": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip deepswe_external.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-coding/epoch-deepswe_external.csv.gz; python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "locator": "deepswe_external.csv: one row per Model version (<model>_<effort>); value Pass@1; Harness; Reasoning effort",
+        "version_guard": "Exact CSV header, every row Harness = mini-swe-agent, and Epoch benchmark_metadata.csv still maps DeepSWE to deepswe_external.csv / Pass@1 / release 2026-05-26. The CSV carries no DeepSWE version, so this identity is dated: a changed DeepSWE task set or version needs a new identity after manual review of the DeepSWE changelog (the DeepSWE site blocks AI crawlers and is never collected automatically).",
+        "notes": "Manual snapshot, not part of the automatic daily refresh: Epoch publishes only a multi-benchmark ZIP (2.3 MB, changing with every Epoch update), the CSV has no DeepSWE version, and the maintainer site blocks AI crawlers. Refresh by hand with this recipe after checking the DeepSWE changelog, then rerun build-identity-map.mjs. CC-BY 4.0: attribute Epoch AI and Datacurve. Model labels are not catalog names; exact joins come from data/raw/benchmarks/identity-map.json (lib/coding-identity.mjs rules)."
+      },
+      "evidence": [
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-deepswe_external.csv.gz",
+          "sha256": "fe4540e8db6be78556ecc2c049e42d06632b9c78f677761c3395524ef5f7199a",
+          "fetched_at": "2026-09-15T09:05:24Z",
+          "excerpt": "Member deepswe_external.csv of the archive (archive sha256 dc62c58b4e8bf16994088528fbc52b1fb7504e40603c77e5c5d4abf7ee364b56, fetched 2026-09-15T09:01:10Z); every row Harness mini-swe-agent, Source https://deepswe.datacurve.ai/."
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-benchmark_metadata.csv.gz",
+          "sha256": "9f5048fc25f51a7a4d35446b15ac36bbc467a909102fb7d93281ea095037773b",
+          "fetched_at": "2026-09-15T08:22:04Z",
+          "excerpt": "benchmark_metadata.csv: \"DeepSWE,True,deepswe_external.csv,Pass@1,1.0,0.0,1.0,2026-05-26\"."
+        },
+        {
+          "url": "https://epoch.ai/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch.ai-robots.txt",
+          "sha256": "6ff02e26d9fa4b2250e4d3e2b280c689821a1353e0dd43e1e6721b092e0e02c0",
+          "fetched_at": "2026-09-15T09:17:52Z",
+          "excerpt": "User-agent: * — /data/ is not disallowed (only /assets/, /inspect-viewer/ and FrontierMath problems)."
+        }
+      ]
+    },
+    {
+      "id": "swe-atlas-qna::snapshot-2026-09-15",
+      "name": "SWE Atlas Codebase QnA (Scale AI)",
+      "family": "swe-atlas-qna",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+      "publication_urls": [
+        {
+          "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+          "type": "official_leaderboard",
+          "role": "Scale Labs leaderboard, methodology and update notes"
+        }
+      ],
+      "update_cadence": {
+        "source_schedule": "Models added irregularly by the maintainer.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "category": "Coding",
+      "one_sentence_description": "How well a coding agent answers deep questions about a real codebase, graded against expert rubrics.",
+      "scoring": {
+        "metric": "Leaderboard score (percent); ± is the published confidence half-width",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). An input to the AA Coding Agent Index v1.5, which runs its own copy with a different harness and judge; these are Scale’s results. Secondary benchmark, never a Composite input."
+      },
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"Scale Labs Leaderboard: SWE Atlas - Codebase QnA\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "evidence": [
+        {
+          "url": "https://labs.scale.com/leaderboard/sweatlas-qna",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-qna.html.gz",
+          "sha256": "ea53fa30d8c7270d90998188531331e75840273f6da2fba5cecf3449353c8dac",
+          "fetched_at": "2026-09-15T09:04:05Z",
+          "excerpt": "Scale Labs Leaderboard: SWE Atlas - Codebase QnA: \"We ran a suite of frontier closed and open coding models on the dataset\"; Performance Comparison entries with score ± CI."
+        },
+        {
+          "url": "https://labs.scale.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/labs.scale.com-robots.txt",
+          "sha256": "50081f06240a924132e8abd67e31f0e5dd61f08ffcbcc876d3a88aa95fd4788a",
+          "fetched_at": "2026-09-15T09:17:52Z",
+          "excerpt": "User-Agent: * Allow: / — /leaderboard/ pages are permitted (Disallow: /api/, /studio, /draft/, /maintenance)."
+        }
+      ]
+    },
+    {
+      "id": "swe-atlas-test-writing::snapshot-2026-09-15",
+      "name": "SWE Atlas Test Writing (Scale AI)",
+      "family": "swe-atlas-test-writing",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+      "publication_urls": [
+        {
+          "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+          "type": "official_leaderboard",
+          "role": "Scale Labs leaderboard, methodology and update notes"
+        }
+      ],
+      "update_cadence": {
+        "source_schedule": "Models added irregularly by the maintainer.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "category": "Coding",
+      "one_sentence_description": "Whether a coding agent writes production-grade tests for real repositories, graded with rubrics and LLM judges.",
+      "scoring": {
+        "metric": "Leaderboard score (percent); ± is the published confidence half-width",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). Secondary benchmark, never a Composite input."
+      },
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Test Writing\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "evidence": [
+        {
+          "url": "https://labs.scale.com/leaderboard/sweatlas-tw",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-tw.html.gz",
+          "sha256": "8353c486fd9d40433158bd304bb3ba3344fe418f5cdf8cc5479426993b0a212b",
+          "fetched_at": "2026-09-15T09:04:01Z",
+          "excerpt": "SWE Atlas - Test Writing: \"We ran a suite of frontier closed and open coding models on the dataset\"; Performance Comparison entries with score ± CI."
+        },
+        {
+          "url": "https://labs.scale.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/labs.scale.com-robots.txt",
+          "sha256": "50081f06240a924132e8abd67e31f0e5dd61f08ffcbcc876d3a88aa95fd4788a",
+          "fetched_at": "2026-09-15T09:17:52Z",
+          "excerpt": "User-Agent: * Allow: / — /leaderboard/ pages are permitted (Disallow: /api/, /studio, /draft/, /maintenance)."
+        }
+      ]
+    },
+    {
+      "id": "swe-atlas-refactoring::snapshot-2026-09-15",
+      "name": "SWE Atlas Refactoring (Scale AI)",
+      "family": "swe-atlas-refactoring",
+      "version": "snapshot-2026-09-15",
+      "version_status": "snapshot",
+      "maintainer": "Scale AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+      "publication_urls": [
+        {
+          "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+          "type": "official_leaderboard",
+          "role": "Scale Labs leaderboard, methodology and update notes"
+        }
+      ],
+      "update_cadence": {
+        "source_schedule": "Models added irregularly by the maintainer.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "category": "Coding",
+      "one_sentence_description": "Whether a coding agent restructures production code while preserving its behaviour, graded by tests and rubrics.",
+      "scoring": {
+        "metric": "Leaderboard score (percent); ± is the published confidence half-width",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by Scale AI with the harness named in each label (Claude Code, Codex, Mini-SWE-Agent, Gemini CLI). Secondary benchmark, never a Composite input."
+      },
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>-coding; review protocol; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "HTML with embedded Next.js flight data",
+        "locator": "entries[] (model, score, confidenceInterval_upper, createdAt, contaminationMessage) — the \"Performance Comparison\" table",
+        "version_guard": "Page title \"SWE Atlas - Refactoring\" and exactly one embedded entries array with model and score. No public version: this identity freezes the 2026-09-15 snapshot (page note \"Update July 28, 2026\": mini-swe-agent step limit 250 → 500 for newer models). A changed task set, judge or metric needs a new identity.",
+        "notes": "Scale states \"We ran a suite of frontier closed and open coding models\" (measured). The harness is part of each model label; rows marked * had refusals scored as 0 by Scale. Scale publishes no data licence: only scores with attribution are stored. Exact joins come from data/raw/benchmarks/identity-map.json."
+      },
+      "evidence": [
+        {
+          "url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/scale-sweatlas-refactoring.html.gz",
+          "sha256": "e27b30357fa6a26a54d1565fc753f35ba78d6663d40d0e7fa2572a80d86e2be5",
+          "fetched_at": "2026-09-15T09:04:03Z",
+          "excerpt": "SWE Atlas - Refactoring: \"We ran a suite of frontier closed and open coding models on the dataset\"; Performance Comparison entries with score ± CI."
+        },
+        {
+          "url": "https://labs.scale.com/robots.txt",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/labs.scale.com-robots.txt",
+          "sha256": "50081f06240a924132e8abd67e31f0e5dd61f08ffcbcc876d3a88aa95fd4788a",
+          "fetched_at": "2026-09-15T09:17:52Z",
+          "excerpt": "User-Agent: * Allow: / — /leaderboard/ pages are permitted (Disallow: /api/, /studio, /draft/, /maintenance)."
+        }
+      ]
     }
   ],
   "aa_field_map": [

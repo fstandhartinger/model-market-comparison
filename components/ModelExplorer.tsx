@@ -16,6 +16,8 @@ import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 import { capShortlist } from "../lib/shortlist.mjs";
+import { SIMPLE_LIMIT, topCandidates } from "../lib/value-map.mjs";
+import { scoreRowSubtitle } from "./ScoreRows";
 import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
 
 type SortKey = "name" | "org" | "score" | "cost" | "providers" | "benchmarks";
@@ -78,7 +80,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const minIntelligence = simplePair ? null : s.minIntelligence;
   const minCoding = simplePair ? null : s.minCoding;
   // F-16: Featured is mode-scoped too (Simple: featured only; Advanced: full catalog until set).
-  const featuredOnly = simple ? s.featured : s.featuredAdvanced;
+  // 2026-09-15: Simple itself no longer applies the internal Featured shortlist. Its table and map
+  // take the top SIMPLE_LIMIT families by AA Intelligence Index (then Epoch ECI) out of everything
+  // the user's filters allow. A Featured setting the user chose by hand is still honoured.
+  const expandSimple = simplePair && !s.featuredTouched;
+  const featuredOnly = expandSimple ? false : simple ? s.featured : s.featuredAdvanced;
 
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const orgs = useMemo(() => Array.from(new Set(candidates.map((m) => m.org))).sort(), [candidates]);
@@ -143,8 +149,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     });
     // "Has provider": keep only models offered by ≥1 provider within the active filters.
     if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
+    // Rank inside the filtered pool, so every filter above still applies. Collapsed families give
+    // one row each; with variants expanded the cap keeps the best-ranked families' rows.
+    if (expandSimple) r = topCandidates(r, (x) => x.m, SIMPLE_LIMIT);
     return r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, expandSimple, s.familySet, s.openOnly, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
 
   const matching = useMemo(() => {
     let r = pool;
@@ -295,7 +304,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           maxCost={maxCost} setMaxCost={setMaxCost}
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
-          map={<CostCapabilityScatter data={data} compact guided={guided} measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} />}
+          map={<CostCapabilityScatter data={data} compact guided={guided} measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} ids={expandSimple ? pool.map((x) => x.m.id) : undefined} />}
         />
       )}
       <div className={`card mb-4 items-center gap-2 p-1 md:gap-3 md:p-3 ${simple ? "hidden" : "flex"} bh-advanced-toolbar`}>
@@ -389,7 +398,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             <Th label="# providers" k="providers" right hideBelowMd />
           </tr></thead>
           <tbody>
-            {rows.map(({ m, sc, price, cheap, ncheap }) => {
+            {rows.map(({ m, sc, hasEvidence, price, cheap, ncheap }) => {
               const isOpen = expanded === m.id;
               const ctx = priceContext(m, data, priceSettings);
               const channelRanking = rankedOffers(data.offersByModel[m.id], offerScope, ctx);
@@ -442,7 +451,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                     </span>}
                   </MagnitudeBar>;
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
-                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact showEstimate={false} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                <td className="px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="block text-right"><PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>
@@ -458,6 +467,14 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                         </div>
                         <table className="w-full text-xs">
                           <tbody>
+                            {/* 2026-09-15: the product's own selected score heads the benchmark list. */}
+                            <tr className="bh-score-mini" data-score={score}>
+                              <th scope="row" className="py-1 pr-2 text-left font-normal">
+                                <span className="block text-[13px] font-bold text-gray-200">Benchmark Heaven Score</span>
+                                <span className="block text-[10px] text-gray-500">{scoreRowSubtitle(score)}</span>
+                              </th>
+                              <td className="py-1 text-right text-base font-bold tabular">{sc != null && hasEvidence ? num(sc, score.startsWith("designarena") ? 0 : 1) : <span className="text-gray-600">—<span className="sr-only">No score with benchmark evidence</span></span>}</td>
+                            </tr>
                             {SCORE_ROWS.map((sr) => {
                               const v = m.scores[sr.key];
                               return (

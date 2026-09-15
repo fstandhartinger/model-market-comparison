@@ -13,7 +13,13 @@ export interface MatrixRow {
   version: string;
   /** Registry benchmark id for the single-benchmark ranking, or null for model-row indices. */
   ranking: string | null;
+  /** Registry scoring range, [min, max] (null ends are open); null for model-row indices. */
+  range?: [number | null, number | null] | null;
 }
+export const COMPOSITE_MIN_ROWS: number;
+export function scoreRowSubtitle(score: string, shortLabel: string): string;
+export function compatibleRow(row: Pick<MatrixRow, "unit" | "higherBetter" | "range">): boolean;
+export function categoryComposite<R extends Pick<MatrixRow, "unit" | "higherBetter" | "range" | "name">>(entries: { row: R; vals: (number | null)[] }[], columns: number): { values: (number | null)[]; rows: R[]; excluded: number };
 export interface BenchmarkMatrix {
   version: string;
   groups: { id: string; label: string }[];

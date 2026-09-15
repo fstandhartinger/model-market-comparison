@@ -161,7 +161,8 @@ test('Composite coverage separates exact inputs from family- or product-attached
   }
   const fable = projected.models.find((model) => model.id === 'claude-fable-5::high');
   assert.ok(fable);
-  assert.equal(fable.benchmark_count, 1);
+  // 2026-09-15: DeepSWE (via Epoch AI) adds an exact claude-fable-5_high result to its one Composite input.
+  assert.equal(fable.benchmark_count, 2);
   assert.equal(fable.composite_coverage, 1);
   assert.ok(fable.composite_attachments.aa_coding_index);
   assert.ok(fable.composite_attachments.aa_intelligence_index);
@@ -255,4 +256,37 @@ test("the data-policy filter composes with the other scope dimensions instead of
   const excluded = new Set(["P::unknown"]);
   const scope = cost.createOfferScope(excluded, false, policyProviders, false, false, false, true);
   assert.deepEqual(cost.scopedCatalogOffers(policyOffers, scope).map((o) => o.provider), ["private"]);
+});
+
+test('2026-09-15 cost modal semantics: exact proxy wording, proxy only for the global I/O fallback, cache basis recorded', async () => {
+  assert.equal(cost.IO_PROXY_TEXT, 'Proxied from publicly available LLM usage statistics from an inference provider');
+  const ioSource = (p) => p.sources.find((s) => s.label === 'Input/output ratio');
+  const own = cost.offerPrice(route, cost.priceContext(model, telemetryData, adjusted));
+  assert.equal(ioSource(own).proxy, false, 'a model’s own OpenRouter ratio is not a proxy');
+  assert.deepEqual(own.cache, { kind: 'observed', rate: 0.75, discounted: true });
+  assert.equal(own.assumedTask, false);
+  const noOwnRatio = structuredClone(model); noOwnRatio.token_efficiency.input_output_ratio = null;
+  const proxied = cost.offerPrice(route, cost.priceContext(noOwnRatio, telemetryData, adjusted));
+  assert.equal(ioSource(proxied).proxy, true, 'the global fallback is shown with the proxy wording');
+  const modal = await readFile(new URL('../components/PriceValue.tsx', import.meta.url), 'utf8');
+  assert.doesNotMatch(modal, /Assumptions and limitations/);
+  assert.match(modal, /\{IO_PROXY_TEXT\}\{" "\}\s*\{source\.url \? <a [^>]*>\[link\]<\/a>/, 'only "[link]" is the link');
+});
+
+test('2026-09-15 typical cache-hit baseline replaces 0 % only where no endpoint observation exists', () => {
+  const endpoints = Object.fromEntries(Array.from({ length: 21 }, (_, i) => [`other/fast-${i}`, { cache_hit_rate: observation(i / 20), cache_read_per_1m: observation(0.1) }]));
+  const data = { ...structuredClone(telemetryData), generated_at: '2026-09-15T00:00:00Z' };
+  data.efficiency.openrouter_endpoints = { 'other/model': endpoints };
+  const withBaseline = cost.offerPrice(route, cost.priceContext(model, data, adjusted));
+  assert.deepEqual(withBaseline.cache, { kind: 'baseline', rate: 0.5, discounted: true });
+  assert.ok(withBaseline.sources.some((s) => /typical baseline/.test(s.label) && /Median of 21 OpenRouter endpoints/.test(s.source)), 'inspectable in Sources');
+  const zero = cost.offerPrice(route, cost.priceContext(model, { ...data, efficiency: { ...data.efficiency, openrouter_endpoints: {} } }, adjusted));
+  assert.equal(zero.cache.kind, 'none');
+  assert.ok(withBaseline.value < zero.value, 'a published cache-read price now earns the typical discount');
+  const noReadPrice = { ...route, cache_read_per_1m: null };
+  const plain = cost.offerPrice(noReadPrice, cost.priceContext(model, data, adjusted));
+  assert.equal(plain.cache.discounted, false);
+  assert.equal(plain.value, cost.offerPrice(noReadPrice, cost.priceContext(model, { ...data, efficiency: { ...data.efficiency, openrouter_endpoints: {} } }, adjusted)).value, 'no cache-read price: the baseline changes nothing');
+  // Deterministic for a dataset.
+  assert.equal(cost.offerPrice(route, cost.priceContext(model, data, adjusted)).value, withBaseline.value);
 });

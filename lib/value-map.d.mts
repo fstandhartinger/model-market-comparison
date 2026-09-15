@@ -1,0 +1,11 @@
+export declare const SIMPLE_LIMIT: number;
+export declare const LABEL_LIMIT: number;
+export declare const COST_AXIS: Readonly<{ reversed: true; cheaper: "right"; capability: "up" }>;
+export declare function costAxisCaption(unit?: string): string;
+export declare function attractiveQuadrant(offset: { left: number; top: number; width: number; height: number } | undefined | null): { x: number; y: number; width: number; height: number } | null;
+export declare const QUADRANT_NOTE: string;
+export declare function annotationBox(offset: { left: number; top: number; width: number; height: number } | undefined | null, fontSize?: number): { l: number; t: number; r: number; b: number; x: number; y: number } | null;
+export declare function labelCandidates<T extends { id: string; y: number }>(points: T[], frontier: Set<string>, max?: number): T[];
+export declare function placeLabels(args: { labels: { id: string; name: string; cx: number; cy: number }[]; dots: { cx: number; cy: number }[]; offset: { left: number; top: number; width: number; height: number }; frontier: Set<string>; headroom?: number; max?: number }): { key: string; x: number; y: number; text: string }[];
+export declare function topCandidates<T>(items: T[], modelOf: (item: T) => { id: string; family_key: string; scores?: { aa_intelligence_index?: number | null; epoch_eci?: number | null } }, n?: number): T[];
+export declare function expandedCandidateFamilies(models: { family_key: string; deprecated?: boolean; scores?: { aa_intelligence_index?: number | null; epoch_eci?: number | null } }[], n?: number): string[];
