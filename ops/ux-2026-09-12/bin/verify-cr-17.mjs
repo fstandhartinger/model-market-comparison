@@ -37,11 +37,16 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
   await page.evaluate((t) => { try { localStorage.setItem('bh-theme', t); } catch {} }, theme);
   await page.reload(); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1000);
-  const summary = page.locator('summary', { hasText: 'Filters & settings' }).first();
-  if (await summary.count() && await summary.isVisible()) await summary.click();
-  else await page.getByRole('button', { name: /^Filters/ }).first().click();
-  await page.waitForTimeout(500);
-  const trigger = page.getByRole('button', { name: 'About the EU-hosted filter' }).first();
+  // The filter panel is the #global-filters dialog; open it from whichever visible toggle this view shows
+  // (Simple's "open the filters" button carries data-bh-filters-toggle; headers show a "Filters" button).
+  await page.evaluate(() => {
+    const visible = (el) => !!(el.offsetWidth || el.offsetHeight || el.getClientRects().length);
+    const buttons = [...document.querySelectorAll('[data-bh-filters-toggle]'), ...document.querySelectorAll('button')];
+    buttons.find((b) => visible(b) && (b.hasAttribute('data-bh-filters-toggle') || /^\s*(✓\s*)?Filters\b/.test(b.textContent || '')))?.click();
+  });
+  await page.locator('#global-filters').waitFor({ state: 'visible', timeout: 8000 }).catch(() => {});
+  check(`${tag} filter panel opens`, await page.locator('#global-filters').isVisible(), '');
+  const trigger = page.locator('#global-filters').getByRole('button', { name: 'About the EU-hosted filter' }).first();
   let text = '';
   if (mobile) {
     await trigger.click(); await page.waitForTimeout(300);
