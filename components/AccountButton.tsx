@@ -29,9 +29,9 @@ export function AccountButton() {
 
   if (status === "loading" || status === "disabled") return null;
   if (status === "signed-out") {
-    return <button type="button" data-bh-signin className="bh-nav-button hidden min-h-10 items-center rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent lg:inline-flex" onClick={signInWithGoogle}>Sign in</button>;
+    return <button type="button" data-bh-signin className="bh-nav-button hidden min-h-10 items-center rounded-md px-2.5 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent xl:inline-flex" onClick={signInWithGoogle}>Sign in</button>;
   }
-  return <div ref={box} className="relative hidden lg:block">
+  return <div ref={box} className="relative hidden xl:block">
     <button type="button" data-bh-account className="bh-nav-button inline-flex min-h-10 items-center rounded-md px-1.5 hover:bg-accent/10" aria-expanded={open} aria-label={`Account: ${user?.name ?? user?.email ?? ""}`} onClick={() => setOpen(!open)}>
       <Avatar name={user?.name ?? user?.email ?? null} image={user?.image ?? null} />
     </button>

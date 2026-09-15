@@ -28,7 +28,7 @@ function BetaTag() {
       onClick={() => setOpen((o) => !o)}
       // Keyboard focus opens the note; a tap also focuses the button, and opening there would let the click close it again.
       onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) setOpen(true); }} onBlur={() => setOpen(false)}>
-      BETA<span className="hidden sm:inline">&nbsp;— Work in progress</span>
+      BETA<span className="hidden md:inline">&nbsp;— Work in progress</span>
     </button>
     {open && <span id="bh-beta-note" role="tooltip" className="absolute left-0 top-full z-50 mt-2 w-60 rounded-lg border border-line bg-[var(--surface)] p-2.5 text-xs font-normal text-[var(--text)] shadow-xl">{BETA_NOTE}</span>}
   </span>;
@@ -56,8 +56,8 @@ const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
 function FilterButton() {
   const { filtersOpen, toggleFilters } = useSettings();
   return (
-    <button type="button" data-bh-filters-toggle className={`bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2.5 text-sm hover:bg-accent/10 hover:text-accent ${filtersOpen ? "text-accent" : "text-gray-300"}`} aria-controls="global-filters" aria-expanded={filtersOpen} aria-label="Open options" onClick={toggleFilters}>
-      <svg aria-hidden="true" className="hidden sm:block" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
+    <button type="button" data-bh-filters-toggle className={`bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 ${filtersOpen ? "text-accent" : "text-gray-300"}`} aria-controls="global-filters" aria-expanded={filtersOpen} aria-label="Open options" onClick={toggleFilters}>
+      <svg aria-hidden="true" className="hidden md:block" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
       <span>Options</span>
     </button>
   );
@@ -79,10 +79,11 @@ export function Nav() {
   const { filtersOpen } = useSettings();
   return (
     <header className={`relative border-b border-line bg-panel ${filtersOpen ? "z-50" : ""}`}>
-      <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-1.5 px-3 sm:gap-2 sm:px-4">
-        <Link href="/" aria-label="Benchmark Heaven home" className="bh-brand-link flex min-h-10 shrink-0 items-center gap-2.5"><BrandMark className="h-8 w-8 shrink-0" /><span className="bh-wordmark hidden sm:inline">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
+      <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-1.5 px-2 sm:gap-2 sm:px-3 md:px-4">
+        <Link href="/" aria-label="Benchmark Heaven home" className="bh-brand-link flex min-h-10 shrink-0 items-center gap-2.5"><BrandMark className="h-8 w-8 shrink-0" /><span className="bh-wordmark hidden md:inline">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
         <BetaTag />
-        <nav aria-label="Primary" className="relative ml-4 hidden flex-1 items-center gap-1 text-sm lg:flex">
+        {/* The full primary nav fits the viewport from 1280 px up; 1024–1279 keeps the compact cluster (measured: the desktop bar needs ~1120 px). */}
+        <nav aria-label="Primary" className="relative ml-4 hidden flex-1 items-center gap-1 text-sm xl:flex">
           {PRIMARY.map(([href, label]) => {
             const active = href === "/" ? path === "/" : path.startsWith(href);
             return (
@@ -99,11 +100,12 @@ export function Nav() {
           })}
           <details className="relative"><summary className="flex min-h-10 cursor-pointer items-center rounded-md px-2.5 text-gray-300">More ▾</summary><div className="absolute left-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></details>
         </nav>
-        <div className="ml-auto flex items-center gap-1">
+        <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
           <FilterButton />
-          {/* CR-6.1: below lg the header carries Options · Benchmarks · More, Benchmarks left of More. */}
-          <Link href="/benchmarks" onClick={(e) => jumpToSimpleBenchmarks(e, path)} aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 lg:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
-          <div className="relative lg:hidden">
+          {/* CR-6.1: below xl (1280 px, was lg — the full bar overflowed 1024–1279) the header carries
+              Options · Benchmarks · More, Benchmarks left of More. */}
+          <Link href="/benchmarks" onClick={(e) => jumpToSimpleBenchmarks(e, path)} aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 xl:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
+          <div className="relative xl:hidden">
             <details>
               <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent sm:px-2.5">More</summary>
               <div className="absolute right-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">
