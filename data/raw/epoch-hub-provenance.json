@@ -1,0 +1,787 @@
+{
+  "source": "Epoch AI benchmark_metadata.csv (Epoch's hub licence note: Epoch-run data CC-BY; externally sourced rows retain their original project licensing)",
+  "evidence_file": "data/raw/benchmarks/daily-evidence/2026-09-15-coding/epoch-benchmark_metadata.csv.gz",
+  "collected_at": "2026-09-15",
+  "method": "scripts/build-epoch-provenance.mjs: rows_origin from Epoch's _external.csv file naming; original_project only from evidence already in this repo (registry primary_urls / CR-20260915n source table); unclear rows are flagged, never silently shown.",
+  "counts": {
+    "hub_benchmarks": 81,
+    "external": 46,
+    "epoch_run": 35,
+    "consumed_external": 10,
+    "consumed_unclear": 4
+  },
+  "unclear_consumed": [
+    "Cybench",
+    "PostTrainBench",
+    "ExploitBench",
+    "Surface Evolver Bench"
+  ],
+  "benchmarks": [
+    {
+      "benchmark": "GPQA diamond",
+      "epoch_hub_file": "gpqa_diamond.csv",
+      "in_eci": true,
+      "release_date": "2023-11-20",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "FrontierMath-2025-02-28-Private",
+      "epoch_hub_file": "frontiermath.csv",
+      "in_eci": true,
+      "release_date": "2025-02-28",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "FrontierMath-Tier-4-2025-07-01-Private",
+      "epoch_hub_file": "frontiermath_tier_4.csv",
+      "in_eci": true,
+      "release_date": "2025-07-11",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "FrontierMath-Tiers-1-3-v2-Private",
+      "epoch_hub_file": "frontiermath_tiers_1_3_v2.csv",
+      "in_eci": true,
+      "release_date": "2026-06-12",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "FrontierMath-Tier-4-v2-Private",
+      "epoch_hub_file": "frontiermath_tier_4_v2.csv",
+      "in_eci": true,
+      "release_date": "2026-06-12",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "MATH level 5",
+      "epoch_hub_file": "math_level_5.csv",
+      "in_eci": true,
+      "release_date": "2021-03-05",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "OTIS Mock AIME 2024-2025",
+      "epoch_hub_file": "otis_mock_aime_2024_2025.csv",
+      "in_eci": true,
+      "release_date": "2024-12-19",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "SWE-Bench verified",
+      "epoch_hub_file": "swe_bench_verified.csv",
+      "in_eci": true,
+      "release_date": "2024-08-13",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "SimpleQA Verified",
+      "epoch_hub_file": "simpleqa_verified.csv",
+      "in_eci": true,
+      "release_date": "2025-09-09",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "Chess Puzzles",
+      "epoch_hub_file": "chess_puzzles.csv",
+      "in_eci": true,
+      "release_date": "2025-12-10",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "EBR-bench",
+      "epoch_hub_file": "ebr_bench.csv",
+      "in_eci": true,
+      "release_date": "2026-07-01",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "Mystery Game Puzzles",
+      "epoch_hub_file": "mystery_game_puzzles.csv",
+      "in_eci": true,
+      "release_date": "2026-07-30",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "MirrorCode",
+      "epoch_hub_file": "mirrorcode.csv",
+      "in_eci": true,
+      "release_date": "2026-06-26",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "Aider polyglot",
+      "epoch_hub_file": "aider_polyglot_external.csv",
+      "in_eci": true,
+      "release_date": "2024-12-21",
+      "rows_origin": "external_project",
+      "original_project": {
+        "project": "Aider",
+        "url": "https://aider.chat/docs/leaderboards/",
+        "evidence": "registry aider-polyglot::snapshot-2026-09-10 primary_url"
+      },
+      "licence_status": "external_original_licensing_retained",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "ANLI",
+      "epoch_hub_file": "adversarial_nli_external.csv",
+      "in_eci": true,
+      "release_date": "2019-10-31",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "ARC-AGI",
+      "epoch_hub_file": "arc_agi_external.csv",
+      "in_eci": true,
+      "release_date": "2019-11-05",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "ARC AI2",
+      "epoch_hub_file": "arc_ai2_external.csv",
+      "in_eci": true,
+      "release_date": "2018-03-14",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "Balrog",
+      "epoch_hub_file": "balrog_external.csv",
+      "in_eci": true,
+      "release_date": "2024-11-20",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "BBH",
+      "epoch_hub_file": "bbh_external.csv",
+      "in_eci": true,
+      "release_date": "2022-10-17",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "CadEval",
+      "epoch_hub_file": "cad_eval_external.csv",
+      "in_eci": true,
+      "release_date": "2025-04-22",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "Cybench",
+      "epoch_hub_file": "cybench_external.csv",
+      "in_eci": true,
+      "release_date": "2024-08-15",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "DeepResearch Bench",
+      "epoch_hub_file": "deepresearchbench_external.csv",
+      "in_eci": true,
+      "release_date": "2025-06-13",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "Fiction.LiveBench",
+      "epoch_hub_file": "fictionlivebench_external.csv",
+      "in_eci": true,
+      "release_date": "2025-02-21",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "GeoBench",
+      "epoch_hub_file": "geobench_external.csv",
+      "in_eci": true,
+      "release_date": "2025-03-01",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "GSM8K",
+      "epoch_hub_file": "gsm8k_external.csv",
+      "in_eci": true,
+      "release_date": "2021-10-27",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "GSO-Bench",
+      "epoch_hub_file": "gso_external.csv",
+      "in_eci": true,
+      "release_date": "2025-05-29",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "HellaSwag",
+      "epoch_hub_file": "hella_swag_external.csv",
+      "in_eci": true,
+      "release_date": "2019-05-19",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "LAMBADA",
+      "epoch_hub_file": "lambada_external.csv",
+      "in_eci": true,
+      "release_date": "2016-06-20",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "Lech Mazur Writing",
+      "epoch_hub_file": "lech_mazur_writing_external.csv",
+      "in_eci": true,
+      "release_date": "2025-01-31",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "MMLU",
+      "epoch_hub_file": "mmlu_external.csv",
+      "in_eci": true,
+      "release_date": "2020-09-07",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "OpenBookQA",
+      "epoch_hub_file": "open_book_qa_external.csv",
+      "in_eci": true,
+      "release_date": "2018-09-08",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "OSWorld",
+      "epoch_hub_file": "os_world_external.csv",
+      "in_eci": true,
+      "release_date": "2024-04-11",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "PIQA",
+      "epoch_hub_file": "piqa_external.csv",
+      "in_eci": true,
+      "release_date": "2019-11-26",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "ScienceQA",
+      "epoch_hub_file": "science_qa_external.csv",
+      "in_eci": true,
+      "release_date": "2022-09-20",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "SimpleBench",
+      "epoch_hub_file": "simplebench_external.csv",
+      "in_eci": true,
+      "release_date": "2024-10-31",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "SuperGLUE",
+      "epoch_hub_file": "superglue_external.csv",
+      "in_eci": true,
+      "release_date": "2019-05-02",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "Terminal Bench",
+      "epoch_hub_file": "terminalbench_external.csv",
+      "in_eci": true,
+      "release_date": "2025-05-19",
+      "rows_origin": "external_project",
+      "original_project": {
+        "project": "Terminal-Bench developers",
+        "url": "https://www.tbench.ai/",
+        "evidence": "registry terminal-bench::4.0 primary_url"
+      },
+      "licence_status": "external_original_licensing_retained",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "The Agent Company",
+      "epoch_hub_file": "the_agent_company_external.csv",
+      "in_eci": true,
+      "release_date": "2024-12-18",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "TriviaQA",
+      "epoch_hub_file": "trivia_qa_external.csv",
+      "in_eci": true,
+      "release_date": "2017-05-09",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "VPCT",
+      "epoch_hub_file": "vpct_external.csv",
+      "in_eci": true,
+      "release_date": "2025-01-30",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "WeirdML",
+      "epoch_hub_file": "weirdml_external.csv",
+      "in_eci": true,
+      "release_date": "2025-01-16",
+      "rows_origin": "external_project",
+      "original_project": {
+        "project": "WeirdML authors",
+        "url": "https://htihle.github.io/weirdml.html",
+        "evidence": "registry weirdml::2 primary_url"
+      },
+      "licence_status": "external_original_licensing_retained",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "Winogrande",
+      "epoch_hub_file": "wino_grande_external.csv",
+      "in_eci": true,
+      "release_date": "2019-07-24",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "APEX-Agents",
+      "epoch_hub_file": "apex_agents_external.csv",
+      "in_eci": true,
+      "release_date": "2026-01-21",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "ARC-AGI-2",
+      "epoch_hub_file": "arc_agi_2_external.csv",
+      "in_eci": true,
+      "release_date": "2025-03-24",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "HLE",
+      "epoch_hub_file": "hle_external.csv",
+      "in_eci": true,
+      "release_date": "2025-01-23",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "PostTrainBench",
+      "epoch_hub_file": "posttrainbench_external.csv",
+      "in_eci": true,
+      "release_date": "2026-03-11",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "CursorBench",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-03-11",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "GBAEval",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-05-02",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "CritPt",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-09-30",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "ExploitBench",
+      "epoch_hub_file": "exploitbench_external.csv",
+      "in_eci": true,
+      "release_date": "2026-05-13",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "Remote Labor Index",
+      "epoch_hub_file": "rli_external.csv",
+      "in_eci": true,
+      "release_date": "2025-10-29",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "GDPval",
+      "epoch_hub_file": "gdpval_external.csv",
+      "in_eci": true,
+      "release_date": "2025-09-25",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "CL-bench",
+      "epoch_hub_file": "cl_bench_external.csv",
+      "in_eci": true,
+      "release_date": "2026-02-03",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "CL-bench Life",
+      "epoch_hub_file": "cl_bench_life_external.csv",
+      "in_eci": true,
+      "release_date": "2026-04-29",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "OSWorld 2.0",
+      "epoch_hub_file": "osworld_2_external.csv",
+      "in_eci": true,
+      "release_date": "2026-06-26",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "Surface Evolver Bench",
+      "epoch_hub_file": "surface_evolver_bench_external.csv",
+      "in_eci": true,
+      "release_date": "2026-06-19",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "METR Time Horizons",
+      "epoch_hub_file": "metr_time_horizons_external.csv",
+      "in_eci": true,
+      "release_date": "2025-03-19",
+      "rows_origin": "external_project",
+      "original_project": {
+        "project": "METR",
+        "url": "https://metr.org/time-horizons/",
+        "evidence": "CR-20260915n source table"
+      },
+      "licence_status": "external_original_licensing_retained",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "DeepSWE",
+      "epoch_hub_file": "deepswe_external.csv",
+      "in_eci": true,
+      "release_date": "2026-05-26",
+      "rows_origin": "external_project",
+      "original_project": {
+        "project": "Datacurve",
+        "url": "https://deepswe.datacurve.ai/",
+        "evidence": "registry deepswe::snapshot-2026-09-15 primary_url"
+      },
+      "licence_status": "external_original_licensing_retained",
+      "consumed_by_benchmark_heaven": true,
+      "displayed_directly": true
+    },
+    {
+      "benchmark": "ProofBench",
+      "epoch_hub_file": "proofbench_external.csv",
+      "in_eci": true,
+      "release_date": "2026-01-30",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "FrontierCode",
+      "epoch_hub_file": "frontiercode_external.csv",
+      "in_eci": true,
+      "release_date": "2026-06-08",
+      "rows_origin": "external_project",
+      "original_project": {
+        "project": "Cognition AI",
+        "url": "https://cognition.com/frontiercode",
+        "evidence": "registry frontiercode::1.1 primary_url"
+      },
+      "licence_status": "external_original_licensing_retained",
+      "consumed_by_benchmark_heaven": true
+    },
+    {
+      "benchmark": "LMCA",
+      "epoch_hub_file": "lmca_external.csv",
+      "in_eci": true,
+      "release_date": "2026-08-12",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "DTBench",
+      "epoch_hub_file": "dtbench_external.csv",
+      "in_eci": true,
+      "release_date": "2026-08-12",
+      "rows_origin": "external_project",
+      "original_project": null,
+      "licence_status": "unclear_flagged_in_ledger"
+    },
+    {
+      "benchmark": "BoolQ",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2019-05-24",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "CSQA2",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2022-01-14",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "ForecastBench",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2024-09-30",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "LiveBench",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2024-06-27",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "METR",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-03-18",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "VideoMME",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2024-05-31",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "FrontierMath-Erdos",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-09-03",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "GDP.pdf",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-04-14",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "FrontierSWE",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-09-02",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "SciCode",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2024-07-18",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "WebDev Arena",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2024-12-10",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "Blueprint-Bench 2",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2026-05-04",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "MindCube",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-06-26",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "SpatialViz-Bench",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-07-10",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "BTF-3",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": null,
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "EnigmaEval",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-02-13",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "AlgoTune",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-07-19",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "ALE-Bench",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-06-10",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    },
+    {
+      "benchmark": "Vending-Bench 2",
+      "epoch_hub_file": null,
+      "in_eci": false,
+      "release_date": "2025-11-18",
+      "rows_origin": "epoch_run",
+      "original_project": null,
+      "licence_status": "cc-by-epoch"
+    }
+  ]
+}

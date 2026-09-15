@@ -46,7 +46,7 @@ npm run db:seed        # load data/dataset.json into Postgres (needs DATABASE_UR
 
 | Source | Snapshot | How to refresh |
 |---|---|---|
-| Epoch AI ECI (general + software engineering) | `data/raw/epoch-eci.json` | `node scripts/fetch-epoch-eci.mjs` — official CSV exports plus the official benchmark catalog; general scores are copied, software ECI is refit with Epoch's public sigmoid least-squares method and a minimum of two qualifying benchmarks |
+| Epoch AI ECI (general + software engineering) | `data/raw/epoch-eci.json` | `node scripts/fetch-epoch-eci.mjs` — official CSV exports plus the official benchmark catalog; general scores are copied, software ECI is refit with Epoch's public sigmoid least-squares method and a minimum of two qualifying benchmarks. CC-BY; externally-sourced hub rows keep their original projects' licensing — per-benchmark provenance in `data/raw/epoch-hub-provenance.json` (`node scripts/build-epoch-provenance.mjs`) |
 | AWS Bedrock (regional on-demand token prices) | `data/raw/aws-bedrock.json` | [aws-bedrock.method.md](raw/aws-bedrock.method.md) — AWS Price List Bulk API per region + model cards; EU and non-EU offers stay distinct |
 | Azure AI Foundry (retail token meters + serving scope) | `data/raw/azure-foundry.json` | [azure-foundry.method.md](raw/azure-foundry.method.md) — Azure Retail Prices API plus model-card/partner-region checks; a billing region is not assumed to be the inference region; the two company-policy equivalents are stored separately from technical residency |
 | Google Vertex AI (Gemini + Model Garden partner models) | `data/raw/google-vertex.json` | [google-vertex.method.md](raw/google-vertex.method.md) — Vertex pricing and model-location docs; `global` is never marked EU-hosted |

@@ -99,6 +99,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     for (const source of ['aa', 'da', 'or']) await command(`fetch-${source}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
     await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
     await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
+    // CR-35.5: rebuild the Epoch hub-provenance sidecar from the newest captured metadata CSV
+    // (non-fatal — provenance only, never blocks publication).
+    try {
+      await command('build-epoch-provenance', process.execPath, ['scripts/build-epoch-provenance.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`build-epoch-provenance skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN build-epoch-provenance: keeping the previous snapshot`);
+    }
     // R4.10: refresh the OpenRouter provider data-policy table daily. Deliberately
     // non-fatal: it drives one filter, and the collector hard-fails on any layout change
     // it cannot verify against the page's own counts. Aborting the whole price and

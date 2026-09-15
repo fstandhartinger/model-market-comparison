@@ -31,3 +31,24 @@ representative. Unmatched rows are retained and reported in
 `build_diagnostics.epoch_eci_attachment`; they are never assigned to a guessed model.
 Epoch's documentation and public source repo are the authority for interpretation and
 license (CC-BY for the data; the public fitting code is MIT).
+
+## Hub provenance of the ECI input rows (CR-35.5, 2026-09-15)
+
+Epoch's hub licence note says Epoch-run data is CC-BY while rows sourced from external
+projects retain the original projects' licensing. `data/raw/epoch-hub-provenance.json`
+classifies every benchmark in Epoch's own `benchmark_metadata.csv` (captured in
+`data/raw/benchmarks/daily-evidence/`) as `epoch_run` or `external_project` from Epoch's
+`*_external.csv` file naming, and records the original project only where this repo's own
+evidence already names it (registry primary_urls, CR-20260915n's source table) — an
+attribution is never guessed. Regenerate with `node scripts/build-epoch-provenance.mjs`
+(runs in the daily refresh after `fetch-epoch-eci`).
+
+Of the 12 benchmarks feeding the Software-ECI refit, 10 are externally sourced
+(Aider polyglot, Cybench, DeepSWE, ExploitBench, FrontierCode, METR Time Horizons,
+PostTrainBench, Surface Evolver Bench, Terminal Bench, WeirdML); MirrorCode and the
+SWE-Bench verified rows are Epoch-run. The 6 with a proven original project are
+attributed there; the 4 without one (Cybench, ExploitBench, PostTrainBench,
+Surface Evolver Bench) are flagged as licence-unclear in `PROGRESS.md` (CR-35.5) and
+remain shown under Epoch's CC-BY umbrella until their original terms are confirmed.
+DeepSWE is displayed directly with its original project named ("DeepSWE (Datacurve,
+via Epoch AI)").
