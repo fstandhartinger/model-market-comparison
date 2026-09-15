@@ -120,9 +120,7 @@ const trackFill = (frac: number) => {
   return `linear-gradient(to right, rgb(var(--accent)) 0 ${pct}, rgb(var(--line)) ${pct} 100%)`;
 };
 
-export function ShortlistControls({
-  scores, costs, minScore, setMinScore, score, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool, map, scoreChoices, onScore, costChoices, costChoice, onCost,
-}: {
+export interface ScoreCostSliderProps {
   scores: number[];               // scores of every model in the pool, before the two sliders
   costs: number[];                // adjusted costs of every model in the pool, before the sliders
   minScore: number;
@@ -132,16 +130,15 @@ export function ShortlistControls({
   maxCost: number | null;         // null = no limit
   setMaxCost: (n: number | null) => void;
   costUnit: string;
-  matching: number;               // rows matching the sliders, before the limit
-  limit: number;
-  pool: number;                   // rows the other filters allow, before the sliders
-  map?: React.ReactNode;          // F-13: value-map node, rendered beside the sliders (lg) / between sliders and summary (below lg)
   /** CR-32.1: the score picker at the slider label (absent = plain label). */
   scoreChoices?: { id: string; label: string }[]; onScore?: (id: string) => void;
   /** CR-32.2: the cost-measure picker at the cost label. */
   costChoices?: { id: string; label: string }[]; costChoice?: string; onCost?: (id: string) => void;
-}) {
-  const { openFilters } = useSettings();
+}
+
+/** The minimum-score and maximum-cost sliders with their histograms and pickers. Simple's shortlist card and the
+ *  Charts value map (CR-26.1) share them, so both answer the same two questions the same way. */
+export function ScoreCostSliders({ scores, costs, minScore, setMinScore, score, scoreName, maxCost, setMaxCost, costUnit, scoreChoices, onScore, costChoices, costChoice, onCost, className }: ScoreCostSliderProps & { className?: string }) {
   const label = minScoreLabel(score, scoreName);
   const scoreStats = useMemo(() => {
     const sorted = [...scores].sort((a, b) => a - b);
@@ -175,43 +172,59 @@ export function ShortlistControls({
   const money = (v: number) => (v >= 10 ? `$${v.toFixed(0)}` : v >= 1 ? `$${v.toFixed(2)}` : `$${v.toFixed(3)}`);
 
   return (
+    <div className={className}>
+      <Row
+        title={<>{scoreChoices && onScore ? <LabelPicker name="Capability score" label={label.title} options={scoreChoices} value={score} onChange={onScore} /> : <span>{label.title}</span>}<InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">Same score as the table&apos;s top row.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
+        value={minScore > 0 ? minScore.toFixed(0) : "any"}
+      >
+        <div className="relative mt-1">
+          <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
+          <input type="range" aria-label={`${label.title} (${label.sub})`}
+            min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
+            onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
+            style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
+        </div>
+        <RangeEnds lo={String(scoreStats.min)} hi={String(scoreStats.max)} />
+      </Row>
+
+      <Row
+        title={<>{costChoices && onCost && costChoice
+          ? <LabelPicker name="Cost measure" label={<>Max {costChoices.find((c) => c.id === costChoice)?.label.replace(/^./, (ch) => ch.toLowerCase()) ?? "cost"}</>} options={costChoices} value={costChoice} onChange={onCost} />
+          : <><span className="sm:hidden">Max cost / task</span><span className="hidden sm:inline">{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span></>}
+          {costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
+        value={maxCost == null ? "no limit" : money(maxCost)}
+      >
+        <div className="relative mt-1">
+          <Sparkline values={costStats.sorted} min={costMin} max={costMax} log keep={(v) => maxCost == null || v <= maxCost} />
+          <input type="range" aria-label={`Maximum ${costUnit}`} min={0} max={1000} step={1} value={fromCost(maxCost)}
+            onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
+            style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
+        </div>
+        {costStats.sorted.length > 0 && <RangeEnds lo={money(costMin)} hi={money(costMax)} />}
+      </Row>
+    </div>
+  );
+}
+
+export function ShortlistControls({
+  matching, limit, pool, map, ...sliders
+}: ScoreCostSliderProps & {
+  matching: number;               // rows matching the sliders, before the limit
+  limit: number;
+  pool: number;                   // rows the other filters allow, before the sliders
+  map?: React.ReactNode;          // F-13: value-map node, rendered beside the sliders (lg) / between sliders and summary (below lg)
+}) {
+  const { openFilters } = useSettings();
+  const { minScore, maxCost, setMinScore, setMaxCost } = sliders;
+
+  return (
     <div className="card mb-4 p-3 lg:p-4">
       {/* F-13: one card. DOM order — sliders, map, summary — is what phones stack with.
           At lg the grid places the map in column 2 spanning both rows, so the left column
           reads: sliders stacked (score above cost), then the summary line. Below lg the two
           sliders sit side by side so the list starts on the first phone screen. */}
        <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
-        <div className="grid grid-cols-1 gap-3 self-start sm:grid-cols-2 lg:grid-cols-1 lg:gap-2">
-          <Row
-            title={<>{scoreChoices && onScore ? <LabelPicker name="Capability score" label={label.title} options={scoreChoices} value={score} onChange={onScore} /> : <span>{label.title}</span>}<InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">Same score as the table&apos;s top row.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
-            value={minScore > 0 ? minScore.toFixed(0) : "any"}
-          >
-            <div className="relative mt-1">
-              <Sparkline values={scoreStats.sorted} min={scoreStats.min} max={scoreStats.max} keep={(v) => v >= minScore} />
-              <input type="range" aria-label={`${label.title} (${label.sub})`}
-                min={scoreStats.min} max={scoreStats.max} step={1} value={Math.min(minScore, scoreStats.max)}
-                onChange={(e) => setMinScore(Number(e.target.value))} className={`${slider} relative z-10`}
-                style={{ "--bh-range-fill": trackFill((Math.min(minScore, scoreStats.max) - scoreStats.min) / Math.max(1, scoreStats.max - scoreStats.min)) } as React.CSSProperties} />
-            </div>
-            <RangeEnds lo={String(scoreStats.min)} hi={String(scoreStats.max)} />
-          </Row>
-
-          <Row
-            title={<>{costChoices && onCost && costChoice
-              ? <LabelPicker name="Cost measure" label={<>Max {costChoices.find((c) => c.id === costChoice)?.label.replace(/^./, (ch) => ch.toLowerCase()) ?? "cost"}</>} options={costChoices} value={costChoice} onChange={onCost} />
-              : <><span className="sm:hidden">Max cost / task</span><span className="hidden sm:inline">{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span></>}
-              {costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
-            value={maxCost == null ? "no limit" : money(maxCost)}
-          >
-            <div className="relative mt-1">
-              <Sparkline values={costStats.sorted} min={costMin} max={costMax} log keep={(v) => maxCost == null || v <= maxCost} />
-              <input type="range" aria-label={`Maximum ${costUnit}`} min={0} max={1000} step={1} value={fromCost(maxCost)}
-                onChange={(e) => setMaxCost(toCost(Number(e.target.value)))} className={`${slider} relative z-10`}
-                style={{ "--bh-range-fill": trackFill(fromCost(maxCost) / 1000) } as React.CSSProperties} />
-            </div>
-            {costStats.sorted.length > 0 && <RangeEnds lo={money(costMin)} hi={money(costMax)} />}
-          </Row>
-        </div>
+        <ScoreCostSliders {...sliders} className="grid grid-cols-1 gap-3 self-start sm:grid-cols-2 lg:grid-cols-1 lg:gap-2" />
 
         {map && <div className="min-w-0 lg:col-start-2 lg:row-span-2 lg:row-start-1">{map}</div>}
 

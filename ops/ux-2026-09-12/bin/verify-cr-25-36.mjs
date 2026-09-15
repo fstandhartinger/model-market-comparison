@@ -26,6 +26,8 @@ const count = async (page) => {
   const t = await page.locator('#global-filters').getByRole('button', { name: /^Show \d+ models$/ }).first().textContent().catch(() => null);
   return t ? Number(t.match(/\d+/)[0]) : null;
 };
+// Transient network flips on this host (ERR_NETWORK_CHANGED) retry, as the other harnesses do.
+const goto = async (page, url, waitUntil = 'domcontentloaded') => { for (let a = 1; ; a++) { try { return await page.goto(url, { waitUntil, timeout: 45000 }); } catch (e) { if (a >= 3 || !/ERR_NETWORK_CHANGED|ERR_CONNECTION|ERR_TIMED_OUT|Timeout|ERR_INTERNET/.test(String(e))) throw e; await new Promise((r) => setTimeout(r, 3000 * a)); } } };
 const trigger = (page, label) => page.locator(`#global-filters [data-bh-combobox-trigger="${label}"]`);
 
 const browser = await chromium.launch();
@@ -34,9 +36,9 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile, colorScheme: theme });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
-  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await goto(page, `${BASE}/`);
   await page.evaluate((t) => { try { localStorage.clear(); localStorage.setItem('bh-theme', t); } catch {} }, theme);
-  await page.reload(); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
+  await page.reload().catch(async () => { await page.waitForTimeout(3000); await page.reload(); }); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
   await openOptions(page);
   const panel = page.locator('#global-filters');
   check(`${tag} Options panel opens`, await panel.isVisible());
@@ -124,7 +126,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     s.euHostedOnly = true; s.excludeChinese = false; s.nonUsOnly = false;
     localStorage.setItem(k, JSON.stringify(s));
   }, KEY);
-  await page.reload(); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
+  await page.reload().catch(async () => { await page.waitForTimeout(3000); await page.reload(); }); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
   await openOptions(page);
   const legacyCount = await count(page);
   const migrated = await page.evaluate(() => [...document.querySelectorAll('#global-filters [role="group"][aria-label="Hosted in"] button[aria-pressed="true"]')].map((b) => b.textContent.replace('✓', '').trim()));

@@ -1,13 +1,14 @@
 "use client";
-import { useMemo, useState } from "react";
+import { useMemo } from "react";
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LabelList,
 } from "recharts";
 import { hasScoreEvidence, type ClientData, type ClientModel } from "../lib/client-model";
-import { SCORE_SHORT_LABELS } from "../lib/types";
+import { SCORE_PICKER_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { orgColor } from "../lib/format";
-import { modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
-import { NumFilter } from "./ui";
+import { FIXED_BLENDS, SCORE_OPTIONS, modelPrice, scopedCatalogOffers, scopeFromSettings, priceContext, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
+import { ScoreCostSliders } from "./ShortlistControls";
+import { SIMPLE_LIMIT, activeCostMeasure, costMeasureChoices, topCandidates } from "../lib/value-map.mjs";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
@@ -139,19 +140,21 @@ export function ChartsBoard({ data }: { data: ClientData }) {
   const score = s.score;
   const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
   const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
-  const [maxCost, setMaxCost] = useState("");
   const candidates = useMemo(() => selectableModels(data.models, s.hideDeprecated), [data.models, s.hideDeprecated]);
   const preferredId = useMemo(() => preferredVariantIds(candidates, score), [candidates, score]);
+  // CR-26.1: Simple's candidate rule — until Featured is set by hand, the top 30 families (AA Intelligence, then
+  // ECI) inside every other filter; with Featured set by hand, that choice applies as before.
+  const expand = !s.featuredTouched;
 
-  const pool = useMemo<PoolEntry[]>(() => {
-    const maxC = parseFloat(maxCost);
-    let base = candidates;
-    if (s.collapse) base = collapseModels(base, preferredId);
-    if (s.openOnly) base = base.filter((m) => m.open_weights);
-    if (s.labAllowed) base = base.filter((m) => s.labAllowed!(m.org));
-    if (s.featured) base = base.filter((m) => m.featured);
-    if (s.familySet) base = base.filter((m) => s.familySet!.has(m.family_key));
-    return base
+  // Everything the filters allow, before the two sliders — the field the slider histograms describe.
+  const base = useMemo<PoolEntry[]>(() => {
+    let models = candidates;
+    if (s.collapse) models = collapseModels(models, preferredId);
+    if (s.openOnly) models = models.filter((m) => m.open_weights);
+    if (s.labAllowed) models = models.filter((m) => s.labAllowed!(m.org));
+    if (!expand && s.featured) models = models.filter((m) => m.featured);
+    if (s.familySet) models = models.filter((m) => s.familySet!.has(m.family_key));
+    const rows = models
       .map((m) => ({
         m,
         price: modelPrice(m, data, offerScope, priceSettings),
@@ -159,12 +162,17 @@ export function ChartsBoard({ data }: { data: ClientData }) {
         hasEvidence: hasScoreEvidence(m, score),
         offerCount: scopedCatalogOffers(data.offersByModel[m.id], offerScope, priceContext(m, data, priceSettings)).length,
       }))
-      .filter((x) => !offerScope.restricted || x.offerCount > 0)
-      .filter((x) => (Number.isFinite(maxC) ? x.price.value != null && x.price.value <= maxC : true))
-      // A composite with zero evidence is the neutral fallback 50, not a
-      // measured score — it cannot satisfy a positive min-score filter.
-      .filter((x) => (s.advancedMinScore > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.advancedMinScore : true));
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, s.familySet, s.openOnly, s.labAllowed, s.advancedMinScore, maxCost, preferredId]);
+      .filter((x) => !offerScope.restricted || x.offerCount > 0);
+    return expand ? topCandidates(rows, (x) => x.m, SIMPLE_LIMIT) : rows;
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, s.featured, expand, s.familySet, s.openOnly, s.labAllowed, preferredId]);
+
+  const pool = useMemo(() => base
+    .filter((x) => (s.maxCost != null ? x.price.value != null && x.price.value <= s.maxCost : true))
+    // A composite with zero evidence is the neutral fallback 50, not a
+    // measured score — it cannot satisfy a positive min-score filter.
+    .filter((x) => (s.advancedMinScore > 0 ? x.hasEvidence && x.sc != null && x.sc >= s.advancedMinScore : true)),
+  [base, s.maxCost, s.advancedMinScore]);
+  const costChoices = costMeasureChoices(FIXED_BLENDS, s.inputWeight);
 
   const leaderboard = useMemo(() =>
     pool.filter((x) => x.hasEvidence && x.sc != null).sort((a, b) => (b.sc as number) - (a.sc as number)).slice(0, 18)
@@ -195,10 +203,23 @@ export function ChartsBoard({ data }: { data: ClientData }) {
 
   return (
     <div>
-      <div className="card mb-4 flex flex-wrap items-center gap-3 p-3">
-        <span className="text-sm text-gray-400">Score <b className="text-gray-200">{SCORE_SHORT_LABELS[score]}</b> · Cost <b className="text-gray-200">{priceLabel(priceSettings)}</b> ·</span>
-        <NumFilter label={adjusted ? "Max $/task" : "Max $/1M"} value={maxCost} onChange={setMaxCost} placeholder="e.g. 5" />
-        <span className="ml-auto text-xs text-gray-500">{pool.length} models</span>
+      {/* CR-26.1 (F-96): the value map leads Charts at full width — the Simple map's pieces (reversed cost axis,
+          attractive quadrant, Pareto line, in-chart names, fitted Y axis, cogwheel, credits), with the score and
+          cost pickers and both sliders in its header. The sliders set the floor and cap every panel below uses. */}
+      <div className="card mb-4 p-3 lg:p-4" data-bh-charts-map>
+        <ScoreCostSliders className="grid grid-cols-1 gap-3 sm:grid-cols-2 sm:gap-6"
+          scores={base.filter((x) => x.hasEvidence).map((x) => x.sc).filter((v): v is number => v != null)}
+          costs={base.map((x) => x.price.value).filter((v): v is number => v != null)}
+          score={score} scoreName={SCORE_SHORT_LABELS[score]}
+          minScore={s.advancedMinScore} setMinScore={s.setAdvancedMinScore}
+          maxCost={s.maxCost} setMaxCost={s.setMaxCost}
+          costUnit={adjusted ? "adjusted $/task" : "raw blended $/1M"}
+          scoreChoices={SCORE_OPTIONS.map((k) => ({ id: k, label: SCORE_PICKER_LABELS[k] }))} onScore={(id) => s.setScore(id as ScoreKey)}
+          costChoices={costChoices} costChoice={activeCostMeasure(costChoices, s.priceMode, s.inputWeight)}
+          onCost={(id) => { const c = costChoices.find((x) => x.id === id); if (!c) return; if (c.patch.inputWeight != null) s.setInputWeight(c.patch.inputWeight); s.setPriceMode(c.patch.priceMode); s.setMaxCost(null); }} />
+        <div className="mt-3">
+          <CostCapabilityScatter data={data} compact advanced wide ids={expand ? base.map((x) => x.m.id) : undefined} />
+        </div>
       </div>
 
       <div className="grid gap-6 xl:grid-cols-2">
@@ -278,12 +299,6 @@ export function ChartsBoard({ data }: { data: ClientData }) {
               ))}
             </div>
           </details>
-        </Panel>
-
-        {/* F-09: the graphical home of the thesis in Advanced — the same value map as Simple,
-            fed by the Advanced filter pool. */}
-        <Panel title="Score vs cost">
-          <CostCapabilityScatter data={data} compact advanced />
         </Panel>
       </div>
       <PriceAssumptions />

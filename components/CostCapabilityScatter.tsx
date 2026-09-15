@@ -136,7 +136,8 @@ function logTicks(min: number, max: number): number[] {
 /** `measuredOnly` (Simple): the map must plot exactly the pool the list ranks — models whose
  *  task-token usage is measured. Without it the map shows an "assumed task" point the list refuses. */
 /** `ids` (Simple): the exact models the overview table considers; the map then plots only those. */
-export function CostCapabilityScatter({ data, compact = false, advanced = false, guided = false, measuredOnly = false, ids }: { data: ClientData; compact?: boolean; advanced?: boolean; guided?: boolean; measuredOnly?: boolean; ids?: string[] }) {
+/** `wide` (Charts, CR-26.1): the compact map at full card width — taller, named like Simple's map, one caption line. */
+export function CostCapabilityScatter({ data, compact = false, advanced = false, guided = false, measuredOnly = false, wide = false, ids }: { data: ClientData; compact?: boolean; advanced?: boolean; guided?: boolean; measuredOnly?: boolean; wide?: boolean; ids?: string[] }) {
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
@@ -224,11 +225,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // cut by a score line, so only the frontier is named there.
     // 2026-09-15: at most LABEL_LIMIT names; unnamed points keep their tooltip and table row.
     // Every candidate is offered in priority order; placement stops after LABEL_LIMIT names fit.
-    const labels = labelCandidates(passing.filter((p) => !advanced || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY);
+    const labels = labelCandidates(passing.filter((p) => !advanced || wide || frontierIds.has(p.id)), frontierIds, Number.POSITIVE_INFINITY);
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
     return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="relative flex items-center justify-end gap-2 lg:mb-1">
-        <span className="text-[11px] text-gray-500">{advanced ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /> · <EpochCredit /></span>
+        <span className="text-[11px] text-gray-500">{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /> · <EpochCredit /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
           className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
           <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="3.2" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
@@ -242,7 +243,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           <button type="button" className="text-accent underline" onClick={() => setPrefsOpen(false)}>Done</button>
         </div>}
       </div>
-      <div aria-hidden="true" className={advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
+      <div aria-hidden="true" className={wide ? "h-[240px] sm:h-[420px]" : advanced ? "h-[260px] sm:h-[320px]" : "h-[200px] lg:h-[240px]"}>
         <ResponsiveContainer width="100%" height="100%">
           <ScatterChart margin={{ top: 22, right: 16, bottom: 4, left: 0 }}>
             <CartesianGrid stroke="#222932" />
@@ -262,7 +263,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      {advanced && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · {logCostAxis ? "log scale" : "linear scale"}</span></div>}
+      {advanced && !wide && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · {logCostAxis ? "log scale" : "linear scale"}</span></div>}
     </div>;
   }
 

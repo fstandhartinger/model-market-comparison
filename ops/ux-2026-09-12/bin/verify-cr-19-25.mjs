@@ -39,7 +39,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const placement = await page.evaluate(() => {
     const sections = [...document.querySelectorAll('#global-filters *')].filter((el) => /^(Price basis|Data confidentiality)$/i.test((el.childNodes[0]?.textContent || '').trim()));
     const company = [...document.querySelectorAll('#global-filters button, #global-filters label')].find((el) => /buying for a company/i.test(el.textContent || ''));
-    const box = (el) => { let n = el; while (n && n.parentElement && !(n.parentElement.id === 'global-filters' || n.parentElement.classList.contains('space-y-4'))) n = n.parentElement; return n; };
+    const box = (el) => { let n = el; while (n && n.parentElement && !(n.parentElement.id === 'global-filters' || n.parentElement.classList.contains('space-y-4') || n.parentElement.classList.contains('space-y-3'))) n = n.parentElement; return n; };
     return { company: !!company, inPrice: company ? /Price basis/i.test(box(company)?.textContent || '') && !/Data confidentiality/i.test(box(company)?.textContent || '') : false, sections: sections.length };
   });
   check(`${tag} CR-25.3 'I'm buying for a company' sits in Price basis, not Data confidentiality`, placement.company && placement.inPrice, placement);
