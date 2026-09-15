@@ -4,6 +4,18 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — EU-hosted filter re-checked per offer (Azure Europe Data Zone)
+
+No data location, route or public API field was removed. Two offer rows changed in `data/raw/azure-foundry.json`
+(offers 2,863 → 2,861):
+
+- **Removed** `GPT-6 Astra (EU Data Zone)` (region `eu`, $12/$60): Microsoft's region-availability page lists GPT-6
+  Astra under Data Zone Standard / Provisioned in US regions only; in Europe it is Global. The Global row stays.
+- **Added** `DeepSeek-V4 Flash (EU Data Zone)` (region `eu`, `eu_hosted: true`, $0.21/$0.56 per 1M; Retail meters
+  `V4 Flash Inp/Outp DZ Tokens`): Data Zone Standard in seven EU regions for version 2026-04-23.
+- Consumers filtering on `eu_hosted` see GPT-6 Astra without an EU Azure route and DeepSeek-V4 Flash with one.
+  AWS Bedrock Claude EU geo rows and the two Azure Global `eu_policy_equivalent` rows are unchanged.
+
 ## 2026-09-15 — Compare radar, value tags, Benchmaxxing master-detail, subscription note
 
 No data location, route or public API field was removed; no dataset value changed.
