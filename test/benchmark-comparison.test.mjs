@@ -55,7 +55,7 @@ test('H3 discloses how a bridged reference was reached: snapshot, anchors, hops,
   assert.equal(bridgeDisclosure(ratio), 'approximated from the 2026-09-12 snapshot, bridged through 12 anchor models over 2 hops, anchor spread ±8%');
   assert.equal(elo.bridge.spreadRelative, null, 'rank shifts have no relative spread');
   assert.match(bridgeDisclosure(elo), /2026-09-13 snapshot, bridged through 40 anchor models, rank-based bridge/);
-  assert.match(bridgeDisclosure(version), /^approximated from older version coding-a::0\.9, bridged through 5 anchor models, anchor spread ±10%$/);
+  assert.match(bridgeDisclosure(version), /^approximated from version 0\.9 of this benchmark, bridged through 5 anchor models, anchor spread ±10%$/);
   assert.equal(bridgeDisclosure(out.axes[0].values.x), 'measured');
   const category = out.categories[0].values.ratio;
   assert.equal(category.approximateCount, 1);
