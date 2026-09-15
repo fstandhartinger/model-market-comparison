@@ -522,6 +522,7 @@ async function build() {
   const ovhcloud = await readJSON("ovhcloud.json").catch(() => ({ models: [] }));
   const stackit = await readJSON("stackit.json").catch(() => ({ models: [] }));
   const tSystems = await readJSON("t-systems-llm-hub.json").catch(() => ({ models: [] }));
+  const trustedtokens = await readJSON("trustedtokens.json").catch(() => ({ models: [] }));
   const providerMeta = await readJSON("provider-meta.json").catch(() => ({ providers: {} }));
   const dataPolicy = await readJSON("openrouter-data-policy.json").catch(() => ({ providers: [] }));
   const epochEci = await readJSON("epoch-eci.json");
@@ -811,6 +812,7 @@ async function build() {
     ["Nebius", nebius], ["Inceptron", inceptron], ["Scaleway", scaleway],
     ["IONOS", ionos], ["Mistral", mistral], ["TensorX", tensorx],
     ["OVHcloud", ovhcloud], ["STACKIT", stackit], ["T-Systems LLM Hub", tSystems],
+    ["TrustedTokens", trustedtokens],
   ]) {
     for (const m of src.models || []) {
       if (EXCLUDE_RE.test(m.model_name || "")) continue;
@@ -1253,7 +1255,7 @@ async function build() {
       google_vertex: vertex.collected_at, nebius: nebius.collected_at, inceptron: inceptron.collected_at,
       scaleway: scaleway.collected_at, ionos: ionos.collected_at, mistral: mistral.collected_at, tensorx: tensorx.collected_at,
       chutes: chutes.collected_at, ovhcloud: ovhcloud.collected_at, stackit: stackit.collected_at,
-      t_systems_llm_hub: tSystems.collected_at,
+      t_systems_llm_hub: tSystems.collected_at, trustedtokens: trustedtokens.collected_at,
       openrouter_data_policy: dataPolicy.source?.retrieved_at || null,
       aa_coding_agents: codingAgents.collected_at, github_copilot: copilot.collected_at, claude_code: claude.collected_at,
       aa_coding_agents_v1_5: currentCodingAgents.collected_at,

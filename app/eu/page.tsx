@@ -25,6 +25,7 @@ const SOVEREIGN = [
   { name: "IONOS AI Model Hub", org: "IONOS (DE)", certs: "BSI C5, Gaia-X", models: "gpt-oss-120b, Llama 3.1/3.3, Mistral, Qwen3-Coder-Next-80B", url: "https://docs.ionos.com/cloud/ai/ai-model-hub/models/models-comparison" },
   { name: "OVHcloud AI Endpoints", org: "OVHcloud (FR)", certs: "SecNumCloud/ANSSI, ZDR", models: "gpt-oss-120b, Llama 3.3, Qwen3.x, Mistral", url: "https://www.ovhcloud.com/en/public-cloud/ai-endpoints/catalog/" },
   { name: "Scaleway Generative APIs", org: "Scaleway (FR)", certs: "GDPR, ZDR by default", models: "GLM 5.2, Qwen3.x, Mistral, Llama, Gemma, gpt-oss-120b, Holo2", url: "https://www.scaleway.com/en/pricing/model-as-a-service/" },
+  { name: "TrustedTokens", org: "TNG Technology Consulting (DE)", certs: "TNG GPUs at Noris Aschheim/Munich · no logging beyond the API call · B2B plan-credit", models: "GLM 5.3/5.2/5.3-Flash, DeepSeek V4.x, Qwen3.x, gpt-oss-120b, DeepSeek-TNG-R1T2-Chimera, Gemma", url: "https://trustedtokens.eu/models" },
   { name: "SAP Generative AI Hub", org: "SAP (DE)", certs: "enterprise · opaque CU billing", models: "mostly proprietary frontier; open weights deprecated/BYOM", url: "https://help.sap.com/docs/sap-ai-core/sap-ai-core-service-guide/models-and-scenarios-in-generative-ai-hub" },
 ];
 

@@ -165,6 +165,13 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       console.warn(`WARN fetch-t-systems-catalog: keeping the previous snapshot`);
     }
     try {
+      await command('fetch-trustedtokens-catalog', process.execPath, ['scripts/fetch-trustedtokens-catalog.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-trustedtokens-catalog skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-trustedtokens-catalog: keeping the previous snapshot`);
+    }
+    try {
       await command('fetch-ovhcloud-catalog', process.execPath, ['scripts/fetch-ovhcloud-catalog.mjs']);
     } catch (error) {
       report.warnings = report.warnings || [];

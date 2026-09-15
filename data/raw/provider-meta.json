@@ -602,6 +602,13 @@
       "non_us": false,
       "url": "https://inference.net/terms-of-service/",
       "note": "Inference R&D, Inc. identifies a San Francisco, California address in its terms. Its public material describes global/private/hybrid deployment but gives no EU residency guarantee for the OpenRouter-routed endpoint; conservatively excluded from EU-hosted and non-US filters. Privacy policy says customer data is not sold or used to train models."
+    },
+    "TrustedTokens": {
+      "country": "Germany",
+      "eu_hosted": true,
+      "non_us": true,
+      "url": "https://trustedtokens.eu/models",
+      "note": "DE-sovereign open-weight inference by TNG Technology Consulting GmbH (audited 2026-09-15: TNG-operated GPUs at Noris Aschheim/Munich; prompts/outputs not logged beyond the API call, no training, GDPR Art. 28 DPA offered). B2B-only: EUR per-token prices billed against included monthly plan credit; no free tier."
     }
   },
   "judgments_checked_at": "2026-07-12",

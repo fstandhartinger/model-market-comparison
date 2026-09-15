@@ -19,7 +19,7 @@ Coding Agent & Intelligence indices) and [Intelligence.ai / DesignArena](https:/
 (Agentic Web Dev Frontend & Full-Stack Elo). Prices are aggregated across **OpenRouter**
 inference providers, **AWS Bedrock**, **Azure AI Foundry**, **Google Vertex AI**,
 **Nebius**, **Inceptron**, **TensorX**, **Scaleway**, **IONOS**, **Mistral**, **Chutes**,
-**OVHcloud**, **STACKIT**, **T-Systems LLM Hub**,
+**OVHcloud**, **STACKIT**, **T-Systems LLM Hub**, **TrustedTokens**,
 **GitHub Copilot**, and the **Anthropic / Claude Code** list price — normalized to
 USD per 1M tokens.
 

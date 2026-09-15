@@ -4,6 +4,27 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — New provider: TrustedTokens (TNG, DE-sovereign, EUR→USD)
+
+No data location, route or public API field was removed; no benchmark value changed. One new
+offer source joins the dataset (providers 91 → 92, offers 2,861 → 2,882 across variant rows);
+every existing offer is unchanged.
+
+- **`sources.trustedtokens`** is a new key. Thirteen public models from
+  `https://trustedtokens.eu/api/service/models` (the unauthenticated payload the `/models` page
+  itself loads; robots.txt allows all) with EUR per-token prices normalized to per-1M EUR and
+  converted to USD at the ECB daily reference rate (1 EUR = 1.1539 USD, 2026-09-15).
+- Eleven models joined their existing families (GLM 5.3/5.2/5.3-Flash, DeepSeek V4 Flash 0731 /
+  V4.1 Flash / V4 Pro 0813, Qwen3.5 397B / Qwen3.6 35B / Qwen3.8 27B, gpt-oss-120b, gemma-4-31b-it).
+  Two are genuinely new families: **DeepSeek TNG R1T2 Chimera** (TNG's own model merge) and
+  **NVIDIA Nemotron 3.5 Lightning 30B A3B**. `zai-org/GLM-5.2` stays in the dataset with
+  `catalog_status: "deprecated"`.
+- Offers carry `eu_hosted: true`, `hosting_class: "sovereign_germany"` and a B2B caveat in
+  `notes`: prices bill against included monthly plan credit (no free tier, no public
+  self-serve signup) — audited operator/hosting evidence in
+  `data/raw/trustedtokens.method.md`. Collector: `scripts/fetch-trustedtokens-catalog.mjs`
+  (daily); parser + fail-closed rules: `lib/trustedtokens-catalog.mjs`.
+
 ## 2026-09-15 — New `/api/benchmark-matrix`; Benchmaxxing verdict per model family
 
 No data location, route or public API field was removed; no benchmark value changed.
