@@ -5974,6 +5974,76 @@
           "excerpt": "| V2 | 100 | 214 | 21,400 | A three-judge panel evaluates responses: Claude Sonnet 4.6, GPT-5.2 and Gemini 3.1 Pro Preview. Their average determines the category: **Clear score = clear answers ÷ (attempts − candidate refusals).** Errors remain in the denominator. Bars include refusals by default; tick **Exclude refusals** to remove them from the bars. Model details and CSV exports include both rates. Canonical leaderboard CSVs retain all-attempt rates."
         }
       ]
+    },
+    {
+      "id": "bu-bench-v1::snapshot-2026-09-09",
+      "name": "BU Bench V1 (Browser Use)",
+      "version": "snapshot-2026-09-09",
+      "version_status": "snapshot",
+      "family": "bu-bench-v1",
+      "category": "Agentic",
+      "one_sentence_description": "A browser agent completes 100 hand-selected web tasks: custom page-interaction challenges plus tasks drawn from WebBench, Mind2Web 2, GAIA and BrowseComp.",
+      "scoring": {
+        "metric": "Task success rate",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Value = tasks_successful / tasks_completed from the official_results run files in Browser Use's benchmark repository (100 tasks, graded by the repository's LLM judge). Each row is one framework version x browser x model run as named in the file name. Browser Use publishes these runs about its own agent framework, cloud browser and bu models, so every row is self_reported and critic-reviewed. The files' total_cost is not ingested (most runs record 0.0, which is not a measured cost). BU Bench V2 results exist only as a plot image and are not ingested. Not a Composite input."
+      },
+      "maintainer": "Browser Use (vendor)",
+      "source_type": "github",
+      "primary_url": "https://github.com/browser-use/benchmark",
+      "publication_urls": [
+        {
+          "url": "https://github.com/browser-use/benchmark",
+          "type": "github",
+          "role": "Primary data: official_results run files, encrypted task sets, judge and runner code (no licence file; results are cited as facts with provenance)"
+        },
+        {
+          "url": "https://x.com/gregpr07/status/2098067206210998586",
+          "type": "x_account",
+          "role": "Announcement named in Florian's E2 list; its BU Bench V2 numbers are a plot image only and are not a data source"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bu-bench-v1-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON run files in the public repository (E3 step 1: official export)",
+        "identity_policy": "source_label",
+        "locator": "GET official_results/<Framework>_<version>_browser_<Browser>_model_<model>.json at a pinned repository commit (one file per run, a one-element array); value = tasks_successful / tasks_completed.",
+        "version_guard": "README must still read \"**100 hand-selected tasks for evaluating browser automation agents**\" and every run file must report tasks_completed == 100 with integer counts; a different task count or task set (BU Bench V2, 200 tasks) is a different identity.",
+        "notes": "raw.githubusercontent.com robots.txt is checked by the capture script; pin the commit SHA in the URL list. The run label (framework, version, browser, model) comes from the file name verbatim; no catalog alias is inferred."
+      },
+      "update_cadence": {
+        "source_schedule": "Irregular; new run files are committed to official_results.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/bf99e4287758736a070c.gz",
+          "sha256": "7a62c4da1ee178509c3ef611712cf66bbe4c3ef8ed3526b05d063727640a8f55",
+          "fetched_at": "2026-09-15T02:16:02.152548+00:00",
+          "excerpt": "## BU Bench V1 **100 hand-selected tasks for evaluating browser automation agents** | Custom | 20 | Page interaction challenges | WebBench | 20 | Mind2Web 2 | 20 | GAIA | 20 | BrowseComp | 20 |"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_bu-2-0.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/50afe0fd4d8e16a6daa5.gz",
+          "sha256": "2aac2db3f31d60384fb7a36c6ff6042c892ef8ad45422c5f3ff1eb97826341e9",
+          "fetched_at": "2026-09-15T02:16:04.976042+00:00",
+          "excerpt": "[{\"run_start\": \"813fa516\", \"tasks_completed\": 100, \"tasks_successful\": 68, \"total_steps\": 3947, \"total_duration\": 38950.713, \"total_cost\": 0.0}]"
+        }
+      ]
     }
   ],
   "aa_field_map": [

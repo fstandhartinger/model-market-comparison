@@ -220427,6 +220427,294 @@
       },
       "protocol": "BullshitBench V2 (snapshot-2026-09-10); 100 nonsense prompts; three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview) grades clear pushback / partial challenge / accepted nonsense; value = green_rate over all attempts; one row per model x reasoning label; not a Composite input.; reasoning=default; avg_score=0.1467; score_2=3; nonsense_count=100; answered_count=100; refusal_count=0; error_count=0",
       "comparison_key": null
+    },
+    {
+      "id": "public:4ee6bb5d1c17d690a8ad22fc",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "bu-2-0|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "bu-2-0 · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.68,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_bu-2-0.json",
+        "retrieved_at": "2026-09-15T02:16:04.976042+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/50afe0fd4d8e16a6daa5.gz",
+        "sha256": "50afe0fd4d8e16a6daa51ff7704648b2177e0295ad78837876814824578994ad",
+        "locator": "bu_official_results; source row 0; bu-2-0|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"bu-2-0\",\"run_start\":\"813fa516\",\"tasks_completed\":100,\"tasks_successful\":68,\"total_steps\":3947}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          68,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:7585210795d86fb154617913",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "claude-opus-4-7|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "claude-opus-4-7 · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.74,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_claude-opus-4-7.json",
+        "retrieved_at": "2026-09-15T02:16:07.506165+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/6ec06815adc02e078507.gz",
+        "sha256": "6ec06815adc02e078507cf799e05c6c68dbc4c7ec490df19159799587c8314d6",
+        "locator": "bu_official_results; source row 0; claude-opus-4-7|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"claude-opus-4-7\",\"run_start\":\"6b188f15\",\"tasks_completed\":100,\"tasks_successful\":74,\"total_steps\":1984}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          74,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:13efd9c7abc80efc4c47d16c",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "deepseek-v4-flash-0731|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "deepseek-v4-flash-0731 · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.37,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_deepseek-v4-flash-0731.json",
+        "retrieved_at": "2026-09-15T02:16:10.035658+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/d6a18fddfb82fc8cbb60.gz",
+        "sha256": "d6a18fddfb82fc8cbb6056ec6813da13e2bc2e32f760ae7c2ed0c014bfa889b5",
+        "locator": "bu_official_results; source row 0; deepseek-v4-flash-0731|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"deepseek-v4-flash-0731\",\"run_start\":\"d6567349\",\"tasks_completed\":100,\"tasks_successful\":37,\"total_steps\":2172}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          37,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:8bed2d50bdd90266a8209be0",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "gemini-3.5-flash|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "gemini-3.5-flash · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.65,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_gemini-3.5-flash.json",
+        "retrieved_at": "2026-09-15T02:16:12.564707+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/e5bf15dfa0862de0a1ba.gz",
+        "sha256": "e5bf15dfa0862de0a1ba7925a55efd1b1e73812b942d2d816ef889b02c57b5ab",
+        "locator": "bu_official_results; source row 0; gemini-3.5-flash|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"gemini-3.5-flash\",\"run_start\":\"a2add0ae\",\"tasks_completed\":100,\"tasks_successful\":65,\"total_steps\":4072}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          65,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:0c065e0e687a71f802224593",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "gpt-5.5|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "gpt-5.5 · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.66,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_gpt-5.5.json",
+        "retrieved_at": "2026-09-15T02:16:15.094765+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/7f557c0fc00f7eba63fb.gz",
+        "sha256": "7f557c0fc00f7eba63fbd17ab76bb9097c15a1f3a1640cf932992a3723664e9b",
+        "locator": "bu_official_results; source row 0; gpt-5.5|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"gpt-5.5\",\"run_start\":\"826583df\",\"tasks_completed\":100,\"tasks_successful\":66,\"total_steps\":1759}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          66,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:d2bf99f45e69a35444aeee1d",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "gpt-5.6-luna|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "gpt-5.6-luna · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.31,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_gpt-5.6-luna.json",
+        "retrieved_at": "2026-09-15T02:16:17.624444+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/56e3f028c75d5c8ddca7.gz",
+        "sha256": "56e3f028c75d5c8ddca7a71fa91f102830e08584518f8716666aa5939fe1c764",
+        "locator": "bu_official_results; source row 0; gpt-5.6-luna|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"gpt-5.6-luna\",\"run_start\":\"9abf331b\",\"tasks_completed\":100,\"tasks_successful\":31,\"total_steps\":713}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          31,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:7c63112b836b34706f03aad1",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "qwen3.6-plus|BrowserUse 0.13.7|BrowserUseCloud",
+        "name": "qwen3.6-plus · BrowserUse 0.13.7 · BrowserUseCloud browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUse 0.13.7 · BrowserUseCloud browser"
+      },
+      "value": 0.45,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_qwen3.6-plus.json",
+        "retrieved_at": "2026-09-15T02:16:20.153808+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/bb695fdb9bbf27127670.gz",
+        "sha256": "bb695fdb9bbf27127670d5eabcb61cbaf06195a635c73791333e0fab23925aba",
+        "locator": "bu_official_results; source row 0; qwen3.6-plus|BrowserUse 0.13.7|BrowserUseCloud; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUse\",\"framework_version\":\"0.13.7\",\"browser\":\"BrowserUseCloud\",\"model\":\"qwen3.6-plus\",\"run_start\":\"45f30cc5\",\"tasks_completed\":100,\"tasks_successful\":45,\"total_steps\":3650}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          45,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:91f9ea7faf1629660149a2c5",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "bu-v4-luna|BrowserUseCloudAPI v4|integrated",
+        "name": "bu-v4-luna · BrowserUseCloudAPI v4 · integrated browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUseCloudAPI v4 · integrated browser"
+      },
+      "value": 0.78,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUseCloudAPI_v4_browser_integrated_model_bu-v4-luna.json",
+        "retrieved_at": "2026-09-15T02:16:22.694647+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/749396abb2aab85c7287.gz",
+        "sha256": "749396abb2aab85c72872ace842d932d967d0b661969b1c7d0e1d7da57bb655d",
+        "locator": "bu_official_results; source row 0; bu-v4-luna|BrowserUseCloudAPI v4|integrated; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUseCloudAPI\",\"framework_version\":\"v4\",\"browser\":\"integrated\",\"model\":\"bu-v4-luna\",\"run_start\":\"00d13a70\",\"tasks_completed\":100,\"tasks_successful\":78,\"total_steps\":4640}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          78,
+          100
+        ]
+      }
+    },
+    {
+      "id": "public:6c152d30e45f65408eac3743",
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "subject": {
+        "source_id": "bu-v4-opus-4-8|BrowserUseCloudAPI v4|integrated",
+        "name": "bu-v4-opus-4-8 · BrowserUseCloudAPI v4 · integrated browser",
+        "model_id": null,
+        "variant": null,
+        "harness": "BrowserUseCloudAPI v4 · integrated browser"
+      },
+      "value": 0.85,
+      "unit": "fraction",
+      "basis": "derived",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUseCloudAPI_v4_browser_integrated_model_bu-v4-opus-4-8.json",
+        "retrieved_at": "2026-09-15T02:16:25.210736+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/cd54f49dea3b6cdb7afe.gz",
+        "sha256": "cd54f49dea3b6cdb7afe05380376f732773ada31a00e3b42533d40e3299c401c",
+        "locator": "bu_official_results; source row 0; bu-v4-opus-4-8|BrowserUseCloudAPI v4|integrated; field success_rate"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.; source row: {\"framework\":\"BrowserUseCloudAPI\",\"framework_version\":\"v4\",\"browser\":\"integrated\",\"model\":\"bu-v4-opus-4-8\",\"run_start\":\"799490f4\",\"tasks_completed\":100,\"tasks_successful\":85,\"total_steps\":2985}",
+      "comparison_key": null,
+      "source_basis": "self_reported",
+      "derivation": {
+        "formula": "tasks_successful / tasks_completed",
+        "inputs": [
+          85,
+          100
+        ]
+      }
     }
   ],
   "collections": [
@@ -220819,6 +221107,12 @@
       "status": "collected",
       "source_url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/v2/latest/leaderboard.csv",
       "reason": "214 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "status": "collected",
+      "source_url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/README.md",
+      "reason": "9 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

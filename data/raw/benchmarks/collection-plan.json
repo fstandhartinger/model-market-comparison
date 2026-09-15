@@ -2593,6 +2593,98 @@
         "https://github.com/petergpt/bullshit-benchmark",
         "https://petergpt.github.io/bullshit-benchmark/"
       ]
+    },
+    {
+      "benchmark_id": "bu-bench-v1::snapshot-2026-09-09",
+      "parser": {
+        "kind": "bu_official_results",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "success_rate",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "require_text": "**100 hand-selected tasks for evaluating browser automation agents**",
+        "require_tasks": 100,
+        "runs": [
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_bu-2-0.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/50afe0fd4d8e16a6daa5.gz",
+            "sha256": "50afe0fd4d8e16a6daa51ff7704648b2177e0295ad78837876814824578994ad",
+            "retrieved_at": "2026-09-15T02:16:04.976042+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_claude-opus-4-7.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/6ec06815adc02e078507.gz",
+            "sha256": "6ec06815adc02e078507cf799e05c6c68dbc4c7ec490df19159799587c8314d6",
+            "retrieved_at": "2026-09-15T02:16:07.506165+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_deepseek-v4-flash-0731.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/d6a18fddfb82fc8cbb60.gz",
+            "sha256": "d6a18fddfb82fc8cbb6056ec6813da13e2bc2e32f760ae7c2ed0c014bfa889b5",
+            "retrieved_at": "2026-09-15T02:16:10.035658+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_gemini-3.5-flash.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/e5bf15dfa0862de0a1ba.gz",
+            "sha256": "e5bf15dfa0862de0a1ba7925a55efd1b1e73812b942d2d816ef889b02c57b5ab",
+            "retrieved_at": "2026-09-15T02:16:12.564707+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_gpt-5.5.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/7f557c0fc00f7eba63fb.gz",
+            "sha256": "7f557c0fc00f7eba63fbd17ab76bb9097c15a1f3a1640cf932992a3723664e9b",
+            "retrieved_at": "2026-09-15T02:16:15.094765+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_gpt-5.6-luna.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/56e3f028c75d5c8ddca7.gz",
+            "sha256": "56e3f028c75d5c8ddca7a71fa91f102830e08584518f8716666aa5939fe1c764",
+            "retrieved_at": "2026-09-15T02:16:17.624444+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUse_0.13.7_browser_BrowserUseCloud_model_qwen3.6-plus.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/bb695fdb9bbf27127670.gz",
+            "sha256": "bb695fdb9bbf27127670d5eabcb61cbaf06195a635c73791333e0fab23925aba",
+            "retrieved_at": "2026-09-15T02:16:20.153808+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUseCloudAPI_v4_browser_integrated_model_bu-v4-luna.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/749396abb2aab85c7287.gz",
+            "sha256": "749396abb2aab85c72872ace842d932d967d0b661969b1c7d0e1d7da57bb655d",
+            "retrieved_at": "2026-09-15T02:16:22.694647+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/official_results/BrowserUseCloudAPI_v4_browser_integrated_model_bu-v4-opus-4-8.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/cd54f49dea3b6cdb7afe.gz",
+            "sha256": "cd54f49dea3b6cdb7afe05380376f732773ada31a00e3b42533d40e3299c401c",
+            "retrieved_at": "2026-09-15T02:16:25.210736+00:00"
+          }
+        ]
+      },
+      "status": "collected",
+      "reason": "Browser Use publishes BU Bench V1 runs as JSON files in its repository; each framework/browser/model run stays a separate source identity, values are self_reported and never enter the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bu-bench-v1-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "JSON run files",
+        "locator": "GET official_results/<Framework>_<version>_browser_<Browser>_model_<model>.json at a pinned repository commit (one file per run, a one-element array); value = tasks_successful / tasks_completed.",
+        "version_guard": "README must still read \"**100 hand-selected tasks for evaluating browser automation agents**\" and every run file must report tasks_completed == 100 with integer counts; a different task count or task set (BU Bench V2, 200 tasks) is a different identity.",
+        "notes": "A browser agent completes 100 hand-selected web tasks: custom page-interaction challenges plus tasks drawn from WebBench, Mind2Web 2, GAIA and BrowseComp. Browser Use benchmarks its own framework and models, so rows need a different-family critic review."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "README must still read \"**100 hand-selected tasks for evaluating browser automation agents**\" and every run file must report tasks_completed == 100 with integer counts; a different task count or task set (BU Bench V2, 200 tasks) is a different identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/browser-use/benchmark/421390ea7fa4708f3d89d7695f9a16debb861daf/README.md",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bu-bench-v1/bf99e4287758736a070c.gz",
+        "sha256": "bf99e4287758736a070c1522ff9014ae7525cc23e20e262c23bceddf9c0e16c8",
+        "retrieved_at": "2026-09-15T02:16:02.152548+00:00"
+      },
+      "protocol": "BU Bench V1 (snapshot of repository commit 421390ea, 2026-09-09); 100 encrypted web tasks (Custom, WebBench, Mind2Web 2, GAIA, BrowseComp; 20 each); LLM judge per the repository; value = tasks_successful / tasks_completed per run; one row per framework version x browser x model; not a Composite input.",
+      "basis": "self_reported",
+      "minimum_rows": 9,
+      "source_urls": [
+        "https://github.com/browser-use/benchmark"
+      ]
     }
   ]
 }

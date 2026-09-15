@@ -4,6 +4,18 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — BU Bench V1 (Browser Use) added as a secondary benchmark (E2)
+
+No data location, route or public API field was removed.
+
+- **New registry identity** `bu-bench-v1::snapshot-2026-09-09` (category Agentic, tag `niche`): 9 runs from the
+  `official_results/` files of `github.com/browser-use/benchmark` at commit `421390ea`, 100 web tasks each.
+  Value = `tasks_successful / tasks_completed` (basis `derived`, source basis `self_reported`: Browser Use
+  benchmarks its own framework, cloud browser and bu models), critic-reviewed like other vendor rows. Each
+  `model|framework version|browser` label stays an unmatched source identity. The files' `total_cost` is not
+  ingested (most runs record 0.0), and BU Bench V2 is not ingested because its results exist only as a plot image.
+- Collector gains the `bu_official_results` parser kind (one JSON file per run; each row cites its own run file).
+
 ## 2026-09-15 — BullshitBench V1 and V2 added as secondary benchmarks (E2)
 
 No data location, route or public API field was removed.

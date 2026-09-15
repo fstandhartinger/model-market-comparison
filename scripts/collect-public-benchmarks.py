@@ -252,6 +252,27 @@ def parse(source,spec,load_source):
                 'passed':fields['passed'],'cost':fields['cost'],'tokens':fields['tokens'],'harness':fields['harness'],'source_row':index,
                 'context':{'board':spec['board'],'model':fields['model'],'org':fields.get('org'),'harness':fields['harness'],'effort':fields['effort'],
                     'n':fields['n'],'passed':fields['passed'],'cost':fields['cost'],'tokens':fields['tokens']}})
+    elif kind=='bu_official_results':
+        # Browser Use publishes one JSON file per framework/browser/model run; the run label exists only in the
+        # file name. The primary source (README) must still describe the same task set; each row cites its run file.
+        if spec['require_text'] not in source:raise ValueError('Task-set description changed')
+        pattern=re.compile(r'(?P<framework>[A-Za-z]+)_(?P<version>[^_]+)_browser_(?P<browser>[^_]+)_model_(?P<model>[^/]+)\.json')
+        for index,run in enumerate(spec['runs']):
+            named=pattern.fullmatch(run['url'].rsplit('/',1)[-1])
+            if not named:raise ValueError('Run file name changed: '+run['url'])
+            data=json.loads(load_source(run))
+            if not isinstance(data,list) or len(data)!=1 or not isinstance(data[0],dict):raise ValueError('Run schema changed: '+run['url'])
+            result=data[0]
+            if any(type(result.get(k)) is not int for k in ('tasks_completed','tasks_successful')):raise ValueError('Run counts missing: '+run['url'])
+            if result['tasks_completed']!=spec['require_tasks']:raise ValueError('Task count changed: '+repr(result['tasks_completed']))
+            if not 0<=result['tasks_successful']<=result['tasks_completed']:raise ValueError('Success count outside task count: '+run['url'])
+            harness=f"{named['framework']} {named['version']} · {named['browser']} browser"
+            rows.append({'name':f"{named['model']} · {harness}",'id':f"{named['model']}|{named['framework']} {named['version']}|{named['browser']}",
+                'success_rate':result['tasks_successful']/result['tasks_completed'],'harness':harness,'source_row':0,'run_source':run,
+                'derivation':{'formula':'tasks_successful / tasks_completed','inputs':[result['tasks_successful'],result['tasks_completed']]},
+                # total_cost is not carried: most published runs record 0.0, which is not a measured cost.
+                'context':{'framework':named['framework'],'framework_version':named['version'],'browser':named['browser'],'model':named['model'],
+                    'run_start':result.get('run_start'),'tasks_completed':result['tasks_completed'],'tasks_successful':result['tasks_successful'],'total_steps':result.get('total_steps')}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows
@@ -283,14 +304,14 @@ def collect(plan,registry,root=Path('.'),evidence=None):
             lo,hi=entry['scoring']['range']
             if not math.isfinite(value) or lo is not None and value<lo or hi is not None and value>hi:raise ValueError('Score outside registry range: '+bid)
             sid=str(row.get(rule.get('id_field'),name));harness=str(row[rule['harness_field']]) if rule.get('harness_field') and row.get(rule['harness_field']) else rule.get('harness')
-            protocol=spec['protocol']
+            protocol=spec['protocol'];src=row.get('run_source') or source
             if 'context' in row:protocol+='; source row: '+json.dumps(row['context'],ensure_ascii=False,separators=(',',':'))
             for field in rule.get('context_fields',[]):
                 if field in row:protocol+=f'; {field}='+str(row[field])
             basis=spec.get('basis','measured');o={'id':'public:'+hashlib.sha256(f'{bid}\0{sid}\0{index}'.encode()).hexdigest()[:24],
                 'benchmark_id':bid,'subject':{'source_id':sid,'name':name,'model_id':None,'variant':None,'harness':harness},
                 'value':value,'unit':entry['scoring']['unit'],'basis':basis,
-                'source':{'url':source['url'],'retrieved_at':source.get('retrieved_at',source.get('fetched_at')),'published_at':None,'file':source['file'],'sha256':source['sha256'],
+                'source':{'url':src['url'],'retrieved_at':src.get('retrieved_at',src.get('fetched_at')),'published_at':None,'file':src['file'],'sha256':src['sha256'],
                     'locator':f'{rule["kind"]}; source row {row.get("source_row",index)}; {sid}; field {rule["value_field"]}'},
                 'protocol':protocol,'comparison_key':None}
             if scale!=1 or 'derivation' in row:

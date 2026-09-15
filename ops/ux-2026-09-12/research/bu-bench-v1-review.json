@@ -1,0 +1,37 @@
+```json
+{
+  "artifact_id": "iter63-bu-bench-v1",
+  "artifact_sha256": "8753eeacde8cbf1b34f2ad6b6f0ffe70108b78d463832a6c8f12aefc2cb56e3f",
+  "round": 1,
+  "verdict": "pass",
+  "coverage_checked": [
+    "public:4ee6bb5d1c17d690a8ad22fc",
+    "public:7585210795d86fb154617913",
+    "public:13efd9c7abc80efc4c47d16c",
+    "public:8bed2d50bdd90266a8209be0",
+    "public:0c065e0e687a71f802224593",
+    "public:d2bf99f45e69a35444aeee1d",
+    "public:7c63112b836b34706f03aad1",
+    "public:91f9ea7faf1629660149a2c5",
+    "public:6c152d30e45f65408eac3743"
+  ],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "C1 completeness: 9 candidate rows match the 9 run files supplied in official_results/; the supplied evidence lists exactly those 9 files, so no extra or missing run files could exist in the snapshot, but I cannot independently enumerate the directory (no execution tools).",
+    "Each run file sha256 in the candidate matches the sha256 stated in the supplied source listing (verified by eye character-by-character, not recomputed).",
+    "'Not a Composite input' is a claim about our pipeline, not the source; not verifiable from supplied evidence but harmless."
+  ],
+  "missing_evidence": [],
+  "notes": {
+    "C1": "9 rows for 9 files; subject.source_id strings match file-name encodings exactly (e.g., 'bu-2-0|BrowserUse 0.13.7|BrowserUseCloud' from BrowserUse_0.13.7_browser_BrowserUseCloud_model_bu-2-0.json).",
+    "C2": "Every value equals tasks_successful/tasks_completed of the cited file: 68/100=0.68, 74/100=0.74, 37/100=0.37, 65/100=0.65, 66/100=0.66, 31/100=0.31, 45/100=0.45, 78/100=0.78, 85/100=0.85; derivation.inputs and source.url/file/locator cite the same run files.",
+    "C3": "All 9 run files report tasks_completed=100; README states '100 hand-selected tasks'.",
+    "C4": "basis=derived with source_basis=self_reported applied uniformly; README shows Browser Use publishing runs of its own framework, cloud browser and bu models.",
+    "C5": "No observation ingests total_cost; bu-v4-luna (6.3067) and bu-v4-opus-4-8 (112.1408) have non-zero costs in source but values derive only from success counts.",
+    "C6": "No rows from BU Bench V2; all model_id fields null; no catalog model mapping.",
+    "C7": "Description/scoring claims (100 tasks, 20 per source category, Custom/WebBench/Mind2Web 2/GAIA/BrowseComp, LLM judge with GOOGLE_API_KEY, encrypted tasks) are all supported by the README."
+  }
+}
+```
