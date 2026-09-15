@@ -68,7 +68,12 @@ def parse(source,spec,load_source):
         match=re.search(r'\b'+re.escape(spec['variable'])+r'\s*=\s*`([^`]+)`',source,re.S)
         if not match or '${' in match[1]:raise ValueError('Missing/static CSV literal changed')
         rows=csvrows(match[1])
-    elif kind=='csv':rows=csvrows(source)
+    elif kind=='csv':
+        rows=csvrows(source)
+        # Optional version guards: an exact header and per-row constants (e.g. the question count).
+        if 'require_header' in spec and list(rows[0].keys() if rows else [])!=spec['require_header']:raise ValueError('CSV header changed')
+        for field,expected in spec.get('require_values',{}).items():
+            if any(r.get(field)!=expected for r in rows):raise ValueError(f'CSV {field} differs from {expected}')
     elif kind=='json':rows=at(json.loads(source),spec.get('row_path',''))
     elif kind=='json_assignment':
         match=re.search(r'\b'+re.escape(spec['variable'])+r'\s*=\s*',source)

@@ -5824,6 +5824,156 @@
           "excerpt": "Allow: / ; Disallow: /downloads/ — the leaderboard page and its data file are permitted."
         }
       ]
+    },
+    {
+      "id": "bullshitbench-v1::snapshot-2026-09-10",
+      "name": "BullshitBench V1 (clear pushback)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "bullshitbench-v1",
+      "category": "Safety/Alignment",
+      "one_sentence_description": "Whether a model rejects the broken premise of 55 deliberately nonsensical prompts (V1 question set) instead of answering them confidently.",
+      "scoring": {
+        "metric": "Clear pushback rate",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Clear-pushback rate as published in the canonical leaderboard CSV: score_2 / nonsense_count, all attempts in the denominator (errors and refusals count as not clear). Graded by a three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview). Each row is one model x reasoning-effort label. Not a Composite input; V1 and V2 are never ranked against each other."
+      },
+      "maintainer": "Peter Gostev (independent)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://github.com/petergpt/bullshit-benchmark",
+      "publication_urls": [
+        {
+          "url": "https://github.com/petergpt/bullshit-benchmark",
+          "type": "github",
+          "role": "Primary data: canonical leaderboard CSVs, manifests, questions and methodology (MIT licence)"
+        },
+        {
+          "url": "https://petergpt.github.io/bullshit-benchmark/",
+          "type": "official_leaderboard",
+          "role": "Maintainer dashboard over the same published data"
+        },
+        {
+          "url": "https://x.com/petergostev/status/2098331418577256546",
+          "type": "x_account",
+          "role": "Maintainer announcement named in Florian's E2 list; not a data source"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "CSV in the public repository (E3 step 1: official export)",
+        "identity_policy": "source_label",
+        "locator": "GET data/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 55 attempts).",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+        "notes": "raw.githubusercontent.com robots.txt is checked by the capture script; pin the commit SHA in the URL list so a capture is reproducible. The model@reasoning label is kept verbatim; no effort alias is inferred."
+      },
+      "update_cadence": {
+        "source_schedule": "Irregular; the README carries an \"Updated\" date per release.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/latest/leaderboard.csv",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/2605907319773e0e5858.gz",
+          "sha256": "8f9fd402a7acac6073ace5c1e5c972cde989fd34c29f2e9562770af3288609fc",
+          "fetched_at": "2026-09-15T01:07:18.318850+00:00",
+          "excerpt": "rank,model,org,reasoning,avg_score,green_rate,red_rate,refusal_rate,score_2,score_1,score_0,refusal_count,answered_count,nonsense_count,error_count"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/61497bfbe4d25dd1a0b7.gz",
+          "sha256": "19797ba383383e403fd92400cd015ffb807be13f8e4ae8d2989b5fc44570bfe1",
+          "fetched_at": "2026-09-15T01:07:29.047399+00:00",
+          "excerpt": "| V1 | 55 | 194 | 10,670 | A three-judge panel evaluates responses: Claude Sonnet 4.6, GPT-5.2 and Gemini 3.1 Pro Preview. Their average determines the category: **Clear score = clear answers ÷ (attempts − candidate refusals).** Errors remain in the denominator. Bars include refusals by default; tick **Exclude refusals** to remove them from the bars. Model details and CSV exports include both rates. Canonical leaderboard CSVs retain all-attempt rates."
+        }
+      ]
+    },
+    {
+      "id": "bullshitbench-v2::snapshot-2026-09-10",
+      "name": "BullshitBench V2 (clear pushback)",
+      "version": "snapshot-2026-09-10",
+      "version_status": "snapshot",
+      "family": "bullshitbench-v2",
+      "category": "Safety/Alignment",
+      "one_sentence_description": "Whether a model rejects the broken premise of 100 deliberately nonsensical prompts (V2 question set) instead of answering them confidently.",
+      "scoring": {
+        "metric": "Clear pushback rate",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Clear-pushback rate as published in the canonical leaderboard CSV: score_2 / nonsense_count, all attempts in the denominator (errors and refusals count as not clear). Graded by a three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview). Each row is one model x reasoning-effort label. Not a Composite input; V1 and V2 are never ranked against each other."
+      },
+      "maintainer": "Peter Gostev (independent)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://github.com/petergpt/bullshit-benchmark",
+      "publication_urls": [
+        {
+          "url": "https://github.com/petergpt/bullshit-benchmark",
+          "type": "github",
+          "role": "Primary data: canonical leaderboard CSVs, manifests, questions and methodology (MIT licence)"
+        },
+        {
+          "url": "https://petergpt.github.io/bullshit-benchmark/",
+          "type": "official_leaderboard",
+          "role": "Maintainer dashboard over the same published data"
+        },
+        {
+          "url": "https://x.com/petergostev/status/2098331418577256546",
+          "type": "x_account",
+          "role": "Maintainer announcement named in Florian's E2 list; not a data source"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "CSV in the public repository (E3 step 1: official export)",
+        "identity_policy": "source_label",
+        "locator": "GET data/v2/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 100 attempts).",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+        "notes": "raw.githubusercontent.com robots.txt is checked by the capture script; pin the commit SHA in the URL list so a capture is reproducible. The model@reasoning label is kept verbatim; no effort alias is inferred."
+      },
+      "update_cadence": {
+        "source_schedule": "Irregular; the README carries an \"Updated\" date per release.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "No verified saturation claim; retained without asserting headroom."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-15",
+      "last_verified": "2026-09-15",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/v2/latest/leaderboard.csv",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/0c866538642eab944f67.gz",
+          "sha256": "042110090e57b8c4089b43da3e561c04b04891253ef12867d206d750be079fa6",
+          "fetched_at": "2026-09-15T01:07:23.764154+00:00",
+          "excerpt": "rank,model,org,reasoning,avg_score,green_rate,red_rate,refusal_rate,score_2,score_1,score_0,refusal_count,answered_count,nonsense_count,error_count"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/61497bfbe4d25dd1a0b7.gz",
+          "sha256": "19797ba383383e403fd92400cd015ffb807be13f8e4ae8d2989b5fc44570bfe1",
+          "fetched_at": "2026-09-15T01:07:29.047399+00:00",
+          "excerpt": "| V2 | 100 | 214 | 21,400 | A three-judge panel evaluates responses: Claude Sonnet 4.6, GPT-5.2 and Gemini 3.1 Pro Preview. Their average determines the category: **Clear score = clear answers ÷ (attempts − candidate refusals).** Errors remain in the denominator. Bars include refusals by default; tick **Exclude refusals** to remove them from the bars. Model details and CSV exports include both rates. Canonical leaderboard CSVs retain all-attempt rates."
+        }
+      ]
     }
   ],
   "aa_field_map": [

@@ -2467,6 +2467,132 @@
         "https://apprenticebench.com/",
         "https://neocognition.io/blog/apprentice-bench/"
       ]
+    },
+    {
+      "benchmark_id": "bullshitbench-v1::snapshot-2026-09-10",
+      "parser": {
+        "kind": "csv",
+        "name_field": "model",
+        "id_field": "model",
+        "value_field": "green_rate",
+        "plain_text_names": true,
+        "context_fields": [
+          "reasoning",
+          "avg_score",
+          "score_2",
+          "nonsense_count",
+          "answered_count",
+          "refusal_count",
+          "error_count"
+        ],
+        "require_header": [
+          "rank",
+          "model",
+          "org",
+          "reasoning",
+          "avg_score",
+          "green_rate",
+          "red_rate",
+          "refusal_rate",
+          "score_2",
+          "score_1",
+          "score_0",
+          "refusal_count",
+          "answered_count",
+          "nonsense_count",
+          "error_count"
+        ],
+        "require_values": {
+          "nonsense_count": "55"
+        }
+      },
+      "status": "collected",
+      "reason": "BullshitBench V1 publishes its canonical leaderboard as CSV in the maintainer's repository; each model@reasoning label stays a separate source identity and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "CSV",
+        "locator": "GET data/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 55 attempts).",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+        "notes": "Whether a model rejects the broken premise of 55 deliberately nonsensical prompts (V1 question set) instead of answering them confidently."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 55 on every row; a different question count, question set or judge panel is a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/latest/leaderboard.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/2605907319773e0e5858.gz",
+        "sha256": "2605907319773e0e5858a24bd8c63ec46501ce282082eff3d134283811d2af6f",
+        "retrieved_at": "2026-09-15T01:07:18.318850+00:00"
+      },
+      "protocol": "BullshitBench V1 (snapshot-2026-09-10); 55 nonsense prompts; three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview) grades clear pushback / partial challenge / accepted nonsense; value = green_rate over all attempts; one row per model x reasoning label; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 194,
+      "source_urls": [
+        "https://github.com/petergpt/bullshit-benchmark",
+        "https://petergpt.github.io/bullshit-benchmark/"
+      ]
+    },
+    {
+      "benchmark_id": "bullshitbench-v2::snapshot-2026-09-10",
+      "parser": {
+        "kind": "csv",
+        "name_field": "model",
+        "id_field": "model",
+        "value_field": "green_rate",
+        "plain_text_names": true,
+        "context_fields": [
+          "reasoning",
+          "avg_score",
+          "score_2",
+          "nonsense_count",
+          "answered_count",
+          "refusal_count",
+          "error_count"
+        ],
+        "require_header": [
+          "rank",
+          "model",
+          "org",
+          "reasoning",
+          "avg_score",
+          "green_rate",
+          "red_rate",
+          "refusal_rate",
+          "score_2",
+          "score_1",
+          "score_0",
+          "refusal_count",
+          "answered_count",
+          "nonsense_count",
+          "error_count"
+        ],
+        "require_values": {
+          "nonsense_count": "100"
+        }
+      },
+      "status": "collected",
+      "reason": "BullshitBench V2 publishes its canonical leaderboard as CSV in the maintainer's repository; each model@reasoning label stays a separate source identity and never enters the Composite.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py ops/ux-2026-09-12/research/bullshitbench-url-list.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json",
+        "format": "CSV",
+        "locator": "GET data/v2/latest/leaderboard.csv at a pinned repository commit; one row per model@reasoning label; value = column green_rate (clear pushback over all 100 attempts).",
+        "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+        "notes": "Whether a model rejects the broken premise of 100 deliberately nonsensical prompts (V2 question set) instead of answering them confidently."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "Require the 15-column header (rank,model,org,reasoning,avg_score,green_rate,…,nonsense_count,error_count) and nonsense_count == 100 on every row; a different question count, question set or judge panel is a new identity.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/petergpt/bullshit-benchmark/2678ac296fe6e234d391e0f4ab339f6a777ba2a3/data/v2/latest/leaderboard.csv",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-bullshitbench/0c866538642eab944f67.gz",
+        "sha256": "0c866538642eab944f672eb1464857ad3f4cb2de89d484360ad6fd0765b8a390",
+        "retrieved_at": "2026-09-15T01:07:23.764154+00:00"
+      },
+      "protocol": "BullshitBench V2 (snapshot-2026-09-10); 100 nonsense prompts; three-judge panel (Claude Sonnet 4.6, GPT-5.2, Gemini 3.1 Pro Preview) grades clear pushback / partial challenge / accepted nonsense; value = green_rate over all attempts; one row per model x reasoning label; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 214,
+      "source_urls": [
+        "https://github.com/petergpt/bullshit-benchmark",
+        "https://petergpt.github.io/bullshit-benchmark/"
+      ]
     }
   ]
 }

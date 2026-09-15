@@ -4,6 +4,20 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — BullshitBench V1 and V2 added as secondary benchmarks (E2)
+
+No data location, route or public API field was removed.
+
+- **Two new registry identities** `bullshitbench-v1::snapshot-2026-09-10` (55 prompts, 194 rows) and
+  `bullshitbench-v2::snapshot-2026-09-10` (100 prompts, 214 rows), category Safety/Alignment, tag
+  `community`, basis `measured`, never Composite inputs. Value = the published `green_rate` (clear pushback
+  over all attempts) from the maintainer's canonical leaderboard CSVs in `github.com/petergpt/bullshit-benchmark`
+  at commit `2678ac29` (MIT). Each `model@reasoning` label stays a separate, unmatched source identity; no
+  effort alias is inferred.
+- Rows land in `data/raw/benchmarks/public-observations.json`, `scores.json` and `data/dataset.json`
+  (`benchmark_coverage.total_benchmarks` 92 → 94). Capture recipe in `collection-plan.json`; the csv parser
+  gains optional `require_header` / `require_values` version guards.
+
 ## 2026-09-15 — Speed and context shown; AA "not speed-tested" zeros become null (P2)
 
 No data location, route or public API field was removed.
