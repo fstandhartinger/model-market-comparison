@@ -285,8 +285,8 @@ credited below, the rest is marked open.
 | CR-35.3 | Hold: do not add new Artificial Analysis-derived metrics (CR-34.4 Agentic Index) until Florian reports AA's an | open | — | — |
 | CR-35.4 | Epoch AI attribution (CC-BY): wherever Epoch data is shown (Epoch ECI, Epoch Software ECI, other Epoch-run ben | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-35/{canonical,legacy}/verification.json` (`bin/verify-cr-35.mjs`, 72/72 per host) | iter 71 claude-opus: Epoch AI (CC BY) credit on Epoch surfaces + recommended citation on /about (`96818a6`); live canonical 72/72 · legacy 72/72 (after c9b97d7/e99d640 and the tap() harness fix) **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-35.mjs` **72/72 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-35/{canonical,legacy}/verification.json`). |
 | CR-35.5 | For benchmark rows taken from Epoch's hub that Epoch sourced from external projects, record and display the or | verified | `data/raw/epoch-hub-provenance.json` (from `scripts/build-epoch-provenance.mjs`); `data/raw/epoch-eci.method.md` ("Hub provenance" section) | **Iteration 72 (opencode-kimi, implementer):** `data/raw/epoch-hub-provenance.json` classifies all 81 benchmarks in Epoch's own captured `benchmark_metadata.csv` as `epoch_run` (35) vs `external_project` (46) from Epoch's `*_external.csv` result-file naming, with `in_eci`, release dates, original project **only where this repo's own evidence already names it** (registry primary_urls: DeepSWE→Datacurve, FrontierCode→Cognition AI, Terminal Bench→tbench.ai, Aider polyglot→aider.chat, WeirdML→htihle.github.io; CR-20260915n table: METR Time Horizons→METR). Never invented an attribution. Product-consumed rows: 10 external of the 12 software-ECI inputs + DeepSWE displayed directly (already labelled "Datacurve, via Epoch AI"). **Licence-unclear, flagged per the rule instead of silently shown: Cybench, ExploitBench, PostTrainBench, Surface Evolver Bench** (externally-sourced in Epoch's hub; original terms not yet confirmed — shown meanwhile under Epoch's CC-BY umbrella, documented in the method md). Daily non-fatal step `build-epoch-provenance`; SCRAPING.md row updated. UI deep-annotation of the provenance per ECI input benchmark lands with the next ECI-touching change. **Needs a non-kimi verifier.** **Verified by iteration 73 (claude-opus, non-implementer):** `/opt/benchmarkheaven/state/ux-evidence/iter73-verify-cr-34-35/verification.json` — 81 benchmarks = 35 epoch_run + 46 external, classification agrees with Epoch's `*_external.csv` naming for every row; named original projects only the six evidence-backed ones; the four flagged licences (Cybench, ExploitBench, PostTrainBench, Surface Evolver Bench) are in the unclear list (which also carries further non-consumed hub benchmarks); evidence CSV present; daily step `build-epoch-provenance` present. |
-| CR-36.1 | Compare tab 'Add models' search: redesign the dropdown — clean list with lab logo/name, model name, release da | open | — | — |
-| CR-36.2 | Compare picker lists one entry per model (weights/training run), not every reasoning variant. For each benchma | open | — | — |
+| CR-36.1 | Compare tab 'Add models' search: redesign the dropdown — clean list with lab logo/name, model name, release da | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter74/` | Iteration 74 (claude-opus), `aa46183`: listbox under the input (full-width sheet below 768 px), "Top by AA Intelligence Index" when empty, bold matches, ↑↓/Enter/Esc with `aria-activedescendant`, opaque and above everything. Live `verify-cr-36-1-2.mjs` **65/65 per host** (1440/390, light/dark). Needs a non-claude verifier. |
+| CR-36.2 | Compare picker lists one entry per model (weights/training run), not every reasoning variant. For each benchma | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter74/` | Iteration 74 (claude-opus), `aa46183`: `compareFamilies` / `selectFamilyBenchmarkView` in `lib/benchmark-view.mjs` — one entry per model, per benchmark the best of its reasoning variants (direction-aware; measured, full-sample rows rank first), each row keeps `variantId`/`variantLabel`/`bestOf`; chips say "best of N" and name the variants, full-comparison cells say "best of variants: <variant>". Live 65/65 per host, incl. an independent recompute of the chosen value from the uncollapsed API. Needs a non-claude verifier. |
 | CR-36.3 | Options panel: revamp the Models and Providers dropdowns (and the new Labs one from CR-25.5) — they are too bi | verified | `/opt/benchmarkheaven/state/ux-evidence/iter73-verify-cr-25-36/{canonical,legacy}/verification.json` (`bin/verify-cr-25-36.mjs`, **76/76 per host**, live at `22ad0f9`, 1440/390, light/dark); unit tests `test/regions.test.mjs`, `test/cost.test.mjs`, `test/presets.test.mjs` | **Iteration 73 (claude-opus, implementer):** `808ef9e` — `components/MultiCombobox.tsx`: trigger shows only the count ("Providers: 88 of 92"); list rendered into <body> so the panel's scroll area cannot clip it — as wide as the trigger (min 280 px), ≤ 320 px with internal scroll at desktop, bottom sheet on phones; search, All · None ("None" then one pick = only that item), selected-first alphabetical order fixed while open, chips for picked items, ↑↓ between options, Escape closes the list and returns focus without closing Options. Options panel 589 px tall at 1440 (F-94 ≤ 600). Decision: the old provider quick-pick links were dropped (they squeezed the list to two rows; filter presets cover those cases). **Needs a non-claude verifier.** **Verified by review gate 20260915T212002Z (opencode-kimi, non-implementer):** `bin/verify-cr-25-36.mjs` **76/76 per host** live on both hosts at `4be0957` and again at `c11af043` — count-only triggers, popover into `<body>` (≤ 320 px internal scroll, phone bottom sheet), search/All·None/chips/↑↓/Escape, nothing clipped; 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/review-20260915T212002Z/{canonical,legacy}/verify-cr-25-36{,-c11af04}/`). |
 | CR-37.1 | Add every Lumina Bench benchmark family we don't have yet (from the intake job's verified `NEW-BENCHMARKS.md`  | open | — | — |
 | CR-37.2 | Scraper/updater: add a daily collector for Lumina's data ledger as a discovery + provenance feed (manifest has | open | — | — |
@@ -2251,3 +2251,63 @@ Iteration 72 exited cleanly at ~21:20 UTC. No Claude and no Codex tokens were us
    naming the variant; share the family grouping with `benchmaxxingFamilySignals` and CR-28.2.
 4. Data group unchanged from iteration 72's handover items 2–5 (CR-34.2/34.3/34.5, CR-28.2, CR-30, CR-37/38 as one
    intake); F-97, F-98, F-99 still open in `DESIGN-DIRECTIVES.md`.
+
+## Iteration 74 (2026-09-15, claude-opus) — CR-36.1/36.2 (F-95), F-97, F-99
+
+**Shipped** (`aa46183`, live on both hosts; gates before the push: `npm test` 477/477, `tsc` clean,
+`node scripts/build-dataset.mjs` 840/660/92/2,882 timestamp-only, `next build` clean):
+
+- **CR-36.1 / CR-36.2 (F-95)** — Compare "Add a model" picker and one entry per model. New
+  `compareFamilies` / `selectFamilyBenchmarkView` (`lib/benchmark-view.mjs`), `?collapse=1` on
+  `/api/benchmark-view`, `components/ComparePicker.tsx`; compare and radar pages start from the
+  collapsed view. New `bin/verify-cr-36-1-2.mjs`: **65/65 per host**.
+- **F-97** — the Benchmaxxing Signal sub-label now reads "bars scaled to 21.2, the list's highest"
+  (`verify-cr-19-25` regex updated; live 53/53 per host).
+- **F-99** — below 768 px the "This is a simplified list" hint is a full-width line under the
+  "Open the full comparison" button instead of a bubble over the intro; `verify-cr-29-31` gained an
+  assertion that the hint never intersects the intro paragraph (live 52/52 per host).
+- **Data defect fixed while there:** `buildBenchmarkView` gave historical models the *benchmark's*
+  family (`e.family`, e.g. `aa-automationbench`), so the retired `gpt-6-astra::non-reasoning` became a
+  second "GPT-6 Astra" entry. Historical models now take the family from their catalog id.
+
+**Recorded interpretations (carry into X7 — Florian may overrule):**
+1. **The picker's "main score" is the AA Intelligence Index, not the Composite** (F-95 says "Top by
+   Composite"). The Composite is computed client-side only (`lib/client-model.ts`, incl. ECI
+   fallbacks); recomputing it on the server for the picker would risk a second, diverging number.
+   The listbox names the score and carries the AA credit (CR-35.1).
+2. **A retired reasoning variant counts as a variant of its model** (so GPT-6 Astra reads "best of 6"),
+   consistent with CR-21.1: same weights, same training run.
+
+**Stale verifier found, not a regression:** `bin/verify-cr-14.mjs` still asserted the pre-CR-19 radar
+(viewBox 720×500, unzoomed positions, 8 axes incl. DesignArena Frontend). The geometry constants were
+updated to the current 900×600 layout; its **CR-14.2 position and CR-14.4 axis-list assertions remain
+stale** (CR-19.2 zooms the radar, CR-19.3 replaced Frontend with Full-Stack — both verified live by
+`verify-cr-19-25`). Someone must rewrite those two assertions against the CR-19 behaviour or retire
+them; they are not evidence of a live defect.
+
+## Handover — next work iteration (written 2026-09-15, iteration 74)
+0. **Verify first (non-claude engine):** CR-36.1, CR-36.2 — `bin/verify-cr-36-1-2.mjs <base> <out>`,
+   both hosts, `BH_RUNNER` recorded.
+1. **CR-25.6 (category composites as selectable scores)** — groundwork done this iteration, no code yet.
+   Coverage measured over the 20 featured families (compatible = 0–100-style, higher-better rows;
+   rerun with `node ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs`):
+   - Coding: Terminal-Bench v4.0 (AA) 100 %, SciCode (AA) 100 %, DeepSWE 65 % (Terminal-Bench v2.1 95 %
+     is an older version of the same benchmark — one version per benchmark, keep the newest).
+   - Agentic & tool use: AutomationBench-AA 100 %, τ³-Banking (AA) 95 %, EnterpriseOps-Gym-AA 65 %.
+   - Science: CritPt (AA) 100 %, GPQA Diamond (AA) 95 %. Long context: AA-LCR v1.1 100 %, GDP.pdf 100 %,
+     MLCR-AA 90 %.
+   - Reasoning and Vision have only **one** qualifying row each (HLE; MMMU Pro) → no category score;
+     `COMPOSITE_MIN_ROWS` = 2 already encodes that rule.
+   Proposed rule: a fixed anchor set per category (≥ 60 % coverage among featured families, newest
+   version per benchmark); a model gets the score only with a value on **every** anchor, otherwise none —
+   never an average over different subsets per model. Then add the keys to `ScoreKey` (`lib/types.ts`,
+   three `Record<ScoreKey, string>` maps), `scoreOf` (`lib/data.ts`), `SCORE_OPTIONS` + `defaultMinFor`
+   (`lib/cost.ts`), `SIMPLE_SCORE_CHOICES` (`lib/value-map.mjs`), the shortlist chart picker (CR-33.2)
+   and the dataset build (the anchor values live in the benchmark matrix, not in `m.benchmarks`, so the
+   per-model category score has to be computed in `scripts/build-dataset.mjs` and stored per model).
+   **Open question for the reviewer:** every anchor except DeepSWE is AA-derived. This is an aggregate of
+   values already shown (CR-12.3 category composites), not a new AA metric, so it is read as *not* blocked
+   by CR-35.3's hold — challenge that if you disagree.
+2. **CR-34.2 / CR-34.3** (OpenRouter Benchmarks ingestion; terms cleared), **CR-28.2**, **CR-30.1/30.2**,
+   **CR-37.x / CR-38.x** as one intake — unchanged from the previous handover.
+3. **F-98** (Saturated / Judged tags, with CR-38.2/38.3) is still open in `DESIGN-DIRECTIVES.md`.
