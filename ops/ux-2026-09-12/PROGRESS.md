@@ -291,6 +291,11 @@ credited below, the rest is marked open.
 | CR-37.1 | Add every Lumina Bench benchmark family we don't have yet (from the intake job's verified `NEW-BENCHMARKS.md`  | open | — | — |
 | CR-37.2 | Scraper/updater: add a daily collector for Lumina's data ledger as a discovery + provenance feed (manifest has | open | — | — |
 | CR-37.3 | Results for the new benchmarks shown across the site (full benchmark list, Benchmarks tab, compare, category s | open | — | — |
+| CR-38.1 | For every source in CR-20260915n: a collector in the scraper/updater (API > official download > leaderboard pa | open | — | — |
+| CR-38.2 | Saturation/freshness metadata per benchmark: test version, task/question date window, contamination notes, and | open | — | — |
+| CR-38.3 | Human-preference arenas (Arena, DesignArena, EQ-Bench-style judged scores) are labelled as preference/judged s | open | — | — |
+| CR-38.4 | Aggregators (Lumina, BenchLM, The Aggregate, LLM Stats, Vellum, LM Council, CodeSOTA, BenchmarkList, HF find-a | open | — | — |
+| CR-38.5 | Daily/weekly refresh schedule per source with fail-closed gates and a source-health view in ops (which collect | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -2041,3 +2046,7 @@ CR-36.2 shares the 'one entry per model' logic with CR-21.1 — build one shared
 
 ## PRIORITY addendum 2026-09-15 ~18:10 UTC (laptop supervisor)
 CR-37 (Lumina Bench) joins the data group with CR-28/CR-30/CR-34. Merge the three research outputs (self-reported scout, OpenRouter API, Lumina intake) into one benchmark intake so the same benchmark isn't added twice under different names.
+
+
+## PRIORITY addendum 2026-09-15 ~18:55 UTC (laptop supervisor)
+CR-38 (further sources) joins the data group: build ONE benchmark intake from the self-reported scout (CR-30), OpenRouter API (CR-34), Lumina (CR-37) and the source-intake job (CR-38) — shared identity mapping, dedupe, provenance and saturation metadata. Start with the ★ sources that have APIs/downloads.

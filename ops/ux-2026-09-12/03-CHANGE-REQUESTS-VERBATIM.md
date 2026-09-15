@@ -279,3 +279,74 @@ Laptop Claude Code chat, 15 Sep 2026 ~18:10 UTC, verbatim:
 > I found a lot of additional benchmarks, let's include what we don't have already into our scraper and updater: https://luminabench.com/
 
 Supervisor check 15 Sep ~18:10 UTC: Lumina Bench is an aggregator (435 benchmark families, 321 with results, 15,598 sourced result records, methodology 2.3; many families imported from BenchLM as `benchlm-*`). robots.txt allows all. Public **data ledger** (updated 1 Sep 2026): https://luminabench.com/downloads/luminabench-ledger-manifest.json, -benchmark-definitions.{csv,json}, -benchmark-results.{csv,json} (12 MB), -sources.{csv,json} (873 sources with fields url, sourceType, authority, publishedAt, retrievedAt, **licence, attribution, redistributionStatus**, verificationStatus), -models, -model-configurations, -operations, -image/-video/-voice, full ZIP/XLSX. No site-wide data licence found. => Use Lumina as a discovery and provenance index; take values from primary sources (or from Lumina only where the source's licence/redistribution status allows and Lumina is credited). Intake job: /home/flori/jobs/bh-lumina-intake-20260915/.
+
+
+## CR-20260915n — Integrate ~55 further benchmark sources and hubs
+Laptop Claude Code chat, 15 Sep 2026 ~18:55 UTC, verbatim:
+
+> one more thing regarding benchmark heaven: 
+>
+> I found lots more pages where we scrape benchmarks from: integrate all of them into benchmark heaven.
+>
+> Broad benchmark collections and comparison hubs
+> Website	Full URL	What it offers
+> ★ Artificial Analysis	https://artificialanalysis.ai/evaluations	Independent evaluations spanning reasoning, agents, professional work, and hallucination.
+> ★ Epoch AI	https://epoch.ai/benchmarks	Benchmark database, difficult evaluations, and capability trends over time.
+> Lumina Bench	https://luminabench.com/	Cross-benchmark rankings for coding, reasoning, agents, research, and mathematics.
+> ★ Scale Labs / SEAL	https://labs.scale.com/leaderboard	Frontier, agentic, and safety benchmarks explicitly targeting saturation problems.
+> ★ Vals AI	https://www.vals.ai/home	Independently run evaluations of economically valuable and real-world tasks.
+> ★ LiveBench	https://livebench.ai/	Refreshed, objectively scored tasks across multiple capability categories.
+> Stanford HELM	https://crfm.stanford.edu/helm/	Collections covering capabilities, safety, multimodality, medicine, and finance.
+> ★ BenchmarkList	https://benchmarklist.com/	Benchmark discovery directory with recent releases and model results.
+> The Aggregate	https://theaggregate.ai/benchmarks	Large public-benchmark catalog plus aggregated rankings and daily changes.
+> BenchLM	https://benchlm.ai/	Broad benchmark aggregation; distinguishes supported from estimated rankings.
+> Vellum	https://www.vellum.ai/llm-leaderboard	Curated comparisons explicitly excluding outdated benchmarks such as MMLU.
+> LLM Stats	https://llm-stats.com/	Public benchmark results alongside model speed and pricing.
+> LM Council	https://lmcouncil.ai/benchmarks	Source-dated benchmark snapshots curated by AI Explained.
+> CodeSOTA	https://www.codesota.com/	Source-linked benchmark registry across coding, agents, and other modalities.
+> ★ Kaggle Benchmarks	https://www.kaggle.com/benchmarks	Platform for discovering and running official and community evaluations.
+> OpenCompass	https://rank.opencompass.org.cn/leaderboard-llm-v2	Broad evaluation platform comparing open-weight and API models.
+> FlagEval	https://flageval.baai.ac.cn/	BAAI's multidimensional model-evaluation platform.
+> EuroEval	https://euroeval.com/leaderboards	Benchmark collections across 30+ European languages.
+> Arena	https://arena.ai/	Human-preference rankings across modalities; distinct from objective task accuracy.
+> Hugging Face — Find a Leaderboard	https://huggingface.co/spaces/OpenEvals/find-a-leaderboard	Discovery tool for specialized community leaderboards; freshness varies.
+> Reasoning, science, factuality, and long context
+> Website	Full URL	What to look at
+> ★ MathArena	https://matharena.ai/	Research mathematics, formal proofs, and fresh competitions—not just AIME.
+> ★ ARC Prize	https://arcprize.org/leaderboard	ARC-AGI series; particularly newer interactive ARC-AGI-3 evaluations.
+> Humanity's Last Exam	https://lastexam.ai/	Expert-level questions; also links to the HLE-Rolling initiative.
+> ★ CritPt	https://critpt.com/	Research-level physics reasoning challenges.
+> SciCode	https://scicode-bench.github.io/	Scientist-curated coding tasks derived from real research problems.
+> SimpleBench	https://simple-bench.com/	Commonsense reasoning questions designed around misleading traps.
+> LisanBench	https://lisanbench.com/	Constrained word-chain tasks testing planning and instruction following.
+> ★ EQ-Bench	https://eqbench.com/	Collection including EQ-Bench 4, creative writing, Judgemark, and Spiral-Bench.
+> Giskard Phare	https://phare.giskard.ai/	Multilingual hallucination, bias, harm, and jailbreak-resistance evaluations.
+> Context Arena	https://contextarena.ai/	Long-context performance comparisons, including MRCR.
+> Google FACTS	https://www.kaggle.com/benchmarks/google/facts	Factuality suite covering grounding, search, parametric knowledge, and multimodality.
+> Agents, coding, and professional work
+> Website	Full URL	What to look at
+> ★ Mercor APEX	https://www.mercor.com/apex/	Professional-work benchmark family: agents, accounting, software engineering, and more.
+> ★ Andon Labs	https://andonlabs.com/	Long-running agent evaluations: Vending-Bench, Blueprint-Bench, and Drone-Bench.
+> ★ METR Time Horizons	https://metr.org/time-horizons/	Autonomous task completion measured against human task duration.
+> ★ Terminal-Bench	https://www.tbench.ai/	Terminal-based agent work; the previous list highlighted version 4.0.
+> ★ ProgramBench	https://programbench.com/	Rebuilding whole programs from binaries and documentation; substantial remaining headroom.
+> ★ SlopCodeBench	https://www.scbench.ai/	Correctness and code degradation across successive requirement changes.
+> ★ SWE-rebench	https://swe-rebench.com/	Time-windowed repository tasks, with recurring model and agent evaluations.
+> SWE-bench	https://www.swebench.com/	Benchmark family including multilingual and multimodal tracks—not only Verified.
+> LiveCodeBench	https://livecodebench.github.io/	Date-filterable coding problems; use recent windows rather than historical averages.
+> GSO	https://livecodebench.github.io/gso.html	Challenging software-performance optimization tasks.
+> Berkeley Function Calling Leaderboard	https://gorilla.cs.berkeley.edu/leaderboard.html	BFCL V4: tool calling, multi-turn interactions, and agentic evaluation.
+> τ-bench	https://taubench.com/	Agent–user interactions and tool workflows; includes the newer τ³ generation.
+> ★ OSWorld 2.0	https://osworld-v2.xlang.ai/	Long-horizon, real-world computer-use tasks.
+> ★ WebArena-x	https://webarena.dev/	Collection including WebArena-Infinity, VisualWebArena, and TheAgentCompany.
+> DeepResearch Bench	https://deepresearch-bench.github.io/	Research-agent evaluation focused on research output quality.
+> CodeClash	https://codeclash.ai/	Goal-oriented coding tournaments; the previous list noted results from November 2025.
+> More collections—rather than just score tables
+> Website	Full URL	What it offers
+> ★ Inspect Evals	https://ukgovernmentbeis.github.io/inspect_evals/	Runnable evaluation collection maintained with UK AISI and collaborators.
+> ★ Harbor Hub	https://hub.harborframework.com/	Catalog of agent benchmarks, tasks, and executable environments.
+> EvalEval Evaluation Cards	https://evalcards.evalevalai.com/evals	Benchmark-family directory and structured evaluation-methodology information.
+>
+> For avoiding saturation: check the test version and task dates, not merely whether the leaderboard recently added new models.
+
+Supervisor note: research runs as job `/home/flori/jobs/bh-source-intake-20260915/` (per-source audit: data access, terms/licence, benchmarks, versions/task dates, overlap). Artificial Analysis: attribution done, new AA metrics still ON HOLD (CR-35.3) until Florian reports AA's answer. Arena = human preference, keep separate from task accuracy. Lumina (CR-37) and OpenRouter API (CR-34) already queued.
