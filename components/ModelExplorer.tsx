@@ -2,7 +2,7 @@
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
 import { hasScoreEvidence, isThinComposite, type ClientData } from "../lib/client-model";
-import { SCORE_LABELS, SCORE_SHORT_LABELS } from "../lib/types";
+import { SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, createOfferScope, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
@@ -16,7 +16,8 @@ import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
 import { capShortlist } from "../lib/shortlist.mjs";
-import { SIMPLE_LIMIT, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
+import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
+import { FIXED_BLENDS } from "../lib/effective-cost.mjs";
 import { valueSignals } from "../lib/value-signal.mjs";
 import { scoreRowSubtitle } from "./ScoreRows";
 import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
@@ -317,6 +318,16 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           costUnit={s.priceMode === "adjusted" ? "adjusted $/task" : "raw blended $/1M"}
           matching={matching.length} limit={limit ?? rows.length} pool={pool.length}
           map={<CostCapabilityScatter data={data} compact guided={guided} measuredOnly={s.priceMode === "adjusted" && measuredTasksOnly} ids={expandSimple ? pool.map((x) => x.m.id) : undefined} />}
+          {...(simplePair ? (() => {
+            // CR-32.1/32.2: pickers at the two slider labels drive the same global settings as Options.
+            const costChoices = costMeasureChoices(FIXED_BLENDS, s.inputWeight);
+            return {
+              scoreChoices: SIMPLE_SCORE_CHOICES.map((k) => ({ id: k, label: k === "composite" ? "Benchmark Heaven Main Composite Score" : SCORE_LABELS[k as ScoreKey] })),
+              onScore: (id: string) => s.setScore(id as ScoreKey),
+              costChoices, costChoice: activeCostMeasure(costChoices, s.priceMode, s.inputWeight),
+              onCost: (id: string) => { const c = costChoices.find((x) => x.id === id); if (!c) return; if (c.patch.inputWeight != null) s.setInputWeight(c.patch.inputWeight); s.setPriceMode(c.patch.priceMode); s.setSimpleMaxCost(null); },
+            };
+          })() : {})}
         />
       )}
       <div className={`card mb-4 items-center gap-2 p-1 md:gap-3 md:p-3 ${simple ? "hidden" : "flex"} bh-advanced-toolbar`}>

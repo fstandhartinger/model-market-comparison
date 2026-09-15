@@ -13,3 +13,7 @@ export declare const DERIVED_MIN_SCORE_FLOOR: number;
 export declare function derivedMinScore(points: readonly { x: number; y: number }[] | null | undefined, opts?: { score?: string; step?: number; floor?: number }): number | null;
 export declare function minScoreLabel(score: string, shortLabel: string): { title: string; sub: string };
 export declare function valueMapYDomain(values: readonly number[] | null | undefined, opts?: { elo?: boolean; full?: boolean }): { domain: [number, number]; ticks: number[] };
+export declare const SIMPLE_SCORE_CHOICES: readonly string[];
+export type CostMeasure = { id: 'adjusted' | 'blended' | 'input' | 'output'; label: string; unit: string; patch: { priceMode: 'adjusted' | 'raw'; inputWeight?: number } };
+export declare function costMeasureChoices(blends: readonly { value: number }[], currentWeight: number): CostMeasure[];
+export declare function activeCostMeasure(choices: CostMeasure[], priceMode: string, inputWeight: number): CostMeasure['id'];

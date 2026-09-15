@@ -55,3 +55,20 @@ test('CR-32.4: Y axis fits the plotted scores; 100 only when the best score is n
   const elo = valueMapYDomain([1171, 1350], { elo: true });
   assert.ok(elo.domain[0] <= 1171 && elo.domain[1] >= 1350 && elo.domain[1] < 1500, JSON.stringify(elo));
 });
+
+import { SIMPLE_SCORE_CHOICES, costMeasureChoices, activeCostMeasure } from '../lib/value-map.mjs';
+import { FIXED_BLENDS } from '../lib/effective-cost.mjs';
+test('CR-32.1: the score picker offers the Main Composite first and the headline indices and boards', () => {
+  assert.equal(SIMPLE_SCORE_CHOICES[0], 'composite');
+  for (const k of ['aa_intelligence_index', 'aa_coding_index', 'epoch_eci', 'epoch_eci_software', 'designarena_fullstack']) assert.ok(SIMPLE_SCORE_CHOICES.includes(k), k);
+});
+test('CR-32.2: each cost measure maps to one price setting and is recognised back', () => {
+  const choices = costMeasureChoices(FIXED_BLENDS, 20);
+  assert.deepEqual(choices.map((c) => c.id), ['adjusted', 'blended', 'input', 'output']);
+  const inputOnly = Math.max(...FIXED_BLENDS.map((b) => b.value));
+  assert.deepEqual(choices.find((c) => c.id === 'input').patch, { priceMode: 'raw', inputWeight: inputOnly });
+  assert.deepEqual(choices.find((c) => c.id === 'output').patch, { priceMode: 'raw', inputWeight: 0 });
+  for (const c of choices) assert.equal(activeCostMeasure(choices, c.patch.priceMode, c.patch.inputWeight ?? 20), c.id, c.id);
+  assert.equal(activeCostMeasure(costMeasureChoices(FIXED_BLENDS, 3), 'raw', 3), 'blended', 'a hand-picked blend stays "blended"');
+  assert.match(costMeasureChoices(FIXED_BLENDS, 3)[1].label, /3:1/);
+});

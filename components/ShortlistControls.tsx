@@ -1,10 +1,34 @@
 "use client";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
 import type { ScoreKey } from "../lib/types";
 import { minScoreLabel } from "../lib/value-map.mjs";
+
+/** CR-32.1/32.2: a label with a small ▾ that opens a compact, opaque choice popup (menu of radio items). */
+function LabelPicker({ label, name, options, value, onChange }: { label: React.ReactNode; name: string; options: { id: string; label: string }[]; value: string; onChange: (id: string) => void }) {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const down = (e: PointerEvent) => { if (!box.current?.contains(e.target as Node)) setOpen(false); };
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("pointerdown", down); document.addEventListener("keydown", key);
+    return () => { document.removeEventListener("pointerdown", down); document.removeEventListener("keydown", key); };
+  }, [open]);
+  return <span ref={box} className="relative inline-flex items-center">
+    <button type="button" aria-haspopup="menu" aria-expanded={open} aria-label={`${name}: choose`} data-label-picker={name}
+      onClick={() => setOpen((o) => !o)} className="inline-flex min-h-0 items-center gap-1 whitespace-nowrap text-left hover:text-accent">
+      {label}<span aria-hidden="true" className="text-[10px] text-gray-400">▼</span>
+    </button>
+    {open && <span role="menu" aria-label={name} className="absolute left-0 top-full z-40 mt-1 w-64 rounded-lg border border-line bg-[var(--surface)] p-1 text-sm shadow-xl">
+      {options.map((o) => <button key={o.id} type="button" role="menuitemradio" aria-checked={o.id === value} data-choice={o.id}
+        onClick={() => { onChange(o.id); setOpen(false); }}
+        className={`block w-full rounded-md px-2.5 py-1.5 text-left ${o.id === value ? "bg-accent/15 font-semibold text-accent" : "hover:bg-accent/5"}`}>{o.label}</button>)}
+    </span>}
+  </span>;
+}
 
 /** R5.3–R5.5 — Simple mode's two questions, as sliders.
  *
@@ -68,7 +92,7 @@ function Row({ title, value, children }: { title: React.ReactNode; value: string
   return (
     <div className="min-w-0">
       <div className="flex items-baseline justify-between gap-3">
-        <span className="min-w-0 whitespace-nowrap text-sm text-gray-300">{title}</span>
+        <span className="min-w-0 whitespace-nowrap text-sm text-gray-300" data-row-title>{title}</span>
         <span className="shrink-0 tabular text-sm font-semibold text-accent">{value}</span>
       </div>
       {children}
@@ -97,7 +121,7 @@ const trackFill = (frac: number) => {
 };
 
 export function ShortlistControls({
-  scores, costs, minScore, setMinScore, score, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool, map,
+  scores, costs, minScore, setMinScore, score, scoreName, maxCost, setMaxCost, costUnit, matching, limit, pool, map, scoreChoices, onScore, costChoices, costChoice, onCost,
 }: {
   scores: number[];               // scores of every model in the pool, before the two sliders
   costs: number[];                // adjusted costs of every model in the pool, before the sliders
@@ -112,6 +136,10 @@ export function ShortlistControls({
   limit: number;
   pool: number;                   // rows the other filters allow, before the sliders
   map?: React.ReactNode;          // F-13: value-map node, rendered beside the sliders (lg) / between sliders and summary (below lg)
+  /** CR-32.1: the score picker at the slider label (absent = plain label). */
+  scoreChoices?: { id: string; label: string }[]; onScore?: (id: string) => void;
+  /** CR-32.2: the cost-measure picker at the cost label. */
+  costChoices?: { id: string; label: string }[]; costChoice?: string; onCost?: (id: string) => void;
 }) {
   const { openFilters } = useSettings();
   const label = minScoreLabel(score, scoreName);
@@ -155,7 +183,7 @@ export function ShortlistControls({
        <div className={map ? "grid items-start gap-3 lg:grid-cols-[2fr_3fr] lg:gap-6" : undefined}>
         <div className="grid grid-cols-1 gap-3 self-start sm:grid-cols-2 lg:grid-cols-1 lg:gap-2">
           <Row
-            title={<><span>{label.title}</span><InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This is the same score as the Benchmark Heaven Score row of the benchmark table below, and it follows the active score selector.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
+            title={<>{scoreChoices && onScore ? <LabelPicker name="Capability score" label={label.title} options={scoreChoices} value={score} onChange={onScore} /> : <span>{label.title}</span>}<InfoTip title={`${label.title} — ${label.sub}`} label="the minimum capability score setting">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">This is the same score as the Benchmark Heaven Score row of the benchmark table below, and it follows the active score selector.</span></InfoTip><span className="bh-muted block whitespace-normal text-[11px] font-normal leading-tight" data-min-score-sub>({label.sub})</span></>}
             value={minScore > 0 ? minScore.toFixed(0) : "any"}
           >
             <div className="relative mt-1">
@@ -169,7 +197,10 @@ export function ShortlistControls({
           </Row>
 
           <Row
-            title={<><span className="sm:hidden">Max cost / task</span><span className="hidden sm:inline">{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span>{costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
+            title={<>{costChoices && onCost && costChoice
+              ? <LabelPicker name="Cost measure" label={<>Max {costChoices.find((c) => c.id === costChoice)?.label.replace(/^./, (ch) => ch.toLowerCase()) ?? "cost"}</>} options={costChoices} value={costChoice} onChange={onCost} />
+              : <><span className="sm:hidden">Max cost / task</span><span className="hidden sm:inline">{costUnit === "adjusted $/task" ? "Max adjusted cost / task" : "Max cost / task"}</span></>}
+              {costUnit === "adjusted $/task" && <InfoTip title="Adjusted cost" label="the adjusted cost setting">{ADJUSTED_COST_TIP}</InfoTip>}</>}
             value={maxCost == null ? "no limit" : money(maxCost)}
           >
             <div className="relative mt-1">
