@@ -4,6 +4,26 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — New raw capture: OpenRouter Benchmarks API (CR-34.1; no values displayed yet)
+
+No data location, route, public API field or benchmark value changed; `data/dataset.json` is
+untouched. One new raw snapshot joins the daily refresh:
+
+- **`data/raw/openrouter-benchmarks.json`** — `GET https://openrouter.ai/api/v1/benchmarks`
+  (documented public API, the project's existing key from the environment, two requests/day;
+  robots.txt allows). 1,518 rows / 250 models as of 2026-09-15T12:01Z: OpenRouter's own runs
+  (`gpqa_diamond` 131, `tau_bench_verified_airline` 123, search benchmarks `search_browsecomp` /
+  `search_dsqa` / `search_hle` / `search_widesearch` with engine+surface labels and measured
+  `avg_cost_per_task`), plus relayed Artificial Analysis (148) and DesignArena (1,102) rows kept
+  for cross-checks only — their own primary sources stay primary for every displayed value.
+- **Terms evaluated before any value ships** (`data/raw/openrouter-benchmarks.method.md`): the
+  page carries no licence; the API's own meta defines `citation` as "Required attribution when
+  republishing this data" per source. Display attribution (once values ship): "OpenRouter
+  Benchmarks" → https://openrouter.ai/benchmarks. Media benchmarks deliberately not ingested
+  (CR-34.6 decision); the AA Agentic Index stays on hold (CR-35.3) until Florian reports AA's
+  answer. Ingesting the own-run rows into taxonomy/UI (CR-34.2/34.3/34.5) is the next step.
+- Fail-closed validator `lib/openrouter-benchmarks.mjs` with unit tests.
+
 ## 2026-09-15 — New provider: TrustedTokens (TNG, DE-sovereign, EUR→USD)
 
 No data location, route or public API field was removed; no benchmark value changed. One new

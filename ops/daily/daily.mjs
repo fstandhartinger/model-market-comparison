@@ -111,6 +111,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       report.warnings.push(`fetch-data-policy skipped: ${error.message.slice(0, 300)}`);
       console.warn(`WARN fetch-data-policy: keeping the previous snapshot`);
     }
+    // CR-34.1: OpenRouter Benchmarks API (raw capture; non-fatal — a key or terms change must
+    // never block the price/benchmark publication; the previous snapshot stays).
+    try {
+      await command('fetch-openrouter-benchmarks', process.execPath, ['scripts/fetch-openrouter-benchmarks.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-openrouter-benchmarks skipped: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-openrouter-benchmarks: keeping the previous snapshot`);
+    }
     // R9.1: provider-meta is hand-curated; its date comes from a cross-check of `country` against the table
     // just fetched (dated by that table). New disagreements exit non-zero → a warning, curated values stay.
     try {
