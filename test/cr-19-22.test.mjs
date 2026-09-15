@@ -24,3 +24,19 @@ test('CR-22.1: two variants of one model are no cohort — no percentile, so no 
 test('CR-22.1: the report tooltip formats a raw fraction instead of printing 15 digits', () => {
   assert.equal(formatRadarValue(0.641775036414302, 'fraction'), '64.2%');
 });
+
+import { radarWindow, windowRadius, RADAR_WINDOW_MAX_FLOOR } from '../lib/radar.mjs';
+test('CR-19.2: the pair window drops the empty centre, labels its rings honestly and keeps half the scale', () => {
+  // Fable 5.1 vs GPT-6 Astra style positions: all between 55 and 100.
+  const w = radarWindow([57, 59, 75, 76, 88, 90, 98, 100]);
+  assert.equal(w.floor, 45);
+  assert.deepEqual(w.rings, [58.8, 72.5, 86.3, 100]);
+  assert.equal(windowRadius(45, w), 0);
+  assert.equal(windowRadius(100, w), 1);
+  assert.ok(windowRadius(59, w) - windowRadius(57, w) > (59 - 57) / 100, 'a 2-point gap is drawn larger than on the full scale');
+  assert.equal(radarWindow([95, 99]).floor, RADAR_WINDOW_MAX_FLOOR, 'never zooms past half the scale');
+  assert.equal(radarWindow([4, 90]).floor, 0, 'a weak axis keeps the full scale, no misleading zero');
+  assert.deepEqual(radarWindow([]), { floor: 0, rings: [25, 50, 75, 100] }, 'no values: full scale');
+  assert.equal(windowRadius(null, w), null, 'missing stays missing');
+  assert.equal(windowRadius(30, w), 0, 'below the floor sits at the centre, never negative');
+});

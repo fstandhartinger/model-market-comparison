@@ -7,6 +7,7 @@ const fs = await import('node:fs/promises');
 const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '');
 const OUT = process.argv[3] || '/tmp/verify-cr-19-25';
 await fs.mkdir(OUT, { recursive: true });
+const goto = async (page, url) => { for (let a = 1; ; a++) { try { return await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 }); } catch (e) { if (a >= 3 || !/ERR_NETWORK_CHANGED|ERR_CONNECTION|ERR_TIMED_OUT|Timeout|ERR_INTERNET/.test(String(e))) throw e; await new Promise((r) => setTimeout(r, 3000 * a)); } } };
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
 
 // CR-22.1 data: Muse Spark 1.3 no longer gets a percentile from a two-variant cohort.
@@ -23,9 +24,9 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile, colorScheme: theme });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
-  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await goto(page, `${BASE}/`);
   await page.evaluate((t) => { try { localStorage.clear(); localStorage.setItem('bh-theme', t); } catch {} }, theme);
-  await page.reload(); await settle(page);
+  await page.reload().catch(async () => { await new Promise((r) => setTimeout(r, 3000)); await page.reload(); }); await settle(page);
 
   // CR-25.1 Options label; CR-25.2 no confidential filter; CR-25.3 company toggle out of Data confidentiality.
   const optBtn = page.locator('header button[data-bh-filters-toggle]').first();
@@ -65,7 +66,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   await summary.click();
 
   // Compare: CR-19.1 opaque tooltip, CR-19.3 default axes, CR-20.1 equal columns.
-  await page.goto(`${BASE}/compare`, { waitUntil: 'domcontentloaded' }); await settle(page); await page.waitForTimeout(1500);
+  await goto(page, `${BASE}/compare`); await settle(page); await page.waitForTimeout(1500);
   const axesText = await page.locator('#benchmark-radar').innerText().catch(() => '');
   check(`${tag} CR-19.3 default radar axes include DesignArena Full-Stack and not Frontend`, /Full-Stack/.test(axesText) && !/DesignArena Frontend/.test(axesText), axesText.slice(0, 300));
   const hit = page.locator('#benchmark-radar svg [role=button]').filter({ visible: true }).first();
@@ -78,7 +79,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   check(`${tag} CR-20.1 full comparison model columns have equal widths`, widths && widths.length >= 2 && Math.max(...widths) - Math.min(...widths) <= 1, widths);
 
   // Benchmaxxing: CR-21.2 bar scale, CR-22.2 sentence, CR-22.3 faint spokes.
-  await page.goto(`${BASE}/benchmaxxing`, { waitUntil: 'domcontentloaded' }); await settle(page); await page.waitForTimeout(1500);
+  await goto(page, `${BASE}/benchmaxxing`); await settle(page); await page.waitForTimeout(1500);
   const bars = await page.evaluate(() => {
     const fracs = [...document.querySelectorAll('[data-signal-frac]')].filter((el) => el.offsetParent).map((el) => Number(el.getAttribute('data-signal-frac')));
     return { n: fracs.length, max: Math.max(...fracs), label: document.querySelector('[data-signal-max]')?.textContent || '' };

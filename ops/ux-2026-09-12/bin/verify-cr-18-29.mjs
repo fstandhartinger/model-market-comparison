@@ -7,6 +7,7 @@ const fs = await import('node:fs/promises');
 const BASE = (process.argv[2] || 'https://benchmarkheaven.com').replace(/\/$/, '');
 const OUT = process.argv[3] || '/tmp/verify-cr-18-29';
 await fs.mkdir(OUT, { recursive: true });
+const goto = async (page, url) => { for (let a = 1; ; a++) { try { return await page.goto(url, { waitUntil: 'domcontentloaded', timeout: 45000 }); } catch (e) { if (a >= 3 || !/ERR_NETWORK_CHANGED|ERR_CONNECTION|ERR_TIMED_OUT|Timeout|ERR_INTERNET/.test(String(e))) throw e; await new Promise((r) => setTimeout(r, 3000 * a)); } } };
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
 
 const slider = (page) => page.locator('input[type=range][aria-label^="Minimum Capability Score"]').first();
@@ -19,9 +20,9 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const context = await browser.newContext({ viewport, isMobile: mobile, hasTouch: mobile, colorScheme: theme });
   const page = await context.newPage(); const errors = [];
   page.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
-  await page.goto(`${BASE}/`, { waitUntil: 'domcontentloaded' });
+  await goto(page, `${BASE}/`);
   await page.evaluate((t) => { try { localStorage.clear(); localStorage.setItem('bh-theme', t); } catch {} }, theme);
-  await page.reload(); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
+  await page.reload().catch(async () => { await new Promise((r) => setTimeout(r, 3000)); await page.reload(); }); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
 
   const value = Number(await slider(page).inputValue());
   const r = await rows(page);
@@ -56,11 +57,11 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   await page.waitForTimeout(500);
   const moved = Number(await slider(page).inputValue());
   check(`${tag} CR-18.3 touching the slider overrides the default`, moved === value + 3 || moved > value, { value, moved });
-  await page.reload(); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
+  await page.reload().catch(async () => { await new Promise((r) => setTimeout(r, 3000)); await page.reload(); }); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
   const kept = Number(await slider(page).inputValue());
   check(`${tag} CR-18.3 the hand-set value persists across reload`, kept === moved, { moved, kept });
   await page.evaluate(() => { try { const k = 'mmc.settings.v9'; const s = JSON.parse(localStorage.getItem(k)); s.minScoreTouched = false; localStorage.setItem(k, JSON.stringify(s)); } catch {} });
-  await page.reload(); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
+  await page.reload().catch(async () => { await new Promise((r) => setTimeout(r, 3000)); await page.reload(); }); await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(1500);
   check(`${tag} CR-18.3 untouched again → back to the derived default`, Number(await slider(page).inputValue()) === value, '');
 
   // Advanced is unchanged: no score floor chip by default.

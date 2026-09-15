@@ -1,7 +1,7 @@
 "use client";
 import { useMemo, useState, type ReactNode } from 'react';
 import { latestScores, type BenchmarkView, type ViewAxis } from '../lib/benchmark-view.mjs';
-import { axisRange, detailedRadarAxes, formatRadarValue, radarScale, scaleNote, type RadarScaled } from '../lib/radar.mjs';
+import { axisRange, detailedRadarAxes, formatRadarValue, radarScale, radarWindow, scaleNote, windowRadius, type RadarScaled } from '../lib/radar.mjs';
 import { InfoTip } from './InfoTip';
 import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 import { RadarHit, RadarTip, TopicRadar, type RadarActive, type RadarSeries } from './TopicRadar';
@@ -27,13 +27,16 @@ function seriesFor(view: BenchmarkView, axes: ViewAxis[], picks: string[]): Seri
   });
 }
 
-function SimpleRadar({ axes, series, variant, label }: { axes: ViewAxis[]; series: Series[]; variant: 'desktop' | 'mobile'; label: string }) {
+function SimpleRadar({ axes, series, variant, label, zoom }: { axes: ViewAxis[]; series: Series[]; variant: 'desktop' | 'mobile'; label: string; zoom: boolean }) {
   const [active, setActive] = useState<RadarActive>(null);
   const d = variant === 'desktop' ? { w: 720, h: 500, cx: 360, cy: 245, R: 150, L: 193 } : { w: 360, h: 360, cx: 180, cy: 180, R: 120, L: 148 };
-  const at = (s: number, i: number) => { const p = position(d.cx, d.cy, i, axes.length, d.R * (series[s]?.points[i]?.value ?? 0) / 100); return [p.x, p.y] as const; };
+  // CR-19.2: zoomed to the compared models' shared window unless the full 0–100 scale is chosen.
+  const win = zoom ? radarWindow(series.flatMap((s) => s.points.map((p) => p.value))) : radarWindow([]);
+  const at = (s: number, i: number) => { const p = position(d.cx, d.cy, i, axes.length, d.R * (windowRadius(series[s]?.points[i]?.value ?? win.floor, win) ?? 0)); return [p.x, p.y] as const; };
   return <div className={`relative mx-auto w-full ${variant === 'desktop' ? 'hidden max-w-[640px] md:block' : 'block max-w-[360px] md:hidden'}`} onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
     <svg className="block w-full" viewBox={`0 0 ${d.w} ${d.h}`} role="group" aria-label={label}>
-      {[25, 50, 75, 100].map((v) => <g key={v}><polygon fill="none" stroke="var(--radar-grid, #526071)" strokeOpacity="0.6" points={axes.map((_, i) => { const p = position(d.cx, d.cy, i, axes.length, d.R * v / 100); return `${p.x},${p.y}`; }).join(' ')} /><text x={d.cx + 5} y={d.cy - d.R * v / 100 + 13} fill="currentColor" fontSize="10">{v}</text></g>)}
+      {win.rings.map((v, k) => <g key={k}><polygon fill="none" stroke="var(--radar-grid, #526071)" strokeOpacity="0.6" points={axes.map((_, i) => { const p = position(d.cx, d.cy, i, axes.length, d.R * (k + 1) / 4); return `${p.x},${p.y}`; }).join(' ')} /><text x={d.cx + 5} y={d.cy - d.R * (k + 1) / 4 + 13} fill="currentColor" fontSize="10" data-radar-ring>{Math.round(v)}</text></g>)}
+      {win.floor > 0 && <text x={d.cx + 5} y={d.cy + 4} fill="currentColor" fontSize="10" data-radar-floor>{win.floor}</text>}
       {axes.map((axis, i) => {
         const p = position(d.cx, d.cy, i, axes.length, d.R), l = position(d.cx, d.cy, i, axes.length, d.L);
         const short = shortName(axis.name), suffix = versionSuffix(short, axis.version);
@@ -59,12 +62,13 @@ function SimpleRadar({ axes, series, variant, label }: { axes: ViewAxis[]; serie
 
 export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel }: { view: BenchmarkView; axes: ViewAxis[]; picks: string[]; axesPicker?: ReactNode; axesPickerLabel?: string }) {
   const [mode, setMode] = useState<'simple' | 'detailed'>('simple');
+  const [zoom, setZoom] = useState(true);
   const detailedAxes = useMemo(() => detailedRadarAxes([...view.axes, ...(view.indexAxes ?? [])], picks), [view, picks]);
   const shown = mode === 'simple' ? axes : detailedAxes;
   const series = seriesFor(view, shown, picks);
   const ariaLabel = `${mode === 'simple' ? 'Radar' : 'Detailed radar grouped by topic'} for ${series.map((s) => s.name).join(', ')}. ${mode === 'simple' ? shown.map((a, i) => `Axis ${i + 1}: ${a.name}, ${humanVersion(a.version).label}`).join('. ') + '. ' : `${shown.length} benchmarks. `}Each point is focusable and announces its exact value; all values are also in the table below.`;
   return <section id="benchmark-radar" className="bh-panel min-w-0 scroll-mt-4 p-5" aria-label="Benchmark radar">
-    <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">PERFORMANCE PROFILE</p><h2 className="text-xl font-semibold">Benchmark radar <InfoTip title="How the benchmark radar works" label="the benchmark radar explanation">Each axis uses the benchmark&apos;s own scale: a 0–100 index or a percentage is drawn as is, so 55 sits just past half. Open-ended scores (Elo, Epoch ECI) have no fixed scale and are placed within the measured range of all models. Missing results stay gaps, never zeroes. Hover, tap or focus a point for its exact value.</InfoTip></h2></div>
+    <div className="flex flex-wrap items-start justify-between gap-3"><div><p className="bh-eyebrow">PERFORMANCE PROFILE</p><h2 className="text-xl font-semibold">Benchmark radar <InfoTip title="How the benchmark radar works" label="the benchmark radar explanation">Each axis uses the benchmark&apos;s own scale: a 0–100 index or a percentage is drawn as is, so 55 sits just past half. Open-ended scores (Elo, Epoch ECI) have no fixed scale and are placed within the measured range of all models. Missing results stay gaps, never zeroes. Hover, tap or focus a point for its exact value. To make two strong models distinguishable, the chart zooms to the range they occupy — the centre is then labelled with its position, not zero; tick “Full 0–100 scale” to undo.</InfoTip></h2></div>
       <div role="group" aria-label="Radar type" className="inline-flex rounded-lg border border-line p-0.5 text-sm">
         {(['simple', 'detailed'] as const).map((m) => <button key={m} type="button" aria-pressed={mode === m} onClick={() => setMode(m)} className={`min-h-9 rounded-md px-3 ${mode === m ? 'bg-accent/15 font-semibold text-accent' : 'bh-muted'}`}>{m === 'simple' ? `Simple · ${axes.length} axes` : `Detailed · ${detailedAxes.length} benchmarks`}</button>)}
       </div>
@@ -72,8 +76,10 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
     {mode === 'simple' && axes.length < 3 ? <div className="bh-empty min-h-80">Choose 3–8 axes to draw a radar. The full comparison table stays available below.</div> : !picks.length ? <div className="bh-empty min-h-80">Choose up to four model configurations to see their profiles.</div> : mode === 'detailed' && shown.length < 3 ? <div className="bh-empty min-h-80">Too few measured benchmarks for a detailed radar.</div> : <>
       <ul className="mt-4 flex flex-wrap gap-x-5 gap-y-2 text-sm" aria-label="Chart legend">{series.map((s, i) => <li key={s.id} className="flex items-center gap-2"><svg width="28" height="12" aria-hidden="true"><line x1="0" y1="6" x2="28" y2="6" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg><span>{String.fromCharCode(65 + i)} · {s.name}</span></li>)}</ul>
       {mode === 'simple' ? <div className="mt-2">
-        <SimpleRadar axes={shown} series={series} variant="desktop" label={ariaLabel} />
-        <SimpleRadar axes={shown} series={series} variant="mobile" label={ariaLabel} />
+        <label className="mb-1 flex items-center justify-end gap-2 text-xs"><input type="checkbox" checked={!zoom} onChange={(e) => setZoom(!e.target.checked)} data-radar-fullscale />Full 0–100 scale</label>
+        <SimpleRadar axes={shown} series={series} variant="desktop" label={ariaLabel} zoom={zoom} />
+        <SimpleRadar axes={shown} series={series} variant="mobile" label={ariaLabel} zoom={zoom} />
+        {zoom && (() => { const f = radarWindow(series.flatMap((s) => s.points.map((p) => p.value))).floor; return f > 0 ? <p className="bh-muted text-center text-xs" data-radar-zoom-note>Zoomed to these models: the centre is {f} on each axis&apos;s 0–100 position, not zero.</p> : null; })()}
         <ol className="md:hidden mt-2 space-y-0.5 text-xs">{shown.map((axis, i) => { const short = shortName(axis.name), suffix = versionSuffix(short, axis.version); return <li key={axis.id}>{i + 1}. {short}{suffix && <span className="bh-muted"> {suffix}</span>}</li>; })}</ol>
       </div> : <div className="mt-2">
         <TopicRadar axes={shown} series={series} label={ariaLabel} />

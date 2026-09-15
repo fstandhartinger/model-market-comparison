@@ -2,7 +2,7 @@ import { getDataset } from "../lib/data";
 import { clientData, type ClientBenchmaxxing } from "../lib/client-model";
 import { HomeMode } from "../components/HomeMode";
 import { getBenchmarkView } from "../lib/benchmark-data";
-import { benchmaxxingSignals } from "../lib/benchmax.mjs";
+import { benchmaxxingFamilySignals } from "../lib/benchmax.mjs";
 import { buildBenchmarkComparison } from "../lib/benchmark-comparison.mjs";
 import { getBenchmarkMatrixPage } from "../lib/benchmark-matrix-data";
 import { importantMatrix } from "../lib/benchmark-matrix.mjs";
@@ -14,8 +14,11 @@ export default async function Home() {
   // implementation over the whole catalog). Server-side, so the client table receives
   // only display data and never recomputes benchmark scores.
   const view = await getBenchmarkView();
-  const { reports, tagged } = benchmaxxingSignals(view);
-  const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(reports.map(([id, report]) => [id, { score: report.score ?? null, signal: tagged.has(id) }]));
+  // CR-21.1: the verdict belongs to the model (family), so every reasoning variant shows its family's score and tag.
+  const { reports, tagged } = benchmaxxingFamilySignals(view);
+  const familyScore = new Map(reports.map(([id, report]) => [view.models.find((m) => m.id === id)?.family ?? id, report.score ?? null]));
+  const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(view.models.filter((m) => familyScore.has(m.family ?? m.id))
+    .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: tagged.has(m.id) }]));
   const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.

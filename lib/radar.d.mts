@@ -9,3 +9,7 @@ export const DEFAULT_RADAR_FAMILIES: readonly string[];
 export function defaultRadarAxes(axes: ViewAxis[], families?: readonly string[]): string[];
 export function detailedRadarAxes(axes: ViewAxis[], picks: string[]): ViewAxis[];
 export function defaultComparePicks(view: BenchmarkView, n?: number): string[];
+export declare const RADAR_WINDOW_MARGIN: number;
+export declare const RADAR_WINDOW_MAX_FLOOR: number;
+export declare function radarWindow(positions: readonly (number | null | undefined)[] | null | undefined): { floor: number; rings: number[] };
+export declare function windowRadius(position: number | null | undefined, win: { floor: number }): number | null;

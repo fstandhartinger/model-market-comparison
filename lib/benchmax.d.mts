@@ -81,3 +81,4 @@ export function groupedRadarProfile(view: BenchmarkView, modelId: string): Bench
 export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minMeasured?: number; minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
 export function benchmaxxingPrior(view: BenchmarkView): { mean: number | null; shrink: number; eligible: number };
 export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string> };
+export function benchmaxxingFamilySignals(view: BenchmarkView): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; taggedFamilies: Set<string>; representatives: Map<string, string>; variantsOf: (id: string) => number };
