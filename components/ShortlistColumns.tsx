@@ -6,6 +6,7 @@ import { hasScoreEvidence } from "../lib/client-model";
 import { SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { formatValue, shortlistColumns } from "../lib/benchmark-matrix.mjs";
 import { seriesColor } from "./BenchmarkBars";
+import { AaCredit } from "./AaCredit";
 
 /** CR-33.2: the scores the chart can show. The Main Composite is the default; category composites join
  *  this list once they exist as catalog-wide scores (CR-25.6). */
@@ -27,7 +28,7 @@ export function ShortlistColumns({ data, ids, tableIds, names }: { data: ClientD
   const measured = columns.filter((c) => !c.noData).length;
   return <figure className="card mt-4 p-3 sm:p-4" aria-labelledby="bh-shortlist-cols-title" data-shortlist-columns>
     <div className="flex flex-wrap items-center justify-between gap-2">
-      <figcaption id="bh-shortlist-cols-title" className="text-sm font-semibold">{label}<span className="bh-muted ml-2 text-xs font-normal">{measured} of {columns.length} models{kind === "position" ? " · Elo, drawn between the lowest and highest rating" : ""}</span></figcaption>
+      <figcaption id="bh-shortlist-cols-title" className="text-sm font-semibold">{label}<span className="bh-muted ml-2 text-xs font-normal">{measured} of {columns.length} models{kind === "position" ? " · Elo, drawn between the lowest and highest rating" : ""} · <AaCredit /></span></figcaption>
       <label className="text-xs">
         <span className="sr-only">Score shown in the chart</span>
         <select className="bh-input py-1 text-xs" value={score} onChange={(e) => setScore(e.target.value as ScoreKey)} data-shortlist-score>

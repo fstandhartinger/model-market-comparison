@@ -1,4 +1,5 @@
 import type { ScoreKey } from "../lib/types";
+import { AaCredit } from "./AaCredit";
 
 /** R1.4: the plain-language explanation of the Adjusted Cost column. It names the four
  *  things the number accounts for and avoids the "Chutes global fallback" phrasing that
@@ -12,7 +13,7 @@ export const ADJUSTED_COST_TIP = (
       <li>Counts how many tokens this model really needs per task.</li>
       <li>“cheaper” / “pricier” tags: about 2× off the typical cost for that score.</li>
     </ul>
-    <a className="mt-2 inline-block text-accent underline" href="/about#adjusted-cost">How we calculate</a>
+    <a className="mt-2 inline-block text-accent underline" href="/about#adjusted-cost">How we calculate</a> <AaCredit className="mt-1 block text-gray-400" />
   </>
 );
 
@@ -25,7 +26,7 @@ const COMPOSITE_TIP = (
       <li>Each counts as the model’s rank among measured models.</li>
       <li>Missing results are never counted as good; thin records are shown hatched.</li>
     </ul>
-    <a className="mt-2 inline-block text-accent underline" href="/about#score">How we calculate</a>
+    <a className="mt-2 inline-block text-accent underline" href="/about#score">How we calculate</a> <AaCredit className="mt-1 block text-gray-400" />
   </>
 );
 
@@ -38,7 +39,7 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
   if (score === "epoch_eci" || score === "epoch_eci_software") {
     return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table.</>;
   }
-  return <>Published by Artificial Analysis, shown on their scale exactly as reported — we do not rescale it. The index version and the date we read it are printed under the table, because Artificial Analysis re-bases these indices from time to time.</>;
+  return <>Published by Artificial Analysis, shown on their scale exactly as reported — we do not rescale it. The index version and the date we read it are printed under the table, because Artificial Analysis re-bases these indices from time to time. <AaCredit className="mt-1 block text-gray-400" /></>;
 }
 
 /** Short pointer to the full method; deliberately understated (R1.6). */

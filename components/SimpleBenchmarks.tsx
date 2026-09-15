@@ -10,6 +10,7 @@ import { hasScoreEvidence } from "../lib/client-model";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 import { ShortlistColumns } from "./ShortlistColumns";
+import { AaCredit } from "./AaCredit";
 
 const COLUMNS = 5;
 const NOTE_KEY = "bh.simpleBenchmarksNote.v1";
@@ -121,6 +122,6 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Every benchmark with a result for at least one of these models. Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
+    <p className="bh-muted mt-2 text-xs">Every benchmark with a result for at least one of these models. <AaCredit />. Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets.</p>
   </section>;
 }

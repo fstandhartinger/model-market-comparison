@@ -14,6 +14,7 @@ import { BenchmarkBars, seriesColor, seriesLetter } from "./BenchmarkBars";
 import { PresetMenu } from "./PresetMenu";
 import { PickFromChart } from "./PickFromChart";
 import { toggleColumn } from "../lib/pick-chart.mjs";
+import { AaCredit } from "./AaCredit";
 
 const MIN_MODELS = 2, MAX_MODELS = 10;
 const ROW_IDS = new Set(ROW_PRESETS.map((p) => p.id));
@@ -246,6 +247,6 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
         </table>
       </div>}
     {ids.length > 1 && <BenchmarkBars rows={chart} ids={ids} names={names} />}
-    <p className="bh-muted text-xs">Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; Elo, native index scales and costs are left out.</p>
+    <p className="bh-muted text-xs"><AaCredit /> · Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; Elo, native index scales and costs are left out.</p>
   </section>;
 }

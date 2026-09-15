@@ -1,4 +1,5 @@
 import { getDataset } from "../../lib/data";
+import { AaCredit } from '../../components/AaCredit';
 
 
 export default async function AboutPage() {
@@ -96,7 +97,7 @@ export default async function AboutPage() {
           uncached input at its normal input price, and cache writes at its write price. The cache-hit
           rate is the measured one for that exact endpoint where OpenRouter publishes it.</li>
         <li><b>The model&apos;s token efficiency.</b> How many output tokens this specific model
-          variant needs per task, from Artificial Analysis&apos; measurements. A model that reasons at
+          variant needs per task, from Artificial Analysis&apos; measurements (<AaCredit />). A model that reasons at
           length pays for every one of those tokens.</li>
         <li><b>The input:output ratio</b> of real workloads on that model, from OpenRouter usage
           statistics. Where a model has no published per-model usage, we fall back to a documented

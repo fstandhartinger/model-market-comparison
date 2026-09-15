@@ -5,6 +5,7 @@ import { axisRange, detailedRadarAxes, formatRadarValue, radarScale, radarWindow
 import { InfoTip } from './InfoTip';
 import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 import { RadarHit, RadarTip, TopicRadar, type RadarActive, type RadarSeries } from './TopicRadar';
+import { AaCredit } from './AaCredit';
 
 export const SERIES_COLORS = ['var(--radar-1, #5b9dff)', 'var(--radar-2, #7ee0c0)', 'var(--radar-3, #f5b65b)', 'var(--radar-4, #cc9aff)'];
 const DASHES = ['', '9 4', '3 4', '12 4 2 4'];
@@ -85,7 +86,7 @@ export function BenchmarkRadar({ view, axes, picks, axesPicker, axesPickerLabel 
         <TopicRadar axes={shown} series={series} label={ariaLabel} />
         <p className="bh-muted mt-2 text-xs">Every benchmark on which at least one selected model has a result ({shown.length}), grouped clockwise by topic, the Benchmaxxing view. Lines join neighbours within one topic only, so an uneven topic shows as a jagged line.</p>
       </div>}
-      <p className="bh-muted mt-2 text-xs">Hover, tap or focus a point for its exact score.</p>
+      <p className="bh-muted mt-2 text-xs">Hover, tap or focus a point for its exact score. <AaCredit /> · Epoch AI · DesignArena</p>
       <details className="mt-4 text-sm"><summary>Show exact radar values</summary><div className="bh-table-wrap overflow-x-auto" tabIndex={0} role="region" aria-label="Radar values"><table className="bh-table w-full text-sm"><caption className="text-left bh-muted py-3">Exact scores, with each point&apos;s position (0–100) on the scale named in the last column. Missing results are never filled.</caption><thead><tr><th scope="col">Axis / version</th>{series.map((s, i) => <th scope="col" key={s.id}>{String.fromCharCode(65 + i)} · {s.name}</th>)}<th scope="col">Scale</th></tr></thead><tbody>{shown.map((a, i) => {
         const range = axisRange(a);
         return <tr key={a.id}><th scope="row" className="text-left font-normal">{i + 1}. {a.name}<div className="bh-muted text-xs">{versionHeading(a.version)} · {a.cohort}</div></th>{series.map((s) => { const c = s.cells[i]; return <td key={s.id} className="tabular">{c.native == null ? 'No measured result' : c.scaled ? `${formatRadarValue(c.native, a.unit)} (position ${Math.round(c.scaled.value)})` : `${formatRadarValue(c.native, a.unit)} (not plotted)`}</td>; })}<td className="text-xs bh-muted">{range ? `Fixed ${formatRadarValue(range[0], a.unit)}–${formatRadarValue(range[1], a.unit)}` : a.stats.min == null ? 'No range' : `Measured range ${formatRadarValue(a.stats.min, a.unit)}–${formatRadarValue(a.stats.max, a.unit)} (${a.stats.n} models)`} · {a.higherBetter === false ? 'lower better' : a.higherBetter === true ? 'higher better' : 'direction unknown'}</td></tr>;

@@ -14,6 +14,7 @@ import { MiniRadar } from '../../../components/MiniRadar';
 import { InfoTip } from '../../../components/InfoTip';
 import { SpeedLine } from '../../../components/SpeedContext';
 import type { ScoreKey } from '../../../lib/types';
+import { AaCredit } from '../../../components/AaCredit';
 
 /** Mid-rank percentile of `value` among every model with a value on that input (0–100). */
 function catalogPercentile(values: number[], value: number | null): number | null {
@@ -116,7 +117,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {variants.length > 1 && (
         <section className="card mt-6 overflow-x-auto p-4">
           <h2 className="font-semibold">Variants / reasoning settings</h2>
-          <p className="mb-3 text-xs text-gray-500">Artificial Analysis snapshot {ds.sources.artificialanalysis}</p>
+          <p className="mb-3 text-xs text-gray-500">Artificial Analysis snapshot {ds.sources.artificialanalysis} · <AaCredit /></p>
           <table className="dtable w-full text-sm">
             <thead><tr>
               <th className="px-2 py-1 text-left text-xs text-gray-400">Variant</th>

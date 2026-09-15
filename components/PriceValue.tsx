@@ -2,6 +2,7 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import { IO_PROXY_TEXT, type PriceResult, type PriceSource } from "../lib/cost";
+import { AaCredit } from "./AaCredit";
 
 export function priceNumber(value: number | null | undefined): string {
   if (value == null) return "—";
@@ -55,7 +56,7 @@ export function PriceValue({ price, compact = false, showEstimate = true, contex
         <ul className="mt-2 list-disc space-y-1.5 pl-5 leading-relaxed" data-testid="cost-explanation">
           <li>{assumedTask
             ? <>Tokens per task: Artificial Analysis has no task measurement for this model, so an example task of {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens is used.</>
-            : <>Tokens per task from Artificial Analysis, to model how token-efficient the model is: {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens and about {tokens(e.inputs.input_tokens_per_task)} input tokens.</>}</li>
+            : <>Tokens per task from Artificial Analysis, to model how token-efficient the model is: {tokens(e.inputs.output_tokens_per_task ?? 0)} output tokens and about {tokens(e.inputs.input_tokens_per_task)} input tokens. <AaCredit /></>}</li>
           <li>{cache?.kind === "observed"
             ? <>Cache-efficiency data from OpenRouter: {percent(cache.rate)} of input tokens are read from cache on this route.</>
             : cache?.kind === "baseline"

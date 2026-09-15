@@ -5,6 +5,30 @@ import { BrandMark } from './BrandMark';
 import { ThemeToggle } from './ThemeToggle';
 import { useSettings } from './SettingsContext';
 import { AccountButton, AccountMenuLink } from './AccountButton';
+import { useEffect, useRef, useState } from "react";
+
+const BETA_NOTE = "This site is under construction; data and features change daily.";
+
+/** CR-35.2 (Florian 2026-09-15): a prominent BETA / Work in progress tag beside the logo on every page. The note
+ *  shows on hover, keyboard focus or tap, in an opaque popup; Escape or a tap elsewhere closes it. */
+function BetaTag() {
+  const [open, setOpen] = useState(false);
+  const box = useRef<HTMLSpanElement>(null);
+  useEffect(() => {
+    if (!open) return;
+    const down = (e: PointerEvent) => { if (!box.current?.contains(e.target as Node)) setOpen(false); };
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") setOpen(false); };
+    document.addEventListener("pointerdown", down); document.addEventListener("keydown", key);
+    return () => { document.removeEventListener("pointerdown", down); document.removeEventListener("keydown", key); };
+  }, [open]);
+  return <span ref={box} className="relative ml-1 inline-flex shrink-0 items-center" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+    <button type="button" className="bh-beta-tag" aria-expanded={open} aria-describedby={open ? "bh-beta-note" : undefined} data-beta-tag
+      onClick={() => setOpen((o) => !o)} onFocus={() => setOpen(true)} onBlur={() => setOpen(false)}>
+      BETA<span className="hidden sm:inline"> — Work in progress</span>
+    </button>
+    {open && <span id="bh-beta-note" role="tooltip" className="absolute left-0 top-full z-50 mt-2 w-60 rounded-lg border border-line bg-[var(--surface)] p-2.5 text-xs font-normal text-[var(--text)] shadow-xl">{BETA_NOTE}</span>}
+  </span>;
+}
 
 const LINKS = [
   ["/", "Overview"],
@@ -53,6 +77,7 @@ export function Nav() {
     <header className={`relative border-b border-line bg-panel ${filtersOpen ? "z-50" : ""}`}>
       <div className="mx-auto flex h-[58px] max-w-[1400px] items-center gap-2 px-4">
         <Link href="/" aria-label="Benchmark Heaven home" className="bh-brand-link flex min-h-10 shrink-0 items-center gap-2.5"><BrandMark className="h-8 w-8 shrink-0" /><span className="bh-wordmark hidden sm:inline">Benchmark <span className="bh-wordmark-accent">Heaven</span></span></Link>
+        <BetaTag />
         <nav aria-label="Primary" className="relative ml-4 hidden flex-1 items-center gap-1 text-sm lg:flex">
           {PRIMARY.map(([href, label]) => {
             const active = href === "/" ? path === "/" : path.startsWith(href);

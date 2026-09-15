@@ -298,3 +298,10 @@ details[open] > .bh-collapsible-grid { display: grid; }
 /* CR-33.3: the selected score's row sits under the Main Composite row, highlighted more quietly. */
 .bh-matrix-hero.bh-matrix-hero-selected th, .bh-matrix-hero.bh-matrix-hero-selected td { background: linear-gradient(rgb(var(--accent2) / .08), rgb(var(--accent2) / .08)), var(--surface); border-bottom: 1px solid rgb(var(--accent2) / .45); }
 .bh-matrix-hero.bh-matrix-hero-selected .bh-matrix-stub { box-shadow: inset 3px 0 0 rgb(var(--accent2)), 1px 0 0 rgb(var(--line) / .55); }
+
+/* CR-35.2: BETA / Work in progress tag beside the logo. Text + border, not colour alone. */
+.bh-beta-tag { display: inline-flex; min-height: 0; align-items: center; white-space: nowrap; border-radius: 999px; border: 1px solid rgb(var(--warn) / .7); padding: 1px 7px; font-size: 10.5px; font-weight: 700; letter-spacing: .04em; line-height: 16px; color: rgb(var(--warn)); background: rgb(var(--warn) / .12); }
+.bh-beta-tag:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
+
+/* CR-35.1: Artificial Analysis attribution — small, muted, always a real link. */
+.bh-aa-credit { white-space: nowrap; font-size: inherit; }

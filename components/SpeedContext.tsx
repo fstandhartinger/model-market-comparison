@@ -1,5 +1,6 @@
 import { InfoTip } from "./InfoTip";
 import { contextTokens, seconds } from "../lib/format";
+import { AaCredit } from "./AaCredit";
 
 // P2-GAP-01: output speed, time to first token and context window, the three facts Artificial
 // Analysis leads with next to price. Values come from the dataset only; null means not measured.
@@ -13,7 +14,7 @@ function SpeedNote({ date }: { date?: string | null }) {
     <InfoTip title="Speed and context" label="speed and context">
       Output speed (tokens per second) and time to first token are Artificial Analysis&apos; median
       measurements{date ? `, read ${date}` : ""}. A reasoning setting thinks before it answers, so its
-      first token can take much longer. The context window comes from Artificial Analysis&apos; model
+      first token can take much longer. <AaCredit className="mr-1" /> The context window comes from Artificial Analysis&apos; model
       metadata. A dash means not measured.
     </InfoTip>
   );
