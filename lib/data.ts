@@ -84,6 +84,7 @@ export function scoreOf(model: ModelRow, key: ScoreKey): number | null {
     case "epoch_eci_software": return model.benchmarks?.epoch_eci_software ?? null;
     case "designarena_frontend": return model.designarena?.frontend?.elo ?? null;
     case "designarena_fullstack": return model.designarena?.fullstack?.elo ?? null;
+    case "cat_coding": case "cat_agentic": case "cat_science": case "cat_long_context": return model.category_scores?.[key] ?? null;
     case "composite": return null; // computed client-side from seven potential slots, model-mean imputation, and DA battle counts
   }
 }

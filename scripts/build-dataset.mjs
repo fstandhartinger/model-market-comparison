@@ -13,6 +13,7 @@ const RAW = join(__dirname, "..", "data", "raw");
 const OUT = join(__dirname, "..", "data", "dataset.json");
 
 const readJSON = async (f) => JSON.parse(await readFile(join(RAW, f), "utf8"));
+const readData = async (f) => JSON.parse(await readFile(join(__dirname, "..", "data", f), "utf8"));
 const rawFileSha256 = async (f) => createHash("sha256").update(await readFile(join(RAW, f))).digest("hex");
 
 // ---------------------------------------------------------------------------
@@ -1323,6 +1324,19 @@ async function build() {
     models: modelRows,
     providers,
   };
+  // CR-25.6: per-model category composite scores (Coding, Agentic & tool use, …) from the fixed anchor
+  // sets in data/category-score-anchors.json — a model scores only with a result on every anchor.
+  {
+    const [{ buildBenchmarkView }, { buildBenchmarkMatrix }, { computeCategoryScores }] = await Promise.all([
+      import("../lib/benchmark-view.mjs"), import("../lib/benchmark-matrix.mjs"), import("../lib/category-scores.mjs")]);
+    const anchors = await readData("category-score-anchors.json");
+    const matrix = buildBenchmarkMatrix(buildBenchmarkView(dataset), dataset, await readData("benchmark-taxonomy.json"));
+    const { scores, resolved } = computeCategoryScores(matrix, anchors);
+    for (const row of modelRows) { const s = scores.get(row.id); if (s) row.category_scores = s; }
+    dataset.category_scores = { version: anchors.version, categories: resolved.map((c) => ({ key: c.key, label: c.label, group: c.group,
+      rows: c.rows.map((r) => ({ id: r.id, name: r.name, version: r.version })) })) };
+    console.log(`Category scores: ${resolved.map((c) => `${c.label} (${c.rows.length} anchors)`).join(", ")} for ${scores.size} model rows`);
+  }
   await writeFile(OUT, JSON.stringify(dataset, null, 2));
   console.log("✓ dataset.json", dataset.counts);
 }

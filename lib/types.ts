@@ -167,6 +167,8 @@ export interface CopilotPricing {
 
 export interface ModelRow {
   id: string;
+  /** CR-25.6: category composite scores, only for models with a result on every anchor benchmark. */
+  category_scores?: Partial<Record<"cat_coding" | "cat_agentic" | "cat_science" | "cat_long_context", number>>;
   family_key: string;
   family_name: string;
   display_name: string;
@@ -217,6 +219,8 @@ export interface ModelRow {
 export interface Dataset {
   benchmark_results: BenchmarkResults;
   generated_at: string;
+  /** CR-25.6: the anchor benchmarks behind each selectable category score, as resolved by this build. */
+  category_scores?: { version: string; categories: { key: string; label: string; group: string; rows: { id: string; name: string; version: string }[] }[] };
   counts: { models: number; families: number; providers: number; offers: number };
   sources: Record<string, string>;
   efficiency?: EfficiencyDataset;
@@ -248,7 +252,12 @@ export type ScoreKey =
   | "epoch_eci"
   | "epoch_eci_software"
   | "designarena_frontend"
-  | "designarena_fullstack";
+  | "designarena_fullstack"
+  // CR-25.6: the benchmark table's category composites, selectable like any other score.
+  | "cat_coding"
+  | "cat_agentic"
+  | "cat_science"
+  | "cat_long_context";
 
 /** Short names for places with no room for the full label — R1.2 puts this in small
  *  parentheses under the "Score" column header, where it must stay a name, not a sentence. */
@@ -261,6 +270,10 @@ export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
   epoch_eci_software: "Epoch Software ECI",
   designarena_frontend: "DesignArena Frontend Elo",
   designarena_fullstack: "DesignArena Full-Stack Elo",
+  cat_coding: "Coding",
+  cat_agentic: "Agentic & tool use",
+  cat_science: "Science",
+  cat_long_context: "Long context",
 };
 
 /** Pass 17 (Fable): the names the score pickers show — the same short names the radar and tables use,
@@ -274,6 +287,10 @@ export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
   epoch_eci_software: "Epoch Software ECI",
   designarena_fullstack: "DesignArena Full-Stack (Elo)",
   designarena_frontend: "DesignArena Frontend (Elo)",
+  cat_coding: "Coding (category composite)",
+  cat_agentic: "Agentic & tool use (category composite)",
+  cat_science: "Science (category composite)",
+  cat_long_context: "Long context (category composite)",
 };
 
 export const SCORE_LABELS: Record<ScoreKey, string> = {
@@ -285,4 +302,8 @@ export const SCORE_LABELS: Record<ScoreKey, string> = {
   epoch_eci_software: "Epoch AI — Software Engineering ECI",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
   designarena_fullstack: "DesignArena — Agentic Web Dev (Full-Stack) Elo",
+  cat_coding: "Category composite — Coding (average of the category's anchor benchmarks, 0–100)",
+  cat_agentic: "Category composite — Agentic & tool use (average of the category's anchor benchmarks, 0–100)",
+  cat_science: "Category composite — Science (average of the category's anchor benchmarks, 0–100)",
+  cat_long_context: "Category composite — Long context (average of the category's anchor benchmarks, 0–100)",
 };

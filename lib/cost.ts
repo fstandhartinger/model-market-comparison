@@ -155,6 +155,11 @@ export const SCORE_OPTIONS: ScoreKey[] = [
   "aa_intelligence_index",
   "epoch_eci_software",
   "epoch_eci",
+  // CR-25.6: category composites, after the single-source scores.
+  "cat_coding",
+  "cat_agentic",
+  "cat_science",
+  "cat_long_context",
 ];
 
 /** Default score across the whole app. */

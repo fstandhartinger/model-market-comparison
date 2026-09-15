@@ -1,0 +1,52 @@
+{
+  "version": "1.0",
+  "recorded_at": "2026-09-15",
+  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the one with the widest coverage (Terminal-Bench v4.0 over v2.1). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score.",
+  "min_coverage": 0.6,
+  "min_anchors": 2,
+  "categories": [
+    {
+      "id": "coding",
+      "key": "cat_coding",
+      "label": "Coding",
+      "group": "coding",
+      "anchors": [
+        { "key": "aa-terminal-bench", "name": "Terminal-Bench (AA)", "coverage_2026_09_15": 1.0 },
+        { "key": "aa-scicode", "name": "SciCode (AA subproblems)", "coverage_2026_09_15": 1.0 },
+        { "key": "deepswe", "name": "DeepSWE (Datacurve, via Epoch AI)", "coverage_2026_09_15": 0.65 }
+      ]
+    },
+    {
+      "id": "agentic",
+      "key": "cat_agentic",
+      "label": "Agentic & tool use",
+      "group": "agentic",
+      "anchors": [
+        { "key": "aa-automationbench", "name": "AutomationBench-AA", "coverage_2026_09_15": 1.0 },
+        { "key": "aa-tau3-banking", "name": "τ³-Banking (AA)", "coverage_2026_09_15": 0.95 },
+        { "key": "aa-enterpriseops-gym", "name": "EnterpriseOps-Gym-AA", "coverage_2026_09_15": 0.65 }
+      ]
+    },
+    {
+      "id": "science",
+      "key": "cat_science",
+      "label": "Science",
+      "group": "science",
+      "anchors": [
+        { "key": "aa-critpt", "name": "CritPt (AA)", "coverage_2026_09_15": 1.0 },
+        { "key": "aa-gpqa-diamond", "name": "GPQA Diamond (AA)", "coverage_2026_09_15": 0.95 }
+      ]
+    },
+    {
+      "id": "long-context",
+      "key": "cat_long_context",
+      "label": "Long context",
+      "group": "long-context",
+      "anchors": [
+        { "key": "aa-lcr", "name": "AA-LCR v1.1", "coverage_2026_09_15": 1.0 },
+        { "key": "aa-gdp-pdf", "name": "GDP.pdf (AA)", "coverage_2026_09_15": 1.0 },
+        { "key": "aa-mlcr", "name": "MLCR-AA", "coverage_2026_09_15": 0.9 }
+      ]
+    }
+  ]
+}

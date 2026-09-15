@@ -37,6 +37,14 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
   if (score.startsWith("designarena")) {
     return <>An Elo rating from head-to-head DesignArena duels, published by DesignArena. It moves as new duels are played, so it is a live ranking rather than a fixed test score, and it is only comparable within the same board.</>;
   }
+  // CR-25.6: a category composite is our own average of that category's fixed anchor benchmarks.
+  if (score.startsWith("cat_")) {
+    return <>The average of this category&apos;s anchor benchmarks, on a 0–100 scale. The anchor set is fixed, so every
+      model&apos;s number covers the same benchmarks: a model is only scored when it has a result on <em>all</em> of them —
+      otherwise the cell stays empty instead of averaging a smaller, easier set. Benchmarks are counted at their newest
+      published version. <a className="text-accent underline" href="/about#score">How we calculate</a>
+      <AaCredit className="mt-1 block text-gray-400" /> <EpochCredit className="block text-gray-400" /></>;
+  }
   if (score === "epoch_eci" || score === "epoch_eci_software") {
     return <>An Epoch AI Capabilities Index. General ECI is copied from Epoch’s published model scores; Software Engineering ECI is refit from Epoch’s published software-benchmark performance and difficulty exports, requiring at least two benchmarks. Epoch publishes the index on a 100–170-ish capability scale; the Composite percentile-normalizes it. Source and date are shown below the table. <EpochCredit className="mt-1 block text-gray-400" /></>;
   }

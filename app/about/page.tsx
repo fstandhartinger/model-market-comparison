@@ -142,6 +142,21 @@ export default async function AboutPage() {
         broader set than the seven composite slots.
       </p>
 
+      {/* CR-25.6: the category composites offered as selectable scores. */}
+      <h4 id="category-scores" className="mt-4 mb-2 font-semibold">Category scores</h4>
+      <p className="text-sm text-gray-400">
+        Besides the composite you can pick a <b>category score</b> — Coding, Agentic &amp; tool use, Science or
+        Long context. Each is the plain average of that category&apos;s <b>anchor benchmarks</b>, on a 0–100 scale.
+        The anchor set is fixed and published here, so two models&apos; category scores always cover the same
+        benchmarks; a model is scored only when it has a result on every anchor, otherwise it has no score for that
+        category rather than an average over an easier subset. Each benchmark counts at its newest published version.
+        A category is only offered when at least two of its benchmarks are on a 0–100-style, higher-is-better scale
+        and are measured for at least 60 % of the featured model families — which is why Reasoning and Vision, with
+        one qualifying benchmark each today, have no category score.
+      </p>
+      <ul className="mt-2 list-disc pl-5 text-sm text-gray-400" data-category-anchors>
+        {(ds.category_scores?.categories ?? []).map((c) => <li key={c.key}><b>{c.label}</b>: {c.rows.map((r) => r.name).join(", ")}</li>)}
+      </ul>
       <h3 id="data-policy" className="mt-6 mb-2 font-semibold">Provider data policy</h3>
       <p className="text-sm text-gray-400">
         &ldquo;Trains or keeps your data&rdquo; is taken from OpenRouter&apos;s published provider

@@ -73,6 +73,10 @@ export interface ClientModel {
     epoch_eci_software: number | null;
     designarena_frontend: number | null;
     designarena_fullstack: number | null;
+    cat_coding: number | null;
+    cat_agentic: number | null;
+    cat_science: number | null;
+    cat_long_context: number | null;
   };
   composite_base: number | null;
   composite_coverage: number;
@@ -195,6 +199,10 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
         epoch_eci_software: m.benchmarks?.epoch_eci_software ?? null,
         designarena_frontend: m.designarena?.frontend?.elo ?? null,
         designarena_fullstack: m.designarena?.fullstack?.elo ?? null,
+        cat_coding: m.category_scores?.cat_coding ?? null,
+        cat_agentic: m.category_scores?.cat_agentic ?? null,
+        cat_science: m.category_scores?.cat_science ?? null,
+        cat_long_context: m.category_scores?.cat_long_context ?? null,
       },
       composite_base: null,
       composite_coverage: 0,
