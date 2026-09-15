@@ -48,7 +48,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
 
   // CR-31.1 via the header Benchmarks link on a fresh load.
   await page.reload().catch(async () => { await new Promise((r) => setTimeout(r, 3000)); await page.reload(); }); await settle(page);
-  await page.locator(mobile ? 'header a[href="/benchmarks"]' : 'nav[aria-label=Primary] a[href="/benchmarks"]').first().click();
+  // The header holds a desktop and a phone Benchmarks link; click whichever is visible at this width.
+  await page.locator('header a[href="/benchmarks"]').filter({ visible: true }).first().click();
   const viaLink = await page.locator('[data-simplified-hint]').waitFor({ state: 'visible', timeout: 5000 }).then(() => true).catch(() => false);
   check(`${tag} CR-31.1 hint also appears after the header Benchmarks link scrolls there`, viaLink, '');
 
