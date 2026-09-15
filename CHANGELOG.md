@@ -4,6 +4,23 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — Catalog ids: AA Coding Agent "Opus 5 / Fable 5.1" rows join their catalog configurations
+
+No data location, route or public API field was removed.
+
+- **Model ids removed:** the seven harness-only ids `opus-5::{low,medium,high,xhigh,max,non-reasoning}` and
+  `fable-5.1-with-fallback::max`, which AA's Coding Agent Index labels had produced because the dataset build
+  had no family alias for them. Their results now attach to the real catalog configurations
+  `claude-opus-5::*` and `claude-fable-5.1::max` (the v1.5 example: `Opus 5 (max)` → `claude-opus-5::max`).
+  Retained history stays immutable; `data/dataset.json` applies an old→new id remap when states are read
+  (`RETAINED_ID_PREFIX_REMAP`), so a row retained under an old id keeps its historical bridge.
+- **13 formerly unmatched Coding Agent rows joined** to catalog configurations (e.g. DeepSeek V4 Flash 0731,
+  GLM-5.2 on the Agent Index boards); `benchmark_results.historical.counts.estimated` 90 → 88 because those
+  two DeepSeek configurations are now measured on v1.5 instead of bridge-estimated.
+- **Naming:** coding-agent-only configurations now follow the catalog convention ("Claude Opus 4.7 (Adaptive
+  Reasoning, Medium Effort)", "Claude Opus 5 (Non-reasoning)") instead of AA's short agent label.
+- Catalog counts: 838 models, 658 families, 91 providers, 2,863 offers (was 844/660/91/2,846).
+
 ## 2026-09-15 — Historical estimates: no false drop-outs; bridge disclosed in "better than model X"
 
 No data location, route or public API field was removed.

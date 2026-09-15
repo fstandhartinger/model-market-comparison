@@ -12,7 +12,7 @@ const BASE = process.argv[2] || 'https://benchmarkheaven.com';
 const OUT = process.argv[3] || '/opt/benchmarkheaven/state/ux-evidence/iter65-p2-history/canonical';
 await fs.mkdir(OUT, { recursive: true });
 
-const res = { base: BASE, at: new Date().toISOString(), engine: 'claude-opus', pass: 0, fail: 0, results: [] };
+const res = { base: BASE, at: new Date().toISOString(), engine: 'claude-opus', runner: process.env.BH_RUNNER ?? 'harness-author', pass: 0, fail: 0, results: [] };
 const check = (id, name, ok, detail = '') => { res.results.push({ id, name, ok, detail }); res[ok ? 'pass' : 'fail']++; console.log(`${ok ? 'PASS' : 'FAIL'} ${id} ${name} ${detail}`); };
 
 // Expected values from the live dataset through the shipped projection, so the page is checked against published data.
@@ -36,6 +36,14 @@ const falseDropOuts = hist.estimates.filter((e) => {
 check('api', 'no estimated row for a configuration still on the current board', falseDropOuts.length === 0, `false=${falseDropOuts.length} estimated=${hist.counts.estimated}`);
 check('api', `${REF} is a real retained estimate on Coding Agent Index v1.5 (from v1.4)`, !!axis && /version 1\.4 of this benchmark, bridged through \d+ anchor models, anchor spread ±\d+%/.test(axisText), `"${axisText}"`);
 check('api', `${REF} Coding median counts its bridged benchmarks`, !!catValue && catValue.approximate && /^approximated: \d+ of \d+ benchmarks? in this median/.test(catText), `"${catText}"`);
+// P2 follow-up (a2a0ced): AA's Coding Agent labels join the catalog configurations instead of harness-only ids.
+const harnessOnly = ds.models.filter((m) => /^(opus-5|fable-5\.1-with-fallback)::/.test(m.id)).map((m) => m.id)
+  .concat(obs.filter((o) => /^(opus-5|fable-5\.1-with-fallback)::/.test(o.subject?.model_id ?? '')).map((o) => o.id));
+check('api', 'no harness-only opus-5::* / fable-5.1-with-fallback::* ids in models or observations', harnessOnly.length === 0, harnessOnly.slice(0, 5).join(','));
+const opus5Agent = obs.filter((o) => o.benchmark_id === 'aa-coding-agent-index::1.5' && o.subject?.model_id === 'claude-opus-5::max');
+check('api', 'Opus 5 (max) on Coding Agent Index v1.5 is attached to claude-opus-5::max', opus5Agent.length >= 1, `n=${opus5Agent.length}`);
+const refRow = ds.models.find((m) => m.id === REF);
+check('api', `${REF} carries the catalog naming`, refRow?.display_name === 'Claude Opus 4.7 (Adaptive Reasoning, Medium Effort)', `"${refRow?.display_name}"`);
 
 const b = await chromium.launch();
 for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { width: 1440, height: 1000 }], ['mobile', { width: 390, height: 844 }]]) {
@@ -72,6 +80,8 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const axisStatus = axis ? await statusFor(`axis:${axis.id}`) : '';
   const shown = axis ? axis.values[REF].value.toFixed(2) : '';
   check('ui', `${tag} Coding Agent Index v1.5 reference shows ${shown} and the bridge disclosure`, !!axis && axisStatus.includes(`above ${shown} for this reference (${axisText})`), `"${axisStatus}"`);
+  const axisQualify = Number(axisStatus.match(/(\d+) models? currently qualif/)?.[1] ?? -1);
+  check('ui', `${tag} Coding Agent Index v1.5 example leaves more than 0 models under the default filters`, axisQualify > 0, `qualify=${axisQualify}`);
   if (kind === 'desktop') await p.screenshot({ path: `${OUT}/${tag}-h3-axis.png` });
   else await scope.screenshot({ path: `${OUT}/${tag}-h3-axis.png` });
 
