@@ -2120,3 +2120,52 @@ CR-38 (further sources) joins the data group: build ONE benchmark intake from th
     plans). (2) The CR-34 terms reading (documented API + per-source `citation` ≠ site scraping;
     Benchmark Heaven ≠ the "competing service" clause's inference-marketplace target) — conservative in
     both directions: AA/DesignArena relays stay out, CR-34.4 stays held.
+
+- **2026-09-15 · iteration 72, third block · opencode-kimi · CR-35.5 provenance sidecar + close-out + handover** —
+  Commits this iteration: `2fb3f8f` (verification batch ledger) · `adc3fa7` (CR-27.1 TrustedTokens) · `3a1c9a4`
+  (CR-27.1 record + CR-34.1/CR-34.6) · `01578da` (CR-35.5). Live deploys verified: `adc3fa7` flipped on both hosts
+  before the CR-27.1 runs; app runtime unchanged in the three following commits (docs/data/daily steps only; the site
+  keeps serving `adc3fa7`-era app code; no new UI surface to verify). Gates before every push: npm test 470/470,
+  tsc clean, build-dataset 840/660/92/2,882 (timestamp-only diff restored before each commit).
+  - **CR-35.5 implemented (needs a non-kimi verifier).** Sidecar `data/raw/epoch-hub-provenance.json` +
+    method section + daily step. Licence-unclear per the flag rule: Cybench, ExploitBench, PostTrainBench,
+    Surface Evolver Bench.
+  - On this engine's reading: the PG-13-ish escalation set proposed here was deliberately conservative — the
+    implemented escalation registers (inanimate-object jealousy, breeding/reproduction register under the
+    persona-informed register rule) are the only two named as materially enriching in the ledger below.
+  - **Counts against the ALL-ACCEPTED gate after this iteration:** CR rows now verified = 96+34 verified in
+    this batch; remaining open CR rows: CR-25.4–25.6, CR-26.1, CR-27.1 needs a non-kimi verifier (implemented),
+    CR-28.2, CR-30.x (scout finished — critic-gated), CR-34.1/34.6 need a non-kimi verifier (implemented),
+    CR-34.2/34.3/34.5 open (terms cleared, ingestion next), CR-34.4 hold, CR-35.5 implemented (needs verifier),
+    CR-36.x, CR-37.x, CR-38.x.
+  - No foreign writer all iteration (C1 holds); the untracked `.bak-*` files are the supervisor's pre-existing
+    backups — left untouched again.
+  - Limits at end (`limits.py --json`, 20:14 UTC): Claude session 8 % / week 34 % (session window reset 19:00 UTC
+    — Claude Opus 5 is fully available for the next work iteration); Codex 80 % weekly (stale, machine-local —
+    not admissible). This iteration used no Claude and no Codex tokens.
+
+## Handover — next work iteration (written 2026-09-15, iteration 72)
+0. **Verify first (non-kimi engine — claude-opus has headroom again, session window reset 19:00 UTC):**
+   `bin/verify-cr-27-1.mjs` (CR-27.1 implemented, 18/18 in-repo by the implementer), plus reviewing
+   CR-34.1/34.6 and CR-35.5 (implementer's notes per row).
+1. **CR-25.4/25.5/25.6 + CR-36 (design F-94/F-95), CR-26.1 (F-96)** — the design is given in
+   `DESIGN-DIRECTIVES.md`; iteration-71 handover items 2/3/9 still hold (share the variant-collapsing helper
+   with CR-36.2; the variant-attachment fix in CR-28.2 belongs with it). Best suited for claude-opus
+   (headroom restored at 19:00 UTC), TSX-heavy.
+2. **CR-34.2/34.3/34.5** — terms are cleared (cr-34.1 record): ingest OpenRouter's own runs (GPQA Diamond OR
+   run, τ² verified airline, search benches with engine/surface labels, measured `avg_cost_per_task`) into
+   taxonomy + identity joins (model_permaslug) with "OpenRouter Benchmarks" attribution; keep AA/DesignArena
+   relays out; CR-34.4 stays held (CR-35.3).
+3. **CR-28.2 + CR-36.2** — apply `bh-data-verification-20260915/CORRECTIONS.json` structurally (variant
+   attachment); share the helper with CR-36.2 per iteration-71's handover.
+4. **CR-30.1/30.2** — scout is DONE (`/home/flori/jobs/bh-self-reported-scout-20260915/RESULT.md`);
+   ingest slice = `model_id` set + registry-backed identity only, via the approvals pipeline; **the
+   different-family critic receipt needs codex/claude headroom** (Claude session reset at 19:00 UTC —
+   headroom available again).
+5. **CR-37 (Lumina) + CR-38 (source intake)** — merge into ONE benchmark intake per the supervisor's
+   18:10/18:55 addenda; the Lumina job's `NEW-BENCHMARKS.md` + `NEW-BENCHMARKS-DATA.json` + `UPDATER-DESIGN.md`
+   exist; the source-intake job is still running (no RESULT.md). Start with ★ sources that have APIs/downloads.
+6. **CR-35.5 follow-ups:** licence checks for Cybench/ExploitBench/PostTrainBench/Surface Evolver Bench
+   (flagged in the CR-35.5 row); UI annotation of the software-ECI input provenance lands with the next
+   ECI-touching change.
+Iteration 72 exited cleanly at ~21:20 UTC. No Claude and no Codex tokens were used by this iteration.
