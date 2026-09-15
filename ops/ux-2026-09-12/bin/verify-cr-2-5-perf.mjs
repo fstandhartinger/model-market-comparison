@@ -60,7 +60,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   s = await p.evaluate(view);
   const shared = await p.evaluate(() => location.href);
   // Fresh browser, and one whose own stored settings disagree: the URL must win.
-  for (const [label, stored] of [['fresh browser', null], ['browser with other stored filters', { openOnly: false, teeOnly: true }]]) {
+  for (const [label, stored] of [['fresh browser', null], ['browser with other stored filters', { openOnly: false, isCompany: true }]]) {
     const c2 = await ctx();
     if (stored) await c2.addInitScript((v) => { try { if (!sessionStorage.getItem('seeded')) { localStorage.setItem('mmc.settings.v9', JSON.stringify(v)); sessionStorage.setItem('seeded', '1'); } } catch {} }, stored);
     const q = await c2.newPage();
@@ -68,7 +68,7 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     await q.waitForTimeout(1200);
     const t = await q.evaluate(view);
     const settings = await q.evaluate(() => JSON.parse(localStorage.getItem('mmc.settings.v9') || '{}'));
-    check(`${tag} CR-2.5 shared URL reproduces columns, rows and filters (${label})`, t.cols.join() === s.cols.join() && t.rows === s.rows && settings.openOnly === true && (!stored || settings.teeOnly === false), `${t.cols.length} cols · ${t.rows} rows · openOnly=${settings.openOnly} teeOnly=${settings.teeOnly}`);
+    check(`${tag} CR-2.5 shared URL reproduces columns, rows and filters (${label})`, t.cols.join() === s.cols.join() && t.rows === s.rows && settings.openOnly === true && (!stored || settings.isCompany === false), `${t.cols.length} cols · ${t.rows} rows · openOnly=${settings.openOnly} isCompany=${settings.isCompany}`);
     await c2.close();
   }
   check(`${tag} no page errors (CR-2.5)`, errors.length === 0, errors.join(' | '));

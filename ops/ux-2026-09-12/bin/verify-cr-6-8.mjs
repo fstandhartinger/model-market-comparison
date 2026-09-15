@@ -1,4 +1,4 @@
-// Acceptance for CR-6.1 (phone header: Filters · Benchmarks · More, all visible, ≥ 44 px targets)
+// Acceptance for CR-6.1 (phone header: Options · Benchmarks · More, all visible, ≥ 44 px targets; 'Filters' was renamed 'Options' by CR-25.1)
 // and CR-8.1 (overview table opens score-descending in Simple and Advanced).
 // Usage: node verify-cr-6-8.mjs <base> <outdir>
 import { createRequire } from 'node:module';
@@ -49,12 +49,12 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of VPS) {
     check(`${tag} CR-6.1 desktop primary nav keeps Benchmarks`, h.bench?.shown, JSON.stringify(h.bench));
     check(`${tag} CR-6.1 desktop no "Menu" label`, !h.menuText);
   } else {
-    for (const [n, x] of [['Filters', h.filters], ['Benchmarks', h.bench], ['More', h.more]]) {
+    for (const [n, x] of [['Options', h.filters], ['Benchmarks', h.bench], ['More', h.more]]) {
       check(`${tag} CR-6.1 ${n} visible, unclipped, inside viewport`, x?.shown && !x.clipped && x.r <= h.vw + 0.5 && x.x >= 0, JSON.stringify(x));
       check(`${tag} CR-6.1 ${n} tap target ≥ 44 px`, x && x.h >= 44 && x.w >= 44, x ? `${x.w.toFixed(1)}×${x.h.toFixed(1)}` : 'missing');
     }
-    check(`${tag} CR-6.1 labels read Filters / Benchmarks / More`, h.filters?.t === 'Filters' && h.bench?.t === 'Benchmarks' && h.more?.t === 'More', `${h.filters?.t}|${h.bench?.t}|${h.more?.t}`);
-    check(`${tag} CR-6.1 order Filters < Benchmarks < More`, h.filters && h.bench && h.more && h.filters.r <= h.bench.x + 0.5 && h.bench.r <= h.more.x + 0.5);
+    check(`${tag} CR-6.1 labels read Options / Benchmarks / More (CR-25.1)`, h.filters?.t === 'Options' && h.bench?.t === 'Benchmarks' && h.more?.t === 'More', `${h.filters?.t}|${h.bench?.t}|${h.more?.t}`);
+    check(`${tag} CR-6.1 order Options < Benchmarks < More`, h.filters && h.bench && h.more && h.filters.r <= h.bench.x + 0.5 && h.bench.r <= h.more.x + 0.5);
     check(`${tag} CR-6.1 no "Menu" label, no header/page overflow`, !h.menuText && !h.headerOverflow && !h.docOverflow, JSON.stringify({ menu: h.menuText, ho: h.headerOverflow, dox: h.docOverflow }));
     const name = await p.getByRole('link', { name: 'Benchmarks', exact: true }).filter({ visible: true }).count();
     check(`${tag} CR-6.1 accessible name "Benchmarks" link`, name >= 1, `count=${name}`);
