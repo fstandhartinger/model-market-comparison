@@ -66,13 +66,25 @@ test('registry provenance: measured maintainers, dated identities, committed evi
   assert.match(registry.entries.find((x) => x.id === IDS[0]).how_to_collect.notes, /CC-BY 4\.0/);
 });
 
-test('identity map: only measured rows, exact existing configurations, every join visible in the dataset', () => {
+test('identity map: exact existing configurations; measured joins visible; self-reported joins only with a review receipt', () => {
   const map = json('data/raw/benchmarks/identity-map.json');
   const dataset = json('data/dataset.json');
   const catalog = new Set(dataset.models.map((m) => m.id));
   const observations = dataset.benchmark_results.observations;
   assert.ok(map.entries.length >= 80);
-  for (const entry of map.entries) {
+  const SELF_REPORTED = ['frontiercode::1.1', 'frontiercode-cost::1.1', 'cursorbench::4.0', 'cursorbench-cost::4.0', 'swe-bench-pro-public::snapshot-2026-09-10'];
+  for (const entry of map.entries.filter((e) => e.basis === 'self_reported')) {
+    assert.ok(SELF_REPORTED.includes(entry.benchmark_id), 'self-reported joins cover only the reviewed vendor boards');
+    assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
+    const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
+    assert.ok(o, entry.source_id);
+    assert.equal(o.source_basis ?? o.basis, 'self_reported', 'derived rows keep their self-reported source basis');
+    if (entry.review) {
+      assert.equal(o.subject.model_id, entry.model_id);
+      assert.equal(o.identity_review.critic_model, entry.review.critic_model);
+    } else assert.equal(o.subject.model_id, null, 'without a receipt the row stays unjoined');
+  }
+  for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
     assert.ok(IDS.includes(entry.benchmark_id), 'the map covers only the reviewed boards');
     assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
@@ -83,6 +95,4 @@ test('identity map: only measured rows, exact existing configurations, every joi
   }
   const effortless = map.entries.filter((e) => /without an effort/.test(e.rule));
   assert.ok(effortless.every((e) => e.model_id.endsWith('::default')), 'no effort is ever guessed');
-  // Self-reported boards stay untouched by the map.
-  for (const b of ['frontiercode::1.1', 'cursorbench::4.0']) assert.ok(!map.entries.some((e) => e.benchmark_id === b));
 });

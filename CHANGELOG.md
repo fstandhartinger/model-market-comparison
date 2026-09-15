@@ -4,6 +4,24 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-15 — FrontierCode, CursorBench and SWE-Bench Pro results joined to catalog models
+
+No data location, route or public API field was removed; no benchmark value changed. 110 self-reported
+observations that were listed only under their source labels now carry a catalog `subject.model_id`:
+FrontierCode 1.1 68, CursorBench 4.0 39, SWE-Bench Pro Public 3. `coverage.by_model[*].available` rises accordingly.
+
+- Exact rules only (`lib/coding-identity.mjs`): the label states the model and an effort that exists as a catalog
+  configuration ("Extra High" = `xhigh`); without an effort only a single `::default` configuration joins. The
+  other rows stay unmatched with their reason in `ops/benchmark-table-2026-09-15/identity-map-review.json`.
+- The cost boards `frontiercode-cost::1.1` and `cursorbench-cost::4.0` stay unjoined for now, so a cost metric never
+  counts as a benchmark in `#benchmarks`.
+- Each join is an entry in `data/raw/benchmarks/identity-map.json` with `basis: "self_reported"` and a `review`
+  receipt (packet + verdict digests, critic `chutes/moonshotai/Kimi-K3-TEE`, producer `anthropic/claude-opus-5`).
+  Joined observations gain `join_note` and `identity_review`. The value approval in `score-approvals.json` still
+  binds the unjoined row; ingest fails closed if a receipt is missing, altered or rejects the join.
+- These results stay self-reported (marked † in tables), never enter the Composite or the Benchmaxxing signal
+  (both read measured results only), and now appear in the Coding rows of the benchmark tables.
+
 ## 2026-09-15 — EU-hosted filter re-checked per offer (Azure Europe Data Zone)
 
 No data location, route or public API field was removed. Two offer rows changed in `data/raw/azure-foundry.json`

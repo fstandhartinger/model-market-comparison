@@ -161,8 +161,9 @@ test('Composite coverage separates exact inputs from family- or product-attached
   }
   const fable = projected.models.find((model) => model.id === 'claude-fable-5::high');
   assert.ok(fable);
-  // 2026-09-15: DeepSWE (via Epoch AI) adds an exact claude-fable-5_high result to its one Composite input.
-  assert.equal(fable.benchmark_count, 2);
+  // 2026-09-15: DeepSWE (via Epoch AI) and FrontierCode 1.1 (reviewed identity join) add exact results to its one
+  // Composite input; the FrontierCode cost board stays unjoined, so no cost metric counts as a benchmark.
+  assert.equal(fable.benchmark_count, 3);
   assert.equal(fable.composite_coverage, 1);
   assert.ok(fable.composite_attachments.aa_coding_index);
   assert.ok(fable.composite_attachments.aa_intelligence_index);

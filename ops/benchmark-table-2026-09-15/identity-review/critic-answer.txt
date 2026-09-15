@@ -1,0 +1,77 @@
+[0m
+> build · moonshotai/Kimi-K3-TEE
+[0m
+[0m→ [0mSkill "run-benchmarkheaven-gauntlet"
+[0m→ [0mRead ops/benchmark-table-2026-09-15/identity-review/packet.json
+[0m→ [0mRead ops/benchmark-table-2026-09-15/identity-review/packet.json[90m [offset=1391, limit=2300][0m
+[0m
+[0m$ [0mnode -e '
+const fs=require("fs");
+const p=JSON.parse(fs.readFileSync("ops/benchmark-table-2026-09-15/identity-review/packet.json","utf8"));
+console.log("rules:",p.rules);
+console.log("n_joins:",p.joins.length);
+const crypto=require("crypto");
+console.log("sha256:",crypto.createHash("sha256").update(fs.readFileSync("ops/benchmark-table-2026-09-15/identity-review/packet.json")).digest("hex"));
+for(const j of p.joins){
+  console.log(JSON.stringify({key:j.key,label:j.source_label,cat:j.catalog_id,fam:j.family_configurations}));
+}
+' > /tmp/opencode/joins-dump.txt && wc -l /tmp/opencode/joins-dump.txt
+220 /tmp/opencode/joins-dump.txt
+[0m
+[0m→ [0mRead /tmp/opencode/joins-dump.txt
+[0m→ [0mRead /tmp/opencode/joins-dump.txt[90m [offset=208][0m
+[0m
+[0m$ [0mnode -e '
+const fs=require("fs");
+const p=JSON.parse(fs.readFileSync("ops/benchmark-table-2026-09-15/identity-review/packet.json","utf8"));
+// key uniqueness
+const keys=p.joins.map(j=>j.key);
+const dup=keys.filter((k,i)=>keys.indexOf(k)!==i);
+console.log("dup keys:",JSON.stringify(dup));
+// boards count
+const boards={};for(const j of p.joins)boards[j.board]=(boards[j.board]||0)+1;
+console.log("boards:",JSON.stringify(boards));
+// rows matching Sonnet 5 High on cursorbench-cost
+for(const j of p.joins) if(j.key.includes("cursorbench-cost")&&j.source_label==="Sonnet 5 High")
+  console.log("ROW:",JSON.stringify(j));
+// swe-bench rows full
+for(const j of p.joins) if(j.board.startsWith("swe"))
+  console.log("SWE:",JSON.stringify(j));
+'
+dup keys: []
+boards: {"frontiercode::1.1":68,"frontiercode-cost::1.1":68,"cursorbench::4.0":39,"cursorbench-cost::4.0":39,"swe-bench-pro-public::snapshot-2026-09-10":3}
+ROW: {"key":"cursorbench-cost::4.0|Sonnet 5 High|claude-sonnet-5::high","board":"cursorbench-cost::4.0","source_label":"Sonnet 5 High","catalog_id":"claude-sonnet-5::high","catalog_display_name":"Claude Sonnet 5 (Adaptive Reasoning, High Effort)","family_configurations":["claude-sonnet-5::max","claude-sonnet-5::xhigh","claude-sonnet-5::high","claude-sonnet-5::non-reasoning-high","claude-sonnet-5::medium","claude-sonnet-5::low"],"rule":"label states model claude-sonnet-5 and effort high; exact catalog configuration claude-sonnet-5::high"}
+SWE: {"key":"swe-bench-pro-public::snapshot-2026-09-10|gpt-5.4 (xHigh)*|gpt-5.4::xhigh","board":"swe-bench-pro-public::snapshot-2026-09-10","source_label":"gpt-5.4 (xHigh)*","catalog_id":"gpt-5.4::xhigh","catalog_display_name":"GPT-5.4 (xhigh)","family_configurations":["gpt-5.4::xhigh","gpt-5.4::low","gpt-5.4::non-reasoning"],"rule":"label states model gpt-5.4 and effort xhigh; exact catalog configuration gpt-5.4::xhigh"}
+SWE: {"key":"swe-bench-pro-public::snapshot-2026-09-10|Muse Spark*|muse-spark::default","board":"swe-bench-pro-public::snapshot-2026-09-10","source_label":"Muse Spark*","catalog_id":"muse-spark::default","catalog_display_name":"Muse Spark","family_configurations":["muse-spark::default"],"rule":"label names muse-spark without an effort; the catalog has exactly one configuration, the default (muse-spark::default)"}
+SWE: {"key":"swe-bench-pro-public::snapshot-2026-09-10|minimax-2.1|minimax-m2.1::default","board":"swe-bench-pro-public::snapshot-2026-09-10","source_label":"minimax-2.1","catalog_id":"minimax-m2.1::default","catalog_display_name":"MiniMax-M2.1","family_configurations":["minimax-m2.1::default"],"rule":"label names minimax-m2.1 without an effort; the catalog has exactly one configuration, the default (minimax-m2.1::default)"}
+[0m
+I have all 217 rows. Let me verify a few details — key uniqueness, and the exact family lists/display names for the rows that looked odd in the dump (cursorbench-cost Sonnet 5 High duplication, and the SWE-Bench rows).
+[0m← [0mWrite ops/benchmark-table-2026-09-15/identity-review/verdict.json
+Wrote file successfully.
+[0m
+[0m$ [0mnode -e 'const v=JSON.parse(require("fs").readFileSync("ops/benchmark-table-2026-09-15/identity-review/verdict.json","utf8"));console.log("valid JSON:",v.verdict,v.checked,"rejected:",v.rejected.length)' && git status --porcelain
+valid JSON: pass 217 rejected: 0
+ M data/raw/benchmarks/identity-map.json
+ M lib/benchmark-score-evidence.mjs
+ M lib/coding-identity.mjs
+ M ops/benchmark-table-2026-09-15/build-identity-map.mjs
+ M ops/benchmark-table-2026-09-15/identity-map-review.json
+ M ops/benchmark-table-2026-09-15/verify.mjs
+ M scripts/ingest-benchmark-scores.mjs
+ M test/coding-identity.test.mjs
+ M test/coding-sources.test.mjs
+?? ops/benchmark-table-2026-09-15/apply-identity-review.mjs
+?? ops/benchmark-table-2026-09-15/identity-review/
+?? ops/ux-2026-09-12/03-CHANGE-REQUESTS-VERBATIM.md.bak-eu-20260915
+?? ops/ux-2026-09-12/03-CHANGE-REQUESTS-VERBATIM.md.bak-gaps-20260915
+?? ops/ux-2026-09-12/04-CR-BRIEF.md.bak-eu-20260915
+?? ops/ux-2026-09-12/04-CR-BRIEF.md.bak-gaps-20260915
+?? ops/ux-2026-09-12/PROGRESS.md.bak-eu-20260915
+?? ops/ux-2026-09-12/PROGRESS.md.bak-ledger-20260915
+?? ops/ux-2026-09-12/PROGRESS.md.bak-reopen-20260915
+[0m
+Critic round complete. The verdict file is written to `ops/benchmark-table-2026-09-15/identity-review/verdict.json` (valid JSON, only file I wrote).
+
+**Result: `pass` — 217/217 rows checked, 0 rejections.**
+
+Method: parsed all 217 joins and applied the packet rules row by row (label-model exactness incl. sibling/mini/snapshot/version rules, effort-equals-variant rule, CursorBench "Extra High"→xhigh, FrontierCode `none`→default-only-family rule, SWE-Bench asterisk→harness marker). Spot-confirmed key uniqueness, board distribution (68+68+39+39+3), and full row details for rows that looked unusual in a truncated display — all clean; a mid-dump glitch was only a read-window artifact, not packet data. Recomputed SHA-256 matches the expected packet hash `484cfc22…f27cb89f`; the pre-existing dirty/untracked files in git status belong to the producer pipeline, not this review.

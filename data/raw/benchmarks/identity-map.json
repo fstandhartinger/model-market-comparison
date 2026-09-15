@@ -1,7 +1,7 @@
 {
   "schema_version": 1,
   "reviewed_at": "2026-09-15",
-  "policy": "Exact joins for measured public boards whose labels are not catalog names. A label must state the exact model and an effort that exists as a catalog configuration; without an effort only a single-configuration family joins; a configuration listed more than once on one board joins neither row. Never applied to self-reported observations (their critic approvals bind the full identity). Rules: lib/coding-identity.mjs.",
+  "policy": "Exact joins for public boards whose labels are not catalog names. A label must state the exact model and an effort that exists as a catalog configuration; without an effort only a single-configuration family joins; a configuration listed more than once on one board joins neither row. Self-reported rows keep the critic approval of their unjoined observation; their join takes effect only with its own independent review receipt (`review`). Rules: lib/coding-identity.mjs.",
   "entries": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -524,6 +524,1876 @@
       "source_id": "Minimax-M2.5 (Mini-SWE-Agent)",
       "model_id": "minimax-m2.5::default",
       "rule": "label names minimax-m2.5 without an effort; the catalog has exactly one configuration, the default (minimax-m2.5::default)"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5|low",
+      "model_id": "claude-fable-5::low",
+      "rule": "label states model claude-fable-5 and effort low; exact catalog configuration claude-fable-5::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5|medium",
+      "model_id": "claude-fable-5::medium",
+      "rule": "label states model claude-fable-5 and effort medium; exact catalog configuration claude-fable-5::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5|high",
+      "model_id": "claude-fable-5::high",
+      "rule": "label states model claude-fable-5 and effort high; exact catalog configuration claude-fable-5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5|xhigh",
+      "model_id": "claude-fable-5::xhigh",
+      "rule": "label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5|max",
+      "model_id": "claude-fable-5::max",
+      "rule": "label states model claude-fable-5 and effort max; exact catalog configuration claude-fable-5::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Sol|low",
+      "model_id": "gpt-5.6-sol::low",
+      "rule": "label states model gpt-5.6-sol and effort low; exact catalog configuration gpt-5.6-sol::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Sol|medium",
+      "model_id": "gpt-5.6-sol::medium",
+      "rule": "label states model gpt-5.6-sol and effort medium; exact catalog configuration gpt-5.6-sol::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Sol|high",
+      "model_id": "gpt-5.6-sol::high",
+      "rule": "label states model gpt-5.6-sol and effort high; exact catalog configuration gpt-5.6-sol::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Sol|xhigh",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Sol|max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.8|low",
+      "model_id": "claude-opus-4.8::low",
+      "rule": "label states model claude-opus-4.8 and effort low; exact catalog configuration claude-opus-4.8::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.8|medium",
+      "model_id": "claude-opus-4.8::medium",
+      "rule": "label states model claude-opus-4.8 and effort medium; exact catalog configuration claude-opus-4.8::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.8|high",
+      "model_id": "claude-opus-4.8::high",
+      "rule": "label states model claude-opus-4.8 and effort high; exact catalog configuration claude-opus-4.8::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.8|xhigh",
+      "model_id": "claude-opus-4.8::xhigh",
+      "rule": "label states model claude-opus-4.8 and effort xhigh; exact catalog configuration claude-opus-4.8::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.8|max",
+      "model_id": "claude-opus-4.8::max",
+      "rule": "label states model claude-opus-4.8 and effort max; exact catalog configuration claude-opus-4.8::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.5|low",
+      "model_id": "gpt-5.5::low",
+      "rule": "label states model gpt-5.5 and effort low; exact catalog configuration gpt-5.5::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.5|medium",
+      "model_id": "gpt-5.5::medium",
+      "rule": "label states model gpt-5.5 and effort medium; exact catalog configuration gpt-5.5::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.5|high",
+      "model_id": "gpt-5.5::high",
+      "rule": "label states model gpt-5.5 and effort high; exact catalog configuration gpt-5.5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.5|xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.5|high",
+      "model_id": "grok-4.5::high",
+      "rule": "label states model grok-4.5 and effort high; exact catalog configuration grok-4.5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.6|low",
+      "model_id": "grok-4.6::low",
+      "rule": "label states model grok-4.6 and effort low; exact catalog configuration grok-4.6::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.6|medium",
+      "model_id": "grok-4.6::medium",
+      "rule": "label states model grok-4.6 and effort medium; exact catalog configuration grok-4.6::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.6|high",
+      "model_id": "grok-4.6::high",
+      "rule": "label states model grok-4.6 and effort high; exact catalog configuration grok-4.6::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 5|low",
+      "model_id": "claude-sonnet-5::low",
+      "rule": "label states model claude-sonnet-5 and effort low; exact catalog configuration claude-sonnet-5::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 5|medium",
+      "model_id": "claude-sonnet-5::medium",
+      "rule": "label states model claude-sonnet-5 and effort medium; exact catalog configuration claude-sonnet-5::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 5|high",
+      "model_id": "claude-sonnet-5::high",
+      "rule": "label states model claude-sonnet-5 and effort high; exact catalog configuration claude-sonnet-5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 5|xhigh",
+      "model_id": "claude-sonnet-5::xhigh",
+      "rule": "label states model claude-sonnet-5 and effort xhigh; exact catalog configuration claude-sonnet-5::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 5|max",
+      "model_id": "claude-sonnet-5::max",
+      "rule": "label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Terra|low",
+      "model_id": "gpt-5.6-terra::low",
+      "rule": "label states model gpt-5.6-terra and effort low; exact catalog configuration gpt-5.6-terra::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Terra|medium",
+      "model_id": "gpt-5.6-terra::medium",
+      "rule": "label states model gpt-5.6-terra and effort medium; exact catalog configuration gpt-5.6-terra::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Terra|high",
+      "model_id": "gpt-5.6-terra::high",
+      "rule": "label states model gpt-5.6-terra and effort high; exact catalog configuration gpt-5.6-terra::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Terra|xhigh",
+      "model_id": "gpt-5.6-terra::xhigh",
+      "rule": "label states model gpt-5.6-terra and effort xhigh; exact catalog configuration gpt-5.6-terra::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Terra|max",
+      "model_id": "gpt-5.6-terra::max",
+      "rule": "label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Luna|low",
+      "model_id": "gpt-5.6-luna::low",
+      "rule": "label states model gpt-5.6-luna and effort low; exact catalog configuration gpt-5.6-luna::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Luna|medium",
+      "model_id": "gpt-5.6-luna::medium",
+      "rule": "label states model gpt-5.6-luna and effort medium; exact catalog configuration gpt-5.6-luna::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Luna|high",
+      "model_id": "gpt-5.6-luna::high",
+      "rule": "label states model gpt-5.6-luna and effort high; exact catalog configuration gpt-5.6-luna::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Luna|xhigh",
+      "model_id": "gpt-5.6-luna::xhigh",
+      "rule": "label states model gpt-5.6-luna and effort xhigh; exact catalog configuration gpt-5.6-luna::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.6 Luna|max",
+      "model_id": "gpt-5.6-luna::max",
+      "rule": "label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.7|medium",
+      "model_id": "claude-opus-4.7::medium",
+      "rule": "label states model claude-opus-4.7 and effort medium; exact catalog configuration claude-opus-4.7::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.7|max",
+      "model_id": "claude-opus-4.7::max",
+      "rule": "label states model claude-opus-4.7 and effort max; exact catalog configuration claude-opus-4.7::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Composer 2.5|none",
+      "model_id": "composer-2.5::default",
+      "rule": "label names composer-2.5 without an effort; the catalog has exactly one configuration, the default (composer-2.5::default)",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "MiniMax M3|none",
+      "model_id": "minimax-m3::default",
+      "rule": "label names minimax-m3 without an effort; the catalog has exactly one configuration, the default (minimax-m3::default)",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5|low",
+      "model_id": "claude-opus-5::low",
+      "rule": "label states model claude-opus-5 and effort low; exact catalog configuration claude-opus-5::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5|medium",
+      "model_id": "claude-opus-5::medium",
+      "rule": "label states model claude-opus-5 and effort medium; exact catalog configuration claude-opus-5::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5|high",
+      "model_id": "claude-opus-5::high",
+      "rule": "label states model claude-opus-5 and effort high; exact catalog configuration claude-opus-5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5|xhigh",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 5|max",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.6 Flash|high",
+      "model_id": "gemini-3.6-flash::high",
+      "rule": "label states model gemini-3.6-flash and effort high; exact catalog configuration gemini-3.6-flash::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.7 Flash|low",
+      "model_id": "gemini-3.7-flash::low",
+      "rule": "label states model gemini-3.7-flash and effort low; exact catalog configuration gemini-3.7-flash::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.7 Flash|medium",
+      "model_id": "gemini-3.7-flash::medium",
+      "rule": "label states model gemini-3.7-flash and effort medium; exact catalog configuration gemini-3.7-flash::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.7 Flash|high",
+      "model_id": "gemini-3.7-flash::high",
+      "rule": "label states model gemini-3.7-flash and effort high; exact catalog configuration gemini-3.7-flash::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.4-mini|medium",
+      "model_id": "gpt-5.4-mini::medium",
+      "rule": "label states model gpt-5.4-mini and effort medium; exact catalog configuration gpt-5.4-mini::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.4-mini|xhigh",
+      "model_id": "gpt-5.4-mini::xhigh",
+      "rule": "label states model gpt-5.4-mini and effort xhigh; exact catalog configuration gpt-5.4-mini::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 4.6|medium",
+      "model_id": "claude-sonnet-4.6::medium",
+      "rule": "label states model claude-sonnet-4.6 and effort medium; exact catalog configuration claude-sonnet-4.6::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 4.6|max",
+      "model_id": "claude-sonnet-4.6::max",
+      "rule": "label states model claude-sonnet-4.6 and effort max; exact catalog configuration claude-sonnet-4.6::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5.1|low",
+      "model_id": "claude-fable-5.1::low",
+      "rule": "label states model claude-fable-5.1 and effort low; exact catalog configuration claude-fable-5.1::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5.1|medium",
+      "model_id": "claude-fable-5.1::medium",
+      "rule": "label states model claude-fable-5.1 and effort medium; exact catalog configuration claude-fable-5.1::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5.1|high",
+      "model_id": "claude-fable-5.1::high",
+      "rule": "label states model claude-fable-5.1 and effort high; exact catalog configuration claude-fable-5.1::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5.1|xhigh",
+      "model_id": "claude-fable-5.1::xhigh",
+      "rule": "label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Fable 5.1|max",
+      "model_id": "claude-fable-5.1::max",
+      "rule": "label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GLM 5.3|max",
+      "model_id": "glm-5.3::max",
+      "rule": "label states model glm-5.3 and effort max; exact catalog configuration glm-5.3::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.8 Flash|medium",
+      "model_id": "gemini-3.8-flash::medium",
+      "rule": "label states model gemini-3.8-flash and effort medium; exact catalog configuration gemini-3.8-flash::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.8 Flash|high",
+      "model_id": "gemini-3.8-flash::high",
+      "rule": "label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Astra|low",
+      "model_id": "gpt-6-astra::low",
+      "rule": "label states model gpt-6-astra and effort low; exact catalog configuration gpt-6-astra::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Astra|medium",
+      "model_id": "gpt-6-astra::medium",
+      "rule": "label states model gpt-6-astra and effort medium; exact catalog configuration gpt-6-astra::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Astra|high",
+      "model_id": "gpt-6-astra::high",
+      "rule": "label states model gpt-6-astra and effort high; exact catalog configuration gpt-6-astra::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Astra|xhigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "rule": "label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-6 Astra|max",
+      "model_id": "gpt-6-astra::max",
+      "rule": "label states model gpt-6-astra and effort max; exact catalog configuration gpt-6-astra::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Fable 5.1 Max",
+      "model_id": "claude-fable-5.1::max",
+      "rule": "label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Fable 5.1 Extra High",
+      "model_id": "claude-fable-5.1::xhigh",
+      "rule": "label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Fable 5.1 High",
+      "model_id": "claude-fable-5.1::high",
+      "rule": "label states model claude-fable-5.1 and effort high; exact catalog configuration claude-fable-5.1::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Fable 5.1 Medium",
+      "model_id": "claude-fable-5.1::medium",
+      "rule": "label states model claude-fable-5.1 and effort medium; exact catalog configuration claude-fable-5.1::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Opus 5 Max",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Opus 5 Extra High",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Fable 5.1 Low",
+      "model_id": "claude-fable-5.1::low",
+      "rule": "label states model claude-fable-5.1 and effort low; exact catalog configuration claude-fable-5.1::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Opus 5 High",
+      "model_id": "claude-opus-5::high",
+      "rule": "label states model claude-opus-5 and effort high; exact catalog configuration claude-opus-5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Opus 5 Medium",
+      "model_id": "claude-opus-5::medium",
+      "rule": "label states model claude-opus-5 and effort medium; exact catalog configuration claude-opus-5::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Sol Max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Muse Spark 1.3 Max",
+      "model_id": "muse-spark-1.3::max",
+      "rule": "label states model muse-spark-1.3 and effort max; exact catalog configuration muse-spark-1.3::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Grok 4.6 Extra High",
+      "model_id": "grok-4.6::xhigh",
+      "rule": "label states model grok-4.6 and effort xhigh; exact catalog configuration grok-4.6::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Terra Max",
+      "model_id": "gpt-5.6-terra::max",
+      "rule": "label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Opus 5 Low",
+      "model_id": "claude-opus-5::low",
+      "rule": "label states model claude-opus-5 and effort low; exact catalog configuration claude-opus-5::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Grok 4.6 High",
+      "model_id": "grok-4.6::high",
+      "rule": "label states model grok-4.6 and effort high; exact catalog configuration grok-4.6::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Gemini 3.8 Flash High",
+      "model_id": "gemini-3.8-flash::high",
+      "rule": "label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Sol Extra High",
+      "model_id": "gpt-5.6-sol::xhigh",
+      "rule": "label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Muse Spark 1.3 Extra High",
+      "model_id": "muse-spark-1.3::xhigh",
+      "rule": "label states model muse-spark-1.3 and effort xhigh; exact catalog configuration muse-spark-1.3::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Gemini 3.8 Flash Medium",
+      "model_id": "gemini-3.8-flash::medium",
+      "rule": "label states model gemini-3.8-flash and effort medium; exact catalog configuration gemini-3.8-flash::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Grok 4.6 Medium",
+      "model_id": "grok-4.6::medium",
+      "rule": "label states model grok-4.6 and effort medium; exact catalog configuration grok-4.6::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Luna Max",
+      "model_id": "gpt-5.6-luna::max",
+      "rule": "label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Sol High",
+      "model_id": "gpt-5.6-sol::high",
+      "rule": "label states model gpt-5.6-sol and effort high; exact catalog configuration gpt-5.6-sol::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Sonnet 5 Max",
+      "model_id": "claude-sonnet-5::max",
+      "rule": "label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Terra Extra High",
+      "model_id": "gpt-5.6-terra::xhigh",
+      "rule": "label states model gpt-5.6-terra and effort xhigh; exact catalog configuration gpt-5.6-terra::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Grok 4.6 Low",
+      "model_id": "grok-4.6::low",
+      "rule": "label states model grok-4.6 and effort low; exact catalog configuration grok-4.6::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Luna Extra High",
+      "model_id": "gpt-5.6-luna::xhigh",
+      "rule": "label states model gpt-5.6-luna and effort xhigh; exact catalog configuration gpt-5.6-luna::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Sonnet 5 Extra High",
+      "model_id": "claude-sonnet-5::xhigh",
+      "rule": "label states model claude-sonnet-5 and effort xhigh; exact catalog configuration claude-sonnet-5::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Sol Medium",
+      "model_id": "gpt-5.6-sol::medium",
+      "rule": "label states model gpt-5.6-sol and effort medium; exact catalog configuration gpt-5.6-sol::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Sonnet 5 High",
+      "model_id": "claude-sonnet-5::high",
+      "rule": "label states model claude-sonnet-5 and effort high; exact catalog configuration claude-sonnet-5::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Terra High",
+      "model_id": "gpt-5.6-terra::high",
+      "rule": "label states model gpt-5.6-terra and effort high; exact catalog configuration gpt-5.6-terra::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Luna High",
+      "model_id": "gpt-5.6-luna::high",
+      "rule": "label states model gpt-5.6-luna and effort high; exact catalog configuration gpt-5.6-luna::high",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Sonnet 5 Medium",
+      "model_id": "claude-sonnet-5::medium",
+      "rule": "label states model claude-sonnet-5 and effort medium; exact catalog configuration claude-sonnet-5::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Composer 2.5",
+      "model_id": "composer-2.5::default",
+      "rule": "label names composer-2.5 without an effort; the catalog has exactly one configuration, the default (composer-2.5::default)",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Terra Medium",
+      "model_id": "gpt-5.6-terra::medium",
+      "rule": "label states model gpt-5.6-terra and effort medium; exact catalog configuration gpt-5.6-terra::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Terra Low",
+      "model_id": "gpt-5.6-terra::low",
+      "rule": "label states model gpt-5.6-terra and effort low; exact catalog configuration gpt-5.6-terra::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Sol Low",
+      "model_id": "gpt-5.6-sol::low",
+      "rule": "label states model gpt-5.6-sol and effort low; exact catalog configuration gpt-5.6-sol::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Sonnet 5 Low",
+      "model_id": "claude-sonnet-5::low",
+      "rule": "label states model claude-sonnet-5 and effort low; exact catalog configuration claude-sonnet-5::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Luna Medium",
+      "model_id": "gpt-5.6-luna::medium",
+      "rule": "label states model gpt-5.6-luna and effort medium; exact catalog configuration gpt-5.6-luna::medium",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "GPT-5.6 Luna Low",
+      "model_id": "gpt-5.6-luna::low",
+      "rule": "label states model gpt-5.6-luna and effort low; exact catalog configuration gpt-5.6-luna::low",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gpt-5.4 (xHigh)*",
+      "model_id": "gpt-5.4::xhigh",
+      "rule": "label states model gpt-5.4 and effort xhigh; exact catalog configuration gpt-5.4::xhigh",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "Muse Spark*",
+      "model_id": "muse-spark::default",
+      "rule": "label names muse-spark without an effort; the catalog has exactly one configuration, the default (muse-spark::default)",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "minimax-2.1",
+      "model_id": "minimax-m2.1::default",
+      "rule": "label names minimax-m2.1 without an effort; the catalog has exactly one configuration, the default (minimax-m2.1::default)",
+      "basis": "self_reported",
+      "review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     }
   ]
 }

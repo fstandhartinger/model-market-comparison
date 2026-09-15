@@ -146,6 +146,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   });
   check(`${tag} Benchmarks tab: score row first, labelled`, bench?.hero?.first && bench.hero.label === 'Benchmark Heaven Score' && bench.hero.sub === 'Main Composite Score', bench?.hero);
   check(`${tag} Benchmarks tab: broad Coding category incl. DeepSWE / SWE Atlas`, bench && bench.coding.length >= 6 && bench.coding.some((n) => /DeepSWE/.test(n)) && bench.coding.some((n) => /SWE Atlas/.test(n)), bench?.coding);
+  // Iteration 69: the self-reported vendor boards joined through a critic-reviewed identity map.
+  check(`${tag} Benchmarks tab: Coding includes FrontierCode and CursorBench`, bench && bench.coding.some((n) => /FrontierCode/.test(n)) && bench.coding.some((n) => /CursorBench/.test(n)), bench?.coding);
   check(`${tag} Benchmarks tab: category composite cells and collapsible header remain`, bench && bench.codingComposite.length > 0 && bench.toggle, { cells: bench?.codingComposite, basis: bench?.codingBasis });
   check(`${tag} no horizontal page overflow, no page errors`, bench && bench.w <= viewport.width + 1 && errors.length === 0, `${bench?.w}px ${errors.join(' | ')}`);
   await page.screenshot({ path: `${OUT}/${tag}-benchmarks.png` });

@@ -207075,7 +207075,7 @@
       "subject": {
         "source_id": "gpt-5.4 (xHigh)*",
         "name": "gpt-5.4 (xHigh)*",
-        "model_id": null,
+        "model_id": "gpt-5.4::xhigh",
         "variant": null,
         "harness": null
       },
@@ -207091,7 +207091,18 @@
         "locator": "scale_swepro; source row 1; gpt-5.4 (xHigh)*; field score"
       },
       "protocol": "SWE-bench Pro Public; source model asterisks identify mini-swe-agent. Preserve source turn/cost annotations; private/held-out boards are excluded.; version=; contaminationMessage=",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.4 and effort xhigh; exact catalog configuration gpt-5.4::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d30bc1985e264eba6a3f6fb5",
@@ -207099,7 +207110,7 @@
       "subject": {
         "source_id": "Muse Spark*",
         "name": "Muse Spark*",
-        "model_id": null,
+        "model_id": "muse-spark::default",
         "variant": null,
         "harness": null
       },
@@ -207115,7 +207126,18 @@
         "locator": "scale_swepro; source row 2; Muse Spark*; field score"
       },
       "protocol": "SWE-bench Pro Public; source model asterisks identify mini-swe-agent. Preserve source turn/cost annotations; private/held-out boards are excluded.; version=; contaminationMessage=",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label names muse-spark without an effort; the catalog has exactly one configuration, the default (muse-spark::default)",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:0d1a36bc65952f2197231ed3",
@@ -207363,7 +207385,7 @@
       "subject": {
         "source_id": "minimax-2.1",
         "name": "minimax-2.1",
-        "model_id": null,
+        "model_id": "minimax-m2.1::default",
         "variant": null,
         "harness": null
       },
@@ -207379,7 +207401,18 @@
         "locator": "scale_swepro; source row 13; minimax-2.1; field score"
       },
       "protocol": "SWE-bench Pro Public; source model asterisks identify mini-swe-agent. Preserve source turn/cost annotations; private/held-out boards are excluded.; version=; contaminationMessage=",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label names minimax-m2.1 without an effort; the catalog has exactly one configuration, the default (minimax-m2.1::default)",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:6c0d393a12d63f51139f77cf",
@@ -342445,7 +342478,7 @@
       "subject": {
         "source_id": "Fable 5.1 Max",
         "name": "Fable 5.1 Max",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::max",
         "variant": null,
         "harness": null
       },
@@ -342461,7 +342494,18 @@
         "locator": "html_table; source row 1; Fable 5.1 Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"1\",\"Fable 5.1 Max\",\"51.8 %\",\"$ 17.28\",\"117,236\",\"128\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:a1d27d0337abe6eb7a933096",
@@ -342469,7 +342513,7 @@
       "subject": {
         "source_id": "Fable 5.1 Extra High",
         "name": "Fable 5.1 Extra High",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::xhigh",
         "variant": null,
         "harness": null
       },
@@ -342485,7 +342529,18 @@
         "locator": "html_table; source row 2; Fable 5.1 Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"2\",\"Fable 5.1 Extra High\",\"51.6 %\",\"$ 13.01\",\"87,294\",\"101\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:4fe377e371d67303d1a8bd72",
@@ -342493,7 +342548,7 @@
       "subject": {
         "source_id": "Fable 5.1 High",
         "name": "Fable 5.1 High",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::high",
         "variant": null,
         "harness": null
       },
@@ -342509,7 +342564,18 @@
         "locator": "html_table; source row 3; Fable 5.1 High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"3\",\"Fable 5.1 High\",\"49.2 %\",\"$ 9.08\",\"58,438\",\"77\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort high; exact catalog configuration claude-fable-5.1::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:5bfca3ae2c5d093a56d18f8d",
@@ -342517,7 +342583,7 @@
       "subject": {
         "source_id": "Fable 5.1 Medium",
         "name": "Fable 5.1 Medium",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::medium",
         "variant": null,
         "harness": null
       },
@@ -342533,7 +342599,18 @@
         "locator": "html_table; source row 4; Fable 5.1 Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"4\",\"Fable 5.1 Medium\",\"46.8 %\",\"$ 7.05\",\"45,411\",\"63\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort medium; exact catalog configuration claude-fable-5.1::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:306e88668761e354c467ad79",
@@ -342541,7 +342618,7 @@
       "subject": {
         "source_id": "Opus 5 Max",
         "name": "Opus 5 Max",
-        "model_id": null,
+        "model_id": "claude-opus-5::max",
         "variant": null,
         "harness": null
       },
@@ -342557,7 +342634,18 @@
         "locator": "html_table; source row 5; Opus 5 Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"5\",\"Opus 5 Max\",\"46.6 %\",\"$ 11.95\",\"85,384\",\"106\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:eb8ccf515c6cdc80577fafc4",
@@ -342565,7 +342653,7 @@
       "subject": {
         "source_id": "Opus 5 Extra High",
         "name": "Opus 5 Extra High",
-        "model_id": null,
+        "model_id": "claude-opus-5::xhigh",
         "variant": null,
         "harness": null
       },
@@ -342581,7 +342669,18 @@
         "locator": "html_table; source row 6; Opus 5 Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"6\",\"Opus 5 Extra High\",\"46.1 %\",\"$ 11.43\",\"80,094\",\"103\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:07bbe0053620069f5760b743",
@@ -342589,7 +342688,7 @@
       "subject": {
         "source_id": "Fable 5.1 Low",
         "name": "Fable 5.1 Low",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::low",
         "variant": null,
         "harness": null
       },
@@ -342605,7 +342704,18 @@
         "locator": "html_table; source row 7; Fable 5.1 Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"7\",\"Fable 5.1 Low\",\"45.1 %\",\"$ 5.44\",\"34,795\",\"51\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort low; exact catalog configuration claude-fable-5.1::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:56de16a7aaf60a33bfe159a6",
@@ -342613,7 +342723,7 @@
       "subject": {
         "source_id": "Opus 5 High",
         "name": "Opus 5 High",
-        "model_id": null,
+        "model_id": "claude-opus-5::high",
         "variant": null,
         "harness": null
       },
@@ -342629,7 +342739,18 @@
         "locator": "html_table; source row 8; Opus 5 High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"8\",\"Opus 5 High\",\"44.7 %\",\"$ 9.00\",\"61,405\",\"86\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort high; exact catalog configuration claude-opus-5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:66464aa2c76084f507ddb142",
@@ -342637,7 +342758,7 @@
       "subject": {
         "source_id": "Opus 5 Medium",
         "name": "Opus 5 Medium",
-        "model_id": null,
+        "model_id": "claude-opus-5::medium",
         "variant": null,
         "harness": null
       },
@@ -342653,7 +342774,18 @@
         "locator": "html_table; source row 9; Opus 5 Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"9\",\"Opus 5 Medium\",\"43.3 %\",\"$ 6.94\",\"45,272\",\"72\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort medium; exact catalog configuration claude-opus-5::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:07f91d2ab26e2b6aced889ec",
@@ -342661,7 +342793,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol Max",
         "name": "GPT-5.6 Sol Max",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::max",
         "variant": null,
         "harness": null
       },
@@ -342677,7 +342809,18 @@
         "locator": "html_table; source row 10; GPT-5.6 Sol Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"10\",\"GPT-5.6 Sol Max\",\"41.7 %\",\"$ 8.23\",\"42,944\",\"99\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d8d53baa5292f51c2263e79a",
@@ -342685,7 +342828,7 @@
       "subject": {
         "source_id": "Muse Spark 1.3 Max",
         "name": "Muse Spark 1.3 Max",
-        "model_id": null,
+        "model_id": "muse-spark-1.3::max",
         "variant": null,
         "harness": null
       },
@@ -342701,7 +342844,18 @@
         "locator": "html_table; source row 11; Muse Spark 1.3 Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"11\",\"Muse Spark 1.3 Max\",\"41.6 %\",\"$ 2.64\",\"52,005\",\"98\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model muse-spark-1.3 and effort max; exact catalog configuration muse-spark-1.3::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:7a19f5772bb0ccbe0832075b",
@@ -342709,7 +342863,7 @@
       "subject": {
         "source_id": "Grok 4.6 Extra High",
         "name": "Grok 4.6 Extra High",
-        "model_id": null,
+        "model_id": "grok-4.6::xhigh",
         "variant": null,
         "harness": null
       },
@@ -342725,7 +342879,18 @@
         "locator": "html_table; source row 12; Grok 4.6 Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"12\",\"Grok 4.6 Extra High\",\"41.4 %\",\"$ 6.10\",\"49,814\",\"56\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort xhigh; exact catalog configuration grok-4.6::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:59eef30d266381024d7da809",
@@ -342733,7 +342898,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra Max",
         "name": "GPT-5.6 Terra Max",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::max",
         "variant": null,
         "harness": null
       },
@@ -342749,7 +342914,18 @@
         "locator": "html_table; source row 13; GPT-5.6 Terra Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"13\",\"GPT-5.6 Terra Max\",\"41.3 %\",\"$ 5.14\",\"60,814\",\"107\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:bebf4d01f889628d4a406af1",
@@ -342757,7 +342933,7 @@
       "subject": {
         "source_id": "Opus 5 Low",
         "name": "Opus 5 Low",
-        "model_id": null,
+        "model_id": "claude-opus-5::low",
         "variant": null,
         "harness": null
       },
@@ -342773,7 +342949,18 @@
         "locator": "html_table; source row 14; Opus 5 Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"14\",\"Opus 5 Low\",\"40.7 %\",\"$ 4.87\",\"31,995\",\"57\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort low; exact catalog configuration claude-opus-5::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:2571bc2234bcc1be8aebdcea",
@@ -342781,7 +342968,7 @@
       "subject": {
         "source_id": "Grok 4.6 High",
         "name": "Grok 4.6 High",
-        "model_id": null,
+        "model_id": "grok-4.6::high",
         "variant": null,
         "harness": null
       },
@@ -342797,7 +342984,18 @@
         "locator": "html_table; source row 15; Grok 4.6 High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"15\",\"Grok 4.6 High\",\"40.4 %\",\"$ 5.20\",\"41,387\",\"48\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort high; exact catalog configuration grok-4.6::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d463e2ebd7a35df3d811836e",
@@ -342805,7 +343003,7 @@
       "subject": {
         "source_id": "Gemini 3.8 Flash High",
         "name": "Gemini 3.8 Flash High",
-        "model_id": null,
+        "model_id": "gemini-3.8-flash::high",
         "variant": null,
         "harness": null
       },
@@ -342821,7 +343019,18 @@
         "locator": "html_table; source row 16; Gemini 3.8 Flash High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"16\",\"Gemini 3.8 Flash High\",\"39.6 %\",\"$ 4.70\",\"162,565\",\"324\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:64b143158aa4a982598d7a00",
@@ -342829,7 +343038,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol Extra High",
         "name": "GPT-5.6 Sol Extra High",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::xhigh",
         "variant": null,
         "harness": null
       },
@@ -342845,7 +343054,18 @@
         "locator": "html_table; source row 17; GPT-5.6 Sol Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"17\",\"GPT-5.6 Sol Extra High\",\"37.7 %\",\"$ 4.40\",\"24,729\",\"55\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:4d5fbe601bf3a31018b1cf01",
@@ -342853,7 +343073,7 @@
       "subject": {
         "source_id": "Muse Spark 1.3 Extra High",
         "name": "Muse Spark 1.3 Extra High",
-        "model_id": null,
+        "model_id": "muse-spark-1.3::xhigh",
         "variant": null,
         "harness": null
       },
@@ -342869,7 +343089,18 @@
         "locator": "html_table; source row 18; Muse Spark 1.3 Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"18\",\"Muse Spark 1.3 Extra High\",\"37.5 %\",\"$ 2.10\",\"40,891\",\"83\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model muse-spark-1.3 and effort xhigh; exact catalog configuration muse-spark-1.3::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:eb425a3454d7924371d572f0",
@@ -342877,7 +343108,7 @@
       "subject": {
         "source_id": "Gemini 3.8 Flash Medium",
         "name": "Gemini 3.8 Flash Medium",
-        "model_id": null,
+        "model_id": "gemini-3.8-flash::medium",
         "variant": null,
         "harness": null
       },
@@ -342893,7 +343124,18 @@
         "locator": "html_table; source row 19; Gemini 3.8 Flash Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"19\",\"Gemini 3.8 Flash Medium\",\"37.3 %\",\"$ 4.06\",\"128,364\",\"290\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.8-flash and effort medium; exact catalog configuration gemini-3.8-flash::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:0e9d08ed1a7c0fcd0a4db7c6",
@@ -342901,7 +343143,7 @@
       "subject": {
         "source_id": "Grok 4.6 Medium",
         "name": "Grok 4.6 Medium",
-        "model_id": null,
+        "model_id": "grok-4.6::medium",
         "variant": null,
         "harness": null
       },
@@ -342917,7 +343159,18 @@
         "locator": "html_table; source row 20; Grok 4.6 Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"20\",\"Grok 4.6 Medium\",\"36.1 %\",\"$ 3.48\",\"24,893\",\"40\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort medium; exact catalog configuration grok-4.6::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:34da203d51c614ade0dde45d",
@@ -342925,7 +343178,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna Max",
         "name": "GPT-5.6 Luna Max",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::max",
         "variant": null,
         "harness": null
       },
@@ -342941,7 +343194,18 @@
         "locator": "html_table; source row 21; GPT-5.6 Luna Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"21\",\"GPT-5.6 Luna Max\",\"35.9 %\",\"$ 1.03\",\"87,284\",\"208\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:0c1005d6e5e02a5216a7d251",
@@ -342949,7 +343213,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol High",
         "name": "GPT-5.6 Sol High",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::high",
         "variant": null,
         "harness": null
       },
@@ -342965,7 +343229,18 @@
         "locator": "html_table; source row 22; GPT-5.6 Sol High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"22\",\"GPT-5.6 Sol High\",\"35.7 %\",\"$ 2.85\",\"16,174\",\"41\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort high; exact catalog configuration gpt-5.6-sol::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:555dc11c8c4cd2ca770419c8",
@@ -342973,7 +343248,7 @@
       "subject": {
         "source_id": "Sonnet 5 Max",
         "name": "Sonnet 5 Max",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::max",
         "variant": null,
         "harness": null
       },
@@ -342989,7 +343264,18 @@
         "locator": "html_table; source row 23; Sonnet 5 Max; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"23\",\"Sonnet 5 Max\",\"34.1 %\",\"$ 7.17\",\"149,257\",\"140\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d2e3470ed0550d3da248dfee",
@@ -342997,7 +343283,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra Extra High",
         "name": "GPT-5.6 Terra Extra High",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::xhigh",
         "variant": null,
         "harness": null
       },
@@ -343013,7 +343299,18 @@
         "locator": "html_table; source row 24; GPT-5.6 Terra Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"24\",\"GPT-5.6 Terra Extra High\",\"33.6 %\",\"$ 1.81\",\"23,436\",\"43\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort xhigh; exact catalog configuration gpt-5.6-terra::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:b44cce6342de9cc8903664d8",
@@ -343021,7 +343318,7 @@
       "subject": {
         "source_id": "Grok 4.6 Low",
         "name": "Grok 4.6 Low",
-        "model_id": null,
+        "model_id": "grok-4.6::low",
         "variant": null,
         "harness": null
       },
@@ -343037,7 +343334,18 @@
         "locator": "html_table; source row 25; Grok 4.6 Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"25\",\"Grok 4.6 Low\",\"33.4 %\",\"$ 2.25\",\"16,307\",\"32\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort low; exact catalog configuration grok-4.6::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:20fb43ccec990698aa7d9565",
@@ -343069,7 +343377,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna Extra High",
         "name": "GPT-5.6 Luna Extra High",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::xhigh",
         "variant": null,
         "harness": null
       },
@@ -343085,7 +343393,18 @@
         "locator": "html_table; source row 27; GPT-5.6 Luna Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"27\",\"GPT-5.6 Luna Extra High\",\"33.0 %\",\"$ 0.44\",\"40,598\",\"98\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort xhigh; exact catalog configuration gpt-5.6-luna::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:e9bdf440b017d87027693fb3",
@@ -343117,7 +343436,7 @@
       "subject": {
         "source_id": "Sonnet 5 Extra High",
         "name": "Sonnet 5 Extra High",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::xhigh",
         "variant": null,
         "harness": null
       },
@@ -343133,7 +343452,18 @@
         "locator": "html_table; source row 29; Sonnet 5 Extra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"29\",\"Sonnet 5 Extra High\",\"32.0 %\",\"$ 4.55\",\"83,373\",\"102\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort xhigh; exact catalog configuration claude-sonnet-5::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:20a4bce7816584167555137e",
@@ -343141,7 +343471,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol Medium",
         "name": "GPT-5.6 Sol Medium",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::medium",
         "variant": null,
         "harness": null
       },
@@ -343157,7 +343487,18 @@
         "locator": "html_table; source row 30; GPT-5.6 Sol Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"30\",\"GPT-5.6 Sol Medium\",\"31.1 %\",\"$ 1.77\",\"10,111\",\"32\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort medium; exact catalog configuration gpt-5.6-sol::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:dbf68e78cf6afcd8a14a2538",
@@ -343165,7 +343506,7 @@
       "subject": {
         "source_id": "Sonnet 5 High",
         "name": "Sonnet 5 High",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::high",
         "variant": null,
         "harness": null
       },
@@ -343181,7 +343522,18 @@
         "locator": "html_table; source row 31; Sonnet 5 High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"31\",\"Sonnet 5 High\",\"30.8 %\",\"$ 3.48\",\"61,146\",\"85\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort high; exact catalog configuration claude-sonnet-5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1eaf61fc41201691fabf3d4a",
@@ -343189,7 +343541,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra High",
         "name": "GPT-5.6 Terra High",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::high",
         "variant": null,
         "harness": null
       },
@@ -343205,7 +343557,18 @@
         "locator": "html_table; source row 32; GPT-5.6 Terra High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"32\",\"GPT-5.6 Terra High\",\"30.7 %\",\"$ 1.11\",\"13,162\",\"33\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort high; exact catalog configuration gpt-5.6-terra::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:f1c8354305071d7a957932e5",
@@ -343213,7 +343576,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna High",
         "name": "GPT-5.6 Luna High",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::high",
         "variant": null,
         "harness": null
       },
@@ -343229,7 +343592,18 @@
         "locator": "html_table; source row 33; GPT-5.6 Luna High; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"33\",\"GPT-5.6 Luna High\",\"29.4 %\",\"$ 0.25\",\"23,368\",\"64\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort high; exact catalog configuration gpt-5.6-luna::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:64ec147eb5ffe2e08bee3051",
@@ -343261,7 +343635,7 @@
       "subject": {
         "source_id": "Sonnet 5 Medium",
         "name": "Sonnet 5 Medium",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::medium",
         "variant": null,
         "harness": null
       },
@@ -343277,7 +343651,18 @@
         "locator": "html_table; source row 35; Sonnet 5 Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"35\",\"Sonnet 5 Medium\",\"28.0 %\",\"$ 2.31\",\"39,114\",\"65\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort medium; exact catalog configuration claude-sonnet-5::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:a25379b2f3f231dd590d3532",
@@ -343285,7 +343670,7 @@
       "subject": {
         "source_id": "Composer 2.5",
         "name": "Composer 2.5",
-        "model_id": null,
+        "model_id": "composer-2.5::default",
         "variant": null,
         "harness": null
       },
@@ -343301,7 +343686,18 @@
         "locator": "html_table; source row 36; Composer 2.5; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"36\",\"Composer 2.5\",\"27.7 %\",\"$ 0.68\",\"17,347\",\"41\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label names composer-2.5 without an effort; the catalog has exactly one configuration, the default (composer-2.5::default)",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:faab3b240bc0ed8ea528faaa",
@@ -343309,7 +343705,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra Medium",
         "name": "GPT-5.6 Terra Medium",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::medium",
         "variant": null,
         "harness": null
       },
@@ -343325,7 +343721,18 @@
         "locator": "html_table; source row 37; GPT-5.6 Terra Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"37\",\"GPT-5.6 Terra Medium\",\"27.6 %\",\"$ 0.64\",\"7,307\",\"25\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort medium; exact catalog configuration gpt-5.6-terra::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:99a40920e5ea73460d9a0dbc",
@@ -343333,7 +343740,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra Low",
         "name": "GPT-5.6 Terra Low",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::low",
         "variant": null,
         "harness": null
       },
@@ -343349,7 +343756,18 @@
         "locator": "html_table; source row 38; GPT-5.6 Terra Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"38\",\"GPT-5.6 Terra Low\",\"25.2 %\",\"$ 0.52\",\"5,914\",\"23\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort low; exact catalog configuration gpt-5.6-terra::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:99dd554d23b5241cbd3a0e9a",
@@ -343357,7 +343775,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol Low",
         "name": "GPT-5.6 Sol Low",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::low",
         "variant": null,
         "harness": null
       },
@@ -343373,7 +343791,18 @@
         "locator": "html_table; source row 39; GPT-5.6 Sol Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"39\",\"GPT-5.6 Sol Low\",\"24.6 %\",\"$ 0.87\",\"4,885\",\"21\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort low; exact catalog configuration gpt-5.6-sol::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:4663ac6a22aa05da61dbea82",
@@ -343405,7 +343834,7 @@
       "subject": {
         "source_id": "Sonnet 5 Low",
         "name": "Sonnet 5 Low",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::low",
         "variant": null,
         "harness": null
       },
@@ -343421,7 +343850,18 @@
         "locator": "html_table; source row 41; Sonnet 5 Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"41\",\"Sonnet 5 Low\",\"24.1 %\",\"$ 1.39\",\"23,772\",\"46\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort low; exact catalog configuration claude-sonnet-5::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:ed2bfd02e514848b88146b8d",
@@ -343429,7 +343869,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna Medium",
         "name": "GPT-5.6 Luna Medium",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::medium",
         "variant": null,
         "harness": null
       },
@@ -343445,7 +343885,18 @@
         "locator": "html_table; source row 42; GPT-5.6 Luna Medium; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"42\",\"GPT-5.6 Luna Medium\",\"22.2 %\",\"$ 0.08\",\"7,642\",\"32\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort medium; exact catalog configuration gpt-5.6-luna::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:30ac7d4eb95df34e209e5377",
@@ -343453,7 +343904,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna Low",
         "name": "GPT-5.6 Luna Low",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::low",
         "variant": null,
         "harness": null
       },
@@ -343469,7 +343920,18 @@
         "locator": "html_table; source row 43; GPT-5.6 Luna Low; field value"
       },
       "protocol": "CursorBench 4.0; higher score is better; each row is a model and published reasoning-effort configuration with score percentage, cost per task, tokens per task and steps per task.; source row: {\"cells\":[\"43\",\"GPT-5.6 Luna Low\",\"16.0 %\",\"$ 0.03\",\"3,288\",\"18\"],\"configuration\":null,\"value_column\":2}",
-      "comparison_key": null
+      "comparison_key": null,
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort low; exact catalog configuration gpt-5.6-luna::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d365ec7d25a75db28e44e05c",
@@ -356704,7 +357166,7 @@
       "subject": {
         "source_id": "Claude Fable 5|low",
         "name": "Claude Fable 5 · low",
-        "model_id": null,
+        "model_id": "claude-fable-5::low",
         "variant": null,
         "harness": "claude-code"
       },
@@ -356737,7 +357199,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5 and effort low; exact catalog configuration claude-fable-5::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:4e39b3bf31c9da301f940259",
@@ -356745,7 +357218,7 @@
       "subject": {
         "source_id": "Claude Fable 5|medium",
         "name": "Claude Fable 5 · medium",
-        "model_id": null,
+        "model_id": "claude-fable-5::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -356778,7 +357251,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5 and effort medium; exact catalog configuration claude-fable-5::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:5fbf3fd60b0ee8f7f9f388b9",
@@ -356786,7 +357270,7 @@
       "subject": {
         "source_id": "Claude Fable 5|high",
         "name": "Claude Fable 5 · high",
-        "model_id": null,
+        "model_id": "claude-fable-5::high",
         "variant": null,
         "harness": "claude-code"
       },
@@ -356819,7 +357303,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5 and effort high; exact catalog configuration claude-fable-5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:bda62e97ad9172902d2462eb",
@@ -356827,7 +357322,7 @@
       "subject": {
         "source_id": "Claude Fable 5|xhigh",
         "name": "Claude Fable 5 · xhigh",
-        "model_id": null,
+        "model_id": "claude-fable-5::xhigh",
         "variant": null,
         "harness": "claude-code"
       },
@@ -356860,7 +357355,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:6d9430cf01c99bf99b14f491",
@@ -356868,7 +357374,7 @@
       "subject": {
         "source_id": "Claude Fable 5|max",
         "name": "Claude Fable 5 · max",
-        "model_id": null,
+        "model_id": "claude-fable-5::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -356901,7 +357407,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5 and effort max; exact catalog configuration claude-fable-5::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:091cc069bace1afd28cdb54a",
@@ -356909,7 +357426,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol|low",
         "name": "GPT-5.6 Sol · low",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::low",
         "variant": null,
         "harness": "codex"
       },
@@ -356942,7 +357459,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort low; exact catalog configuration gpt-5.6-sol::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:3dd6aedd2c3850ede384cc09",
@@ -356950,7 +357478,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol|medium",
         "name": "GPT-5.6 Sol · medium",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::medium",
         "variant": null,
         "harness": "codex"
       },
@@ -356983,7 +357511,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort medium; exact catalog configuration gpt-5.6-sol::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:f3b21c6e2923cf13cac41beb",
@@ -356991,7 +357530,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol|high",
         "name": "GPT-5.6 Sol · high",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::high",
         "variant": null,
         "harness": "codex"
       },
@@ -357024,7 +357563,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort high; exact catalog configuration gpt-5.6-sol::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:510e42788ac5e6ed9dc022e3",
@@ -357032,7 +357582,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol|xhigh",
         "name": "GPT-5.6 Sol · xhigh",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::xhigh",
         "variant": null,
         "harness": "codex"
       },
@@ -357065,7 +357615,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort xhigh; exact catalog configuration gpt-5.6-sol::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:29a6e6bb13a31c85ed10c6b0",
@@ -357073,7 +357634,7 @@
       "subject": {
         "source_id": "GPT-5.6 Sol|max",
         "name": "GPT-5.6 Sol · max",
-        "model_id": null,
+        "model_id": "gpt-5.6-sol::max",
         "variant": null,
         "harness": "codex"
       },
@@ -357106,7 +357667,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:07c5ba6ad4db2bb3245d7aea",
@@ -357114,7 +357686,7 @@
       "subject": {
         "source_id": "Claude Opus 4.8|low",
         "name": "Claude Opus 4.8 · low",
-        "model_id": null,
+        "model_id": "claude-opus-4.8::low",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357147,7 +357719,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.8 and effort low; exact catalog configuration claude-opus-4.8::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:130a6b2976aa5cb3db5774db",
@@ -357155,7 +357738,7 @@
       "subject": {
         "source_id": "Claude Opus 4.8|medium",
         "name": "Claude Opus 4.8 · medium",
-        "model_id": null,
+        "model_id": "claude-opus-4.8::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357188,7 +357771,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.8 and effort medium; exact catalog configuration claude-opus-4.8::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:738d575457ed88257fdc43bd",
@@ -357196,7 +357790,7 @@
       "subject": {
         "source_id": "Claude Opus 4.8|high",
         "name": "Claude Opus 4.8 · high",
-        "model_id": null,
+        "model_id": "claude-opus-4.8::high",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357229,7 +357823,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.8 and effort high; exact catalog configuration claude-opus-4.8::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:091d14d930e657020ccf4582",
@@ -357237,7 +357842,7 @@
       "subject": {
         "source_id": "Claude Opus 4.8|xhigh",
         "name": "Claude Opus 4.8 · xhigh",
-        "model_id": null,
+        "model_id": "claude-opus-4.8::xhigh",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357270,7 +357875,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.8 and effort xhigh; exact catalog configuration claude-opus-4.8::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:5f94cf7aa08ae4d41038ca28",
@@ -357278,7 +357894,7 @@
       "subject": {
         "source_id": "Claude Opus 4.8|max",
         "name": "Claude Opus 4.8 · max",
-        "model_id": null,
+        "model_id": "claude-opus-4.8::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357311,7 +357927,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.8 and effort max; exact catalog configuration claude-opus-4.8::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d5654f4acfd3f9d8519a8bdb",
@@ -357319,7 +357946,7 @@
       "subject": {
         "source_id": "GPT-5.5|low",
         "name": "GPT-5.5 · low",
-        "model_id": null,
+        "model_id": "gpt-5.5::low",
         "variant": null,
         "harness": "codex"
       },
@@ -357352,7 +357979,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.5 and effort low; exact catalog configuration gpt-5.5::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:45453859667e4bef50d05810",
@@ -357360,7 +357998,7 @@
       "subject": {
         "source_id": "GPT-5.5|medium",
         "name": "GPT-5.5 · medium",
-        "model_id": null,
+        "model_id": "gpt-5.5::medium",
         "variant": null,
         "harness": "codex"
       },
@@ -357393,7 +358031,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.5 and effort medium; exact catalog configuration gpt-5.5::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1b569d8b5230b7417fea4bdd",
@@ -357401,7 +358050,7 @@
       "subject": {
         "source_id": "GPT-5.5|high",
         "name": "GPT-5.5 · high",
-        "model_id": null,
+        "model_id": "gpt-5.5::high",
         "variant": null,
         "harness": "codex"
       },
@@ -357434,7 +358083,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.5 and effort high; exact catalog configuration gpt-5.5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:33027575ebebfd99bc82b68e",
@@ -357442,7 +358102,7 @@
       "subject": {
         "source_id": "GPT-5.5|xhigh",
         "name": "GPT-5.5 · xhigh",
-        "model_id": null,
+        "model_id": "gpt-5.5::xhigh",
         "variant": null,
         "harness": "codex"
       },
@@ -357475,7 +358135,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1ed22acf6e77baa2e8e68528",
@@ -357565,7 +358236,7 @@
       "subject": {
         "source_id": "Grok 4.5|high",
         "name": "Grok 4.5 · high",
-        "model_id": null,
+        "model_id": "grok-4.5::high",
         "variant": null,
         "harness": "grok-build"
       },
@@ -357598,7 +358269,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.5 and effort high; exact catalog configuration grok-4.5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:50ca79d2dfa4a8abe0ce6d7c",
@@ -357606,7 +358288,7 @@
       "subject": {
         "source_id": "Grok 4.6|low",
         "name": "Grok 4.6 · low",
-        "model_id": null,
+        "model_id": "grok-4.6::low",
         "variant": null,
         "harness": "grok-build"
       },
@@ -357639,7 +358321,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort low; exact catalog configuration grok-4.6::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:68893d8eb32be417c3f25f42",
@@ -357647,7 +358340,7 @@
       "subject": {
         "source_id": "Grok 4.6|medium",
         "name": "Grok 4.6 · medium",
-        "model_id": null,
+        "model_id": "grok-4.6::medium",
         "variant": null,
         "harness": "grok-build"
       },
@@ -357680,7 +358373,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort medium; exact catalog configuration grok-4.6::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:9795554b478f57853bce5516",
@@ -357688,7 +358392,7 @@
       "subject": {
         "source_id": "Grok 4.6|high",
         "name": "Grok 4.6 · high",
-        "model_id": null,
+        "model_id": "grok-4.6::high",
         "variant": null,
         "harness": "grok-build"
       },
@@ -357721,7 +358425,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model grok-4.6 and effort high; exact catalog configuration grok-4.6::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:62648f1270bfa44daac51929",
@@ -357729,7 +358444,7 @@
       "subject": {
         "source_id": "Claude Sonnet 5|low",
         "name": "Claude Sonnet 5 · low",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::low",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357762,7 +358477,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort low; exact catalog configuration claude-sonnet-5::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:f79e57ef2eb09255cc41c48d",
@@ -357770,7 +358496,7 @@
       "subject": {
         "source_id": "Claude Sonnet 5|medium",
         "name": "Claude Sonnet 5 · medium",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357803,7 +358529,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort medium; exact catalog configuration claude-sonnet-5::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1d4cae05780c6e1885c1db96",
@@ -357811,7 +358548,7 @@
       "subject": {
         "source_id": "Claude Sonnet 5|high",
         "name": "Claude Sonnet 5 · high",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::high",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357844,7 +358581,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort high; exact catalog configuration claude-sonnet-5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d0a78902a80dd25b8cf046e5",
@@ -357852,7 +358600,7 @@
       "subject": {
         "source_id": "Claude Sonnet 5|xhigh",
         "name": "Claude Sonnet 5 · xhigh",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::xhigh",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357885,7 +358633,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort xhigh; exact catalog configuration claude-sonnet-5::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:b8745a560a032573811e29b6",
@@ -357893,7 +358652,7 @@
       "subject": {
         "source_id": "Claude Sonnet 5|max",
         "name": "Claude Sonnet 5 · max",
-        "model_id": null,
+        "model_id": "claude-sonnet-5::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -357926,7 +358685,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1f980287c09950311752a56f",
@@ -357934,7 +358704,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra|low",
         "name": "GPT-5.6 Terra · low",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::low",
         "variant": null,
         "harness": "codex"
       },
@@ -357967,7 +358737,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort low; exact catalog configuration gpt-5.6-terra::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:2630aef74d9c1cd649538cc1",
@@ -357975,7 +358756,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra|medium",
         "name": "GPT-5.6 Terra · medium",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::medium",
         "variant": null,
         "harness": "codex"
       },
@@ -358008,7 +358789,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort medium; exact catalog configuration gpt-5.6-terra::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:9ec1047a8bf0515e7a4b23a3",
@@ -358016,7 +358808,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra|high",
         "name": "GPT-5.6 Terra · high",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::high",
         "variant": null,
         "harness": "codex"
       },
@@ -358049,7 +358841,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort high; exact catalog configuration gpt-5.6-terra::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:2a771f4cfff2b5f95952bf35",
@@ -358057,7 +358860,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra|xhigh",
         "name": "GPT-5.6 Terra · xhigh",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::xhigh",
         "variant": null,
         "harness": "codex"
       },
@@ -358090,7 +358893,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort xhigh; exact catalog configuration gpt-5.6-terra::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:edfdf3d65550f3e21b0e377c",
@@ -358098,7 +358912,7 @@
       "subject": {
         "source_id": "GPT-5.6 Terra|max",
         "name": "GPT-5.6 Terra · max",
-        "model_id": null,
+        "model_id": "gpt-5.6-terra::max",
         "variant": null,
         "harness": "codex"
       },
@@ -358131,7 +358945,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:e0a6726eb3392dc53d1f26d6",
@@ -358139,7 +358964,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna|low",
         "name": "GPT-5.6 Luna · low",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::low",
         "variant": null,
         "harness": "codex"
       },
@@ -358172,7 +358997,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort low; exact catalog configuration gpt-5.6-luna::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:5d5a6504ad9b2f6536cbe0dc",
@@ -358180,7 +359016,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna|medium",
         "name": "GPT-5.6 Luna · medium",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::medium",
         "variant": null,
         "harness": "codex"
       },
@@ -358213,7 +359049,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort medium; exact catalog configuration gpt-5.6-luna::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d92cc5665e71bd3277ce43d7",
@@ -358221,7 +359068,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna|high",
         "name": "GPT-5.6 Luna · high",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::high",
         "variant": null,
         "harness": "codex"
       },
@@ -358254,7 +359101,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort high; exact catalog configuration gpt-5.6-luna::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:4e668147f8fb3900750ed6d2",
@@ -358262,7 +359120,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna|xhigh",
         "name": "GPT-5.6 Luna · xhigh",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::xhigh",
         "variant": null,
         "harness": "codex"
       },
@@ -358295,7 +359153,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort xhigh; exact catalog configuration gpt-5.6-luna::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d74e241d1dcc60c69bd5f1d1",
@@ -358303,7 +359172,7 @@
       "subject": {
         "source_id": "GPT-5.6 Luna|max",
         "name": "GPT-5.6 Luna · max",
-        "model_id": null,
+        "model_id": "gpt-5.6-luna::max",
         "variant": null,
         "harness": "codex"
       },
@@ -358336,7 +359205,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:e2f75ce6a316c3fae607dd62",
@@ -358426,7 +359306,7 @@
       "subject": {
         "source_id": "Claude Opus 4.7|medium",
         "name": "Claude Opus 4.7 · medium",
-        "model_id": null,
+        "model_id": "claude-opus-4.7::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -358459,7 +359339,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.7 and effort medium; exact catalog configuration claude-opus-4.7::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:e5f1118ce276bd165541507d",
@@ -358549,7 +359440,7 @@
       "subject": {
         "source_id": "Claude Opus 4.7|max",
         "name": "Claude Opus 4.7 · max",
-        "model_id": null,
+        "model_id": "claude-opus-4.7::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -358582,7 +359473,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-4.7 and effort max; exact catalog configuration claude-opus-4.7::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:8fbc67097d026e4050a3c88e",
@@ -358631,7 +359533,7 @@
       "subject": {
         "source_id": "Composer 2.5|none",
         "name": "Composer 2.5 · none",
-        "model_id": null,
+        "model_id": "composer-2.5::default",
         "variant": null,
         "harness": "cursor-cli"
       },
@@ -358664,7 +359566,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label names composer-2.5 without an effort; the catalog has exactly one configuration, the default (composer-2.5::default)",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:c6588a22a71d076dd0289cb1",
@@ -358754,7 +359667,7 @@
       "subject": {
         "source_id": "MiniMax M3|none",
         "name": "MiniMax M3 · none",
-        "model_id": null,
+        "model_id": "minimax-m3::default",
         "variant": null,
         "harness": "mini-swe-agent"
       },
@@ -358787,7 +359700,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label names minimax-m3 without an effort; the catalog has exactly one configuration, the default (minimax-m3::default)",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:39eddf14cd0b7e3b9f1d4994",
@@ -358877,7 +359801,7 @@
       "subject": {
         "source_id": "Claude Opus 5|low",
         "name": "Claude Opus 5 · low",
-        "model_id": null,
+        "model_id": "claude-opus-5::low",
         "variant": null,
         "harness": "claude-code"
       },
@@ -358910,7 +359834,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort low; exact catalog configuration claude-opus-5::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:edb750c30d7f08dbe6398378",
@@ -358918,7 +359853,7 @@
       "subject": {
         "source_id": "Claude Opus 5|medium",
         "name": "Claude Opus 5 · medium",
-        "model_id": null,
+        "model_id": "claude-opus-5::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -358951,7 +359886,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort medium; exact catalog configuration claude-opus-5::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:3ed08720e1026a688fffc645",
@@ -358959,7 +359905,7 @@
       "subject": {
         "source_id": "Claude Opus 5|high",
         "name": "Claude Opus 5 · high",
-        "model_id": null,
+        "model_id": "claude-opus-5::high",
         "variant": null,
         "harness": "claude-code"
       },
@@ -358992,7 +359938,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort high; exact catalog configuration claude-opus-5::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:43b34bf870b56ecd64d08332",
@@ -359000,7 +359957,7 @@
       "subject": {
         "source_id": "Claude Opus 5|xhigh",
         "name": "Claude Opus 5 · xhigh",
-        "model_id": null,
+        "model_id": "claude-opus-5::xhigh",
         "variant": null,
         "harness": "claude-code"
       },
@@ -359033,7 +359990,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort xhigh; exact catalog configuration claude-opus-5::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d07e6dea66bbe691d0c89b56",
@@ -359041,7 +360009,7 @@
       "subject": {
         "source_id": "Claude Opus 5|max",
         "name": "Claude Opus 5 · max",
-        "model_id": null,
+        "model_id": "claude-opus-5::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -359074,7 +360042,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:b5a046f4f16e9ebc7c81d72a",
@@ -359246,7 +360225,7 @@
       "subject": {
         "source_id": "Gemini 3.6 Flash|high",
         "name": "Gemini 3.6 Flash · high",
-        "model_id": null,
+        "model_id": "gemini-3.6-flash::high",
         "variant": null,
         "harness": "chisel"
       },
@@ -359279,7 +360258,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.6-flash and effort high; exact catalog configuration gemini-3.6-flash::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:4769c6fe17d1ebb0e77603a1",
@@ -359287,7 +360277,7 @@
       "subject": {
         "source_id": "Gemini 3.7 Flash|low",
         "name": "Gemini 3.7 Flash · low",
-        "model_id": null,
+        "model_id": "gemini-3.7-flash::low",
         "variant": null,
         "harness": "chisel"
       },
@@ -359320,7 +360310,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.7-flash and effort low; exact catalog configuration gemini-3.7-flash::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:a26164f8ea5650fd02909dbe",
@@ -359328,7 +360329,7 @@
       "subject": {
         "source_id": "Gemini 3.7 Flash|medium",
         "name": "Gemini 3.7 Flash · medium",
-        "model_id": null,
+        "model_id": "gemini-3.7-flash::medium",
         "variant": null,
         "harness": "chisel"
       },
@@ -359361,7 +360362,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.7-flash and effort medium; exact catalog configuration gemini-3.7-flash::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:836d75dd3745fcb42f54e2f0",
@@ -359369,7 +360381,7 @@
       "subject": {
         "source_id": "Gemini 3.7 Flash|high",
         "name": "Gemini 3.7 Flash · high",
-        "model_id": null,
+        "model_id": "gemini-3.7-flash::high",
         "variant": null,
         "harness": "chisel"
       },
@@ -359402,7 +360414,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.7-flash and effort high; exact catalog configuration gemini-3.7-flash::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:72d317c6d5b911b40688f920",
@@ -359451,7 +360474,7 @@
       "subject": {
         "source_id": "GPT-5.4-mini|medium",
         "name": "GPT-5.4-mini · medium",
-        "model_id": null,
+        "model_id": "gpt-5.4-mini::medium",
         "variant": null,
         "harness": "codex"
       },
@@ -359484,7 +360507,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.4-mini and effort medium; exact catalog configuration gpt-5.4-mini::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:d7dd07f68ada27a378a0cd68",
@@ -359533,7 +360567,7 @@
       "subject": {
         "source_id": "GPT-5.4-mini|xhigh",
         "name": "GPT-5.4-mini · xhigh",
-        "model_id": null,
+        "model_id": "gpt-5.4-mini::xhigh",
         "variant": null,
         "harness": "codex"
       },
@@ -359566,7 +360600,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-5.4-mini and effort xhigh; exact catalog configuration gpt-5.4-mini::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:36aec613f1c254642d6074de",
@@ -359738,7 +360783,7 @@
       "subject": {
         "source_id": "Claude Sonnet 4.6|medium",
         "name": "Claude Sonnet 4.6 · medium",
-        "model_id": null,
+        "model_id": "claude-sonnet-4.6::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -359771,7 +360816,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-4.6 and effort medium; exact catalog configuration claude-sonnet-4.6::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:a9fd6b56e8f3247d2087602a",
@@ -359820,7 +360876,7 @@
       "subject": {
         "source_id": "Claude Sonnet 4.6|max",
         "name": "Claude Sonnet 4.6 · max",
-        "model_id": null,
+        "model_id": "claude-sonnet-4.6::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -359853,7 +360909,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-sonnet-4.6 and effort max; exact catalog configuration claude-sonnet-4.6::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:7ef865d4e9113b5d5ad5a833",
@@ -359943,7 +361010,7 @@
       "subject": {
         "source_id": "Claude Fable 5.1|low",
         "name": "Claude Fable 5.1 · low",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::low",
         "variant": null,
         "harness": "claude-code"
       },
@@ -359976,7 +361043,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort low; exact catalog configuration claude-fable-5.1::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:86528b68db529f29be36a231",
@@ -359984,7 +361062,7 @@
       "subject": {
         "source_id": "Claude Fable 5.1|medium",
         "name": "Claude Fable 5.1 · medium",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::medium",
         "variant": null,
         "harness": "claude-code"
       },
@@ -360017,7 +361095,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort medium; exact catalog configuration claude-fable-5.1::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:f470403a9101df336bbdec3d",
@@ -360025,7 +361114,7 @@
       "subject": {
         "source_id": "Claude Fable 5.1|high",
         "name": "Claude Fable 5.1 · high",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::high",
         "variant": null,
         "harness": "claude-code"
       },
@@ -360058,7 +361147,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort high; exact catalog configuration claude-fable-5.1::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:acfbfb0bf5678a5ab807f093",
@@ -360066,7 +361166,7 @@
       "subject": {
         "source_id": "Claude Fable 5.1|xhigh",
         "name": "Claude Fable 5.1 · xhigh",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::xhigh",
         "variant": null,
         "harness": "claude-code"
       },
@@ -360099,7 +361199,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort xhigh; exact catalog configuration claude-fable-5.1::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:de686b9cca2c1bf30d7760f5",
@@ -360107,7 +361218,7 @@
       "subject": {
         "source_id": "Claude Fable 5.1|max",
         "name": "Claude Fable 5.1 · max",
-        "model_id": null,
+        "model_id": "claude-fable-5.1::max",
         "variant": null,
         "harness": "claude-code"
       },
@@ -360140,7 +361251,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1430aaff6e761384ff0b7b9a",
@@ -360189,7 +361311,7 @@
       "subject": {
         "source_id": "GLM 5.3|max",
         "name": "GLM 5.3 · max",
-        "model_id": null,
+        "model_id": "glm-5.3::max",
         "variant": null,
         "harness": "chisel"
       },
@@ -360222,7 +361344,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model glm-5.3 and effort max; exact catalog configuration glm-5.3::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1581c2cbadfb6a7b6ee9d1d8",
@@ -360312,7 +361445,7 @@
       "subject": {
         "source_id": "Gemini 3.8 Flash|medium",
         "name": "Gemini 3.8 Flash · medium",
-        "model_id": null,
+        "model_id": "gemini-3.8-flash::medium",
         "variant": null,
         "harness": "chisel"
       },
@@ -360345,7 +361478,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.8-flash and effort medium; exact catalog configuration gemini-3.8-flash::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:1745705733d5bd916b4fde6e",
@@ -360353,7 +361497,7 @@
       "subject": {
         "source_id": "Gemini 3.8 Flash|high",
         "name": "Gemini 3.8 Flash · high",
-        "model_id": null,
+        "model_id": "gemini-3.8-flash::high",
         "variant": null,
         "harness": "chisel"
       },
@@ -360386,7 +361530,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:af7c8c7bd9e5255a2e8f1956",
@@ -360394,7 +361549,7 @@
       "subject": {
         "source_id": "GPT-6 Astra|low",
         "name": "GPT-6 Astra · low",
-        "model_id": null,
+        "model_id": "gpt-6-astra::low",
         "variant": null,
         "harness": "codex"
       },
@@ -360427,7 +361582,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-6-astra and effort low; exact catalog configuration gpt-6-astra::low",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:439086190c468d9c8f000420",
@@ -360435,7 +361601,7 @@
       "subject": {
         "source_id": "GPT-6 Astra|medium",
         "name": "GPT-6 Astra · medium",
-        "model_id": null,
+        "model_id": "gpt-6-astra::medium",
         "variant": null,
         "harness": "codex"
       },
@@ -360468,7 +361634,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-6-astra and effort medium; exact catalog configuration gpt-6-astra::medium",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:eee1bb4cf7339a7f0787eadf",
@@ -360476,7 +361653,7 @@
       "subject": {
         "source_id": "GPT-6 Astra|high",
         "name": "GPT-6 Astra · high",
-        "model_id": null,
+        "model_id": "gpt-6-astra::high",
         "variant": null,
         "harness": "codex"
       },
@@ -360509,7 +361686,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-6-astra and effort high; exact catalog configuration gpt-6-astra::high",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:10b3ff905e16d57de59473c9",
@@ -360517,7 +361705,7 @@
       "subject": {
         "source_id": "GPT-6 Astra|xhigh",
         "name": "GPT-6 Astra · xhigh",
-        "model_id": null,
+        "model_id": "gpt-6-astra::xhigh",
         "variant": null,
         "harness": "codex"
       },
@@ -360550,7 +361738,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:ef020a7d41ace07a04e285db",
@@ -360558,7 +361757,7 @@
       "subject": {
         "source_id": "GPT-6 Astra|max",
         "name": "GPT-6 Astra · max",
-        "model_id": null,
+        "model_id": "gpt-6-astra::max",
         "variant": null,
         "harness": "codex"
       },
@@ -360591,7 +361790,18 @@
           "published_at": null,
           "locator": "method_source"
         }
-      ]
+      ],
+      "join_note": "Reviewed identity map 2026-09-15: label states model gpt-6-astra and effort max; exact catalog configuration gpt-6-astra::max",
+      "identity_review": {
+        "packet_file": "ops/benchmark-table-2026-09-15/identity-review/packet.json",
+        "packet_sha256": "484cfc227b0c79ffc26102a89350082188c8b97d8f02ab7e9421db85f27cb89f",
+        "verdict_file": "ops/benchmark-table-2026-09-15/identity-review/verdict.json",
+        "verdict_sha256": "cf347639bc96eea03a27ad49331b47f5b8db8352638e806f64666b78389faad3",
+        "critic_model": "chutes/moonshotai/Kimi-K3-TEE",
+        "producer_models": [
+          "anthropic/claude-opus-5"
+        ]
+      }
     },
     {
       "id": "public:3fda971b1a92ab94f83a20e9",

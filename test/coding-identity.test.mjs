@@ -42,3 +42,53 @@ test('joins need the exact configuration; no effort only for single-configuratio
   assert.match(joins[0].reason, /appears 2 times/);
   assert.match(joins[3].reason, /effort not stated/);
 });
+
+test('self-reported boards: FrontierCode ids, CursorBench "Extra High", SWE-Bench Pro harness asterisk', async () => {
+  const { parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } = await import('../lib/coding-identity.mjs');
+  assert.deepEqual(parseFrontierCodeId('Claude Fable 5.1|xhigh'), { family: 'claude-fable-5.1', effort: 'xhigh' });
+  assert.deepEqual(parseFrontierCodeId('Kimi K3|none'), { family: 'kimi-k3', effort: null }, '"none" states no effort');
+  assert.deepEqual(parseFrontierCodeId('Inkling|0.99'), { family: null, effort: null });
+  assert.equal(parseFrontierCodeId('GPT-5.4-mini|medium').family, 'gpt-5.4-mini', 'mini is its own family, never gpt-5.4');
+  assert.deepEqual(parseCursorBenchLabel('Opus 5 Extra High'), { family: 'claude-opus-5', effort: 'xhigh' });
+  assert.deepEqual(parseCursorBenchLabel('Gemini 3.8 Flash High'), { family: 'gemini-3.8-flash', effort: 'high' });
+  assert.deepEqual(parseCursorBenchLabel('Composer 2.5'), { family: 'composer-2.5', effort: null });
+  assert.deepEqual(parseSweBenchProLabel('gpt-5.4 (xHigh)*'), { family: 'gpt-5.4', effort: 'xhigh' });
+  assert.deepEqual(parseSweBenchProLabel('claude-opus-4-6 (thinking)*'), { family: null, effort: null }, '"thinking" is not an effort');
+  const kimi = [{ id: 'kimi-k3::max', family_key: 'kimi-k3', variant: 'max' }, { id: 'kimi-k3::default', family_key: 'kimi-k3', variant: 'default' }];
+  assert.equal(identityJoins([{ source_id: 'Kimi K3|none' }], parseFrontierCodeId, kimi)[0].model_id, null, 'no effort never picks among several configurations');
+});
+
+test('reviewed self-reported join: value approval binds the unjoined row; the receipt must be independent and cover the join', async () => {
+  const { unjoined, identityKey, observationDigest, verifyScoreEvidence } = await import('../lib/benchmark-score-evidence.mjs');
+  const base = { id: 'public:x', benchmark_id: 'cursorbench::4.0', subject: { source_id: 'Opus 5 Max', name: 'Opus 5 Max', model_id: null, variant: null, harness: null }, value: 46.6 };
+  const joined = { ...base, subject: { ...base.subject, model_id: 'claude-opus-5::max' }, join_note: 'Reviewed identity map', identity_review: {} };
+  assert.equal(observationDigest(unjoined(joined)), observationDigest(base));
+  assert.equal(identityKey(joined), 'cursorbench::4.0|Opus 5 Max|claude-opus-5::max');
+  assert.equal(typeof verifyScoreEvidence, 'function');
+});
+
+test('identity receipt: the committed Kimi verdict covers every self-reported join; a tampered verdict fails closed', async () => {
+  const { readFileSync, writeFileSync, mkdtempSync, mkdirSync, copyFileSync } = await import('node:fs');
+  const { join } = await import('node:path');
+  const { createHash } = await import('node:crypto');
+  const { verifyIdentityReview, identityKey } = await import('../lib/benchmark-score-evidence.mjs');
+  const sha = (b) => createHash('sha256').update(b).digest('hex');
+  const dir = 'ops/benchmark-table-2026-09-15/identity-review';
+  const packet = JSON.parse(readFileSync(`${dir}/packet.json`));
+  const verdict = JSON.parse(readFileSync(`${dir}/verdict.json`));
+  assert.equal(verdict.packet_sha256, sha(readFileSync(`${dir}/packet.json`)));
+  assert.equal(verdict.checked, packet.joins.length);
+  const joined = JSON.parse(readFileSync('data/raw/benchmarks/scores.json')).observations.filter((o) => o.identity_review);
+  const approved = new Set(packet.joins.map((j) => j.key).filter((k) => !verdict.rejected.some((r) => r.key === k)));
+  assert.ok(joined.length > 0 && joined.every((x) => approved.has(identityKey(x))), 'every joined row is an approved packet join');
+  const o = joined[0];
+  await verifyIdentityReview(o);
+  const root = mkdtempSync('/tmp/bh-receipt-');
+  mkdirSync(join(root, dir), { recursive: true });
+  copyFileSync(`${dir}/packet.json`, join(root, dir, 'packet.json'));
+  const bad = JSON.stringify({ ...verdict, rejected: [{ key: identityKey(o), reason: 'test' }] });
+  writeFileSync(join(root, dir, 'verdict.json'), bad);
+  await assert.rejects(verifyIdentityReview({ ...o, identity_review: { ...o.identity_review, verdict_sha256: sha(bad) } }, root), /not accepted by critic/);
+  await assert.rejects(verifyIdentityReview(o, root), /digest mismatch/, 'an altered verdict no longer matches the recorded digest');
+  await assert.rejects(verifyIdentityReview({ ...o, identity_review: { ...o.identity_review, producer_models: ['moonshotai/kimi-k3'] } }), /not independent/);
+});

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-15T11:06:34.460Z",
-  "joined": 87,
+  "generated_at": "2026-09-15T14:42:32.404Z",
+  "joined": 197,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -235,6 +235,286 @@
     {
       "benchmark_id": "swe-atlas-refactoring::snapshot-2026-09-15",
       "source_id": "Gemini-3-Flash (Mini-SWE-Agent)",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "SWE-2|medium",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "SWE-2|high",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "SWE-2|max",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.5|low",
+      "reason": "no catalog configuration grok-4.5::low"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Grok 4.5|medium",
+      "reason": "no catalog configuration grok-4.5::medium"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "SWE-1.7|none",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.7|low",
+      "reason": "no catalog configuration claude-opus-4.7::low"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.7|high",
+      "reason": "no catalog configuration claude-opus-4.7::high"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.7|xhigh",
+      "reason": "no catalog configuration claude-opus-4.7::xhigh"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Kimi K2.7|none",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GLM 5.2|none",
+      "reason": "effort not stated and glm-5.2 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "DeepSeek V4 Pro|none",
+      "reason": "effort not stated and deepseek-v4-pro has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Inkling|0.99",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Qwen 3.7 Plus|none",
+      "reason": "effort not stated and qwen3.7-plus has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "SWE-1.6|none",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Kimi K3|none",
+      "reason": "effort not stated and kimi-k3 has 3 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.6 Flash|low",
+      "reason": "no catalog configuration gemini-3.6-flash::low"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Gemini 3.6 Flash|medium",
+      "reason": "no catalog configuration gemini-3.6-flash::medium"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.4-mini|low",
+      "reason": "no catalog configuration gpt-5.4-mini::low"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GPT-5.4-mini|high",
+      "reason": "no catalog configuration gpt-5.4-mini::high"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.6|low",
+      "reason": "no catalog configuration claude-opus-4.6::low"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.6|medium",
+      "reason": "no catalog configuration claude-opus-4.6::medium"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Opus 4.6|high",
+      "reason": "no catalog configuration claude-opus-4.6::high"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 4.6|low",
+      "reason": "no catalog configuration claude-sonnet-4.6::low"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Claude Sonnet 4.6|high",
+      "reason": "no catalog configuration claude-sonnet-4.6::high"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "DeepSeek V4 Flash 0731|high",
+      "reason": "no catalog configuration deepseek-v4-flash-0731::high"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Mistral 3.5 Medium|none",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "DeepSeek V4 Pro 0813|high",
+      "reason": "no catalog configuration deepseek-v4-pro-0813::high"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "GLM 5.3 Flash|max",
+      "reason": "no catalog configuration glm-5.3-flash::max"
+    },
+    {
+      "benchmark_id": "frontiercode::1.1",
+      "source_id": "Nemotron 3 Ultra|none",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Muse Spark 1.3 High",
+      "reason": "no catalog configuration muse-spark-1.3::high"
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Muse Spark 1.3 Medium",
+      "reason": "no catalog configuration muse-spark-1.3::medium"
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Muse Spark 1.3 Low",
+      "reason": "no catalog configuration muse-spark-1.3::low"
+    },
+    {
+      "benchmark_id": "cursorbench::4.0",
+      "source_id": "Muse Spark 1.3 Minimal",
+      "reason": "no catalog configuration muse-spark-1.3::minimal"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "Muse Spark 1.1*",
+      "reason": "effort not stated and the only catalog configuration is muse-spark-1.1::xhigh, not a default"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "claude-opus-4-6 (thinking)*",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gemini-3.1-pro (thinking)*",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "claude-opus-4-5-20251101",
+      "reason": "effort not stated and claude-opus-4.5 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "claude-4-5-Sonnet",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gemini-3-pro-preview",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "claude-4-Sonnet",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gpt-5-2025-08-07 (High)",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gpt-5.2-codex",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "claude-4-5-haiku",
+      "reason": "effort not stated and claude-haiku-4.5 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "qwen3-coder-480b-a35b",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gemini-3-flash",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gpt-5.2",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "kimi-k2-instruct",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "qwen3-235b-a22b",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gpt-oss-120b",
+      "reason": "effort not stated and gpt-oss-120b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "deepseek-v3p2",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "gemma-3-27b-it",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "llama3-1-405b-instruct",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "glm-4.6",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "llama4-maverick-17b-instruct",
+      "reason": "model name not in the reviewed list"
+    },
+    {
+      "benchmark_id": "swe-bench-pro-public::snapshot-2026-09-10",
+      "source_id": "codestral-2405",
       "reason": "model name not in the reviewed list"
     }
   ]

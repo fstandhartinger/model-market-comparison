@@ -152,10 +152,13 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
     }
     const reviewed = identityJoin.get(`${observation.benchmark_id}\0${observation.subject.source_id}`);
     if (reviewed && path.endsWith('public-observations.json') && observation.subject.model_id === null) {
-      if ((observation.source_basis ?? observation.basis) !== 'measured') throw new Error(`Identity map may only join measured observations: ${observation.id}`);
-      if (models.some((m) => m.id === reviewed.model_id)) {
+      const selfReported = (observation.source_basis ?? observation.basis) === 'self_reported';
+      if (!selfReported && (observation.source_basis ?? observation.basis) !== 'measured') throw new Error(`Identity map may only join measured or self-reported observations: ${observation.id}`);
+      // A self-reported join without its own review receipt stays unjoined (verifyScoreEvidence checks the receipt).
+      if (models.some((m) => m.id === reviewed.model_id) && (!selfReported || reviewed.review)) {
         observation.subject.model_id = reviewed.model_id;
         observation.join_note = `Reviewed identity map ${identityMap.reviewed_at}: ${reviewed.rule}`;
+        if (selfReported) observation.identity_review = reviewed.review;
       }
     }
     observations.push(observation);
