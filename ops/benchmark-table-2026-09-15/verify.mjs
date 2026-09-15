@@ -33,7 +33,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
 
   // Header copy.
   const h1 = await page.locator('h1').first().innerText();
-  check(`${tag} header copy exact`, h1.replace(/\s+/g, ' ').trim() === 'The most detailed cost–capability analysis in AI. Every model. Every benchmark. Actual costs.', h1);
+  check(`${tag} header copy exact`, h1.replace(/\s+/g, ' ').trim() === 'The most detailed cost–capability analysis in AI. Every model. Every Benchmark. Actual Costs.', h1);
 
   // Value map.
   const map = await page.evaluate(() => {

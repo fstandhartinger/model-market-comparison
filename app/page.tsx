@@ -30,8 +30,8 @@ export default async function Home() {
       {/* F-01 (Fable 5.1 design pass, 2026-09-13): compact hero — the recommendation list
           must be visible on the first screen. R3.1 claim decided in DESIGN-DIRECTIVES.md. */}
       <section className="bh-hero mb-4">
-        {/* 2026-09-15: user-approved wording, verbatim; sentence case for "benchmark". */}
-        <h1 className="bh-display">The most detailed cost–capability analysis in AI.<br /><span>Every model. Every benchmark. Actual costs.</span></h1>
+        {/* CR-10.1 (Florian 2026-09-15): verbatim, with his capitalisation ("Every Benchmark. Actual Costs."). */}
+        <h1 className="bh-display">The most detailed cost–capability analysis in AI.<br /><span>Every model. Every Benchmark. Actual Costs.</span></h1>
         <p className="bh-hero-line mt-2 text-sm text-gray-400">
           <span className="tabular">{results.toLocaleString()}</span> results · <span className="tabular">{benchmarks}</span> benchmarks · <span className="tabular">{ds.counts.models.toLocaleString()}</span> models · updated {updated}
         </p>
