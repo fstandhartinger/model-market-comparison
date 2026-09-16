@@ -515,7 +515,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   <td colSpan={6} className="bg-[#0c0f14] px-4 py-3">
                     <div className="grid gap-4 md:grid-cols-[minmax(220px,280px)_1fr]">
                       {/* model details */}
-                      <div>
+                      <div data-pane="benchmarks">
                         <div className="mb-1.5 flex items-center justify-between">
                           <span className="text-[11px] uppercase tracking-wide text-gray-500">Benchmarks — {m.display_name}</span>
                           <Link href={`/models/${encodeURIComponent(m.id)}`} className="text-[11px] text-accent">full detail ↗</Link>
@@ -562,13 +562,16 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                           </tbody>
                         </table>
                       </div>
-                      {/* provider list for this model */}
-                      <div>
-                        <div className="mb-1.5 text-[11px] uppercase tracking-wide text-gray-500">Providers within global filters — {allOffers.length} exact route{allOffers.length === 1 ? "" : "s"} (provider-channel price rank; alternate routes marked “alt”; prices: {priceLabel(priceSettings)})</div>
+                      {/* provider list for this model. CR-43.2: from md up the pane takes exactly the benchmarks pane's
+                          height (absolute fill of the stretched grid cell, so its own length never grows the row) and
+                          scrolls inside; on phones the panes stack and the list keeps its own capped scroll. */}
+                      <div className="relative" data-pane="providers">
+                        <div className="flex flex-col md:absolute md:inset-0">
+                        <div className="mb-1.5 shrink-0 text-[11px] uppercase tracking-wide text-gray-500">Providers within global filters — {allOffers.length} exact route{allOffers.length === 1 ? "" : "s"} (provider-channel price rank; alternate routes marked “alt”; prices: {priceLabel(priceSettings)})</div>
                         {allOffers.length === 0 ? <span className="text-xs text-gray-600">no token pricing</span> : (
-                        <div className="max-h-64 overflow-y-auto">
+                        <div className="max-h-64 overflow-y-auto md:max-h-none md:min-h-0 md:flex-1" data-pane-scroll="providers" tabIndex={0} aria-label={`Provider routes for ${m.display_name}`}>
                         <table className="w-full text-xs">
-                          <thead><tr>
+                          <thead className="sticky top-0 z-[1] bg-[#0c0f14]"><tr>
                             <th className="py-1 pr-1 text-left text-[10px] font-normal text-gray-500">rank</th>
                             <th className="py-1 pr-2 text-left text-[10px] font-normal text-gray-500">provider</th>
                             <th className="py-1 text-right text-[10px] font-normal text-gray-500">raw in $/1M</th>
@@ -605,6 +608,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                         </table>
                         </div>
                         )}
+                        </div>
                       </div>
                     </div>
                   </td>
