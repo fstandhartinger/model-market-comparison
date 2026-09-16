@@ -4,13 +4,14 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
-import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, versionLine, countBoards, boardId, CAVEAT_TAGS, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, versionLine, countBoards, boardId, variantLabel, CAVEAT_TAGS, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
 import { InfoTip } from "./InfoTip";
 import { hasScoreEvidence } from "../lib/client-model";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 import { ShortlistColumns } from "./ShortlistColumns";
 import { AaCredit } from "./AaCredit";
+import { BEST_OF_NOTE } from "./BestOf";
 
 const COLUMNS = 5;
 const NOTE_KEY = "bh.simpleBenchmarksNote.v1";
@@ -112,12 +113,13 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
           {g.rows.map(({ row, vals, basis }) => {
             const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter), odd = rowOutliers(vals, row.higherBetter);
             // F-102: the board a row belongs to, so the published count can be checked against the table itself.
-            return <tr key={row.id} data-board={boardId(row)}>
+            return <tr key={row.id} data-board={boardId(row)} data-boards={row.boards ? JSON.stringify(row.boards) : undefined} data-best-of={row.bestOf ? "1" : undefined}>
               <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}
                 {/* F-98: the two caveat tags a reader needs to read the number right; the editorial tier tags stay in the full comparison. */}
                 {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="bh-matrix-tag" data-tag={t} title={matrix.tags[t].tip}>{matrix.tags[t].label}<span className="sr-only">: {matrix.tags[t].tip}</span></span>)}
                 <InfoTip title={row.name} label={`the ${row.name} benchmark`}>{row.description || "What this benchmark measures is not described by its publisher yet."}
                   <span className="mt-2 block">{scoreTypeText(row)}</span>
+                  {row.bestOf && <span className="mt-2 block" data-best-of-note>{BEST_OF_NOTE}</span>}
                   {versionLine(row) && <span className="bh-muted mt-2 block">{versionLine(row)}</span>}
                   {row.freshness?.contamination && <span className="bh-muted mt-2 block">{row.freshness.contamination}</span>}
                   {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="mt-2 block"><b>{matrix.tags[t].label}:</b> {matrix.tags[t].tip}</span>)}
@@ -125,10 +127,11 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
               {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                 {v == null
                   ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
-                  : <Link href={cellHref(row, ids[j], ids, true)} className="bh-matrix-link">
+                  : <Link href={cellHref(row, ids[j], ids, true)} className="bh-matrix-link" title={row.bestOf ? `Best recorded result: ${variantLabel(row, ids[j])}` : undefined} data-variant={row.bestOf ? variantLabel(row, ids[j]) : undefined}>
                     {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
                     <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}</span>
                     {win[j] && <span className="sr-only"> (best in row)</span>}
+                    {row.bestOf && <span className="sr-only"> (best recorded result: {variantLabel(row, ids[j])})</span>}
                     {odd[j] && <span className="bh-outlier-tag" data-kind={odd[j]} title={odd[j] === "top" ? "Clearly ahead: its lead over the next model is at least twice the spread of the models in between" : "Clearly behind: its gap to the next model is at least twice the spread of the models in between"}>{odd[j]}<span className="sr-only">{odd[j] === "top" ? ": clearly ahead of the other models in this row" : ": clearly behind the other models in this row"}</span></span>}
                   </Link>}
               </td>)}
@@ -137,6 +140,6 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets. <AaCredit />.</p>
+    <p className="bh-muted mt-2 text-xs">Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. A row marked <b>best of</b> holds each model&apos;s best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets. <AaCredit />.</p>
   </section>;
 }

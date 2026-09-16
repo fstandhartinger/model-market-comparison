@@ -35,6 +35,12 @@ matrix restricted to those models — `rows` (every benchmark with a result for 
 `catalogRows` (the full matrix's row count). Cached 5 minutes, CORS open. Added 2026-09-15 for the start page's
 benchmark table (CR-28.1).
 
+Since 2026-09-16 (CR-41.1) runs of one board through the agent harnesses Claude Code and Codex — and, for the AA
+Coding Agent Index, its versions 1.4 and 1.5 — arrive as **one row** with each model's best recorded result. Such a
+row has `id` `<key>::best-of[::<version>]`, `boards` (the board ids it stands for), and `bestOf = { acrossVersions,
+variants: [{ id, benchmarkId, cohort, version }], pick: { <modelId>: <variant index> } }` naming the exact run behind
+every value. The per-run results are unchanged in `/api/benchmark-scores` and the dataset.
+
 ### `GET /api/benchmark-scores`
 
 Filters: `benchmark_id`, `model_id`, `basis` (`measured`, `self_reported`, `derived`),

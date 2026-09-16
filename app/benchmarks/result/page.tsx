@@ -7,7 +7,7 @@ import { getDataset } from '../../../lib/data';
 import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { getBenchmarkMatrixPage } from '../../../lib/benchmark-matrix-data';
 import { latestScores } from '../../../lib/benchmark-view.mjs';
-import { formatValue, cellHref, resultHref, rowWinners, versionLine, cohortLabel } from '../../../lib/benchmark-matrix.mjs';
+import { formatValue, cellHref, cellAxisId, resultHref, rowWinners, versionLine, cohortLabel, variantLabel } from '../../../lib/benchmark-matrix.mjs';
 import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
 import { humanVersion } from '../../../lib/version-label';
@@ -40,7 +40,9 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
   const model = models.get(modelId)!;
   const back = pinned ? `/benchmarks?models=${compared.map(encodeURIComponent).join(',')}` : '/benchmarks';
   const groupLabel = new Map(matrix.groups.map((g) => [g.id, g.label]));
-  const others = (matrix.values[modelId] ?? []).map(([i, v]) => ({ row: matrix.rows[i], v })).filter((o) => o.row.id !== axisId);
+  // CR-41.1: a best-of row lists here under the run its value came from; the run on this page is not repeated.
+  const others = (matrix.values[modelId] ?? []).map(([i, v]) => ({ row: matrix.rows[i], v })).filter((o) => cellAxisId(o.row, modelId) !== axisId);
+  const mergedInto = matrix.rows.find((r) => r.bestOf?.variants.some((x) => x.id === axisId));
   const othersSection = others.length > 0 && <section className="mt-8" aria-labelledby="bh-result-others">
     <h2 id="bh-result-others" className="text-lg font-semibold">{model.display_name}: {others.length} other results</h2>
     <ul className="mt-3 grid gap-x-8 sm:grid-cols-2">{others.map(({ row: o, v }) => <li key={o.id} className="flex items-baseline justify-between gap-3 border-b border-line py-2 text-sm">
@@ -120,7 +122,10 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
   const row = latest.get(modelId);
   if (!row) notFound();
   const win = rowWinners(compared.map((id) => latest.get(id)?.value ?? null), ax.higherBetter ?? null);
-  const matrixRow = matrix.rows.find((r) => r.id === axisId) ?? null;
+  const variant = mergedInto?.bestOf?.variants.find((x) => x.id === axisId);
+  // CR-41.2: a run merged into a best-of row keeps its own version on this page.
+  const matrixRow = matrix.rows.find((r) => r.id === axisId) ?? (mergedInto && variant ? { ...mergedInto, version: variant.version } : null);
+  const bestHere = mergedInto ? cellAxisId(mergedInto, modelId) === axisId : false;
   const direction = ax.higherBetter == null ? 'direction not published' : ax.higherBetter ? 'higher is better' : 'lower is better';
 
   return <div className="max-w-4xl">
@@ -135,6 +140,11 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
       <h2 id="bh-result-model" className="bh-muted text-sm">{model.org} · <Link href={`/models/${encodeURIComponent(modelId)}`} className="text-accent hover:underline">{model.display_name}</Link></h2>
       <p className="mt-1 text-4xl font-bold tabular" data-bh-result-value>{formatValue(row.value, ax.unit)}</p>
       <p className="bh-muted mt-1 text-sm">Unit: {ax.unit} · {direction}</p>
+      {mergedInto && <p className="mt-3 border-t border-line pt-3 text-sm" data-bh-result-best-of>
+        This is the {[mergedInto.bestOf?.acrossVersions ? `v${variant?.version}` : null, variant?.cohort].filter(Boolean).join(' · ')} run. The comparison tables merge it into one row, <b>{mergedInto.name}</b> ({mergedInto.cohort}), which shows each model&apos;s best recorded result{bestHere
+          ? <> — for {model.display_name} that is this run.</>
+          : <> — for {model.display_name} that is the <Link href={cellHref(mergedInto, modelId, compared, pinned)} className="text-accent underline">{variantLabel(mergedInto, modelId)} run</Link>.</>}
+      </p>}
       {/* CR-38.2 / CR-38.3: what a reader needs to read this number correctly — the tooltip has room for a
           sentence, this page has room for all of it. Every line is either measured or quoted from the source. */}
       {matrixRow && <ul className="bh-muted mt-3 space-y-1 border-t border-line pt-3 text-sm" data-bh-result-caveats>

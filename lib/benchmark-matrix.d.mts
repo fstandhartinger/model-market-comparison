@@ -19,6 +19,10 @@ export interface MatrixRow {
   saturation?: Saturation | null;
   /** CR-38.3: a preference or judge score rather than task accuracy. */
   judged?: boolean;
+  /** CR-41.1: the boards (family + version) a best-of row stands for; absent on a plain row. */
+  boards?: string[];
+  /** CR-41.1: a row merged from agent/version runs of one board — the runs and which one each model's value comes from. */
+  bestOf?: { acrossVersions: boolean; variants: { id: string; benchmarkId: string | null; cohort: string | null; version: string }[]; pick: Record<string, number> };
   /** CR-38.2: what the verified source states about the task window and contamination control; null when it states nothing. */
   freshness?: Freshness | null;
   /** The date the benchmark's results were last verified from its source (YYYY-MM-DD). */
@@ -60,7 +64,10 @@ export interface BenchmarkMatrix {
   catalogBoards: number;
 }
 export function boardId(row: Pick<MatrixRow, "key" | "version">): string;
-export function countBoards(rows: Pick<MatrixRow, "key" | "version">[]): number;
+export function countBoards(rows: Pick<MatrixRow, "key" | "version" | "boards">[]): number;
+export function cellVariant(row: Pick<MatrixRow, "bestOf">, modelId: string): { id: string; benchmarkId: string | null; cohort: string | null; version: string } | null;
+export function cellAxisId(row: Pick<MatrixRow, "id" | "bestOf">, modelId: string): string;
+export function variantLabel(row: Pick<MatrixRow, "bestOf">, modelId: string): string;
 export function baseKey(id: string): string;
 export function rowBars(values: (number | null)[], higherBetter: boolean | null, unit: string): (number | null)[];
 export function rowWinners(values: (number | null)[], higherBetter: boolean | null): boolean[];
@@ -80,5 +87,7 @@ export const OUTLIER_CORE_MULTIPLE: number;
 export const OUTLIER_MIN_SHARE: number;
 export function rowOutliers(values: (number | null)[], higherBetter: boolean | null): ("top" | "low" | null)[];
 export function scoreTypeText(row: { unit: string; higherBetter: boolean | null; range?: readonly (number | null)[] | null }): string;
-export function shortlistColumns<T extends { id: string; value: number | null }>(items: T[], unit: string): { columns: (T & { height: number | null; noData: boolean })[]; kind: 'bar' | 'log' | 'position' | null; domain: [number, number] | null };
+export function shortlistColumns<T extends { id: string; value: number | null }>(items: T[], unit: string, options?: { zeroBaseline?: boolean }): { columns: (T & { height: number | null; noData: boolean })[]; kind: 'bar' | 'log' | 'position' | 'zoomed' | null; domain: [number, number] | null; ticks: number[] };
+export function zoomedScale(values: (number | null)[], unit: string): { kind: 'zoomed'; domain: [number, number]; positions: (number | null)[] } | null;
+export function axisTicks(domain: [number, number]): number[];
 export function matrixForModels(matrix: BenchmarkMatrix, modelIds: Iterable<string>): BenchmarkMatrix & { catalogRows: number };

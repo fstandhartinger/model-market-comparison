@@ -327,5 +327,15 @@
       0,
       100
     ]
+  },
+  "best_of": {
+    "note": "CR-41.1 (Florian 2026-09-16): presentation-level merge. One board run through these agent harnesses reads as one row holding each model's best recorded result; boards listed under across_versions also merge their versions. Every run stays separate in the benchmark view, the API and on the result page each value links to. Only rows with the same key, unit and direction merge.",
+    "harness_cohorts": [
+      "Claude Code",
+      "Codex"
+    ],
+    "across_versions": [
+      "aa-coding-agent-index"
+    ]
   }
 }

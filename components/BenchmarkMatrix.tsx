@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, variantLabel, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { versionSuffix } from "../lib/version-label";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
@@ -16,6 +16,7 @@ import { PresetMenu } from "./PresetMenu";
 import { PickFromChart } from "./PickFromChart";
 import { toggleColumn } from "../lib/pick-chart.mjs";
 import { AaCredit } from "./AaCredit";
+import { BEST_OF_NOTE } from "./BestOf";
 
 const MIN_MODELS = 2, MAX_MODELS = 10;
 const ROW_IDS = new Set(ROW_PRESETS.map((p) => p.id));
@@ -241,15 +242,17 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
                   {/* F-98 / CR-38.2 + F-100: a stated task window is the one line worth a row of its own; the version and the
                       date the results were read are on hover here, on the (i) of the Simple table and on the result page. */}
                   {(() => { const suffix = versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
+                  {row.bestOf && <span className="bh-matrix-sub" data-best-of-note>{BEST_OF_NOTE}</span>}
                   <span className="bh-matrix-desc" title={[row.description, versionLine(row)].filter(Boolean).join(" — ")}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
                 </th>
                 {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                   {v == null
                     ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
-                    : <Link href={cellHref(row, ids[j], ids, pinned != null)} className="bh-matrix-link">
+                    : <Link href={cellHref(row, ids[j], ids, pinned != null)} className="bh-matrix-link" title={row.bestOf ? `Best recorded result: ${variantLabel(row, ids[j])}` : undefined} data-variant={row.bestOf ? variantLabel(row, ids[j]) : undefined}>
                       {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
                       <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}</span>
                       {win[j] && <span className="sr-only"> (best in row)</span>}
+                      {row.bestOf && <span className="sr-only"> (best recorded result: {variantLabel(row, ids[j])})</span>}
                     </Link>}
                 </td>)}
               </tr>;
@@ -258,6 +261,6 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
         </table>
       </div>}
     {ids.length > 1 && <BenchmarkBars rows={chart} ids={ids} names={names} />}
-    <p className="bh-muted text-xs"><AaCredit /> · Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href="/about#benchmark-tags" className="underline">How the tags are decided</Link>.</p>
+    <p className="bh-muted text-xs"><AaCredit /> · Each value is the latest published result for that exact configuration, measured results preferred; a row marked <b>best of</b> holds each model's best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions. † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href="/about#benchmark-tags" className="underline">How the tags are decided</Link>.</p>
   </section>;
 }

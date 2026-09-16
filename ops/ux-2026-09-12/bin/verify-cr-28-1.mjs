@@ -38,7 +38,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     shown: Number(document.querySelector('[data-bench-count]')?.textContent), catalog: Number(document.querySelector('[data-catalog-count]')?.textContent),
     groups: document.querySelectorAll('#benchmarks tr.bh-matrix-group').length,
     // F-102: a benchmark is a board (family + version); harness cohorts and cost twins are rows of it.
-    boards: new Set([...document.querySelectorAll('#benchmarks tbody tr[data-board]')].map((tr) => tr.getAttribute('data-board'))).size,
+    boards: new Set([...document.querySelectorAll('#benchmarks tbody tr[data-board]')].flatMap((tr) => tr.hasAttribute('data-boards') ? JSON.parse(tr.getAttribute('data-boards')) : [tr.getAttribute('data-board')])).size, // CR-41.1: a best-of row lists every board it stands for
     sentence: document.querySelector('[data-bench-count]')?.closest('p')?.innerText.replace(/\s+/g, ' ').trim() ?? '',
   }));
   check(`${tag} CR-28.1 the table lists every benchmark its models have (more than the 22 headline rows), count stated honestly`,

@@ -4,6 +4,17 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — Best-of rows in the comparison matrix; link-preview copy
+
+**No data file changed shape; one API response gained fields.** `GET /api/benchmark-matrix` (and the comparison tables)
+now merge the Claude Code and Codex runs of one board — ApprenticeBench API and CUA, FrontierCode 1.1, τ^τ-bench and
+their cost rows — into one row per board holding each model's best recorded result, and merge AA Coding Agent Index
+v1.4 and v1.5 the same way (Florian, CR-41.1). A cost row follows the run its score row picked. Each merged row lists
+its runs and which run each value comes from (`bestOf`, `boards`; see API.md); the benchmark count is unchanged (99),
+and every run keeps its own result page, observation and history. The site's Open Graph, Twitter and description
+tags and the share image `public/brand/og-image.png` now carry the hero's copy ("The most detailed cost–capability
+analysis in AI. Every model. Every Benchmark. Actual Costs."); the image URL gained `?v=2` so scrapers fetch it anew.
+
 ## 2026-09-16 — Lumina Bench discovery feed (no values)
 
 **New file, no change to any existing data.** `data/raw/lumina-ledger.json` is a daily discovery and provenance feed

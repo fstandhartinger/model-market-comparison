@@ -51,3 +51,32 @@ test('CR-28.1: the model-scoped matrix keeps every row any of those models has, 
   assert.equal(out.catalogRows, 4);
   assert.deepEqual(matrixForModels(matrix, []).rows, []);
 });
+
+import { zoomedScale, axisTicks } from '../lib/benchmark-matrix.mjs';
+test('CR-40.2/40.3: the shortlist axis is zoomed by default with a stated range, zero baseline on request', () => {
+  const items = [65, 72, 80, 88, 93].map((value, i) => ({ id: `m${i}`, value }));
+  const zoomed = shortlistColumns(items, 'points');
+  assert.equal(zoomed.kind, 'zoomed');
+  assert.deepEqual(zoomed.domain, [55, 95]);
+  assert.deepEqual(zoomed.ticks, [55, 65, 75, 85, 95]);
+  assert.ok(zoomed.domain[0] < 65 && zoomed.domain[1] >= 93, 'every value inside the drawn range');
+  assert.ok(zoomed.columns[0].height / zoomed.columns[4].height > 3, 'differences become visible');
+  const zero = shortlistColumns(items, 'points', { zeroBaseline: true });
+  assert.equal(zero.kind, 'bar');
+  assert.deepEqual(zero.domain, [0, 100]);
+  assert.equal(zero.ticks[0], 0);
+  assert.ok(zero.columns[0].height / zero.columns[4].height < 1.5);
+  // a range that would reach zero anyway is the zero baseline, never a negative axis
+  assert.equal(zoomedScale([5, 60], 'points'), null);
+  assert.equal(shortlistColumns([{ id: 'a', value: 5 }, { id: 'b', value: 60 }], 'points').kind, 'bar');
+  // the axis never passes 100 on a 0–100 score
+  assert.equal(zoomedScale([99, 100], 'points').domain[1], 100);
+  // Elo keeps its position scale in both modes and carries no bar ticks
+  for (const zeroBaseline of [false, true]) {
+    const elo = shortlistColumns([{ id: 'x', value: 1350 }, { id: 'y', value: 1171 }], 'Elo', { zeroBaseline });
+    assert.equal(elo.kind, 'position');
+    assert.deepEqual(elo.ticks, []);
+  }
+  assert.deepEqual(axisTicks([85, 100]), [85, 90, 95, 100]);
+  assert.deepEqual(axisTicks([0, 100]), [0, 20, 40, 60, 80, 100]);
+});

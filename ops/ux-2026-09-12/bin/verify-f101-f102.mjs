@@ -54,7 +54,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
       shown: Number(document.querySelector('[data-bench-count]')?.textContent),
       catalog: Number(el?.textContent),
       sentence: el?.closest('p')?.innerText.replace(/\s+/g, ' ').trim() ?? '',
-      boards: new Set([...document.querySelectorAll('#benchmarks tbody tr[data-board]')].map((tr) => tr.getAttribute('data-board'))).size,
+      boards: new Set([...document.querySelectorAll('#benchmarks tbody tr[data-board]')].flatMap((tr) => tr.hasAttribute('data-boards') ? JSON.parse(tr.getAttribute('data-boards')) : [tr.getAttribute('data-board')])).size, // CR-41.1: a best-of row lists every board it stands for
       rows: document.querySelectorAll('#benchmarks tbody tr[data-board]').length,
     };
   });

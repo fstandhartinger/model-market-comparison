@@ -13,6 +13,7 @@ import { modelPrice, scopeFromSettings, priceLabel, type PriceResult, type Price
 import { Toggle } from "./ui";
 import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
+import { GearIcon } from "./GearIcon";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
 import { paretoFrontier } from "../lib/pareto.mjs";
 import { COST_AXIS, LABEL_LIMIT, QUADRANT_NOTE, annotationBox, attractiveQuadrant, costAxisCaption, labelCandidates, placeLabels, valueMapYDomain } from "../lib/value-map.mjs";
@@ -232,7 +233,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
         <span className="text-[11px] text-gray-500">{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /> · <EpochCredit /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
           className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
-          <svg aria-hidden="true" width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><circle cx="12" cy="12" r="3.2" /><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-1.1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.5-1.1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3H9a1.7 1.7 0 0 0 1-1.5V3a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 1 1.5 1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8V9a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1z" /></svg>
+          <GearIcon />
         </button>
         {prefsOpen && <div id="bh-value-map-settings" role="group" aria-label="Value map settings" tabIndex={-1}
           onKeyDown={(e) => { if (e.key === "Escape") setPrefsOpen(false); }}
