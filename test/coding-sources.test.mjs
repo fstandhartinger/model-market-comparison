@@ -9,7 +9,7 @@ import { join } from 'node:path';
 const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url)));
 const IDS = ['deepswe::snapshot-2026-09-15', 'swe-atlas-qna::snapshot-2026-09-15', 'swe-atlas-test-writing::snapshot-2026-09-15', 'swe-atlas-refactoring::snapshot-2026-09-15'];
 // 2026-09-16 (iteration 79): boards whose labels are model slugs, joined by lib/board-identity.mjs.
-const SLUG_BOARDS = ['bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
+const SLUG_BOARDS = ['osworld-2', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
   'apprenticebench-cua', 'apprenticebench-cua-cost', 'vals-index', 'vals-index-cost', 'vals-index-emb',
   'vals-index-finance-agent', 'vals-index-hlab', 'vals-index-legal-research', 'vals-index-terminal-bench-2.1',
   'vals-index-vibe-code-bench', 'vals-index-code-migration'];
@@ -114,13 +114,14 @@ test('identity map: exact existing configurations; measured joins visible; self-
 // 2026-09-16 (iteration 79): the slug boards. The map is re-derived here from the labels alone, so a hand
 // edit that does not follow the published rule fails the build.
 test('slug boards: every join re-derives from the label, and the refusals are the honest ones', async () => {
-  const { normaliseSlug, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId } = await import('../lib/board-identity.mjs');
+  const { normaliseSlug, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id } = await import('../lib/board-identity.mjs');
   const map = json('data/raw/benchmarks/identity-map.json');
   const dataset = json('data/dataset.json');
   const byId = new Map(dataset.models.map((m) => [m.id, m]));
   const parserFor = (benchmarkId) => benchmarkId.startsWith('bullshitbench-') ? parseBullshitBenchId
     : benchmarkId.startsWith('apprenticebench-') ? parseApprenticeBenchId
-    : benchmarkId.startsWith('vals-index') ? parseValsIndexId : null;
+    : benchmarkId.startsWith('vals-index') ? parseValsIndexId
+    : benchmarkId.startsWith('osworld-2::') ? parseOsworld2Id : null;
   const slugEntries = map.entries.filter((e) => parserFor(e.benchmark_id));
   assert.ok(slugEntries.length >= 300, `slug boards carry joins: ${slugEntries.length}`);
   const observations = dataset.benchmark_results.observations;

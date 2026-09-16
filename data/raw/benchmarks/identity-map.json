@@ -7339,6 +7339,66 @@
       "source_id": "grok/grok-4.3",
       "model_id": "grok-4.3::high",
       "rule": "label states model grok-4.3 and setting high; exact catalog configuration grok-4.3::high"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 5|low|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::low",
+      "rule": "label states model claude-opus-5 and setting low; exact catalog configuration claude-opus-5::low"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 5|medium|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::medium",
+      "rule": "label states model claude-opus-5 and setting medium; exact catalog configuration claude-opus-5::medium"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 5|high|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::high",
+      "rule": "label states model claude-opus-5 and setting high; exact catalog configuration claude-opus-5::high"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 5|xhigh|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and setting xhigh; exact catalog configuration claude-opus-5::xhigh"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 5|max|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and setting max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "GPT-5.6 Sol|max|batch tool|v2026.08.08",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and setting max; exact catalog configuration gpt-5.6-sol::max"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Sonnet 4.6|medium|standard|v2026.06.24",
+      "model_id": "claude-sonnet-4.6::medium",
+      "rule": "label states model claude-sonnet-4.6 and setting medium; exact catalog configuration claude-sonnet-4.6::medium"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Sonnet 4.6|max|standard|v2026.06.24",
+      "model_id": "claude-sonnet-4.6::max",
+      "rule": "label states model claude-sonnet-4.6 and setting max; exact catalog configuration claude-sonnet-4.6::max"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "GPT-5.5|xhigh|batch tool|v2026.06.24",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and setting xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "MiniMax M3|enabled|standard|v2026.06.24",
+      "model_id": "minimax-m3::default",
+      "rule": "label names minimax-m3 without a setting; the catalog has exactly one configuration, the default (minimax-m3::default)"
     }
   ]
 }

@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-16T05:13:43.405Z",
-  "joined": 825,
+  "generated_at": "2026-09-16T09:34:02.321Z",
+  "joined": 835,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -3196,6 +3196,36 @@
       "benchmark_id": "vals-index-cost::2",
       "source_id": "fireworks/nemotron-lightning-3p5-30b-a3b",
       "reason": "slug nemotron-lightning-3p5-30b-a3b is not a catalog family"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 4.8|max|batched tool|v2026.06.24",
+      "reason": "configuration claude-opus-4.8::max appears 2 times on this board; neither row is joined"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 4.8|max|standard|v2026.06.24",
+      "reason": "configuration claude-opus-4.8::max appears 2 times on this board; neither row is joined"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 4.7|max|batched tool|v2026.06.24",
+      "reason": "configuration claude-opus-4.7::max appears 2 times on this board; neither row is joined"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Claude Opus 4.7|max|standard|v2026.06.24",
+      "reason": "configuration claude-opus-4.7::max appears 2 times on this board; neither row is joined"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Qwen 3.7-Plus|thinking|standard|v2026.06.24",
+      "reason": "setting thinking is not a reviewed setting"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "source_id": "Kimi 2.6|enabled|standard|v2026.06.24",
+      "reason": "label is not a catalog model slug"
     }
   ]
 }

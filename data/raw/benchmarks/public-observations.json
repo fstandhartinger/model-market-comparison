@@ -223931,6 +223931,390 @@
       },
       "protocol": "SWE Atlas Refactoring (Scale AI), 2026-09-15 snapshot; harness and effort as stated in the source label; * = refusals scored 0 by the source; confidenceInterval_upper=4.8; createdAt=2026-05-06T01:46:40.000Z; contaminationMessage=",
       "comparison_key": null
+    },
+    {
+      "id": "public:98b1b9ab0fa97413d4f50ba0",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 5|low|batch tool|v2026.08.08",
+        "name": "Claude Opus 5 · low · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 22.32,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 0; Claude Opus 5|low|batch tool|v2026.08.08; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 5\",\"reasoning\":\"low\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.08.08\",\"datasetScope\":\"full\",\"binaryAccuracy\":22.32,\"partialScore\":54.89,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:a3cc7618110b9f321e4fc547",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 5|medium|batch tool|v2026.08.08",
+        "name": "Claude Opus 5 · medium · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 25.33,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 1; Claude Opus 5|medium|batch tool|v2026.08.08; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 5\",\"reasoning\":\"medium\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.08.08\",\"datasetScope\":\"full\",\"binaryAccuracy\":25.33,\"partialScore\":60.49,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:201379b15a6bed74cc08c9fe",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 5|high|batch tool|v2026.08.08",
+        "name": "Claude Opus 5 · high · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 28.98,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 2; Claude Opus 5|high|batch tool|v2026.08.08; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 5\",\"reasoning\":\"high\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.08.08\",\"datasetScope\":\"full\",\"binaryAccuracy\":28.98,\"partialScore\":63.79,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8aea22ecd5e3a945bf9c0c00",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 5|xhigh|batch tool|v2026.08.08",
+        "name": "Claude Opus 5 · xhigh · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 30.21,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 3; Claude Opus 5|xhigh|batch tool|v2026.08.08; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 5\",\"reasoning\":\"xhigh\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.08.08\",\"datasetScope\":\"full\",\"binaryAccuracy\":30.21,\"partialScore\":67.67,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:b7a5ae034e1dd2f30d119c2c",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 5|max|batch tool|v2026.08.08",
+        "name": "Claude Opus 5 · max · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 31.43,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 4; Claude Opus 5|max|batch tool|v2026.08.08; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 5\",\"reasoning\":\"max\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.08.08\",\"datasetScope\":\"full\",\"binaryAccuracy\":31.43,\"partialScore\":68.31,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:3dd1ac56d0135652932f8499",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "GPT-5.6 Sol|max|batch tool|v2026.08.08",
+        "name": "GPT-5.6 Sol · max · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 27.34,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 5; GPT-5.6 Sol|max|batch tool|v2026.08.08; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"GPT-5.6 Sol\",\"reasoning\":\"max\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.08.08\",\"datasetScope\":\"full\",\"binaryAccuracy\":27.34,\"partialScore\":62.72,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d7f7d985d644cf77bce08b32",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 4.8|max|batched tool|v2026.06.24",
+        "name": "Claude Opus 4.8 · max · batched tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batched tool"
+      },
+      "value": 20.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 17; Claude Opus 4.8|max|batched tool|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 4.8\",\"reasoning\":\"max\",\"toolSetting\":\"batched tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":20.6,\"partialScore\":54.8,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:54515d7920ae54bce034190e",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 4.8|max|standard|v2026.06.24",
+        "name": "Claude Opus 4.8 · max · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 18.52,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 18; Claude Opus 4.8|max|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 4.8\",\"reasoning\":\"max\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":18.52,\"partialScore\":49.33,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:8ab42753d82abf84b221badf",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 4.7|max|batched tool|v2026.06.24",
+        "name": "Claude Opus 4.7 · max · batched tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batched tool"
+      },
+      "value": 18.2,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 19; Claude Opus 4.7|max|batched tool|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 4.7\",\"reasoning\":\"max\",\"toolSetting\":\"batched tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":18.2,\"partialScore\":48.91,\"estimatedCostUsd\":null}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:9469a81f8581611ef5c0884b",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Opus 4.7|max|standard|v2026.06.24",
+        "name": "Claude Opus 4.7 · max · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 13.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 22; Claude Opus 4.7|max|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Opus 4.7\",\"reasoning\":\"max\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":13.9,\"partialScore\":49.1,\"estimatedCostUsd\":3870}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d76570120a32340da0e8e01a",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6|medium|standard|v2026.06.24",
+        "name": "Claude Sonnet 4.6 · medium · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 9.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 25; Claude Sonnet 4.6|medium|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Sonnet 4.6\",\"reasoning\":\"medium\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":9.3,\"partialScore\":33.9,\"estimatedCostUsd\":1550}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:69fb51f6ccad646dba424b6a",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Claude Sonnet 4.6|max|standard|v2026.06.24",
+        "name": "Claude Sonnet 4.6 · max · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 8.3,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 28; Claude Sonnet 4.6|max|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Claude Sonnet 4.6\",\"reasoning\":\"max\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":8.3,\"partialScore\":41.5,\"estimatedCostUsd\":2410}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:d9a9de5b5bce03003cc4d5c9",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "GPT-5.5|xhigh|batch tool|v2026.06.24",
+        "name": "GPT-5.5 · xhigh · batch tool",
+        "model_id": null,
+        "variant": null,
+        "harness": "batch tool"
+      },
+      "value": 13,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 31; GPT-5.5|xhigh|batch tool|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"GPT-5.5\",\"reasoning\":\"xhigh\",\"toolSetting\":\"batch tool\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":13.0,\"partialScore\":49.5,\"estimatedCostUsd\":2750}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:7e3be10cc4d66742bf30c0c6",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Qwen 3.7-Plus|thinking|standard|v2026.06.24",
+        "name": "Qwen 3.7-Plus · thinking · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 2.8,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 33; Qwen 3.7-Plus|thinking|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Qwen 3.7-Plus\",\"reasoning\":\"thinking\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":2.8,\"partialScore\":21.5,\"estimatedCostUsd\":411.56}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:264b8f34fb1de9fbd17381a7",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "MiniMax M3|enabled|standard|v2026.06.24",
+        "name": "MiniMax M3 · enabled · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 4.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 36; MiniMax M3|enabled|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"MiniMax M3\",\"reasoning\":\"enabled\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":4.6,\"partialScore\":22.3,\"estimatedCostUsd\":258.78}",
+      "comparison_key": null
+    },
+    {
+      "id": "public:19aaa192bd98854f0311719e",
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "subject": {
+        "source_id": "Kimi 2.6|enabled|standard|v2026.06.24",
+        "name": "Kimi 2.6 · enabled · standard",
+        "model_id": null,
+        "variant": null,
+        "harness": "standard"
+      },
+      "value": 4.6,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "locator": "osworld2_results; source row 39; Kimi 2.6|enabled|standard|v2026.06.24; field binaryAccuracy"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.; source row: {\"model\":\"Kimi 2.6\",\"reasoning\":\"enabled\",\"toolSetting\":\"standard\",\"stepBudget\":500,\"releaseVersion\":\"v2026.06.24\",\"datasetScope\":\"full\",\"binaryAccuracy\":4.6,\"partialScore\":22.1,\"estimatedCostUsd\":708}",
+      "comparison_key": null
     }
   ],
   "collections": [
@@ -224353,6 +224737,12 @@
       "status": "collected",
       "source_url": "https://labs.scale.com/leaderboard/sweatlas-refactoring",
       "reason": "17 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "status": "collected",
+      "source_url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+      "reason": "16 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

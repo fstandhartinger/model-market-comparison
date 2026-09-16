@@ -2932,6 +2932,50 @@
       "refresh": "manual",
       "status": "collected",
       "reason": "Collected by its own authenticated collector, scripts/fetch-openrouter-benchmarks.mjs (OpenRouter's documented Benchmarks API, Bearer key from the environment, 30 req/min and 500 req/day). The daily's generic page capture must not fetch this URL: without the key it would answer 401 and mislabel a working source as unreachable. The capture is hash-bound in data/raw/benchmarks/ingestion-lock.json and refreshed there by ops/daily/refresh-benchmarks.mjs."
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.06.24",
+      "parser": {
+        "kind": "osworld2_results",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "binaryAccuracy",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "dataset_scope": "full",
+        "require": {
+          "benchmarkVersion": "OSWorld 2.0",
+          "taskVersion": "v2026.06.24",
+          "datasetSize": 108,
+          "defaultStepBudget": 500,
+          "defaultMetric": "binaryAccuracy",
+          "defaultResultReleaseVersion": "v2026.06.24",
+          "defaultResultDatasetScope": "full"
+        }
+      },
+      "status": "collected",
+      "reason": "OSWorld 2.0 publishes its official leaderboard as one JSON file; full-set rows at the default 500-step budget are this identity, each model x reasoning x tool setting stays a separate source identity.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON file",
+        "locator": "official-results.json \u2192 results[]: one object per model x reasoning x toolSetting x stepBudget x releaseVersion x datasetScope; value = binaryAccuracy (percent).",
+        "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full; every row must name a release listed in releaseVersions. A new taskVersion or a different task count is a new identity. Only full-set rows at the default 500-step budget marked official are this identity; the offline subset and 150/300-step budgets are different protocols and are not ingested.",
+        "notes": "Measured by the benchmark maintainers. The release version, partial score and estimated cost are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full; every row must name a release listed in releaseVersions. A new taskVersion or a different task count is a new identity. Only full-set rows at the default 500-step budget marked official are this identity; the offline subset and 150/300-step budgets are different protocols and are not ingested.",
+      "source": {
+        "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+        "sha256": "94b07148b350183677c3415befbdf736ec37bbcf74c525cea668f5d98dafaa32",
+        "retrieved_at": "2026-09-16T09:31:16.648565+00:00"
+      },
+      "protocol": "OSWorld 2.0, task version v2026.06.24 (108 tasks); primary metric binary accuracy at the 500-step budget on the full set; one row per model x reasoning setting x tool setting as published; result release version recorded per row; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 10,
+      "source_urls": [
+        "https://osworld-v2.xlang.ai/"
+      ]
     }
   ]
 }

@@ -4,6 +4,21 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — OSWorld 2.0, the first board from the source audit
+
+**One new board, no shape change.** `osworld-2::v2026.06.24` (XLANG Lab, University of Hong Kong): a
+computer-use agent completes 108 long-horizon real-world workflows; value = binary accuracy in percent at
+the source's default 500-step budget on the full task set, collected from the leaderboard page's own data
+file (`official-results.json`, Apache-2.0 project). The offline subset and the 150/300-step budgets are
+different protocols and are not ingested. Each row is one model x reasoning setting x tool setting; the
+tool setting (`batch tool`, `batched tool`, `standard`, spelled as the source spells it) is the
+observation's `subject.harness`, and the result release (`v2026.06.24` / `v2026.08.08`) stays in the
+protocol. Ten of 16 rows join a catalog configuration under the existing exact rule
+(`lib/board-identity.mjs`, `parseOsworld2Id`); Claude Opus 4.8 and 4.7 max appear under two tool settings
+and therefore join neither row, Qwen 3.7-Plus "thinking" and "Kimi 2.6" are refused rather than guessed.
+For a consumer: `benchmark_results` gains 16 observations and one registry entry, and the count of
+benchmarks the site reports rises by one (89 → 90). Never a Composite input.
+
 ## 2026-09-16 — Twelve benchmarks we already collected now have rows, and DesignArena's scope is recorded
 
 **More data, no shape change.** Boards whose leaderboards label a model with a slug rather than a product
