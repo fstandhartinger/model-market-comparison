@@ -93,6 +93,8 @@ export interface EfficiencyDataset {
     canonical_token_counts: { input: number; output: number; answer: number; reasoning: number };
     derived: { basis: "derived"; input_output_ratio: number; reasoning_output_share: number | null } }>> & { reason: string };
   coverage: Record<string, number>;
+  /** CR-62.1: set only on a per-page subset of `openrouter_endpoints`; the catalog-wide typical cache-hit rate. */
+  cache_hit_baseline?: import("./effective-cost.mjs").CacheHitBaseline | null;
 }
 
 export interface DesignArenaEntry {

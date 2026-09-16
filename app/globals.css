@@ -367,3 +367,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-sel-btn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-height: 0; border: 1px solid rgb(var(--line)); border-radius: 6px; background: var(--surface); font-size: 15px; line-height: 1; color: var(--text); }
 .bh-sel-btn:hover { border-color: rgb(var(--accent)); color: rgb(var(--accent)); }
 .bh-sel-btn:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 1px; }
+
+/* CR-62.1: placeholder while a page's data loads after the server-rendered shell. */
+.bh-deferred-pulse { animation: bh-deferred-pulse 1.6s ease-in-out infinite; }
+@keyframes bh-deferred-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .bh-deferred-pulse { animation: none; } }

@@ -1,6 +1,6 @@
-import { getDataset } from "../../lib/data";
-import { clientData } from "../../lib/client-model";
-import { EuSotaTable } from "../../components/EuSotaTable";
+import { EuSotaTableLoader } from "../../components/deferred/EuSotaTableLoader";
+import { pageDataVersion } from "../../lib/page-data";
+import { previewMetadata } from "../../lib/seo";
 
 
 // The SOTA open models that are genuinely competitive with the leading US closed
@@ -40,9 +40,11 @@ const PROPRIETARY = [
   { name: "US-law platforms (EU region only)", org: "Hugging Face, Together AI", what: "EU data residency only via enterprise/dedicated; operating company under US law." },
 ];
 
+export const metadata = previewMetadata({ path: "/eu", documentTitle: "EU sovereign cloud", title: "Run frontier open models in the EU — Benchmark Heaven",
+  description: "Which competitive AI models can run on European-hosted, GDPR-compliant infrastructure, from which providers and at what price." });
+
 export default async function EuPage() {
-  const ds = await getDataset();
-  const data = clientData(ds);
+  const version = await pageDataVersion();
 
   return (
     <div className="max-w-4xl">
@@ -66,7 +68,7 @@ export default async function EuPage() {
       </section>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">✅ EU-hosted and company-approved equivalent offers for SOTA models</h2>
-      <EuSotaTable data={data} entries={SOTA} />
+      <EuSotaTableLoader version={version} entries={SOTA} />
       <p className="mt-2 text-xs text-gray-500">
         <b className="text-accent2">TensorX</b> (Ireland; 3 EU data-centre regions, 100% EU-sovereign / isolated from US
         hyperscalers, zero data retention) is now the <b>broadest</b> EU-sovereign option — a self-serve per-token API

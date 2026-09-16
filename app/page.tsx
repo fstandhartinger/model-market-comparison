@@ -1,26 +1,15 @@
 import { getDataset } from "../lib/data";
-import { clientData, type ClientBenchmaxxing } from "../lib/client-model";
-import { HomeMode } from "../components/HomeMode";
-import { getBenchmarkView } from "../lib/benchmark-data";
-import { benchmaxxingFamilySignals } from "../lib/benchmax.mjs";
-import { buildBenchmarkComparison } from "../lib/benchmark-comparison.mjs";
 import { getBenchmarkMatrixPage } from "../lib/benchmark-matrix-data";
-import { importantMatrix } from "../lib/benchmark-matrix.mjs";
+import { HomeModeLoader } from "../components/deferred/HomeModeLoader";
+import { pageDataVersion } from "../lib/page-data";
+import { previewMetadata } from "../lib/seo";
 
+
+export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven",
+  description: "The most detailed cost–capability analysis in AI. Every model. Every Benchmark. Actual Costs." });
 
 export default async function Home() {
   const ds = await getDataset();
-  // Overview carries the same tag as the dedicated Benchmaxxing page (one shared
-  // implementation over the whole catalog). Server-side, so the client table receives
-  // only display data and never recomputes benchmark scores.
-  const view = await getBenchmarkView();
-  // CR-21.1: the verdict belongs to the model (family), so every reasoning variant shows its family's score and tag.
-  const { reports, tagged, weak, representatives } = benchmaxxingFamilySignals(view);
-  const familyScore = new Map(reports.map(([id, report]) => [view.models.find((m) => m.id === id)?.family ?? id, report.score ?? null]));
-  const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(view.models.filter((m) => familyScore.has(m.family ?? m.id))
-    .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: tagged.has(m.id), level: tagged.has(m.id) ? "strong" : weak.has(m.id) ? "weak" : null,
-      reportId: representatives.get(m.family ?? m.id) ?? m.id }]));
-  const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.
   const fullMatrix = (await getBenchmarkMatrixPage()).matrix;
@@ -31,8 +20,6 @@ export default async function Home() {
   const benchmarks = fullMatrix.catalogBoards;
   const results = ds.benchmark_results?.observations?.length ?? 0;
   const updated = String(ds.generated_at ?? "").slice(0, 10) || "n/a";
-  // CR-7.1: the simple Benchmarks section gets only the "Important" rows, not the full matrix.
-  const benchMatrix = importantMatrix(fullMatrix);
 
   return (
     <div>
@@ -46,7 +33,8 @@ export default async function Home() {
         </p>
       </section>
 
-      <HomeMode data={data} matrix={benchMatrix} />
+      {/* CR-62.1: the model and benchmark data arrive as JSON after this shell (the inlined 8 MB page broke link previews). */}
+      <HomeModeLoader version={await pageDataVersion()} />
     </div>
   );
 }

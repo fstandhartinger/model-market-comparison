@@ -1,11 +1,13 @@
-import { getDataset } from "../../lib/data";
-import { clientData } from "../../lib/client-model";
-import { ChartsBoard } from "../../components/ChartsBoard";
+import { ChartsBoardLoader } from "../../components/deferred/ChartsBoardLoader";
+import { pageDataVersion } from "../../lib/page-data";
+import { previewMetadata } from "../../lib/seo";
 
+
+export const metadata = previewMetadata({ path: "/charts", documentTitle: "Charts", title: "AI model charts — Benchmark Heaven",
+  description: "Leaderboard, cheapest models, open vs closed weights and score against real cost per task, all under your filters." });
 
 export default async function ChartsPage() {
-  const ds = await getDataset();
-  const data = clientData(ds);
+  const version = await pageDataVersion();
   return (
     <div>
       <h1 className="text-2xl font-bold">Charts</h1>
@@ -13,7 +15,7 @@ export default async function ChartsPage() {
         <a href="/compare" className="text-accent">Leaderboard</a>, cheapest models, open vs closed, and{" "}
         <a href="/scatter" className="text-accent">score against cost</a> — all under your current filters.
       </p>
-      <ChartsBoard data={data} />
+      <ChartsBoardLoader version={version} />
     </div>
   );
 }

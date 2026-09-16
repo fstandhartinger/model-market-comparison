@@ -1,11 +1,10 @@
 import { getDataset } from "../../lib/data";
-import { clientData } from "../../lib/client-model";
-import { ProvidersView } from "../../components/ProvidersView";
+import { ProvidersViewLoader } from "../../components/deferred/ProvidersViewLoader";
+import { pageDataVersion } from "../../lib/page-data";
 
 
 export default async function ProvidersPage() {
   const ds = await getDataset();
-  const data = clientData(ds);
   const platforms = new Map<string, number>();
   for (const p of ds.providers) platforms.set(p.platform, (platforms.get(p.platform) || 0) + 1);
 
@@ -28,7 +27,7 @@ export default async function ProvidersPage() {
         ))}
       </div>
 
-      <ProvidersView data={data} />
+      <ProvidersViewLoader version={await pageDataVersion()} />
     </div>
   );
 }

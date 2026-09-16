@@ -1,11 +1,9 @@
-import { getDataset } from "../../lib/data";
-import { clientData } from "../../lib/client-model";
-import { CostCapabilityScatter } from "../../components/CostCapabilityScatter";
+import { ScatterLoader } from "../../components/deferred/ScatterLoader";
+import { pageDataVersion } from "../../lib/page-data";
 
 
 export default async function ScatterPage() {
-  const ds = await getDataset();
-  const data = clientData(ds);
+  const version = await pageDataVersion();
   return (
     <div>
       <h1 className="text-2xl font-bold">Cost vs Capability</h1>
@@ -13,7 +11,7 @@ export default async function ScatterPage() {
         Every model by real cost per task (cheaper to the right) and score. Upper-right is best
         value; the green line is the Pareto frontier.
       </p>
-      <CostCapabilityScatter data={data} />
+      <ScatterLoader version={version} />
     </div>
   );
 }

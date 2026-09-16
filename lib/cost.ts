@@ -34,6 +34,8 @@ const baselines = new WeakMap<object, CacheHitBaseline | null>();
 function baselineFor(data: ClientData): CacheHitBaseline | null {
   const efficiency = data.efficiency;
   if (!efficiency) return null;
+  // CR-62.1: a page that ships only one model's endpoints carries the catalog-wide baseline precomputed.
+  if (efficiency.cache_hit_baseline !== undefined) return efficiency.cache_hit_baseline;
   if (!baselines.has(efficiency)) baselines.set(efficiency, cacheHitBaseline(efficiency, data.generated_at));
   return baselines.get(efficiency) ?? null;
 }

@@ -1,12 +1,10 @@
-import { getDataset } from "../../lib/data";
-import { clientData } from "../../lib/client-model";
-import { ProviderExplorer } from "../../components/ProviderExplorer";
+import { ProviderExplorerLoader } from "../../components/deferred/ProviderExplorerLoader";
+import { pageDataVersion } from "../../lib/page-data";
 
 export const metadata = { title: "Provider explorer" };
 
 export default async function ProviderExplorerPage() {
-  const ds = await getDataset();
-  const data = clientData(ds);
+  const version = await pageDataVersion();
   return (
     <div>
       <h1 className="text-2xl font-bold">Provider explorer</h1>
@@ -16,7 +14,7 @@ export default async function ProviderExplorerPage() {
         Click a provider to see <b>every model it offers</b> and its price; click a model to compare that provider&apos;s
         price against <b>all other providers</b> of the same model, ranked cheapest-first in the selected cost scenario (adjusted USD/task by default).
       </p>
-      <ProviderExplorer data={data} />
+      <ProviderExplorerLoader version={version} />
     </div>
   );
 }

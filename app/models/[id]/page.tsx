@@ -1,8 +1,11 @@
+import type { Metadata } from "next";
 import Link from "next/link";
+import { previewMetadata } from "../../../lib/seo";
 import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
 import { num, pct, orgColor, usdPerM } from "../../../lib/format";
 import { clientData } from "../../../lib/client-model";
+import { cacheHitBaseline } from "../../../lib/effective-cost.mjs";
 import { ModelDetailOffers } from "../../../components/ModelDetailOffers";
 
 import { getBenchmarkView } from '../../../lib/benchmark-data';
@@ -27,6 +30,16 @@ function catalogPercentile(values: number[], value: number | null): number | nul
 
 export const dynamic = "force-dynamic";
 
+// CR-62.2: each model page previews as itself.
+export async function generateMetadata({ params }: { params: Promise<{ id: string }> }): Promise<Metadata> {
+  const { id } = await params;
+  const ds = await getDataset();
+  const model = ds.models.find((m) => m.id === decodeURIComponent(id) || m.family_key === decodeURIComponent(id));
+  if (!model) return { title: "Model not found" };
+  return previewMetadata({ path: `/models/${encodeURIComponent(model.id)}`, documentTitle: model.display_name, title: `${model.display_name} — Benchmark Heaven`,
+    description: `${model.display_name} by ${model.org}: every benchmark result with its source, and what it actually costs per task across providers.` });
+}
+
 export default async function ModelDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const ds = await getDataset();
@@ -40,7 +53,18 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
   const offers = data.offersByModel[model.id] || [];
   const clientModel = data.models.find((candidate) => candidate.id === model.id);
   if (!clientModel) notFound();
-  const pricingData = { efficiency: data.efficiency, sourceDates: data.sourceDates, generated_at: data.generated_at };
+  // CR-62.1: only this model's endpoint observations reach the page (the full table is 1.1 MB); the
+  // catalog-wide typical cache-hit rate those prices fall back to is computed here from the full table.
+  const endpoints = data.efficiency?.openrouter_endpoints ?? {};
+  const efficiency = data.efficiency && {
+    ...data.efficiency,
+    openrouter_endpoints: Object.fromEntries(offers.flatMap((o) => o.or_model_id && endpoints[o.or_model_id] ? [[o.or_model_id, endpoints[o.or_model_id]]] : [])),
+    cache_hit_baseline: cacheHitBaseline(data.efficiency, data.generated_at),
+  };
+  const pricingData = { efficiency, sourceDates: data.sourceDates, generated_at: data.generated_at };
+  // CR-62.1: the offers panels only look up the providers of this model's offers.
+  const offerKeys = new Set(offers.map((o) => o.key));
+  const providers = data.providers.filter((p) => offerKeys.has(p.key));
   const fullView = await getBenchmarkView();
   const benchmarkView = selectBenchmarkView(fullView, [model.id]);
   // F-08b: percentiles need the whole catalog, so they are taken before the view is narrowed.
@@ -87,7 +111,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
       {model.manual_notes && <p className="mt-2 max-w-3xl text-xs text-warn/90">{model.manual_notes}</p>}
 
       <div className="mt-6 grid gap-6 lg:grid-cols-2">
-        <ModelDetailOffers offers={offers} providers={data.providers} model={clientModel} pricingData={pricingData} view="top" />
+        <ModelDetailOffers offers={offers} providers={providers} model={clientModel} pricingData={pricingData} view="top" />
 
         {/* F-08b: the Composite as the headline, its inputs as a six-axis percentile radar,
             and the native numbers as a caption strip. */}
@@ -187,7 +211,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         </section>
       )}
 
-      <ModelDetailOffers offers={offers} providers={data.providers} model={clientModel} pricingData={pricingData} view="all" />
+      <ModelDetailOffers offers={offers} providers={providers} model={clientModel} pricingData={pricingData} view="all" />
     </div>
   );
 }
