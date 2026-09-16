@@ -14,21 +14,27 @@
   },
   "openrouter_catalog": {
     "previous_identity_sha256": "6e3f8538ca6a633df306aee4f52984f3b8224ed4f8b684fcd13795635d61de49",
-    "current_identity_sha256": "51f2d9c92260732159c73ac7639c1a3a08d43124db0986d964a8301a086c6388",
+    "current_identity_sha256": "333d7cd802e0a0b7fbcaf19f33f883cf004d03c05dbdaae1bc03bda7bed18947",
     "removed": [
       "google/gemini-2.5-pro-preview-05-06",
-      "openai/gpt-4-turbo-preview"
+      "google/gemma-4-31b-it:batch",
+      "openai/gpt-4-turbo-preview",
+      "openai/gpt-oss-20b:batch",
+      "thinkingmachines/inkling-small:batch"
     ],
-    "expires_at": "2026-09-16T05:00:00Z",
-    "reviewed_at": "2026-09-15T06:38:29Z",
+    "expires_at": "2026-09-17T06:00:00Z",
+    "reviewed_at": "2026-09-16T05:44:00Z",
     "primary_url": "https://openrouter.ai/api/v1/models",
-    "primary_capture_sha256": "128223bf01b1c07c57600462658ba9139e59a8a19089d53b3bc02afa6df13675",
+    "primary_capture_sha256": "872971a1f8a18c246b8d9c51f19b54c97e31162be369d6f50487288e23d43a7f",
     "supporting_captures": {
-      "https://openrouter.ai/api/v1/models/google/gemini-2.5-pro-preview-05-06/endpoints": "a22ae55a38addc7ac73b513615c380122e1a6675dde92abb36d5a65e157eb489",
+      "https://openrouter.ai/api/v1/models/google/gemma-4-31b-it:batch/endpoints": "85b7255eb59dbda07466f6b30294f034fbfd50be6f99e1a151f0f55bdeacc671",
+      "https://openrouter.ai/api/v1/models/openai/gpt-oss-20b:batch/endpoints": "42c8c7814ce296f2bee72b8309ed6b62732733faf61101eb240d5b0021caa7f6",
+      "https://openrouter.ai/api/v1/models/thinkingmachines/inkling-small:batch/endpoints": "e11a1df6d713e1f507450c4131ac073ae2995ce02b2f453dffd73d2657332c7a",
+      "https://openrouter.ai/api/v1/models/google/gemini-2.5-pro-preview-05-06/endpoints": "4b4245f5ccd1b83dd9f57f7a3ed8b83483b583a14c916c9e4d01b102efa69f09",
       "https://openrouter.ai/api/v1/models/openai/gpt-4-turbo-preview/endpoints": "2eba2a4d5aea9470a1740f122d79a2bfc1afe344b87ed0dc1810e39322f1c6b0"
     },
-    "review_basis": "Three primary catalog responses (06:29:44Z CDN hit, 06:30:01Z CDN miss, 06:38:29Z captured) each contained the same 445 unique IDs. Against the 445 IDs accepted on 2026-09-14, exactly google/gemini-2.5-pro-preview-05-06 and openai/gpt-4-turbo-preview are absent and ~deepseek/deepseek-flash-latest and ~deepseek/deepseek-pro-latest were added, so this is not a partial response. The gemini preview endpoint resource now resolves to google/gemini-2.5-pro (a distinct GA model already in the catalog; its web page redirects there), so it is retired as an alias, not a factual rename for benchmark joins. The gpt-4-turbo-preview resource still resolves but lists 0 endpoints (1 OpenAI endpoint on 2026-09-14): retired without providers. Historical benchmark observations are retained. This exception binds both full identity-set hashes and expires; any other shrink, changed response, malformed response, or endpoint change remains fatal.",
-    "owner_acceptance": "Operator-delegated repair agent reviewed the captured primary catalog and endpoint responses during the 2026-09-15 daily-refresh repair (ops/daily-repair-2026-09-15/EVIDENCE.md); approve only these two exact withdrawals for a bounded rerun."
+    "review_basis": "Two primary catalog responses on 2026-09-16 (one CDN, one cache-busted) contained the same 443 unique IDs; three IDs were added (z-ai/glm-5.2:free, ~deepseek/deepseek-flash-latest, ~deepseek/deepseek-pro-latest), so this is not a partial response. Against the 445 IDs accepted on 2026-09-14, exactly the five listed IDs are absent. Each of the three :batch identities still resolves to itself and lists 0 endpoints while its base model remains in the catalog, so the batch tier lost its providers and no replacement identity is inferred. The two previously reviewed withdrawals were re-checked from the primary source rather than carried over after their 2026-09-16T05:00:00Z expiry: gemini-2.5-pro-preview-05-06 resolves to the distinct GA google/gemini-2.5-pro (not used as a replacement identity for benchmark rows) and gpt-4-turbo-preview lists 0 endpoints. No offer in the dataset references any of the three batch identities. This exception binds both full identity-set hashes and expires; any other shrink, changed response or malformed response remains fatal.",
+    "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary catalog and the five endpoint responses (ops/daily-repair-2026-09-16/EVIDENCE.md); approve only these five exact withdrawals for a bounded rerun."
   },
   "openrouter_endpoints": [
     {
