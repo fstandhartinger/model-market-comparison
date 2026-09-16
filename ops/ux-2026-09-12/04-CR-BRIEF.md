@@ -533,3 +533,12 @@ Order = priority. Acceptance for every row: live on both hosts, 1440 and 390 px,
 **After implementing (required by Florian):** send Florian **one `~/bin/notify now --photo` per 3–5 improved screens**, before/after where possible
 (the before shots are in `/home/flori/jobs/bh-ux-gauntlet-20260916/shots/`, e.g. `d-light-home-1.png`, `m-light-moremenu.png`,
 `d-light-eu-1.png`, `d-light-benchmaxxing-1.png`, `d-light-model-2.png`), plain English caption naming what changed. No other messages.
+
+
+## CR-20260916h checklist — no cost metrics in Benchmaxxing (CR-64) — PRIORITY before launch
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-64.1 | Benchmaxxing analysis (signal score, per-model report, radar, cohort comparisons) uses CAPABILITY metrics only: exclude every cost-, price-, tokens-per-task-, latency-, speed-, throughput- and efficiency-type metric (e.g. 'Vals Index v2 cost per test', tokens per task, cost per task) — including the whole 'Efficiency' category — from the signal computation and from the radar axes. Add an explicit `kind: cost|efficiency|capability` flag per benchmark in the taxonomy so the exclusion is data-driven, not by name matching | Unit test: no cost/efficiency metric contributes to any signal or radar; taxonomy flag present for all benchmarks; the Fable 5.1 report no longer shows the Vals cost spike |
+| CR-64.2 | Cost/efficiency metrics stay visible elsewhere (adjusted cost, cost modal, model pages) with their own labelling; the Benchmaxxing page states in one line that cost/efficiency metrics are excluded by design | Copy present; nothing else lost |
+| CR-64.3 | Recompute the Benchmaxxing signals/cohorts after the exclusion and check that the ranking and the 'featured' set still make sense (before/after diff in the ledger) | Diff recorded; no model flagged only because of a cost metric |

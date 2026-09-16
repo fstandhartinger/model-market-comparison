@@ -369,6 +369,9 @@ credited below, the rest is marked open.
 | CR-63.21 | optional — Benchmarks phone rows: max two chips + '+N' | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
 | CR-63.22 | optional — display-name/glyph/case consistency, 'BETA' pill wording | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
 | CR-63.23 | optional — investigate one-off /compare 504 Gateway Timeout (~21:50 UTC 16 Sep) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-64.1 | Benchmaxxing analysis (signal score, per-model report, radar, cohort comparisons) uses CAPABILITY metrics only: exclude  | open | — | — |
+| CR-64.2 | Cost/efficiency metrics stay visible elsewhere (adjusted cost, cost modal, model pages) with their own labelling; the Be | open | — | — |
+| CR-64.3 | Recompute the Benchmaxxing signals/cohorts after the exclusion and check that the ranking and the 'featured' set still m | open | — | — |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -3691,3 +3694,7 @@ Optional rows (63.20–63.23) that are not worth doing: a review gate may close 
 
 ## PRIORITY 2026-09-16 ~21:45 UTC (laptop supervisor)
 Florian lifted the Artificial Analysis hold: do CR-34.4 (AA Agentic Index into taxonomy, 'Agentic & tool use' composite and the score pickers, with attribution) in the next work iteration, and include every other AA metric the free API offers that we don't show yet (same attribution). CR-35.3 is closed.
+
+
+## PRIORITY 2026-09-16 ~22:30 UTC (laptop supervisor)
+CR-64 (cost/efficiency metrics out of Benchmaxxing) is a data-soundness fix for launch — do it before the UI polish rows; the data & math gauntlet running now (`/home/flori/jobs/bh-data-math-gauntlet-20260916/`) should treat it as given.
