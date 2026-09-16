@@ -5,9 +5,25 @@ import test from 'node:test';
 // Run explicitly after npm run build (without DATABASE_URL). This tests the
 // production artifact, not a source-code spelling of the cache policy.
 const manifest = JSON.parse(readFileSync('.next/prerender-manifest.json', 'utf8'));
-for (const route of ['/', '/about', '/charts', '/compare', '/eu', '/gateways', '/provider-explorer', '/providers', '/scatter', '/benchmarks', '/benchmaxxing', '/radar']) {
+for (const route of ['/', '/about', '/charts', '/compare', '/eu', '/gateways', '/provider-explorer', '/providers', '/scatter', '/benchmaxxing', '/radar']) {
   test(`bundled catalog ${route} is rendered once at build time`, () => {
     assert.ok(manifest.routes[route], `${route} must not repeat catalog SSR per request`);
     assert.equal(manifest.routes[route].initialRevalidateSeconds, false);
   });
 }
+
+// 2026-09-16: `/benchmarks` is the one bundled-catalog page that is deliberately *not* prerendered.
+// CR-2.5 requires a shared URL to reproduce the view, and CR-1.11 requires it without layout shift, so
+// `bfd4974` made the page read `searchParams` on the server and seed the first render from them
+// (measured CLS 0.20–0.36 → 0). Reading `searchParams` makes a Next 15 route dynamic by definition.
+// The list above kept demanding a build-time render for it, so this file has been failing since that
+// commit — unnoticed, because it runs only in the daily publication, which had not reached this step
+// since 2026-09-14. The exception is recorded here rather than silently dropped: if the route ever
+// becomes static again, this test fails and whoever did it must re-check the share URL and the CLS
+// measurement before changing the assertion.
+test('/benchmarks is server-rendered per request by design (CR-2.5 share URL, CR-1.11 no layout shift)', () => {
+  assert.equal(manifest.routes['/benchmarks'], undefined,
+    '/benchmarks must stay dynamic: it seeds its first render from the shared URL on the server');
+  assert.match(readFileSync('app/benchmarks/page.tsx', 'utf8'), /searchParams/,
+    'the reason it is dynamic is that the page reads the URL on the server');
+});
