@@ -317,7 +317,7 @@ credited below, the rest is marked open.
 | CR-47.1 | Strong value-tag level plainly more emphatic than weak, both colours, light/dark; classification unchanged; arrow/text cues distinct | implemented | `/opt/benchmarkheaven/state/ux-evidence/fable-20260916-pass19/verify-cr-47/{canonical,legacy}/verification.json` (`bin/verify-cr-47.mjs`, **33/33 per host** at `5e01468`, 1440/390, light/dark, `BH_RUNNER=claude-fable`) | **Fable pass 19 (claude-fable, implementer, `5e01468`) — F-103:** cause: the weak tag was a 1 px outline in the full signal colour, the strong tag the same colour at 13 % with no edge — an outline is the crisper shape, so the hierarchy read inverted. Now one emphasis vocabulary for signal pills (design-system rule added): **strong = solid pill** in the signal colour (`rgb(var(--warn))` / `rgb(var(--accent2))`) with `rgb(var(--panel))` bold (700) text; **weak = 14 % tint**, medium (500) text in the signal colour; no outline on either; arrows ↑↓ / ↗↘ and the "Notably"/"Slightly" words unchanged. Measured live: strong background alpha 1, weak ≤ 0.2, text contrast on every pill ≥ 4.5:1 (light solid teal 5.9:1 … dark solid orange 12:1). `test/value-tag-emphasis.test.mjs` guards the stylesheet (solid vs tint, weights, computed AA contrast for both themes). Classification untouched (`lib/value-signal.mjs`). Needs a **non-Fable verifier**: `BH_RUNNER=<engine> node bin/verify-cr-47.mjs <host> <out> 5e01468` on both hosts. Seeded 2026-09-16 by Fable pass 19 (claude-fable) from CR-20260916i (supervisor-appended to `03-CHANGE-REQUESTS-VERBATIM.md`). Florian: the more intense level looks less intense than the other one. |
 | CR-48.1 | Overview-table Benchmaxxing tag is a keyboard-accessible link to the model's Benchmaxxing report; never expands/collapses the row; direct load + back/forward predictable; non-link row parts still expand | implemented | same change as CR-42.2 (F-104), commit `830d384` | **Iteration 84 (claude-opus, implementer):** link stops row expansion (click/Enter/Space), back/forward checked by `verify-cr-42-2` **77/77 per host** at `467a5c6` (`/opt/benchmarkheaven/state/ux-evidence/iter85/cr-42-2/`). Needs a non-implementer verifier. **Fable pass 19:** specified as **F-104** in `DESIGN-DIRECTIVES.md` (link with `stopPropagation`, `/benchmaxxing?model=<id>#radar`, strong/weak in the F-103 vocabulary, Enter/Space/tap/back acceptance) together with CR-42.2 — implement both in one go. Seeded 2026-09-16 by Fable pass 19 (claude-fable) from CR-20260916j. Live source: the signal is a non-interactive span inside the row whose click handler toggles expansion. Shares its target with CR-42.2. |
 | CR-49.1 | Simple view: one shared "Edit shortlist" interaction for the score chart and the benchmark table — remove, add by type-ahead, explicit order, documented cap and full state, reset to the automatic top 5, local persistence, chart and table reflect one selection | implemented | `lib/shortlist.mjs` (+5 tests), `components/SimpleBenchmarks.tsx`, `components/ShortlistColumns.tsx`, `components/ComparePicker.tsx`, `app/globals.css`, `bin/verify-cr-49.mjs`, commit `467a5c6` | **Iterations 84–85 (claude-opus, implementer, F-106):** chart columns/bars are toggles, Edit shows ‹ › × and "+ Add a model", localStorage `bh.simpleShortlist.v1`, "Reset to top 5". Live at `467a5c6`: `verify-cr-49` **86/86 per host** (1440/390/320, light/dark) (`/opt/benchmarkheaven/state/ux-evidence/iter85/cr-49/`). Needs an engine other than claude-opus to verify live (brief acceptance). Seeded 2026-09-16 by Fable pass 19 (claude-fable) from CR-20260916k (supervisor-appended to `03-CHANGE-REQUESTS-VERBATIM.md`). Florian asks the design authority to choose the least visually noisy implementation first: **F-106** in `DESIGN-DIRECTIVES.md` is that choice. |
-| CR-50.1 | Zero-price API routes are promotion/availability evidence, never the paid price: revalidated each refresh, excluded when gone/stale/quota-bound; every cost ranking, chart, table and value map uses the cheapest current paid route (GLM-5.2 shows $0 today) | open | - | Seeded 2026-09-16 by iteration 85 (claude-opus) from CR-20260916l (supervisor-appended to `03-CHANGE-REQUESTS-VERBATIM.md`). Data correctness; buildable without a design pass. |
+| CR-50.1 | Zero-price API routes are promotion/availability evidence, never the paid price: revalidated each refresh, excluded when gone/stale/quota-bound; every cost ranking, chart, table and value map uses the cheapest current paid route (GLM-5.2 shows $0 today) | implemented | `lib/free-route.mjs`, `lib/cost.ts` (`scopedCatalogOffers`, `modelPrice`), `lib/data.ts`, `lib/benchmark-matrix-data.ts`, `components/ModelExplorer.tsx`, `components/ModelDetailOffers.tsx`, `test/cost.test.mjs` (+6), `bin/verify-cr-50-1.mjs`, commit `29f7bfc` | **Iteration 85 (claude-opus, implementer):** live at `29f7bfc` `verify-cr-50-1` **27/27 per host** (canonical rerun after a rolling-deploy run hit an old replica), and it fails 6 ways on the pre-change site (`/opt/benchmarkheaven/state/ux-evidence/iter85/cr-50/before-live`). Revalidation = the daily OpenRouter fetch (a vanished route is gone from the next dataset); the `:free` SKU rule makes the route quota-bound regardless. Needs a non-implementer verifier. Seeded 2026-09-16 by iteration 85 (claude-opus) from CR-20260916l (supervisor-appended to `03-CHANGE-REQUESTS-VERBATIM.md`). Data correctness; buildable without a design pass. |
 | CR-50.2 | "Free route currently available" tag for a current, broadly usable zero-price route (provider named, limits may apply); none for expired routes | open | - | Seeded 2026-09-16 by iteration 85 (claude-opus) from CR-20260916l. Waits for the design authority to choose the least noisy form. |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
@@ -2635,6 +2635,35 @@ Local self-check before push: `verify-cr-49` 86/86, `verify-iter83` 102/102.
 
 **Status:** CR-42.2, CR-48.1, CR-44.1, CR-49.1 → *implemented*. All were built by claude-opus; the review gate must
 verify them with a different engine. `verify-cr-2-5-perf` not run (the box is shared with other agents).
+
+**CR-50.1 — a free route is never a paid price (`29f7bfc`).** CR-20260916l was appended by the supervisor during
+this iteration and seeded as CR-50.1 (pricing rule) and CR-50.2 (the "Free route currently available" tag, which waits
+for the design authority). Findings before building:
+
+- All 23 zero-price routes in the dataset are OpenRouter `:free` SKUs (GLM-5.2 via Decart, Gemma 4, Nemotron, Inkling,
+  Nex N2.5, Laguna…). OpenRouter rate- and daily-quota-limits every `:free` SKU, so by the CR's own wording
+  ("quota-bound") none of them may stand for the paid price.
+- **The CR's diagnosis is partly out of date:** `z-ai/glm-5.2:free` *is* still listed right now (Decart, `decart/fp4`,
+  status 0, 99.5 % uptime over the last 30 min — snapshot in `/opt/benchmarkheaven/state/ux-evidence/iter85/cr-50/glm-5.2-free-endpoints-*.json`); the
+  supervisor looked at the paid SKU's endpoint list, where it is indeed absent. The rule is the same either way.
+- A second path to $0: five models carry an Artificial Analysis reference price of exactly $0 (north-mini-code,
+  lfm2.5, gemma-4-31b reasoning, ling-3.0-flash-vl…). Once their free route was dropped, the AA fallback would have
+  put them back at $0; a $0 reference is now treated as a free route too (no price rather than $0).
+- A provider's free SKU used to *displace its own paid route* in the one-route-per-provider choice
+  (`scopedCatalogOffers`); free routes are now removed before that choice.
+
+Built: `lib/free-route.mjs` (`isFreeRoute`, `FREE_ROUTE_NOTE`) used by `scopedCatalogOffers` (hence every ranking,
+count, chart and value map), `modelPrice`'s AA fallback, the matrix best-value costs and `/api/models`. The expanded
+price tables (overview row, model page "Token offers by platform") keep free routes after the paid ones with a small
+"free" label (title + screen-reader text) and "not a paid price" in the price cell. Models whose only priced route was
+free now show no price instead of $0. CR-50.2's tag is not built.
+
+| Suite at `29f7bfc` | canonical | legacy |
+| --- | --- | --- |
+| `verify-cr-50-1` (new) | **27/27** (first run 21/27 hit an old replica mid-rollout, kept as `canonical-during-rollout`) | **27/27** |
+| `verify-cr-44-1` | **61/61** | — |
+
+Local on the same build: `npm test` 592/592, `tsc` clean, `verify-cr-44-1` 61/61, `verify-iter83` 102/102.
 
 ## Fable pass 19 — 2026-09-16 ~14:00–15:00 UTC (claude-fable, design gate): iteration 83 judged; CR-47.1 fixed; F-104/F-106 specified
 
