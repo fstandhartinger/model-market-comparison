@@ -1,6 +1,6 @@
 "use client";
 import { useEffect, useMemo, useRef, useState } from "react";
-import { SLIDER_MAX, costToSlider, logPosition, pickChart, sliderToCost } from "../lib/pick-chart.mjs";
+import { SLIDER_MAX, costToSlider, logPosition, nearestHitId, pickChart, sliderToCost } from "../lib/pick-chart.mjs";
 import { formatValue } from "../lib/benchmark-matrix.mjs";
 import { seriesColor, seriesLetter } from "./BenchmarkBars";
 
@@ -48,6 +48,18 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
   // Unselected first, selected on top (in column order), so a chosen model is never hidden.
   const ordered = [...chart.points].sort((a, b) => (selectedIndex.has(a.id) ? 1 : 0) - (selectedIndex.has(b.id) ? 1 : 0) || (selectedIndex.get(a.id) ?? 0) - (selectedIndex.get(b.id) ?? 0));
   const xTicks = narrow ? chart.xTicks.filter((_, i) => i % 2 === 0) : chart.xTicks;
+  const hitR = narrow ? 14 : 10;
+  // Tap resolution: among the (possibly overlapping) hit areas containing the tap, the point whose
+  // centre is nearest the tap wins — a selected neighbour drawn on top can no longer swallow it.
+  const onSvgClick = (e: React.MouseEvent<SVGSVGElement>) => {
+    const rect = e.currentTarget.getBoundingClientRect();
+    const coord = { x: e.clientX - rect.left, y: e.clientY - rect.top };
+    const id = nearestHitId(chart.points.map((p) => ({ id: p.id, x: X(p.x), y: Y(p.y) })), coord, hitR);
+    if (id == null) return;
+    const selected = selectedIndex.has(id);
+    if (!selected && full) return;
+    onToggle(id);
+  };
 
   return <div className="bh-pick space-y-4">
     <div className="grid gap-4 sm:grid-cols-2">
@@ -69,7 +81,7 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
       {" · "}{full ? `${max} of ${max} columns — remove one to add another` : "click or tap a point to add or remove it"}
     </p>
     <div ref={wrap} style={{ height: H }} className="relative w-full">
-      {width > 0 && <svg width={width} height={H} role="group" aria-label={`${scoreLabel} against adjusted cost per task, log scale. ${ids.length} models selected.`} className="block overflow-visible">
+      {width > 0 && <svg width={width} height={H} role="group" aria-label={`${scoreLabel} against adjusted cost per task, log scale. ${ids.length} models selected.`} className="block overflow-visible" onClick={onSvgClick}>
         {chart.yTicks.map((t) => <g key={`y${t}`}><line x1={M.l} x2={M.l + pw} y1={Y(t)} y2={Y(t)} stroke="rgb(var(--line))" strokeOpacity={0.5} /><text x={M.l - 6} y={Y(t) + 3} textAnchor="end" fontSize={10} fill="var(--muted)">{t}</text></g>)}
         {xTicks.map((t) => <g key={`x${t}`}><line x1={X(t)} x2={X(t)} y1={M.t} y2={M.t + ph} stroke="rgb(var(--line))" strokeOpacity={0.35} /><text x={X(t)} y={H - M.b + 14} textAnchor="middle" fontSize={10} fill="var(--muted)">{tickMoney(t)}</text></g>)}
         <text x={M.l + pw} y={H - 4} textAnchor="end" fontSize={10} fill="var(--muted)">Adjusted cost / task · log scale · cheaper ←</text>
@@ -80,10 +92,9 @@ export function PickFromChart({ candidates, score, scoreLabel, ids, onToggle, ma
           const label = `${nameOf(p.id)} (${c?.org ?? ""}): ${scoreLabel} ${formatValue(p.y, "points")}, ${p.free ? "free route" : money(p.cost)} per task${selected ? `, column ${seriesLetter(j)} — press to remove` : disabled ? " — columns full" : " — press to add"}`;
           return <g key={p.id} role="button" tabIndex={p.pass || selected ? 0 : -1} aria-pressed={selected} aria-disabled={disabled || undefined} aria-label={label}
             className="bh-pick-point" data-id={p.id} data-selected={selected || undefined} data-pass={p.pass || undefined}
-            onClick={() => { if (!disabled) onToggle(p.id); }}
             onKeyDown={(e) => { if ((e.key === "Enter" || e.key === " ") && !disabled) { e.preventDefault(); onToggle(p.id); } }}>
             <title>{label}</title>
-            <circle cx={X(p.x)} cy={Y(p.y)} r={narrow ? 14 : 10} fill="transparent" />
+            <circle cx={X(p.x)} cy={Y(p.y)} r={hitR} fill="transparent" />
             {selected
               ? <><circle cx={X(p.x)} cy={Y(p.y)} r={7} fill={seriesColor(j)} stroke="var(--surface)" strokeWidth={2} />
                   <text x={X(p.x) + 10} y={Y(p.y) - 8} fontSize={11} fontWeight={700} fill="var(--text)" paintOrder="stroke" stroke="var(--surface)" strokeWidth={3}>{seriesLetter(j)}</text></>

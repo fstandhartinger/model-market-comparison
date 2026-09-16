@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import { pickChart, logTicks, scoreTicks, logPosition, sliderToCost, costToSlider, toggleColumn, SLIDER_MAX } from '../lib/pick-chart.mjs';
+import { pickChart, logTicks, scoreTicks, logPosition, sliderToCost, costToSlider, toggleColumn, nearestHitId, SLIDER_MAX } from '../lib/pick-chart.mjs';
 
 const m = (id, score, cost) => ({ id, scores: { composite: score }, cost });
 
@@ -51,4 +51,18 @@ test('CR-2.2 toggleColumn: add, remove, never below one column, null when full',
   assert.deepEqual(toggleColumn(['a', 'b'], 'a', 10), ['b']);
   assert.deepEqual(toggleColumn(['a'], 'a', 10), ['a']);
   assert.equal(toggleColumn(['a', 'b'], 'c', 2), null);
+});
+
+test('CR-2.2 tap resolution: among overlapping hit areas the nearest centre wins', () => {
+  const pts = [{ id: 'kimi', x: 226, y: 857 }, { id: 'sol', x: 226, y: 865 }];
+  // Tap exactly on the weaker point's centre (behind the stronger one in paint order).
+  assert.equal(nearestHitId(pts, { x: 226, y: 865 }, 14), 'sol');
+  // Tap exactly on the stronger one's centre.
+  assert.equal(nearestHitId(pts, { x: 226, y: 857 }, 14), 'kimi');
+  // A tie keeps the first point encountered (deterministic).
+  assert.equal(nearestHitId([{ id: 'a', x: 0, y: 0 }, { id: 'b', x: 0, y: 0 }], { x: 0, y: 0 }, 14), 'a');
+  // Outside every hit area nothing resolves.
+  assert.equal(nearestHitId(pts, { x: 226, y: 900 }, 14), null);
+  // Empty list resolves to null.
+  assert.equal(nearestHitId([], { x: 0, y: 0 }, 14), null);
 });

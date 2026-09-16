@@ -12,3 +12,4 @@ export function sliderToCost(pos: number, range: [number, number]): number | nul
 export function costToSlider(cost: number | null, range: [number, number]): number;
 export function pickChart(candidates: { id: string; scores: Record<string, number | null | undefined>; cost: number | null }[], score: string, limits?: { minScore?: number | null; maxCost?: number | null }): PickChart;
 export function toggleColumn(ids: string[], id: string, max: number): string[] | null;
+export function nearestHitId(pointsXY: { id: string; x: number; y: number }[], coord: { x: number; y: number }, hitR: number): string | null;
