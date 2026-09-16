@@ -14,6 +14,8 @@ export type BenchmaxxingOverviewRow = {
   composite: number | null;
   featured: boolean;
   tagged: boolean;
+  /** CR-43.3: the published tag level (strong = top 10 %, weak = next 10 %), for the expandable row. */
+  level: "strong" | "weak" | null;
 };
 
 export type BenchmaxxingPreset = "featured" | "signals" | "all";

@@ -1,7 +1,11 @@
 "use client";
 
+import { Fragment, useEffect, useState } from "react";
 import { InfoTip } from "./InfoTip";
 import { SIGNAL_WARN, SignalValue } from "./SignalValue";
+import { TopicRadar } from "./TopicRadar";
+import type { BenchmaxxingReportData } from "./BenchmaxxingReport";
+import { interpretBenchmaxxing } from "../lib/benchmaxxing-interpretation.mjs";
 
 import { BENCHMAXXING_PRESETS, presetRows, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
 
@@ -10,17 +14,61 @@ import { BENCHMAXXING_PRESETS, presetRows, type BenchmaxxingOverviewRow, type Be
 
 // F-24: the Signal keeps its 4 px magnitude bar in the Benchmaxxing orange; CR-15.3 turns values above
 // the warning threshold into a pill. CR-15.4: a row is the master — selecting it drives the report below.
-function Rows({ rows, maxScore, selected, onSelect }: { rows: BenchmaxxingOverviewRow[]; maxScore: number; selected: string[]; onSelect: (id: string) => void }) {
+// CR-43.3: reports fetched for expanded rows, shared across rows and re-expansions (one request per model).
+const reportCache = new Map<string, Promise<BenchmaxxingReportData | null>>();
+const loadReport = (id: string) => {
+  if (!reportCache.has(id)) reportCache.set(id, fetch(`/api/benchmaxxing?report=${encodeURIComponent(id)}`).then((r) => r.ok ? r.json() : null).then((x) => x?.report ?? null).catch(() => { reportCache.delete(id); return null; }));
+  return reportCache.get(id)!;
+};
+
+/** CR-43.3 (Florian 2026-09-16): the quick look inside an expanded row — a compact radar of the measured axes,
+ *  the signal, a plain-language reading, and a link to the full report section below (model selected, focus moved). */
+function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpenReport: (id: string) => void }) {
+  const [report, setReport] = useState<BenchmaxxingReportData | null | undefined>(undefined);
+  useEffect(() => { let live = true; loadReport(row.id).then((r) => { if (live) setReport(r); }); return () => { live = false; }; }, [row.id]);
+  const reading = interpretBenchmaxxing(report ?? { status: "scored", score: row.score, topicSpread: [] }, row.level);
+  const axes = (report?.profile.axes ?? []).filter((a) => !a.missing && a.value != null);
+  return <div className="grid gap-4 md:grid-cols-[minmax(0,400px)_1fr] md:items-center">
+    <div className="min-h-[120px]">
+      {report === undefined ? <p className="bh-muted text-sm">Loading radar…</p>
+        : !report || !axes.length ? <p className="bh-muted text-sm">Radar unavailable.</p>
+        : <TopicRadar compact axes={axes} series={[{ id: row.id, name: row.name, color: "#35a7ff", points: axes.map((a) => ({ value: a.value, label: `percentile ${Math.round(a.value!)}` })) }]}
+            label={`Compact radar of ${row.name}'s ${axes.length} measured benchmarks, grouped by topic; the full interactive radar is in the report below.`} />}
+    </div>
+    <div className="space-y-3 text-sm">
+      <p className="bh-muted text-xs font-semibold uppercase tracking-wide">Benchmaxxing signal</p>
+      <p className="text-3xl leading-none"><SignalValue score={row.score} /></p>
+      <p className="font-medium" data-quick-reading>{reading.headline}</p>
+      {reading.detail && <p className="bh-muted" data-quick-detail>{reading.detail}</p>}
+      <p className="bh-muted text-xs">{reading.caveat} The more jagged the shape inside one topic, the stronger the pattern.</p>
+      <a href={`?model=${encodeURIComponent(row.id)}#radar`} className="bh-button inline-flex min-h-9 items-center px-3" data-quick-report
+        onClick={(e) => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; e.preventDefault(); onOpenReport(row.id); }}>
+        Open the full report for {row.name} ↓
+      </a>
+    </div>
+  </div>;
+}
+
+function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenReport }: { rows: BenchmaxxingOverviewRow[]; maxScore: number; selected: string[]; onSelect: (id: string) => void; expanded: string | null; onExpand: (id: string | null) => void; onOpenReport: (id: string) => void }) {
   return <>
     {rows.map((row) => {
       const slot = selected.indexOf(row.id);
-      return <tr key={row.id} className={`cursor-pointer ${slot >= 0 ? "bg-accent/10" : "hover:bg-accent/5"}`} onClick={() => onSelect(row.id)}>
+      const open = expanded === row.id;
+      const panelId = `bmx-quick-${row.id.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
+      return <Fragment key={row.id}><tr className={`cursor-pointer ${slot >= 0 ? "bg-accent/10" : "hover:bg-accent/5"}`} onClick={() => onSelect(row.id)} data-row-id={row.id}>
         <th scope="row" className="!py-2 text-left align-middle font-medium">
-          <button type="button" className="block w-full text-left" aria-pressed={slot >= 0} onClick={(e) => { e.stopPropagation(); onSelect(row.id); }}>
+          <span className="flex items-start gap-1">
+          <button type="button" className="bh-bmx-expand -ml-1 mt-0.5 flex h-7 w-7 shrink-0 items-center justify-center rounded text-gray-400 hover:text-accent" aria-expanded={open} aria-controls={panelId}
+            aria-label={`${open ? "Hide" : "Show"} quick look for ${row.name}`} title={open ? "Hide quick look" : "Quick look: compact radar and reading"}
+            onClick={(e) => { e.stopPropagation(); onExpand(open ? null : row.id); }}>
+            <span aria-hidden="true" className={`inline-block transition-transform ${open ? "rotate-90" : ""}`}>▸</span>
+          </button>
+          <button type="button" className="block min-w-0 flex-1 text-left" aria-pressed={slot >= 0} onClick={(e) => { e.stopPropagation(); onSelect(row.id); }}>
             {/* F-67: phones wrap the name (two Qwen rows differed only in the truncated part); md:truncate keeps the desktop single line. */}
             <span className="block leading-5 md:truncate">{slot >= 0 && <span className="mr-1 text-[10px] font-bold text-accent">{String.fromCharCode(65 + slot)}</span>}{row.name}</span>
             <span className="bh-muted block text-[11px] font-normal leading-4">{row.org}</span>
           </button>
+          </span>
         </th>
         <td className="!py-2 align-middle">
           {/* CR-21.2: the bar spans 0 → the highest signal in this list, so differences stay visible. */}
@@ -34,13 +82,18 @@ function Rows({ rows, maxScore, selected, onSelect }: { rows: BenchmaxxingOvervi
         <td className="hidden !py-2 align-middle tabular md:table-cell">{row.comparisons} in {row.topics} topics</td>
         <td className="!py-2 align-middle tabular">{row.measured}/{row.total}<span className="hidden sm:inline"> ({((row.measured / Math.max(1, row.total)) * 100).toFixed(0)}%)</span></td>
         <td className="hidden !py-2 align-middle tabular md:table-cell">{row.domainSpecialization == null ? "—" : row.domainSpecialization.toFixed(1)}</td>
-      </tr>;
+      </tr>
+      {open && <tr className="bh-bmx-quick"><td colSpan={5} id={panelId} className="!px-4 !py-4">
+        <QuickLook row={row} onOpenReport={onOpenReport} />
+      </td></tr>}
+      </Fragment>;
     })}
   </>;
 }
 
-export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, showAll, onShowAll, taggedCount, minComparisons, minTopics }: {
+export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, minComparisons, minTopics }: {
   rows: BenchmaxxingOverviewRow[];
+  onOpenReport: (id: string) => void;
   preset: BenchmaxxingPreset;
   onPreset: (preset: BenchmaxxingPreset) => void;
   selected: string[];
@@ -52,6 +105,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   minTopics: number;
 }) {
   const listed = presetRows(rows, preset);
+  const [expanded, setExpanded] = useState<string | null>(null);
   const visible = showAll ? listed : listed.slice(0, 10);
   // CR-21.2: the bar spans 0 → the highest signal among the rows on screen, so one bar always reaches full width.
   const maxScore = Math.max(1e-9, ...visible.map((row) => row.score));
@@ -60,7 +114,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
     <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
       <div>
         <h2 className="text-xl font-semibold">{heading}</h2>
-        <p className="bh-muted mt-2 max-w-3xl text-sm">A signal highlights models whose results jump between related benchmarks. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below.</p>
+        <p className="bh-muted mt-2 max-w-3xl text-sm">A signal highlights models whose results jump between related benchmarks. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
       </div>
       <div className="rounded-lg border border-line px-4 !py-2 text-sm"><b>{taggedCount}</b> tagged models <span className="bh-muted">· coverage floor: {minComparisons} comparisons in {minTopics} topics</span></div>
     </div>
@@ -79,7 +133,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>
         </tr></thead>
-        <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} /></tbody>
+        <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={setExpanded} onOpenReport={onOpenReport} /></tbody>
       </table>
     </div>
     {!listed.length ? <p className="bh-empty mt-4">No scored model in this preset.</p> : null}

@@ -47,6 +47,13 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
     touched.current = true;
     setIds((old) => !compare ? [id] : id === old[0] ? old : [old[0], id]);
   };
+  // CR-43.3: the quick look's "full report" link selects that model alone and moves focus/scroll to #radar
+  // once its report is ready (same landing as the F-104 deep link); the URL gains ?model=…#radar.
+  const openReport = (id: string) => {
+    touched.current = true;
+    history.replaceState(null, "", `${location.pathname}${location.search}#radar`);
+    setCompare(false); setIds([id]); setFocusRadar(true);
+  };
   const toggleCompare = () => {
     touched.current = true;
     if (compare) { setCompare(false); setIds((old) => old.slice(0, 1)); return; }
@@ -56,7 +63,7 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
   };
 
   return <>
-    <BenchmaxxingOverview rows={rows} preset={preset} onPreset={(p) => { setPreset(p); setShowAll(false); }} selected={ids} onSelect={select}
+    <BenchmaxxingOverview rows={rows} preset={preset} onPreset={(p) => { setPreset(p); setShowAll(false); }} selected={ids} onSelect={select} onOpenReport={openReport}
       showAll={showAll} onShowAll={setShowAll} taggedCount={taggedCount} minComparisons={minComparisons} minTopics={minTopics} />
     <BenchmaxxingReport models={models} ids={ids} initial={initial} compare={compare} onToggleCompare={toggleCompare} focusOnReady={focusRadar} onFocused={() => setFocusRadar(false)} />
   </>;

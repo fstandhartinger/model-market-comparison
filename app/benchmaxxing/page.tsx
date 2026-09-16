@@ -17,7 +17,7 @@ export default async function BenchmaxxingPage() {
   const view = await getBenchmarkView();
   const compositeById = new Map(clientData(ds).models.map((m) => [m.id, m.scores.composite]));
   // CR-21.1: one row per model family (its most-covered scored variant); the tag is the family's verdict.
-  const { reports, tagged, taggedFamilies } = benchmaxxingFamilySignals(view);
+  const { reports, tagged, taggedFamilies, weak } = benchmaxxingFamilySignals(view);
   const reportsById = new Map(view.models.map((m) => [m.id, scoreBenchmaxxing(view, m.id)]));
   const models = view.models.map((m) => {
     const report = reportsById.get(m.id)!;
@@ -33,6 +33,7 @@ export default async function BenchmaxxingPage() {
     id: model.id, name: model.name, org: model.org, score: report.score!, comparisons: report.comparisons, topics: report.topics,
     measured: report.profile.measured, total: report.profile.total, domainSpecialization: report.domainSpecialization,
     composite: model.composite, featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ''), tagged: tagged.has(model.id),
+    level: tagged.has(model.id) ? 'strong' : weak.has(model.id) ? 'weak' : null,
   }));
   const prior = benchmaxxingPrior(view);
   // The report opens on the first row of the default Featured preset (the top current model by Composite).

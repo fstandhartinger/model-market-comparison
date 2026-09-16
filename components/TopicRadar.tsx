@@ -47,7 +47,9 @@ const TOPIC_COLORS = ['#5b9dff', '#7ee0c0', '#f5b65b', '#cc9aff', '#ff8aa8', '#8
 /** Many-axis radar with topics contiguous clockwise and a coloured sector arc per topic (the
  *  Benchmaxxing radar), for one or several series. Lines join only neighbours inside one topic,
  *  so a jagged topic stays visible and missing results stay gaps. */
-export function TopicRadar({ axes, series, label }: { axes: RadarAxisMeta[]; series: RadarSeries[]; label: string }) {
+/** `compact` (CR-43.3, the Benchmaxxing expandable row): a smaller, static picture — no per-point hit targets or
+ *  tooltip, one accessible name for the whole shape; the full interactive radar stays in the report section. */
+export function TopicRadar({ axes, series, label, compact = false }: { axes: RadarAxisMeta[]; series: RadarSeries[]; label: string; compact?: boolean }) {
   const [active, setActive] = useState<RadarActive>(null);
   const size = 560, c = size / 2, r = 205, inner = r * 0.18;
   const polar = (angle: number, radius: number) => [c + Math.cos(angle) * radius, c + Math.sin(angle) * radius] as const;
@@ -84,8 +86,8 @@ export function TopicRadar({ axes, series, label }: { axes: RadarAxisMeta[]; ser
     return out;
   });
   const otherNames = singletonTopics.map(([topic]) => topic);
-  return <div className="overflow-hidden"><div className="relative mx-auto w-full max-w-[640px]" onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
-    <svg viewBox={`0 0 ${size} ${size}`} role="group" aria-label={label} className="mx-auto block h-auto w-full">
+  return <div className={`overflow-hidden ${compact ? "px-14" : ""}`}><div className={`relative mx-auto w-full ${compact ? "max-w-[320px]" : "max-w-[640px]"}`} onPointerLeave={(e) => { if (e.pointerType === 'mouse') setActive(null); }} onClick={() => setActive(null)}>
+    <svg viewBox={`0 0 ${size} ${size}`} role={compact ? "img" : "group"} aria-label={label} className="mx-auto block h-auto w-full">
       {[25, 50, 75, 100].map((n) => <circle key={n} cx={c} cy={c} r={r * n / 100} fill="none" stroke="currentColor" opacity=".12" />)}
       {sectors.map((sector) => <path key={sector.topic} d={sector.path} fill={sector.eligible ? TOPIC_COLORS[sector.topicIndex % TOPIC_COLORS.length] : 'var(--line, #526071)'} opacity={sector.eligible ? '.35' : '.18'} />)}
       {axes.map((axis, i) => {
@@ -95,9 +97,9 @@ export function TopicRadar({ axes, series, label }: { axes: RadarAxisMeta[]; ser
       })}
       {series.map((s) => runs(s).map((points, k) => <polyline key={`${s.id}-${k}`} points={points.join(' ')} fill="none" stroke={s.color} strokeWidth="2" strokeDasharray={s.dash} strokeLinejoin="round" />))}
       {series.map((s, si) => s.points.map((p, i) => { if (p.value == null) return null; const [x, y] = at(si, i); return <circle key={`${s.id}-${i}`} cx={x} cy={y} r={active?.s === si && active?.i === i ? 7 : 5} fill={s.color} stroke="var(--surface, #161b22)" strokeWidth="1.5" pointerEvents="none" />; }))}
-      {series.map((s, si) => s.points.map((p, i) => { if (p.value == null) return null; const [x, y] = at(si, i); return <RadarHit key={`hit-${s.id}-${i}`} cx={x} cy={y} s={si} i={i} active={active} setActive={setActive} label={`${s.name}, ${axes[i].name}: ${p.label}`} />; }))}
+      {!compact && series.map((s, si) => s.points.map((p, i) => { if (p.value == null) return null; const [x, y] = at(si, i); return <RadarHit key={`hit-${s.id}-${i}`} cx={x} cy={y} s={si} i={i} active={active} setActive={setActive} label={`${s.name}, ${axes[i].name}: ${p.label}`} />; }))}
     </svg>
-    <div className="pointer-events-none absolute inset-0" aria-hidden="true">{labels.map((l) => <span key={l.topic} className="absolute text-[11px] font-semibold leading-4" style={{ left: `${(l.x / size) * 100}%`, top: `${(l.y / size) * 100}%`, transform: l.right ? 'translateY(-50%)' : 'translate(-100%, -50%)' }}>{l.topic}</span>)}</div>
-    <RadarTip active={active} axes={axes} series={series} at={at} width={size} height={size} />
+    <div className="pointer-events-none absolute inset-0" aria-hidden="true">{labels.map((l) => <span key={l.topic} className={`absolute font-semibold ${compact ? "text-[9px] leading-3" : "text-[11px] leading-4"}`} style={{ left: `${(l.x / size) * 100}%`, top: `${(l.y / size) * 100}%`, transform: l.right ? 'translateY(-50%)' : 'translate(-100%, -50%)' }}>{l.topic}</span>)}</div>
+    {!compact && <RadarTip active={active} axes={axes} series={series} at={at} width={size} height={size} />}
   </div>{otherNames.length ? <p className="bh-muted mt-2 text-center text-xs">Other: {otherNames.join(' · ')}</p> : null}</div>;
 }
