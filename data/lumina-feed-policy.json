@@ -5,7 +5,13 @@
     "by": "claude-opus (iteration 82)",
     "at": "2026-09-16"
   },
-  "review": null,
+  "review": {
+    "by": "opencode-kimi (Kimi K3 via Chutes)",
+    "at": "2026-09-16",
+    "scope": "all 114 drafted family decisions",
+    "result": "108 agree, 5 disagree, 1 unclear; all six checked against the ledger snapshot and the registry and applied: benchlm-gdpvalrubrics (vendor rubric score, not the Elo board) and eq-bench (version 3, no results) lost their mapping; benchlm-gdpvalaanormalized excluded; the two Omniscience sub-scores on hold (CR-35.3); tau3-banking maps to AA's run as well as Sierra's board",
+    "evidence": "/opt/benchmarkheaven/state/ux-evidence/iter82/decision-review/"
+  },
   "host_roles": {
     "evaluator": [
       "artificialanalysis.ai",
@@ -289,18 +295,8 @@
       "note": "Epoch AI's own runs (iteration 80)"
     },
     "benchlm-gdpvalaanormalized": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "aa-gdpval::2"
-      ],
-      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
-    },
-    "benchlm-gdpvalrubrics": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "aa-gdpval::2"
-      ],
-      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+      "decision": "excluded",
+      "reason": "A normalisation of GDPval-AA's Elo made by an aggregator (every cited row is benchlm.ai or a Lumina estimate), not a published result; our board is aa-gdpval::2 (Elo)"
     },
     "benchlm-hlab": {
       "decision": "in_registry",
@@ -358,18 +354,12 @@
       "note": "Artificial Analysis run of MMMU-Pro"
     },
     "benchlm-omniscienceaccuracy": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "aa-omniscience::snapshot-2026-09-10"
-      ],
-      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+      "decision": "on_hold",
+      "reason": "A component sub-score of AA-Omniscience; the registry shows only the headline Omniscience Index, and a new AA-derived metric waits for CR-35.3"
     },
     "benchlm-omnisciencehallucinationrate": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "aa-omniscience::snapshot-2026-09-10"
-      ],
-      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+      "decision": "on_hold",
+      "reason": "A component sub-score of AA-Omniscience; the registry shows only the headline Omniscience Index, and a new AA-derived metric waits for CR-35.3"
     },
     "benchlm-osworld2": {
       "decision": "in_registry",
@@ -534,13 +524,6 @@
       ],
       "note": "Mapped by the Lumina intake job, 15 Sep 2026"
     },
-    "eq-bench": {
-      "decision": "in_registry",
-      "benchmark_ids": [
-        "eq-bench::4"
-      ],
-      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
-    },
     "finance-agent-v2": {
       "decision": "in_registry",
       "benchmark_ids": [
@@ -698,9 +681,10 @@
     "tau3-banking": {
       "decision": "in_registry",
       "benchmark_ids": [
+        "aa-tau3-banking::1.0.1",
         "tau3-banking::1.0.1"
       ],
-      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+      "note": "Lumina's primary source is Artificial Analysis's τ³-Banking run (118 of 127 rows); the registry carries both AA's run and Sierra's own board, which are different evaluators"
     },
     "terminal-bench": {
       "decision": "in_registry",

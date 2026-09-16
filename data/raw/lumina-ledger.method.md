@@ -31,9 +31,9 @@ A host role is a first cut: an evaluator's host can relay lab numbers (cybench.g
 by hand and recorded before the snapshot is accepted. Until then the daily run writes the candidate to
 `lumina-ledger.pending-review.json`, keeps the committed snapshot and reports a warning.
 
-**First reading (2026-09-16).** Of 435 families: 79 already in the registry, 16 planned collectors, 5 on hold
-(AA-derived, CR-35.3), 10 excluded (DesignArena expansion CR-39.1, BenchLM's own composites, Mercor APEX terms,
-saturated MATH-500), 98 without results, 64 vendor-reported only, 163 whose every cited value is an aggregator
-page or a Lumina estimate. 12,533 of 15,598 results cite benchlm.ai.
+**First reading (2026-09-16, decisions reviewed by opencode-kimi, 6 corrections applied).** Of 435 families: 74
+already in the registry, 16 planned collectors, 7 on hold (AA-derived, CR-35.3), 11 excluded (DesignArena expansion
+CR-39.1, BenchLM's own composites and normalisations, Mercor APEX terms, saturated MATH-500), 99 without results,
+64 vendor-reported only, 164 whose every cited value is an aggregator page or a Lumina estimate. 12,533 of 15,598 results cite benchlm.ai.
 
 `node scripts/fetch-lumina-ledger.mjs --report` prints the current reading.
