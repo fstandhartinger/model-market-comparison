@@ -1,7 +1,11 @@
 import { getDataset } from "../../lib/data";
 import { AaCredit } from '../../components/AaCredit';
 import { EpochCredit } from '../../components/EpochCredit';
+import { previewMetadata } from "../../lib/seo";
 
+
+export const metadata = previewMetadata({ path: "/about", documentTitle: "About & data sources", title: "How Benchmark Heaven works — sources & methodology",
+  description: "Where every benchmark result and price comes from, how the adjusted cost per task is calculated, and how publishers can ask for removal." });
 
 export default async function AboutPage() {
   const ds = await getDataset();
@@ -30,6 +34,15 @@ export default async function AboutPage() {
         terms (see <a href="#sources" className="text-accent">Sources</a> above — Artificial Analysis requires attribution, Epoch AI is CC BY,
         DesignArena is shown under a documented risk decision), and nothing collected here is relicensed by the MIT licence.
         The site is still in beta: data and features change daily.
+      </p>
+
+      {/* CR-61.1 (Florian 2026-09-16): the removal-on-request note, verbatim wording from the change request. */}
+      <h2 id="removal" className="mt-6 mb-2 font-semibold">Data sources &amp; removal on request</h2>
+      <p className="text-sm text-gray-400">
+        Benchmark Heaven is a free, open-source, non-commercial hobby project. Benchmark results are shown with attribution and
+        links to their original publishers (Artificial Analysis, Epoch AI, DesignArena, OpenRouter, …). If you publish benchmark
+        data and would like your numbers removed or shown differently, email{" "}
+        <a href="mailto:info@productivity-boost.com" className="text-accent">info@productivity-boost.com</a> and we will act promptly.
       </p>
 
       <h2 id="sources" className="mt-6 mb-2 font-semibold">Sources</h2>

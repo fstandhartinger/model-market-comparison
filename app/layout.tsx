@@ -11,6 +11,8 @@ import { EpochCredit } from "../components/EpochCredit";
 
 const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
 const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
+// CR-62.2: pages without their own preview inherit these; og:url and the canonical are set per page (lib/seo.ts).
+const X_HANDLE = "@benchmarkheaven";
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://benchmarkheaven.com"),
@@ -20,11 +22,11 @@ export const metadata: Metadata = {
   // the retired pre-CR-10.1 slogan must not reappear in any preview field or the share image.
   description: `${BRAND_CLAIM} ${BRAND_LINE} Each benchmark result with its source and date, and the adjusted cost per task given the provider, its caching and the model's own token appetite.`,
   openGraph: {
-    type: "website", siteName: "Benchmark Heaven",
+    type: "website", siteName: "Benchmark Heaven", locale: "en_US",
     title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`,
     images: [{ url: "/brand/og-image.png?v=2", width: 1200, height: 630, alt: `Benchmark Heaven — ${BRAND_CLAIM} ${BRAND_LINE}` }],
   },
-  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`, images: ["/brand/og-image.png?v=2"] },
+  twitter: { card: "summary_large_image", site: X_HANDLE, creator: X_HANDLE, title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`, images: ["/brand/og-image.png?v=2"] },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 
@@ -60,6 +62,9 @@ export default async function RootLayout({ children }: { children: React.ReactNo
             <p className="mt-1">
               Open source (MIT) and a hobby project — <a href="https://github.com/fstandhartinger/model-market-comparison" className="underline decoration-dotted underline-offset-2 hover:text-accent">the code is on GitHub</a>,
               built to give the world better tools to decide which LLM to choose for the job. The licence covers the code, not the third-party data (its own terms apply).
+            </p>
+            <p className="mt-1">
+              Benchmark publishers can ask for their numbers to be removed or shown differently — <a href="/about#removal" className="underline decoration-dotted underline-offset-2 hover:text-accent">data sources &amp; removal on request</a>.
             </p>
           </footer>
           </AccountProvider>
