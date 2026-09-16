@@ -2651,7 +2651,17 @@ gate on an idle box should still re-run it.
    MCP Atlas, FrontierSWE, PostTrainBench, SimpleQA Verified, FrontierMath v2) from independent boards.
 4. **The 28 registry boards without a row** (F-102's follow-up): their observations carry
    `subject.model_id: null`, so an identity-map pass would add real benchmarks to every count on the
-   site without collecting anything new. Cheapest large win on the board.
+   site without collecting anything new. Cheapest large win on the board. Measured this iteration
+   (read-only, no change): **8,271 of 15,924 observations are unjoined**, of which **1,388 sit on the
+   28 boards that have no row at all** — the eight Vals Index boards (56 rows each), BullshitBench v1/v2
+   (194/214), ARC-AGI 3 (39), both ApprenticeBench boards, RULER, SlopBench, Real-SWE, Vending-Bench 2,
+   BU-Bench, PingPong English v2, RP-Bench, plus four `-cost` twins of boards already listed. A rough
+   normalized name match suggests **~1,064** of those 1,388 name a current catalog family
+   (`anthropic/claude-fable-5-1`, `GPT-6 Astra New`, `gpt-6-astra · Codex · max`, …) — an **estimate,
+   not a join**: `data/raw/benchmarks/identity-map.json`'s policy demands an exact model *and* an effort
+   that exists as a catalog configuration, refuses a label that matches two configurations, and needs an
+   independent review receipt for self-reported rows. That policy is what makes this a real task rather
+   than a regex.
 5. CR-37.x / CR-38.1 / 38.4 / 38.5 as one intake when the source-intake job writes `RESULT.md`.
 
 ---
