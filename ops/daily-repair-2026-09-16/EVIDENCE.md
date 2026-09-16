@@ -53,3 +53,41 @@ catalog snapshot with prices only.
 `data/raw/source-change-approvals.json#openrouter_catalog` names exactly these five removals, binds
 both complete identity digests and expires `2026-09-17T06:00:00Z`. Any other missing ID, or a
 different current set, still fails closed. Historical benchmark observations are unchanged.
+
+---
+
+# Per-model endpoint withdrawals — 2026-09-16 (same run)
+
+With the catalog approved, the run reached the per-model endpoint gate and failed closed on ten models.
+Each model's endpoints were fetched twice (one cache-busted); `endpoints/review.json` holds the full
+record and `endpoints/*.gz` the captured bodies with a manifest.
+
+| Model | endpoints 09-14 → 09-16 | absent | added |
+| --- | --- | --- | --- |
+| `z-ai/glm-5.3-flash` | 26 → 27 | CoreWeave fp8, Makora unknown | AtlasCloud fp8, CoreWeave **nvfp4**, OpenInference fp4 |
+| `deepseek/deepseek-v4-flash-vision-exp` | 6 → 5 | AtlasCloud fp8 | — |
+| `tencent/hy3` | 6 → 6 | DeepInfra fp8 | DeepInfra **fp4** |
+| `z-ai/glm-5.2` | 31 → 30 | Crusoe fp8 | — |
+| `z-ai/glm-5.1` | 15 → 14 | Crusoe fp8 | — |
+| `google/gemma-4-31b-it` | 14 → 14 | Crusoe unknown | Crusoe **bf16** |
+| `z-ai/glm-4.6` | 5 → 4 | AtlasCloud fp8 | — |
+| `qwen/qwen3-235b-a22b-2507` | 10 → 9 | AtlasCloud fp8 | — |
+| `deepseek/deepseek-chat-v3-0324` | 4 → 3 | Crusoe bf16 | — |
+| `meta-llama/llama-3.3-70b-instruct` | 12 → 11 | Crusoe bf16 | — |
+
+None of these is a partial response: both fetches agree per model, the remaining lists are large
+(27, 30, 14, 11 …), and four models gained endpoints.
+
+Two different facts hide behind one gate, and the approvals say which is which:
+
+- **Requantization, not departure** (`tencent/hy3`, `google/gemma-4-31b-it`, `z-ai/glm-5.3-flash`'s
+  CoreWeave row): quantization is part of the endpoint identity, so the same provider under a new
+  quantization reads as a removal plus an addition. No price or history is carried from the old
+  identity to the new one — the approval only accepts the removal.
+- **The provider stopped serving that model** (Crusoe on GLM-5.2/5.1, DeepSeek V3-0324 and
+  Llama 3.3 70B; AtlasCloud on three models; Makora on GLM-5.3-Flash). Both providers still appear
+  elsewhere in the same fetch (Crusoe on Gemma 4 31B, AtlasCloud on GLM-5.3-Flash), so neither has left
+  the platform; they dropped individual models. No replacement identity is inferred.
+
+Each approval binds that model's complete prior and current identity digests, names exactly the missing
+identities, and expires `2026-09-17T06:00:00Z`.

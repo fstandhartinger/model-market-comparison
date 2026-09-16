@@ -317,6 +317,157 @@
       "reviewed_at": "2026-09-15T07:00:51Z",
       "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.2/endpoints",
       "review_basis": "Three HTTP 200 primary responses (sha256 e46def5503ab… plus two cache-busted repeats) gave the identical identity set: 33 -> 32 endpoints, exactly Crusoe/crusoe/fp8/fp8 absent, while that provider still serves 6 other models, so this is a model-specific withdrawal, not a partial response or provider outage. This approval binds complete prior/current identity sets and exactly the listed withdrawal; any other change remains fatal."
+    },
+    {
+      "model_id": "z-ai/glm-5.3-flash",
+      "previous_identity_sha256": "f6f12ed21d421e8ef6f255fa5942cafc88db48ebf21158ae12b9016eca45ac12",
+      "current_identity_sha256": "b1fbb3dd89f92a75675d21e41208d02735a8e0a9c78ee3b20d52494a83e7266b",
+      "removed": [
+        "CoreWeave/coreweave/fp8/fp8",
+        "Makora/makora/unknown"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.3-flash/endpoints",
+      "primary_capture_sha256": "b5151c5bd46d5b15184b32633146edc400757380c6ff722d1ae43ed48005dad8",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 27 endpoint identities, so this is not a partial response; 26 were accepted on 2026-09-14. Absent: CoreWeave/coreweave/fp8/fp8, Makora/makora/unknown. The same provider is still present under a different quantization (CoreWeave/coreweave/nvfp4/nvfp4), so this reads as a requantized endpoint rather than a provider leaving; no price or history is carried over from the old identity. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "deepseek/deepseek-v4-flash-vision-exp",
+      "previous_identity_sha256": "9e828ee02a5c8263113a9de3d6c8fc1e5a43ae79b3a32b02eb034397609ac981",
+      "current_identity_sha256": "5478c463bf95331362575ccbd69133093e2d78b053061bc6686b2606c5ec8cc9",
+      "removed": [
+        "AtlasCloud/atlas-cloud/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4-flash-vision-exp/endpoints",
+      "primary_capture_sha256": "8bbc677db2febd0678459f9eb5c3c5a7b110e8316939d706d6390ba940529247",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 5 endpoint identities, so this is not a partial response; 6 were accepted on 2026-09-14. Absent: AtlasCloud/atlas-cloud/fp8/fp8. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "tencent/hy3",
+      "previous_identity_sha256": "d4b95b42d61a1d2b42a4231b8b74d07e8fe212ce479f89f283faee3d2917ebe0",
+      "current_identity_sha256": "546fa8b2f9758b49699ab9706cb47ff68fd22272687751fccbd670669fce8522",
+      "removed": [
+        "DeepInfra/deepinfra/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/tencent/hy3/endpoints",
+      "primary_capture_sha256": "40286ad5e90b4bba3fdce43dba980d992cf187a41cc38c2184d6b15632a0056a",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 6 endpoint identities, so this is not a partial response; 6 were accepted on 2026-09-14. Absent: DeepInfra/deepinfra/fp8/fp8. The same provider is still present under a different quantization (DeepInfra/deepinfra/fp4/fp4), so this reads as a requantized endpoint rather than a provider leaving; no price or history is carried over from the old identity. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "z-ai/glm-5.2",
+      "previous_identity_sha256": "c9589bedf02f2d2267f7d136566e1434376098f51d568ac43227afde4974a14d",
+      "current_identity_sha256": "9f4a0e7af45f0fc7544aa9bc56c97b06f030447a651d455579bea952f3dc7214",
+      "removed": [
+        "Crusoe/crusoe/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.2/endpoints",
+      "primary_capture_sha256": "b51933e316bec55dc3a16b9901831b04274f03b20807ebdc25fc951df22f287e",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 30 endpoint identities, so this is not a partial response; 31 were accepted on 2026-09-14. Absent: Crusoe/crusoe/fp8/fp8. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "z-ai/glm-5.1",
+      "previous_identity_sha256": "4d51f5ba15e49afabd1568cd12c6ff3fad8b48259324f335ed98ff20358c2d93",
+      "current_identity_sha256": "3298d091720fc04df23a783c5dfccce2c4ab26e807e2ecff1cd3ee8ee0767097",
+      "removed": [
+        "Crusoe/crusoe/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-5.1/endpoints",
+      "primary_capture_sha256": "fe963c79ed7b94bb93b0b24ee47ccfe3a51344c7ed51cef907ff1e9b080b7bf1",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 14 endpoint identities, so this is not a partial response; 15 were accepted on 2026-09-14. Absent: Crusoe/crusoe/fp8/fp8. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "google/gemma-4-31b-it",
+      "previous_identity_sha256": "7efb9a06af933a32124e09b4fbae21ed32115b16896944c15e6814dba051899e",
+      "current_identity_sha256": "651c2f8d4539c0c7a77ba1d2628c8306d240e0cbc4f96e3c2db240168d10dcd0",
+      "removed": [
+        "Crusoe/crusoe/unknown"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/google/gemma-4-31b-it/endpoints",
+      "primary_capture_sha256": "5fab0226f64e5ff156d5524e189b8c147c36fc34324230813b1a7e23f3552f20",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 14 endpoint identities, so this is not a partial response; 14 were accepted on 2026-09-14. Absent: Crusoe/crusoe/unknown. The same provider is still present under a different quantization (Crusoe/crusoe/bf16/bf16), so this reads as a requantized endpoint rather than a provider leaving; no price or history is carried over from the old identity. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "z-ai/glm-4.6",
+      "previous_identity_sha256": "ef0b614d0c5f5f007e99087d402e5efe84ec522cbe0f26d0f480ad4380704558",
+      "current_identity_sha256": "d2c8dde2f788646e4cbe7a89c1bf10aa7a4b889a941e93fa915b778c002c0d1e",
+      "removed": [
+        "AtlasCloud/atlas-cloud/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/z-ai/glm-4.6/endpoints",
+      "primary_capture_sha256": "0de43e7ab4a69f7c64e1accfc6e8707877a7f4a1bfa481f4b0649cd9d8943992",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 4 endpoint identities, so this is not a partial response; 5 were accepted on 2026-09-14. Absent: AtlasCloud/atlas-cloud/fp8/fp8. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "qwen/qwen3-235b-a22b-2507",
+      "previous_identity_sha256": "abcacb065103dd61bd370468bd652bb6eff07042d16788c0ceae34c16e2ff45f",
+      "current_identity_sha256": "15467a60683ca9efee2309090ab493f3f7f053b4dd6c01c51d9ccb31c495829e",
+      "removed": [
+        "AtlasCloud/atlas-cloud/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/qwen/qwen3-235b-a22b-2507/endpoints",
+      "primary_capture_sha256": "8ec918b2a52f931b86298088619fb77aeb8cc6e0322412421c5da2df84402b00",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 9 endpoint identities, so this is not a partial response; 10 were accepted on 2026-09-14. Absent: AtlasCloud/atlas-cloud/fp8/fp8. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "deepseek/deepseek-chat-v3-0324",
+      "previous_identity_sha256": "cf2d6077b4225c978d08d91a77eaf36dd5dcea227e42a01a568d74ff5743ceb9",
+      "current_identity_sha256": "f85e08560e1f89e5c82b4b0489ebd7933453cb83fd013f05ee3ced4f373e8135",
+      "removed": [
+        "Crusoe/crusoe/bf16/bf16"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-chat-v3-0324/endpoints",
+      "primary_capture_sha256": "26fa849a86aec43b7b01f93e206df745376787c5c598f836d86f2260b8891ecf",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 3 endpoint identities, so this is not a partial response; 4 were accepted on 2026-09-14. Absent: Crusoe/crusoe/bf16/bf16. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "meta-llama/llama-3.3-70b-instruct",
+      "previous_identity_sha256": "bd8352d44d5354b8702344222a185acf5735a98ae0af1f6b867b53d38b4dbc5f",
+      "current_identity_sha256": "8c3e7cac5fba0993b5fdf9320e46ba02b9456f810cb3cab473656c792164b120",
+      "removed": [
+        "Crusoe/crusoe/bf16/bf16"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/meta-llama/llama-3.3-70b-instruct/endpoints",
+      "primary_capture_sha256": "782b543154d35148cb10e700dc58d7b33462a6d0ac472d382c09ca1fe6e38a1e",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 11 endpoint identities, so this is not a partial response; 12 were accepted on 2026-09-14. Absent: Crusoe/crusoe/bf16/bf16. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
     }
   ]
 }
