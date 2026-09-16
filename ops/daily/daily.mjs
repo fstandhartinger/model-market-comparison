@@ -11,6 +11,10 @@ import { COMMIT_TRAILER, assessCommitScope, parseStatusPorcelain, selectProducer
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
 const exec = promisify(execFile);
+// How long publication waits for the other writer's checkout to become clean before it gives up for the day.
+// Overridable for tests; the shell entry point allows 3 h in total, so 30 min is affordable.
+const CLEAN_CHECKOUT_WAIT_MS = Number(process.env.BH_CLEAN_CHECKOUT_WAIT_MS ?? 30 * 60_000);
+const CLEAN_CHECKOUT_POLL_MS = Number(process.env.BH_CLEAN_CHECKOUT_POLL_MS ?? 60_000);
 const ROOT = fileURLToPath(new URL('../../', import.meta.url));
 const hash = (value) => createHash('sha256').update(value).digest('hex');
 const readJSON = async (path) => JSON.parse(await readFile(path, 'utf8'));
@@ -66,8 +70,21 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   console.log(`Benchmark Heaven daily ${started}: ${runDir}${dryRun ? ' (dry run)' : ''}`);
   try {
     if (await git('branch', ['branch', '--show-current']) !== 'main') throw new Error('Daily publication requires the main checkout');
-    const dirty = await status('initial-status', repo);
-    if (!dryRun && dirty.length) throw new Error('Daily publication requires a clean checkout; owner changes were preserved');
+    // 2026-09-16: publication needs a clean checkout, but the UX workstream writes to this repo all day
+    // and its cron ticks every 10 minutes, so "dirty at 05:17" used to cost the whole day's refresh — the
+    // scheduled runs of 15 and 16 Sep both died here. Wait for the other writer instead of giving up: the
+    // gate is unchanged and still fail-closed, it just gets a bounded window.
+    let dirty = await status('initial-status', repo);
+    if (!dryRun && dirty.length) {
+      const deadline = Date.now() + CLEAN_CHECKOUT_WAIT_MS;
+      for (let attempt = 1; dirty.length && Date.now() < deadline; attempt++) {
+        console.log(`WAIT initial-status: ${dirty.length} uncommitted path(s); another writer owns the repo. Retrying in ${Math.round(CLEAN_CHECKOUT_POLL_MS / 1000)}s.`);
+        await new Promise((r) => setTimeout(r, CLEAN_CHECKOUT_POLL_MS));
+        dirty = await status(`initial-status-retry-${attempt}`, repo);
+      }
+      if (dirty.length) throw new Error(`Daily publication requires a clean checkout; owner changes were preserved (still dirty after ${Math.round(CLEAN_CHECKOUT_WAIT_MS / 60000)} min: ${dirty.slice(0, 5).map((e) => e.path).join(', ')})`);
+      console.log('OK initial-status cleared while waiting');
+    }
     await git('fetch-main', ['fetch', 'origin', 'main']);
     if (!dryRun) await git('sync-main', ['merge', '--ff-only', 'origin/main']);
     const base = await git('base', ['rev-parse', 'HEAD']);
