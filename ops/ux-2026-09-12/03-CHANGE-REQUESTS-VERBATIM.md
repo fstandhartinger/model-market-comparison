@@ -692,3 +692,7 @@ Options panel, More menu, Guided/Advanced, empty search, 404, 320 px, light and 
 `~/jobs/bh-ux-gauntlet-20260916/shots/`). A second opinion per page came from Gemini 3.8 Flash (vision, real screenshots;
 `reviews/gemini-*.json`), and one Fable 5.1 design pass covered the five main screens (`reviews/fable-design-pass.md`).
 Model claims that did not hold up against the screenshots or the code were dropped. Scope: polish only, no redesigns. Checklist: `04-CR-BRIEF.md` → "CR-20260916r".
+
+
+## CR-20260916g — Hold on new Artificial Analysis metrics LIFTED: include the AA Agentic Index
+Laptop chat 16 Sep 2026 ~21:45 UTC, verbatim (German): "Heißt das wir haben den Agentic Index aktuell nicht mit drin? Falls das so ist, bitte lass ihn uns wieder mit in die liste der Werte aufnehmen, die wir in unserer benchmarkliste haben. Es macht jetzt eh schon keinen unterschied mehr, ob wir einen score mehr oder weniger von denen anzeigen. da habe ich lieber alle" → The hold from CR-35.3 (no new AA-derived metrics until AA answers) is lifted. Add the Artificial Analysis Agentic Index (CR-34.4) and any other AA metric we can source, all with the existing attribution.
