@@ -147,7 +147,9 @@
     "livebench": "The source calls the tasks objectively graded.",
     "swe-atlas-qna": "Scale AI publishes it as a leaderboard accuracy, graded against expert rubrics with no judge model named, and Artificial Analysis averages it into the Coding Agent Index.",
     "swe-atlas-refactoring": "Graded by tests and rubrics; behaviour preservation is checked, not rated.",
-    "matharena-arxivmath": "Final answers are checked by a rule-based parser; the LLM judge is only a fallback for unparsable answers, and anything it accepts is manually verified."
+    "matharena-arxivmath": "Final answers are checked by a rule-based parser; the LLM judge is only a fallback for unparsable answers, and anything it accepts is manually verified.",
+    "gso": "Opt@1 is decided by measured speedup against the expert patch and the correctness tests; the LLM hack detector only affects the separate Hack-Adjusted column, which is not the ingested value.",
+    "swe-rebench": "Resolved means the repository's own tests pass after the model's patch."
   },
   "freshness": {
     "aa-aime": {
@@ -221,6 +223,16 @@
         "label": "arXiv papers submitted in June 2026"
       },
       "quote": "This dataset contains problems from papers submitted in June 2026.",
+      "field": "evidence.excerpt"
+    },
+    "swe-rebench": {
+      "task_window": {
+        "from": "2026-05-15",
+        "to": "2026-07-01",
+        "label": "GitHub issues created 15 May – 1 Jul 2026"
+      },
+      "contamination": "The source marks an evaluation as potentially contaminated when the window includes issues created before the model's release date; that flag stays on each row.",
+      "quote": "window: 2026-05-15..2026-07-01",
       "field": "evidence.excerpt"
     }
   },

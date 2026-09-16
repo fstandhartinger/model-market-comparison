@@ -4,6 +4,27 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — SWE-rebench (one task window) and GSO
+
+**Two new boards, no shape change.** `swe-rebench::2026-05-15..2026-07-01`: Nebius' SWE-rebench, 111 fresh GitHub
+issues from 65 repositories created between 15 May and 1 July 2026, resolved rate averaged over five runs in the
+maintainers' fixed ReAct-style scaffold (tool mode). The page renders every historical window in one 7.8 MB
+payload; a window is a different task set, so each window is its own identity, and only this window's extraction
+is committed (`scripts/extract-swe-rebench-window.py`, with the full page's sha256). SEM, Pass@5, cost and tokens
+per problem, and the source's own potential-contamination marker (the model was released after the window's
+first task — true for most frontier rows in this window) stay in each observation's protocol. Agent products
+(Claude Code, Codex, Junie, Cursor) are not models and are not ingested. 13 rows, 8 join a catalog configuration
+(`parseSweRebenchLabel`); GLM-5.2 [high] has no catalog `high` configuration and labels without a setting whose
+model has several configurations are refused. Manual snapshot.
+
+`gso::opt1-102`: GSO (software optimisation, 102 tasks), Opt@1 as the page ranks it, from the page's own
+`assets/leaderboard.json`, collected daily. The Hack-Adjusted score and the run date stay in the protocol; the
+page's changelog changed the protocol for runs from 2026-04-27 (larger iteration budget) and 2026-07-12
+(network-isolated tasks). Opt@10 rows are another protocol and are skipped. 28 rows, 10 join (`parseGsoId`);
+"Gemini 3 Flash"/"Gemini 3 Pro" are not mapped because the catalog holds preview and release families under
+those names. For a consumer: 41 new observations, two registry entries, and the count of benchmarks the site
+reports rises by two. Neither is a Composite input.
+
 ## 2026-09-16 — FrontierMath v2 (Tiers 1–3 and Tier 4) and SimpleQA Verified, as Epoch AI runs them
 
 **Three new boards, no shape change.** From Epoch AI's Benchmarking Hub archive

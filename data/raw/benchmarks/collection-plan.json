@@ -3285,6 +3285,91 @@
       "source_urls": [
         "https://epoch.ai/benchmarks"
       ]
+    },
+    {
+      "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
+      "refresh": "manual",
+      "parser": {
+        "kind": "swe_rebench_window",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "resolved_rate",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "require": {
+          "from": "2026-05-15",
+          "to": "2026-07-01",
+          "from_ms": 1778803200000,
+          "to_ms": 1782864000000,
+          "problems": 111,
+          "repositories": 65
+        }
+      },
+      "status": "collected",
+      "reason": "SWE-rebench publishes every task window in one server-rendered page; this identity is the 15 May \u2013 1 Jul 2026 window, the page's default at capture. Models only; agent products are external systems.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json <tmp capture dir>; python3 scripts/extract-swe-rebench-window.py <captured page .gz> <from_ms> <to_ms> https://swe-rebench.com/ <retrieved_at> <window.json>; gzip -n -9 <window.json> into data/raw/benchmarks/daily-evidence/<ISO-date>-swe-rebench/; python3 scripts/collect-public-benchmarks.py; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "One-window extraction (JSON) of the page's Flight payload",
+        "locator": "Extraction of the leaderboard block in the page's Flight payload: items[] with rangeStats.all['1778803200000:1782864000000'] (resolvedRate = the displayed Resolved Rate, sem, passN = Pass@5, instanceCosts, totalTokenUsage, cachedTokenPercentage), problems[] inside the window, and the rendered table's row markers.",
+        "version_guard": "The extraction must state window 2026-05-15..2026-07-01 (1778803200000..1782864000000 ms) as the page's own default window, 111 problems from 65 repositories, every problem dated inside the window, and each item rendered exactly once; the page's contamination marker must equal the source rule (model released after the window's first task). Another window is another task set and another identity; a changed problem count fails.",
+        "notes": "Manual snapshot, not part of the automatic daily refresh: the page is 7.8 MB and every capture would re-commit hundreds of unused windows."
+      },
+      "cadence": "manual snapshot; add the next default window as a new identity",
+      "version_guard": "The extraction must state window 2026-05-15..2026-07-01 (1778803200000..1782864000000 ms) as the page's own default window, 111 problems from 65 repositories, every problem dated inside the window, and each item rendered exactly once; the page's contamination marker must equal the source rule (model released after the window's first task). Another window is another task set and another identity; a changed problem count fails.",
+      "source": {
+        "url": "https://swe-rebench.com/",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-swe-rebench/swe-rebench-window-2026-05-15-2026-07-01.json.gz",
+        "sha256": "02ca7866387fd2ed949fc4f951a084a7fdec50149ede42747eeb70cb50aa50c8",
+        "retrieved_at": "2026-09-16T10:12:49.875716+00:00"
+      },
+      "protocol": "SWE-rebench (Nebius), task window 2026-05-15..2026-07-01 (111 issues, 65 repositories); resolved rate averaged over five runs in the maintainers' fixed ReAct-style scaffold, tool mode, 128K context; one row per model x reasoning setting as published; potential-contamination flag per row as the source marks it; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 12,
+      "source_urls": [
+        "https://swe-rebench.com/"
+      ]
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "parser": {
+        "kind": "gso_leaderboard",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "score",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "setting": "Opt@1",
+        "known_settings": [
+          "Opt@1",
+          "Opt@10"
+        ],
+        "require": {
+          "total_tasks": 102
+        }
+      },
+      "status": "collected",
+      "reason": "GSO publishes its leaderboard as one JSON file; Opt@1 rows are this identity, each model x reasoning effort x scaffold x run date stays a separate source identity.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON file",
+        "locator": "assets/leaderboard.json \u2192 models[]: one object per model x reasoning_effort x scaffold x setting x run date; value = score (Opt@1, percent); score_hack_control (the page's Hack-Adjusted column) kept in the protocol.",
+        "version_guard": "leaderboard.json must still state metadata.total_tasks 102, and every row must name a model, scaffold, setting and run date with a setting in the known set (Opt@1, Opt@10). Only Opt@1 rows are this identity; Opt@10 is another protocol and is not ingested. A new task count is a new identity.",
+        "notes": "Measured by the benchmark maintainers. The hack-adjusted score and the run date are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "leaderboard.json must still state metadata.total_tasks 102, and every row must name a model, scaffold, setting and run date with a setting in the known set (Opt@1, Opt@10). Only Opt@1 rows are this identity; Opt@10 is another protocol and is not ingested. A new task count is a new identity.",
+      "source": {
+        "url": "https://gso-bench.github.io/assets/leaderboard.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-gso/177bdc84b9d862c8113f.gz",
+        "sha256": "177bdc84b9d862c8113f2a87b285d7c410806fbb5765684e14dcbc5a1d94474b",
+        "retrieved_at": "2026-09-16T10:12:55.435717+00:00"
+      },
+      "protocol": "GSO, 102 tasks; Opt@1 (single attempt reaches \u226595 % of the human speedup and passes correctness tests) as published, OpenHands scaffold unless the row names another; run date and hack-adjusted score recorded per row; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 20,
+      "source_urls": [
+        "https://gso-bench.github.io/"
+      ]
     }
   ]
 }

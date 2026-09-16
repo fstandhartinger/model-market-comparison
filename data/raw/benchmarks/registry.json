@@ -7636,6 +7636,163 @@
           "excerpt": "benchmark_metadata.csv: \"SimpleQA Verified,True,simpleqa_verified.csv,Best score (across scorers),1.0,0.0,1.0,2025-09-09,\"."
         }
       ]
+    },
+    {
+      "id": "swe-rebench::2026-05-15..2026-07-01",
+      "name": "SWE-rebench (Nebius), tasks 15 May – 1 Jul 2026",
+      "version": "2026-05-15..2026-07-01",
+      "version_status": "published",
+      "family": "swe-rebench",
+      "category": "Coding",
+      "one_sentence_description": "A model resolves 111 fresh GitHub issues from 65 repositories, created between 15 May and 1 July 2026, inside one fixed minimal agent scaffold, run five times.",
+      "scoring": {
+        "metric": "Resolved rate (mean over five runs) on the task window's issues, fixed ReAct-style scaffold, 128K context",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by the maintainers (Nebius) with the same scaffold, prompts and default generation settings for every model, tool-based mode. SEM, Pass@5, cost and tokens per problem stay in each observation's protocol. The source marks a row 'potential contamination' when the model was released after the window's first task; that flag is kept per row. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Nebius (SWE-rebench team)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://swe-rebench.com/",
+      "publication_urls": [
+        {
+          "url": "https://swe-rebench.com/",
+          "type": "official_leaderboard",
+          "role": "SWE-rebench leaderboard (server-rendered, every task window)"
+        },
+        {
+          "url": "https://swe-rebench.com/about",
+          "type": "official_leaderboard",
+          "role": "Methodology: fixed scaffold, five runs, SEM and Pass@5, contamination marking"
+        },
+        {
+          "url": "https://huggingface.co/datasets/nebius/SWE-rebench-leaderboard",
+          "type": "huggingface",
+          "role": "Leaderboard task data, CC BY 4.0"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json <tmp capture dir>; python3 scripts/extract-swe-rebench-window.py <captured page .gz> <from_ms> <to_ms> https://swe-rebench.com/ <retrieved_at> <window.json>; gzip -n -9 <window.json> into data/raw/benchmarks/daily-evidence/<ISO-date>-swe-rebench/; python3 scripts/collect-public-benchmarks.py; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "Next.js Flight payload in server-rendered HTML, committed as a one-window extraction",
+        "identity_policy": "source_label",
+        "locator": "Extraction of the leaderboard block in the page's Flight payload: items[] with rangeStats.all['1778803200000:1782864000000'] (resolvedRate = the displayed Resolved Rate, sem, passN = Pass@5, instanceCosts, totalTokenUsage, cachedTokenPercentage), problems[] inside the window, and the rendered table's row markers.",
+        "version_guard": "The extraction must state window 2026-05-15..2026-07-01 (1778803200000..1782864000000 ms) as the page's own default window, 111 problems from 65 repositories, every problem dated inside the window, and each item rendered exactly once; the page's contamination marker must equal the source rule (model released after the window's first task). Another window is another task set and another identity; a changed problem count fails.",
+        "notes": "Manual snapshot (the page is 7.8 MB with every historical window; only this window's extraction is committed, with the full page's sha256). robots.txt: 'User-Agent: * Allow: /'. Task data on Hugging Face (nebius/SWE-rebench-leaderboard) is CC BY 4.0; attribute SWE-rebench (Nebius) and link the leaderboard. Agent products (Claude Code, Codex, Junie, Cursor) are 'External system' rows and are not ingested. Model labels are product names with the reasoning setting in brackets; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseSweRebenchLabel). Audited in /home/flori/jobs/bh-source-intake-20260915/SOURCES.md (priority 1)."
+      },
+      "update_cadence": {
+        "source_schedule": "New issues are mined continuously; the default window moves roughly every one to two months.",
+        "check_recommendation": "Manual: when the page's default window moves, add the new window as a new identity in a reviewed change."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best resolved rate in this window at capture is 64.5 % (Fable 5, high); computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://swe-rebench.com/about",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-swe-rebench/6774e470ea22058d19b6.gz",
+          "sha256": "0fcc752f944185e538be62346dc0b9fceb03d6a9a0e93cf6b106d332feefb35c",
+          "fetched_at": "2026-09-16T10:12:47.165586+00:00",
+          "excerpt": "To capture performance variability, we run each model five times on the full benchmark. We additionally report both the standard error of the mean (SEM) and pass@5 metrics"
+        },
+        {
+          "url": "https://swe-rebench.com/about",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-swe-rebench/6774e470ea22058d19b6.gz",
+          "sha256": "0fcc752f944185e538be62346dc0b9fceb03d6a9a0e93cf6b106d332feefb35c",
+          "fetched_at": "2026-09-16T10:12:47.165586+00:00",
+          "excerpt": "we can explicitly mark potentially contaminated evaluations that include issues created before a model’s release date."
+        },
+        {
+          "url": "https://swe-rebench.com/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-swe-rebench/swe-rebench-window-2026-05-15-2026-07-01.json.gz",
+          "sha256": "6e32743be39573eaa64595e8d0a8bb8288b38797afb420377ce14f9e7cb93c29",
+          "fetched_at": "2026-09-16T10:12:49.875716+00:00",
+          "excerpt": "window: 2026-05-15..2026-07-01, default_window true, 111 problems from 65 repositories; extraction of page sha256 fbb1b659562843da266aa20ec2295253d727ccd9b9469c78ab32df6fad1fffed"
+        }
+      ]
+    },
+    {
+      "id": "gso::opt1-102",
+      "name": "GSO: software optimization (Opt@1)",
+      "version": "opt1-102",
+      "version_status": "published",
+      "family": "gso",
+      "category": "Coding",
+      "one_sentence_description": "An agent gets a real codebase and a performance test and must make the code as fast as an expert developer's optimization; 102 tasks across 10 codebases and 5 languages.",
+      "scoring": {
+        "metric": "Opt@1: share of tasks where a single attempt reaches at least 95 % of the human speedup and passes the correctness tests",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by the GSO maintainers with the OpenHands scaffold unless a row names another. The Hack-Adjusted score (after the maintainers' hack detector) and the run date stay in each observation's protocol; runs from 2026-04-27 use a larger iteration budget and runs from 2026-07-12 network-isolated tasks, as the page's changelog states. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "GSO team (UC Berkeley)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://gso-bench.github.io/",
+      "publication_urls": [
+        {
+          "url": "https://gso-bench.github.io/",
+          "type": "official_leaderboard",
+          "role": "GSO leaderboard, metric definitions and changelog"
+        },
+        {
+          "url": "https://gso-bench.github.io/assets/leaderboard.json",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own data file (assets/script.js loads it)"
+        },
+        {
+          "url": "https://github.com/gso-bench/gso",
+          "type": "github",
+          "role": "Benchmark code and data"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON file",
+        "identity_policy": "source_label",
+        "locator": "assets/leaderboard.json → models[]: one object per model x reasoning_effort x scaffold x setting x run date; value = score (Opt@1, percent); score_hack_control (the page's Hack-Adjusted column) kept in the protocol.",
+        "version_guard": "leaderboard.json must still state metadata.total_tasks 102, and every row must name a model, scaffold, setting and run date with a setting in the known set (Opt@1, Opt@10). Only Opt@1 rows are this identity; Opt@10 is another protocol and is not ingested. A new task count is a new identity.",
+        "notes": "robots.txt returns 404 (no rules). Code and data are MIT-licensed (GitHub gso-bench); attribute GSO and link the leaderboard. The page's changelog records protocol changes that apply to runs from their date on (2026-04-27: 200 max iterations and reasoning effort for Claude models; 2026-07-12: tasks network-isolated), so each row's run date is kept in its protocol. Labels are product names; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseGsoId). Audited in /home/flori/jobs/bh-source-intake-20260915/SOURCES.md."
+      },
+      "update_cadence": {
+        "source_schedule": "A few rows per month in 2026 (runs dated 2026-03-10, 2026-04-27, 2026-07-12).",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best Opt@1 at capture is 47.06 % (Claude Opus 4.8, xhigh); computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://gso-bench.github.io/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-gso/30a38613a10635a89ac5.gz",
+          "sha256": "80c1d928fda7dee37f60d67c74c90d2bd6bb556ad16027eaf493d93dcb1092d2",
+          "fetched_at": "2026-09-16T10:12:52.873676+00:00",
+          "excerpt": "Opt@1: Estimator of fraction of tasks where a single attempt achieves ≥95% human speedup and passes correctness tests."
+        },
+        {
+          "url": "https://gso-bench.github.io/assets/leaderboard.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-gso/177bdc84b9d862c8113f.gz",
+          "sha256": "a5de9559c0cb5e2d2faa10b6228e78fda3c3ab371b3353ca0cc4378a27aa3bfe",
+          "fetched_at": "2026-09-16T10:12:55.435717+00:00",
+          "excerpt": "\"metadata\": {\"last_updated\": \"2026-03-10\", \"total_tasks\": 102}"
+        }
+      ]
     }
   ],
   "aa_field_map": [

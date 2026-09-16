@@ -193,10 +193,10 @@ same result is never counted twice.
 | Terminal-Bench | live | `terminal-bench::4.0` (and AA's own runs as separate ids) |
 | ProgramBench | planned | Static page, attribution OK |
 | SlopCodeBench | planned | Static page, attribution OK |
-| SWE-rebench | planned (priority 1) | CC BY 4.0, robots allow. The page is 7.8 MB of server-rendered HTML with every historical time window; a collector must pin one window per identity (windows are different task sets) and store an extraction, not the whole page each day |
+| SWE-rebench | **live (2026-09-16)** | `swe-rebench::2026-05-15..2026-07-01` (parser `swe_rebench_window`) — one identity per task window (a window is a different task set). The 7.8 MB page is not committed: `scripts/extract-swe-rebench-window.py` keeps only the pinned window (its items, problems and the rendered row markers) plus the page's sha256. Manual snapshot; the next default window becomes a new identity in a reviewed change. Agent products ("External system") are not ingested; the source's potential-contamination marker stays per row. CC BY 4.0 task data, attribute SWE-rebench (Nebius) |
 | SWE-bench | live | `swe-bench-verified`, `-multilingual`, `-multimodal` |
 | LiveCodeBench | planned | Primary `performances_generation.json` is row-level and date-filterable (AA's copy stays withheld until its window is known) |
-| GSO | planned | Static JSON endpoint, attribution OK |
+| GSO | **live (2026-09-16)** | `gso::opt1-102` (parser `gso_leaderboard`, daily) — the page's own `assets/leaderboard.json`, Opt@1 rows only (Opt@10 is another protocol); 102-task guard; hack-adjusted score and run date in the protocol (the page's changelog changes the protocol from 2026-04-27 and 2026-07-12). MIT, attribute GSO |
 | Berkeley Function Calling Leaderboard | planned | `data_overall.csv`, Apache-2.0 |
 | τ-bench (Sierra) | live / planned | `tau2-bench`, `tau3-banking`, `tau3-voice`; **planned:** hyper-tau-bench (MIT, submission JSON on GitHub) |
 | OSWorld 2.0 | **live (2026-09-16)** | `osworld-2::v2026.06.24` and `osworld-2::v2026.08.08` — one identity per task release (parser `osworld2_results`), Apache-2.0 project |

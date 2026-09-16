@@ -170,7 +170,8 @@ test('Composite coverage separates exact inputs from family- or product-attached
   // capability board. Three cost boards (FrontierCode, ApprenticeBench CUA, and the two OpenRouter twins) now
   // carry joined rows for this configuration and still do not count: that exclusion used to be untestable here
   // because no cost row was joined at all.
-  assert.equal(fable.benchmark_count, 6);
+  // 2026-09-16 (iteration 81): SWE-rebench's 15 May – 1 Jul 2026 window joins ("Fable 5 [high]") — the seventh.
+  assert.equal(fable.benchmark_count, 7);
   assert.equal(dataset.benchmark_results.observations.filter((o) => o.subject.model_id === fable.id
     && dataset.benchmark_results.registry.find((e) => e.id === o.benchmark_id)?.category === 'Efficiency').length, 4,
     'joined cost rows exist for this configuration and are excluded from #benchmarks');

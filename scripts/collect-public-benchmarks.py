@@ -319,6 +319,53 @@ def parse(source,spec,load_source):
             rows.append({'name':name,'id':name,'accuracy':cells[3],'source_row':index+1,
                 'context':{'rank':cells[0],'model':name,'provider':cells[2],'accuracy':cells[3],'cost':cells[4],'output_tokens':cells[5],
                     'released_after_competition':flagged,'open_weights':cells[9]}})
+    elif kind=='swe_rebench_window':
+        # SWE-rebench (Nebius): the source is our extraction of ONE pinned task window from the captured page
+        # (scripts/extract-swe-rebench-window.py). Another window is another task set and another identity. The
+        # window, its problem and repository counts are the version guard. Agent products ("External system")
+        # are not models and are skipped. The page's contamination marker is re-derived from the source's own
+        # rule (the model was released after the window's first task) and must agree with the rendered row.
+        data=json.loads(source);req=spec['require'];win=data.get('window') or {}
+        for key in ['from','to','from_ms','to_ms']:
+            if win.get(key)!=req[key]:raise ValueError(f'SWE-rebench window {key} changed: {win.get(key)!r}')
+        if win.get('default_window') is not True:raise ValueError('SWE-rebench window is not the page default; rendered markers would not describe it')
+        problems=data.get('problems')
+        if not isinstance(problems,list) or len(problems)!=req['problems'] or len({p['repository'] for p in problems})!=req['repositories']:raise ValueError('SWE-rebench task set changed')
+        if any(not req['from_ms']<=p['timestamp']<=req['to_ms'] for p in problems):raise ValueError('SWE-rebench problem outside the pinned window')
+        rendered={}
+        for r in data.get('rendered_rows',[]):rendered.setdefault(r['name'],[]).append(r['markers'])
+        for index,it in enumerate(data.get('items') or []):
+            name=it.get('modelName');stats=it.get('window_stats');itype=(it.get('meta') or {}).get('instance_type')
+            if not isinstance(name,str) or not name.strip() or not isinstance(stats,dict) or itype not in ['model','agent']:raise ValueError(f'SWE-rebench item {index} schema changed')
+            shown=rendered.get(name)
+            if not shown or len(shown)!=1:raise ValueError(f'SWE-rebench item {name!r} is not rendered exactly once for this window')
+            if itype=='agent':
+                if 'external-system' not in shown[0]:raise ValueError(f'SWE-rebench agent {name!r} lacks the external-system marker')
+                continue
+            contaminated=it['release']['timestamp']>req['from_ms']
+            if contaminated!=('contamination-risk' in shown[0]):raise ValueError(f'SWE-rebench contamination marker disagrees for {name!r}')
+            rate=stats.get('resolvedRate')
+            if not isinstance(rate,(int,float)) or isinstance(rate,bool):raise ValueError(f'SWE-rebench {name!r}: resolved rate missing')
+            rows.append({'name':name,'id':it['modelId'],'resolved_rate':round(rate,1),'harness':'SWE-rebench fixed ReAct scaffold, '+('tool' if it['agentVersion']=='tools' else it['agentVersion'])+' mode','source_row':index,
+                'context':{'window':f"{req['from']}..{req['to']}",'tasks':len(problems),'mode':it['agentVersion'],'model_release':it['release']['date'],'potential_contamination':contaminated,
+                    'resolved_rate_unrounded':rate,'sem':stats.get('sem'),'pass_at_5':stats.get('passN'),'cost_per_problem_usd':stats.get('instanceCosts'),
+                    'tokens_per_problem':stats.get('totalTokenUsage'),'cached_token_percent':stats.get('cachedTokenPercentage')}})
+    elif kind=='gso_leaderboard':
+        # GSO (software optimisation, UC Berkeley): the leaderboard page loads one JSON file. The page's default
+        # view is the Opt@1 setting ranked by the plain Opt@1 score; that is this identity. Opt@10 is another
+        # protocol and is skipped. The hack-adjusted score and the run date stay in the protocol.
+        data=json.loads(source);meta=data.get('metadata') or {}
+        if meta.get('total_tasks')!=spec['require']['total_tasks']:raise ValueError(f"GSO task count changed: {meta.get('total_tasks')!r}")
+        if not isinstance(data.get('models'),list):raise ValueError('GSO models missing')
+        for index,r in enumerate(data['models']):
+            if not isinstance(r,dict) or not all(isinstance(r.get(k),str) and r[k].strip() for k in ['name','scaffold','setting','date']):raise ValueError(f'GSO row {index} schema changed')
+            if r['setting'] not in spec['known_settings']:raise ValueError(f"GSO row {index}: unknown setting {r['setting']!r}")
+            if r['setting']!=spec['setting']:continue
+            effort=r.get('reasoning_effort') or ''
+            rows.append({'name':r['name']+(f' · {effort}' if effort else '')+f" · {r['scaffold']}",'id':f"{r['name']}|{effort}|{r['scaffold']}|{r['date']}",
+                'score':r.get('score'),'harness':r['scaffold'],'source_row':index,
+                'context':{'model':r['name'],'model_org':r.get('model_org'),'reasoning_effort':r.get('reasoning_effort'),'scaffold':r['scaffold'],'setting':r['setting'],
+                    'run_date':r['date'],'score_hack_adjusted':r.get('score_hack_control'),'submitted_by':r.get('submission_org_name')}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

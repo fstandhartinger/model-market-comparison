@@ -11,7 +11,7 @@ const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url))
 const EPOCH_RUN = ['frontiermath-tiers-1-3::v2', 'frontiermath-tier-4::v2', 'simpleqa-verified::snapshot-2026-09-16'];
 const IDS = ['deepswe::snapshot-2026-09-15', 'swe-atlas-qna::snapshot-2026-09-15', 'swe-atlas-test-writing::snapshot-2026-09-15', 'swe-atlas-refactoring::snapshot-2026-09-15'];
 // 2026-09-16 (iteration 79): boards whose labels are model slugs, joined by lib/board-identity.mjs.
-const SLUG_BOARDS = ['osworld-2', 'matharena-arxivmath', 'matharena-brokenarxiv', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
+const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'matharena-arxivmath', 'matharena-brokenarxiv', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
   'apprenticebench-cua', 'apprenticebench-cua-cost', 'vals-index', 'vals-index-cost', 'vals-index-emb',
   'vals-index-finance-agent', 'vals-index-hlab', 'vals-index-legal-research', 'vals-index-terminal-bench-2.1',
   'vals-index-vibe-code-bench', 'vals-index-code-migration'];

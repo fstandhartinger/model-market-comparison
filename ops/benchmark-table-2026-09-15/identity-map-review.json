@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-16T09:49:11.310Z",
-  "joined": 958,
+  "generated_at": "2026-09-16T10:16:18.453Z",
+  "joined": 976,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -4070,6 +4070,121 @@
     {
       "benchmark_id": "matharena-brokenarxiv::2026-06",
       "source_id": "Qwen3.5-2B",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
+      "source_id": "Qwen3.5-35B-A3B__tools",
+      "reason": "setting not stated and qwen3.5-35b-a3b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
+      "source_id": "GLM-5.2 [high]__tools",
+      "reason": "no catalog configuration for glm-5.2 with setting high"
+    },
+    {
+      "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
+      "source_id": "MiMo V2.5 Pro__tools",
+      "reason": "setting not stated and mimo-v2.5-pro has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
+      "source_id": "Qwen3.6-27B__tools",
+      "reason": "setting not stated and qwen3.6-27b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "swe-rebench::2026-05-15..2026-07-01",
+      "source_id": "Qwen3.6-35B-A3B__tools",
+      "reason": "setting not stated and qwen3.6-35b-a3b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Opus 4.7|high|OpenHands|2026-04-27",
+      "reason": "no catalog configuration for claude-opus-4.7 with setting high"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Opus 4.6|high|OpenHands|2026-04-27",
+      "reason": "no catalog configuration for claude-opus-4.6 with setting high"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "GPT 5.4|high|OpenHands|2026-03-10",
+      "reason": "no catalog configuration for gpt-5.4 with setting high"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Gemini 3.1 Pro||OpenHands|2026-03-09",
+      "reason": "setting not stated and gemini-3.1-pro has 1 catalog configurations"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Opus 4.6||OpenHands|2026-02-11",
+      "reason": "setting not stated and claude-opus-4.6 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Gemini 3 Flash||OpenHands|2025-12-19",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "GPT 5.2|high|OpenHands|2025-12-18",
+      "reason": "no catalog configuration for gpt-5.2 with setting high"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Opus 4.5||OpenHands|2025-11-28",
+      "reason": "setting not stated and claude-opus-4.5 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Gemini 3 Pro||OpenHands|2025-11-28",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Gemini 2.5 Pro||OpenHands|2025-10-10",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Sonnet 4.5||OpenHands|2025-10-10",
+      "reason": "setting not stated and claude-sonnet-4.5 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Qwen3 Coder||OpenHands|2025-09-02",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Opus 4||OpenHands|2025-08-10",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "O3|high|OpenHands|2025-06-09",
+      "reason": "no catalog configuration for o3 with setting high"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Sonnet 4||OpenHands|2025-05-30",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Sonnet 3.7||OpenHands|2025-05-30",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "Claude Sonnet 3.5 V2||OpenHands|2025-05-30",
+      "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "gso::opt1-102",
+      "source_id": "GPT 4o||OpenHands|2025-05-30",
       "reason": "label is not a catalog model slug"
     }
   ]
