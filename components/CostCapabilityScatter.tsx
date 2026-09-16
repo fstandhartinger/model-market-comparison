@@ -11,7 +11,7 @@ import { scoreChartLabel } from "../lib/score-label";
 import { orgColor } from "../lib/format";
 import { modelPrice, scopeFromSettings, priceLabel, type PriceResult, type PriceSettings } from "../lib/cost";
 import { Toggle } from "./ui";
-import { PriceValue, PriceAssumptions, priceNumber } from "./PriceValue";
+import { PriceValue, PriceAssumptions, costTick, priceNumber } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
 import { GearIcon } from "./GearIcon";
 import { preferredVariantIds, collapseModels, collapsedName, selectableModels } from "../lib/variants";
@@ -230,7 +230,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
     // F-13: inside Simple's shortlist card the map has no card of its own, one header line.
     return <div className="bh-value-map" role="img" aria-label={`Score versus adjusted cost value map: ${compactPoints.length} models. Higher scores are further up and cheaper models further right, so the most attractive models sit in the top-right quadrant.`}>
       <div className="relative flex items-center justify-end gap-2 lg:mb-1">
-        <span className="text-[11px] text-gray-500">{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /> · <EpochCredit /></span>
+        <span className="text-[11px] text-gray-500">{advanced && !wide ? "cheaper → right · green line = Pareto frontier" : `Value map · ${compactPoints.length} models · cheaper → right · green line = Pareto`} · <AaCredit /> · <EpochCredit bare /></span>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-value-map-settings" data-value-map-settings onClick={() => setPrefsOpen((o) => !o)}
           className="inline-flex h-7 min-h-0 w-7 items-center justify-center rounded-md text-gray-400 hover:bg-accent/10 hover:text-accent">
           <GearIcon />
@@ -250,7 +250,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
             <CartesianGrid stroke="#222932" />
             {/* F-26: phones keep a small fixed scale — X at $3 · $1 · $0.3 · $0.1 (those inside the
                 data range), Y only at the floor and 100 — in 10 px text with reserved axis space. */}
-            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed={COST_AXIS.reversed} scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => narrow ? `$${v}` : priceNumber(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
+            <XAxis type="number" dataKey="x" name="Adjusted cost" reversed={COST_AXIS.reversed} scale={logCostAxis ? "log" : "linear"} domain={logCostAxis ? [Math.max(xMin * 0.85, Number.EPSILON), xMax * 1.15] : [0, Math.max(1, xMax * 1.15)]} ticks={logCostAxis ? (narrow ? phoneCostTicks(xMin * 0.85, xMax * 1.15) : logTicks(xMin, xMax)) : undefined} allowDataOverflow interval={0} tickFormatter={(v) => costTick(v)} stroke="#8a93a3" fontSize={narrow ? 10 : 11} height={narrow ? 18 : 30} tickSize={narrow ? 3 : 6} />
             <YAxis type="number" dataKey="y" name={SCORE_SHORT_LABELS[score]} domain={yCompact.domain} ticks={narrow ? phoneYTicks(yCompact.domain, yCompact.ticks) : yCompact.ticks} interval={0} width={narrow ? 24 : 32} stroke="#8a93a3" fontSize={narrow ? 10 : 11} tickSize={narrow ? 3 : 6} tickFormatter={(v) => v.toFixed(0)} />
             <ZAxis type="number" dataKey="z" range={[50, 50]} />
             <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-compact" />} />
@@ -289,7 +289,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
               domain={logX ? [xMin * 0.85, xMax * 1.15] : [0, Math.max(1, xMax * 1.1)]}
               ticks={logX ? logTicks(xMin, xMax) : undefined}
               allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
-              tickFormatter={(v) => priceNumber(v)} stroke="#8a93a3" fontSize={12}>
+              tickFormatter={(v) => costTick(v)} stroke="#8a93a3" fontSize={12}>
               <Label value={costAxisCaption(`lowest ${priceLabel(priceSettings)}`)} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFull.domain} ticks={isElo ? undefined : yFull.ticks} allowDataOverflow={false}>

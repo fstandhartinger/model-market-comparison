@@ -82,7 +82,7 @@ export default async function EuPage() {
         Kimi K2.6/K2.7 Code, DeepSeek V4 Pro and MiniMax M2.5/M3 — but <b>serves several of them from
         US/UK regions</b>, so its only SOTA model currently running in an EU region is <b>GLM 5.1</b>. The table normally
         lists a provider only where that specific model runs in-EU — a provider being EU-capable in general isn&apos;t
-        enough. There are exactly two deliberate company-policy exceptions: the native <b>Azure Direct Global</b>
+        enough. There are exactly two deliberate company-policy exceptions: the native <b>Azure Direct Global</b>{" "}
         offers for <b>DeepSeek V4 Pro</b> and <b>Kimi K2.7 Code</b> are included as company-approved EU-hosted
         equivalents. This is a legal/business classification for this application, <b>not a technical EU-residency
         guarantee</b>; those Global deployments may process inference outside the EU. ⚠️ Azure&apos;s Fireworks-hosted

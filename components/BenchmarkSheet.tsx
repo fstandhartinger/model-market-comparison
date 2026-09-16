@@ -6,11 +6,10 @@ import { LazyMissingCoverage, SheetRows, type SheetRow } from './BenchmarkSheetL
 import { InfoTip } from './InfoTip';
 import { humanVersion, versionSuffix } from '../lib/version-label';
 import type { CompositeAttachment, CompositeSlot } from '../lib/client-model';
+import { formatNative } from '../lib/benchmark-matrix.mjs';
 
-const nativeValue = (value: number, unit: string | null) => {
-  const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
-  return `${Number(value.toFixed(digits))}${unit ? ` ${unit}` : ''}`;
-};
+// CR-63.6: the same formatting as the Benchmarks page (fractions as %, USD with $, Elo named).
+const nativeValue = (value: number, unit: string | null) => formatNative(value, unit);
 
 /** F-08b: a release-post style sheet — one bar row per benchmark version, the model's catalog
  *  percentile as the bar, native value and date beside it; provenance in the row's expand.
@@ -22,7 +21,7 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
   const absent = [...new Map(view.axes.filter((a) => !axes.some((present) => present.benchmarkId === a.benchmarkId)).map((a) => [a.benchmarkId, a])).values()];
   const attachedEntries = Object.values(attachments);
   return <section id="benchmark-sheet" className="mt-8 scroll-mt-6 space-y-5">
-    <div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-semibold">Benchmark sheet</h2><p className="bh-muted mt-1 text-sm">{versions} of {view.registryCount} registered benchmark versions · bars show the percentile among all models measured on each benchmark.</p>{attachedEntries.length > 0 && <div className="bh-muted mt-2 text-xs" role="note" aria-label="Composite attached inputs"><span className="font-medium text-gray-300">Composite attachments</span> <span>(used in the score, not counted as exact benchmarks):</span><ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1">{attachedEntries.map((attachment) => <li key={attachment.label} className="inline-flex items-center gap-1"><span>{attachment.label} · attached</span><InfoTip title={`${attachment.label} attachment`} label={`explain ${attachment.label} attachment`}>{attachment.note}</InfoTip></li>)}</ul></div>}</div><Link className="bh-button" href={`/compare?model=${encodeURIComponent(modelId)}`}>Compare this model ↗</Link></div>
+    <div className="flex flex-wrap items-end justify-between gap-3"><div><h2 className="text-2xl font-semibold">Benchmark sheet</h2><p className="bh-muted mt-1 text-sm">{versions} of {view.registryCount} registered benchmark versions · bars show the percentile among all models measured on each benchmark.</p>{attachedEntries.length > 0 && <div className="bh-muted mt-2 text-xs" role="note" aria-label="Composite attached inputs"><span className="font-medium text-gray-300">Composite attachments</span> <span>(used in the score, not counted as exact benchmarks):</span><ul className="mt-1 flex flex-wrap gap-x-3 gap-y-1">{attachedEntries.map((attachment) => <li key={attachment.label} className="inline-flex items-center gap-1"><span>{attachment.label} · attached</span><InfoTip title={`${attachment.label} attachment`} label={`explain ${attachment.label} attachment`}>{attachment.note}</InfoTip></li>)}</ul></div>}</div><Link className="bh-button" href={`/compare?model=${encodeURIComponent(modelId)}`}>Compare this model →</Link></div>
     <div className="grid items-start gap-5 lg:grid-cols-2">
     {categories.map((category) => <section key={category} className="bh-panel min-w-0 p-4" aria-label={`${category} benchmarks`}>
       <h3 className="mb-2 text-base font-semibold">{category}</h3>

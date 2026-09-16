@@ -11,6 +11,13 @@ export function priceNumber(value: number | null | undefined): string {
   return `$${value < 1 ? Number(value.toPrecision(3)).toString() : value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
 }
 
+/** CR-63.11: chart cost-axis ticks — whole dollars from $1, two decimals below ($0.30, $0.03), one significant figure under a cent. */
+export function costTick(value: number): string {
+  if (value >= 1) return `$${Math.round(value).toLocaleString("en-US")}`;
+  if (value >= 0.01) return `$${value.toFixed(2)}`;
+  return `$${Number(value.toPrecision(1))}`;
+}
+
 const tokens = (n: number) => Math.round(n).toLocaleString("en-US");
 const percent = (x: number) => `${(x * 100).toFixed(x > 0 && x < 0.1 ? 1 : 0)}%`;
 

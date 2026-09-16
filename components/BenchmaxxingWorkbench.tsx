@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { BenchmaxxingOverview } from "./BenchmaxxingOverview";
-import { presetRows, presetShowing, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
+import { DEFAULT_BENCHMAXXING_PRESET, presetRows, presetShowing, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
 import { BenchmaxxingReport, type BenchmaxxingModel, type BenchmaxxingReportData } from "./BenchmaxxingReport";
 
 /** CR-15.2/15.4 (Florian 2026-09-15): master-detail. The table (a changeable preset, Featured by
@@ -15,7 +15,7 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
   minComparisons: number;
   minTopics: number;
 }) {
-  const [preset, setPreset] = useState<BenchmaxxingPreset>("featured");
+  const [preset, setPreset] = useState<BenchmaxxingPreset>(DEFAULT_BENCHMAXXING_PRESET);
   const [showAll, setShowAll] = useState(false);
   const [ids, setIds] = useState<string[]>(initial ? [initial.id] : []);
   const [compare, setCompare] = useState(false);
@@ -29,7 +29,7 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
       if (!wanted.length) return;
       const unique = [...new Set(wanted)].slice(0, 2);
       setIds(unique); setCompare(unique.length === 2);
-      const place = presetShowing(rows, unique[0]);
+      const place = presetShowing(rows, unique[0], DEFAULT_BENCHMAXXING_PRESET);
       if (place) { setPreset(place.preset); setShowAll(place.showAll); }
       if (location.hash === "#radar") setFocusRadar(true);
     };

@@ -20,13 +20,15 @@ export type BenchmaxxingOverviewRow = {
 
 export type BenchmaxxingPreset = "featured" | "signals" | "all";
 
+// CR-63.4 (2026-09-16): Strongest signals is the default and comes first, so a first visit opens on flagged models.
+export const DEFAULT_BENCHMAXXING_PRESET: BenchmaxxingPreset = "signals";
 export const BENCHMAXXING_PRESETS: { key: BenchmaxxingPreset; label: string; heading: string }[] = [
-  { key: "featured", label: "Featured models", heading: "Today’s featured models" },
   { key: "signals", label: "Strongest signals", heading: "The strongest unevenness signals" },
+  { key: "featured", label: "Featured models", heading: "Today’s featured models" },
   { key: "all", label: "All scored", heading: "Every scored model" },
 ];
 
-/** Featured (default): current top models by Composite. Strongest signals: tagged models by signal. All: every scored model by signal. */
+/** Strongest signals (default): tagged models by signal. Featured: current top models by Composite. All: every scored model by signal. */
 export function presetRows(rows: BenchmaxxingOverviewRow[], preset: BenchmaxxingPreset): BenchmaxxingOverviewRow[] {
   const bySignal = (a: BenchmaxxingOverviewRow, b: BenchmaxxingOverviewRow) => b.score - a.score || b.comparisons - a.comparisons || a.name.localeCompare(b.name);
   if (preset === "featured") return rows.filter((r) => r.featured).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));

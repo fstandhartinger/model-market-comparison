@@ -31,7 +31,7 @@ export default async function AboutPage() {
         The code lives at{" "}
         <a href="https://github.com/fstandhartinger/model-market-comparison" className="text-accent">github.com/fstandhartinger/model-market-comparison</a>.
         The licence covers this code only: the benchmark results, prices and other data collected here are third-party data under their own
-        terms (see <a href="#sources" className="text-accent">Sources</a> above — Artificial Analysis requires attribution, Epoch AI is CC BY,
+        terms (see <a href="#sources" className="text-accent">Sources</a> below — Artificial Analysis requires attribution, Epoch AI is CC BY,
         DesignArena is shown under a documented risk decision), and nothing collected here is relicensed by the MIT licence.
         The site is still in beta: data and features change daily.
       </p>

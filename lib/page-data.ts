@@ -7,7 +7,7 @@ import { getBenchmarkMatrixPage } from "./benchmark-matrix-data";
 import { importantMatrix } from "./benchmark-matrix.mjs";
 import { selectBenchmarkView, selectFamilyBenchmarkView } from "./benchmark-view.mjs";
 import { defaultComparePicks } from "./radar.mjs";
-import { presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets";
+import { DEFAULT_BENCHMAXXING_PRESET, presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets";
 
 /**
  * CR-62.1 (Florian 2026-09-16): link-preview crawlers (X, WhatsApp, Telegram, Facebook) give up on pages
@@ -85,8 +85,8 @@ async function build(key: PageDataKey): Promise<unknown> {
     composite: model.composite, featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ""), tagged: tagged.has(model.id),
     level: tagged.has(model.id) ? "strong" : weak.has(model.id) ? "weak" : null,
   }));
-  // The report opens on the first row of the default Featured preset (the top current model by Composite).
-  const defaultModel = presetRows(rows, "featured")[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
+  // The report opens on the first row of the default preset (CR-63.4: the strongest signal).
+  const defaultModel = presetRows(rows, DEFAULT_BENCHMAXXING_PRESET)[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
   const initial = defaultModel ? { id: defaultModel.id, report: scoreBenchmaxxing(view, defaultModel.id) } : null;
   return { rows, models, initial, taggedCount: taggedFamilies.size };
 }

@@ -8,11 +8,10 @@ import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
 import { humanVersion, versionHeading, versionSuffix } from '../lib/version-label';
 import { SpeedTable } from './SpeedContext';
 import { ComparePicker } from './ComparePicker';
+import { formatNative } from '../lib/benchmark-matrix.mjs';
 
-const nativeValue = (value: number, unit: string | null) => {
-  const digits = Math.abs(value) >= 100 ? 0 : Math.abs(value) >= 10 ? 1 : 2;
-  return `${Number(value.toFixed(digits))}${unit ? ` ${unit}` : ''}`;
-};
+// CR-63.6: the same formatting as the Benchmarks page (fractions as %, USD with $, Elo named).
+const nativeValue = (value: number, unit: string | null) => formatNative(value, unit);
 
 export function MissingCell({ view, axis, modelId }: { view: BenchmarkView; axis: ViewAxis; modelId: string }) {
   const known = view.missing.find((m) => m.model_id === modelId && m.benchmark_id === axis.benchmarkId);

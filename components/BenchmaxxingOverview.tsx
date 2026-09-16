@@ -49,6 +49,10 @@ function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpen
   </div>;
 }
 
+/** CR-63.5: "Claude Fable 5.1 (Adaptive Reasoning, Max Effort, Default Fallback)" → base "Claude Fable 5.1", variant "Adaptive Reasoning · Max Effort · Default Fallback". */
+function baseName(name: string) { const i = name.indexOf(" ("); return i > 0 && name.endsWith(")") ? name.slice(0, i) : name; }
+function variantOf(name: string) { const i = name.indexOf(" ("); return i > 0 && name.endsWith(")") ? name.slice(i + 2, -1).split(", ").join(" · ") : ""; }
+
 function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenReport }: { rows: BenchmaxxingOverviewRow[]; maxScore: number; selected: string[]; onSelect: (id: string) => void; expanded: string | null; onExpand: (id: string | null) => void; onOpenReport: (id: string) => void }) {
   return <>
     {rows.map((row) => {
@@ -65,8 +69,9 @@ function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenRe
           </button>
           <button type="button" className="block min-w-0 flex-1 text-left" aria-pressed={slot >= 0} onClick={(e) => { e.stopPropagation(); onSelect(row.id); }}>
             {/* F-67: phones wrap the name (two Qwen rows differed only in the truncated part); md:truncate keeps the desktop single line. */}
-            <span className="block leading-5 md:truncate">{slot >= 0 && <span className="mr-1 text-[10px] font-bold text-accent">{String.fromCharCode(65 + slot)}</span>}{row.name}</span>
-            <span className="bh-muted block text-[11px] font-normal leading-4">{row.org}</span>
+            <span className="block leading-5 md:truncate">{selected.length > 1 && slot >= 0 && <span className="mr-1 text-[10px] font-bold text-accent" title={`Model ${String.fromCharCode(65 + slot)} of the side-by-side report`}>{String.fromCharCode(65 + slot)}</span>}{baseName(row.name)}</span>
+            {/* CR-63.5: base name first; the reasoning configuration in muted small text instead of a six-line name. */}
+            <span className="bh-muted block text-[11px] font-normal leading-4">{row.org}{variantOf(row.name) ? ` · ${variantOf(row.name)}` : ""}</span>
           </button>
           </span>
         </th>
@@ -107,8 +112,12 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   const listed = presetRows(rows, preset);
   const [expanded, setExpanded] = useState<string | null>(null);
   const visible = showAll ? listed : listed.slice(0, 10);
-  // CR-21.2: the bar spans 0 → the highest signal among the rows on screen, so one bar always reaches full width.
-  const maxScore = Math.max(1e-9, ...visible.map((row) => row.score));
+  // CR-21.2 → CR-63.5: the bar spans 0 → the highest signal of every scored model, one scale for all tabs, so a
+  // model's bar keeps its length when the list changes.
+  const maxScore = Math.max(1e-9, ...rows.map((row) => row.score));
+  // CR-63.4: the tag cut-offs as they fall today (tags are ranks, so the scores are read from the rows).
+  const lowest = (level: "strong" | "weak") => { const s = rows.filter((r) => r.level === level).map((r) => r.score); return s.length ? Math.min(...s) : null; };
+  const strongFrom = lowest("strong"), weakFrom = lowest("weak");
   const heading = BENCHMAXXING_PRESETS.find((p) => p.key === preset)!.heading;
   return <section className="bh-panel p-5" aria-label="Benchmaxxing overview">
     <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
@@ -116,7 +125,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <h2 className="text-xl font-semibold">{heading}</h2>
         <p className="bh-muted mt-2 max-w-3xl text-sm">A signal highlights models whose results jump between related benchmarks. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
       </div>
-      <div className="rounded-lg border border-line px-4 !py-2 text-sm"><b>{taggedCount}</b> tagged models <span className="bh-muted">· coverage floor: {minComparisons} comparisons in {minTopics} topics</span></div>
+      <div className="rounded-lg border border-line px-4 !py-2 text-sm"><b>{taggedCount}</b> models carry the strong tag <span className="bh-muted">· coverage floor: {minComparisons} comparisons in {minTopics} topics</span></div>
     </div>
     <div role="group" aria-label="Model list preset" className="mt-4 flex flex-wrap gap-2">
       {BENCHMAXXING_PRESETS.map((p) => <button key={p.key} type="button" aria-pressed={preset === p.key} onClick={() => onPreset(p.key)}
@@ -128,7 +137,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, adjusted for coverage, 0–100. Above {SIGNAL_WARN} it is shown as a warning: results jump strongly between related benchmarks. That is where today&apos;s tag starts (the top 10 % of scored models). It is a screening flag, not proof of leakage or intent. The bar runs from 0 to the highest signal among the rows shown.</InfoTip><span className="bh-muted block text-[10px] font-normal" data-signal-max>bars scaled to {maxScore.toFixed(1)}, the list&apos;s highest</span></th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, adjusted for coverage, 0–100. Above {SIGNAL_WARN} it is shown as a warning: results jump strongly between related benchmarks. The tags are ranks: the top 10 % of scored models carry the strong ⚠ tag{strongFrom != null ? ` (today a signal of ${strongFrom.toFixed(1)} or more)` : ""}, the next 10 % the weak △ tag{weakFrom != null ? ` (today from ${weakFrom.toFixed(1)})` : ""} — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list.</span></InfoTip></th>
           <th scope="col" className="hidden text-left md:table-cell">Related comparisons</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>
@@ -137,6 +146,6 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
       </table>
     </div>
     {!listed.length ? <p className="bh-empty mt-4">No scored model in this preset.</p> : null}
-    {listed.length > 10 ? <button type="button" className="bh-button mt-4" onClick={() => onShowAll(!showAll)} aria-expanded={showAll}>{showAll ? "Show first 10" : `Show all ${listed.length}`}</button> : null}
+    {listed.length > 10 ? <button type="button" className="bh-button mt-4" onClick={() => onShowAll(!showAll)} aria-expanded={showAll}>{showAll ? "Show first 10" : `Show all ${listed.length} in this list`}</button> : null}
   </section>;
 }

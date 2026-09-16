@@ -72,6 +72,7 @@ export function baseKey(id: string): string;
 export function rowBars(values: (number | null)[], higherBetter: boolean | null, unit: string): (number | null)[];
 export function rowWinners(values: (number | null)[], higherBetter: boolean | null): boolean[];
 export function formatValue(value: number | null, unit: string): string;
+export function formatNative(value: number | null, unit: string | null): string;
 export function resultHref(axisId: string, modelId: string, models: string[], pinned: boolean): string;
 export function cellHref(row: MatrixRow, modelId: string, models: string[], pinned: boolean): string;
 export function groupOf(key: string, category: string | null, taxonomy: unknown): string;

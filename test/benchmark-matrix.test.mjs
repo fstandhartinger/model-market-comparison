@@ -210,3 +210,16 @@ test('2026-09-15 Benchmark Heaven Score row: "Main Composite Score" only for the
   assert.match(source, />Benchmark Heaven Score</, 'primary label');
   assert.match(source, /subtitleFor\(score, SCORE_SHORT_LABELS\[score\]\)/, 'the component uses this rule');
 });
+
+test('CR-63.6: small values keep one decimal count; formatNative names Elo and matches formatValue otherwise', async () => {
+  const { formatNative } = await import('../lib/benchmark-matrix.mjs');
+  assert.equal(formatValue(0.8, 'points'), '0.80');
+  assert.equal(formatValue(0.58, 'points'), '0.58');
+  assert.equal(formatValue(0.0042, 'points'), '0.0042');
+  assert.equal(formatNative(0.88, 'fraction'), '88.0%');
+  assert.equal(formatNative(46.1, 'percent'), '46.1%');
+  assert.equal(formatNative(11.4, 'USD'), '$11.40');
+  assert.equal(formatNative(77, 'points'), '77.0');
+  assert.equal(formatNative(1625, 'Elo'), '1,625 Elo');
+  assert.equal(formatNative(null, 'Elo'), '—');
+});

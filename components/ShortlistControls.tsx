@@ -231,11 +231,11 @@ export function ShortlistControls({
         <div className="border-t border-line/60 pt-1.5 text-xs text-gray-400 lg:pt-2">
           {matching === 0
             ? `No model out of ${pool} meets both limits — lower the score or raise the budget.`
-            : <><b className="text-gray-200">{matching} models pass</b>{" "}
-            {/* F-18: the pool is what the filters allow, so its count opens them. */}
+            : <><b className="text-gray-200">{matching}</b>{" "}
+            {/* F-18: the pool is what the filters allow, so its count opens them. CR-63.12: "25 of 30 models pass". */}
             <button type="button" data-bh-filters-toggle onClick={openFilters} title="These models are what your filters allow — open the filters"
               className="min-h-0 text-accent underline decoration-dotted underline-offset-2">of {pool}</button>
-            {" "}· {Math.max(0, pool - matching)} below your score line
+            {" "}<b className="text-gray-200">models pass</b> · {Math.max(0, pool - matching)} below your score line
               {matching > limit && <> · {limit} shown: the Pareto line first, then the highest scores</>}</>}
           {(minScore > 0 || maxCost != null) && (
             <button type="button" onClick={() => { setMinScore(0); setMaxCost(null); }} className="ml-2 text-accent underline underline-offset-2">
