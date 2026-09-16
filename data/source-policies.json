@@ -1,0 +1,32 @@
+{
+  "schema_version": 1,
+  "note": "Access decisions for sources whose own rules need one. A collector that reads its scope from here cannot grow past the scope that was decided. The rule is checked by test/source-policy.test.mjs.",
+  "policies": {
+    "designarena": {
+      "source": "DesignArena (Arcada Labs)",
+      "site": "https://www.designarena.ai",
+      "decision": "documented_risk",
+      "decided_by": "Florian",
+      "decided_at": "2026-09-16",
+      "decision_text": "i choose b",
+      "change_request": "ops/ux-2026-09-12/03-CHANGE-REQUESTS-VERBATIM.md — CR-20260916",
+      "evidence": "/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/",
+      "findings": {
+        "robots": "https://www.designarena.ai/robots.txt disallows /api/ (and /admin/).",
+        "terms": "Arcada Labs' terms prohibit access or download \"using any engine, software, tool, agent, device, or mechanism (including spiders, robots, crawlers, data mining tools, or the like) other than the software and/or search agents provided by Arcada Labs or other generally available third-party web browsers\".",
+        "api_documentation": "None found: the site publishes no API documentation, data licence or attribution clause for /api/leaderboard."
+      },
+      "scope": "Exactly the two boards Benchmark Heaven already showed when the decision was taken. Nothing may be added without a new explicit decision from Florian or documented permission/licence from the source.",
+      "expansion": "blocked",
+      "revisit_when": "An official API, a data licence, or written permission from Arcada Labs is documented.",
+      "permitted_endpoints": [
+        "POST https://www.designarena.ai/api/leaderboard",
+        "GET https://www.designarena.ai/api/registry"
+      ],
+      "permitted_boards": [
+        { "key": "frontend", "label": "Agentic Web Dev Frontend Elo", "request": { "arenaType": "agents", "category": "agon_webapps", "variationName": "public", "inputModality": "text" } },
+        { "key": "fullstack", "label": "Agentic Web Dev Full-Stack Elo", "request": { "arenaType": "agents", "category": "fullstack", "variationName": "public" } }
+      ]
+    }
+  }
+}

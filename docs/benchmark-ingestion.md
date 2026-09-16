@@ -239,3 +239,24 @@ The pipeline is a lead → capture → re-verify → review chain; no step trust
 
 Widening the tranche means extending the identity map (and, where a benchmark's own published
 protocol has no identity yet, minting one with its own primary source) and re-running steps 2–6.
+
+## Source access decisions (`data/source-policies.json`)
+
+Some sources need a decision before they may be collected at all, and that decision — not the
+collector — defines the scope. `data/source-policies.json` records one entry per such source: what the
+source's own rules say, who decided, when, on what evidence, exactly which boards and endpoints are
+permitted, and what would reopen the question. A collector reads its scope from this file, so widening
+it means changing the recorded decision. `test/source-policy.test.mjs` fails if a collector requests
+anything the decision does not list.
+
+**DesignArena (Arcada Labs), decided 2026-09-16 by Florian — documented risk.** Iteration 78 read the
+source's rules before acting on CR-34.5 and found that `https://www.designarena.ai/robots.txt` disallows
+`/api/`, that Arcada Labs' terms permit access only through "generally available third-party web
+browsers", and that the site publishes no API documentation, licence or attribution clause. The daily
+collector calls `POST /api/leaderboard` and `GET /api/registry`. Florian was given three options and
+chose to keep the data under a documented risk (CR-20260916, "i choose b"): the two boards Benchmark
+Heaven already published — Agentic Web Dev **Frontend** and **Full-Stack** Elo — stay, the collector is
+not switched off, and **nothing is added**. Evidence, with both documents and their hashes:
+`/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/`. The snapshot and `/about` say what
+this source is: the site's own public leaderboard endpoint, not an official API or a licensed feed.
+Revisit only if an official API, a licence, or written permission becomes documented.

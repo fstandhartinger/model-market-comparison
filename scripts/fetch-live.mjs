@@ -19,6 +19,14 @@ const RAW = join(__dirname, "..", "data", "raw");
 const AA_KEY = process.env.ARTIFICIAL_ANALYSIS_API_KEY || process.env.ARTIF_ANALYSIS_API_KEY || "";
 const UA = "BenchmarkHeaven/1.0 (+https://github.com/fstandhartinger/model-market-comparison)";
 
+/** CR-20260916: a source whose access was decided reads its scope from the recorded decision. */
+async function readSourcePolicy(id) {
+  const policies = JSON.parse(await readFile(join(__dirname, "..", "data", "source-policies.json"), "utf8"));
+  const policy = policies.policies?.[id];
+  if (!policy) throw new Error(`No recorded access decision for ${id}: add one to data/source-policies.json before collecting`);
+  return policy;
+}
+
 const stoppedHosts = new Set();
 const stopStatuses = [401, 403, 429];
 const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
@@ -130,11 +138,19 @@ async function fetchDesignArena() {
   console.log("→ DesignArena leaderboards …");
   // 2026-07: the leaderboard API moved back from intelligence.ai (now a plain
   // marketing site returning 404s for /api/*) to www.designarena.ai.
-  const baseUrl = "https://www.designarena.ai";
-  const queries = [
-    { key: "frontend", body: { arenaType: "agents", category: "agon_webapps", variationName: "public", inputModality: "text" } },
-    { key: "fullstack", body: { arenaType: "agents", category: "fullstack", variationName: "public" } },
-  ];
+  // CR-20260916: this source is collected under Florian's documented-risk decision of 2026-09-16
+  // ("i choose b") — the two boards that were already published stay, and nothing is added. The scope
+  // is not written here but read from data/source-policies.json, so widening the collector means
+  // changing the recorded decision, which is what the decision asks for.
+  const policy = await readSourcePolicy("designarena");
+  const baseUrl = policy.site;
+  const queries = policy.permitted_boards.map((b) => ({ key: b.key, body: b.request }));
+  const permit = (endpoint) => {
+    if (!policy.permitted_endpoints.includes(endpoint)) {
+      throw new Error(`DesignArena: ${endpoint} is outside the recorded access decision (${policy.evidence}). Expansion is ${policy.expansion}.`);
+    }
+  };
+  permit(`POST ${baseUrl}/api/leaderboard`);
   const out = {};
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, 'designarena.json'), 'utf8')); }
@@ -156,6 +172,7 @@ async function fetchDesignArena() {
   // (for example `yoda` is displayed as Grok 4.5). Snapshot the source-owned
   // registry metadata used by the leaderboard UI so dataset joins do not depend
   // on a growing local alias list. Fail closed if the registry and boards drift.
+  permit(`GET ${baseUrl}/api/registry`);
   const registry = await getJSON(`${baseUrl}/api/registry`);
   const modelIds = [...new Set(Object.values(out).flatMap((board) => board.data.map((row) => row.modelId)))].sort();
   const missingRegistryIds = modelIds.filter((id) => !registry.models?.[id]);
@@ -171,7 +188,11 @@ async function fetchDesignArena() {
     }];
   }));
   await writeJSONAtomic(join(RAW, "designarena.json"), {
-    source: "Intelligence.ai leaderboard API (formerly DesignArena)",
+    // Not an API the source offers for programmatic use: DesignArena publishes no API documentation,
+    // licence or attribution clause. The wording says what this is, so nothing downstream can read it
+    // as an official feed (CR-39.2).
+    source: "DesignArena public leaderboard (the site's own leaderboard endpoint; no published API documentation or data licence)",
+    access_policy: { decision: policy.decision, decided_at: policy.decided_at, evidence: policy.evidence, expansion: policy.expansion },
     endpoint: `POST ${baseUrl}/api/leaderboard`,
     registry_endpoint: `GET ${baseUrl}/api/registry`,
     collected_at: new Date().toISOString().slice(0, 10),
