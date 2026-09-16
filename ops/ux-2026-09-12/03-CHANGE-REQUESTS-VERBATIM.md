@@ -527,3 +527,35 @@ accurate category (only after methodology review), source/version/date tooltip/d
 refresh recipe with fail-closed staleness handling, tests, and independent live verification. If
 reuse or collection is not permitted, document the evidence and decision without publishing the
 scores.
+
+---
+
+## CR-20260916n — Information popovers must keep links usable
+
+User feedback forwarded by Florian, 16 Sep 2026, verbatim:
+
+<requirements>
+
+the information buttons are ragebait you need to fix them
+
+inside them are links for "how we calculate" but the information window doesnt stay open
+
+like you move your cursor and it disappears
+
+</requirements>
+
+Screenshot context: on the dark-mode Overview table, the `SCORE ⓘ` information control opens a
+methodology panel containing **How we calculate**, Artificial Analysis, and Epoch AI links. Moving
+the pointer from the trigger towards that panel dismisses it before a link can be reached.
+
+Implementation clarification: every informational popover/tooltip in the product which contains an
+interactive element must remain open while focus or pointer is on either the trigger or its panel,
+with no gap/`mouseleave` race between them. Its links must be normally clickable/tappable; keyboard
+users must be able to open it, Tab through its interactive content, activate a link, and dismiss it
+predictably (including Escape), while focus returns sensibly. Touch must have an explicit usable
+open/close path rather than hover-only behavior. Non-interactive short tooltips may retain ordinary
+brief behavior, but do not apply that behavior to panels with links. Avoid trapping users, blocking
+table sorting, or creating stale/overlapping panels. Cover Score and Adjusted Cost first, audit every
+other interactive info panel for the same shared primitive/bug, add interaction regression tests,
+and independently verify the deployed result by mouse pointer, keyboard, touch-width emulation,
+light/dark, desktop and mobile.
