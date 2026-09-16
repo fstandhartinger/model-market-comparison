@@ -76,7 +76,10 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   await page.waitForTimeout(900);
   const provLinks = await page.evaluate(() => {
     const tables = [...document.querySelectorAll('table')];
-    const t = tables.find((x) => [...x.querySelectorAll('th')].some((h) => h.textContent.trim().toLowerCase() === 'provider'));
+    // Scope to the table's own thead so the main table (whose tbody nests the
+    // provider table) is not mistaken for the provider table.
+    const ownTh = (x) => [...(x.querySelector('thead')?.querySelectorAll('th') || [])];
+    const t = tables.find((x) => ownTh(x).some((h) => h.textContent.trim().toLowerCase() === 'provider'));
     if (!t) return { found: false };
     return { found: true, links: [...t.querySelectorAll('tbody a')].map((a) => ({ text: a.textContent.trim(), href: a.href, target: a.target, rel: a.rel, aria: a.getAttribute('aria-label') })) };
   });
@@ -94,7 +97,8 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
     await row3.scrollIntoViewIfNeeded(); await row3.click(); await page.waitForTimeout(700);
     const pl3 = await page.evaluate(() => {
       const tables = [...document.querySelectorAll('table')];
-      const t = tables.filter((x) => [...x.querySelectorAll('th')].some((h) => h.textContent.trim().toLowerCase() === 'provider')).pop();
+      const ownTh = (x) => [...(x.querySelector('thead')?.querySelectorAll('th') || [])];
+      const t = tables.filter((x) => ownTh(x).some((h) => h.textContent.trim().toLowerCase() === 'provider')).pop();
       return t ? [...t.querySelectorAll('tbody a')].map((a) => ({ text: a.textContent.trim(), href: a.href })) : [];
     });
     check(`${tag} a second expanded model also links its providers`, pl3.length > 0 && pl3.every((l) => /^https:\/\//.test(l.href)), pl3.slice(0, 5));
