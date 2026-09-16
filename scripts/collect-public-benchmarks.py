@@ -113,8 +113,13 @@ def parse(source,spec,load_source):
             if at(value,path)!=expected:raise ValueError(f'Source version guard failed: {path}')
         board=at(value,spec['row_path'])
         if not isinstance(board,dict):raise ValueError('Astro row map changed')
+        # 2026-09-16: Vals added a nested `token_totals` object to every row. A nested field is accepted only when the
+        # plan names it (it is never a score and is dropped); any other nested field still fails closed.
+        ignored=set(spec.get('ignored_nested_fields',[]))
         for index,(key,fields) in enumerate(board.items()):
-            if not isinstance(fields,dict) or any(isinstance(x,(dict,list)) for x in fields.values()):raise ValueError('Astro row schema changed')
+            if not isinstance(fields,dict):raise ValueError('Astro row schema changed')
+            fields={k:v for k,v in fields.items() if not (k in ignored and isinstance(v,(dict,list)))}
+            if any(isinstance(x,(dict,list)) for x in fields.values()):raise ValueError('Astro row schema changed')
             rows.append({**fields,'name':key,'source_row':index,'context':{'task':spec['row_path'].rsplit('.',1)[-1],**{k:fields.get(k) for k in spec.get('context_keys',[])}}})
     elif kind=='effort_runs_json':
         # {data: {model: {effort: {subset: {...}}}}}; one row per published model and effort, never averaged.

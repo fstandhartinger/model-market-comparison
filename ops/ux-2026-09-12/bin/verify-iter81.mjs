@@ -1,4 +1,4 @@
-// Iteration 81 (CR-38.1): SWE-rebench (task window 2026-05-15..2026-07-01) and GSO (Opt@1). Published values are
+// Iteration 81 (CR-38.1): SWE-rebench (task window 2026-05-15..2026-07-01), GSO (Opt@1) and τ^τ-bench release v1. Published values are
 // checked against the numbers the sources themselves display (SWE-rebench's rendered default table at capture;
 // GSO's leaderboard.json), independently re-readable from data/raw/benchmarks/daily-evidence/2026-09-16-{swe-rebench,gso}/,
 // then the rows are checked in the UI at 1440/390, light/dark.
@@ -14,7 +14,7 @@ const goto = async (page, url) => { for (let a = 1; ; a++) { try { return await 
 const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !!ok, detail: typeof detail === 'string' ? detail : JSON.stringify(detail) });
 const settle = async (page) => { await page.waitForLoadState('networkidle').catch(() => {}); await page.waitForTimeout(2500); };
 
-const IDS = ['claude-fable-5::high', 'claude-opus-5::high', 'gpt-5.6-sol::medium', 'claude-opus-4.8::xhigh'];
+const IDS = ['claude-fable-5::high', 'claude-opus-5::high', 'gpt-5.6-sol::medium', 'claude-opus-4.8::xhigh', 'claude-opus-5::max'];
 const api = await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent(IDS.join(','))}`)).json();
 const matrix = api.matrix;
 const rows = matrix?.rows ?? [];
@@ -32,7 +32,19 @@ check('API: an agent product (Claude Code 60.4) is not published as a model valu
 // GSO leaderboard.json: Claude Opus 4.8 xhigh Opt@1 47.06; Opt@10 values (15.7, 12.7) are another protocol.
 check('API: GSO claude-opus-4.8::xhigh = 47.06', valueOf('claude-opus-4.8::xhigh', 'GSO') === 47.06, String(valueOf('claude-opus-4.8::xhigh', 'GSO')));
 check('API: GSO rows carry neither SWE-rebench nor GSO judged tags', !(rows[idx('GSO')]?.tags ?? []).includes('judged') && !(rows[idx('SWE-rebench')]?.tags ?? []).includes('judged'), [rows[idx('GSO')]?.tags, rows[idx('SWE-rebench')]?.tags]);
-check('API: catalog board count includes the two new boards (96 before)', (matrix?.catalogBoards ?? 0) >= 98, String(matrix?.catalogBoards));
+check('API: catalog board count includes the three new boards (96 before)', (matrix?.catalogBoards ?? 0) >= 99, String(matrix?.catalogBoards));
+// τ^τ-bench submission.json files: Claude Opus 5 max (Claude Code) 23.9, GPT-5.6-sol xhigh (Codex) 22.0; Kimi K3 max
+// appears under two harnesses (16.1, 17.9) and must join neither.
+const ht = (await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent('claude-opus-5::max,gpt-5.6-sol::xhigh,kimi-k3::max')}`)).json()).matrix;
+const htRows = (ht?.rows ?? []).map((r, i) => [r, i]).filter(([r]) => r.name.includes('τ^τ-bench'));
+const htVal = (m) => (ht?.values?.[m] ?? []).filter(([k]) => htRows.some(([, i]) => i === k)).map(([, v]) => v);
+check('API: τ^τ-bench rows are agentic; claude-opus-5::max = 23.9, gpt-5.6-sol::xhigh = 22.0, kimi-k3::max has no value',
+  htRows.length > 0 && htRows.every(([r]) => r.group === 'agentic') && htVal('claude-opus-5::max').includes(23.9) && htVal('gpt-5.6-sol::xhigh').includes(22) && htVal('kimi-k3::max').length === 0,
+  { rows: htRows.map(([r]) => `${r.name} · ${r.cohort}`), opus: htVal('claude-opus-5::max'), sol: htVal('gpt-5.6-sol::xhigh'), kimi: htVal('kimi-k3::max') });
+const hs = await (await fetch(`${BASE}/api/benchmark-scores?model_id=${encodeURIComponent('claude-opus-5::max')}&limit=500`)).json();
+const hobs = (hs.observations ?? hs.results ?? []).find((o) => o.benchmark_id === 'hyper-tau-bench::release-v1');
+check('API: the τ^τ-bench observation cites its own submission.json and keeps the domain scores',
+  hobs && /claude-code_claude-opus-5\/submission\.json$/.test(hobs.source?.url ?? '') && /"banking":5\.9/.test(hobs.protocol ?? ''), hobs ? { url: hobs.source?.url } : 'missing');
 const gpt = (await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent('gpt-5.4::xhigh,claude-sonnet-5::xhigh')}`)).json()).matrix;
 const gi = (gpt?.rows ?? []).findIndex((r) => r.name.includes('GSO'));
 const gv = (m) => (gpt?.values?.[m] ?? []).find(([k]) => k === gi)?.[1] ?? null;
@@ -67,7 +79,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const seen = await page.evaluate((boards) => {
     const trs = [...document.querySelectorAll('table tr')].map((tr) => tr.innerText.replace(/\s+/g, ' ').trim());
     return boards.map((b) => ({ board: b, row: trs.find((r) => r.includes(b)) ?? null }));
-  }, ['SWE-rebench, issues 15 May', 'GSO software optimization']);
+  }, ['SWE-rebench, issues 15 May', 'GSO software optimization', 'τ^τ-bench']);
   check(`${tag} the new boards render as rows with values on /benchmarks`, seen.every((s) => s.row && /\d/.test(s.row)), JSON.stringify(seen).slice(0, 500));
   const text = await page.evaluate(() => document.body.innerText);
   check(`${tag} the published numbers appear in the table`, /64\.5/.test(text) && /47\.(06|1)\b/.test(text), '');

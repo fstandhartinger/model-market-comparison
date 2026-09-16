@@ -48,6 +48,12 @@ for bad in [dict(astro,require={'view.metadata.version':'3'}), dict(astro,compon
  try: m.parse(page,bad,None)
  except ValueError: pass
  else: raise AssertionError('changed Astro source accepted')
+nested=json.loads(json.dumps(props));nested['view'][1]['tasks'][1]['overall'][1]['lab/a'][1]['token_totals']=[0,{'input_tokens':[0,5]}]
+npage='<astro-island component-url="/_astro/BenchmarkView.X.js" props="'+h.escape(json.dumps(nested))+'"></astro-island>'
+try: m.parse(npage,astro,None)
+except ValueError: pass
+else: raise AssertionError('unlisted nested Astro field accepted')
+rows=m.parse(npage,dict(astro,ignored_nested_fields=['token_totals']),None);assert [(r['name'],r['accuracy']) for r in rows]==[('lab/a',0),('lab/b',71.2)] and 'token_totals' not in rows[0]
 try: m.parse(page.replace(h.escape('[0, 71.2]'),h.escape('[3, "2026-01-01"]')),astro,None)
 except ValueError: pass
 else: raise AssertionError('non-plain Astro encoding accepted')
