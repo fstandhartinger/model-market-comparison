@@ -19,19 +19,19 @@ export interface MatrixRow {
   saturation?: Saturation | null;
   /** CR-38.3: a preference or judge score rather than task accuracy. */
   judged?: boolean;
-  /** CR-38.2: what the verified source states about the task window and contamination control. */
-  freshness?: Freshness;
+  /** CR-38.2: what the verified source states about the task window and contamination control; null when it states nothing. */
+  freshness?: Freshness | null;
   /** The date the benchmark's results were last verified from its source (YYYY-MM-DD). */
   asOf?: string | null;
 }
 export interface Saturation { saturated: boolean; topMean: number; ceiling: number; share: number; models: number; topN: number }
 export interface Freshness {
   taskWindow: { from: string; to?: string; label?: string } | null;
-  taskWindowNote: string | null;
   contamination: string | null;
-  contaminationNote: string | null;
   source: { quote: string; field: string | null } | null;
 }
+export interface FreshnessDefaults { taskWindowNote: string | null; contaminationNote: string | null }
+export function freshnessDefaults(caveats: unknown): FreshnessDefaults;
 export const SATURATION_TOP_N: number;
 export const SATURATION_MIN_MODELS: number;
 export const SATURATION_THRESHOLD: number;
@@ -40,7 +40,7 @@ export const CAVEAT_TAGS: string[];
 export function scaleCeiling(row: Pick<MatrixRow, "unit" | "range" | "higherBetter">): number | null;
 export function saturationOf(values: (number | null)[], row: Pick<MatrixRow, "unit" | "range" | "higherBetter">): Saturation | null;
 export function isJudged(key: string, caveats: unknown): boolean;
-export function freshnessOf(key: string, caveats: unknown): Freshness;
+export function freshnessOf(key: string, caveats: unknown): Freshness | null;
 export function versionLine(row: Pick<MatrixRow, "version" | "asOf" | "freshness">): string;
 export const COMPOSITE_MIN_ROWS: number;
 export function scoreRowSubtitle(score: string, shortLabel: string): string;
@@ -54,6 +54,7 @@ export interface BenchmarkMatrix {
   /** modelId → [row index, value, basis (0 measured, 1 self-reported, 2 other)] */
   values: Record<string, [number, number, number][]>;
   generatedAt: string;
+  freshnessDefaults: FreshnessDefaults;
 }
 export function baseKey(id: string): string;
 export function rowBars(values: (number | null)[], higherBetter: boolean | null, unit: string): (number | null)[];

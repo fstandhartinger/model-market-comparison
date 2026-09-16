@@ -143,8 +143,8 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
         {matrixRow.judged && <li><b>Judged.</b> {matrix.tags.judged?.tip} {caveats.judged[matrixRow.key as keyof typeof caveats.judged]?.why}</li>}
         {matrixRow.freshness?.contamination
           ? <li>{matrixRow.freshness.contamination} <span className="opacity-70">(source: &ldquo;{matrixRow.freshness.source?.quote}&rdquo;)</span></li>
-          : <li>{matrixRow.freshness?.contaminationNote}</li>}
-        {!matrixRow.freshness?.taskWindow && <li>{matrixRow.freshness?.taskWindowNote}</li>}
+          : <li>{matrix.freshnessDefaults.contaminationNote}</li>}
+        {!matrixRow.freshness?.taskWindow && <li>{matrix.freshnessDefaults.taskWindowNote}</li>}
       </ul>}
       <div className="mt-4 border-t border-line pt-4"><SourceScore view={view} axis={ax} row={row} /></div>
       <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">

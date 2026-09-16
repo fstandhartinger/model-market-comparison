@@ -2586,8 +2586,17 @@ version and the window.
 
 **Gates:** `npm test` **520/520** (+13 new), `npx tsc --noEmit -p .` clean, `next build` clean,
 `node scripts/build-dataset.mjs` 840/660/92/2,882 (the `cat_science` change above is the only value diff).
-`bin/verify-cr-38.mjs` **81/81** against a local production build at 1440/390, light and dark, before the
-push; live on both hosts after it (evidence below).
+`bin/verify-cr-38.mjs` **81/81 per host** live on both hosts at `0033b25`, 1440/390, light and dark
+(`/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38/{canonical,legacy}/`, README there lists every check).
+
+**Regression on the suites this change touches** (canonical, same build,
+`/opt/benchmarkheaven/state/ux-evidence/iter77-regression/`): `verify-cr-25-6` **57/57**,
+`verify-cr-29-31` **52/52**, `verify-cr-1` **108/108**, `verify-cr-7` **42/42**,
+`verify-cr-28-1` **10/10**. One superseded assertion was corrected rather than pinned:
+`verify-cr-25-6` recomputed `cat_science` as the *flat* anchor mean, which was right until this build.
+It now reads which benchmarks are half-weighted **from the live page** (the category header's own (i)
+names them) and recomputes with those weights — still an independent check of the published number
+against what the product tells a user, not against this repo's constants.
 
 **Still open after this iteration:** CR-38.1 (collectors per source), CR-38.4 (aggregator provenance),
 CR-38.5 (source-health view), CR-30.2/30.3, CR-34.5, CR-37.x, CR-34.4/CR-35.3 (on hold), D09.1's receipt.

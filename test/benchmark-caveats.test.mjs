@@ -4,7 +4,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
 import {
-  saturationOf, scaleCeiling, isJudged, freshnessOf, versionLine, rowTags, categoryComposite,
+  saturationOf, scaleCeiling, isJudged, freshnessOf, freshnessDefaults, versionLine, rowTags, categoryComposite,
   SATURATION_MIN_MODELS, SATURATION_THRESHOLD, SATURATED_WEIGHT, CAVEAT_TAGS, buildBenchmarkMatrix,
 } from '../lib/benchmark-matrix.mjs';
 import { computeCategoryScores, resolveAnchors, assertNoJudgedAnchors } from '../lib/category-scores.mjs';
@@ -52,12 +52,13 @@ test('CR-38.2: every freshness entry quotes its own source verbatim', () => {
 test('CR-38.2: the freshness fields exist for every benchmark, stating the unknown when it is unknown', () => {
   const known = freshnessOf('aa-aime', caveats);
   assert.deepEqual(known.taskWindow, { from: '2025', to: '2025', label: 'AIME I and II 2025' });
-  assert.equal(known.taskWindowNote, null);
-  const unknown = freshnessOf('a-benchmark-nobody-curated', caveats);
-  assert.equal(unknown.taskWindow, null);
-  assert.match(unknown.taskWindowNote, /does not state/);
-  assert.match(unknown.contaminationNote, /no contamination control/);
-  assert.equal(unknown.source, null);
+  assert.equal(known.contamination, null);
+  // An uncurated benchmark has no per-row freshness; the sentence for "the source says nothing" is the
+  // same for all of them and travels once on the matrix, not 120 times.
+  assert.equal(freshnessOf('a-benchmark-nobody-curated', caveats), null);
+  const defaults = freshnessDefaults(caveats);
+  assert.match(defaults.taskWindowNote, /does not state/);
+  assert.match(defaults.contaminationNote, /no contamination control/);
 });
 
 test('CR-38.2: scaleCeiling only accepts bounded, higher-is-better scales', () => {
