@@ -2679,6 +2679,37 @@ product publishes at `/api/benchmark-scores`, which is the stronger check — 10
 another project's workers), and this loop's rule is that long-task/CLS numbers from a busy Sandy are not
 evidence. Nothing in this iteration adds a client-side element that can shift layout.
 
+### 4. The data refresh, unblocked to the end of `fetch-or` (`16c4119`, `808bff2`, `29e33ba`)
+
+With the checkout gate fixed, the triggered run reached `fetch-or` — further than any run since 14 Sep —
+and failed closed there, correctly. Three rounds of source review, each from the primary source and each
+captured:
+
+1. **The catalog** (`16c4119`): five identities accepted on 14 Sep are absent. Two were reviewed on
+   15 Sep and their approval had expired at 05:00Z today; three are new `:batch` tiers. Two responses (one
+   cache-busted) return the same 443 IDs and three IDs were *added*, so it is not a truncated response.
+   Each withdrawn `:batch` id still resolves to itself with **0 endpoints** while its base model stays in
+   the catalog: the batch tier lost its providers, the model did not disappear. No offer in the dataset
+   references any of the three, so the product effect is nil.
+2. **Ten models' endpoints** (`808bff2`): each fetched twice, all stable, remaining lists large (27, 30,
+   14, 11 …), four models *gained* endpoints. The approvals separate two facts the one gate conflates:
+   a **requantized** endpoint from the same provider (DeepInfra fp8→fp4 on `tencent/hy3`, Crusoe
+   unknown→bf16 on `google/gemma-4-31b-it`, CoreWeave fp8→nvfp4 on `z-ai/glm-5.3-flash` — quantization is
+   part of the identity, so it reads as a removal plus an addition and nothing is carried over), and a
+   provider that **stopped serving that model** (Crusoe, AtlasCloud, Makora), both of which still appear
+   elsewhere in the same fetch, so neither left the platform.
+3. **Two more** (`29e33ba`): Io Net on `deepseek/deepseek-v4.1-flash`, Makora on `qwen/qwen3.8-flash`.
+   The first pair of fetches for DeepSeek V4.1 Flash **disagreed** — the list was flapping — so it was not
+   approved until two further fetches agreed. An unstable set is not an approvable one.
+
+Every approval binds the complete prior and current identity digests, names exactly the missing
+identities and expires 2026-09-17T06:00:00Z; any other shrink stays fatal. Evidence, with all captured
+bodies, hashes and manifests: `ops/daily-repair-2026-09-16/` (`EVIDENCE.md`, `evidence/`, `endpoints/`).
+
+**The run is past `fetch-or` and collecting the provider catalogs** as this iteration ends
+(`/opt/benchmarkheaven-daily/runs/2026-09-16T05-45-32-109Z-412070`). It continues after exit; the next
+iteration reads its report — that is D09.1's receipt if it publishes.
+
 ### Still open after this iteration
 
 CR-30.2/30.3 · CR-34.4 + CR-35.3 (**on hold**, AA permission) · CR-34.5 — **now decided, not blocked**:
@@ -2688,8 +2719,11 @@ OpenRouter's relayed `design-arena` rows, is a different arena and cross-check-o
 
 ### Next work iteration (highest value first)
 
-1. **D09.1** — read the receipt of the run this iteration triggered (`/opt/benchmarkheaven-daily/runs/`);
-   if it failed again, the cause is now visible in its report and is no longer the checkout gate.
+1. **D09.1** — read the report of `/opt/benchmarkheaven-daily/runs/2026-09-16T05-45-32-109Z-412070`
+   (running past `fetch-or` at exit). If it published, D09.1 has its receipt. If it failed later (the
+   15 Sep run died at the chutes_efficiency live-source gauntlet, whose whitelist is Florian's and lives
+   outside this repo), the report names where. Note that today's source approvals expire
+   2026-09-17T06:00:00Z: the 05:17 run tomorrow is inside that window, a later one is not.
 2. **The eleven remaining empty boards**: ARC-AGI 3 and the τ³ boards need a critic packet and receipt
    (self-reported basis) — the same machinery `apply-identity-review.mjs` already provides. That is the next
    cheapest set of real benchmarks.
