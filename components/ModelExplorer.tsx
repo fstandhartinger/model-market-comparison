@@ -18,7 +18,7 @@ import { preferredVariantIds, collapsedName, selectableModels } from "../lib/var
 import { capShortlist } from "../lib/shortlist.mjs";
 import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
 import { FIXED_BLENDS } from "../lib/effective-cost.mjs";
-import { valueSignals } from "../lib/value-signal.mjs";
+import { valueSignals, type ValueSignal } from "../lib/value-signal.mjs";
 import { scoreRowSubtitle } from "./ScoreRows";
 import { bridgeDisclosure } from "../lib/benchmark-comparison.mjs";
 
@@ -298,6 +298,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // price settings apply; the score floor, cost cap and search do not shrink the comparison).
   const valueById = useMemo(() => valueSignals(valueReference.filter((x) => x.hasEvidence).map((x) => ({ id: x.m.id, score: x.sc, cost: x.price.value }))), [valueReference]);
 
+  // CR-44.1: sorted by adjusted cost (either direction) the reader looks from the price side, so the value signal
+  // reads "more / less capable for its price" in the Score column; every other sort keeps the cost-relative tag.
+  const priceFraming = sort === "cost";
   const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
   // F-14: Org, # benchmarks and # providers drop out on phones (hidden below md); their
   // six-column layout and widths return at md. ('hidden' alone would also hide at md+ in a
@@ -409,6 +412,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             from md up today's six columns and widths return. Widths on <col> because
             'hidden md:table-cell' is illegal on <col> — the w-0 below md keeps the hidden
             columns from eating the table-fixed width budget. */}
+        <p className="sr-only" aria-live="polite" data-value-framing={priceFraming ? "capability" : "cost"}>{valueById.size ? (priceFraming ? "Sorted by cost: value tags now sit in the Score column and mark models more or less capable than their price suggests." : "Value tags sit in the Adjusted Cost column and say how much cheaper or pricier a model is than its score predicts.") : ""}</p>
         <table aria-label="Model ranking" className="dtable w-full table-fixed text-sm">
           <colgroup>
             {/* F-46 (Fable pass 6): the Adjusted Cost header ("ADJUSTED / COST ▼" + (i)) needs
@@ -477,8 +481,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   const attached = composite ? m.composite_attached : 0;
                   const thin = composite && isThinComposite(m);
                   const evidence = `${exact} exact + ${attached} attached of 7 Composite inputs`;
+                  const valueNum = <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={thin && simple ? `Composite built on ${exact + attached} of 7 inputs` : undefined}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>;
+                  const capTag = priceFraming ? capabilityTag(valueById.get(m.id), price.value, sc) : null;
                   return <MagnitudeBar frac={sc / maxScoreVal} tone="score" thin={thin}>
-                    <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={thin && simple ? `Composite built on ${exact + attached} of 7 inputs` : undefined}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>
+                    {capTag ? <span className="bh-cost-line flex items-center justify-end gap-1.5 whitespace-nowrap">{capTag}{valueNum}</span> : valueNum}
                     {exact < 7 && !simple && <span className="mt-1 flex justify-end gap-0.5" title={evidence} aria-label={evidence} role="img">
                       {Array.from({ length: 7 }, (_, i) => <span key={i} aria-hidden="true" className={`h-1 w-1 rounded-[1px] border ${i < exact ? "border-accent bg-accent" : i < exact + attached ? "border-accent bg-accent/40" : "border-line bg-transparent"}`} />)}
                     </span>}
@@ -486,7 +492,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                 })() : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="bh-cost-cell px-3 py-2">{price.value != null ? <MagnitudeBar frac={costBarFraction(price.value) ?? 0} tone="cost"><span className="bh-cost-line flex items-center justify-end gap-1.5 whitespace-nowrap">{(() => {
                   const v = valueById.get(m.id);
-                  if (!v) return null;
+                  // CR-44.1: sorted by cost, the same signal moves to the Score column in capability words — never both.
+                  if (!v || priceFraming) return null;
                   const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
                   const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
                   const strong = v.level === "strong";
@@ -631,4 +638,18 @@ function BenchmaxxingTag({ id, name, level, score }: { id: string; name: string;
     }}>
     <span aria-hidden="true">{level === "strong" ? "⚠" : "△"}&nbsp;</span><span className="bh-bmx-words">Benchmaxxing</span>{value && <span className="bh-bmx-score">&nbsp;{value}</span>}
   </Link>;
+}
+
+/** CR-44.1: the value signal in capability words for the Score column (cost sort). Same model, same level, same arrow
+ *  shapes (straight = strong, slanted = weak); a model cheap for its score is "more capable" for its price. No score
+ *  distance is printed: read along the fitted line it extrapolates far outside the scores anyone measured, so the size
+ *  stays the cost ratio the signal is built on. Below 1024 px only the arrow shows; the words are in title and sr-only. */
+function capabilityTag(v: ValueSignal | undefined, cost: number | null, sc: number) {
+  if (!v) return null;
+  const up = v.kind === "cheap";
+  const strong = v.level === "strong";
+  const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
+  const words = up ? "more capable" : "less capable";
+  const why = `${strong ? "Well" : "Somewhat"} ${up ? "above" : "below"} the capability typical for ${cost != null ? `a $${cost < 1 ? cost.toPrecision(2) : cost.toFixed(2)} cost` : "its cost"}: its ${num(sc, 1)} score usually costs about ${ratio} ${up ? "more" : "less"}. Same signal as the ${ratio} ${up ? "cheaper" : "pricier"} tag shown when sorted by score, among ${v.n} priced models with your settings (log cost fitted against score).`;
+  return <span className="bh-value-tag" data-kind={v.kind} data-level={v.level} data-framing="capability" title={`${words} for its price. ${why}`}><span aria-hidden="true">{up ? (strong ? "↑" : "↗") : (strong ? "↓" : "↘")}</span><span className="bh-vt-full">{words}</span><span className="sr-only">{strong ? "Notably" : "Slightly"} {words} for its price: {why}</span></span>;
 }
