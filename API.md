@@ -316,6 +316,26 @@ FrontierCode 1.1 Main** (`self_reported`, owner-approved after a critic review):
 published fraction, input kept in `derivation.inputs`) and `frontiercode-cost::1.1` (mean USD per
 rollout). `subject.source_id` is `"<model>|<effort>"` and `subject.harness` the source harness.
 
+### Self-reported release-document scores (2026-09-16, secondary, non-Composite)
+
+`benchmark_results.observations` now also carries observations whose `id` begins with
+`self-reported:` — benchmark numbers a lab published about its own models in a system card, model
+card or technical report. They are `basis: "self_reported"` with `comparison_key: null`, sit on
+existing registry identities (currently `swe-bench-verified::snapshot-2026-09-10`,
+`swe-bench-multilingual::snapshot-2026-09-10`, `swe-bench-multimodal::snapshot-2026-09-10`,
+`longbench::2`, `terminal-bench::4.0`), and are excluded from the Composite and from every category
+score. Rows whose catalog configuration is unresolved keep `subject.model_id: null` and remain
+unmatched source identities.
+
+`source.file` points at the retained capture under `data/raw/benchmarks/self-reported/<date>/`; for
+a release PDF that file is the `pdftotext -layout` text layer of the captured bytes and
+`source.locator` names the original document's SHA-256 and byte length alongside the exact document
+line the value was read from and the header line that identifies the model's column. `protocol`
+names the reporting lab, the configuration the document stated, and — where a document prints one
+column for two products — that the value is that shared column's. Nothing about existing paths,
+fields or units changed; queries through `GET /api/benchmark-scores?basis=self_reported` return
+these alongside the earlier vendor rows.
+
 ### Speed and context (2026-09-15)
 
 `models[].aa_speed` = `{ output_tps, ttft_s }`: Artificial Analysis' median output tokens per second and

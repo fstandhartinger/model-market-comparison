@@ -261,9 +261,9 @@ credited below, the rest is marked open.
 | CR-29.1 | Simple mode minimum-score slider label reads 'Minimum Capability Score' with '(Benchmark Heaven Main Composite | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-18-29/{canonical,legacy}/verification.json` (`bin/verify-cr-18-29.mjs`, 60/60 per host) | two-line label + aria name + (i) title "(Benchmark Heaven Main Composite Score)"; live both hosts, 1440/390 light/dark **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-18-29.mjs` **60/60 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-18-29/{canonical,legacy}/verification.json`). |
 | CR-29.2 | The slider filters on exactly the same score shown in the top 'Benchmark Heaven Score' row of the Simple bench | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-18-29/{canonical,legacy}/verification.json` (`bin/verify-cr-18-29.mjs`, 60/60 per host) | slider filters on `s.score`, the same key as the Score row (`data-score=composite`); rows all ≥ slider value live **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-18-29.mjs` **60/60 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-18-29/{canonical,legacy}/verification.json`). |
 | CR-29.3 | Simple benchmark results table: in each benchmark row, a small tag marks scores that are outstandingly good or | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-29-31/{canonical,legacy}/verification.json` (`bin/verify-cr-29-31.mjs`, 48/48 per host) | iter 71 claude-opus: top/low outlier tags, transparent rule in tooltip + footnote (`5b8159f`); live canonical 48/48 · legacy 48/48 (after 4c6366c hint observer and fe29860 tooltip placement; first run 44/48) **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-29-31.mjs` **48/48 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-29-31/{canonical,legacy}/verification.json`). |
-| CR-30.1 | Ingest the verified self-reported scores from `/home/flori/jobs/bh-self-reported-scout-20260915/self-reported- | open | — | **Scout job FINISHED (checked 2026-09-15 20:10 UTC):** `RESULT.md` + `self-reported-scores.jsonl` (6,624 rows / 50 docs / 68 families; 6,513 fully verified rows, 111 spot-check; 15 wrong values found and none remaining; `row_sha256` per row). Scout's own ingest rules: never mix with `measured`; only exact identities (`model_id` + matching benchmark/version); drop `secondary_quote`; each row needs an owner approval bound to its hash + a **different-family critic receipt** before `score-approvals.json`. Blocked on the critic (needs codex/claude headroom — both at cap at 2026-09-15 20:00 UTC); first slice proposed: rows with `model_id` set whose benchmark/version matches a current registry identity (e.g. SWE-bench Pro, Terminal-Bench 2.1, GDPval-AA v2). |
+| CR-30.1 | Ingest the verified self-reported scores from `/home/flori/jobs/bh-self-reported-scout-20260915/self-reported- | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter76-verify-cr-30/{canonical,legacy}/verification.json` (**51/51 per host**), `ops/rebuild-2026-09/evidence/phase-05/self-reported/` | **Tranche A shipped (`67558f8`, iteration 76, claude-opus).** The scout extraction is stored as hashed evidence (`data/raw/benchmarks/self-reported/scout-20260915.jsonl.gz`, lock binds its SHA-256) and treated as a *lead only*: `scripts/capture-vendor-documents.py` re-captured all 13 primary documents (robots-respecting, bounded; PDFs retained as their text layer with the original document hash + length, because 16–27 MB of PDF does not belong in the repo), and `scripts/collect-self-reported-scores.mjs` must find the published row **and the model's column** again in our own capture. 63 rows mapped to a registry identity via the reviewed `self-reported-identity-map.json`; 25 rejected with reasons; 41 candidates; independent critic (deepseek/deepseek-v4.1-flash ≠ producer family) cleared **38**, the 3 it did not clear are in the map's `withheld` list with its objection. Live: 38 observations on 5 identities (SWE-bench Verified / Multilingual / Multimodal, LongBench v2, Terminal-Bench 4.0), 21 joined to catalog configurations; `basis: self_reported`, `comparison_key: null`, never in the Composite or a category score. Tests: `test/self-reported-vendor.test.mjs` (21). Needs a non-claude verifier: `node ops/ux-2026-09-12/bin/verify-cr-30.mjs <base> <out>`. |
 | CR-30.2 | Add the top new benchmarks from `BENCHMARK-CANDIDATES.md` (prefer ones with an independent leaderboard) to the | open | — | `BENCHMARK-CANDIDATES.md` exists (checked 2026-09-15 20:10 UTC): 492 candidate benchmarks ranked; tier-A = OSWorld 2.0, Toolathlon-Verified, MCP Atlas, FrontierSWE, PostTrainBench, SimpleQA Verified, FrontierMath v2 — ingest from their independent boards (several already sit in Epoch AI's archive), not from vendor rows. |
-| CR-30.3 | Benchmark lists/tables show the new benchmarks (Overview all-benchmarks list, Benchmarks tab, compare) with se | open | — | follows CR-30.1/30.2 |
+| CR-30.3 | Benchmark lists/tables show the new benchmarks (Overview all-benchmarks list, Benchmarks tab, compare) with se | open | — | Half of it is live with CR-30.1: the newly ingested values appear in the benchmark boards and tables and stay distinguishable (the `†` marker and the "Self-reported only" evidence filter the product already had). The other half — *new* benchmarks from `BENCHMARK-CANDIDATES.md` — waits for CR-30.2. |
 | CR-31.1 | Simple mode: when the benchmark table comes into view — via the header 'Benchmarks' link scroll or by manual s | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-29-31/{canonical,legacy}/verification.json` (`bin/verify-cr-29-31.mjs`, 48/48 per host) | iter 71 claude-opus: 'This is a simplified list' once per visit, IntersectionObserver, reduced-motion safe (`5b8159f`); live canonical 48/48 · legacy 48/48 (after 4c6366c hint observer and fe29860 tooltip placement; first run 44/48) **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-29-31.mjs` **48/48 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-29-31/{canonical,legacy}/verification.json`). |
 | CR-31.2 | Simple benchmark table: an (i) next to every benchmark name, with a tooltip that briefly explains what the ben | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-29-31/{canonical,legacy}/verification.json` (`bin/verify-cr-29-31.mjs`, 48/48 per host) | iter 71 claude-opus: (i) per benchmark: description + score type, portalled tooltip (`5b8159f`); live canonical 48/48 · legacy 48/48 (after 4c6366c hint observer and fe29860 tooltip placement; first run 44/48) **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-29-31.mjs` **48/48 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-29-31/{canonical,legacy}/verification.json`). |
 | CR-32.1 | Simple view: the 'Minimum Capability Score' label gets a small downward triangle; clicking opens a compact pop | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-32-1-2/{canonical,legacy}/verification.json` (`bin/verify-cr-32-1-2.mjs`, 40/40 per host) | iter 71 claude-opus: score picker at the slider label (category composites follow with CR-25.6) (`24485b3`); live canonical 40/40 · legacy 40/40 **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-32-1-2.mjs` **40/40 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-32-1-2/{canonical,legacy}/verification.json`). |
@@ -2331,6 +2331,83 @@ OpenRouter ones) freezes at the capture its registry entry was written against. 
 detects and parks a changed capture; what is missing is the reviewed step that mints the next
 dated registry identity and supersedes the old one. That is a worthwhile, self-contained piece of
 work for a later iteration — it would make a whole class of boards refresh daily.
+
+## Iteration 76 (2026-09-16, claude-opus) — CR-30.1 tranche A: labs' own published numbers
+
+**Shipped** (`67558f8`; gates before the push: `npm test` 506/506, `tsc` clean,
+`node scripts/build-dataset.mjs` 840/660/92/2,882, `next build` clean):
+
+- **CR-30.1 tranche A** — 38 self-reported observations from 13 release documents, details in the
+  ledger row. New: `scripts/capture-vendor-documents.py`, `scripts/collect-self-reported-scores.mjs`,
+  `lib/self-reported-vendor.mjs`, `data/raw/benchmarks/self-reported-identity-map.json`,
+  `test/self-reported-vendor.test.mjs`, `ops/ux-2026-09-12/bin/self-reported-{critic-packet,approvals}.mjs`,
+  `ops/ux-2026-09-12/bin/verify-cr-30.mjs`. Documented in `docs/benchmark-ingestion.md`,
+  `data/SCRAPING.md` and `CHANGELOG.md`.
+- **Live check (`bin/verify-cr-30.mjs`, 51/51 on both hosts, 1440/390, light and dark):** the values
+  are served with their provenance, the board keeps a lab's own run in its own evaluation group
+  ("Published board") and **does not mix it into the measured default** — it takes one group and one
+  evidence choice to see it — and the model pages show them. Three defects in the verifier itself
+  were found and fixed while writing it (a 500-row page limit read as "no rows", an assertion that
+  the board shows self-reported values by default, and a wrong option selector).
+- **Stale verifier closed (handover item 5):** `bin/verify-cr-14.mjs`'s CR-14.2 position and CR-14.4
+  axis-list assertions were retired with a header note naming their current owners
+  (`verify-cr-19-2-21-1.mjs` for the zoom window, `verify-cr-19-25.mjs` for the axis list). What
+  survived the CR-19 changes is still asserted: no saturated GPQA axis, no truncated label, and an
+  open-ended Elo/ECI axis that says it uses the measured range.
+
+**What the gauntlet actually found — the column, not the row.** The first critic round rejected the
+whole tranche on one point: the packet proved the *row* a number came from, never the *column*. It
+was right, and the verifier had the same gap. `locateColumn` now establishes the model's column from
+the header above the row — cell position in a Markdown or folded HTML table (they align from the
+right, the row carrying one extra leading cell), character column in a PDF layout table, where a
+column name printed over three lines is stitched back together and a group header over several
+columns may not widen a column onto its neighbour. That change alone removed four wrong
+attributions the extraction had made and the earlier verification had accepted.
+
+**Recorded interpretations (carry into X7 — Florian may overrule):**
+1. **A release PDF is retained as its text layer, not as its bytes.** The ingestion contract asks for
+   original bytes; four of these documents are 16–27 MB each. The manifest records the original
+   document's SHA-256 and byte length, and vendor PDF URLs are content-addressed CDN paths, so a
+   re-download can be checked against the digest that produced the extract. HTML and Markdown are
+   retained byte-for-byte as before.
+2. **A shared product column is attached, and says it is shared.** Anthropic prints one column for
+   "Claude Fable 5.1/ Mythos 5.1". The value is recorded on the configuration the source names, with
+   a sentence in the protocol stating that the document did not separate the two products.
+3. **Three candidates are withheld rather than argued.** The critic's objections to them were
+   self-contradictory in places, but a producer clearing its own rows defeats the point of the gate.
+   They sit in `self-reported-identity-map.json` under `withheld`, with the objection, for a later
+   round.
+4. **Board identities do not take vendor runs.** A registry identity that freezes one operator's own
+   run (AA, Cursor, Datacurve, Cognition, Scale AI) never takes a lab's own run of the same
+   benchmark; those 400-odd rows wait for their benchmark's own identity. Same for HLE and GPQA
+   Diamond, whose printed identity is regularly ambiguous.
+
+**Cost of the review:** six critic rounds, ~$0.012 total (deepseek-v4.1-flash via OpenRouter). Two
+attempts with other models failed closed and are worth knowing: `moonshotai/kimi-k3` is **below the
+AA 34 worker gate** on OpenRouter, and `z-ai/glm-5.3` is **not in Florian's authorized
+scheduled-worker set** (`glm-5.3-flash` is, but it spent 15+ minutes per slice on reasoning tokens).
+
+## Handover — next work iteration (written 2026-09-16, iteration 76)
+
+0. **Verify first (non-claude engine):** CR-30.1 — `node ops/ux-2026-09-12/bin/verify-cr-30.mjs <base> <out>`,
+   both hosts, `BH_RUNNER` recorded. Also still unverified from iteration 75: CR-25.6, CR-28.2,
+   CR-34.2/34.3, CR-36.1/36.2.
+1. **Widen the self-reported tranche.** The machinery is done and repeatable; what is left is
+   identity work. In order of yield: (a) add identities for the benchmarks' *own* published
+   protocols where only an operator's board identity exists today (Terminal-Bench 2.0/2.1/3.0,
+   DeepSWE v1.1, CursorBench, AutomationBench, SciCode, LiveCodeBench, AIME) — each needs its own
+   primary source; (b) resolve HLE's printed variants (full set / text-only / with tools) per
+   document; (c) SWE-bench Pro's public-vs-commercial set per document. Then re-run
+   `scripts/capture-vendor-documents.py` for the new documents, `collect-self-reported-scores.mjs`,
+   the critic packets and the approvals script. 2,555 competitor-claim rows and 555 secondary quotes
+   stay out by rule.
+2. **CR-30.2 / CR-30.3** — the tier-A benchmarks from `BENCHMARK-CANDIDATES.md` (OSWorld 2.0,
+   Toolathlon-Verified, MCP Atlas, FrontierSWE, PostTrainBench, SimpleQA Verified, FrontierMath v2),
+   from their independent boards, never from the vendor rows. CR-30.3 closes with them.
+3. **CR-34.5** — unchanged from iteration 75's handover: extend the DesignArena collector to the
+   models arena and its categories; OpenRouter's relay is then the cross-check.
+4. **CR-37.x / CR-38.x** as one intake; **F-98** (Saturated / Judged tags) still open in
+   `DESIGN-DIRECTIVES.md`; **dated-snapshot version rotation** still open from iteration 75.
 
 ## Handover — next work iteration (written 2026-09-16, iteration 75)
 

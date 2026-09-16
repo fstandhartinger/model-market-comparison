@@ -36,14 +36,22 @@ for (const c of CASES) {
   check(`CR-30.1 ${hit.id} says which lab reported it`, /self-reported by \S/i.test(hit.protocol || ''), (hit.protocol || '').slice(0, 120));
 }
 // The whole tranche, and the rule that none of it can pass as a measurement.
-const all = await api('/api/benchmark-scores?basis=self_reported&limit=500');
+const page = async (path) => {
+  const out = [];
+  for (let offset = 0; ; offset += 500) {
+    const r = await api(`${path}&limit=500&offset=${offset}`);
+    out.push(...(r.observations || []));
+    if (out.length >= r.total || !r.observations?.length) return { total: r.total, observations: out };
+  }
+};
+const all = await page('/api/benchmark-scores?basis=self_reported');
 const mine = (all.observations || []).filter((o) => o.id.startsWith('self-reported:'));
-check('CR-30.1 the release-document tranche is live', mine.length >= 40, { self_reported_total: all.total, tranche: mine.length });
+check('CR-30.1 the release-document tranche is live', mine.length >= 38, { self_reported_total: all.total, tranche: mine.length });
 check('CR-30.1 every tranche row is self-reported with a retained capture and no comparison pair',
   mine.every((o) => o.basis === 'self_reported' && o.comparison_key === null
     && String(o.source?.file || '').startsWith('data/raw/benchmarks/self-reported/')),
   mine.filter((o) => o.comparison_key !== null || !String(o.source?.file || '').startsWith('data/raw/benchmarks/self-reported/')).map((o) => o.id).slice(0, 5));
-const measured = await api('/api/benchmark-scores?basis=measured&limit=500');
+const measured = await page('/api/benchmark-scores?basis=measured');
 check('CR-30.1 no tranche row appears as an independent measurement',
   !(measured.observations || []).some((o) => o.id.startsWith('self-reported:')), '');
 
@@ -56,11 +64,22 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   page.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
   await goto(page, `${BASE}/benchmarks?benchmark=${encodeURIComponent("swe-bench-multilingual::snapshot-2026-09-10")}`);
   await settle(page);
-  let body = await page.locator('body').innerText();
-  check(`${tag} CR-30.3 the SWE-bench Multilingual board shows the newly ingested values`, /89\.1/.test(body) && /89\.5/.test(body), body.slice(0, 200).replace(/\s+/g, ' '));
+  // A vendor's own run is its own evaluation group, so the board keeps it apart from the boards'
+  // own numbers; the values are one group and one evidence choice away, never mixed into the default.
+  const group = page.locator('select').filter({ hasText: /Published board/ }).first();
+  check(`${tag} CR-30.3 the board offers the release documents as their own evaluation group`, await group.count() > 0, '');
+  const evidence = page.locator('select').filter({ hasText: /Self-reported/i }).first();
   check(`${tag} CR-30.3 the board keeps an evidence control that separates self-reported from measured`,
-    await page.locator('select').filter({ hasText: /Self-reported/i }).count() > 0
-    || /self-reported/i.test(body), '');
+    await evidence.count() > 0, '');
+  let body = await page.locator('body').innerText();
+  check(`${tag} CR-30.3 the board does not mix a lab's own claim into the measured default`, !/89\.1/.test(body), '');
+  const groupValue = await group.locator('option').filter({ hasText: /Published board/ }).first().getAttribute('value');
+  await group.selectOption(groupValue);
+  await page.waitForTimeout(2000);
+  await evidence.selectOption('self_reported');
+  await page.waitForTimeout(2500);
+  body = await page.locator('body').innerText();
+  check(`${tag} CR-30.3 choosing "Self-reported only" shows the newly ingested values`, /89\.1/.test(body) && /89\.5/.test(body), body.slice(0, 220).replace(/\s+/g, ' '));
   await page.screenshot({ path: `${OUT}/${tag}-board.png`, fullPage: false });
   await goto(page, `${BASE}/models/${encodeURIComponent('claude-fable-5.1::max')}`);
   await settle(page);
