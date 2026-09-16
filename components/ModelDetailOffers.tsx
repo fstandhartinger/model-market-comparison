@@ -3,6 +3,7 @@
 import { useMemo } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
 import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
+import { FREE_ROUTE_NOTE, isFreeRoute } from "../lib/free-route.mjs";
 import { usdPerM } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -86,12 +87,12 @@ export function ModelDetailOffers({
           <table className="dtable w-full text-sm">
             <tbody>
               {platformOffers.map((offer) => (
-                <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")}>
-                  <td className="px-2 py-1">{offer.provider}</td>
+                <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")} data-free-route={isFreeRoute(offer) ? "1" : undefined}>
+                  <td className="px-2 py-1">{offer.provider}{isFreeRoute(offer) && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">free<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}</td>
                   <td className="hidden px-2 py-1 text-xs text-gray-500 md:table-cell">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> raw in $/1M</span></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> raw out $/1M</span></td>
-                  <td className="px-2 py-1 text-right tabular font-semibold"><PriceValue price={offer.price} showEstimate={false} /></td>
+                  <td className="px-2 py-1 text-right tabular font-semibold">{isFreeRoute(offer) ? <span className="text-xs font-normal text-gray-500" title={FREE_ROUTE_NOTE}>not a paid price</span> : <PriceValue price={offer.price} showEstimate={false} />}</td>
                 </tr>
               ))}
             </tbody>

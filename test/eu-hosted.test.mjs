@@ -9,7 +9,8 @@ import ts from "typescript";
 const source = await readFile(new URL("../lib/cost.ts", import.meta.url), "utf8");
 const compiled = ts.transpileModule(source, { compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 } })
   .outputText.replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`)
-  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`);
+  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`)
+  .replace('from "./free-route.mjs"', `from "${new URL("../lib/free-route.mjs", import.meta.url).href}"`);
 const { isEuOffer } = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 const ds = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
 const offers = (family, provider) => ds.models.filter((m) => m.family_key === family).flatMap((m) => (m.offers ?? []).filter((o) => o.provider === provider));

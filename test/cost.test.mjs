@@ -9,7 +9,8 @@ const source = await readFile(new URL("../lib/cost.ts", import.meta.url), "utf8"
 const compiled = ts.transpileModule(source, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
 }).outputText.replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`)
-  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`);
+  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`)
+  .replace('from "./free-route.mjs"', `from "${new URL("../lib/free-route.mjs", import.meta.url).href}"`);
 const cost = await import(`data:text/javascript;base64,${Buffer.from(compiled).toString("base64")}`);
 
 // Exercise the real Dataset -> client projection -> shared offer scope as one
@@ -326,4 +327,63 @@ test("CR-25.4: 'Hosted in' filters per offer by hosting bucket; EU needs EU evid
   assert.equal(cost.providerBucket({ key: "x", provider: "SiliconFlow", non_us: true }), "China");
   assert.equal(cost.providerBucket({ key: "x", provider: "Nebius", non_us: true, country: "Netherlands" }), "EU");
   assert.equal(cost.providerBucket({ key: "x", provider: "Ambient", non_us: false, country: null }), "US", "the non-US flag decides, as before");
+});
+
+// CR-50.1 (CR-20260916l): a free ($0 / ":free") route is never a paid price.
+import { isFreeRoute, paidRoutes } from "../lib/free-route.mjs";
+test("CR-50.1: free routes are recognised by the :free SKU or a zero price in both directions", () => {
+  assert.equal(isFreeRoute({ or_model_id: "z-ai/glm-5.2:free", input_per_1m: 0, output_per_1m: 0 }), true);
+  assert.equal(isFreeRoute({ or_model_id: "x/y:free", input_per_1m: null, output_per_1m: null }), true);
+  assert.equal(isFreeRoute({ platform: "Direct", input_per_1m: 0, output_per_1m: 0 }), true);
+  assert.equal(isFreeRoute({ or_model_id: "z-ai/glm-5.2", input_per_1m: 0.49, output_per_1m: 1.56 }), false);
+  assert.equal(isFreeRoute({ input_per_1m: 0, output_per_1m: 1 }), false, "a route that bills output is paid");
+  assert.equal(isFreeRoute({ input_per_1m: null, output_per_1m: null }), false, "unpriced is not free");
+  assert.deepEqual(paidRoutes([{ input_per_1m: 0, output_per_1m: 0 }, { input_per_1m: 1, output_per_1m: 2 }]).length, 1);
+});
+
+const freeOffer = { key: "OpenRouter::Decart", platform: "OpenRouter", provider: "Decart", or_model_id: "z-ai/glm-5.2:free", endpoint_tag: "decart/fp4", status: 0, input_per_1m: 0, output_per_1m: 0, region: "global", eu_hosted: false };
+const paidSameProvider = { key: "OpenRouter::Decart", platform: "OpenRouter", provider: "Decart", or_model_id: "z-ai/glm-5.2", endpoint_tag: "decart/fast", status: 0, input_per_1m: 2.1, output_per_1m: 6.6, region: "global", eu_hosted: false };
+const paidOther = { key: "OpenRouter::DeepInfra", platform: "OpenRouter", provider: "DeepInfra", or_model_id: "z-ai/glm-5.2", endpoint_tag: "deepinfra/fp4", status: 0, input_per_1m: 0.4875, output_per_1m: 1.56, region: "global", eu_hosted: false };
+const openScope = null;
+
+test("CR-50.1: a current free route next to paid routes — the ranking and price use the cheapest paid route", () => {
+  const ranked = cost.rankedOffers([freeOffer, paidSameProvider, paidOther], openScope, 10);
+  assert.ok(ranked.length === 2 && ranked.every((o) => !isFreeRoute(o)), "no free route ranked");
+  assert.equal(ranked[0].provider, "DeepInfra");
+  assert.ok(ranked[0].blended > 0);
+  assert.ok(ranked.some((o) => o.endpoint_tag === "decart/fast"), "the provider's free SKU does not displace its paid route");
+  // The full route list still carries the free route, so it can be shown labelled.
+  assert.ok(cost.scopedCatalogRoutes([freeOffer, paidOther], openScope, 10).some(isFreeRoute));
+});
+
+test("CR-50.1: a vanished free endpoint leaves the paid price unchanged", () => {
+  const withFree = cost.rankedOffers([freeOffer, paidOther], openScope, 10)[0].blended;
+  const without = cost.rankedOffers([paidOther], openScope, 10)[0].blended;
+  assert.equal(withFree, without);
+});
+
+test("CR-50.1: a model whose only route is free has no paid route and never prices at $0", () => {
+  assert.deepEqual(cost.rankedOffers([freeOffer], openScope, 10), []);
+  assert.deepEqual(cost.scopedCatalogOffers([freeOffer], openScope, 10), []);
+});
+
+test("CR-50.1: in the real dataset no model's price comes from a free route", () => {
+  const data = client.clientData(dataset);
+  const glm = data.models.find((m) => m.id === "glm-5.2::max");
+  if (glm) {
+    const p = cost.modelPrice(glm, data, null, 10);
+    assert.ok(p.value > 0, `GLM-5.2 priced at ${p.value}`);
+  }
+  for (const m of data.models) {
+    const r = cost.rankedOffers(data.offersByModel[m.id], null, 10);
+    assert.ok(!r.some(isFreeRoute), m.id);
+  }
+});
+
+test("CR-50.1: an AA reference price of $0 is not used as the fallback price", () => {
+  const data = client.clientData(dataset);
+  for (const m of data.models) {
+    const p = cost.modelPrice(m, data, null, 10);
+    if (p.value != null) assert.ok(p.value > 0, `${m.id} priced at $0 via ${p.provider}`);
+  }
 });

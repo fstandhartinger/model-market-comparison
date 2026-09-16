@@ -15,6 +15,7 @@ test('DB-backed requests opt out of prerender even on an in-process dataset cach
   // Isolate external DB and Next request-context boundary, execute real data.ts.
   const deps = (id) => id === 'next/cache' ? { unstable_noStore: () => dynamicCalls++ }
     : id === './db' ? { loadFromDb: async () => { dbCalls++; return db; } }
+    : id === './free-route.mjs' ? { isFreeRoute: () => false }
     : id === '../data/dataset.json' ? { models: [] } : require(id);
   new Function('require', 'exports', compiled)(deps, exports);
   const before = process.env.DATABASE_URL;

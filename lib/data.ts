@@ -1,6 +1,7 @@
 import type { Dataset, ModelRow, Offer, ScoreKey } from "./types";
 import bundled from "../data/dataset.json";
 import { loadFromDb } from "./db";
+import { isFreeRoute } from "./free-route.mjs";
 import { unstable_noStore as noStore } from "next/cache";
 
 let cache: { at: number; data: Dataset } | null = null;
@@ -40,8 +41,9 @@ export function blendedCost(input: number | null, output: number | null, inputWe
   return (inputWeight * i + o) / (inputWeight + 1);
 }
 
+/** Priced token offers; CR-50.1: free ($0 / ":free") routes are not a paid price and are left out. */
 export function tokenOffers(model: ModelRow): Offer[] {
-  return (model.offers || []).filter((o) => o.unit === "per_1m_token" && (o.input_per_1m != null || o.output_per_1m != null));
+  return (model.offers || []).filter((o) => o.unit === "per_1m_token" && (o.input_per_1m != null || o.output_per_1m != null) && !isFreeRoute(o));
 }
 
 /** Cheapest token offers by 10:1 blended cost. */
@@ -70,6 +72,7 @@ export function modelCost(model: ModelRow, inputWeight = 10): number | null {
   const c = cheapestOffers(model, 1, inputWeight);
   if (c.length) return c[0].blended;
   const ref = model.aa_reference_price;
+  if (isFreeRoute(ref)) return null; // CR-50.1: a $0 reference reports a free route, not a price
   return blendedCost(ref?.input_per_1m ?? null, ref?.output_per_1m ?? null, inputWeight);
 }
 

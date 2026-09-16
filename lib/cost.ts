@@ -2,6 +2,7 @@ import type { ClientOffer, ClientModel, ClientData } from "./client-model";
 import type { ScoreKey } from "./types";
 import { effectiveCost, fixedCost, cacheHitBaseline, FIXED_BLENDS, DEFAULT_BLEND, type EffectiveCostResult, type CacheHitBaseline } from "./effective-cost.mjs";
 import { REGION_BUCKETS, allRegions, countryBucket, hostingBucket, regionStateFromLegacy } from "./regions.mjs";
+import { isFreeRoute } from "./free-route.mjs";
 export { FIXED_BLENDS, DEFAULT_BLEND };
 
 export type PriceMode = "adjusted" | "raw";
@@ -240,13 +241,15 @@ export function scopedCatalogRoutes(
 
 /** Catalog offers that match the active scope, including active listings whose
  * public token price is not published yet. One healthy route per provider
- * survives, with a priced route preferred over an unpriced one. */
+ * survives, with a priced route preferred over an unpriced one. CR-50.1: free ($0 / ":free") routes are
+ * never a paid price, so they are left out before the per-provider choice — a provider's free SKU must not
+ * displace its paid route — and every ranking, count and chart built on this list ignores them. */
 export function scopedCatalogOffers(
   offers: ClientOffer[] | undefined,
   selection: OfferSelection,
   inputWeight: Pricing = 10,
 ): ClientOffer[] {
-  const sorted = scopedCatalogRoutes(offers, selection, inputWeight);
+  const sorted = scopedCatalogRoutes(offers, selection, inputWeight).filter((offer) => !isFreeRoute(offer));
   const seen = new Set<string>();
   return sorted.filter((offer) => {
     if (seen.has(offer.key)) return false;
@@ -286,7 +289,8 @@ export function modelPrice(m: ClientModel, data: ClientData, selection: OfferSel
   const r = rankedOffers(data.offersByModel[m.id], selection, context);
   if (r.length) return r[0].price;
   const reference: ClientOffer = { key: "AA reference", source: "Artificial Analysis reference list price", provider: "AA reference (no matching priced endpoint)", platform: "Artificial Analysis", region: "unspecified", input_per_1m: null, output_per_1m: null };
-  if (!selection || (isOfferScope(selection) && !selection.restricted)) {
+  // CR-50.1: an AA reference of $0 in both directions reports a free route, not a list price.
+  if ((!selection || (isOfferScope(selection) && !selection.restricted)) && !isFreeRoute({ input_per_1m: m.aa_ref_input, output_per_1m: m.aa_ref_output })) {
     reference.input_per_1m = m.aa_ref_input;
     reference.output_per_1m = m.aa_ref_output;
   }

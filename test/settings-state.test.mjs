@@ -11,10 +11,12 @@ const transpile = (source) => ts.transpileModule(source, {
 const asModule = (code) => `data:text/javascript;base64,${Buffer.from(code).toString("base64")}`;
 const costCode = transpile(await readFile(new URL("../lib/cost.ts", import.meta.url), "utf8"))
   .replace('from "./effective-cost.mjs"', `from "${new URL("../lib/effective-cost.mjs", import.meta.url).href}"`)
-  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`);
+  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`)
+  .replace('from "./free-route.mjs"', `from "${new URL("../lib/free-route.mjs", import.meta.url).href}"`);
 const settingsCode = transpile(await readFile(new URL("../lib/settings-state.ts", import.meta.url), "utf8"))
   .replace('from "./cost"', `from "${asModule(costCode)}"`)
-  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`);
+  .replace('from "./regions.mjs"', `from "${new URL("../lib/regions.mjs", import.meta.url).href}"`)
+  .replace('from "./free-route.mjs"', `from "${new URL("../lib/free-route.mjs", import.meta.url).href}"`);
 const { SETTINGS_DEFAULTS, sanitizeSettings, advancedFiltersActive, anyFiltersActive } = await import(asModule(settingsCode));
 
 const load = (payload) => ({ ...SETTINGS_DEFAULTS, ...sanitizeSettings(payload) });

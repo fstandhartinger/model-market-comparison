@@ -6,6 +6,7 @@ import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } 
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, scopeFromSettings, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
+import { FREE_ROUTE_NOTE, isFreeRoute } from "../lib/free-route.mjs";
 import { Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
@@ -443,6 +444,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
               const allOffers = scopedCatalogRoutes(data.offersByModel[m.id], offerScope, ctx).map((offer) => ({
                 ...offer, price: offerPrice(offer, ctx),
               })).sort((a, b) => {
+                // CR-50.1: free routes are listed for provenance, after every paid route.
+                const free = Number(isFreeRoute(a)) - Number(isFreeRoute(b));
+                if (free) return free;
                 const channel = (channelRankByKey.get(a.key) ?? Infinity) - (channelRankByKey.get(b.key) ?? Infinity);
                 if (channel) return channel;
                 const representative = Number(routeSignature(b) === representativeByKey.get(b.key))
@@ -576,19 +580,21 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                               const p = provByKey.get(o.key);
                               const isRepresentative = routeSignature(o) === representativeByKey.get(o.key);
                               const priceRank = isRepresentative ? channelRankByKey.get(o.key) : null;
+                              const free = isFreeRoute(o);
                               return (
-                                <tr key={o.key + i} className="border-b border-line/40">
-                                  <td className="py-1 pr-1 text-gray-500">{priceRank != null ? `#${priceRank}` : o.price.value == null ? "—" : "alt"}</td>
+                                <tr key={o.key + i} className="border-b border-line/40" data-free-route={free ? "1" : undefined}>
+                                  <td className="py-1 pr-1 text-gray-500">{free ? "—" : priceRank != null ? `#${priceRank}` : o.price.value == null ? "—" : "alt"}</td>
                                   <td className="py-1 pr-2 font-medium">{o.provider}
                                     {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
                                     {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
                                     {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}
                                     {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
+                                    {free && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[9px] text-gray-400">free<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}
                                     <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
                                   </td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)}</td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.output_per_1m)}</td>
-                                  <td className="py-1 tabular text-right font-semibold"><PriceValue price={o.price} compact showEstimate={false} /></td>
+                                  <td className="py-1 tabular text-right font-semibold">{free ? <span className="text-[10px] font-normal text-gray-500" title={FREE_ROUTE_NOTE}>not a paid price</span> : <PriceValue price={o.price} compact showEstimate={false} />}</td>
                                 </tr>
                               );
                             })}
