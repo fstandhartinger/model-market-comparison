@@ -101,59 +101,12 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-> **Status 2026-09-16 pass 18 (Fable), end of pass:** **F-100 landed** (`aa0e23e`, Fable) — needs a non-Fable verifier
-> (decision 5). Open for implementers: **F-101** and **F-102** (`[judgment → claude-opus]`, data + copy, no redesign).
-> Everything from pass 17 (F-94 … F-99) landed and is in the Done log; F-84/F-85/F-86 as well.
+> **Status 2026-09-16, after iteration 78 (claude-opus):** **no open directive.** F-100 (Fable) is now verified live by
+> a non-Fable engine (`verify-cr-38` 81/81 per host); **F-101** and **F-102** landed (`ae4f8a5`, `e6c17ff`) and are
+> live-checked by their implementer — both need a verifier that is not claude-opus. Everything from pass 17
+> (F-94 … F-99) is in the Done log, as are F-84/F-85/F-86 and F-100…F-102.
 
-### F-100 `[surgical, Fable — landed aa0e23e, needs a non-Fable verifier]` Benchmarks page: data strings are not copy
-*Where:* `lib/benchmark-matrix.mjs` (`versionLine`, `cohortLabel`), `components/BenchmarkMatrix.tsx`,
-`components/SimpleBenchmarks.tsx`, `components/ScoreRows.tsx`, `app/benchmarks/result/page.tsx`, `app/globals.css`,
-`test/benchmark-caveats.test.mjs`, `bin/verify-cr-38.mjs`.
-*What (as landed):* (1) `versionLine` reads "Published 2026-09-14" for a snapshot board, "Version 1.4 · results as of
-2026-09-10" for a versioned one, "· tasks from 2024 to 2025" when the source states a window; the raw
-`snapshot-… (unversioned)` identity never reaches a reader. (2) Full comparison stub: name line = name · harness (muted,
-`.bh-matrix-cohort`) · tags; the sub-line exists only for a stated task window or a version the name lacks
-(`versionSuffix`); the description's `title` carries the description and the version line. (3) Simple table: the
-harness on the name line, no sub-line. (4) Group header without a composite: empty cells with sr-only text. (5) Result
-page: one sentence when neither a contamination control nor a task window is stated. (6) Harness labels humanised
-once (`HARNESS_LABELS`).
-*Accept (both hosts, 1440/390, light/dark):* `verify-cr-38.mjs` passes (81 checks per host — the version check now
-reads the hover title); on `/benchmarks` no `.bh-matrix-sub` contains "snapshot" or "(unversioned)"; the two
-"AA Coding Agent Index v1.4" rows show "Claude Code" and "Codex" on their name lines; the "General reasoning &
-knowledge" header row has no visible "—"; `/benchmarks/result/…` for an AA index shows "Published 2026-09-1x" and one
-"states neither" sentence; `verify-cr-1`, `verify-cr-7`, `verify-cr-29-31` unchanged; `npm test` (521) and `tsc` green.
-
-### F-101 `[judgment → claude-opus]` Providers combobox: one row per company
-*Where:* `components/GlobalFilters.tsx` (`providerItems`), `components/MultiCombobox.tsx` (a grouped item may toggle
-several keys), `lib/presets.mjs` / `SettingsContext` (the excluded-provider keys stay what they are).
-*What:* the Providers list shows **Anthropic** twice (direct and the OpenRouter route), **Amazon Bedrock** next to
-**AWS Bedrock**, **Azure** next to **Azure AI Foundry** — one company, two catalog keys, and a reader cannot tell which
-one to untick. One option per company: label = the company as the site names it elsewhere (the model page's offers
-table), sub = "N routes" when more than one key folds in (e.g. "direct · via OpenRouter"), and the checkbox toggles all
-of its keys together; the search matches the company and every route name. Naming is harmonised in the catalog, not
-in the component: "Amazon Bedrock" and "AWS Bedrock" are one company (`data/` provider names → the AWS name the EU
-page already uses), "Azure" and "Azure AI Foundry" likewise. Keys, filters, presets and results do not change for a
-default user; a stored exclusion of one key still excludes that key only (shown as a mixed state, `aria-checked=
-"mixed"`).
-*Accept:* no company name appears twice in the Providers popover at either width; `verify-cr-25-36` (76) and
-`verify-cr-presets` (88) pass; a unit test folds two keys of one company into one item and toggles both; screenshots
-of the open popover at 1440 and the sheet at 390, light/dark.
-
-### F-102 `[judgment → claude-opus]` One counting rule for "benchmarks" everywhere
-*Where:* `app/page.tsx` (hero counts line, `benchmarks = registry.length`), `components/SimpleBenchmarks.tsx`
-(`catalogRows` = matrix rows), `components/BenchmarkMatrix.tsx` ("N benchmarks across K categories"), `/about`.
-*What:* today the hero says **111 benchmarks** (registry entries: family + version), the Simple section 2 says
-**"46 of the 120 benchmark results we track"** (matrix rows: harness cohorts and OpenRouter cost twins add rows), and
-the Benchmarks page says **41 benchmarks** for the same five models. One rule: **a benchmark is a board — one family +
-version; harnesses and cost twins are rows of a board, not boards.** Expose that count once from the matrix
-(`matrix.catalogBoards`) and use it in all three places: hero "111 benchmarks", section 2 "41 of the 111 benchmarks we
-track for your top 5" (numerator counts boards, not rows), Benchmarks page "41 benchmarks · 46 rows across 10
-categories" only if the row count adds information — otherwise just the boards. `/about#benchmark-tags` gets one
-sentence stating the rule. If the registry count and the board count differ (retired versions kept for history), the
-hero shows the boards with at least one current result and the Sources page explains the difference.
-*Accept:* the three numbers agree by construction (a test computes each from the dataset and asserts hero = section-2
-denominator = boards with results); the section-2 sentence and the Benchmarks-page count read "benchmarks", never
-"benchmark results"; `verify-cr-7` (42) and `verify-cr-28-1` (10) pass with their assertions updated to the rule.
+*(F-100, F-101 and F-102 are in the Done log — nothing is open.)*
 
 
 ## Design system notes (apply while touching any file above)
@@ -282,7 +235,9 @@ denominator = boards with results); the section-2 sentence and the Benchmarks-pa
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
-| F-100 Benchmarks page: version line as copy ("Published …"), harness on the name line, quiet no-composite headers, one "not stated" sentence | `aa0e23e` (Fable) | `ux-evidence/fable-20260916-pass18/{after,verify-cr-38}/` | needs a non-Fable verifier (pass 18, decision 5) |
+| F-102 one counting rule for "benchmarks": a benchmark is a board (family + version), harness cohorts and cost twins are its rows | `e6c17ff` (claude-opus, iter 78) | `ux-evidence/iter78/{canonical,legacy}/verify-f101-f102/` (52/52 per host), `…/verify-cr-28-1/` (14/14), `…/verify-cr-7/` (42/42) | live-checked by the implementer — needs a non-claude-opus verifier. Recorded deviation: the hero now reads **77 benchmarks**, not the registry's 111 (12 of those are cost twins, 28 more are boards whose observations are not joined to a catalog model yet); F-102 foresees this ("the hero shows the boards with at least one current result"), and /about states the rule. No "· N rows" second total was added (F-85 keeps one total per line) |
+| F-101 Providers combobox: one row per company, routes named, mixed state for a partly excluded company | `ae4f8a5` (claude-opus, iter 78) | `ux-evidence/iter78/{canonical,legacy}/verify-f101-f102/` (52/52 per host), `…/verify-cr-25-36/`, `…/verify-cr-presets/` | live-checked by the implementer — needs a non-claude-opus verifier. Recorded decision: only routes to the *same product* fold (direct + gateway, incl. the gateway's own spelling); two different products of one company stay two rows (Google AI Studio ≠ Vertex AI, "Claude Platform on AWS" ≠ Bedrock), because their policies, regions and prices differ |
+| F-100 Benchmarks page: version line as copy ("Published …"), harness on the name line, quiet no-composite headers, one "not stated" sentence | `aa0e23e` (Fable) | `ux-evidence/fable-20260916-pass18/{after,verify-cr-38}/`; **non-Fable re-run: `ux-evidence/iter78/{canonical,legacy}/verify-cr-38/` (81/81 per host)** | **verified by claude-opus (iteration 78, non-Fable), live on both hosts at `e6c17ff`, 1440/390, light/dark** |
 | F-99 phone: simplified-list hint under the button | `aa46183` (claude-opus, iter 74) | `ux-evidence/review-20260916T010002Z/` | verified by opencode-kimi (gate 20260916T010002Z, verify-cr-29-31 52/52 per host) |
 | F-98 Saturated / Judged tags, no new colour | `0033b25` (claude-opus, iter 77) | `ux-evidence/iter77-cr-38-final/` (81/81 per host, implementer) | needs a non-claude verifier (CR-38.2/38.3 rows) — pass 18 re-checked the tags live: drawn like Niche, one sentence each |
 | F-97 Benchmaxxing Signal sub-label "bars scaled to N, the list's highest" | `aa46183` (claude-opus, iter 74) | `ux-evidence/review-20260916T010002Z/` | verified by opencode-kimi (verify-cr-19-25 53/53 per host) |

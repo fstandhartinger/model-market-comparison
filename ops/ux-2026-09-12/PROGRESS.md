@@ -278,7 +278,7 @@ credited below, the rest is marked open.
 | CR-34.2 | New independent benchmarks from OpenRouter's own runs: GPQA Diamond (OpenRouter run), τ²-Bench Verified Airline, and the search benchmarks |  verified  | `/opt/benchmarkheaven/state/ux-evidence/iter75-cr-34-2-3/{canonical,legacy}/verification.json` (`bin/verify-cr-34-2-3.mjs`, **72/72 per host**, live at `7a08d31`, 1440/390, light/dark) | **Iteration 75 (claude-opus, implementer):** `7a08d31`, `c29c103`. Twelve registry entries at `snapshot-2026-09-15`: `openrouter-gpqa-diamond` (126 models), `openrouter-tau2-bench-airline` (120), `openrouter-search-{browsecomp,dsqa,hle,widesearch}` (2–4 each), each with a `…-cost` twin (CR-34.3). 514 joined observations; values match openrouter.ai/benchmarks row for row (GPQA top 94.4 % Gemini 3.1 Pro Preview, τ²-Bench top 80.6 % Gemini 3.7 Flash). Accuracy ± published stddev and task count travel with each observation and render in the evidence panel. **Separate registry identities from AA's same-named boards; never merged.** Identity (`lib/openrouter-benchmark-scores.mjs`): `model_permaslug` → catalog family via the OpenRouter offers the catalog already carries; a slug with no offer or claimed by two families joins nothing. GPQA/τ²-Bench rows publish no effort → family-scoped, attached once to the deterministic family representative (`lib/family-representative.mjs`, extracted from build-dataset) with a protocol note — the Epoch/DesignArena rule. Search rows do publish it (the own-run call gained `include_run_config=true`) → exact configuration join or unjoined; three DeepSeek V4 Flash rows stay unjoined because OpenRouter ran "high" and the catalog has only `::max`. Newest `last_run_timestamp` represents a family; an exact tie represents nothing. Tier: **niche**, not headline (`c29c103`) — release posts cite AA's GPQA/τ²-Bench, and the Simple table must not show two different GPQA numbers. Both boards keep every row in the full Benchmarks table. Freshness: ingestion reads the **locked capture**, not the daily-refreshed snapshot, so a dated identity and its bytes stay one pair; `ops/daily/refresh-benchmarks.mjs` reports `source_changed_retained` and parks the day's capture for a reviewed version rotation. Tests: `test/openrouter-benchmark-scores.test.mjs` (6). **Needs a non-claude engine to set `verified`.** **Verified by review gate 20260916T010002Z (opencode-kimi, non-implementer):** `bin/verify-cr-34-2-3.mjs` **72/72 per host** at `958f207`, 1440/390, light/dark. Independent spot-check against the lock-pinned capture (`4fab3d14…`, as_of 2026-09-15T12:01Z): 25 sampled score rows and 246 cost-twin rows match exactly; 257+257 joined / 3 documented DeepSeek unjoined rows (OpenRouter ran "high", catalog has only `::max`); 257+257 = 514 joined, matching the ledger claim. |
 | CR-34.3 | Use OpenRouter's measured `avg_cost_per_task` as an additional, clearly labelled cost signal — never silently replacing the adjusted cost model |  verified  | same as CR-34.2 (`bin/verify-cr-34-2-3.mjs`, **72/72 per host**) | **Iteration 75 (claude-opus, implementer):** each score board has a `…-cost` twin in category `Efficiency` (unit USD, lower-is-better) holding OpenRouter's measured `avg_cost_per_task`. It rides on the score row (`costPerRollout`) and renders as "… USD per task (measured by OpenRouter)", with "measured by OpenRouter on <benchmark>" in the evidence panel. It is **never** an input to the adjusted cost model and never lands in `models[].benchmarks`. New `coverage.capability_available` / `total_capability_benchmarks` exclude `Efficiency` boards, so a cost board counts as a cell but not as a benchmark in the "#benchmarks" column. **Needs a non-claude engine to set `verified`.** **Verified by review gate 20260916T010002Z (opencode-kimi, non-implementer):** same `verify-cr-34-2-3.mjs` **72/72 per host**; 246 cost-twin observations match the locked capture's `avg_cost_per_task` exactly (0 mismatches); cost twins render "measured by OpenRouter on <benchmark>", category `Efficiency`, Unit USD, never an adjusted-cost input and excluded from `#benchmarks` via `capability_available` (re-read in build code). |
 | CR-34.4 | Add Artificial Analysis Agentic Index (from this API or AA directly) to the taxonomy, category composites (Age | open (ON HOLD: AA permission pending, see CR-35.3) | — | — |
-| CR-34.5 | Use the API's DesignArena rows to fill gaps and cross-check existing DesignArena values (categories: website,  | open | — | — |
+| CR-34.5 | Use the API's DesignArena rows to fill gaps and cross-check existing DesignArena values (categories: website,  | open (blocked on Florian) | `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/` | **Iteration 78 (claude-opus):** the source's own rules were read before widening anything — `designarena.ai/robots.txt` says `Disallow: /api/`, and the Arcada Labs terms forbid access "using any engine, software, tool, agent, device, or mechanism (including spiders, robots, crawlers, data mining tools, or the like) other than … generally available third-party web browsers". No API documentation, licence or attribution clause exists there. The daily run calls `POST /api/leaderboard` and `GET /api/registry` every day, and no terms review for this source exists in the repo. The other half of CR-34.5 cannot substitute: OpenRouter's relayed `design-arena` rows are the "models" arena (iteration 76) and are cross-check-only. Nothing widened, nothing switched off unilaterally (DesignArena values are visible product: the Compare radar's Full-Stack axis, CR-14/CR-15). **Escalated to Florian, Telegram 13762, 2026-09-16 04:37 UTC** — ask Arcada Labs as with AA · keep as a documented risk · drop the source. |
 | CR-34.6 | Evaluate OpenRouter's media benchmarks (Image, Video) and whether they fit the product; document the decision | verified | `data/raw/openrouter-benchmarks.method.md` ("Decision" paragraph); CHANGELOG | **Iteration 72 (opencode-kimi):** evaluated — the API's media surface (Image, Video; samples + per-output $) targets generation models with non-text capability scores; Benchmark Heaven's taxonomy, category composites, benchmaxxing method and adjusted-cost model all assume text-capability task accuracy. A media score has no honest place in any of them. **Decision: not ingested** (documented in the method md, flagged for X7). Re-openable if Florian wants a media section. **Needs a non-kimi verifier.** **Verified by iteration 73 (claude-opus, non-implementer):** decision paragraph present in the method md ("Media benchmarks … not ingested"), flagged for X7 (`/opt/benchmarkheaven/state/ux-evidence/iter73-verify-cr-34-35/verification.json`). |
 | CR-35.1 | Attribute Artificial Analysis wherever AA data is shown: a visible 'Data: Artificial Analysis' (linked to http | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-35/{canonical,legacy}/verification.json` (`bin/verify-cr-35.mjs`, 72/72 per host) | iter 71 claude-opus: AaCredit on footer, tooltips, cost modal, tables, value map, column chart, radar, model page, /about, Benchmaxxing (`738432c`); live canonical 72/72 · legacy 72/72 (after c9b97d7/e99d640 and the tap() harness fix) **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-35.mjs` **72/72 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-35/{canonical,legacy}/verification.json`). |
 | CR-35.2 | A prominent 'BETA — Work in progress' tag in the site header (next to the logo/name) on all pages, plus a shor | verified | `/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-35/{canonical,legacy}/verification.json` (`bin/verify-cr-35.mjs`, 72/72 per host) | iter 71 claude-opus: BETA — Work in progress pill + note on hover/focus/tap; phone header fits (`738432c`, `c9b97d7`, `e99d640`); live canonical 72/72 · legacy 72/72 (after c9b97d7/e99d640 and the tap() harness fix) **Verified by iteration 72 (opencode-kimi, non-implementer):** `bin/verify-cr-35.mjs` **72/72 per host** live on both hosts at `d2929fa`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/iter72-verify-cr-35/{canonical,legacy}/verification.json`). |
@@ -296,7 +296,7 @@ credited below, the rest is marked open.
 | CR-38.3 | Human-preference arenas (Arena, DesignArena, EQ-Bench-style judged scores) are labelled as preference/judged s | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38-final/{canonical,legacy}/verification.json` (`bin/verify-cr-38.mjs`, **81/81 per host** live at `5c43c4e`); the reviewer's verdicts at `/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38/judged-review-kimi.json`; unit tests `test/benchmark-caveats.test.mjs` | **Iteration 77 (claude-opus, implementer):** `0033b25`, `5c43c4e`. **Definition recorded in the data** (`data/benchmark-caveats.json` → `judged_definition`): a benchmark is judged when the published number ranks or rates outputs by preference or quality; a judge that only checks whether an answer is *correct* (equality checker, majority vote on accuracy, an LLM normalising an entity name before exact matching) is **not** judged, because the ground truth still decides. 24 judged families, including DesignArena Frontend/Full-Stack, AA GDPval, AA-Briefcase, Harvey LAB-AA, APEX-Agents-AA, the EQ-Bench boards, the Lech Mazur boards, PingPong, RP-Bench, Slop Index, Spiral-Bench, Towards-AI editorial, UGI Writing, FrontierCode and SWE-Atlas Test Writing. **Every classification quotes its own source verbatim** and `test/benchmark-caveats.test.mjs` fails if a quote is not found in the cited registry/taxonomy field — a label can never rest on a sentence no source wrote. Eight near-misses are recorded with their reason in `considered_not_judged` (AA AnalystAgent, AA IT-Bench, AA MLCR, EQ-Bench Slop Score, SlopBench, LiveBench, SWE-Atlas QnA and Refactoring). **Reviewed by a different engine:** `opencode-kimi` judged all 32 rows from their own source text — 31 agreed, and its one disagreement (SWE-Atlas Test Writing, whose description names LLM judges as the graders while its siblings' do not) was checked against the registry and applied in `5c43c4e`. **Kept separate in composites:** a judged row never averages with task accuracy — in a mixed category only the task-accuracy rows make the composite and the category (i) says how many judged rows were left out; a category whose qualifying rows are *all* judged gets a composite of those and is named a judged composite. A judged benchmark may not be a CR-25.6 anchor at all: `assertNoJudgedAnchors` throws at build time rather than silently redefining a published score. **Interpretation for X7:** the Main Composite keeps DesignArena Frontend and Full-Stack (Florian's own definition) — they are two of seven *separate*, percentile-normalised slots, never averaged into task accuracy, and `/about` now says so. **Needs a non-claude verifier.** |
 | CR-38.4 | Aggregators (Lumina, BenchLM, The Aggregate, LLM Stats, Vellum, LM Council, CodeSOTA, BenchmarkList, HF find-a | open | — | — |
 | CR-38.5 | Daily/weekly refresh schedule per source with fail-closed gates and a source-health view in ops (which collect | open | — | — |
-| D09.1 | Florian directive 2026-09-15 (`09-FLORIAN-DIRECTIVE-AA-AND-FALLBACK-2026-09-15.md`): Artificial Analysis collection continues on its normal schedule (no wait for the email reply); `Nex 2.5 Pro` ahead of paid OpenRouter fallbacks only when the exact free route is confirmed | open | — | **Iteration 73 (claude-opus) check:** nothing in this repo pauses AA collection — CR-35.3 only holds *new* AA-derived metrics; live `/api/meta` dates `artificialanalysis` 2026-09-14 and `aa_efficiency` 2026-09-14T05:14Z (acceptance 1 needs the next ordinary daily run's receipt, which this loop does not start). Fallback order in `bin/delegate.sh`: `openrouter/nex-agi/nex-n2.5-pro:free` first, then Kimi K3 via Chutes (free); no paid OpenRouter model anywhere in this loop. The paid-fallback order lives in Hermes' model policy, outside this repo. |
+| D09.1 | Florian directive 2026-09-15 (`09-FLORIAN-DIRECTIVE-AA-AND-FALLBACK-2026-09-15.md`): Artificial Analysis collection continues on its normal schedule (no wait for the email reply); `Nex 2.5 Pro` ahead of paid OpenRouter fallbacks only when the exact free route is confirmed | open | — | **Iteration 73 (claude-opus) check:** nothing in this repo pauses AA collection — CR-35.3 only holds *new* AA-derived metrics; live `/api/meta` dates `artificialanalysis` 2026-09-14 and `aa_efficiency` 2026-09-14T05:14Z (acceptance 1 needs the next ordinary daily run's receipt, which this loop does not start). Fallback order in `bin/delegate.sh`: `openrouter/nex-agi/nex-n2.5-pro:free` first, then Kimi K3 via Chutes (free); no paid OpenRouter model anywhere in this loop. The paid-fallback order lives in Hermes' model policy, outside this repo. **Iteration 78 (claude-opus) check:** still open, and the reason is measured now — no ordinary daily run has succeeded since 2026-09-14. The 2026-09-15 run failed at the `chutes_efficiency` live-source-contract gauntlet: all three rounds landed on DeepSeek free endpoints that timed out (that run's `workers/unavailable-models.jsonl` records all three). Not an AA problem and not a broken exclusion — a failed model *is* recorded and excluded, but `selectModelForWorker` deliberately retries an excluded **critic** when no other authorized scheduled worker qualifies, and the whitelist (`FLORIAN_ALLOWED_SCHEDULED_WORKERS`) left nothing eligible against a DeepSeek producer. That whitelist is Florian's model policy, owned outside this loop, so this iteration records rather than changes it. Next chance: the 05:17 UTC run. |
 | D10.1 | Florian directive 2026-09-15 (`10-FLORIAN-DIRECTIVE-MOBILE-TABLE-TAGS-2026-09-15.md`): Simple overview cost tag compact `↓11×` in mobile portrait (320/375/390), desktop/tablet text unchanged, accessible words kept, no overlap/overflow | verified | `/opt/benchmarkheaven/state/ux-evidence/iter73-verify-d10-value-tag/{canonical,legacy}/verification.json` (`bin/verify-d10-value-tag.mjs`, **70/70 per host**, live at `3fd6a42`: 320/375/390 portrait, 844 landscape, 768 tablet, 1024 + 1440 desktop, light/dark) | **Iteration 73 (claude-opus, implementer):** `22ad0f9`, `3fd6a42` — compact `↓11×` (no words, no space) with the words kept in the tooltip and screen-reader text. **Decision for X7:** measured that below 1024 px the full words overflow the cost cell (at 768 they covered the score), so the compact tag applies below 1024 px, not only on phones; ≥ 1024 px unchanged. On phones the cost cell drops its left padding and uses a 2 px gap so the tag stays inside its cell at 320. The 1024 page-overflow check is scoped to the table: the header itself overflows at 1024 (pre-existing, logged in the iteration 73 block). **Needs a non-claude verifier.** **Verified by review gate 20260915T212002Z (opencode-kimi, non-implementer):** `bin/verify-d10-value-tag.mjs` **70/70 per host** live on both hosts at `4be0957` and again at `c11af043` (320/375/390 portrait, 844 landscape, 768 tablet, 1024 + 1440 desktop, light/dark; `/opt/benchmarkheaven/state/ux-evidence/review-20260915T212002Z/{canonical,legacy}/verify-d10-value-tag{,-c11af04}/`). The iteration-73 deviation (compact below 1024 px, not phones only — the full tag covered the score at 768) is documented and carried to X7; the pre-existing header overflow named here is fixed by this gate (`c11af043`, see the gate record). |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
@@ -2524,6 +2524,135 @@ daily run's receipt. 3) CR-30.2/30.3 (tier-A tier from BENCHMARK-CANDIDATES.md, 
 4) CR-34.5 (models-arena DesignArena collector; OpenRouter relay as cross-check) + CR-30.1 tranche B
 (more identity maps: Terminal-Bench 2.0/2.1/3.0 own protocols, HLE printed variants).
 5) CR-37.x/CR-38.1 as one intake when the source-intake job writes RESULT.md.
+
+---
+
+## Iteration 78 — 2026-09-16 (claude-opus, work): F-100 verified, F-101, F-102 — and DesignArena's own rules
+
+Picked from Fable pass 18's hand-over: F-100 needed a non-Fable verifier, F-101 and F-102 were the two
+open directives, both marked `[judgment → claude-opus]`. Two commits: `ae4f8a5`, `e6c17ff`.
+
+**F-100 (Fable's own change) is verified.** `bin/verify-cr-38.mjs` **81/81 per host**, live on both hosts
+at `e6c17ff`, 1440/390, light and dark — the version line reads as copy ("Published 2026-09-14"), the
+harness sits on the name line, a group header without a composite shows nothing rather than dashes, and
+the result page says "states neither …" once. Implementer Fable ≠ verifier claude-opus, so the Done log
+now records it as verified. Evidence: `ux-evidence/iter78/{canonical,legacy}/verify-cr-38/`.
+
+**F-101 — the Providers list is one row per provider product** (`ae4f8a5`). The Options panel listed
+Anthropic twice (its own API and the OpenRouter route), "Amazon Bedrock" next to "AWS Bedrock" and
+"Azure" next to "Azure AI Foundry": one company, two catalog keys, no way to tell which one to untick.
+`lib/provider-company.mjs` folds the catalog, not the component: a gateway spelling maps to the name the
+site already uses elsewhere, keyed by the **full** catalog key (`OpenRouter::Amazon Bedrock`), so a
+provider that shares a name on another platform is never renamed by accident; a row carries every key of
+its product, its routes ("direct · via OpenRouter") and a search string that still matches the gateway's
+spelling. `MultiCombobox` learned group rows: all keys selected reads checked, some of them
+`aria-checked="mixed"`, one click sets the whole company, and the catalog keys are untouched — a stored
+exclusion, a preset or a shared URL keeps meaning exactly what it meant.
+
+*Recorded decision (Florian may overrule):* only routes to the **same product** fold. Google AI Studio
+stays separate from Google Vertex AI, and "Claude Platform on AWS" stays separate from AWS Bedrock —
+different endpoints with different data policies, regions and prices, where excluding one but not the
+other is a real choice a reader may want.
+
+**F-102 — one counting rule for "benchmarks"** (`e6c17ff`). The site published three numbers for one
+collection: the hero counted registry entries (111), Simple's section 2 counted matrix rows ("46 of the
+120 benchmark results we track"), the Benchmarks page counted row keys (41). Now: **a benchmark is a
+board — one family at one version, with at least one result; a harness cohort and a cost twin are rows
+of that board.** `boardId`/`countBoards` live in `lib/benchmark-matrix.mjs` and `matrix.catalogBoards`
+travels with every derived matrix, so hero, section 2 and the Benchmarks page cannot drift apart:
+live now "**77 benchmarks**" in the hero, "**41 of the 77 benchmarks we track**" in section 2 (its rows
+are 46 — the AA Coding Agent Index alone is one board across twelve harnesses), and "41 benchmarks
+across 10 categories" on the Benchmarks page, where the row chooser counts boards as well.
+
+*Recorded deviation (for X7):* the hero fell from 111 to 77. F-102 foresees exactly this ("the hero
+shows the boards with at least one current result"). The arithmetic, exactly: the registry's 111 entries
+are **99 boards** (12 of them are cost twins, which are rows of the benchmark whose run they measured);
+**71** of those 99 have at least one row in the comparison matrix, and **6** further boards come from
+sources kept outside the registry (the two AA indices, the two Epoch ECI model fields, DesignArena
+Frontend and Full-Stack) → 71 + 6 = **77**. `/about#benchmark-tags` now states the rule and why the
+registry can be larger. **Follow-up worth a row of its own:** the 28 registry boards without a row (HLE, ARC-AGI 3, the seven Vals
+Index boards, Real-SWE, both ApprenticeBench boards, BullshitBench v1/v2, BU-Bench, RULER, HELMET,
+IFBench, τ³-banking, τ³-voice, SlopBench, PingPong English v2, OTIS Mock AIME, RP-Bench, Towards-AI
+editorial writing, Vending-Bench 2, AA LiveCodeBench) carry observations whose `subject.model_id` is
+`null` — the identity join, not the collection, is what keeps them off the site.
+
+**Two verifier corrections, both pre-existing on production and not caused by this change** (found by
+running the suites before pushing, and re-run against the unchanged production build to prove it):
+`verify-f84-f85` counted category header rows as benchmark rows — those carry a category composite and,
+by the pass-18 rule "a header row shows numbers or nothing", deliberately no data bar, so the check read
+**27/37**; excluding header rows it reads 20/20 on the untouched production build as well.
+`verify-cr-1-8-eci` matched any row mentioning "Epoch", and DeepSWE now credits "(Datacurve, via Epoch
+AI)" — **64/76**; anchored to the two ECI boards it reads 56/56 on production too.
+
+**Gates:** `npm test` **529/529** (+8: `test/provider-company.test.mjs`, `test/benchmark-count-rule.test.mjs`),
+`npx tsc --noEmit -p .` clean, `next build` clean, `node scripts/build-dataset.mjs` 840/660/92/2,882
+(timestamp-only diff, restored).
+
+**Live verification (implementer's own run — needs a non-claude-opus verifier), both hosts at `e6c17ff`,
+1440/390, light/dark**, `BH_RUNNER=claude-opus`, under `ux-evidence/iter78/{canonical,legacy}/`:
+
+| Suite | canonical | legacy | what it covers |
+| --- | --- | --- | --- |
+| `verify-f101-f102` (new) | **52/52** | **52/52** | F-101 no duplicate company, routes named, gateway spelling folded and still searchable, one click sets the whole company; F-102 hero = section-2 denominator, numerator = boards of the rows on screen, chooser agrees, no "benchmark results" |
+| `verify-cr-38` | **81/81** | **81/81** | F-100 (Fable) — non-Fable verification |
+| `verify-cr-28-1` | **14/14** | **14/14** | Simple section 2 lists every benchmark its models have; the count is the board count of its own rows |
+| `verify-cr-7` | **42/42** | **42/42** | CR-7.1/7.2/7.3 unchanged |
+| `verify-cr-25-36` | **76/76** | **76/76** | the Options panel and the three comboboxes after the F-101 change |
+| `verify-cr-1` | **108/108** | **108/108** | the Benchmarks page, incl. the status/chooser counts |
+| `verify-f84-f85` | **20/20** | **20/20** | data bars and the one-total status line (assertion corrected, see above) |
+| `verify-cr-1-8-eci` | **56/56** | **56/56** | the two Epoch ECI boards and their result pages (assertion corrected, see above) |
+| `verify-cr-presets` | **88/88** | **88/88** | model/row/filter presets, incl. a stored provider exclusion |
+
+**DesignArena: its own rules say no, and that was never checked before.** CR-34.5 asks to widen
+DesignArena coverage, so this iteration read the source's rules first — the gate the workstream applied
+to OpenRouter, Artificial Analysis and Epoch AI, and which no file in this repo records for DesignArena.
+`https://www.designarena.ai/robots.txt` says `Disallow: /api/`; the terms (Arcada Labs) forbid, verbatim,
+to *"access or search the Services or download content from the Services using any engine, software,
+tool, agent, device, or mechanism (including spiders, robots, crawlers, data mining tools, or the like)
+other than … generally available third-party web browsers"*. The daily run calls
+`POST /api/leaderboard` and `GET /api/registry` every day. No public API documentation, licence or
+attribution clause exists on that site (unlike OpenRouter's benchmarks API).
+
+What this iteration did: **did not widen it** (CR-34.5's other half, OpenRouter's relayed `design-arena`
+rows, is a different arena — "models", measured by iteration 76 — and is cross-check-only, so it cannot
+fill these boards either); **did not switch the existing collector off on its own**, because DesignArena
+values are product Florian asked for by name (the Compare radar's Full-Stack axis, CR-14/CR-15); and
+**escalated**: Telegram message 13762 (2026-09-16 04:37 UTC) with the three options — ask Arcada Labs
+for permission as with AA, keep the two boards as a documented risk, or drop DesignArena. Evidence, with
+both documents and their hashes: `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/`.
+**CR-34.5 is therefore blocked on Florian's answer, not on implementation.**
+
+**D09.1 — why it is still open.** The receipt acceptance needs an ordinary *successful* daily run. The
+2026-09-15 run failed at the live-source-contract gauntlet for `chutes_efficiency`: all three critic
+rounds landed on DeepSeek free endpoints that timed out (`unavailable-models.jsonl` in that run's
+`workers/` records all three). This is not an AA problem and not a bug in the exclusion: a failed model
+is recorded and excluded, but `selectModelForWorker` deliberately retries an excluded **critic** when no
+other authorized scheduled worker qualifies for that round — and with a DeepSeek producer the remaining
+whitelist (Nex 2.5 Pro, GLM-5.3 Flash, Kimi K3) left nothing eligible. The whitelist is Florian's model
+policy (`FLORIAN_ALLOWED_SCHEDULED_WORKERS`), owned outside this repo's UX loop, so this iteration only
+records it: **since 2026-09-14 no daily publication has succeeded**, which is why `/api/meta` still dates
+the live sources 2026-09-14. Today's 05:17 UTC run is the next chance for the receipt.
+
+Two harness notes, both recorded rather than glossed over: `verify-cr-1-8-eci` crashed once on the
+canonical host while nine suites ran back to back (no `verification.json` written) and passed **56/56**
+on a solo re-run against the same build — the same parallel-load flake earlier gates saw for `cr-6-8`
+and `cr-15`. And `verify-cr-2-5-perf` (CLS) was deliberately **not** run: the box was not idle (this
+iteration's own verifier sweep), and this loop's rule is that long-task/CLS numbers from a busy Sandy are
+not evidence. The F-101/F-102 changes add no client-side element that can shift layout (grouped rows
+render in the same popover, the counts are server-rendered numbers inside existing sentences), but a
+gate on an idle box should still re-run it.
+
+**Next work iteration (highest value first).**
+1. **D09.1** — attach the receipt of the next *successful* ordinary daily run; if 2026-09-16's 05:17 run
+   fails the same way, the blocker is the scheduled-worker whitelist and belongs in front of Florian
+   together with the DesignArena question.
+2. **CR-34.5** — blocked on Florian's DesignArena answer (see above); do not widen that source meanwhile.
+3. **CR-30.2/30.3** — tier-A boards from `BENCHMARK-CANDIDATES.md` (OSWorld 2.0, Toolathlon-Verified,
+   MCP Atlas, FrontierSWE, PostTrainBench, SimpleQA Verified, FrontierMath v2) from independent boards.
+4. **The 28 registry boards without a row** (F-102's follow-up): their observations carry
+   `subject.model_id: null`, so an identity-map pass would add real benchmarks to every count on the
+   site without collecting anything new. Cheapest large win on the board.
+5. CR-37.x / CR-38.1 / 38.4 / 38.5 as one intake when the source-intake job writes `RESULT.md`.
 
 ---
 
