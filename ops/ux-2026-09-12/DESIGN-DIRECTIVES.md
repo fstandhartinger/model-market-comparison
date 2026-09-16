@@ -1,15 +1,18 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 19: 2026-09-16 ~14:00 UTC**, the "what changed since pass 18" pass (Florian: Fable sparingly), against live
-revision `472a0bf` (https://benchmarkheaven.com) — iteration 83: CR-40 (shortlist chart: diagonal names, zoomed axis with
-a stated range, zero-baseline cogwheel), CR-41 (best-of rows for harness/version variants), CR-42.1 (two-level value
-tags), CR-46.1 (tags back in narrowed tables), CR-45.1 (link-preview copy) — plus Florian's three new reports of the
-afternoon (CR-20260916i/j/k → CR-47.1, CR-48.1, CR-49.1, seeded by this pass in `488bd51` and `4843bd2`). Evidence:
-`/opt/benchmarkheaven/state/ux-evidence/fable-20260916-pass19/` — 89 shots + `metrics.json` (Simple top 12 rows with both
-tag levels, the strong and the weak row, shortlist chart with the settings popover open and with the zero baseline,
-Simple section 2 best-of rows, Benchmarks page best-of rows, Advanced with the Benchmaxxing tag, Guided, Benchmaxxing,
-model page; 1440/390 × light/dark). Script: `bin/shoot-fable-pass19.mjs`. Pass-19 fixes (F-103, F-105) are live-checked
-by `bin/verify-cr-47.mjs` (`verify-cr-47/{canonical,legacy}/`). Earlier passes: `…/fable-20260916-pass18/` … `…/fable-20260913/`.
+**Pass 20: 2026-09-16 ~23:00 UTC**, the "what changed since pass 19" pass (Florian: Fable sparingly), against live
+revision `4b3c2a6` (canonical) / `bd02d48` (legacy; same code, ledger-only commits after `1a0c256`) — iterations 86–89:
+CR-63 pre-release UI gauntlet (Benchmaxxing second in the nav + Overview teaser, Benchmaxxing page first five seconds
+and table polish, model-page value formats and Benchmaxxing line, /eu filled and rewritten, Benchmarks data bars and
+chips, Compare accent colours, 404, footnote legend, one score name), CR-64 (capability-only Benchmaxxing), CR-51–55
+(licence, provider homepages, info panels, scrollbar gutter, LisanBench) — plus the two **radar rows of the data & math
+gauntlet (CR-65.17, CR-65.18)**, which ask the design authority to choose before anyone builds. Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260916-pass20/` — 95 shots + `metrics.json` (Overview with nav, teaser
+and footnote; Advanced; Benchmaxxing page and per-model radar for the strongest tag and for a frontier model; Compare
+radar and strength cards; Benchmarks table; model page; /eu; 404; Guided; 1440/390 × light/dark), `check.json`
+(deep-link focus, radar label boxes at 390, phone More menu), `check-error.json` (React #185 reproduction matrix).
+Scripts: `bin/shoot-fable-pass20.mjs`, `bin/check-fable-pass20.mjs`, `bin/check-fable-pass20-error.mjs`. Earlier
+passes: `…/fable-20260916-pass19/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -28,60 +31,76 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 19 (2026-09-16), what changed since pass 18
+## Verdict on the live site — pass 20 (2026-09-16), what changed since pass 19
 
-**Iteration 83 landed as asked and three of its four pieces are at the bar.** The shortlist chart is now a chart a reader
-can read: 25 columns, the five compared models in their table colours, the rest muted, names at −45° ending under their
-column, axis 60–100 with the range said three times (labels, one sentence with the break mark, the accessible name), and a
-cogwheel whose only option is "Start the axis at zero" with one sentence of explanation — on the phone the same data is
-bar rows with a 60–100 tick line. The best-of rows read "AA Coding Agent Index best of v1.4 / v1.5 · Claude Code / Codex"
-on the name line, one row per board, each value linking its own run. The link preview carries the hero copy. 0 page errors
-in 89 shots.
+**Iteration 89's gauntlet batch is at the bar; the site is ready to launch on its UI.** Benchmaxxing sits second in the
+desktop nav and in the phone More menu (`check.json`: Overview · Benchmaxxing · Compare · Charts · …); the Overview
+teaser under the table is one quiet card in the footnote's own style with a single link; the Benchmaxxing page opens on
+"Strongest signals" with flagged rows, a two-line intro, the capability-only sentence and base name + muted variant;
+the Benchmarks table's data bars no longer cut through digits, ECI rows carry chips, and the group subtitle says what it
+counts; /eu shows 21 rows on a fresh visit; the 404 is themed with three ways back; the Compare strength cards use each
+model's own colour; the model page shows one format per unit. 0 page errors in 95 shots on a plain load at any width
+(`check-error.json`: 11 width × route cases, all 0).
 
-**What was wrong, and Florian saw it first (CR-20260916i): the emphasis of the two value-tag levels was inverted.** The
-weak tag was a 1 px outline in the full signal colour on a white or near-black surface; the strong tag was the same colour
-at 13 % — a pale wash with no edge. An outline is a crisp, high-contrast shape; a tint is not. So "↗ 3.0× pricier" (weak)
-stood out and "↑ 8.3× pricier" (strong) receded, at both widths and in both themes (`desktop_light-simple-top12.png`,
-`mobile_light-simple-top12.png`). Fixed in this pass as **F-103**: one emphasis vocabulary for every signal pill in the
-table — **strong = solid pill in the signal colour, surface-coloured bold text; weak = the pale tint, medium text in the
-signal colour.** Arrows and words still differ, so colour is never the only cue. Contrast: text on the solid pill 5.9:1
-(light, teal) to 12:1 (dark, orange); text on the tint ≥ 6.5:1.
+**What is not at the bar — the two radars, exactly as the math gauntlet said, and one footnote that grew into a wall.**
 
-**The second defect is the pass-18 mistake in a new place (F-105).** On the Benchmarks page a best-of row carried
-**five lines** under the name: the name-line tag ("best of v1.4 / v1.5 · Claude Code / Codex"), a "Version 1.4 / 1.5"
-sub-line that repeated the tag, the sentence "Each model's best recorded result; open a value for its version and agent."
-(instructional copy inside a table row — the footnote and the (i) already say it), then the description. Decision 2 of
-pass 18 covers this exactly: a visible sub-line may carry only what changes how the number is read. Fixed in this pass: the
-Version sub-line is skipped on best-of rows (the tag names the versions) and the sentence moved to the description's hover;
-the row is two lines again. The Simple table was already right (the sentence sits inside its (i)).
+1. **The Compare radar lies with its shape (CR-65.17).** `desktop_light-compare-radar.png`: Claude Fable 5.1 and GPT-6
+   Astra, the two best models on the AA Intelligence Index, are drawn at ~55 on that axis (zoom floor 40, so a fifth of
+   the radius) while Epoch ECI sits on the rim — because fixed-range axes are plotted on their published 0–100 scale
+   and open-ended axes on the peer min–max. A reader sees "weak at AA Intelligence". The model page already plots its
+   own radar as *percentile among measured models*, and the Benchmaxxing radar does too; Compare is the odd one out.
+   Decision: **one convention site-wide — percentile among current models — with the native scale as the toggle** (F-107).
+2. **The Benchmaxxing radar shows the data but not the story (CR-65.18).** `desktop_light-bmx-radar.png` (Qwen3.6 Plus,
+   the strongest tag, 37.8): 24 measured axes of 271, most of the disc empty, a cluster of points at the exact centre
+   (percentile 0 collapsed onto one pixel — they read as spikes from nowhere), no ring labels, no baseline to judge
+   "jagged" against, and a grey "Other" arc that spans half the circle because the singleton topics are scattered
+   alphabetically between the real sectors. At 390 px the "Long-context" label of a 38-axis model (MiniMax-M2.7) starts
+   8 px left of the clipped wrapper (`check.json`: l 29 < wrap 37). The sentence above the chart — "The more jagged the
+   shape, the more benchmaxxed the model looks" — overstates what the signal measures (CR-65.5: mid-table models are
+   jagged by construction; rim models look smooth). Decision: **inner zero ring, three ring labels, the model's own
+   average as a dashed reference ring, singleton topics gathered at the end, the label kept inside the wrapper, and
+   honest copy** (F-108). The expected-spread band waits for CR-65.5's fit.
+3. **The Overview footnote is twelve lines on a phone** (`mobile_light-simple-footnote.png`). CR-63.7 asked the footnote
+   to explain the tags; it now explains everything in one paragraph — underlined prices, the ranking rule, striped
+   scores, both Benchmaxxing levels, four cost arrows, and the ratio reference. On a phone that is a wall between the
+   table and the teaser; on desktop four lines of 11 px. Decision: **two visible sentences and a collapsed "Legend"
+   with one line per mark** (F-109).
+4. **The Benchmarks table's group header collides at 390 px** (`mobile_light-benchmarks-table.png`): "COMPOSITE
+   INDICES" and "7 BENCHMARKS" are laid out side by side and the count wraps into the name. Stack them on narrow
+   widths (F-110).
+5. **One fragile listener.** `metrics.json` records a "Minified React error #185" (maximum update depth) on `/` at
+   390 px, light and dark. It reproduces only when a full-page screenshot is taken on the phone emulation
+   (`bin/check-fable-pass20-error.mjs`, which the pass-19 sweep did not do at this size), never on a plain load, a
+   resize or the desktop; the stack enters through a `MediaQueryList` listener in the layout chunk. Real phones do not
+   flip their hover/pointer capability, so users are unlikely to hit it — but a setState loop behind a media listener
+   is a hardening item before launch (F-111, low).
 
-Checked, not findings: the "Benchmaxxing signal" badge in the Advanced table is an outlined pill — under the new
-vocabulary that reads as a *weak* signal, which is what CR-42.2 wants the weak form to be; the strong form and the link
-are specified below (**F-104**). Guided, Benchmaxxing and the model page are unchanged since pass 18 and at the bar.
+Checked, not findings: the "Skip to main content" box in `mobile_light-bmx-radar.png` is a screenshot artefact — on the
+real deep link `#radar` holds focus and the skip link stays translated off-screen (`check.json` deepLink). The "BETA —
+Work in progress" pill stays as it is: CR-35.2 is Florian's own wording of 2026-09-15; the gauntlet's "BETA alone"
+was an engine's taste, not his (recorded under CR-63.22 in the ledger). The Compare strength cards still list an
+"Efficiency" topic — CR-64.2 keeps cost metrics visible outside Benchmaxxing, and the card names the scale, so it stays.
+Guided is unchanged since pass 18 and at the bar.
 
-**Florian's third request of the afternoon (CR-20260916k) asks the design authority to choose the interaction before
-anyone builds it.** That choice is **F-106** below: the chart *is* the picker — click a column to add or remove a model;
-the table's "Edit" reveals ×, ‹ › and "+ Add a model"; one ordered selection of five drives both; "Reset to top 5". No
-drag-and-drop.
+## Decisions in pass 20
 
-## Decisions in pass 19
-
-1. **One emphasis vocabulary for signal pills in tables (rule, added below):** solid = strong, tint = weak, outline is
-   not used for levels. Applies to the value tags now (F-103) and to the Benchmaxxing tag when CR-42.2 lands (F-104).
-2. **A best-of row's tag is its version line.** No "Version …" sub-line on a row whose name-line tag already names the
-   versions; the explanation of "best of" is footnote / hover / result-page copy, never a row line (F-105, extends
-   pass-18 decision 2).
-3. **The Simple shortlist is one ordered selection of five** shared by the chart and the table; the chart stays a ranking
-   (columns sorted by score) and shows membership and slot letter by colour, the table shows the order (F-106). Cap 5
-   everywhere, because the five series colours are the five table columns (CR-1.9's rule).
-4. **No drag-and-drop in F-106.** Click/tap on a column and the table's controls are the whole interaction; DnD between a
-   chart and a table is the noisiest possible route and the clarification allows it only as an extra.
-5. **Fable landed F-103 and F-105 itself** (CSS + a two-line TSX edit; Kimi stalls on TSX per the record). Both need a
-   **non-Fable verifier**: `BH_RUNNER=<engine> node ops/ux-2026-09-12/bin/verify-cr-47.mjs <base> <out>` on both hosts,
-   plus `verify-iter83.mjs` (its best-of head check now reads the hover, F-105).
-6. **X4 (UI meets the design bar): judged met at pass 19** for iteration 83, pending that verification.
-7. **No further Fable pass is scheduled.** F-104 and F-106 are specified so that their implementation is a check, not a
-   redesign; CR-44.1 (sort-aware framing) reuses the F-103 vocabulary unchanged.
+1. **One radar convention for the whole site: percentile among current models** (mid-rank ties, the `percentileFor`
+   cohort rule from `lib/benchmax.mjs`), with the published native scale as an explicit toggle. The model page and the
+   Benchmaxxing radar already do this; Compare joins them (F-107). Rationale: the tooltip carries the exact number, so
+   the shape's only job is comparison — and comparison across axes needs one scale.
+2. **Zero is a ring, not a point.** Every TopicRadar plot starts at the inner ring (18 % of the radius, already drawn for
+   the spokes); a percentile-0 result sits on that ring, visibly, with its own hit target (F-108 b).
+3. **The reference for "jagged" is the model's own average percentile**, drawn as a dashed ring in the series colour.
+   A band of expected within-topic spread is the right second step but depends on CR-65.5's level fit; it is specified
+   in F-108 as a follow-up, not built ahead of the math.
+4. **Copy about the signal says what it measures and where it is common.** No "the more jagged, the more benchmaxxed"
+   as a rule; "jumps between neighbouring benchmarks of one topic" plus the two caveats (mid-table models, rim models).
+5. **Footnotes explain one thing per line, behind a disclosure when longer than two sentences** (rule added to the
+   design system notes).
+6. **No code change by Fable in this pass** — every item is a directive with a live check; the two radar directives are
+   the launch-relevant ones and go to Claude Opus 5 (judgment); F-109 to F-111 are mechanical.
+7. **X4 (UI meets the design bar): judged met at pass 20** for the gauntlet batch, with the radar rows (F-107, F-108) as
+   the remaining gap that CR-65 already tracks.
 
 ## R3.1 / CR-10.1 — Hero claim (Florian's own copy since 2026-09-15; earlier Fable wording retired)
 
@@ -89,7 +108,7 @@ drag-and-drop.
 > **Every model. Every Benchmark. Actual Costs.**
 
 Line 2 accent-coloured, capitalisation exactly as Florian wrote it (CR-10.1); the muted counts line underneath is
-generated from the dataset. Re-confirmed live in passes 17, 18 and 19. History, for the record: pass 1 chose
+generated from the dataset. Re-confirmed live in passes 17–20. History, for the record: pass 1 chose
 "Every AI model benchmark we can find, in one place. / And what each model really costs you." (re-decided in pass 8,
 held through pass 16) after rejecting Florian's 2026-09-12 draft ("All … every" over-reaches, P4) and the
 "most complete … only place" form ("only" not provable against Artificial Analysis' cost per task, review gate
@@ -100,94 +119,130 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-> **Status 2026-09-16 ~16:30 UTC, review gate 20260916T153003Z (opencode-kimi):** F-103 and F-105 verified live by a
-> non-Fable engine (`verify-cr-47` 33/33, `verify-iter83` 102/102 per host, both hosts at `3eab0aa`). **F-104** (CR-42.2
-> + CR-48.1) and **F-106** (CR-49.1) landed with claude-opus in iterations 84–85 (`830d384`, `467a5c6`) and are
-> verified live by the same gate (`verify-cr-42-2` 77/77, `verify-cr-49` 86/86 per host). No open directive remains.
+> **Status 2026-09-16 ~23:30 UTC (pass 20):** five open directives, in order of value. F-107 and F-108 are the design
+> decisions for CR-65.17 and CR-65.18 (Florian: "the benchmaxxing radar chart should be also doublechecked to make sure
+> this is really looking great and tells the story perfectly"). Verification of each by a non-implementer, both hosts,
+> 1440/390, light/dark.
 
-### F-104 [judgment] — The Benchmaxxing tag is a link, in two levels, in the table's emphasis vocabulary (CR-42.2, CR-48.1)
+### F-107 [judgment] — Compare radar: one convention, percentile among current models; native scale as the toggle (CR-65.17)
 
-*Where:* `components/ModelExplorer.tsx` (the `<span className="bh-badge bh-alert">Benchmaxxing signal</span>` at the
-name cell, and the row's `onClick` expand handler), `app/globals.css` (`.bh-badge.bh-alert`), `lib/benchmaxxing*.mjs`
-(level thresholds), `app/benchmaxxing/page.tsx` + `components/BenchmaxxingWorkbench.tsx` (the deep-link target; the
-workbench already mirrors its selection into `?model=`).
+*Where:* `lib/radar.mjs` (`radarScale`, `scaleNote`, `radarWindow`), `components/BenchmarkRadar.tsx` (`seriesFor`,
+`SimpleRadar` ring labels, the "Full 0–100 scale" checkbox, the InfoTip and "How to read this chart" copy, the exact-values
+table), `lib/benchmax.mjs` (`percentileFor` — reuse, do not copy), tests in `test/radar*.test.mjs`.
 
 *What:*
-1. **Link, not span.** Render the tag as `<Link href={`/benchmaxxing?model=${encodeURIComponent(m.id)}#radar`}>` with
-   `onClick={(e) => e.stopPropagation()}` and `onKeyDown` that stops propagation for Enter/Space; the row's expand
-   handler must ignore events whose target is inside the link. The link's accessible name is
-   "Benchmaxxing signal, strong — open the report for <model>" / "…, weak — …". Focus ring: the site's
-   `focus-visible:outline-accent`. Hover: underline the words, nothing else moves.
-2. **Two levels, same vocabulary as F-103.** `data-level="strong"` = today's threshold; `data-level="weak"` = a
-   documented lower threshold from the same score (implementer picks it from the score distribution and writes the rule
-   into the ledger — not per model). Styles: strong = solid `rgb(var(--warn))` fill, `rgb(var(--panel))` text, weight 700;
-   weak = `rgb(var(--warn) / .14)` tint, `rgb(var(--warn))` text, weight 500 — i.e. reuse the `.bh-value-tag` level rules
-   (make `.bh-badge.bh-alert[data-level]` share them, or give the tag the `bh-value-tag` class). Text: "Benchmaxxing" +
-   the score (e.g. "Benchmaxxing 23.9") — the word "signal" moves to the accessible name and the title; the pill stays
-   ≤ 120 px at 1440 and does not wrap at 390 (it may show only "Benchmaxxing" below `md`).
-3. **Landing.** `/benchmaxxing?model=<id>#radar` opens with that model selected in the master list, the report section
-   scrolled into view and focused (`tabIndex={-1}` + `focus({ preventScroll: true })` after scroll), and the page
-   `<h1>` unchanged. Direct load and browser back/forward: the selection follows the URL (`popstate`), so back from the
-   report returns to the Overview with the row *not* expanded (expansion state is not in the URL — it never was).
-4. **Row behaviour unchanged elsewhere:** clicking the model name, the org, the score or the price still expands the
-   row; only the tag navigates.
+- `radarScale(value, axis, convention = 'percentile')`. **`percentile`** (default): the position is
+  `percentileFor(axis, modelId)` — the same mid-rank percentile among current, non-low-sample rows that /benchmaxxing and
+  the model page use, with the same `PERCENTILE_MIN_FAMILIES` cohort rule; when the cohort is too small the point is not
+  plotted and the tooltip says "too few models measured to place it" (never a zero). `scale: 'percentile'`. **`native`**:
+  today's behaviour (published range where one exists, else peer min–max), unchanged.
+- Both radar modes (Simple and Detailed) follow the convention; Detailed with percentiles is then the same picture as the
+  Benchmaxxing radar for the same models (and gets F-108's rings for free through `TopicRadar`).
+- The "Full 0–100 scale" checkbox becomes a two-option segmented control **"Scale: Percentile · Native"** (aria-pressed,
+  same style as the Simple/Detailed control). The zoom stays and applies to either scale; the zoom note reads
+  "Zoomed to these models: the centre is the 40th percentile, not the bottom." under Percentile and keeps today's wording
+  under Native. Ring labels read `p40 · p55 · p70 · p85 · p100` under Percentile (numbers under Native).
+- One sentence under the chart, always visible: "Each axis: percentile among current models on that benchmark
+  (p100 = best measured); hover for the published number." Under Native: "Each axis on its published scale; open-ended
+  axes (Elo, ECI) span the measured range."
+- `scaleNote` for percentiles: "p62 among 84 current models". The exact-values table shows native value and percentile
+  side by side. The InfoTip and "How to read this chart" describe both conventions in two sentences each; drop the
+  per-formula prose.
+- The preference is not persisted (a URL param `?scale=native` is fine; default stays percentile).
 
-*Accept (live, both hosts, 1440/390, light/dark):* the tag is an `<a>` with the href above; mouse click, Enter and Space
-on the focused tag navigate and the row stays collapsed (`aria-expanded` unchanged before navigation); a tap at 390 does
-the same; the landing page has the model selected and the radar section within the viewport with focus inside it;
-browser back lands on `/` with no row expanded; clicking the name cell of the same row still expands it; strong pills
-have background alpha 1 and weight 700, weak pills alpha ≤ 0.2 and weight 500 (extend `verify-cr-47.mjs` or write
-`verify-cr-42-2.mjs`); unit test for the level rule; Playwright interaction test for click / Enter / Space / tap / back.
+*Accept:* for any axis set, the compared model with the highest native value on an axis (direction-aware) sits at the
+largest radius on that axis under both conventions (unit test); on the default pair Claude Fable 5.1 ::high is plotted
+at p ≥ 95 on AA Intelligence Index (live DOM check); a screenshot at 1440/390 light/dark shows ring labels with the `p`
+prefix; the "Show exact radar values" table lists both numbers; `npm test` and `tsc` green.
 
-### F-106 [judgment] — "Edit shortlist": the chart is the picker, the table shows the order (CR-49.1)
+### F-108 [judgment] — Benchmaxxing radar tells the story: zero ring, labels, the model's average as reference, honest copy (CR-65.18)
 
-*Where:* `components/SimpleBenchmarks.tsx` (owns `ids` = the top 5 of `shown` from `HomeMode.tsx`; renders
-`ShortlistColumns` and the table), `components/ShortlistColumns.tsx` (columns / bar rows), `components/ComparePicker.tsx`
-or `MultiCombobox.tsx` (the F-95 type-ahead, reuse — do not write a third picker), `lib/shortlist.mjs` (pure selection
-logic + tests), `app/globals.css`.
+*Where:* `components/TopicRadar.tsx` (geometry, rings, labels, the `Other` sector), `components/BenchmaxxingReport.tsx`
+(the `data-jagged-note` line, the axes sentence, series average), `lib/benchmax.mjs` `groupedRadarProfile` (axis order of
+singleton topics), `app/benchmaxxing/page.tsx` (intro stays as CR-63.4 wrote it), `app/about/page.tsx#benchmaxxing`
+(one sentence), tests.
 
-*What — one ordered selection, two views:*
-1. **State.** `selection: string[]` (max **5**), `manual: boolean`. Automatic (default): the top 5 of the list above by
-   the active score, in that order — exactly today. Manual: the user's list, persisted in `localStorage`
-   `bh.simpleShortlist.v1` as `{ ids, at }`; ids no longer in the filtered list are dropped silently on load (the list is
-   what the global filters allow — the filters are never changed by this feature). Table columns **and** chart colours
-   follow `selection` order: slot 1 = series-1 = column A, and so on.
-2. **The chart is the picker.** Every column (desktop) / bar row (phone) becomes a `<button type="button"
-   aria-pressed={selected}>` wrapping the bar only — the name stays the model-page link it is today. Click/tap on a
-   muted column adds the model to the last free slot (it takes that slot's colour immediately, the table gains the
-   column); on a coloured column removes it (it turns muted, the table loses the column, later slots move up). When the
-   selection is full, muted columns get `aria-disabled="true"`, their tooltip says "Your comparison is full (5) — remove
-   a model first", and the click does nothing else. One hint line under the chart, muted, 11 px, shown until the first
-   toggle (persisted flag): "Click a column to add or remove a model from the table below." Keyboard: the column buttons
-   are in tab order in ranked order; Enter/Space toggles; the accessible name is "<model>, <value>, in your comparison
-   as A" / "<model>, <value>, not in your comparison".
-3. **The table shows the order and edits it.** In the section header, right of "Open the full comparison", one text
-   button **Edit** (`aria-pressed`, becomes **Done**). While editing, each model column header shows three 28 px
-   icon buttons under the name: **‹** (move left, hidden on column A), **›** (move right, hidden on the last column), **×**
-   (remove) — `aria-label` "Move <model> left" / "… right" / "Remove <model> from the comparison". A last header cell
-   **"+ Add a model"** (only while editing and only when < 5 selected) opens the F-95 picker (listbox under the input on
-   desktop, sheet on the phone) over the filtered list minus the selected; choosing adds to the last free slot. Nothing
-   else in the table changes while editing; the chart's toggles keep working. Order changes re-colour the chart at once.
-4. **State line and reset.** Under the H2 intro, when `manual`: one muted line "Your selection · 4 of 5 ·
-   [Reset to top 5]" (link-styled button); when automatic: nothing new (the existing intro already says "the top 5 of your
-   list above"). Reset clears the stored selection and returns to automatic, chart and table together.
-5. **Links kept.** Names in the table header and the chart remain links to the model page; "Open the full comparison"
-   passes the current selection in order (`?models=` — as today).
-6. **What is not built:** no drag-and-drop, no reordering in the chart (it is a ranking), no per-user server state, no
-   change to the global filters, no new colours.
+*What:*
+- **(a) Reference ring.** For each series draw a dashed circle (1 px, series colour, opacity .55) at the series'
+  **mean percentile over its measured axes**, with a tiny label on the 12-o'clock spoke: "avg p68" (compare mode: "A avg
+  p68", "B avg p41"). Accessible name of the chart mentions it. *Follow-up when CR-65.5 lands:* a faint filled band
+  (series colour at 8 %) between avg − s and avg + s where s is the expected within-topic spread at that level; the
+  caption then says "band = spread expected at this level".
+- **(b) Zero is a ring.** Plot radius `inner + (r − inner) · v / 100` with `inner = 0.18 r` (already the spoke start);
+  the grid circles at 0, 25, 50, 75, 100 use the same mapping, so percentile 0 sits on a visible ring, keeps its own hit
+  target and never stacks in the centre. Missing results stay gaps.
+- **(c) Ring labels.** Three muted 10 px labels on the 12-o'clock spoke: "0", "50", "100" and one word "percentile" under
+  the "100" (compact mode: none).
+- **(d) Labels inside the wrapper at 390 px.** Topic labels anchor by side (left half: right-aligned, `translateX(-100%)`
+  from the anchor; right half: left-aligned) and clamp so that every label's bounding box stays inside the chart wrapper;
+  drop the `px-14` on compact and give the wrapper `px-2` on narrow widths. Test with MiniMax-M2.7 (38 axes, has
+  Long-context) and Qwen3.6 Plus at 390 px.
+- **(e) Copy.** The line above the chart (`data-jagged-note`) becomes: "Jumps between neighbouring benchmarks of one topic
+  are what the signal measures. Mid-table models jump more often, and models at the rim look smooth — a flag is a screen,
+  not proof." The sentence under the chart: "Axes: the N benchmarks this model has results for, grouped clockwise by
+  topic. Dashed ring = this model's average percentile." The page intro (CR-63.4) stays. `/about#benchmaxxing` gets the
+  same two caveats in one sentence. `BenchmaxxingOverview` (quick look) keeps its caveat sentence but drops "The more
+  jagged the shape inside one topic, the stronger the pattern." in favour of "Jumps inside one topic are the pattern."
+- **(f) Frontier note** — covered by (e); no extra line.
+- **(g) One "Other" arc.** Singleton topics are ordered *after* the last multi-axis topic (in `groupedRadarProfile` and
+  `detailedRadarAxes`: sort key = (topic has ≥ 2 axes among the plotted ? 0 : 1, topic, name)), so the grey arc is one
+  contiguous sector at the end of the clock and the coloured sectors never overlap it. The "Other: …" line under the chart
+  stays.
 
-*Accept (live, both hosts, 1440/390, light/dark):* clicking the 7th column adds it as column E in colour series-5 and the
-table gains that column; clicking column A's bar removes it and B–E shift up in colour and position; with 5 selected the
-muted columns are `aria-disabled` with the "full" tooltip; Edit reveals ‹ › × on every header and "+ Add a model"
-appears only when < 5; keyboard: Tab reaches columns and header controls, Enter/Space toggle/move/remove; a screen
-reader hears the names above; reload keeps a manual selection and its order; "Reset to top 5" restores today's
-automatic five; the global filter panel is byte-identical before and after; 320 px shows no horizontal overflow; the
-name links still open model pages; `lib/shortlist.mjs` unit tests cover add-at-last-free-slot, remove-and-shift,
-move-left/right at the ends, full-state, dropping ids the filters no longer allow, and reset. Non-implementer live
-verification with a `verify-cr-49.mjs`.
+*Accept:* screenshots 1440/390 light/dark for Qwen3.6 Plus (strong tag) and Claude Fable 5.1 ::high (frontier) show the
+zero ring with points on it, three ring labels, a dashed average ring with its label, one contiguous grey arc; every
+topic label's bounding box is inside the wrapper at 390 px (DOM check, both models); text tests for the three copy
+strings; the signal values themselves are unchanged (this directive touches presentation only — a diff of
+`/api/benchmaxxing` before/after is empty); `npm test` and `tsc` green.
+
+### F-109 [mechanical] — Overview footnote: two sentences visible, the legend behind a disclosure
+
+*Where:* `components/ModelExplorer.tsx` (the footnote paragraph under the table, CR-63.7/63.8 text), `app/globals.css`.
+
+*What:* Visible, one short paragraph: "Underlined prices open their inputs and sources · How we calculate adjusted cost.
+Only models with measured task-token usage are ranked here; Advanced can relax that." Then a `<details class="bh-muted
+text-xs">` with the summary **"Legend: marks and tags"** (collapsed on every width) containing a `<dl>` with one row per
+mark, term in the mark's own rendering, definition ≤ 12 words:
+- striped score bar → built on fewer than 3 of 7 inputs
+- ⚠ Benchmaxxing (solid) → top 10 % most uneven across related benchmarks; opens the model's radar
+- △ Benchmaxxing (tint) → the next 10 %; a screening flag, not proof
+- ↓ cheaper / ↑ pricier (filled) → cost well below / above models with a similar score in this list
+- ↘ cheaper / ↗ pricier (outlined) → somewhat below / above
+- a last line: "Ratios compare against the models in the current view, so Simple and Advanced can differ." plus the
+  "What Benchmaxxing means →" link.
+The badge tooltips (CR-63.8) keep the ratio reference; nothing is lost, only moved.
+
+*Accept:* at 390 px the collapsed footnote is ≤ 3 lines; opened, one `<dt>/<dd>` per mark; both links present; the same
+at 1440; light/dark.
+
+### F-110 [mechanical] — Benchmarks table group header stacks on narrow widths
+
+*Where:* `components/ScoreRows.tsx` (`bh-cat-head`, `bh-cat-basis`, the count span), `app/globals.css`.
+
+*What:* Below 640 px the group row's stub renders three stacked lines: the group name (uppercase, as now), then "7
+benchmarks · 2 feed the group score" as one muted line (merge the count into the basis line on narrow widths; keep the
+inline count beside the name at ≥ 640 px). No element may overlap; the sticky first column keeps its width.
+
+*Accept:* at 360/390 px no two text boxes in a group header intersect (DOM check on the first three groups); the count
+and the basis text are both present; desktop unchanged.
+
+### F-111 [mechanical, low] — Media-query listener must not loop
+
+*Where:* the `MediaQueryList` listener that the stack in `check-error.json` enters through in the layout chunk — find it
+with a non-minified build: `next dev`, then `node ops/ux-2026-09-12/bin/check-fable-pass20-error.mjs http://127.0.0.1:3000 <out>`
+(the `fullPage` case reproduces it). Candidates from `grep matchMedia`: `InfoTip.tsx` (`hover/pointer`),
+`ShortlistColumns.tsx`, `ComparePicker.tsx`, `CostCapabilityScatter.tsx`, `MultiCombobox.tsx`.
+
+*What:* the offending effect updates state only when the value changes and never from a render path; add a Playwright
+check (existing verifier style) that a full-page screenshot of `/` at 390 px on the phone emulation records 0 page
+errors, and keep that check in the pass-20 script.
+
+*Accept:* `check-fable-pass20-error.mjs` shows `fullPage.errors: 0` for 390 and 360 px on both hosts.
 
 ## Design system notes (apply while touching any file above)
 
+- **Footnotes (pass 20):** two visible sentences at most; anything longer is a collapsed "Legend" disclosure with one
+  line per mark. A legend never repeats what a tooltip already says at the mark itself, beyond one line.
 - **Type:** display serif (`--brand-serif`) only for the H1 on `/` and page titles; everything
   else the system sans. No serif in cards.
 - **Signal pills in tables (pass 19):** one emphasis vocabulary — **strong = solid pill** in the signal colour with
@@ -245,6 +300,11 @@ verification with a `verify-cr-49.mjs`.
 - **Dashes mean "no result" and appear only in value cells.** A header or summary row with nothing to say shows nothing.
 
 ## Earlier verdicts (condensed, for the record)
+
+- **Pass 19 (2026-09-16 14:00 UTC, live `472a0bf`):** iteration 83 at the bar (shortlist chart, best-of rows, link
+  preview) except the inverted value-tag emphasis Florian reported (CR-47.1) — fixed by Fable as F-103 (solid = strong,
+  tint = weak) with F-105 (best-of rows lose two sub-lines); specified F-104 (Benchmaxxing tag as a two-level link) and
+  F-106 (chart-as-picker shortlist editing); all four verified by review gate 20260916T153003Z.
 
 - **Pass 17 (2026-09-15 18:00 UTC, live `4e126b6`):** iteration 71's batch at the bar in substance; fixed F-87 (More
   menu 256 px), F-88 (BETA non-breaking space), F-89 (short picker names), F-90 (phone map ticks), F-91 (desktop radar
