@@ -109,12 +109,12 @@ const wordmark = (theme) => {
 };
 
 const og = () =>
-  `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t"><title id="t">Benchmark Heaven — every AI model benchmark we can find, in one place, and what each model really costs you.</title>` +
+  `<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630" role="img" aria-labelledby="t"><title id="t">Benchmark Heaven — The most detailed cost–capability analysis in AI. Every model. Every Benchmark. Actual Costs.</title>` +
   `<rect width="1200" height="630" fill="#0e131b"/>` +
   `<g transform="translate(64 52) scale(1.1)">${markBody(PALETTE.dark, "OG")}</g>` +
   `<text x="150" y="102" fill="#edf2f8" font-family="Helvetica,Arial,sans-serif" font-size="34" font-weight="700">Benchmark <tspan fill="#5ae6ff">Heaven</tspan></text>` +
-  `<text x="64" y="250" fill="#edf2f8" font-family="Georgia,serif" font-size="46" letter-spacing="-1.5">Every AI model benchmark we can find, in one place.</text>` +
-  `<text x="64" y="308" fill="#67e0c1" font-family="Georgia,serif" font-size="46" letter-spacing="-1.5">And what each model really costs you.</text>` +
+  `<text x="64" y="250" fill="#edf2f8" font-family="Georgia,serif" font-size="46" letter-spacing="-1.5">The most detailed cost–capability analysis in AI.</text>` +
+  `<text x="64" y="308" fill="#67e0c1" font-family="Georgia,serif" font-size="46" letter-spacing="-1.5">Every model. Every Benchmark. Actual Costs.</text>` +
   `<text x="68" y="430" fill="#adb9ca" font-family="Helvetica,Arial,sans-serif" font-size="25">Benchmarks with their source and date · adjusted cost per task, not price per million tokens</text>` +
   `<path d="M64 508h600" stroke="#394657"/>` +
   `<text x="68" y="560" fill="#6caeff" font-family="Helvetica,Arial,sans-serif" font-size="23">benchmarkheaven.com</text>` +

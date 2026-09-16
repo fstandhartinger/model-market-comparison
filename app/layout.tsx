@@ -9,19 +9,22 @@ import type { ProviderInfo, FamilyOption } from "../lib/client-model";
 import { AaCredit } from "../components/AaCredit";
 import { EpochCredit } from "../components/EpochCredit";
 
+const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
+const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
+
 export const metadata: Metadata = {
   metadataBase: new URL("https://benchmarkheaven.com"),
   applicationName: "Benchmark Heaven",
   title: { default: "Benchmark Heaven — Model benchmarks & costs", template: "%s | Benchmark Heaven" },
-  // R3.1 (Fable 5.1, 2026-09-13): the two-part claim Florian asked for; the page proves it with
-  // generated counts. P4: never "every benchmark result".
-  description: "Every AI model benchmark we can find, in one place, each result with its source and date — and what each model really costs you per task, given the provider, its caching and the model's own token appetite.",
+  // CR-45.1 (Florian 2026-09-16): link previews carry the accepted brand copy of the hero (CR-10.1);
+  // the retired pre-CR-10.1 slogan must not reappear in any preview field or the share image.
+  description: `${BRAND_CLAIM} ${BRAND_LINE} Each benchmark result with its source and date, and the adjusted cost per task given the provider, its caching and the model's own token appetite.`,
   openGraph: {
     type: "website", siteName: "Benchmark Heaven",
-    title: "Benchmark Heaven", description: "Every AI model benchmark we can find, in one place. And what each model really costs you.",
-    images: [{ url: "/brand/og-image.png", width: 1200, height: 630, alt: "Benchmark Heaven — every AI model benchmark we can find, in one place, and what each model really costs you." }],
+    title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`,
+    images: [{ url: "/brand/og-image.png?v=2", width: 1200, height: 630, alt: `Benchmark Heaven — ${BRAND_CLAIM} ${BRAND_LINE}` }],
   },
-  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: "Every AI model benchmark we can find, in one place. And what each model really costs you.", images: ["/brand/og-image.png"] },
+  twitter: { card: "summary_large_image", title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`, images: ["/brand/og-image.png?v=2"] },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 
