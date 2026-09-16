@@ -16,7 +16,25 @@ const CHART_SCORES: ScoreKey[] = ["composite", "aa_intelligence_index", "aa_codi
 
 /** CR-33.1 (Florian 2026-09-15): a column chart above the shortlist table — every shortlisted model's score,
  *  high → low, values on the columns. The table's five columns keep their colours here. */
-export function ShortlistColumns({ data, ids, tableIds, names }: { data: ClientData; ids: string[]; tableIds: string[]; names: Map<string, string> }) {
+export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = false }: { data: ClientData; ids: string[]; tableIds: string[]; names: Map<string, string>; onToggle?: (id: string) => void; full?: boolean }) {
+  // F-106 (CR-49.1): the chart is the picker — each column's bar is a toggle for the comparison below. The hint shows
+  // until the reader's first toggle (remembered in this browser).
+  const [hintSeen, setHintSeen] = useState(true);
+  useEffect(() => { try { setHintSeen(localStorage.getItem(HINT_KEY) === "1"); } catch { /* ignore */ } }, []);
+  const toggle = (id: string, inTable: boolean) => {
+    if (!onToggle || (!inTable && full)) return;
+    onToggle(id);
+    if (!hintSeen) { setHintSeen(true); try { localStorage.setItem(HINT_KEY, "1"); } catch { /* ignore */ } }
+  };
+  const toggleProps = (id: string, value: string) => {
+    const j = tableIds.indexOf(id), inTable = j >= 0, blocked = !inTable && full, name = names.get(id) ?? id;
+    return {
+      type: "button" as const, "aria-pressed": inTable, "aria-disabled": blocked || undefined, "data-toggle": id,
+      "aria-label": `${name}, ${value}, ${inTable ? `in your comparison as ${String.fromCharCode(65 + j)}` : "not in your comparison"}`,
+      title: blocked ? `Your comparison is full (${tableIds.length}) — remove a model first` : inTable ? `Remove ${name} from the comparison below` : `Add ${name} to the comparison below`,
+      onClick: () => toggle(id, inTable),
+    };
+  };
   const [score, setScore] = useState<ScoreKey>("composite");
   // Pass 17 (Fable): below md the chart is re-laid out as bar rows (name · bar · value) so every model is
   // visible without horizontal panning; the columns stay for wider screens.
@@ -73,52 +91,57 @@ export function ShortlistColumns({ data, ids, tableIds, names }: { data: ClientD
       </div>
     </div>
     {range && <p className="bh-muted mt-1 flex items-center gap-1.5 text-[11px]" data-axis-range={kind} aria-live="polite">{kind === "zoomed" && <AxisBreak />}{range}</p>}
-    <div className={rows ? "mt-3" : "mt-3 overflow-x-auto"} role="img" aria-label={`${label}${rangeText}: ${columns.map((c) => `${names.get(c.id) ?? c.id} ${c.noData ? "no data" : formatValue(c.value as number, unit)}`).join(", ")}`}>
+    {onToggle && !hintSeen && <p className="bh-muted mt-1 text-[11px]" data-toggle-hint>{rows ? "Tap a bar" : "Click a column"} to add or remove a model from the table below.</p>}
+    <p className="sr-only" data-chart-summary>{`${label}${rangeText}: ${columns.map((c) => `${names.get(c.id) ?? c.id} ${c.noData ? "no data" : formatValue(c.value as number, unit)}`).join(", ")}`}</p>
+    <div className={rows ? "mt-3" : "mt-3 overflow-x-auto"} data-shortlist-plot>
       {rows
-        ? <div className="space-y-1" aria-hidden="true">
-          {ticks.length > 0 && <div className="flex items-center gap-2 text-[9px] leading-none" data-axis-ticks>
+        ? <div className="space-y-1">
+          {ticks.length > 0 && <div className="flex items-center gap-2 text-[9px] leading-none" aria-hidden="true" data-axis-ticks>
             <span className="w-[38%] shrink-0" />
             <span className="bh-muted relative h-3 flex-1">{ticks.map((t) => <span key={t} className="absolute top-0 -translate-x-1/2 tabular" style={{ left: pct(t) }}>{tick(t)}</span>)}</span>
             <span className="w-10 shrink-0" />
           </div>}
           {columns.map((c) => {
             const j = tableIds.indexOf(c.id);
-            return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
-              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular">{c.noData ? "" : formatValue(c.value as number, unit)}</span>
-              <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} className="order-1 w-[38%] shrink-0 hover:underline">{names.get(c.id)}</Link>
-              <span className="order-2 flex h-3.5 flex-1 items-center">
-                {c.noData
+            const valueText = c.noData ? "no data" : formatValue(c.value as number, unit);
+            const bar = <>{c.noData
                   ? <span className="bh-muted text-[9px]">no data</span>
-                  : <span className="block rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, height: "100%", background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}
-              </span>
+                  : <span className="block h-3.5 rounded-t rounded-r" style={{ width: `${Math.round((c.height ?? 0) * 100)}%`, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />}</>;
+            return <div key={c.id} className="flex items-center gap-2 text-[11px] leading-tight" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
+              <span className="order-3 w-10 shrink-0 text-right font-semibold tabular" aria-hidden="true">{c.noData ? "" : valueText}</span>
+              <Link href={`/models/${encodeURIComponent(c.id)}`} tabIndex={-1} aria-hidden="true" className="order-1 w-[38%] shrink-0 hover:underline">{names.get(c.id)}</Link>
+              {onToggle
+                ? <button {...toggleProps(c.id, valueText)} className="bh-col-toggle order-2 flex h-6 min-h-0 flex-1 items-center rounded p-0">{bar}</button>
+                : <span className="order-2 flex h-3.5 flex-1 items-center" aria-hidden="true">{bar}</span>}
             </div>;
           })}
         </div>
-        : <div className="pl-6" style={{ width: `max(100%, ${columns.length * 2.6 + 4}rem)` }} aria-hidden="true">
+        : <div className="pl-6" style={{ width: `max(100%, ${columns.length * 2.6 + 4}rem)` }}>
           <div className="relative ml-8 h-44">
             <div className="absolute inset-x-0 bottom-0 top-4" data-plot>
-              {ticks.map((t) => <div key={t} className="absolute inset-x-0 border-t border-line/70" style={{ bottom: pct(t) }} data-axis-tick={t}>
+              {ticks.map((t) => <div key={t} className="absolute inset-x-0 border-t border-line/70" style={{ bottom: pct(t) }} data-axis-tick={t} aria-hidden="true">
                 <span className="bh-muted absolute right-full mr-1.5 -translate-y-1/2 text-[9.5px] tabular">{tick(t)}</span>
               </div>)}
               {kind === "zoomed" && <span className="absolute right-full top-full mr-1.5 mt-1 leading-none"><AxisBreak /></span>}
               <div className="absolute inset-0 flex items-end gap-1.5">
                 {columns.map((c) => {
                   const j = tableIds.indexOf(c.id), h = `${Math.round((c.height ?? 0) * 1000) / 10}%`;
-                  return <div key={c.id} className="relative h-full min-w-[2.2rem] flex-1" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>
-                    {c.noData
-                      ? <span className="bh-muted absolute inset-0 flex items-end justify-center rounded-t border border-dashed border-line pb-1 text-[9px]">no data</span>
-                      : <>
-                        <span className="absolute inset-x-0 bottom-0 rounded-t" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />
-                        <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}</span>
-                      </>}
-                  </div>;
+                  const inner = c.noData
+                    ? <span className="bh-muted absolute inset-0 flex items-end justify-center rounded-t border border-dashed border-line pb-1 text-[9px]" aria-hidden="true">no data</span>
+                    : <>
+                      <span className="absolute inset-x-0 bottom-0 rounded-t" aria-hidden="true" style={{ height: h, background: j >= 0 ? seriesColor(j) : "rgb(var(--accent) / .45)" }} />
+                      <span className="absolute inset-x-0 text-center text-[10px] font-semibold leading-none tabular" aria-hidden="true" style={{ bottom: `calc(${h} + 3px)` }}>{formatValue(c.value as number, unit)}</span>
+                    </>;
+                  return onToggle
+                    ? <button key={c.id} {...toggleProps(c.id, c.noData ? "no data" : formatValue(c.value as number, unit))} className="bh-col-toggle relative block h-full min-h-0 min-w-[2.2rem] flex-1 rounded-t p-0" data-col={c.id} data-no-data={c.noData ? "1" : undefined}>{inner}</button>
+                    : <div key={c.id} className="relative h-full min-w-[2.2rem] flex-1" data-col={c.id} data-no-data={c.noData ? "1" : undefined} aria-hidden="true">{inner}</div>;
                 })}
               </div>
             </div>
           </div>
           {/* CR-40.1 (Florian 2026-09-16): names run diagonally, ending under their column, so they read without
               turning the head. */}
-          <div className="ml-8 flex h-[5.75rem] gap-1.5" data-diagonal-names>
+          <div className="ml-8 flex h-[5.75rem] gap-1.5" data-diagonal-names aria-hidden="true">
             {columns.map((c) => {
               const name = names.get(c.id) ?? c.id;
               return <div key={c.id} className="relative min-w-[2.2rem] flex-1">
@@ -133,6 +156,7 @@ export function ShortlistColumns({ data, ids, tableIds, names }: { data: ClientD
 }
 
 const PREFS_KEY = "bh.shortlistChart.v1";
+const HINT_KEY = "bh.simpleShortlistHint.v1";
 const NAME_MAX = 22;
 const tick = (v: number) => String(Math.round(v * 10) / 10);
 

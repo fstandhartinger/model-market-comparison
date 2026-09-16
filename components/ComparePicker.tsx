@@ -15,7 +15,11 @@ function Highlight({ text, query }: { text: string; query: string }) {
 
 /** CR-36.1 / F-95: the Compare "Add a model" picker — a listbox under the input (a full-width sheet on phones),
  *  one option per model (CR-36.2), keyboard ↑ ↓ Enter Esc with aria-activedescendant. */
-export function ComparePicker({ families, picks, onPick, max = 4 }: { families: CompareFamily[]; picks: string[]; onPick: (id: string) => void; max?: number }) {
+export function ComparePicker({ families, picks, onPick, max = 4, topHeading = 'Top by AA Intelligence Index', footer, autoFocus = false, onClose }: {
+  families: CompareFamily[]; picks: string[]; onPick: (id: string) => void; max?: number;
+  /** F-106: the Simple view reuses this picker over its own list and score. */
+  topHeading?: string; footer?: React.ReactNode; autoFocus?: boolean; onClose?: () => void;
+}) {
   const [query, setQuery] = useState(''), [open, setOpen] = useState(false), [active, setActive] = useState(0);
   const [phone, setPhone] = useState(false), [sheetTop, setSheetTop] = useState(0);
   const listId = useId(), inputRef = useRef<HTMLInputElement>(null), sheetInputRef = useRef<HTMLInputElement>(null);
@@ -28,18 +32,19 @@ export function ComparePicker({ families, picks, onPick, max = 4 }: { families: 
   const needle = query.trim().toLowerCase();
   const { heading, options, more } = useMemo(() => {
     const pool = families.filter((f) => !pickedFamilies.has(f.id) && !f.variants.some((v) => pickedFamilies.has(v)));
-    if (!needle) return { heading: 'Top by AA Intelligence Index', options: pool.filter((f) => f.current && f.score != null).sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || a.name.localeCompare(b.name)).slice(0, TOP_N), more: 0 };
+    if (!needle) return { heading: topHeading, options: pool.filter((f) => f.current && f.score != null).sort((a, b) => (b.score ?? 0) - (a.score ?? 0) || a.name.localeCompare(b.name)).slice(0, TOP_N), more: 0 };
     const tokens = needle.split(/\s+/);
     const hits = pool.filter((f) => { const hay = `${f.name} ${f.org}`.toLowerCase(); return tokens.every((t) => hay.includes(t)); })
       .sort((a, b) => a.name.localeCompare(b.name) || a.org.localeCompare(b.org));
     return { heading: 'Matches', options: hits.slice(0, MAX_MATCHES), more: Math.max(0, hits.length - MAX_MATCHES) };
-  }, [families, pickedFamilies, needle]);
+  }, [families, pickedFamilies, needle, topHeading]);
   useEffect(() => { setActive(0); }, [needle, open]);
   useEffect(() => {
     if (!open || !phone) return;
     setSheetTop(Math.max(0, document.querySelector('header')?.getBoundingClientRect().bottom ?? 0));
     sheetInputRef.current?.focus();
   }, [open, phone]);
+  useEffect(() => { if (autoFocus) { inputRef.current?.focus(); setOpen(true); } }, [autoFocus]);
   useEffect(() => { document.getElementById(`${listId}-opt-${active}`)?.scrollIntoView({ block: 'nearest' }); }, [active, listId]);
 
   const choose = (f: CompareFamily | undefined) => {
@@ -51,7 +56,7 @@ export function ComparePicker({ families, picks, onPick, max = 4 }: { families: 
     if (e.key === 'ArrowDown') { e.preventDefault(); if (!open) setOpen(true); else setActive((i) => Math.min(options.length - 1, i + 1)); }
     else if (e.key === 'ArrowUp') { e.preventDefault(); setActive((i) => Math.max(0, i - 1)); }
     else if (e.key === 'Enter') { e.preventDefault(); if (open) choose(options[active]); }
-    else if (e.key === 'Escape') { if (open) { e.preventDefault(); setOpen(false); } }
+    else if (e.key === 'Escape') { if (open) { e.preventDefault(); setOpen(false); } else onClose?.(); }
   };
   const inputProps = (ref: React.RefObject<HTMLInputElement | null>) => ({
     ref, role: 'combobox', 'aria-expanded': open, 'aria-controls': listId, 'aria-autocomplete': 'list' as const,
@@ -79,7 +84,7 @@ export function ComparePicker({ families, picks, onPick, max = 4 }: { families: 
     </ul>
     {!options.length && <p className="bh-muted px-3 py-3 text-sm" role="status">No model matches “{query.trim()}”.</p>}
     {more > 0 && <p className="bh-muted px-3 py-2 text-xs">{more} more — keep typing to narrow the list.</p>}
-    <p className="bh-muted border-t border-line px-3 py-1.5 text-[11px]">Score: AA Intelligence Index of the strongest variant · <AaCredit /></p>
+    <p className="bh-muted border-t border-line px-3 py-1.5 text-[11px]">{footer ?? <>Score: AA Intelligence Index of the strongest variant · <AaCredit /></>}</p>
   </div>;
 
   return <form className="relative flex min-w-[min(100%,16rem)] flex-1 items-center gap-2 sm:max-w-sm" onSubmit={(e) => { e.preventDefault(); if (open) choose(options[active]); else setOpen(true); }}>
@@ -90,7 +95,7 @@ export function ComparePicker({ families, picks, onPick, max = 4 }: { families: 
     {open && !full && phone && <div className="bh-picker-sheet" style={{ top: sheetTop }} role="dialog" aria-modal="true" aria-label="Add a model">
       <div className="flex items-center gap-2 border-b border-line p-3">
         <input {...inputProps(sheetInputRef)} aria-label="Search models" className="bh-input min-w-0 flex-1" />
-        <button type="button" className="bh-button shrink-0 px-3" onClick={() => setOpen(false)}>Close</button>
+        <button type="button" className="bh-button shrink-0 px-3" onClick={() => { setOpen(false); onClose?.(); }}>Close</button>
       </div>
       {list}
     </div>}

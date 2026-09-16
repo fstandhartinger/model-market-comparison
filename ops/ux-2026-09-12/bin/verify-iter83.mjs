@@ -55,7 +55,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     const ticks = [...f.querySelectorAll('[data-axis-tick]')].map((t) => Number(t.getAttribute('data-axis-tick')));
     const mticks = [...f.querySelectorAll('[data-axis-ticks] span span')].map((s) => s.textContent);
     const values = [...f.querySelectorAll('[data-col]:not([data-no-data]) .tabular')].map((s) => parseFloat(s.textContent)).filter((v) => Number.isFinite(v));
-    return { range: range?.textContent ?? '', kind: range?.getAttribute('data-axis-range') ?? null, axisBreak: !!f.querySelector('[data-axis-break]'), names, ticks, mticks, values, label: f.querySelector('[role="img"]')?.getAttribute('aria-label') ?? '', overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth };
+    return { range: range?.textContent ?? '', kind: range?.getAttribute('data-axis-range') ?? null, axisBreak: !!f.querySelector('[data-axis-break]'), names, ticks, mticks, values, label: f.querySelector('[role="img"]')?.getAttribute('aria-label') ?? f.querySelector('[data-chart-summary]')?.textContent ?? '', overflow: document.documentElement.scrollWidth - document.documentElement.clientWidth };
   });
   let s = await state();
   const lo = Number((s.range.match(/Axis ([\d.]+)–([\d.]+)/) || [])[1]);
@@ -68,7 +68,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     // rotate(-45deg) = matrix(0.707107, -0.707107, 0.707107, 0.707107, 0, 0)
     const diag = s.names.length >= 2 && s.names.every((t) => { const m = t.match(/matrix\(([^,]+), ([^,]+)/); return m && Math.abs(Number(m[1]) - 0.7071) < 0.01 && Math.abs(Number(m[2]) + 0.7071) < 0.01; });
     check(`${tag} CR-40.1 model names are diagonal (−45°)`, diag, s.names.slice(0, 3));
-    const clipped = await page.evaluate(() => { const f = document.querySelector('[data-shortlist-columns]'); const scroller = f.querySelector('[role="img"]'); const b = scroller.getBoundingClientRect(); return [...f.querySelectorAll('[data-name-for]')].filter((a) => { const r = a.getBoundingClientRect(); return r.left < b.left - 1 || r.bottom > b.bottom + 1; }).map((a) => a.textContent); });
+    const clipped = await page.evaluate(() => { const f = document.querySelector('[data-shortlist-columns]'); const scroller = f.querySelector('[role="img"]') ?? f.querySelector('[data-shortlist-plot]'); /* F-106: the plot holds toggles now, so it is no longer role=img */ const b = scroller.getBoundingClientRect(); return [...f.querySelectorAll('[data-name-for]')].filter((a) => { const r = a.getBoundingClientRect(); return r.left < b.left - 1 || r.bottom > b.bottom + 1; }).map((a) => a.textContent); });
     check(`${tag} CR-40.1 no diagonal name is cut off by the chart box`, clipped.length === 0, clipped);
   }
   await fig.screenshot({ path: `${OUT}/${tag}-chart-zoomed.png` }).catch(() => {});

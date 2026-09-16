@@ -352,3 +352,15 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-picker-heading { padding: 8px 12px 4px; font-size: 11px; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; color: var(--muted); }
 .bh-picker-option { cursor: pointer; padding: 7px 12px; border-left: 3px solid transparent; }
 .bh-picker-option[aria-selected="true"] { background: rgb(var(--accent) / .10); border-left-color: rgb(var(--accent)); }
+
+/* F-106 (CR-49.1): the shortlist chart's columns are toggles for the comparison table; the table's Edit mode adds
+   28 px move / remove buttons under each model name. Muted columns in a full comparison read as unavailable. */
+.bh-col-toggle { cursor: pointer; background: transparent; border: 0; }
+.bh-col-toggle:hover { background: rgb(var(--accent) / .06); }
+.bh-col-toggle:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
+.bh-col-toggle[aria-disabled="true"] { cursor: not-allowed; }
+.bh-col-toggle[aria-disabled="true"]:hover { background: transparent; }
+.bh-sel-controls { display: flex; justify-content: flex-end; gap: 4px; margin-top: 6px; }
+.bh-sel-btn { display: inline-flex; align-items: center; justify-content: center; width: 28px; height: 28px; min-height: 0; border: 1px solid rgb(var(--line)); border-radius: 6px; background: var(--surface); font-size: 15px; line-height: 1; color: var(--text); }
+.bh-sel-btn:hover { border-color: rgb(var(--accent)); color: rgb(var(--accent)); }
+.bh-sel-btn:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 1px; }

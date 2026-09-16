@@ -37,3 +37,44 @@ test('unpriced or unscored rows never displace scored ones', () => {
   const keep = capShortlist(rows, 2);
   assert.deepEqual([...keep].sort(), ['a', 'b']);
 });
+
+import { SHORTLIST_CAP, addToSelection, removeFromSelection, toggleInSelection, moveInSelection, resolveSelection, parseStoredSelection } from '../lib/shortlist.mjs';
+
+test('F-106: add goes to the last free slot; full and duplicate adds change nothing', () => {
+  assert.equal(SHORTLIST_CAP, 5);
+  assert.deepEqual(addToSelection(['a', 'b'], 'c'), ['a', 'b', 'c']);
+  assert.deepEqual(addToSelection(['a', 'b'], 'a'), ['a', 'b']);
+  const full = ['a', 'b', 'c', 'd', 'e'];
+  assert.equal(addToSelection(full, 'f'), full);
+  assert.equal(toggleInSelection(full, 'f'), full, 'toggling a muted model when full does nothing');
+  assert.deepEqual(toggleInSelection(full, 'c'), ['a', 'b', 'd', 'e']);
+});
+
+test('F-106: remove shifts later slots up', () => {
+  assert.deepEqual(removeFromSelection(['a', 'b', 'c', 'd', 'e'], 'a'), ['b', 'c', 'd', 'e']);
+  assert.deepEqual(removeFromSelection(['a', 'b'], 'z'), ['a', 'b']);
+});
+
+test('F-106: move left/right swaps neighbours and is a no-op at the ends', () => {
+  const sel = ['a', 'b', 'c'];
+  assert.deepEqual(moveInSelection(sel, 'b', -1), ['b', 'a', 'c']);
+  assert.deepEqual(moveInSelection(sel, 'b', 1), ['a', 'c', 'b']);
+  assert.equal(moveInSelection(sel, 'a', -1), sel);
+  assert.equal(moveInSelection(sel, 'c', 1), sel);
+  assert.equal(moveInSelection(sel, 'z', 1), sel);
+});
+
+test('F-106: resolve drops ids the filters no longer allow, falls back to automatic, and reset is "no stored list"', () => {
+  const auto = ['a', 'b', 'c', 'd', 'e', 'f'];
+  assert.deepEqual(resolveSelection(null, auto, auto), { ids: ['a', 'b', 'c', 'd', 'e'], manual: false }, 'reset / nothing stored = top 5');
+  assert.deepEqual(resolveSelection(['x', 'c', 'a'], ['a', 'b', 'c'], auto), { ids: ['c', 'a'], manual: true }, 'order kept, disallowed dropped');
+  assert.deepEqual(resolveSelection(['x', 'y'], ['a', 'b'], ['a', 'b']), { ids: ['a', 'b'], manual: false }, 'nothing left: automatic');
+  assert.deepEqual(resolveSelection([], ['a'], ['a']), { ids: [], manual: true }, 'emptied by the user stays empty');
+  assert.deepEqual(resolveSelection(['c'], [], []), { ids: [], manual: false }, 'list not rendered yet: nothing dropped, nothing shown');
+  assert.deepEqual(resolveSelection(['a', 'a', 'b', 'c', 'd', 'e', 'f'], auto, auto).ids, ['a', 'b', 'c', 'd', 'e'], 'deduplicated and capped');
+});
+
+test('F-106: stored value parsing is defensive', () => {
+  assert.deepEqual(parseStoredSelection(JSON.stringify({ ids: ['a'], at: 1 })), ['a']);
+  for (const bad of [null, '', '{', '{"ids":"a"}', '{"ids":[1]}']) assert.equal(parseStoredSelection(bad), null);
+});

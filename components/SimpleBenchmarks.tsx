@@ -12,8 +12,11 @@ import { seriesColor, seriesLetter } from "./BenchmarkBars";
 import { ShortlistColumns } from "./ShortlistColumns";
 import { AaCredit } from "./AaCredit";
 import { BEST_OF_NOTE } from "./BestOf";
+import { ComparePicker } from "./ComparePicker";
+import { SHORTLIST_CAP, SHORTLIST_STORAGE_KEY, addToSelection, moveInSelection, parseStoredSelection, removeFromSelection, resolveSelection, toggleInSelection } from "../lib/shortlist.mjs";
+import { SCORE_SHORT_LABELS } from "../lib/types";
 
-const COLUMNS = 5;
+const COLUMNS = SHORTLIST_CAP;
 const NOTE_KEY = "bh.simpleBenchmarksNote.v1";
 
 /** CR-7.1 / CR-7.2: Simple mode's second section — the headline benchmarks for the top of the list above,
@@ -27,7 +30,13 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
   // models have is fetched for exactly these models and replaces them.
   const [fullMatrix, setFullMatrix] = useState<{ key: string; matrix: Matrix & { catalogBoards?: number } } | null>(null);
   const candidateIds = useMemo(() => listIds.filter((id) => headline.values[id]?.length || fullMatrix?.matrix.values[id]?.length).slice(0, COLUMNS), [listIds, headline, fullMatrix]);
-  const fetchKey = listIds.slice(0, COLUMNS).join(",");
+  // F-106 / CR-49.1: one ordered selection drives the chart and the table. Automatic = today's top of the list;
+  // manual = the reader's own list, kept in this browser only. The global filters decide which models are
+  // allowed and are never changed here.
+  const [stored, setStored] = useState<string[] | null>(null);
+  useEffect(() => { try { setStored(parseStoredSelection(localStorage.getItem(SHORTLIST_STORAGE_KEY))); } catch { /* storage blocked */ } }, []);
+  const { ids: selection, manual } = useMemo<{ ids: string[]; manual: boolean }>(() => resolveSelection(stored, listIds, candidateIds), [stored, listIds, candidateIds]);
+  const fetchKey = (manual ? selection : listIds.slice(0, COLUMNS)).join(",");
   useEffect(() => {
     if (!fetchKey) return;
     let live = true;
@@ -37,7 +46,20 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
   }, [fetchKey]);
   const loaded = !!(fullMatrix && fullMatrix.key === fetchKey);
   const matrix: Matrix & { catalogBoards?: number } = loaded ? fullMatrix!.matrix : headline;
-  const ids = useMemo(() => candidateIds.filter((id) => matrix.values[id]?.length), [candidateIds, matrix]);
+  const ids = useMemo<string[]>(() => manual ? selection : candidateIds.filter((id) => matrix.values[id]?.length), [manual, selection, candidateIds, matrix]);
+  const commit = (next: string[]) => {
+    setStored(next);
+    try { localStorage.setItem(SHORTLIST_STORAGE_KEY, JSON.stringify({ ids: next, at: new Date().toISOString() })); } catch { /* ignore */ }
+  };
+  const resetSelection = () => { setStored(null); setEditing(false); try { localStorage.removeItem(SHORTLIST_STORAGE_KEY); } catch { /* ignore */ } };
+  const [editing, setEditing] = useState(false);
+  const [adding, setAdding] = useState(false);
+  const full = ids.length >= COLUMNS;
+  const nameOf = (id: string) => { const m = byId.get(id); return m ? collapsedName(m, true, preferred) : id; };
+  const pickable = useMemo(() => listIds.filter((id) => !ids.includes(id)).map((id) => {
+    const m = byId.get(id);
+    return { id, name: m ? collapsedName(m, true, preferred) : id, org: m?.org ?? "", released: m?.release_date ?? null, score: m && hasScoreEvidence(m, score) ? m.scores[score] ?? null : null, variants: [id], current: true };
+  }), [listIds, ids, byId, preferred, score]);
   const [note, setNote] = useState(false);
   // CR-7.2: on small screens say once that the full version is built for larger screens.
   useEffect(() => {
@@ -68,7 +90,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
     .filter(({ vals }) => vals.some((v) => v != null)), [matrix, lookups]);
   const groups = matrix.groups.map((g) => ({ ...g, rows: visible.filter((v) => v.row.group === g.id) })).filter((g) => g.rows.length);
   const valuesFor = (key: typeof score) => ids.map((id) => { const m = byId.get(id); return m && hasScoreEvidence(m, key) ? m.scores[key] ?? null : null; });
-  const full = `/benchmarks${ids.length ? `?${new URLSearchParams({ models: ids.join(",") })}` : ""}`;
+  const fullHref = `/benchmarks${ids.length ? `?${new URLSearchParams({ models: ids.join(",") })}` : ""}`;
 
   return <section ref={setTableEl} id="benchmarks" tabIndex={-1} aria-labelledby="bh-simple-bench-title" className="mt-10 scroll-mt-20 outline-none">
     <div className="flex flex-wrap items-end justify-between gap-x-4 gap-y-2">
@@ -79,14 +101,18 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
           {/* F-102: one counting rule — a benchmark is a board (family + version); harness cohorts and cost
               twins are rows of a board. Numerator and denominator therefore count the same thing as the hero. */}
           {ids.length ? (loaded && matrix.catalogBoards
-            ? <>Every benchmark with a result for the top {ids.length} of your list above: <span className="tabular" data-bench-count>{countBoards(visible.map((v) => v.row))}</span> of the <span className="tabular" data-catalog-count>{matrix.catalogBoards}</span> benchmarks we track.</>
-            : <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{countBoards(visible.map((v) => v.row))}</span> benchmarks side by side (loading the full list…).</>) : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
+            ? <>Every benchmark with a result for {manual ? <>your {ids.length} selected model{ids.length === 1 ? "" : "s"}</> : <>the top {ids.length} of your list above</>}: <span className="tabular" data-bench-count>{countBoards(visible.map((v) => v.row))}</span> of the <span className="tabular" data-catalog-count>{matrix.catalogBoards}</span> benchmarks we track.</>
+            : <>The headline benchmarks for {manual ? <>your {ids.length} selected model{ids.length === 1 ? "" : "s"}</> : <>the top {ids.length} of your list above</>}: <span className="tabular">{countBoards(visible.map((v) => v.row))}</span> benchmarks side by side (loading the full list…).</>) : (manual && listIds.length ? "No model selected — click a column in the chart or use Edit to add one." : "Your list above is empty — widen the score or cost limits to compare benchmarks.")}
         </p>
+        {manual && <p className="bh-muted mt-1 text-xs" data-selection-state>Your selection · <span className="tabular">{ids.length} of {COLUMNS}</span>{full && " (full)"} · <button type="button" className="text-accent underline" onClick={resetSelection} data-selection-reset>Reset to top {COLUMNS}</button></p>}
       </div>
       {/* F-99: below md the hint is a full-width line under the button (CSS order), so it never covers the intro. */}
       <span className="relative inline-flex max-md:w-full max-md:flex-col max-md:items-start max-md:gap-2">
         <span role="status" aria-live="polite" className="contents">{hint && <span className="bh-simplified-hint" data-simplified-hint>This is a simplified list</span>}</span>
-        <Link href={full} className="bh-button text-sm font-semibold">Open the full comparison <span aria-hidden="true">→</span></Link>
+        <span className="inline-flex items-center gap-3">
+          <Link href={fullHref} className="bh-button text-sm font-semibold">Open the full comparison <span aria-hidden="true">→</span></Link>
+          {listIds.length > 0 && <button type="button" className="text-sm font-semibold text-accent underline-offset-2 hover:underline" aria-pressed={editing} onClick={() => { setEditing((e) => !e); setAdding(false); }} data-selection-edit>{editing ? "Done" : "Edit"}</button>}
+        </span>
       </span>
     </div>
     {note && <div role="note" className="mt-3 flex items-start gap-3 rounded-xl border border-line bg-panel px-3 py-2 text-sm">
@@ -95,17 +121,32 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
     </div>}
 
     {/* CR-33.1: every shortlisted model's score as columns, above the table. */}
-    <ShortlistColumns data={data} ids={listIds} tableIds={ids} names={new Map(listIds.map((id) => { const m = byId.get(id); return [id, m ? collapsedName(m, true, preferred) : id]; }))} />
+    <ShortlistColumns data={data} ids={listIds} tableIds={ids} names={new Map(listIds.map((id) => [id, nameOf(id)]))}
+      onToggle={(id) => commit(toggleInSelection(ids, id))} full={full} />
+    {/* With no table (every model removed), the header's "+ Add a model" cell is gone — offer it here instead. */}
+    {editing && !adding && !full && !(ids.length > 0 && visible.length > 0) && <button type="button" className="bh-button mt-3 px-3 text-sm" onClick={() => setAdding(true)} data-selection-add>+ Add a model</button>}
+    {editing && adding && !full && <div className="mt-3 flex flex-wrap items-center gap-2" data-selection-add-picker>
+      <ComparePicker families={pickable} picks={ids} max={COLUMNS} autoFocus onClose={() => setAdding(false)}
+        onPick={(id) => { commit(addToSelection(ids, id)); setAdding(false); }}
+        topHeading={`Top of your list by ${score === "composite" ? "Main Composite Score" : SCORE_SHORT_LABELS[score]}`} footer={<>Models from your list above that are not in the comparison yet.</>} />
+      <button type="button" className="text-sm text-accent underline" onClick={() => setAdding(false)}>Cancel</button>
+    </div>}
     {ids.length > 0 && visible.length > 0 && <div className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>
       <table className="bh-matrix">
         <caption className="sr-only">Benchmark results for the top models of your shortlist. Bold marks the best result in each row.</caption>
         <thead><tr>
           <th scope="col" className="bh-matrix-stub">Benchmark</th>
-          {ids.map((id, j) => { const m = byId.get(id); return <th key={id} scope="col" className={`bh-matrix-model !pt-3 ${j === 0 ? "bh-matrix-lead" : ""}`}>
+          {ids.map((id, j) => { const m = byId.get(id); const name = nameOf(id); return <th key={id} scope="col" className={`bh-matrix-model !pt-3 ${j === 0 ? "bh-matrix-lead" : ""}`} data-selection-col={id}>
             <span className="bh-matrix-accent" style={{ ["--swatch" as string]: seriesColor(j) }} aria-hidden="true">{seriesLetter(j)}</span>
             <span className="bh-matrix-org">{m?.org}</span>
-            <span className="bh-matrix-name"><Link href={`/models/${encodeURIComponent(id)}`} title={m?.display_name} className="hover:underline">{m ? collapsedName(m, true, preferred) : id}</Link></span>
+            <span className="bh-matrix-name"><Link href={`/models/${encodeURIComponent(id)}`} title={m?.display_name} className="hover:underline">{name}</Link></span>
+            {editing && <span className="bh-sel-controls" data-selection-controls>
+              {j > 0 && <button type="button" className="bh-sel-btn" aria-label={`Move ${name} left`} title="Move left" onClick={() => commit(moveInSelection(ids, id, -1))}>‹</button>}
+              {j < ids.length - 1 && <button type="button" className="bh-sel-btn" aria-label={`Move ${name} right`} title="Move right" onClick={() => commit(moveInSelection(ids, id, 1))}>›</button>}
+              <button type="button" className="bh-sel-btn" aria-label={`Remove ${name} from the comparison`} title="Remove" onClick={() => commit(removeFromSelection(ids, id))}>×</button>
+            </span>}
           </th>; })}
+          {editing && !full && <th scope="col" className="bh-matrix-model !pt-3 align-bottom"><button type="button" className="bh-button whitespace-nowrap px-3 text-sm" aria-expanded={adding} onClick={() => setAdding((a) => !a)} data-selection-add>+ Add a model</button></th>}
         </tr></thead>
         <tbody><ScoreRowPair score={score} valuesFor={valuesFor} /></tbody>
         {groups.map((g) => <tbody key={g.id}>
@@ -140,6 +181,6 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         </tbody>)}
       </table>
     </div>}
-    <p className="bh-muted mt-2 text-xs">Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. A row marked <b>best of</b> holds each model&apos;s best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href={full} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets. <AaCredit />.</p>
+    <p className="bh-muted mt-2 text-xs">Bold is best in row; a <b>top</b> or <b>low</b> tag marks a result whose gap to the next model is at least twice the spread of the models in between (rows with at least {OUTLIER_MIN_VALUES} results); † marks a developer&apos;s own report; a dash means no published result. A row marked <b>best of</b> holds each model&apos;s best recorded result across agents (Claude Code, Codex) and, for the AA Coding Agent Index, versions. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. The first row is always the Benchmark Heaven Main Composite Score; a score you select in Options follows right below it. A category row averages that category&apos;s results shown here on a 0–100 scale (higher is better) that every model in the table has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href={fullHref} className="underline">The full comparison</Link> adds every other benchmark, a chart, and model and row presets. <AaCredit />.</p>
   </section>;
 }
