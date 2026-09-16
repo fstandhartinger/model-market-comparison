@@ -668,3 +668,27 @@ Florian forwarded a screenshot of @cline's post (16 Sep 18:47 UTC, 'Union Alpha 
 ## CR-20260916d — Link previews (X chat, WhatsApp, Telegram) don't show for benchmarkheaven.com
 Laptop chat 16 Sep 2026 ~21:20 UTC, verbatim: "do we have that feature working properly that makes a webpage show in a chat app like WhatsApp or X chat with a text and image etc? for https://benchmarkheaven.com/? Because at the moment I don't see it in X.chat"
 Supervisor findings: og:title/description/image (1200×630 PNG, 56 KB, HTTP 200) and twitter:card=summary_large_image are present and correct in <head>. BUT the homepage HTML is **8.25 MB** (dataset inlined into the server-rendered payload); link-preview crawlers of X, WhatsApp (~300 KB limit), Telegram and Facebook abort on such pages, so no card. Also: no og:url, no twitter:site; /robots.txt returns the HTML app (no real robots.txt); sitemap.xml missing. X caches a failed card fetch for days — after the fix, share the URL with a fresh query string (e.g. ?launch=1) or post a new link.
+
+
+## CR-20260916r — Pre-release UI/UX gauntlet (launch 17 Sep ~17:00 UTC) → CR-63
+(Requested as "CR-20260916e"; that letter is already used by the data-revalidation section above, so this section takes the next free letter, r. Rows: **CR-63.x**.)
+
+Florian, laptop chat, 16 Sep 2026 evening, verbatim:
+
+<requirements>
+
+finishing touches on the ui/ux … challenge all the ui … have great models actually use the website, look at the screenshots, discuss if things should be polished. let's not make too drastic changes, the main thing is pretty great now, but let's see if we find issues that we want to fix and maybe some improvements or inconsistencies
+
+benchmaxxing tab should be moved up in priority, I think it's the top feature besides the completeness of our benchmark collection and the adjusted cost calculation
+
+</requirements>
+
+Also: send screenshots of the improvements via Telegram when done.
+
+How the findings were produced (16 Sep 2026 ~21:30–23:00 UTC, supervisor gauntlet job `~/jobs/bh-ux-gauntlet-20260916/`): the live site
+was used headless as three users (first-time visitor on a 390 px phone, a developer comparing models on a 1440 px
+desktop, a CTO checking EU hosting and cost): /, /benchmarks, /compare, /charts, /benchmaxxing, /eu, /about, a model page,
+Options panel, More menu, Guided/Advanced, empty search, 404, 320 px, light and dark (~110 screenshots in
+`~/jobs/bh-ux-gauntlet-20260916/shots/`). A second opinion per page came from Gemini 3.8 Flash (vision, real screenshots;
+`reviews/gemini-*.json`), and one Fable 5.1 design pass covered the five main screens (`reviews/fable-design-pass.md`).
+Model claims that did not hold up against the screenshots or the code were dropped. Scope: polish only, no redesigns. Checklist: `04-CR-BRIEF.md` → "CR-20260916r".

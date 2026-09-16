@@ -346,6 +346,29 @@ credited below, the rest is marked open.
 | CR-62.2 | Complete the preview tags: og:url (canonical), twitter:site @benchmarkheaven, twitter:creator @benchmarkheaven, og:local | open | — | — |
 | CR-62.3 | A better share image for launch: 1200×630 with the real product look (dark UI screenshot of the value map + ranking with | open | — | — |
 | CR-62.4 | Verify previews end to end after deploy: fetch with the Twitterbot, WhatsApp, TelegramBot and facebookexternalhit user a | open | — | — |
+| CR-63.1 | Benchmaxxing second in main nav after Overview (desktop; phone More menu + header where it fits) and a short Benchmaxxing teaser under the Overview table | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.2 | /eu main table empty under default filters (stale SOTA family list vs Featured/Hide-deprecated defaults) — fix cause; reset link if legitimately empty | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.3 | Desktop More▾ dropdown closes on outside click, Escape and route change | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.4 | Benchmaxxing page first-5-seconds: default tab Strongest signals, shorter intro, flag thresholds in Signal (i) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.5 | Benchmaxxing table polish: one bar scale across tabs, base name + muted variant, stray 'A' marker, '17 tagged' vs 'Show all 19' labels | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.6 | Model page value formats match Benchmarks page (fraction→%, percent→%, USD→$, points, Elo) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.7 | Overview footnote explains weak/strong Benchmaxxing tags and pricier/cheaper badges; tag tooltip | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.8 | '× pricier' differs Simple vs Advanced for the same model — name the reference in the tooltip or unify | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.9 | Distinct <title> per page (only /benchmaxxing has one); coordinate with CR-62.2 | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.10 | Branded, themed 404 page with links back (status stays 404) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.11 | Value-map cost ticks one format ($10 · $3 · $1 · $0.30 · $0.10 · $0.03) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.12 | Copy fixes: double 'Data:' captions, '25 of 30 models pass', phone date wrap, /about 'above'→'below', /eu 'Globaloffers', internal-link arrow | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.13 | One label for the composite: 'Benchmark Heaven Score' | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.14 | Model page: Benchmaxxing signal line/link, '7 of 7 inputs' vs 6 radar axes, same-list-price hint line | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.15 | /eu copy & style: outdated leader names, provider paragraph → bullets, h1 size, phone header clipping (emoji optional) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.16 | Benchmarks table: † tooltip/legend, data-bar ends not cutting digits, ECI rows chips, group subtitle wording | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.17 | Compare: per-model accent colours in strength cards, axes wording, hide footer on no-match search | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.18 | Phone value map label collisions (Overview Simple + Charts) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.19 | /about short Benchmaxxing section (#benchmaxxing) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.20 | optional — Charts intro anchor links for all four sections | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.21 | optional — Benchmarks phone rows: max two chips + '+N' | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.22 | optional — display-name/glyph/case consistency, 'BETA' pill wording | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
+| CR-63.23 | optional — investigate one-off /compare 504 Gateway Timeout (~21:50 UTC 16 Sep) | open | — | Seeded 2026-09-16 ~23:00 UTC by the laptop supervisor's UI/UX gauntlet (CR-20260916r; before shots `~/jobs/bh-ux-gauntlet-20260916/shots/`). |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
@@ -3653,3 +3676,15 @@ My requests now carry free ids: CR-59 (MIT licence + footer; live already → ve
 
 ## PRIORITY 2026-09-16 ~21:25 UTC (laptop supervisor)
 CR-62 (link previews: 8 MB homepage kills the X/WhatsApp card) is a launch blocker — do it right after CR-61 (removal note) and CR-60 (Union Alpha).
+
+
+## PRIORITY 2026-09-16 ~23:00 UTC (laptop supervisor) — pre-release UI/UX gauntlet, CR-63 before launch
+Florian: "finishing touches on the ui/ux … let's not make too drastic changes" and "benchmaxxing tab should be moved up in priority".
+Rows CR-63.1–63.19 (brief: `04-CR-BRIEF.md` → CR-20260916r; verbatim: CR-20260916r) go **before launch (17 Sep ~17:00 UTC)**,
+right after the launch blockers already queued (CR-62 link previews, CR-61, CR-60). Order: **CR-63.1 (Benchmaxxing second in nav +
+Overview teaser) and CR-63.2 (/eu table empty under default filters) first**, then 63.3–63.19 in number order. 63.20–63.23 are optional.
+No redesigns; each row is small.
+**After implementing, send Florian ONE `~/bin/notify now --photo <png> "<caption>"` per 3–5 improved screens** (before/after where
+possible; the before shots are in `/home/flori/jobs/bh-ux-gauntlet-20260916/shots/`, same file names per page/width/theme), a plain
+English caption of what changed, no internal ids. Nothing else to Florian about these rows.
+Optional rows (63.20–63.23) that are not worth doing: a review gate may close them as `verified` with the note "declined as optional — no change", so they never block ALL-ACCEPTED.
