@@ -384,3 +384,9 @@ still-open rows from section 2 per the priority rule in section 0.
 | ID | Requirement | Acceptance |
 |---|---|---|
 | CR-45.1 | Replace the retired social description ("Every AI model benchmark we can find, in one place. And what each model really costs you.") with the accepted brand copy — "The most detailed cost–capability analysis in AI." / "Every Benchmark. Actual Costs." — in **canonical Open Graph, Twitter, standard description and any wording embedded in the share image**; canonical and www must agree | Scraper-style fetches of both hosts show the new copy; Telegram cache limitation explained, not claimed fixable retroactively |
+
+### CR-20260916h — Regression: restore overview-table value badges (priority)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-46.1 | **Priority regression.** Restore the data-derived cost-relative value badges ("cheaper" / "pricier") in the default score-descending Overview table; find the real cause in the live data/threshold/filter path, no static labels, no hard-coded models; lands **before** the CR-44.1 sort-aware reframing | Regression test over current (fixture or live-equivalent) data proves qualifying expensive and cheap rows render, including strong-tier examples when their inputs meet the documented thresholds; independently live-verified after deploy in the default table, desktop/mobile, light/dark; later price-sort framing (CR-44.1) moves/rewords without suppressing the signal |

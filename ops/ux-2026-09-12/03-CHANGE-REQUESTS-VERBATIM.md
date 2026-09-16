@@ -449,3 +449,13 @@ Florian's report, Telegram, 16 Sep 2026: the Benchmark Heaven link preview still
 Live evidence, 16 Sep 2026: both `https://benchmarkheaven.com/` and `https://www.benchmarkheaven.com/` still serve the retired social description: “Every AI model benchmark we can find, in one place. And what each model really costs you.” This is a real metadata defect, not merely a cached Telegram card.
 
 Implementation clarification: replace the canonical Open Graph, Twitter, standard description, and any wording embedded in the share image with the already accepted current Benchmark Heaven brand copy: “The most detailed cost–capability analysis in AI.” and “Every Benchmark. Actual Costs.” Ensure canonical and www responses agree and validate output with scraper-style fetches after deployment. Check whether Telegram has cached previews already issued; explain plainly that already-sent cards can remain cached and verify a newly shared URL/card where cache behavior permits. Do not claim the old Telegram message itself can be retroactively changed.
+
+---
+
+## CR-20260916h — Regression: restore overview-table value badges
+
+Florian's report, Telegram, 16 Sep 2026: “now it seems these tags (cheaper / pricier etc) are completely gone in the model capability/cost table. home they come back soon”.
+
+Live verification, 16 Sep 2026: on the default score-descending Overview table, no cheaper/pricier badges are currently rendered beside costs, including rows that had them in the verified earlier presentation. The current source code contains a value-signal renderer, so investigate the real live data/threshold/filter path rather than merely adding static labels.
+
+Implementation clarification: treat this as a priority regression. Restore data-derived cost-relative value badges in the default composite-capability descending table before adding the planned sort-aware reframing. Preserve the existing no-hard-coded-model rule; add regression coverage against current fixture/live-equivalent data that proves qualifying expensive and cheap rows render, including the strong-tier examples when their actual inputs meet the documented thresholds. Independently live-verify after deploy that badges are visible in the default table and that the later price-sort framing changes their placement/wording without suppressing the signal.
