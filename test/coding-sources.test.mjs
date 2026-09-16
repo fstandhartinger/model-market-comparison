@@ -8,6 +8,11 @@ import { join } from 'node:path';
 // 2026-09-15 coding intake: DeepSWE (via Epoch AI) and Scale AI's SWE Atlas boards.
 const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url)));
 const IDS = ['deepswe::snapshot-2026-09-15', 'swe-atlas-qna::snapshot-2026-09-15', 'swe-atlas-test-writing::snapshot-2026-09-15', 'swe-atlas-refactoring::snapshot-2026-09-15'];
+// 2026-09-16 (iteration 79): boards whose labels are model slugs, joined by lib/board-identity.mjs.
+const SLUG_BOARDS = ['bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
+  'apprenticebench-cua', 'apprenticebench-cua-cost', 'vals-index', 'vals-index-cost', 'vals-index-emb',
+  'vals-index-finance-agent', 'vals-index-hlab', 'vals-index-legal-research', 'vals-index-terminal-bench-2.1',
+  'vals-index-vibe-code-bench', 'vals-index-code-migration'];
 const MIN = { 'deepswe::snapshot-2026-09-15': 60, 'swe-atlas-qna::snapshot-2026-09-15': 20, 'swe-atlas-test-writing::snapshot-2026-09-15': 20, 'swe-atlas-refactoring::snapshot-2026-09-15': 15 };
 
 test('the collector reproduces the committed observations from the committed evidence alone', () => {
@@ -85,14 +90,64 @@ test('identity map: exact existing configurations; measured joins visible; self-
     } else assert.equal(o.subject.model_id, null, 'without a receipt the row stays unjoined');
   }
   for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
-    assert.ok(IDS.includes(entry.benchmark_id), 'the map covers only the reviewed boards');
+    assert.ok([...IDS, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
+      `the map covers only the reviewed boards: ${entry.benchmark_id}`);
     assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);
     assert.ok(o, entry.source_id);
     assert.equal(o.basis, 'measured');
     assert.equal(o.subject.model_id, entry.model_id);
-    assert.match(o.join_note, /^Reviewed identity map 2026-09-15: /);
+    assert.match(o.join_note, new RegExp(`^Reviewed identity map ${map.reviewed_at}: `));
   }
-  const effortless = map.entries.filter((e) => /without an effort/.test(e.rule));
+  const effortless = map.entries.filter((e) => /without an effort|without a setting/.test(e.rule));
   assert.ok(effortless.every((e) => e.model_id.endsWith('::default')), 'no effort is ever guessed');
+  // A configuration is never claimed twice on one board — the rule that keeps two harness rows of one
+  // configuration from both becoming "the" result.
+  const seen = new Set();
+  for (const e of map.entries) {
+    const key = `${e.benchmark_id}\0${e.model_id}`;
+    assert.ok(!seen.has(key), `${e.model_id} is claimed twice on ${e.benchmark_id}`);
+    seen.add(key);
+  }
+});
+
+// 2026-09-16 (iteration 79): the slug boards. The map is re-derived here from the labels alone, so a hand
+// edit that does not follow the published rule fails the build.
+test('slug boards: every join re-derives from the label, and the refusals are the honest ones', async () => {
+  const { normaliseSlug, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId } = await import('../lib/board-identity.mjs');
+  const map = json('data/raw/benchmarks/identity-map.json');
+  const dataset = json('data/dataset.json');
+  const byId = new Map(dataset.models.map((m) => [m.id, m]));
+  const parserFor = (benchmarkId) => benchmarkId.startsWith('bullshitbench-') ? parseBullshitBenchId
+    : benchmarkId.startsWith('apprenticebench-') ? parseApprenticeBenchId
+    : benchmarkId.startsWith('vals-index') ? parseValsIndexId : null;
+  const slugEntries = map.entries.filter((e) => parserFor(e.benchmark_id));
+  assert.ok(slugEntries.length >= 300, `slug boards carry joins: ${slugEntries.length}`);
+  const observations = dataset.benchmark_results.observations;
+  for (const e of slugEntries) {
+    // Vals publishes the setting it ran in its own row, which the observation retains verbatim, so the
+    // re-derivation reads the same protocol text the join was made from.
+    const o = observations.find((x) => x.benchmark_id === e.benchmark_id && x.subject.source_id === e.source_id);
+    const { family, effort } = parserFor(e.benchmark_id)(e.source_id, e.source_id, o?.protocol ?? '');
+    const model = byId.get(e.model_id);
+    assert.ok(model, e.model_id);
+    assert.equal(model.family_key, family, `${e.source_id}: the joined family is the label's own slug`);
+    if (effort && effort !== 'none' && effort !== 'default') assert.equal(model.variant, effort, `${e.source_id}: the joined configuration is the stated setting`);
+    if (effort === 'none') assert.equal(model.variant, 'non-reasoning', 'reasoning off joins only a non-reasoning configuration');
+    if (!effort) assert.equal(model.variant, 'default', 'a label without a setting joins only a default configuration');
+  }
+  // The normalisation is the documented one and nothing more.
+  assert.equal(normaliseSlug('muse_spark_1_3'), 'muse-spark-1.3');
+  assert.equal(normaliseSlug('claude-opus-4-8'), 'claude-opus-4.8');
+  assert.equal(normaliseSlug('MiniMax-M3'), 'minimax-m3');
+  assert.equal(normaliseSlug('claude-haiku-4-5-20251001-thinking'), 'claude-haiku-4-5-20251001-thinking', 'a dated checkpoint is not rewritten into a version');
+  // Vals' own published setting is what decides the configuration; "0.99" in that field is not a setting.
+  const vals = (id, protocol) => parseValsIndexId(id, id, `x; source row: ${JSON.stringify(protocol)}`);
+  assert.deepEqual(vals('openai/gpt-6-astra', { reasoning_effort: 'max', compute_effort: null }), { family: 'gpt-6-astra', effort: 'max' });
+  assert.deepEqual(vals('anthropic/claude-opus-4-7', { reasoning_effort: null, compute_effort: 'high' }), { family: 'claude-opus-4.7', effort: 'high' });
+  assert.deepEqual(vals('thinkingmachines/inkling', { reasoning_effort: '0.99' }), { family: 'inkling', effort: null });
+  assert.deepEqual(vals('x/y', { reasoning_effort: 'high', compute_effort: 'max' }), { family: 'y', effort: null }, 'two different published settings state none');
+  assert.deepEqual(parseValsIndexId('meta/muse_spark_1_3_max', '', ''), { family: 'muse-spark-1.3', effort: 'max' });
+  // A label the catalog cannot place stays unplaced: BullshitBench's OpenRouter suffixes never join.
+  assert.ok(!map.entries.some((e) => e.source_id.includes(':thinking') || e.source_id.includes(':free')), 'suffixed OpenRouter slugs are refused, not stripped');
 });
