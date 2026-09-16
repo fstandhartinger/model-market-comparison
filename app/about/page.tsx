@@ -138,15 +138,21 @@ export default async function AboutPage() {
         <li><b>The model&apos;s token efficiency.</b> How many output tokens this specific model
           variant needs per task, from Artificial Analysis&apos; measurements (<AaCredit />). A model that reasons at
           length pays for every one of those tokens.</li>
-        <li><b>The input:output ratio</b> of real workloads on that model, from OpenRouter usage
-          statistics. Where a model has no published per-model usage, we fall back to a documented
-          global ratio and label the figure as an estimate rather than a measurement.</li>
+        <li><b>One common workload.</b> Input tokens per task = the model&apos;s output tokens × one
+          input:output ratio that is the same for every model: the documented global ratio from public
+          LLM usage statistics (Chutes, last 7 days). Two models with the same prices and the same
+          tokens per task therefore cost the same. Under Options → <i>Task workload</i> you can switch to
+          <i>As used on OpenRouter</i>, which takes each model&apos;s own traffic mix instead — that says who
+          uses a model (long agent sessions push the ratio from 3:1 up to 115:1), not what a task costs,
+          and can make a model look several times pricier.</li>
       </ul>
       <p className="mt-3 text-sm text-gray-400">
         USD/task = [input × (1 − hit) × input price + input × hit × cache-read price + additional
         writes × write price + output × output price] ÷ 1,000,000. Where an input is unknown we say
-        so instead of hiding it: missing task-token measurements assume 1,000 output tokens/task, an
-        unknown cache-hit rate assumes 0 %, and unmeasured cache writes assume 0 tokens. Every such
+        so instead of hiding it: missing task-token measurements assume 1,000 output tokens/task, a
+        route without its own cache-hit measurement gets the typical rate (the median of OpenRouter
+        endpoints that publish a cache-read price), which only lowers the cost where the route publishes
+        a cheaper cache-read price, and unmeasured cache writes assume 0 tokens. Every such
         assumption is listed on the price itself — click any underlined price to see the exact
         inputs, sources and dates behind it. Raw list-price mode skips all of this and simply blends
         list prices at the fixed input:output ratio you choose.

@@ -1,5 +1,5 @@
 import type { ScoreKey } from "./types";
-import { DEFAULT_BLEND, DEFAULT_SCORE, FIXED_BLENDS, SCORE_OPTIONS, type PriceMode } from "./cost";
+import { DEFAULT_BLEND, DEFAULT_IO_BASIS, DEFAULT_SCORE, FIXED_BLENDS, SCORE_OPTIONS, type IoBasis, type PriceMode } from "./cost";
 import { REGION_BUCKETS, allRegions, migrateLegacyRegions, sanitizeRegionList } from "./regions.mjs";
 
 /** The persisted settings. Pure data plus the load/migration rules, so they are testable
@@ -40,9 +40,10 @@ export interface SettingsState {
   families: string[];      // selected model family keys; empty = all
   priceMode: PriceMode;    // adjusted $/task (default) vs raw fixed-blend list prices
   inputWeight: number;     // raw mode's fixed input:output blend; persists while adjusted
+  ioBasis: IoBasis;        // CR-65.8: adjusted mode's workload — one common I/O ratio (default) or each model's OpenRouter usage
 }
 
-export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND, ioBasis: DEFAULT_IO_BASIS };
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 export const isBlendValue = (n: number) => BLEND_VALUES.has(n);
@@ -88,6 +89,7 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (strArr(raw.families)) out.families = raw.families;
   if (raw.priceMode === "adjusted" || raw.priceMode === "raw") out.priceMode = raw.priceMode;
   if (typeof raw.inputWeight === "number" && BLEND_VALUES.has(raw.inputWeight)) out.inputWeight = raw.inputWeight;
+  if (raw.ioBasis === "common" || raw.ioBasis === "usage") out.ioBasis = raw.ioBasis;
   return out;
 }
 
@@ -95,7 +97,7 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
 function sharedFiltersActive(s: SettingsState): boolean {
   return !!(s.providersExcluded.length || s.families.length || s.labs.length || s.featuredTouched || !s.collapse || !s.hideDeprecated
     || !allRegions(s.hostedIn) || !allRegions(s.providerBasedIn) || !allRegions(s.labBasedIn) || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
-    || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND);
+    || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND || s.ioBasis !== DEFAULT_IO_BASIS);
 }
 
 /** What non-Simple views apply beyond their defaults; drives Advanced's "· filtered". */

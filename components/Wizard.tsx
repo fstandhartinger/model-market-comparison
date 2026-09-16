@@ -94,7 +94,7 @@ export function Wizard({ data, onFinish }: { data: ClientData; onFinish: () => v
   // eslint-disable-next-line react-hooks/exhaustive-deps
   useEffect(() => { setAdvancedMinScore(0); }, []);
 
-  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight, ioBasis: s.ioBasis }), [s.priceMode, s.inputWeight, s.ioBasis]);
   const scope = useMemo(() => scopeFromSettings(s, data.providers),
     [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
 

@@ -6,8 +6,14 @@ import { isFreeRoute } from "./free-route.mjs";
 export { FIXED_BLENDS, DEFAULT_BLEND };
 
 export type PriceMode = "adjusted" | "raw";
-export interface PriceSettings { priceMode: PriceMode; inputWeight: number }
-export const DEFAULT_PRICE_SETTINGS: PriceSettings = { priceMode: "adjusted", inputWeight: DEFAULT_BLEND };
+/** CR-65.8: which input:output ratio turns a model's output tokens per task into input tokens.
+ *  "common" (default): one documented global ratio for every model, so two models with the same prices and the
+ *  same tokens per task cost the same. "usage": each model's own OpenRouter traffic mix ("as used on OpenRouter"),
+ *  which describes who uses a model rather than what a task costs. */
+export type IoBasis = "common" | "usage";
+export interface PriceSettings { priceMode: PriceMode; inputWeight: number; ioBasis?: IoBasis }
+export const DEFAULT_IO_BASIS: IoBasis = "common";
+export const DEFAULT_PRICE_SETTINGS: PriceSettings = { priceMode: "adjusted", inputWeight: DEFAULT_BLEND, ioBasis: DEFAULT_IO_BASIS };
 export interface PriceContext extends PriceSettings { model: ClientModel; data: ClientData }
 /** 2026-09-15: the exact wording shown for a proxied I/O-ratio source; only the "[link]" after it is a link. */
 export const IO_PROXY_TEXT = "Proxied from publicly available LLM usage statistics from an inference provider";
@@ -40,7 +46,7 @@ function baselineFor(data: ClientData): CacheHitBaseline | null {
   return baselines.get(efficiency) ?? null;
 }
 export function priceContext(model: ClientModel, data: ClientData, settings: PriceSettings = DEFAULT_PRICE_SETTINGS): PriceContext {
-  return { priceMode: settings.priceMode, inputWeight: settings.inputWeight, model, data };
+  return { priceMode: settings.priceMode, inputWeight: settings.inputWeight, ioBasis: settings.ioBasis ?? DEFAULT_IO_BASIS, model, data };
 }
 export function priceLabel(settings: PriceSettings): string {
   return settings.priceMode === "adjusted" ? "Adjusted $/task"
@@ -84,8 +90,16 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   const { model, data } = context;
   const extra: string[] = [];
   const telemetry = model.token_efficiency;
+  const common = (context.ioBasis ?? DEFAULT_IO_BASIS) === "common";
   let ratio = telemetry?.input_output_ratio;
-  if (!freshUsage(ratio, data)) {
+  if (common) {
+    // CR-65.8: the same workload for every model. Never a per-model ratio (not even AA's benchmark ratio).
+    const global = data.efficiency?.global_io_ratio;
+    ratio = freshUsage(global, data) ? { ...global!, fallback: false, basis: "assumed" } : undefined;
+    extra.push(ratio
+      ? "Common workload: the same global input:output ratio is applied to every model, so models are compared on one task mix, not on who happens to use them."
+      : "Common workload: the global input:output ratio is unavailable or stale, so the 10:1 scenario is applied to every model.");
+  } else if (!freshUsage(ratio, data)) {
     const global = data.efficiency?.global_io_ratio;
     const benchmark = telemetry?.aa?.benchmark_input_output_ratio;
     if (freshUsage(global, data)) {
@@ -97,10 +111,10 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
     if (telemetry?.input_output_ratio) extra.push("Unavailable, invalid or stale model I/O observation ignored.");
   }
   if (ratio) {
-    sources.push({ label: "Input/output ratio", source: ratio.source, url: ratio.url, date: ratio.collected_at, basis: ratio.basis,
-      proxy: ratio.fallback === true && ratio.source === data.efficiency?.global_io_ratio?.source,
+    sources.push({ label: common ? "Input/output ratio (same for every model)" : "Input/output ratio", source: ratio.source, url: ratio.url, date: ratio.collected_at, basis: ratio.basis,
+      proxy: (common || ratio.fallback === true) && ratio.source === data.efficiency?.global_io_ratio?.source,
       note: [ratio.scope, ratio.configuration_scope, ratio.window ? `${ratio.window.start_date} to ${ratio.window.end_date}` : ""].filter(Boolean).join("; ") });
-    if (ratio.fallback || ratio.basis === "assumed") extra.push("I/O ratio assigned from fallback evidence; assumed for this model and task.");
+    if (!common && (ratio.fallback || ratio.basis === "assumed")) extra.push("I/O ratio assigned from fallback evidence; assumed for this model and task.");
   }
   const tokens = telemetry?.aa?.tokens_per_task;
   if (tokens && !tokens.stale) sources.push({ label: "Output tokens/task", source: tokens.source, url: tokens.url, date: tokens.collected_at, basis: tokens.basis,
@@ -140,7 +154,8 @@ export function offerPrice(offer: ClientOffer, context: Pricing = 10): PriceResu
   const read = result.inputs.cache_read_per_1m, input = result.inputs.input_per_1m;
   const cache: PriceCache = { kind: observedHit ? "observed" : baseline ? "baseline" : "none", rate: result.inputs.cache_hit_rate ?? 0,
     discounted: typeof read === "number" && typeof input === "number" && read < input };
-  extra.push("AA output/task combined with general usage I/O is a modeled workload, not a measured coding-agent bill.");
+  extra.push(common ? "AA output/task combined with one global usage I/O ratio is a modeled workload, not a measured coding-agent bill."
+    : "AA output/task combined with this model's OpenRouter usage I/O is a modeled workload, not a measured coding-agent bill.");
   extra.push("Selected catalog tier only; per-request context premiums, cache storage, tools, retries and taxes are not modeled.");
   if (offer.estimated) extra.push("Catalog price is marked estimated by its source.");
   result.assumptions.push(...extra);

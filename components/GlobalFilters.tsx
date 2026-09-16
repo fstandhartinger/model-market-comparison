@@ -182,6 +182,23 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
               {FIXED_BLENDS.map((b) => <option key={b.value} value={b.value}>{b.label}</option>)}
             </select>
           </span>
+          {/* CR-65.8: adjusted costs compare models on one common workload unless the reader asks for each model's own usage mix. */}
+          <span className="inline-flex items-center gap-1.5">
+            <label htmlFor="bh-io-basis" className="text-sm text-gray-400">Task workload</label>
+            <select id="bh-io-basis" value={s.ioBasis} disabled={!adjusted}
+              onChange={(e) => s.setIoBasis(e.target.value === "usage" ? "usage" : "common")}
+              className="rounded-md border border-line bg-ink px-2 py-1.5 text-sm disabled:opacity-50">
+              <option value="common">Same for every model</option>
+              <option value="usage">As used on OpenRouter</option>
+            </select>
+            <InfoTip title="Task workload" label="the task workload setting">
+              How many input tokens a task sends for each output token. <b>Same for every model</b> (default)
+              applies one global ratio from public usage statistics to every model, so models are compared on
+              the same job. <b>As used on OpenRouter</b> takes each model&apos;s own traffic mix instead; that
+              describes who uses a model (long agent sessions push it up), not what a task costs, so it can
+              make a model look several times pricier. <a className="text-accent" href="/about#adjusted-cost">How we calculate</a>.
+            </InfoTip>
+          </span>
           {/* CR-25.3: the company question changes which subscription plans are shown next to API costs, so it sits with the price basis. */}
           <span className="inline-flex items-center">
             <Toggle label="I'm buying for a company" on={s.isCompany} set={s.setIsCompany} />

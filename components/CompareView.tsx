@@ -24,7 +24,7 @@ const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; d
 
 export function CompareView({ data }: { data: ClientData }) {
   const s = useSettings();
-  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight, ioBasis: s.ioBasis }), [s.priceMode, s.inputWeight, s.ioBasis]);
   const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const [q, setQ] = useState("");
   const [picks, setPicks] = useState<string[]>([]);

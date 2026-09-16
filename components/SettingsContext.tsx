@@ -1,7 +1,7 @@
 "use client";
 import { createContext, useCallback, useContext, useEffect, useMemo, useState } from "react";
 import type { ScoreKey } from "../lib/types";
-import { defaultMinFor, type PriceMode } from "../lib/cost";
+import { defaultMinFor, type IoBasis, type PriceMode } from "../lib/cost";
 import { advancedFiltersActive, anyFiltersActive, isBlendValue, sanitizeSettings, SETTINGS_DEFAULTS, type SettingsState } from "../lib/settings-state";
 import { labFilter, sanitizeRegionList } from "../lib/regions.mjs";
 
@@ -61,6 +61,7 @@ interface SettingsCtx extends SettingsState {
   setFamilies: (k: string[]) => void;
   setPriceMode: (m: PriceMode) => void;
   setInputWeight: (n: number) => void;
+  setIoBasis: (b: IoBasis) => void;
   /** CR-4.1: replace every filter key at once with a resolved preset (lib/presets.mjs). */
   applyFilters: (filters: Record<string, unknown>) => void;
   /** CR-5.2: the persisted settings alone (what the account stores). */
@@ -176,6 +177,7 @@ export function SettingsProvider({ children }: { children: React.ReactNode }) {
     setFamilies: (families) => setState((s) => ({ ...s, families })),
     setPriceMode: (priceMode) => setState((s) => ({ ...s, priceMode })),
     setInputWeight: (inputWeight) => setState((s) => isBlendValue(inputWeight) ? { ...s, inputWeight } : s),
+    setIoBasis: (ioBasis) => setState((s) => ({ ...s, ioBasis })),
     // Sanitised like a stored payload, so a saved preset from an older build cannot wedge the UI.
     applyFilters: (filters) => setState((s) => ({ ...s, ...sanitizeSettings({ ...s, ...filters, advancedMinScore: filters.advancedMinScore ?? s.advancedMinScore }) })),
     settingsState: state,

@@ -121,7 +121,9 @@ const model = {id:'synthetic::high', display_name:'Synthetic high', variant:'hig
   token_efficiency:{aa:{source_slug:'synthetic-high',source_variant:'high',tokens_per_task:observation({output:1000,answer:500,reasoning:500}),benchmark_input_output_ratio:observation(5)},input_output_ratio:observation(20,{fallback:false})}};
 const route = {key:'OpenRouter::Test',source:'synthetic',provider:'Test',platform:'OpenRouter',region:'eu',eu_hosted:true,or_model_id:'test/model',endpoint_tag:'test/fast',input_per_1m:2,output_per_1m:10,cache_read_per_1m:0.2,cache_write_per_1m:2.5};
 const telemetryData = {models:[model],providers:[],offersByModel:{[model.id]:[route]},efficiency:{global_io_ratio:observation(30),openrouter_endpoints:{'test/model':{'test/fast':{or_model_id:'test/model',endpoint_tag:'test/fast',provider:'Test',status:'available',cache_hit_rate:observation(0.75,{definition:'Synthetic known input-token denominator'})}}}}};
-const adjusted={priceMode:'adjusted',inputWeight:10};
+// CR-65.8: the per-model tests below price each model's own OpenRouter usage mix; the default is the common workload.
+const adjusted={priceMode:'adjusted',inputWeight:10,ioBasis:'usage'};
+const common={priceMode:'adjusted',inputWeight:10};
 
 test('client projection includes exact effort tokens and shared endpoint observations',()=>{
   const projected=client.clientData(dataset);
@@ -236,8 +238,8 @@ test('F-41: thin Composite counts exact plus attached inputs', () => {
     assert.equal(model.composite_attached, Math.min(7 - model.composite_coverage, Object.keys(model.composite_attachments).length), model.id);
   }
 });
-test('adjusted is modelCost default and uses per-model OR ratio before global or AA proxy',()=>{
-  assert.equal(cost.modelCost(model,telemetryData,null),0.023);
+test('adjusted "as used on OpenRouter" uses per-model OR ratio before global or AA proxy',()=>{
+  assert.equal(cost.modelCost(model,telemetryData,null,adjusted),0.023);
   const p=cost.modelPrice(model,telemetryData,null,adjusted);
   assert.equal(p.unit,'$/task');assert.equal(p.effective.inputs.input_output_ratio,20);
   assert.equal(p.effective.inputs.output_tokens_per_task,1000);
@@ -245,12 +247,28 @@ test('adjusted is modelCost default and uses per-model OR ratio before global or
 });
 test('model I/O fallback selects global Chutes before benchmark proxy, rejects stale measurements',()=>{
   const m=structuredClone(model);m.token_efficiency.input_output_ratio=observation(90,{stale:true});
-  assert.equal(cost.modelPrice(m,telemetryData,null).effective.inputs.input_output_ratio,30);
+  assert.equal(cost.modelPrice(m,telemetryData,null,adjusted).effective.inputs.input_output_ratio,30);
   const d=structuredClone(telemetryData);d.efficiency.global_io_ratio.stale=true;
-  const p=cost.modelPrice(m,d,null);assert.equal(p.effective.inputs.input_output_ratio,5);
+  const p=cost.modelPrice(m,d,null,adjusted);assert.equal(p.effective.inputs.input_output_ratio,5);
   assert.match(p.assumptions.join(' '),/benchmark I\/O ratio used as a proxy/);
   m.token_efficiency.aa.benchmark_input_output_ratio=null;
-  assert.equal(cost.modelPrice(m,d,null).effective.inputs.input_output_ratio,10);
+  assert.equal(cost.modelPrice(m,d,null,adjusted).effective.inputs.input_output_ratio,10);
+});
+test('CR-65.8: the default adjusted cost prices one common workload — same prices and tokens per task give the same cost whatever the usage mix',()=>{
+  const heavy=structuredClone(model);heavy.id='synthetic::heavy';heavy.token_efficiency.input_output_ratio=observation(115);
+  const light=structuredClone(model);light.id='synthetic::light';light.token_efficiency.input_output_ratio=observation(3);
+  const d={...telemetryData,offersByModel:{[heavy.id]:[route],[light.id]:[route]}};
+  const a=cost.modelPrice(heavy,d,null), b=cost.modelPrice(light,d,null), c=cost.modelPrice(light,d,null,common);
+  assert.equal(a.value,b.value,'default settings: usage mix does not change the cost');
+  assert.equal(b.value,c.value,'the default is the common workload');
+  assert.equal(a.effective.inputs.input_output_ratio,30,'the global ratio for every model');
+  assert.ok(a.sources.some((x)=>x.label==='Input/output ratio (same for every model)'&&x.proxy===true));
+  // The per-model benchmark proxy never enters the common workload: with no fresh global ratio every model gets 10:1.
+  const stale=structuredClone(d);stale.efficiency.global_io_ratio.stale=true;
+  assert.equal(cost.modelPrice(heavy,stale,null).effective.inputs.input_output_ratio,10);
+  assert.equal(cost.modelPrice(light,stale,null).effective.inputs.input_output_ratio,10);
+  // "As used on OpenRouter" keeps the per-model view, where the two differ.
+  assert.notEqual(cost.modelPrice(heavy,d,null,adjusted).value,cost.modelPrice(light,d,null,adjusted).value);
 });
 test('cache rates require platform + exact SKU + exact endpoint + same provider, with no stale borrowing',()=>{
   for(const change of [{platform:'Direct'},{or_model_id:'test/other'},{endpoint_tag:'test/other'},{provider:'Other'}]) {

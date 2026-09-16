@@ -11,7 +11,7 @@ export const ADJUSTED_COST_TIP = (
     <ul className="list-disc space-y-1 pl-4">
       <li>What one typical task costs you, in US dollars.</li>
       <li>Uses the cheapest provider your options allow, with its prices and cache discounts.</li>
-      <li>Counts how many tokens this model really needs per task.</li>
+      <li>Counts how many tokens this model really needs per task, on the same task mix for every model.</li>
       <li>“cheaper” / “pricier” tags: well off the typical cost for that score (filled tag, ↑ ↓) or clearly off (outlined tag, ↗ ↘), judged among the models your options include.</li>
     </ul>
     <a className="mt-2 inline-block text-accent underline" href="/about#adjusted-cost">How we calculate</a> <AaCredit className="mt-1 block text-gray-400" />

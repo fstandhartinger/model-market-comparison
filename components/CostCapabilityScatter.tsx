@@ -142,7 +142,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
   const router = useRouter();
   const s = useSettings();
   const score = s.score;
-  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight, ioBasis: s.ioBasis }), [s.priceMode, s.inputWeight, s.ioBasis]);
   const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   const [logX, setLogX] = useState(true);
   const [showPareto, setShowPareto] = useState(true);

@@ -58,7 +58,7 @@ function MagnitudeBar({ frac, tone, thin, children }: { frac: number; tone: "sco
 export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, guided, onRowsChange }: { data: ClientData; limit?: number; defaultSort?: SortKey; defaultAsc?: boolean; simple?: boolean; guided?: boolean; /** CR-7.1: the model ids on screen, in display order. */ onRowsChange?: (ids: string[]) => void }) {
   const s = useSettings();
   const score = s.score;
-  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight }), [s.priceMode, s.inputWeight]);
+  const priceSettings = useMemo<PriceSettings>(() => ({ priceMode: s.priceMode, inputWeight: s.inputWeight, ioBasis: s.ioBasis }), [s.priceMode, s.inputWeight, s.ioBasis]);
   const offerScope = useMemo(() => scopeFromSettings(s, data.providers), [s.excludedSet, s.hostedIn, s.providerBasedIn, data.providers, s.allowDataTraining]);
   // R1.1: the table opens sorted by the score column, highest first.
   const [sort, setSort] = useState<SortKey>(defaultSort ?? "score");

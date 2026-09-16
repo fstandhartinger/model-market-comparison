@@ -26,7 +26,7 @@ export function ModelDetailOffers({
     () => scopeFromSettings(s, providers),
     [s.excludedSet, s.hostedIn, s.providerBasedIn, providers, s.allowDataTraining],
   );
-  const ctx = useMemo(() => priceContext(model, { ...pricingData, models: [model], offersByModel: { [model.id]: offers }, offersByFamily: {}, providers, families: [] }, s), [model, pricingData, offers, providers, s.priceMode, s.inputWeight]);
+  const ctx = useMemo(() => priceContext(model, { ...pricingData, models: [model], offersByModel: { [model.id]: offers }, offersByFamily: {}, providers, families: [] }, s), [model, pricingData, offers, providers, s.priceMode, s.inputWeight, s.ioBasis]);
   const ranked = useMemo(() => rankedOffers(offers, scope, ctx), [offers, scope, ctx]);
   const catalog = useMemo(() => scopedCatalogRoutes(offers, scope, ctx).map((offer) => ({
     ...offer,
