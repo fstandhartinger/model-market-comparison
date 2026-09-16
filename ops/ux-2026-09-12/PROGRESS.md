@@ -292,8 +292,8 @@ credited below, the rest is marked open.
 | CR-37.2 | Scraper/updater: add a daily collector for Lumina's data ledger as a discovery + provenance feed (manifest has | open | — | — |
 | CR-37.3 | Results for the new benchmarks shown across the site (full benchmark list, Benchmarks tab, compare, category s | open | — | — |
 | CR-38.1 | For every source in CR-20260915n: a collector in the scraper/updater (API > official download > leaderboard pa | open | — | — |
-| CR-38.2 | Saturation/freshness metadata per benchmark: test version, task/question date window, contamination notes, and | open | — | — |
-| CR-38.3 | Human-preference arenas (Arena, DesignArena, EQ-Bench-style judged scores) are labelled as preference/judged s | open | — | — |
+| CR-38.2 | Saturation/freshness metadata per benchmark: test version, task/question date window, contamination notes, and | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38/{canonical,legacy}/verification.json` (`bin/verify-cr-38.mjs`); unit tests `test/benchmark-caveats.test.mjs` (13) | **Iteration 77 (claude-opus, implementer):** `0033b25`. **Saturated is measured, not asserted** — `saturationOf` in `lib/benchmark-matrix.mjs`: a bounded higher-is-better scale (fraction [0,1], percent, or points registered [0,100]), independently *measured* results for ≥ 5 catalog models, and the mean of the 5 best ≥ 90 % of the ceiling. Six boards qualify at this build: τ²-Bench Telecom (AA) 98.8 %, AIME 2025 (AA) 97.6 %, GPQA Diamond (AA) 95.5 %, GPQA Diamond (OpenRouter run) 94.1 %, Harvey LAB-AA 94.1 %, Terminal-Bench v2.1 (AA) 90.3 % — exactly the boards everyone treats as saturated, found by the rule and not by a hand-written list (a test asserts AIME and GPQA are caught). A row we cannot assess (Elo, open points scale, < 5 measured models) carries **no** tag and is explicitly not called unsaturated. **Freshness fields exist for every benchmark**: version + version status (registry), the date the results were last verified, and — only where the verified source states it — the task/question date window and the contamination control; where the source says nothing the field says exactly that (`freshness_default` in `data/benchmark-caveats.json`). No date window is inferred from a benchmark's name. Curated windows today: AIME 2025, OTIS Mock AIME 2024–2025; curated contamination notes: 9 (private/held-out/semi-private/refreshed sets, plus AA LiveCodeBench's stated *unknown* window). **Down-weighting (documented):** a saturated row counts at `SATURATED_WEIGHT = 0.5` in every category composite — the Benchmarks-page and Simple category header rows and the selectable CR-25.6 category scores. **Value change:** `cat_science` is now `(CritPt + 0.5 × GPQA Diamond) / 1.5`, ≈ 10 points below earlier builds, for 515 model rows; `cat_coding`/`cat_agentic`/`cat_long_context` unchanged. Documented in `API.md`, `CHANGELOG.md`, `/about#benchmark-tags` and `data/category-score-anchors.json`. No Main Composite slot is saturated (a test fails if one becomes so). **Needs a non-claude verifier.** |
+| CR-38.3 | Human-preference arenas (Arena, DesignArena, EQ-Bench-style judged scores) are labelled as preference/judged s | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38/{canonical,legacy}/verification.json` (`bin/verify-cr-38.mjs`); unit tests `test/benchmark-caveats.test.mjs` | **Iteration 77 (claude-opus, implementer):** `0033b25`. **Definition recorded in the data** (`data/benchmark-caveats.json` → `judged_definition`): a benchmark is judged when the published number ranks or rates outputs by preference or quality; a judge that only checks whether an answer is *correct* (equality checker, majority vote on accuracy, an LLM normalising an entity name before exact matching) is **not** judged, because the ground truth still decides. 23 judged families today, including DesignArena Frontend/Full-Stack, AA GDPval, AA-Briefcase, Harvey LAB-AA, APEX-Agents-AA, the EQ-Bench boards, the Lech Mazur boards, PingPong, RP-Bench, Slop Index, Spiral-Bench, Towards-AI editorial, UGI Writing, FrontierCode. **Every classification quotes its own source verbatim** and `test/benchmark-caveats.test.mjs` fails if a quote is not found in the cited registry/taxonomy field — a label can never rest on a sentence no source wrote. Nine near-misses are recorded with their reason in `considered_not_judged` (AA AnalystAgent, AA IT-Bench, AA MLCR, EQ-Bench Slop Score, SlopBench, LiveBench, the three SWE-Atlas boards). **Kept separate in composites:** a judged row never averages with task accuracy — in a mixed category only the task-accuracy rows make the composite and the category (i) says how many judged rows were left out; a category whose qualifying rows are *all* judged gets a composite of those and is named a judged composite. A judged benchmark may not be a CR-25.6 anchor at all: `assertNoJudgedAnchors` throws at build time rather than silently redefining a published score. **Interpretation for X7:** the Main Composite keeps DesignArena Frontend and Full-Stack (Florian's own definition) — they are two of seven *separate*, percentile-normalised slots, never averaged into task accuracy, and `/about` now says so. **Needs a non-claude verifier.** |
 | CR-38.4 | Aggregators (Lumina, BenchLM, The Aggregate, LLM Stats, Vellum, LM Council, CodeSOTA, BenchmarkList, HF find-a | open | — | — |
 | CR-38.5 | Daily/weekly refresh schedule per source with fail-closed gates and a source-health view in ops (which collect | open | — | — |
 | D09.1 | Florian directive 2026-09-15 (`09-FLORIAN-DIRECTIVE-AA-AND-FALLBACK-2026-09-15.md`): Artificial Analysis collection continues on its normal schedule (no wait for the email reply); `Nex 2.5 Pro` ahead of paid OpenRouter fallbacks only when the exact free route is confirmed | open | — | **Iteration 73 (claude-opus) check:** nothing in this repo pauses AA collection — CR-35.3 only holds *new* AA-derived metrics; live `/api/meta` dates `artificialanalysis` 2026-09-14 and `aa_efficiency` 2026-09-14T05:14Z (acceptance 1 needs the next ordinary daily run's receipt, which this loop does not start). Fallback order in `bin/delegate.sh`: `openrouter/nex-agi/nex-n2.5-pro:free` first, then Kimi K3 via Chutes (free); no paid OpenRouter model anywhere in this loop. The paid-fallback order lives in Hermes' model policy, outside this repo. |
@@ -2524,3 +2524,70 @@ daily run's receipt. 3) CR-30.2/30.3 (tier-A tier from BENCHMARK-CANDIDATES.md, 
 4) CR-34.5 (models-arena DesignArena collector; OpenRouter relay as cross-check) + CR-30.1 tranche B
 (more identity maps: Terminal-Bench 2.0/2.1/3.0 own protocols, HLE printed variants).
 5) CR-37.x/CR-38.1 as one intake when the source-intake job writes RESULT.md.
+
+---
+
+## Iteration 77 — 2026-09-16 (claude-opus, work): CR-38.2 / CR-38.3 / F-98 — saturated and judged benchmarks
+
+Picked from the previous gate's "next work iteration" list, item 1 (it gates CR-38's closure and F-98
+was the last open design directive). One commit: `0033b25`.
+
+**What a reader gains.** Two caveats that used to be invisible are now on the number itself. A
+benchmark whose best results already sit at its ceiling separates weak models, not strong ones — that
+is now a `Saturated` tag rather than something a reader has to know. A number produced by preference
+votes or by a judge model's rating is not the same kind of number as a pass rate — that is now a
+`Judged` tag, and the two kinds no longer average together inside a category.
+
+**Saturated is measured, never asserted.** `saturationOf` (`lib/benchmark-matrix.mjs`) works on the
+catalog's own *independently measured* results: a bounded higher-is-better scale (fraction [0,1],
+percent, or points registered [0,100]), at least 5 measured models, and the mean of the 5 best results
+at or above 90 % of the ceiling. Six boards qualify at this build — τ²-Bench Telecom (AA) 98.8 %,
+AIME 2025 (AA) 97.6 %, GPQA Diamond (AA) 95.5 %, GPQA Diamond (OpenRouter run) 94.1 %, Harvey LAB-AA
+94.1 %, Terminal-Bench v2.1 (AA) 90.3 %. The rule found the boards everybody already treats as
+saturated (AIME 2025, GPQA Diamond) without a hand-written list, which is the reason to trust it; a
+test asserts exactly that. A row we cannot assess (Elo, an open points scale, fewer than five measured
+models) carries **no** tag — "not assessable" is deliberately not "not saturated".
+
+**Judged rests on quotes, not opinion.** `data/benchmark-caveats.json` holds the classification, the
+definition in force, and for every entry a `quote` that must appear verbatim in the benchmark's own
+registry text (`scoring.metric`, `scoring.notes`, `one_sentence_description`, an evidence excerpt) or in
+the taxonomy description for a non-registry axis. `test/benchmark-caveats.test.mjs` fails if a quote is
+not found in its cited field, so a label can never rest on a sentence no source wrote. 23 judged
+families; 9 near-misses recorded with their reason under `considered_not_judged` — a judge that only
+checks whether the answer is *correct* is not judged, because the ground truth still decides.
+**A different engine is reviewing the classification** (the CR-1.7 precedent); the verdict is appended
+to this ledger and to the file's `review` block when it returns.
+
+**What changed in the numbers.** A judged row never averages with task accuracy: in a mixed category
+only the task-accuracy rows make the composite (the category (i) names how many judged rows were left
+out); an all-judged category gets a composite of those and is named a judged composite. A saturated row
+still counts, at `SATURATED_WEIGHT = 0.5`. For the selectable CR-25.6 category scores that makes
+`cat_science = (CritPt + 0.5 × GPQA Diamond) / 1.5` — about ten points below earlier builds, on 515
+model rows. `cat_coding`, `cat_agentic` and `cat_long_context` are unchanged because none of their
+anchors is saturated. Written down in `API.md` (with the "changed 2026-09-16" note downstream consumers
+need), `CHANGELOG.md`, `/about#benchmark-tags`, `data/category-score-anchors.json` and the category (i).
+
+**Two fail-closed guards** rather than silent behaviour: `assertNoJudgedAnchors` throws at build time if
+a category-score anchor is ever reclassified as judged, and a test fails if a slot of the Main Composite
+ever becomes saturated (none is today).
+
+**Freshness (CR-38.2's other half).** Every benchmark has the fields: version and version status from the
+registry, the date its results were last verified, and — only where the verified source states it — the
+task/question date window and the contamination control. Where the source states nothing, the field says
+exactly that. **Decision recorded:** we do not infer a date window from a benchmark's name (an "AIME 2025"
+row gets its window because AA's retained evidence names the 2025 papers, not because of the title). That
+keeps the curated set small today (2 windows, 9 contamination notes, one of them a *stated* unknown) and
+honest; a later source-intake pass (CR-38.1) can widen it with new primary text.
+
+**Deviations from F-98, recorded for the design gate:** (1) the Simple table shows only the two caveat
+tags, not the editorial tier tags, so a simple row never grows four pills; (2) the (i)'s second line also
+names the date the results were read — CR-38.2 asks for freshness and the directive's line had only the
+version and the window.
+
+**Gates:** `npm test` **520/520** (+13 new), `npx tsc --noEmit -p .` clean, `next build` clean,
+`node scripts/build-dataset.mjs` 840/660/92/2,882 (the `cat_science` change above is the only value diff).
+`bin/verify-cr-38.mjs` **81/81** against a local production build at 1440/390, light and dark, before the
+push; live on both hosts after it (evidence below).
+
+**Still open after this iteration:** CR-38.1 (collectors per source), CR-38.4 (aggregator provenance),
+CR-38.5 (source-health view), CR-30.2/30.3, CR-34.5, CR-37.x, CR-34.4/CR-35.3 (on hold), D09.1's receipt.

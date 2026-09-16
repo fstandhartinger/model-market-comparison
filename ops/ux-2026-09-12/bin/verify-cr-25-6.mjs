@@ -23,19 +23,32 @@ for (const key of CATEGORIES) {
   check(`data ${key} values sit on a 0–100 scale`, withValue.every((m) => m.score >= 0 && m.score <= 100), withValue.slice(0, 3).map((m) => m.score));
 }
 // Independent recompute from a different endpoint: the exact model's own benchmark rows.
+// 2026-09-16 (CR-38.2): anchors are weighted, not averaged flat — a saturated anchor counts at half.
+// Which anchors are saturated is read from the LIVE page (the category header's own (i) names them), so
+// this stays an independent recompute: the arithmetic below must agree with what the product tells a user.
+const benchmarksHtml = await (await fetch(`${BASE}/benchmarks`)).text();
+const halfWeighted = [...benchmarksHtml.matchAll(/saturated benchmarks weigh half \(([^)]*\([^)]*\)[^)]*|[^)]*)\)/g)]
+  .flatMap((m) => m[1].split(/,\s*(?=[A-Z\u03c4])/).map((n) => n.trim())).filter(Boolean);
+const SATURATED_WEIGHT = 0.5;
 const anchorNames = {
   cat_coding: [/^Terminal-Bench v4/, /^SciCode/, /^DeepSWE/],
   cat_science: [/^CritPt/, /^GPQA Diamond/],
   cat_long_context: [/^AA-LCR/, /^GDP\.pdf/, /^MLCR/],
 };
+/** Half weight when the live page itself lists this axis as a saturated benchmark of its category. */
+const axisWeight = (axis) => (axis && halfWeighted.some((n) => n === axis.name) ? SATURATED_WEIGHT : 1);
+check('CR-38.2 the live page names its half-weighted (saturated) benchmarks', halfWeighted.length > 0, halfWeighted);
+
 for (const [key, patterns] of Object.entries(anchorNames)) {
   const sample = scored[key].slice(0, 3);
   const wrong = [];
   for (const m of sample) {
     const view = await (await fetch(`${BASE}/api/benchmark-view?model=${encodeURIComponent(m.id)}`)).json();
+    const weights = [];
     const values = patterns.map((re) => {
       const axis = view.axes.filter((a) => re.test(a.name) && a.scores.some((r) => r.modelId === m.id))
         .sort((a, b) => String(b.version).localeCompare(String(a.version)))[0];
+      weights.push(axisWeight(axis));
       if (!axis) return null;
       const rows = axis.scores.filter((r) => r.modelId === m.id);
       const measured = rows.filter((r) => r.basis === 'measured');
@@ -43,10 +56,10 @@ for (const [key, patterns] of Object.entries(anchorNames)) {
       return row ? (axis.unit === 'fraction' ? row.value * 100 : row.value) : null;
     });
     if (values.some((v) => v == null)) { wrong.push({ id: m.id, values, note: 'anchor missing in view' }); continue; }
-    const want = Number((values.reduce((s, v) => s + v, 0) / values.length).toFixed(1));
+    const want = Number((values.reduce((s, v, i) => s + weights[i] * v, 0) / weights.reduce((s, w) => s + w, 0)).toFixed(1));
     if (Math.abs(want - m.score) > 0.15) wrong.push({ id: m.id, want, got: m.score, values });
   }
-  check(`data ${key} = mean of its anchor benchmarks (independent recompute for ${sample.length} models)`, sample.length > 0 && !wrong.length, wrong.slice(0, 2));
+  check(`data ${key} = weighted mean of its anchor benchmarks, a saturated anchor at half (independent recompute for ${sample.length} models)`, sample.length > 0 && !wrong.length, wrong.slice(0, 2));
 }
 // Honesty: a model without a result on every anchor gets no score, never a partial average.
 const codingIds = new Set(scored.cat_coding.map((m) => m.id));

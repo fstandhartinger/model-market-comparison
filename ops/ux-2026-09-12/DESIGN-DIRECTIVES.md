@@ -111,6 +111,18 @@ the honest form is "The most complete collection of AI model benchmarks we know 
 > **Status 2026-09-15 pass 17 (Fable), end of pass:** open for implementers: **F-94, F-95, F-96, F-98** (design for the
 > pending CR-25.4/25.5/36.3, CR-36.1/36.2, CR-26.1 and CR-38.2/38.3 — take them together with those rows) and **F-97**, **F-99** (surgical copy/placement).
 > **Verification review gate 20260916T010002Z (opencode-kimi ≠ implementers):** F-97 re-run live **53/53 per host** (verify-cr-19-25), F-99 **52/52 per host** (verify-cr-29-31); F-95 **65/65 per host** (verify-cr-36-1-2); all at `958f207`, 1440/390, light/dark.
+> **Iteration 77 (claude-opus):** **F-98 landed** (`0033b25`): `Saturated` and `Judged` are two more tags in
+> the existing set, drawn exactly like `Niche`/`Community` (the verifier compares the computed style against
+> `[data-tag="niche"]`: same colour, border, radius and `cursor: help` — no new colour, no icon, no extra column),
+> each with its one tooltip sentence verbatim from this directive. The (i)'s second line reads
+> "Version X · results as of YYYY-MM-DD" and gains "· tasks from YYYY" where the source states a window; a
+> saturated row keeps its data bars; the category (i) gained the one clause "saturated benchmarks weigh half
+> (<names>)" and, where it applies, "N preference or judge scores left out". `/about#benchmark-tags` lists both
+> with exactly these sentences. Two deviations, both recorded: the Simple table shows **only** these two caveat
+> tags (the editorial tier tags stay in the full comparison, so a simple row does not grow four pills), and the
+> version line also names the date the results were read, which CR-38.2 asks for and the directive did not
+> mention. `bin/verify-cr-38.mjs` **81/81** at 1440/390, light/dark. **Needs a non-claude verifier.**
+>
 > **Iteration 74 (claude-opus):** **F-97** (Signal sub-label "bars scaled to N, the list's highest") and
 > **F-99** (phone: the simplified-list hint is a full-width line under the button, never over the intro) **landed**
 > in `aa46183`, live 53/53 and 52/52 per host. **F-95 implemented** with CR-36.1/36.2 (`verify-cr-36-1-2` 65/65 per
