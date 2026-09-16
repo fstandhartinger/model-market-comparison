@@ -89,6 +89,33 @@ test('avg_cost_per_task is a separate USD observation on its own -cost board, ne
   assert.equal(build([row({ avg_cost_per_task: null })]).observations.filter((o) => o.benchmark_id.includes('-cost::')).length, 0);
 });
 
+test('CR-65.12: a run that cannot be this model (far above AA on the same test, or a cost the list price cannot explain) is withheld with a reason', () => {
+  const micro = [{ id: 'micro::default', family_key: 'micro', display_name: 'Micro', variant: 'default', benchmarks: { aa_gpqa: 0.358 },
+    offers: [{ ...offer('vendor/micro'), input_per_1m: 0.035, output_per_1m: 0.14 }] }];
+  const run = (over) => buildOpenRouterBenchmarkObservations({ own_data: [row({ model_permaslug: 'vendor/micro', ...over })] }, micro, SOURCE, VERSION);
+  // Nova Micro's published GPQA row: 89.1 % against AA's 35.8 % — score and its cost twin are both withheld.
+  const far = run({ accuracy: 0.890572, avg_cost_per_task: 0.0001 });
+  assert.equal(far.observations.length, 0);
+  assert.match(far.rejected[0].reason, /more than 25 percentage points above Artificial Analysis/);
+  // τ² has no AA twin; $1.28 per task at $0.14/1M means > 9 M tokens per task.
+  const pricey = run({ benchmark_type: 'tau_bench_verified_airline', accuracy: 0.787, avg_cost_per_task: 1.2795 });
+  assert.equal(pricey.observations.length, 0);
+  assert.match(pricey.rejected[0].reason, /list price cannot explain it/);
+  // A plausible run of the same model passes: within 25 pp of AA and a cost of a few thousand tokens.
+  const fine = run({ accuracy: 0.40, avg_cost_per_task: 0.0005 });
+  assert.equal(fine.observations.length, 2);
+  assert.equal(fine.rejected.length, 0);
+});
+
+test('CR-65.12 live: Nova Micro shows no OpenRouter GPQA Diamond or τ² value', async () => {
+  const ds = JSON.parse(await readFile('data/dataset.json', 'utf8'));
+  const hits = ds.benchmark_results.observations.filter((o) => o.subject.model_id?.startsWith('nova-micro') && o.benchmark_id.startsWith('openrouter-'));
+  assert.deepEqual(hits.map((o) => o.benchmark_id), []);
+  // Retained history states still hold the run; it must not return as a "no longer published" estimate.
+  const estimates = ds.benchmark_results.historical.estimates.filter((e) => e.model_id?.startsWith('nova-micro') && e.benchmark_id.startsWith('openrouter-'));
+  assert.deepEqual(estimates.map((e) => e.id), []);
+});
+
 test('the live dataset carries the OpenRouter boards, separate from same-named boards of other maintainers', async () => {
   const ds = JSON.parse(await readFile('data/dataset.json', 'utf8'));
   validateBenchmarkScores(ds.benchmark_results, { entries: ds.benchmark_results.registry });

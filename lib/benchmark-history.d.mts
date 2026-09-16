@@ -52,5 +52,5 @@ export function computeBridgeComparison(pairs: { model_key: string; subject_name
 export function computeRankShift(oldValues: { value: number }[], newValues: { value: number }[], pairs: { old_value: number; new_value: number }[]): { bridge_count: number; comparable: boolean; shift: number | null; spread: BridgeSpread | null; reason: string | null; cause: BridgeCause | null; cause_value: number | null };
 export function estimateFromRankShift(sourceValue: number, oldValues: { value: number }[], newValues: { value: number }[], comparison: { shift: number }): number;
 export function crossVersionEstimates(observations: BenchmarkObservation[], registry: { entries: BenchmarkEntry[] }): HistoricalEstimate[];
-export function datedEstimates(observations: BenchmarkObservation[], registry: { entries: BenchmarkEntry[] }, states: HistoryState[]): HistoricalEstimate[];
-export function buildHistoricalEstimates(input: { observations: BenchmarkObservation[]; registry: { entries: BenchmarkEntry[] }; history?: HistoryStore | null }): HistoricalResults;
+export function datedEstimates(observations: BenchmarkObservation[], registry: { entries: BenchmarkEntry[] }, states: HistoryState[], withheldLocators?: string[]): HistoricalEstimate[];
+export function buildHistoricalEstimates(input: { observations: BenchmarkObservation[]; registry: { entries: BenchmarkEntry[] }; history?: HistoryStore | null; withheldLocators?: string[] }): HistoricalResults;

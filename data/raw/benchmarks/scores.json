@@ -155507,56 +155507,6 @@
     },
     {
       "subject": {
-        "source_id": "amazon/nova-micro-v1|gpqa_diamond",
-        "name": "Amazon: Nova Micro 1.0",
-        "model_id": "nova-micro::default",
-        "variant": "default",
-        "harness": null
-      },
-      "basis": "measured",
-      "source": {
-        "url": "https://openrouter.ai/benchmarks",
-        "retrieved_at": "2026-09-15T23:29:03.209Z",
-        "published_at": null,
-        "sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
-        "locator": "own_data row model_permaslug=amazon/nova-micro-v1, benchmark_type=gpqa_diamond"
-      },
-      "comparison_key": null,
-      "id": "openrouter-cost:amazon/nova-micro-v1|gpqa_diamond",
-      "benchmark_id": "openrouter-gpqa-diamond-cost::snapshot-2026-09-15",
-      "value": 0.21863568181818183,
-      "unit": "USD",
-      "sample_size": 396,
-      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 396 tasks; last run 2026-09-01T13:30:25.730Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug amazon/nova-micro-v1) without a reasoning effort. It is attached once to nova-micro::default, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"amazon/nova-micro-v1\",\"total_tasks\":396,\"accuracy_stddev\":0.006734000000000018,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-01T13:30:25.730Z\",\"avg_cost_per_task_usd\":0.21863568181818183,\"avg_latency_per_task_ms\":null}"
-    },
-    {
-      "subject": {
-        "source_id": "amazon/nova-micro-v1|tau_bench_verified_airline",
-        "name": "Amazon: Nova Micro 1.0",
-        "model_id": "nova-micro::default",
-        "variant": "default",
-        "harness": null
-      },
-      "basis": "measured",
-      "source": {
-        "url": "https://openrouter.ai/benchmarks",
-        "retrieved_at": "2026-09-15T23:29:03.209Z",
-        "published_at": null,
-        "sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
-        "locator": "own_data row model_permaslug=amazon/nova-micro-v1, benchmark_type=tau_bench_verified_airline"
-      },
-      "comparison_key": null,
-      "id": "openrouter-cost:amazon/nova-micro-v1|tau_bench_verified_airline",
-      "benchmark_id": "openrouter-tau2-bench-airline-cost::snapshot-2026-09-15",
-      "value": 1.2795196199999999,
-      "unit": "USD",
-      "sample_size": 100,
-      "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 100 tasks; last run 2026-09-01T13:03:28.251Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug amazon/nova-micro-v1) without a reasoning effort. It is attached once to nova-micro::default, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"amazon/nova-micro-v1\",\"total_tasks\":100,\"accuracy_stddev\":0.020000000000000018,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-01T13:03:28.251Z\",\"avg_cost_per_task_usd\":1.2795196199999999,\"avg_latency_per_task_ms\":null}"
-    },
-    {
-      "subject": {
         "source_id": "anthropic/claude-4-sonnet-20250522|gpqa_diamond",
         "name": "Anthropic: Claude Sonnet 4",
         "model_id": "claude-4-sonnet::reasoning",
@@ -162004,58 +161954,6 @@
       "unit": "USD",
       "sample_size": 100,
       "protocol": "Mean USD spent per task by OpenRouter's own run of this configuration, measured on 100 tasks; last run 2026-09-12T08:11:04.852Z. Measured cost of that specific run, not Benchmark Heaven's adjusted cost model. OpenRouter publishes this run at model scope (permaslug z-ai/glm-5.3-flash-20260826) without a reasoning effort. It is attached once to glm-5.3-flash::default, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"z-ai/glm-5.3-flash-20260826\",\"total_tasks\":100,\"accuracy_stddev\":0.020000000000000018,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-12T08:11:04.852Z\",\"avg_cost_per_task_usd\":0.0057111,\"avg_latency_per_task_ms\":null}"
-    },
-    {
-      "subject": {
-        "source_id": "amazon/nova-micro-v1|gpqa_diamond",
-        "name": "Amazon: Nova Micro 1.0",
-        "model_id": "nova-micro::default",
-        "variant": "default",
-        "harness": null
-      },
-      "basis": "measured",
-      "source": {
-        "url": "https://openrouter.ai/benchmarks",
-        "retrieved_at": "2026-09-15T23:29:03.209Z",
-        "published_at": null,
-        "sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
-        "locator": "own_data row model_permaslug=amazon/nova-micro-v1, benchmark_type=gpqa_diamond"
-      },
-      "comparison_key": null,
-      "id": "openrouter:amazon/nova-micro-v1|gpqa_diamond",
-      "benchmark_id": "openrouter-gpqa-diamond::snapshot-2026-09-15",
-      "value": 0.890572,
-      "unit": "fraction",
-      "protocol": "OpenRouter's own reproducible run over 396 tasks, published standard deviation 0.006734000000000018; last run 2026-09-01T13:30:25.730Z. OpenRouter publishes this run at model scope (permaslug amazon/nova-micro-v1) without a reasoning effort. It is attached once to nova-micro::default, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"amazon/nova-micro-v1\",\"total_tasks\":396,\"accuracy_stddev\":0.006734000000000018,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-01T13:30:25.730Z\",\"avg_cost_per_task_usd\":0.21863568181818183,\"avg_latency_per_task_ms\":null}",
-      "published_stddev": 0.006734000000000018,
-      "sample_size": 396
-    },
-    {
-      "subject": {
-        "source_id": "amazon/nova-micro-v1|tau_bench_verified_airline",
-        "name": "Amazon: Nova Micro 1.0",
-        "model_id": "nova-micro::default",
-        "variant": "default",
-        "harness": null
-      },
-      "basis": "measured",
-      "source": {
-        "url": "https://openrouter.ai/benchmarks",
-        "retrieved_at": "2026-09-15T23:29:03.209Z",
-        "published_at": null,
-        "sha256": "4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641",
-        "file": "data/raw/benchmarks/daily-evidence/2026-09-15-openrouter-benchmarks/4fab3d14d915d4aada89d2225a23e0e15b693c8435a82eede999b74a0312c641.gz",
-        "locator": "own_data row model_permaslug=amazon/nova-micro-v1, benchmark_type=tau_bench_verified_airline"
-      },
-      "comparison_key": null,
-      "id": "openrouter:amazon/nova-micro-v1|tau_bench_verified_airline",
-      "benchmark_id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
-      "value": 0.7866669999999999,
-      "unit": "fraction",
-      "protocol": "OpenRouter's own reproducible run over 100 tasks, published standard deviation 0.020000000000000018; last run 2026-09-01T13:03:28.251Z. OpenRouter publishes this run at model scope (permaslug amazon/nova-micro-v1) without a reasoning effort. It is attached once to nova-micro::default, the deterministic family representative used by collapsed comparisons; this does not assert that OpenRouter tested this exact effort setting.; source row: {\"configuration\":\"\",\"permaslug\":\"amazon/nova-micro-v1\",\"total_tasks\":100,\"accuracy_stddev\":0.020000000000000018,\"primary_metric\":null,\"search_engine\":null,\"search_surface\":null,\"run_config\":null,\"last_run\":\"2026-09-01T13:03:28.251Z\",\"avg_cost_per_task_usd\":1.2795196199999999,\"avg_latency_per_task_ms\":null}",
-      "published_stddev": 0.020000000000000018,
-      "sample_size": 100
     },
     {
       "subject": {
@@ -424039,6 +423937,20 @@
       "benchmark_id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
       "source_id": "openai/gpt-5.3-chat-20260303|tau_bench_verified_airline",
       "reason": "OpenRouter permaslug has no OpenRouter offer in the catalog."
+    },
+    {
+      "benchmark_id": "openrouter-gpqa-diamond::snapshot-2026-09-15",
+      "source_id": "amazon/nova-micro-v1|gpqa_diamond",
+      "reason": "OpenRouter's accuracy 0.891 is more than 25 percentage points above Artificial Analysis's best measurement of the same test for this family (0.358); the run is probably another model's and is withheld for review.",
+      "withheld": true,
+      "locator": "own_data row model_permaslug=amazon/nova-micro-v1, benchmark_type=gpqa_diamond"
+    },
+    {
+      "benchmark_id": "openrouter-tau2-bench-airline::snapshot-2026-09-15",
+      "source_id": "amazon/nova-micro-v1|tau_bench_verified_airline",
+      "reason": "OpenRouter's mean cost of $1.2795 per task implies at least 9,139,426 tokens per task at this model's OpenRouter list price (highest $0.14/1M); the list price cannot explain it, so the run is probably another model's and is withheld for review.",
+      "withheld": true,
+      "locator": "own_data row model_permaslug=amazon/nova-micro-v1, benchmark_type=tau_bench_verified_airline"
     },
     {
       "benchmark_id": "longbench::2",
