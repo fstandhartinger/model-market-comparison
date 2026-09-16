@@ -6,7 +6,7 @@ import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } 
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
 import { modelPrice, rankedOffers, scopedCatalogOffers, scopedCatalogRoutes, scopeFromSettings, offerPrice, priceContext, priceLabel, type PriceSettings } from "../lib/cost";
-import { FREE_ROUTE_NOTE, isFreeRoute } from "../lib/free-route.mjs";
+import { FREE_ROUTE_NOTE, freeRouteLabel, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { Toggle, NumFilter } from "./ui";
 import { InfoTip } from "./InfoTip";
 import { ADJUSTED_COST_TIP, scoreTip } from "./methodology";
@@ -506,7 +506,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   // Florian 2026-09-15 (directive 10): below 1024 px (where the words overflow the cell) the tag is the compact "↓11×"; the words stay in the tooltip and for screen readers.
                   // CR-42.1: a strong tag is a filled pill with a straight arrow, a weak one an outlined pill with a slanted arrow.
                   return <span className="bh-value-tag" data-kind={v.kind} data-level={v.level} title={`${words}. ${why}`}><span aria-hidden="true">{v.kind === "cheap" ? (strong ? "↓" : "↘") : (strong ? "↑" : "↗")}</span><span className="bh-vt-full">{words}</span><span className="bh-vt-compact" aria-hidden="true">{ratio}</span><span className="sr-only">{strong ? "Notably" : "Slightly"} {v.kind === "cheap" ? "cheap" : "pricey"}, {words}: {why}</span></span>;
-                })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
+                })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : (data.offersByModel[m.id] ?? []).some(isStealthPreview)
+                  // CR-60.3: a stealth model with only its $0 preview route has no paid price; say why the cell is empty.
+                  ? <span className="block whitespace-nowrap text-right text-xs text-gray-500" title={FREE_ROUTE_NOTE}>free (stealth preview)</span>
+                  : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
               </tr>
@@ -595,7 +598,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                                     {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
                                     {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}
                                     {o.tee && <span className="ml-1 rounded bg-purple-500/20 px-1 text-[9px] text-purple-300">TEE</span>}
-                                    {free && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[9px] text-gray-400">free<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}
+                                    {free && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[9px] text-gray-400">{freeRouteLabel(o)}<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}
                                     <span className="ml-1 text-[10px] text-gray-500">{o.platform !== o.provider ? o.platform : ""} {o.region && o.region !== "global" ? `· ${o.region}` : ""}</span>
                                   </td>
                                   <td className="py-1 tabular text-right text-gray-400">{usdPerM(o.input_per_1m)}</td>

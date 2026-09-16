@@ -3,7 +3,7 @@
 import { useMemo } from "react";
 import type { ClientOffer, ProviderInfo, ClientModel, ClientData } from "../lib/client-model";
 import { offerPrice, priceContext, priceLabel, scopeFromSettings, rankedOffers, scopedCatalogRoutes } from "../lib/cost";
-import { FREE_ROUTE_NOTE, isFreeRoute } from "../lib/free-route.mjs";
+import { FREE_ROUTE_NOTE, freeRouteLabel, isFreeRoute, isStealthPreview } from "../lib/free-route.mjs";
 import { usdPerM } from "../lib/format";
 import { PriceValue, PriceAssumptions } from "./PriceValue";
 import { useSettings } from "./SettingsContext";
@@ -62,7 +62,10 @@ export function ModelDetailOffers({
               ))}
             </tbody>
           </table>
-        ) : <p className="text-sm text-gray-500">No per-token pricing matches the active global filters.</p>}
+        ) : offers.some(isStealthPreview)
+          // CR-60.3: a stealth model's only route is its $0 preview — say so instead of "no pricing".
+          ? <p className="text-sm text-gray-500"><span className="rounded border border-line px-1 text-xs text-gray-400">free (stealth preview)</span> on OpenRouter — rate-limited and temporary, not a paid price; the eventual price is not announced.</p>
+          : <p className="text-sm text-gray-500">No per-token pricing matches the active global filters.</p>}
       </section>
     );
   }
@@ -88,7 +91,7 @@ export function ModelDetailOffers({
             <tbody>
               {platformOffers.map((offer) => (
                 <tr key={[offer.key, offer.region, offer.pricing_tier, offer.route_type, offer.endpoint_tag].join("::")} data-free-route={isFreeRoute(offer) ? "1" : undefined}>
-                  <td className="px-2 py-1">{offer.provider}{isFreeRoute(offer) && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">free<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}</td>
+                  <td className="px-2 py-1">{offer.provider}{isFreeRoute(offer) && <span title={FREE_ROUTE_NOTE} className="ml-1 rounded border border-line px-1 text-[10px] text-gray-400">{freeRouteLabel(offer)}<span className="sr-only"> — {FREE_ROUTE_NOTE}</span></span>}</td>
                   <td className="hidden px-2 py-1 text-xs text-gray-500 md:table-cell">{offer.region}{offer.endpoint_tag && <span className="ml-1 text-gray-400">{offer.endpoint_tag}</span>}{offer.pricing_tier && <span className="ml-1 text-sky-300">{offer.pricing_tier.replaceAll("_", " ")}</span>}{offer.route_type && <span className="ml-1 text-amber-300">{offer.route_type.replaceAll("_", " ")}</span>}{offer.eu_hosted && <span className="ml-1 text-emerald-300">EU</span>}{offer.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 text-sky-300">EU equivalent</span>}{offer.tee && <span className="ml-1 text-purple-300">TEE</span>}</td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.input_per_1m)}<span className="text-gray-600"> raw in $/1M</span></td>
                   <td className="hidden px-2 py-1 text-right tabular md:table-cell">{usdPerM(offer.output_per_1m)}<span className="text-gray-600"> raw out $/1M</span></td>
