@@ -177,6 +177,16 @@ export default async function AboutPage() {
         the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the
         expected score against a fixed Elo 1000 opponent.
       </p>
+      {/* CR-65.1: which slots may be shared inside a model family. */}
+      <p className="mt-3 text-sm text-gray-400" data-family-scope>
+        Effort settings are scored separately. The three Artificial Analysis slots (AA Coding, AA Intelligence and
+        the Coding Agent Index) are measured per effort setting, so a result counts only for the configuration that
+        was measured — a non-reasoning setting never borrows its max setting&apos;s index. Epoch ECI, Software ECI
+        and DesignArena publish one result per model family, so that result is shared with the family&apos;s other
+        settings and marked as attached. It is shared only when the family&apos;s published values agree (otherwise
+        only the family representative&apos;s value is used), never as a family maximum and never from a retired
+        configuration.
+      </p>
       <p className="mt-3 text-sm text-gray-400">
         Thin evidence must not become an advantage. Every missing slot inherits that model&apos;s own
         mean observed percentile, producing a base score exactly equal to the mean of its available
@@ -246,10 +256,12 @@ export default async function AboutPage() {
       <h3 id="identity" className="mt-6 mb-2 font-semibold">Matching models to prices</h3>
       <p className="text-sm text-gray-400">
         Coding Agent results are attached to an exact or explicitly audited model/reasoning identity;
-        every harness result is retained and their median is used. Family-scoped Intelligence.ai /
-        DesignArena results are attached exactly once to the deterministic collapsed-family
-        representative rather than copied to effort siblings — the provenance note states explicitly
-        that this does not identify the tested effort setting. Raw DesignArena score views continue
+        every harness result is retained and their median is used; like the AA indices it is never
+        copied to another effort setting. Family-scoped Epoch ECI and Intelligence.ai / DesignArena
+        results are stored once on the deterministic collapsed-family representative; the composite
+        and the model pages share them with the family&apos;s other settings as attached values (see
+        the composite score above), and the provenance note states explicitly that this does not
+        identify the tested effort setting. Raw DesignArena score views continue
         to show Elo. Stable model ids and repositories are preferred over fuzzy names, so distinct
         releases, modes, context tiers and serving routes never share the wrong price. See the
         repository README and <code>data/SCRAPING.md</code> for how each source is collected and

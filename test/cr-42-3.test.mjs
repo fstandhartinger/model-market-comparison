@@ -15,7 +15,8 @@ const clientSource = await readFile(join(__dirname, "..", "lib", "client-model.t
 const compositeUrl = new URL("../lib/composite.mjs", import.meta.url).href;
 const clientCompiled = ts.transpileModule(clientSource, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
-}).outputText.replace('from "./composite.mjs"', `from "${compositeUrl}"`);
+}).outputText.replace('from "./composite.mjs"', `from "${compositeUrl}"`)
+  .replace('from "./family-representative.mjs"', `from "${new URL("../lib/family-representative.mjs", import.meta.url).href}"`);
 const client = await import(`data:text/javascript;base64,${Buffer.from(clientCompiled).toString("base64")}`);
 
 test("CR-42.3: every dataset provider carries a curated official website", () => {

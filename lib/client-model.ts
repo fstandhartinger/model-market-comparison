@@ -1,5 +1,6 @@
 import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
 import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
+import { deterministicFamilyRepresentative } from "./family-representative.mjs";
 import type { BenchmarkComparison } from "./benchmark-comparison.mjs";
 
 export interface ClientBenchmaxxing {
@@ -47,6 +48,11 @@ export type CompositeSlot =
   | "epoch_eci_software"
   | "designarena_frontend"
   | "designarena_fullstack";
+
+/** CR-65.1: composite slots whose sources publish at model-family scope (no effort setting). Only these are
+ *  shared with a family's other configurations; the AA indices stay on the configuration AA measured. */
+export const FAMILY_SCOPE_SLOTS = ["epoch_eci", "epoch_eci_software", "designarena_frontend", "designarena_fullstack"] as const;
+export type FamilyScopeSlot = (typeof FAMILY_SCOPE_SLOTS)[number];
 
 export interface CompositeAttachment {
   /** The catalog row that supplied the displayed value, when there is one. */
@@ -235,29 +241,17 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
   // percentile. An evidence-free row receives 50 but keeps coverage 0 so it cannot
   // masquerade as a measured family representative.
   const rawById = new Map(ds.models.map((m) => [m.id, m]));
-  // FAMILY BACKFILL: benchmark sources attach to different effort rows of the same
-  // family (AA Coding/Intelligence on the flagship effort, Coding-Agent and DesignArena
-  // on an alias row like "GPT-5.4 (medium)"), so no single row sees the family's full
-  // evidence. A missing slot is therefore filled with the family's best REAL measurement
-  // of that slot before imputation — a real sibling measurement beats assuming the
-  // model's own mean percentile. Without this, whichever row represents a family is
-  // punished for the slots that happen to live on its siblings (GPT-5.4 ranked below its
-  // own mini/nano), and low-coverage rows game the imputation upward.
-  const famBest = new Map<string, { c: number | null; ca: number | null; i: number | null; eci: number | null; eciSoftware: number | null; df: { elo: number; battles: number | null } | null; ds: { elo: number; battles: number | null } | null }>();
-  for (const m of models) {
-    const raw = rawById.get(m.id);
-    const fb = famBest.get(m.family_key) ?? { c: null, ca: null, i: null, eci: null, eciSoftware: null, df: null, ds: null };
-    const better = (a: number | null, b: number | null) => (a == null ? b : b == null ? a : Math.max(a, b));
-    fb.c = better(fb.c, m.scores.aa_coding_index);
-    fb.ca = better(fb.ca, m.scores.aa_coding_agent);
-    fb.i = better(fb.i, m.scores.aa_intelligence_index);
-    fb.eci = better(fb.eci, m.scores.epoch_eci);
-    fb.eciSoftware = better(fb.eciSoftware, m.scores.epoch_eci_software);
-    const df = m.scores.designarena_frontend;
-    if (df != null && (fb.df == null || df > fb.df.elo)) fb.df = { elo: df, battles: raw?.designarena?.frontend?.battles ?? null };
-    const dsv = m.scores.designarena_fullstack;
-    if (dsv != null && (fb.ds == null || dsv > fb.ds.elo)) fb.ds = { elo: dsv, battles: raw?.designarena?.fullstack?.battles ?? null };
-    famBest.set(m.family_key, fb);
+  // FAMILY-SCOPE ATTACHMENT (CR-65.1, supersedes the earlier "family's best value" backfill). Only sources that
+  // publish a result for a model family without an effort setting — Epoch ECI, Epoch Software ECI and
+  // DesignArena — are shared with a family's other configurations. AA Coding, AA Intelligence and the Coding
+  // Agent Index are measured per effort setting and never move to a sibling: a non-reasoning row does not
+  // inherit the max row's AA Intelligence. There is no family maximum either: a family-scope value is shared
+  // only when every configuration that carries it agrees, otherwise only the family representative's own value
+  // is shared, otherwise nothing; and a current row never borrows from a deprecated sibling.
+  const familyRows = new Map<string, ModelRow[]>();
+  for (const raw of ds.models) {
+    if (!familyRows.has(raw.family_key)) familyRows.set(raw.family_key, []);
+    familyRows.get(raw.family_key)!.push(raw);
   }
   const slotValue = (row: ModelRow, slot: CompositeSlot): number | null => {
     if (slot === "aa_coding_index") return row.benchmarks?.aa_coding_index ?? null;
@@ -267,11 +261,15 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     if (slot === "epoch_eci_software") return row.benchmarks?.epoch_eci_software ?? null;
     return row.designarena?.[slot === "designarena_frontend" ? "frontend" : "fullstack"]?.elo ?? null;
   };
-  const familySource = (row: ModelRow, slot: CompositeSlot): ModelRow | null => {
-    const candidates = [...rawById.values()]
-      .filter((candidate) => candidate.family_key === row.family_key && slotValue(candidate, slot) != null)
-      .sort((a, b) => (slotValue(b, slot) ?? -Infinity) - (slotValue(a, slot) ?? -Infinity));
-    return candidates[0] ?? null;
+  const familyDonor = (row: ModelRow, slot: FamilyScopeSlot): ModelRow | null => {
+    const rows = familyRows.get(row.family_key) ?? [];
+    const donors = rows.filter((c) => c.id !== row.id && slotValue(c, slot) != null && (row.deprecated === true || c.deprecated !== true))
+      .sort((a, b) => a.id.localeCompare(b.id));
+    if (!donors.length) return null;
+    const representative = deterministicFamilyRepresentative(row.family_key, rows) as ModelRow | undefined;
+    const named = donors.find((c) => c.id === representative?.id) ?? null;
+    if (new Set(donors.map((c) => slotValue(c, slot))).size === 1) return named ?? donors[0];
+    return named;
   };
   const slotLabels: Record<CompositeSlot, string> = {
     aa_coding_index: "AA Coding",
@@ -283,40 +281,29 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     designarena_fullstack: "DesignArena Full-Stack",
   };
   const attachmentMaps = new Map<string, Partial<Record<CompositeSlot, CompositeAttachment>>>();
+  const donors = new Map<string, Partial<Record<FamilyScopeSlot, ModelRow>>>();
   for (const model of models) {
     const raw = rawById.get(model.id)!;
     const attached: Partial<Record<CompositeSlot, CompositeAttachment>> = {};
+    const borrowed: Partial<Record<FamilyScopeSlot, ModelRow>> = {};
     const add = (slot: CompositeSlot, sourceModelId: string | null, note: string) => {
       attached[slot] = { sourceModelId, label: slotLabels[slot], note };
     };
-    for (const slot of ["aa_coding_index", "aa_coding_agent", "aa_intelligence_index"] as const) {
-      const source = familySource(raw, slot);
-      if (slotValue(raw, slot) == null && source && slotValue(source, slot) != null) {
-        add(slot, source.id, `Attached from ${source.display_name}; the source published this value on another configuration of the same model family.`);
+    for (const slot of FAMILY_SCOPE_SLOTS) {
+      const eci = slot === "epoch_eci" || slot === "epoch_eci_software";
+      const ownNote = eci ? raw.epoch_eci_attachment_note : raw.designarena_attachment_note;
+      if (slotValue(raw, slot) != null) {
+        if (ownNote) add(slot, null, ownNote);
+        continue;
       }
-    }
-    if (raw.benchmarks?.epoch_eci != null && raw.epoch_eci_attachment_note) {
-      add("epoch_eci", null, raw.epoch_eci_attachment_note);
-    } else if (raw.benchmarks?.epoch_eci == null && famBest.get(raw.family_key)?.eci != null) {
-      const source = familySource(raw, "epoch_eci");
-      add("epoch_eci", source?.id ?? null, source ? `Attached from ${source.display_name}; ${source.epoch_eci_attachment_note ?? "Epoch AI publishes this at family scope."}` : "Attached from another configuration in this model family.");
-    }
-    if (raw.benchmarks?.epoch_eci_software != null && raw.epoch_eci_attachment_note) {
-      add("epoch_eci_software", null, raw.epoch_eci_attachment_note);
-    } else if (raw.benchmarks?.epoch_eci_software == null && famBest.get(raw.family_key)?.eciSoftware != null) {
-      const source = familySource(raw, "epoch_eci_software");
-      add("epoch_eci_software", source?.id ?? null, source ? `Attached from ${source.display_name}; ${source.epoch_eci_attachment_note ?? "Epoch AI publishes this at family scope."}` : "Attached from another configuration in this model family.");
-    }
-    for (const [slot, board] of [["designarena_frontend", "frontend"], ["designarena_fullstack", "fullstack"]] as const) {
-      const own = raw.designarena?.[board]?.elo ?? null;
-      const hasAttachmentNote = !!raw.designarena_attachment_note;
-      if (own != null && hasAttachmentNote) add(slot, null, raw.designarena_attachment_note!);
-      else if (own == null && famBest.get(raw.family_key)?.[slot === "designarena_frontend" ? "df" : "ds"] != null) {
-        const source = familySource(raw, slot);
-        add(slot, source?.id ?? null, source ? `Attached from ${source.display_name}; ${source.designarena_attachment_note ?? "DesignArena publishes this at product/family scope."}` : "Attached from another configuration in this model family.");
-      }
+      const donor = familyDonor(raw, slot);
+      if (!donor) continue;
+      borrowed[slot] = donor;
+      const donorNote = eci ? donor.epoch_eci_attachment_note ?? "Epoch AI publishes this at family scope." : donor.designarena_attachment_note ?? "DesignArena publishes this at product/family scope.";
+      add(slot, donor.id, `Attached from ${donor.display_name}; ${donorNote}`);
     }
     attachmentMaps.set(model.id, attached);
+    donors.set(model.id, borrowed);
     model.composite_attachments = attached;
   }
   // The registry coverage contains the versioned secondary benchmark catalog. The six
@@ -347,29 +334,24 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       .filter((slot) => slotValue(raw!, slot as CompositeSlot) != null).length;
     return [m.id, Math.max(0, rawCount - attachedOwnSlots)];
   }));
-  // DISPLAY BACKFILL (user policy): a variant that lacks a metric inherits the family's
-  // best measured value of that metric — shown everywhere (Compare, model detail, metric
-  // sorting), not only inside the composite. A metric no variant of the family was ever
-  // measured on stays empty (e.g. Opus 4.6 has no complete AA Coding / Coding-Agent
-  // measurement at the source at all).
+  // DISPLAY: a family-scope value shared above is shown everywhere (Compare, model detail, metric sorting), not
+  // only inside the composite. Effort-specific AA values stay on the configuration that was measured.
   const compositeInputs = models.map((m) => {
     const raw = rawById.get(m.id);
-    const fb = famBest.get(m.family_key)!;
+    const borrowed = donors.get(m.id) ?? {};
+    const share = (slot: FamilyScopeSlot) => (borrowed[slot] ? slotValue(borrowed[slot]!, slot) : null);
     const ownDf = m.scores.designarena_frontend;
     const ownDs = m.scores.designarena_fullstack;
-    m.scores.aa_coding_index = m.scores.aa_coding_index ?? fb.c;
-    m.scores.aa_coding_agent = m.scores.aa_coding_agent ?? fb.ca;
-    m.scores.aa_intelligence_index = m.scores.aa_intelligence_index ?? fb.i;
-    m.scores.epoch_eci = m.scores.epoch_eci ?? fb.eci;
-    m.scores.epoch_eci_software = m.scores.epoch_eci_software ?? fb.eciSoftware;
-    m.scores.designarena_frontend = ownDf ?? fb.df?.elo ?? null;
-    m.scores.designarena_fullstack = ownDs ?? fb.ds?.elo ?? null;
+    m.scores.epoch_eci = m.scores.epoch_eci ?? share("epoch_eci");
+    m.scores.epoch_eci_software = m.scores.epoch_eci_software ?? share("epoch_eci_software");
+    m.scores.designarena_frontend = ownDf ?? share("designarena_frontend");
+    m.scores.designarena_fullstack = ownDs ?? share("designarena_fullstack");
     return {
       id: m.id,
       scores: m.scores,
       designarenaBattles: {
-        frontend: ownDf != null ? raw?.designarena?.frontend?.battles ?? null : fb.df?.battles ?? null,
-        fullstack: ownDs != null ? raw?.designarena?.fullstack?.battles ?? null : fb.ds?.battles ?? null,
+        frontend: (ownDf != null ? raw : borrowed.designarena_frontend)?.designarena?.frontend?.battles ?? null,
+        fullstack: (ownDs != null ? raw : borrowed.designarena_fullstack)?.designarena?.fullstack?.battles ?? null,
       },
     };
   });

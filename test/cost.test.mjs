@@ -19,7 +19,8 @@ const clientSource = await readFile(new URL("../lib/client-model.ts", import.met
 const compositeUrl = new URL("../lib/composite.mjs", import.meta.url).href;
 const clientCompiled = ts.transpileModule(clientSource, {
   compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
-}).outputText.replace('from "./composite.mjs"', `from "${compositeUrl}"`);
+}).outputText.replace('from "./composite.mjs"', `from "${compositeUrl}"`)
+  .replace('from "./family-representative.mjs"', `from "${new URL("../lib/family-representative.mjs", import.meta.url).href}"`);
 const client = await import(`data:text/javascript;base64,${Buffer.from(clientCompiled).toString("base64")}`);
 const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
 
@@ -177,10 +178,56 @@ test('Composite coverage separates exact inputs from family- or product-attached
     && dataset.benchmark_results.registry.find((e) => e.id === o.benchmark_id)?.category === 'Efficiency').length, 4,
     'joined cost rows exist for this configuration and are excluded from #benchmarks');
   assert.equal(fable.composite_coverage, 1);
-  assert.ok(fable.composite_attachments.aa_coding_index);
-  assert.ok(fable.composite_attachments.aa_intelligence_index);
+  // CR-65.1: AA measures per effort setting, so `::high` no longer shows `::max`'s AA indices; the family-scope
+  // Epoch and DesignArena results are still shared.
+  assert.equal(fable.composite_attachments.aa_coding_index, undefined);
+  assert.equal(fable.composite_attachments.aa_intelligence_index, undefined);
   assert.ok(fable.composite_attachments.epoch_eci);
   assert.ok(fable.composite_attachments.designarena_fullstack);
+});
+
+// CR-65.1: a family fixture beside the real catalog. `::max` carries AA Intelligence, `::non-reasoning` only a
+// Coding Agent result; the non-reasoning row must not inherit the AA value, and its composite must not use it.
+const familyFixture = (maxIntelligence, extra = {}) => {
+  const template = dataset.models.find((m) => m.id === 'claude-opus-5::non-reasoning');
+  const row = (variant, benchmarks, over = {}) => ({ ...template, id: `fixture-fam::${variant}`, family_key: 'fixture-fam', family_name: 'Fixture',
+    display_name: `Fixture (${variant})`, variant, benchmarks, designarena: {}, offers: [], featured: false, deprecated: false, ...over });
+  return { ...dataset, models: [...dataset.models,
+    row('max', { aa_intelligence_index: maxIntelligence, aa_coding_index: 70, epoch_eci: 150 }),
+    row('non-reasoning', { aa_coding_agent_index: 40 }),
+    ...(extra.rows ?? []).map(([variant, benchmarks, over]) => row(variant, benchmarks, over))] };
+};
+test('CR-65.1: effort-specific AA results never move to a sibling configuration; family-scope ECI does', () => {
+  const pick = (ds, id) => client.clientData(ds).models.find((m) => m.id === id);
+  const a = pick(familyFixture(50), 'fixture-fam::non-reasoning');
+  const b = pick(familyFixture(10), 'fixture-fam::non-reasoning');
+  assert.equal(a.scores.aa_intelligence_index, null);
+  assert.equal(a.scores.aa_coding_index, null);
+  assert.equal(a.composite_attachments.aa_intelligence_index, undefined);
+  assert.equal(a.composite_base, b.composite_base, 'the composite does not depend on the sibling AA Intelligence');
+  assert.equal(a.scores.epoch_eci, 150, 'Epoch ECI is published at family scope and is shared');
+  assert.equal(a.composite_attachments.epoch_eci.sourceModelId, 'fixture-fam::max');
+  // The Coding Agent result stays on its own row as well.
+  assert.equal(pick(familyFixture(50), 'fixture-fam::max').scores.aa_coding_agent, null);
+});
+test('CR-65.1: no family maximum and no deprecated donor for a current row', () => {
+  // Two current rows publish different ECI values: only the family representative's own value is shared.
+  const disagree = familyFixture(50, { rows: [['low', { epoch_eci: 120 }], ['old', { epoch_eci: 190 }, { deprecated: true }]] });
+  const models = client.clientData(disagree).models;
+  const nonReasoning = models.find((m) => m.id === 'fixture-fam::non-reasoning');
+  assert.equal(nonReasoning.scores.epoch_eci, 150, 'the representative (max) value, not the family maximum 190');
+  const deprecatedOnly = familyFixture(50, { rows: [['old', { epoch_eci_software: 190 }, { deprecated: true }]] });
+  assert.equal(client.clientData(deprecatedOnly).models.find((m) => m.id === 'fixture-fam::non-reasoning').scores.epoch_eci_software, null);
+  // Live catalog: no current row shows a value attached from a deprecated sibling.
+  const live = client.clientData(dataset).models;
+  const byId = new Map(dataset.models.map((m) => [m.id, m]));
+  for (const m of live) {
+    if (m.deprecated) continue;
+    for (const [slot, attachment] of Object.entries(m.composite_attachments)) {
+      if (attachment.sourceModelId) assert.notEqual(byId.get(attachment.sourceModelId)?.deprecated, true, `${m.id} ${slot} from deprecated ${attachment.sourceModelId}`);
+      assert.ok(!['aa_coding_index', 'aa_coding_agent', 'aa_intelligence_index'].includes(slot), `${m.id}: ${slot} attached across efforts`);
+    }
+  }
 });
 test('F-41: thin Composite counts exact plus attached inputs', () => {
   assert.equal(client.isThinComposite({ composite_coverage: 2, composite_attached: 4 }), false);
