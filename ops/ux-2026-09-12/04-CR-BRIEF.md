@@ -410,3 +410,13 @@ still-open rows from section 2 per the priority rule in section 0.
 | ID | Requirement | Acceptance |
 |---|---|---|
 | CR-49.1 | One coherent, low-clutter **"Edit shortlist"** interaction shared by the Simple-view score chart and benchmark table: remove any displayed model; add another eligible model by type-ahead; set the table/chart order explicitly with accessible move controls and keyboard operation; both chart and table visibly reflect one shared selection and order; documented cap with a clear "full" state; one-click reset to the automatic shortlist; local persistence of the curation without changing global filters; links to the model and the full comparison kept. Drag-and-drop only as a robust desktop enhancement, never the sole route. **The design authority chooses the interaction before implementation (F-106 in `DESIGN-DIRECTIVES.md`).** | Mouse, touch, keyboard and screen-reader labels tested; 320/390 px and 1440 px, light/dark; reload persistence; reset; independent live verification by an engine other than the implementer |
+
+## 22. CR-20260916l — A free route is a status, not a $0 paid price (seeded 2026-09-16 by iteration 85)
+
+Split in two: the pricing rule (CR-50.1) is unambiguous data correctness and can be built at once; the tag (CR-50.2)
+waits for the design authority's choice, as Florian's clarification asks.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-50.1 | A zero-price API route is volatile availability/promotion evidence, never the ordinary paid price. Every refresh revalidates it; it is excluded when absent from the current source, stale, quota-bound, invitation-only or not usable through the normal paid API. Every cost ranking, chart (incl. **Cheapest models — Adjusted $/task**), table and value map uses the cheapest current **paid** route; historic raw provenance is kept but never shown as current pricing. Provider, privacy and region filters keep working. | Regression tests: a vanished free endpoint; a verified current free endpoint next to a paid chart value; a model with only a valid zero-price route. GLM-5.2 no longer shows $0 live; the expanded price table exposes paid/free provenance accessibly |
+| CR-50.2 | Where a zero-price route is current and broadly usable, a compact **"Free route currently available"** tag beside the model names the provider, says limits and availability may apply and never implies the model is universally free; no tag when expired/unconfirmed. **The design authority chooses the least noisy form before implementation.** | Live on both hosts, 1440/390, light/dark; tag absent for expired routes; independent verification by an engine other than the implementer |
