@@ -30,6 +30,10 @@ export default async function AboutPage() {
           so this is not an official feed and we do not present it as one. We show these two boards and collect
           nothing further from this source; that scope is recorded in the repository and would only change with the
           source&apos;s documented permission.</li>
+        <li id="aggregators"><b>Benchmark aggregators</b> (Lumina Bench, BenchLM, LLM Stats, Vellum, CodeSOTA and others) — used
+          only to discover benchmarks and to check where a published result came from. No number on this site is taken
+          from these aggregators: each comes from the organisation that ran the benchmark, or from the model&apos;s developer
+          and is then labelled self-reported, and one result is never counted twice through two routes.</li>
         <li><b>AWS Bedrock</b> — on-demand token pricing, European regions (eu-central-1 where available).</li>
         <li><b>Azure AI Foundry</b> — retail token meters plus model-card serving-region checks. A billing/resource region alone is not treated as proof that inference stays in the EU. By company policy, only Azure Direct Global DeepSeek V4 Pro and Kimi K2.7 Code are additionally eligible as EU-hosted equivalents; they remain marked Global because inference may occur outside the EU.</li>
         <li><b>Google Vertex AI</b> — pay-as-you-go token pricing for Gemini and Model Garden partner models (Claude, Llama, Mistral, DeepSeek, Qwen); offers are marked EU-hosted only where the model supports a documented European serving location.</li>
