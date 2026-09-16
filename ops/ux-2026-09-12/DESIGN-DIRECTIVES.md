@@ -1,16 +1,15 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 17: 2026-09-15 ~18:00 UTC**, the "what changed since pass 16" pass (Florian: Fable sparingly), against live
-revision `4e126b6` (https://benchmarkheaven.com) — iteration 71's batch: CR-18 (derived slider default), CR-19…25
-(compare radar, equal columns, one Benchmaxxing row per model, signal bar, report copy, spokes, More menu, cost tag,
-Options rename), CR-28.1, CR-29 (two-line label, outlier tags), CR-31 (hint, (i) per benchmark), CR-32 (pickers,
-shorter tips, fitted Y, cogwheel), CR-33 (shortlist column chart, Main Composite row first), CR-35 (AA/Epoch credits,
-BETA tag). Evidence: `/opt/benchmarkheaven/state/ux-evidence/fable-20260915-pass17/` — 96 shots + `metrics.json`
-(Simple with pickers/menus/cost modal/section 2, Options, More menu, Advanced, Compare + radar, Benchmaxxing overview /
-report / side-by-side, model page; 1440/390 × light/dark) plus `*-section2-top.png`, `*-beta-focus.png`,
-`desktop_light-benchmaxxing-compare.png`, `desktop_light-compare-top.png`. Script: `bin/shoot-fable-pass17.mjs`.
-Pass-17 fixes live-checked in `after/` (`bin/verify-f87-f93.mjs`). Earlier passes: `…/fable-20260915-pass16/` …
-`…/fable-20260913/`.
+**Pass 18: 2026-09-16 ~04:00 UTC**, the "what changed since pass 17" pass (Florian: Fable sparingly), against live
+revision `5610c35` (https://benchmarkheaven.com) — iterations 73–77: F-94 (Options: regional chips, Models · Providers ·
+Labs comboboxes, CR-25.4/25.5/36.3), F-95 (Compare picker, CR-36.1/36.2), F-96 (Charts value map, CR-26.1), CR-25.6
+(category scores in the Score select), F-98 (Saturated / Judged tags, CR-38.2/38.3), CR-30.1 (self-reported †),
+CR-34.2 (OpenRouter's own boards), CR-28.2 — with the focus on the Benchmarks page (CR-1.10). Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260916-pass18/` — 150 shots + `metrics.json` (Benchmarks page top /
+tagged rows / mid / bottom chart / result page, Options with an open combobox, Compare with the picker empty and
+typing, Charts, Simple + section 2, Guided, Advanced, Benchmaxxing, model page; 1440/390 × light/dark). Script:
+`bin/shoot-fable-pass18.mjs`. Pass-18 fixes (F-100, `aa0e23e`) live-checked in `after/` and by `verify-cr-38.mjs`
+(`verify-cr-38/{canonical,legacy}/`). Earlier passes: `…/fable-20260915-pass17/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -29,224 +28,133 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 17 (2026-09-15), what changed since pass 16
+## Verdict on the live site — pass 18 (2026-09-16), what changed since pass 17
 
-**Iteration 71 landed a large batch and the site is still at the bar in substance: every page is clean at both widths and
-both themes (0 page errors in 96 shots), the Simple card reads as one sentence — "how good, how cheap" — with the
-derived default (69) putting the cheapest top model on the Pareto line, the compare radar now shows two strong models as
-two different shapes (zoom window 40–100 with an honest sentence), Benchmaxxing is one row per model with a
-master-detail report and a clean side-by-side mode, and the BETA tag and the AA/Epoch credits sit where they must
-without shouting.** The tagline stands. What was not yet right was small and mostly at the edges — seven findings,
-all fixed surgically in this pass (`cadbe88`, `992fa97`):
+**The four designs given in advance landed as designed, and the site is at the bar: the Options panel is one screen
+(589 px at 1440 with the comboboxes closed), three regional rows of four pressed chips, three comboboxes that open a
+320 px popover on desktop and a sheet on the phone; the Compare picker is a listbox under the input with one entry per
+model, two lines each, "best of N variants" named; Charts is the Simple value map at full width with its score picker,
+sliders, quadrant, Pareto line and cogwheel; the Benchmarks page shows 41 boards in 10 categories with bold winners,
+data bars, † for a lab's own number, Saturated / Judged drawn exactly like Niche, and small-multiple bar rows (Elo as
+dot rows) underneath. 0 page errors in 150 shots at both widths and both themes.** The tagline stands.
 
-1. **The desktop More menu was 63 px wide.** CR-23.1 anchored it to its button, and `max-w-full` then clamped the
-   256 px menu to the summary's width: "Cost vs / Capability", "Providers / per Model" wrapped inside a sliver. →
-   **F-87**: the clamp is gone; the menu is 256 px, anchored, inside the viewport.
-2. **"BETA— Work in progress".** The space before the dash lived at the start of an inline-flex item and was
-   collapsed. → **F-88**: a non-breaking space, so the text carries the space for eyes and readers alike.
-3. **The Simple score picker spoke registry ("ArtificialAnalysis — Coding Agent Index v1.4 (median harness)")** while
-   the radar, tables and Options say "AA Coding Agent Index"; on the phone the menu ran 42 px past the viewport. →
-   **F-89**: one naming for pickers (`SCORE_PICKER_LABELS`: AA Intelligence Index · AA Coding Index · AA Coding
-   Agent Index v1.4 · Epoch ECI · Epoch Software ECI · DesignArena Full-Stack (Elo) · DesignArena Frontend (Elo)),
-   used by the slider picker and the shortlist chart's select; the menu never exceeds the phone width.
-4. **The phone value map had two Y ticks (50, 100)** after CR-32.4 fitted the axis — a 200 px chart with no middle
-   reference. → **F-90**: floor, the round tick nearest the middle, top.
-5. **The desktop compare radar was a thumbnail** (R = 150 in a 1368 px card, most of the card empty). → **F-91**:
-   R 205, 900×600 viewBox, container 820 px; labels to 30 characters; the phone radar unchanged.
-6. **In the Simple benchmark table on phones the (i) dropped to its own line** under every wrapped name (the stub is
-   a wrapping flex row), adding a line to most rows; the footnote also repeated the intro sentence word for word. →
-   **F-92**: the (i) follows the last word (`.bh-matrix-bench-inline`); the footnote starts with the rule; the sr-only
-   caption no longer says "Headline" (CR-28.1 made it every benchmark).
-7. **The shortlist column chart (CR-33.1) panned horizontally on phones** — 8 of 25 columns visible, the rest behind
-   a scroll — against the pass-9 rule; on desktop the 25 rotated names read top-to-bottom and were cut at 6.5 rem
-   ("DeepSeek V4 Flash 0…"). → **F-93**: below `md` the same data as bar rows (name · bar · value, all models in
-   view, no panning); at `md` and above the columns stay, names read bottom-to-top (the plotting convention) with room
-   for the longest name. Florian asked for "a column chart"; the phone re-layout is the standing design-system rule,
-   recorded for X7.
+What was not yet right was on the Benchmarks page, and all of it was the same mistake — data strings shown as copy —
+fixed surgically in this pass as **F-100** (`aa0e23e`):
 
-Not findings, checked: the cost modal is now four plain bullets and a compact Sources block — right; "↑ 14× pricier"
-sits left of the price on one line (CR-24.1); the derived slider default is explained by the "25 models pass of 30 ·
-5 below your score line" line; the outlier tags (TOP/LOW) are text-first and rare (two in 49 rows); the Benchmaxxing
-side-by-side report keeps both signal cards under one radar; the model page and Advanced are unchanged and at the
-bar; the hint "This is a simplified list" appears once beside the button and leaves.
+1. **"Version snapshot 2026-09-14 (unversioned)" under 26 of 41 rows.** The registry identity leaked into the
+   table (F-54 forbids exactly that), and the line said the same date on every row — on the phone it added two
+   lines to most rows for nothing. Now the harness sits on the name line, the visible sub-line is only a stated
+   task window (or a version the name does not carry), and the version + read date live on the description's hover,
+   in the Simple table's (i) and on the result page, where a snapshot now reads **"Published 2026-09-14"**.
+2. **Two rows with the same name** — "AA Coding Agent Index v1.4" twice, "FrontierCode 1.1 Main (Cognition)" twice —
+   told apart only by a muted sub-line ("Claude Code" / "codex"). The harness is now on the name line in muted text,
+   and harness labels are humanised once (`claude-code` → Claude Code, `codex` → Codex, `mini-swe-agent` →
+   mini-SWE-agent) instead of mixing "Claude Code" and "claude-code" three rows apart.
+3. **A category header without a composite showed five dashes** ("General reasoning & knowledge · no composite · — —
+   — — —"). A dash means "no result" and belongs in a value cell; a header that has nothing to say shows nothing
+   (screen readers still hear "No category composite").
+4. **The result page said "not stated" twice** ("The verified source states no contamination control …" and "… does
+   not state a task or question date window") — one sentence now when both are missing.
 
-What the next work items must get right the first time — design given up front, not after: the Options panel's
-regional and models/providers/labs sections (CR-25.4, CR-25.5, CR-36.3 → **F-94**), the Compare model picker
-(CR-36.1/36.2 → **F-95**), the Charts value map (CR-26.1 → **F-96**), and one line of Benchmaxxing copy (**F-97**).
+Checked, not findings: the Options panel and both comboboxes (F-94) match their spec to the pixel; the picker (F-95)
+lists retired models under "Matches" with a "retired" note and no score — right; the Charts map (F-96) has the same
+ticks, quadrant and labels as Simple; the Simple table shows only the two caveat tags (iteration 77's recorded
+deviation — correct: a simple row must not grow four pills); the "LOW" outlier tag is rare and text-first; Guided,
+Advanced, Benchmaxxing and the model page are unchanged since pass 17 and at the bar.
 
-## Decisions in pass 17
+Two things are for the next work iterations, not for Fable, and both are data questions: the Providers combobox lists
+one company several times (**F-101**), and the site says "111 benchmarks", "120 benchmark results we track" and
+"41 benchmarks" for three different countings of one collection (**F-102**).
+
+## Decisions in pass 18
 
 1. **R3.1 / CR-10.1 stands.** No change to the tagline.
-2. **Pickers use the site's short names** (F-89); the registry labels ("ArtificialAnalysis — …", "Epoch AI —
-   Capabilities Index (ECI)") appear only inside the Score (i) and on the Sources page. Rule added below.
-3. **The shortlist chart is bar rows below `md`** (F-93) — the pass-9 rule ("no chart requires horizontal panning")
-   wins over the literal "column chart" on phones; at `md`+ it is the column chart Florian asked for. Recorded for X7.
-4. **A zoomed radar says so** (already CR-19.2's sentence) and is drawn at chart size, not thumbnail size (F-91): on
-   desktop a radar's outer ring spans ≥ 40 % of its card width.
-5. **Fable landed F-87…F-93 itself** (surgical; Kimi stalls on TSX per the record) — they need a **non-Fable verifier**:
-   `BH_RUNNER=<engine> node ops/ux-2026-09-12/bin/verify-f87-f93.mjs <base> <out>` (both hosts, 1440/390, light/dark).
-6. **X4 (UI meets the design bar): judged met at pass 17** for the iteration-71 batch, pending that verification; the
-   ledger row stays with its owner until X6.
-7. **Next Fable pass:** only after CR-25.4/25.5/36 land (they change the Options panel and the Compare picker), and
-   only one — F-94/F-95 give the design in advance so that pass is a check, not a redesign.
+2. **Version and read date are hover / (i) / result-page facts, never a visible row line.** A visible sub-line under a
+   benchmark name may carry only what changes how the number is read: a harness, a stated task window, a version the
+   name does not already carry. Rule added below.
+3. **A harness belongs on the name line.** One benchmark run through several harnesses is several rows with the same
+   name and the harness in muted text right after it — never a sub-line a reader has to find.
+4. **A header row shows numbers or nothing.** Dashes mean "no result" and appear only in value cells.
+5. **Fable landed F-100 itself** (surgical, six files; Kimi stalls on TSX per the record) — it needs a **non-Fable
+   verifier**: `BH_RUNNER=<engine> node ops/ux-2026-09-12/bin/verify-cr-38.mjs <base> <out>` (both hosts; the verifier
+   now reads the version line from the hover title and accepts "Published"), plus the after-shots in
+   `fable-20260916-pass18/after/`.
+6. **X4 (UI meets the design bar): judged met at pass 18** for iterations 73–77, pending that verification.
+7. **No further Fable pass is scheduled.** F-101 and F-102 are specified below so that their implementation is a
+   check, not a redesign; the open CR rows (CR-30.2/30.3, CR-34.5, CR-37, CR-38.1/38.4/38.5) are collectors and data
+   and do not change a page.
 
-## R3.1 — Hero claim (decided in pass 1, re-decided in pass 8, confirmed passes 9–16)
+## R3.1 / CR-10.1 — Hero claim (Florian's own copy since 2026-09-15; earlier Fable wording retired)
 
-> **Every AI model benchmark we can find, in one place.**
-> **And what each model really costs you.**
+> **The most detailed cost–capability analysis in AI.**
+> **Every model. Every Benchmark. Actual Costs.**
 
-Line 2 accent-coloured. The muted counts line underneath is generated from the dataset.
-Rejected: Florian's draft ("All benchmark results for every model, in one place. The most
-realistic cost estimate for each model.") — "all … every" over-reaches (P4); the pass-1 wording
-("The most complete collection … the only place …") — "only" is not provable against Artificial
-Analysis' cost per task (review gate 2026-09-13 20:50); the iteration-35 wording ("A complete,
-source-linked collection … grounded in provider prices, caching, and token efficiency.") — a
-methodology sentence, three lines, repeated in the footer. If Florian wants the superlative back,
-the honest form is "The most complete collection of AI model benchmarks we know of."
+Line 2 accent-coloured, capitalisation exactly as Florian wrote it (CR-10.1); the muted counts line underneath is
+generated from the dataset. Re-confirmed live in passes 17 and 18. History, for the record: pass 1 chose
+"Every AI model benchmark we can find, in one place. / And what each model really costs you." (re-decided in pass 8,
+held through pass 16) after rejecting Florian's 2026-09-12 draft ("All … every" over-reaches, P4) and the
+"most complete … only place" form ("only" not provable against Artificial Analysis' cost per task, review gate
+2026-09-13). CR-10.1 (2026-09-15) replaced it with the copy above; it is a positioning claim in Florian's own words,
+and the counts line under it keeps the page honest (P4).
 
 ---
 
 ## Directives (open)
 
-> **Status 2026-09-15 pass 17 (Fable), end of pass:** open for implementers: **F-94, F-95, F-96, F-98** (design for the
-> pending CR-25.4/25.5/36.3, CR-36.1/36.2, CR-26.1 and CR-38.2/38.3 — take them together with those rows) and **F-97**, **F-99** (surgical copy/placement).
-> **Verification review gate 20260916T010002Z (opencode-kimi ≠ implementers):** F-97 re-run live **53/53 per host** (verify-cr-19-25), F-99 **52/52 per host** (verify-cr-29-31); F-95 **65/65 per host** (verify-cr-36-1-2); all at `958f207`, 1440/390, light/dark.
-> **Iteration 77 (claude-opus):** **F-98 landed** (`0033b25`): `Saturated` and `Judged` are two more tags in
-> the existing set, drawn exactly like `Niche`/`Community` (the verifier compares the computed style against
-> `[data-tag="niche"]`: same colour, border, radius and `cursor: help` — no new colour, no icon, no extra column),
-> each with its one tooltip sentence verbatim from this directive. The (i)'s second line reads
-> "Version X · results as of YYYY-MM-DD" and gains "· tasks from YYYY" where the source states a window; a
-> saturated row keeps its data bars; the category (i) gained the one clause "saturated benchmarks weigh half
-> (<names>)" and, where it applies, "N preference or judge scores left out". `/about#benchmark-tags` lists both
-> with exactly these sentences. Two deviations, both recorded: the Simple table shows **only** these two caveat
-> tags (the editorial tier tags stay in the full comparison, so a simple row does not grow four pills), and the
-> version line also names the date the results were read, which CR-38.2 asks for and the directive did not
-> mention. `bin/verify-cr-38.mjs` **81/81** at 1440/390, light/dark. **Needs a non-claude verifier.**
->
-> **Iteration 74 (claude-opus):** **F-97** (Signal sub-label "bars scaled to N, the list's highest") and
-> **F-99** (phone: the simplified-list hint is a full-width line under the button, never over the intro) **landed**
-> in `aa46183`, live 53/53 and 52/52 per host. **F-95 implemented** with CR-36.1/36.2 (`verify-cr-36-1-2` 65/65 per
-> host) — one deviation: the empty-query list is headed **"Top by AA Intelligence Index"**, not "Top by Composite"
-> (the Composite exists only client-side; see iteration 74's note in `PROGRESS.md`). Still open: **F-98**.
->
-> **Iteration 73 (claude-opus):** F-94 landed (`808ef9e`; one deviation: the provider quick-pick links were dropped, they squeezed the list) and F-96 landed (`95fd086`), both live-checked by the implementer (`verify-cr-25-36` 76/76, `verify-cr-26-1` 56/56 per host) — they need a non-claude verifier and the next Fable pass. F-95, F-97, F-98, F-99 stay open.
-> F-87…F-93 landed (`cadbe88`, `992fa97`) and were live-checked by Fable (`fable-20260915-pass17/after/`); they need a
-> non-Fable verifier (`verify-f87-f93.mjs`). F-86 was landed by iteration 66 and verified by claude-opus.
+> **Status 2026-09-16 pass 18 (Fable), end of pass:** **F-100 landed** (`aa0e23e`, Fable) — needs a non-Fable verifier
+> (decision 5). Open for implementers: **F-101** and **F-102** (`[judgment → claude-opus]`, data + copy, no redesign).
+> Everything from pass 17 (F-94 … F-99) landed and is in the Done log; F-84/F-85/F-86 as well.
 
-### F-94 `[judgment → claude-opus, with CR-25.4 / CR-25.5 / CR-36.3]` Options panel: regional rows and the models · providers · labs comboboxes
-*Where:* `components/GlobalFilters.tsx`, `lib/regions.mjs` (tested groundwork), `app/globals.css`, the presets in
-`lib/presets.mjs`.
-*What:*
-1. **Section order:** Ranking · Price basis (keeps "I'm buying for a company", CR-25.3) · **Models, providers and
-   labs** · **Regional** · Data confidentiality · More settings. The footer (Show N models · Presets) and the sentence
-   "Applies to price views & model offers; benchmark evidence stays unfiltered." stay as they are.
-2. **Regional = three rows of the same shape**, one per axis, positively worded (CR-25.4): a label at the left —
-   "Hosted in", "Provider company based in", "Model lab based in" — and four toggle chips **China · EU · US · Other**,
-   all pressed by default, the existing `aria-pressed` chip style, **no (i)** and no checkboxes. One muted line under the
-   three rows: "Hosting = where inference runs; company = where the provider or lab is registered." A stored
-   `euHostedOnly` / `excludeChinese` / `nonUsOnly` maps onto the chips (`regionStateFromLegacy`); default users see
-   identical results before and after.
-3. **Models, providers and labs = three identical compact comboboxes** in one row at `md`+ (stacked at 390): a
-   trigger button reading "Models: All" / "Providers: 3 of 91" / "Labs: All"; it opens a popover **as wide as the
-   trigger (min 280 px), max-height 320 px with internal scroll**, a search field on top, "All · None" links, the list
-   grouped alphabetically with the selected items first; selected items are chips **inside the popover**, never in the
-   panel — the panel shows only the count. On phones the popover is a bottom sheet like the Options sheet. Keyboard:
-   Tab to the trigger, Enter opens, typing filters, Space toggles, Escape closes and returns focus.
-4. Nothing else moves; the old Models/Providers dropdown markup is removed, not hidden.
-*Accept (both hosts, 1440 popover and 390 sheet, light/dark):* the Options popover is ≤ 600 px tall at 1440 with the
-comboboxes closed; nothing wider than the sheet at 390; the three regional rows have four chips each, all pressed on a
-fresh load; a combobox popover never exceeds 320 px in height and scrolls inside; the CR-25.4 mapping test and
-`verify-cr-6-8` / `verify-cr-presets` pass; screenshots of the panel and one open combobox in every context.
+### F-100 `[surgical, Fable — landed aa0e23e, needs a non-Fable verifier]` Benchmarks page: data strings are not copy
+*Where:* `lib/benchmark-matrix.mjs` (`versionLine`, `cohortLabel`), `components/BenchmarkMatrix.tsx`,
+`components/SimpleBenchmarks.tsx`, `components/ScoreRows.tsx`, `app/benchmarks/result/page.tsx`, `app/globals.css`,
+`test/benchmark-caveats.test.mjs`, `bin/verify-cr-38.mjs`.
+*What (as landed):* (1) `versionLine` reads "Published 2026-09-14" for a snapshot board, "Version 1.4 · results as of
+2026-09-10" for a versioned one, "· tasks from 2024 to 2025" when the source states a window; the raw
+`snapshot-… (unversioned)` identity never reaches a reader. (2) Full comparison stub: name line = name · harness (muted,
+`.bh-matrix-cohort`) · tags; the sub-line exists only for a stated task window or a version the name lacks
+(`versionSuffix`); the description's `title` carries the description and the version line. (3) Simple table: the
+harness on the name line, no sub-line. (4) Group header without a composite: empty cells with sr-only text. (5) Result
+page: one sentence when neither a contamination control nor a task window is stated. (6) Harness labels humanised
+once (`HARNESS_LABELS`).
+*Accept (both hosts, 1440/390, light/dark):* `verify-cr-38.mjs` passes (81 checks per host — the version check now
+reads the hover title); on `/benchmarks` no `.bh-matrix-sub` contains "snapshot" or "(unversioned)"; the two
+"AA Coding Agent Index v1.4" rows show "Claude Code" and "Codex" on their name lines; the "General reasoning &
+knowledge" header row has no visible "—"; `/benchmarks/result/…` for an AA index shows "Published 2026-09-1x" and one
+"states neither" sentence; `verify-cr-1`, `verify-cr-7`, `verify-cr-29-31` unchanged; `npm test` (521) and `tsc` green.
 
-### F-95 `[judgment → claude-opus, with CR-36.1 / CR-36.2]` Compare "Add a model" picker
-*Where:* `components/BenchmarkCompare.tsx` (or the picker component it uses), `lib/benchmark-view.mjs` for the one-entry-per-model
-collapse, `app/globals.css`.
-*What:* the input stays where it is; the results are a **listbox directly under the input** (same width as the input
-+ Add button, min 360 px, max-height 380 px, internal scroll, opaque, above everything). Each option is one entry per
-model family (CR-36.2): line 1 — org dot, model name with the matched characters bold, the main score right-aligned in
-tabular figures; line 2, muted — lab · released YYYY-MM · "best of N variants" when variants were collapsed. With an
-empty query the list shows **"Top by Composite" (8 entries)**; while typing, "Matches" alphabetically; keyboard ↑ ↓
-Enter Esc, `aria-activedescendant`; on phones the listbox becomes a full-width sheet under the header with the input at
-its top. The A–D chips above keep their style; a chip's tooltip names the variant behind each best-of value.
-*Accept:* no clipping or overflow at 1440/390, light/dark; options are ≤ 2 lines; Fable 5.1 and GPT-6 Astra appear
-once each; keyboard-only selection works; `verify-cr-14` and `verify-cr-19-25` pass.
+### F-101 `[judgment → claude-opus]` Providers combobox: one row per company
+*Where:* `components/GlobalFilters.tsx` (`providerItems`), `components/MultiCombobox.tsx` (a grouped item may toggle
+several keys), `lib/presets.mjs` / `SettingsContext` (the excluded-provider keys stay what they are).
+*What:* the Providers list shows **Anthropic** twice (direct and the OpenRouter route), **Amazon Bedrock** next to
+**AWS Bedrock**, **Azure** next to **Azure AI Foundry** — one company, two catalog keys, and a reader cannot tell which
+one to untick. One option per company: label = the company as the site names it elsewhere (the model page's offers
+table), sub = "N routes" when more than one key folds in (e.g. "direct · via OpenRouter"), and the checkbox toggles all
+of its keys together; the search matches the company and every route name. Naming is harmonised in the catalog, not
+in the component: "Amazon Bedrock" and "AWS Bedrock" are one company (`data/` provider names → the AWS name the EU
+page already uses), "Azure" and "Azure AI Foundry" likewise. Keys, filters, presets and results do not change for a
+default user; a stored exclusion of one key still excludes that key only (shown as a mixed state, `aria-checked=
+"mixed"`).
+*Accept:* no company name appears twice in the Providers popover at either width; `verify-cr-25-36` (76) and
+`verify-cr-presets` (88) pass; a unit test folds two keys of one company into one item and toggles both; screenshots
+of the open popover at 1440 and the sheet at 390, light/dark.
 
-### F-96 `[judgment → claude-opus, with CR-26.1]` Charts cost-vs-capability = the Simple value map, full width
-*Where:* `components/ChartsBoard.tsx`, `components/CostCapabilityScatter.tsx` (compact mode already has everything).
-*What:* the Charts card renders the **compact value map's pieces at full width** — reversed cost axis, green quadrant
-with its note, Pareto line, in-chart labels with halos and collision handling, fitted Y axis, cogwheel — at 420 px
-height on desktop and 240 px on phones (bar rows are not needed: it is a scatter). In the card header: a score select
-(`SCORE_PICKER_LABELS`) and the two sliders (min score, max cost) from `ShortlistControls` in one row; the 30-model
-rule applies when Featured is on. One card, one caption line, no second explanatory paragraph.
-*Accept:* a parity checklist against the Simple map (axis, quadrant, line, labels, ticks, cogwheel, credits) all
-present; sliders and select change the map; 1440/390, light/dark; no page errors.
+### F-102 `[judgment → claude-opus]` One counting rule for "benchmarks" everywhere
+*Where:* `app/page.tsx` (hero counts line, `benchmarks = registry.length`), `components/SimpleBenchmarks.tsx`
+(`catalogRows` = matrix rows), `components/BenchmarkMatrix.tsx` ("N benchmarks across K categories"), `/about`.
+*What:* today the hero says **111 benchmarks** (registry entries: family + version), the Simple section 2 says
+**"46 of the 120 benchmark results we track"** (matrix rows: harness cohorts and OpenRouter cost twins add rows), and
+the Benchmarks page says **41 benchmarks** for the same five models. One rule: **a benchmark is a board — one family +
+version; harnesses and cost twins are rows of a board, not boards.** Expose that count once from the matrix
+(`matrix.catalogBoards`) and use it in all three places: hero "111 benchmarks", section 2 "41 of the 111 benchmarks we
+track for your top 5" (numerator counts boards, not rows), Benchmarks page "41 benchmarks · 46 rows across 10
+categories" only if the row count adds information — otherwise just the boards. `/about#benchmark-tags` gets one
+sentence stating the rule. If the registry count and the board count differ (retired versions kept for history), the
+hero shows the boards with at least one current result and the Sources page explains the difference.
+*Accept:* the three numbers agree by construction (a test computes each from the dataset and asserts hero = section-2
+denominator = boards with results); the section-2 sentence and the Benchmarks-page count read "benchmarks", never
+"benchmark results"; `verify-cr-7` (42) and `verify-cr-28-1` (10) pass with their assertions updated to the rule.
 
-### F-97 `[surgical, claude-opus]` Benchmaxxing Signal header sub-label
-*Where:* `components/BenchmaxxingOverview.tsx`.
-*What:* the Signal column's sub-label "bar 0–21.2" reads **"bars scaled to 21.2, the list's highest"** (value from the
-same `max`). Nothing else changes; the page intro keeps "One row per model …" (asserted by `verify-cr-19-2-21-1`).
-*Accept:* header text matches `/bars scaled to [\d.]+, the list's highest/`; CR-21.2 check in `verify-cr-32-33` passes.
-
-### F-86 `[judgment → claude-opus]` "Better than a model": only offer comparisons the reference can answer
-*Where:* `components/ModelExplorer.tsx` (`comparisonMetrics`, `comparisonPanel`), `lib/benchmark-comparison.mjs`
-(labels), `test/benchmark-comparison.test.mjs` (or the nearest existing test file).
-*What:*
-1. **Disable what cannot work.** Once a reference model is chosen, every option in "Benchmark or category"
-   whose `values[comparisonTarget]` is missing renders `disabled` with the suffix " · no result for this model";
-   options with a bridged (approximate) value get the suffix " · bridged". The enabled options come first, in the
-   existing order (category medians, then benchmarks); disabled ones follow. With no reference chosen the list is
-   unchanged. If the currently selected metric becomes unavailable after a reference change, keep it selected
-   (the existing "no comparable result" status line stays as the fallback) — do not silently clear it.
-2. **No two options with the same label.** Where two axes share `name · category · unit`, append the registry
-   version (`axis.version`, e.g. " · v1.4") to both; if the versions are equal too, append the cohort. Today 5 of
-   70 labels collide. Unit test: `buildBenchmarkComparison` output has unique labels for a fixture with two
-   versions of one benchmark.
-3. **Reference list, cheap win:** the "Reference model" select keeps every catalog model (retained references
-   like Opus 4.7 must stay choosable), but models with **no** value in any metric go last under a disabled
-   separator option "— no comparable results —". No other change to that select.
-4. Nothing else moves: the popover width, the Refine sheet block, the status sentence, "Clear comparison".
-5. **Naming, while there:** the retained reference is labelled "Opus 4.7 (medium)" beside "Claude Opus 4.7 (Adaptive
-   Reasoning, Max Effort)" — the harness-only catalog entry should carry the catalog convention ("Claude Opus 4.7
-   (Adaptive Reasoning, Medium Effort)"), which is the P2 row's "duplicate harness-only catalog ids" follow-up; fix it
-   there, not in the component.
-*Accept (both hosts, 1440 popover and 390 Refine sheet, light/dark; `verify-p2-history.mjs` gains the assertions):*
-after choosing the retained reference `claude-opus-4.7::medium` (today labelled "Opus 4.7 (medium)") the metric select has ≥ 1 enabled and ≥ 1
-disabled option; every disabled option's text ends with "no result for this model"; the enabled option whose
-label starts with "AA Coding Agent Index v1.5" (or the registry name) selects and the status line shows a value
-with the bridge disclosure; all option labels are unique; `npm test` and `tsc` green; `verify-cr-1` 92/92 per
-host unchanged.
-
-### F-84 `[surgical, Fable — landed ec80831]` No data bar on a single-value row
-*Where:* `lib/benchmark-matrix.mjs` (`rowBars`: `present.length < 2` → all `null`), `test/benchmark-matrix.test.mjs`.
-*Accept:* on `/benchmarks` (All preset, top 5) every row with exactly one value shows the number without a
-`.bh-matrix-bar`; rows with ≥ 2 values keep their bars; `verify-cr-1` CR-1.5 check (bars > 0, none on missing
-cells, alpha ≤ .25) still passes at 1440/390, light/dark, both hosts.
-
-### F-85 `[surgical, Fable — landed ec80831]` Status line without the second total
-*Where:* `components/BenchmarkMatrix.tsx` (status `<p role="status">`), `ops/ux-2026-09-12/bin/verify-cr-1.mjs`.
-*Accept:* the status line matches `/^\d+ benchmarks across \d+ categories · /` and contains no "rows"; the
-rendered table has ≥ as many rows as the benchmark count; the rows chooser still reads "(N of N)" with N equal
-to the status line's benchmark count; F-83's four assertions unchanged.
-
-### F-98 `[judgment → claude-opus, with CR-38.2 / CR-38.3]` Saturated and judged benchmarks: one tag each, no new colour
-*Where:* `lib/benchmark-matrix.mjs` (tag set of CR-1.7), `data/benchmark-taxonomy.json` (metadata), `components/BenchmarkMatrix.tsx`,
-`components/SimpleBenchmarks.tsx`, the benchmark (i) copy.
-*What:* the metadata CR-38.2/38.3 adds becomes **two more tags in the existing tag set**, drawn exactly like `Niche` /
-`Community` (outlined pill, muted, `cursor: help`, one tooltip sentence): **`Saturated`** — "Top models sit near this
-benchmark's ceiling; it separates weaker models, not the best." — and **`Judged`** — "A preference or judge score,
-not task accuracy." The (i) tooltip's second line gains "Version X · tasks from YYYY-MM to YYYY-MM" when known. No
-new colours, no icons, no extra column; a saturated row keeps its data bars. Category composites that down-weight
-saturated rows say so in the category (i) in one clause ("saturated benchmarks weigh half").
-*Accept:* the tag legend on `/about` lists both with the same sentences; every row with `saturated: true` or a
-preference basis carries the tag in the Benchmarks page and the Simple table; tooltips opaque, correct z-index;
-1440/390, light/dark.
-
-### F-99 `[surgical, claude-opus]` Phone: the "This is a simplified list" hint must not cover the intro
-*Where:* `components/SimpleBenchmarks.tsx` (CR-31.1 hint).
-*What:* below `md` the hint renders as a full-width line directly under the "Open the full comparison" button (same
-words, same accent style, same timing) instead of a bubble above it — on a 390 px screen the bubble hides the intro
-sentence while it is shown (`fable-20260915-pass17/after/canonical/mobile_light-section2.png`). Desktop unchanged.
-*Accept:* at 390 the hint's box does not intersect the intro paragraph's box; `verify-cr-29-31` CR-31.1 checks pass.
 
 ## Design system notes (apply while touching any file above)
 
@@ -296,9 +204,21 @@ sentence while it is shown (`fable-20260915-pass17/after/canonical/mobile_light-
 ---
 
 ---
+- **Data strings are not copy (F-54, re-stated in pass 18).** A registry identity (`snapshot-2026-09-14 (unversioned)`),
+  a harness key (`claude-code`) or a source id never reaches a reader raw: every string a reader sees goes through one
+  labelling helper (`versionLine`, `cohortLabel`, `SCORE_PICKER_LABELS`).
+- **A visible sub-line under a benchmark name carries only what changes the reading of the number:** a harness (on the
+  name line), a stated task window, a version the name lacks. Version and read date are hover / (i) / result-page facts.
+- **Dashes mean "no result" and appear only in value cells.** A header or summary row with nothing to say shows nothing.
 
 ## Earlier verdicts (condensed, for the record)
 
+- **Pass 17 (2026-09-15 18:00 UTC, live `4e126b6`):** iteration 71's batch at the bar in substance; fixed F-87 (More
+  menu 256 px), F-88 (BETA non-breaking space), F-89 (short picker names), F-90 (phone map ticks), F-91 (desktop radar
+  R 205), F-92 (inline (i), footnote), F-93 (shortlist chart as bar rows below `md`), Fable `cadbe88`/`992fa97`,
+  verified by opencode-kimi (iteration 72); gave F-94/F-95/F-96 (designs for CR-25/36/26) and F-97/F-98/F-99 in
+  advance, all landed by claude-opus (iterations 73–77). Rules added: pickers use the site's short names; a zoomed
+  radar says so and is drawn at chart size.
 - **Pass 16 (2026-09-15 04:30 UTC, live `3dac13e`):** the Benchmarks page at the bar after F-83; fixed F-84 (no
   data bar on a single-value row) and F-85 (status line without the second total), Fable `ec80831`, verified by
   claude-opus (iteration 66); opened F-86 ("Better than a model" offers only answerable comparisons), landed by
@@ -362,6 +282,16 @@ sentence while it is shown (`fable-20260915-pass17/after/canonical/mobile_light-
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-100 Benchmarks page: version line as copy ("Published …"), harness on the name line, quiet no-composite headers, one "not stated" sentence | `aa0e23e` (Fable) | `ux-evidence/fable-20260916-pass18/{after,verify-cr-38}/` | needs a non-Fable verifier (pass 18, decision 5) |
+| F-99 phone: simplified-list hint under the button | `aa46183` (claude-opus, iter 74) | `ux-evidence/review-20260916T010002Z/` | verified by opencode-kimi (gate 20260916T010002Z, verify-cr-29-31 52/52 per host) |
+| F-98 Saturated / Judged tags, no new colour | `0033b25` (claude-opus, iter 77) | `ux-evidence/iter77-cr-38-final/` (81/81 per host, implementer) | needs a non-claude verifier (CR-38.2/38.3 rows) — pass 18 re-checked the tags live: drawn like Niche, one sentence each |
+| F-97 Benchmaxxing Signal sub-label "bars scaled to N, the list's highest" | `aa46183` (claude-opus, iter 74) | `ux-evidence/review-20260916T010002Z/` | verified by opencode-kimi (verify-cr-19-25 53/53 per host) |
+| F-96 Charts cost-vs-capability = the Simple value map at full width | `95fd086` (claude-opus, iter 73) | `ux-evidence/review-20260915T212002Z/` | verified by opencode-kimi (gate 20260915T212002Z, verify-cr-26-1 56/56 per host); pass 18 re-checked: parity with Simple |
+| F-95 Compare "Add a model" picker | `aa46183` (claude-opus, iter 74) | `ux-evidence/review-20260916T010002Z/` | verified by opencode-kimi (verify-cr-36-1-2 65/65 per host); one recorded deviation: empty query heading "Top by AA Intelligence Index"; pass 18 re-checked at 1440/390 |
+| F-94 Options panel: regional chips, Models · Providers · Labs comboboxes | `808ef9e` (claude-opus, iter 73) | `ux-evidence/review-20260915T212002Z/` | verified by opencode-kimi (verify-cr-25-36 76/76 per host); one recorded deviation: provider quick-pick links dropped; pass 18 re-checked: 589 px panel, 320 px popover, phone sheet |
+| F-86 "Better than a model": only answerable comparisons offered | `6d775aa` (claude-opus, iter 66) | `ux-evidence/review-20260915T051001Z/` (verify-p2-history 54/54 per host) | verified by opencode-kimi (gate 20260915T051001Z) |
+| F-85 status line without the second total | `ec80831` (Fable) | `ux-evidence/review-20260915T051001Z/` (verify-f84-f85 20/20 per host) | verified by opencode-kimi |
+| F-84 no data bar on a single-value row | `ec80831` (Fable) | `ux-evidence/review-20260915T051001Z/` (verify-f84-f85 20/20 per host) | verified by opencode-kimi |
 | R3.1 hero claim + meta/OG/footer text | `76d8f86` (Fable) | `ux-evidence/fable-20260913/local/`, `…/after/` | Fable pass 2 re-checked live (`b3a1453`): hero text and counts line correct at both widths |
 | F-01 compact hero (eyebrow and stat boxes gone, one counts line, smaller display) | `76d8f86` (Fable) | `ux-evidence/fable-20260913-pass2/desktop_light-simple.png` | hero part done; the fold acceptance moved to F-13 |
 | F-04 small print under the table, caption into the Score (i), short score labels in Charts/Scatter/select | `76d8f86` (Kimi K3, reviewed by Fable) | `ux-evidence/fable-20260913/after/` | pass 2: done on `/`; residual jargon on `/charts` → F-20 |

@@ -7,7 +7,7 @@ import { getDataset } from '../../../lib/data';
 import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { getBenchmarkMatrixPage } from '../../../lib/benchmark-matrix-data';
 import { latestScores } from '../../../lib/benchmark-view.mjs';
-import { formatValue, cellHref, resultHref, rowWinners, versionLine } from '../../../lib/benchmark-matrix.mjs';
+import { formatValue, cellHref, resultHref, rowWinners, versionLine, cohortLabel } from '../../../lib/benchmark-matrix.mjs';
 import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
 import { humanVersion } from '../../../lib/version-label';
@@ -126,7 +126,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
   return <div className="max-w-4xl">
     {backLink}
     <header className="bh-page-head mt-3">
-      <p className="bh-eyebrow">{ax.category} · {humanVersion(ax.version).label}{ax.cohort !== 'Published board' ? ` · ${ax.cohort}` : ''}</p>
+      <p className="bh-eyebrow">{ax.category} · {humanVersion(ax.version).label}{ax.cohort !== 'Published board' ? ` · ${cohortLabel(ax.cohort)}` : ''}</p>
       <h1 className="text-3xl font-bold tracking-tight">{ax.name}</h1>
       {ax.description && <p className="bh-muted mt-2 max-w-2xl">{ax.description}</p>}
     </header>
@@ -138,7 +138,8 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
       {/* CR-38.2 / CR-38.3: what a reader needs to read this number correctly — the tooltip has room for a
           sentence, this page has room for all of it. Every line is either measured or quoted from the source. */}
       {matrixRow && <ul className="bh-muted mt-3 space-y-1 border-t border-line pt-3 text-sm" data-bh-result-caveats>
-        {versionLine(matrixRow) && <li>{versionLine(matrixRow)}</li>}
+        {/* F-100: the eyebrow already says "published <date>" for a snapshot board — the list repeats it only when there is more to say. */}
+        {versionLine(matrixRow) && !/^Published \d{4}-\d{2}-\d{2}$/.test(versionLine(matrixRow)) && <li>{versionLine(matrixRow)}</li>}
         {matrixRow.saturation?.saturated && <li><b>Saturated.</b> {matrix.tags.saturated?.tip} Measured here: the {matrixRow.saturation.topN} best of {matrixRow.saturation.models} independently measured models average {Math.round(matrixRow.saturation.share * 1000) / 10}&nbsp;% of this benchmark&apos;s ceiling.</li>}
         {matrixRow.judged && <li><b>Judged.</b> {matrix.tags.judged?.tip} {caveats.judged[matrixRow.key as keyof typeof caveats.judged]?.why}</li>}
         {matrixRow.freshness?.contamination
