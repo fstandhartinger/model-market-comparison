@@ -366,3 +366,86 @@ The evidence is `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms
 Implement the decision as a durable, visible operational guard: scope is exactly the two existing boards; record the source/legal-access risk and evidence path; block any future DesignArena endpoint/board expansion pending a new explicit Florian decision or documented permission. Preserve data provenance/date and ensure the user-facing source/methodology wording is accurate and does not falsely claim an official API or licensed feed. Revisit only if an official API, license, or permission becomes documented.
 
 </requirements>
+
+---
+
+## CR-20260916b — Simple shortlist benchmark-chart readability
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+regarding the bar chat at "Simple view Benchmarks for your shortlist" on the overview: can we make the model names show up as diagonal, not vertical at the moment? would make them easier to read. Also please change the y-Axis start-/end-value so that the differences between the values become more visible. Currently the y-Axis begins at 0, but in many cases the lowest value in the chart would be maybe carry a value of 65, which makes all the bar look very similar in height. I'd like to have a cogwheel to configure y-Axis being nulled, though, if a user regards it as a chart crime not to do that. (in my opinion it isn't a chart crime in this case, because these benchmark values often can't be interpreted as straight linear continuous measurements in the sense that "50 is half as good as 100").
+
+</requirements>
+
+Implementation clarification: preserve truthful scale communication. The default may use a data-driven, non-zero y-axis range only when it visibly states the displayed range and gives enough visual context to prevent an implied zero baseline. The cogwheel must offer a clearly named zero-baseline option and persist the user choice; it must work on desktop and mobile, in light and dark themes. Add tests and independent live verification before marking accepted.
+
+---
+
+## CR-20260916c — Merge agent/version variants in benchmark-table display
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+another thing I'd like to have adjusted: "ApprenticeBench API (NeoCognition)" gets shown seperately in the table in different rows, e.g. for Claude Code and Codex. I think we should merge these in the display and take the highest score each. In reality usually a model is either tested with Codex or with Claude Code, so it makes most sense to have the values in one row.
+Similar for AA Coding Agent Index: let's unify these rows and take the best score a model has achieved, no matter which version (v1.4 or v1.5) or agent (Claude Code or Codex).
+
+</requirements>
+
+Implementation clarification: this is a presentation-level best-record aggregation. Preserve every raw result, version, agent/harness, date, source, and provenance; never overwrite or relabel raw measurements. Merge only results with a compatible metric/unit and direction. The unified row must say that it shows each model's best recorded result, and its detail/provenance view must identify the selected source version and agent/harness. Apply consistently in Simple, Advanced, and the Benchmarks tab, with tests and independent live verification.
+
+---
+
+## CR-20260916d — Stronger table signals and provider links
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+also: the tags/bubbles we add to the table with the score and cost columns: these are great. maybe we can even extend this a bit: I think we should show the pricier/cheaper tags a little bit more often, and in two intensity levels. Fable 5.1 in my opinion should also get as pricier tag (but maybe a weaker version than the tag we show for Fable 5) and GLM-5.3 should maybe also get a cheaper tag, but a weaker one than GLM-5.3-Flash, and maybe we can also add that Benchmaxxing signal tag in a weak and a strong (strong would be what we currently have at GLM-5.2) form. And a click on it should lead to the benchmaxxing view with this model seslected and the view scrolled to the radar chart section, so that the user understands immediately intuitively why we regard it as benchmaxxed.
+And I also noticed, if a model in this table is expanded, in the provider list it would be good if there could be links as well, either to the providers webpage or to a provider detail page in our app.
+
+</requirements>
+
+Implementation clarification: derive weak/strong cheap, expensive, and Benchmaxxing signal levels from documented current data thresholds rather than hard-coding individual models; use text/icon and accessible explanations, not color alone. The examples above are acceptance examples only when their current data still meets the documented thresholds. A signal pill must be a keyboard-accessible deep link to `/benchmaxxing` with the model selected and the radar section focused/scrolled into view, while preserving understandable back navigation. In expanded offer/provider lists, link to an in-app provider detail page when available; otherwise link to the verified official provider website. Do not manufacture URLs; preserve offer/provider provenance. Test and independently live-verify on desktop/mobile and light/dark.
+
+---
+
+## CR-20260916e — Data revalidation, matched expansion panes, Benchmaxxing quick radar
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+Then also start another round of checks if all scraped numbers are correct. And the provider list currently has the wrong height, I see a scrollbar there for GLM-5.2 because we have may providers, but the height of this provider table is not even same height as the Benchmarks listing left of it (but it should be).
+Also I think in the Benchmaxxing view we should consider showing that radar chart with the potentially jagged lines not only in the master-detail style way (selected row in table and below table the radar chart) but also using an expandable row mechanism similar to how rows in the model capability/cost table in simple overview can be expanded. Maxbe we then place a rather simple version of the radar chart and the score and the comment how we interpret that jaggedness as benchmaxxing signal and then put there a link to that more complete and more detailed section on the same page (anchor link or similar) if the user wants to explore this data in greater detail.
+
+</requirements>
+
+Implementation clarification: run a new independent source-data revalidation round after the change, covering every currently collected source group and every published scraped numeric value against its retained primary-source capture/contract; record coverage, mismatches, exclusions, and remedies. Fail closed for any unverified or mismatched value; do not call the revalidation complete until every published scraped number is accounted for. In each expanded overview row, the provider/offers pane and the benchmark pane must share the same visible height at applicable desktop widths; if either side needs overflow, use a deliberate matched-height layout with an internal scroll area and no clipped content. On Benchmaxxing, add an accessible expandable per-model row that exposes a compact radar, the signal score, and a plain-language jaggedness interpretation; its detail link must select that model and move focus/scroll to the existing full radar/report section on the same page. Keep the existing master-detail flow. Test and independently live-verify all states, desktop/mobile, light/dark.
+
+---
+
+## CR-20260916f — Sort-aware value-signal framing
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+one more thought regarding the tags in the model capability/cost table: the tags for high price or cheap prive are only really interesting in the default sorting of the table, when the models are sorted descending by capabilities. If the user switches sorting to price (descrending) it would be more appropriate to put high/low capability tags into the capability column for rows that kidn of violate the expected price-capability-ratio. It would basically be the same signal and affect the same models, but the perspective and thus the message would be a slightly different one. let's do it like this
+
+</requirements>
+
+Implementation clarification: when the active table sort is composite capability descending, render the existing cost-relative badges in the adjusted-cost column. When the user actively sorts by adjusted cost descending, render the equivalent same-model/value signal in the capability column with clear capability-relative wording rather than cost-relative wording; do not show both versions at once. Recompute/re-render correctly after sorting, preserve weak/strong levels and the documented threshold/provenance explanation, announce the changed context accessibly, and test keyboard sorting plus desktop/mobile/light/dark states.
+
+---
+
+## CR-20260916g — Correct the social link-preview slogan
+
+Florian's report, Telegram, 16 Sep 2026: the Benchmark Heaven link preview still shows the old slogan.
+
+Live evidence, 16 Sep 2026: both `https://benchmarkheaven.com/` and `https://www.benchmarkheaven.com/` still serve the retired social description: “Every AI model benchmark we can find, in one place. And what each model really costs you.” This is a real metadata defect, not merely a cached Telegram card.
+
+Implementation clarification: replace the canonical Open Graph, Twitter, standard description, and any wording embedded in the share image with the already accepted current Benchmark Heaven brand copy: “The most detailed cost–capability analysis in AI.” and “Every Benchmark. Actual Costs.” Ensure canonical and www responses agree and validate output with scraper-style fetches after deployment. Check whether Telegram has cached previews already issued; explain plainly that already-sent cards can remain cached and verify a newly shared URL/card where cache behavior permits. Do not claim the old Telegram message itself can be retroactively changed.

@@ -339,3 +339,48 @@ still-open rows from section 2 per the priority rule in section 0.
 |---|---|---|
 | CR-39.1 | Keep only the two current DesignArena boards (Frontend and Full-Stack Elo) under Florian’s documented-risk decision. No endpoint, board, or collection expansion without a new explicit decision or documented permission/licence. | A committed machine-readable/source-policy guard names the two permitted boards; a test rejects any added DesignArena endpoint/board by default. |
 | CR-39.2 | Make the restriction and evidence durable in operational/source documentation, while preserving exact provenance/date and avoiding any false official-API/licensed-feed claim in user-facing methodology. | Evidence path `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/` is recorded; methodology/source wording is reviewed live; tests remain green. |
+
+## 19. CR-20260916b–g — chart readability, variant merging, stronger signals, panes/radar, sort-aware tags, social preview (seeded 2026-09-16 by review gate 20260916T121002Z)
+
+### CR-20260916b — Simple shortlist benchmark-chart readability
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-40.1 | "Simple view — Benchmarks for your shortlist" bar chart: model names on the x-axis rendered **diagonally** instead of vertically | Readable at desktop and 390 px; no clipping/overlap; light and dark |
+| CR-40.2 | Y-axis defaults to a **data-driven (non-zero) range** so score differences are visible; the displayed range must be visibly stated on the chart so the missing zero baseline cannot mislead | Range label visible; default sensible when values span 65–100 |
+| CR-40.3 | A **cogwheel** offers a clearly named **zero-baseline** option (and back); the choice persists; works desktop/mobile, light/dark | Persisted across reload; keyboard accessible; tests + independent live verification |
+
+### CR-20260916c — Merge agent/version variants in benchmark-table display
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-41.1 | Benchmark-table display merges agent/version variants of one board into a **single row per model**, showing each model's **best recorded result**: ApprenticeBench API (no more separate Claude Code / Codex rows) and AA Coding Agent Index (one row, best across v1.4/v1.5 and across agents) | Raw results preserved untouched (version, agent/harness, date, source); merge only compatible metric/unit/direction |
+| CR-41.2 | The unified row states that it shows the model's best recorded result; its detail/provenance view names the selected version and agent/harness | Wording + provenance live; applied consistently in Simple, Advanced and the Benchmarks tab; tests + independent live verification |
+
+### CR-20260916d — Stronger table signals and provider links
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-42.1 | Value signals ("pricier"/"cheaper") shown **more often and in two intensity levels** (weak/strong), derived from documented data thresholds — not hard-coded per model (Fable 5.1 weak-pricier and GLM-5.3 weak-cheaper are acceptance examples only when current data meets the thresholds) | Threshold rule documented in the ledger; text/icon + accessible explanation, not colour alone |
+| CR-42.2 | **Benchmaxxing signal tag** in a weak and a strong form (strong = today's form); clicking it deep-links to `/benchmaxxing` with the model selected and the **radar section** scrolled/focused, with understandable back navigation | Keyboard-accessible deep link; target section focused; live on desktop/mobile, light/dark |
+| CR-42.3 | In an expanded model row's provider list, each provider links to its **in-app provider detail page** when available, otherwise to the verified official provider website; no manufactured URLs; provenance preserved | Links live and correct for a sampled set; tests + independent live verification, desktop/mobile, light/dark |
+
+### CR-20260916e — Data revalidation, matched expansion panes, Benchmaxxing quick radar
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-43.1 | **Full independent revalidation round** of every published scraped number against its retained primary-source capture/contract (every collected source group); coverage, mismatches, exclusions and remedies recorded; fail closed on any unverified or mismatched value | Revalidation report accounts for **every** published scraped number; no unaccounted value; report path in the ledger |
+| CR-43.2 | In each expanded overview row the provider/offers pane and the benchmarks pane share the **same visible height** at applicable desktop widths; deliberate matched-height layout with internal scroll where needed, no clipped content | No stray page-level scrollbar on one pane; both panes equal height; desktop widths + 390 px, light/dark |
+| CR-43.3 | Benchmaxxing tab: an accessible **expandable per-model row** exposing a compact radar, the signal score and a plain-language jaggedness interpretation, plus a link/anchor to the existing full radar/report section (model selected, focus/scroll moved); the master-detail flow stays | Expand/collapse keyboard accessible; compact radar correct; anchor keeps context; live desktop/mobile, light/dark |
+
+### CR-20260916f — Sort-aware value-signal framing
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-44.1 | When the table is sorted by **score descending** (default), cost-relative "pricier/cheaper" badges render in the adjusted-cost column; when the user actively sorts by **adjusted cost descending**, the equivalent same-model value signal renders instead in the **capability** column with capability-relative wording | Mutually exclusive per sort state; thresholds/levels (weak/strong) preserved; changed context announced accessibly; keyboard sorting, desktop/mobile, light/dark tested |
+
+### CR-20260916g — Correct the social link-preview slogan
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-45.1 | Replace the retired social description ("Every AI model benchmark we can find, in one place. And what each model really costs you.") with the accepted brand copy — "The most detailed cost–capability analysis in AI." / "Every Benchmark. Actual Costs." — in **canonical Open Graph, Twitter, standard description and any wording embedded in the share image**; canonical and www must agree | Scraper-style fetches of both hosts show the new copy; Telegram cache limitation explained, not claimed fixable retroactively |
