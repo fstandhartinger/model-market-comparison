@@ -1,7 +1,7 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { BenchmaxxingOverview } from "./BenchmaxxingOverview";
-import { presetRows, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
+import { presetRows, presetShowing, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
 import { BenchmaxxingReport, type BenchmaxxingModel, type BenchmaxxingReportData } from "./BenchmaxxingReport";
 
 /** CR-15.2/15.4 (Florian 2026-09-15): master-detail. The table (a changeable preset, Featured by
@@ -21,12 +21,22 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
   const [compare, setCompare] = useState(false);
   const touched = useRef(false);
 
+  const [focusRadar, setFocusRadar] = useState(false);
   useEffect(() => {
-    const wanted = new URLSearchParams(location.search).getAll("model").filter((id) => models.some((m) => m.id === id));
-    if (!wanted.length) return;
-    const unique = [...new Set(wanted)].slice(0, 2);
-    setIds(unique); setCompare(unique.length === 2);
-  }, [models]);
+    // F-104: the selection follows the URL on direct load and on browser back/forward (popstate).
+    const fromUrl = () => {
+      const wanted = new URLSearchParams(location.search).getAll("model").filter((id) => models.some((m) => m.id === id));
+      if (!wanted.length) return;
+      const unique = [...new Set(wanted)].slice(0, 2);
+      setIds(unique); setCompare(unique.length === 2);
+      const place = presetShowing(rows, unique[0]);
+      if (place) { setPreset(place.preset); setShowAll(place.showAll); }
+      if (location.hash === "#radar") setFocusRadar(true);
+    };
+    fromUrl();
+    window.addEventListener("popstate", fromUrl);
+    return () => window.removeEventListener("popstate", fromUrl);
+  }, [models, rows]);
   useEffect(() => {
     if (!touched.current) return;
     const q = new URLSearchParams(location.search); q.delete("model"); ids.forEach((id) => q.append("model", id));
@@ -48,6 +58,6 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
   return <>
     <BenchmaxxingOverview rows={rows} preset={preset} onPreset={(p) => { setPreset(p); setShowAll(false); }} selected={ids} onSelect={select}
       showAll={showAll} onShowAll={setShowAll} taggedCount={taggedCount} minComparisons={minComparisons} minTopics={minTopics} />
-    <BenchmaxxingReport models={models} ids={ids} initial={initial} compare={compare} onToggleCompare={toggleCompare} />
+    <BenchmaxxingReport models={models} ids={ids} initial={initial} compare={compare} onToggleCompare={toggleCompare} focusOnReady={focusRadar} onFocused={() => setFocusRadar(false)} />
   </>;
 }

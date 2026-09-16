@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { TopicRadar } from './TopicRadar';
 import { SignalValue } from './SignalValue';
 import { formatRadarValue } from '../lib/radar.mjs';
@@ -24,7 +24,8 @@ function SignalCard({ name, slot, compare, report }: { name: string; slot: numbe
 
 /** CR-15.4: the report has no model selector of its own; it shows the row(s) selected in the table
  *  above, and in compare mode draws both models on one topic radar with their signals side by side. */
-export function BenchmaxxingReport({ models, ids, initial, compare, onToggleCompare }: { models: BenchmaxxingModel[]; ids: string[]; initial: { id: string; report: BenchmaxxingReportData } | null; compare: boolean; onToggleCompare: () => void }) {
+export function BenchmaxxingReport({ models, ids, initial, compare, onToggleCompare, focusOnReady = false, onFocused }: { models: BenchmaxxingModel[]; ids: string[]; initial: { id: string; report: BenchmaxxingReportData } | null; compare: boolean; onToggleCompare: () => void; focusOnReady?: boolean; onFocused?: () => void }) {
+  const sectionRef = useRef<HTMLElement>(null);
   const [reports, setReports] = useState<Record<string, BenchmaxxingReportData | null>>(initial ? { [initial.id]: initial.report } : {});
   const [loading, setLoading] = useState(false), [showAllAxes, setShowAllAxes] = useState(false);
   useEffect(() => {
@@ -45,8 +46,16 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
     const x = byId[k].get(a.id);
     return { value: x && !x.missing ? x.value : null, label: !x || x.missing || x.value == null ? 'No measured score' : `${formatRadarValue(x.nativeValue, x.unit)} · percentile ${Math.round(x.value)}${x.observedDate ? ` · observed ${x.observedDate}` : ''}` };
   }) }));
+  // F-104: a deep link (`?model=<id>#radar`, e.g. from the Overview tag) lands on this section once the
+  // selected model's report is ready — scrolled into view and focused, the page <h1> unchanged.
+  useEffect(() => {
+    if (!focusOnReady || !ready || !sectionRef.current) return;
+    sectionRef.current.scrollIntoView({ block: 'start' });
+    sectionRef.current.focus({ preventScroll: true });
+    onFocused?.();
+  }, [focusOnReady, ready, onFocused]);
   const title = shown.length ? shown.map((s) => s.name).join(' vs ') : 'Select a model in the table above';
-  return <section className="bh-panel mt-6 p-5" aria-label="Per-model Benchmaxxing report" aria-live="polite">
+  return <section ref={sectionRef} id="radar" tabIndex={-1} className="bh-panel mt-6 scroll-mt-6 p-5 focus:outline-none focus-visible:outline-accent" aria-label="Per-model Benchmaxxing report" aria-live="polite">
     <div className="flex flex-wrap items-end justify-between gap-3">
       <div className="min-w-0"><p className="bh-eyebrow">PER-MODEL REPORT</p><h2 className="text-xl font-semibold">{title}</h2><p className="bh-muted mt-1 text-sm">{compare ? 'Compare mode: A stays; select another row above to change B.' : 'Follows the row selected in the table above.'}</p></div>
       <button type="button" className="bh-button min-h-9 px-3" aria-pressed={compare} onClick={onToggleCompare} disabled={!ids.length}>{compare ? 'Close side-by-side' : 'Compare side by side'}</button>

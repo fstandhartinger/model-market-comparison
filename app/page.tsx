@@ -15,10 +15,11 @@ export default async function Home() {
   // only display data and never recomputes benchmark scores.
   const view = await getBenchmarkView();
   // CR-21.1: the verdict belongs to the model (family), so every reasoning variant shows its family's score and tag.
-  const { reports, tagged } = benchmaxxingFamilySignals(view);
+  const { reports, tagged, weak, representatives } = benchmaxxingFamilySignals(view);
   const familyScore = new Map(reports.map(([id, report]) => [view.models.find((m) => m.id === id)?.family ?? id, report.score ?? null]));
   const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(view.models.filter((m) => familyScore.has(m.family ?? m.id))
-    .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: tagged.has(m.id) }]));
+    .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: tagged.has(m.id), level: tagged.has(m.id) ? "strong" : weak.has(m.id) ? "weak" : null,
+      reportId: representatives.get(m.family ?? m.id) ?? m.id }]));
   const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.

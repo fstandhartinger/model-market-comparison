@@ -167,6 +167,14 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-value-tag[data-level="strong"] { color: rgb(var(--panel)); font-weight: 700; }
 .bh-value-tag[data-level="strong"][data-kind="cheap"] { background: rgb(var(--accent2)); }
 .bh-value-tag[data-level="strong"][data-kind="pricey"] { background: rgb(var(--warn)); }
+/* F-104 (CR-42.2): the Benchmaxxing tag uses the same vocabulary as the value tags — warn tint (weak) or solid warn
+   (strong) — under its own class so value-tag checks never count it. It is a link: hover underlines the words, the
+   focus ring is the site's accent outline. Below 1024 px it drops the score, like the value tags drop their words. */
+.bh-bmx-tag { display: inline-flex; align-items: center; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; line-height: 16px; vertical-align: middle; text-decoration: none; color: rgb(var(--warn)); background: rgb(var(--warn) / .14); font-weight: 500; }
+.bh-bmx-tag[data-level="strong"] { color: rgb(var(--panel)); background: rgb(var(--warn)); font-weight: 700; }
+.bh-bmx-tag:hover .bh-bmx-words { text-decoration: underline; }
+.bh-bmx-tag:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
+@media (max-width: 1023px) { .bh-bmx-tag { padding: 0 4px; } .bh-bmx-tag .bh-bmx-score { display: none; } }
 /* Directive 10 (2026-09-15): the compact tag "↓11×" — no words, no space. Measured 2026-09-15: below 1024 px (phones,
    768/834 tablets, landscape phones) the full "↓ 11× cheaper" spills out of the cost cell and at 768 covers the score,
    so the compact form applies there; from 1024 px up the full text fits and stays unchanged. */

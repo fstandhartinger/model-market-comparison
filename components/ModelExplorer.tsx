@@ -459,7 +459,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   {m.open_weights && <span className="ml-2 hidden rounded bg-accent2/15 px-1.5 py-0.5 text-[10px] text-accent2 md:inline">open</span>}
                   {m.deprecated && <span className="ml-1 hidden rounded bg-amber-500/15 px-1.5 py-0.5 text-[10px] text-amber-300 md:inline">deprecated</span>}
                   {m.featured && !simple && <span className="ml-1 hidden text-[10px] text-warn md:inline" title="Featured model">★</span>}
-                  {m.benchmaxxing_signal && <span className="bh-badge bh-alert ml-2" title={`Benchmaxxing signal ${m.benchmaxxing_score?.toFixed(1)} — topic-local inconsistency flag, not evidence of intent`}>Benchmaxxing signal</span>}
+                  {m.benchmaxxing_level && <BenchmaxxingTag id={m.benchmaxxing_report_id ?? m.id} name={String(collapsedName(m, s.collapse, preferredId))} level={m.benchmaxxing_level} score={m.benchmaxxing_score ?? null} />}
                   <span className="mt-0.5 flex flex-wrap items-center gap-1.5 text-[11px] text-gray-500 md:hidden">
                     <span className="inline-block h-1.5 w-1.5 shrink-0 rounded-full" style={{ background: orgColor(m.org) }} />
                     {m.org}
@@ -606,11 +606,29 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           the signal) and the measured-task-tokens note with " · ". */}
       <p className="mt-3 text-xs text-gray-500">
         {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span>{score === "composite" && rows.some((x) => isThinComposite(x.m)) && <span> · Striped score = built on fewer than 3 of 7 inputs</span>}</> : <><PriceAssumptions inline />
-          {rows.some((x) => x.m.benchmaxxing_signal) && <>{" · "}The <span className="bh-badge bh-alert">Benchmaxxing signal</span> flags the highest topic-local inconsistency scores among coverage-qualified models. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
+          {rows.some((x) => x.m.benchmaxxing_level) && <>{" · "}The Benchmaxxing tag marks the top 10 % of coverage-qualified models by topic-local inconsistency (solid) and the next 10 % (tint); it opens that model&apos;s radar. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
           {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>
       <SubscriptionsPanel perTask={s.priceMode === "adjusted"}
         rows={matching.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, score: x.sc, cost: x.price.value }))} />
     </div>
   );
+}
+
+/** F-104 / CR-42.2 + CR-48.1: the Benchmaxxing tag is a real link to the model's radar, in the F-103 emphasis
+ *  vocabulary (solid = strong, tint = weak). It never expands the row: click/Enter bubble as a click and are
+ *  stopped here; Space (which does not activate links natively) navigates too. */
+function BenchmaxxingTag({ id, name, level, score }: { id: string; name: string; level: "strong" | "weak"; score: number | null }) {
+  const href = `/benchmaxxing?model=${encodeURIComponent(id)}#radar`;
+  const value = score != null ? score.toFixed(1) : null;
+  return <Link href={href} className="bh-bmx-tag ml-2" data-level={level}
+    aria-label={`Benchmaxxing signal, ${level}${value ? ` (${value})` : ""} — open the report for ${name}`}
+    title={`Benchmaxxing signal ${level}${value ? ` ${value}` : ""}: ${level === "strong" ? "top 10 %" : "top 10–20 %"} of scored models by topic-local inconsistency — a screening flag, not evidence of intent. Opens the radar.`}
+    onClick={(e) => e.stopPropagation()}
+    onKeyDown={(e) => {
+      if (e.key === "Enter") e.stopPropagation();
+      if (e.key === " ") { e.preventDefault(); e.stopPropagation(); e.currentTarget.click(); }
+    }}>
+    <span aria-hidden="true">{level === "strong" ? "⚠" : "△"}&nbsp;</span><span className="bh-bmx-words">Benchmaxxing</span>{value && <span className="bh-bmx-score">&nbsp;{value}</span>}
+  </Link>;
 }
