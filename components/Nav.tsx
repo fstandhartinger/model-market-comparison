@@ -48,8 +48,27 @@ const LINKS = [
   ["/eu", "EU & Sovereign"],
   ["/about", "About"],
 ];
-const PRIMARY = [LINKS[0], LINKS[1], LINKS[2], LINKS[3], LINKS[4]];
+// CR-63.1 (Florian 2026-09-16): Benchmaxxing is second, after Overview, on every breakpoint.
+const PRIMARY = [LINKS[0], LINKS[4], LINKS[1], LINKS[2], LINKS[3]];
 const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
+const PHONE_MORE = [LINKS[0], LINKS[4], LINKS[2], LINKS[3], ...MORE];
+
+/** CR-63.3: a header <details> menu closes on a click outside, on Escape (focus back on its summary) and on a route change. */
+function MenuDetails({ className, summary, children }: { className?: string; summary: React.ReactNode; children: React.ReactNode }) {
+  const ref = useRef<HTMLDetailsElement>(null);
+  const path = usePathname();
+  const [open, setOpen] = useState(false);
+  useEffect(() => { ref.current?.removeAttribute("open"); }, [path]);
+  useEffect(() => {
+    if (!open) return;
+    const close = () => ref.current?.removeAttribute("open");
+    const down = (e: PointerEvent) => { if (!ref.current?.contains(e.target as Node)) close(); };
+    const key = (e: KeyboardEvent) => { if (e.key === "Escape") { close(); ref.current?.querySelector("summary")?.focus(); } };
+    document.addEventListener("pointerdown", down); document.addEventListener("keydown", key);
+    return () => { document.removeEventListener("pointerdown", down); document.removeEventListener("keydown", key); };
+  }, [open]);
+  return <details ref={ref} className={className} onToggle={(e) => setOpen(e.currentTarget.open)}>{summary}{children}</details>;
+}
 
 /** F-15 / CR-25.1: Options (was Filters) is one of the three shared 40 px header controls, visible at every
  *  width — on mobile it sits between the logo and Menu. */
@@ -98,21 +117,22 @@ export function Nav() {
               </Link>
             );
           })}
-          <details className="relative"><summary className="flex min-h-10 cursor-pointer items-center rounded-md px-2.5 text-gray-300">More ▾</summary><div className="absolute left-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></details>
+          <MenuDetails className="relative" summary={<summary className="flex min-h-10 cursor-pointer items-center rounded-md px-2.5 text-gray-300">More ▾</summary>}><div className="absolute left-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></MenuDetails>
         </nav>
         <div className="ml-auto flex items-center gap-0.5 max-[359px]:gap-0 sm:gap-1">
           <FilterButton />
           {/* CR-6.1: below xl (1280 px, was lg — the full bar overflowed 1024–1279) the header carries
               Options · Benchmarks · More, Benchmarks left of More. */}
+          {/* CR-63.1: Benchmaxxing beside Benchmarks where it fits (from 640 px — measured: at 375–390 px the header needs ~460 px with it); second in More below that. */}
+          <Link href="/benchmaxxing" aria-current={path.startsWith("/benchmaxxing") ? 'page' : undefined} className={`bh-nav-button hidden min-h-10 items-center rounded-md px-2.5 text-sm hover:bg-accent/10 hover:text-accent sm:inline-flex xl:hidden ${path.startsWith("/benchmaxxing") ? "text-accent" : "text-gray-300"}`}>Benchmaxxing</Link>
           <Link href="/benchmarks" onClick={(e) => jumpToSimpleBenchmarks(e, path)} aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm max-[359px]:px-1 max-[359px]:text-[13px] hover:bg-accent/10 hover:text-accent sm:px-2.5 xl:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
           <div className="relative xl:hidden">
-            <details>
-              <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent max-[359px]:px-1 max-[359px]:text-[13px] sm:px-2.5">More</summary>
+            <MenuDetails summary={<summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent max-[359px]:px-1 max-[359px]:text-[13px] sm:px-2.5">More</summary>}>
               <div className="absolute right-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">
-                {LINKS.filter(([href]) => href !== "/radar" && href !== "/benchmarks").map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
+                {PHONE_MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
                 <AccountMenuLink className={`border-t border-line/70 rounded-md px-3 py-3 ${path === "/account" ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} />
               </div>
-            </details>
+            </MenuDetails>
           </div>
           <AccountButton />
           <ThemeToggle />

@@ -36,7 +36,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
   const ds = await getDataset();
   const model = ds.models.find((m) => m.id === decodeURIComponent(id) || m.family_key === decodeURIComponent(id));
   if (!model) return { title: "Model not found" };
-  return previewMetadata({ path: `/models/${encodeURIComponent(model.id)}`, documentTitle: model.display_name, title: `${model.display_name} — Benchmark Heaven`,
+  return previewMetadata({ path: `/models/${encodeURIComponent(model.id)}`, documentTitle: `${model.display_name} — benchmarks & cost`, title: `${model.display_name} — Benchmark Heaven`,
     description: `${model.display_name} by ${model.org}: every benchmark result with its source, and what it actually costs per task across providers.` });
 }
 

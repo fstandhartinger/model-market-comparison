@@ -629,6 +629,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           {rows.some((x) => x.m.benchmaxxing_level) && <>{" · "}The Benchmaxxing tag marks the top 10 % of coverage-qualified models by topic-local inconsistency (solid) and the next 10 % (tint); it opens that model&apos;s radar. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
           {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>
+      {/* CR-63.1 (Florian 2026-09-16: "benchmaxxing tab should be moved up in priority"): a one-line teaser in the style of the row below. */}
+      <p className="card mt-4 px-4 py-3 text-sm" data-bh-benchmaxxing-teaser>
+        <span aria-hidden="true" className="text-warn">⚠ </span><strong>Benchmaxxing check.</strong>{" "}
+        <span className="text-gray-400">Some models score high on one benchmark and slump on its siblings. We flag uneven results so you don&apos;t trust a single headline number.</span>{" "}
+        <Link href="/benchmaxxing" className="whitespace-nowrap font-semibold text-accent underline decoration-dotted underline-offset-2">See which models are flagged →</Link>
+      </p>
       <SubscriptionsPanel perTask={s.priceMode === "adjusted"}
         rows={matching.map((x) => ({ id: x.m.id, name: collapsedName(x.m, s.collapse, preferredId), org: x.m.org, score: x.sc, cost: x.price.value }))} />
     </div>

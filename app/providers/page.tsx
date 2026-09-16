@@ -3,6 +3,8 @@ import { ProvidersViewLoader } from "../../components/deferred/ProvidersViewLoad
 import { pageDataVersion } from "../../lib/page-data";
 
 
+export const metadata = { title: "Providers per model" };
+
 export default async function ProvidersPage() {
   const ds = await getDataset();
   const platforms = new Map<string, number>();

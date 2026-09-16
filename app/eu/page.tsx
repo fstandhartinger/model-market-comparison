@@ -5,15 +5,18 @@ import { previewMetadata } from "../../lib/seo";
 
 // The SOTA open models that are genuinely competitive with the leading US closed
 // labs on coding — the only ones worth seeking an EU host for.
+// CR-63.2 (2026-09-16): refreshed to the current catalog — the leading open-weight families by AA
+// Intelligence Index that are not deprecated (GLM 5.1, Kimi K2.6, MiniMax M2.5/M2.7 now are).
 const SOTA = [
+  { key: "glm-5.3", name: "GLM 5.3" },
+  { key: "kimi-k3", name: "Kimi K3" },
+  { key: "glm-5.3-flash", name: "GLM 5.3 Flash" },
+  { key: "qwen3.8-2.4t-a95b", name: "Qwen3.8 2.4T A95B" },
+  { key: "deepseek-v4.1-flash", name: "DeepSeek V4.1 Flash" },
+  { key: "deepseek-v4-pro-0813", name: "DeepSeek V4 Pro 0813" },
   { key: "glm-5.2", name: "GLM 5.2" },
-  { key: "glm-5.1", name: "GLM 5.1" },
-  { key: "kimi-k2.6", name: "Kimi K2.6" },
   { key: "kimi-k2.7-code", name: "Kimi K2.7 Coding" },
-  { key: "deepseek-v4-pro", name: "DeepSeek V4 Pro" },
-  { key: "minimax-m2.7", name: "MiniMax M2.7" },
   { key: "minimax-m3", name: "MiniMax M3" },
-  { key: "minimax-m2.5", name: "MiniMax M2.5" },
   { key: "mimo-v2.5-pro", name: "Xiaomi MiMo-V2.5-Pro" },
 ];
 

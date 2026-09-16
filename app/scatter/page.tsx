@@ -2,6 +2,8 @@ import { ScatterLoader } from "../../components/deferred/ScatterLoader";
 import { pageDataVersion } from "../../lib/page-data";
 
 
+export const metadata = { title: "Cost vs capability" };
+
 export default async function ScatterPage() {
   const version = await pageDataVersion();
   return (

@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import { useMemo } from "react";
+import { REGION_BUCKETS } from "../lib/regions.mjs";
 import { hasScoreEvidence, type ClientData, type ClientModel, type ClientOffer } from "../lib/client-model";
 import {
   offerPrice, priceContext, priceLabel,
@@ -46,7 +47,8 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
     }
     if (s.openOnly && !model.open_weights) return result;
     if (s.labAllowed && !s.labAllowed(model.org)) return result;
-    if (s.featured && !model.featured) return result;
+    // CR-63.2: this page's list is itself the curated set of competitive open models, so the global
+    // "Featured" shortlist (a different, cross-lab selection) does not apply here — it emptied the table.
     if (s.familySet && !s.familySet.has(model.family_key)) return result;
     const score = model.scores[s.score];
     if (s.advancedMinScore > 0 && (!hasScoreEvidence(model, s.score) || score == null || score < s.advancedMinScore)) return result;
@@ -99,7 +101,8 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
           </tbody>
         </table>
       </div>
-      {rows.length === 0 && <p className="mt-2 text-sm text-gray-500">No SOTA model family matches the active global model filters.</p>}
+      {rows.length === 0 && <p className="mt-2 text-sm text-gray-500">No SOTA model family matches the active global model filters.{" "}
+        <button type="button" className="min-h-0 text-accent underline" onClick={() => { s.setOpenOnly(false); s.setLabs([]); s.setFamilies([]); s.setAdvancedMinScore(0); s.setProvidersExcluded([]); s.setProviderBasedIn([...REGION_BUCKETS]); s.setHideDeprecated(true); }}>Reset filters</button></p>}
       <p className="mt-2 text-[11px] text-gray-500">
         {rows.length} model families within the active global model/provider filters. Active catalog listings without a public per-token rate remain visible as “price not public”.
       </p>
