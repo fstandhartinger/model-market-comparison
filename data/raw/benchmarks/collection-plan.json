@@ -3485,6 +3485,62 @@
       "source_urls": [
         "https://sierra-research.github.io/hyper-tau-bench/"
       ]
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "parser": {
+        "kind": "lisanbench_core",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "path_length",
+        "plain_text_names": true,
+        "require": {
+          "num_words": 50,
+          "starting_words_sha256": "4f62ea68e96d428c57b4d3213c7c06ee78c9dafab303ed3c2837f9df5e3f2568",
+          "words_file": "dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt",
+          "readme_text": [
+            "By default, models are scored on **50 starting words** with **3 trials per word**.",
+            "The main score is the **sum of valid transitions in the longest valid chain prefix** across all starting words.",
+            "Each word in the chain must differ from the previous one by a **Levenshtein distance of 1** (i.e., one insert, delete, or substitution), all intermediate words have to be in the dictionary and **no repetitions are allowed**."
+          ],
+          "sum_tolerance": 0.3
+        },
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/voice-from-the-outer-world/lisan-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-lisanbench/1ee21c293a38f88cb7c2.gz",
+          "sha256": "1ee21c293a38f88cb7c2135d2205d97ee6f6620a1982be1320d8a4c7fe2a50b0",
+          "retrieved_at": "2026-09-16T19:06:53.678641+00:00"
+        },
+        "detail_source": {
+          "url": "https://lisanbench.com/data/rankings.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-lisanbench/6d97496b0853e1f2a2af.gz",
+          "sha256": "6d97496b0853e1f2a2af91076243759624a09080f7b6e75ad0106471e4b18ce2",
+          "retrieved_at": "2026-09-16T19:06:48.201893+00:00"
+        }
+      },
+      "status": "collected",
+      "reason": "LisanBench publishes its leaderboard as the JSON files its page loads; one row per published model configuration, the page's default Path Length ranking.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON files",
+        "locator": "data/core.json \u2192 aggregated[]: one object per model configuration; value = sum_chain_avg (the page's default 'Path Length' ranking); models[] gives the label and route; data/rankings.json \u2192 per_word[] (average chain per model x starting word) and stop_reasons[word][model] (one entry per trial) cross-check the sum and give the trial count.",
+        "version_guard": "core.json must state num_words 50 with the pinned 50 starting words (sha256 of the newline-joined list 4f62ea68\u2026) and the pinned dictionary dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt; the README must still state the 50-word, 3-trial default, the Levenshtein-1 no-repeat rule and the 'sum of valid transitions in the longest valid chain prefix' score; every model must have 50 per-word results whose averages sum to its score (\u00b10.3, rounding) and at least one listed trial per word. Another word list or dictionary is another identity (the earlier 10-word runs are not comparable).",
+        "notes": "Measured by the maintainer. Credit @scaling01 and link the repository wherever the results are shown (README Usage Terms)."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "core.json must state num_words 50 with the pinned 50 starting words (sha256 of the newline-joined list 4f62ea68\u2026) and the pinned dictionary dictionaries/scowl/scowl_2026_02_25_huge_us_gb_ca_au_ascii.txt; the README must still state the 50-word, 3-trial default, the Levenshtein-1 no-repeat rule and the 'sum of valid transitions in the longest valid chain prefix' score; every model must have 50 per-word results whose averages sum to its score (\u00b10.3, rounding) and at least one listed trial per word. Another word list or dictionary is another identity (the earlier 10-word runs are not comparable).",
+      "source": {
+        "url": "https://lisanbench.com/data/core.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-lisanbench/09ce01d262ad08e01228.gz",
+        "sha256": "09ce01d262ad08e012282fc2286890f489691a0facc1afd3cb4ef2acd801b339",
+        "retrieved_at": "2026-09-16T19:06:45.428158+00:00"
+      },
+      "protocol": "LisanBench v0.2.0 (Lisan al Gaib): 50 pinned starting words, pinned SCOWL 2026-02-25 dictionary, Levenshtein distance 1, no repeats; path length = valid transitions in the longest valid prefix, averaged over the model's trials per word and summed over the 50 words, as published; the maintainer's API route and the listed trial count are recorded per row; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 100,
+      "source_urls": [
+        "https://lisanbench.com/"
+      ]
     }
   ]
 }

@@ -150,7 +150,8 @@
     "matharena-arxivmath": "Final answers are checked by a rule-based parser; the LLM judge is only a fallback for unparsable answers, and anything it accepts is manually verified.",
     "gso": "Opt@1 is decided by measured speedup against the expert patch and the correctness tests; the LLM hack detector only affects the separate Hack-Adjusted column, which is not the ingested value.",
     "swe-rebench": "Resolved means the repository's own tests pass after the model's patch.",
-    "hyper-tau-bench": "The reward is the built agent's pass rate on τ³-bench tasks; judge models only check whether natural-language assertions in a task's pass criteria hold."
+    "hyper-tau-bench": "The reward is the built agent's pass rate on τ³-bench tasks; judge models only check whether natural-language assertions in a task's pass criteria hold.",
+    "lisanbench": "Chains are validated programmatically against a pinned dictionary (edit distance 1, no repeats); no judge model."
   },
   "freshness": {
     "aa-aime": {

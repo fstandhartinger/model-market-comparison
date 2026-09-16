@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseSweRebenchLabel, parseGsoId, parseHyperTauId } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel, parseSweRebenchLabel, parseGsoId, parseHyperTauId, parseLisanBenchId } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -41,6 +41,8 @@ const BOARDS = [
   // 2026-09-16 (iteration 81): SWE-rebench (one task window per identity) and GSO (CR-38.1), product-name labels.
   { prefix: 'swe-rebench::', parse: parseSweRebenchLabel, join: boardJoins, basis: 'measured' },
   { prefix: 'gso::', parse: parseGsoId, join: boardJoins, basis: 'measured' },
+  // 2026-09-16 (iteration 88, CR-52): LisanBench, maintainer slugs with a `:thinking-<setting>` suffix or a label setting.
+  { prefix: 'lisanbench::', parse: parseLisanBenchId, join: boardJoins, basis: 'measured' },
   { prefix: 'hyper-tau-bench::', parse: parseHyperTauId, join: boardJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;

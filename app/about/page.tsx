@@ -43,6 +43,10 @@ export default async function AboutPage() {
           so this is not an official feed and we do not present it as one. We show these two boards and collect
           nothing further from this source; that scope is recorded in the repository and would only change with the
           source&apos;s documented permission.</li>
+        <li id="lisanbench"><b>LisanBench</b> — word-chain benchmark by Lisan al Gaib (<a href="https://x.com/scaling01" className="text-accent">@scaling01</a>),
+          read from the files <a href="https://lisanbench.com/" className="text-accent">lisanbench.com</a> itself loads. Its{" "}
+          <a href="https://github.com/voice-from-the-outer-world/lisan-bench" className="text-accent">repository</a> publishes usage terms rather
+          than an open-source licence: results are shared with credit to the creator and a link to the repository.</li>
         <li id="aggregators"><b>Benchmark aggregators</b> (Lumina Bench, BenchLM, LLM Stats, Vellum, CodeSOTA and others) — used
           only to discover benchmarks and to check where a published result came from. No number on this site is taken
           from these aggregators: each comes from the organisation that ran the benchmark, or from the model&apos;s developer

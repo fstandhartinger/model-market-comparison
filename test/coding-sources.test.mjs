@@ -11,7 +11,7 @@ const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url))
 const EPOCH_RUN = ['frontiermath-tiers-1-3::v2', 'frontiermath-tier-4::v2', 'simpleqa-verified::snapshot-2026-09-16'];
 const IDS = ['deepswe::snapshot-2026-09-15', 'swe-atlas-qna::snapshot-2026-09-15', 'swe-atlas-test-writing::snapshot-2026-09-15', 'swe-atlas-refactoring::snapshot-2026-09-15'];
 // 2026-09-16 (iteration 79): boards whose labels are model slugs, joined by lib/board-identity.mjs.
-const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'matharena-arxivmath', 'matharena-brokenarxiv', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
+const SLUG_BOARDS = ['osworld-2', 'swe-rebench', 'gso', 'hyper-tau-bench', 'lisanbench', 'matharena-arxivmath', 'matharena-brokenarxiv', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
   'apprenticebench-cua', 'apprenticebench-cua-cost', 'vals-index', 'vals-index-cost', 'vals-index-emb',
   'vals-index-finance-agent', 'vals-index-hlab', 'vals-index-legal-research', 'vals-index-terminal-bench-2.1',
   'vals-index-vibe-code-bench', 'vals-index-code-migration'];
@@ -153,5 +153,6 @@ test('slug boards: every join re-derives from the label, and the refusals are th
   assert.deepEqual(vals('x/y', { reasoning_effort: 'high', compute_effort: 'max' }), { family: 'y', effort: null }, 'two different published settings state none');
   assert.deepEqual(parseValsIndexId('meta/muse_spark_1_3_max', '', ''), { family: 'muse-spark-1.3', effort: 'max' });
   // A label the catalog cannot place stays unplaced: BullshitBench's OpenRouter suffixes never join.
-  assert.ok(!map.entries.some((e) => e.source_id.includes(':thinking') || e.source_id.includes(':free')), 'suffixed OpenRouter slugs are refused, not stripped');
+  // (LisanBench states its setting as a `:thinking-<level>` suffix by design; its own rule lives in test/lisanbench.test.mjs.)
+  assert.ok(!map.entries.some((e) => e.benchmark_id.startsWith('bullshitbench-') && (e.source_id.includes(':thinking') || e.source_id.includes(':free'))), 'suffixed OpenRouter slugs are refused, not stripped');
 });

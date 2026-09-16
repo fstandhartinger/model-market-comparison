@@ -8247,6 +8247,318 @@
       "rule": "label states model o3-mini and setting high; exact catalog configuration o3-mini::high"
     },
     {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.4:thinking-none",
+      "model_id": "gpt-5.4::non-reasoning",
+      "rule": "label states model gpt-5.4 and setting none; exact catalog configuration gpt-5.4::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.2:thinking-medium",
+      "model_id": "gpt-5.2::medium",
+      "rule": "label states model gpt-5.2 and setting medium; exact catalog configuration gpt-5.2::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gemini-3-pro-preview",
+      "model_id": "gemini-3-pro-preview::high",
+      "rule": "label states model gemini-3-pro-preview and setting high; exact catalog configuration gemini-3-pro-preview::high"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5",
+      "model_id": "gpt-5::medium",
+      "rule": "label states model gpt-5 and setting medium; exact catalog configuration gpt-5::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5-mini",
+      "model_id": "gpt-5-mini::medium",
+      "rule": "label states model gpt-5-mini and setting medium; exact catalog configuration gpt-5-mini::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5-nano",
+      "model_id": "gpt-5-nano::medium",
+      "rule": "label states model gpt-5-nano and setting medium; exact catalog configuration gpt-5-nano::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-3-haiku",
+      "model_id": "claude-3-haiku::default",
+      "rule": "label names claude-3-haiku without a setting; the catalog has exactly one configuration, the default (claude-3-haiku::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-3-opus",
+      "model_id": "claude-3-opus::default",
+      "rule": "label names claude-3-opus without a setting; the catalog has exactly one configuration, the default (claude-3-opus::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "ernie-4.5-300b-a47b",
+      "model_id": "ernie-4.5-300b-a47b::default",
+      "rule": "label names ernie-4.5-300b-a47b without a setting; the catalog has exactly one configuration, the default (ernie-4.5-300b-a47b::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-3.2-1b-instruct",
+      "model_id": "llama-3.2-1b-instruct::default",
+      "rule": "label names llama-3.2-1b-instruct without a setting; the catalog has exactly one configuration, the default (llama-3.2-1b-instruct::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-3.2-3b-instruct",
+      "model_id": "llama-3.2-3b-instruct::default",
+      "rule": "label names llama-3.2-3b-instruct without a setting; the catalog has exactly one configuration, the default (llama-3.2-3b-instruct::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-3.1-8b-instruct",
+      "model_id": "llama-3.1-8b-instruct::default",
+      "rule": "label names llama-3.1-8b-instruct without a setting; the catalog has exactly one configuration, the default (llama-3.1-8b-instruct::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-3.1-70b-instruct",
+      "model_id": "llama-3.1-70b-instruct::default",
+      "rule": "label names llama-3.1-70b-instruct without a setting; the catalog has exactly one configuration, the default (llama-3.1-70b-instruct::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-3.1-405b-instruct",
+      "model_id": "llama-3.1-405b-instruct::default",
+      "rule": "label names llama-3.1-405b-instruct without a setting; the catalog has exactly one configuration, the default (llama-3.1-405b-instruct::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-4-scout",
+      "model_id": "llama-4-scout::default",
+      "rule": "label names llama-4-scout without a setting; the catalog has exactly one configuration, the default (llama-4-scout::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "llama-4-maverick",
+      "model_id": "llama-4-maverick::default",
+      "rule": "label names llama-4-maverick without a setting; the catalog has exactly one configuration, the default (llama-4-maverick::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "kimi-k2",
+      "model_id": "kimi-k2::default",
+      "rule": "label names kimi-k2 without a setting; the catalog has exactly one configuration, the default (kimi-k2::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "mistral-nemo",
+      "model_id": "mistral-nemo::default",
+      "rule": "label names mistral-nemo without a setting; the catalog has exactly one configuration, the default (mistral-nemo::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "mistral-small-3.2-24b-instruct",
+      "model_id": "mistral-small-3.2-24b-instruct::default",
+      "rule": "label names mistral-small-3.2-24b-instruct without a setting; the catalog has exactly one configuration, the default (mistral-small-3.2-24b-instruct::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "mistral-medium-3",
+      "model_id": "mistral-medium-3::default",
+      "rule": "label names mistral-medium-3 without a setting; the catalog has exactly one configuration, the default (mistral-medium-3::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "devstral-medium",
+      "model_id": "devstral-medium::default",
+      "rule": "label names devstral-medium without a setting; the catalog has exactly one configuration, the default (devstral-medium::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "codestral-2508",
+      "model_id": "codestral-2508::default",
+      "rule": "label names codestral-2508 without a setting; the catalog has exactly one configuration, the default (codestral-2508::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-4.1-nano",
+      "model_id": "gpt-4.1-nano::default",
+      "rule": "label names gpt-4.1-nano without a setting; the catalog has exactly one configuration, the default (gpt-4.1-nano::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-4.1-mini",
+      "model_id": "gpt-4.1-mini::default",
+      "rule": "label names gpt-4.1-mini without a setting; the catalog has exactly one configuration, the default (gpt-4.1-mini::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-4.1",
+      "model_id": "gpt-4.1::default",
+      "rule": "label names gpt-4.1 without a setting; the catalog has exactly one configuration, the default (gpt-4.1::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-4o-mini",
+      "model_id": "gpt-4o-mini::default",
+      "rule": "label names gpt-4o-mini without a setting; the catalog has exactly one configuration, the default (gpt-4o-mini::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-3.5-turbo-0613",
+      "model_id": "gpt-3.5-turbo-0613::default",
+      "rule": "label names gpt-3.5-turbo-0613 without a setting; the catalog has exactly one configuration, the default (gpt-3.5-turbo-0613::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-4-turbo",
+      "model_id": "gpt-4-turbo::default",
+      "rule": "label names gpt-4-turbo without a setting; the catalog has exactly one configuration, the default (gpt-4-turbo::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "qwen3-30b-a3b-instruct-2507",
+      "model_id": "qwen3-30b-a3b-instruct-2507::default",
+      "rule": "label names qwen3-30b-a3b-instruct-2507 without a setting; the catalog has exactly one configuration, the default (qwen3-30b-a3b-instruct-2507::default)"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.4-mini:thinking-none",
+      "model_id": "gpt-5.4-mini::non-reasoning",
+      "rule": "label states model gpt-5.4-mini and setting none; exact catalog configuration gpt-5.4-mini::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.4-mini:thinking-medium",
+      "model_id": "gpt-5.4-mini::medium",
+      "rule": "label states model gpt-5.4-mini and setting medium; exact catalog configuration gpt-5.4-mini::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.4-nano:thinking-none",
+      "model_id": "gpt-5.4-nano::non-reasoning",
+      "rule": "label states model gpt-5.4-nano and setting none; exact catalog configuration gpt-5.4-nano::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.4-nano:thinking-medium",
+      "model_id": "gpt-5.4-nano::medium",
+      "rule": "label states model gpt-5.4-nano and setting medium; exact catalog configuration gpt-5.4-nano::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.5:thinking-none",
+      "model_id": "gpt-5.5::non-reasoning",
+      "rule": "label states model gpt-5.5 and setting none; exact catalog configuration gpt-5.5::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.5:thinking-medium",
+      "model_id": "gpt-5.5::medium",
+      "rule": "label states model gpt-5.5 and setting medium; exact catalog configuration gpt-5.5::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "deepseek-v4-pro:thinking-high",
+      "model_id": "deepseek-v4-pro::high",
+      "rule": "label states model deepseek-v4-pro and setting high; exact catalog configuration deepseek-v4-pro::high"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "deepseek-v4-flash:thinking-high",
+      "model_id": "deepseek-v4-flash::high",
+      "rule": "label states model deepseek-v4-flash and setting high; exact catalog configuration deepseek-v4-flash::high"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gemini-3.5-flash:thinking-high",
+      "model_id": "gemini-3.5-flash::high",
+      "rule": "label states model gemini-3.5-flash and setting high; exact catalog configuration gemini-3.5-flash::high"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-opus-4.8:thinking-high",
+      "model_id": "claude-opus-4.8::high",
+      "rule": "label states model claude-opus-4.8 and setting high; exact catalog configuration claude-opus-4.8::high"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-fable-5:thinking-medium",
+      "model_id": "claude-fable-5::medium",
+      "rule": "label states model claude-fable-5 and setting medium; exact catalog configuration claude-fable-5::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "glm-5.2:thinking-none",
+      "model_id": "glm-5.2::non-reasoning",
+      "rule": "label states model glm-5.2 and setting none; exact catalog configuration glm-5.2::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-sonnet-5:thinking-high",
+      "model_id": "claude-sonnet-5::high",
+      "rule": "label states model claude-sonnet-5 and setting high; exact catalog configuration claude-sonnet-5::high"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.6-sol:thinking-none",
+      "model_id": "gpt-5.6-sol::non-reasoning",
+      "rule": "label states model gpt-5.6-sol and setting none; exact catalog configuration gpt-5.6-sol::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.6-sol:thinking-medium",
+      "model_id": "gpt-5.6-sol::medium",
+      "rule": "label states model gpt-5.6-sol and setting medium; exact catalog configuration gpt-5.6-sol::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.6-terra:thinking-none",
+      "model_id": "gpt-5.6-terra::non-reasoning",
+      "rule": "label states model gpt-5.6-terra and setting none; exact catalog configuration gpt-5.6-terra::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.6-terra:thinking-medium",
+      "model_id": "gpt-5.6-terra::medium",
+      "rule": "label states model gpt-5.6-terra and setting medium; exact catalog configuration gpt-5.6-terra::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.6-luna:thinking-none",
+      "model_id": "gpt-5.6-luna::non-reasoning",
+      "rule": "label states model gpt-5.6-luna and setting none; exact catalog configuration gpt-5.6-luna::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "gpt-5.6-luna:thinking-medium",
+      "model_id": "gpt-5.6-luna::medium",
+      "rule": "label states model gpt-5.6-luna and setting medium; exact catalog configuration gpt-5.6-luna::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "kimi-k3:thinking-max",
+      "model_id": "kimi-k3::max",
+      "rule": "label states model kimi-k3 and setting max; exact catalog configuration kimi-k3::max"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-opus-5:thinking-medium",
+      "model_id": "claude-opus-5::medium",
+      "rule": "label states model claude-opus-5 and setting medium; exact catalog configuration claude-opus-5::medium"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-opus-5:thinking-none",
+      "model_id": "claude-opus-5::non-reasoning",
+      "rule": "label states model claude-opus-5 and setting none; exact catalog configuration claude-opus-5::non-reasoning"
+    },
+    {
+      "benchmark_id": "lisanbench::0.2.0",
+      "source_id": "claude-opus-5:thinking-high",
+      "model_id": "claude-opus-5::high",
+      "rule": "label states model claude-opus-5 and setting high; exact catalog configuration claude-opus-5::high"
+    },
+    {
       "benchmark_id": "hyper-tau-bench::release-v1",
       "source_id": "GPT-5.6-sol|xhigh|Codex",
       "model_id": "gpt-5.6-sol::xhigh",

@@ -42,6 +42,22 @@ the MIT repository's `manifest.json` and one `submission.json` per row; a new su
 Domain scores, build time and cost, serve-credit ratio, date and the maintainer-baseline flag stay in the protocol.
 6 rows, 4 join; Kimi K3 (max) appears under two harnesses and joins neither. Never a Composite input.
 
+## 2026-09-16 — LisanBench v0.2.0
+
+**One new board, no shape change.** `lisanbench::0.2.0`: Lisan al Gaib's (@scaling01) word-chain benchmark — from each
+of 50 pinned starting words a model builds the longest chain of dictionary words that each differ from the last by one
+letter, without repeats; the first broken rule ends the chain. The value is the page's default **Path Length**: valid
+transitions per starting word, averaged over the model's trials, summed over the 50 words (points, higher is better, no
+ceiling). Collected daily from the files the page itself loads (`data/core.json`, `data/rankings.json`) plus the
+repository README as the method source; the collector fails closed on another word list, dictionary or score
+definition, and when a score is not the sum of its published per-word averages. Most rows ran 150 trials; seven list
+149, 250 or 300, and every row keeps its own trial count, difficulty-weighted score, best-trial sum, validity rate,
+output tokens and run cost in its protocol. 154 observations, 52 join a catalog configuration; token budgets
+(`:thinking-16k`), a bare `:thinking` and `:free` routes are not reviewed settings and stay unjoined. Not a Composite
+input; tier Community; category Instruction following. The repository carries usage terms, not an open-source licence:
+credit @scaling01 and link https://github.com/voice-from-the-outer-world/lisan-bench when reusing these numbers.
+Parser support: plan entries may now name a `detail_source` supporting capture (refreshed daily like `method_source`).
+
 ## 2026-09-16 — SWE-rebench (one task window) and GSO
 
 **Two new boards, no shape change.** `swe-rebench::2026-05-15..2026-07-01`: Nebius' SWE-rebench, 111 fresh GitHub

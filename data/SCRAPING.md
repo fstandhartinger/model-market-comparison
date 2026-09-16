@@ -182,7 +182,7 @@ same result is never counted twice.
 | CritPt | live | `critpt` |
 | SciCode | live | `scicode` |
 | SimpleBench | live | `simple-bench` |
-| LisanBench | planned | Static page, attribution OK |
+| LisanBench | **live (2026-09-16)** | `lisanbench::0.2.0` (parser `lisanbench_core`, daily) — the page's own `data/core.json` (Path Length = `sum_chain_avg`, the page's default ranking) with `data/rankings.json` as the cross-check (each score must equal the sum of its 50 per-word averages; the per-model trial count is read from the listed trials and kept in the protocol) and the repository README as the method source. Guards: 50 pinned starting words (sha256), pinned SCOWL 2026-02-25 dictionary, README score definition and 3-trial default. No robots.txt; no open-source licence — the README Usage Terms require crediting @scaling01 (Lisan al Gaib) on X and linking the repository, which the registry entry's maintainer and publication links carry wherever the board is shown. 154 rows, 52 exact joins (`parseLisanBenchId`); budgets (`:thinking-16k`), bare `:thinking` and `:free` routes are refused |
 | EQ-Bench | live | `eq-bench`, `eqbench-*`, `spiral-bench`, `buzzbench` |
 | Giskard Phare | planned | Static page, attribution OK |
 | Context Arena | planned | Open JSON API (GDM-MRCRv2 at 1M-token bins); no licence statement — attribution to Context Arena and GDM eval_hub |

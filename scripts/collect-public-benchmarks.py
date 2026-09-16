@@ -395,6 +395,45 @@ def parse(source,spec,load_source):
                 'context':{'harness':harness,'model':model,'reasoning_effort':effort,'submission_date':s['submission_date'],'submitted_by':s.get('submitting_organization'),
                     'maintainer_baseline':s.get('baseline') is True,'domain_scores':{k:scores[k] for k in weights},'build_time_min':s.get('build_time_min'),
                     'build_cost_usd':s.get('build_cost_usd'),'serve_credit_ratio':s.get('serve_credit_ratio')}})
+    elif kind=='lisanbench_core':
+        # LisanBench (Lisan al Gaib, @scaling01): lisanbench.com loads data/core.json (models, aggregated scores) and
+        # data/rankings.json (per starting word: average chain, stop reason of every trial). The page ranks models by
+        # sum_chain_avg ("Path Length"): per starting word, the valid-chain length averaged over that model's trials,
+        # summed over the 50 starting words. Version guard: 50 starting words exactly as pinned, the pinned SCOWL
+        # dictionary, the README's score definition and trial protocol. Each row's sum must equal the sum of its 50
+        # published per-word averages (rounding tolerance), and the trial count per model is read from the trials the
+        # source lists, never assumed; it stays in the row's protocol.
+        data=json.loads(source);req=spec['require'];meta=data.get('metadata') or {}
+        words=meta.get('starting_words')
+        if meta.get('num_words')!=req['num_words'] or not isinstance(words,list) or len(words)!=req['num_words'] or len(set(words))!=len(words):raise ValueError(f"LisanBench starting-word count changed: {meta.get('num_words')!r}")
+        if hashlib.sha256('\n'.join(words).encode()).hexdigest()!=req['starting_words_sha256']:raise ValueError('LisanBench starting words changed')
+        if meta.get('words_file')!=req['words_file']:raise ValueError(f"LisanBench dictionary changed: {meta.get('words_file')!r}")
+        readme=' '.join(load_source(spec['method_source']).split())
+        for phrase in req['readme_text']:
+            if phrase not in readme:raise ValueError('LisanBench README no longer states: '+phrase[:80])
+        models=data.get('models');agg=data.get('aggregated')
+        if not isinstance(models,list) or not isinstance(agg,list) or not agg:raise ValueError('LisanBench models/aggregated missing')
+        by={m.get('id'):m for m in models if isinstance(m,dict)}
+        if len(by)!=len(models) or meta.get('num_models')!=len(models) or len(agg)!=len(models) or len({a.get('model') for a in agg})!=len(agg):raise ValueError('LisanBench model list inconsistent')
+        detail=json.loads(load_source(spec['detail_source']));per=detail.get('per_word');stops=detail.get('stop_reasons')
+        if not isinstance(per,list) or not isinstance(stops,dict):raise ValueError('LisanBench rankings schema changed')
+        sums={};counts={}
+        for r in per:
+            if not isinstance(r,dict) or r.get('word') not in words or not isinstance(r.get('avg_chain'),(int,float)) or isinstance(r.get('avg_chain'),bool):raise ValueError('LisanBench per-word row schema changed')
+            sums[r['model']]=sums.get(r['model'],0)+r['avg_chain'];counts[r['model']]=counts.get(r['model'],0)+1
+        for index,a in enumerate(agg):
+            mid=a.get('model');m=by.get(mid);value=a.get('sum_chain_avg')
+            if not isinstance(mid,str) or m is None or not isinstance(m.get('label'),str) or not m['label'].strip():raise ValueError(f'LisanBench row {index} schema changed')
+            if not isinstance(value,(int,float)) or isinstance(value,bool) or value<0:raise ValueError(f'LisanBench {mid}: path length missing')
+            if counts.get(mid)!=len(words):raise ValueError(f'LisanBench {mid}: per-word results do not cover the {len(words)} starting words')
+            if abs(sums[mid]-value)>req['sum_tolerance']:raise ValueError(f'LisanBench {mid}: {value} is not the sum of its per-word averages ({sums[mid]:.2f})')
+            trials=[len((stops.get(w) or {}).get(mid) or []) for w in words]
+            if min(trials)<1:raise ValueError(f'LisanBench {mid}: a starting word lists no trial')
+            rows.append({'name':m['label'],'id':mid,'path_length':value,'source_row':index,
+                'context':{'model':mid,'route':m.get('full'),'label':m['label'],'company':m.get('company'),'thinking':m.get('thinking'),
+                    'trials_total':sum(trials),'trials_per_word':[min(trials),max(trials)],'difficulty_weighted_score':a.get('sum_sparse_chain_avg'),
+                    'best_trial_sum':a.get('sum_chain_max'),'average_validity':a.get('avg_validity'),'output_tokens':a.get('output_tokens'),
+                    'estimated_run_cost_usd':a.get('estimated_cost_usd'),'model_release_date':(data.get('release_dates') or {}).get(mid)}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows
@@ -438,7 +477,7 @@ def collect(plan,registry,root=Path('.'),evidence=None):
                 'protocol':protocol,'comparison_key':None}
             if scale!=1 or 'derivation' in row:
                 o.update(basis='derived',source_basis=basis,derivation=row.get('derivation',{'formula':f'Source value × {scale} to registry units','inputs':[raw_value]}))
-            supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source'] if k in rule]
+            supporting=[(k,rule[k]) for k in ['method_source','categories_source','frontend_source','detail_source'] if k in rule]
             if supporting:
                 o['supporting_sources']=[{'url':s['url'],'file':s['file'],'sha256':s['sha256'],'retrieved_at':s.get('retrieved_at',s.get('fetched_at')),'published_at':None,'locator':k} for k,s in supporting]
             if evidence is not None:evidence[o['id']]={'source_row':row,'parser':rule,'source_index':index}
