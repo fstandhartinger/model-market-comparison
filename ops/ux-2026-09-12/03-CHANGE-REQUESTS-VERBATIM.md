@@ -502,3 +502,28 @@ Florian's question, Telegram, 16 Sep 2026: “in the charts section in Cheapest 
 ## CR-20260916a — Make the open-source claim true: add a licence
 Laptop Claude Code chat, 16 Sep 2026 ~15:45 UTC (launch ad brief), verbatim excerpt: "lets make clear this is open source and a hobby project, to give the world better tools to decide which LLM to choose best for the job".
 Supervisor check: https://github.com/fstandhartinger/model-market-comparison is PUBLIC but has **no LICENSE** file (GitHub licenseInfo null) — legally source-available, not open source. Default choice: MIT (Florian may overrule). Third-party data keeps its own terms (Artificial Analysis, Epoch AI CC BY, DesignArena, OpenRouter …) — the licence covers our code, not their data.
+
+---
+
+## CR-20260916m — Include LisanBench
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+lets include https://lisanbench.com/ into our benchmark list
+
+</requirements>
+
+Implementation clarification: treat the official LisanBench site and the linked first-party
+project/repository as discovery only until the source, benchmark version, test methodology,
+leaderboard licence/terms, model identity, score scale/direction, evaluation date, and result-level
+provenance have all been independently established. Prefer an official downloadable result or
+documented official API; do not scrape/reuse a third-party aggregator as the published score source
+unless its terms explicitly permit it and the primary-source relationship is retained. Add every
+verified LisanBench result via the normal intake pipeline with raw capture and provenance untouched;
+show it as missing rather than estimating absent model results. Add clear benchmark metadata and an
+accurate category (only after methodology review), source/version/date tooltip/detail evidence, a
+refresh recipe with fail-closed staleness handling, tests, and independent live verification. If
+reuse or collection is not permitted, document the evidence and decision without publishing the
+scores.
