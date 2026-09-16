@@ -23,6 +23,16 @@ test('AA discovery preserves exact identity, zero, null, negative score, version
   assert.equal(Object.hasOwn(s.rows[0].fields, 'tau2'), false);
 });
 
+test('AA discovery reads the reviewed Terminal-Bench renames into the registry field names, and refuses a page carrying both', () => {
+  const { terminalbenchV21, terminalbenchV40, ...rest } = row;
+  const s = parseAaBenchmarkFields(flight([{ ...rest, terminalBench21: 0.4, terminalBench40: 0.1 }]), provenance);
+  assert.equal(s.rows[0].fields.terminalbenchV21, 0.4);
+  assert.equal(s.rows[0].fields.terminalbenchV40, 0.1);
+  assert.equal(Object.hasOwn(s.rows[0].fields, 'terminalBench21'), false);
+  assert.equal(s.inventory.find((f) => f.field === 'terminalbenchV40').numeric, 1);
+  assert.throws(() => parseAaBenchmarkFields(flight([{ ...row, terminalBench21: 0.4 }]), provenance), /both terminalbenchV21 and terminalBench21/);
+});
+
 test('AA discovery rejects incomplete, conflicting and nonnumeric source data', () => {
   assert.throws(() => parseAaBenchmarkFields(flight([row]), { ...provenance, minimumRows: 2 }), /incomplete/);
   assert.throws(() => parseAaBenchmarkFields(flight([row, { ...row, gpqa: 0.9 }]), provenance), /conflicting/);
