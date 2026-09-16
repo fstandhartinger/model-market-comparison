@@ -140,6 +140,19 @@ test('CR-38.3: a category whose qualifying rows are all judged gets a judged com
   assert.equal(c.judgedExcluded, 0);
 });
 
+test('CR-38.3: one task-accuracy row plus judged rows gives no composite, and says how many were left out', () => {
+  // Conservative on purpose: the judged rows cannot stand in for the missing accuracy rows, and the
+  // single accuracy row is not a composite. The header still has to say why.
+  const c = categoryComposite([
+    { row: pctRow('Accuracy A'), vals: [60, 40] },
+    { row: pctRow('Preference B', { judged: true }), vals: [80, 40] },
+    { row: pctRow('Preference C', { judged: true }), vals: [60, 20] },
+  ], 2);
+  assert.deepEqual(c.values, [null, null]);
+  assert.equal(c.judgedExcluded, 2);
+  assert.equal(c.kind, 'measured');
+});
+
 test('CR-38.2: a saturated row still counts, at half weight, and the composite reports it', () => {
   const c = categoryComposite([
     { row: pctRow('Fresh'), vals: [60, 40] },

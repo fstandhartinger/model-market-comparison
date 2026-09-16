@@ -2598,5 +2598,31 @@ It now reads which benchmarks are half-weighted **from the live page** (the cate
 names them) and recomputes with those weights — still an independent check of the published number
 against what the product tells a user, not against this repo's constants.
 
+**Delegation, honestly reported.** The judged classification was sent to a free model for the
+independent review the CR-1.7 tiers set as precedent (`bin/delegate.sh`, packet
+`/tmp/judged-review-packet.json`: 32 rows with each benchmark's own maintainer/metric/description text
+and the draft label). `openrouter/nex-agi/nex-n2.5-pro:free` ran ~50 minutes and produced nothing;
+`delegate.sh` fell back to Kimi K3, which had also not returned a verdict when this iteration ended.
+**Consequence recorded, not papered over:** `data/benchmark-caveats.json` → `review.reviewed_by` stays
+`pending`, and the Judged classification is the one thing in this iteration that a second engine has
+not yet checked. The next review gate is a different engine and must verify CR-38.3 anyway — it should
+close this by reviewing the 23 judged entries and the 9 `considered_not_judged` reasons against their
+quoted source text, and write its verdict into that file's `review` block. Everything else in the
+iteration is mechanically checkable and is checked (the quote test, the saturation recompute, the
+weighted-mean recompute from the live page in `verify-cr-25-6`).
+
+**Payload:** carrying the caveats on every row cost 40 KB of the Benchmarks page's matrix payload,
+most of it the same "the source states nothing" sentence 110 times. `020f6b6` moves those two
+sentences to `matrix.freshnessDefaults` (once) and emits `freshness` per row only when the source
+actually states something: +14 KB over the pre-CR-38 payload instead of +40 KB, nothing visible changed.
+
+**Not run this iteration, and why:** `verify-cr-2-5-perf` (CLS) — the box is not idle (the portfolio
+controller's reviewers are running several OpenCode workers), and this loop's own rule is that
+long-task/CLS numbers from a busy Sandy are not evidence. The change adds no client-side element that
+can shift layout (the tags and the sub-line are server-rendered inside cells that already existed), but
+a gate on an idle box should still re-run it.
+
 **Still open after this iteration:** CR-38.1 (collectors per source), CR-38.4 (aggregator provenance),
-CR-38.5 (source-health view), CR-30.2/30.3, CR-34.5, CR-37.x, CR-34.4/CR-35.3 (on hold), D09.1's receipt.
+CR-38.5 (source-health view), CR-30.2/30.3, CR-34.5, CR-37.x, CR-34.4/CR-35.3 (on hold), D09.1's receipt
+(the newest daily run is still 2026-09-15T07-03-42Z, the fail-closed one; no ordinary successful run has
+happened since, so acceptance 1 still cannot be attached).
