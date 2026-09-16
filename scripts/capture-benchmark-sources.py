@@ -4,6 +4,11 @@ import sys,urllib.request,urllib.error,urllib.robotparser,urllib.parse,hashlib,j
 from pathlib import Path
 from datetime import datetime,timezone
 urls=json.loads(Path(sys.argv[1]).read_text());dest=Path(sys.argv[2]);dest.mkdir(parents=True,exist_ok=True)
+class Redirects(urllib.request.HTTPRedirectHandler):
+ # Python 3.10 follows 301/302/303/307 only; a 308 (permanent, method-preserving) is followed the same way as 307.
+ def redirect_request(self,req,fp,code,msg,headers,newurl):return super().redirect_request(req,fp,307 if code==308 else code,msg,headers,newurl)
+ http_error_308=urllib.request.HTTPRedirectHandler.http_error_307
+urllib.request.install_opener(urllib.request.build_opener(Redirects))
 UA='BenchmarkHeavenResearch/1.0 (+https://github.com/fstandhartinger/model-market-comparison)'
 policies={};last={};blocked=set();receipts=[];queue=list(urls)
 while queue:

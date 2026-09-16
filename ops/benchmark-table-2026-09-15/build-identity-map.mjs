@@ -4,7 +4,7 @@
 // ops/benchmark-table-2026-09-15/identity-map-review.json. Review the diff of both files before committing.
 import { readFileSync, writeFileSync } from 'node:fs';
 import { identityJoins, parseDeepSweId, parseScaleLabel, parseFrontierCodeId, parseCursorBenchLabel, parseSweBenchProLabel } from '../../lib/coding-identity.mjs';
-import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id } from '../../lib/board-identity.mjs';
+import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsIndexId, parseOsworld2Id, parseMathArenaLabel } from '../../lib/board-identity.mjs';
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
@@ -32,6 +32,8 @@ const BOARDS = [
   { prefix: 'vals-index', parse: parseValsIndexId, join: boardJoins, basis: 'measured' },
   // 2026-09-16 (iteration 80): OSWorld 2.0 (CR-30.2 / CR-38.1), product-name labels with the reasoning setting in its own field.
   { prefix: 'osworld-2::', parse: parseOsworld2Id, join: boardJoins, basis: 'measured' },
+  // MathArena (CR-38.1): product names with the setting in parentheses.
+  { prefix: 'matharena-', parse: parseMathArenaLabel, join: boardJoins, basis: 'measured' },
 ];
 const observations = JSON.parse(readFileSync('data/raw/benchmarks/public-observations.json')).observations;
 const catalog = JSON.parse(readFileSync('data/dataset.json')).models.map(({ id, family_key, variant }) => ({ id, family_key, variant }));

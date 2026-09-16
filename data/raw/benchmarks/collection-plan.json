@@ -2976,6 +2976,104 @@
       "source_urls": [
         "https://osworld-v2.xlang.ai/"
       ]
+    },
+    {
+      "benchmark_id": "matharena-arxivmath::2026-06",
+      "parser": {
+        "kind": "matharena_table",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "require_header": [
+          "Rank",
+          "Model Name",
+          "Provider",
+          "Accuracy (\u00b1 95% CI)",
+          "Cost",
+          "Output Tokens",
+          "Input Tokens",
+          "Average Retries",
+          "Average Time",
+          "Open",
+          "Parameters",
+          "Active Parameters"
+        ],
+        "require_problems": 48,
+        "post_release_flag": "\u26a0\ufe0f"
+      },
+      "status": "collected",
+      "reason": "MathArena serves the ArXivMath 06/2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "locator": "GET /competition_tables/arxiv--june \u2192 JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (\u00b1 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv--june",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/91786c48faa4e8a66e0b.gz",
+        "sha256": "91786c48faa4e8a66e0b639ec2c3bd0680fa37319a4869a30eac50f3687d8d5c",
+        "retrieved_at": "2026-09-16T09:38:34.794372+00:00"
+      },
+      "protocol": "ArXivMath 06/2026 (MathArena): 48 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 15,
+      "source_urls": [
+        "https://matharena.ai/"
+      ]
+    },
+    {
+      "benchmark_id": "matharena-brokenarxiv::2026-06",
+      "parser": {
+        "kind": "matharena_table",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "accuracy",
+        "plain_text_names": true,
+        "require_header": [
+          "Rank",
+          "Model Name",
+          "Provider",
+          "Accuracy (\u00b1 95% CI)",
+          "Cost",
+          "Output Tokens",
+          "Input Tokens",
+          "Average Retries",
+          "Average Time",
+          "Open",
+          "Parameters",
+          "Active Parameters"
+        ],
+        "require_problems": 54,
+        "post_release_flag": "\u26a0\ufe0f"
+      },
+      "status": "collected",
+      "reason": "MathArena serves the BrokenArXiv 06/2026 (MathArena) leaderboard as JSON; one row per model, the setting stays part of the label.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "locator": "GET /competition_tables/arxiv_false--june \u2192 JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (\u00b1 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "Measured by MathArena. The confidence interval, cost, tokens and the released-after-competition flag are kept in each observation's protocol, never as separate scores."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (\u00b1 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 \u00b7 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+      "source": {
+        "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/ba1db28a84d33e1dbd14.gz",
+        "sha256": "ba1db28a84d33e1dbd14e6022aa5cde74079226f168f871ae932dcc13152904c",
+        "retrieved_at": "2026-09-16T09:38:37.594859+00:00"
+      },
+      "protocol": "BrokenArXiv 06/2026 (MathArena): 54 problems from arXiv papers submitted in June 2026; accuracy in percent as published by MathArena (point estimate; the 95% CI is kept in the source row); a model flagged as released after the competition may have seen the problems; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 15,
+      "source_urls": [
+        "https://matharena.ai/"
+      ]
     }
   ]
 }

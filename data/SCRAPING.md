@@ -141,3 +141,68 @@ content-addressed CDN paths, so a re-download can be checked against that digest
 Values are re-verified against those captures before they become candidates, and every candidate
 still needs an independent critic approval; see
 [versioned benchmark ingestion](../docs/benchmark-ingestion.md).
+
+## Benchmark sources from CR-20260915n — one decision per source (CR-38.1, started 2026-09-16)
+
+Florian listed ~55 benchmark sites and hubs on 15 Sep 2026. Each was audited for data access, robots.txt,
+terms/licence, benchmarks and freshness in `/home/flori/jobs/bh-source-intake-20260915/` (`SOURCES.md`,
+`collectors-plan.md`). This table is the standing decision per source. **Status:** `live` = a collector feeds
+the dataset and the daily refresh; `planned` = a collector is justified and not built yet; `not collected` =
+a recorded decision with its reason. Access rules for every collector: the bounded capture tool
+(`scripts/capture-benchmark-sources.py`: robots.txt for `BenchmarkHeavenResearch/1.0`, crawl delay, size and
+time bounds, a bot challenge or 403/429 stops the host), no authenticated or internal endpoints, and values
+from the **primary evaluator** — an aggregator is used for discovery and cross-checks only (CR-38.4), so the
+same result is never counted twice.
+
+| Source | Status | Collector / registry ids, or reason |
+| --- | --- | --- |
+| Artificial Analysis | live | `fetch-live.mjs`, `fetch-aa-coding-agents.mjs`, 26 `aa-*` ids; no new AA-derived metrics while CR-35.3 holds |
+| Epoch AI | live | `fetch-epoch-eci.mjs` (ECI, Software ECI), `otis-mock-aime`, DeepSWE via the Epoch hub (manual snapshot); **planned:** FrontierMath (CC BY 4.0 CSV export; never the problem pages robots.txt disallows) |
+| Lumina Bench | not collected (values) | Aggregator: discovery and provenance feed only (CR-37.2); values come from the primary sources it cites. Its own intake found 31 % of sampled citations pointing at generic pages |
+| Scale Labs (SEAL) | live (part) / planned | `swe-bench-pro-public`, `swe-atlas-*` live. New boards: only the top rows are crawlable (`/api/` is robots-disallowed) and the terms on derivative use are unclear — needs a terms decision before collection |
+| Vals AI | live | 9 `vals-index*` ids |
+| LiveBench | live | `livebench`; category sub-scores are an optional deeper read of the same capture |
+| Stanford HELM | planned | Public JSON on Google Cloud Storage per release; terms unclear — attribution-only use to be confirmed |
+| BenchmarkList | not collected | Every page including `sitemap.xml` serves a Cloudflare challenge; we do not work around bot protection |
+| The Aggregate | not collected | `/data/*.json` is robots-disallowed for AI crawlers and no licence exists; aggregator |
+| BenchLM | not collected | Aggregator; robots.txt disallows `/api/`; reached transitively through Lumina for discovery only |
+| Vellum | not collected (values) | Aggregator: discovery and cross-check only (CR-38.4) |
+| LLM Stats | not collected (values) | Aggregator: discovery and cross-check only (CR-38.4) |
+| LM Council | not collected | Aggregator of dated snapshots from primaries we collect directly (Epoch AI, Scale, METR, SimpleBench) |
+| CodeSOTA | not collected (values) | Aggregator (CC BY 4.0): discovery and cross-check only (CR-38.4); its ~7 genuinely new items go to their primary sources |
+| Kaggle Benchmarks | planned | Undocumented JSON API, terms unclear; ParseBench, ITBench, Enterprise Ops, Game Arena |
+| OpenCompass | planned (low) | One public POST per table; terms unclear |
+| FlagEval | planned (low) | Much of the data sits behind an authenticated internal API; only the public slice qualifies |
+| EuroEval | planned | Official CSV downloads, attribution OK |
+| Arena (LMArena) | planned | CC BY 4.0 daily parquet dump (site terms forbid scraping; the dump is the permitted route); human preference, kept apart from task accuracy (CR-38.3) |
+| Hugging Face Find a Leaderboard | not collected | Directory with no scores of its own; backing dataset gated, no licence |
+| MathArena | **live (2026-09-16)** | `matharena-arxivmath::2026-06`, `matharena-brokenarxiv::2026-06` (parser `matharena_table`); CC-BY-SA-4.0 data, attribute MathArena. **Planned:** further editions and families (ArXivLean, USAMO/IMO proofs, Project Euler) |
+| ARC Prize | live | `arc-agi::1/2/3` |
+| Humanity's Last Exam | live / planned | `hle` from the GitHub README; **planned:** HLE-Rolling once a stable public results location exists (none found on 15 Sep) |
+| CritPt | live | `critpt` |
+| SciCode | live | `scicode` |
+| SimpleBench | live | `simple-bench` |
+| LisanBench | planned | Static page, attribution OK |
+| EQ-Bench | live | `eq-bench`, `eqbench-*`, `spiral-bench`, `buzzbench` |
+| Giskard Phare | planned | Static page, attribution OK |
+| Context Arena | planned | Open JSON API (GDM-MRCRv2 at 1M-token bins); no licence statement — attribution to Context Arena and GDM eval_hub |
+| Google FACTS | planned | Kaggle-hosted suite (4 sub-benchmarks); terms unclear |
+| Mercor APEX | not collected | Mercor's terms §4.2 prohibit copying, displaying or distributing the leaderboard without written permission |
+| Andon Labs | live / planned | `vending-bench::2` live; **planned:** Blueprint-Bench v2, Drone-Bench |
+| METR Time Horizons | planned | GitHub-hosted data; terms unclear |
+| Terminal-Bench | live | `terminal-bench::4.0` (and AA's own runs as separate ids) |
+| ProgramBench | planned | Static page, attribution OK |
+| SlopCodeBench | planned | Static page, attribution OK |
+| SWE-rebench | planned (priority 1) | CC BY 4.0, robots allow. The page is 7.8 MB of server-rendered HTML with every historical time window; a collector must pin one window per identity (windows are different task sets) and store an extraction, not the whole page each day |
+| SWE-bench | live | `swe-bench-verified`, `-multilingual`, `-multimodal` |
+| LiveCodeBench | planned | Primary `performances_generation.json` is row-level and date-filterable (AA's copy stays withheld until its window is known) |
+| GSO | planned | Static JSON endpoint, attribution OK |
+| Berkeley Function Calling Leaderboard | planned | `data_overall.csv`, Apache-2.0 |
+| τ-bench (Sierra) | live / planned | `tau2-bench`, `tau3-banking`, `tau3-voice`; **planned:** hyper-tau-bench (MIT, submission JSON on GitHub) |
+| OSWorld 2.0 | **live (2026-09-16)** | `osworld-2::v2026.06.24` (parser `osworld2_results`), Apache-2.0 project |
+| WebArena-x | planned (low) | Four sub-benchmarks on static pages, attribution OK |
+| DeepResearch Bench | planned | CSV downloads from a public HF Space |
+| CodeClash | planned (low) | MIT, static page; results dated Nov 2025 |
+| Inspect Evals | not collected | A runnable evaluation library with no published results; running evaluations ourselves is out of scope |
+| Harbor Hub | not collected | Rows load through an internal Next.js server action (no public API); its benchmarks are ones we already collect |
+| EvalEval Evaluation Cards | not collected (values) | Republishes 52 upstream sources we mostly collect directly, 4.5 months stale; monthly provenance cross-check only |

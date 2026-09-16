@@ -7143,6 +7143,176 @@
           "excerpt": "\"benchmarkVersion\": \"OSWorld 2.0\", \"taskVersion\": \"v2026.06.24\", \"datasetSize\": 108, \"defaultStepBudget\": 500, \"defaultMetric\": \"binaryAccuracy\"."
         }
       ]
+    },
+    {
+      "id": "matharena-arxivmath::2026-06",
+      "name": "ArXivMath 06/2026 (MathArena)",
+      "version": "2026-06",
+      "version_status": "published",
+      "family": "matharena-arxivmath",
+      "category": "Math",
+      "one_sentence_description": "Research-level math problems with a checkable final answer, drawn from arXiv papers submitted in June 2026, so they postdate most training data.",
+      "scoring": {
+        "metric": "Accuracy (share of problems solved, averaged over runs) with a 95% confidence interval",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (48 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition arxiv--june)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv--june",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this edition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Edition list with problem counts, model counts and the edition description"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena/arxivmath-0626",
+          "type": "huggingface",
+          "role": "Problems and model outputs, CC-BY-SA-4.0"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET /competition_tables/arxiv--june → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 48 problems in its per-problem grid (MathArena lists \"06/2026 · 48 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. Data is CC-BY-SA-4.0 on Hugging Face and MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Audited in /home/flori/jobs/bh-source-intake-20260915/SOURCES.md (priority 1)."
+      },
+      "update_cadence": {
+        "source_schedule": "A new edition per month for the ArXiv families; an edition is frozen once MathArena marks it deprecated. Models are added to the current edition as they are released.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/87031ff17ee4c1995c8a.gz",
+          "sha256": "becfafb5d977ff28aa2e19bbdd0c14a86c8e7ea1d4af084134250942362d7ef9",
+          "fetched_at": "2026-09-16T09:38:31.990495+00:00",
+          "excerpt": "ArXivMath is a dynamic benchmark of research-level math problems sourced from recent arXiv papers. This dataset contains problems from papers submitted in June 2026."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv--june",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/91786c48faa4e8a66e0b.gz",
+          "sha256": "3c4c0352d8fc84ad4d269e6b6b0a391183a51de47587815900ea47e3704ab48b",
+          "fetched_at": "2026-09-16T09:38:34.794372+00:00",
+          "excerpt": "Leaderboard columns: Rank | Model Name | Provider | Accuracy (± 95% CI) | Cost | Output Tokens | Input Tokens | Average Retries | Average Time | Open | Parameters | Active Parameters; 22 model rows; 48 problem columns."
+        }
+      ]
+    },
+    {
+      "id": "matharena-brokenarxiv::2026-06",
+      "name": "BrokenArXiv 06/2026 (MathArena)",
+      "version": "2026-06",
+      "version_status": "published",
+      "family": "matharena-brokenarxiv",
+      "category": "Math",
+      "one_sentence_description": "Plausible but false proof statements taken from June 2026 arXiv papers; a model scores by refusing to prove them and saying the statement is false as written.",
+      "scoring": {
+        "metric": "Accuracy (share of problems solved, averaged over runs) with a 95% confidence interval",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (54 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://matharena.ai/",
+      "publication_urls": [
+        {
+          "url": "https://matharena.ai/",
+          "type": "official_leaderboard",
+          "role": "MathArena leaderboard (competition arxiv_false--june)"
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own table endpoint for this edition"
+        },
+        {
+          "url": "https://matharena.ai/competitions",
+          "type": "official_leaderboard",
+          "role": "Edition list with problem counts, model counts and the edition description"
+        },
+        {
+          "url": "https://huggingface.co/datasets/MathArena",
+          "type": "huggingface",
+          "role": "Problems and model outputs, CC-BY-SA-4.0"
+        },
+        {
+          "url": "https://github.com/eth-sri/matharena",
+          "type": "github",
+          "role": "Evaluation code, MIT"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON with a rendered HTML table",
+        "identity_policy": "source_label",
+        "locator": "GET /competition_tables/arxiv_false--june → JSON field \"table\" (rendered leaderboard): one row per model; value = the \"Accuracy (± 95% CI)\" point estimate in percent; the warning sign after a name is MathArena's \"Model was released after competition release\" flag, kept per row.",
+        "version_guard": "The competition table must keep exactly the twelve published leaderboard columns (Rank, Model Name, Provider, Accuracy (± 95% CI), Cost, Output Tokens, Input Tokens, Average Retries, Average Time, Open, Parameters, Active Parameters) and exactly 54 problems in its per-problem grid (MathArena lists \"06/2026 · 54 problems\"). A different problem count or another monthly edition is a different identity; editions are never averaged.",
+        "notes": "robots.txt redirects (308) to a 404, so no rules are published; the site has no terms page. Data is CC-BY-SA-4.0 on Hugging Face and MathArena asks to be cited (arXiv 2605.00674): attribute MathArena and link the leaderboard. Model labels are product names with the setting in parentheses; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseMathArenaLabel). Audited in /home/flori/jobs/bh-source-intake-20260915/SOURCES.md (priority 1)."
+      },
+      "update_cadence": {
+        "source_schedule": "A new edition per month for the ArXiv families; an edition is frozen once MathArena marks it deprecated. Models are added to the current edition as they are released.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://matharena.ai/competitions",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/87031ff17ee4c1995c8a.gz",
+          "sha256": "becfafb5d977ff28aa2e19bbdd0c14a86c8e7ea1d4af084134250942362d7ef9",
+          "fetched_at": "2026-09-16T09:38:31.990495+00:00",
+          "excerpt": "BrokenArXiv is a benchmark of plausible but false proof statements extracted from recent arXiv papers. Models are rewarded for refusing to prove the statement and for explicitly recognizing when it is false as written."
+        },
+        {
+          "url": "https://matharena.ai/competition_tables/arxiv_false--june",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena/ba1db28a84d33e1dbd14.gz",
+          "sha256": "16444ac96539a92adad60547b2989eaaebf9be35d5f418e33e95e0728d450385",
+          "fetched_at": "2026-09-16T09:38:37.594859+00:00",
+          "excerpt": "Leaderboard columns: Rank | Model Name | Provider | Accuracy (± 95% CI) | Cost | Output Tokens | Input Tokens | Average Retries | Average Time | Open | Parameters | Active Parameters; 22 model rows; 54 problem columns."
+        }
+      ]
     }
   ],
   "aa_field_map": [

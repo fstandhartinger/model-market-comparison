@@ -4,6 +4,24 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — MathArena: ArXivMath and BrokenArXiv, June 2026 editions
+
+**Two new boards, no shape change.** `matharena-arxivmath::2026-06` (48 research-level problems from arXiv
+papers submitted in June 2026) and `matharena-brokenarxiv::2026-06` (54 plausible but false statements from
+the same month; a model scores by refusing to prove them). Both are run by MathArena (SRI Lab, ETH Zurich,
+with INSAIT) and collected from the leaderboard page's own table endpoint
+(`/competition_tables/<competition>`); value = accuracy in percent. The 95 % interval, cost, output tokens and
+MathArena's own "model was released after competition release" flag stay in each observation's protocol —
+the flag says a model may have seen the problems, it corrects nothing. Each monthly edition is its own
+identity; editions are never averaged. Data CC-BY-SA-4.0 (Hugging Face `MathArena/*`); attribute MathArena.
+11 of 22 rows per board join a catalog configuration (`parseMathArenaLabel`, reviewed names, the parenthesis
+is the stated setting); "Kimi K3 (Think)" and labels without a setting whose model has several (or a
+non-default) configurations are refused. For a consumer: 44 new observations, two registry entries, and the
+count of benchmarks the site reports rises by two. Never a Composite input.
+
+`scripts/capture-benchmark-sources.py` now follows HTTP 308 redirects like 307 (Python 3.10 does not):
+MathArena answers `robots.txt` with a 308 to a 404, which previously stopped the capture before any request.
+
 ## 2026-09-16 — OSWorld 2.0, the first board from the source audit
 
 **One new board, no shape change.** `osworld-2::v2026.06.24` (XLANG Lab, University of Hong Kong): a

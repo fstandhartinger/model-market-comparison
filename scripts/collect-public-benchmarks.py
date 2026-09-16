@@ -295,6 +295,28 @@ def parse(source,spec,load_source):
                 'binaryAccuracy':r.get('binaryAccuracy'),'harness':tool,'source_row':index,
                 'context':{'model':r['model'],'reasoning':reasoning,'toolSetting':tool,'stepBudget':r['stepBudget'],'releaseVersion':release,
                     'datasetScope':scope,'binaryAccuracy':r.get('binaryAccuracy'),'partialScore':r.get('partialScore'),'estimatedCostUsd':r.get('estimatedCostUsd')}})
+    elif kind=='matharena_table':
+        # MathArena serves each competition as JSON holding two rendered tables: the leaderboard ('table') and the
+        # per-problem grid ('problem_table'). The exact leaderboard columns and the problem count are the version
+        # guard; a competition that gains or loses problems is a different edition. The warning sign after a model
+        # name is MathArena's own "Model was released after competition release" flag and is kept per row.
+        data=json.loads(source)
+        if not isinstance(data,dict) or not isinstance(data.get('table'),str) or not isinstance(data.get('problem_table'),str):raise ValueError('MathArena table schema changed')
+        heads=[text(h) for h in re.findall(r'<th[^>]*>(.*?)</th>',data['table'],re.S)]
+        if heads!=spec['require_header']:raise ValueError('MathArena leaderboard columns changed: '+json.dumps(heads))
+        problems={int(i) for i in re.findall(r'data-problem-index="(\d+)"',data['problem_table'])}
+        if problems!=set(range(spec['require_problems'])):raise ValueError(f'MathArena problem count changed: {len(problems)}')
+        flag=spec['post_release_flag'];flag_title='Model was released after competition release.'
+        for index,tr in enumerate(re.findall(r'<tr[^>]*>(.*?)</tr>',data['table'],re.S)[1:]):
+            raw=re.findall(r'<td[^>]*>(.*?)</td>',tr,re.S);cells=[text(c) for c in raw]
+            if len(cells)!=len(heads):raise ValueError(f'MathArena row {index} width changed')
+            flagged=flag in cells[1]
+            if flagged and flag_title not in raw[1]:raise ValueError(f'MathArena row {index}: warning sign without the release-date explanation')
+            name=' '.join(cells[1].replace(flag,' ').split())
+            if not name:raise ValueError(f'MathArena row {index}: missing model name')
+            rows.append({'name':name,'id':name,'accuracy':cells[3],'source_row':index+1,
+                'context':{'rank':cells[0],'model':name,'provider':cells[2],'accuracy':cells[3],'cost':cells[4],'output_tokens':cells[5],
+                    'released_after_competition':flagged,'open_weights':cells[9]}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows
