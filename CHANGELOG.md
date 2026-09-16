@@ -4,6 +4,33 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — Twelve benchmarks we already collected now have rows, and DesignArena's scope is recorded
+
+**More data, no shape change.** Boards whose leaderboards label a model with a slug rather than a product
+name were collected for weeks and reached nobody: nothing joined
+`anthropic/claude-opus-4.8@reasoning=xhigh` or `claude-fable-5-1|Claude Code|max` to a catalog
+configuration. `lib/board-identity.mjs` now does, under the same rule the coding boards already used — the
+label must state the exact model *and* a setting that exists as a catalog configuration; a label that
+states no setting joins only a family the catalog holds as a single default configuration; a configuration
+named twice on one board joins neither row. Where a source publishes the setting it ran (Vals AI's
+`reasoning_effort` / `compute_effort`), that published field decides, not the slug.
+
+For a consumer: `data/dataset.json` keeps its shape and no field was renamed. There are simply more
+observations with a `subject.model_id` (the identity map grew 197 → 825 entries), so
+`benchmark_results.coverage.by_model[id].capability_available` rises (7,384 → 7,829 cells across the
+catalog) and twelve more boards appear in the comparison matrix: BullshitBench V1/V2, ApprenticeBench API
+and CUA, and the eight Vals Index boards. The count of benchmarks the site reports went 77 → 89 under the
+unchanged F-102 rule (a benchmark is a board; harness cohorts and cost twins are rows of it). The
+FrontierCode and CursorBench **cost** boards are joined too and, being category `Efficiency`, still do not
+count as benchmarks — exactly as documented for `capability_available`.
+
+**DesignArena's collection scope is now a recorded decision** (`data/source-policies.json`, new). The two
+boards we publish — Agentic Web Dev Frontend and Full-Stack Elo — stay under an explicit documented-risk
+decision by the site owner; the collector reads its permitted boards and endpoints from that file and
+refuses anything else. The raw snapshot's `source` field changed wording from "Intelligence.ai leaderboard
+API (formerly DesignArena)" to "DesignArena public leaderboard (the site's own leaderboard endpoint; no
+published API documentation or data licence)" and gained an `access_policy` block; no value changed.
+
 ## 2026-09-16 — Saturated and judged benchmarks are labelled, and weigh differently (CR-38.2 / CR-38.3)
 
 **One breaking value change: `cat_science`.** Benchmarks now carry two measured caveats.
