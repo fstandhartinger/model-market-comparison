@@ -33,7 +33,10 @@
   --brand-word: #0a5fd8;
 }
 html, body { background: rgb(var(--ink)); color: var(--text); font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif; line-height: 1.5; }
-html { -webkit-text-size-adjust: 100%; }
+/* CR-55 (2026-09-16): reserve the vertical scrollbar's gutter at all times. Guided is shorter than the viewport,
+   so with a classic (space-taking) scrollbar the scrollbar vanished and the centred shell jumped sideways by half
+   its width on every Simple/Guided/Advanced switch. Overlay scrollbars (phones, macOS default) reserve nothing. */
+html { -webkit-text-size-adjust: 100%; scrollbar-gutter: stable; }
 body { margin: 0; }
 main :is(p, li) a { text-decoration: underline; }
 a { color: inherit; text-underline-offset: 3px; }
