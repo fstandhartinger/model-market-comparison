@@ -241,9 +241,11 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
                   <span className="bh-matrix-bench">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} />)}</span>
                   {/* F-98 / CR-38.2 + F-100: a stated task window is the one line worth a row of its own; the version and the
                       date the results were read are on hover here, on the (i) of the Simple table and on the result page. */}
-                  {(() => { const suffix = versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
-                  {row.bestOf && <span className="bh-matrix-sub" data-best-of-note>{BEST_OF_NOTE}</span>}
-                  <span className="bh-matrix-desc" title={[row.description, versionLine(row)].filter(Boolean).join(" — ")}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
+                  {/* F-105 (pass 19): a best-of row's name-line tag already names its versions and agents, so the "Version …"
+                      sub-line is skipped there; the sentence saying what "best of" means lives in the footnote, on the
+                      hover and on each value's result page, not as a third line under the name. */}
+                  {(() => { const suffix = row.bestOf ? "" : versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
+                  <span className="bh-matrix-desc" title={[row.bestOf ? BEST_OF_NOTE : null, row.description, versionLine(row)].filter(Boolean).join(" — ")} data-best-of-note={row.bestOf ? "hover" : undefined}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
                 </th>
                 {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                   {v == null

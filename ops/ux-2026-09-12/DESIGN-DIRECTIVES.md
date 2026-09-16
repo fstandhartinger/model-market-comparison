@@ -1,15 +1,15 @@
 # DESIGN DIRECTIVES — Benchmark Heaven (design authority: Claude Fable 5.1)
 
-**Pass 18: 2026-09-16 ~04:00 UTC**, the "what changed since pass 17" pass (Florian: Fable sparingly), against live
-revision `5610c35` (https://benchmarkheaven.com) — iterations 73–77: F-94 (Options: regional chips, Models · Providers ·
-Labs comboboxes, CR-25.4/25.5/36.3), F-95 (Compare picker, CR-36.1/36.2), F-96 (Charts value map, CR-26.1), CR-25.6
-(category scores in the Score select), F-98 (Saturated / Judged tags, CR-38.2/38.3), CR-30.1 (self-reported †),
-CR-34.2 (OpenRouter's own boards), CR-28.2 — with the focus on the Benchmarks page (CR-1.10). Evidence:
-`/opt/benchmarkheaven/state/ux-evidence/fable-20260916-pass18/` — 150 shots + `metrics.json` (Benchmarks page top /
-tagged rows / mid / bottom chart / result page, Options with an open combobox, Compare with the picker empty and
-typing, Charts, Simple + section 2, Guided, Advanced, Benchmaxxing, model page; 1440/390 × light/dark). Script:
-`bin/shoot-fable-pass18.mjs`. Pass-18 fixes (F-100, `aa0e23e`) live-checked in `after/` and by `verify-cr-38.mjs`
-(`verify-cr-38/{canonical,legacy}/`). Earlier passes: `…/fable-20260915-pass17/` … `…/fable-20260913/`.
+**Pass 19: 2026-09-16 ~14:00 UTC**, the "what changed since pass 18" pass (Florian: Fable sparingly), against live
+revision `472a0bf` (https://benchmarkheaven.com) — iteration 83: CR-40 (shortlist chart: diagonal names, zoomed axis with
+a stated range, zero-baseline cogwheel), CR-41 (best-of rows for harness/version variants), CR-42.1 (two-level value
+tags), CR-46.1 (tags back in narrowed tables), CR-45.1 (link-preview copy) — plus Florian's three new reports of the
+afternoon (CR-20260916i/j/k → CR-47.1, CR-48.1, CR-49.1, seeded by this pass in `488bd51` and `4843bd2`). Evidence:
+`/opt/benchmarkheaven/state/ux-evidence/fable-20260916-pass19/` — 89 shots + `metrics.json` (Simple top 12 rows with both
+tag levels, the strong and the weak row, shortlist chart with the settings popover open and with the zero baseline,
+Simple section 2 best-of rows, Benchmarks page best-of rows, Advanced with the Benchmaxxing tag, Guided, Benchmaxxing,
+model page; 1440/390 × light/dark). Script: `bin/shoot-fable-pass19.mjs`. Pass-19 fixes (F-103, F-105) are live-checked
+by `bin/verify-cr-47.mjs` (`verify-cr-47/{canonical,legacy}/`). Earlier passes: `…/fable-20260916-pass18/` … `…/fable-20260913/`.
 
 **The bar (Florian):** minimalistic and simple, very expressive, not overloaded, key messages
 first, graphical with many charts.
@@ -28,61 +28,60 @@ the reviewing engine directly.
 
 ---
 
-## Verdict on the live site — pass 18 (2026-09-16), what changed since pass 17
+## Verdict on the live site — pass 19 (2026-09-16), what changed since pass 18
 
-**The four designs given in advance landed as designed, and the site is at the bar: the Options panel is one screen
-(589 px at 1440 with the comboboxes closed), three regional rows of four pressed chips, three comboboxes that open a
-320 px popover on desktop and a sheet on the phone; the Compare picker is a listbox under the input with one entry per
-model, two lines each, "best of N variants" named; Charts is the Simple value map at full width with its score picker,
-sliders, quadrant, Pareto line and cogwheel; the Benchmarks page shows 41 boards in 10 categories with bold winners,
-data bars, † for a lab's own number, Saturated / Judged drawn exactly like Niche, and small-multiple bar rows (Elo as
-dot rows) underneath. 0 page errors in 150 shots at both widths and both themes.** The tagline stands.
+**Iteration 83 landed as asked and three of its four pieces are at the bar.** The shortlist chart is now a chart a reader
+can read: 25 columns, the five compared models in their table colours, the rest muted, names at −45° ending under their
+column, axis 60–100 with the range said three times (labels, one sentence with the break mark, the accessible name), and a
+cogwheel whose only option is "Start the axis at zero" with one sentence of explanation — on the phone the same data is
+bar rows with a 60–100 tick line. The best-of rows read "AA Coding Agent Index best of v1.4 / v1.5 · Claude Code / Codex"
+on the name line, one row per board, each value linking its own run. The link preview carries the hero copy. 0 page errors
+in 89 shots.
 
-What was not yet right was on the Benchmarks page, and all of it was the same mistake — data strings shown as copy —
-fixed surgically in this pass as **F-100** (`aa0e23e`):
+**What was wrong, and Florian saw it first (CR-20260916i): the emphasis of the two value-tag levels was inverted.** The
+weak tag was a 1 px outline in the full signal colour on a white or near-black surface; the strong tag was the same colour
+at 13 % — a pale wash with no edge. An outline is a crisp, high-contrast shape; a tint is not. So "↗ 3.0× pricier" (weak)
+stood out and "↑ 8.3× pricier" (strong) receded, at both widths and in both themes (`desktop_light-simple-top12.png`,
+`mobile_light-simple-top12.png`). Fixed in this pass as **F-103**: one emphasis vocabulary for every signal pill in the
+table — **strong = solid pill in the signal colour, surface-coloured bold text; weak = the pale tint, medium text in the
+signal colour.** Arrows and words still differ, so colour is never the only cue. Contrast: text on the solid pill 5.9:1
+(light, teal) to 12:1 (dark, orange); text on the tint ≥ 6.5:1.
 
-1. **"Version snapshot 2026-09-14 (unversioned)" under 26 of 41 rows.** The registry identity leaked into the
-   table (F-54 forbids exactly that), and the line said the same date on every row — on the phone it added two
-   lines to most rows for nothing. Now the harness sits on the name line, the visible sub-line is only a stated
-   task window (or a version the name does not carry), and the version + read date live on the description's hover,
-   in the Simple table's (i) and on the result page, where a snapshot now reads **"Published 2026-09-14"**.
-2. **Two rows with the same name** — "AA Coding Agent Index v1.4" twice, "FrontierCode 1.1 Main (Cognition)" twice —
-   told apart only by a muted sub-line ("Claude Code" / "codex"). The harness is now on the name line in muted text,
-   and harness labels are humanised once (`claude-code` → Claude Code, `codex` → Codex, `mini-swe-agent` →
-   mini-SWE-agent) instead of mixing "Claude Code" and "claude-code" three rows apart.
-3. **A category header without a composite showed five dashes** ("General reasoning & knowledge · no composite · — —
-   — — —"). A dash means "no result" and belongs in a value cell; a header that has nothing to say shows nothing
-   (screen readers still hear "No category composite").
-4. **The result page said "not stated" twice** ("The verified source states no contamination control …" and "… does
-   not state a task or question date window") — one sentence now when both are missing.
+**The second defect is the pass-18 mistake in a new place (F-105).** On the Benchmarks page a best-of row carried
+**five lines** under the name: the name-line tag ("best of v1.4 / v1.5 · Claude Code / Codex"), a "Version 1.4 / 1.5"
+sub-line that repeated the tag, the sentence "Each model's best recorded result; open a value for its version and agent."
+(instructional copy inside a table row — the footnote and the (i) already say it), then the description. Decision 2 of
+pass 18 covers this exactly: a visible sub-line may carry only what changes how the number is read. Fixed in this pass: the
+Version sub-line is skipped on best-of rows (the tag names the versions) and the sentence moved to the description's hover;
+the row is two lines again. The Simple table was already right (the sentence sits inside its (i)).
 
-Checked, not findings: the Options panel and both comboboxes (F-94) match their spec to the pixel; the picker (F-95)
-lists retired models under "Matches" with a "retired" note and no score — right; the Charts map (F-96) has the same
-ticks, quadrant and labels as Simple; the Simple table shows only the two caveat tags (iteration 77's recorded
-deviation — correct: a simple row must not grow four pills); the "LOW" outlier tag is rare and text-first; Guided,
-Advanced, Benchmaxxing and the model page are unchanged since pass 17 and at the bar.
+Checked, not findings: the "Benchmaxxing signal" badge in the Advanced table is an outlined pill — under the new
+vocabulary that reads as a *weak* signal, which is what CR-42.2 wants the weak form to be; the strong form and the link
+are specified below (**F-104**). Guided, Benchmaxxing and the model page are unchanged since pass 18 and at the bar.
 
-Two things are for the next work iterations, not for Fable, and both are data questions: the Providers combobox lists
-one company several times (**F-101**), and the site says "111 benchmarks", "120 benchmark results we track" and
-"41 benchmarks" for three different countings of one collection (**F-102**).
+**Florian's third request of the afternoon (CR-20260916k) asks the design authority to choose the interaction before
+anyone builds it.** That choice is **F-106** below: the chart *is* the picker — click a column to add or remove a model;
+the table's "Edit" reveals ×, ‹ › and "+ Add a model"; one ordered selection of five drives both; "Reset to top 5". No
+drag-and-drop.
 
-## Decisions in pass 18
+## Decisions in pass 19
 
-1. **R3.1 / CR-10.1 stands.** No change to the tagline.
-2. **Version and read date are hover / (i) / result-page facts, never a visible row line.** A visible sub-line under a
-   benchmark name may carry only what changes how the number is read: a harness, a stated task window, a version the
-   name does not already carry. Rule added below.
-3. **A harness belongs on the name line.** One benchmark run through several harnesses is several rows with the same
-   name and the harness in muted text right after it — never a sub-line a reader has to find.
-4. **A header row shows numbers or nothing.** Dashes mean "no result" and appear only in value cells.
-5. **Fable landed F-100 itself** (surgical, six files; Kimi stalls on TSX per the record) — it needs a **non-Fable
-   verifier**: `BH_RUNNER=<engine> node ops/ux-2026-09-12/bin/verify-cr-38.mjs <base> <out>` (both hosts; the verifier
-   now reads the version line from the hover title and accepts "Published"), plus the after-shots in
-   `fable-20260916-pass18/after/`.
-6. **X4 (UI meets the design bar): judged met at pass 18** for iterations 73–77, pending that verification.
-7. **No further Fable pass is scheduled.** F-101 and F-102 are specified below so that their implementation is a
-   check, not a redesign; the open CR rows (CR-30.2/30.3, CR-34.5, CR-37, CR-38.1/38.4/38.5) are collectors and data
-   and do not change a page.
+1. **One emphasis vocabulary for signal pills in tables (rule, added below):** solid = strong, tint = weak, outline is
+   not used for levels. Applies to the value tags now (F-103) and to the Benchmaxxing tag when CR-42.2 lands (F-104).
+2. **A best-of row's tag is its version line.** No "Version …" sub-line on a row whose name-line tag already names the
+   versions; the explanation of "best of" is footnote / hover / result-page copy, never a row line (F-105, extends
+   pass-18 decision 2).
+3. **The Simple shortlist is one ordered selection of five** shared by the chart and the table; the chart stays a ranking
+   (columns sorted by score) and shows membership and slot letter by colour, the table shows the order (F-106). Cap 5
+   everywhere, because the five series colours are the five table columns (CR-1.9's rule).
+4. **No drag-and-drop in F-106.** Click/tap on a column and the table's controls are the whole interaction; DnD between a
+   chart and a table is the noisiest possible route and the clarification allows it only as an extra.
+5. **Fable landed F-103 and F-105 itself** (CSS + a two-line TSX edit; Kimi stalls on TSX per the record). Both need a
+   **non-Fable verifier**: `BH_RUNNER=<engine> node ops/ux-2026-09-12/bin/verify-cr-47.mjs <base> <out>` on both hosts,
+   plus `verify-iter83.mjs` (its best-of head check now reads the hover, F-105).
+6. **X4 (UI meets the design bar): judged met at pass 19** for iteration 83, pending that verification.
+7. **No further Fable pass is scheduled.** F-104 and F-106 are specified so that their implementation is a check, not a
+   redesign; CR-44.1 (sort-aware framing) reuses the F-103 vocabulary unchanged.
 
 ## R3.1 / CR-10.1 — Hero claim (Florian's own copy since 2026-09-15; earlier Fable wording retired)
 
@@ -90,7 +89,7 @@ one company several times (**F-101**), and the site says "111 benchmarks", "120 
 > **Every model. Every Benchmark. Actual Costs.**
 
 Line 2 accent-coloured, capitalisation exactly as Florian wrote it (CR-10.1); the muted counts line underneath is
-generated from the dataset. Re-confirmed live in passes 17 and 18. History, for the record: pass 1 chose
+generated from the dataset. Re-confirmed live in passes 17, 18 and 19. History, for the record: pass 1 chose
 "Every AI model benchmark we can find, in one place. / And what each model really costs you." (re-decided in pass 8,
 held through pass 16) after rejecting Florian's 2026-09-12 draft ("All … every" over-reaches, P4) and the
 "most complete … only place" form ("only" not provable against Artificial Analysis' cost per task, review gate
@@ -101,26 +100,97 @@ and the counts line under it keeps the page honest (P4).
 
 ## Directives (open)
 
-> **Status 2026-09-16, after iteration 78 (claude-opus):** **no open directive.** F-100 (Fable) is now verified live by
-> a non-Fable engine (`verify-cr-38` 81/81 per host); **F-101** and **F-102** landed (`ae4f8a5`, `e6c17ff`) and are
-> live-checked by their implementer — both need a verifier that is not claude-opus. Everything from pass 17
-> (F-94 … F-99) is in the Done log, as are F-84/F-85/F-86 and F-100…F-102.
->
-> **Status 2026-09-16 ~08:30 UTC, review gate 20260916T081003Z (opencode-kimi, non-claude):** **F-98, F-101 and
-> F-102 are now verified live by a non-claude engine** — `bin/verify-cr-38.mjs` **81/81 per host**,
-> `bin/verify-f101-f102.mjs` **52/52 per host**, `bin/verify-cr-28-1.mjs` **14/14** and `bin/verify-cr-7.mjs`
-> **42/42 per host**, all live on both hosts at `ec686c8`, 1440/390, light/dark (evidence
-> `/opt/benchmarkheaven/state/ux-evidence/review-20260916T081003Z/`). F-100 was already verified by iteration 78
-> (claude-opus, non-Fable). F-101 and F-102's "needs a non-claude-opus verifier" condition is met by this gate.
-> All directives F-84 … F-102 are verified.
+> **Status 2026-09-16 ~14:30 UTC, Fable pass 19:** F-103 and F-105 landed in this pass (Fable) and need a non-Fable
+> verifier. **F-104** (CR-42.2 + CR-48.1) and **F-106** (CR-49.1) are open for the work loop, in that order.
 
-*(F-100, F-101 and F-102 are in the Done log — nothing is open.)*
+### F-104 [judgment] — The Benchmaxxing tag is a link, in two levels, in the table's emphasis vocabulary (CR-42.2, CR-48.1)
 
+*Where:* `components/ModelExplorer.tsx` (the `<span className="bh-badge bh-alert">Benchmaxxing signal</span>` at the
+name cell, and the row's `onClick` expand handler), `app/globals.css` (`.bh-badge.bh-alert`), `lib/benchmaxxing*.mjs`
+(level thresholds), `app/benchmaxxing/page.tsx` + `components/BenchmaxxingWorkbench.tsx` (the deep-link target; the
+workbench already mirrors its selection into `?model=`).
+
+*What:*
+1. **Link, not span.** Render the tag as `<Link href={`/benchmaxxing?model=${encodeURIComponent(m.id)}#radar`}>` with
+   `onClick={(e) => e.stopPropagation()}` and `onKeyDown` that stops propagation for Enter/Space; the row's expand
+   handler must ignore events whose target is inside the link. The link's accessible name is
+   "Benchmaxxing signal, strong — open the report for <model>" / "…, weak — …". Focus ring: the site's
+   `focus-visible:outline-accent`. Hover: underline the words, nothing else moves.
+2. **Two levels, same vocabulary as F-103.** `data-level="strong"` = today's threshold; `data-level="weak"` = a
+   documented lower threshold from the same score (implementer picks it from the score distribution and writes the rule
+   into the ledger — not per model). Styles: strong = solid `rgb(var(--warn))` fill, `rgb(var(--panel))` text, weight 700;
+   weak = `rgb(var(--warn) / .14)` tint, `rgb(var(--warn))` text, weight 500 — i.e. reuse the `.bh-value-tag` level rules
+   (make `.bh-badge.bh-alert[data-level]` share them, or give the tag the `bh-value-tag` class). Text: "Benchmaxxing" +
+   the score (e.g. "Benchmaxxing 23.9") — the word "signal" moves to the accessible name and the title; the pill stays
+   ≤ 120 px at 1440 and does not wrap at 390 (it may show only "Benchmaxxing" below `md`).
+3. **Landing.** `/benchmaxxing?model=<id>#radar` opens with that model selected in the master list, the report section
+   scrolled into view and focused (`tabIndex={-1}` + `focus({ preventScroll: true })` after scroll), and the page
+   `<h1>` unchanged. Direct load and browser back/forward: the selection follows the URL (`popstate`), so back from the
+   report returns to the Overview with the row *not* expanded (expansion state is not in the URL — it never was).
+4. **Row behaviour unchanged elsewhere:** clicking the model name, the org, the score or the price still expands the
+   row; only the tag navigates.
+
+*Accept (live, both hosts, 1440/390, light/dark):* the tag is an `<a>` with the href above; mouse click, Enter and Space
+on the focused tag navigate and the row stays collapsed (`aria-expanded` unchanged before navigation); a tap at 390 does
+the same; the landing page has the model selected and the radar section within the viewport with focus inside it;
+browser back lands on `/` with no row expanded; clicking the name cell of the same row still expands it; strong pills
+have background alpha 1 and weight 700, weak pills alpha ≤ 0.2 and weight 500 (extend `verify-cr-47.mjs` or write
+`verify-cr-42-2.mjs`); unit test for the level rule; Playwright interaction test for click / Enter / Space / tap / back.
+
+### F-106 [judgment] — "Edit shortlist": the chart is the picker, the table shows the order (CR-49.1)
+
+*Where:* `components/SimpleBenchmarks.tsx` (owns `ids` = the top 5 of `shown` from `HomeMode.tsx`; renders
+`ShortlistColumns` and the table), `components/ShortlistColumns.tsx` (columns / bar rows), `components/ComparePicker.tsx`
+or `MultiCombobox.tsx` (the F-95 type-ahead, reuse — do not write a third picker), `lib/shortlist.mjs` (pure selection
+logic + tests), `app/globals.css`.
+
+*What — one ordered selection, two views:*
+1. **State.** `selection: string[]` (max **5**), `manual: boolean`. Automatic (default): the top 5 of the list above by
+   the active score, in that order — exactly today. Manual: the user's list, persisted in `localStorage`
+   `bh.simpleShortlist.v1` as `{ ids, at }`; ids no longer in the filtered list are dropped silently on load (the list is
+   what the global filters allow — the filters are never changed by this feature). Table columns **and** chart colours
+   follow `selection` order: slot 1 = series-1 = column A, and so on.
+2. **The chart is the picker.** Every column (desktop) / bar row (phone) becomes a `<button type="button"
+   aria-pressed={selected}>` wrapping the bar only — the name stays the model-page link it is today. Click/tap on a
+   muted column adds the model to the last free slot (it takes that slot's colour immediately, the table gains the
+   column); on a coloured column removes it (it turns muted, the table loses the column, later slots move up). When the
+   selection is full, muted columns get `aria-disabled="true"`, their tooltip says "Your comparison is full (5) — remove
+   a model first", and the click does nothing else. One hint line under the chart, muted, 11 px, shown until the first
+   toggle (persisted flag): "Click a column to add or remove a model from the table below." Keyboard: the column buttons
+   are in tab order in ranked order; Enter/Space toggles; the accessible name is "<model>, <value>, in your comparison
+   as A" / "<model>, <value>, not in your comparison".
+3. **The table shows the order and edits it.** In the section header, right of "Open the full comparison", one text
+   button **Edit** (`aria-pressed`, becomes **Done**). While editing, each model column header shows three 28 px
+   icon buttons under the name: **‹** (move left, hidden on column A), **›** (move right, hidden on the last column), **×**
+   (remove) — `aria-label` "Move <model> left" / "… right" / "Remove <model> from the comparison". A last header cell
+   **"+ Add a model"** (only while editing and only when < 5 selected) opens the F-95 picker (listbox under the input on
+   desktop, sheet on the phone) over the filtered list minus the selected; choosing adds to the last free slot. Nothing
+   else in the table changes while editing; the chart's toggles keep working. Order changes re-colour the chart at once.
+4. **State line and reset.** Under the H2 intro, when `manual`: one muted line "Your selection · 4 of 5 ·
+   [Reset to top 5]" (link-styled button); when automatic: nothing new (the existing intro already says "the top 5 of your
+   list above"). Reset clears the stored selection and returns to automatic, chart and table together.
+5. **Links kept.** Names in the table header and the chart remain links to the model page; "Open the full comparison"
+   passes the current selection in order (`?models=` — as today).
+6. **What is not built:** no drag-and-drop, no reordering in the chart (it is a ranking), no per-user server state, no
+   change to the global filters, no new colours.
+
+*Accept (live, both hosts, 1440/390, light/dark):* clicking the 7th column adds it as column E in colour series-5 and the
+table gains that column; clicking column A's bar removes it and B–E shift up in colour and position; with 5 selected the
+muted columns are `aria-disabled` with the "full" tooltip; Edit reveals ‹ › × on every header and "+ Add a model"
+appears only when < 5; keyboard: Tab reaches columns and header controls, Enter/Space toggle/move/remove; a screen
+reader hears the names above; reload keeps a manual selection and its order; "Reset to top 5" restores today's
+automatic five; the global filter panel is byte-identical before and after; 320 px shows no horizontal overflow; the
+name links still open model pages; `lib/shortlist.mjs` unit tests cover add-at-last-free-slot, remove-and-shift,
+move-left/right at the ends, full-state, dropping ids the filters no longer allow, and reset. Non-implementer live
+verification with a `verify-cr-49.mjs`.
 
 ## Design system notes (apply while touching any file above)
 
 - **Type:** display serif (`--brand-serif`) only for the H1 on `/` and page titles; everything
   else the system sans. No serif in cards.
+- **Signal pills in tables (pass 19):** one emphasis vocabulary — **strong = solid pill** in the signal colour with
+  surface-coloured bold text, **weak = pale tint** (≤ 20 % alpha) with medium text in the signal colour. Outlines are not
+  used for levels (an outline reads as stronger than a tint). Arrows/words differ per level so colour is never the only cue.
 - **Colour:** accent blue for interactive and for magnitude bars; categorical colours only
   for organisation dots and Benchmaxxing topic sectors; green reserved for "passes / cheaper /
   Pareto", orange reserved for the Benchmaxxing tag. Never tint a table bar by organisation.
@@ -243,6 +313,8 @@ and the counts line under it keeps the page honest (P4).
 
 | Directive | Commit | Evidence | Verified by |
 |---|---|---|---|
+| F-105 Benchmarks page best-of rows: no "Version …" sub-line, the note sentence on the hover (two lines, not five) | `PENDING_SHA` (Fable, pass 19) | `ux-evidence/fable-20260916-pass19/verify-cr-47/{canonical,legacy}/` | needs a non-Fable verifier (`bin/verify-cr-47.mjs` + `verify-iter83.mjs`) |
+| F-103 value tags: strong = solid pill, weak = pale tint (CR-47.1) | `PENDING_SHA` (Fable, pass 19) | `ux-evidence/fable-20260916-pass19/verify-cr-47/{canonical,legacy}/`, `test/value-tag-emphasis.test.mjs` | needs a non-Fable verifier (`bin/verify-cr-47.mjs`) |
 | F-102 one counting rule for "benchmarks": a benchmark is a board (family + version), harness cohorts and cost twins are its rows | `e6c17ff` (claude-opus, iter 78) | `ux-evidence/iter78/{canonical,legacy}/verify-f101-f102/` (52/52 per host), `…/verify-cr-28-1/` (14/14), `…/verify-cr-7/` (42/42) | **verified by review gate 20260916T081003Z (opencode-kimi, non-claude-opus):** `bin/verify-f101-f102.mjs` **52/52 per host** and `bin/verify-cr-28-1.mjs` **14/14** and `bin/verify-cr-7.mjs` **42/42 per host**, live on both hosts at `ec686c8`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/review-20260916T081003Z/{canonical,legacy}/verify-f101-f102/`, `…/verify-cr-28-1/`, `…/verify-cr-7/`). Recorded deviation: the hero now reads **77 benchmarks**, not the registry's 111 (12 of those are cost twins, 28 more are boards whose observations are not joined to a catalog model yet); F-102 foresees this ("the hero shows the boards with at least one current result"), and /about states the rule. No "· N rows" second total was added (F-85 keeps one total per line) |
 | F-101 Providers combobox: one row per company, routes named, mixed state for a partly excluded company | `ae4f8a5` (claude-opus, iter 78) | `ux-evidence/iter78/{canonical,legacy}/verify-f101-f102/` (52/52 per host), `…/verify-cr-25-36/`, `…/verify-cr-presets/` | **verified by review gate 20260916T081003Z (opencode-kimi, non-claude-opus):** `bin/verify-f101-f102.mjs` **52/52 per host** live on both hosts at `ec686c8`, 1440/390, light/dark (`/opt/benchmarkheaven/state/ux-evidence/review-20260916T081003Z/{canonical,legacy}/verify-f101-f102/`). Recorded decision: only routes to the *same product* fold (direct + gateway, incl. the gateway's own spelling); two different products of one company stay two rows (Google AI Studio ≠ Vertex AI, "Claude Platform on AWS" ≠ Bedrock), because their policies, regions and prices differ |
 | F-100 Benchmarks page: version line as copy ("Published …"), harness on the name line, quiet no-composite headers, one "not stated" sentence | `aa0e23e` (Fable) | `ux-evidence/fable-20260916-pass18/{after,verify-cr-38}/`; **non-Fable re-run: `ux-evidence/iter78/{canonical,legacy}/verify-cr-38/` (81/81 per host)** | **verified by claude-opus (iteration 78, non-Fable), live on both hosts at `e6c17ff`, 1440/390, light/dark** |

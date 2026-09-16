@@ -127,10 +127,11 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const info = await page.evaluate(() => {
     const trs = [...document.querySelectorAll('table.bh-matrix tbody tr')];
     const pick = (re) => trs.filter((tr) => re.test(tr.querySelector('th')?.textContent ?? ''));
-    const describe = (tr) => ({ head: tr.querySelector('th').innerText.replace(/\s+/g, ' ').slice(0, 220), variants: [...tr.querySelectorAll('[data-variant]')].map((a) => [a.getAttribute('data-variant'), a.getAttribute('href')]) });
+    // F-105 (Fable pass 19): the note sentence moved from a visible sub-line to the description's hover title.
+    const describe = (tr) => ({ head: tr.querySelector('th').innerText.replace(/\s+/g, ' ').slice(0, 220), note: tr.querySelector('th .bh-matrix-desc')?.getAttribute('title') ?? '', variants: [...tr.querySelectorAll('[data-variant]')].map((a) => [a.getAttribute('data-variant'), a.getAttribute('href')]) });
     return { apprentice: pick(/^ApprenticeBench API \(NeoCognition\)/).map(describe), aa: pick(/^AA Coding Agent Index/).map(describe) };
   });
-  check(`${tag} Benchmarks tab: ApprenticeBench API is one row, marked best of, with the note`, info.apprentice.length === 1 && /best of Claude Code \/ Codex/.test(info.apprentice[0].head) && /best recorded result/.test(info.apprentice[0].head), info.apprentice);
+  check(`${tag} Benchmarks tab: ApprenticeBench API is one row, marked best of, with the note (on the hover since F-105)`, info.apprentice.length === 1 && /best of Claude Code \/ Codex/.test(info.apprentice[0].head) && /best recorded result/.test(info.apprentice[0].head + ' ' + info.apprentice[0].note), info.apprentice);
   check(`${tag} Benchmarks tab: AA Coding Agent Index is one row across v1.4/v1.5 and agents; each value names its run`, info.aa.length === 1 && /best of v1\.4 \/ v1\.5/.test(info.aa[0].head) && info.aa[0].variants.length >= 3 && info.aa[0].variants.every(([l]) => /^v1\.[45] · (Claude Code|Codex)$/.test(l)), info.aa);
   if (theme === 'light' && info.aa[0]?.variants?.[0]) {
     const [label, href] = info.aa[0].variants[0];
