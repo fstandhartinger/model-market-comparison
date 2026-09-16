@@ -3370,6 +3370,94 @@
       "source_urls": [
         "https://gso-bench.github.io/"
       ]
+    },
+    {
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "parser": {
+        "kind": "hyper_tau_submissions",
+        "name_field": "name",
+        "id_field": "id",
+        "value_field": "overall",
+        "harness_field": "harness",
+        "plain_text_names": true,
+        "method_source": {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00"
+        },
+        "runs": [
+          {
+            "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/codex_gpt-5.6-sol/submission.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/6ca5da8cc68f70c267c8.gz",
+            "sha256": "6ca5da8cc68f70c267c867e50b2032e299f1dd4f4e323765912083e4ca4fe146",
+            "retrieved_at": "2026-09-16T10:22:12.932981+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/codex_gpt-5.6-terra/submission.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/dd7c05509995badcac61.gz",
+            "sha256": "dd7c05509995badcac619ab2302e075f11b1c2ef663061e1d1ebcf1f53888a6a",
+            "retrieved_at": "2026-09-16T10:22:15.469914+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/claude-code_claude-opus-5/submission.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/b696fe985f7dfe2a3c30.gz",
+            "sha256": "b696fe985f7dfe2a3c3077a7564b998ab20114b0d609428b90cb9282a98d7158",
+            "retrieved_at": "2026-09-16T10:22:18.013927+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/claude-code_claude-sonnet-5/submission.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/bdfd3f119f0b2861e1bc.gz",
+            "sha256": "bdfd3f119f0b2861e1bc155387d2c6356d7ee256dcecc03046af0c79e21aa047",
+            "retrieved_at": "2026-09-16T10:22:20.528964+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/kimi-code_kimi-k3/submission.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/e5c2fe1cfe6468373e43.gz",
+            "sha256": "e5c2fe1cfe6468373e43c54594a581f85126f1bd002bb9b76d53f8df5d68c809",
+            "retrieved_at": "2026-09-16T10:22:23.082712+00:00"
+          },
+          {
+            "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/opencode_kimi-k3/submission.json",
+            "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/a42ce6d899adc5547595.gz",
+            "sha256": "a42ce6d899adc5547595c8f65c2ac2b95835a8cd04280522fe8d808b9adeda0c",
+            "retrieved_at": "2026-09-16T10:22:25.587668+00:00"
+          }
+        ],
+        "require": {
+          "board_version": "release-v1 \u00b7 53 tasks",
+          "readme_text": "`overall` the mean across all 53 tasks",
+          "domain_tasks": {
+            "airline": 6,
+            "retail": 6,
+            "telecom": 6,
+            "banking": 35
+          }
+        }
+      },
+      "status": "collected",
+      "reason": "\u03c4^\u03c4-bench publishes each harness x Developer model run as its own submission.json listed in manifest.json; each row cites its submission file.",
+      "recipe": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON files",
+        "locator": "hyper-submissions/<harness>_<model>/submission.json \u2192 scores.overall (percent); domain scores, build time/cost, serve-credit ratio, submission date and the maintainer-baseline flag kept in the protocol.",
+        "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 \u00b7 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
+        "notes": "Measured under the maintainers' sealed runner (the current rows are the \u03c4-bench team's baselines). Every submission file is the primary source of its own row."
+      },
+      "cadence": "daily, at most one capture per source; stop on access restrictions",
+      "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 \u00b7 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/manifest.json",
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/b5a2065690e1c06c6f23.gz",
+        "sha256": "b5a2065690e1c06c6f235931709cba3595da593734783a1ff30fa2cf785f8a74",
+        "retrieved_at": "2026-09-16T10:22:07.902960+00:00"
+      },
+      "protocol": "\u03c4^\u03c4-bench (Hyper-\u03c4) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.",
+      "basis": "measured",
+      "minimum_rows": 6,
+      "source_urls": [
+        "https://sierra-research.github.io/hyper-tau-bench/"
+      ]
     }
   ]
 }

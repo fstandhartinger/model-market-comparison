@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-16T10:16:18.453Z",
-  "joined": 976,
+  "generated_at": "2026-09-16T10:23:33.957Z",
+  "joined": 980,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -4186,6 +4186,16 @@
       "benchmark_id": "gso::opt1-102",
       "source_id": "GPT 4o||OpenHands|2025-05-30",
       "reason": "label is not a catalog model slug"
+    },
+    {
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "source_id": "Kimi K3|max|Kimi Code",
+      "reason": "configuration kimi-k3::max appears 2 times on this board; neither row is joined"
+    },
+    {
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "source_id": "Kimi K3|max|OpenCode",
+      "reason": "configuration kimi-k3::max appears 2 times on this board; neither row is joined"
     }
   ]
 }

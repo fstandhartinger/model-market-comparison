@@ -7793,6 +7793,88 @@
           "excerpt": "\"metadata\": {\"last_updated\": \"2026-03-10\", \"total_tasks\": 102}"
         }
       ]
+    },
+    {
+      "id": "hyper-tau-bench::release-v1",
+      "name": "τ^τ-bench (Hyper-τ), release v1 (Sierra)",
+      "version": "release-v1",
+      "version_status": "published",
+      "family": "hyper-tau-bench",
+      "category": "Agentic",
+      "one_sentence_description": "A coding agent builds a working customer-service agent from realistic evidence (policies, transcripts, recordings, a client API), and is scored by how well that agent then serves simulated customers on 53 held-out tasks.",
+      "scoring": {
+        "metric": "Overall: mean reward across all 53 release tasks of the agent the Developer built (τ³-bench inner loop)",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run under the maintainers' sealed runner; the six current rows are the τ-bench team's own baseline runs. One row per coding harness x Developer model x reasoning effort, as published. Banking knowledge is 35 of the 53 tasks, so it dominates the overall score; the domain scores stay in each observation's protocol. The inner loop uses simulated customers and judge models for natural-language assertions. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Sierra (τ-bench team)",
+      "source_type": "github",
+      "primary_url": "https://github.com/sierra-research/hyper-tau-bench",
+      "publication_urls": [
+        {
+          "url": "https://github.com/sierra-research/hyper-tau-bench",
+          "type": "github",
+          "role": "Benchmark code, task set and leaderboard submissions, MIT"
+        },
+        {
+          "url": "https://sierra-research.github.io/hyper-tau-bench/",
+          "type": "official_leaderboard",
+          "role": "Public board (reads the submission files)"
+        },
+        {
+          "url": "https://taubench.com/",
+          "type": "official_leaderboard",
+          "role": "τ-bench family site"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON files in a GitHub repository (raw.githubusercontent.com)",
+        "identity_policy": "source_label",
+        "locator": "hyper-submissions/<harness>_<model>/submission.json → scores.overall (percent); domain scores, build time/cost, serve-credit ratio, submission date and the maintainer-baseline flag kept in the protocol.",
+        "version_guard": "hyper-submissions/manifest.json must state board_version \"release-v1 · 53 tasks\" and list exactly the six reviewed submissions in order; README.md must still define `overall` as the mean across all 53 tasks; every submission names harness, Developer model, reasoning effort, date and all five scores, and its overall must equal the task-weighted mean of its domain scores (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge) within 0.06. A new release or task set is a new identity; a new submission needs a reviewed plan change.",
+        "notes": "raw.githubusercontent.com has no robots rules (404). The repository is MIT-licensed (GitHub API license.spdx_id MIT); attribute Sierra's τ-bench team and link the board. Model labels are product names with the effort in its own field; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseHyperTauId). The same model under two harnesses (Kimi K3 in Kimi Code and OpenCode) joins neither row. Audited in /home/flori/jobs/bh-source-intake-20260915 (verify-tau3-generation)."
+      },
+      "update_cadence": {
+        "source_schedule": "Submissions by pull request; repository created 2026-09-04, rows dated 2026-08-31 to 2026-09-02.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best overall at capture is 23.9 % (Claude Opus 5, max, Claude Code) against an expert-human reference of 82.2; computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "dc4bed45728a49e60443ff805c5d6e157102337d595b6dc8baf4c9627e818dbd",
+          "fetched_at": "2026-09-16T10:22:05.305280+00:00",
+          "excerpt": "`scores` — mean reward per source domain (0–100), and `overall` the mean across all 53 tasks"
+        },
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "dc4bed45728a49e60443ff805c5d6e157102337d595b6dc8baf4c9627e818dbd",
+          "fetched_at": "2026-09-16T10:22:05.305280+00:00",
+          "excerpt": "The benchmark ships **53 tasks** under [`data/tau2/hyper/tasks/`](data/tau2/hyper/tasks/): 6 airline_plus, 6 retail_plus, 6 telecom, and 35 banking_knowledge."
+        },
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/manifest.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/b5a2065690e1c06c6f23.gz",
+          "sha256": "ed4df6d3aea7e8f3d02b687de5b3cea4dfbb0a08cba325927a1dc099b2979546",
+          "fetched_at": "2026-09-16T10:22:07.902960+00:00",
+          "excerpt": "\"board_version\": \"release-v1 · 53 tasks\""
+        }
+      ]
     }
   ],
   "aa_field_map": [

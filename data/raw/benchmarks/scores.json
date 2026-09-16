@@ -404646,6 +404646,214 @@
       "comparison_key": null
     },
     {
+      "id": "public:80e917d8b05114d5f0d5b7e9",
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "subject": {
+        "source_id": "GPT-5.6-sol|xhigh|Codex",
+        "name": "GPT-5.6-sol · xhigh · Codex",
+        "model_id": "gpt-5.6-sol::xhigh",
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 22,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/codex_gpt-5.6-sol/submission.json",
+        "retrieved_at": "2026-09-16T10:22:12.932981+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/6ca5da8cc68f70c267c8.gz",
+        "sha256": "6ca5da8cc68f70c267c867e50b2032e299f1dd4f4e323765912083e4ca4fe146",
+        "locator": "hyper_tau_submissions; source row 0; GPT-5.6-sol|xhigh|Codex; field overall"
+      },
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.; source row: {\"harness\":\"Codex\",\"model\":\"GPT-5.6-sol\",\"reasoning_effort\":\"xhigh\",\"submission_date\":\"2026-08-31\",\"submitted_by\":\"τ-bench team\",\"maintainer_baseline\":true,\"domain_scores\":{\"airline\":49.8,\"retail\":59.2,\"telecom\":32.9,\"banking\":9.0},\"build_time_min\":47.9,\"build_cost_usd\":18.2,\"serve_credit_ratio\":0.45}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ],
+      "join_note": "Reviewed identity map 2026-09-16: label states model gpt-5.6-sol and setting xhigh; exact catalog configuration gpt-5.6-sol::xhigh"
+    },
+    {
+      "id": "public:ffc725de9a6d3ec7f0a8289e",
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "subject": {
+        "source_id": "GPT-5.6-terra|xhigh|Codex",
+        "name": "GPT-5.6-terra · xhigh · Codex",
+        "model_id": "gpt-5.6-terra::xhigh",
+        "variant": null,
+        "harness": "Codex"
+      },
+      "value": 18,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/codex_gpt-5.6-terra/submission.json",
+        "retrieved_at": "2026-09-16T10:22:15.469914+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/dd7c05509995badcac61.gz",
+        "sha256": "dd7c05509995badcac619ab2302e075f11b1c2ef663061e1d1ebcf1f53888a6a",
+        "locator": "hyper_tau_submissions; source row 0; GPT-5.6-terra|xhigh|Codex; field overall"
+      },
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.; source row: {\"harness\":\"Codex\",\"model\":\"GPT-5.6-terra\",\"reasoning_effort\":\"xhigh\",\"submission_date\":\"2026-09-01\",\"submitted_by\":\"τ-bench team\",\"maintainer_baseline\":true,\"domain_scores\":{\"airline\":44.5,\"retail\":46.6,\"telecom\":27.2,\"banking\":6.9},\"build_time_min\":30.0,\"build_cost_usd\":7.0,\"serve_credit_ratio\":0.38}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ],
+      "join_note": "Reviewed identity map 2026-09-16: label states model gpt-5.6-terra and setting xhigh; exact catalog configuration gpt-5.6-terra::xhigh"
+    },
+    {
+      "id": "public:f57e39775916567a1d4ff416",
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "subject": {
+        "source_id": "Claude Opus 5|max|Claude Code",
+        "name": "Claude Opus 5 · max · Claude Code",
+        "model_id": "claude-opus-5::max",
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 23.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/claude-code_claude-opus-5/submission.json",
+        "retrieved_at": "2026-09-16T10:22:18.013927+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/b696fe985f7dfe2a3c30.gz",
+        "sha256": "b696fe985f7dfe2a3c3077a7564b998ab20114b0d609428b90cb9282a98d7158",
+        "locator": "hyper_tau_submissions; source row 0; Claude Opus 5|max|Claude Code; field overall"
+      },
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.; source row: {\"harness\":\"Claude Code\",\"model\":\"Claude Opus 5\",\"reasoning_effort\":\"max\",\"submission_date\":\"2026-08-31\",\"submitted_by\":\"τ-bench team\",\"maintainer_baseline\":true,\"domain_scores\":{\"airline\":55.9,\"retail\":72.8,\"telecom\":48.2,\"banking\":5.9},\"build_time_min\":216.3,\"build_cost_usd\":42.0,\"serve_credit_ratio\":0.58}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ],
+      "join_note": "Reviewed identity map 2026-09-16: label states model claude-opus-5 and setting max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "id": "public:a072d42e0a468fb9e32129d8",
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "subject": {
+        "source_id": "Claude Sonnet 5|max|Claude Code",
+        "name": "Claude Sonnet 5 · max · Claude Code",
+        "model_id": "claude-sonnet-5::max",
+        "variant": null,
+        "harness": "Claude Code"
+      },
+      "value": 14.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/claude-code_claude-sonnet-5/submission.json",
+        "retrieved_at": "2026-09-16T10:22:20.528964+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/bdfd3f119f0b2861e1bc.gz",
+        "sha256": "bdfd3f119f0b2861e1bc155387d2c6356d7ee256dcecc03046af0c79e21aa047",
+        "locator": "hyper_tau_submissions; source row 0; Claude Sonnet 5|max|Claude Code; field overall"
+      },
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.; source row: {\"harness\":\"Claude Code\",\"model\":\"Claude Sonnet 5\",\"reasoning_effort\":\"max\",\"submission_date\":\"2026-09-02\",\"submitted_by\":\"τ-bench team\",\"maintainer_baseline\":true,\"domain_scores\":{\"airline\":41.9,\"retail\":50.2,\"telecom\":21.1,\"banking\":3.2},\"build_time_min\":235.5,\"build_cost_usd\":30.0,\"serve_credit_ratio\":0.76}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ],
+      "join_note": "Reviewed identity map 2026-09-16: label states model claude-sonnet-5 and setting max; exact catalog configuration claude-sonnet-5::max"
+    },
+    {
+      "id": "public:c8c21e5b7432673a0e8d572d",
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "subject": {
+        "source_id": "Kimi K3|max|Kimi Code",
+        "name": "Kimi K3 · max · Kimi Code",
+        "model_id": null,
+        "variant": null,
+        "harness": "Kimi Code"
+      },
+      "value": 16.1,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/kimi-code_kimi-k3/submission.json",
+        "retrieved_at": "2026-09-16T10:22:23.082712+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/e5c2fe1cfe6468373e43.gz",
+        "sha256": "e5c2fe1cfe6468373e43c54594a581f85126f1bd002bb9b76d53f8df5d68c809",
+        "locator": "hyper_tau_submissions; source row 0; Kimi K3|max|Kimi Code; field overall"
+      },
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.; source row: {\"harness\":\"Kimi Code\",\"model\":\"Kimi K3\",\"reasoning_effort\":\"max\",\"submission_date\":\"2026-08-31\",\"submitted_by\":\"τ-bench team\",\"maintainer_baseline\":true,\"domain_scores\":{\"airline\":42.3,\"retail\":49.1,\"telecom\":24.9,\"banking\":4.4},\"build_time_min\":205.7,\"build_cost_usd\":13.5,\"serve_credit_ratio\":0.72}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
+      "id": "public:34044afd1a92544eacd13732",
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "subject": {
+        "source_id": "Kimi K3|max|OpenCode",
+        "name": "Kimi K3 · max · OpenCode",
+        "model_id": null,
+        "variant": null,
+        "harness": "OpenCode"
+      },
+      "value": 17.9,
+      "unit": "percent",
+      "basis": "measured",
+      "source": {
+        "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/opencode_kimi-k3/submission.json",
+        "retrieved_at": "2026-09-16T10:22:25.587668+00:00",
+        "published_at": null,
+        "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/a42ce6d899adc5547595.gz",
+        "sha256": "a42ce6d899adc5547595c8f65c2ac2b95835a8cd04280522fe8d808b9adeda0c",
+        "locator": "hyper_tau_submissions; source row 0; Kimi K3|max|OpenCode; field overall"
+      },
+      "protocol": "τ^τ-bench (Hyper-τ) release v1, 53 tasks (6 airline_plus, 6 retail_plus, 6 telecom, 35 banking_knowledge); overall = mean reward across all 53 tasks of the agent the Developer built, sealed runner; one row per coding harness x Developer model x reasoning effort as published; not a Composite input.; source row: {\"harness\":\"OpenCode\",\"model\":\"Kimi K3\",\"reasoning_effort\":\"max\",\"submission_date\":\"2026-09-02\",\"submitted_by\":\"τ-bench team\",\"maintainer_baseline\":true,\"domain_scores\":{\"airline\":43.8,\"retail\":52.1,\"telecom\":27.6,\"banking\":6.0},\"build_time_min\":360.3,\"build_cost_usd\":15.1,\"serve_credit_ratio\":0.61}",
+      "comparison_key": null,
+      "supporting_sources": [
+        {
+          "url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/README.md",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-hyper-tau-bench/8eec8df7fcf6d7bc5a4b.gz",
+          "sha256": "8eec8df7fcf6d7bc5a4b10dbee7f8a3e617b3e4437a44ec1829c00e6d49d011c",
+          "retrieved_at": "2026-09-16T10:22:05.305280+00:00",
+          "published_at": null,
+          "locator": "method_source"
+        }
+      ]
+    },
+    {
       "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
       "benchmark_id": "tau2-bench::2",
       "subject": {
@@ -415502,6 +415710,12 @@
       "status": "collected",
       "source_url": "https://gso-bench.github.io/assets/leaderboard.json",
       "reason": "28 source results parsed; configurations remain separate; unmatched model identities are retained."
+    },
+    {
+      "benchmark_id": "hyper-tau-bench::release-v1",
+      "status": "collected",
+      "source_url": "https://raw.githubusercontent.com/sierra-research/hyper-tau-bench/main/web/leaderboard/public/hyper-submissions/manifest.json",
+      "reason": "6 source results parsed; configurations remain separate; unmatched model identities are retained."
     }
   ],
   "rejected": [

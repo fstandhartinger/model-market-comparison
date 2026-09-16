@@ -4,6 +4,17 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — τ^τ-bench (Hyper-τ) release v1
+
+**One new board, no shape change.** `hyper-tau-bench::release-v1`: Sierra's τ^τ-bench, where a coding agent (the
+Developer, in a harness such as Codex or Claude Code) builds a customer-service agent from realistic evidence and is
+scored by that agent's pass rate on 53 held-out τ³-bench tasks. Value = `overall`, which the README defines as the
+mean across all 53 tasks; the collector checks that each overall equals the task-weighted mean of the domain scores
+(35 of the 53 tasks are banking, which is why overall sits far below the airline/retail scores). Collected daily from
+the MIT repository's `manifest.json` and one `submission.json` per row; a new submission needs a reviewed plan change.
+Domain scores, build time and cost, serve-credit ratio, date and the maintainer-baseline flag stay in the protocol.
+6 rows, 4 join; Kimi K3 (max) appears under two harnesses and joins neither. Never a Composite input.
+
 ## 2026-09-16 — SWE-rebench (one task window) and GSO
 
 **Two new boards, no shape change.** `swe-rebench::2026-05-15..2026-07-01`: Nebius' SWE-rebench, 111 fresh GitHub
@@ -23,7 +34,7 @@ page's changelog changed the protocol for runs from 2026-04-27 (larger iteration
 (network-isolated tasks). Opt@10 rows are another protocol and are skipped. 28 rows, 10 join (`parseGsoId`);
 "Gemini 3 Flash"/"Gemini 3 Pro" are not mapped because the catalog holds preview and release families under
 those names. For a consumer: 41 new observations, two registry entries, and the count of benchmarks the site
-reports rises by two. Neither is a Composite input.
+reports rises by two (three with τ^τ-bench above). Neither is a Composite input.
 
 ## 2026-09-16 — FrontierMath v2 (Tiers 1–3 and Tier 4) and SimpleQA Verified, as Epoch AI runs them
 

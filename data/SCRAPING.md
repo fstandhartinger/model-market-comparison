@@ -197,8 +197,8 @@ same result is never counted twice.
 | SWE-bench | live | `swe-bench-verified`, `-multilingual`, `-multimodal` |
 | LiveCodeBench | planned | Primary `performances_generation.json` is row-level and date-filterable (AA's copy stays withheld until its window is known) |
 | GSO | **live (2026-09-16)** | `gso::opt1-102` (parser `gso_leaderboard`, daily) — the page's own `assets/leaderboard.json`, Opt@1 rows only (Opt@10 is another protocol); 102-task guard; hack-adjusted score and run date in the protocol (the page's changelog changes the protocol from 2026-04-27 and 2026-07-12). MIT, attribute GSO |
-| Berkeley Function Calling Leaderboard | planned | `data_overall.csv`, Apache-2.0 |
-| τ-bench (Sierra) | live / planned | `tau2-bench`, `tau3-banking`, `tau3-voice`; **planned:** hyper-tau-bench (MIT, submission JSON on GitHub) |
+| Berkeley Function Calling Leaderboard | planned (low) | `data_overall.csv`, Apache-2.0. Checked 2026-09-16: 109 rows, newest models from late 2025 (Claude Opus 4.5, GPT-5.2, Gemini 3 Pro Preview) and dated checkpoint labels — little overlap with the current catalog; revisit when the board adds 2026 models |
+| τ-bench (Sierra) | live | `tau2-bench`, `tau3-banking`, `tau3-voice`; **τ^τ-bench `hyper-tau-bench::release-v1` live (2026-09-16)** (parser `hyper_tau_submissions`, daily): manifest.json + one submission.json per harness x Developer model from the MIT repository; board version and the exact submission list are the guard, and each overall must equal the 53-task weighted mean of its domain scores |
 | OSWorld 2.0 | **live (2026-09-16)** | `osworld-2::v2026.06.24` and `osworld-2::v2026.08.08` — one identity per task release (parser `osworld2_results`), Apache-2.0 project |
 | WebArena-x | planned (low) | Four sub-benchmarks on static pages, attribution OK |
 | DeepResearch Bench | planned | CSV downloads from a public HF Space |

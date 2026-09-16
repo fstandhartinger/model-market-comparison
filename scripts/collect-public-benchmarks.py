@@ -366,6 +366,30 @@ def parse(source,spec,load_source):
                 'score':r.get('score'),'harness':r['scaffold'],'source_row':index,
                 'context':{'model':r['name'],'model_org':r.get('model_org'),'reasoning_effort':r.get('reasoning_effort'),'scaffold':r['scaffold'],'setting':r['setting'],
                     'run_date':r['date'],'score_hack_adjusted':r.get('score_hack_control'),'submitted_by':r.get('submission_org_name')}})
+    elif kind=='hyper_tau_submissions':
+        # τ^τ-bench (Sierra): the public board reads manifest.json and one submission.json per harness x Developer
+        # model. The manifest's board version and its exact submission list are the version guard (a new submission
+        # needs a reviewed plan change, never a silent row). The README must still define `overall` as the mean over
+        # all 53 tasks, and each row's overall must equal the task-weighted mean of its domain scores (6 airline_plus,
+        # 6 retail_plus, 6 telecom, 35 banking_knowledge) — so the number really is that mean.
+        data=json.loads(source);req=spec['require']
+        if data.get('board_version')!=req['board_version']:raise ValueError(f"τ^τ-bench board version changed: {data.get('board_version')!r}")
+        readme=load_source(spec['method_source'])
+        if req['readme_text'] not in ' '.join(readme.split()):raise ValueError('τ^τ-bench score definition changed')
+        names=[run['url'].rsplit('/',2)[-2] for run in spec['runs']]
+        if data.get('submissions')!=names:raise ValueError(f"τ^τ-bench submission list changed: {data.get('submissions')!r}")
+        weights=req['domain_tasks']
+        for index,run in enumerate(spec['runs']):
+            s=json.loads(load_source(run));scores=s.get('scores') or {}
+            model=(s.get('builder') or {}).get('model_name');effort=(s.get('builder') or {}).get('reasoning_effort');harness=(s.get('harness') or {}).get('name')
+            if not all(isinstance(v,str) and v.strip() for v in [model,effort,harness]) or not isinstance(s.get('submission_date'),str):raise ValueError(f'τ^τ-bench submission {names[index]} schema changed')
+            if any(not isinstance(scores.get(k),(int,float)) or isinstance(scores.get(k),bool) for k in ['overall',*weights]):raise ValueError(f'τ^τ-bench submission {names[index]} scores missing')
+            mean=sum(scores[k]*n for k,n in weights.items())/sum(weights.values())
+            if abs(mean-scores['overall'])>0.06:raise ValueError(f"τ^τ-bench {names[index]}: overall {scores['overall']} is not the 53-task mean {mean:.2f}")
+            rows.append({'name':f'{model} · {effort} · {harness}','id':f'{model}|{effort}|{harness}','overall':scores['overall'],'harness':harness,'source_row':0,'run_source':run,
+                'context':{'harness':harness,'model':model,'reasoning_effort':effort,'submission_date':s['submission_date'],'submitted_by':s.get('submitting_organization'),
+                    'maintainer_baseline':s.get('baseline') is True,'domain_scores':{k:scores[k] for k in weights},'build_time_min':s.get('build_time_min'),
+                    'build_cost_usd':s.get('build_cost_usd'),'serve_credit_ratio':s.get('serve_credit_ratio')}})
     else:raise ValueError('Unknown parser kind '+kind)
     if not isinstance(rows,list) or not rows:raise ValueError('No source result rows')
     return rows

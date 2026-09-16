@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import { execFileSync } from 'node:child_process';
 import { readFileSync } from 'node:fs';
-import { parseSweRebenchLabel, parseGsoId, boardJoins } from '../lib/board-identity.mjs';
+import { parseSweRebenchLabel, parseGsoId, parseHyperTauId, boardJoins } from '../lib/board-identity.mjs';
 
 // 2026-09-16 (iteration 81, CR-38.1). Sources are the committed SWE-rebench one-window extraction (page captured
 // 2026-09-16) and GSO's leaderboard.json; mutations below are synthetic failure probes, never source claims.
@@ -75,4 +75,36 @@ test('SWE-rebench and GSO joins: exact stated setting, no setting only for a sin
   assert.equal(map.filter((e) => e.benchmark_id === 'swe-rebench::2026-05-15..2026-07-01').length, 8);
   assert.equal(map.filter((e) => e.benchmark_id === 'gso::opt1-102').length, 10);
   assert.ok(map.some((e) => e.source_id === 'Opus 5 [high]__tools' && e.model_id === 'claude-opus-5::high'));
+});
+
+test('τ^τ-bench parser: exact submission list, overall is the 53-task mean, and one model under two harnesses joins neither', () => {
+  const out = execFileSync('python3', ['-B', '-c', String.raw`
+import importlib.util,gzip,hashlib,json,copy
+from pathlib import Path
+s=importlib.util.spec_from_file_location('collector','scripts/collect-public-benchmarks.py');m=importlib.util.module_from_spec(s);s.loader.exec_module(m)
+entry=next(e for e in json.loads(Path('data/raw/benchmarks/collection-plan.json').read_text())['entries'] if e['benchmark_id']=='hyper-tau-bench::release-v1')
+files={}
+def load(src):
+  raw=gzip.decompress(Path(src['file']).read_bytes());assert hashlib.sha256(raw).hexdigest()==src['sha256']
+  return files.get(src['file'],raw.decode('utf-8'))
+spec=entry['parser'];source=load(entry['source']);data=json.loads(source)
+rows=m.parse(source,spec,load)
+got={r['id']:r['overall'] for r in rows}
+assert got=={'GPT-5.6-sol|xhigh|Codex':22.0,'GPT-5.6-terra|xhigh|Codex':18.0,'Claude Opus 5|max|Claude Code':23.9,'Claude Sonnet 5|max|Claude Code':14.9,'Kimi K3|max|Kimi Code':16.1,'Kimi K3|max|OpenCode':17.9},got
+assert all(r['run_source']['url'].endswith('/submission.json') for r in rows)
+def fails(d,why,load=load):
+  try: m.parse(json.dumps(d),spec,load)
+  except ValueError: return
+  raise AssertionError('accepted: '+why)
+d=copy.deepcopy(data);d['board_version']='release-v2 · 60 tasks';fails(d,'board version')
+d=copy.deepcopy(data);d['submissions'].append('codex_gpt-6-astra');fails(d,'unreviewed submission')
+opus=next(r for r in spec['runs'] if 'claude-opus-5' in r['url'])
+sub=json.loads(gzip.decompress(Path(opus['file']).read_bytes()));sub['scores']['overall']=45.7
+files[opus['file']]=json.dumps(sub);fails(data,'overall that is the plain domain average, not the 53-task mean')
+print('ok')
+`]).toString().trim();
+  assert.equal(out, 'ok');
+  assert.deepEqual(parseHyperTauId('Claude Opus 5|max|Claude Code'), { family: 'claude-opus-5', effort: 'max' });
+  const map = JSON.parse(readFileSync('data/raw/benchmarks/identity-map.json', 'utf8')).entries.filter((e) => e.benchmark_id === 'hyper-tau-bench::release-v1');
+  assert.deepEqual(map.map((e) => e.model_id).sort(), ['claude-opus-5::max', 'claude-sonnet-5::max', 'gpt-5.6-sol::xhigh', 'gpt-5.6-terra::xhigh']);
 });
