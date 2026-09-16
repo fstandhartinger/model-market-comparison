@@ -404,3 +404,9 @@ still-open rows from section 2 per the priority rule in section 0.
 | ID | Requirement | Acceptance |
 |---|---|---|
 | CR-48.1 | The Overview-table Benchmaxxing signal is a real keyboard-accessible link to the corresponding model's Benchmaxxing report (model identity encoded safely); click and keyboard activation never expand/collapse the row; lands on the selected-model section; direct load and back/forward behave predictably; clicking any non-link part of the row still expands it | Automated interaction coverage plus independent live checks for mouse, Enter/Space, mobile tap and browser back; shares the deep-link target with CR-42.2 |
+
+## 21. CR-20260916k — Directly curate the Simple-view chart and benchmark table (seeded 2026-09-16 by Fable pass 19)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-49.1 | One coherent, low-clutter **"Edit shortlist"** interaction shared by the Simple-view score chart and benchmark table: remove any displayed model; add another eligible model by type-ahead; set the table/chart order explicitly with accessible move controls and keyboard operation; both chart and table visibly reflect one shared selection and order; documented cap with a clear "full" state; one-click reset to the automatic shortlist; local persistence of the curation without changing global filters; links to the model and the full comparison kept. Drag-and-drop only as a robust desktop enhancement, never the sole route. **The design authority chooses the interaction before implementation (F-106 in `DESIGN-DIRECTIVES.md`).** | Mouse, touch, keyboard and screen-reader labels tested; 320/390 px and 1440 px, light/dark; reload persistence; reset; independent live verification by an engine other than the implementer |

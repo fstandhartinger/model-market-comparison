@@ -477,3 +477,13 @@ Florian's report, Telegram, 16 Sep 2026: clicking the Overview-table “Benchmax
 Live source verification, 16 Sep 2026: the signal is currently a non-interactive `span` inside a `tr` whose click handler toggles expansion, so it cannot navigate.
 
 Implementation clarification: make the signal a real keyboard-accessible link or button-link to the corresponding Benchmaxxing model report (with the exact model identity encoded safely). Its click and keyboard activation must stop propagation so it never expands/collapses the Overview row. It must land on the intended selected-model section, handle direct load and back/forward predictably, and preserve standard row expansion when any non-link part of that row is clicked. Add automated interaction coverage plus independent live checks for mouse, Enter/Space, mobile tap, and browser back.
+
+---
+
+## CR-20260916k — Directly curate the Simple-view chart and benchmark table
+
+Florian's request, Telegram, 16 Sep 2026: in the Simple view section containing the shortlist score chart and benchmark table, make adding/removing models easier; support reordering in the table; and consider dragging a bar or its name from the chart into the table, or another UX that solves this cleanly.
+
+Current source verification, 16 Sep 2026: the chart and table derive their top five models automatically from the filtered shortlist; chart labels only navigate to a model page, and the table has no curation controls. This means a reader cannot directly choose, remove, add, or reorder the displayed comparison set.
+
+Implementation clarification: design and ship one coherent, low-clutter **“Edit shortlist”** interaction shared by the chart and table. It must let a user: (1) remove any currently displayed model; (2) add another eligible model through searchable/type-ahead selection; (3) set table/chart order explicitly, with accessible move controls and keyboard operation; and (4) make clear that both chart and table reflect one shared selection/order. Drag-and-drop from a chart bar/name to the shortlist is welcome as a progressive desktop enhancement only if it is robust, but must not be the sole route: equivalent buttons/type-ahead and touch/keyboard paths are required. Cap the Simple comparison at a documented sensible limit, explain what happens when it is full, preserve the original automatic shortlist as a one-click reset, persist a user’s temporary curation locally without silently changing global filters, and retain links to the model and full comparison. Test mouse, touch, keyboard, screen reader labels, narrow phones, wide desktop, light/dark, reload persistence, and reset. The design authority should choose the least visually noisy implementation before the implementation run.
