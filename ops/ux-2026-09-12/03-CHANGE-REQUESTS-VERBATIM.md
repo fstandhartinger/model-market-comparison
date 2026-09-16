@@ -702,3 +702,25 @@ Laptop chat 16 Sep 2026 ~21:45 UTC, verbatim (German): "Heißt das wir haben den
 Laptop chat 16 Sep 2026 ~22:30 UTC, verbatim: "we have to remove cost per task type benchmarks from the benchmaxxing check - i noticed them in the radar, because they show up as very low values. they don't make sense for the benchmaxxing analysis concept"
 Screenshot: per-model Benchmaxxing radar for Claude Fable 5.1, category 'Efficiency'; tooltip 'Vals Index v2 cost per test (Vals AI) · v2 — 28.9 USD · percentile 0 · observed 2026-09-13' plotted as a spike toward the centre (percentile 0), dragging the shape down.
 Supervisor note: cost-like metric names found in the taxonomy (first 25): ["CR-1.3 / CR-1.7: presentation metadata for the Benchmarks comparison table. Groups map registry categories to display groups; overrides are keyed by the benchmark id before '::' (or the snapshot key). Tiers are editorial tags, drafted by one engine and reviewed by another. Nothing here changes a score. 2026-09-15: aa_input_keys marks Coding Agent Index constituents; Terminal-Bench rows display under Coding. score_ranges: the published 0–100 scale of unregistered snapshot index axes, used only to decide whether a row may enter a category composite. 2026-09-16: OpenRouter's own reproducible runs (CR-34.2) enter as their own registry families; their -cost families are the measured spend of the same run and sit under Cost & efficiency. All of them are tier 'niche': release posts cite Artificial Analysis' GPQA Diamond and tau2-Bench, not OpenRouter's own re-runs, and the Simple table must not show two different GPQA numbers side by side. 2026-09-16 (CR-38.2/38.3, F-98): the tags 'saturated' and 'judged' are not editorial — 'saturated' is computed from the results we hold (saturationOf in lib/benchmark-matrix.mjs) and 'judged' comes from data/benchmark-caveats.json, where every classification quotes its own source. Both affect category composites: a judged row never averages with task accuracy, a saturated row weighs half.", 'Cost & efficiency', 'Efficiency', 'apprenticebench-api-cost', 'apprenticebench-cua-cost', 'cursorbench-cost', 'efficiency', 'frontiercode-cost', 'openrouter-gpqa-diamond-cost', 'openrouter-search-browsecomp-cost', 'openrouter-search-dsqa-cost', 'openrouter-search-hle-cost', 'openrouter-search-widesearch-cost', 'openrouter-tau2-bench-airline-cost', 'realswe-cost', 'vals-index-cost']
+
+
+## CR-20260916s — Pre-release data & math gauntlet (launch 17 Sep ~17:00 UTC) → CR-65
+(Requested as "CR-20260916f"; that letter is already used by the sort-aware value-signal section above, so this section takes the next free letter, s. Rows: **CR-65.x**.)
+
+Florian, laptop chat, 16 Sep 2026 evening, verbatim:
+
+<requirements>
+
+very very important: the whole data collection and the math behind things like the composite scores and the benchmaxxing must be sound (even taking into account complicated cases like missing scores etc). And the benchmaxxing radar chart should be also doublechecked to make sure this is really looking great and tells the story perfectly.
+
+challenge all the data
+
+</requirements>
+
+How the findings were produced (16 Sep 2026 ~21:25–23:15 UTC, supervisor gauntlet job `~/jobs/bh-data-math-gauntlet-20260916/`, critic only — no code changed):
+every number was recomputed with the site's own code on `data/dataset.json` (local composite = live API for all 839 rows; re-run on the
+22:40 build with CR-64). Math: `MATH-AUDIT.md` (formulas as implemented, worked examples, a null simulation for the Benchmaxxing signal),
+independently re-checked by Kimi K3, which confirmed every finding in substance and added three (`work/kimi-math/review.md`). Data: two Kimi K3
+workers checked 1,337 stored values for 38 models against the primary sources (93 % exact); every mismatch was re-checked live by Claude
+Opus 5 and 11 worker claims were rejected (`DATA-AUDIT.md`, `CORRECTIONS.json`). Radar: live screenshots 1440/390 (`shots/`).
+Checklist: `04-CR-BRIEF.md` → "CR-20260916s".
