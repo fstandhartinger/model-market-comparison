@@ -23,9 +23,9 @@ export const metadata: Metadata = {
   openGraph: {
     type: "website", siteName: "Benchmark Heaven", locale: "en_US",
     title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`,
-    images: [{ url: "/brand/og-image.png?v=2", width: 1200, height: 630, alt: `Benchmark Heaven — ${BRAND_CLAIM} ${BRAND_LINE}` }],
+    images: [{ url: "/brand/og-launch.png?v=1", width: 1200, height: 630, alt: `Benchmark Heaven — ${BRAND_CLAIM} ${BRAND_LINE}` }],
   },
-  twitter: { card: "summary_large_image", site: X_HANDLE, creator: X_HANDLE, title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`, images: ["/brand/og-image.png?v=2"] },
+  twitter: { card: "summary_large_image", site: X_HANDLE, creator: X_HANDLE, title: "Benchmark Heaven", description: `${BRAND_CLAIM} ${BRAND_LINE}`, images: ["/brand/og-launch.png?v=1"] },
   icons: { icon: "/icon.svg", apple: "/apple-icon.png" },
 };
 
