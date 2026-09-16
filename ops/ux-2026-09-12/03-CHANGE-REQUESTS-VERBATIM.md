@@ -459,3 +459,21 @@ Florian's report, Telegram, 16 Sep 2026: “now it seems these tags (cheaper / p
 Live verification, 16 Sep 2026: on the default score-descending Overview table, no cheaper/pricier badges are currently rendered beside costs, including rows that had them in the verified earlier presentation. The current source code contains a value-signal renderer, so investigate the real live data/threshold/filter path rather than merely adding static labels.
 
 Implementation clarification: treat this as a priority regression. Restore data-derived cost-relative value badges in the default composite-capability descending table before adding the planned sort-aware reframing. Preserve the existing no-hard-coded-model rule; add regression coverage against current fixture/live-equivalent data that proves qualifying expensive and cheap rows render, including the strong-tier examples when their actual inputs meet the documented thresholds. Independently live-verify after deploy that badges are visible in the default table and that the later price-sort framing changes their placement/wording without suppressing the signal.
+
+---
+
+## CR-20260916i — Make the strong value-tag level visibly stronger
+
+Florian's report, Telegram, 16 Sep 2026: “I can now see the pricier/cheaper tags a little bit more often, and in two intensity levels, as I wished, but the visual style of the more intense level looks less visual intense than the other one, so please reverse the two visual styles or adjust them any other way to fix this.”
+
+Implementation clarification: the semantic strong/weak classification must remain correct. Change the presentation so **strong** has plainly greater visual emphasis than weak at a glance, in both cheap and pricey colors and in light/dark. A suitable solution is a stronger fill plus clear border and heavier type for strong, while weak has a lower-contrast outline or subtle fill; reverse styles only if that produces the same unambiguous hierarchy. Retain distinct arrow/text cues and sufficient non-colour contrast. Add visual regression coverage and independently compare live weak vs strong examples at desktop and mobile widths before accepting.
+
+---
+
+## CR-20260916j — Benchmaxxing tag must navigate instead of expanding the row
+
+Florian's report, Telegram, 16 Sep 2026: clicking the Overview-table “Benchmaxxing signal” tag should go to the corresponding model on the Benchmaxxing page, but currently the table row expand/collapse handler wins.
+
+Live source verification, 16 Sep 2026: the signal is currently a non-interactive `span` inside a `tr` whose click handler toggles expansion, so it cannot navigate.
+
+Implementation clarification: make the signal a real keyboard-accessible link or button-link to the corresponding Benchmaxxing model report (with the exact model identity encoded safely). Its click and keyboard activation must stop propagation so it never expands/collapses the Overview row. It must land on the intended selected-model section, handle direct load and back/forward predictably, and preserve standard row expansion when any non-link part of that row is clicked. Add automated interaction coverage plus independent live checks for mouse, Enter/Space, mobile tap, and browser back.

@@ -390,3 +390,17 @@ still-open rows from section 2 per the priority rule in section 0.
 | ID | Requirement | Acceptance |
 |---|---|---|
 | CR-46.1 | **Priority regression.** Restore the data-derived cost-relative value badges ("cheaper" / "pricier") in the default score-descending Overview table; find the real cause in the live data/threshold/filter path, no static labels, no hard-coded models; lands **before** the CR-44.1 sort-aware reframing | Regression test over current (fixture or live-equivalent) data proves qualifying expensive and cheap rows render, including strong-tier examples when their inputs meet the documented thresholds; independently live-verified after deploy in the default table, desktop/mobile, light/dark; later price-sort framing (CR-44.1) moves/rewords without suppressing the signal |
+
+## 20. CR-20260916i–j — strong value tag visibly stronger; Benchmaxxing tag navigates (seeded 2026-09-16 by Fable pass 19)
+
+### CR-20260916i — Make the strong value-tag level visibly stronger
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-47.1 | The **strong** pricier/cheaper level has plainly greater visual emphasis than **weak** at a glance (both colours, light and dark); the semantic strong/weak classification stays as it is; arrow/text cues stay distinct; sufficient non-colour contrast | Live weak vs strong examples compared side by side at 1440 and 390 px, light/dark, by an engine other than the implementer; visual-regression coverage of both levels |
+
+### CR-20260916j — Benchmaxxing tag must navigate instead of expanding the row
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-48.1 | The Overview-table Benchmaxxing signal is a real keyboard-accessible link to the corresponding model's Benchmaxxing report (model identity encoded safely); click and keyboard activation never expand/collapse the row; lands on the selected-model section; direct load and back/forward behave predictably; clicking any non-link part of the row still expands it | Automated interaction coverage plus independent live checks for mouse, Enter/Space, mobile tap and browser back; shares the deep-link target with CR-42.2 |
