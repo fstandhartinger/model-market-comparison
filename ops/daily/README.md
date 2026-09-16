@@ -57,3 +57,10 @@ Full source/approval contracts are in `../../docs/benchmark-ingestion.md` and
 `../rebuild-2026-09/GAUNTLET.md`.
 
 After a normal run publishes and verifies both public hosts, it removes the duplicate staging checkout, prior-raw copy and temporary candidates. Before/after dataset exports are compressed and byte-verified. Primary captures, gauntlet packets, full-row verification records, model receipts and reports remain. Failed and dry runs retain their full staging trees for investigation; they need periodic owner review if failures persist.
+
+**Source health (CR-38.5, 2026-09-16).** After the benchmarks step, `ops/daily/source-health.mjs` writes
+`reports/source-health.{json,md}` into the run directory: for every benchmark source, its status in the newest run,
+the last run it refreshed or was confirmed unchanged, and — when failing — since when and for how many consecutive
+runs, across every run still held under `runs/` plus the committed `daily-evidence/*/checks.json`. A retained failure
+keeps the previous values on the site (correct), so this is where a stuck source becomes visible. Run it by hand with
+`node ops/daily/source-health.mjs` (prints the failing table). Writing it can never fail the step.

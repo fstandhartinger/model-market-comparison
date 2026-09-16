@@ -2,7 +2,7 @@
 // Execute data-bearing daily modules inside the isolated staged checkout.
 // The parent process owns timeout/exit handling; this child cannot publish Git.
 import { mkdir, readFile } from 'node:fs/promises';
-import { resolve, join } from 'node:path';
+import { resolve, join, dirname } from 'node:path';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { reviewLive, RULES } from './review-live.mjs';
 import { reviewArtifact, sha256 } from './gauntlet.mjs';
@@ -78,6 +78,15 @@ try {
 
   }
   await writeJSONAtomic(join(runDir, 'reports', `${step}-step-result.json`), result);
+  if (step === 'benchmarks') {
+    // CR-38.5: per-source health across all held runs (reports/source-health.{json,md}). Never fails the step.
+    try {
+      const { writeSourceHealth } = await import('./source-health.mjs');
+      const health = await writeSourceHealth({ runsDir: dirname(runDir), outDir: join(runDir, 'reports') });
+      const failing = health.sources.filter((s) => s.kind === 'failing');
+      console.log(`source health: ${failing.length} failing source(s)${failing.length ? ': ' + failing.map((s) => `${s.id} since ${s.failing_since.slice(0, 10)}`).join(', ') : ''}`);
+    } catch (error) { console.warn(`WARN source health not written: ${error.message}`); }
+  }
   console.log(`${step} stage complete`);
 } catch (error) {
   await writeJSONAtomic(join(runDir, 'reports', `${step}-step-result.json`), { ok: false, error: error.message });
