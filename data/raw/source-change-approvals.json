@@ -468,6 +468,36 @@
       "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
       "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 11 endpoint identities, so this is not a partial response; 12 were accepted on 2026-09-14. Absent: Crusoe/crusoe/bf16/bf16. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
       "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "deepseek/deepseek-v4.1-flash",
+      "previous_identity_sha256": "332269645ad43617faa0f219e1db83c6505ee8b61da2947d9616c743fa22f007",
+      "current_identity_sha256": "2d4e248013a831d7c2cb45b7dc623229373b294490490c5f852ba2166f51b2ce",
+      "removed": [
+        "Io Net/io-net/fp8/fp8"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/deepseek/deepseek-v4.1-flash/endpoints",
+      "primary_capture_sha256": "bcff6b25a986157f55ed82aa458ca72110c7e7a424a512d5bb5eac262260ce39",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 18 endpoint identities, so this is not a partial response; 16 were accepted on 2026-09-14. Absent: Io Net/io-net/fp8/fp8. Added in the same fetch: Krea/krea/fp8/fp8, Phala/phala/unknown, Reka/reka/fp4/fp4. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
+    },
+    {
+      "model_id": "qwen/qwen3.8-flash",
+      "previous_identity_sha256": "0a4e5f1414f9676f4cb3587602f9f00b682153c66e1e2b4420e4ab3302b2e26a",
+      "current_identity_sha256": "3dface208c695407272b55104ad49b4a812a0cde89109473e7357e8b9c165ade",
+      "removed": [
+        "Makora/makora/fp4/fp4"
+      ],
+      "expires_at": "2026-09-17T06:00:00Z",
+      "reviewed_at": "2026-09-16T05:46:00Z",
+      "primary_url": "https://openrouter.ai/api/v1/models/qwen/qwen3.8-flash/endpoints",
+      "primary_capture_sha256": "a4759b1b48fa79786b968a0fbffc77f0069359b33e3653dcf02a186793735280",
+      "review_file": "ops/daily-repair-2026-09-16/endpoints/review.json",
+      "review_basis": "Two primary endpoint responses on 2026-09-16 (one cache-busted) returned the same 1 endpoint identities, so this is not a partial response; 2 were accepted on 2026-09-14. Absent: Makora/makora/fp4/fp4. Added in the same fetch: none. The provider no longer serves this model; no replacement identity is inferred. This approval binds both complete identity digests and expires; any other shrink or a different current set remains fatal.",
+      "owner_acceptance": "Reviewed by UX-workstream iteration 79 (claude-opus) from the captured primary endpoint responses (ops/daily-repair-2026-09-16/endpoints/); approve only these exact withdrawals for a bounded rerun."
     }
   ]
 }

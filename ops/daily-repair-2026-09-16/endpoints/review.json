@@ -1,296 +1,59 @@
 {
-  "reviewed_at": "2026-09-16T05:42:31.744Z",
+  "reviewed_at": "2026-09-16T05:45:12.083Z",
   "models": [
     {
-      "model_id": "z-ai/glm-5.3-flash",
+      "model_id": "deepseek/deepseek-v4.1-flash",
       "status": 200,
-      "prior": 26,
-      "current": 27,
+      "prior": 16,
+      "current": 18,
       "stable": true,
       "removed": [
-        "CoreWeave/coreweave/fp8/fp8",
-        "Makora/makora/unknown"
+        "Io Net/io-net/fp8/fp8"
       ],
       "added": [
-        "AtlasCloud/atlas-cloud/fp8/fp8",
-        "CoreWeave/coreweave/nvfp4/nvfp4",
-        "OpenInference/open-inference/fp4/fp4"
+        "Krea/krea/fp8/fp8",
+        "Phala/phala/unknown",
+        "Reka/reka/fp4/fp4"
       ],
-      "previous_identity_sha256": "f6f12ed21d421e8ef6f255fa5942cafc88db48ebf21158ae12b9016eca45ac12",
-      "current_identity_sha256": "b1fbb3dd89f92a75675d21e41208d02735a8e0a9c78ee3b20d52494a83e7266b",
-      "capture_sha256": "b5151c5bd46d5b15184b32633146edc400757380c6ff722d1ae43ed48005dad8",
+      "previous_identity_sha256": "332269645ad43617faa0f219e1db83c6505ee8b61da2947d9616c743fa22f007",
+      "current_identity_sha256": "2d4e248013a831d7c2cb45b7dc623229373b294490490c5f852ba2166f51b2ce",
+      "capture_sha256": "bcff6b25a986157f55ed82aa458ca72110c7e7a424a512d5bb5eac262260ce39",
       "remaining": [
-        "DeepInfra/deepinfra/fp4/fp4",
-        "Relace/relace/unknown",
-        "Morph/morph/fp8/fp8",
-        "Wafer/wafer/unknown",
-        "StreamLake/streamlake/fp8/fp8",
-        "GMICloud/gmicloud/fp8/fp8",
-        "Novita/novita/fp8/fp8",
-        "OpenInference/open-inference/fp4/fp4",
-        "Crusoe/crusoe/fp4/fp4",
-        "CoreWeave/coreweave/nvfp4/nvfp4",
-        "Sail Research/sail-research/fp8/fp8",
-        "AtlasCloud/atlas-cloud/fp8/fp8",
-        "Fireworks/fireworks/unknown",
-        "Phala/phala/fp8/fp8",
-        "Friendli/friendli/unknown",
-        "SiliconFlow/siliconflow/fp8/fp8",
-        "DigitalOcean/digitalocean/unknown",
-        "Together/together/unknown",
-        "Parasail/parasail/fp8/fp8",
-        "BaseTen/baseten/fp8/fp8",
-        "Venice/venice/unknown",
-        "Io Net/io-net/fp8/fp8",
-        "Cloudflare/cloudflare/unknown",
-        "Z.AI/z-ai/fp8/fp8",
-        "Reka/reka/fp8/fp8",
-        "NextBit/nextbit/fp8/fp8",
-        "Modal/modal/fp8/fp8"
-      ]
-    },
-    {
-      "model_id": "deepseek/deepseek-v4-flash-vision-exp",
-      "status": 200,
-      "prior": 6,
-      "current": 5,
-      "stable": true,
-      "removed": [
-        "AtlasCloud/atlas-cloud/fp8/fp8"
-      ],
-      "added": [],
-      "previous_identity_sha256": "9e828ee02a5c8263113a9de3d6c8fc1e5a43ae79b3a32b02eb034397609ac981",
-      "current_identity_sha256": "5478c463bf95331362575ccbd69133093e2d78b053061bc6686b2606c5ec8cc9",
-      "capture_sha256": "8bbc677db2febd0678459f9eb5c3c5a7b110e8316939d706d6390ba940529247",
-      "remaining": [
+        "Relace/relace/fp4/fp4",
+        "DeepSeek/deepseek/unknown",
         "DeepInfra/deepinfra/fp8/fp8",
-        "Fireworks/fireworks/unknown",
         "GMICloud/gmicloud/fp8/fp8",
-        "SiliconFlow/siliconflow/fp8/fp8",
-        "Novita/novita/unknown"
-      ]
-    },
-    {
-      "model_id": "tencent/hy3",
-      "status": 200,
-      "prior": 6,
-      "current": 6,
-      "stable": true,
-      "removed": [
-        "DeepInfra/deepinfra/fp8/fp8"
-      ],
-      "added": [
-        "DeepInfra/deepinfra/fp4/fp4"
-      ],
-      "previous_identity_sha256": "d4b95b42d61a1d2b42a4231b8b74d07e8fe212ce479f89f283faee3d2917ebe0",
-      "current_identity_sha256": "546fa8b2f9758b49699ab9706cb47ff68fd22272687751fccbd670669fce8522",
-      "capture_sha256": "40286ad5e90b4bba3fdce43dba980d992cf187a41cc38c2184d6b15632a0056a",
-      "remaining": [
-        "DeepInfra/deepinfra/fp4/fp4",
-        "Tencent/tencent/fp8/fp8",
-        "Novita/novita/unknown",
-        "GMICloud/gmicloud/bf16/bf16",
-        "Phala/phala/unknown",
-        "AtlasCloud/atlas-cloud/fp8/fp8"
-      ]
-    },
-    {
-      "model_id": "z-ai/glm-5.2",
-      "status": 200,
-      "prior": 31,
-      "current": 30,
-      "stable": true,
-      "removed": [
-        "Crusoe/crusoe/fp8/fp8"
-      ],
-      "added": [],
-      "previous_identity_sha256": "c9589bedf02f2d2267f7d136566e1434376098f51d568ac43227afde4974a14d",
-      "current_identity_sha256": "9f4a0e7af45f0fc7544aa9bc56c97b06f030447a651d455579bea952f3dc7214",
-      "capture_sha256": "b51933e316bec55dc3a16b9901831b04274f03b20807ebdc25fc951df22f287e",
-      "remaining": [
-        "DeepInfra/deepinfra/fp4/fp4",
-        "Ambient/ambient/fp8/fp8",
-        "StreamLake/streamlake/fp8/fp8",
-        "Novita/novita/fp8/fp8",
-        "DigitalOcean/digitalocean/unknown",
-        "CoreWeave/coreweave/fp4/fp4",
-        "AtlasCloud/atlas-cloud/fp8/fp8",
-        "Alibaba/alibaba/fp8/fp8",
-        "Inceptron/inceptron/fp4/fp4",
-        "SiliconFlow/siliconflow/fp8/fp8",
-        "Phala/phala/fp8/fp8",
-        "Mistral/mistral/zdr/unknown",
-        "Mistral/mistral/unknown",
-        "BaseTen/baseten/fp8/fp8",
+        "Fireworks/fireworks/unknown",
+        "Krea/krea/fp8/fp8",
+        "Morph/morph/fp8/fp8",
+        "Reka/reka/fp4/fp4",
+        "Alibaba/alibaba/unknown",
         "Together/together/unknown",
-        "Baidu/baidu/fp8/fp8",
-        "Fireworks/fireworks/unknown",
-        "Venice/venice/fp8/fp8",
-        "GMICloud/gmicloud/fp8/fp8",
-        "Parasail/parasail/fp4/fp4",
-        "Friendli/friendli/unknown",
-        "Cloudflare/cloudflare/unknown",
-        "Z.AI/z-ai/fp8/fp8",
-        "Mistral/mistral/eu/unknown",
-        "Decart/decart/fast/fp4",
-        "BaseTen/baseten/fast/fp8",
-        "Fireworks/fireworks/fast-us/unknown",
-        "Fireworks/fireworks/fast/unknown",
-        "Baidu/baidu/fast/fp4",
-        "Alibaba/alibaba/fast/fp8"
-      ]
-    },
-    {
-      "model_id": "z-ai/glm-5.1",
-      "status": 200,
-      "prior": 15,
-      "current": 14,
-      "stable": true,
-      "removed": [
-        "Crusoe/crusoe/fp8/fp8"
-      ],
-      "added": [],
-      "previous_identity_sha256": "4d51f5ba15e49afabd1568cd12c6ff3fad8b48259324f335ed98ff20358c2d93",
-      "current_identity_sha256": "3298d091720fc04df23a783c5dfccce2c4ab26e807e2ecff1cd3ee8ee0767097",
-      "capture_sha256": "fe963c79ed7b94bb93b0b24ee47ccfe3a51344c7ed51cef907ff1e9b080b7bf1",
-      "remaining": [
-        "StreamLake/streamlake/fp8/fp8",
-        "Chutes/chutes/fp8/fp8",
-        "DeepInfra/deepinfra/fp4/fp4",
         "SiliconFlow/siliconflow/fp8/fp8",
-        "Phala/phala/unknown",
-        "AtlasCloud/atlas-cloud/fp8/fp8",
-        "Alibaba/alibaba/fp8/fp8",
+        "Modal/modal/unknown",
+        "Wafer/wafer/unknown",
+        "BaseTen/baseten/fp8/fp8",
+        "Parasail/parasail/fp8/fp8",
         "Novita/novita/fp8/fp8",
-        "Nebius/nebius/fp8/fp8",
-        "Baidu/baidu/fp8/fp8",
-        "GMICloud/gmicloud/fp8/fp8",
-        "Friendli/friendli/unknown",
-        "Z.AI/z-ai/fp8/fp8",
+        "Phala/phala/unknown",
         "Venice/venice/fp8/fp8"
       ]
     },
     {
-      "model_id": "google/gemma-4-31b-it",
+      "model_id": "qwen/qwen3.8-flash",
       "status": 200,
-      "prior": 14,
-      "current": 14,
+      "prior": 2,
+      "current": 1,
       "stable": true,
       "removed": [
-        "Crusoe/crusoe/unknown"
-      ],
-      "added": [
-        "Crusoe/crusoe/bf16/bf16"
-      ],
-      "previous_identity_sha256": "7efb9a06af933a32124e09b4fbae21ed32115b16896944c15e6814dba051899e",
-      "current_identity_sha256": "651c2f8d4539c0c7a77ba1d2628c8306d240e0cbc4f96e3c2db240168d10dcd0",
-      "capture_sha256": "5fab0226f64e5ff156d5524e189b8c147c36fc34324230813b1a7e23f3552f20",
-      "remaining": [
-        "DeepInfra/deepinfra/turbo/fp4",
-        "CoreWeave/coreweave/fp4/fp4",
-        "Venice/venice/bf16/bf16",
-        "Chutes/chutes/fp4/fp4",
-        "DeepInfra/deepinfra/fp8/fp8",
-        "Crusoe/crusoe/bf16/bf16",
-        "Friendli/friendli/unknown",
-        "Novita/novita/bf16/bf16",
-        "Parasail/parasail/fp8/fp8",
-        "DeepInfra/deepinfra/ultra/fp8",
-        "SambaNova/sambanova/unknown",
-        "Together/together/unknown",
-        "ModelRun/modelrun/fp4/fp4",
-        "SiliconFlow/siliconflow/fp8/fp8"
-      ]
-    },
-    {
-      "model_id": "z-ai/glm-4.6",
-      "status": 200,
-      "prior": 5,
-      "current": 4,
-      "stable": true,
-      "removed": [
-        "AtlasCloud/atlas-cloud/fp8/fp8"
+        "Makora/makora/fp4/fp4"
       ],
       "added": [],
-      "previous_identity_sha256": "ef0b614d0c5f5f007e99087d402e5efe84ec522cbe0f26d0f480ad4380704558",
-      "current_identity_sha256": "d2c8dde2f788646e4cbe7a89c1bf10aa7a4b889a941e93fa915b778c002c0d1e",
-      "capture_sha256": "0de43e7ab4a69f7c64e1accfc6e8707877a7f4a1bfa481f4b0649cd9d8943992",
+      "previous_identity_sha256": "0a4e5f1414f9676f4cb3587602f9f00b682153c66e1e2b4420e4ab3302b2e26a",
+      "current_identity_sha256": "3dface208c695407272b55104ad49b4a812a0cde89109473e7357e8b9c165ade",
+      "capture_sha256": "a4759b1b48fa79786b968a0fbffc77f0069359b33e3653dcf02a186793735280",
       "remaining": [
-        "Venice/venice/fp4/fp4",
-        "DeepInfra/deepinfra/fp4/fp4",
-        "Novita/novita/bf16/bf16",
-        "Z.AI/z-ai/fp4/fp4"
-      ]
-    },
-    {
-      "model_id": "qwen/qwen3-235b-a22b-2507",
-      "status": 200,
-      "prior": 10,
-      "current": 9,
-      "stable": true,
-      "removed": [
-        "AtlasCloud/atlas-cloud/fp8/fp8"
-      ],
-      "added": [],
-      "previous_identity_sha256": "abcacb065103dd61bd370468bd652bb6eff07042d16788c0ceae34c16e2ff45f",
-      "current_identity_sha256": "15467a60683ca9efee2309090ab493f3f7f053b4dd6c01c51d9ccb31c495829e",
-      "capture_sha256": "8ec918b2a52f931b86298088619fb77aeb8cc6e0322412421c5da2df84402b00",
-      "remaining": [
-        "GMICloud/gmicloud/fp8/fp8",
-        "DeepInfra/deepinfra/fp8/fp8",
-        "Novita/novita/fp8/fp8",
-        "Parasail/parasail/fp8/fp8",
-        "Alibaba/alibaba/unknown",
-        "Venice/venice/fp8/fp8",
-        "Nebius/nebius/fp8/fp8",
-        "StreamLake/streamlake/unknown",
-        "Google/google-vertex/us-south1/unknown"
-      ]
-    },
-    {
-      "model_id": "deepseek/deepseek-chat-v3-0324",
-      "status": 200,
-      "prior": 4,
-      "current": 3,
-      "stable": true,
-      "removed": [
-        "Crusoe/crusoe/bf16/bf16"
-      ],
-      "added": [],
-      "previous_identity_sha256": "cf2d6077b4225c978d08d91a77eaf36dd5dcea227e42a01a568d74ff5743ceb9",
-      "current_identity_sha256": "f85e08560e1f89e5c82b4b0489ebd7933453cb83fd013f05ee3ced4f373e8135",
-      "capture_sha256": "26fa849a86aec43b7b01f93e206df745376787c5c598f836d86f2260b8891ecf",
-      "remaining": [
-        "DeepInfra/deepinfra/fp4/fp4",
-        "SiliconFlow/siliconflow/fp8/fp8",
-        "GMICloud/gmicloud/fp8/fp8"
-      ]
-    },
-    {
-      "model_id": "meta-llama/llama-3.3-70b-instruct",
-      "status": 200,
-      "prior": 12,
-      "current": 11,
-      "stable": true,
-      "removed": [
-        "Crusoe/crusoe/bf16/bf16"
-      ],
-      "added": [],
-      "previous_identity_sha256": "bd8352d44d5354b8702344222a185acf5735a98ae0af1f6b867b53d38b4dbc5f",
-      "current_identity_sha256": "8c3e7cac5fba0993b5fdf9320e46ba02b9456f810cb3cab473656c792164b120",
-      "capture_sha256": "782b543154d35148cb10e700dc58d7b33462a6d0ac472d382c09ca1fe6e38a1e",
-      "remaining": [
-        "DeepInfra/deepinfra/turbo/fp8",
-        "Novita/novita/bf16/bf16",
-        "AkashML/akashml/fp8/fp8",
-        "Parasail/parasail/fp8/fp8",
-        "Cloudflare/cloudflare/fp8/fp8",
-        "SambaNova/sambanova-turbo/unknown",
-        "Groq/groq/unknown",
-        "CoreWeave/coreweave/fp16/fp16",
-        "Google/google-vertex/us-central1/unknown",
-        "Google/google-vertex/unknown",
-        "Together/together/unknown"
+        "Alibaba/alibaba/unknown"
       ]
     }
   ]
