@@ -109,7 +109,17 @@ Full guide incl. **required env vars / secrets**, Postgres setup, Docker and **A
 hosting: [DEPLOYMENT.md](DEPLOYMENT.md). In short — the only runtime secret is the
 optional `DATABASE_URL` (the app falls back to the bundled `data/dataset.json` snapshot
 without it); `ARTIFICIAL_ANALYSIS_API_KEY` is needed only to refresh data, not at runtime.
-A [`render.yaml`](render.yaml) Blueprint and a [`Dockerfile`](Dockerfile) are included.
+ A [`render.yaml`](render.yaml) Blueprint and a [`Dockerfile`](Dockerfile) are included.
+
+## Licence
+
+Benchmark Heaven is **open source** under the [MIT licence](LICENSE) — a hobby project,
+built to give the world a better tool to decide which LLM fits a job. The licence covers
+this repository's **code only**. The benchmark results, prices and other data it collects
+are third-party data and are **not relicensed**: each source keeps its own terms
+(Artificial Analysis — attribution required; Epoch AI — CC BY 4.0; DesignArena — two boards
+under a documented risk decision; OpenRouter; and the benchmark maintainers and provider
+catalogs named on the site's [Sources & methodology](https://benchmarkheaven.com/about) page).
 
 ## Methodology & caveats
 

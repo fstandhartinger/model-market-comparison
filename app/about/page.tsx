@@ -19,7 +19,20 @@ export default async function AboutPage() {
         platform prices differently (GitHub Copilot&apos;s current token/AI-Credit rates and legacy request billing are shown on a separate product axis).
       </p>
 
-      <h2 className="mt-6 mb-2 font-semibold">Sources</h2>
+      <h2 id="open-source" className="mt-6 mb-2 font-semibold">Open source &amp; hobby project</h2>
+      <p className="text-sm text-gray-400">
+        Benchmark Heaven is <strong>open source</strong> under the{" "}
+        <a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/LICENSE" className="text-accent">MIT licence</a>
+        {" "}<strong>and a hobby project</strong> — built to give the world better tools to decide which LLM to choose for the job.
+        The code lives at{" "}
+        <a href="https://github.com/fstandhartinger/model-market-comparison" className="text-accent">github.com/fstandhartinger/model-market-comparison</a>.
+        The licence covers this code only: the benchmark results, prices and other data collected here are third-party data under their own
+        terms (see <a href="#sources" className="text-accent">Sources</a> above — Artificial Analysis requires attribution, Epoch AI is CC BY,
+        DesignArena is shown under a documented risk decision), and nothing collected here is relicensed by the MIT licence.
+        The site is still in beta: data and features change daily.
+      </p>
+
+      <h2 id="sources" className="mt-6 mb-2 font-semibold">Sources</h2>
       <ul className="space-y-2 text-sm text-gray-300">
         <li><b>OpenRouter</b> — model catalog and per-provider endpoint pricing (live API).</li>
         <li><b>ArtificialAnalysis</b> — Intelligence &amp; Coding indices plus sub-benchmarks (LiveCodeBench, SciCode, Terminal-Bench Hard, τ²-Bench, GPQA, MMLU-Pro) via the v2 API.</li>

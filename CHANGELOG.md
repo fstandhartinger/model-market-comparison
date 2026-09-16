@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — MIT licence (code only)
+
+**No data change.** The repository now carries an [MIT licence](LICENSE) (`license` field
+in `package.json`, README "Licence" section), making the open-source claim on the site true.
+The licence covers the **code only**; the collected benchmark results, prices and other data
+remain third-party data under their own terms (Artificial Analysis, Epoch AI CC BY, DesignArena,
+OpenRouter, benchmark maintainers, provider catalogs — see the site's Sources & methodology page).
+
 ## 2026-09-16 — Best-of rows in the comparison matrix; link-preview copy
 
 **No data file changed shape; one API response gained fields.** `GET /api/benchmark-matrix` (and the comparison tables)
