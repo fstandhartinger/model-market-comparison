@@ -2,7 +2,9 @@
 import { useEffect, useId, useLayoutEffect, useMemo, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
-export interface ComboItem { key: string; label: string; sub?: string }
+/** F-101: a row may stand for several catalog keys (one company reached directly and through a
+ *  gateway). `keys` defaults to `[key]`; a row whose keys are only partly selected shows as mixed. */
+export interface ComboItem { key: string; label: string; sub?: string; keys?: string[]; search?: string }
 
 const MAX_ROWS = 300, MAX_CHIPS = 6;
 
@@ -18,9 +20,9 @@ export function MultiCombobox({ label, items, summary, active, isChecked, toggle
   summary: string;
   active: boolean;
   isChecked: (key: string) => boolean;
-  toggle: (key: string) => void;
+  toggle: (keys: string[]) => void;
   all: () => void;
-  only: (key: string) => void;
+  only: (keys: string[]) => void;
   footer?: React.ReactNode;
 }) {
   const [open, setOpen] = useState(false);
@@ -35,11 +37,19 @@ export function MultiCombobox({ label, items, summary, active, isChecked, toggle
   const listId = useId();
 
   const checked = (k: string) => !noneDraft && isChecked(k);
+  const keysOf = (i: ComboItem) => i.keys ?? [i.key];
+  /** "on" only when every key of the row is selected; "mixed" when some are (a stored exclusion of
+   *  one route of a company survives untouched and stays visible as such). */
+  const state = (i: ComboItem): "on" | "off" | "mixed" => {
+    const ks = keysOf(i), on = ks.filter(checked).length;
+    return on === 0 ? "off" : on === ks.length ? "on" : "mixed";
+  };
   const close = (refocus = true) => { setOpen(false); setQ(""); setNoneDraft(false); if (refocus) trigger.current?.focus(); };
   const openList = () => {
     // Selected first, then alphabetical — fixed while open, so rows do not jump under the pointer.
     const byName = [...items].sort((a, b) => a.label.localeCompare(b.label));
-    setOrder([...byName.filter((i) => isChecked(i.key)), ...byName.filter((i) => !isChecked(i.key))].map((i) => i.key));
+    const some = (i: ComboItem) => (i.keys ?? [i.key]).some((k) => isChecked(k));
+    setOrder([...byName.filter(some), ...byName.filter((i) => !some(i))].map((i) => i.key));
     setSheet(!window.matchMedia("(min-width: 768px)").matches);
     setOpen(true);
   };
@@ -76,12 +86,13 @@ export function MultiCombobox({ label, items, summary, active, isChecked, toggle
 
   const byKey = useMemo(() => new Map(items.map((i) => [i.key, i])), [items]);
   const needle = q.trim().toLowerCase();
-  const shown = order.map((k) => byKey.get(k)).filter((i): i is ComboItem => !!i && (!needle || `${i.label} ${i.sub ?? ""}`.toLowerCase().includes(needle)));
-  const picked = noneDraft ? [] : items.filter((i) => isChecked(i.key));
+  const shown = order.map((k) => byKey.get(k)).filter((i): i is ComboItem =>
+    !!i && (!needle || `${i.search ?? `${i.label} ${i.sub ?? ""}`}`.toLowerCase().includes(needle)));
+  const picked = noneDraft ? [] : items.filter((i) => state(i) !== "off");
   const restricted = noneDraft || picked.length < items.length;
 
-  const pick = (k: string) => {
-    if (noneDraft) { only(k); setNoneDraft(false); } else toggle(k);
+  const pick = (i: ComboItem) => {
+    if (noneDraft) { only(keysOf(i)); setNoneDraft(false); } else toggle(keysOf(i));
   };
   const onKeyDown = (e: React.KeyboardEvent) => {
     if (e.key === "Escape") { e.preventDefault(); e.stopPropagation(); close(); return; }
@@ -114,7 +125,7 @@ export function MultiCombobox({ label, items, summary, active, isChecked, toggle
           <div className="flex flex-wrap items-center gap-1 text-[11px]">
             {noneDraft ? <span className="text-gray-500">Pick at least one.</span> : <>
               {picked.slice(0, MAX_CHIPS).map((i) => (
-                <button key={i.key} type="button" onClick={() => toggle(i.key)} aria-label={`Remove ${i.label}`}
+                <button key={i.key} type="button" onClick={() => toggle(keysOf(i))} aria-label={`Remove ${i.label}`}
                   className="inline-flex max-w-[12rem] items-center gap-1 rounded-full border border-accent/50 bg-accent/10 px-2 py-0.5 text-accent">
                   <span className="truncate">{i.label}</span><span aria-hidden="true">×</span>
                 </button>
@@ -126,11 +137,11 @@ export function MultiCombobox({ label, items, summary, active, isChecked, toggle
       </div>
       <div id={listId} role="listbox" aria-multiselectable="true" aria-label={label} className="min-h-0 flex-1 overflow-y-auto overscroll-contain py-1">
         {shown.slice(0, MAX_ROWS).map((i) => {
-          const on = checked(i.key);
+          const st = state(i), on = st === "on";
           return (
-            <button key={i.key} type="button" role="option" aria-selected={on} onClick={() => pick(i.key)}
+            <button key={i.key} type="button" role="option" aria-selected={on} aria-checked={st === "mixed" ? "mixed" : on} onClick={() => pick(i)}
               className="flex w-full items-center gap-2 px-3 py-1.5 text-left text-sm hover:bg-accent/10 focus:bg-accent/10 focus:outline-none">
-              <span aria-hidden="true" className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] ${on ? "border-accent bg-accent text-ink" : "border-line"}`}>{on ? "✓" : ""}</span>
+              <span aria-hidden="true" className={`inline-flex h-4 w-4 shrink-0 items-center justify-center rounded border text-[10px] ${st === "off" ? "border-line" : "border-accent bg-accent text-ink"}`}>{on ? "✓" : st === "mixed" ? "–" : ""}</span>
               <span className="min-w-0 flex-1 truncate text-gray-200">{i.label}</span>
               {i.sub && <span className="shrink-0 text-xs text-gray-500">{i.sub}</span>}
             </button>

@@ -9,6 +9,7 @@ import { MultiCombobox, type ComboItem } from "./MultiCombobox";
 import { defaultMinFor, DEFAULT_BLEND, FIXED_BLENDS } from "../lib/cost";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
 import { REGION_BUCKETS, labBucket } from "../lib/regions.mjs";
+import { providerCompanies } from "../lib/provider-company.mjs";
 import { FILTER_PRESETS, matchingFilterPreset, pickFilters, resolveFilterPatch } from "../lib/presets.mjs";
 import { PresetMenu, usePresetStore } from "./PresetMenu";
 
@@ -104,7 +105,9 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
   const familyKeys = useMemo(() => families.map((f) => f.key), [families]);
   const familyItems = useMemo<ComboItem[]>(() => families.map((f) => ({ key: f.key, label: f.name, sub: f.org })), [families]);
   const providerKeys = useMemo(() => providers.map((p) => p.key), [providers]);
-  const providerItems = useMemo<ComboItem[]>(() => providers.map((p) => ({ key: p.key, label: p.provider, sub: p.platform === p.provider ? undefined : p.platform })), [providers]);
+  // F-101: one row per provider product — a company reached directly and through a gateway is one
+  // choice, not two look-alike rows. The keys behind a row stay the catalog's own.
+  const providerItems = useMemo<ComboItem[]>(() => providerCompanies(providers), [providers]);
   const labs = useMemo(() => [...new Set(families.map((f) => f.org))].sort((a, b) => a.localeCompare(b)), [families]);
   const labItems = useMemo<ComboItem[]>(() => labs.map((org) => ({ key: org, label: org, sub: labBucket(org) })), [labs]);
 
@@ -183,18 +186,20 @@ export function GlobalFilters({ providers, families }: { providers: ProviderInfo
             <MultiCombobox label="Models" items={familyItems} active={s.families.length > 0}
               summary={countLabel(s.families.length || familyKeys.length, familyKeys.length)}
               isChecked={(k) => !s.families.length || s.families.includes(k)}
-              toggle={(k) => s.setFamilies(toggleInclusion(s.families, familyKeys, k))}
-              all={() => s.setFamilies([])} only={(k) => s.setFamilies([k])} />
+              toggle={(ks) => s.setFamilies(ks.reduce((list, k) => toggleInclusion(list, familyKeys, k), s.families))}
+              all={() => s.setFamilies([])} only={(ks) => s.setFamilies([...ks])} />
             <MultiCombobox label="Providers" items={providerItems} active={excluded.length > 0}
-              summary={countLabel(providerKeys.length - excluded.length, providerKeys.length)}
+              summary={countLabel(providerItems.filter((i) => i.keys!.some((k) => !excluded.includes(k))).length, providerItems.length)}
               isChecked={(k) => !excluded.includes(k)}
-              toggle={(k) => s.setProvidersExcluded(excluded.includes(k) ? excluded.filter((x) => x !== k) : [...excluded, k])}
-              all={() => s.setProvidersExcluded([])} only={(k) => s.setProvidersExcluded(providerKeys.filter((x) => x !== k))} />
+              toggle={(ks) => s.setProvidersExcluded(ks.every((k) => !excluded.includes(k))
+                ? [...excluded, ...ks]
+                : excluded.filter((x) => !ks.includes(x)))}
+              all={() => s.setProvidersExcluded([])} only={(ks) => s.setProvidersExcluded(providerKeys.filter((x) => !ks.includes(x)))} />
             <MultiCombobox label="Labs" items={labItems} active={s.labs.length > 0}
               summary={countLabel(s.labs.length || labs.length, labs.length)}
               isChecked={(k) => !s.labs.length || s.labs.includes(k)}
-              toggle={(k) => s.setLabs(toggleInclusion(s.labs, labs, k))}
-              all={() => s.setLabs([])} only={(k) => s.setLabs([k])} />
+              toggle={(ks) => s.setLabs(ks.reduce((list, k) => toggleInclusion(list, labs, k), s.labs))}
+              all={() => s.setLabs([])} only={(ks) => s.setLabs([...ks])} />
           </div>
         </Section>
 
