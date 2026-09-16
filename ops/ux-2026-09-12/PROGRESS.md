@@ -296,9 +296,9 @@ credited below, the rest is marked open.
 | CR-38.3 | Human-preference arenas (Arena, DesignArena, EQ-Bench-style judged scores) are labelled as preference/judged s | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38-final/{canonical,legacy}/verification.json` (`bin/verify-cr-38.mjs`, **81/81 per host** live at `5c43c4e`); the reviewer's verdicts at `/opt/benchmarkheaven/state/ux-evidence/iter77-cr-38/judged-review-kimi.json`; unit tests `test/benchmark-caveats.test.mjs` | **Iteration 77 (claude-opus, implementer):** `0033b25`, `5c43c4e`. **Definition recorded in the data** (`data/benchmark-caveats.json` → `judged_definition`): a benchmark is judged when the published number ranks or rates outputs by preference or quality; a judge that only checks whether an answer is *correct* (equality checker, majority vote on accuracy, an LLM normalising an entity name before exact matching) is **not** judged, because the ground truth still decides. 24 judged families, including DesignArena Frontend/Full-Stack, AA GDPval, AA-Briefcase, Harvey LAB-AA, APEX-Agents-AA, the EQ-Bench boards, the Lech Mazur boards, PingPong, RP-Bench, Slop Index, Spiral-Bench, Towards-AI editorial, UGI Writing, FrontierCode and SWE-Atlas Test Writing. **Every classification quotes its own source verbatim** and `test/benchmark-caveats.test.mjs` fails if a quote is not found in the cited registry/taxonomy field — a label can never rest on a sentence no source wrote. Eight near-misses are recorded with their reason in `considered_not_judged` (AA AnalystAgent, AA IT-Bench, AA MLCR, EQ-Bench Slop Score, SlopBench, LiveBench, SWE-Atlas QnA and Refactoring). **Reviewed by a different engine:** `opencode-kimi` judged all 32 rows from their own source text — 31 agreed, and its one disagreement (SWE-Atlas Test Writing, whose description names LLM judges as the graders while its siblings' do not) was checked against the registry and applied in `5c43c4e`. **Kept separate in composites:** a judged row never averages with task accuracy — in a mixed category only the task-accuracy rows make the composite and the category (i) says how many judged rows were left out; a category whose qualifying rows are *all* judged gets a composite of those and is named a judged composite. A judged benchmark may not be a CR-25.6 anchor at all: `assertNoJudgedAnchors` throws at build time rather than silently redefining a published score. **Interpretation for X7:** the Main Composite keeps DesignArena Frontend and Full-Stack (Florian's own definition) — they are two of seven *separate*, percentile-normalised slots, never averaged into task accuracy, and `/about` now says so. **Needs a non-claude verifier.** |
 | CR-38.4 | Aggregators (Lumina, BenchLM, The Aggregate, LLM Stats, Vellum, LM Council, CodeSOTA, BenchmarkList, HF find-a | open | — | — |
 | CR-38.5 | Daily/weekly refresh schedule per source with fail-closed gates and a source-health view in ops (which collect | open | — | — |
-| CR-39.1 | DesignArena stays at exactly the two current boards (Frontend, Full-Stack Elo) under Florian's documented-risk | open | — | Seeded 2026-09-16 (iteration 79) from CR-20260916. Florian answered iteration 78's escalation with "i choose b": keep the two boards, do not expand, do not silently switch the collector off. |
-| CR-39.2 | The restriction and its evidence are durable in the source documentation; provenance/date preserved; no false | open | — | Seeded 2026-09-16 (iteration 79). Evidence of the terms audit: `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/`. |
-| D09.1 | Florian directive 2026-09-15 (`09-FLORIAN-DIRECTIVE-AA-AND-FALLBACK-2026-09-15.md`): Artificial Analysis collection continues on its normal schedule (no wait for the email reply); `Nex 2.5 Pro` ahead of paid OpenRouter fallbacks only when the exact free route is confirmed | open | — | **Iteration 73 (claude-opus) check:** nothing in this repo pauses AA collection — CR-35.3 only holds *new* AA-derived metrics; live `/api/meta` dates `artificialanalysis` 2026-09-14 and `aa_efficiency` 2026-09-14T05:14Z (acceptance 1 needs the next ordinary daily run's receipt, which this loop does not start). Fallback order in `bin/delegate.sh`: `openrouter/nex-agi/nex-n2.5-pro:free` first, then Kimi K3 via Chutes (free); no paid OpenRouter model anywhere in this loop. The paid-fallback order lives in Hermes' model policy, outside this repo. **Iteration 78 (claude-opus) check:** still open, and the reason is measured now — no ordinary daily run has succeeded since 2026-09-14. The 2026-09-15 run failed at the `chutes_efficiency` live-source-contract gauntlet: all three rounds landed on DeepSeek free endpoints that timed out (that run's `workers/unavailable-models.jsonl` records all three). Not an AA problem and not a broken exclusion — a failed model *is* recorded and excluded, but `selectModelForWorker` deliberately retries an excluded **critic** when no other authorized scheduled worker qualifies, and the whitelist (`FLORIAN_ALLOWED_SCHEDULED_WORKERS`) left nothing eligible against a DeepSeek producer. That whitelist is Florian's model policy, owned outside this loop, so this iteration records rather than changes it. Next chance: the 05:17 UTC run. |
+| CR-39.1 | DesignArena stays at exactly the two current boards (Frontend, Full-Stack Elo) under Florian's documented-risk | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter79/{canonical,legacy}/verify-iter79/verification.json` (**37/37 per host** live at `c05843d`, 1440/390, light/dark); `test/source-policy.test.mjs` (5) | **Iteration 79 (claude-opus, implementer):** `c05843d`. `data/source-policies.json` records Florian's decision of 2026-09-16 ("i choose b") with the source's own findings (robots.txt disallows `/api/`; the terms quoted verbatim; no API documentation found), the evidence path, the two permitted boards with the exact request each may send, the two permitted endpoints and `expansion: blocked`. `fetchDesignArena` reads its boards from that file and throws for any endpoint the decision does not list, so widening the collector means changing the recorded decision. A test walks the collector's own source and fails if it ever requests a third path. **Needs a non-claude verifier.** |
+| CR-39.2 | The restriction and its evidence are durable in the source documentation; provenance/date preserved; no false | implemented | `/opt/benchmarkheaven/state/ux-evidence/iter79/{canonical,legacy}/verify-iter79/verification.json` (**37/37 per host**); `docs/benchmark-ingestion.md` § Source access decisions | **Iteration 79 (claude-opus, implementer):** `c05843d`. The snapshot's `source` said "Intelligence.ai leaderboard API", which reads like an official feed; it now says "DesignArena public leaderboard (the site's own leaderboard endpoint; no published API documentation or data licence)" and carries the access decision beside it. `/about` says the same to a reader, including that we collect nothing further from this source. Only metadata changed — every Elo, battle count and registry entry is byte-identical. Evidence of the terms audit: `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/`. **Needs a non-claude verifier.** |
+| D09.1 | Florian directive 2026-09-15 (`09-FLORIAN-DIRECTIVE-AA-AND-FALLBACK-2026-09-15.md`): Artificial Analysis collection continues on its normal schedule (no wait for the email reply); `Nex 2.5 Pro` ahead of paid OpenRouter fallbacks only when the exact free route is confirmed | open | — | **Iteration 73 (claude-opus) check:** nothing in this repo pauses AA collection — CR-35.3 only holds *new* AA-derived metrics; live `/api/meta` dates `artificialanalysis` 2026-09-14 and `aa_efficiency` 2026-09-14T05:14Z (acceptance 1 needs the next ordinary daily run's receipt, which this loop does not start). Fallback order in `bin/delegate.sh`: `openrouter/nex-agi/nex-n2.5-pro:free` first, then Kimi K3 via Chutes (free); no paid OpenRouter model anywhere in this loop. The paid-fallback order lives in Hermes' model policy, outside this repo. **Iteration 78 (claude-opus) check:** still open, and the reason is measured now — no ordinary daily run has succeeded since 2026-09-14. The 2026-09-15 run failed at the `chutes_efficiency` live-source-contract gauntlet: all three rounds landed on DeepSeek free endpoints that timed out (that run's `workers/unavailable-models.jsonl` records all three). Not an AA problem and not a broken exclusion — a failed model *is* recorded and excluded, but `selectModelForWorker` deliberately retries an excluded **critic** when no other authorized scheduled worker qualifies, and the whitelist (`FLORIAN_ALLOWED_SCHEDULED_WORKERS`) left nothing eligible against a DeepSeek producer. That whitelist is Florian's model policy, owned outside this loop, so this iteration records rather than changes it. Next chance: the 05:17 UTC run. | **Iteration 79 (2026-09-16):** the receipt is still missing, and the reason was not the collector. The *scheduled* runs of 15 and 16 Sep both died in their first second at the clean-checkout gate — this repo has two writers and the UX loop held the tree at 05:17 both times (15 Sep's gauntlet failure was the manually started 07:03 run). `834a9d7` fixes both causes: publication now waits up to 30 min for the other writer instead of giving up for the day, and the supervisor's 49 untracked `*.bak-*` brief backups are gitignored so they can never count as uncommitted changes again. A run was triggered at the end of iteration 79 with a clean tree; the next iteration reads its report.
 | D10.1 | Florian directive 2026-09-15 (`10-FLORIAN-DIRECTIVE-MOBILE-TABLE-TAGS-2026-09-15.md`): Simple overview cost tag compact `↓11×` in mobile portrait (320/375/390), desktop/tablet text unchanged, accessible words kept, no overlap/overflow | verified | `/opt/benchmarkheaven/state/ux-evidence/iter73-verify-d10-value-tag/{canonical,legacy}/verification.json` (`bin/verify-d10-value-tag.mjs`, **70/70 per host**, live at `3fd6a42`: 320/375/390 portrait, 844 landscape, 768 tablet, 1024 + 1440 desktop, light/dark) | **Iteration 73 (claude-opus, implementer):** `22ad0f9`, `3fd6a42` — compact `↓11×` (no words, no space) with the words kept in the tooltip and screen-reader text. **Decision for X7:** measured that below 1024 px the full words overflow the cost cell (at 768 they covered the score), so the compact tag applies below 1024 px, not only on phones; ≥ 1024 px unchanged. On phones the cost cell drops its left padding and uses a 2 px gap so the tag stays inside its cell at 320. The 1024 page-overflow check is scoped to the table: the header itself overflows at 1024 (pre-existing, logged in the iteration 73 block). **Needs a non-claude verifier.** **Verified by review gate 20260915T212002Z (opencode-kimi, non-implementer):** `bin/verify-d10-value-tag.mjs` **70/70 per host** live on both hosts at `4be0957` and again at `c11af043` (320/375/390 portrait, 844 landscape, 768 tablet, 1024 + 1440 desktop, light/dark; `/opt/benchmarkheaven/state/ux-evidence/review-20260915T212002Z/{canonical,legacy}/verify-d10-value-tag{,-c11af04}/`). The iteration-73 deviation (compact below 1024 px, not phones only — the full tag covered the score at 768) is documented and carried to X7; the pre-existing header overflow named here is fixed by this gate (`c11af043`, see the gate record). |
 
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
@@ -2526,6 +2526,177 @@ daily run's receipt. 3) CR-30.2/30.3 (tier-A tier from BENCHMARK-CANDIDATES.md, 
 4) CR-34.5 (models-arena DesignArena collector; OpenRouter relay as cross-check) + CR-30.1 tranche B
 (more identity maps: Terminal-Bench 2.0/2.1/3.0 own protocols, HLE printed variants).
 5) CR-37.x/CR-38.1 as one intake when the source-intake job writes RESULT.md.
+
+---
+
+## Iteration 79 — 2026-09-16 (claude-opus, work): the boards we collected but never showed; CR-39; and why the data stopped refreshing
+
+Picked from iteration 78's list: item 4 (the identity-join gap, "cheapest large win on the board"), then
+Florian's new CR-20260916 which arrived in the working tree mid-iteration, then item 1 (D09.1), whose real
+blocker turned out to be something else entirely. Four commits: `26be8b3`, `0f69528`, `c05843d`, `834a9d7`.
+
+### 1. Twelve boards that were collected for weeks and appeared nowhere (`0f69528`)
+
+Iteration 78 measured the gap: 8,271 unjoined observations, 1,388 of them on 28 boards with no row at all.
+The collection was never the problem — the identity join was. Those boards label a model with a slug
+(`anthropic/claude-opus-4.8@reasoning=xhigh`, `claude-fable-5-1|Claude Code|max`, `meta/muse_spark_1_3`),
+and nothing mapped a slug to a catalog configuration.
+
+`lib/board-identity.mjs` applies the policy `lib/coding-identity.mjs` already used to labels that are slugs
+rather than product names. The model half is exact equality after one documented normalisation (lower-case,
+`_`→`-`, a trailing `-<digit>-<digit>` read as a version), so `claude-3.7-sonnet:thinking` and
+`claude-haiku-4-5-20251001-thinking` are refused rather than approximated. The duplicate rule ("a
+configuration named twice on one board joins neither row") now counts **per board**, which matters for the
+first time here: one prefix, nine Vals Index boards.
+
+**The setting is read from the source, never guessed.** BullshitBench publishes "one row per model x
+reasoning label", so `@reasoning=none` is a *stated* setting: it joins a `::non-reasoning` configuration and
+nothing else. An earlier draft let it fall back to a family's single default configuration (17 more joins);
+that was dropped, because attaching a reasoning-off run to a model's default entry asserts an equivalence
+the source itself distinguishes. Vals AI publishes the effort it ran in its own row (`reasoning_effort`,
+`compute_effort` for Anthropic's), which our collector retains verbatim in the observation's protocol —
+reading that field took Vals from 90 joins to 287 and is *more* exact than the slug alone, because the
+source states the setting. A row whose two fields disagree, or whose field holds `"0.99"`, states no setting
+and stays unjoined.
+
+**The cost twins the previous round deliberately held back.** `build-identity-map.mjs` recorded that the
+FrontierCode and CursorBench cost boards must wait "until the count excludes costs". Since CR-34.3 and F-102
+it does (`capability_available` skips the Efficiency category; a cost twin is a row of the board it
+measures), so the 107 joins the **same** reviewed critic packet already carried — 217 checked, none
+rejected — now take effect. Every self-reported entry in the map still matches a packet key exactly
+(checked: 217 entries, 217 with a receipt, 0 outside the packet).
+
+| | before | after |
+| --- | --- | --- |
+| identity-map entries | 197 | **825** |
+| boards with zero rows | 28 | **11** |
+| capability cells (`capability_available`) | 7,384 | **7,829** |
+| hero benchmark count | 77 | **89** |
+| Benchmarks page, default columns | 41 rows / 10 categories | **45 rows / 11 categories** |
+
+New on the site: BullshitBench V1 and V2, ApprenticeBench API and CUA, and the eight Vals Index boards
+(Vals Index v2, Excel Modeling, HLAB, Terminal-Bench 2.1, Vibe Code Bench, Code Migration, Legal Research,
+Finance Agent). The **eleven still empty are honest refusals**, and each has a reason: ARC-AGI 3 and the two
+τ³ boards are self-reported and need their own review receipt (a packet + critic round, not a parser);
+Vending-Bench, Real-SWE, BU-Bench and SlopBench label models without a setting for families that have
+several configurations; RULER and PingPong English list models we do not carry.
+
+**Checked against the source, not against the ledger:** ApprenticeBench's own retained capture
+(`daily-evidence/2026-09-14-apprenticebench/8b07652a…gz`) says `claude-fable-5`, Claude Code, effort `high`
+→ passed 35, cost 28.36 — exactly the cell and the cost twin the site now shows for `claude-fable-5::high`.
+
+**Tests (+7).** `test/coding-sources.test.mjs` re-derives every slug join from the label alone, and from the
+same protocol text the join was made from, so a hand edit that does not follow the published rule fails the
+build; a new assertion forbids one configuration being claimed twice on a board. `test/cost.test.mjs` now
+also asserts that this configuration's four joined *cost* rows stay out of `#benchmarks` — an exclusion that
+could not be tested before, because no cost row was joined at all.
+
+**Independent review:** the 521 slug joins went to `bin/delegate.sh --kimi` with the full packet
+(`ops/benchmark-table-2026-09-15/slug-identity-review/packet.json`, each join with its label, the published
+setting, the chosen configuration and that family's full configuration list). Outcome is recorded at the end
+of this entry.
+
+### 2. CR-39 — Florian chose "b" for DesignArena (`26be8b3` seeding, `c05843d`)
+
+CR-20260916 arrived in the working tree while this iteration ran; it was landed as found and seeded as
+CR-39.1/39.2 before any code, per the CR-brief rule. Florian's answer to iteration 78's escalation: keep the
+two boards under a documented risk, expand nothing, do not switch the collector off on our own.
+
+`data/source-policies.json` records the decision in a form a collector can obey: the source's own findings
+(robots.txt disallows `/api/`; the terms quoted verbatim; "no API documentation found"), who decided and
+when, the evidence path, the two permitted boards with the exact request each may send, the two permitted
+endpoints, `expansion: blocked`, and what would reopen it. `fetchDesignArena` reads its boards from that
+file and refuses any endpoint the decision does not list — so adding a board means changing the recorded
+decision, which is precisely what the decision asks for.
+
+The wording follows the fact: the snapshot's `source` said "Intelligence.ai leaderboard API", which reads
+like an official feed. It now says what this is — "DesignArena public leaderboard (the site's own
+leaderboard endpoint; no published API documentation or data licence)" — and carries the access decision
+beside it. `/about` says the same in a sentence a reader can use, including that we collect nothing further
+from this source. `docs/benchmark-ingestion.md` explains the mechanism for the next source that needs a
+decision. Only metadata changed in the snapshot: every Elo, battle count and registry entry is byte-identical.
+
+`test/source-policy.test.mjs` (5 tests) holds it: the decision keeps its evidence and its quoted terms, the
+scope is exactly two boards and two endpoints, the collector reads the scope instead of hard-coding it, an
+endpoint outside the decision throws, and no surface claims an official API or a licensed feed.
+
+### 3. Why the site's data has not refreshed since 14 September (`834a9d7`) — D09.1's real blocker
+
+The scheduled daily runs of **both 15 and 16 September died in their first second**: "Daily publication
+requires a clean checkout; owner changes were preserved". Not the gauntlet, not a source — this repo has two
+writers, and whoever holds the working tree at 05:17 decides whether the data refreshes that day. Iteration
+78 attributed the gap to the chutes_efficiency gauntlet; that was the **manually started 07:03 run** on
+15 Sep. The two scheduled ones never reached it. Today's 05:17 run died on this iteration's own uncommitted
+files.
+
+Two causes, two fixes:
+
+1. **The gate now waits instead of giving up for the day.** `CLEAN_CHECKOUT_WAIT_MS` (30 min, env
+   overridable) with a 60 s poll: publication re-reads the status while the other writer finishes, logs each
+   wait, and only then fails — with a message naming what was still dirty, which the old one did not. The
+   gate is unchanged and still fail-closed. The shell entry point allows three hours, so waiting half of one
+   costs nothing. Proven behaviourally against the real repo with a 5 s window: three status reads, then the
+   new error naming the dirty paths.
+2. **Untracked backups can no longer block it at all.** The supervisor keeps dated copies of its briefs next
+   to them (49 `*.bak-*` files). The gate reads `--untracked-files=all`, so those counted as uncommitted
+   changes. `*.bak-*` is now gitignored, and a test runs the gate's own status command and fails if a
+   `.bak-` path is ever reported again.
+
+*Recorded honestly:* the behavioural probe sent one Telegram failure alert naming its own run directory.
+Today's scheduled run had failed for real minutes earlier, so the alert's substance is correct.
+
+**D09.1 still needs its receipt** — an ordinary *successful* run. With the tree clean and both causes fixed,
+this iteration triggered one run after finishing (see below); tomorrow's 05:17 is the next ordinary chance,
+and it can now survive a busy loop.
+
+### Gates and live verification
+
+`npm test` **537/537** (+7 slug/identity, +5 source policy, +2 clean-checkout) · `npx tsc --noEmit -p .`
+clean · `next build` clean · `node scripts/build-dataset.mjs` 840/660/92/2,882 (timestamp-only diff,
+restored).
+
+Live at `c05843d`, both hosts, 1440/390, light and dark, `BH_RUNNER=claude-opus`, evidence under
+`/opt/benchmarkheaven/state/ux-evidence/iter79/{canonical,legacy}/`:
+
+| Suite | canonical | legacy | what it covers |
+| --- | --- | --- | --- |
+| `verify-iter79` (new) | **37/37** | **37/37** | the twelve new boards are on the site with values; the catalog board count grew past 77; ApprenticeBench CUA carries the source's own 35 for `claude-fable-5::high`; that configuration has 10 published cells of which exactly 6 count as benchmarks (the 4 cost rows do not); CR-39's three wording checks on `/about` plus no overflow and no page errors |
+| `verify-cr-28-1` | **14/14** | **14/14** | the start page lists every benchmark its models have; the count is the board count of its own rows |
+| `verify-f101-f102` | **52/52** | **52/52** | F-102's one counting rule survives twelve new boards (hero = section-2 denominator = chooser) |
+| `verify-cr-1` | **108/108** | **108/108** | the Benchmarks release table with the new rows |
+| `verify-cr-7` | **42/42** | **42/42** | Simple's two sections |
+| `verify-cr-25-6` | **57/57** | — | the category composites after new rows joined their categories |
+| `verify-cr-38` | **81/81** | — | the Saturated / Judged tags on the enlarged row set |
+
+*Harness note, recorded rather than glossed over:* the first `verify-iter79` run scored 31/37. Two failures
+were a stale server-rendered home page in the minute after the deploy (the hero still said 77 while the
+same page's section 2, which reads the API, already said 89) and one was a mobile-light timing miss; the
+verifier now loads the home page with a cache-busting parameter and both hosts pass 37/37. One check was
+wrong in the verifier itself (`/api/models` carries no `benchmark_count`); it now reads the coverage the
+product publishes at `/api/benchmark-scores`, which is the stronger check — 10 available, 6 capability.
+
+*Not run:* `verify-cr-2-5-perf` (CLS). The box was not idle (the daily probe, the delegated review and
+another project's workers), and this loop's rule is that long-task/CLS numbers from a busy Sandy are not
+evidence. Nothing in this iteration adds a client-side element that can shift layout.
+
+### Still open after this iteration
+
+CR-30.2/30.3 · CR-34.4 + CR-35.3 (**on hold**, AA permission) · CR-34.5 — **now decided, not blocked**:
+Florian's "b" means the DesignArena half is closed as "no expansion" (CR-39 implements it); its other half,
+OpenRouter's relayed `design-arena` rows, is a different arena and cross-check-only · CR-37.x · CR-38.1 /
+38.4 / 38.5 · D09.1's receipt · this iteration's rows need a non-claude-opus verifier.
+
+### Next work iteration (highest value first)
+
+1. **D09.1** — read the receipt of the run this iteration triggered (`/opt/benchmarkheaven-daily/runs/`);
+   if it failed again, the cause is now visible in its report and is no longer the checkout gate.
+2. **The eleven remaining empty boards**: ARC-AGI 3 and the τ³ boards need a critic packet and receipt
+   (self-reported basis) — the same machinery `apply-identity-review.mjs` already provides. That is the next
+   cheapest set of real benchmarks.
+3. **CR-30.2/30.3** — tier-A boards from `BENCHMARK-CANDIDATES.md` from independent boards.
+4. **CR-37.x / CR-38.1 / 38.4 / 38.5** as one intake when the source-intake job writes `RESULT.md`.
+5. The 7,643 observations that are still unjoined on boards that *do* have rows — the same technique, now
+   with a reviewed module to extend.
 
 ---
 
