@@ -332,3 +332,10 @@ still-open rows from section 2 per the priority rule in section 0.
 | CR-38.3 | Human-preference arenas (Arena, DesignArena, EQ-Bench-style judged scores) are labelled as preference/judged scores and kept separate from objective task accuracy in categories and composites | Labels + category mapping reviewed |
 | CR-38.4 | Aggregators (Lumina, BenchLM, The Aggregate, LLM Stats, Vellum, LM Council, CodeSOTA, BenchmarkList, HF find-a-leaderboard) are used for discovery and cross-checks; values come from primary sources unless the aggregator's terms allow reuse with attribution — never double-count the same result from two aggregators | Provenance shows primary source; dedupe test |
 | CR-38.5 | Daily/weekly refresh schedule per source with fail-closed gates and a source-health view in ops (which collectors succeeded, stale sources) | Refresh report lists every source's status |
+
+## 18. CR-20260916 — DesignArena documented-risk guard
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-39.1 | Keep only the two current DesignArena boards (Frontend and Full-Stack Elo) under Florian’s documented-risk decision. No endpoint, board, or collection expansion without a new explicit decision or documented permission/licence. | A committed machine-readable/source-policy guard names the two permitted boards; a test rejects any added DesignArena endpoint/board by default. |
+| CR-39.2 | Make the restriction and evidence durable in operational/source documentation, while preserving exact provenance/date and avoiding any false official-API/licensed-feed claim in user-facing methodology. | Evidence path `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/` is recorded; methodology/source wording is reviewed live; tests remain green. |

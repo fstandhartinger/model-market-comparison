@@ -350,3 +350,19 @@ Laptop Claude Code chat, 15 Sep 2026 ~18:55 UTC, verbatim:
 > For avoiding saturation: check the test version and task dates, not merely whether the leaderboard recently added new models.
 
 Supervisor note: research runs as job `/home/flori/jobs/bh-source-intake-20260915/` (per-source audit: data access, terms/licence, benchmarks, versions/task dates, overlap). Artificial Analysis: attribution done, new AA metrics still ON HOLD (CR-35.3) until Florian reports AA's answer. Arena = human preference, keep separate from task accuracy. Lumina (CR-37) and OpenRouter API (CR-34) already queued.
+
+---
+
+## CR-20260916 — DesignArena collector: documented-risk decision
+
+Florian's decision, Telegram: **“i choose b”** in response to the documented DesignArena access issue.
+
+<requirements>
+
+Keep the two existing DesignArena boards (Frontend and Full-Stack Elo) as visible Benchmark Heaven product data under a documented risk decision. Do not expand DesignArena collection or add new endpoints/boards. Do not silently stop or remove the existing collector/data solely because of this decision.
+
+The evidence is `/opt/benchmarkheaven/state/ux-evidence/iter78-designarena-terms/`: DesignArena robots.txt disallows `/api/`; Arcada Labs terms say access/download is via a normal browser and expressly prohibit software, tools, agents, or data-mining tools. The existing daily collector uses `POST /api/leaderboard` and `POST /api/registry`; no public API documentation or license was found.
+
+Implement the decision as a durable, visible operational guard: scope is exactly the two existing boards; record the source/legal-access risk and evidence path; block any future DesignArena endpoint/board expansion pending a new explicit Florian decision or documented permission. Preserve data provenance/date and ensure the user-facing source/methodology wording is accurate and does not falsely claim an official API or licensed feed. Revisit only if an official API, license, or permission becomes documented.
+
+</requirements>
