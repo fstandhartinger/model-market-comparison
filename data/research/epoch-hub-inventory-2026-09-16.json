@@ -1,0 +1,1317 @@
+{
+  "schema_version": 1,
+  "recorded_at": "2026-09-16",
+  "recorded_by": "claude-opus (Sandy UX workstream, iteration 88)",
+  "cr": "CR-54.1 (CR-20260916o)",
+  "source": {
+    "url": "https://epoch.ai/data/benchmark_data.zip",
+    "retrieved_at": "2026-09-16T19:17:30Z",
+    "sha256": "07bd747866c45ceea36ab529a887ca96893d3ef24aeb38e4a4264a35e41ab49e",
+    "bytes": 2292853,
+    "licence": "README.md in the archive: free to use, distribute and reproduce with credit under CC BY 4.0; citation 'Epoch AI, Capabilities & Benchmarking, https://epoch.ai/benchmarks'.",
+    "robots": "https://epoch.ai/robots.txt allows /data/ (disallows /assets/, /inspect-viewer/ and the FrontierMath problem pages)."
+  },
+  "notes": [
+    "81 benchmark CSV files: 14 Epoch runs (no _external suffix) and 67 external compilations with per-row Source/Source link columns (some external files have none).",
+    "benchmark_metadata.csv covers 60 of them (in_eci, score column, release date, superseded_by); 21 newer files have no metadata row.",
+    "External rows are Epoch's copies of results other organisations published. Terms of the original project apply to those numbers; Benchmark Heaven publishes a number from its origin, not from an aggregator copy, unless the origin is unreachable and its terms allow reuse (DeepSWE precedent, iteration 76).",
+    "ECI itself (epoch_capabilities_index/) is collected separately by scripts/fetch-epoch-eci.mjs; this inventory is about the individual boards."
+  ],
+  "counts": {
+    "not_collected_legacy": 15,
+    "included_from_primary": 18,
+    "candidate_external": 32,
+    "candidate_epoch_run": 8,
+    "included_from_epoch": 5,
+    "superseded": 2
+  },
+  "boards": [
+    {
+      "file": "adversarial_nli_external.csv",
+      "epoch_benchmark": "ANLI",
+      "origin": "external",
+      "rows": 19,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2019-10-31",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Phi-3 Technical Report: A Highly Capable Language Model Loca",
+        "http://arxiv.org/abs/2404.14219",
+        "Using DeepSpeed and Megatron to Train Megatron-Turing NLG 53"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "aider_polyglot_external.csv",
+      "epoch_benchmark": "Aider polyglot",
+      "origin": "external",
+      "rows": 77,
+      "in_eci": "True",
+      "metadata_score_column": "Percent correct",
+      "metadata_release_date": "2024-12-21",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://aider.chat/docs/leaderboards/#polyglot-leaderboard",
+        "https://aider.chat/docs/leaderboards/",
+        "Aider LLM Leaderboards"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "aider-polyglot::snapshot-2026-09-10",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "ale_bench_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 112,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "algotune_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 18,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "apex_agents_external.csv",
+      "epoch_benchmark": "APEX-Agents",
+      "origin": "external",
+      "rows": 65,
+      "in_eci": "True",
+      "metadata_score_column": "Pass@1 score",
+      "metadata_release_date": "2026-01-21",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "aa-apex-agents::snapshot-2026-09-10",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "arc_agi_2_external.csv",
+      "epoch_benchmark": "ARC-AGI-2",
+      "origin": "external",
+      "rows": 227,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2025-03-24",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "arc-agi::2",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "arc_agi_external.csv",
+      "epoch_benchmark": "ARC-AGI",
+      "origin": "external",
+      "rows": 247,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2019-11-05",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://arcprize.org/leaderboard",
+        "ARC Prize Leaderboard"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "arc-agi::1",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "arc_ai2_external.csv",
+      "epoch_benchmark": "ARC AI2",
+      "origin": "external",
+      "rows": 145,
+      "in_eci": "True",
+      "metadata_score_column": "Challenge score",
+      "metadata_release_date": "2018-03-14",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Qwen Technical Report",
+        "https://arxiv.org/abs/2309.16609",
+        "Qwen2.5-Coder Technical Report"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "balrog_external.csv",
+      "epoch_benchmark": "Balrog",
+      "origin": "external",
+      "rows": 36,
+      "in_eci": "True",
+      "metadata_score_column": "Average progress",
+      "metadata_release_date": "2024-11-20",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://balrogai.com/",
+        "Balrog Leaderboard"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "bbh_external.csv",
+      "epoch_benchmark": "BBH",
+      "origin": "external",
+      "rows": 92,
+      "in_eci": "True",
+      "metadata_score_column": "Average",
+      "metadata_release_date": "2022-10-17",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Qwen Technical Report",
+        "https://arxiv.org/pdf/2309.16609",
+        "Yi: Open Foundation Models by 01.AI"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "blueprint_bench_2_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 24,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://andonlabs.com/evals/blueprint-bench-2"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "bool_q_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 206,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Stanford HELM",
+        "https://crfm.stanford.edu/helm/classic/latest/#/groups/boolq",
+        "GLaM: Efficient Scaling of Language Models with Mixture-of-E"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "btf3_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 10,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://evals.futuresearch.ai/#btf3"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "cad_eval_external.csv",
+      "epoch_benchmark": "CadEval",
+      "origin": "external",
+      "rows": 15,
+      "in_eci": "True",
+      "metadata_score_column": "Overall pass (%)",
+      "metadata_release_date": "2025-04-22",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "CadEval Dashboard",
+        "https://willpatrick.xyz/cadevalresults_20250422_095709/"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "chess_puzzles.csv",
+      "epoch_benchmark": "Chess Puzzles",
+      "origin": "epoch_run",
+      "rows": 222,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2025-12-10",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "cl_bench_external.csv",
+      "epoch_benchmark": "CL-bench",
+      "origin": "external",
+      "rows": 23,
+      "in_eci": "True",
+      "metadata_score_column": "Overall",
+      "metadata_release_date": "2026-02-03",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "cl_bench_life_external.csv",
+      "epoch_benchmark": "CL-bench Life",
+      "origin": "external",
+      "rows": 17,
+      "in_eci": "True",
+      "metadata_score_column": "Overall",
+      "metadata_release_date": "2026-04-29",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "common_sense_qa_2_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 10,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "CommonsenseQA 2.0: Exposing the Limits of AI through Gamific",
+        "https://arxiv.org/pdf/2201.05320",
+        "Decker: Double Check with Heterogeneous Knowledge for Common"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "critpt_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 177,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "critpt::snapshot-2026-09-10 / aa-critpt",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "cursorbench_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 74,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://cursor.com/cursorbench"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "cursorbench::4.0",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "cybench_external.csv",
+      "epoch_benchmark": "Cybench",
+      "origin": "external",
+      "rows": 22,
+      "in_eci": "True",
+      "metadata_score_column": "Unguided % Solved",
+      "metadata_release_date": "2024-08-15",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Cybench leaderboard",
+        "https://cybench.github.io/",
+        "Opus 4.5 System Card"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "deepresearchbench_external.csv",
+      "epoch_benchmark": "DeepResearch Bench",
+      "origin": "external",
+      "rows": 41,
+      "in_eci": "True",
+      "metadata_score_column": "Average score",
+      "metadata_release_date": "2025-06-13",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://evals.futuresearch.ai/#drb",
+        "https://drb.futuresearch.ai",
+        "DeepResearchBench Leaderboard"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "deepswe_external.csv",
+      "epoch_benchmark": "DeepSWE",
+      "origin": "external",
+      "rows": 69,
+      "in_eci": "True",
+      "metadata_score_column": "Pass@1",
+      "metadata_release_date": "2026-05-26",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://deepswe.datacurve.ai/"
+      ],
+      "state": "included_from_epoch",
+      "benchmark_heaven_identity": "deepswe::snapshot-2026-09-15",
+      "decision": "Collected from this Epoch file."
+    },
+    {
+      "file": "dtbench_external.csv",
+      "epoch_benchmark": "DTBench",
+      "origin": "external",
+      "rows": 161,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy",
+      "metadata_release_date": "2026-08-12",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://conceptualreasoning.ai/dtbench"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "ebr_bench.csv",
+      "epoch_benchmark": "EBR-bench",
+      "origin": "epoch_run",
+      "rows": 21,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2026-07-01",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "enigma_eval_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 46,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://labs.scale.com/leaderboard/enigma_eval"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "exploitbench_external.csv",
+      "epoch_benchmark": "ExploitBench",
+      "origin": "external",
+      "rows": 20,
+      "in_eci": "True",
+      "metadata_score_column": "Mean capability",
+      "metadata_release_date": "2026-05-13",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "fictionlivebench_external.csv",
+      "epoch_benchmark": "Fiction.LiveBench",
+      "origin": "external",
+      "rows": 62,
+      "in_eci": "True",
+      "metadata_score_column": "16k token score",
+      "metadata_release_date": "2025-02-21",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Fiction.live leaderboard",
+        "https://fiction.live/stories/Fiction-liveBench-Mar-14-2025/o"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "forecastbench_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 81,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "frontiercode_external.csv",
+      "epoch_benchmark": "FrontierCode",
+      "origin": "external",
+      "rows": 35,
+      "in_eci": "True",
+      "metadata_score_column": "Main score",
+      "metadata_release_date": "2026-06-08",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://cognition.com/frontiercode"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "frontiercode::1.1",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "frontiermath.csv",
+      "epoch_benchmark": "FrontierMath-2025-02-28-Private",
+      "origin": "epoch_run",
+      "rows": 101,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2025-02-28",
+      "superseded_by": "FrontierMath-Tiers-1-3-v2-Private",
+      "primary_sources_named": [],
+      "state": "superseded",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch marks it superseded by FrontierMath-Tiers-1-3-v2-Private, which is collected."
+    },
+    {
+      "file": "frontiermath_erdos.csv",
+      "epoch_benchmark": null,
+      "origin": "epoch_run",
+      "rows": 5,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "frontiermath_tier_4.csv",
+      "epoch_benchmark": "FrontierMath-Tier-4-2025-07-01-Private",
+      "origin": "epoch_run",
+      "rows": 72,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2025-07-11",
+      "superseded_by": "FrontierMath-Tier-4-v2-Private",
+      "primary_sources_named": [],
+      "state": "superseded",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch marks it superseded by FrontierMath-Tier-4-v2-Private, which is collected."
+    },
+    {
+      "file": "frontiermath_tier_4_v2.csv",
+      "epoch_benchmark": "FrontierMath-Tier-4-v2-Private",
+      "origin": "epoch_run",
+      "rows": 62,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2026-06-12",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_epoch",
+      "benchmark_heaven_identity": "frontiermath-tier-4::v2",
+      "decision": "Collected from this Epoch file."
+    },
+    {
+      "file": "frontiermath_tiers_1_3_v2.csv",
+      "epoch_benchmark": "FrontierMath-Tiers-1-3-v2-Private",
+      "origin": "epoch_run",
+      "rows": 106,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2026-06-12",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_epoch",
+      "benchmark_heaven_identity": "frontiermath-tiers-1-3::v2",
+      "decision": "Collected from this Epoch file."
+    },
+    {
+      "file": "frontierswe_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 9,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://www.frontierswe.com/"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "gbaeval_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 23,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://gbaeval.com/model/claude-opus-5",
+        "https://gbaeval.com/model/claude-fable-5",
+        "https://gbaeval.com/model/claude-opus-4-8"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "gdp_pdf_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 42,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://surgehq.ai/benchmarks/gdp-pdf",
+        "Surge AI GDP.pdf leaderboard",
+        "https://surgehq.ai/leaderboards/gdp-pdf"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "aa-gdp-pdf::snapshot-2026-09-10",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "gdpval_external.csv",
+      "epoch_benchmark": "GDPval",
+      "origin": "external",
+      "rows": 11,
+      "in_eci": "True",
+      "metadata_score_column": "Win Rate (%)",
+      "metadata_release_date": "2025-09-25",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "aa-gdpval::2",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "geobench_external.csv",
+      "epoch_benchmark": "GeoBench",
+      "origin": "external",
+      "rows": 32,
+      "in_eci": "True",
+      "metadata_score_column": "ACW Country %",
+      "metadata_release_date": "2025-03-01",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "GeoBench leaderboard",
+        "https://geobench.org/"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "gpqa_diamond.csv",
+      "epoch_benchmark": "GPQA diamond",
+      "origin": "epoch_run",
+      "rows": 313,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2023-11-20",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "gsm8k_external.csv",
+      "epoch_benchmark": "GSM8K",
+      "origin": "external",
+      "rows": 235,
+      "in_eci": "True",
+      "metadata_score_column": "EM",
+      "metadata_release_date": "2021-10-27",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Stanford HELM",
+        "https://crfm.stanford.edu/helm/classic/latest/#/groups/gsm",
+        "Qwen Technical Report"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "gso_external.csv",
+      "epoch_benchmark": "GSO-Bench",
+      "origin": "external",
+      "rows": 38,
+      "in_eci": "True",
+      "metadata_score_column": "Score OPT@1",
+      "metadata_release_date": "2025-05-29",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "GSO Leaderboard",
+        "https://gso-bench.github.io/index.html",
+        "https://gso-bench.github.io/leaderboard.html"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "gso::opt1-102",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "hella_swag_external.csv",
+      "epoch_benchmark": "HellaSwag",
+      "origin": "external",
+      "rows": 135,
+      "in_eci": "True",
+      "metadata_score_column": "Overall accuracy",
+      "metadata_release_date": "2019-05-19",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Stanford HELM",
+        "https://crfm.stanford.edu/helm/classic/latest/#/groups/hella",
+        "XGen-7B Technical Report"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "hle_external.csv",
+      "epoch_benchmark": "HLE",
+      "origin": "external",
+      "rows": 51,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy",
+      "metadata_release_date": "2025-01-23",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "hle::snapshot-2026-09-10 / aa-hle",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "lambada_external.csv",
+      "epoch_benchmark": "LAMBADA",
+      "origin": "external",
+      "rows": 80,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2016-06-20",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Qwen Technical Report",
+        "https://arxiv.org/abs/2309.16609",
+        "GLaM: Efficient Scaling of Language Models with Mixture-of-E"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "lech_mazur_writing_external.csv",
+      "epoch_benchmark": "Lech Mazur Writing",
+      "origin": "external",
+      "rows": 49,
+      "in_eci": "True",
+      "metadata_score_column": "Mean score",
+      "metadata_release_date": "2025-01-31",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "lechmazur/writing Github repository",
+        "https://github.com/lechmazur/Writing"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "mazur-creative-story-writing::snapshot-2026-09-10 (primary repository)",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "live_bench_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 64,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "LiveBench Leaderboard",
+        "https://livebench.ai/#/"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "livebench::2026-06-25",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "lmca_external.csv",
+      "epoch_benchmark": "LMCA",
+      "origin": "external",
+      "rows": 123,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2026-08-12",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://conceptualreasoning.ai/lmca"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "math_level_5.csv",
+      "epoch_benchmark": "MATH level 5",
+      "origin": "epoch_run",
+      "rows": 108,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2021-03-05",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "metr_time_horizons_external.csv",
+      "epoch_benchmark": "METR Time Horizons",
+      "origin": "external",
+      "rows": 50,
+      "in_eci": "True",
+      "metadata_score_column": "average_score",
+      "metadata_release_date": "2025-03-19",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://metr.org/blog/2025-03-19-measuring-ai-ability-to-com",
+        "METR - Measuring AI Ability to Complete Long Tasks"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "mindcube_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 5,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://mind-cube.github.io/"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "mirrorcode.csv",
+      "epoch_benchmark": "MirrorCode",
+      "origin": "epoch_run",
+      "rows": 8,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2026-06-26",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "mmlu_external.csv",
+      "epoch_benchmark": "MMLU",
+      "origin": "external",
+      "rows": 249,
+      "in_eci": "True",
+      "metadata_score_column": "EM",
+      "metadata_release_date": "2020-09-07",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Stanford CRFM Leaderboard",
+        "https://crfm.stanford.edu/helm/lite/latest/#/leaderboard/mml",
+        "XGen-7B Technical Report"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "mystery_game_puzzles.csv",
+      "epoch_benchmark": "Mystery Game Puzzles",
+      "origin": "epoch_run",
+      "rows": 127,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2026-07-30",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "open_book_qa_external.csv",
+      "epoch_benchmark": "OpenBookQA",
+      "origin": "external",
+      "rows": 71,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy",
+      "metadata_release_date": "2018-09-08",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Phi-3 Technical Report: A Highly Capable Language Model Loca",
+        "http://arxiv.org/abs/2404.14219",
+        "XGen-7B Technical Report"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "os_world_external.csv",
+      "epoch_benchmark": "OSWorld",
+      "origin": "external",
+      "rows": 58,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2024-04-11",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "OS World Website",
+        "https://os-world.github.io/",
+        "Anthropic annoucement"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "osworld_2_external.csv",
+      "epoch_benchmark": "OSWorld 2.0",
+      "origin": "external",
+      "rows": 16,
+      "in_eci": "True",
+      "metadata_score_column": "Binary accuracy",
+      "metadata_release_date": "2026-06-26",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://osworld-v2.xlang.ai/"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "osworld-2::v2026.06.24 / osworld-2::v2026.08.08",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "otis_mock_aime_2024_2025.csv",
+      "epoch_benchmark": "OTIS Mock AIME 2024-2025",
+      "origin": "epoch_run",
+      "rows": 290,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2024-12-19",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_epoch",
+      "benchmark_heaven_identity": "otis-mock-aime::2024-2025",
+      "decision": "Collected from this Epoch file."
+    },
+    {
+      "file": "piqa_external.csv",
+      "epoch_benchmark": "PIQA",
+      "origin": "external",
+      "rows": 140,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2019-11-26",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "GLaM: Efficient Scaling of Language Models with Mixture-of-E",
+        "http://arxiv.org/abs/2112.06905",
+        "Qwen Technical Report"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "posttrainbench_external.csv",
+      "epoch_benchmark": "PostTrainBench",
+      "origin": "external",
+      "rows": 12,
+      "in_eci": "True",
+      "metadata_score_column": "Average (%)",
+      "metadata_release_date": "2026-03-11",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "proofbench_external.csv",
+      "epoch_benchmark": "ProofBench",
+      "origin": "external",
+      "rows": 64,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy",
+      "metadata_release_date": "2026-01-30",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://www.vals.ai/benchmarks/proof_bench"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "rli_external.csv",
+      "epoch_benchmark": "Remote Labor Index",
+      "origin": "external",
+      "rows": 13,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2025-10-29",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "scicode_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 168,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://artificialanalysis.ai/evaluations/scicode"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "aa-scicode::1.0.1 / scicode::snapshot-2026-09-10",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "science_qa_external.csv",
+      "epoch_benchmark": "ScienceQA",
+      "origin": "external",
+      "rows": 104,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2022-09-20",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "ScienceQA leaderboard",
+        "https://scienceqa.github.io/leaderboard.html",
+        "VisionLLM v2: An End-to-End Generalist Multimodal Large Lang"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "simplebench_external.csv",
+      "epoch_benchmark": "SimpleBench",
+      "origin": "external",
+      "rows": 104,
+      "in_eci": "True",
+      "metadata_score_column": "Score (AVG@5)",
+      "metadata_release_date": "2024-10-31",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "SimpleBench Leaderboard",
+        "https://simple-bench.com/",
+        "https://lmcouncil.ai/benchmarks"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "simple-bench::snapshot-2026-09-10",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "simpleqa_verified.csv",
+      "epoch_benchmark": "SimpleQA Verified",
+      "origin": "epoch_run",
+      "rows": 80,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2025-09-09",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_epoch",
+      "benchmark_heaven_identity": "simpleqa-verified::snapshot-2026-09-16",
+      "decision": "Collected from this Epoch file."
+    },
+    {
+      "file": "spatialviz_bench_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 8,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://arxiv.org/abs/2507.07610"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "superglue_external.csv",
+      "epoch_benchmark": "SuperGLUE",
+      "origin": "external",
+      "rows": 11,
+      "in_eci": "True",
+      "metadata_score_column": "Score",
+      "metadata_release_date": "2019-05-02",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Exploring the Limits of Transfer Learning with a Unified Tex",
+        "https://arxiv.org/pdf/1910.10683",
+        "Switch Transformers: Scaling to Trillion Parameter Models wi"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "surface_evolver_bench_external.csv",
+      "epoch_benchmark": "Surface Evolver Bench",
+      "origin": "external",
+      "rows": 26,
+      "in_eci": "True",
+      "metadata_score_column": "Mean score",
+      "metadata_release_date": "2026-06-19",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://yhenon.github.io/surface-evolver-llm-eval/"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "swe_bench_verified.csv",
+      "epoch_benchmark": "SWE-Bench verified",
+      "origin": "epoch_run",
+      "rows": 35,
+      "in_eci": "True",
+      "metadata_score_column": "Best score (across scorers)",
+      "metadata_release_date": "2024-08-13",
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "candidate_epoch_run",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch runs it itself (CC BY 4.0): candidate for CR-54.2 after a methodology/version review."
+    },
+    {
+      "file": "terminalbench_external.csv",
+      "epoch_benchmark": "Terminal Bench",
+      "origin": "external",
+      "rows": 204,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy mean",
+      "metadata_release_date": "2025-05-19",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://www.tbench.ai/leaderboard/terminal-bench/2.0",
+        "Terminal-Bench v2 Leaderboard"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "Epoch's copy holds Terminal-Bench 2.0 leaderboard rows (tbench.ai). Benchmark Heaven collects Terminal-Bench 4.0 from the primary board and AA's v2.1/v4.0 runs; 2.0 is another version and not collected — candidate only from tbench.ai's own 2.0 board."
+    },
+    {
+      "file": "the_agent_company_external.csv",
+      "epoch_benchmark": "The Agent Company",
+      "origin": "external",
+      "rows": 16,
+      "in_eci": "True",
+      "metadata_score_column": "% Resolved",
+      "metadata_release_date": "2024-12-18",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "TheAgentCompany experiment results github",
+        "https://github.com/TheAgentCompany/experiments/tree/main/eva",
+        "TheAgentCompany leaderboard"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "trivia_qa_external.csv",
+      "epoch_benchmark": "TriviaQA",
+      "origin": "external",
+      "rows": 115,
+      "in_eci": "True",
+      "metadata_score_column": "EM",
+      "metadata_release_date": "2017-05-09",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Llama 2: Open Foundation and Fine-Tuned Chat Models",
+        "http://arxiv.org/abs/2307.09288",
+        "LLaMA: Open and Efficient Foundation Language Models"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    },
+    {
+      "file": "vending_bench_2_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 60,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "vending-bench::2",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "video_mme_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 50,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Video-MME Leaderboard",
+        "https://video-mme.github.io/home_page.html#leaderboard"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "vpct_external.csv",
+      "epoch_benchmark": "VPCT",
+      "origin": "external",
+      "rows": 38,
+      "in_eci": "True",
+      "metadata_score_column": "Correct",
+      "metadata_release_date": "2025-01-30",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "VPCT leaderboard",
+        "https://cbrower.dev/vpct",
+        "Tweet from VPCT creator"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "webdev_arena_external.csv",
+      "epoch_benchmark": null,
+      "origin": "external",
+      "rows": 127,
+      "in_eci": null,
+      "metadata_score_column": null,
+      "metadata_release_date": null,
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://web.lmarena.ai/leaderboard",
+        "https://arena.ai/leaderboard",
+        "WebDev Arena Leaderboard"
+      ],
+      "state": "candidate_external",
+      "benchmark_heaven_identity": null,
+      "decision": "External origin: candidate only through its primary source (or Epoch's copy where the origin's terms allow and the source link is retained), after review."
+    },
+    {
+      "file": "weirdml_external.csv",
+      "epoch_benchmark": "WeirdML",
+      "origin": "external",
+      "rows": 171,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy",
+      "metadata_release_date": "2025-01-16",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "https://htihle.github.io/weirdml.html",
+        "WeirdML Leaderboard"
+      ],
+      "state": "included_from_primary",
+      "benchmark_heaven_identity": "weirdml::2",
+      "decision": "Collected from the benchmark's own primary source; Epoch's copy is a cross-check only (one result is never counted twice)."
+    },
+    {
+      "file": "wino_grande_external.csv",
+      "epoch_benchmark": "Winogrande",
+      "origin": "external",
+      "rows": 145,
+      "in_eci": "True",
+      "metadata_score_column": "Accuracy",
+      "metadata_release_date": "2019-07-24",
+      "superseded_by": null,
+      "primary_sources_named": [
+        "Qwen2.5-Coder Technical Report",
+        "https://arxiv.org/pdf/2409.12186",
+        "LLaMA: Open and Efficient Foundation Language Models"
+      ],
+      "state": "not_collected_legacy",
+      "benchmark_heaven_identity": null,
+      "decision": "Pre-2024 academic benchmark compiled by Epoch from papers/HELM; saturated for current models; not planned."
+    }
+  ]
+}
