@@ -3,10 +3,20 @@ import assert from "node:assert/strict";
 import { readFile } from "node:fs/promises";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
+import ts from "typescript";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ds = JSON.parse(await readFile(join(__dirname, "..", "data", "dataset.json"), "utf8"));
 const providerMeta = JSON.parse(await readFile(join(__dirname, "..", "data", "raw", "provider-meta.json"), "utf8"));
+
+// Compile the real Dataset -> client projection so a future omitted mapping cannot
+// silently drop the provider website (the expanded-row links would vanish).
+const clientSource = await readFile(join(__dirname, "..", "lib", "client-model.ts"), "utf8");
+const compositeUrl = new URL("../lib/composite.mjs", import.meta.url).href;
+const clientCompiled = ts.transpileModule(clientSource, {
+  compilerOptions: { module: ts.ModuleKind.ES2022, target: ts.ScriptTarget.ES2022 },
+}).outputText.replace('from "./composite.mjs"', `from "${compositeUrl}"`);
+const client = await import(`data:text/javascript;base64,${Buffer.from(clientCompiled).toString("base64")}`);
 
 test("CR-42.3: every dataset provider carries a curated official website", () => {
   assert.ok(ds.providers.length > 0);
@@ -36,4 +46,15 @@ test("CR-42.3: every curated provider-meta url is a well-formed https URL", () =
 test("CR-42.3: the curation is dated in provider-meta", () => {
   assert.match(String(providerMeta.urls_verified_at ?? ""), /^\d{4}-\d{2}-\d{2}$/, "urls_verified_at missing or undated");
   assert.ok(String(providerMeta.url_provenance ?? "").length > 40, "url_provenance note missing");
+});
+
+test("CR-42.3: clientData passes the provider website through to the client (expanded-row links)", () => {
+  const cd = client.clientData(ds);
+  assert.ok(cd.providers.length > 0);
+  for (const p of cd.providers) {
+    const datasetProvider = ds.providers.find((d) => d.platform === p.platform && d.provider === p.provider);
+    assert.ok(datasetProvider, `dataset provider missing for ${p.provider}`);
+    assert.equal(p.website, datasetProvider.website ?? null, `${p.provider}: client website ${p.website} != dataset ${datasetProvider.website}`);
+    assert.match(p.website, /^https:\/\//, `${p.provider} client website not https: ${p.website}`);
+  }
 });
