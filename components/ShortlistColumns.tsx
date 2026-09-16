@@ -74,7 +74,7 @@ export function ShortlistColumns({ data, ids, tableIds, names, onToggle, full = 
         <label className="text-xs">
           <span className="sr-only">Score shown in the chart</span>
           <select className="bh-input py-1 text-xs" value={score} onChange={(e) => setScore(e.target.value as ScoreKey)} data-shortlist-score>
-            {CHART_SCORES.map((k) => <option key={k} value={k}>{k === "composite" ? "Main Composite Score" : SCORE_PICKER_LABELS[k]}</option>)}
+            {CHART_SCORES.map((k) => <option key={k} value={k}>{k === "composite" ? "Benchmark Heaven Score" : SCORE_PICKER_LABELS[k]}</option>)}
           </select>
         </label>
         <button type="button" aria-label="Chart settings" aria-expanded={prefsOpen} aria-controls="bh-shortlist-chart-settings" data-shortlist-settings onClick={() => setPrefsOpen((o) => !o)}

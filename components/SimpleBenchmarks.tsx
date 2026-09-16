@@ -128,7 +128,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
     {editing && adding && !full && <div className="mt-3 flex flex-wrap items-center gap-2" data-selection-add-picker>
       <ComparePicker families={pickable} picks={ids} max={COLUMNS} autoFocus onClose={() => setAdding(false)}
         onPick={(id) => { commit(addToSelection(ids, id)); setAdding(false); }}
-        topHeading={`Top of your list by ${score === "composite" ? "Main Composite Score" : SCORE_SHORT_LABELS[score]}`} footer={<>Models from your list above that are not in the comparison yet.</>} />
+        topHeading={`Top of your list by ${score === "composite" ? "Benchmark Heaven Score" : SCORE_SHORT_LABELS[score]}`} footer={<>Models from your list above that are not in the comparison yet.</>} />
       <button type="button" className="text-sm text-accent underline" onClick={() => setAdding(false)}>Cancel</button>
     </div>}
     {ids.length > 0 && visible.length > 0 && <div className="bh-matrix-wrap mt-4" role="region" aria-label="Headline benchmark results for your shortlist" tabIndex={0}>

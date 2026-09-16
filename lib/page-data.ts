@@ -91,6 +91,25 @@ async function build(key: PageDataKey): Promise<unknown> {
   return { rows, models, initial, taggedCount: taggedFamilies.size };
 }
 
+/** CR-63.14: each model family's Benchmaxxing verdict (score, tag level, report model), built once per dataset
+ *  version with the same function as the Overview tags. */
+let familySignals: { version: string; value: Promise<Map<string, { score: number | null; level: "strong" | "weak" | null; reportId: string }>> } | null = null;
+export async function benchmaxxingByFamily() {
+  const version = await pageDataVersion();
+  if (!familySignals || familySignals.version !== version) {
+    familySignals = { version, value: getBenchmarkView().then((view) => {
+      const { reports, taggedFamilies, weakFamilies, representatives } = benchmaxxingFamilySignals(view);
+      const out = new Map<string, { score: number | null; level: "strong" | "weak" | null; reportId: string }>();
+      for (const [id, report] of reports) {
+        const family = view.models.find((m) => m.id === id)?.family ?? id;
+        out.set(family, { score: report.score ?? null, level: taggedFamilies.has(family) ? "strong" : weakFamilies.has(family) ? "weak" : null, reportId: representatives.get(family) ?? id });
+      }
+      return out;
+    }) };
+  }
+  return familySignals.value;
+}
+
 // One serialised body per key and dataset version: the JSON is built once, not per request.
 const memo = new Map<PageDataKey, { version: string; body: Promise<string> }>();
 export async function pageDataBody(key: PageDataKey): Promise<{ version: string; body: string }> {

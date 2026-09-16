@@ -317,6 +317,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     </th>
   );
 
+  // CR-63.7: one legend for both tag families, in Simple and Advanced.
+  const tagLegend = <>{rows.some((x) => x.m.benchmaxxing_level) && <>{" · "}<span data-bh-tag-legend="benchmaxxing"><b>⚠ Benchmaxxing</b> (solid) marks the top 10 % of scored models by unevenness between related benchmarks, <b>△</b> (tint) the next 10 % — a screening flag, not proof of leakage; the tag opens the model&apos;s radar. <Link className="text-accent underline" href="/benchmaxxing">What Benchmaxxing means →</Link></span></>}
+        {" · "}<span data-bh-tag-legend="value"><b>↓ cheaper</b> / <b>↑ pricier</b> (filled, straight arrow) = cost well below / above what models with a similar score cost in this list; <b>↘</b> / <b>↗</b> (outlined, slanted) = somewhat. The ratio is measured against the models in the current view, so Simple and Advanced can show different ratios.</span></>;
   return (
     <div>
       {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
@@ -501,7 +504,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
                   const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
                   const strong = v.level === "strong";
-                  const why = `${strong ? "Well" : "Somewhat"} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score: about ${ratio} ${v.kind === "cheap" ? "less" : "more"}, among ${v.n} priced models with your settings (log cost fitted against score).`;
+                  const why = `${strong ? "Well" : "Somewhat"} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score: about ${ratio} ${v.kind === "cheap" ? "less" : "more"}, compared with the ${v.n} priced models in this ${simple ? "Simple" : "Advanced"} view under your settings (log cost fitted against score). The reference set differs between views, so the ratio can too.`;
                   // CR-24.1: the tag sits left of the price on the same line, so the cost bar keeps its row height.
                   // Florian 2026-09-15 (directive 10): below 1024 px (where the words overflow the cell) the tag is the compact "↓11×"; the words stay in the tooltip and for screen readers.
                   // CR-42.1: a strong tag is a filled pill with a straight arrow, a weak one an outlined pill with a slanted arrow.
@@ -628,8 +631,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           price hint, the Benchmaxxing screening note (only when a displayed row carries
           the signal) and the measured-task-tokens note with " · ". */}
       <p className="mt-3 text-xs text-gray-500">
-        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span>{score === "composite" && rows.some((x) => isThinComposite(x.m)) && <span> · Striped score = built on fewer than 3 of 7 inputs</span>}</> : <><PriceAssumptions inline />
-          {rows.some((x) => x.m.benchmaxxing_level) && <>{" · "}The Benchmaxxing tag marks the top 10 % of coverage-qualified models by topic-local inconsistency (solid) and the next 10 % (tint); it opens that model&apos;s radar. It is a screening signal, not evidence of leakage or intent. <Link className="text-accent underline" href="/benchmaxxing#method">Read the method ↗</Link></>}
+        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span>{score === "composite" && rows.some((x) => isThinComposite(x.m)) && <span> · Striped score = built on fewer than 3 of 7 inputs</span>}{tagLegend}</> : <><PriceAssumptions inline />
+          {tagLegend}
           {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>
       {/* CR-63.1 (Florian 2026-09-16: "benchmaxxing tab should be moved up in priority"): a one-line teaser in the style of the row below. */}

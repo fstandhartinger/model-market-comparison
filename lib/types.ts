@@ -281,7 +281,7 @@ export const SCORE_SHORT_LABELS: Record<ScoreKey, string> = {
 /** Pass 17 (Fable): the names the score pickers show — the same short names the radar and tables use,
  *  never the source-prefixed registry labels ("ArtificialAnalysis — …"). */
 export const SCORE_PICKER_LABELS: Record<ScoreKey, string> = {
-  composite: "Benchmark Heaven Main Composite Score",
+  composite: "Benchmark Heaven Score (Main Composite)",
   aa_intelligence_index: "AA Intelligence Index",
   aa_coding_index: "AA Coding Index",
   aa_coding_agent: "AA Coding Agent Index v1.4",

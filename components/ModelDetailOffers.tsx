@@ -38,6 +38,8 @@ export function ModelDetailOffers({
     return (
       <section className="card min-w-0 overflow-x-auto p-4">
         <h2 className="mb-1 font-semibold">Top {Math.min(5, top.length)} cheapest providers <span className="text-xs font-normal text-gray-500">({priceLabel(s)})</span></h2>
+        {/* CR-63.14: identical list prices can give different adjusted costs. */}
+        {s.priceMode === "adjusted" && top.length > 1 && <p className="mb-2 text-xs text-gray-500">The same list price can give a different adjusted $/task (caching, token efficiency) — click a price for its inputs.</p>}
         <p className="mb-3 text-[11px] text-gray-500">Within the active global provider, residency and confidentiality filters.</p>
         {top.length ? (
           <table className="dtable w-full text-sm">

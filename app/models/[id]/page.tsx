@@ -1,6 +1,8 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { previewMetadata } from "../../../lib/seo";
+import { benchmaxxingByFamily } from "../../../lib/page-data";
+import { SignalValue } from "../../../components/SignalValue";
 import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
 import { num, pct, orgColor, usdPerM } from "../../../lib/format";
@@ -73,6 +75,8 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
     .map((axis) => [axis.id, percentileFor(axis, model.id)]));
   const b = model.benchmarks;
   const da = model.designarena;
+  // CR-63.14: the family's Benchmaxxing verdict, the same one the Overview tag shows.
+  const bmx = (await benchmaxxingByFamily()).get(model.family_key) ?? null;
   // The six Composite inputs of the mini radar (DesignArena's two boards share one axis: the
   // mean of the percentiles it has). Percentiles use the same display values as the ranking.
   const pctOf = (key: ScoreKey) => catalogPercentile(
@@ -118,9 +122,13 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
         <section className="card order-first min-w-0 p-4 lg:order-none" aria-label="Composite and its inputs">
           <div className="flex items-baseline justify-between gap-3">
             <h2 className="font-semibold">Composite</h2>
-            <span className="text-xs text-gray-500">{clientModel.composite_coverage + clientModel.composite_attached} of 7 inputs{clientModel.composite_attached ? ` · ${clientModel.composite_attached} from the model family` : ""}</span>
+            <span className="text-xs text-gray-500">{clientModel.composite_coverage + clientModel.composite_attached} of 7 inputs{clientModel.composite_attached ? ` · ${clientModel.composite_attached} from the model family` : ""}<span className="block text-right">6 radar axes: DesignArena&apos;s two boards share one</span></span>
           </div>
           <p className="text-4xl font-bold tabular">{num(clientModel.scores.composite)}</p>
+          {bmx?.score != null && bmx.level && <p className="mt-2 text-sm" data-bh-model-benchmaxxing>
+            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} /> <span className="bh-muted">· {bmx.level}</span>{" "}
+            <Link href={`/benchmaxxing?model=${encodeURIComponent(bmx.reportId)}#radar`} className="text-accent underline">report →</Link>
+          </p>}
           <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />
           <p className="mt-2 flex flex-wrap justify-center gap-x-3 gap-y-1 text-xs text-gray-400">
             {radarAxes.map((axis) => (
