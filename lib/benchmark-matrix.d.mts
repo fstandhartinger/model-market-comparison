@@ -56,7 +56,11 @@ export interface BenchmarkMatrix {
   values: Record<string, [number, number, number][]>;
   generatedAt: string;
   freshnessDefaults: FreshnessDefaults;
+  /** F-102: boards (family + version) with at least one result in the whole catalog. */
+  catalogBoards: number;
 }
+export function boardId(row: Pick<MatrixRow, "key" | "version">): string;
+export function countBoards(rows: Pick<MatrixRow, "key" | "version">[]): number;
 export function baseKey(id: string): string;
 export function rowBars(values: (number | null)[], higherBetter: boolean | null, unit: string): (number | null)[];
 export function rowWinners(values: (number | null)[], higherBetter: boolean | null): boolean[];

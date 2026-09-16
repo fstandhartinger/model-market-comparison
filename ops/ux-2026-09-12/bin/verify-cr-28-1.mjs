@@ -37,9 +37,17 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     rows: [...document.querySelectorAll('#benchmarks tbody tr')].filter((tr) => !tr.classList.contains('bh-matrix-hero') && !tr.classList.contains('bh-matrix-group')).length,
     shown: Number(document.querySelector('[data-bench-count]')?.textContent), catalog: Number(document.querySelector('[data-catalog-count]')?.textContent),
     groups: document.querySelectorAll('#benchmarks tr.bh-matrix-group').length,
+    // F-102: a benchmark is a board (family + version); harness cohorts and cost twins are rows of it.
+    boards: new Set([...document.querySelectorAll('#benchmarks tbody tr[data-board]')].map((tr) => tr.getAttribute('data-board'))).size,
+    sentence: document.querySelector('[data-bench-count]')?.closest('p')?.innerText.replace(/\s+/g, ' ').trim() ?? '',
   }));
   check(`${tag} CR-28.1 the table lists every benchmark its models have (more than the 22 headline rows), count stated honestly`,
-    info.rows > 22 && info.rows === info.shown && info.catalog >= info.shown && info.groups >= 5, info);
+    info.rows > 22 && info.rows >= info.shown && info.catalog >= info.shown && info.groups >= 5, info);
+  // F-102: the published number is the board count of the very rows on screen, and the sentence counts
+  // benchmarks, never "benchmark results".
+  check(`${tag} F-102 the count is the board count of the rows shown, out of the same catalog count`,
+    info.shown === info.boards && info.catalog >= info.boards && /benchmarks we track/.test(info.sentence) && !/benchmark results/.test(info.sentence),
+    JSON.stringify(info));
   await page.locator('#benchmarks .bh-matrix-wrap').screenshot({ path: `${OUT}/${tag}-all-benchmarks.png` }).catch(() => {});
   check(`${tag} no page errors`, !errors.length, errors);
   await context.close();

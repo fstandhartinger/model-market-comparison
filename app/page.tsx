@@ -22,11 +22,16 @@ export default async function Home() {
   const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
   // R3.1: the claim is quantified from the dataset it describes, so it cannot drift
   // away from what the page actually shows.
-  const benchmarks = ds.benchmark_results?.registry?.length ?? 0;
+  const fullMatrix = (await getBenchmarkMatrixPage()).matrix;
+  // F-102: one counting rule — a benchmark is a board (one family at one version) with at least one
+  // result; harness cohorts and cost twins are rows of a board. The same number is the denominator
+  // of Simple's section 2 and of the Benchmarks page, so the site never counts its own collection
+  // three different ways.
+  const benchmarks = fullMatrix.catalogBoards;
   const results = ds.benchmark_results?.observations?.length ?? 0;
   const updated = String(ds.generated_at ?? "").slice(0, 10) || "n/a";
   // CR-7.1: the simple Benchmarks section gets only the "Important" rows, not the full matrix.
-  const benchMatrix = importantMatrix((await getBenchmarkMatrixPage()).matrix);
+  const benchMatrix = importantMatrix(fullMatrix);
 
   return (
     <div>

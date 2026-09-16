@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import type { ClientData } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
 import { collapsedName, preferredVariantIds } from "../lib/variants";
-import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, versionLine, CAVEAT_TAGS, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
+import { formatValue, cellHref, rowBars, rowWinners, rowOutliers, scoreTypeText, categoryComposite, versionLine, countBoards, boardId, CAVEAT_TAGS, OUTLIER_MIN_VALUES, type BenchmarkMatrix as Matrix } from "../lib/benchmark-matrix.mjs";
 import { InfoTip } from "./InfoTip";
 import { hasScoreEvidence } from "../lib/client-model";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
@@ -24,7 +24,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
   const preferred = useMemo(() => preferredVariantIds(data.models, score), [data, score]);
   // CR-28.1: the headline rows render first (shipped with the page); the full list of every benchmark these
   // models have is fetched for exactly these models and replaces them.
-  const [fullMatrix, setFullMatrix] = useState<{ key: string; matrix: Matrix & { catalogRows?: number } } | null>(null);
+  const [fullMatrix, setFullMatrix] = useState<{ key: string; matrix: Matrix & { catalogBoards?: number } } | null>(null);
   const candidateIds = useMemo(() => listIds.filter((id) => headline.values[id]?.length || fullMatrix?.matrix.values[id]?.length).slice(0, COLUMNS), [listIds, headline, fullMatrix]);
   const fetchKey = listIds.slice(0, COLUMNS).join(",");
   useEffect(() => {
@@ -34,7 +34,8 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
       .then((j) => { if (live && j?.matrix) setFullMatrix({ key: fetchKey, matrix: j.matrix }); }).catch(() => { /* keep headline rows */ });
     return () => { live = false; };
   }, [fetchKey]);
-  const matrix: Matrix & { catalogRows?: number } = fullMatrix && fullMatrix.key === fetchKey ? fullMatrix.matrix : headline;
+  const loaded = !!(fullMatrix && fullMatrix.key === fetchKey);
+  const matrix: Matrix & { catalogBoards?: number } = loaded ? fullMatrix!.matrix : headline;
   const ids = useMemo(() => candidateIds.filter((id) => matrix.values[id]?.length), [candidateIds, matrix]);
   const [note, setNote] = useState(false);
   // CR-7.2: on small screens say once that the full version is built for larger screens.
@@ -74,9 +75,11 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         <p className="bh-eyebrow">Simple view</p>
         <h2 id="bh-simple-bench-title" className="text-2xl font-bold tracking-tight">Benchmarks for your shortlist</h2>
         <p className="bh-muted mt-1 max-w-2xl text-sm">
-          {ids.length ? (matrix.catalogRows
-            ? <>Every benchmark with a result for the top {ids.length} of your list above: <span className="tabular" data-bench-count>{visible.length}</span> of the <span className="tabular" data-catalog-count>{matrix.catalogRows}</span> benchmark results we track.</>
-            : <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{visible.length}</span> results side by side (loading the full list…).</>) : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
+          {/* F-102: one counting rule — a benchmark is a board (family + version); harness cohorts and cost
+              twins are rows of a board. Numerator and denominator therefore count the same thing as the hero. */}
+          {ids.length ? (loaded && matrix.catalogBoards
+            ? <>Every benchmark with a result for the top {ids.length} of your list above: <span className="tabular" data-bench-count>{countBoards(visible.map((v) => v.row))}</span> of the <span className="tabular" data-catalog-count>{matrix.catalogBoards}</span> benchmarks we track.</>
+            : <>The headline benchmarks for the top {ids.length} of your list above: <span className="tabular">{countBoards(visible.map((v) => v.row))}</span> benchmarks side by side (loading the full list…).</>) : "Your list above is empty — widen the score or cost limits to compare benchmarks."}
         </p>
       </div>
       {/* F-99: below md the hint is a full-width line under the button (CSS order), so it never covers the intro. */}
@@ -108,7 +111,8 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
           <CategoryHeader label={<span className="inline-flex min-h-8 items-center">{g.label}</span>} composite={categoryComposite(g.rows, ids.length)} columns={ids.length} />
           {g.rows.map(({ row, vals, basis }) => {
             const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter), odd = rowOutliers(vals, row.higherBetter);
-            return <tr key={row.id}>
+            // F-102: the board a row belongs to, so the published count can be checked against the table itself.
+            return <tr key={row.id} data-board={boardId(row)}>
               <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}
                 {/* F-98: the two caveat tags a reader needs to read the number right; the editorial tier tags stay in the full comparison. */}
                 {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="bh-matrix-tag" data-tag={t} title={matrix.tags[t].tip}>{matrix.tags[t].label}<span className="sr-only">: {matrix.tags[t].tip}</span></span>)}

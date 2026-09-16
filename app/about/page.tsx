@@ -220,6 +220,14 @@ export default async function AboutPage() {
         marked †, and a missing result stays a dash. Bars compare values within one row only; the bold value is the
         row&apos;s best, and ties are all bold.
       </p>
+      {/* F-102: one counting rule, stated once, for every "N benchmarks" on the site. */}
+      <p className="mt-2 text-sm text-gray-400">
+        Wherever this site counts benchmarks, it counts <strong>boards</strong>: one benchmark family at one
+        version, with at least one published result. A board can occupy several rows of the comparison table —
+        one per harness a benchmark was run through, plus the measured cost a run of it reported — and those rows
+        are still one benchmark. The registry lists every version we have ever read, including versions no
+        current model has a result for, so it can be larger than the number the page shows.
+      </p>
       <p className="mt-3 text-sm text-gray-400">
         Two further tags are not editorial. <strong>Saturated</strong> — &ldquo;Top models sit near this
         benchmark&apos;s ceiling; it separates weaker models, not the best.&rdquo; — is measured from the results we

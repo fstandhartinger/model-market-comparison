@@ -32,9 +32,14 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     rows: document.querySelectorAll('table.bh-matrix tbody tr:not(.bh-matrix-group)').length,
   }));
   const m = counts.status.match(/(\d+) benchmarks across \d+ categories(?: in (\d+) rows)?/), c = counts.chooser.match(/\((\d+) of \d+\)/);
-  check(`${tag} F-77 toolbar benchmark count equals the row chooser; rows equal the table`, m && c && m[1] === c[1] && Number(m[2] ?? m[1]) === counts.rows, `${counts.status} · ${counts.chooser} · rows ${counts.rows}`);
+  // F-102: both numbers count boards (family + version); a harness cohort and a cost twin are rows of a
+  // board, so the table has at least as many rows as it has benchmarks.
+  check(`${tag} F-77 / F-102 toolbar benchmark count equals the row chooser; the table has at least that many rows`,
+    m && c && m[1] === c[1] && counts.rows >= Number(m[2] ?? m[1]), `${counts.status} · ${counts.chooser} · rows ${counts.rows}`);
   const links = await p.evaluate(() => [...document.querySelectorAll('table.bh-matrix tbody tr')]
-    .filter((tr) => /Epoch/.test(tr.querySelector('.bh-matrix-bench')?.textContent ?? ''))
+    // The two ECI boards are named "Epoch …"; a benchmark that merely credits Epoch AI as its publisher
+    // (DeepSWE, since 2026-09-15) is a different row and is not what E1/CR-1.8 checks here.
+    .filter((tr) => /^Epoch/.test((tr.querySelector('.bh-matrix-bench')?.childNodes[0]?.textContent ?? '').trim()))
     .map((tr) => ({ name: tr.querySelector('.bh-matrix-bench')?.childNodes[0]?.textContent ?? '', cells: [...tr.querySelectorAll('a.bh-matrix-link')].map((a) => ({ href: a.getAttribute('href'), text: a.textContent.trim() })) })));
   check(`${tag} both Epoch ECI rows are in the default table`, links.length === 2, links.map((l) => l.name).join(' | '));
   const hrefsOk = links.every((l) => l.cells.length > 0 && l.cells.every((x) => x.href.startsWith('/benchmarks/result?')));

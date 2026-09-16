@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, countBoards, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { versionSuffix } from "../lib/version-label";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
@@ -28,10 +28,12 @@ function Tag({ id, tags }: { id: string; tags: Matrix["tags"] }) {
 }
 
 /** CR-3.1: the custom row checklist — one toggle per category, and the benchmarks inside it. */
-function RowPicker({ rows, groups, selected, onChange, open, onToggle }: { rows: MatrixRow[]; groups: Matrix["groups"]; selected: Set<string>; onChange: (keys: string[]) => void; open: boolean; onToggle: (e: React.SyntheticEvent<HTMLDetailsElement>) => void }) {
+function RowPicker({ rows, groups, selected, selectedBoards, onChange, open, onToggle }: { rows: MatrixRow[]; groups: Matrix["groups"]; selected: Set<string>; selectedBoards: number; onChange: (keys: string[]) => void; open: boolean; onToggle: (e: React.SyntheticEvent<HTMLDetailsElement>) => void }) {
   const set = (keys: string[], on: boolean) => { const n = new Set(selected); keys.forEach((k) => on ? n.add(k) : n.delete(k)); onChange([...n]); };
   return <details className="bh-rowpicker bh-disclosure" open={open} onToggle={onToggle}>
-    <summary>Choose rows <span className="bh-muted font-normal tabular">({selected.size} of {new Set(rows.map((r) => r.key)).size})</span></summary>
+    {/* F-102: the chooser counts benchmarks the same way the status line does — boards, not rows and
+        not list entries. Its list still ticks a benchmark family, which is what a reader picks. */}
+    <summary>Choose rows <span className="bh-muted font-normal tabular">({selectedBoards} of {countBoards(rows)})</span></summary>
     <div className="mt-2 grid gap-x-6 gap-y-3 sm:grid-cols-2 xl:grid-cols-3">
       {groups.map((g) => {
         const keys = [...new Set(rows.filter((r) => r.group === g.id).map((r) => r.key))];
@@ -140,6 +142,9 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
     .map((v, i) => ({ v, i, comparable: v.vals.filter((x) => x != null).length >= 2 ? 0 : 1 }))
     .sort((a, b) => a.comparable - b.comparable || a.i - b.i).map(({ v }) => v) })).filter((g) => g.rows.length);
   const selectedKeys = useMemo(() => new Set(visible.map((v) => v.row.key)), [visible]);
+  // F-102: one counting rule — a benchmark is a board (one family at one version); a harness cohort and a
+  // cost twin are rows of that board. The status line, the row chooser and the hero all count boards.
+  const shownBoards = useMemo(() => countBoards(visible.map((v) => v.row)), [visible]);
   // 2026-09-15: the selected score, with the same evidence rule as the candidate filter (a Composite
   // with no observed slot is the neutral fallback, not a score).
   const valuesFor = (key: typeof score) => ids.map((id) => { const m = modelsById.get(id); const v = m?.scores[key]; return v != null && (key !== "composite" || (m!.composite_coverage ?? 0) > 0) ? v : null; });
@@ -166,7 +171,9 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
   return <section aria-label="Benchmark comparison" className="space-y-3">
     <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
       <p className="text-sm" role="status">
-        <span className="font-semibold tabular">{selectedKeys.size}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
+        {/* F-102: a benchmark is a board (family + version); harness cohorts and cost twins are rows of a
+            board, so the same collection is counted the same way here, in Simple's section 2 and in the hero. */}
+        <span className="font-semibold tabular">{shownBoards}</span> benchmarks across <span className="font-semibold tabular">{groups.length}</span> categories
         {/* F-85: no second total here — a benchmark split into harness cohorts shows the cohort on its own rows. */}
         <span className="bh-muted"> · {pinned ? "your selection" : modelPreset === "top" ? <>top {countSelect} by {SCORE_SHORT_LABELS[score]} under your filters</> : <>{presetName} · {countSelect} under your filters</>}</span>
       </p>
@@ -199,7 +206,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
             onToggle={(id) => { const next = toggleColumn(ids, id, MAX_MODELS); if (next) pin(next); }} />
         </div>
       </details>
-      <RowPicker rows={withValues.map((v) => v.row)} groups={matrix.groups} selected={selectedKeys} onChange={(keys) => chooseRows(keys)} open={panel === "rows"} onToggle={panelToggle("rows")} />
+      <RowPicker rows={withValues.map((v) => v.row)} groups={matrix.groups} selected={selectedKeys} selectedBoards={shownBoards} onChange={(keys) => chooseRows(keys)} open={panel === "rows"} onToggle={panelToggle("rows")} />
     </div>
 
     {ids.length === 0

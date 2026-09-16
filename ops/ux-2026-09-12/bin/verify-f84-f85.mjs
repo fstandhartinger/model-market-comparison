@@ -15,7 +15,11 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   p.on('pageerror', (e) => errors.push(String(e.message).slice(0, 200)));
   await p.goto(`${BASE}/benchmarks`, { waitUntil: 'networkidle' }); await p.evaluate((t) => document.documentElement.setAttribute('data-theme', t), theme); await p.waitForTimeout(1000);
   const s = await p.evaluate(() => {
-    const rows = [...document.querySelectorAll('table.bh-matrix tbody tr')].filter((tr) => tr.querySelector('td'));
+    // F-84 is about benchmark rows. Category header rows (CR-25.6) carry a category composite and, by the
+    // pass-18 rule "a header row shows numbers or nothing", deliberately no data bar — they are excluded
+    // here (2026-09-16: this is why the check read 27/37 after the category composites shipped).
+    const rows = [...document.querySelectorAll('table.bh-matrix tbody tr')]
+      .filter((tr) => tr.querySelector('td') && !tr.classList.contains('bh-matrix-group'));
     let single = 0, singleWithBar = 0, multi = 0, multiWithBar = 0;
     for (const tr of rows) {
       const tds = [...tr.querySelectorAll('td')]; const vals = tds.filter((td) => !td.querySelector('.bh-matrix-missing') && td.innerText.trim() && td.innerText.trim() !== '—').length;
