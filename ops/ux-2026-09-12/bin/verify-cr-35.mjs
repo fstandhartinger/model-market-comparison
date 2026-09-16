@@ -49,7 +49,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   check(`${tag} CR-35.1 Simple benchmark table credit`, (await credits(page, '#benchmarks')) >= 1, '');
   const tipBtn = page.getByRole('button', { name: /About the minimum capability score setting/ }).first();
   if (mobile) { await tipBtn.click(); await page.waitForTimeout(300); } else { await tipBtn.hover(); await page.waitForTimeout(300); }
-  const tipCredit = await page.evaluate((AA) => [...document.querySelectorAll('[role=tooltip] [data-aa-credit] a, dialog[open] [data-aa-credit] a')].some((a) => a.href === AA), AA);
+  const tipCredit = await page.evaluate((AA) => [...document.querySelectorAll('[data-bh-infotip-panel] [data-aa-credit] a, dialog[open] [data-aa-credit] a')].some((a) => a.href === AA), AA);
   check(`${tag} CR-35.1 capability score tooltip credit`, tipCredit, '');
   if (mobile) await page.keyboard.press('Escape');
 

@@ -106,7 +106,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     row.querySelector('button')?.click();
     await new Promise((r) => setTimeout(r, 600));
     // Desktop draws a tooltip, phones a modal dialog (CR-1.8) — take whichever is about this row.
-    const panel = [...document.querySelectorAll('dialog[open], [role="tooltip"], .bh-tip, .bh-infotip-panel, [data-infotip-panel]')]
+    const panel = [...document.querySelectorAll('dialog[open], [role="tooltip"], .bh-tip, .bh-infotip-panel, [data-infotip-panel], [data-bh-infotip-panel]')]
       .find((e) => name && e.innerText.includes(name));
     if (!panel) return { text: null };
     const s = getComputedStyle(panel), r = panel.getBoundingClientRect();

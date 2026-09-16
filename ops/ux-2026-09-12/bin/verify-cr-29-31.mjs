@@ -73,7 +73,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     await page.keyboard.press('Escape');
   } else {
     await trigger.hover(); await page.waitForTimeout(300);
-    const tip = page.locator('[role=tooltip]').last();
+    const tip = page.locator('[data-bh-infotip-panel]').last();
     tipText = await tip.innerText().catch(() => '');
     // The tooltip is pointer-events:none, so elementFromPoint cannot see it; "above sticky headers and the table"
     // is checked as: portalled to <body>, fixed, z-index >= 100. Attachment: within 24 px of its (i).

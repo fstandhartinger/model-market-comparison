@@ -34,7 +34,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
       await page.keyboard.press('Escape'); await page.waitForTimeout(200);
     } else {
       await btn.hover(); await page.waitForTimeout(300);
-      const tip = page.locator('[role=tooltip]').last();
+      const tip = page.locator('[data-bh-infotip-panel]').last();
       text = await tip.innerText().catch(() => ''); bullets = await tip.locator('li').count();
       await page.mouse.move(0, 0);
     }
