@@ -53,6 +53,13 @@
       "note": "EU residency via europe-west / EU multi-region; never the global endpoint. US parent.",
       "hyperscaler": true
     },
+    "Krea": {
+      "country": "US",
+      "eu_hosted": false,
+      "non_us": false,
+      "url": "https://openrouter.ai/provider/krea",
+      "note": "New OpenRouter-routed inference host (appeared 2026-09-16 on DeepSeek V4.1 Flash, fp8). OpenRouter's provider table reports headquarters United States, does-not-train and zero-retention; no EU serving region is documented, so it is not EU-hosted."
+    },
     "Nebius": {
       "country": "Netherlands",
       "eu_hosted": true,
