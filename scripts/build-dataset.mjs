@@ -1204,6 +1204,8 @@ async function build() {
       platform: p.platform, provider: p.provider, model_count: p.model_count.size,
       eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, eu_dedicated: !!m.eu_dedicated, hyperscaler: !!m.hyperscaler, country: m.country || null, note: m.note || "",
       data_private: p.data_private ?? null,
+      // CR-42.3: the provider's official website, curated + dated in data/raw/provider-meta.json.
+      website: m.url || null,
     };
   }).sort((a, b) => b.model_count - a.model_count);
   const missingProviderMeta = providers.filter((provider) => !pmeta[provider.provider]).map((provider) => provider.provider);
@@ -1214,7 +1216,7 @@ async function build() {
   for (const [name, m] of Object.entries(pmeta)) {
     if (!m.coming_soon) continue;
     if (providers.some((p) => p.provider === name)) continue;
-    providers.push({ platform: name, provider: name, model_count: 0, eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, eu_dedicated: !!m.eu_dedicated, hyperscaler: !!m.hyperscaler, country: m.country || null, note: m.note || "", coming_soon: true });
+    providers.push({ platform: name, provider: name, model_count: 0, eu_hosted: !!m.eu_hosted, non_us: !!m.non_us, eu_dedicated: !!m.eu_dedicated, hyperscaler: !!m.hyperscaler, country: m.country || null, note: m.note || "", coming_soon: true, website: m.url || null });
   }
 
   const generated_at = new Date().toISOString();

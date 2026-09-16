@@ -240,7 +240,7 @@ export interface Dataset {
   providers: {
     platform: string; provider: string; model_count: number;
     eu_hosted?: boolean; eu_dedicated?: boolean; non_us?: boolean; hyperscaler?: boolean; data_private?: boolean | null;
-    country?: string | null; note?: string; coming_soon?: boolean;
+    country?: string | null; note?: string; coming_soon?: boolean; website?: string | null;
   }[];
 }
 

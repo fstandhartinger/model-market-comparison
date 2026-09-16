@@ -115,6 +115,8 @@ export interface ProviderInfo {
   country?: string | null;
   note?: string;
   coming_soon?: boolean;
+  /** CR-42.3: the provider's official website, curated in data/raw/provider-meta.json with a dated verification. */
+  website?: string | null;
 }
 
 export interface FamilyOption { key: string; name: string; org: string }

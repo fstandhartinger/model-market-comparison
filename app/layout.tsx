@@ -33,7 +33,7 @@ export default async function RootLayout({ children }: { children: React.ReactNo
   const providers: ProviderInfo[] = ds.providers.map((p) => ({
     key: `${p.platform}::${p.provider}`, platform: p.platform, provider: p.provider, model_count: p.model_count,
     eu_hosted: p.eu_hosted, eu_dedicated: p.eu_dedicated, non_us: p.non_us,
-    hyperscaler: p.hyperscaler, country: p.country, note: p.note, coming_soon: p.coming_soon,
+    hyperscaler: p.hyperscaler, country: p.country, note: p.note, coming_soon: p.coming_soon, website: p.website ?? null,
   }));
   const famMap = new Map<string, FamilyOption>();
   for (const m of ds.models) if (!famMap.has(m.family_key)) famMap.set(m.family_key, { key: m.family_key, name: m.family_name, org: m.org });

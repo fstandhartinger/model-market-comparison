@@ -150,7 +150,8 @@
       "country": null,
       "eu_hosted": false,
       "non_us": false,
-      "note": "OpenRouter's provider API currently publishes neither headquarters nor datacenters. Conservatively excluded from EU-hosted and non-US filters pending first-party evidence."
+      "note": "OpenRouter's provider API currently publishes neither headquarters nor datacenters. Conservatively excluded from EU-hosted and non-US filters pending first-party evidence.",
+      "url": "https://ambient.xyz"
     },
     "Azure": {
       "country": "US",
@@ -241,12 +242,14 @@
     "Anthropic": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.anthropic.com"
     },
     "OpenAI": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://openai.com"
     },
     "Google": {
       "country": "US",
@@ -260,177 +263,208 @@
     "Google AI Studio": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://aistudio.google.com"
     },
     "DeepInfra": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)"
+      "note": "Single global endpoint, US data centers (per own privacy policy); strong ZDR + SOC2/ISO27001 but no self-serve EU region. (One 3rd-party blog claims EU GPUs — unconfirmed, contradicted by DeepInfra's own docs.)",
+      "url": "https://deepinfra.com"
     },
     "Together": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
       "eu_dedicated": true,
-      "note": "EU footprint (Sweden, since Sep 2025) is GPU clusters / dedicated endpoints only; the per-token serverless API has no EU region selector and runs from US capacity. US HQ (CLOUD Act). Not an EU serverless price source."
+      "note": "EU footprint (Sweden, since Sep 2025) is GPU clusters / dedicated endpoints only; the per-token serverless API has no EU region selector and runs from US capacity. US HQ (CLOUD Act). Not an EU serverless price source.",
+      "url": "https://www.together.ai"
     },
     "Fireworks": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
       "eu_dedicated": true,
-      "note": "EU only via dedicated (Frankfurt/Iceland) / BYOC GPU deployments, not serverless."
+      "note": "EU only via dedicated (Frankfurt/Iceland) / BYOC GPU deployments, not serverless.",
+      "url": "https://fireworks.ai"
     },
     "Groq": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://groq.com"
     },
     "Cerebras": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.cerebras.ai"
     },
     "SambaNova": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://sambanova.ai"
     },
     "Sakana AI": {
       "country": "Japan",
       "eu_hosted": false,
       "non_us": true,
-      "note": "Tokyo-headquartered AI lab; OpenRouter serving location is global/unspecified, so non-US company filtering applies but EU hosting does not."
+      "note": "Tokyo-headquartered AI lab; OpenRouter serving location is global/unspecified, so non-US company filtering applies but EU hosting does not.",
+      "url": "https://sakana.ai"
     },
     "BaseTen": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.baseten.co"
     },
     "Parasail": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
       "eu_dedicated": true,
-      "note": "US-HQ (San Mateo, CA). Single global auto-routed serverless endpoint, no EU region pin; region handling is a paid Dedicated/sales feature only."
+      "note": "US-HQ (San Mateo, CA). Single global auto-routed serverless endpoint, no EU region pin; region handling is a paid Dedicated/sales feature only.",
+      "url": "https://parasail.io"
     },
     "Cloudflare": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
       "eu_dedicated": true,
-      "note": "Self-serve Workers AI uses global anycast to nearest GPU, no EU pinning; EU/region-locked inference is Enterprise-only via Data Localization Suite / Custom Regions (\"not yet self-serve\")."
+      "note": "Self-serve Workers AI uses global anycast to nearest GPU, no EU pinning; EU/region-locked inference is Enterprise-only via Data Localization Suite / Custom Regions (\"not yet self-serve\").",
+      "url": "https://www.cloudflare.com"
     },
     "Nvidia": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.nvidia.com"
     },
     "Perplexity": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.perplexity.ai"
     },
     "Venice": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "Privacy-first / no-logs but US (per own privacy policy the Service is US-hosted); compute is a global decentralized GPU pool (Akash/Phala/etc.) with no selectable/guaranteed EU geography. No-logs != EU residency."
+      "note": "Privacy-first / no-logs but US (per own privacy policy the Service is US-hosted); compute is a global decentralized GPU pool (Akash/Phala/etc.) with no selectable/guaranteed EU geography. No-logs != EU residency.",
+      "url": "https://venice.ai"
     },
     "Novita": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "US-HQ, AWS-backed global per-token API; single endpoint api.novita.ai, no region param. GDPR-compliance claims only, no EU region for self-serve serverless."
+      "note": "US-HQ, AWS-backed global per-token API; single endpoint api.novita.ai, no region param. GDPR-compliance claims only, no EU region for self-serve serverless.",
+      "url": "https://novita.ai"
     },
     "AtlasCloud": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
       "eu_dedicated": true,
-      "note": "Public per-token API is US/global with no region selection; an eu-west region exists only for deploy-your-own dedicated serverless endpoints (out of scope)."
+      "note": "Public per-token API is US/global with no region selection; an eu-west region exists only for deploy-your-own dedicated serverless endpoints (out of scope).",
+      "url": "https://www.atlascloud.ai"
     },
     "WandB": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "CoreWeave-powered serverless is US-only (multi-tenant on GCP North America, only coreweave-us storage); EU exists solely for sales-gated Dedicated Cloud. CoreWeave (US) owned."
+      "note": "CoreWeave-powered serverless is US-only (multi-tenant on GCP North America, only coreweave-us storage); EU exists solely for sales-gated Dedicated Cloud. CoreWeave (US) owned.",
+      "url": "https://wandb.ai"
     },
     "Infermatic": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://infermatic.ai"
     },
     "Wafer": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.wafer.ai"
     },
     "Ionstream": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://ionstream.ai"
     },
     "Mara": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://mara.network"
     },
     "Liquid": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://liquid.ai"
     },
     "Inception": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://inceptionlabs.ai"
     },
     "Arcee AI": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://arcee.ai"
     },
     "Io Net": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "DePIN, no residency control."
+      "note": "DePIN, no residency control.",
+      "url": "https://io.net"
     },
     "AkashML": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "DePIN."
+      "note": "DePIN.",
+      "url": "https://www.akash.network"
     },
     "Phala": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "TEE/confidential but US/India nodes, not EU-resident."
+      "note": "TEE/confidential but US/India nodes, not EU-resident.",
+      "url": "https://phala.network"
     },
     "Chutes": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "TEE models available; node location not EU-pinned."
+      "note": "TEE models available; node location not EU-pinned.",
+      "url": "https://chutes.ai"
     },
     "GMICloud": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.gmicloud.com"
     },
     "DigitalOcean": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "Serverless inference is US-only (single global endpoint inference.do-ai.run, no region param); EU regions run only NA-restricted Dedicated/Agent products. DO states GDPR EU inference regions are roadmap, not shipped (re-check 2026-H2)."
+      "note": "Serverless inference is US-only (single global endpoint inference.do-ai.run, no region param); EU regions run only NA-restricted Dedicated/Agent products. DO states GDPR EU inference regions are roadmap, not shipped (re-check 2026-H2).",
+      "url": "https://www.digitalocean.com"
     },
     "Clarifai": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://www.clarifai.com"
     },
     "Friendli": {
       "country": "US",
@@ -442,12 +476,14 @@
     "Upstage": {
       "country": "South Korea",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://upstage.ai"
     },
     "AI21": {
       "country": "Israel",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://ai21.com"
     },
     "AionLabs": {
       "country": "Israel",
@@ -459,12 +495,14 @@
     "DekaLLM": {
       "country": "Indonesia",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.cloudeka.id"
     },
     "Reka": {
       "country": "US",
       "eu_hosted": false,
-      "non_us": false
+      "non_us": false,
+      "url": "https://reka.ai"
     },
     "Mistral": {
       "country": "France",
@@ -478,74 +516,88 @@
       "country": "Canada",
       "eu_hosted": false,
       "non_us": true,
-      "note": "Non-US; EU via VPC."
+      "note": "Non-US; EU via VPC.",
+      "url": "https://cohere.com"
     },
     "Alibaba": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.alibabacloud.com"
     },
     "DeepSeek": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.deepseek.com"
     },
     "Z.AI": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://z.ai"
     },
     "Moonshot AI": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.moonshot.ai"
     },
     "Minimax": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.minimaxi.com"
     },
     "Baidu": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://cloud.baidu.com"
     },
     "StepFun": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.stepfun.com"
     },
     "StreamLake": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.streamlake.ai"
     },
     "SiliconFlow": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://siliconflow.io"
     },
     "Xiaomi": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://www.xiaomi.com"
     },
     "Seed": {
       "country": "China",
       "eu_hosted": false,
       "non_us": true,
-      "note": "ByteDance."
+      "note": "ByteDance.",
+      "url": "https://seed.bytedance.com"
     },
     "Nex AGI": {
       "country": "China",
       "eu_hosted": false,
-      "non_us": true
+      "non_us": true,
+      "url": "https://nex.sii.edu.cn/"
     },
     "Crusoe": {
       "country": "US",
       "eu_hosted": false,
       "non_us": false,
-      "note": "US GPU-cloud (Crusoe Energy); serverless inference endpoint via OpenRouter, no EU region selector. Also operates an Iceland DC, but no EU residency guarantee for the per-token API."
+      "note": "US GPU-cloud (Crusoe Energy); serverless inference endpoint via OpenRouter, no EU region selector. Also operates an Iceland DC, but no EU residency guarantee for the per-token API.",
+      "url": "https://www.crusoe.network"
     },
     "Meta": {
       "country": "US",
@@ -701,5 +753,7 @@
       "InferenceNet",
       "TrustedTokens"
     ]
-  }
+  },
+  "urls_verified_at": "2026-09-16",
+  "url_provenance": "Official provider websites, CR-42.3 curation 2026-09-16 (opencode-kimi): each URL fetched once (redirects followed) and the final status recorded in /opt/benchmarkheaven/state/ux-evidence/iter86-cr-42-3/provider-urls-verified.json; OpenAI and Perplexity returned 403 to automated clients (own domains, not circumvented); Clarifai and GMICloud were unreachable from the build server (DNS+MX checked); DekaLLM's TLS chain is incomplete (Let's Encrypt cert confirmed via openssl). The 41 pre-existing urls were curated with the original provider-meta pass."
 }

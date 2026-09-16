@@ -584,7 +584,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                               return (
                                 <tr key={o.key + i} className="border-b border-line/40" data-free-route={free ? "1" : undefined}>
                                   <td className="py-1 pr-1 text-gray-500">{free ? "—" : priceRank != null ? `#${priceRank}` : o.price.value == null ? "—" : "alt"}</td>
-                                  <td className="py-1 pr-2 font-medium">{o.provider}
+                                  <td className="py-1 pr-2 font-medium">
+                                    {p?.website
+                                      ? <a href={p.website} target="_blank" rel="noopener noreferrer" className="underline decoration-dotted underline-offset-2 hover:text-accent" title={`Official website: ${p.website}`} aria-label={`${o.provider} official website`}>{o.provider}</a>
+                                      : o.provider}
                                     {p?.hyperscaler && <span className="ml-1 rounded bg-amber-500/20 px-1 text-[9px] text-amber-300">HS</span>}
                                     {o.eu_hosted && <span className="ml-1 rounded bg-emerald-500/20 px-1 text-[9px] text-emerald-300">EU</span>}
                                     {o.eu_policy_equivalent && <span title="Company-approved equivalent; Global inference may occur outside the EU" className="ml-1 rounded bg-sky-500/20 px-1 text-[9px] text-sky-300">EU≈</span>}
