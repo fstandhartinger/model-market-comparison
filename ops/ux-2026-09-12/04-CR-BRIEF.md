@@ -465,3 +465,35 @@ DesignArena, OpenRouter …) — the licence covers our code, not their data.
 |---|---|---|
 | CR-55.1 | Switching Overview modes (**Simple**, **Guided**, **Advanced**) never moves the page shell, header, controls, or main content horizontally. Diagnose and correct the underlying layout/scrollbar/reflow cause, not a cosmetic transform. | Automated test captures identical horizontal positions before/after Simple → Guided → Advanced → Simple; both short/long mode content and scrollbar-reserving desktop configurations covered; no horizontal page overflow. |
 | CR-55.2 | The correction is responsive and preserves scrolling, selected mode/focus behavior and reduced-motion expectations. | Independent live verification at desktop with classic scrollbar and at 390 px/mobile width, light/dark; no jump or compensating animation; keyboard mode selection remains correct. |
+
+## 28. CR-20260916q — Read-only WebMCP tools for browser agents
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-56.1 | Feature-detect and register read-only, bounded WebMCP tools: `search_benchmarks`, `get_benchmark_results`, and `get_model_benchmark_summary`. Use explicit JSON Schemas, canonical identities, strict caps/cursors and structured errors. | Compatible browser inspector/agent discovers all three tools and invokes valid/invalid/boundary inputs; result payloads meet schemas and limits; unsupported browser has no error, fake shim, or broken visual UI. |
+| CR-56.2 | Tool results use the same published projection semantics as the site and retain benchmark/model identity, value/unit/direction, version/as-of/source/methodology and material configuration. Null means unavailable, never estimated. Expose no secret, raw/unreviewed/private data, write action or identity tracking. | Contract tests compare representative tool output with public site/API data; security review demonstrates read-only behavior, input validation, no credentials in bundles/responses and bounded payloads. |
+| CR-56.3 | Satisfy the supported WebMCP origin-isolation and `tools` permissions-policy model explicitly; only intended top-level/same-origin contexts expose tools. | Deployed headers/context test and cross-origin iframe denial/allowance test pass; no regression to normal pages/APIs. |
+| CR-56.4 | Publish concise “For agents” documentation distinguishing WebMCP’s open-browser-tab requirement from the existing headless HTTP APIs, with schemas/examples, limits, sources/freshness/privacy and agent integration guidance. | Docs links work and accurately describe the deployed behavior; independent live review exercises every tool, unsupported fallback, desktop/mobile and light/dark. |
+
+
+## CR-20260916a/b/c checklist — licence (CR-59), Union Alpha (CR-60), removal-on-request note (CR-61) — PRIORITY before launch
+(Verbatim requests: sections CR-20260916a/b/c in 03-CHANGE-REQUESTS-VERBATIM.md.)
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-59.1 | Add an MIT `LICENSE` (copyright productivity-boost.com Betriebs UG (haftungsbeschränkt) & Co. KG / Florian Standhartinger, 2026) and a README section 'Open source & data sources' (code licence; third-party benchmark data stays under its providers' terms with attribution) | GitHub shows the licence; README section present |
+| CR-59.2 | Site footer and /about: 'Open source (MIT) · hobby project' with a link to the GitHub repository | Visible on all pages, light/dark, mobile (already live on 16 Sep — verify and mark) |
+| CR-60.1 | Add Union Alpha to the model catalog (org Union Alpha / stealth, closed weights, 256K context, released 2026-09-16) with the OpenRouter offer `stealth/union-alpha` (free) and its providers; include it everywhere like any model | Model visible; identity map documented |
+| CR-60.2 | Ingest the announced scores with provenance and a 'preliminary / chart-read / anticipated pricing' label: DeepSWE 73 % (OpenRouter run, via Cline + Alex Atallah posts, 16 Sep), Terminal-Bench v4.0 ≈ 52 % (Artificial Analysis chart via @opencode post); prefer exact values from the OpenRouter Benchmarks API / AA when available; never show anticipated cost as measured adjusted cost | Rows carry source URL, date, basis, preliminary flag; tooltip says chart-read |
+| CR-60.3 | Price 0 on OpenRouter: show 'free (stealth preview)'; $0 must not break the value map/Pareto (pin as free per the existing rule) | Value map renders; free label |
+| CR-61.1 | 'Data sources & removal on request' note on /about (short section) and one footer line linking to it: "Benchmark Heaven is a free, open-source, non-commercial hobby project. Benchmark results are shown with attribution and links to their original publishers (Artificial Analysis, Epoch AI, DesignArena, OpenRouter, …). If you publish benchmark data and would like your numbers removed or shown differently, email info@productivity-boost.com and we will act promptly." | Visible on /about and in the footer on all pages, light/dark, mobile; mail link works |
+
+
+## CR-20260916d checklist — link previews (CR-62) — PRIORITY before launch
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-62.1 | Make the homepage (and every public page) small enough for link-preview crawlers: initial HTML ≤ 300 KB. Move the inlined dataset out of the server-rendered payload (fetch the JSON client-side / stream / cache in the browser), keep server-rendered head + hero for SEO. Same for /benchmarks, /compare, /charts etc. | curl size of / ≤ 300 KB with a WhatsApp/Twitterbot user agent; page still renders and works; Lighthouse not worse |
+| CR-62.2 | Complete the preview tags: og:url (canonical), twitter:site @benchmarkheaven, twitter:creator @benchmarkheaven, og:locale; per-page og:title/description/image for /benchmarks, /compare, /benchmaxxing, /charts, /eu and model pages | Tags present per page; a proper /robots.txt (allow all, sitemap link) and /sitemap.xml exist |
+| CR-62.3 | A better share image for launch: 1200×630 with the real product look (dark UI screenshot of the value map + ranking with the logo and tagline), plus a 1:1 variant; keep the existing text-only image as fallback | Image ≤ 1 MB, looks good in an X card and WhatsApp preview |
+| CR-62.4 | Verify previews end to end after deploy: fetch with the Twitterbot, WhatsApp, TelegramBot and facebookexternalhit user agents (size + tags), then send https://benchmarkheaven.com/?v=<date> to Florian via `notify now` so he can confirm the card in X chat and WhatsApp | Report shows sizes per UA; Florian sees the card |

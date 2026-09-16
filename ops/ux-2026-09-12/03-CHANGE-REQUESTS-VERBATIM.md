@@ -612,3 +612,59 @@ that both require and do not require vertical scrolling, on desktop scrollbars t
 width and at narrow/mobile widths. Preserve normal scrolling, no horizontal page overflow, focus and
 selected-mode behavior, and respect reduced-motion preferences (the correction itself must not use
 a distracting compensating animation). Add regression coverage and independently live-verify.
+
+---
+
+## CR-20260916q — Let browser agents read Benchmark Heaven through WebMCP
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+let's add WebMCP to the benchmarkheaven project - people should be able to read benchmarks from there via their agents
+
+</requirements>
+
+Implementation clarification: add a **read-only WebMCP integration** to the public Benchmark
+Heaven site for compatible browser agents. Do not represent WebMCP as a conventional remote MCP
+server: the current proposed WebMCP model requires an open browser context/tab and browser support.
+Keep the existing documented public HTTP APIs as the headless/programmatic route; document this
+distinction plainly for users and agents.
+
+Feature-detect the supported WebMCP API and degrade silently and completely safely in unsupported
+browsers (no polyfill that impersonates browser mediation, no user-visible broken widget). Register
+small, bounded, read-only tools with precise JSON schemas and source/date/protocol-bearing results:
+
+1. `search_benchmarks` — discover benchmark identities by text/category, returning a capped,
+   paginated compact list with metric, unit/direction, maintained version, source and as-of date.
+2. `get_benchmark_results` — request one canonical benchmark identity plus a bounded model selection
+   or page cursor, returning only published results and their exact provenance/methodology links.
+3. `get_model_benchmark_summary` — request a canonical catalog model identity (and optionally a
+   bounded list of benchmark identities), returning scores only with value/unit, run configuration
+   where material, benchmark source/version/date and explicit null/unavailable state—not inferred
+   scores.
+
+The tools must delegate to the same published projection/data semantics used by the site rather than
+duplicating a dataset in client code; they must never expose credentials, internal/raw unreviewed
+records, unpublished model data or more data than strict result limits allow. Validate all input,
+escape/display untrusted source metadata safely in resulting UI, give actionable structured errors,
+and avoid endpoint abuse through request caps, pagination and appropriate existing rate/security
+controls. Address WebMCP's origin-isolation and `tools` permissions-policy requirements explicitly
+and prove it runs only in the intended top-level/same-origin context.
+
+Add a concise “For agents” documentation page explaining availability, browser-tab requirement,
+tool schemas/examples, result limits, source/attribution, currency and freshness caveats, privacy,
+and the existing API path for headless/server agents. Add unit/contract tests plus a real compatible
+browser test using the WebMCP inspector or equivalent—not merely checking `window` existence. An
+independent agent must verify each tool against live deployed data, including an unsupported-browser
+fallback, desktop/mobile and light/dark. No write actions, login, analytics identity or agent-tracking
+may be introduced.
+
+
+### CR-20260916b addendum (16 Sep ~19:20 UTC): exact DeepSWE numbers from Cline's post
+Florian forwarded a screenshot of @cline's post (16 Sep 18:47 UTC, 'Union Alpha (stealth model) is now free in Cline … near GPT-6 Astra and Opus 5 performance for ~18x lower expected cost'). Bar chart 'DeepSWE score and cost, Source: OpenRouter': GPT-6 Astra 74 % ($6.50/task), Opus 5 74 % ($11.80), **Union Alpha 73 % (~$0.65, expected pricing)**, GLM-5.3 69 % ($4.00), DeepSeek V4 Pro 63 % ($1.65). Use 73 % as the DeepSWE value (source: OpenRouter via Cline post + Alex Atallah post), cost still 'expected', not measured.
+
+
+## CR-20260916d — Link previews (X chat, WhatsApp, Telegram) don't show for benchmarkheaven.com
+Laptop chat 16 Sep 2026 ~21:20 UTC, verbatim: "do we have that feature working properly that makes a webpage show in a chat app like WhatsApp or X chat with a text and image etc? for https://benchmarkheaven.com/? Because at the moment I don't see it in X.chat"
+Supervisor findings: og:title/description/image (1200×630 PNG, 56 KB, HTTP 200) and twitter:card=summary_large_image are present and correct in <head>. BUT the homepage HTML is **8.25 MB** (dataset inlined into the server-rendered payload); link-preview crawlers of X, WhatsApp (~300 KB limit), Telegram and Facebook abort on such pages, so no card. Also: no og:url, no twitter:site; /robots.txt returns the HTML app (no real robots.txt); sitemap.xml missing. X caches a failed card fetch for days — after the fix, share the URL with a fresh query string (e.g. ?launch=1) or post a new link.
