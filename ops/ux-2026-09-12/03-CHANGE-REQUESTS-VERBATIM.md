@@ -559,3 +559,56 @@ table sorting, or creating stale/overlapping panels. Cover Score and Adjusted Co
 other interactive info panel for the same shared primitive/bug, add interaction regression tests,
 and independently verify the deployed result by mouse pointer, keyboard, touch-width emulation,
 light/dark, desktop and mobile.
+
+---
+
+## CR-20260916o — Include the individual Epoch benchmark results, not only ECI
+
+Florian's change request, Telegram, 16 Sep 2026, verbatim:
+
+<requirements>
+
+do we already include the individual benchmarks from Epoch? not only the ECI? if we don't let's add that
+
+</requirements>
+
+Implementation clarification: audit the complete current Epoch AI Benchmarking Hub/catalog and
+the ECI input/evaluation records. The product already has the general ECI and Software Engineering
+ECI, plus selected individual Epoch-published boards (including DeepSWE, FrontierMath v2 tiers and
+SimpleQA Verified); this is not proof that all individual results are covered. Produce an auditable
+one-row-per-benchmark inventory: current inclusion/collector state, maintained benchmark/version,
+methodology/metric/direction, source/capture date, whether Epoch ran it or republished an external
+project's results, and the original project's reuse terms where applicable. Ingest every additional
+individual benchmark whose official Epoch result data and applicable reuse rights are verified,
+using separate stable benchmark identities and normal raw/provenance retention—never collapse raw
+benchmark scores into ECI or fabricate gaps. If an external-origin board has no verified right to
+republish, retain the audit decision but do not publish its values merely because Epoch hosts a
+copy. Surface verified boards in the benchmark list/table with accurate source/attribution and
+methodology/date detail; assign categories and composite treatment according to the documented
+taxonomy rather than treating them all as ECI. Add a source-health/refresh plan, parser and
+provenance tests, and independent live verification.
+
+---
+
+## CR-20260916p — View switcher must not shift the page horizontally
+
+Tester feedback forwarded by Florian, 16 Sep 2026, verbatim:
+
+<requirements>
+
+when you click these buttons the whole site shifts left and right
+
+</requirements>
+
+Screenshot context: changing the Overview view selector between **Simple**, **Guided**, and
+**Advanced** visibly moves the whole page left/right.
+
+Implementation clarification: eliminate the horizontal layout jump on every view change, without
+breaking responsive or overlay-scrollbar environments. Diagnose whether the cause is scrollbar
+appearance, mode-dependent container geometry, or another layout reflow; fix the root cause rather
+than adding a one-off transform. The page shell/header/main alignment must have an identical x
+position before and after each switch. Test Simple → Guided → Advanced → Simple with content heights
+that both require and do not require vertical scrolling, on desktop scrollbars that consume layout
+width and at narrow/mobile widths. Preserve normal scrolling, no horizontal page overflow, focus and
+selected-mode behavior, and respect reduced-motion preferences (the correction itself must not use
+a distracting compensating animation). Add regression coverage and independently live-verify.
