@@ -23,5 +23,8 @@ const headlineObservations = buildHeadlineObservations({
   epochEci,
   modelRows: dataset.models,
 });
-if (!isDeepStrictEqual(buildBenchmarkResults(snapshot, registry, dataset.models, history.states.length ? history : null, headlineObservations), dataset.benchmark_results)) throw new Error('Built benchmark data differs from validated scores; run data:build');
+// CR-64: the per-benchmark kind map is copied from the taxonomy by build-dataset, not derived from scores; check it on its own.
+const { benchmark_kinds: kinds, ...builtResults } = dataset.benchmark_results;
+if (!isDeepStrictEqual(kinds, (await read('data/benchmark-taxonomy.json')).benchmark_kinds)) throw new Error('Dataset benchmark kinds differ from the taxonomy; run data:build');
+if (!isDeepStrictEqual(buildBenchmarkResults(snapshot, registry, dataset.models, history.states.length ? history : null, headlineObservations), builtResults)) throw new Error('Built benchmark data differs from validated scores; run data:build');
 console.log('Benchmark source/build guard:', checked);

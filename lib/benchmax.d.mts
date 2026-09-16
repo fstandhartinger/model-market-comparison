@@ -83,3 +83,4 @@ export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: {
 export function benchmaxxingPrior(view: BenchmarkView): { mean: number | null; shrink: number; eligible: number };
 export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; weak: Set<string> };
 export function benchmaxxingFamilySignals(view: BenchmarkView): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; taggedFamilies: Set<string>; weak: Set<string>; weakFamilies: Set<string>; representatives: Map<string, string>; variantsOf: (id: string) => number };
+export function isCapabilityAxis(axis: { kind?: string; category?: string }): boolean;

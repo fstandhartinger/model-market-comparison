@@ -1238,6 +1238,8 @@ async function build() {
     modelRows,
   });
   const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null, headlineObservations);
+  // CR-64: what each benchmark measures (capability / cost / efficiency), so analyses can select by kind.
+  benchmark_results.benchmark_kinds = (await readData("benchmark-taxonomy.json")).benchmark_kinds;
   const dataset = {
     benchmark_results,
     generated_at,
