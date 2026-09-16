@@ -724,3 +724,23 @@ independently re-checked by Kimi K3, which confirmed every finding in substance 
 workers checked 1,337 stored values for 38 models against the primary sources (93 % exact); every mismatch was re-checked live by Claude
 Opus 5 and 11 worker claims were rejected (`DATA-AUDIT.md`, `CORRECTIONS.json`). Radar: live screenshots 1440/390 (`shots/`).
 Checklist: `04-CR-BRIEF.md` → "CR-20260916s".
+
+
+## CR-20260916t — Daily data pipeline: reliable, free, critic-checked → CR-66
+Florian, 16 Sep 2026 (overnight job brief), verbatim:
+
+<requirements>
+have another look at how our daily (or maybe even more often) data update and data collection agent jobs are set up and if these will
+really be able to update the data very reliably (no wrong data — maybe we should really have full gauntlet loop like critics agents there) and still
+ideally free (based on LLMs in opencode that don't produce costs, or at least very affordable ones) — maybe also in Codex using very cheap models
+like GPT-5.6 Luna, which should be ok.
+</requirements>
+
+How this was handled (16 Sep 2026 ~23:00–00:30 UTC, job `~/jobs/bh-pipeline-reliability-20260916/`, outside the repo):
+audit in `PIPELINE-AUDIT.md` (the scheduled 05:17 run failed on all six days 11–16 Sep; every publication was a manual repair run).
+Built outside the repo, live since 16 Sep 23:30 UTC: `/opt/benchmarkheaven-daily/gated-run.sh` (cron 05:17, catch-up 07:17) and
+`/opt/benchmarkheaven-daily/gate/` — git hooks in the daily staging checkout (injected via `GIT_CONFIG_*`) that re-derive every
+OpenRouter price and AA score row from the captured source bodies, apply blast-radius gates, let a free collector model (Qwen3.8 /
+Kimi K3 on Chutes) and a different-family free critic (Union Alpha) review 8 sampled rows, and block the push unless PASS; a diff
+digest per run; `notify now` on the second failure in a row; a no-LLM 6-hourly price watch. The rows below are the repo parts.
+Checklist: `04-CR-BRIEF.md` → "CR-20260916t".
