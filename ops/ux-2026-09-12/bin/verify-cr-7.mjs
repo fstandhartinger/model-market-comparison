@@ -47,7 +47,15 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
   const expected = s.tableIds.slice(0, 5).map(idOf);
   const got = s.cols.map(idOf);
   check(`${tag} CR-7.1 columns = the first (up to) 5 models of section 1's list, in order`, got.length >= 2 && got.every((id, j) => id === expected[j]) || (got.length > 0 && got.every((id) => expected.includes(id))), `${got.join(' | ')} vs ${expected.join(' | ')}`);
-  check(`${tag} CR-7.1 rows are headline benchmarks (≥ 5 rows, each with ≥ 2 values)`, s.rows.length >= 5 && s.rows.every((r) => r.filled >= Math.min(2, got.length)), `${s.rows.length} rows: ${s.rows.slice(0, 6).map((r) => r.name).join(' | ')}`);
+  // 2026-09-16: CR-28.1 (newer than CR-7.1's "Important row preset") requires this section to list
+  // every benchmark its models have, not only the headline ones. Sparse rows are therefore expected
+  // and correct — family-scoped evidence (Epoch ECI, DesignArena, the OpenRouter runs) sits on one
+  // configuration while these columns are the top five models' own variants, and a missing value is
+  // shown as missing (CR-9.3). What must hold: enough rows, no all-empty row, and no row whose
+  // values exceed the number of columns.
+  check(`${tag} CR-7.1/CR-28.1 rows are the models' full benchmark list (≥ 5 rows, every row carries at least one real value)`,
+    s.rows.length >= 5 && s.rows.every((r) => r.filled >= 1 && r.filled <= got.length),
+    `${s.rows.length} rows, sparse: ${s.rows.filter((r) => r.filled < 2).length}; first: ${s.rows.slice(0, 4).map((r) => r.name).join(' | ')}`);
   check(`${tag} CR-7.2 marked as the simple version, obvious link to the full comparison with these models`, /Simple view/i.test(s.eyebrow) && s.fullHref && new URL(s.fullHref, BASE).searchParams.get('models') === got.join(','), `${s.eyebrow} · ${s.fullHref}`);
   check(`${tag} CR-7.2 small-screen note only on phones`, kind === 'mobile' ? s.note : !s.note, `note=${s.note}`);
   await p.locator('#benchmarks').scrollIntoViewIfNeeded();
