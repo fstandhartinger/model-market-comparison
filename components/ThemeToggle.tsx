@@ -8,7 +8,7 @@ export function ThemeToggle() {
   useEffect(() => setTheme(document.documentElement.dataset.theme || 'dark'), []);
   const light = theme === 'light';
   const label = theme == null ? 'Switch color theme' : light ? 'Switch to dark theme' : 'Switch to light theme';
-  return <button type="button" className="bh-nav-button inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-300 hover:bg-accent/10 hover:text-accent" aria-label={label} title={label} onClick={() => {
+  return <button type="button" className="bh-nav-button inline-flex h-10 w-10 items-center justify-center rounded-md text-gray-300 hover:bg-accent/10 hover:text-accent max-[359px]:w-9" aria-label={label} title={label} onClick={() => {
     const next = document.documentElement.dataset.theme === 'light' ? 'dark' : 'light';
     document.documentElement.dataset.theme = next; setTheme(next);
     try { localStorage.setItem('bh-theme', next); } catch { /* The active theme still works without storage. */ }

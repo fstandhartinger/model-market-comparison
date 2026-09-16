@@ -56,7 +56,7 @@ const MORE = [LINKS[6], LINKS[7], LINKS[8], LINKS[9], LINKS[10], LINKS[11]];
 function FilterButton() {
   const { filtersOpen, toggleFilters } = useSettings();
   return (
-    <button type="button" data-bh-filters-toggle className={`bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 ${filtersOpen ? "text-accent" : "text-gray-300"}`} aria-controls="global-filters" aria-expanded={filtersOpen} aria-label="Open options" onClick={toggleFilters}>
+    <button type="button" data-bh-filters-toggle className={`bh-nav-button inline-flex min-h-10 items-center gap-1.5 rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent max-[359px]:px-1 max-[359px]:text-[13px] sm:px-2.5 ${filtersOpen ? "text-accent" : "text-gray-300"}`} aria-controls="global-filters" aria-expanded={filtersOpen} aria-label="Open options" onClick={toggleFilters}>
       <svg aria-hidden="true" className="hidden md:block" width="15" height="15" viewBox="0 0 20 20" fill="none"><path d="M3 5h14M5.5 10h9M8 15h4" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" /></svg>
       <span>Options</span>
     </button>
@@ -100,14 +100,14 @@ export function Nav() {
           })}
           <details className="relative"><summary className="flex min-h-10 cursor-pointer items-center rounded-md px-2.5 text-gray-300">More ▾</summary><div className="absolute left-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">{MORE.map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} onClick={(e) => e.currentTarget.closest('details')?.removeAttribute('open')}>{label}</Link>)}</div></details>
         </nav>
-        <div className="ml-auto flex items-center gap-0.5 sm:gap-1">
+        <div className="ml-auto flex items-center gap-0.5 max-[359px]:gap-0 sm:gap-1">
           <FilterButton />
           {/* CR-6.1: below xl (1280 px, was lg — the full bar overflowed 1024–1279) the header carries
               Options · Benchmarks · More, Benchmarks left of More. */}
-          <Link href="/benchmarks" onClick={(e) => jumpToSimpleBenchmarks(e, path)} aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm hover:bg-accent/10 hover:text-accent sm:px-2.5 xl:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
+          <Link href="/benchmarks" onClick={(e) => jumpToSimpleBenchmarks(e, path)} aria-current={path.startsWith("/benchmarks") ? 'page' : undefined} className={`bh-nav-button inline-flex min-h-10 items-center rounded-md px-2 text-sm max-[359px]:px-1 max-[359px]:text-[13px] hover:bg-accent/10 hover:text-accent sm:px-2.5 xl:hidden ${path.startsWith("/benchmarks") ? "text-accent" : "text-gray-300"}`}>Benchmarks</Link>
           <div className="relative xl:hidden">
             <details>
-              <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent sm:px-2.5">More</summary>
+              <summary className="bh-nav-button flex min-h-10 cursor-pointer list-none items-center rounded-md px-2 text-sm text-gray-300 hover:bg-accent/10 hover:text-accent max-[359px]:px-1 max-[359px]:text-[13px] sm:px-2.5">More</summary>
               <div className="absolute right-0 top-full z-30 mt-2 grid w-64 gap-1 rounded-xl border border-line bg-panel p-2 shadow-lg">
                 {LINKS.filter(([href]) => href !== "/radar" && href !== "/benchmarks").map(([href, label]) => <Link key={href} href={href} aria-current={path === href ? 'page' : undefined} className={`rounded-md px-3 py-3 ${path === href ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`}>{label}</Link>)}
                 <AccountMenuLink className={`border-t border-line/70 rounded-md px-3 py-3 ${path === "/account" ? 'bg-accent/10 text-accent' : 'hover:bg-accent/5'}`} />

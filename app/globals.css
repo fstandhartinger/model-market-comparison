@@ -158,6 +158,8 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-value-tag { display: inline-flex; align-items: center; gap: 2px; margin-top: 0; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 600; line-height: 16px; white-space: nowrap; }
 .bh-value-tag[data-kind="cheap"] { color: rgb(var(--accent2)); background: rgb(var(--accent2) / .13); }
 .bh-value-tag[data-kind="pricey"] { color: rgb(var(--warn)); background: rgb(var(--warn) / .13); }
+/* CR-42.1: the weak level is an outline in the same colour — the arrow shape differs too, so colour is not the only cue. */
+.bh-value-tag[data-level="weak"] { background: transparent; box-shadow: inset 0 0 0 1px currentColor; font-weight: 500; }
 /* Directive 10 (2026-09-15): the compact tag "↓11×" — no words, no space. Measured 2026-09-15: below 1024 px (phones,
    768/834 tablets, landscape phones) the full "↓ 11× cheaper" spills out of the cost cell and at 768 covers the score,
    so the compact form applies there; from 1024 px up the full text fits and stays unchanged. */

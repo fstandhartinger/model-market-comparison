@@ -123,7 +123,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // The pool is everything the current filters allow BEFORE the two shortlist limits
   // (min score, max cost) are applied. Simple mode's histograms describe this pool, so
   // the user sees the field they are cutting into rather than what is left of it.
-  const pool = useMemo(() => {
+  const settingsPool = useMemo(() => {
     let r = candidates.map((m) => {
       const ctx = priceContext(m, data, priceSettings);
       return {
@@ -137,6 +137,20 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     if (s.labAllowed) r = r.filter((x) => s.labAllowed!(x.m.org));
     if (featuredOnly) r = r.filter((x) => x.m.featured);
     if (s.familySet) r = r.filter((x) => s.familySet!.has(x.m.family_key));
+    if (withScoreOnly) r = r.filter((x) => x.hasEvidence);
+    if (s.priceMode === "adjusted" && measuredTasksOnly) r = r.filter((x) => {
+      const tokens = x.m.token_efficiency?.aa.tokens_per_task;
+      return tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
+    });
+    // "Has provider": keep only models offered by ≥1 provider within the active filters.
+    if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
+    return r;
+  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, s.familySet, s.openOnly, s.labAllowed, s.priceMode, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId]);
+  // CR-46.1: the population the cheaper/pricier tags are judged against — the settings' models before
+  // search, the lab picker, a comparison, the score floor or the cost cap narrow what is shown.
+  const valueReference = useMemo(() => expandSimple ? topCandidates(settingsPool, (x) => x.m, SIMPLE_LIMIT) : settingsPool, [settingsPool, expandSimple]);
+  const pool = useMemo(() => {
+    let r = settingsPool;
     if (org) r = r.filter((x) => x.m.org === org);
     if (q.trim()) { const t = q.toLowerCase(); r = r.filter((x) => x.m.display_name.toLowerCase().includes(t) || x.m.family_key.includes(t) || x.m.org.toLowerCase().includes(t)); }
     if (chosenComparisonMetric && comparisonReference) {
@@ -145,18 +159,11 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
         return value != null && value.value > comparisonReference.value;
       });
     }
-    if (withScoreOnly) r = r.filter((x) => x.hasEvidence);
-    if (s.priceMode === "adjusted" && measuredTasksOnly) r = r.filter((x) => {
-      const tokens = x.m.token_efficiency?.aa.tokens_per_task;
-      return tokens && !tokens.stale && Number.isFinite(tokens.value.output) && tokens.value.output > 0;
-    });
-    // "Has provider": keep only models offered by ≥1 provider within the active filters.
-    if (hasProviderOnly || offerScope.restricted) r = r.filter((x) => x.ncheap > 0);
     // Rank inside the filtered pool, so every filter above still applies. Collapsed families give
     // one row each; with variants expanded the cap keeps the best-ranked families' rows.
     if (expandSimple) r = topCandidates(r, (x) => x.m, SIMPLE_LIMIT);
     return r;
-  }, [data, candidates, score, offerScope, priceSettings, s.collapse, featuredOnly, expandSimple, s.familySet, s.openOnly, s.labAllowed, s.priceMode, org, q, withScoreOnly, hasProviderOnly, measuredTasksOnly, preferredId, chosenComparisonMetric, comparisonReference]);
+  }, [settingsPool, expandSimple, org, q, chosenComparisonMetric, comparisonReference]);
 
   // CR-18: while Simple's floor is untouched it defaults to the score of the cheapest model the value
   // map plots from this pre-cut pool, so that model is on the Pareto line. Computed before the cut, so
@@ -287,8 +294,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     if (costRange.max === costRange.min) return 1;
     return Math.log(value / costRange.min) / Math.log(costRange.max / costRange.min);
   };
-  // CR-15.1: notably cheap / pricey for the score, judged only among the rows on screen (filters apply).
-  const valueById = useMemo(() => valueSignals(rows.map((x) => ({ id: x.m.id, score: x.sc, cost: x.price.value }))), [rows]);
+  // CR-15.1 / CR-46.1: notably cheap / pricey for the score, judged against the settings' models (filters and
+  // price settings apply; the score floor, cost cap and search do not shrink the comparison).
+  const valueById = useMemo(() => valueSignals(valueReference.filter((x) => x.hasEvidence).map((x) => ({ id: x.m.id, score: x.sc, cost: x.price.value }))), [valueReference]);
 
   const onSort = (k: SortKey) => { if (sort === k) setAsc(!asc); else { setSort(k); setAsc(k === "name" || k === "org" || k === "cost"); } };
   // F-14: Org, # benchmarks and # providers drop out on phones (hidden below md); their
@@ -481,10 +489,12 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   if (!v) return null;
                   const ratio = `${v.ratio >= 10 ? Math.round(v.ratio) : v.ratio.toFixed(1)}×`;
                   const words = v.kind === "cheap" ? `${ratio} cheaper` : `${ratio} pricier`;
-                  const why = `About ${ratio} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score among the ${v.n} priced models shown (log cost fitted against score).`;
+                  const strong = v.level === "strong";
+                  const why = `${strong ? "Well" : "Somewhat"} ${v.kind === "cheap" ? "below" : "above"} the typical cost for a ${num(sc, 1)} score: about ${ratio} ${v.kind === "cheap" ? "less" : "more"}, among ${v.n} priced models with your settings (log cost fitted against score).`;
                   // CR-24.1: the tag sits left of the price on the same line, so the cost bar keeps its row height.
                   // Florian 2026-09-15 (directive 10): below 1024 px (where the words overflow the cell) the tag is the compact "↓11×"; the words stay in the tooltip and for screen readers.
-                  return <span className="bh-value-tag" data-kind={v.kind} title={`${words}. ${why}`}><span aria-hidden="true">{v.kind === "cheap" ? "↓" : "↑"}</span><span className="bh-vt-full">{words}</span><span className="bh-vt-compact" aria-hidden="true">{ratio}</span><span className="sr-only">{words}: {why}</span></span>;
+                  // CR-42.1: a strong tag is a filled pill with a straight arrow, a weak one an outlined pill with a slanted arrow.
+                  return <span className="bh-value-tag" data-kind={v.kind} data-level={v.level} title={`${words}. ${why}`}><span aria-hidden="true">{v.kind === "cheap" ? (strong ? "↓" : "↘") : (strong ? "↑" : "↗")}</span><span className="bh-vt-full">{words}</span><span className="bh-vt-compact" aria-hidden="true">{ratio}</span><span className="sr-only">{strong ? "Notably" : "Slightly"} {v.kind === "cheap" ? "cheap" : "pricey"}, {words}: {why}</span></span>;
                 })()}<PriceValue price={price} compact showEstimate={false} context={{ cheapest: cheap.length > 0, strongest: s.collapse && preferredId.get(m.family_key) === m.id }} /></span></MagnitudeBar> : <span className="block text-right text-gray-600">—</span>}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{m.benchmark_count || "—"}</td>
                 <td className="hidden px-3 py-2 text-right tabular text-gray-400 md:table-cell">{ncheap || "—"}</td>
