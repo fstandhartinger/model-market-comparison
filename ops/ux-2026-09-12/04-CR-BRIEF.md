@@ -420,3 +420,17 @@ waits for the design authority's choice, as Florian's clarification asks.
 |---|---|---|
 | CR-50.1 | A zero-price API route is volatile availability/promotion evidence, never the ordinary paid price. Every refresh revalidates it; it is excluded when absent from the current source, stale, quota-bound, invitation-only or not usable through the normal paid API. Every cost ranking, chart (incl. **Cheapest models — Adjusted $/task**), table and value map uses the cheapest current **paid** route; historic raw provenance is kept but never shown as current pricing. Provider, privacy and region filters keep working. | Regression tests: a vanished free endpoint; a verified current free endpoint next to a paid chart value; a model with only a valid zero-price route. GLM-5.2 no longer shows $0 live; the expanded price table exposes paid/free provenance accessibly |
 | CR-50.2 | Where a zero-price route is current and broadly usable, a compact **"Free route currently available"** tag beside the model names the provider, says limits and availability may apply and never implies the model is universally free; no tag when expired/unconfirmed. **The design authority chooses the least noisy form before implementation.** | Live on both hosts, 1440/390, light/dark; tag absent for expired routes; independent verification by an engine other than the implementer |
+
+## 23. CR-20260916a — Make the open-source claim true: add a licence (seeded 2026-09-16 by review gate 20260916T153003Z)
+
+Florian (launch-ad brief, Laptop Claude Code chat, 16 Sep 2026 ~15:45 UTC): "lets make clear this
+is open source and a hobby project, to give the world better tools to decide which LLM to choose
+best for the job". Supervisor check in the same message: the public GitHub repo has **no LICENSE**
+(GitHub licenseInfo null) — legally source-available, not open source. Default choice: **MIT**
+(Florian may overrule). Third-party data keeps its own terms (Artificial Analysis, Epoch AI CC BY,
+DesignArena, OpenRouter …) — the licence covers our code, not their data.
+
+| ID | Requirement | Acceptance |
+|---|---|---|
+| CR-51.1 | The repo carries a **licence** (MIT unless Florian overrules) that is visible to GitHub's licence banner: LICENSE file at the repo root, `license` field in package.json, README section | GitHub shows the licence; the licence text names the project's copyright holder consistently with the site's existing Impressum; third-party benchmark data explicitly NOT relicensed (its own terms named, linking the existing attribution/attributions page) |
+| CR-51.2 | Product copy states plainly that Benchmark Heaven is **open source and a hobby project** ("to give the world better tools to decide which LLM to choose best for the job" as the spirit), placed where users read it (footer and/or /about), consistent with the existing BETA tag and the AA/Epoch attribution obligations (CR-35) | Live on both hosts, desktop/mobile, light/dark; links to the GitHub repo and the licence file work; no claim stronger than the repo reality; `npm test`/`tsc` stay green |
