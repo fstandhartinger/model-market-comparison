@@ -4,8 +4,7 @@ import { Nav } from "../components/Nav";
 import { SettingsProvider } from "../components/SettingsContext";
 import { AccountProvider } from "../components/AccountContext";
 import { GlobalFilters } from "../components/GlobalFilters";
-import { getDataset } from "../lib/data";
-import type { ProviderInfo, FamilyOption } from "../lib/client-model";
+import { pageDataVersion } from "../lib/page-data";
 import { AaCredit } from "../components/AaCredit";
 import { EpochCredit } from "../components/EpochCredit";
 
@@ -31,16 +30,6 @@ export const metadata: Metadata = {
 };
 
 export default async function RootLayout({ children }: { children: React.ReactNode }) {
-  const ds = await getDataset();
-  const providers: ProviderInfo[] = ds.providers.map((p) => ({
-    key: `${p.platform}::${p.provider}`, platform: p.platform, provider: p.provider, model_count: p.model_count,
-    eu_hosted: p.eu_hosted, eu_dedicated: p.eu_dedicated, non_us: p.non_us,
-    hyperscaler: p.hyperscaler, country: p.country, note: p.note, coming_soon: p.coming_soon, website: p.website ?? null,
-  }));
-  const famMap = new Map<string, FamilyOption>();
-  for (const m of ds.models) if (!famMap.has(m.family_key)) famMap.set(m.family_key, { key: m.family_key, name: m.family_name, org: m.org });
-  const families = [...famMap.values()].sort((a, b) => a.name.localeCompare(b.name));
-
   return (
     <html lang="en" suppressHydrationWarning>
       <head><script dangerouslySetInnerHTML={{ __html: `(function(){try{var t=localStorage.getItem('bh-theme');document.documentElement.dataset.theme=t==='light'||t==='dark'?t:window.matchMedia('(prefers-color-scheme: light)').matches?'light':'dark'}catch(e){document.documentElement.dataset.theme='dark'}})()` }} /></head>
@@ -49,7 +38,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SettingsProvider>
           <AccountProvider>
           <Nav />
-          <GlobalFilters providers={providers} families={families} />
+          {/* CR-62.1: the Options sheet fetches its provider and model lists after the page shell. */}
+          <GlobalFilters version={await pageDataVersion()} />
           <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>
           {/* F-12: wordmark, the R3.1 line, one data-sources sentence, three links. */}
           <footer className="bh-footer mx-auto max-w-[1400px] px-4 py-5 text-xs text-gray-500">

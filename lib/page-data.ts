@@ -1,5 +1,5 @@
 import { getDataset } from "./data";
-import { clientData, type ClientBenchmaxxing } from "./client-model";
+import { clientData, type ClientBenchmaxxing, type FamilyOption, type ProviderInfo } from "./client-model";
 import { getBenchmarkView } from "./benchmark-data";
 import { benchmaxxingFamilySignals, scoreBenchmaxxing } from "./benchmax.mjs";
 import { buildBenchmarkComparison } from "./benchmark-comparison.mjs";
@@ -16,7 +16,7 @@ import { presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets
  * `/api/page-data/<key>?v=<dataset version>`; the pages keep their server-rendered head and hero.
  * The payloads are exactly the props the pages used to pass, built by the same functions.
  */
-export const PAGE_DATA_KEYS = ["home", "catalog", "benchmarks", "ranking", "compare", "benchmaxxing"] as const;
+export const PAGE_DATA_KEYS = ["home", "catalog", "benchmarks", "ranking", "compare", "benchmaxxing", "filters"] as const;
 export type PageDataKey = (typeof PAGE_DATA_KEYS)[number];
 export const isPageDataKey = (key: string): key is PageDataKey => (PAGE_DATA_KEYS as readonly string[]).includes(key);
 
@@ -29,6 +29,17 @@ export async function pageDataVersion(): Promise<string> {
 async function build(key: PageDataKey): Promise<unknown> {
   const ds = await getDataset();
   if (key === "catalog") return clientData(ds);
+  if (key === "filters") {
+    // The Options sheet's provider and model lists (every page's layout used to inline them, ~80 KB).
+    const providers: ProviderInfo[] = ds.providers.map((p) => ({
+      key: `${p.platform}::${p.provider}`, platform: p.platform, provider: p.provider, model_count: p.model_count,
+      eu_hosted: p.eu_hosted, eu_dedicated: p.eu_dedicated, non_us: p.non_us,
+      hyperscaler: p.hyperscaler, country: p.country, note: p.note, coming_soon: p.coming_soon, website: p.website ?? null,
+    }));
+    const famMap = new Map<string, FamilyOption>();
+    for (const m of ds.models) if (!famMap.has(m.family_key)) famMap.set(m.family_key, { key: m.family_key, name: m.family_name, org: m.org });
+    return { providers, families: [...famMap.values()].sort((a, b) => a.name.localeCompare(b.name)) };
+  }
   const view = await getBenchmarkView();
   if (key === "home") {
     // Overview carries the same tag as the dedicated Benchmaxxing page (one shared implementation

@@ -1,5 +1,5 @@
 "use client";
-import { useEffect, useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { usePathname } from "next/navigation";
 import type { FamilyOption, ProviderInfo } from "../lib/client-model";
 import { useSettings } from "./SettingsContext";
@@ -74,7 +74,22 @@ const toggleInclusion = (list: string[], all: string[], k: string) => {
 };
 const countLabel = (n: number, total: number) => (n === total ? "All" : `${n} of ${total}`);
 
-export function GlobalFilters({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
+// CR-62.1: the lists arrive as JSON after the page shell (they were inlined into every page); until then the
+// sheet's pickers are empty, and they are only reachable once the sheet is opened.
+const EMPTY: { providers: ProviderInfo[]; families: FamilyOption[] } = { providers: [], families: [] };
+let filterLists: Promise<typeof EMPTY> | null = null;
+export function GlobalFilters({ version }: { version: string }) {
+  const [lists, setLists] = useState(EMPTY);
+  useEffect(() => {
+    let live = true;
+    filterLists ??= fetch(`/api/page-data/filters?v=${encodeURIComponent(version)}`).then((r) => { if (!r.ok) throw new Error(`HTTP ${r.status}`); return r.json(); });
+    filterLists.then((value) => { if (live) setLists(value); }, () => { filterLists = null; });
+    return () => { live = false; };
+  }, [version]);
+  return <FiltersSheet providers={lists.providers} families={lists.families} />;
+}
+
+function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; families: FamilyOption[] }) {
   const s = useSettings();
   const path = usePathname();
   const adjusted = s.priceMode === "adjusted";

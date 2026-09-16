@@ -1,7 +1,8 @@
 import Link from 'next/link';
 import type { BenchmarkView } from '../lib/benchmark-view.mjs';
 import { latestScores } from '../lib/benchmark-view.mjs';
-import { AnomalySummary, SourceScore } from './BenchmarkEvidence';
+import { AnomalySummary } from './BenchmarkEvidence';
+import { LazyMissingCoverage, SheetRows, type SheetRow } from './BenchmarkSheetLazy';
 import { InfoTip } from './InfoTip';
 import { humanVersion, versionSuffix } from '../lib/version-label';
 import type { CompositeAttachment, CompositeSlot } from '../lib/client-model';
@@ -25,43 +26,19 @@ export function BenchmarkSheet({ view, modelId, percentiles, attachments = {} }:
     <div className="grid items-start gap-5 lg:grid-cols-2">
     {categories.map((category) => <section key={category} className="bh-panel min-w-0 p-4" aria-label={`${category} benchmarks`}>
       <h3 className="mb-2 text-base font-semibold">{category}</h3>
-      <ul className="divide-y divide-[rgb(var(--line))]">
-        {axes.filter((a) => a.category === category).map((a) => {
-          const rows = a.scores.filter((r) => r.modelId === modelId);
-          const shown = latestScores(rows)[0] ?? rows[0];
-          const pct = percentiles[a.id] ?? null;
-          return <li key={a.id}>
-            <details className="group">
-              <summary className="grid min-h-0 list-none grid-cols-[minmax(0,1fr)_auto] items-center gap-x-3 !min-h-0 !py-1.5 text-sm md:grid-cols-[minmax(0,3fr)_minmax(0,2fr)_6.5rem_5.5rem]">
-                {/* F-69: below md the name takes its own line and wraps; identifying text never truncates (design-system rule). */}
-                <span className="col-span-2 min-w-0 md:col-span-1 md:truncate">
-                  <span aria-hidden="true" className="bh-row-chevron mr-1 group-open:rotate-90">›</span>
-                  <span className="font-medium">{a.name}</span>{versionSuffix(a.name, a.version) && <> <span className="bh-muted text-xs">{versionSuffix(a.name, a.version)}</span></>}
-                </span>
-                <span className="flex min-w-0 items-center gap-2">
-                  {pct != null
-                    ? <><span className="h-1.5 min-w-0 flex-1 overflow-hidden rounded-full bg-[rgb(var(--line)/.5)]" aria-hidden="true"><span className="block h-full rounded-full bg-accent" style={{ width: `${Math.max(2, pct)}%` }} /></span><span className="w-7 text-right text-xs tabular-nums text-gray-400" title="Percentile among models measured on this benchmark">{Math.round(pct)}</span></>
-                    : <span className="bh-muted text-xs">no percentile{shown?.lowSample ? ' · low sample' : ''}</span>}
-                </span>
-                <span className="text-right font-semibold tabular-nums">{shown ? nativeValue(shown.value, a.unit) : '—'}</span>
-                <span className="bh-muted hidden text-right text-xs tabular-nums md:block">{shown?.date ? shown.date.slice(0, 10) : ''}</span>
-              </summary>
-              <div className="space-y-3 pb-3 pl-5">
-                <p className="bh-muted text-xs">
-                  <Link className="text-accent hover:underline" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} {versionSuffix(a.name, a.version) ?? humanVersion(a.version).label} ↗</Link>
-                  {a.cohort ? ` · ${a.cohort}` : ''}{a.description ? ` — ${a.description}` : ''}
-                </p>
-                {rows.map((r) => <SourceScore key={r.id} view={view} axis={a} row={r} />)}
-              </div>
-            </details>
-          </li>;
-        })}
-      </ul>
+      {/* CR-62.1: compact row data for a client list — a server-rendered tree of these rows cost ~2.5× its HTML in the flight payload. */}
+      <SheetRows modelId={modelId} rows={axes.filter((a) => a.category === category).map((a): SheetRow => {
+        const rows = a.scores.filter((r) => r.modelId === modelId);
+        const shown = latestScores(rows)[0] ?? rows[0];
+        return { axisId: a.id, benchmarkId: a.benchmarkId, name: a.name, suffix: versionSuffix(a.name, a.version) ?? null, versionLabel: humanVersion(a.version).label,
+          pct: percentiles[a.id] ?? null, lowSample: !!shown?.lowSample, value: shown ? nativeValue(shown.value, a.unit) : null, date: shown?.date ? shown.date.slice(0, 10) : '',
+          cohort: a.cohort || null, description: a.description || null };
+      })} />
     </section>)}
     </div>
     {!axes.length && <div className="bh-empty">No verified benchmark observation is attached to this exact configuration yet. Provider pricing can still be available.</div>}
     <AnomalyPanel view={view} modelId={modelId} />
-    <details className="bh-panel p-5"><summary className="font-medium">Missing coverage · {absent.length} benchmark versions</summary><p className="bh-muted my-3 text-sm">No result does not mean a zero, or that the model was never tested. Collection failures and disputed versions retain their distinct status.</p><ul className="grid gap-3 md:grid-cols-2">{absent.map((a) => { const missing = view.missing.find((m) => m.model_id === modelId && m.benchmark_id === a.benchmarkId); return <li key={a.benchmarkId} className="rounded border border-line p-3 text-sm"><Link className="text-accent" href={`/benchmarks?benchmark=${encodeURIComponent(a.benchmarkId)}`}>{a.name} · {humanVersion(a.version).label}</Link><p className="bh-muted mt-1 text-xs">{missing ? `${missing.status.replaceAll('_', ' ')}: ${missing.reason}` : a.collection && a.collection.status !== 'collected' ? `${a.collection.status.replaceAll('_', ' ')}: ${a.collection.reason}` : 'Unknown: no published result matched to this configuration.'}</p></li>; })}</ul></details>
+    <LazyMissingCoverage modelId={modelId} count={absent.length} />
   </section>;
 }
 

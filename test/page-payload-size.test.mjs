@@ -47,3 +47,15 @@ test("preview tags: robots, sitemap and the shared helper carry the X handle and
   for (const page of ["app/page.tsx", "app/benchmarks/page.tsx", "app/compare/page.tsx", "app/benchmaxxing/page.tsx", "app/charts/page.tsx", "app/eu/page.tsx", "app/models/[id]/page.tsx"])
     assert.match(read(page), /previewMetadata\(/, `${page} sets its own preview`);
 });
+
+test("the layout no longer inlines the Options sheet lists; model-page evidence loads on open", () => {
+  const layout = read("app/layout.tsx");
+  assert.doesNotMatch(layout, /getDataset\(|families=\{|providers=\{/);
+  assert.match(layout, /<GlobalFilters version=\{await pageDataVersion\(\)\} \/>/);
+  assert.match(read("components/GlobalFilters.tsx"), /\/api\/page-data\/filters\?v=/);
+  assert.match(read("lib/page-data.ts"), /"filters"\] as const/);
+  const sheet = read("components/BenchmarkSheet.tsx");
+  assert.doesNotMatch(sheet, /<SourceScore\b/, "row evidence is rendered by LazyEvidenceRow on open");
+  assert.match(sheet, /<SheetRows\b/);
+  assert.match(sheet, /<LazyMissingCoverage\b/);
+});

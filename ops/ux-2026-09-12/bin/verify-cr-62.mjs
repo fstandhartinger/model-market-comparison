@@ -23,10 +23,12 @@ const UAS = {
 };
 const LIMIT = 300 * 1024;
 const PREVIEW_PAGES = ['/', '/benchmarks', '/compare', '/benchmaxxing', '/charts', '/eu', '/about', '/models/claude-fable-5.1'];
+// The heaviest model pages (most benchmarks and offers) must fit too.
+const HEAVY_MODELS = ['/models/glm-5.3%3A%3Amax', '/models/kimi-k3%3A%3Amax', '/models/glm-5.2%3A%3Amax', '/models/claude-opus-5%3A%3Amax', '/models/gpt-5.6-sol%3A%3Amax'];
 const OTHER_PAGES = ['/benchmarks?benchmark=aa_intelligence_index', '/scatter', '/providers', '/provider-explorer', '/radar', '/gateways', '/privacy', '/terms', '/impressum'];
 const tag = (html, attr, name) => { const m = html.match(new RegExp(`<meta[^>]*${attr}="${name.replace(/[:.]/g, (c) => `\\${c}`)}"[^>]*content="([^"]*)"`)); return m ? m[1] : null; };
 const sizes = {};
-for (const path of [...PREVIEW_PAGES, ...OTHER_PAGES]) {
+for (const path of [...PREVIEW_PAGES, ...OTHER_PAGES, ...HEAVY_MODELS]) {
   sizes[path] = {};
   for (const [ua, value] of Object.entries(UAS)) {
     const r = await fetch(`${BASE}${path}`, { headers: { 'User-Agent': value, 'Accept-Encoding': 'identity' } });
@@ -76,6 +78,44 @@ const RENDER = {
 };
 const browser = await chromium.launch();
 try {
+  // The Options sheet's model and provider lists now load after the shell (they were inlined into every page).
+  for (const [w, h] of [[1440, 900], [390, 844]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h } }); const page = await ctx.newPage();
+    try {
+      await page.goto(`${BASE}/about`, { waitUntil: 'networkidle', timeout: 90000 });
+      await page.locator('button[data-bh-filters-toggle][aria-controls="global-filters"]').first().click();
+      await page.locator('[data-bh-combobox-trigger="Models"]').click();
+      await page.waitForTimeout(800);
+      const models = await page.locator('[data-bh-combobox] [role="listbox"][aria-label="Models"] [role="option"]').count();
+      await page.keyboard.press('Escape');
+      await page.locator('[data-bh-combobox-trigger^="Provider"]').first().click().catch(() => {});
+      await page.waitForTimeout(800);
+      const providers = await page.locator('[data-bh-combobox] [role="option"]').count();
+      check(`Options sheet ${w}px: Models and Providers pickers are filled after the shell`, models >= 100 && providers > 20, { models, providers });
+      await page.screenshot({ path: `${OUT}/options-sheet-${w}.png` });
+    } catch (e) { check(`Options sheet ${w}px: opens`, false, String(e.message).slice(0, 300)); }
+    finally { await ctx.close(); }
+  }
+  // Model page: a benchmark row's evidence and the missing-coverage list load when opened.
+  for (const [w, h] of [[1440, 900], [390, 844]]) {
+    const ctx = await browser.newContext({ viewport: { width: w, height: h } }); const page = await ctx.newPage();
+    try {
+      await page.goto(`${BASE}/models/claude-fable-5.1`, { waitUntil: 'networkidle', timeout: 90000 });
+      const row = page.locator('#benchmark-sheet li details').first();
+      await row.locator('summary').click();
+      await page.waitForFunction(() => { const d = document.querySelector('#benchmark-sheet li details'); return d && /Exact observation and full protocol|Protocol:/.test(d.textContent || ''); }, null, { timeout: 30000 }).catch(() => {});
+      const evidence = await row.locator('summary:text-is("Evidence")').count();
+      const missing = page.locator('#benchmark-sheet details.bh-panel').last();
+      await missing.locator('summary').click();
+      await page.waitForTimeout(2500);
+      const missingItems = await missing.locator('li').count();
+      const label = await missing.locator('summary').textContent();
+      const expected = Number((label || '').match(/(\d+) benchmark versions/)?.[1] ?? -1);
+      check(`model page ${w}px: row evidence and missing coverage load on open`, evidence >= 1 && missingItems === expected && expected > 0, { evidence, missingItems, expected });
+      await page.screenshot({ path: `${OUT}/model-evidence-${w}.png`, fullPage: false });
+    } catch (e) { check(`model page ${w}px: evidence opens`, false, String(e.message).slice(0, 300)); }
+    finally { await ctx.close(); }
+  }
   for (const [w, h] of [[1440, 900], [390, 844]]) for (const scheme of ['dark', 'light']) {
     const ctx = await browser.newContext({ viewport: { width: w, height: h }, colorScheme: scheme });
     await ctx.addInitScript((t) => { try { localStorage.setItem('bh-theme', t); } catch {} }, scheme);
