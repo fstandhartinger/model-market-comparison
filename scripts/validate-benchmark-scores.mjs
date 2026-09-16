@@ -24,7 +24,9 @@ const headlineObservations = buildHeadlineObservations({
   modelRows: dataset.models,
 });
 // CR-64: the per-benchmark kind map is copied from the taxonomy by build-dataset, not derived from scores; check it on its own.
-const { benchmark_kinds: kinds, ...builtResults } = dataset.benchmark_results;
+// CR-65.7: likewise the judged-benchmark list, copied from data/benchmark-caveats.json.
+const { benchmark_kinds: kinds, judged_benchmarks: judged, ...builtResults } = dataset.benchmark_results;
 if (!isDeepStrictEqual(kinds, (await read('data/benchmark-taxonomy.json')).benchmark_kinds)) throw new Error('Dataset benchmark kinds differ from the taxonomy; run data:build');
+if (!isDeepStrictEqual(judged, Object.keys((await read('data/benchmark-caveats.json')).judged).sort())) throw new Error('Dataset judged benchmarks differ from benchmark-caveats.json; run data:build');
 if (!isDeepStrictEqual(buildBenchmarkResults(snapshot, registry, dataset.models, history.states.length ? history : null, headlineObservations), builtResults)) throw new Error('Built benchmark data differs from validated scores; run data:build');
 console.log('Benchmark source/build guard:', checked);
