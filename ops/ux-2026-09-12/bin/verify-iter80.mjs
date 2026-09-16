@@ -20,7 +20,7 @@ const matrix = api.matrix;
 const rows = matrix?.rows ?? [];
 const idx = (needle) => rows.findIndex((r) => r.name.includes(needle));
 const valueOf = (modelId, needle) => { const i = idx(needle); return (matrix?.values?.[modelId] ?? []).find(([k]) => k === i)?.[1] ?? null; };
-for (const [board, group] of [['OSWorld 2.0, June 2026 task release', 'agentic'], ['OSWorld 2.0, August 2026 task release', 'agentic'], ['ArXivMath 06/2026', 'math'], ['BrokenArXiv 06/2026', 'math']]) {
+for (const [board, group] of [['OSWorld 2.0, August 2026 task release', 'agentic'], ['ArXivMath 06/2026', 'math'], ['BrokenArXiv 06/2026', 'math']]) {
   const r = rows[idx(board)];
   check(`API: ${board} is a row in its category`, r && r.group === group, r ? { name: r.name, group: r.group, cohort: r.cohort, unit: r.unit } : 'missing');
 }
@@ -34,6 +34,13 @@ check('API: SimpleQA Verified claude-fable-5.1::max = 0.708 (Epoch CSV)', valueO
 check('API: BrokenArXiv carries the Judged tag (LLM-judged, CR-38.3)', (rows[idx('BrokenArXiv')]?.tags ?? []).includes('judged'), rows[idx('BrokenArXiv')]?.tags);
 check('API: BrokenArXiv 06/2026 claude-opus-5::max = 90.74', valueOf('claude-opus-5::max', 'BrokenArXiv') === 90.74, String(valueOf('claude-opus-5::max', 'BrokenArXiv')));
 check('API: catalog board count includes the six new boards (89 before)', (matrix?.catalogBoards ?? 0) >= 96, String(matrix?.catalogBoards));
+// The June 2026 release carries none of the models above; read it through a model it did measure.
+const june = (await (await fetch(`${BASE}/api/benchmark-matrix?models=${encodeURIComponent('gpt-5.5::xhigh,claude-sonnet-4.6::medium')}`)).json()).matrix;
+const juneIdx = (june?.rows ?? []).map((r, i) => [r, i]).filter(([r]) => r.name.includes('June 2026 task release'));
+const juneVal = (m) => (june?.values?.[m] ?? []).find(([k]) => juneIdx.some(([, i]) => i === k))?.[1] ?? null;
+check('API: OSWorld 2.0 June 2026 release is an agentic row; gpt-5.5::xhigh = 13, claude-sonnet-4.6::medium = 9.3',
+  juneIdx.length > 0 && juneIdx.every(([r]) => r.group === 'agentic') && juneVal('gpt-5.5::xhigh') === 13 && juneVal('claude-sonnet-4.6::medium') === 9.3,
+  { rows: juneIdx.map(([r]) => `${r.name} · ${r.cohort}`), gpt55: juneVal('gpt-5.5::xhigh'), sonnet: juneVal('claude-sonnet-4.6::medium') });
 // Provenance: the observation names its source and keeps MathArena's release-date flag.
 const scores = await (await fetch(`${BASE}/api/benchmark-scores?model_id=${encodeURIComponent('gpt-6-astra::max')}&limit=500`)).json();
 const obs = (scores.observations ?? scores.results ?? []).find((o) => o.benchmark_id === 'matharena-arxivmath::2026-06');
