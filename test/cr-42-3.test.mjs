@@ -21,16 +21,31 @@ const client = await import(`data:text/javascript;base64,${Buffer.from(clientCom
 test("CR-42.3: every dataset provider carries a curated official website", () => {
   assert.ok(ds.providers.length > 0);
   for (const p of ds.providers) {
+    // `website: null` is deliberate when no homepage is confirmed by a primary source (plain text, no link).
+    if (p.website === null) continue;
     assert.equal(typeof p.website, "string", `${p.provider} has no website`);
     assert.match(p.website, /^https:\/\//, `${p.provider} website is not https: ${p.website}`);
   }
 });
 
-test("CR-42.3: dataset website is exactly the curated provider-meta url (provenance preserved)", () => {
+test("CR-42.3: dataset website is the curated `website` when set, else the curated url (provenance preserved)", () => {
   const meta = providerMeta.providers || {};
   for (const p of ds.providers) {
-    const curated = meta[p.provider]?.url;
+    const m = meta[p.provider] || {};
+    const curated = m.website !== undefined ? m.website : m.url;
     assert.equal(p.website, curated ?? null, `${p.provider}: dataset ${p.website} != curated ${curated}`);
+  }
+});
+
+// Iteration 87: `url` is the evidence behind a provider's judgment and was often a privacy policy or terms
+// page; a link labelled "official website" must never point at one, nor at a third party's provider page.
+test("CR-42.3: no 'official website' link is a legal page, an OpenRouter page or an API host", () => {
+  for (const p of ds.providers) {
+    if (!p.website) continue;
+    const u = new URL(p.website);
+    assert.doesNotMatch(u.pathname, /privacy|terms|legal|policy/i, `${p.provider}: website is a legal page: ${p.website}`);
+    assert.notEqual(u.hostname, "openrouter.ai", `${p.provider}: website is OpenRouter's page, not the provider's`);
+    assert.doesNotMatch(u.hostname, /^api\./, `${p.provider}: website is an API host: ${p.website}`);
   }
 });
 
@@ -55,6 +70,6 @@ test("CR-42.3: clientData passes the provider website through to the client (exp
     const datasetProvider = ds.providers.find((d) => d.platform === p.platform && d.provider === p.provider);
     assert.ok(datasetProvider, `dataset provider missing for ${p.provider}`);
     assert.equal(p.website, datasetProvider.website ?? null, `${p.provider}: client website ${p.website} != dataset ${datasetProvider.website}`);
-    assert.match(p.website, /^https:\/\//, `${p.provider} client website not https: ${p.website}`);
+    if (p.website !== null) assert.match(p.website, /^https:\/\//, `${p.provider} client website not https: ${p.website}`);
   }
 });
