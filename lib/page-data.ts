@@ -72,7 +72,8 @@ async function build(key: PageDataKey): Promise<unknown> {
   const models = view.models.map((m) => {
     const report = reportsById.get(m.id)!;
     return { id: m.id, name: m.name, org: m.org, composite: compositeById.get(m.id) ?? null,
-      coverageAxes: report.profile.measured, totalAxes: report.profile.total, tagged: tagged.has(m.id) };
+      coverageAxes: report.profile.measured, totalAxes: report.profile.total, tagged: tagged.has(m.id),
+      level: tagged.has(m.id) ? "strong" as const : weak.has(m.id) ? "weak" as const : null };
   }).sort((a, b) => b.coverageAxes - a.coverageAxes || (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));
   const byId = new Map(models.map((m) => [m.id, m]));
   const scored = reports.map(([id, report]) => ({ model: byId.get(id), report })).filter((item): item is { model: (typeof models)[number]; report: ReturnType<typeof scoreBenchmaxxing> } => Boolean(item.model && item.report.status === "scored"));

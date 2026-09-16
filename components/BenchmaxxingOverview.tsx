@@ -2,7 +2,7 @@
 
 import { Fragment, useEffect, useState } from "react";
 import { InfoTip } from "./InfoTip";
-import { SIGNAL_WARN, SignalValue } from "./SignalValue";
+import { SignalValue } from "./SignalValue";
 import { TopicRadar } from "./TopicRadar";
 import type { BenchmaxxingReportData } from "./BenchmaxxingReport";
 import { interpretBenchmaxxing } from "../lib/benchmaxxing-interpretation.mjs";
@@ -37,10 +37,10 @@ function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpen
     </div>
     <div className="space-y-3 text-sm">
       <p className="bh-muted text-xs font-semibold uppercase tracking-wide">Benchmaxxing signal</p>
-      <p className="text-3xl leading-none"><SignalValue score={row.score} /></p>
+      <p className="text-3xl leading-none"><SignalValue score={row.score} level={row.level} /></p>
       <p className="font-medium" data-quick-reading>{reading.headline}</p>
       {reading.detail && <p className="bh-muted" data-quick-detail>{reading.detail}</p>}
-      <p className="bh-muted text-xs">{reading.caveat} The more jagged the shape inside one topic, the stronger the pattern.</p>
+      <p className="bh-muted text-xs">{reading.caveat} Jumps between neighbouring benchmarks of one topic are what the signal measures.</p>
       <a href={`?model=${encodeURIComponent(row.id)}#radar`} className="bh-button inline-flex min-h-9 items-center px-3" data-quick-report
         onClick={(e) => { if (e.metaKey || e.ctrlKey || e.shiftKey || e.button !== 0) return; e.preventDefault(); onOpenReport(row.id); }}>
         Open the full report for {row.name} ↓
@@ -81,7 +81,7 @@ function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenRe
             <div className="bh-magnitude-track" aria-hidden="true">
               <div className="bh-magnitude-fill" style={{ width: `${Math.max(0, Math.min(1, row.score / maxScore)) * 100}%` }} />
             </div>
-            <span className="relative z-[1] block"><SignalValue score={row.score} /></span>
+            <span className="relative z-[1] block"><SignalValue score={row.score} level={row.level} /></span>
           </div>
         </td>
         <td className="hidden !py-2 align-middle tabular md:table-cell">{row.comparisons} in {row.topics} topics</td>
@@ -137,7 +137,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, adjusted for coverage, 0–100. Above {SIGNAL_WARN} it is shown as a warning: results jump strongly between related benchmarks. The tags are ranks: the top 10 % of scored models carry the strong ⚠ tag{strongFrom != null ? ` (today a signal of ${strongFrom.toFixed(1)} or more)` : ""}, the next 10 % the weak △ tag{weakFrom != null ? ` (today from ${weakFrom.toFixed(1)})` : ""} — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, 0–100, adjusted for the model’s level (mid-table models jump more by chance) and for coverage. The tags are ranks among models with at least 10 related comparisons: the top 10 % carry the strong ⚠ tag{strongFrom != null ? ` (today a signal of ${strongFrom.toFixed(1)} or more)` : ""}, the next 10 % the weak △ tag{weakFrom != null ? ` (today from ${weakFrom.toFixed(1)})` : ""} — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
           <th scope="col" className="hidden text-left md:table-cell">Related comparisons</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>

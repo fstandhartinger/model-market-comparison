@@ -126,7 +126,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           </div>
           <p className="text-4xl font-bold tabular">{num(clientModel.scores.composite)}</p>
           {bmx?.score != null && bmx.level && <p className="mt-2 text-sm" data-bh-model-benchmaxxing>
-            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} /> <span className="bh-muted">· {bmx.level}</span>{" "}
+            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} /> <span className="bh-muted">· {bmx.level}</span>{" "}
             <Link href={`/benchmaxxing?model=${encodeURIComponent(bmx.reportId)}#radar`} className="text-accent underline">report →</Link>
           </p>}
           <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />

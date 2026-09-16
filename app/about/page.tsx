@@ -164,8 +164,14 @@ export default async function AboutPage() {
         A model that was tuned for particular benchmarks tends to score very differently on benchmarks that test the same
         skill. We compare each model&apos;s results between related benchmarks (coding with coding, maths with maths): the more
         they jump within a topic, the higher its signal. Being consistently strong in one field and weak in another is
-        specialisation and does not count. The top 10 % of scored models carry the strong ⚠ tag and the next 10 % the weak △
-        tag. It is a screening flag that invites a closer look at the sources, not proof of contamination or intent.{" "}
+        specialisation and does not count. Only benchmarks with a verifiable score count: boards decided by a vote or a judge
+        model (writing, roleplay, some arena and rubric boards) and willingness-to-answer boards are left out, and cost
+        boards were never in. Percentiles are bounded, so a model in the middle of the field jumps more by chance than one
+        near the top or bottom; each model&apos;s spread is therefore divided by the spread expected at its level (its
+        average percentile), fitted on the whole catalog, so frontier models are no longer immune. Scores with few
+        comparisons are pulled towards the catalog average. Among models with at least 10 related comparisons, the top
+        10 % carry the strong ⚠ tag and the next 10 % the weak △ tag. It is a screening flag that invites a closer look at
+        the sources, not proof of contamination or intent.{" "}
         <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.
       </p>
 

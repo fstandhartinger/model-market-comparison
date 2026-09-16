@@ -4,19 +4,19 @@ import { TopicRadar } from './TopicRadar';
 import { SignalValue } from './SignalValue';
 import { formatRadarValue } from '../lib/radar.mjs';
 
-export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean };
+export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean; level?: 'strong' | 'weak' | null };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean };
 export type BenchmaxxingReportData = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number } };
 
 const SERIES = [{ color: '#35a7ff', dash: undefined }, { color: '#f5b65b', dash: '7 4' }];
 
-function SignalCard({ name, slot, compare, report }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData }) {
+function SignalCard({ name, slot, compare, report, level }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData; level?: 'strong' | 'weak' | null }) {
   return <aside className="rounded-xl border border-line p-4" style={compare ? { borderLeft: `3px solid ${SERIES[slot].color}` } : undefined}>
     <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{compare ? `${String.fromCharCode(65 + slot)} · ` : ''}Benchmaxxing signal</p>
     {compare && <p className="mt-1 truncate text-sm font-medium">{name}</p>}
     {report.status === 'scored' ? <>
-      <p className="mt-2"><SignalValue score={report.score ?? 0} large /></p>
-      <p className="bh-muted mt-2 text-sm">Within-topic percentile spread, adjusted for coverage. Higher means more uneven results among related benchmarks.</p>
+      <p className="mt-2"><SignalValue score={report.score ?? 0} level={level} large /></p>
+      <p className="bh-muted mt-2 text-sm">Within-topic percentile spread, adjusted for the model’s level and for coverage. Higher means more uneven results among related benchmarks.</p>
       <dl className="mt-4 space-y-2 text-sm"><div><dt className="bh-muted">Related comparisons</dt><dd>{report.comparisons} in {report.topics} topics</dd></div><div><dt className="bh-muted">Measured coverage</dt><dd>{report.profile.measured}/{report.profile.total} axes ({(report.coverage * 100).toFixed(0)}%)</dd></div><div><dt className="bh-muted">Domain specialization</dt><dd>{report.domainSpecialization?.toFixed(1)} — disclosed, not added to the score</dd></div></dl>
     </> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes, {report.comparisons} related comparisons in {report.topics} topics — a score needs {report.rule.minComparisons} in {report.rule.minTopics}. No score is synthesized from missing results.</p></>}
   </aside>;
@@ -66,12 +66,12 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
           {compare ? <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Chart legend">{series.map((s, k) => <li key={s.id} className="flex items-center gap-2"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg>{String.fromCharCode(65 + k)} · {s.name}</li>)}</ul> : <span className="bh-muted text-xs">{radarAxes.length} measured axes shown{showAllAxes ? ` · ${allAxes.length} total` : ''}</span>}
           <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={showAllAxes} onChange={(e) => setShowAllAxes(e.target.checked)} />Show all {allAxes.length} axes</label>
         </div>
-        <p className="mb-2 text-sm font-medium" data-jagged-note>The more jagged the shape, the more benchmaxxed the model looks.</p>
+        <p className="mb-2 text-sm font-medium" data-jagged-note>Jumps between neighbouring benchmarks of one topic are what the signal measures. Mid-table models jump more often, and models at the rim look smooth — a flag is a screen, not proof.</p>
         <TopicRadar axes={radarAxes} series={series} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value." />
         <p className="bh-muted text-xs">Axes are the {radarAxes.length} benchmarks {compare ? 'either model has' : 'this model has'} results for, grouped clockwise by topic; a jagged outline inside one topic is the Benchmaxxing pattern.</p>
       </div>
       <div className={compare ? 'grid gap-4 md:grid-cols-2' : 'space-y-5 lg:flex lg:h-full lg:flex-col lg:gap-5 lg:space-y-0'}>
-        {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} />)}
+        {shown.map((s, k) => <SignalCard key={s.id} name={s.name} slot={k} compare={compare} report={s.report!} level={models.find((m) => m.id === s.id)?.level ?? null} />)}
         <details className={`text-sm ${compare ? 'md:col-span-2' : 'lg:min-h-0 lg:flex-1'}`}><summary className="cursor-pointer font-medium">Advanced details: topic groups and method</summary><div className="bh-muted mt-3 grid gap-3 md:grid-cols-2 lg:grid-cols-1">{Object.entries(grouped).map(([topic, axes]) => <div key={topic}><b>{topic}</b><p>{axes.map((axis) => `${axis.name}${axis.missing ? ' (gap)' : ''}`).join(' · ')}</p></div>)}<p className="md:col-span-2 lg:col-span-1">Scores are percentile-normalized within each exact benchmark cohort, then only differences between measured axes within the same topic contribute to the anomaly signal. This is a descriptive inconsistency signal, not evidence that a benchmark leaked into training or that any training team acted improperly.</p></div></details>
       </div>
     </div>}

@@ -126,3 +126,75 @@ test('real dataset: Benchmaxxing tag rate does not fall as coverage grows', asyn
   const high = rate(byCoverage.slice(half));
   assert.ok(high >= low * 0.5, `tag rate high-coverage ${high.toFixed(3)} must not collapse vs low-coverage ${low.toFixed(3)}`);
 });
+
+// CR-65.5 (data & math gauntlet B1): release test. A simulated catalog WITHOUT any benchmaxxing — every axis is
+// skill plus independent noise — must not tag mid-table models preferentially: the tagged share (strong + weak)
+// in each level tercile stays within ±10 percentage points of the overall share. The unadjusted spread fails
+// this (mid-pack models spread most because percentiles are bounded), which the second assertion pins.
+test('CR-65.5: without benchmaxxing, tags spread evenly across level bands (null simulation)', () => {
+  for (const seed0 of [7, 11, 23]) {
+    let seed = seed0;
+    const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+    const gauss = () => Math.sqrt(-2 * Math.log(rnd())) * Math.cos(2 * Math.PI * rnd());
+    const models = Array.from({ length: 300 }, (_, i) => ({ id: `m${i}`, skill: gauss() }));
+    const axes = [];
+    for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 5; k += 1) {
+      axes.push({ ...axis(`${topic}-${k}`, topic, {}), scores: models.map((m) => ({ modelId: m.id, value: m.skill + 0.45 * gauss(), basis: 'measured', lowSample: false })) });
+    }
+    const v = { models, axes };
+    const { reports, tagged, weak } = benchmaxxingSignals(v);
+    assert.equal(reports.length, 300);
+    assert.ok(reports.every(([, r]) => r.levelAdjustment), 'a catalog this size is level-adjusted');
+    const level = new Map(reports.map(([id, r]) => [id, r.levelAdjustment.level]));
+    const bands = [[0, 100 / 3], [100 / 3, 200 / 3], [200 / 3, 101]];
+    const share = (set) => bands.map(([lo, hi]) => { const ids = reports.map(([id]) => id).filter((id) => level.get(id) >= lo && level.get(id) < hi); return ids.filter((id) => set(id)).length / ids.length; });
+    const overall = (tagged.size + weak.size) / reports.length;
+    for (const s of share((id) => tagged.has(id) || weak.has(id))) assert.ok(Math.abs(s - overall) <= 0.10, `seed ${seed0}: band share ${s.toFixed(3)} vs overall ${overall.toFixed(3)}`);
+    // Power check: ranking by the unadjusted spread puts most of the same number of models in the middle band.
+    const byRaw = [...reports].sort((a, b) => b[1].rawScore - a[1].rawScore).slice(0, tagged.size + weak.size).map(([id]) => id);
+    const mid = byRaw.filter((id) => level.get(id) >= 100 / 3 && level.get(id) < 200 / 3).length / byRaw.length;
+    assert.ok(mid > 0.6, `seed ${seed0}: unadjusted spread is mid-table heavy (${mid.toFixed(2)})`);
+  }
+});
+
+test('CR-65.5: the expected-spread fit recovers a known quadratic and is not applied to a tiny catalog', async () => {
+  const { fitLevelCurve, BENCHMAXX_LEVEL_MIN_MODELS } = await import('../lib/benchmax.mjs');
+  const truth = (m) => -3.9 + 1.04 * m - 0.0098 * m * m;
+  const curve = fitLevelCurve(Array.from({ length: 21 }, (_, i) => ({ x: i * 5, y: truth(i * 5) })));
+  for (const m of [10, 50, 90]) assert.ok(Math.abs(curve.at(m) - truth(m)) < 1e-6, `fit at ${m}`);
+  assert.equal(fitLevelCurve([{ x: 1, y: 1 }, { x: 2, y: 2 }]), null);
+  assert.ok(BENCHMAXX_LEVEL_MIN_MODELS >= 20);
+  const peers = Object.fromEntries(Array.from({ length: 11 }, (_, i) => [`p${i}`, i * 10]));
+  const small = { models: [{ id: 'm' }], axes: ['a', 'b', 'c', 'd'].flatMap((k) => [axis(`c-${k}`, 'Coding', { ...peers, m: 50 }), axis(`w-${k}`, 'Writing', { ...peers, m: 60 })]) };
+  assert.equal(scoreBenchmaxxing(small, 'm').levelAdjustment, null);
+});
+
+test('CR-65.6 / CR-65.7: a thin model at the top is untagged; judged and Uncensored axes do not move the signal', async () => {
+  const { BENCHMAXX_TAG_MIN_COMPARISONS, BENCHMAXX_MIN_SHRINK, isSignalAxis } = await import('../lib/benchmax.mjs');
+  assert.ok(BENCHMAXX_TAG_MIN_COMPARISONS >= 10);
+  assert.ok(BENCHMAXX_MIN_SHRINK >= 6);
+  // 40 smooth peers with 12 comparisons each and one very jagged model with only 8 comparisons.
+  let seed = 3; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const models = Array.from({ length: 40 }, (_, i) => ({ id: `p${i}` })).concat([{ id: 'thin' }]);
+  const axes = [];
+  for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 5; k += 1) {
+    const entries = models.filter((m) => m.id !== 'thin' || k < 4).map((m, i) => [m.id, m.id === 'thin' ? (k % 2 ? 0 : 100) : i * 2 + rnd() * 10]);
+    axes.push(catalogAxis(`${topic}-${k}`, topic, entries));
+  }
+  const v = { models, axes };
+  const thin = scoreBenchmaxxing(v, 'thin');
+  assert.equal(thin.comparisons, 9);
+  const { reports, tagged, weak } = benchmaxxingSignals(v);
+  assert.equal(reports[0][0], 'thin', 'the thin model has the highest score');
+  assert.ok(!tagged.has('thin') && !weak.has('thin'), 'but fewer than 10 comparisons never carry a named tag');
+  // A judged axis and an Uncensored axis with a wild value leave the score unchanged.
+  const withNoise = { models, axes: [...axes,
+    { ...catalogAxis('judged-a', 'Coding', models.map((m, i) => [m.id, m.id === 'p3' ? 100 : i])), judged: true },
+    { ...catalogAxis('judged-b', 'Coding', models.map((m, i) => [m.id, m.id === 'p3' ? 0 : i])), judged: true },
+    catalogAxis('ugi-a', 'Uncensored', models.map((m, i) => [m.id, m.id === 'p3' ? 100 : i])),
+    catalogAxis('ugi-b', 'Uncensored', models.map((m, i) => [m.id, m.id === 'p3' ? 0 : i])),
+  ] };
+  assert.equal(isSignalAxis(withNoise.axes.at(-1)), false);
+  assert.equal(isSignalAxis(withNoise.axes.at(-3)), false);
+  assert.equal(scoreBenchmaxxing(withNoise, 'p3').score, scoreBenchmaxxing(v, 'p3').score);
+});

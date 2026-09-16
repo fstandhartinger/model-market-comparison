@@ -1240,6 +1240,9 @@ async function build() {
   const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null, headlineObservations);
   // CR-64: what each benchmark measures (capability / cost / efficiency), so analyses can select by kind.
   benchmark_results.benchmark_kinds = (await readData("benchmark-taxonomy.json")).benchmark_kinds;
+  // CR-65.7: benchmarks scored by a vote or a judge model (data/benchmark-caveats.json), so analyses that need
+  // verifiable task results (the Benchmaxxing signal) can leave them out.
+  benchmark_results.judged_benchmarks = Object.keys((await readData("benchmark-caveats.json")).judged).sort();
   const dataset = {
     benchmark_results,
     generated_at,
