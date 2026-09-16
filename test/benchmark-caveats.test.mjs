@@ -111,7 +111,7 @@ test('F-98: the (i) second line names the version, the read date and a known tas
   assert.equal(versionLine({ version: '1.1', asOf: '2026-09-13', freshness: freshnessOf('otis-mock-aime', caveats) }),
     'Version 1.1 · results as of 2026-09-13 · tasks from 2024 to 2025');
   assert.equal(versionLine({ version: 'snapshot-2026-09-15', asOf: null, freshness: freshnessOf('nothing-known', caveats) }),
-    'Version snapshot 2026-09-15');
+    'Published 2026-09-15');
   assert.equal(versionLine({ version: '', asOf: null, freshness: null }), '');
 });
 

@@ -65,7 +65,7 @@ export function CategoryHeader({ label, composite, columns }: { label: ReactNode
       <span className="bh-cat-basis">{n >= COMPOSITE_MIN_ROWS ? `composite of ${n}${composite.saturated?.length ? ", weighted" : ""}` : "no composite"}<span className="sr-only">. {basis}</span></span>
     </th>
     {Array.from({ length: columns }, (_, j) => { const v = composite.values[j]; return <td key={j} className={`bh-cat-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
-      {v == null ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No category composite</span></span>
+      {v == null ? <span className="sr-only">No category composite</span>
         : <span className="tabular">{v.toFixed(1)}<span className="sr-only"> category composite</span></span>}
     </td>; })}
   </tr>;

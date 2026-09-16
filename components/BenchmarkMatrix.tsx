@@ -5,6 +5,7 @@ import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
 import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { versionSuffix } from "../lib/version-label";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
@@ -228,10 +229,12 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
               const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter);
               return <tr key={row.id}>
                 <th scope="row" className="bh-matrix-stub">
-                  <span className="bh-matrix-bench">{row.name}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} />)}</span>
-                  {/* F-98 / CR-38.2: the version, the date we last read the results, and the task window when the source states one. */}
-                  {(row.cohort || versionLine(row)) && <span className="bh-matrix-sub">{[row.cohort, versionLine(row)].filter(Boolean).join(" · ")}</span>}
-                  <span className="bh-matrix-desc" title={row.description}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
+                  {/* F-100 (pass 18): the harness sits on the name line, so two rows of one benchmark read apart at a glance. */}
+                  <span className="bh-matrix-bench">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} />)}</span>
+                  {/* F-98 / CR-38.2 + F-100: a stated task window is the one line worth a row of its own; the version and the
+                      date the results were read are on hover here, on the (i) of the Simple table and on the result page. */}
+                  {(() => { const suffix = versionSuffix(row.name, String(row.version ?? "")), w = row.freshness?.taskWindow; const sub = [suffix ? `Version ${suffix.replace(/^v/i, "")}` : null, w?.from ? (w.to && w.to !== w.from ? `tasks from ${w.from} to ${w.to}` : `tasks from ${w.from}`) : null].filter(Boolean).join(" · "); return sub ? <span className="bh-matrix-sub">{sub}</span> : null; })()}
+                  <span className="bh-matrix-desc" title={[row.description, versionLine(row)].filter(Boolean).join(" — ")}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
                 </th>
                 {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                   {v == null

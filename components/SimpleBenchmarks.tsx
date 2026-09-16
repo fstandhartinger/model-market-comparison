@@ -109,7 +109,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
           {g.rows.map(({ row, vals, basis }) => {
             const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter), odd = rowOutliers(vals, row.higherBetter);
             return <tr key={row.id}>
-              <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}
+              <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}
                 {/* F-98: the two caveat tags a reader needs to read the number right; the editorial tier tags stay in the full comparison. */}
                 {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="bh-matrix-tag" data-tag={t} title={matrix.tags[t].tip}>{matrix.tags[t].label}<span className="sr-only">: {matrix.tags[t].tip}</span></span>)}
                 <InfoTip title={row.name} label={`the ${row.name} benchmark`}>{row.description || "What this benchmark measures is not described by its publisher yet."}
@@ -117,7 +117,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
                   {versionLine(row) && <span className="bh-muted mt-2 block">{versionLine(row)}</span>}
                   {row.freshness?.contamination && <span className="bh-muted mt-2 block">{row.freshness.contamination}</span>}
                   {row.tags.filter((t) => CAVEAT_TAGS.includes(t)).map((t) => matrix.tags[t] && <span key={t} className="mt-2 block"><b>{matrix.tags[t].label}:</b> {matrix.tags[t].tip}</span>)}
-                </InfoTip></span>{row.cohort && <span className="bh-matrix-sub">{row.cohort}</span>}</th>
+                </InfoTip></span></th>
               {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
                 {v == null
                   ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>

@@ -45,6 +45,8 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
       name: tr.querySelector('.bh-matrix-bench')?.childNodes[0]?.textContent?.trim() ?? '',
       tags: [...tr.querySelectorAll('.bh-matrix-tag')].map((e) => ({ tag: e.dataset.tag, label: e.textContent, tip: e.getAttribute('title') })),
       sub: tr.querySelector('.bh-matrix-sub')?.textContent ?? '',
+      // F-100 (pass 18): the version and the read date are on the description's hover title, not a visible line.
+      hover: tr.querySelector('.bh-matrix-desc')?.getAttribute('title') ?? '',
     })));
   check(`${tag} the full comparison renders its benchmark rows`, rows.length >= 20, { rows: rows.length });
   const saturated = rows.filter((r) => r.tags.some((t) => t.tag === 'saturated'));
@@ -66,7 +68,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     && JSON.stringify(paint.judged) === JSON.stringify(paint.niche)
     && paint.saturated.cursor === 'help', paint);
   check(`${tag} CR-38.2 rows name their version and when the results were read`,
-    rows.filter((r) => /Version /.test(r.sub)).length >= rows.length * 0.8, { with: rows.filter((r) => /Version /.test(r.sub)).length, of: rows.length, sample: rows.find((r) => /Version /.test(r.sub))?.sub });
+    rows.filter((r) => /Version |Published /.test(r.hover)).length >= rows.length * 0.8, { with: rows.filter((r) => /Version |Published /.test(r.hover)).length, of: rows.length, sample: rows.find((r) => /Version |Published /.test(r.hover))?.hover });
   const shownWindow = rows.find((r) => /tasks from/.test(r.sub));
   if (shownWindow) check(`${tag} CR-38.2 a known task window is shown in the comparison where the source states one`, true, shownWindow.sub);
 
@@ -111,7 +113,7 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
     return { text: panel.innerText, bg: s.backgroundColor, z: s.zIndex, inView: r.left >= -1 && r.right <= innerWidth + 1 && r.width > 80 };
   });
   check(`${tag} CR-38.2 the (i) of a saturated benchmark carries its version line and caveat sentence`,
-    tip && tip.text && /Version /.test(tip.text) && tip.text.includes('Saturated:'), (tip?.text ?? 'no saturated row in the Simple table').slice(0, 300));
+    tip && tip.text && /Version |Published /.test(tip.text) && tip.text.includes('Saturated:'), (tip?.text ?? 'no saturated row in the Simple table').slice(0, 300));
   check(`${tag} the (i) panel is opaque and inside the viewport`, tip && tip.bg && !/rgba\(0, 0, 0, 0\)/.test(tip.bg) && tip.inView, { bg: tip?.bg, z: tip?.z, inView: tip?.inView });
   const simpleFoot = await page.evaluate(() => [...document.querySelectorAll('#benchmarks p')].map((p) => p.textContent).find((t) => /Bold is best in row/.test(t ?? '')) ?? '');
   check(`${tag} the Simple footnote explains both tags and the weighting`, /Saturated/.test(simpleFoot) && /Judged/.test(simpleFoot) && /weighs half/.test(simpleFoot), simpleFoot.slice(-320));
