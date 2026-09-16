@@ -465,3 +465,36 @@ test("Fable 5's exact max evidence and family-scoped high evidence both stay abo
     `expected Fable high (${scores.get(fableHigh.id)}) > GLM-5.2 (${scores.get(glm.id)})`,
   );
 });
+
+// CR-65.2: cohort bias. Slot B (here DesignArena Full-Stack) exists only for the top 30 % of the slot-A population
+// (AA Intelligence), with identical ordering. Deleting a model's B value must change its composite by < 2 points.
+test("CR-65.2: a selective board neither penalises nor rewards the models measured on it", () => {
+  const rows = Array.from({ length: 200 }, (_, i) => ({
+    id: `m${i}`,
+    scores: { aa_intelligence_index: 10 + i * 0.4, ...(i >= 140 ? { designarena_fullstack: 900 + (i - 140) * 8 } : {}) },
+    designarenaBattles: { fullstack: 1000 },
+  }));
+  const base = computeCompositeScoreDetails(rows).baseScores;
+  for (const i of [140, 150, 170, 199]) {
+    const without = rows.map((row, k) => (k === i ? { ...row, scores: { aa_intelligence_index: row.scores.aa_intelligence_index } } : row));
+    const delta = computeCompositeScoreDetails(without).baseScores.get(`m${i}`) - base.get(`m${i}`);
+    assert.ok(Math.abs(delta) < 2, `m${i}: deleting the selective result moved the composite by ${delta.toFixed(2)}`);
+  }
+});
+
+test("CR-65.2 live catalog: deleting a model's DesignArena or Coding Agent result does not raise its composite on average", async () => {
+  const dataset = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
+  const rows = inputsFromDataset(dataset);
+  const base = computeCompositeScoreDetails(rows).baseScores;
+  for (const keys of [["designarena_frontend", "designarena_fullstack"], ["aa_coding_agent"]]) {
+    const deltas = [];
+    for (const row of rows) {
+      if (!keys.some((k) => row.scores[k] != null) || !(base.get(row.id) < 88)) continue;
+      if (!Object.entries(row.scores).some(([k, v]) => v != null && !keys.includes(k))) continue;
+      const without = rows.map((x) => (x.id === row.id ? { ...x, scores: Object.fromEntries(Object.entries(x.scores).map(([k, v]) => [k, keys.includes(k) ? null : v])) } : x));
+      deltas.push(computeCompositeScoreDetails(without).baseScores.get(row.id) - base.get(row.id));
+    }
+    const mean = deltas.reduce((a, b) => a + b, 0) / deltas.length;
+    assert.ok(deltas.length >= 10 && Math.abs(mean) < 2, `${keys.join("+")}: mean change ${mean.toFixed(2)} over ${deltas.length} models`);
+  }
+});

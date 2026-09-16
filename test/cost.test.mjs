@@ -206,7 +206,9 @@ test('CR-65.1: effort-specific AA results never move to a sibling configuration;
   assert.equal(a.scores.aa_intelligence_index, null);
   assert.equal(a.scores.aa_coding_index, null);
   assert.equal(a.composite_attachments.aa_intelligence_index, undefined);
-  assert.equal(a.composite_base, b.composite_base, 'the composite does not depend on the sibling AA Intelligence');
+  // Not borrowed: 50 vs 10 on the sibling moves this row only through the catalog-wide CR-65.2 linking table
+  // (the sibling is one pair in the Epoch cohort), never as its own input.
+  assert.ok(Math.abs(a.composite_base - b.composite_base) < 0.5, 'the composite does not use the sibling AA Intelligence');
   assert.equal(a.scores.epoch_eci, 150, 'Epoch ECI is published at family scope and is shared');
   assert.equal(a.composite_attachments.epoch_eci.sourceModelId, 'fixture-fam::max');
   // The Coding Agent result stays on its own row as well.

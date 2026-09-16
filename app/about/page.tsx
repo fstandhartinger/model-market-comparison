@@ -179,10 +179,15 @@ export default async function AboutPage() {
       {/* CR-35.4: Epoch AI's recommended citation (CC BY). */}
       <p className="mb-2 text-xs text-gray-500" data-epoch-citation>Epoch ECI and Software Engineering ECI: Epoch AI, &lsquo;Epoch Capabilities Index&rsquo;. Published online at epoch.ai. Retrieved from &lsquo;https://epoch.ai/eci&rsquo; [online resource]. Accessed 2026-09-15. <EpochCredit /></p>
       <p className="text-sm text-gray-400">
-        Benchmarks are not on a common scale, so we do not average raw scores. Each model&apos;s
-        result on a benchmark becomes its <b>percentile</b> among all models measured on that same
-        benchmark, and those percentiles are averaged — a hard benchmark and an easy one then count
-        equally. The composite uses seven slots: AA Coding, source-matched AA Coding Agent, AA
+        Benchmarks are not on a common scale, so we do not average raw scores. The composite is
+        rank-based: each result becomes a <b>percentile on one common scale</b>, and those are averaged.
+        The scale is the AA Intelligence Index, which covers the widest field of models. The other
+        benchmarks cover different fields — DesignArena and the Coding Agent Index test mostly frontier
+        models — so a plain percentile there would put the same model 20–30 points lower and punish a
+        model for being measured on a selective board. Each of them is therefore <b>linked</b> to the common
+        scale through the models measured on both: a result that ranks at the same position among those
+        models as a given AA Intelligence percentile counts as that percentile. Differences at the top are
+        rank differences, so 99 against 97 is not a 2 % capability gap. The composite uses seven slots: AA Coding, source-matched AA Coding Agent, AA
         Intelligence, Epoch general ECI, Epoch Software Engineering ECI, DesignArena Frontend and
         DesignArena Full-Stack. AA values are clamped to
         0–100. A DesignArena board qualifies at an app-selected minimum of 200 battles, aligned with
