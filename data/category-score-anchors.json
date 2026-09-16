@@ -1,7 +1,7 @@
 {
   "version": "1.0",
   "recorded_at": "2026-09-15",
-  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the one with the widest coverage (Terminal-Bench v4.0 over v2.1). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score.",
+  "note": "CR-25.6: category composite scores that can be selected like any other score. A category is only offered when at least two benchmarks in it are on a 0-100-style, higher-is-better scale AND are measured for at least 60 % of the featured model families (measured with ops/ux-2026-09-12/bin/cr-25-6-coverage.mjs). The anchor set is fixed here, not derived per model: a model gets the category score only when it has a result on EVERY anchor, so two models' category scores are always an average over the same benchmarks. Where a benchmark exists in several versions, the build picks the one with the widest coverage (Terminal-Bench v4.0 over v2.1). Reasoning and Vision have only one qualifying benchmark each (Humanity's Last Exam, MMMU Pro) and therefore get no category score. 2026-09-16 (CR-38.2/38.3, F-98): anchors are weighted, not averaged flat — a benchmark whose top five independently measured results average at least 90 % of its ceiling counts at half weight (SATURATED_WEIGHT in lib/benchmark-matrix.mjs), because it no longer separates the best models. Today that applies to GPQA Diamond in Science, so cat_science is (CritPt + 0.5 x GPQA Diamond) / 1.5. A preference or judge score may not be an anchor at all: computeCategoryScores throws rather than silently redefining a published score if one is ever reclassified (assertNoJudgedAnchors).",
   "min_coverage": 0.6,
   "min_anchors": 2,
   "categories": [
@@ -11,9 +11,21 @@
       "label": "Coding",
       "group": "coding",
       "anchors": [
-        { "key": "aa-terminal-bench", "name": "Terminal-Bench (AA)", "coverage_2026_09_15": 1.0 },
-        { "key": "aa-scicode", "name": "SciCode (AA subproblems)", "coverage_2026_09_15": 1.0 },
-        { "key": "deepswe", "name": "DeepSWE (Datacurve, via Epoch AI)", "coverage_2026_09_15": 0.65 }
+        {
+          "key": "aa-terminal-bench",
+          "name": "Terminal-Bench (AA)",
+          "coverage_2026_09_15": 1.0
+        },
+        {
+          "key": "aa-scicode",
+          "name": "SciCode (AA subproblems)",
+          "coverage_2026_09_15": 1.0
+        },
+        {
+          "key": "deepswe",
+          "name": "DeepSWE (Datacurve, via Epoch AI)",
+          "coverage_2026_09_15": 0.65
+        }
       ]
     },
     {
@@ -22,9 +34,21 @@
       "label": "Agentic & tool use",
       "group": "agentic",
       "anchors": [
-        { "key": "aa-automationbench", "name": "AutomationBench-AA", "coverage_2026_09_15": 1.0 },
-        { "key": "aa-tau3-banking", "name": "τ³-Banking (AA)", "coverage_2026_09_15": 0.95 },
-        { "key": "aa-enterpriseops-gym", "name": "EnterpriseOps-Gym-AA", "coverage_2026_09_15": 0.65 }
+        {
+          "key": "aa-automationbench",
+          "name": "AutomationBench-AA",
+          "coverage_2026_09_15": 1.0
+        },
+        {
+          "key": "aa-tau3-banking",
+          "name": "τ³-Banking (AA)",
+          "coverage_2026_09_15": 0.95
+        },
+        {
+          "key": "aa-enterpriseops-gym",
+          "name": "EnterpriseOps-Gym-AA",
+          "coverage_2026_09_15": 0.65
+        }
       ]
     },
     {
@@ -33,8 +57,16 @@
       "label": "Science",
       "group": "science",
       "anchors": [
-        { "key": "aa-critpt", "name": "CritPt (AA)", "coverage_2026_09_15": 1.0 },
-        { "key": "aa-gpqa-diamond", "name": "GPQA Diamond (AA)", "coverage_2026_09_15": 0.95 }
+        {
+          "key": "aa-critpt",
+          "name": "CritPt (AA)",
+          "coverage_2026_09_15": 1.0
+        },
+        {
+          "key": "aa-gpqa-diamond",
+          "name": "GPQA Diamond (AA)",
+          "coverage_2026_09_15": 0.95
+        }
       ]
     },
     {
@@ -43,10 +75,23 @@
       "label": "Long context",
       "group": "long-context",
       "anchors": [
-        { "key": "aa-lcr", "name": "AA-LCR v1.1", "coverage_2026_09_15": 1.0 },
-        { "key": "aa-gdp-pdf", "name": "GDP.pdf (AA)", "coverage_2026_09_15": 1.0 },
-        { "key": "aa-mlcr", "name": "MLCR-AA", "coverage_2026_09_15": 0.9 }
+        {
+          "key": "aa-lcr",
+          "name": "AA-LCR v1.1",
+          "coverage_2026_09_15": 1.0
+        },
+        {
+          "key": "aa-gdp-pdf",
+          "name": "GDP.pdf (AA)",
+          "coverage_2026_09_15": 1.0
+        },
+        {
+          "key": "aa-mlcr",
+          "name": "MLCR-AA",
+          "coverage_2026_09_15": 0.9
+        }
       ]
     }
-  ]
+  ],
+  "saturation_weight": 0.5
 }

@@ -1,4 +1,5 @@
 import taxonomy from "../data/benchmark-taxonomy.json";
+import caveats from "../data/benchmark-caveats.json";
 import { getDataset } from "./data";
 import { getBenchmarkView } from "./benchmark-data";
 import { buildBenchmarkMatrix, type BenchmarkMatrix } from "./benchmark-matrix.mjs";
@@ -14,7 +15,7 @@ let cached: { dataset: Dataset; value: { matrix: BenchmarkMatrix; filterData: Ma
 export async function getBenchmarkMatrixPage() {
   const dataset = await getDataset();
   if (cached?.dataset === dataset) return cached.value;
-  const matrix = buildBenchmarkMatrix(await getBenchmarkView(), dataset, taxonomy);
+  const matrix = buildBenchmarkMatrix(await getBenchmarkView(), dataset, taxonomy, caveats);
   const cd = clientData(dataset);
   const alive = new Set(selectableModels(cd.models, true).map((m) => m.family_key));
   const withValues = new Set(Object.keys(matrix.values));

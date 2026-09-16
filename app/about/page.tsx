@@ -220,6 +220,40 @@ export default async function AboutPage() {
         marked †, and a missing result stays a dash. Bars compare values within one row only; the bold value is the
         row&apos;s best, and ties are all bold.
       </p>
+      <p className="mt-3 text-sm text-gray-400">
+        Two further tags are not editorial. <strong>Saturated</strong> — &ldquo;Top models sit near this
+        benchmark&apos;s ceiling; it separates weaker models, not the best.&rdquo; — is measured from the results we
+        hold: the benchmark is on a bounded, higher-is-better scale, we have independently measured results for at
+        least five models, and the mean of the five best results is at or above 90&nbsp;% of the benchmark&apos;s
+        ceiling. Nothing is asserted from a claim, and a benchmark we cannot assess (an Elo board, an open points
+        scale, fewer than five measured models) is not called unsaturated — it simply carries no tag.
+        <strong> Judged</strong> — &ldquo;A preference or judge score, not task accuracy.&rdquo; — marks benchmarks
+        whose number ranks or rates outputs by preference or quality: human head-to-head votes, an Elo from a judge
+        panel, a rubric graded by a judge model. A judge that only checks whether an answer is correct (an equality
+        checker, a majority vote on accuracy) is not judged, because the ground truth still decides. Each Judged
+        classification quotes the benchmark&apos;s own registry text; the classifications and the quotes live in
+        <code> data/benchmark-caveats.json</code> and a test fails if a quote is not found verbatim in its source.
+      </p>
+      <p className="mt-3 text-sm text-gray-400">
+        Both tags change how a <strong>category composite</strong> is built. A preference or judge score never
+        averages with task accuracy: when a category shows both kinds, only the task-accuracy rows make its
+        composite (a category whose qualifying rows are all judged gets a composite of those, and says so). A
+        saturated benchmark still counts, at half the weight of an unsaturated one — today that applies to GPQA
+        Diamond inside the Science category score, which is therefore a weighted mean of CritPt and GPQA Diamond
+        rather than a plain average. The same rule governs the selectable category scores in
+        <code> data/category-score-anchors.json</code>; a judged benchmark may not be an anchor at all, and the
+        build fails rather than silently changing a published score if one is ever reclassified. None of the seven
+        slots of the Benchmark Heaven Main Composite is saturated today; two of them (DesignArena Frontend and
+        Full-Stack) are preference scores, and they enter as their own separate, percentile-normalised slots rather
+        than averaged into task accuracy.
+      </p>
+      <p className="mt-3 text-sm text-gray-400">
+        Where the benchmark&apos;s own source states a task or question date window, or a contamination control (a
+        private or held-out set, a semi-private set, a periodically refreshed task set), the benchmark&apos;s (i)
+        repeats it. Where the source states nothing, the field says exactly that — we do not infer a date window
+        from a benchmark&apos;s name. Every row also names the version it is and the date we last verified its
+        results from the source.
+      </p>
     </div>
   );
 }

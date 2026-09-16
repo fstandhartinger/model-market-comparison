@@ -7,7 +7,8 @@ import { getDataset } from '../../../lib/data';
 import { getBenchmarkView } from '../../../lib/benchmark-data';
 import { getBenchmarkMatrixPage } from '../../../lib/benchmark-matrix-data';
 import { latestScores } from '../../../lib/benchmark-view.mjs';
-import { formatValue, cellHref, resultHref, rowWinners } from '../../../lib/benchmark-matrix.mjs';
+import { formatValue, cellHref, resultHref, rowWinners, versionLine } from '../../../lib/benchmark-matrix.mjs';
+import caveats from '../../../data/benchmark-caveats.json';
 import { SourceScore } from '../../../components/BenchmarkEvidence';
 import { humanVersion } from '../../../lib/version-label';
 
@@ -119,6 +120,7 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
   const row = latest.get(modelId);
   if (!row) notFound();
   const win = rowWinners(compared.map((id) => latest.get(id)?.value ?? null), ax.higherBetter ?? null);
+  const matrixRow = matrix.rows.find((r) => r.id === axisId) ?? null;
   const direction = ax.higherBetter == null ? 'direction not published' : ax.higherBetter ? 'higher is better' : 'lower is better';
 
   return <div className="max-w-4xl">
@@ -133,6 +135,17 @@ export default async function BenchmarkResultPage({ searchParams }: { searchPara
       <h2 id="bh-result-model" className="bh-muted text-sm">{model.org} · <Link href={`/models/${encodeURIComponent(modelId)}`} className="text-accent hover:underline">{model.display_name}</Link></h2>
       <p className="mt-1 text-4xl font-bold tabular" data-bh-result-value>{formatValue(row.value, ax.unit)}</p>
       <p className="bh-muted mt-1 text-sm">Unit: {ax.unit} · {direction}</p>
+      {/* CR-38.2 / CR-38.3: what a reader needs to read this number correctly — the tooltip has room for a
+          sentence, this page has room for all of it. Every line is either measured or quoted from the source. */}
+      {matrixRow && <ul className="bh-muted mt-3 space-y-1 border-t border-line pt-3 text-sm" data-bh-result-caveats>
+        {versionLine(matrixRow) && <li>{versionLine(matrixRow)}</li>}
+        {matrixRow.saturation?.saturated && <li><b>Saturated.</b> {matrix.tags.saturated?.tip} Measured here: the {matrixRow.saturation.topN} best of {matrixRow.saturation.models} independently measured models average {Math.round(matrixRow.saturation.share * 1000) / 10}&nbsp;% of this benchmark&apos;s ceiling.</li>}
+        {matrixRow.judged && <li><b>Judged.</b> {matrix.tags.judged?.tip} {caveats.judged[matrixRow.key as keyof typeof caveats.judged]?.why}</li>}
+        {matrixRow.freshness?.contamination
+          ? <li>{matrixRow.freshness.contamination} <span className="opacity-70">(source: &ldquo;{matrixRow.freshness.source?.quote}&rdquo;)</span></li>
+          : <li>{matrixRow.freshness?.contaminationNote}</li>}
+        {!matrixRow.freshness?.taskWindow && <li>{matrixRow.freshness?.taskWindowNote}</li>}
+      </ul>}
       <div className="mt-4 border-t border-line pt-4"><SourceScore view={view} axis={ax} row={row} /></div>
       <p className="mt-4 flex flex-wrap gap-x-4 gap-y-2 text-sm">
         {ax.url && <a href={ax.url} target="_blank" rel="noreferrer" className="text-accent underline">Benchmark&apos;s primary source ↗</a>}

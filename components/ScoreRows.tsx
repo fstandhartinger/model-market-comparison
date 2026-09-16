@@ -4,6 +4,9 @@ import type { ReactNode } from "react";
 import { SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { rowBars, rowWinners, COMPOSITE_MIN_ROWS, scoreRowSubtitle as subtitleFor } from "../lib/benchmark-matrix.mjs";
 
+/** What `categoryComposite` returns, as much of it as the header needs. */
+export type CompositeSummary = { values: (number | null)[]; rows: { name: string }[]; judgedExcluded?: number; saturated?: { name: string }[]; kind?: "measured" | "judged" };
+
 /** 2026-09-15: the product's own score, first row of every benchmark table. It shows exactly the
  *  score the settings select; only the Composite is called a composite. */
 export function scoreRowSubtitle(score: ScoreKey): string {
@@ -42,14 +45,24 @@ export function ScoreRowPair({ score, valuesFor }: { score: ScoreKey; valuesFor:
   </>;
 }
 
-/** A category header that is also that category's composite (see `categoryComposite`). */
-export function CategoryHeader({ label, composite, columns }: { label: ReactNode; composite: { values: (number | null)[]; rows: { name: string }[] }; columns: number }) {
+/** A category header that is also that category's composite (see `categoryComposite`).
+ *  F-98: when the average had to leave judged rows out, or weighs a saturated row half, the header's
+ *  own (i) text says so in one clause — no extra column, no new colour. */
+export function CategoryHeader({ label, composite, columns }: { label: ReactNode; composite: CompositeSummary; columns: number }) {
   const n = composite.rows.length;
-  const basis = n >= COMPOSITE_MIN_ROWS ? `Category composite: mean of ${n} shared results on a 0–100 scale (${composite.rows.map((r) => r.name).join(", ")})` : `No category composite: fewer than ${COMPOSITE_MIN_ROWS} shown results on a 0–100 scale that every compared model has`;
+  const clauses = [
+    composite.saturated?.length ? `saturated benchmarks weigh half (${composite.saturated.map((r) => r.name).join(", ")})` : null,
+    composite.judgedExcluded ? `${composite.judgedExcluded} preference or judge score${composite.judgedExcluded > 1 ? "s" : ""} left out — they never average with task accuracy` : null,
+  ].filter(Boolean);
+  const weighted = composite.saturated?.length ? "weighted mean" : "mean";
+  const mean = composite.kind === "judged" ? `${weighted} of preference and judge scores` : weighted;
+  const basis = n >= COMPOSITE_MIN_ROWS
+    ? `Category composite: ${mean} of ${n} shared results on a 0–100 scale (${composite.rows.map((r) => r.name).join(", ")})${clauses.length ? `. ${clauses.join("; ")}` : ""}`
+    : `No category composite: fewer than ${COMPOSITE_MIN_ROWS} shown results on a 0–100 scale that every compared model has${clauses.length ? `. ${clauses.join("; ")}` : ""}`;
   return <tr className="bh-matrix-group">
     <th scope="rowgroup" className="bh-matrix-stub" title={basis}>
       <span className="bh-cat-head">{label}</span>
-      <span className="bh-cat-basis">{n >= COMPOSITE_MIN_ROWS ? `composite of ${n}` : "no composite"}<span className="sr-only">. {basis}</span></span>
+      <span className="bh-cat-basis">{n >= COMPOSITE_MIN_ROWS ? `composite of ${n}${composite.saturated?.length ? ", weighted" : ""}` : "no composite"}<span className="sr-only">. {basis}</span></span>
     </th>
     {Array.from({ length: columns }, (_, j) => { const v = composite.values[j]; return <td key={j} className={`bh-cat-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
       {v == null ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No category composite</span></span>

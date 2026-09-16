@@ -4,7 +4,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { useSettings } from "./SettingsContext";
 import { SCORE_SHORT_LABELS } from "../lib/types";
 import type { ClientModel } from "../lib/client-model";
-import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
+import { rowBars, rowWinners, formatValue, cellHref, chartRows, categoryComposite, versionLine, type BenchmarkMatrix as Matrix, type MatrixRow } from "../lib/benchmark-matrix.mjs";
 import { ScoreRowPair, CategoryHeader } from "./ScoreRows";
 import { MODEL_PRESETS, ROW_PRESETS, decodeFilters, encodeFilters, modelsForPreset, pickFilters, rowFilter } from "../lib/presets.mjs";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
@@ -229,7 +229,8 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
               return <tr key={row.id}>
                 <th scope="row" className="bh-matrix-stub">
                   <span className="bh-matrix-bench">{row.name}{row.tags.map((t) => <Tag key={t} id={t} tags={matrix.tags} />)}</span>
-                  {row.cohort && <span className="bh-matrix-sub">{row.cohort}</span>}
+                  {/* F-98 / CR-38.2: the version, the date we last read the results, and the task window when the source states one. */}
+                  {(row.cohort || versionLine(row)) && <span className="bh-matrix-sub">{[row.cohort, versionLine(row)].filter(Boolean).join(" · ")}</span>}
                   <span className="bh-matrix-desc" title={row.description}>{row.higherBetter === false ? "Lower is better. " : ""}{row.description}</span>
                 </th>
                 {vals.map((v, j) => <td key={ids[j]} className={`bh-matrix-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
@@ -247,6 +248,6 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
         </table>
       </div>}
     {ids.length > 1 && <BenchmarkBars rows={chart} ids={ids} names={names} />}
-    <p className="bh-muted text-xs"><AaCredit /> · Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; Elo, native index scales and costs are left out.</p>
+    <p className="bh-muted text-xs"><AaCredit /> · Each value is the latest published result for that exact configuration, measured results preferred; † marks a developer's own report. A dash means no published result — never a zero. Bold is best in row; bars compare within a row only. Open a value for its source. The first row is the Benchmark Heaven score your settings select. A <b>Saturated</b> tag means the best models already sit near that benchmark&apos;s ceiling; a <b>Judged</b> tag means the number is a preference or judge score, not task accuracy. Each category row averages that category&apos;s shown results on a 0–100 scale (higher is better) that every compared model has — at least two, otherwise a dash; a saturated benchmark weighs half, judged scores never average with task accuracy, and Elo, native index scales and costs are left out. <Link href="/about#benchmark-tags" className="underline">How the tags are decided</Link>.</p>
   </section>;
 }

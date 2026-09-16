@@ -4,6 +4,29 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — Saturated and judged benchmarks are labelled, and weigh differently (CR-38.2 / CR-38.3)
+
+**One breaking value change: `cat_science`.** Benchmarks now carry two measured caveats.
+
+*Saturated* is computed from the results we hold, never asserted: a benchmark on a bounded,
+higher-is-better scale, with independently measured results for at least five models, whose five best
+results average at least 90 % of its ceiling. Six boards qualify today — AIME 2025 (AA), GPQA Diamond
+(AA and the OpenRouter run), τ²-Bench Telecom (AA), Harvey LAB-AA and Terminal-Bench v2.1 (AA). A
+benchmark we cannot assess (Elo, an open points scale, fewer than five measured models) carries no tag
+and is **not** called unsaturated.
+
+*Judged* marks a score set by preference or by a judge's rating rather than by task accuracy — human
+head-to-head votes, an Elo from a judge panel, a rubric graded by a judge model. The classification and
+the verbatim quote from each benchmark's own registry text live in the new
+`data/benchmark-caveats.json`; a test fails if a quote is not found in its cited source.
+
+Both change composites. A judged row never averages with task accuracy: where a category shows both,
+only the task-accuracy rows make its composite. A saturated row still counts, at half weight. For the
+selectable category scores that means **`cat_science` is now `(CritPt + 0.5 × GPQA Diamond) / 1.5`**,
+roughly ten points below earlier builds; `cat_coding`, `cat_agentic` and `cat_long_context` are
+unchanged, and no slot of the Benchmark Heaven Main Composite is saturated. Nothing moved: no field was
+removed or renamed, and `data/dataset.json` keeps its shape.
+
 ## 2026-09-16 — Labs' own published benchmark numbers, re-verified against the documents (CR-30.1)
 
 **New self-reported observations; nothing moved or removed.** Benchmark numbers that model labs

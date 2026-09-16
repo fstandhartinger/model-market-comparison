@@ -1321,7 +1321,7 @@ async function build() {
     const [{ buildBenchmarkView }, { buildBenchmarkMatrix }, { computeCategoryScores }] = await Promise.all([
       import("../lib/benchmark-view.mjs"), import("../lib/benchmark-matrix.mjs"), import("../lib/category-scores.mjs")]);
     const anchors = await readData("category-score-anchors.json");
-    const matrix = buildBenchmarkMatrix(buildBenchmarkView(dataset), dataset, await readData("benchmark-taxonomy.json"));
+    const matrix = buildBenchmarkMatrix(buildBenchmarkView(dataset), dataset, await readData("benchmark-taxonomy.json"), await readData("benchmark-caveats.json"));
     const { scores, resolved } = computeCategoryScores(matrix, anchors);
     for (const row of modelRows) { const s = scores.get(row.id); if (s) row.category_scores = s; }
     dataset.category_scores = { version: anchors.version, categories: resolved.map((c) => ({ key: c.key, label: c.label, group: c.group,

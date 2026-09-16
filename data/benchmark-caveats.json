@@ -1,0 +1,65 @@
+{
+  "version": "1.0",
+  "recorded_at": "2026-09-16",
+  "note": "CR-38.2 / CR-38.3 (Florian 2026-09-15) with design directive F-98: per-benchmark caveat metadata. Two blocks. `judged` names the benchmarks whose score is set by a human vote or by a judge model's opinion rather than by a verifiable ground truth (unit tests, an answer key, a backend state check, a deterministic pattern count); those rows carry the `Judged` tag and never average with task-accuracy rows inside one category composite. `freshness` records what the verified source itself states about the task/question date window and about contamination control; where the source states nothing, the field stays null and says so — nothing here is inferred. The `saturated` flag of CR-38.2 is NOT curated here: it is computed from the results we hold (see `saturationOf` in lib/benchmark-matrix.mjs), so it can never drift away from the data on the page. Keys are benchmark family keys (the registry id before '::') or, for axes without a registry entry, the taxonomy key.",
+  "quote_rule": "Every entry carries a `quote` that must appear verbatim in the named field of the benchmark's own registry entry (data/raw/benchmarks/registry.json) or, for non-registry axes, in data/benchmark-taxonomy.json. test/benchmark-caveats.test.mjs enforces this, so a classification can never rest on a sentence no source wrote.",
+  "review": {
+    "drafted_by": "claude-opus (Sandy UX workstream, iteration 77, 2026-09-16)",
+    "reviewed_by": "pending — a different engine reviews the judged classification (same rule as the CR-1.7 tiers)",
+    "review_note": "The reviewer's verdict is recorded in ops/ux-2026-09-12/PROGRESS.md and in `review` here once it returns."
+  },
+  "judged_definition": "The published number ranks or rates outputs by preference or quality. A judge model that only checks whether an answer is correct (an equality checker, a majority vote on accuracy, an LLM normaliser in front of exact matching) is NOT judged — the ground truth still decides.",
+  "judged": {
+    "aa-apex-agents": { "quote": "Rubric-based local file grading", "field": "scoring.metric", "why": "Deliverables are scored against a rubric, not against a verifier's pass/fail." },
+    "aa-briefcase": { "quote": "Combined Elo from rubric task success, analytical quality and presentation comparisons", "field": "scoring.metric", "why": "Elo built from quality comparisons." },
+    "aa-gdpval": { "quote": "Bradley-Terry Elo from pairwise judge-panel comparisons", "field": "scoring.metric", "why": "A judge panel's pairwise preference is the score." },
+    "aa-harvey-lab": { "quote": "Rubric criterion grading by a single LLM judge", "field": "scoring.metric", "why": "One judge model grades legal work product against a rubric." },
+    "buzzbench": { "quote": "LLM judge score against human-authored gold responses", "field": "scoring.metric", "why": "A judge model rates the answer's quality." },
+    "eq-bench": { "quote": "blind, bidirectional pairwise judging of multi-turn persona-chat transcripts by a three-judge LLM panel", "field": "scoring.metric", "why": "Elo from a judge panel's preference." },
+    "eqbench-creative-writing": { "quote": "A LLM-judged creative writing benchmark", "field": "one_sentence_description", "why": "Creative-writing Elo from judge models." },
+    "eqbench-judgemark": { "quote": "rates LLM judges on how discriminatively they score fixed creative-writing samples", "field": "one_sentence_description", "why": "The scored quantity is judging behaviour on creative writing, not task accuracy." },
+    "eqbench-longform-writing": { "quote": "across 14 rubric dimensions", "field": "scoring.metric", "why": "Chapter scores come from rubric judging." },
+    "frontiercode": { "quote": "weighted aggregate of the rubric items", "field": "scoring.metric", "why": "Rubric items decide the score; tests only gate it." },
+    "japanese-rp-bench-aratako": { "quote": "averaged over 4 judge models", "field": "scoring.metric", "why": "Four judge models rate the roleplay." },
+    "japanese-rp-bench-tegnike": { "quote": "judge rubric v2.1", "field": "scoring.notes", "why": "A judge rubric produces the criteria scores." },
+    "mazur-creative-story-writing": { "quote": "pairwise evaluator-v2/evaluator-v3 judgments", "field": "scoring.metric", "why": "Pairwise judgments, Thurstone-style rating." },
+    "mazur-divergent-thinking": { "quote": "Average LLM-judged score", "field": "scoring.metric", "why": "A judge model scores divergence." },
+    "mazur-elimination-game": { "quote": "vote to eliminate each other, with final rankings scored via TrueSkill", "field": "one_sentence_description", "why": "The ranking comes from the players' own votes — a preference outcome." },
+    "pingpong-english": { "quote": "LLM judges rate in-character, entertaining, and fluent qualities", "field": "one_sentence_description", "why": "Judge models rate qualities." },
+    "rp-bench-community": { "quote": "Bayesian community Elo", "field": "scoring.metric", "why": "Elo from community votes." },
+    "slop-index": { "quote": "40% live arena Elo votes", "field": "scoring.metric", "why": "Arena votes are the largest single component." },
+    "spiral-bench": { "quote": "A LLM-judged benchmark", "field": "one_sentence_description", "why": "A judge model labels protective vs risky behaviour." },
+    "towards-ai-editorial-writing": { "quote": "Reported editorial-writing Elo", "field": "scoring.metric", "why": "Editorial-writing Elo from preference comparisons." },
+    "ugi-writing": { "quote": "informed by human preferences", "field": "one_sentence_description", "why": "The maintainer's writing composite is preference-informed." },
+    "frontend": { "quote": "Human head-to-head votes on generated front-end designs (Elo).", "field": "taxonomy.descriptions", "why": "DesignArena: human votes." },
+    "fullstack": { "quote": "Human head-to-head votes on generated full-stack apps (Elo).", "field": "taxonomy.descriptions", "why": "DesignArena: human votes." }
+  },
+  "considered_not_judged": {
+    "aa-analystagent": "pass^5 correctness with numeric checks; the LLM judging only checks the answer against a held-out reference answer.",
+    "aa-itbench": "An LLM normalises entity names in front of exact matching; precision/recall against ground truth decides.",
+    "aa-mlcr": "Three judges vote on whether the answer is accurate — the ground truth still decides.",
+    "eqbench-slop-score": "A deterministic lexical composite (word, pattern and trigram frequencies), no judge.",
+    "slopbench": "Deterministic slop-pattern detection, explicitly without an LLM judge.",
+    "livebench": "The source calls the tasks objectively graded.",
+    "swe-atlas-qna": "Scale AI publishes it as a leaderboard accuracy and Artificial Analysis averages it into the Coding Agent Index; rubric grading targets a correct answer.",
+    "swe-atlas-test-writing": "Same as swe-atlas-qna.",
+    "swe-atlas-refactoring": "Same as swe-atlas-qna."
+  },
+  "freshness": {
+    "aa-aime": { "task_window": { "from": "2025", "to": "2025", "label": "AIME I and II 2025" }, "quote": "2025 AIME I", "field": "evidence.excerpt" },
+    "otis-mock-aime": { "task_window": { "from": "2024", "to": "2025", "label": "OTIS Mock AIME 2024 and 2025" }, "quote": "OTIS Mock AIME exam questions from 2024 and 2025", "field": "one_sentence_description" },
+    "aa-livecodebench": { "task_window": null, "contamination": "The source does not identify the contest date window of this historical run, so it is not comparable across releases.", "quote": "exact contest date window is not identified in the retained field", "field": "scoring.metric" },
+    "aa-analystagent": { "contamination": "Held privately: the questions, reference answers and source files are unpublished to limit contamination.", "quote": "the question set, reference answers, and source files are not publicly released, to limit contamination risk", "field": "evidence.excerpt" },
+    "aa-automationbench": { "contamination": "Run on a private held-out split of the public dataset.", "quote": "We evaluate a private 657-task held-out split from AutomationBench dataset version 1.0.6", "field": "evidence.excerpt" },
+    "aa-harvey-lab": { "contamination": "Run on Harvey's private task set; only example tasks are public.", "quote": "Tests legal-work deliverables across practice areas on Harvey's private task set.", "field": "one_sentence_description" },
+    "aa-mlcr": { "contamination": "A private held-out set, separate from the published dataset.", "quote": "This private set is separate from the publicly released dataset", "field": "evidence.excerpt" },
+    "arc-agi": { "contamination": "Scored on the semi-private set, which is not published.", "quote": "Semi-private exact grid task solution rate", "field": "scoring.metric" },
+    "ifbench": { "contamination": "New out-of-distribution constraints applied to held-out prompts.", "quote": "held-out set of WildChat", "field": "evidence.excerpt" },
+    "swe-bench-pro-public": { "contamination": "This board is the public set; the private and held-out sets are separate boards.", "quote": "private and held-out sets are separate", "field": "how_to_collect.locator" },
+    "livebench": { "contamination": "The task set is refreshed periodically, which limits contamination.", "quote": "A periodically refreshed suite of objectively graded tasks", "field": "one_sentence_description" }
+  },
+  "freshness_default": {
+    "task_window_note": "The verified source does not state a task or question date window.",
+    "contamination_note": "The verified source states no contamination control for this benchmark."
+  }
+}
