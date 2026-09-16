@@ -4,6 +4,14 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — Lumina Bench discovery feed (no values)
+
+**New file, no change to any existing data.** `data/raw/lumina-ledger.json` is a daily discovery and provenance feed
+from Lumina Bench's public ledger: one record per benchmark family (435) with counts of results by who the cited
+source is — the evaluator, a model vendor, an aggregator, or a Lumina estimate — and the diff whenever the ledger's
+hash changes. It carries **no scores**; a consumer must not read it as results. Reviewed decisions per family live in
+`data/lumina-feed-policy.json`. Details: `data/raw/lumina-ledger.method.md`.
+
 ## 2026-09-16 — τ^τ-bench (Hyper-τ) release v1
 
 **One new board, no shape change.** `hyper-tau-bench::release-v1`: Sierra's τ^τ-bench, where a coding agent (the

@@ -146,6 +146,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       report.warnings.push(`fetch-openrouter-benchmarks skipped: ${error.message.slice(0, 300)}`);
       console.warn(`WARN fetch-openrouter-benchmarks: keeping the previous snapshot`);
     }
+    // CR-37.2: Lumina Bench ledger as a discovery/provenance feed (no values). Non-fatal: a manifest change
+    // that needs a decision keeps the previous snapshot and writes a pending-review candidate.
+    try {
+      await command('fetch-lumina-ledger', process.execPath, ['scripts/fetch-lumina-ledger.mjs']);
+    } catch (error) {
+      report.warnings = report.warnings || [];
+      report.warnings.push(`fetch-lumina-ledger: ${error.message.slice(0, 300)}`);
+      console.warn(`WARN fetch-lumina-ledger: keeping the previous snapshot`);
+    }
     // R9.1: provider-meta is hand-curated; its date comes from a cross-check of `country` against the table
     // just fetched (dated by that table). New disagreements exit non-zero → a warning, curated values stay.
     try {

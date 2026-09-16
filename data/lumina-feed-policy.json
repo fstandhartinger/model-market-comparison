@@ -1,0 +1,748 @@
+{
+  "purpose": "CR-37.2 / CR-38.4: reviewed rules for the Lumina Bench discovery feed (scripts/fetch-lumina-ledger.mjs). host_roles decides who a cited result comes from; family_decisions records families already in the registry, on hold, excluded or planned. Every other family is classified mechanically (lib/lumina-ledger.mjs → classifyFamily).",
+  "aggregator_hosts_note": "host_roles.aggregator is also the list test/aggregator-provenance.test.mjs uses: no observation in the benchmark store may cite one of these hosts.",
+  "drafted": {
+    "by": "claude-opus (iteration 82)",
+    "at": "2026-09-16"
+  },
+  "review": null,
+  "host_roles": {
+    "evaluator": [
+      "artificialanalysis.ai",
+      "cursor.com",
+      "cybench.github.io",
+      "epoch.ai",
+      "livebench.ai",
+      "livecodebench.github.io",
+      "mmmu-benchmark.github.io",
+      "osworld-v2.xlang.ai",
+      "www.tbench.ai"
+    ],
+    "vendor": [
+      "ai.meta.com",
+      "api-docs.deepseek.com",
+      "blog.google",
+      "deepmind.google",
+      "huggingface.co",
+      "qwen.ai",
+      "research.meta.ai",
+      "storage.googleapis.com",
+      "www.anthropic.com",
+      "www.kimi.com",
+      "x.ai",
+      "z.ai"
+    ],
+    "aggregator": [
+      "benchlm.ai",
+      "benchmarklist.com",
+      "codesota.com",
+      "llm-stats.com",
+      "lmcouncil.ai",
+      "luminabench.com",
+      "theaggregate.ai",
+      "vellum.ai",
+      "www.codesota.com",
+      "www.vellum.ai"
+    ]
+  },
+  "family_decisions": {
+    "aa-automation-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-automationbench::1.0.6"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "aa-briefcase": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-briefcase::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "aa-lcr": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-lcr::1.1"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "aa-omniscience": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-omniscience::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "aider-polyglot": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aider-polyglot::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "aime-2025": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-aime::2025"
+      ],
+      "note": "Artificial Analysis run of AIME 2025"
+    },
+    "apex-agents": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-apex-agents::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "apex-swe": {
+      "decision": "excluded",
+      "reason": "Mercor APEX terms §4.2 forbid reuse (data/SCRAPING.md, iteration 80)"
+    },
+    "arc-agi-2": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "arc-agi::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "arc-agi-3": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "arc-agi::3"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aaagenticindex": {
+      "decision": "on_hold",
+      "reason": "CR-35.3: no new Artificial Analysis-derived metric until Florian reports AA's answer"
+    },
+    "benchlm-aaaime2025": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-aime::2025"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aabriefcaseelo": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-briefcase::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aacodingagents": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-coding-agent-index::1.5"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aacodingindex": {
+      "decision": "in_registry",
+      "dataset_fields": [
+        "aa_coding_index"
+      ],
+      "note": "Artificial Analysis field in the dataset (the intake job's mapping, 15 Sep 2026)"
+    },
+    "benchlm-aaenterpriseopsgym": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-enterpriseops-gym::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aaglobalmmlulite": {
+      "decision": "on_hold",
+      "reason": "CR-35.3: no new Artificial Analysis-derived metric until Florian reports AA's answer"
+    },
+    "benchlm-aaharveylab": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-harvey-lab::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aaitbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-itbench::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aalivecodebench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-livecodebench::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aamath500": {
+      "decision": "on_hold",
+      "reason": "CR-35.3: no new Artificial Analysis-derived metric until Florian reports AA's answer"
+    },
+    "benchlm-aammlupro": {
+      "decision": "in_registry",
+      "dataset_fields": [
+        "aa_mmlu_pro"
+      ],
+      "note": "Artificial Analysis field in the dataset (the intake job's mapping, 15 Sep 2026)"
+    },
+    "benchlm-aaopennessindex": {
+      "decision": "on_hold",
+      "reason": "CR-35.3: no new Artificial Analysis-derived metric until Florian reports AA's answer"
+    },
+    "benchlm-aatau3banking": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-tau3-banking::1.0.1"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-aaterminalbench21": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-terminal-bench::2.1"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-alebench": {
+      "decision": "vendor_reported",
+      "note": "Reviewed 2026-09-16: the \"evaluator host\" rows for Agents Last Exam are artificialanalysis.ai/models/<model> pages, not an Artificial Analysis evaluation board; the rest are lab-reported. Any AA-derived value stays on hold (CR-35.3)"
+    },
+    "benchlm-apexagents": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-apex-agents::snapshot-2026-09-10"
+      ],
+      "note": "Artificial Analysis run of APEX-Agents"
+    },
+    "benchlm-arcagi1": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "arc-agi::1"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-arxivmathjune2026": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "matharena-arxivmath::2026-06"
+      ],
+      "note": "MathArena's own runs (iteration 80); Lumina's two rows are Anthropic-reported"
+    },
+    "benchlm-bullshitbenchv2": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "bullshitbench-v2::snapshot-2026-09-10"
+      ],
+      "note": "The maintainer's own board"
+    },
+    "benchlm-codemigration": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-code-migration::2"
+      ],
+      "note": "Vals AI's own board"
+    },
+    "benchlm-designarenaagenticwebdev": {
+      "decision": "excluded",
+      "reason": "CR-39.1: DesignArena stays at the two current boards; no board expansion without a new decision"
+    },
+    "benchlm-designarenawebsite": {
+      "decision": "excluded",
+      "reason": "CR-39.1: DesignArena stays at the two current boards; no board expansion without a new decision"
+    },
+    "benchlm-emb": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-emb::2"
+      ],
+      "note": "Vals AI's own board"
+    },
+    "benchlm-eqbench4": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "eq-bench::4"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-frontiercode": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "frontiercode::1.1"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-frontiermathv2tier4": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "frontiermath-tier-4::v2"
+      ],
+      "note": "Epoch AI's own runs (iteration 80)"
+    },
+    "benchlm-frontiermathv2tiers13": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "frontiermath-tiers-1-3::v2"
+      ],
+      "note": "Epoch AI's own runs (iteration 80)"
+    },
+    "benchlm-gdpvalaanormalized": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-gdpval::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-gdpvalrubrics": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-gdpval::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-hlab": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-hlab::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-hlenotools": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "hle::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-ifbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "ifbench::snapshot-2026-09-10",
+        "aa-ifbench::snapshot-2026-09-10"
+      ],
+      "note": "BenchLM registry duplicate of IFBench"
+    },
+    "benchlm-legalresearchbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-legal-research::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-lisanbench": {
+      "decision": "planned",
+      "collector": "LisanBench static page (data/SCRAPING.md)"
+    },
+    "benchlm-livecodebenchv5": {
+      "decision": "planned",
+      "collector": "LiveCodeBench primary, date-windowed (data/SCRAPING.md)"
+    },
+    "benchlm-livecodebenchv6": {
+      "decision": "planned",
+      "collector": "LiveCodeBench primary, date-windowed (data/SCRAPING.md)"
+    },
+    "benchlm-mmmu": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "mmmu::snapshot-2026-09-10"
+      ],
+      "note": "MMMU authors' board"
+    },
+    "benchlm-mmmupro": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-mmmu-pro::snapshot-2026-09-10"
+      ],
+      "note": "Artificial Analysis run of MMMU-Pro"
+    },
+    "benchlm-omniscienceaccuracy": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-omniscience::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-omnisciencehallucinationrate": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-omniscience::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-osworld2": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "osworld-2::v2026.06.24",
+        "osworld-2::v2026.08.08"
+      ],
+      "note": "XLANG Lab's results file, one identity per task release (iteration 80)"
+    },
+    "benchlm-programbench": {
+      "decision": "planned",
+      "collector": "ProgramBench static page (data/SCRAPING.md)"
+    },
+    "benchlm-programbenchepisode1": {
+      "decision": "planned",
+      "collector": "ProgramBench static page (data/SCRAPING.md)"
+    },
+    "benchlm-scicode": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "scicode::snapshot-2026-09-10",
+        "aa-scicode::1.0.1"
+      ],
+      "note": "BenchLM registry duplicate of SciCode"
+    },
+    "benchlm-sweatlasrefactoring": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "swe-atlas-refactoring::snapshot-2026-09-15"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-swemultilingual-benchmark-2": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "swe-bench-multilingual::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-swemultimodal": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "swe-bench-multimodal::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-tau2airline": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "openrouter-tau2-bench-airline::snapshot-2026-09-15"
+      ],
+      "note": "OpenRouter's own run (CR-34.2)"
+    },
+    "benchlm-toolathlonverified": {
+      "decision": "planned",
+      "collector": "CR-30.2 tier A: Toolathlon-Verified from an independent board"
+    },
+    "benchlm-valsindex": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index::2"
+      ],
+      "note": "Vals AI's own board; Lumina names it v1.2, the registry carries the current Vals Index"
+    },
+    "benchlm-valsterminalbench21": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-terminal-bench-2.1::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "benchlm-vibecodebench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-vibe-code-bench::2"
+      ],
+      "note": "Vals AI's own board"
+    },
+    "benchlm-voxpopuliwer": {
+      "decision": "on_hold",
+      "reason": "CR-35.3: no new Artificial Analysis-derived metric until Florian reports AA's answer"
+    },
+    "benchlm-webarenaverified": {
+      "decision": "planned",
+      "collector": "WebArena-x static pages, low priority (data/SCRAPING.md)"
+    },
+    "benchlm-weirdml": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "weirdml::2"
+      ],
+      "note": "The maintainer's own board"
+    },
+    "bl-agents": {
+      "decision": "excluded",
+      "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
+    },
+    "bl-coding": {
+      "decision": "excluded",
+      "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
+    },
+    "bl-mathematics": {
+      "decision": "excluded",
+      "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
+    },
+    "bl-multimodal": {
+      "decision": "excluded",
+      "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
+    },
+    "bl-reasoning": {
+      "decision": "excluded",
+      "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
+    },
+    "bl-research": {
+      "decision": "excluded",
+      "reason": "An aggregator's own composite (BenchLM prior), not a benchmark anyone ran (CR-38.4)"
+    },
+    "blueprint-bench-2": {
+      "decision": "planned",
+      "collector": "Andon Labs Blueprint-Bench v2 (data/SCRAPING.md)"
+    },
+    "browsecomp": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "openrouter-search-browsecomp::snapshot-2026-09-15"
+      ],
+      "note": "OpenRouter's own run with its stated search configuration (CR-34.2); not comparable with vendor-reported BrowseComp numbers"
+    },
+    "charxiv": {
+      "decision": "vendor_reported",
+      "note": "Reviewed 2026-09-16: the \"evaluator host\" rows for CharXiv are artificialanalysis.ai/models/<model> pages, not an Artificial Analysis evaluation board; the rest are lab-reported. Any AA-derived value stays on hold (CR-35.3)"
+    },
+    "critpt": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "critpt::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "cursor-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "cursorbench::4.0"
+      ],
+      "note": "Cursor's own board; Lumina records version 3.2, the registry carries CursorBench 4.0"
+    },
+    "cybench": {
+      "decision": "vendor_reported",
+      "note": "Reviewed 2026-09-16: cybench.github.io relays each lab's own system-card number (every row links to the system card), so the six \"evaluator host\" rows are vendor-reported; self-reported route (CR-30.1)"
+    },
+    "deepswe": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "deepswe::snapshot-2026-09-15"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "enterpriseops-gym-aa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-enterpriseops-gym::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "eq-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "eq-bench::4"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "finance-agent-v2": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vals-index-finance-agent::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "frontierswe": {
+      "decision": "planned",
+      "collector": "CR-30.2 tier A: FrontierSWE primary-page parser (licence unclear)"
+    },
+    "gdm-mrcr-v2-128k-average": {
+      "decision": "planned",
+      "collector": "Context Arena open JSON API, GDM-MRCR v2 (data/SCRAPING.md)"
+    },
+    "gdpval-aa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-gdpval::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "gdpval-aa-v2-elo": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-gdpval::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "gpqa-diamond": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-gpqa-diamond::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "harvey-lab-aa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-harvey-lab::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "humanitys-last-exam": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "hle::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "ifbench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "ifbench::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "itbench-aa": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-itbench::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "livebench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "livebench::2026-06-25"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "livecodebench": {
+      "decision": "planned",
+      "collector": "LiveCodeBench primary performances_generation.json (data/SCRAPING.md)"
+    },
+    "longbench-v2": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "longbench::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "math-500": {
+      "decision": "excluded",
+      "reason": "Saturated: the only cited results are 99.2–99.4 % (Artificial Analysis, July 2026); CR-38.1 records stale/saturated benchmarks as not collected"
+    },
+    "mcp-atlas": {
+      "decision": "planned",
+      "collector": "CR-30.2 tier A: MCP Atlas (Scale Labs terms decision first)"
+    },
+    "mmmu": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "mmmu::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "mmmu-pro": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-mmmu-pro::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "posttrain-bench": {
+      "decision": "planned",
+      "collector": "CR-30.2 tier A: PostTrainBench from an independent board"
+    },
+    "program-bench": {
+      "decision": "planned",
+      "collector": "ProgramBench static page (data/SCRAPING.md)"
+    },
+    "scicode": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "scicode::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "simpleqa-verified": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "simpleqa-verified::snapshot-2026-09-16"
+      ],
+      "note": "Epoch AI's own runs (iteration 80)"
+    },
+    "swe-bench-pro": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "swe-bench-pro-public::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "swe-bench-verified": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "swe-bench-verified::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "swe-rebench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "swe-rebench::2026-05-15..2026-07-01"
+      ],
+      "note": "Nebius's board, one identity per task window (iteration 81); Lumina does not say which window its rows belong to"
+    },
+    "tau2-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-tau2-telecom::snapshot-2026-09-10"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "tau3-banking": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "tau3-banking::1.0.1"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "terminal-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-terminal-bench::2.1",
+        "vals-index-terminal-bench-2.1::2"
+      ],
+      "note": "Terminal-Bench 2.1 as run by Artificial Analysis and Vals AI; tbench.ai's own 2.1 board is not collected directly"
+    },
+    "terminal-bench-4": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "terminal-bench::4.0"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "terminal-bench-hard": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "aa-terminal-bench-hard::74221fb"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "toolathlon": {
+      "decision": "planned",
+      "collector": "CR-30.2 tier A: Toolathlon-Verified from an independent board"
+    },
+    "vending-bench": {
+      "decision": "in_registry",
+      "benchmark_ids": [
+        "vending-bench::2"
+      ],
+      "note": "Mapped by the Lumina intake job, 15 Sep 2026"
+    },
+    "webarena": {
+      "decision": "planned",
+      "collector": "WebArena-x static pages, low priority (data/SCRAPING.md)"
+    },
+    "zerobench": {
+      "decision": "vendor_reported",
+      "note": "Reviewed 2026-09-16: the \"evaluator host\" rows for ZeroBench are artificialanalysis.ai/models/<model> pages, not an Artificial Analysis evaluation board; the rest are lab-reported. Any AA-derived value stays on hold (CR-35.3)"
+    }
+  },
+  "host_roles_note": "A host role is a first cut, not a verdict: an evaluator host can relay vendor numbers (cybench.github.io links system cards; artificialanalysis.ai/models pages show lab-reported values). Every family that lands in evaluator_result is therefore read by hand and recorded in family_decisions."
+}
