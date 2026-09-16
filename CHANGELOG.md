@@ -4,6 +4,21 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — FrontierMath v2 (Tiers 1–3 and Tier 4) and SimpleQA Verified, as Epoch AI runs them
+
+**Three new boards, no shape change.** From Epoch AI's Benchmarking Hub archive
+(`https://epoch.ai/data/benchmark_data.zip`, CC BY 4.0), the CSV members of three benchmarks Epoch runs
+itself: `frontiermath-tiers-1-3::v2` (106 rows) and `frontiermath-tier-4::v2` (62 rows) — Epoch's private v2
+problem sets released 2026-06-12, which supersede the 2025 sets as different identities — and
+`simpleqa-verified::snapshot-2026-09-16` (80 rows; Google DeepMind's benchmark, Epoch's runs, no published
+version so the identity is dated). Value = Epoch's declared score column "Best score (across scorers)", a
+fraction; mean score, standard error, start time and the Epoch run id stay in the protocol. Manual snapshots
+like DeepSWE (the archive changes with every Epoch update), never fetched by the daily run. Joins use the
+DeepSWE label rule (`<slug>_<effort>`, exact catalog configuration): 101 of 248 rows. Epoch never lets
+crawlers see the FrontierMath sample problems and neither do we. For a consumer: 248 new observations,
+three registry entries, and the count of benchmarks the site reports rises by three. Never a Composite
+input; attribute Epoch AI.
+
 ## 2026-09-16 — MathArena: ArXivMath and BrokenArXiv, June 2026 editions
 
 **Two new boards, no shape change.** `matharena-arxivmath::2026-06` (48 research-level problems from arXiv
@@ -22,20 +37,26 @@ count of benchmarks the site reports rises by two. Never a Composite input.
 `scripts/capture-benchmark-sources.py` now follows HTTP 308 redirects like 307 (Python 3.10 does not):
 MathArena answers `robots.txt` with a 308 to a 404, which previously stopped the capture before any request.
 
-## 2026-09-16 — OSWorld 2.0, the first board from the source audit
+## 2026-09-16 — OSWorld 2.0, the first board from the source audit (one identity per task release)
 
-**One new board, no shape change.** `osworld-2::v2026.06.24` (XLANG Lab, University of Hong Kong): a
-computer-use agent completes 108 long-horizon real-world workflows; value = binary accuracy in percent at
-the source's default 500-step budget on the full task set, collected from the leaderboard page's own data
-file (`official-results.json`, Apache-2.0 project). The offline subset and the 150/300-step budgets are
-different protocols and are not ingested. Each row is one model x reasoning setting x tool setting; the
-tool setting (`batch tool`, `batched tool`, `standard`, spelled as the source spells it) is the
-observation's `subject.harness`, and the result release (`v2026.06.24` / `v2026.08.08`) stays in the
-protocol. Ten of 16 rows join a catalog configuration under the existing exact rule
-(`lib/board-identity.mjs`, `parseOsworld2Id`); Claude Opus 4.8 and 4.7 max appear under two tool settings
-and therefore join neither row, Qwen 3.7-Plus "thinking" and "Kimi 2.6" are refused rather than guessed.
-For a consumer: `benchmark_results` gains 16 observations and one registry entry, and the count of
-benchmarks the site reports rises by one (89 → 90). Never a Composite input.
+**Two new boards, no shape change.** OSWorld 2.0 (XLANG Lab, University of Hong Kong): a computer-use agent
+completes 108 long-horizon real-world workflows; value = binary accuracy in percent at the source's default
+500-step budget on the full task set, collected from the leaderboard page's own data file
+(`official-results.json`, Apache-2.0 project). Each result release is a **task release** with different task
+files, so each is its own identity and they are never compared directly: `osworld-2::v2026.06.24` (10 rows)
+and `osworld-2::v2026.08.08` (6 rows). The offline subset and the 150/300-step budgets are different
+protocols and are not ingested. Each row is one model x reasoning setting x tool setting; the tool setting
+(`batch tool`, `batched tool`, `standard`, spelled as the source spells it) is `subject.harness`.
+4 + 6 rows join a catalog configuration (`lib/board-identity.mjs`, `parseOsworld2Id`); Claude Opus 4.8 and
+4.7 max appear under two tool settings and join neither row, Qwen 3.7-Plus "thinking" and "Kimi 2.6" are
+refused rather than guessed. Never a Composite input.
+
+**Correction, same day.** The first build of this entry (`52719ba`, live for about an hour) published all
+16 rows under `osworld-2::v2026.06.24`, mixing the two task releases. Anthropic's Claude Fable 5.1 page
+states that the August 2026 task files differ and the numbers "aren't directly comparable to previously
+published OSWorld 2.0 results"; an independent review surfaced the sentence and it was checked on the page
+before the split. The two history states written by that build (`20260916-31bc236e`, `20260916-c8572ee5`)
+were withdrawn rather than kept as a record of a mislabelled identity.
 
 ## 2026-09-16 — Twelve benchmarks we already collected now have rows, and DesignArena's scope is recorded
 

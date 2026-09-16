@@ -382,6 +382,612 @@
       "rule": "label states model gpt-6-astra and effort low; exact catalog configuration gpt-6-astra::low"
     },
     {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.8-flash_high",
+      "model_id": "gemini-3.8-flash::high",
+      "rule": "label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-fable-5-1_max",
+      "model_id": "claude-fable-5.1::max",
+      "rule": "label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-plus",
+      "model_id": "qwen3.6-plus::default",
+      "rule": "label names qwen3.6-plus without an effort; the catalog has exactly one configuration, the default (qwen3.6-plus::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-6-astra_max",
+      "model_id": "gpt-6-astra::max",
+      "rule": "label states model gpt-6-astra and effort max; exact catalog configuration gpt-6-astra::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.7-flash",
+      "model_id": "qwen3.7-flash::default",
+      "rule": "label names qwen3.7-flash without an effort; the catalog has exactly one configuration, the default (qwen3.7-flash::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.6-luna_low",
+      "model_id": "gpt-5.6-luna::low",
+      "rule": "label states model gpt-5.6-luna and effort low; exact catalog configuration gpt-5.6-luna::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-flash",
+      "model_id": "qwen3.6-flash::default",
+      "rule": "label names qwen3.6-flash without an effort; the catalog has exactly one configuration, the default (qwen3.6-flash::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-4o-mini-2024-07-18",
+      "model_id": "gpt-4o-mini-2024-07-18::default",
+      "rule": "label names gpt-4o-mini-2024-07-18 without an effort; the catalog has exactly one configuration, the default (gpt-4o-mini-2024-07-18::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.3_max",
+      "model_id": "glm-5.3::max",
+      "rule": "label states model glm-5.3 and effort max; exact catalog configuration glm-5.3::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "deepseek-v4-pro-0813_max",
+      "model_id": "deepseek-v4-pro-0813::max",
+      "rule": "label states model deepseek-v4-pro-0813 and effort max; exact catalog configuration deepseek-v4-pro-0813::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.7-flash_high",
+      "model_id": "gemini-3.7-flash::high",
+      "rule": "label states model gemini-3.7-flash and effort high; exact catalog configuration gemini-3.7-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "grok-4.6_xhigh",
+      "model_id": "grok-4.6::xhigh",
+      "rule": "label states model grok-4.6 and effort xhigh; exact catalog configuration grok-4.6::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "deepseek-v4-flash-0731_max",
+      "model_id": "deepseek-v4-flash-0731::max",
+      "rule": "label states model deepseek-v4-flash-0731 and effort max; exact catalog configuration deepseek-v4-flash-0731::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.6-flash_high",
+      "model_id": "gemini-3.6-flash::high",
+      "rule": "label states model gemini-3.6-flash and effort high; exact catalog configuration gemini-3.6-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-opus-5_max",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "kimi-k3_max",
+      "model_id": "kimi-k3::max",
+      "rule": "label states model kimi-k3 and effort max; exact catalog configuration kimi-k3::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.6-terra_max",
+      "model_id": "gpt-5.6-terra::max",
+      "rule": "label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.6-luna_max",
+      "model_id": "gpt-5.6-luna::max",
+      "rule": "label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.6-sol_max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "grok-4.5_high",
+      "model_id": "grok-4.5::high",
+      "rule": "label states model grok-4.5 and effort high; exact catalog configuration grok-4.5::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-sonnet-5_max",
+      "model_id": "claude-sonnet-5::max",
+      "rule": "label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.2_max",
+      "model_id": "glm-5.2::max",
+      "rule": "label states model glm-5.2 and effort max; exact catalog configuration glm-5.2::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "grok-4.3_high",
+      "model_id": "grok-4.3::high",
+      "rule": "label states model grok-4.3 and effort high; exact catalog configuration grok-4.3::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "deepseek-v4-pro_max",
+      "model_id": "deepseek-v4-pro::max",
+      "rule": "label states model deepseek-v4-pro and effort max; exact catalog configuration deepseek-v4-pro::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.7-max",
+      "model_id": "qwen3.7-max::default",
+      "rule": "label names qwen3.7-max without an effort; the catalog has exactly one configuration, the default (qwen3.7-max::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "kimi-k2.7-code",
+      "model_id": "kimi-k2.7-code::default",
+      "rule": "label names kimi-k2.7-code without an effort; the catalog has exactly one configuration, the default (kimi-k2.7-code::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.5-pro_xhigh",
+      "model_id": "gpt-5.5-pro::xhigh",
+      "rule": "label states model gpt-5.5-pro and effort xhigh; exact catalog configuration gpt-5.5-pro::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.1-pro-preview",
+      "model_id": "gemini-3.1-pro-preview::default",
+      "rule": "label names gemini-3.1-pro-preview without an effort; the catalog has exactly one configuration, the default (gemini-3.1-pro-preview::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.5_xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-opus-4-6_max",
+      "model_id": "claude-opus-4.6::max",
+      "rule": "label states model claude-opus-4.6 and effort max; exact catalog configuration claude-opus-4.6::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-opus-4-7_max",
+      "model_id": "claude-opus-4.7::max",
+      "rule": "label states model claude-opus-4.7 and effort max; exact catalog configuration claude-opus-4.7::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.5-flash_high",
+      "model_id": "gemini-3.5-flash::high",
+      "rule": "label states model gemini-3.5-flash and effort high; exact catalog configuration gemini-3.5-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-opus-4-8_max",
+      "model_id": "claude-opus-4.8::max",
+      "rule": "label states model claude-opus-4.8 and effort max; exact catalog configuration claude-opus-4.8::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-fable-5_max",
+      "model_id": "claude-fable-5::max",
+      "rule": "label states model claude-fable-5 and effort max; exact catalog configuration claude-fable-5::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3.8-flash_high",
+      "model_id": "gemini-3.8-flash::high",
+      "rule": "label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-fable-5-1_max",
+      "model_id": "claude-fable-5.1::max",
+      "rule": "label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-6-astra_low",
+      "model_id": "gpt-6-astra::low",
+      "rule": "label states model gpt-6-astra and effort low; exact catalog configuration gpt-6-astra::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-6-astra_medium",
+      "model_id": "gpt-6-astra::medium",
+      "rule": "label states model gpt-6-astra and effort medium; exact catalog configuration gpt-6-astra::medium"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-6-astra_high",
+      "model_id": "gpt-6-astra::high",
+      "rule": "label states model gpt-6-astra and effort high; exact catalog configuration gpt-6-astra::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-6-astra_xhigh",
+      "model_id": "gpt-6-astra::xhigh",
+      "rule": "label states model gpt-6-astra and effort xhigh; exact catalog configuration gpt-6-astra::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-6-astra_max",
+      "model_id": "gpt-6-astra::max",
+      "rule": "label states model gpt-6-astra and effort max; exact catalog configuration gpt-6-astra::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "glm-5.3_max",
+      "model_id": "glm-5.3::max",
+      "rule": "label states model glm-5.3 and effort max; exact catalog configuration glm-5.3::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "deepseek-v4-pro-0813_max",
+      "model_id": "deepseek-v4-pro-0813::max",
+      "rule": "label states model deepseek-v4-pro-0813 and effort max; exact catalog configuration deepseek-v4-pro-0813::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3.7-flash_high",
+      "model_id": "gemini-3.7-flash::high",
+      "rule": "label states model gemini-3.7-flash and effort high; exact catalog configuration gemini-3.7-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "grok-4.6_xhigh",
+      "model_id": "grok-4.6::xhigh",
+      "rule": "label states model grok-4.6 and effort xhigh; exact catalog configuration grok-4.6::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "deepseek-v4-flash-0731_max",
+      "model_id": "deepseek-v4-flash-0731::max",
+      "rule": "label states model deepseek-v4-flash-0731 and effort max; exact catalog configuration deepseek-v4-flash-0731::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3.6-flash_high",
+      "model_id": "gemini-3.6-flash::high",
+      "rule": "label states model gemini-3.6-flash and effort high; exact catalog configuration gemini-3.6-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-opus-5_max",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "kimi-k3_max",
+      "model_id": "kimi-k3::max",
+      "rule": "label states model kimi-k3 and effort max; exact catalog configuration kimi-k3::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.6-terra_max",
+      "model_id": "gpt-5.6-terra::max",
+      "rule": "label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.6-luna_max",
+      "model_id": "gpt-5.6-luna::max",
+      "rule": "label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.6-sol_max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "grok-4.5_high",
+      "model_id": "grok-4.5::high",
+      "rule": "label states model grok-4.5 and effort high; exact catalog configuration grok-4.5::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-sonnet-5_max",
+      "model_id": "claude-sonnet-5::max",
+      "rule": "label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "glm-5.2_max",
+      "model_id": "glm-5.2::max",
+      "rule": "label states model glm-5.2 and effort max; exact catalog configuration glm-5.2::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "grok-4.3_high",
+      "model_id": "grok-4.3::high",
+      "rule": "label states model grok-4.3 and effort high; exact catalog configuration grok-4.3::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "deepseek-v4-pro_max",
+      "model_id": "deepseek-v4-pro::max",
+      "rule": "label states model deepseek-v4-pro and effort max; exact catalog configuration deepseek-v4-pro::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "qwen3.7-max",
+      "model_id": "qwen3.7-max::default",
+      "rule": "label names qwen3.7-max without an effort; the catalog has exactly one configuration, the default (qwen3.7-max::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "kimi-k2.7-code",
+      "model_id": "kimi-k2.7-code::default",
+      "rule": "label names kimi-k2.7-code without an effort; the catalog has exactly one configuration, the default (kimi-k2.7-code::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.5-pro_xhigh",
+      "model_id": "gpt-5.5-pro::xhigh",
+      "rule": "label states model gpt-5.5-pro and effort xhigh; exact catalog configuration gpt-5.5-pro::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3.1-pro-preview",
+      "model_id": "gemini-3.1-pro-preview::default",
+      "rule": "label names gemini-3.1-pro-preview without an effort; the catalog has exactly one configuration, the default (gemini-3.1-pro-preview::default)"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.5_xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-opus-4-6_max",
+      "model_id": "claude-opus-4.6::max",
+      "rule": "label states model claude-opus-4.6 and effort max; exact catalog configuration claude-opus-4.6::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-opus-4-7_max",
+      "model_id": "claude-opus-4.7::max",
+      "rule": "label states model claude-opus-4.7 and effort max; exact catalog configuration claude-opus-4.7::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3.5-flash_high",
+      "model_id": "gemini-3.5-flash::high",
+      "rule": "label states model gemini-3.5-flash and effort high; exact catalog configuration gemini-3.5-flash::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-opus-4-8_max",
+      "model_id": "claude-opus-4.8::max",
+      "rule": "label states model claude-opus-4.8 and effort max; exact catalog configuration claude-opus-4.8::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-fable-5_max",
+      "model_id": "claude-fable-5::max",
+      "rule": "label states model claude-fable-5 and effort max; exact catalog configuration claude-fable-5::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemini-3.8-flash_high",
+      "model_id": "gemini-3.8-flash::high",
+      "rule": "label states model gemini-3.8-flash and effort high; exact catalog configuration gemini-3.8-flash::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-fable-5-1_max",
+      "model_id": "claude-fable-5.1::max",
+      "rule": "label states model claude-fable-5.1 and effort max; exact catalog configuration claude-fable-5.1::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-4o-mini-2024-07-18",
+      "model_id": "gpt-4o-mini-2024-07-18::default",
+      "rule": "label names gpt-4o-mini-2024-07-18 without an effort; the catalog has exactly one configuration, the default (gpt-4o-mini-2024-07-18::default)"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-6-astra_max",
+      "model_id": "gpt-6-astra::max",
+      "rule": "label states model gpt-6-astra and effort max; exact catalog configuration gpt-6-astra::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "glm-5.3_max",
+      "model_id": "glm-5.3::max",
+      "rule": "label states model glm-5.3 and effort max; exact catalog configuration glm-5.3::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "muse-spark-1.2_xhigh",
+      "model_id": "muse-spark-1.2::xhigh",
+      "rule": "label states model muse-spark-1.2 and effort xhigh; exact catalog configuration muse-spark-1.2::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "kimi-k3_max",
+      "model_id": "kimi-k3::max",
+      "rule": "label states model kimi-k3 and effort max; exact catalog configuration kimi-k3::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "glm-5.2_max",
+      "model_id": "glm-5.2::max",
+      "rule": "label states model glm-5.2 and effort max; exact catalog configuration glm-5.2::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "kimi-k2.7-code",
+      "model_id": "kimi-k2.7-code::default",
+      "rule": "label names kimi-k2.7-code without an effort; the catalog has exactly one configuration, the default (kimi-k2.7-code::default)"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.7-max",
+      "model_id": "qwen3.7-max::default",
+      "rule": "label names qwen3.7-max without an effort; the catalog has exactly one configuration, the default (qwen3.7-max::default)"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.6-plus",
+      "model_id": "qwen3.6-plus::default",
+      "rule": "label names qwen3.6-plus without an effort; the catalog has exactly one configuration, the default (qwen3.6-plus::default)"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.6-max-preview",
+      "model_id": "qwen3.6-max-preview::default",
+      "rule": "label names qwen3.6-max-preview without an effort; the catalog has exactly one configuration, the default (qwen3.6-max-preview::default)"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.6-flash",
+      "model_id": "qwen3.6-flash::default",
+      "rule": "label names qwen3.6-flash without an effort; the catalog has exactly one configuration, the default (qwen3.6-flash::default)"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemini-3.5-flash_high",
+      "model_id": "gemini-3.5-flash::high",
+      "rule": "label states model gemini-3.5-flash and effort high; exact catalog configuration gemini-3.5-flash::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "deepseek-v4-pro_max",
+      "model_id": "deepseek-v4-pro::max",
+      "rule": "label states model deepseek-v4-pro and effort max; exact catalog configuration deepseek-v4-pro::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemini-3.7-flash_high",
+      "model_id": "gemini-3.7-flash::high",
+      "rule": "label states model gemini-3.7-flash and effort high; exact catalog configuration gemini-3.7-flash::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "deepseek-v4-pro-0813_max",
+      "model_id": "deepseek-v4-pro-0813::max",
+      "rule": "label states model deepseek-v4-pro-0813 and effort max; exact catalog configuration deepseek-v4-pro-0813::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "deepseek-v4-flash-0731_max",
+      "model_id": "deepseek-v4-flash-0731::max",
+      "rule": "label states model deepseek-v4-flash-0731 and effort max; exact catalog configuration deepseek-v4-flash-0731::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemini-3.6-flash_high",
+      "model_id": "gemini-3.6-flash::high",
+      "rule": "label states model gemini-3.6-flash and effort high; exact catalog configuration gemini-3.6-flash::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "grok-4.6_high",
+      "model_id": "grok-4.6::high",
+      "rule": "label states model grok-4.6 and effort high; exact catalog configuration grok-4.6::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "grok-4.3_high",
+      "model_id": "grok-4.3::high",
+      "rule": "label states model grok-4.3 and effort high; exact catalog configuration grok-4.3::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "grok-4.5_high",
+      "model_id": "grok-4.5::high",
+      "rule": "label states model grok-4.5 and effort high; exact catalog configuration grok-4.5::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "grok-4.6_xhigh",
+      "model_id": "grok-4.6::xhigh",
+      "rule": "label states model grok-4.6 and effort xhigh; exact catalog configuration grok-4.6::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.5_xhigh",
+      "model_id": "gpt-5.5::xhigh",
+      "rule": "label states model gpt-5.5 and effort xhigh; exact catalog configuration gpt-5.5::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-sonnet-5_xhigh",
+      "model_id": "claude-sonnet-5::xhigh",
+      "rule": "label states model claude-sonnet-5 and effort xhigh; exact catalog configuration claude-sonnet-5::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-opus-4-6_max",
+      "model_id": "claude-opus-4.6::max",
+      "rule": "label states model claude-opus-4.6 and effort max; exact catalog configuration claude-opus-4.6::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-sonnet-5_max",
+      "model_id": "claude-sonnet-5::max",
+      "rule": "label states model claude-sonnet-5 and effort max; exact catalog configuration claude-sonnet-5::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-sonnet-4-6_max",
+      "model_id": "claude-sonnet-4.6::max",
+      "rule": "label states model claude-sonnet-4.6 and effort max; exact catalog configuration claude-sonnet-4.6::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-opus-4-8_max",
+      "model_id": "claude-opus-4.8::max",
+      "rule": "label states model claude-opus-4.8 and effort max; exact catalog configuration claude-opus-4.8::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.6-sol_max",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and effort max; exact catalog configuration gpt-5.6-sol::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.6-terra_max",
+      "model_id": "gpt-5.6-terra::max",
+      "rule": "label states model gpt-5.6-terra and effort max; exact catalog configuration gpt-5.6-terra::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.6-luna_max",
+      "model_id": "gpt-5.6-luna::max",
+      "rule": "label states model gpt-5.6-luna and effort max; exact catalog configuration gpt-5.6-luna::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-opus-5_max",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and effort max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-fable-5_xhigh",
+      "model_id": "claude-fable-5::xhigh",
+      "rule": "label states model claude-fable-5 and effort xhigh; exact catalog configuration claude-fable-5::xhigh"
+    },
+    {
       "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",
       "source_id": "Opus 5 (Claude Code) xHigh",
       "model_id": "claude-opus-5::xhigh",
@@ -7342,42 +7948,6 @@
     },
     {
       "benchmark_id": "osworld-2::v2026.06.24",
-      "source_id": "Claude Opus 5|low|batch tool|v2026.08.08",
-      "model_id": "claude-opus-5::low",
-      "rule": "label states model claude-opus-5 and setting low; exact catalog configuration claude-opus-5::low"
-    },
-    {
-      "benchmark_id": "osworld-2::v2026.06.24",
-      "source_id": "Claude Opus 5|medium|batch tool|v2026.08.08",
-      "model_id": "claude-opus-5::medium",
-      "rule": "label states model claude-opus-5 and setting medium; exact catalog configuration claude-opus-5::medium"
-    },
-    {
-      "benchmark_id": "osworld-2::v2026.06.24",
-      "source_id": "Claude Opus 5|high|batch tool|v2026.08.08",
-      "model_id": "claude-opus-5::high",
-      "rule": "label states model claude-opus-5 and setting high; exact catalog configuration claude-opus-5::high"
-    },
-    {
-      "benchmark_id": "osworld-2::v2026.06.24",
-      "source_id": "Claude Opus 5|xhigh|batch tool|v2026.08.08",
-      "model_id": "claude-opus-5::xhigh",
-      "rule": "label states model claude-opus-5 and setting xhigh; exact catalog configuration claude-opus-5::xhigh"
-    },
-    {
-      "benchmark_id": "osworld-2::v2026.06.24",
-      "source_id": "Claude Opus 5|max|batch tool|v2026.08.08",
-      "model_id": "claude-opus-5::max",
-      "rule": "label states model claude-opus-5 and setting max; exact catalog configuration claude-opus-5::max"
-    },
-    {
-      "benchmark_id": "osworld-2::v2026.06.24",
-      "source_id": "GPT-5.6 Sol|max|batch tool|v2026.08.08",
-      "model_id": "gpt-5.6-sol::max",
-      "rule": "label states model gpt-5.6-sol and setting max; exact catalog configuration gpt-5.6-sol::max"
-    },
-    {
-      "benchmark_id": "osworld-2::v2026.06.24",
       "source_id": "Claude Sonnet 4.6|medium|standard|v2026.06.24",
       "model_id": "claude-sonnet-4.6::medium",
       "rule": "label states model claude-sonnet-4.6 and setting medium; exact catalog configuration claude-sonnet-4.6::medium"
@@ -7399,6 +7969,42 @@
       "source_id": "MiniMax M3|enabled|standard|v2026.06.24",
       "model_id": "minimax-m3::default",
       "rule": "label names minimax-m3 without a setting; the catalog has exactly one configuration, the default (minimax-m3::default)"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.08.08",
+      "source_id": "Claude Opus 5|low|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::low",
+      "rule": "label states model claude-opus-5 and setting low; exact catalog configuration claude-opus-5::low"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.08.08",
+      "source_id": "Claude Opus 5|medium|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::medium",
+      "rule": "label states model claude-opus-5 and setting medium; exact catalog configuration claude-opus-5::medium"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.08.08",
+      "source_id": "Claude Opus 5|high|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::high",
+      "rule": "label states model claude-opus-5 and setting high; exact catalog configuration claude-opus-5::high"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.08.08",
+      "source_id": "Claude Opus 5|xhigh|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::xhigh",
+      "rule": "label states model claude-opus-5 and setting xhigh; exact catalog configuration claude-opus-5::xhigh"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.08.08",
+      "source_id": "Claude Opus 5|max|batch tool|v2026.08.08",
+      "model_id": "claude-opus-5::max",
+      "rule": "label states model claude-opus-5 and setting max; exact catalog configuration claude-opus-5::max"
+    },
+    {
+      "benchmark_id": "osworld-2::v2026.08.08",
+      "source_id": "GPT-5.6 Sol|max|batch tool|v2026.08.08",
+      "model_id": "gpt-5.6-sol::max",
+      "rule": "label states model gpt-5.6-sol and setting max; exact catalog configuration gpt-5.6-sol::max"
     },
     {
       "benchmark_id": "matharena-arxivmath::2026-06",

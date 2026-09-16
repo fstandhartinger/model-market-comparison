@@ -157,7 +157,7 @@ same result is never counted twice.
 | Source | Status | Collector / registry ids, or reason |
 | --- | --- | --- |
 | Artificial Analysis | live | `fetch-live.mjs`, `fetch-aa-coding-agents.mjs`, 26 `aa-*` ids; no new AA-derived metrics while CR-35.3 holds |
-| Epoch AI | live | `fetch-epoch-eci.mjs` (ECI, Software ECI), `otis-mock-aime`, DeepSWE via the Epoch hub (manual snapshot); **planned:** FrontierMath (CC BY 4.0 CSV export; never the problem pages robots.txt disallows) |
+| Epoch AI | live | `fetch-epoch-eci.mjs` (ECI, Software ECI), `otis-mock-aime`; from the Benchmarking Hub archive (manual snapshots, CC BY 4.0): DeepSWE, **FrontierMath Tiers 1–3 v2, FrontierMath Tier 4 v2, SimpleQA Verified (2026-09-16)** — never the FrontierMath problem pages robots.txt disallows |
 | Lumina Bench | not collected (values) | Aggregator: discovery and provenance feed only (CR-37.2); values come from the primary sources it cites. Its own intake found 31 % of sampled citations pointing at generic pages |
 | Scale Labs (SEAL) | live (part) / planned | `swe-bench-pro-public`, `swe-atlas-*` live. New boards: only the top rows are crawlable (`/api/` is robots-disallowed) and the terms on derivative use are unclear — needs a terms decision before collection |
 | Vals AI | live | 9 `vals-index*` ids |
@@ -199,7 +199,7 @@ same result is never counted twice.
 | GSO | planned | Static JSON endpoint, attribution OK |
 | Berkeley Function Calling Leaderboard | planned | `data_overall.csv`, Apache-2.0 |
 | τ-bench (Sierra) | live / planned | `tau2-bench`, `tau3-banking`, `tau3-voice`; **planned:** hyper-tau-bench (MIT, submission JSON on GitHub) |
-| OSWorld 2.0 | **live (2026-09-16)** | `osworld-2::v2026.06.24` (parser `osworld2_results`), Apache-2.0 project |
+| OSWorld 2.0 | **live (2026-09-16)** | `osworld-2::v2026.06.24` and `osworld-2::v2026.08.08` — one identity per task release (parser `osworld2_results`), Apache-2.0 project |
 | WebArena-x | planned (low) | Four sub-benchmarks on static pages, attribution OK |
 | DeepResearch Bench | planned | CSV downloads from a public HF Space |
 | CodeClash | planned (low) | MIT, static page; results dated Nov 2025 |

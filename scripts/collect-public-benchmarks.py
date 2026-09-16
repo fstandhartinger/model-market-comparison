@@ -276,19 +276,21 @@ def parse(source,spec,load_source):
                 'context':{'framework':named['framework'],'framework_version':named['version'],'browser':named['browser'],'model':named['model'],
                     'run_start':result.get('run_start'),'tasks_completed':result['tasks_completed'],'tasks_successful':result['tasks_successful'],'total_steps':result.get('total_steps')}})
     elif kind=='osworld2_results':
-        # OSWorld 2.0 (XLANG Lab) ships its whole leaderboard as one JSON file. Only one protocol becomes this
-        # identity: the full task set at the default step budget. The offline subset and shorter budgets are
+        # OSWorld 2.0 (XLANG Lab) ships its whole leaderboard as one JSON file. Only one protocol becomes an
+        # identity: one task release, the full task set, the default step budget. The offline subset and shorter budgets are
         # different protocols and are skipped, never mixed in. Rows without a release/scope inherit the file's
         # own stated defaults.
         data=json.loads(source)
         for key,expected in spec['require'].items():
             if data.get(key)!=expected:raise ValueError(f'OSWorld 2.0 {key} changed: {data.get(key)!r}')
         if not isinstance(data.get('results'),list):raise ValueError('OSWorld 2.0 results missing')
+        if spec['release_version'] not in data.get('releaseVersions',[]):raise ValueError('OSWorld 2.0 release no longer listed: '+spec['release_version'])
         for index,r in enumerate(data['results']):
             if not isinstance(r,dict) or not isinstance(r.get('model'),str) or not r['model'].strip():raise ValueError(f'OSWorld 2.0 row {index} schema changed')
             release=r.get('releaseVersion',data['defaultResultReleaseVersion']);scope=r.get('datasetScope',data['defaultResultDatasetScope'])
             if release not in data.get('releaseVersions',[]):raise ValueError(f'OSWorld 2.0 row {index}: unknown release {release!r}')
-            if scope!=spec['dataset_scope'] or r.get('stepBudget')!=data['defaultStepBudget'] or r.get('official') is not True:continue
+            # A result release is a task release: its task files differ, so each release is its own identity.
+            if release!=spec['release_version'] or scope!=spec['dataset_scope'] or r.get('stepBudget')!=data['defaultStepBudget'] or r.get('official') is not True:continue
             reasoning=str(r.get('reasoning') or '');tool=str(r.get('toolSetting') or '')
             if not reasoning or not tool:raise ValueError(f'OSWorld 2.0 row {index}: reasoning or tool setting missing')
             rows.append({'name':f"{r['model']} · {reasoning} · {tool}",'id':f"{r['model']}|{reasoning}|{tool}|{release}",

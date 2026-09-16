@@ -7,6 +7,8 @@ import { join } from 'node:path';
 
 // 2026-09-15 coding intake: DeepSWE (via Epoch AI) and Scale AI's SWE Atlas boards.
 const json = (p) => JSON.parse(readFileSync(new URL(`../${p}`, import.meta.url)));
+// 2026-09-16 (iteration 80): Epoch AI's own runs from the same hub archive, joined with the DeepSWE label rule.
+const EPOCH_RUN = ['frontiermath-tiers-1-3::v2', 'frontiermath-tier-4::v2', 'simpleqa-verified::snapshot-2026-09-16'];
 const IDS = ['deepswe::snapshot-2026-09-15', 'swe-atlas-qna::snapshot-2026-09-15', 'swe-atlas-test-writing::snapshot-2026-09-15', 'swe-atlas-refactoring::snapshot-2026-09-15'];
 // 2026-09-16 (iteration 79): boards whose labels are model slugs, joined by lib/board-identity.mjs.
 const SLUG_BOARDS = ['osworld-2', 'matharena-arxivmath', 'matharena-brokenarxiv', 'bullshitbench-v1', 'bullshitbench-v2', 'apprenticebench-api', 'apprenticebench-api-cost',
@@ -90,7 +92,7 @@ test('identity map: exact existing configurations; measured joins visible; self-
     } else assert.equal(o.subject.model_id, null, 'without a receipt the row stays unjoined');
   }
   for (const entry of map.entries.filter((e) => e.basis !== 'self_reported')) {
-    assert.ok([...IDS, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
+    assert.ok([...IDS, ...EPOCH_RUN, ...SLUG_BOARDS].some((id) => entry.benchmark_id === id || entry.benchmark_id.startsWith(`${id}::`)),
       `the map covers only the reviewed boards: ${entry.benchmark_id}`);
     assert.ok(catalog.has(entry.model_id), `${entry.model_id} exists`);
     const o = observations.find((x) => x.benchmark_id === entry.benchmark_id && x.subject.source_id === entry.source_id);

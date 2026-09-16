@@ -1,6 +1,6 @@
 {
-  "generated_at": "2026-09-16T09:39:54.576Z",
-  "joined": 857,
+  "generated_at": "2026-09-16T09:49:11.310Z",
+  "joined": 958,
   "unmatched": [
     {
       "benchmark_id": "deepswe::snapshot-2026-09-15",
@@ -31,6 +31,741 @@
       "benchmark_id": "deepswe::snapshot-2026-09-15",
       "source_id": "glm-5.3-flash_max",
       "reason": "no catalog configuration glm-5.3-flash::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.8-max-0902_xhigh",
+      "reason": "no catalog configuration qwen3.8-max-0902::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.1-flash-lite_low",
+      "reason": "no catalog configuration gemini-3.1-flash-lite::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.1-flash-lite_high",
+      "reason": "no catalog configuration gemini-3.1-flash-lite::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-35b-a3b_none",
+      "reason": "family qwen3.6-35b-a3b_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.5-397b-a17b_none",
+      "reason": "family qwen3.5-397b-a17b_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3-max-2025-09-23",
+      "reason": "family qwen3-max-2025-09-23 not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.2_none",
+      "reason": "family glm-5.2_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.7-flash_none",
+      "reason": "family qwen3.7-flash_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.6-luna_none",
+      "reason": "family gpt-5.6-luna_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.7-plus_none",
+      "reason": "family qwen3.7-plus_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.2_low",
+      "reason": "no catalog configuration glm-5.2::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-flash_none",
+      "reason": "family qwen3.6-flash_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-plus_none",
+      "reason": "family qwen3.6-plus_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-35b-a3b",
+      "reason": "effort not stated and qwen3.6-35b-a3b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-27b_none",
+      "reason": "family qwen3.6-27b_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.1",
+      "reason": "effort not stated and glm-5.1 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.1-flash-lite_minimal",
+      "reason": "no catalog configuration gemini-3.1-flash-lite::minimal"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.6-27b",
+      "reason": "effort not stated and qwen3.6-27b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.1_none",
+      "reason": "family glm-5.1_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-nano-2026-03-17_none",
+      "reason": "family gpt-5.4-nano-2026-03-17_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-mini-2026-03-17_none",
+      "reason": "family gpt-5.4-mini-2026-03-17_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-nano-2026-03-17_low",
+      "reason": "no catalog configuration gpt-5.4-nano-2026-03-17::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-mini-2026-03-17_low",
+      "reason": "no catalog configuration gpt-5.4-mini-2026-03-17::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.5-flash_none",
+      "reason": "family qwen3.5-flash_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.5-flash",
+      "reason": "family qwen3.5-flash not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.5-397b-a17b",
+      "reason": "effort not stated and qwen3.5-397b-a17b has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o1-2024-12-17_high",
+      "reason": "no catalog configuration o1-2024-12-17::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o1-2024-12-17_low",
+      "reason": "no catalog configuration o1-2024-12-17::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o1-2024-12-17_medium",
+      "reason": "no catalog configuration o1-2024-12-17::medium"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o3-2025-04-16_high",
+      "reason": "no catalog configuration o3-2025-04-16::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o3-2025-04-16_medium",
+      "reason": "no catalog configuration o3-2025-04-16::medium"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-2025-08-07_low",
+      "reason": "no catalog configuration gpt-5-2025-08-07::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-4.1-mini-2025-04-14",
+      "reason": "family gpt-4.1-mini-2025-04-14 not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-3.5-turbo-0125",
+      "reason": "family gpt-3.5-turbo-0125 not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o3-2025-04-16_low",
+      "reason": "no catalog configuration o3-2025-04-16::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-4.1-2025-04-14",
+      "reason": "family gpt-4.1-2025-04-14 not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-4-turbo-2024-04-09",
+      "reason": "family gpt-4-turbo-2024-04-09 not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-4o-2024-08-06",
+      "reason": "family gpt-4o-2024-08-06 not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o4-mini-2025-04-16_low",
+      "reason": "no catalog configuration o4-mini-2025-04-16::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o4-mini-2025-04-16_medium",
+      "reason": "no catalog configuration o4-mini-2025-04-16::medium"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o3-mini-2025-01-31_medium",
+      "reason": "no catalog configuration o3-mini-2025-01-31::medium"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-mini-2025-08-07_minimal",
+      "reason": "no catalog configuration gpt-5-mini-2025-08-07::minimal"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-2025-08-07_minimal",
+      "reason": "no catalog configuration gpt-5-2025-08-07::minimal"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-mini-2025-08-07_low",
+      "reason": "no catalog configuration gpt-5-mini-2025-08-07::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-nano-2025-08-07_minimal",
+      "reason": "no catalog configuration gpt-5-nano-2025-08-07::minimal"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o3-mini-2025-01-31_low",
+      "reason": "no catalog configuration o3-mini-2025-01-31::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-nano-2025-08-07_low",
+      "reason": "no catalog configuration gpt-5-nano-2025-08-07::low"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "glm-5.3-flash_max",
+      "reason": "no catalog configuration glm-5.3-flash::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "inkling-small_xhigh",
+      "reason": "no catalog configuration inkling-small::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "Inkling_xhigh",
+      "reason": "no catalog configuration Inkling::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "qwen3.8-max_xhigh",
+      "reason": "no catalog configuration qwen3.8-max::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.5-instant",
+      "reason": "family gpt-5.5-instant not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3.5-flash-lite_high",
+      "reason": "no catalog configuration gemini-3.5-flash-lite::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "grok-4.20-0309-reasoning",
+      "reason": "family grok-4.20-0309-reasoning not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-pro-2026-03-05_xhigh",
+      "reason": "no catalog configuration gpt-5.4-pro-2026-03-05::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.2-pro-2025-12-11_xhigh",
+      "reason": "no catalog configuration gpt-5.2-pro-2025-12-11::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-pro-2025-10-06_high",
+      "reason": "no catalog configuration gpt-5-pro-2025-10-06::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-mini-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-mini-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-nano-2026-03-17_high",
+      "reason": "no catalog configuration gpt-5.4-nano-2026-03-17::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-nano-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-nano-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-mini-2026-03-17_xhigh",
+      "reason": "no catalog configuration gpt-5.4-mini-2026-03-17::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-2.5-pro",
+      "reason": "effort not stated and gemini-2.5-pro has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gemini-3-flash-preview",
+      "reason": "effort not stated and gemini-3-flash-preview has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-opus-4-1-20250805_32K",
+      "reason": "family claude-opus-4-1-20250805_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-sonnet-4-5-20250929_32K",
+      "reason": "family claude-sonnet-4-5-20250929_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.4-2026-03-05_xhigh",
+      "reason": "no catalog configuration gpt-5.4-2026-03-05::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o4-mini-2025-04-16_high",
+      "reason": "no catalog configuration o4-mini-2025-04-16::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "o3-mini-2025-01-31_high",
+      "reason": "no catalog configuration o3-mini-2025-01-31::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5.2-2025-12-11_xhigh",
+      "reason": "no catalog configuration gpt-5.2-2025-12-11::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "claude-opus-4-5-20251101_32K",
+      "reason": "family claude-opus-4-5-20251101_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "gpt-5-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tiers-1-3::v2",
+      "source_id": "kimi-k2.6",
+      "reason": "effort not stated and kimi-k2.6 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "qwen3.8-max-0902_xhigh",
+      "reason": "no catalog configuration qwen3.8-max-0902::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-6-astra_none",
+      "reason": "family gpt-6-astra_none not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "glm-5.3-flash_max",
+      "reason": "no catalog configuration glm-5.3-flash::max"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "inkling-small_xhigh",
+      "reason": "no catalog configuration inkling-small::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "Inkling_xhigh",
+      "reason": "no catalog configuration Inkling::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "qwen3.8-max_xhigh",
+      "reason": "no catalog configuration qwen3.8-max::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.5-instant",
+      "reason": "family gpt-5.5-instant not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3.5-flash-lite_high",
+      "reason": "no catalog configuration gemini-3.5-flash-lite::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "grok-4.20-0309-reasoning",
+      "reason": "family grok-4.20-0309-reasoning not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.6-sol_promax",
+      "reason": "family gpt-5.6-sol_promax not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.4-pro-2026-03-05_xhigh",
+      "reason": "no catalog configuration gpt-5.4-pro-2026-03-05::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.2-pro-2025-12-11_xhigh",
+      "reason": "no catalog configuration gpt-5.2-pro-2025-12-11::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5-pro-2025-10-06_high",
+      "reason": "no catalog configuration gpt-5-pro-2025-10-06::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5-mini-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-mini-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.4-nano-2026-03-17_high",
+      "reason": "no catalog configuration gpt-5.4-nano-2026-03-17::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5-nano-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-nano-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.4-mini-2026-03-17_xhigh",
+      "reason": "no catalog configuration gpt-5.4-mini-2026-03-17::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gdm-ai-co-mathematician",
+      "reason": "family gdm-ai-co-mathematician not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-2.5-pro",
+      "reason": "effort not stated and gemini-2.5-pro has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gemini-3-flash-preview",
+      "reason": "effort not stated and gemini-3-flash-preview has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-opus-4-1-20250805_32K",
+      "reason": "family claude-opus-4-1-20250805_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-sonnet-4-5-20250929_32K",
+      "reason": "family claude-sonnet-4-5-20250929_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.4-2026-03-05_xhigh",
+      "reason": "no catalog configuration gpt-5.4-2026-03-05::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5.2-2025-12-11_xhigh",
+      "reason": "no catalog configuration gpt-5.2-2025-12-11::xhigh"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "o3-mini-2025-01-31_high",
+      "reason": "no catalog configuration o3-mini-2025-01-31::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "o4-mini-2025-04-16_high",
+      "reason": "no catalog configuration o4-mini-2025-04-16::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "claude-opus-4-5-20251101_32K",
+      "reason": "family claude-opus-4-5-20251101_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "gpt-5-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "frontiermath-tier-4::v2",
+      "source_id": "kimi-k2.6",
+      "reason": "effort not stated and kimi-k2.6 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.8-max-0902_xhigh",
+      "reason": "no catalog configuration qwen3.8-max-0902::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-4o-2024-08-06",
+      "reason": "family gpt-4o-2024-08-06 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-4.1-nano-2025-04-14",
+      "reason": "family gpt-4.1-nano-2025-04-14 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-4.1-mini-2025-04-14",
+      "reason": "family gpt-4.1-mini-2025-04-14 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-4.1-2025-04-14",
+      "reason": "family gpt-4.1-2025-04-14 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "o3-mini-2025-01-31_high",
+      "reason": "no catalog configuration o3-mini-2025-01-31::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "o1-2024-12-17_high",
+      "reason": "no catalog configuration o1-2024-12-17::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "muse-spark-1.1",
+      "reason": "effort not stated and the only catalog configuration is muse-spark-1.1::xhigh, not a default"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-3-opus-20240229",
+      "reason": "family claude-3-opus-20240229 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.5-plus",
+      "reason": "family qwen3.5-plus not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "Inkling_xhigh",
+      "reason": "no catalog configuration Inkling::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "Qwen3-235B-A22B-Thinking-2507",
+      "reason": "family Qwen3-235B-A22B-Thinking-2507 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "glm-5.1",
+      "reason": "effort not stated and glm-5.1 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "inkling-small_xhigh",
+      "reason": "no catalog configuration inkling-small::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "glm-4.7",
+      "reason": "effort not stated and glm-4.7 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "kimi-k2.5",
+      "reason": "effort not stated and kimi-k2.5 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.5-flash",
+      "reason": "family qwen3.5-flash not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3-max-2025-09-23",
+      "reason": "family qwen3-max-2025-09-23 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "qwen3.8-max_xhigh",
+      "reason": "no catalog configuration qwen3.8-max::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemma-4-31b-it",
+      "reason": "effort not stated and gemma-4-31b-it has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemini-3-flash-preview_high",
+      "reason": "no catalog configuration gemini-3-flash-preview::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "grok-4.20-0309-reasoning",
+      "reason": "family grok-4.20-0309-reasoning not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "o4-mini-2025-04-16_low",
+      "reason": "no catalog configuration o4-mini-2025-04-16::low"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.2-2025-12-11_low",
+      "reason": "no catalog configuration gpt-5.2-2025-12-11::low"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.2-2025-12-11_medium",
+      "reason": "no catalog configuration gpt-5.2-2025-12-11::medium"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "o3-2025-04-16_high",
+      "reason": "no catalog configuration o3-2025-04-16::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.4-nano-2026-03-17_high",
+      "reason": "no catalog configuration gpt-5.4-nano-2026-03-17::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "o4-mini-2025-04-16_high",
+      "reason": "no catalog configuration o4-mini-2025-04-16::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.4-mini-2026-03-17_high",
+      "reason": "no catalog configuration gpt-5.4-mini-2026-03-17::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.2-2025-12-11_high",
+      "reason": "no catalog configuration gpt-5.2-2025-12-11::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.4-pro-2026-03-05_xhigh",
+      "reason": "no catalog configuration gpt-5.4-pro-2026-03-05::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.1-2025-11-13_high",
+      "reason": "no catalog configuration gpt-5.1-2025-11-13::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-sonnet-4-5-20250929_59K",
+      "reason": "family claude-sonnet-4-5-20250929_59K not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.4-2026-03-05_xhigh",
+      "reason": "no catalog configuration gpt-5.4-2026-03-05::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-opus-4-5-20251101_32K",
+      "reason": "family claude-opus-4-5-20251101_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-haiku-4-5-20251001_32K",
+      "reason": "family claude-haiku-4-5-20251001_32K not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5.2-2025-12-11_xhigh",
+      "reason": "no catalog configuration gpt-5.2-2025-12-11::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-opus-4-7_xhigh",
+      "reason": "no catalog configuration claude-opus-4.7::xhigh"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-sonnet-4-6_high",
+      "reason": "no catalog configuration claude-sonnet-4.6::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-sonnet-4-5-20250929",
+      "reason": "family claude-sonnet-4-5-20250929 not in the catalog"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gemini-3.1-pro-preview_high",
+      "reason": "no catalog configuration gemini-3.1-pro-preview::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "kimi-k2.6",
+      "reason": "effort not stated and kimi-k2.6 has 2 catalog configurations"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5-mini-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-mini-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "gpt-5-nano-2025-08-07_high",
+      "reason": "no catalog configuration gpt-5-nano-2025-08-07::high"
+    },
+    {
+      "benchmark_id": "simpleqa-verified::snapshot-2026-09-16",
+      "source_id": "claude-haiku-4-5-20251001",
+      "reason": "family claude-haiku-4-5-20251001 not in the catalog"
     },
     {
       "benchmark_id": "swe-atlas-qna::snapshot-2026-09-15",

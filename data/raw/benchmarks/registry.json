@@ -7071,21 +7071,21 @@
     },
     {
       "id": "osworld-2::v2026.06.24",
-      "name": "OSWorld 2.0 (XLANG Lab)",
+      "name": "OSWorld 2.0, June 2026 task release (XLANG Lab)",
       "version": "v2026.06.24",
       "version_status": "published",
       "family": "osworld-2",
       "category": "Agentic",
       "one_sentence_description": "A computer-use agent completes 108 long-horizon, real-world workflows across 31 self-hosted websites and desktop applications, each taking a person about 1.6 hours.",
       "scoring": {
-        "metric": "Binary accuracy (share of tasks fully completed) at a 500-step budget, full task set",
+        "metric": "Binary accuracy (share of tasks fully completed) at a 500-step budget, full task set, task release v2026.06.24",
         "unit": "percent",
         "range": [
           0,
           100
         ],
         "higher_better": true,
-        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. Secondary benchmark, never a Composite input."
+        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. The August 2026 task release (v2026.08.08) changed the task files and is the separate identity osworld-2::v2026.08.08. Secondary benchmark, never a Composite input."
       },
       "maintainer": "XLANG Lab (The University of Hong Kong)",
       "source_type": "official_leaderboard",
@@ -7111,8 +7111,8 @@
         "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
         "format": "JSON file",
         "identity_policy": "source_label",
-        "locator": "official-results.json → results[]: one object per model x reasoning x toolSetting x stepBudget x releaseVersion x datasetScope; value = binaryAccuracy (percent).",
-        "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full; every row must name a release listed in releaseVersions. A new taskVersion or a different task count is a new identity. Only full-set rows at the default 500-step budget marked official are this identity; the offline subset and 150/300-step budgets are different protocols and are not ingested.",
+        "locator": "official-results.json → results[] with releaseVersion v2026.06.24 (rows without one inherit the file's defaultResultReleaseVersion v2026.06.24): one object per model x reasoning x toolSetting x stepBudget x datasetScope; value = binaryAccuracy (percent).",
+        "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full, and must still list release v2026.06.24 in releaseVersions. Only official full-set rows of release v2026.06.24 at the default 500-step budget are this identity. Each release is a task release with different task files (Anthropic's Claude Fable 5.1 page: \"Because the task files differ from earlier releases, these numbers aren't directly comparable to previously published OSWorld 2.0 results\"), so releases are separate identities and never compared directly; the offline subset and the 150/300-step budgets are different protocols and are not ingested.",
         "notes": "robots.txt returns 404 (no rules); the site publishes no terms page. Code (GitHub) and task data (Hugging Face xlangai/osworld_v2_tasks) are Apache-2.0; attribute XLANG Lab and link the leaderboard. Model labels are product names; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseOsworld2Id). Audited in /home/flori/jobs/bh-source-intake-20260915/SOURCES.md (priority 1). Paper: arXiv 2606.29537."
       },
       "update_cadence": {
@@ -7121,7 +7121,7 @@
       },
       "saturated": {
         "value": false,
-        "note": "Best full-set binary accuracy at capture is 31.4 % (Claude Opus 5, max); computed saturation (CR-38.2) applies on build."
+        "note": "Best full-set binary accuracy on this release at capture is 20.6 % (Claude Opus 4.8, max); computed saturation (CR-38.2) applies on build."
       },
       "superseded_by": null,
       "status": "active",
@@ -7141,6 +7141,95 @@
           "sha256": "404e2070fe7a9dae12781a19effe51606e75195636cef340ca2db7abc2a99ca1",
           "fetched_at": "2026-09-16T09:31:16.648565+00:00",
           "excerpt": "\"benchmarkVersion\": \"OSWorld 2.0\", \"taskVersion\": \"v2026.06.24\", \"datasetSize\": 108, \"defaultStepBudget\": 500, \"defaultMetric\": \"binaryAccuracy\"."
+        },
+        {
+          "url": "https://www.anthropic.com/claude/mythos",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2-releases/b993d8f3198f4ff1a0e6.gz",
+          "sha256": "1a30723812766e64ef9f7584549416d21dd19fc4fab9a7efd40e02bbd502a716",
+          "fetched_at": "2026-09-16T09:48:33.502177+00:00",
+          "excerpt": "OSWorld 2.0: Scores are on the benchmark authors’ August 2026 task release; Fable 5 and Opus 5 were re-run under the same conditions. Because the task files differ from earlier releases, these numbers aren't directly comparable to previously published OSWorld 2.0 results, which is why no competitor score is shown."
+        }
+      ]
+    },
+    {
+      "id": "osworld-2::v2026.08.08",
+      "name": "OSWorld 2.0, August 2026 task release (XLANG Lab)",
+      "version": "v2026.08.08",
+      "version_status": "published",
+      "family": "osworld-2",
+      "category": "Agentic",
+      "one_sentence_description": "A computer-use agent completes 108 long-horizon, real-world workflows across 31 self-hosted websites and desktop applications, each taking a person about 1.6 hours.",
+      "scoring": {
+        "metric": "Binary accuracy (share of tasks fully completed) at a 500-step budget, full task set, task release v2026.08.08",
+        "unit": "percent",
+        "range": [
+          0,
+          100
+        ],
+        "higher_better": true,
+        "notes": "Run by the benchmark maintainers (XLANG Lab, University of Hong Kong) and published as one official results file. Each row is one model x reasoning setting x tool setting, kept as the source spells it (\"batch tool\", \"batched tool\", \"standard\"); the tool setting is the harness cohort. The partial score, the offline subset and the 150/300-step budgets stay in the source and are not ingested. The task files differ from the June 2026 release (osworld-2::v2026.06.24), so the two are never compared directly. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "XLANG Lab (The University of Hong Kong)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://osworld-v2.xlang.ai/",
+      "publication_urls": [
+        {
+          "url": "https://osworld-v2.xlang.ai/",
+          "type": "official_leaderboard",
+          "role": "OSWorld 2.0 leaderboard and abstract"
+        },
+        {
+          "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+          "type": "official_leaderboard",
+          "role": "The leaderboard page's own data file (static/js/leaderboard.js loads it)"
+        },
+        {
+          "url": "https://github.com/xlang-ai/OSWorld-V2",
+          "type": "github",
+          "role": "Benchmark code, Apache-2.0"
+        }
+      ],
+      "how_to_collect": {
+        "command": "python3 scripts/capture-benchmark-sources.py URL_LIST.json data/raw/benchmarks/daily-evidence/<ISO-date>; python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "JSON file",
+        "identity_policy": "source_label",
+        "locator": "official-results.json → results[] with releaseVersion v2026.08.08: one object per model x reasoning x toolSetting x stepBudget x datasetScope; value = binaryAccuracy (percent).",
+        "version_guard": "official-results.json must still state benchmarkVersion \"OSWorld 2.0\", taskVersion \"v2026.06.24\", datasetSize 108, defaultStepBudget 500, defaultMetric binaryAccuracy and default result release v2026.06.24 / scope full, and must still list release v2026.08.08 in releaseVersions. Only official full-set rows of release v2026.08.08 at the default 500-step budget are this identity. Each release is a task release with different task files (Anthropic's Claude Fable 5.1 page: \"Because the task files differ from earlier releases, these numbers aren't directly comparable to previously published OSWorld 2.0 results\"), so releases are separate identities and never compared directly; the offline subset and the 150/300-step budgets are different protocols and are not ingested.",
+        "notes": "robots.txt returns 404 (no rules); the site publishes no terms page. Code (GitHub) and task data (Hugging Face xlangai/osworld_v2_tasks) are Apache-2.0; attribute XLANG Lab and link the leaderboard. Model labels are product names; exact joins come from data/raw/benchmarks/identity-map.json (lib/board-identity.mjs, parseOsworld2Id). Audited in /home/flori/jobs/bh-source-intake-20260915/SOURCES.md (priority 1). Paper: arXiv 2606.29537."
+      },
+      "update_cadence": {
+        "source_schedule": "Result releases roughly monthly in 2026 (v2026.06.24, v2026.08.08); updatedAt 2026-09-03 at capture.",
+        "check_recommendation": "Daily, at most one capture per source; stop on access restrictions."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Best full-set binary accuracy on this release at capture is 31.4 % (Claude Opus 5, max); computed saturation (CR-38.2) applies on build."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://osworld-v2.xlang.ai/",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/b366fbcde976419afc53.gz",
+          "sha256": "4737d5519097becb3857fd652fa9c7b18832f9c6d5cb756e3dc1297166bb38da",
+          "fetched_at": "2026-09-16T09:31:19.612807+00:00",
+          "excerpt": "We introduce OSWorld 2.0, a benchmark of 108 long-horizon computer-use workflows spanning everyday and professional tasks."
+        },
+        {
+          "url": "https://osworld-v2.xlang.ai/static/data/leaderboard/official-results.json",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2/94b07148b350183677c3.gz",
+          "sha256": "404e2070fe7a9dae12781a19effe51606e75195636cef340ca2db7abc2a99ca1",
+          "fetched_at": "2026-09-16T09:31:16.648565+00:00",
+          "excerpt": "\"benchmarkVersion\": \"OSWorld 2.0\", \"taskVersion\": \"v2026.06.24\", \"datasetSize\": 108, \"defaultStepBudget\": 500, \"defaultMetric\": \"binaryAccuracy\"."
+        },
+        {
+          "url": "https://www.anthropic.com/claude/mythos",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-osworld-2-releases/b993d8f3198f4ff1a0e6.gz",
+          "sha256": "1a30723812766e64ef9f7584549416d21dd19fc4fab9a7efd40e02bbd502a716",
+          "fetched_at": "2026-09-16T09:48:33.502177+00:00",
+          "excerpt": "OSWorld 2.0: Scores are on the benchmark authors’ August 2026 task release; Fable 5 and Opus 5 were re-run under the same conditions. Because the task files differ from earlier releases, these numbers aren't directly comparable to previously published OSWorld 2.0 results, which is why no competitor score is shown."
         }
       ]
     },
@@ -7190,6 +7279,11 @@
           "url": "https://github.com/eth-sri/matharena",
           "type": "github",
           "role": "Evaluation code, MIT"
+        },
+        {
+          "url": "https://matharena.ai/arxivmath",
+          "type": "official_leaderboard",
+          "role": "ArXivMath methodology"
         }
       ],
       "how_to_collect": {
@@ -7226,6 +7320,13 @@
           "sha256": "3c4c0352d8fc84ad4d269e6b6b0a391183a51de47587815900ea47e3704ab48b",
           "fetched_at": "2026-09-16T09:38:34.794372+00:00",
           "excerpt": "Leaderboard columns: Rank | Model Name | Provider | Accuracy (± 95% CI) | Cost | Output Tokens | Input Tokens | Average Retries | Average Time | Open | Parameters | Active Parameters; 22 model rows; 48 problem columns."
+        },
+        {
+          "url": "https://matharena.ai/arxivmath",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena-method/29fc617cb1aa3311439d.gz",
+          "sha256": "f0d4a29dcc01ffe650272c171083b3cc5c54f6115a3dee1ee137c5858b859a9e",
+          "fetched_at": "2026-09-16T09:46:26.826479+00:00",
+          "excerpt": "we implemented a fallback LLM judge using Gemini-3-Flash for all incorrect or unparsable responses. Any answer deemed correct by the LLM judge was then manually verified to prevent false positives."
         }
       ]
     },
@@ -7245,7 +7346,7 @@
           100
         ],
         "higher_better": true,
-        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (54 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Secondary benchmark, never a Composite input."
+        "notes": "Run by MathArena (SRI Lab, ETH Zurich, with INSAIT) on the June 2026 edition (54 problems). The 95% interval, cost, token counts and the source's own \"released after competition release\" flag stay in each observation's protocol. A model released after the problems were published may have seen them; the flag says so, it is not a correction. Monthly editions are separate identities. Secondary benchmark, never a Composite input. Graded by an LLM judge on a 0–2 scale per response (MathArena's BrokenArXiv methodology page), so it is a judged score (CR-38.3)."
       },
       "maintainer": "MathArena (SRI Lab, ETH Zurich; INSAIT)",
       "source_type": "official_leaderboard",
@@ -7275,6 +7376,11 @@
           "url": "https://github.com/eth-sri/matharena",
           "type": "github",
           "role": "Evaluation code, MIT"
+        },
+        {
+          "url": "https://matharena.ai/brokenarxiv",
+          "type": "official_leaderboard",
+          "role": "BrokenArXiv methodology (evaluation and grading design)"
         }
       ],
       "how_to_collect": {
@@ -7311,6 +7417,223 @@
           "sha256": "16444ac96539a92adad60547b2989eaaebf9be35d5f418e33e95e0728d450385",
           "fetched_at": "2026-09-16T09:38:37.594859+00:00",
           "excerpt": "Leaderboard columns: Rank | Model Name | Provider | Accuracy (± 95% CI) | Cost | Output Tokens | Input Tokens | Average Retries | Average Time | Open | Parameters | Active Parameters; 22 model rows; 54 problem columns."
+        },
+        {
+          "url": "https://matharena.ai/brokenarxiv",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-matharena-method/9767a51944f8761adfe8.gz",
+          "sha256": "f1c3e6e6dee0f76ef82ed6b5a2fc8bb6da35ef8cecf01fdd7ab15655945dffd8",
+          "fetched_at": "2026-09-16T09:46:23.933574+00:00",
+          "excerpt": "Unlike our other benchmarks, BrokenArXiv does not admit rule-based verification. As a result, evaluation necessarily relies on an LLM judge."
+        }
+      ]
+    },
+    {
+      "id": "frontiermath-tiers-1-3::v2",
+      "name": "FrontierMath Tiers 1–3 v2 (Epoch AI)",
+      "version": "v2",
+      "version_status": "published",
+      "family": "frontiermath-tiers-1-3",
+      "category": "Math",
+      "one_sentence_description": "Unpublished, expert-written mathematics problems from undergraduate to research level with automatically checkable answers, run by Epoch AI on its private v2 set.",
+      "scoring": {
+        "metric": "Best score across scorers (share of problems solved), as published by Epoch AI",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Epoch AI writes and runs FrontierMath on a private problem set; version 2 (released 2026-06-12) supersedes the 2025-02-28 set, which is a different identity. Value is Epoch's \"Best score (across scorers)\", its declared score column; mean score and standard error stay in the protocol. Epoch's robots.txt keeps the sample problems out of crawlers and we never collect them. CC BY 4.0: attribute Epoch AI. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Epoch AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://epoch.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub archive (CC BY 4.0), member frontiermath_tiers_1_3_v2.csv"
+        }
+      ],
+      "how_to_collect": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_tiers_1_3_v2.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "identity_policy": "source_label",
+        "locator": "frontiermath_tiers_1_3_v2.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tiers-1-3-v2-Private to frontiermath_tiers_1_3_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+        "notes": "Manual snapshot like DeepSWE: Epoch publishes one multi-benchmark ZIP that changes with every Epoch update. Refresh with this recipe, then rerun build-identity-map.mjs. robots.txt allows /data/. CC BY 4.0: attribute Epoch AI. Epoch-run results (not an *_external file), so CR-35.5's original-source question does not arise. Model labels are Epoch slugs; exact joins come from data/raw/benchmarks/identity-map.json (lib/coding-identity.mjs, parseDeepSweId rules). Candidate from BENCHMARK-CANDIDATES.md tier A (CR-30.2)."
+      },
+      "update_cadence": {
+        "source_schedule": "Epoch adds models as it evaluates them.",
+        "check_recommendation": "Manual snapshot; refresh when the archive changes."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-frontiermath_tiers_1_3_v2.csv.gz",
+          "sha256": "4d92ff3a4beeb508c55f049d04fb731132e47209ed72209230ce11625e7fcc5e",
+          "fetched_at": "2026-09-16T09:43:00Z",
+          "excerpt": "Member frontiermath_tiers_1_3_v2.csv of the archive (archive sha256 2714017ac8c961723c737f35ed9995ceceeba6286fd128e8a913317f2663834c, fetched 2026-09-16T09:43:00Z); Model version,mean_score,Best score (across scorers),Release date,Organization,Country,Training compute (FLOP),Training compute notes,stderr,Log viewer,Logs,Started at,id"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-benchmark_metadata.csv.gz",
+          "sha256": "fc79bf2bb1478dd061dcfba9203924140118b6cd6b65200612b5b7f597160add",
+          "fetched_at": "2026-09-16T09:43:00Z",
+          "excerpt": "benchmark_metadata.csv: \"FrontierMath-Tiers-1-3-v2-Private,True,frontiermath_tiers_1_3_v2.csv,Best score (across scorers),1.0,0.0,1.0,2026-06-12,\"."
+        }
+      ]
+    },
+    {
+      "id": "frontiermath-tier-4::v2",
+      "name": "FrontierMath Tier 4 v2 (Epoch AI)",
+      "version": "v2",
+      "version_status": "published",
+      "family": "frontiermath-tier-4",
+      "category": "Math",
+      "one_sentence_description": "The hardest, research-level tier of Epoch AI's unpublished FrontierMath problems, run by Epoch AI on its private v2 set.",
+      "scoring": {
+        "metric": "Best score across scorers (share of problems solved), as published by Epoch AI",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Epoch AI writes and runs FrontierMath Tier 4 on a private problem set; version 2 (released 2026-06-12) supersedes the 2025-07-01 set, which is a different identity. Value is Epoch's \"Best score (across scorers)\"; mean score and standard error stay in the protocol. CC BY 4.0: attribute Epoch AI. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Epoch AI",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://epoch.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub archive (CC BY 4.0), member frontiermath_tier_4_v2.csv"
+        }
+      ],
+      "how_to_collect": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip frontiermath_tier_4_v2.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "identity_policy": "source_label",
+        "locator": "frontiermath_tier_4_v2.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps FrontierMath-Tier-4-v2-Private to frontiermath_tier_4_v2.csv / \"Best score (across scorers)\" / release 2026-06-12. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+        "notes": "Manual snapshot like DeepSWE: Epoch publishes one multi-benchmark ZIP that changes with every Epoch update. Refresh with this recipe, then rerun build-identity-map.mjs. robots.txt allows /data/. CC BY 4.0: attribute Epoch AI. Epoch-run results (not an *_external file), so CR-35.5's original-source question does not arise. Model labels are Epoch slugs; exact joins come from data/raw/benchmarks/identity-map.json (lib/coding-identity.mjs, parseDeepSweId rules). Candidate from BENCHMARK-CANDIDATES.md tier A (CR-30.2)."
+      },
+      "update_cadence": {
+        "source_schedule": "Epoch adds models as it evaluates them.",
+        "check_recommendation": "Manual snapshot; refresh when the archive changes."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-frontiermath_tier_4_v2.csv.gz",
+          "sha256": "9b30fcc8d6254da31e537b56c2fe78322a89b53c11fda12c5a94e159bc00039c",
+          "fetched_at": "2026-09-16T09:43:00Z",
+          "excerpt": "Member frontiermath_tier_4_v2.csv of the archive (archive sha256 2714017ac8c961723c737f35ed9995ceceeba6286fd128e8a913317f2663834c, fetched 2026-09-16T09:43:00Z); Model version,mean_score,Best score (across scorers),Release date,Organization,Country,Training compute (FLOP),Training compute notes,stderr,Log viewer,Logs,Started at,id"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-benchmark_metadata.csv.gz",
+          "sha256": "fc79bf2bb1478dd061dcfba9203924140118b6cd6b65200612b5b7f597160add",
+          "fetched_at": "2026-09-16T09:43:00Z",
+          "excerpt": "benchmark_metadata.csv: \"FrontierMath-Tier-4-v2-Private,True,frontiermath_tier_4_v2.csv,Best score (across scorers),1.0,0.0,1.0,2026-06-12,\"."
+        }
+      ]
+    },
+    {
+      "id": "simpleqa-verified::snapshot-2026-09-16",
+      "name": "SimpleQA Verified (run by Epoch AI)",
+      "version": "snapshot-2026-09-16",
+      "version_status": "snapshot",
+      "family": "simpleqa-verified",
+      "category": "Knowledge",
+      "one_sentence_description": "Short fact-seeking questions answered without tools, testing whether a model knows a fact rather than guessing; Google DeepMind's cleaned version of OpenAI's SimpleQA, run by Epoch AI.",
+      "scoring": {
+        "metric": "Best score across scorers (share of problems solved), as published by Epoch AI",
+        "unit": "fraction",
+        "range": [
+          0,
+          1
+        ],
+        "higher_better": true,
+        "notes": "Google DeepMind published SimpleQA Verified (2025-09-09); these results are Epoch AI's own runs from its Benchmarking Hub, not the maintainer's or a lab's numbers. The archive states no version, so the identity is dated by capture. Value is Epoch's \"Best score (across scorers)\"; mean score and standard error stay in the protocol. CC BY 4.0: attribute Epoch AI. Secondary benchmark, never a Composite input."
+      },
+      "maintainer": "Google DeepMind (benchmark); Epoch AI (runs)",
+      "source_type": "official_leaderboard",
+      "primary_url": "https://epoch.ai/benchmarks",
+      "publication_urls": [
+        {
+          "url": "https://epoch.ai/benchmarks",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "type": "official_leaderboard",
+          "role": "Epoch AI Benchmarking Hub archive (CC BY 4.0), member simpleqa_verified.csv"
+        }
+      ],
+      "how_to_collect": {
+        "command": "curl --fail -A 'BenchmarkHeavenResearch/1.0' https://epoch.ai/data/benchmark_data.zip -o benchmark_data.zip && unzip -p benchmark_data.zip simpleqa_verified.csv | gzip -n > data/raw/benchmarks/daily-evidence/<ISO-date>-epoch-hub/epoch-simpleqa_verified.csv.gz (same for benchmark_metadata.csv); python3 scripts/collect-public-benchmarks.py --plan CANDIDATE_PLAN.json CANDIDATE.json; node ops/benchmark-table-2026-09-15/build-identity-map.mjs (review the diff)",
+        "format": "CSV member of a ZIP archive",
+        "identity_policy": "source_label",
+        "locator": "simpleqa_verified.csv: one row per Epoch \"Model version\" (<model>_<effort> or a bare slug); value \"Best score (across scorers)\" (fraction); mean_score, stderr, Started at and the Epoch run id kept in the protocol.",
+        "version_guard": "Exact 13-column Epoch run header (Model version, mean_score, Best score (across scorers), Release date, Organization, Country, Training compute (FLOP), Training compute notes, stderr, Log viewer, Logs, Started at, id), and benchmark_metadata.csv still maps SimpleQA Verified to simpleqa_verified.csv / \"Best score (across scorers)\" / release 2025-09-09. A new FrontierMath version or problem set, or a changed score column, is a new identity after review.",
+        "notes": "Manual snapshot like DeepSWE: Epoch publishes one multi-benchmark ZIP that changes with every Epoch update. Refresh with this recipe, then rerun build-identity-map.mjs. robots.txt allows /data/. CC BY 4.0: attribute Epoch AI. Epoch-run results (not an *_external file), so CR-35.5's original-source question does not arise. Model labels are Epoch slugs; exact joins come from data/raw/benchmarks/identity-map.json (lib/coding-identity.mjs, parseDeepSweId rules). Candidate from BENCHMARK-CANDIDATES.md tier A (CR-30.2)."
+      },
+      "update_cadence": {
+        "source_schedule": "Epoch adds models as it evaluates them.",
+        "check_recommendation": "Manual snapshot; refresh when the archive changes."
+      },
+      "saturated": {
+        "value": false,
+        "note": "Computed saturation (CR-38.2) applies on build; no saturation claim is recorded here."
+      },
+      "superseded_by": null,
+      "status": "active",
+      "first_seen": "2026-09-16",
+      "last_verified": "2026-09-16",
+      "evidence": [
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-simpleqa_verified.csv.gz",
+          "sha256": "3f7117da51ddd9b5f8b245ab68c19f0c5fb7d71fe2a8e422c5cb5474ef08de9a",
+          "fetched_at": "2026-09-16T09:43:00Z",
+          "excerpt": "Member simpleqa_verified.csv of the archive (archive sha256 2714017ac8c961723c737f35ed9995ceceeba6286fd128e8a913317f2663834c, fetched 2026-09-16T09:43:00Z); Model version,mean_score,Best score (across scorers),Release date,Organization,Country,Training compute (FLOP),Training compute notes,stderr,Log viewer,Logs,Started at,id"
+        },
+        {
+          "url": "https://epoch.ai/data/benchmark_data.zip",
+          "file": "data/raw/benchmarks/daily-evidence/2026-09-16-epoch-hub/epoch-benchmark_metadata.csv.gz",
+          "sha256": "fc79bf2bb1478dd061dcfba9203924140118b6cd6b65200612b5b7f597160add",
+          "fetched_at": "2026-09-16T09:43:00Z",
+          "excerpt": "benchmark_metadata.csv: \"SimpleQA Verified,True,simpleqa_verified.csv,Best score (across scorers),1.0,0.0,1.0,2025-09-09,\"."
         }
       ]
     }

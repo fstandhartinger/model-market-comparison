@@ -8,6 +8,10 @@ import { boardJoins, parseBullshitBenchId, parseApprenticeBenchId, parseValsInde
 
 const BOARDS = [
   { prefix: 'deepswe::', parse: parseDeepSweId, basis: 'measured' },
+  // 2026-09-16 (iteration 80, CR-30.2): Epoch AI's own runs from the same hub archive, same `<slug>_<effort>` labels.
+  { prefix: 'frontiermath-tiers-1-3::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'frontiermath-tier-4::', parse: parseDeepSweId, basis: 'measured' },
+  { prefix: 'simpleqa-verified::', parse: parseDeepSweId, basis: 'measured' },
   { prefix: 'swe-atlas-qna::', parse: parseScaleLabel, basis: 'measured' },
   { prefix: 'swe-atlas-test-writing::', parse: parseScaleLabel, basis: 'measured' },
   { prefix: 'swe-atlas-refactoring::', parse: parseScaleLabel, basis: 'measured' },

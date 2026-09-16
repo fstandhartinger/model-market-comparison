@@ -131,6 +131,11 @@
       "field": "one_sentence_description",
       "why": "Scale AI's own description names LLM judges as the graders; its sibling boards (QnA: expert rubrics, Refactoring: tests and rubrics) do not, and stay task accuracy.",
       "added_by_review": "opencode-kimi, 2026-09-16 — the one correction of this engine's draft."
+    },
+    "matharena-brokenarxiv": {
+      "quote": "evaluation necessarily relies on an LLM judge",
+      "field": "evidence.excerpt",
+      "why": "An LLM judge scores each response 0–2 by how it handles the false statement; there is no rule-based verifier."
     }
   },
   "considered_not_judged": {
@@ -141,7 +146,8 @@
     "slopbench": "Deterministic slop-pattern detection, explicitly without an LLM judge.",
     "livebench": "The source calls the tasks objectively graded.",
     "swe-atlas-qna": "Scale AI publishes it as a leaderboard accuracy, graded against expert rubrics with no judge model named, and Artificial Analysis averages it into the Coding Agent Index.",
-    "swe-atlas-refactoring": "Graded by tests and rubrics; behaviour preservation is checked, not rated."
+    "swe-atlas-refactoring": "Graded by tests and rubrics; behaviour preservation is checked, not rated.",
+    "matharena-arxivmath": "Final answers are checked by a rule-based parser; the LLM judge is only a fallback for unparsable answers, and anything it accepts is manually verified."
   },
   "freshness": {
     "aa-aime": {
@@ -207,6 +213,15 @@
       "contamination": "The task set is refreshed periodically, which limits contamination.",
       "quote": "A periodically refreshed suite of objectively graded tasks",
       "field": "one_sentence_description"
+    },
+    "matharena-arxivmath": {
+      "task_window": {
+        "from": "2026-06",
+        "to": "2026-06",
+        "label": "arXiv papers submitted in June 2026"
+      },
+      "quote": "This dataset contains problems from papers submitted in June 2026.",
+      "field": "evidence.excerpt"
     }
   },
   "freshness_default": {
