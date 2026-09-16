@@ -15,7 +15,7 @@ const checks = []; const check = (name, ok, detail) => checks.push({ name, ok: !
 const meta = await (await fetch(`${BASE}/api/meta`)).json().catch(() => ({}));
 check('deployed revision matches the expected commit', !REV || String(meta.revision || '').startsWith(REV), { revision: meta.revision, expected: REV });
 
-const parse = (s) => { const m = s.match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/); return m ? { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] } : null; };
+const parse = (s) => { const m = (s || "").match(/rgba?\(([\d.]+),\s*([\d.]+),\s*([\d.]+)(?:,\s*([\d.]+))?\)/); return m ? { r: +m[1], g: +m[2], b: +m[3], a: m[4] == null ? 1 : +m[4] } : null; };
 const lum = ({ r, g, b }) => { const f = (c) => { c /= 255; return c <= 0.03928 ? c / 12.92 : ((c + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(r) + 0.7152 * f(g) + 0.0722 * f(b); };
 const contrast = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
 const blend = (fg, bg) => ({ r: fg.r * fg.a + bg.r * (1 - fg.a), g: fg.g * fg.a + bg.g * (1 - fg.a), b: fg.b * fg.a + bg.b * (1 - fg.a), a: 1 });
@@ -44,9 +44,9 @@ for (const theme of ['light', 'dark']) for (const [kind, vp] of [['desktop', { w
 
   // F-105: best-of rows on the Benchmarks page
   await go('/benchmarks'); await page.waitForTimeout(800);
-  const bo = await page.evaluate(() => [...document.querySelectorAll('tr[data-best-of]')].map((r) => { const th = r.querySelector('th'); return { name: th?.querySelector('.bh-matrix-bench')?.innerText.replace(/\s+/g, ' '), subs: [...th.querySelectorAll('.bh-matrix-sub')].map((s) => s.innerText), noteVisible: !!th.querySelector('.bh-matrix-sub[data-best-of-note]'), hover: th.querySelector('.bh-matrix-desc')?.getAttribute('title') ?? '', lines: Math.round(th.getBoundingClientRect().height) }; }));
+  const bo = await page.evaluate(() => [...document.querySelectorAll('table.bh-matrix tbody tr')].filter((r) => /^best of/.test(r.querySelector('th .bh-matrix-cohort')?.textContent ?? '')).map((r) => { const th = r.querySelector('th'); return { name: th?.querySelector('.bh-matrix-bench')?.innerText.replace(/\s+/g, ' '), subs: [...th.querySelectorAll('.bh-matrix-sub')].map((s) => s.innerText), noteVisible: !!th.querySelector('.bh-matrix-sub[data-best-of-note]'), hover: th.querySelector('.bh-matrix-desc')?.getAttribute('title') ?? '', lines: Math.round(th.getBoundingClientRect().height) }; }));
   check(`${tag} best-of rows show no "Version …" sub-line and no visible note sentence; the note is on the description's hover`, bo.length > 0 && bo.every((r) => !r.noteVisible && !r.subs.some((s) => /^Version /.test(s)) && /best recorded result/.test(r.hover) && /best of/.test(r.name)), bo);
-  const boRow = page.locator('tr[data-best-of]').first(); if (await boRow.count()) { await boRow.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await boRow.screenshot({ path: `${OUT}/${tag}-bestof-row.png` }).catch(() => {}); }
+  const boRow = page.locator('table.bh-matrix tbody tr').filter({ has: page.locator('th .bh-matrix-cohort', { hasText: /^best of/ }) }).first(); if (await boRow.count()) { await boRow.scrollIntoViewIfNeeded(); await page.waitForTimeout(300); await boRow.screenshot({ path: `${OUT}/${tag}-bestof-row.png` }).catch(() => {}); }
   check(`${tag} no page errors`, errors.length === 0, errors);
   await c.close();
 }
