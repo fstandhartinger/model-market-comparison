@@ -242,7 +242,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
           </div>
         </Panel>
 
-        <Panel title={`Cheapest models — ${priceLabel(priceSettings)}`}>
+        <Panel id="cheapest" title={`Cheapest models — ${priceLabel(priceSettings)}`}>
           <div className="md:hidden" role="list" aria-label="Cheapest models">
             <MobileBars rows={cheapest} max={Math.max(...cheapest.map((d) => d.value))} format={priceNumber} log />
             <p className="mt-1 text-right text-[11px] text-gray-500">{adjusted ? "Adjusted cost" : "Cost"} · log scale</p>
@@ -271,7 +271,7 @@ export function ChartsBoard({ data }: { data: ClientData }) {
           </details>
         </Panel>
 
-        <Panel title="Open weights vs closed">
+        <Panel id="open-vs-closed" title="Open weights vs closed">
           <DotStrip label={SCORE_SHORT_LABELS[score]} format={(v) => v.toFixed(isElo ? 0 : 1)}
             groups={openVsClosed.map((g) => ({ name: g.name, values: g.scores }))} />
           <DotStrip label={`Cost (${unitShort})`} format={(v) => priceNumber(v)} log
@@ -310,6 +310,6 @@ const tip = { background: "#161b22", border: "1px solid #272e3a", borderRadius: 
 const tipLabel = { color: "#e6edf3", fontWeight: 600 };
 const tipItem = { color: "#cbd5e1" };
 
-function Panel({ title, children }: { title: string; children: React.ReactNode }) {
-  return <div className="card p-4"><h2 className="mb-3 text-sm font-semibold text-gray-200">{title}</h2>{children}</div>;
+function Panel({ id, title, children }: { id?: string; title: string; children: React.ReactNode }) {
+  return <div id={id} className="card scroll-mt-4 p-4"><h2 className="mb-3 text-sm font-semibold text-gray-200">{title}</h2>{children}</div>;
 }
