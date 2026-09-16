@@ -1,0 +1,145 @@
+{
+  "schema_version": 1,
+  "reviewed_at": "2026-09-16",
+  "reviewed_by": "claude-opus (Sandy UX workstream, iteration 76)",
+  "source": {
+    "job": "/home/flori/jobs/bh-self-reported-scout-20260915",
+    "file": "data/raw/benchmarks/self-reported/scout-20260915.jsonl.gz",
+    "description": "Self-reported benchmark results extracted from 50 official model release documents (system cards, model cards, technical reports, release posts) by the 2026-09-15 scout job. The job is a lead: every value ingested here is re-verified against our own capture of the primary document."
+  },
+  "rules": [
+    "Only rows whose basis_hint is vendor_claim_own_model are ingested. A lab's number for a competitor (vendor_claim_about_other_model) is context, not evidence; a number a lab quotes from an independent board (secondary_quote) is taken from that board instead.",
+    "A row is ingested only when its (benchmark_normalized, benchmark_version) pair appears in `accepted` below, so the benchmark identity a lab printed is matched to one registry identity explicitly and never by name similarity.",
+    "Every value is re-verified against our own bounded capture of the primary document: the printed benchmark row must exist on the page the locator names, and the document's own comparison values must line up with the claimed column. A row that fails is rejected with its reason, never silently dropped.",
+    "basis is always self_reported. These values never enter the Composite and never replace a measured result; the product marks them as reported by the developer.",
+    "comparison_key stays null: a vendor's own harness and the board's harness are not a reviewed compatible pair, so no divergence is computed from these rows.",
+    "An unresolved catalog identity stays unmatched (model_id null) instead of being guessed onto a reasoning variant.",
+    "A candidate an independent critic did not clear is listed in `withheld` with the objection and is not ingested. It stays a rejected candidate with its reason, so the next round can take it up again; an unresolved objection is never resolved by the producer alone."
+  ],
+  "accepted": [
+    {
+      "benchmark_normalized": "swe-bench-verified",
+      "benchmark_version": [
+        "Verified",
+        null
+      ],
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "rationale": "SWE-bench Verified is one published 500-task set with one metric (% resolved). Labs run it with their own scaffold, which the protocol string records. Established precedent in this registry: the Devstral 2 and DeepSeek V3 vendor claims already sit on this identity."
+    },
+    {
+      "benchmark_normalized": "swe-bench-multilingual",
+      "benchmark_version": [
+        "Multilingual",
+        null
+      ],
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "rationale": "Same shape as SWE-bench Verified: one published task set of multilingual repositories, one % resolved metric, and the vendor scaffold recorded in the protocol."
+    },
+    {
+      "benchmark_normalized": "swe-bench-multimodal",
+      "benchmark_version": [
+        "Multimodal",
+        null
+      ],
+      "benchmark_id": "swe-bench-multimodal::snapshot-2026-09-10",
+      "rationale": "Same shape as SWE-bench Verified: one published task set of issues with image context, one % resolved metric, and the vendor scaffold recorded in the protocol."
+    },
+    {
+      "benchmark_normalized": "terminal-bench",
+      "benchmark_version": [
+        "4.0"
+      ],
+      "benchmark_id": "terminal-bench::4.0",
+      "rationale": "Only the literal version 4.0 joins the 4.0 identity. Terminal-Bench 2.0, 2.1, 3.0 and 'Hard' are different task sets and have no neutral registry identity of their own yet, so those rows stay out."
+    },
+    {
+      "benchmark_normalized": "longbench",
+      "benchmark_version": [
+        "v2"
+      ],
+      "benchmark_id": "longbench::2",
+      "rationale": "LongBench v2 is a fixed 503-question multiple-choice set. Precedent: the DeepSeek V3 vendor claim already sits on this identity."
+    },
+    {
+      "benchmark_normalized": "aider-polyglot",
+      "benchmark_version": [
+        null
+      ],
+      "benchmark_id": "aider-polyglot::snapshot-2026-09-10",
+      "rationale": "Precedent: the DeepSeek V3 vendor claim already sits on this identity."
+    },
+    {
+      "benchmark_normalized": "vending-bench",
+      "benchmark_version": [
+        "2"
+      ],
+      "benchmark_id": "vending-bench::2",
+      "rationale": "Vending-Bench 2 reports a final balance in USD; the registry unit is USD and the published version is literal.",
+      "unit_override": "USD"
+    },
+    {
+      "benchmark_normalized": "tau2-bench",
+      "benchmark_version": [
+        null
+      ],
+      "benchmark_id": "tau2-bench::2",
+      "rationale": "Precedent: the Qwen3 vendor claims already sit on this identity, with the domain (retail / airline / telecom) recorded in the protocol."
+    }
+  ],
+  "excluded": [
+    {
+      "benchmark_normalized": [
+        "hle",
+        "humanitys-last-exam",
+        "humanity-s-last-exam"
+      ],
+      "reason": "The HLE identity a lab prints is regularly ambiguous — full set, text-only subset, with or without tools. This registry already rejected a Qwen HLE row for exactly that reason. Needs a per-document identity review before any of these rows can be ingested."
+    },
+    {
+      "benchmark_normalized": [
+        "gpqa-diamond"
+      ],
+      "reason": "The registry has no neutral GPQA Diamond identity: aa-gpqa-diamond is Artificial Analysis' implementation and openrouter-gpqa-diamond is OpenRouter's own run. A lab's own GPQA Diamond run is a third implementation and would need its own identity."
+    },
+    {
+      "benchmark_normalized": [
+        "deepswe",
+        "deepswe-v1-1",
+        "cursorbench",
+        "frontiercode",
+        "swe-atlas-qna",
+        "automationbench",
+        "critpt",
+        "scicode",
+        "livecodebench",
+        "aime",
+        "tau3-banking",
+        "ifbench",
+        "mmmu",
+        "mmmu-pro",
+        "ruler"
+      ],
+      "reason": "These registry identities freeze one operator's own run (Datacurve, Cursor, Cognition, Scale AI, Artificial Analysis). A lab running the same benchmark itself is a different implementation, which the registry keeps separate. Ingesting these needs a new registry identity for the benchmark's own published protocol, with its own primary source."
+    },
+    {
+      "benchmark_normalized": [
+        "swe-bench-pro"
+      ],
+      "reason": "Our identity is the SWE-Bench Pro *public* set. The release documents print 'SWE-bench Pro' without stating the set, so which one was run is unverified. Revisit per document."
+    }
+  ],
+  "withheld": [
+    {
+      "id": "self-reported:c2646aec2be3d1863d90",
+      "reason": "The independent critic did not clear this value in two review rounds. Its reasoning was self-contradictory (it stated the character-column alignment puts 86.6 under 'Fable 5' and still recorded a finding), so this is withheld rather than corrected: an unresolved objection is not the same as a confirmed defect. Re-review with a fresh packet before ingesting."
+    },
+    {
+      "id": "self-reported:c1612a80607531baee3d",
+      "reason": "Critic objection, not cleared: the column anchor relies on a header 56 lines above the row in a folded HTML table. The alignment holds, but the evidence was called weak; withheld until a review clears it."
+    },
+    {
+      "id": "self-reported:aa6ec2f9ca726d495c52",
+      "reason": "Critic objection, not cleared: the published row prints the same value twice (69.3), so the critic would not accept the column attribution from the evidence shown. Withheld until a review clears it."
+    }
+  ]
+}

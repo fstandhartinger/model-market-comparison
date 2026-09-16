@@ -1,0 +1,41 @@
+{
+  "artifact_id": "self-reported-tranche-a-slice-1-of-4",
+  "artifact_sha256": "e77f3f1d919de52d64845d965301cd39fab421b3ca77e276b43fd2d2e7c37ca7",
+  "round": 1,
+  "verdict": "revise",
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "self-reported:04cabdac5720bfeaf309",
+      "severity": "major",
+      "problem": "Column-evidence/identity mismatch: the column claimed is \"Qwen3.6-35B-A3B\" (value 73.4, cell 5 of the row), but the source README is the Qwen3.6-27B document and the row in the captured document lists only 6 values, whose header columns per check 3 must be this model's column. 73.4 sits at cell position 5 which, per the sibling candidate self-reported:0f99c30c965838dfee31 (same document line, same source file), is the Qwen3.6-27B column. Either the model column quoted is a neighbouring column (check 3 failure) or the model/configuration identity (Qwen3.6-35B-A3B vs source document for 27B) is contradicted by the same document line cited for the 27B entry. The 35B claim cannot be supported by a 27B README row."
+    },
+    {
+      "id": "self-reported:0ba740f86c56cdcf0b41",
+      "severity": "major",
+      "problem": "Benchmark identity/version may not match registry: registry entry is `terminal-bench::4.0`, and the printed name is \"Terminal-Bench 4.0\" — the numeric suffix 4.0 reads as the printed version of the benchmark, which is consistent with the registry name, but the protocol field asserts the printed name is \"Terminal-Bench 4.0\" 4.0 (double-stated) while the metric text (\"95% confidence-interval whiskers, with cost and tokens per run\") describes collateral reporting, not the metric definition for Resolution rate. Not clearly a value or unit error, but the identity evidence is ambiguous on whether \"4.0\" is part of the benchmark name or the registry version suffix; if it is a version suffix in the printed name it must match the registry version exactly. Flagging for identity confirmation rather than asserting a mismatch."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Candidate 0ba740f86c56cdcf0b41: whether \"4.0\" in the printed name is the benchmark's version (matching registry terminal-bench::4.0) or a separate suffix; the supplied line text does not disambiguate.",
+    "Candidate 04cabdac5720bfeaf309: the header text is only partially quoted (column \"Qwen3.6-35B-A3B\" of header 7 lines above), so a same-row column reassignment cannot be ruled out from the supplied text alone; however the source file is the 27B README and the row shows 6 cells, so the 35B column attribution is unsupported."
+  ],
+  "missing_evidence": [
+    "Full quoted header line for the Qwen3.6 README row (candidate 04cabdac5720bfeaf309) to confirm which cell index maps to which model column.",
+    "The registry entry text for terminal-bench to confirm whether the version suffix \"4.0\" is part of the benchmark identity (candidate 0ba740f86c56cdcf0b41)."
+  ],
+  "coverage_checked": [
+    "self-reported:04cabdac5720bfeaf309",
+    "self-reported:08d15ed46dd285a9619a",
+    "self-reported:0ba740f86c56cdcf0b41",
+    "self-reported:0f99c30c965838dfee31",
+    "self-reported:4301e1ac7b73635c8046",
+    "self-reported:5094d51ae64218832de6",
+    "self-reported:50a799350b07ea4f15b8",
+    "self-reported:515c3cab7e9f71cbce9e",
+    "self-reported:5351eb84f797826e6c4c",
+    "self-reported:584844ad9dfdb470bdc6",
+    "self-reported:5c224b579fee5671b1fa"
+  ]
+}

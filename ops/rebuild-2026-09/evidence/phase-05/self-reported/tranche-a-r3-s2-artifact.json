@@ -1,0 +1,269 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "self-reported:6348e9315a241c915678",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md#Qwen3.5-27B",
+        "name": "Qwen3.5-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": "internal agent scaffold (bash + file-edit tools)"
+      },
+      "value": 75,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:18.986459+00:00",
+        "published_at": "2026-04-22",
+        "sha256": "bb936d6da51014f1edc9aa4cf9abf28d98695b7616ad56adfeeebfa752051d3d",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/bb936d6da51014f1edc9.gz",
+        "locator": "### Language table; captured evidence: original response bytes; matched line: | SWE-bench Verified | 75.0 | 76.2 | 52.0 | 80.9 | 73.4 | 77.2 |; column header: |  | Qwen3.5-27B | Qwen3.5-397B-A17B | Gemma4-31B | Claude 4.5 Opus | Qwen3.6-35B-A3B | Qwen3.6-27B | (cell 6 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Alibaba Qwen for its own model, printed as \"SWE-bench Verified\" Verified; configuration: scaffold internal agent scaffold (bash + file-edit tools); other temp=1.0, top_p=0.95, 200K context window; SWE-bench Pro tasks corrected, all baselines on refined benchmark; re-verified against our own capture: the published row with this value and all 5 comparison values the extraction read from it, and column \"Qwen3.5-27B\" of the header 7 line(s) above, matched by cell position, page 1 (the extraction cited ### Language table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:6d3d7a886511423d4f37",
+      "benchmark_id": "swe-bench-multimodal::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/ceaf5c7ff2783855203fde8208ec311252dced5b/Claude%20Opus%205%20System%20Card.pdf#Claude Fable 5",
+        "name": "Claude Fable 5",
+        "model_id": "claude-fable-5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 54.1,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/ceaf5c7ff2783855203fde8208ec311252dced5b/Claude%20Opus%205%20System%20Card.pdf",
+        "retrieved_at": "2026-09-16T00:17:07.545849+00:00",
+        "published_at": "2026-07-24",
+        "sha256": "425dc56392bac6e23924707a4d63a2f54c500e9a8085fd1d958477410bf7b944",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/425dc56392bac6e23924.gz",
+        "locator": "Table 8.1.A, p. 152; captured evidence: text layer of the PDF (original document sha256 0950dae1ba6b341e4f1a009e535e0f025625efeca21bd043a9a5ae148a3f2e6b, 16281258 bytes); matched line: SWE-bench Multimodal                      59.4        38.4        54.1           -; column header: Fable 5 (characters 72-74 of the line, the only row cell under it)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Anthropic for its own model, printed as \"SWE-bench Multimodal\"; configuration: reasoning effort max; cot adaptive thinking; context length up to 1M tokens (eval dependent); attempts or samples averaged over 5 trials; other standard configuration: adaptive thinking at max effort, default sampling settings (temperature, top_p); re-verified against our own capture: the published row with the benchmark name and exactly one matching value, and column \"Fable 5\" of the header above the row, matched by column position, page 152",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:723dc2aa0ffeefcf88de",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md#Qwen3.5-27B",
+        "name": "Qwen3.5-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": "internal agent scaffold (bash + file-edit tools)"
+      },
+      "value": 69.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:18.986459+00:00",
+        "published_at": "2026-04-22",
+        "sha256": "bb936d6da51014f1edc9aa4cf9abf28d98695b7616ad56adfeeebfa752051d3d",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/bb936d6da51014f1edc9.gz",
+        "locator": "### Language table; captured evidence: original response bytes; matched line: | SWE-bench Multilingual | 69.3 | 69.3 | 51.7 | 77.5 | 67.2 | 71.3 |; column header: |  | Qwen3.5-27B | Qwen3.5-397B-A17B | Gemma4-31B | Claude 4.5 Opus | Qwen3.6-35B-A3B | Qwen3.6-27B | (cell 6 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Alibaba Qwen for its own model, printed as \"SWE-bench Multilingual\"; configuration: scaffold internal agent scaffold (bash + file-edit tools); other temp=1.0, top_p=0.95, 200K context window; SWE-bench Pro tasks corrected, all baselines on refined benchmark; re-verified against our own capture: the published row with this value and all 5 comparison values the extraction read from it, and column \"Qwen3.5-27B\" of the header 13 line(s) above, matched by cell position, page 1 (the extraction cited ### Language table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:778d7e4162eee375076d",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/raw/main/README.md#Qwen3.8-Flash-Next",
+        "name": "Qwen3.8-Flash-Next",
+        "model_id": "qwen3.8-flash-next::default",
+        "variant": null,
+        "harness": "mini-SWE-agent harness"
+      },
+      "value": 81,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/raw/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:24.215447+00:00",
+        "published_at": "2026-08-26",
+        "sha256": "35ca37ccc366f1ba478dab33841a2c0c18ce53fd62f291ca05341f7728b225b2",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/35ca37ccc366f1ba478d.gz",
+        "locator": "### Language benchmark table; captured evidence: original response bytes; matched line: | Multilingual software engineering SWE-bench Multilingual | 81.0 | 73.8 | 75.8 | -- | 77.5 |; column header: |  | Qwen3.8-Flash-Next | Qwen3.8-27B | Qwen3.7-Plus | DeepSeek-V4-Flash-0731 | Claude-Opus-4.6 (Max) | (cell 5 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Alibaba Qwen for its own model, printed as \"SWE-bench Multilingual\"; configuration: tools agentic coding; scaffold mini-SWE-agent harness; context length 256K context window; other temp=1.0, top_p=0.95, 256K context window; re-verified against our own capture: the published row with this value and all 3 comparison values the extraction read from it, and column \"Qwen3.8-Flash-Next\" of the header 22 line(s) above, matched by cell position, page 1 (the extraction cited ### Language benchmark table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:7a8cabed33c92752054b",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf#Claude Opus 4.8",
+        "name": "Claude Opus 4.8",
+        "model_id": "claude-opus-4.8::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 84.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf",
+        "retrieved_at": "2026-09-16T00:17:45.809963+00:00",
+        "published_at": "2026-05-28",
+        "sha256": "14e508a278892a378a6eddc87e34e36bcd555cc60907b7fc67ead57496a78d90",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/14e508a278892a378a6e.gz",
+        "locator": "Table 8.1.A, p. 194; captured evidence: text layer of the PDF (original document sha256 97f11ae3fb305c7105c958599bcf90f216669543393220f674610ddb83ee611a, 20600475 bytes); matched line: SWE-bench Multilingual                  84.4                 80.5          -​           -​; column header: Claude family models Claude Opus 4.8 (characters 43-45 of the line, the only row cell under it)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Anthropic for its own model, printed as \"SWE-bench Multilingual\" Multilingual; configuration: reasoning effort max; context length 1M (evaluation-dependent); attempts or samples averaged over 5 trials; other adaptive thinking at max effort; default sampling settings (temperature, top_p); re-verified against our own capture: the published row with the benchmark name and exactly one matching value, and column \"Claude family models Claude Opus 4.8\" of the header above the row, matched by column position, page 194",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:7b944a4f5a2c84771651",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf#Claude Opus 4.8",
+        "name": "Claude Opus 4.8",
+        "model_id": "claude-opus-4.8::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 88.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf",
+        "retrieved_at": "2026-09-16T00:17:45.809963+00:00",
+        "published_at": "2026-05-28",
+        "sha256": "14e508a278892a378a6eddc87e34e36bcd555cc60907b7fc67ead57496a78d90",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/14e508a278892a378a6e.gz",
+        "locator": "Table 8.1.A, p. 194; captured evidence: text layer of the PDF (original document sha256 97f11ae3fb305c7105c958599bcf90f216669543393220f674610ddb83ee611a, 20600475 bytes); matched line: SWE-bench Verified                      88.6                 87.6          -​        80.6; column header: Claude family models Claude Opus 4.8 (characters 43-47 of the line, the only row cell under it)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Anthropic for its own model, printed as \"SWE-bench Verified\" Verified; configuration: reasoning effort max; context length 1M (evaluation-dependent); attempts or samples averaged over 5 trials; other adaptive thinking at max effort; default sampling settings (temperature, top_p); re-verified against our own capture: the published row with this value and all 2 comparison values the extraction read from it, and column \"Claude family models Claude Opus 4.8\" of the header above the row, matched by column position, page 194",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:82b19c5cf59bf0f29950",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md#Qwen3.5-397B-A17B",
+        "name": "Qwen3.5-397B-A17B",
+        "model_id": null,
+        "variant": null,
+        "harness": "internal agent scaffold (bash + file-edit tools)"
+      },
+      "value": 76.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:18.986459+00:00",
+        "published_at": "2026-04-22",
+        "sha256": "bb936d6da51014f1edc9aa4cf9abf28d98695b7616ad56adfeeebfa752051d3d",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/bb936d6da51014f1edc9.gz",
+        "locator": "### Language table; captured evidence: original response bytes; matched line: | SWE-bench Verified | 75.0 | 76.2 | 52.0 | 80.9 | 73.4 | 77.2 |; column header: |  | Qwen3.5-27B | Qwen3.5-397B-A17B | Gemma4-31B | Claude 4.5 Opus | Qwen3.6-35B-A3B | Qwen3.6-27B | (cell 5 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Alibaba Qwen for its own model, printed as \"SWE-bench Verified\" Verified; configuration: scaffold internal agent scaffold (bash + file-edit tools); other temp=1.0, top_p=0.95, 200K context window; SWE-bench Pro tasks corrected, all baselines on refined benchmark; re-verified against our own capture: the published row with this value and all 5 comparison values the extraction read from it, and column \"Qwen3.5-397B-A17B\" of the header 7 line(s) above, matched by cell position, page 1 (the extraction cited ### Language table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:83cdffe803420246341e",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/raw/main/README.md#Qwen3.8-27B",
+        "name": "Qwen3.8-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": "mini-SWE-agent harness"
+      },
+      "value": 73.8,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3.8-Flash-Next/raw/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:24.215447+00:00",
+        "published_at": "2026-08-26",
+        "sha256": "35ca37ccc366f1ba478dab33841a2c0c18ce53fd62f291ca05341f7728b225b2",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/35ca37ccc366f1ba478d.gz",
+        "locator": "### Language benchmark table; captured evidence: original response bytes; matched line: | Multilingual software engineering SWE-bench Multilingual | 81.0 | 73.8 | 75.8 | -- | 77.5 |; column header: |  | Qwen3.8-Flash-Next | Qwen3.8-27B | Qwen3.7-Plus | DeepSeek-V4-Flash-0731 | Claude-Opus-4.6 (Max) | (cell 4 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Alibaba Qwen for its own model, printed as \"SWE-bench Multilingual\"; configuration: tools agentic coding; scaffold mini-SWE-agent harness; context length 256K context window; other temp=1.0, top_p=0.95, 256K context window; re-verified against our own capture: the published row with this value and all 3 comparison values the extraction read from it, and column \"Qwen3.8-27B\" of the header 22 line(s) above, matched by cell position, page 1 (the extraction cited ### Language benchmark table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:852c3dae32f6c8de93b6",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://raw.githubusercontent.com/XiaomiMiMo/MiMo-V2-Flash/main/README.md#MiMo-V2 Flash",
+        "name": "MiMo-V2 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 71.7,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://raw.githubusercontent.com/XiaomiMiMo/MiMo-V2-Flash/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:21.650760+00:00",
+        "published_at": "2025-12-16",
+        "sha256": "4edc0443591861c77056722b0a6033177538b37454ac85dc01162eec3cdd9bc4",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/4edc0443591861c77056.gz",
+        "locator": "### Post-training Model Evaluation table; captured evidence: original response bytes; matched line: | SWE-Bench Multilingual         |     71.7      |       61.1       |          70.2          |       -        |       68.0        |    55.3    |; column header: | Benchmark                      | MiMo-V2 Flash | Kimi-K2 Thinking | DeepSeek-V3.2 Thinking | Gemini-3.0 Pro | Claude Sonnet 4.5 | GPT-5 High | (cell 6 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Xiaomi MiMo for its own model, printed as \"SWE-Bench Multilingual\"; configuration: other post-trained model; re-verified against our own capture: the published row with this value and all 4 comparison values the extraction read from it, and column \"MiMo-V2 Flash\" of the header 17 line(s) above, matched by cell position, page 1 (the extraction cited ### Post-training Model Evaluation table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:85e4cbf202157bf69c3d",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md#Qwen3.6-27B",
+        "name": "Qwen3.6-27B",
+        "model_id": null,
+        "variant": null,
+        "harness": "internal agent scaffold (bash + file-edit tools)"
+      },
+      "value": 71.3,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/Qwen/Qwen3.6-27B/raw/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:18.986459+00:00",
+        "published_at": "2026-04-22",
+        "sha256": "bb936d6da51014f1edc9aa4cf9abf28d98695b7616ad56adfeeebfa752051d3d",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/bb936d6da51014f1edc9.gz",
+        "locator": "### Language table; captured evidence: original response bytes; matched line: | SWE-bench Multilingual | 69.3 | 69.3 | 51.7 | 77.5 | 67.2 | 71.3 |; column header: |  | Qwen3.5-27B | Qwen3.5-397B-A17B | Gemma4-31B | Claude 4.5 Opus | Qwen3.6-35B-A3B | Qwen3.6-27B | (cell 1 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Alibaba Qwen for its own model, printed as \"SWE-bench Multilingual\"; configuration: scaffold internal agent scaffold (bash + file-edit tools); other temp=1.0, top_p=0.95, 200K context window; SWE-bench Pro tasks corrected, all baselines on refined benchmark; re-verified against our own capture: the published row with this value and all 5 comparison values the extraction read from it, and column \"Qwen3.6-27B\" of the header 13 line(s) above, matched by cell position, page 1 (the extraction cited ### Language table)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:87a5c431317190b74e24",
+      "benchmark_id": "longbench::2",
+      "subject": {
+        "source_id": "https://raw.githubusercontent.com/XiaomiMiMo/MiMo-V2-Flash/main/README.md#MiMo-V2 Flash",
+        "name": "MiMo-V2 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 60.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://raw.githubusercontent.com/XiaomiMiMo/MiMo-V2-Flash/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:21.650760+00:00",
+        "published_at": "2025-12-16",
+        "sha256": "4edc0443591861c77056722b0a6033177538b37454ac85dc01162eec3cdd9bc4",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/4edc0443591861c77056.gz",
+        "locator": "### Post-training Model Evaluation table; captured evidence: original response bytes; matched line: | LongBench V2                   |     60.6      |       45.1       |          58.4          |      65.6      |       61.8        |     -      |; column header: | Benchmark                      | MiMo-V2 Flash | Kimi-K2 Thinking | DeepSeek-V3.2 Thinking | Gemini-3.0 Pro | Claude Sonnet 4.5 | GPT-5 High | (cell 6 from the right of both the header and the row)"
+      },
+      "protocol": "Accuracy on 503 multiple-choice questions across six task categories; self-reported by Xiaomi MiMo for its own model, printed as \"LongBench V2\" v2; configuration: other post-trained model; re-verified against our own capture: the published row with this value and all 4 comparison values the extraction read from it, and column \"MiMo-V2 Flash\" of the header 13 line(s) above, matched by cell position, page 1 (the extraction cited ### Post-training Model Evaluation table)",
+      "comparison_key": null
+    }
+  ]
+}

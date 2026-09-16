@@ -194,3 +194,48 @@ The collector is deterministic and offline once the bytes exist:
 `data/raw/benchmarks/daily-evidence/2026-09-12T08-31-06-000Z/` and refuses to run if the
 source hash no longer matches `ingestion-lock.json`. Parser: `lib/realswe.mjs`. Tests:
 `test/realswe.test.mjs`.
+
+## Self-reported release-document scores (`scripts/collect-self-reported-scores.mjs`)
+
+Model labs publish benchmark tables about their own models in system cards, model cards and
+technical reports. Those numbers are evidence of what the lab claims, never a measurement, so they
+enter the registry as `basis: self_reported` with `comparison_key: null`, never touch the Composite,
+and the product marks them as reported by the developer.
+
+The pipeline is a lead → capture → re-verify → review chain; no step trusts the previous one.
+
+1. **Lead.** `data/raw/benchmarks/self-reported/scout-20260915.jsonl.gz` is the 2026-09-15 scout
+   job's extraction (6,624 rows from 50 documents). `self-reported/lock.json` binds its SHA-256: a
+   changed extraction stops the collector until the new rows are reviewed. The extraction is a list
+   of claims about documents — it is never itself the evidence.
+2. **Capture.** `python3 scripts/capture-vendor-documents.py URL_LIST.json data/raw/benchmarks/self-reported/<date>`
+   fetches each primary document under the same access discipline as the public-source capture
+   (robots.txt for our user agent, crawl delay, bounded size and time, a bot challenge stops the
+   host). HTML and Markdown are retained as their original bytes. A 16–27 MB release PDF does not
+   belong in the repository, so for PDFs the retained evidence is the `pdftotext -layout` **text
+   layer** of exactly the captured bytes, and the manifest records the original document's SHA-256
+   and length; vendor PDF URLs are content-addressed, so a re-download can be checked against it.
+3. **Identity.** `data/raw/benchmarks/self-reported-identity-map.json` maps a printed benchmark name
+   and version to exactly one registry identity, with a rationale per entry and a recorded reason for
+   every family left out. Nothing is matched by name similarity. Identities that freeze one
+   operator's own run (Artificial Analysis, Cursor, Datacurve, Cognition, Scale AI) do not take a
+   lab's own run of the same benchmark: that is a different implementation and needs its own identity.
+4. **Re-verification.** `node scripts/collect-self-reported-scores.mjs` finds the published row again
+   in our own capture: one line must carry the printed benchmark name, the claimed value and every
+   comparison value the extraction read from that same row (HTML model cards are folded row-wise
+   first, `lib/self-reported-vendor.mjs`). Where a document prints no comparison values the value
+   must be the only match on its line. Anything else is rejected with its reason into
+   `self-reported-candidates.json`; a rejected claim is never quietly dropped. The matched line and
+   the page are stored in the observation's locator, so every cell can be re-read without the source.
+5. **Review and acceptance.** `ops/ux-2026-09-12/bin/self-reported-critic-packet.mjs` freezes the
+   candidates as an artifact and builds the critic packet; a critic from a different vendor family
+   than the producer reviews it (`ops/rebuild-2026-09/bin/worker.sh --critic`), and
+   `ops/ux-2026-09-12/bin/self-reported-approvals.mjs` writes one `score-approvals.json` row per
+   candidate the critic actually covered, bound to the observation digest, the receipt and the
+   artifact. `verifyScoreEvidence` refuses any self-reported observation without that chain.
+6. **Ingestion.** `node scripts/ingest-benchmark-scores.mjs` reads the candidates like the other
+   sources. A row whose catalog identity is unresolved keeps `model_id: null` and appears as an
+   unmatched source identity; it never guesses a reasoning variant.
+
+Widening the tranche means extending the identity map (and, where a benchmark's own published
+protocol has no identity yet, minting one with its own primary source) and re-running steps 2–6.

@@ -1,5 +1,11 @@
 // CR-14 (Florian 2026-09-15): compare tab defaults and benchmark radar.
 // Usage: node verify-cr-14.mjs <base> <outdir>   (1440×1000 and 390×844, light and dark; writes verification.json + PNGs)
+//
+// CR-14.2 (axis scaling) and CR-14.4 (default axis list) are **not checked here any more**: CR-19.2
+// zoomed the radar to the compared pair, so a point's position is no longer its value, and CR-19.3
+// replaced DesignArena Frontend with Full-Stack. Both are verified against their current behaviour
+// by verify-cr-19-2-21-1.mjs (zoom window, honest ring labels, full-scale toggle) and
+// verify-cr-19-25.mjs (default axis list). This file keeps CR-14.1, CR-14.3 and CR-14.5.
 import { createRequire } from 'node:module';
 const require = createRequire('/home/flori/n8n-local/');
 const { chromium } = require('playwright');
@@ -33,22 +39,22 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   const chips = await page.locator('[aria-label="Selected models"] [role="listitem"] a').allInnerTexts();
   check(`${tag} CR-14.1 default pair is Fable 5.1 and GPT-6 Astra (top two AA Intelligence families today)`, chips.length === 2 && chips.some((n) => /Fable 5\.1/.test(n)) && chips.some((n) => /GPT-6 Astra/.test(n)), chips);
 
-  // CR-14.4 default axes.
+  // CR-14.4's axis list moved to verify-cr-19-25.mjs when CR-19.3 replaced DesignArena Frontend
+  // with Full-Stack. What stays here is the part CR-14.4 asked for and CR-19.3 did not change:
+  // a balanced, current set with no saturated GPQA axis and no truncated label.
   const section = page.locator('#benchmark-radar');
   await section.scrollIntoViewIfNeeded();
   const axisNames = mobile ? await section.locator('ol li').allInnerTexts() : await section.locator('svg[role="group"] text tspan:first-child').evaluateAll((els) => els.map((e) => e.textContent || ''));
   const joined = axisNames.join(' | ');
-  check(`${tag} CR-14.4 eight default axes: AA indices, Epoch ECI ×2, DesignArena ×2, HLE, Terminal-Bench; no GPQA`, axisNames.length === 8
-    && /AA Intelligence Index/.test(joined) && /AA Coding Index/.test(joined) && /Epoch ECI/.test(joined) && /Epoch Software ECI/.test(joined) && !/…/.test(joined)
-    && /DesignArena Frontend/.test(joined) && /DesignArena Full-Stack/.test(joined) && /Humanity/.test(joined) && /Terminal-Bench/.test(joined) && !/GPQA/.test(joined), axisNames);
+  check(`${tag} CR-14.4 a balanced default axis set without a saturated GPQA axis`, axisNames.length >= 6
+    && /AA Intelligence Index/.test(joined) && /AA Coding Index/.test(joined) && /Epoch ECI/.test(joined)
+    && /DesignArena/.test(joined) && !/…/.test(joined) && !/GPQA/.test(joined), axisNames);
 
-  // CR-14.2 scaling: every drawn point sits at its announced position; fixed-scale positions equal the value.
+  // CR-14.2's "position = value" assertion was retired when CR-19.2 zoomed the radar to the compared
+  // pair; the zoom window and its ring labels are verified by verify-cr-19-2-21-1.mjs. What remains
+  // here is the rule that survived the zoom: an open-ended Elo/ECI axis must say so.
   const simpleSvg = mobile ? '#benchmark-radar svg[viewBox="0 0 360 360"]' : '#benchmark-radar svg[viewBox="0 0 900 600"]';
   const geo = mobile ? await geometry(page, simpleSvg, 180, 180, 120) : await geometry(page, simpleSvg, 450, 295, 205);
-  const off = geo.filter((g) => g.announced == null || Math.abs(g.announced - g.drawn) > 1.5);
-  check(`${tag} CR-14.2 every point is drawn at its announced position (±1.5)`, geo.length >= 8 && !off.length, { points: geo.length, off: off.slice(0, 3) });
-  const coding = geo.filter((g) => /AA Coding Index: [\d.]+ · \d+ on its 0–100 scale/.test(g.label));
-  check(`${tag} CR-14.2 AA Coding Index on its 0–100 scale: position = rounded value`, coding.length >= 1 && coding.every((g) => { const v = Number(g.label.match(/Index: ([\d.]+)/)[1]); return Math.abs(Math.round(v) - g.announced) <= 1; }), coding.map((g) => g.label));
   const peer = geo.filter((g) => /Elo|ECI/.test(g.label));
   check(`${tag} CR-14.2 open-ended Elo/ECI points say they use the measured range`, peer.length >= 1 && peer.every((g) => /no fixed scale/.test(g.label)), peer.slice(0, 2).map((g) => g.label));
 

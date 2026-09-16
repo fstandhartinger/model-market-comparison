@@ -123,3 +123,21 @@ The software value minimizes the same sigmoid residuals as Epoch's public explor
 `performance = sigmoid(slope × (capability − difficulty))`, on `[-100, 300]`, using at
 least two software-engineering benchmarks. ECI remains on Epoch's native scale in the
 individual score view; the Composite percentile-normalizes it against the current catalog.
+
+## Self-reported release documents (2026-09-16)
+
+Vendor release documents (system cards, model cards, technical reports) are captured with
+`scripts/capture-vendor-documents.py`, which follows the same access rules as the public-source
+capture: robots.txt is honoured for `BenchmarkHeavenResearch/1.0`, one host at a time with the
+crawl delay, bounded size and time, and a Cloudflare/captcha challenge stops that host instead of
+being worked around. Documents behind a bot challenge or an HTTP 401 are recorded as not
+retrievable and their numbers are not used.
+
+HTML and Markdown documents are retained as their original bytes. For a release PDF (16–27 MB is
+normal) the retained evidence is the `pdftotext -layout` text layer of exactly the captured bytes,
+and the manifest records the original document's SHA-256 and byte length. Vendor PDF URLs are
+content-addressed CDN paths, so a re-download can be checked against that digest.
+
+Values are re-verified against those captures before they become candidates, and every candidate
+still needs an independent critic approval; see
+[versioned benchmark ingestion](../docs/benchmark-ingestion.md).

@@ -4,6 +4,28 @@ For downstream consumers (forks, apps syncing data from this repo or the live AP
 the **data locations have not moved**. What changed recently is the hosting URL and
 some app internals — details per release below.
 
+## 2026-09-16 — Labs' own published benchmark numbers, re-verified against the documents (CR-30.1)
+
+**New self-reported observations; nothing moved or removed.** Benchmark numbers that model labs
+published about their own models in system cards, model cards and technical reports now reach the
+registry as `basis: self_reported` observations on five existing identities (SWE-bench Verified,
+SWE-bench Multilingual, SWE-bench Multimodal, LongBench v2, Terminal-Bench 4.0). They are never part
+of the Composite or of any category score, keep `comparison_key: null`, and the product shows them
+with the same self-reported marker as before (the `†` in the benchmark tables, the "Self-reported
+only" evidence filter).
+
+The 2026-09-15 scout extraction is a lead, not a source: every value is re-verified against our own
+bounded capture of the primary document, and the observation's locator records the exact document
+line the value was found in, so any cell can be re-read without the source. Release PDFs are
+retained as their text layer with the original document's SHA-256 recorded (16-27 MB of PDF does not
+belong in a repository); HTML and Markdown cards are retained byte-for-byte. Each row still carries
+its own independent critic approval in `score-approvals.json`.
+
+Downstream: no schema change. `benchmark_results.observations` gains rows with ids prefixed
+`self-reported:`; rows whose catalog configuration is unresolved keep `model_id: null` and remain
+unmatched source identities. New files: `data/raw/benchmarks/self-reported-candidates.json`,
+`self-reported-identity-map.json` and the captures under `data/raw/benchmarks/self-reported/`.
+
 ## 2026-09-16 — DesignArena results sit on the effort the source actually names (CR-28.2)
 
 **Values move between configurations of the same family; no value changes.** Intelligence.ai's

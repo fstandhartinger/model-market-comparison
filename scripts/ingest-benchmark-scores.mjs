@@ -150,7 +150,10 @@ for (const version of ['1.4', '1.5']) {
       reason: `OpenRouter's own runs from its documented public Benchmarks API, captured ${spec.retrieved_at.slice(0, 10)} and hash-bound to the ingestion lock. Attribution: OpenRouter Benchmarks.` });
   }
 }
-for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/benchmarks/vendor-candidates.json']) {
+for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/benchmarks/vendor-candidates.json',
+  // Self-reported release-document claims, rebuilt by scripts/collect-self-reported-scores.mjs from
+  // our own captures; each row still needs its own critic approval in score-approvals.json.
+  'data/raw/benchmarks/self-reported-candidates.json']) {
   let raw;
   try { raw = await read(path); } catch (e) { if (e.code === 'ENOENT' && process.argv.includes('--draft')) continue; throw e; }
   for (const observation of raw.observations) {

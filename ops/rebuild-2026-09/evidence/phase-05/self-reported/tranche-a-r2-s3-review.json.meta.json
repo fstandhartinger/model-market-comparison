@@ -1,0 +1,65 @@
+{
+  "started_at": "2026-09-16T00:39:56.374Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4.1-flash",
+  "producers": [
+    "anthropic/claude-opus-5"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4.1-flash",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.15,
+    "output_per_1m": 0.6,
+    "context": 1048576,
+    "aa_intelligence_index": 39.5,
+    "aa_source": "exact_family_slug",
+    "matched_model_ids": [
+      "deepseek-v4.1-flash::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4.1-flash::max",
+        "index": 39.5
+      }
+    ]
+  },
+  "input_sha256": "48bf13a83a01dfe48bc88902163dcda8f1f3abef3fcb945e481fc72fbf39a13f",
+  "reasoning": {
+    "enabled": false,
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4.1-flash",
+  "usage": {
+    "prompt_tokens": 4995,
+    "completion_tokens": 1481,
+    "total_tokens": 6476,
+    "cost": 0.0016214715,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00163785,
+      "upstream_inference_prompt_cost": 0.00074925,
+      "upstream_inference_completions_cost": 0.0008886
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 0,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "DeepSeek",
+  "session_id": null,
+  "finished_at": "2026-09-16T00:40:03.633Z",
+  "output_sha256": "4a8f068fe9c3fdefe1428de8c5d961d4154151e93325cf8b85940e4cd4a79dc2"
+}

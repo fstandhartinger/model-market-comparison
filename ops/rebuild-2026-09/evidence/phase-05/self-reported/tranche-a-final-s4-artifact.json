@@ -1,0 +1,197 @@
+{
+  "schema_version": 1,
+  "observations": [
+    {
+      "id": "self-reported:ce503815b534c1205f75",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf#Claude Opus 4.7",
+        "name": "Claude Opus 4.7",
+        "model_id": "claude-opus-4.7::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 80.5,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf",
+        "retrieved_at": "2026-09-16T00:17:45.809963+00:00",
+        "published_at": "2026-05-28",
+        "sha256": "14e508a278892a378a6eddc87e34e36bcd555cc60907b7fc67ead57496a78d90",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/14e508a278892a378a6e.gz",
+        "locator": "Table 8.1.A, p. 194; captured evidence: text layer of the PDF (original document sha256 97f11ae3fb305c7105c958599bcf90f216669543393220f674610ddb83ee611a, 20600475 bytes); matched line: SWE-bench Multilingual                  84.4                 80.5          -​           -​; column header: Claude Opus 4.7 (characters 62-66 of the line, the only row cell under it)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Anthropic for its own model, printed as \"SWE-bench Multilingual\" Multilingual; configuration: reasoning effort max; context length 1M (evaluation-dependent); attempts or samples averaged over 5 trials; other Claude Opus 4.7; see Claude Opus 4.7 System Card for evaluation details; re-verified against our own capture: the published row with the benchmark name and exactly one matching value, and column \"Claude Opus 4.7\" of the header above the row, matched by column position, page 194",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:cfaaa48d7a4d585a045d",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/moonshotai/Kimi-K2.6#Kimi K2.6",
+        "name": "Kimi K2.6",
+        "model_id": null,
+        "variant": "thinking mode",
+        "harness": "in-house evaluation framework adapted from SWE-agent (minimal tools: bash, createfile, insert, view, strreplace, submit)"
+      },
+      "value": 80.2,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/moonshotai/Kimi-K2.6",
+        "retrieved_at": "2026-09-16T00:17:24.386085+00:00",
+        "published_at": "2026-04-20",
+        "sha256": "ad5da257f791b7b2891c45433796b1966ff48a09c1da11042ea15482302caeb1",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/ad5da257f791b7b2891c.gz",
+        "locator": "Section 3 Evaluation Results table, row 'SWE-Bench Verified'; captured evidence: original response bytes; matched line: | SWE-Bench Verified | 80.2 | - | 80.8 | 80.6 | 76.8 |; column header: | Benchmark | Kimi K2.6 | GPT-5.4 (xhigh) | Claude Opus 4.6 (max effort) | Gemini 3.1 Pro (thinking high) | Kimi K2.5 | (cell 5 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Moonshot AI for its own model, printed as \"SWE-Bench Verified\" Verified; configuration: reasoning effort thinking mode; scaffold in-house evaluation framework adapted from SWE-agent (minimal tools: bash, createfile, insert, view, strreplace, submit); context length 262,144; attempts or samples avg of 10 runs; other coding scores averaged over 10 independent runs; re-verified against our own capture: the published row with this value and all 3 comparison values the extraction read from it, and column \"Kimi K2.6\" of the header 56 line(s) above, matched by cell position, page 1 (the extraction cited Section 3 Evaluation Results table, row 'SWE-Bench Verified')",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:d1a7b2f000a21a6c96ba",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/IFM/K2-Horizon-7B#K2-Horizon-7B",
+        "name": "K2-Horizon-7B",
+        "model_id": "k2-horizon-7b::default",
+        "variant": null,
+        "harness": null
+      },
+      "value": 70.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/IFM/K2-Horizon-7B",
+        "retrieved_at": "2026-09-16T00:17:42.738595+00:00",
+        "published_at": "2026-09-01",
+        "sha256": "58e13577b4d8405767b3c3c495dc8e090f0afaeff7d40739b100d177a0222480",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/58e13577b4d8405767b3.gz",
+        "locator": "Benchmark Results table (Reference models · weak to strong), benchmarking; captured evidence: original response bytes; matched line: | SWE-bench Verified Software engineering | 70.6 | Gemma 4-12B 30.6 | Granite 4.2-8B 47.7 | Qwen3.5-9B 50.8 |; column header: | Benchmark | K2-Horizon-7B | Reference 1 | Reference 2 | Reference 3 | (cell 4 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by MBZUAI Institute of Foundation Models for its own model, printed as \"SWE-bench Verified\" Verified; re-verified against our own capture: the published row with this value and all 3 comparison values the extraction read from it, and column \"K2-Horizon-7B\" of the header 8 line(s) above, matched by cell position, page 1 (the extraction cited Benchmark Results table (Reference models · weak to strong), benchmarking)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:d3b8f42de28997bfb0a1",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf#Claude Fable 5",
+        "name": "Claude Fable 5",
+        "model_id": "claude-fable-5::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 86.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf",
+        "retrieved_at": "2026-09-16T00:17:04.006440+00:00",
+        "published_at": "2026-09-01",
+        "sha256": "2709a1fd8f09da026601300b4c611cc298b21b1753f4fc527b8cbb5f48b56793",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/2709a1fd8f09da026601.gz",
+        "locator": "Table 8.1.A, p. 167; captured evidence: text layer of the PDF (original document sha256 b0d59edc7a60eef32a879c13d713cce60c3fefd7e6b5183afdc8b835af3c8c39, 16397488 bytes); matched line: SWE-bench Multilingual                  89.1              86.6              89.5              -; column header: Fable family models Claude Fable 5/ Mythos 5 (characters 59-61 of the line, the only row cell under it)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Anthropic for its own model, printed as \"SWE-bench Multilingual\"; configuration: reasoning effort max; cot adaptive thinking; context length up to 1M tokens (eval dependent); attempts or samples averaged over five trials; other standard configuration: adaptive thinking at max effort, default sampling settings (temperature, top_p); the document prints one column, \"Fable family models Claude Fable 5/ Mythos 5\", for more than one product, so this value is that column's; it is recorded on the configuration the source names; re-verified against our own capture: the published row with this value and all 3 comparison values the extraction read from it, and column \"Fable family models Claude Fable 5/ Mythos 5\" of the header above the row, matched by column position, page 167",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:db9819d3108e5a6b8dec",
+      "benchmark_id": "terminal-bench::4.0",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf#Claude Fable 5",
+        "name": "Claude Fable 5",
+        "model_id": "claude-fable-5::max",
+        "variant": "maximum thinking effort",
+        "harness": "Claude Code in --bare mode"
+      },
+      "value": 42,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/0339e6a7c5c7b87f5c07798616dc32c215d14235/Claude%20Fable%205.1%20&%20Claude%20Mythos%205.1%20System%20Card.pdf",
+        "retrieved_at": "2026-09-16T00:17:04.006440+00:00",
+        "published_at": "2026-09-01",
+        "sha256": "2709a1fd8f09da026601300b4c611cc298b21b1753f4fc527b8cbb5f48b56793",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/2709a1fd8f09da026601.gz",
+        "locator": "Section 8.6, p. 171; captured evidence: text layer of the PDF (original document sha256 b0d59edc7a60eef32a879c13d713cce60c3fefd7e6b5183afdc8b835af3c8c39, 16397488 bytes); matched line: Terminal-Bench 4.0                      56%               42%               52%               37%; column header: Fable family models Claude Fable 5/ Mythos 5 (characters 59-61 of the line, the only row cell under it)"
+      },
+      "protocol": "Resolution rate on Terminal-Bench 4.0 tasks (95% confidence-interval whiskers), with cost and tokens per run; self-reported by Anthropic for its own model, printed as \"Terminal-Bench 4.0\" 4.0; configuration: reasoning effort maximum thinking effort; tools terminal/command-line container; scaffold Claude Code in --bare mode; attempts or samples 15 trials per task (990 trials); other 66 tasks; standard error is ±1.6-2 points per model; the document prints one column, \"Fable family models Claude Fable 5/ Mythos 5\", for more than one product, so this value is that column's; it is recorded on the configuration the source names; re-verified against our own capture: the published row with the benchmark name and exactly one matching value, and column \"Fable family models Claude Fable 5/ Mythos 5\" of the header above the row, matched by column position, page 167 (the extraction cited Section 8.6, p. 171)",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:f317596d7379fbf1e1d2",
+      "benchmark_id": "swe-bench-multilingual::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://huggingface.co/moonshotai/Kimi-K2.6#Kimi K2.5",
+        "name": "Kimi K2.5",
+        "model_id": null,
+        "variant": "thinking mode",
+        "harness": "in-house evaluation framework adapted from SWE-agent (minimal tools: bash, createfile, insert, view, strreplace, submit)"
+      },
+      "value": 73,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://huggingface.co/moonshotai/Kimi-K2.6",
+        "retrieved_at": "2026-09-16T00:17:24.386085+00:00",
+        "published_at": "2026-04-20",
+        "sha256": "ad5da257f791b7b2891c45433796b1966ff48a09c1da11042ea15482302caeb1",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/ad5da257f791b7b2891c.gz",
+        "locator": "Section 3 Evaluation Results table, row 'SWE-Bench Multilingual'; captured evidence: original response bytes; matched line: | SWE-Bench Multilingual | 76.7 | - | 77.8 | 76.9* | 73.0 |; column header: | Benchmark | Kimi K2.6 | GPT-5.4 (xhigh) | Claude Opus 4.6 (max effort) | Gemini 3.1 Pro (thinking high) | Kimi K2.5 | (cell 1 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Moonshot AI for its own model, printed as \"SWE-Bench Multilingual\" Multilingual; configuration: reasoning effort thinking mode; scaffold in-house evaluation framework adapted from SWE-agent (minimal tools: bash, createfile, insert, view, strreplace, submit); attempts or samples avg of 10 runs; other coding scores averaged over 10 independent runs; re-verified against our own capture: the published row with the benchmark name and exactly one matching value, and column \"Kimi K2.5\" of the header 53 line(s) above, matched by cell position, page 1 (the extraction cited Section 3 Evaluation Results table, row 'SWE-Bench Multilingual')",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:fb443140d0bb94a6aa76",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf#Claude Opus 4.7",
+        "name": "Claude Opus 4.7",
+        "model_id": "claude-opus-4.7::max",
+        "variant": "max",
+        "harness": null
+      },
+      "value": 87.6,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://www-cdn.anthropic.com/0b4915911bb0d19eca5b5ee635c80fef830a37ea.pdf",
+        "retrieved_at": "2026-09-16T00:17:45.809963+00:00",
+        "published_at": "2026-05-28",
+        "sha256": "14e508a278892a378a6eddc87e34e36bcd555cc60907b7fc67ead57496a78d90",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/14e508a278892a378a6e.gz",
+        "locator": "Table 8.1.A, p. 194; captured evidence: text layer of the PDF (original document sha256 97f11ae3fb305c7105c958599bcf90f216669543393220f674610ddb83ee611a, 20600475 bytes); matched line: SWE-bench Verified                      88.6                 87.6          -​        80.6; column header: Claude Opus 4.7 (characters 62-68 of the line, the only row cell under it)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Anthropic for its own model, printed as \"SWE-bench Verified\" Verified; configuration: reasoning effort max; context length 1M (evaluation-dependent); attempts or samples averaged over 5 trials; other Claude Opus 4.7; see Claude Opus 4.7 System Card for evaluation details; re-verified against our own capture: the published row with the benchmark name and exactly one matching value, and column \"Claude Opus 4.7\" of the header above the row, matched by column position, page 194",
+      "comparison_key": null
+    },
+    {
+      "id": "self-reported:fcdf54e5922e03b797e4",
+      "benchmark_id": "swe-bench-verified::snapshot-2026-09-10",
+      "subject": {
+        "source_id": "https://raw.githubusercontent.com/XiaomiMiMo/MiMo-V2-Flash/main/README.md#MiMo-V2 Flash",
+        "name": "MiMo-V2 Flash",
+        "model_id": null,
+        "variant": null,
+        "harness": null
+      },
+      "value": 73.4,
+      "unit": "percent",
+      "basis": "self_reported",
+      "source": {
+        "url": "https://raw.githubusercontent.com/XiaomiMiMo/MiMo-V2-Flash/main/README.md",
+        "retrieved_at": "2026-09-16T00:17:21.650760+00:00",
+        "published_at": "2025-12-16",
+        "sha256": "4edc0443591861c77056722b0a6033177538b37454ac85dc01162eec3cdd9bc4",
+        "file": "data/raw/benchmarks/self-reported/2026-09-16/4edc0443591861c77056.gz",
+        "locator": "### Post-training Model Evaluation table; captured evidence: original response bytes; matched line: | SWE-Bench Verified             |     73.4      |       71.3       |          73.1          |      76.2      |       77.2        |    74.9    |; column header: | Benchmark                      | MiMo-V2 Flash | Kimi-K2 Thinking | DeepSeek-V3.2 Thinking | Gemini-3.0 Pro | Claude Sonnet 4.5 | GPT-5 High | (cell 6 from the right of both the header and the row)"
+      },
+      "protocol": "% Resolved: percentage of task instances solved; self-reported by Xiaomi MiMo for its own model, printed as \"SWE-Bench Verified\" Verified; configuration: other post-trained model; re-verified against our own capture: the published row with this value and all 5 comparison values the extraction read from it, and column \"MiMo-V2 Flash\" of the header 16 line(s) above, matched by cell position, page 1 (the extraction cited ### Post-training Model Evaluation table)",
+      "comparison_key": null
+    }
+  ]
+}

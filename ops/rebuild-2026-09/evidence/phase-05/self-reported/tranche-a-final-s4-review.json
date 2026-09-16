@@ -1,0 +1,44 @@
+{
+  "artifact_id": "self-reported-tranche-a-slice-4-of-4",
+  "artifact_sha256": "55f125c1ac8e0ca7ddf4a26281624514f4a5db7b5ccbada5c8ce9ab54a8158da",
+  "round": 1,
+  "verdict": "revise",
+  "errors_found": 3,
+  "findings": [
+    {
+      "id": "self-reported:cfaaa48d7a4d585a045d",
+      "severity": "minor",
+      "problem": "Impossible header distance: states '56 line(s) above', but the SWE-Bench Multilingual row sits on the immediately preceding line in the same table and its candidate (f317596d) states '53 line(s) above'; distances for adjacent rows must differ by exactly 1. Header line is not printed in the packet, so the 'Kimi K2.6' column label cannot be confirmed."
+    },
+    {
+      "id": "self-reported:f317596d7379fbf1e1d2",
+      "severity": "minor",
+      "problem": "Same impossibility from the other side: states '53 line(s) above' while the adjacent SWE-Bench Verified row (next line below, same table) states '56 line(s) above'; both cannot be right. Header line not printed, so the 'Kimi K2.5' column label cannot be confirmed."
+    },
+    {
+      "id": "self-reported:d3b8f42de28997bfb0a1",
+      "severity": "minor",
+      "problem": "Column line claims 'all 3 comparison values', but the row contains only 2 other models' values (89.1 Fable 5.1/Mythos 5.1; 89.5 Opus 5); the fourth cell is a '-' placeholder (GPT-5.6 Sol), not a value — a row of 3 values has 2 comparisons. The column position itself checks out (86.6 aligns under 'Fable 5/ Mythos 5')."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "self-reported:d1a7b2f000a21a6c96ba: the header visible in the printed window sits only 5 lines above the row, but the row states '8 line(s) above'; cannot rule out silently elided lines between them (packet windows elsewhere omit distant lines), so not filed as a finding.",
+    "The d3b8f42 count finding assumes '-' placeholders are not 'values' (comparisons are other models' values per the packet note); if dashes were meant to count as cells, the equivalent mismatch would instead fall on cfaaa48d (5 cells → 4 comparisons, not 3)."
+  ],
+  "missing_evidence": [
+    "self-reported:cfaaa48d7a4d585a045d: header line (stated 56 lines above) not included in packet; column label 'Kimi K2.6' unverifiable.",
+    "self-reported:f317596d7379fbf1e1d2: header line (stated 53 lines above) not included; column label 'Kimi K2.5' unverifiable.",
+    "self-reported:fcdf54e5922e03b797e4: header line (stated 16 lines above) not included; column label 'MiMo-V2 Flash' unverifiable."
+  ],
+  "coverage_checked": [
+    "self-reported:ce503815b534c1205f75",
+    "self-reported:cfaaa48d7a4d585a045d",
+    "self-reported:d1a7b2f000a21a6c96ba",
+    "self-reported:d3b8f42de28997bfb0a1",
+    "self-reported:db9819d3108e5a6b8dec",
+    "self-reported:f317596d7379fbf1e1d2",
+    "self-reported:fb443140d0bb94a6aa76",
+    "self-reported:fcdf54e5922e03b797e4"
+  ]
+}
