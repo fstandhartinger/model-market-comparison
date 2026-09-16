@@ -1,7 +1,7 @@
 {
   "source": "Nebius Token Factory — tokenfactory.nebius.com/api/public/models_info (first-party, public catalog)",
   "region": "mixed (eu-north1 / eu-west2 / us-central1 / uk-south1)",
-  "collected_at": "2026-09-14",
+  "collected_at": "2026-09-16",
   "listing_url": "https://tokenfactory.nebius.com/models",
   "method": "scripts/fetch-nebius-catalog.mjs: one GET of the public catalog (allowed by robots.txt); prices are flavors[].input/output_price_per_million_tokens in native USD; region from flavors[].regions[].country_code (EU member state → eu, US → us, UK → uk); non-chat types and zero-output-price rows (embeddings) omitted; curated model_name/provider_org carried over by exact model_id; new ids marked mapping=derived; catalog status kept per row. See nebius.method.md.",
   "models": [
@@ -36,8 +36,7 @@
       "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
       "context_length": 979000,
       "status": "active",
-      "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4-Pro-0813",
-      "mapping": "derived"
+      "notes": "flavor: cheap; served region: us-north1 (US); id deepseek-ai/DeepSeek-V4-Pro-0813"
     },
     {
       "model_name": "Gemma 3 27B",
@@ -49,17 +48,6 @@
       "context_length": 110000,
       "status": "active",
       "notes": "flavor: cheap; served region: eu-north1 (FI); id google/gemma-3-27b-it"
-    },
-    {
-      "model_name": "Llama 3.3 70B",
-      "provider_org": "Meta",
-      "input_per_1m_usd": 0.13,
-      "output_per_1m_usd": 0.4,
-      "region": "eu",
-      "model_id": "meta-llama/Llama-3.3-70B-Instruct",
-      "context_length": 131072,
-      "status": "active",
-      "notes": "flavor: cheap; served region: eu-north1 (FI); id meta-llama/Llama-3.3-70B-Instruct"
     },
     {
       "model_name": "MiniMax M3",
@@ -80,8 +68,8 @@
       "region": "us",
       "model_id": "moonshotai/Kimi-K2.6",
       "context_length": 262144,
-      "status": "error",
-      "notes": "flavor: cheap; served region: us-central1 (US); id moonshotai/Kimi-K2.6; catalog status: error"
+      "status": "active",
+      "notes": "flavor: cheap; served region: us-central1 (US); id moonshotai/Kimi-K2.6"
     },
     {
       "model_name": "Kimi K2.7 Code",
@@ -146,8 +134,8 @@
       "region": "us",
       "model_id": "nvidia/Nemotron-3-Ultra-550b-a55b",
       "context_length": 1048576,
-      "status": "error",
-      "notes": "flavor: cheap; served region: us-central1 (US); id nvidia/Nemotron-3-Ultra-550b-a55b; catalog status: error"
+      "status": "active",
+      "notes": "flavor: cheap; served region: us-central1 (US); id nvidia/Nemotron-3-Ultra-550b-a55b"
     },
     {
       "model_name": "Nemotron 3.5 Lightning",
@@ -246,8 +234,7 @@
       "model_id": "zai-org/GLM-5.3",
       "context_length": 1024000,
       "status": "active",
-      "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3",
-      "mapping": "derived"
+      "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3"
     },
     {
       "model_name": "GLM 5.3 Flash",
@@ -258,19 +245,18 @@
       "model_id": "zai-org/GLM-5.3-Flash",
       "context_length": 1024000,
       "status": "active",
-      "notes": "flavor: cheap; served region: us-central1 (US); id zai-org/GLM-5.3-Flash"
+      "notes": "flavor: cheap; served region: us-north1 (US); id zai-org/GLM-5.3-Flash"
     }
   ],
-  "response_sha256": "8399c5065898c8b40da60eb575acf354512b8bdbed7b33eb96a94a7303ec55f6",
+  "response_sha256": "e8fbfc0d85bf7c8dd5faa56d36e20262cc496d167649f52d38f3f9e1ae7f7e6a",
   "skipped": [
     "Qwen/Qwen3-Embedding-8B"
   ],
   "diff": {
-    "added": [
-      "deepseek-ai/DeepSeek-V4-Pro-0813",
-      "zai-org/GLM-5.3"
+    "added": [],
+    "removed": [
+      "meta-llama/Llama-3.3-70B-Instruct"
     ],
-    "removed": [],
     "price_changed": [],
     "region_changed": []
   }

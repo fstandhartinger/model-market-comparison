@@ -1,0 +1,147 @@
+{
+  "artifact_id": "scores-3",
+  "rounds_used": 1,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+    ]
+  },
+  "producer_flagged": [
+    "vendor:DeepSeek-V3:aider-polyglot::snapshot-2026-09-10"
+  ],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": {
+      "complete": true,
+      "model": "z-ai/glm-5.3-flash",
+      "rows_covered": 1
+    },
+    "critic": [
+      {
+        "round": 1,
+        "verdict": "pass",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 1,
+      "criteria_covered": 1,
+      "complete": true
+    }
+  },
+  "receipts": [
+    {
+      "round": 1,
+      "role": "producer",
+      "reused_from_round": null,
+      "model": "z-ai/glm-5.3-flash",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-3/producer-r1.json",
+      "output_sha256": "fbe2b41eda8dbbc4325dd2ae29ae5b42baeafe12ef24b089a2d0c8c4325caa6f",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.09999999999999999,
+        "output_per_1m": 0.3333,
+        "context": 1310720,
+        "aa_intelligence_index": 41.9,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.9
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 4024,
+        "completion_tokens": 1361,
+        "total_tokens": 5385,
+        "cost": 0.00088455906,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 64,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.000893494,
+          "upstream_inference_prompt_cost": 0.000417144,
+          "upstream_inference_completions_cost": 0.00047635
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 1206,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 1,
+      "role": "critic",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-3/review-r1.json",
+      "output_sha256": "2e7a8b298b47e173029830d0ce374339565811c06a55080004ccd9669bb28e71",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 4062,
+        "completion_tokens": 8926,
+        "total_tokens": 12988,
+        "cost": 0.0009311049,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 3819,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00094051,
+          "upstream_inference_prompt_cost": 0.00004791,
+          "upstream_inference_completions_cost": 0.0008926
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 8691,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

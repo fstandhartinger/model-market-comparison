@@ -1,10 +1,10 @@
 {
   "source": "STACKIT AI Model Serving",
   "region": "eu01 (Germany South)",
-  "collected_at": "2026-09-14",
+  "collected_at": "2026-09-16",
   "listing_url": "https://docs.stackit.cloud/products/data-and-ai/ai-model-serving/basics/available-shared-models/",
   "pricing_url": "https://stackit.com/en/products/data-ai/stackit-ai-model-serving",
-  "method": "scripts/fetch-stackit-catalog.mjs (2026-09-14): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.1592 (ECB euro reference rate of 2026-09-11, latest available on 2026-09-14), four decimal places. See stackit.method.md.",
+  "method": "scripts/fetch-stackit-catalog.mjs (2026-09-16): model list from the first-party Available Shared Models documentation (page last updated 2026-09-08; Type Chat rows under Text Models, embedding models excluded), each model's billing category and status from its Facts table. Token prices from the EU01 (Germany South) SKU table on the STACKIT AI Model Serving product page: LLM-Standard 0.15/0.25 EUR, LLM-Premium 1.5/1.75 EUR, LLM-Plus 0.45/0.65 EUR per 1M input/output tokens, mapped via each model's billing category. USD = EUR x 1.1539 (ECB euro reference rate of 2026-09-15, latest available on 2026-09-16), four decimal places. See stackit.method.md.",
   "models": [
     {
       "model_name": "Qwen3 VL 235B A22B Instruct",
@@ -13,8 +13,8 @@
       "billing_category": "LLM-Premium",
       "input_per_1m_eur": 1.5,
       "output_per_1m_eur": 1.75,
-      "input_per_1m_usd": 1.7388,
-      "output_per_1m_usd": 2.0286,
+      "input_per_1m_usd": 1.7308,
+      "output_per_1m_usd": 2.0193,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -29,8 +29,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5216,
-      "output_per_1m_usd": 0.7535,
+      "input_per_1m_usd": 0.5193,
+      "output_per_1m_usd": 0.75,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -46,8 +46,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5216,
-      "output_per_1m_usd": 0.7535,
+      "input_per_1m_usd": 0.5193,
+      "output_per_1m_usd": 0.75,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -62,8 +62,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5216,
-      "output_per_1m_usd": 0.7535,
+      "input_per_1m_usd": 0.5193,
+      "output_per_1m_usd": 0.75,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -78,8 +78,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5216,
-      "output_per_1m_usd": 0.7535,
+      "input_per_1m_usd": 0.5193,
+      "output_per_1m_usd": 0.75,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -94,8 +94,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5216,
-      "output_per_1m_usd": 0.7535,
+      "input_per_1m_usd": 0.5193,
+      "output_per_1m_usd": 0.75,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -110,8 +110,8 @@
       "billing_category": "LLM-Plus",
       "input_per_1m_eur": 0.45,
       "output_per_1m_eur": 0.65,
-      "input_per_1m_usd": 0.5216,
-      "output_per_1m_usd": 0.7535,
+      "input_per_1m_usd": 0.5193,
+      "output_per_1m_usd": 0.75,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -126,8 +126,8 @@
       "billing_category": "LLM-Standard",
       "input_per_1m_eur": 0.15,
       "output_per_1m_eur": 0.25,
-      "input_per_1m_usd": 0.1739,
-      "output_per_1m_usd": 0.2898,
+      "input_per_1m_usd": 0.1731,
+      "output_per_1m_usd": 0.2885,
       "region": "eu01",
       "server_location": "Germany South",
       "eu_hosted": true,
@@ -136,27 +136,23 @@
       "notes": "Text input/output; tool calling and reasoning; MXFP4."
     }
   ],
-  "fx_eur_usd": 1.1592,
+  "fx_eur_usd": 1.1539,
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1592,
-    "fx_rate_date": "2026-09-11",
+    "eur_to_usd": 1.1539,
+    "fx_rate_date": "2026-09-15",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "4 decimal places"
   },
   "docs_last_updated": "2026-09-08",
   "response_sha256": {
-    "docs": "c2aaacb7db9b3253f704490d2539c3d079327e4e85efa32e6560b0ea9dd2ebe9",
-    "product": "eea4bf4062f2b278c04a1007fcfc68b2097a61e3bce90b23b1b63e56f51d6589"
+    "docs": "554a4f4b51c704083d5feecc712facaafb5871ea4349da00fe67affea16dfc3d",
+    "product": "15b865aaf6d3a8abf41f86904401169affd9aa67d6a4545d04ab8363b217244a"
   },
   "diff": {
-    "added": [
-      "Qwen/Qwen3.8-27B"
-    ],
+    "added": [],
     "removed": [],
-    "category_or_status_changed": [
-      "Qwen/Qwen3.6-27B"
-    ],
+    "category_or_status_changed": [],
     "eur_price_changed": []
   }
 }

@@ -18656,6 +18656,62 @@
       "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
       "verdict": "accepted",
       "evidence_locator": "ops/rebuild-2026-09/evidence/phase-05/vendor-round2-packet.json vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "observation_sha256": "bc5b9d239c90980b006eaeb1f16f144191f676389193d3eca684ce31536f9660",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
+      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/retail"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "observation_sha256": "4931d7c2d2a3311e75f34cc9304a675b9273154ce134f1f611b81b276f24ce2c",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
+      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/airline"
+    },
+    {
+      "id": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+      "observation_sha256": "e2b7df076d9320c65348f1e6d418012a8c5bc3b706d9bf75aec7926a8a9bf327",
+      "critic_model": "deepseek/deepseek-v4.1-flash",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/review-r1.json",
+      "review_sha256": "62840f4b1cb8804cedf4538a464b7f4e3cefcd4d7e79ae8f71ba5f7029a700d8",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/artifact-r1.json",
+      "review_row": "vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-0/packet-r1.md#vendor:Qwen/Qwen3-235B-A22B-Thinking-2507:tau2-bench::2/telecom"
+    },
+    {
+      "id": "vendor:DeepSeek-V3:longbench::2",
+      "observation_sha256": "e9c5eccbc55baa685f6dc6404f051ff0bb391e61d177f2b36982da5585547a48",
+      "critic_model": "deepseek/deepseek-v4-flash-0731",
+      "producer_models": [
+        "z-ai/glm-5.3-flash"
+      ],
+      "review_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/review-r1.json",
+      "review_sha256": "3af0cddcc5b24a150c480579360c2394c5648c65cd674a56f082155babef40c5",
+      "artifact_file": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/artifact-r1.json",
+      "review_row": "vendor:DeepSeek-V3:longbench::2",
+      "verdict": "accepted",
+      "evidence_locator": "data/raw/benchmarks/daily-evidence/2026-09-16T07-39-38-064Z/gauntlet/scores-4/packet-r1.md#vendor:DeepSeek-V3:longbench::2"
     }
   ]
 }

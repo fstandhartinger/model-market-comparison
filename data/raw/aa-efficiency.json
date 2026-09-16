@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-14T05:14:24.320Z",
+  "collected_at": "2026-09-16T07:29:45.549Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-14T05:14:23.773Z",
+      "fetched_at": "2026-09-16T07:29:44.945Z",
       "http_status": 200,
-      "bytes": 3517661,
-      "sha256": "2a24254b0549a62305bceefe9053f8a2329552127c13914b004059b184241775"
+      "bytes": 3614429,
+      "sha256": "425623773f6dd955fe20e54e340f82d11079b0aea9252e2099762b4ab1b6f7c9"
     }
   ],
   "coverage": {
-    "published_rows": 148,
-    "scored_denominator": 641,
+    "published_rows": 155,
+    "scored_denominator": 642,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 148,
+  "count": 155,
   "rows": [
     {
       "source_id": "8decf027-5114-4721-9ee1-81c0552980a0",
@@ -1369,6 +1369,28 @@
       }
     },
     {
+      "source_id": "dc64f856-3ded-497d-9527-d41d31267ed5",
+      "slug": "gpt-5-6-luna-non-reasoning",
+      "name": "GPT-5.6 Luna (Non-reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 2027.4761833867608,
+        "output": 2027.4761833867608
+      },
+      "canonical_token_counts": {
+        "input": 328270441,
+        "output": 4847490,
+        "answer": 4847490,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 67.71967368679461,
+        "reasoning_output_share": 0
+      }
+    },
+    {
       "source_id": "87110ff0-1f79-41b4-9976-eda250597317",
       "slug": "gpt-5-6-luna-xhigh",
       "name": "GPT-5.6 Luna (xhigh)",
@@ -1586,6 +1608,28 @@
         "basis": "derived",
         "input_output_ratio": 29.164808213948852,
         "reasoning_output_share": 0.3426793189514255
+      }
+    },
+    {
+      "source_id": "9b97a35e-6ac7-44d9-91c6-422fa678963e",
+      "slug": "gpt-5-6-terra-non-reasoning",
+      "name": "GPT-5.6 Terra (Non-reasoning)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 3129.3947847469058,
+        "output": 3129.3947847469058
+      },
+      "canonical_token_counts": {
+        "input": 347112842,
+        "output": 5818048,
+        "answer": 5818048,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 59.66139193076441,
+        "reasoning_output_share": 0
       }
     },
     {
@@ -2161,6 +2205,28 @@
       }
     },
     {
+      "source_id": "0de67206-4d36-4d10-b8f6-cf37fa747a03",
+      "slug": "kimi-k2-6",
+      "name": "Kimi K2.6",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 36844.89079060351,
+        "answer": 10492.215745784366,
+        "output": 47337.10653638787
+      },
+      "canonical_token_counts": {
+        "input": 2339837296,
+        "output": 180582624,
+        "answer": 14029542,
+        "reasoning": 166553082
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 12.957156365166119,
+        "reasoning_output_share": 0.7783511390220053
+      }
+    },
+    {
       "source_id": "8d0cb231-7303-452c-9923-a9620b948475",
       "slug": "kimi-k2-7-code",
       "name": "Kimi K2.7 Code",
@@ -2227,25 +2293,47 @@
       }
     },
     {
+      "source_id": "e33dc369-ae81-40e0-8c4e-28b002d02197",
+      "slug": "ling-3-0-flash",
+      "name": "Ling 3.0 Flash",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 33207.0669421994,
+        "answer": 15489.914338358092,
+        "output": 48696.98128055749
+      },
+      "canonical_token_counts": {
+        "input": 1476271560,
+        "output": 261278745,
+        "answer": 35978177,
+        "reasoning": 225300568
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 5.650178547818729,
+        "reasoning_output_share": 0.6819122267740544
+      }
+    },
+    {
       "source_id": "433d5c5d-3092-4026-9727-1587ca07915d",
       "slug": "ling-3-0-flash-vl",
       "name": "Ling-3.0-flash-VL",
       "variant": null,
       "tokens_per_task": {
-        "reasoning": 29194.367290592407,
-        "answer": 20697.98498476277,
-        "output": 49892.35227535518
+        "reasoning": 29407.32629059241,
+        "answer": 20773.10998476277,
+        "output": 50180.43627535518
       },
       "canonical_token_counts": {
-        "input": 4092483649,
-        "output": 160053880,
-        "answer": 35788871,
-        "reasoning": 124265009
+        "input": 4096507673,
+        "output": 160341964,
+        "answer": 35863996,
+        "reasoning": 124477968
       },
       "derived": {
         "basis": "derived",
-        "input_output_ratio": 25.569412306655735,
-        "reasoning_output_share": 0.5851471409780222
+        "input_output_ratio": 25.54856863921163,
+        "reasoning_output_share": 0.5860316982743143
       }
     },
     {
@@ -2557,6 +2645,28 @@
       }
     },
     {
+      "source_id": "05a32e26-e609-4377-951b-8fa23d329926",
+      "slug": "mistral-medium-3-1",
+      "name": "Mistral Medium 3.1",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 0,
+        "answer": 13193.973378542094,
+        "output": 13193.973378542094
+      },
+      "canonical_token_counts": {
+        "input": 925379251,
+        "output": 17859256,
+        "answer": 17859256,
+        "reasoning": 0
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 51.81510646356153,
+        "reasoning_output_share": 0
+      }
+    },
+    {
       "source_id": "dd059b25-d82a-4ead-82a4-4adceaaec48b",
       "slug": "mistral-medium-3-5",
       "name": "Mistral Medium 3.5",
@@ -2774,6 +2884,28 @@
         "basis": "derived",
         "input_output_ratio": 11.203415273391736,
         "reasoning_output_share": 0.4614234193485181
+      }
+    },
+    {
+      "source_id": "1e9907e0-ffac-4595-b006-962e4f1da7cf",
+      "slug": "north-mini-code",
+      "name": "North Mini Code",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 10552.932382862688,
+        "answer": 7802.356050504403,
+        "output": 18355.28843336709
+      },
+      "canonical_token_counts": {
+        "input": 903747242,
+        "output": 81537442,
+        "answer": 9967973,
+        "reasoning": 71569469
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 11.08383118028157,
+        "reasoning_output_share": 0.5749259904670896
       }
     },
     {
@@ -3173,8 +3305,30 @@
       }
     },
     {
-      "source_id": "5e5b4ce7-bc54-47b2-b911-21b9cad8394c",
+      "source_id": "b112af07-3bd5-4647-b09f-b23204361bb2",
       "slug": "qwen3-8-max",
+      "name": "Qwen3.8 Max (0902)",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 70829.88378234163,
+        "answer": 36900.3468741272,
+        "output": 107730.23065646883
+      },
+      "canonical_token_counts": {
+        "input": 9896761467,
+        "output": 191963342,
+        "answer": 43134084,
+        "reasoning": 148829258
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 51.5554759772832,
+        "reasoning_output_share": 0.6574745394187879
+      }
+    },
+    {
+      "source_id": "5e5b4ce7-bc54-47b2-b911-21b9cad8394c",
+      "slug": "qwen3-8-max-0803",
       "name": "Qwen3.8 Max",
       "variant": null,
       "tokens_per_task": {

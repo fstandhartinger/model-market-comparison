@@ -1,0 +1,63 @@
+{
+  "started_at": "2026-09-16T08:00:44.438Z",
+  "mode": "oneshot",
+  "requested_model": "z-ai/glm-5.3-flash",
+  "producers": [],
+  "qualification": {
+    "id": "z-ai/glm-5.3-flash",
+    "family": "z-ai",
+    "free": false,
+    "input_per_1m": 0.09999999999999999,
+    "output_per_1m": 0.3333,
+    "context": 1310720,
+    "aa_intelligence_index": 41.9,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "glm-5.3-flash::default"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "glm-5.3-flash::default",
+        "index": 41.9
+      }
+    ]
+  },
+  "input_sha256": "5dc687f92cc2a7c314eb8b53d84d8c48b85cd2aba29b799401d3c967f85a0b15",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": "json_object",
+  "response_schema_sha256": "376bde7986cc2f8fd182f04e745c607933760bea7c306ea6e8e992b7f70be25a",
+  "images": [],
+  "actual_model": "z-ai/glm-5.3-flash",
+  "usage": {
+    "prompt_tokens": 3966,
+    "completion_tokens": 187,
+    "total_tokens": 4153,
+    "cost": 0.0004770612,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 0,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00048188,
+      "upstream_inference_prompt_cost": 0.00041643,
+      "upstream_inference_completions_cost": 0.00006545
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 63,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "GMICloud",
+  "session_id": null,
+  "finished_at": "2026-09-16T08:00:51.536Z",
+  "output_sha256": "ce093ed3ac268784399e97fff74f7786faf3506053366d3946bb91a462445636"
+}

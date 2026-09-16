@@ -1,7 +1,7 @@
 {
   "source": "Anthropic Claude API and Claude Code Enterprise",
-  "collected_at": "2026-09-14",
-  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-14): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
+  "collected_at": "2026-09-16",
+  "method": "scripts/fetch-claude-api-catalog.mjs (2026-09-16): models[] from the server-rendered model and batch price tables on https://platform.claude.com/docs/en/about-claude/pricing; rows labelled retired there, or Retired in the lifecycle table on https://platform.claude.com/docs/en/about-claude/model-deprecations, are excluded; lifecycle_status and tentative retirement dates come from that table by API model id. pricing_modifiers: cache-write multipliers derived from the table (must be uniform), cache-hit default/exception, batch discount and US-only inference multiplier read from the page text. claude_code_enterprise: the seat price is re-read from the Enterprise line on https://claude.com/pricing (\"Seat price + usage at API rates\"); minimum-seat, sales-assisted and legacy-seat terms are not on that page and keep other_terms_checked_at. See claude-code.method.md.",
   "models": [
     {
       "model_name": "Claude Fable 5.1",
@@ -222,7 +222,7 @@
     "sales_assisted_minimum_seats": 50,
     "sales_assisted_options": "Invoicing, HIPAA-readiness/BAA, dedicated customer success, and multi-currency support are available through sales.",
     "legacy_note": "Chat/Chat + Claude Code and Standard/Premium seat types are legacy and unavailable for new contracts; they transition to the single Enterprise seat at renewal.",
-    "seat_and_usage_checked_at": "2026-09-14",
+    "seat_and_usage_checked_at": "2026-09-16",
     "other_terms_checked_at": "2026-09-08"
   },
   "pricing_modifiers": {
@@ -245,9 +245,9 @@
     "Claude Haiku 3.5 (retired, except on Bedrock and Google Cloud)"
   ],
   "response_sha256": {
-    "pricing": "585eabc776e9c7128c452e2a4f19f2d3ba72e02e7cb88ea95fcd8a97ccefdc2f",
-    "deprecations": "d6051aa97937188aa28e59fe91f2ba4bac4c1c624806a5445afe2a9aa6463b23",
-    "enterprise": "85e86a5bb80e28cc2dfdfde7593c3ea99ae7f50a9fbc360fa402bc32e1fc69d3"
+    "pricing": "76759dadb1404c0da276b0b4e0d094624584f27d0d692da6f27b770ef0b5164b",
+    "deprecations": "fac79a18188f3b2b9d57eb78ac2cee6dad5976dc515ba87919f50dbe33e65f9e",
+    "enterprise": "feb19b5ff1b0125171a5900b0d55e98f22d36587f6ba2fd89af332b0ed7fe346"
   },
   "diff": {
     "added": [],

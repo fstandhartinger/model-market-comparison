@@ -236,8 +236,8 @@
     }
   ],
   "source": "TrustedTokens — trustedtokens.eu/api/service/models (first-party, public; the endpoint the /models page itself loads)",
-  "collected_at": "2026-09-15",
-  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-09-15): one unauthenticated GET of /api/service/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
+  "collected_at": "2026-09-16",
+  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-09-16): one unauthenticated GET of /api/service/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
   "currency": "EUR",
   "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-09-15: 1 EUR = 1.1539 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
   "usd_normalization": {
@@ -250,21 +250,7 @@
   "response_sha256": "9fb658041800edf8cd821a3a5bd31bc7852708617ff9976e91800c3dd4879f23",
   "skipped": [],
   "diff": {
-    "added": [
-      "zai-org/GLM-5.3",
-      "zai-org/GLM-5.2",
-      "zai-org/GLM-5.3-Flash",
-      "tngtech/DeepSeek-TNG-R1T2-Chimera",
-      "google/gemma-4-31B-it",
-      "openai/gpt-oss-120b",
-      "Qwen/Qwen3.5-397B-A17B-FP8",
-      "Qwen/Qwen3.6-35B-A3B-FP8",
-      "deepseek-ai/DeepSeek-V4-Flash-0731",
-      "deepseek-ai/DeepSeek-V4.1-Flash",
-      "deepseek-ai/DeepSeek-V4-Pro-0813",
-      "nvidia/NVIDIA-Nemotron-3.5-Lightning-30B-A3B",
-      "Qwen/Qwen3.8-27B"
-    ],
+    "added": [],
     "removed": [],
     "eur_price_changed": []
   }

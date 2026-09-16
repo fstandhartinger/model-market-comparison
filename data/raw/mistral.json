@@ -1,7 +1,7 @@
 {
   "source": "Mistral AI (La Plateforme) — mistral.ai/pricing/api (first-party, public)",
   "region": "eu (France)",
-  "collected_at": "2026-09-14",
+  "collected_at": "2026-09-16",
   "method": "scripts/fetch-mistral-catalog.mjs: one GET of the server-rendered pricing page; every <mistral-block-card-model> with both an 'Input (/M tokens)' and an 'Output (/M tokens)' USD price and an API id is a chat/text model (OCR per 1000 pages, embeddings, classifiers, TTS/transcription and unpriced Labs endpoints drop out); 'Cached input' becomes cache_read_per_1m_usd; duplicate cards must agree; curated names kept by API id or normalized name; new ids mapping=derived. Region eu (Mistral hosts in the EU unless the US endpoint is chosen). See mistral.method.md.",
   "models": [
     {
@@ -87,7 +87,7 @@
       "api_model_id": "ministral-14b-latest"
     }
   ],
-  "response_sha256": "f5804925ecffb9d3476fb92aea19096a9c6285177e18f5b42acb951ebfcc9dd4",
+  "response_sha256": "88909484d7e2f378ba8029ecfd17b25da0659481b2a8aa74067cb16a8ab23ff3",
   "diff": {
     "added": [],
     "removed": [],

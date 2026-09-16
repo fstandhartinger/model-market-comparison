@@ -1,0 +1,35 @@
+{
+  "artifact_id": "scores-2",
+  "artifact_sha256": "df58ada08db8b9f449f2c616438b34295fe3eddacc3a85975d2ec8cfd6e35e54",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vendor:DeepSeek-V3:swe-bench-verified::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "unsupported-model-checkpoint-date",
+      "severity": "major",
+      "location": "subject.model_id / subject.name / subject.source_id",
+      "evidence": "Primary evidence Table 6 labels the last model column as 'DeepSeek V3' and the surrounding text refers to 'DeepSeek-V3'. No checkpoint/revision date such as 'Dec ''24' or 'December 2024 update' appears in the captured content. The arXiv id 2412.19437v2 implies a December 2024 submission and version 2, but that does not establish a model checkpoint date. The artifact's model_id 'deepseek-v3-dec-24::default' and name 'DeepSeek V3 (Dec ''24)' therefore go beyond the primary source and violate criterion c1's exact model/checkpoint verification and the prohibition on alias inference.",
+      "repair": "Remove the unsupported date qualifiers from model_id/name or justify them from retained context; use only the exact source-verified model label 'DeepSeek-V3' unless a primary source explicitly states the December 2024 checkpoint/update."
+    },
+    {
+      "id": "unsupported-benchmark-version-snapshot",
+      "severity": "major",
+      "location": "benchmark_id / row id",
+      "evidence": "The primary source content mentions only 'SWE-Bench Verified' (also styled 'SWE Verified'). It does not mention 'snapshot-2026-09-10' or any dataset snapshot version. The artifact's benchmark_id and row id include 'swe-bench-verified::snapshot-2026-09-10', a specific benchmark version that cannot be verified against the supplied primary evidence. Criterion c1 requires verification of the benchmark version, and this field is asserted without supporting evidence.",
+      "repair": "Add primary evidence that records the exact SWE-bench Verified snapshot used in the paper, or change the benchmark_id to the verifiable form (e.g., 'swe-bench-verified') and treat the snapshot as a downstream/system identifier rather than a source-verified benchmark version."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's SHA-256, transport, or qualification checks; the row-level and artifact-level hashes are accepted as owner-provided.",
+    "The artifact's source.published_at is null and the captured primary evidence does not explicitly state an arXiv revision/publication date. The arXiv id alone indicates a December 2024 identifier but not a model checkpoint date.",
+    "It is not clear whether the model_id 'deepseek-v3-dec-24::default' is a system registry alias that is part of the accepted prior identity; if so, the artifact should state that retained context. Otherwise, the date is an unsupported inference.",
+    "The snapshot date in the benchmark_id may be a system-assigned identifier required by the row id; if so, its absence from the primary evidence is a documentation issue rather than a numerical mismatch. The current wording still fails c1 because no such source version is supplied."
+  ],
+  "missing_evidence": []
+}
