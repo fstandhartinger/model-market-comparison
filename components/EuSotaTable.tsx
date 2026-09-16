@@ -74,7 +74,7 @@ export function EuSotaTable({ data, entries }: { data: ClientData; entries: Sota
         <table className="dtable w-full min-w-[720px] text-sm">
           <thead><tr>
             <th className="px-3 py-2 text-left text-xs text-gray-400">Model</th>
-            <th className="px-3 py-2 text-left text-xs text-gray-400">EU-hosted / approved-equivalent offers ({priceLabel(s)})</th>
+            <th className="px-3 py-2 text-left text-xs text-gray-400" title="EU-hosted and company-approved equivalent offers">EU offers <span className="whitespace-nowrap">({priceLabel(s)})</span></th>
           </tr></thead>
           <tbody>
             {rows.map(({ entry, model, offers }) => (

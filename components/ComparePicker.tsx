@@ -84,7 +84,7 @@ export function ComparePicker({ families, picks, onPick, max = 4, topHeading = '
     </ul>
     {!options.length && <p className="bh-muted px-3 py-3 text-sm" role="status">No model matches “{query.trim()}”.</p>}
     {more > 0 && <p className="bh-muted px-3 py-2 text-xs">{more} more — keep typing to narrow the list.</p>}
-    <p className="bh-muted border-t border-line px-3 py-1.5 text-[11px]">{footer ?? <>Score: AA Intelligence Index of the strongest variant · <AaCredit /></>}</p>
+    {/* CR-63.17: no score footer under an empty result. */}{options.length > 0 && <p className="bh-muted border-t border-line px-3 py-1.5 text-[11px]">{footer ?? <>Score: AA Intelligence Index of the strongest variant · <AaCredit /></>}</p>}
   </div>;
 
   return <form className="relative flex min-w-[min(100%,16rem)] flex-1 items-center gap-2 sm:max-w-sm" onSubmit={(e) => { e.preventDefault(); if (open) choose(options[active]); else setOpen(true); }}>

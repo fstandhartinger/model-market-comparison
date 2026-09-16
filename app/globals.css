@@ -372,3 +372,8 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-deferred-pulse { animation: bh-deferred-pulse 1.6s ease-in-out infinite; }
 @keyframes bh-deferred-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
 @media (prefers-reduced-motion: reduce) { .bh-deferred-pulse { animation: none; } }
+
+/* CR-63.16: a data bar's end must not read as a stroke through a digit — its last 14 px fade out, and the value
+   carries a thin halo in the cell colour. */
+.bh-matrix-bar { -webkit-mask-image: linear-gradient(to right, #000 calc(100% - 14px), transparent); mask-image: linear-gradient(to right, #000 calc(100% - 14px), transparent); }
+.bh-matrix-link .tabular { text-shadow: 0 0 2px var(--surface), 0 0 2px var(--surface); }

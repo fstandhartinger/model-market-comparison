@@ -152,6 +152,17 @@ export default async function AboutPage() {
         list prices at the fixed input:output ratio you choose.
       </p>
 
+      {/* CR-63.19: the third headline feature beside adjusted cost and the score. */}
+      <h3 id="benchmaxxing" className="mt-6 mb-2 font-semibold">Benchmaxxing signal</h3>
+      <p className="text-sm text-gray-400">
+        A model that was tuned for particular benchmarks tends to score very differently on benchmarks that test the same
+        skill. We compare each model&apos;s results between related benchmarks (coding with coding, maths with maths): the more
+        they jump within a topic, the higher its signal. Being consistently strong in one field and weak in another is
+        specialisation and does not count. The top 10 % of scored models carry the strong ⚠ tag and the next 10 % the weak △
+        tag. It is a screening flag that invites a closer look at the sources, not proof of contamination or intent.{" "}
+        <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.
+      </p>
+
       <h3 id="score" className="mt-6 mb-2 font-semibold">The composite score</h3>
       {/* CR-35.4: Epoch AI's recommended citation (CC BY). */}
       <p className="mb-2 text-xs text-gray-500" data-epoch-citation>Epoch ECI and Software Engineering ECI: Epoch AI, &lsquo;Epoch Capabilities Index&rsquo;. Published online at epoch.ai. Retrieved from &lsquo;https://epoch.ai/eci&rsquo; [online resource]. Accessed 2026-09-15. <EpochCredit /></p>

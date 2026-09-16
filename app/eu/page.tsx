@@ -51,46 +51,37 @@ export default async function EuPage() {
 
   return (
     <div className="max-w-4xl">
-      <h1 className="text-2xl font-bold">EU sovereign cloud &amp; data residency</h1>
-      <p className="mt-2 text-sm text-gray-400">
+      {/* CR-63.15: the same page head as the other tabs. */}
+      <header className="bh-page-head"><h1 className="text-3xl font-bold tracking-tight">EU sovereign cloud &amp; data residency</h1>
+      <p className="bh-muted mt-3 max-w-2xl">
         Where can you run these models on <b className="text-gray-200">European-hosted, GDPR-compliant</b>
         {" "}infrastructure — and is that even possible for the models that matter?
-      </p>
+      </p></header>
 
       <section className="card mt-5 p-4">
         <h2 className="font-semibold">The catch: only a handful of open models are SOTA-competitive on coding</h2>
         <p className="mt-2 text-sm text-gray-400">
-          Of the open-weight models, only <b className="text-gray-200">GLM 5.1+, Kimi K2.6+, DeepSeek V4 Pro,
-          MiniMax M2.7+</b> (and arguably <b className="text-gray-200">Xiaomi MiMo-V2.5-Pro</b>) are genuinely
-          competitive with the leading US closed labs (Claude Opus, GPT-5.x) on coding. Everything
-          else an EU host typically offers — gpt-oss-120b, Llama 3.x, Mistral, Qwen3 — is a clear step below
-          on the coding benchmarks tracked in this app. So the relevant question isn&apos;t &ldquo;is there an
-          EU inference provider?&rdquo; (there are many) but <b className="text-gray-200">&ldquo;is there an EU
+          {/* CR-63.15: no version numbers here — the current families are the table below, which follows the catalog. */}
+          Only the newest large open-weight models — the families in the table below — come close to the leading closed
+          models on coding. Much of what EU hosts typically offer — gpt-oss-120b, Llama 3.x, Mistral, smaller Qwen
+          models — is a clear step below on the coding benchmarks tracked in this app. So the relevant question isn&apos;t
+          &ldquo;is there an EU inference provider?&rdquo; (there are many) but <b className="text-gray-200">&ldquo;is there an EU
           provider that hosts the SOTA models?&rdquo;</b>
         </p>
       </section>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">✅ EU-hosted and company-approved equivalent offers for SOTA models</h2>
       <EuSotaTableLoader version={version} entries={SOTA} />
-      <p className="mt-2 text-xs text-gray-500">
-        <b className="text-accent2">TensorX</b> (Ireland; 3 EU data-centre regions, 100% EU-sovereign / isolated from US
-        hyperscalers, zero data retention) is now the <b>broadest</b> EU-sovereign option — a self-serve per-token API
-        carrying GLM 5.2/5.1/5, <b>Kimi K2.7 Code</b>/K2.6/K2.5, DeepSeek V4 Pro/Flash/V3.2, <b>MiniMax M3</b>/M2.5 and Qwen,
-        all in-EU. <b className="text-accent2">Inceptron</b> (Swedish HQ, Finnish datacenter; zero-retention) serves GLM 5.2,
-        Kimi K2.6/K2.7 Code and MiniMax M2.5 from the EU. <b className="text-accent2">Scaleway</b> now also serves GLM 5.2
-        from Paris. <b className="text-accent2">Nebius</b> (Netherlands; Finland/France; ZDR + no-training) lists GLM 5.1/5.2,
-        Kimi K2.6/K2.7 Code, DeepSeek V4 Pro and MiniMax M2.5/M3 — but <b>serves several of them from
-        US/UK regions</b>, so its only SOTA model currently running in an EU region is <b>GLM 5.1</b>. The table normally
-        lists a provider only where that specific model runs in-EU — a provider being EU-capable in general isn&apos;t
-        enough. There are exactly two deliberate company-policy exceptions: the native <b>Azure Direct Global</b>{" "}
-        offers for <b>DeepSeek V4 Pro</b> and <b>Kimi K2.7 Code</b> are included as company-approved EU-hosted
-        equivalents. This is a legal/business classification for this application, <b>not a technical EU-residency
-        guarantee</b>; those Global deployments may process inference outside the EU. ⚠️ Azure&apos;s Fireworks-hosted
-        alternatives, including GLM/MiniMax, remain <b>US-served and excluded from the EU Data Boundary</b>. Thanks to
-        TensorX, <b>Kimi K2.7 Code and MiniMax M3 also have a genuinely EU-hosted
-        managed route</b>; <b>NextBit</b> additionally serves DeepSeek V4 Flash from Spain. MiniMax M2.7 and Xiaomi
-        MiMo-V2.5-Pro still have no managed EU route.
-      </p>
+      {/* CR-63.15: one bullet per EU provider plus the policy exceptions (was one bold 12-line paragraph). The table
+          lists a provider only where that specific model runs in the EU; which models each serves is in the table. */}
+      <ul className="mt-3 space-y-1.5 text-xs text-gray-400">
+        <li>• <b className="text-gray-300">TensorX</b> — Ireland, three EU data-centre regions isolated from US hyperscalers, zero data retention; the broadest in-EU catalog of open models.</li>
+        <li>• <b className="text-gray-300">Inceptron</b> — Swedish company, Finnish datacenter, zero retention.</li>
+        <li>• <b className="text-gray-300">Scaleway</b> — serves from Paris, zero data retention by default.</li>
+        <li>• <b className="text-gray-300">Nebius</b> — Netherlands, Finland/France infrastructure, opt-in zero retention and no training; its catalog mixes EU, US and UK regions, so each model&apos;s offer is checked separately.</li>
+        <li>• <b className="text-gray-300">NextBit</b> — Spain, EU-hosted endpoints on OpenRouter.</li>
+        <li>• <b className="text-gray-300">Policy exceptions</b> — the native Azure Direct Global offers for DeepSeek V4 Pro and Kimi K2.7 Code count as company-approved EU-hosted equivalents. That is a business classification for this application, not an EU-residency guarantee: those deployments may process inference outside the EU. Azure&apos;s Fireworks-hosted alternatives stay US-served and excluded.</li>
+      </ul>
 
       <h2 className="mt-6 mb-2 text-lg font-semibold">🟡 Coming soon</h2>
       <p className="text-sm text-gray-400">
