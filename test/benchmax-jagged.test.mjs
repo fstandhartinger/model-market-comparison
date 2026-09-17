@@ -198,3 +198,28 @@ test('CR-65.6 / CR-65.7: a thin model at the top is untagged; judged and Uncenso
   assert.equal(isSignalAxis(withNoise.axes.at(-3)), false);
   assert.equal(scoreBenchmaxxing(withNoise, 'p3').score, scoreBenchmaxxing(v, 'p3').score);
 });
+
+test('CR-65.6: a bootstrap interval gates the tag — deterministic, and a noisy leader without a credible lead stays untagged', async () => {
+  const { benchmaxxingInterval } = await import('../lib/benchmax.mjs');
+  let seed = 5; const rnd = () => (seed = (seed * 16807) % 2147483647) / 2147483647;
+  const models = Array.from({ length: 60 }, (_, i) => ({ id: `p${i}` }));
+  const axes = [];
+  for (const topic of ['Coding', 'Math', 'Agentic']) for (let k = 0; k < 6; k += 1) {
+    axes.push(catalogAxis(`${topic}-${k}`, topic, models.map((m, i) => {
+      // p0: one wild benchmark per topic, otherwise smooth → high score, wide interval. p1: consistently jagged.
+      const base = i * 1.5 + rnd() * 8;
+      if (m.id === 'p0') return [m.id, k === 0 ? 0 : 60];
+      if (m.id === 'p1') return [m.id, k % 2 ? 5 : 85];
+      return [m.id, base];
+    })));
+  }
+  const v = { models, axes };
+  const a = benchmaxxingInterval(v, 'p1'), b = benchmaxxingInterval(v, 'p1');
+  assert.deepEqual(a, b, 'seeded by model id');
+  assert.ok(a.lower <= scoreBenchmaxxing(v, 'p1').score && scoreBenchmaxxing(v, 'p1').score <= a.upper);
+  const { reports, tagged, weak, average } = benchmaxxingSignals(v);
+  assert.ok(tagged.has('p1'), 'a consistently jagged model is tagged');
+  for (const id of [...tagged, ...weak]) assert.ok(reports.find(([x]) => x === id)[1].interval.lower > average);
+  const p0 = reports.find(([x]) => x === 'p0')[1];
+  assert.ok(p0.interval.upper - p0.interval.lower > a.upper - a.lower, 'one wild benchmark per topic gives a wider interval');
+});

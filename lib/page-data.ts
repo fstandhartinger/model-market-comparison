@@ -67,7 +67,7 @@ async function build(key: PageDataKey): Promise<unknown> {
   // benchmaxxing
   const compositeById = new Map(clientData(ds).models.map((m) => [m.id, m.scores.composite]));
   // CR-21.1: one row per model family (its most-covered scored variant); the tag is the family's verdict.
-  const { reports, tagged, taggedFamilies, weak } = benchmaxxingFamilySignals(view);
+  const { reports, tagged, taggedFamilies, weak, average } = benchmaxxingFamilySignals(view);
   const reportsById = new Map(view.models.map((m) => [m.id, scoreBenchmaxxing(view, m.id)]));
   const models = view.models.map((m) => {
     const report = reportsById.get(m.id)!;
@@ -85,11 +85,12 @@ async function build(key: PageDataKey): Promise<unknown> {
     measured: report.profile.measured, total: report.profile.total, domainSpecialization: report.domainSpecialization,
     composite: model.composite, featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ""), tagged: tagged.has(model.id),
     level: tagged.has(model.id) ? "strong" : weak.has(model.id) ? "weak" : null,
+    interval: report.interval ? { lower: report.interval.lower, upper: report.interval.upper } : null,
   }));
   // The report opens on the first row of the default preset (CR-63.4: the strongest signal).
   const defaultModel = presetRows(rows, DEFAULT_BENCHMAXXING_PRESET)[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
   const initial = defaultModel ? { id: defaultModel.id, report: scoreBenchmaxxing(view, defaultModel.id) } : null;
-  return { rows, models, initial, taggedCount: taggedFamilies.size };
+  return { rows, models, initial, taggedCount: taggedFamilies.size, tagAverage: average };
 }
 
 /** CR-63.14: each model family's Benchmaxxing verdict (score, tag level, report model), built once per dataset

@@ -4,5 +4,5 @@ import { PageData } from "./usePageData";
 
 type Props = Parameters<typeof BenchmaxxingWorkbench>[0];
 export function BenchmaxxingWorkbenchLoader({ version, minComparisons, tagMinComparisons, minTopics }: { version: string; minComparisons: number; tagMinComparisons: number; minTopics: number }) {
-  return <PageData<Pick<Props, "rows" | "models" | "initial" | "taggedCount">> dataKey="benchmaxxing" version={version} label="Benchmaxxing analysis">{(p) => <BenchmaxxingWorkbench {...p} minComparisons={minComparisons} tagMinComparisons={tagMinComparisons} minTopics={minTopics} />}</PageData>;
+  return <PageData<Pick<Props, "rows" | "models" | "initial" | "taggedCount" | "tagAverage">> dataKey="benchmaxxing" version={version} label="Benchmaxxing analysis">{(p) => <BenchmaxxingWorkbench {...p} minComparisons={minComparisons} tagMinComparisons={tagMinComparisons} minTopics={minTopics} />}</PageData>;
 }

@@ -7,11 +7,13 @@ import { BenchmaxxingReport, type BenchmaxxingModel, type BenchmaxxingReportData
 /** CR-15.2/15.4 (Florian 2026-09-15): master-detail. The table (a changeable preset, Featured by
  *  default) is the master; the report follows the selected row. Compare mode keeps model A and
  *  takes the next selected row as B. `?model=` deep links (one or two) keep working. */
-export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minComparisons, tagMinComparisons, minTopics }: {
+export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, tagAverage, minComparisons, tagMinComparisons, minTopics }: {
   rows: BenchmaxxingOverviewRow[];
   models: BenchmaxxingModel[];
   initial: { id: string; report: BenchmaxxingReportData } | null;
   taggedCount: number;
+  /** CR-65.6: catalog average of the signal; a tag needs its interval above it. */
+  tagAverage: number | null;
   minComparisons: number;
   tagMinComparisons: number;
   minTopics: number;
@@ -65,7 +67,7 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, minC
 
   return <>
     <BenchmaxxingOverview rows={rows} preset={preset} onPreset={(p) => { setPreset(p); setShowAll(false); }} selected={ids} onSelect={select} onOpenReport={openReport}
-      showAll={showAll} onShowAll={setShowAll} taggedCount={taggedCount} minComparisons={minComparisons} tagMinComparisons={tagMinComparisons} minTopics={minTopics} />
+      showAll={showAll} onShowAll={setShowAll} taggedCount={taggedCount} tagAverage={tagAverage} minComparisons={minComparisons} tagMinComparisons={tagMinComparisons} minTopics={minTopics} />
     <BenchmaxxingReport models={models} ids={ids} initial={initial} compare={compare} onToggleCompare={toggleCompare} focusOnReady={focusRadar} onFocused={() => setFocusRadar(false)} />
   </>;
 }

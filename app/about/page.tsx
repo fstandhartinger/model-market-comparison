@@ -170,7 +170,9 @@ export default async function AboutPage() {
         near the top or bottom; each model&apos;s spread is therefore divided by the spread expected at its level (its
         average percentile), fitted on the whole catalog, so frontier models are no longer immune. Scores with few
         comparisons are pulled towards the catalog average. Among models with at least 10 related comparisons, the top
-        10 % carry the strong ⚠ tag and the next 10 % the weak △ tag. It is a screening flag that invites a closer look at
+        10 % can carry the strong ⚠ tag and the next 10 % the weak △ tag — but only when the model&apos;s 80 % bootstrap
+        interval (its benchmarks resampled within each topic, 400 times) lies above the catalog average. Neighbouring
+        signals near the top differ by less than their own uncertainty, so a high but uncertain signal stays untagged. It is a screening flag that invites a closer look at
         the sources, not proof of contamination or intent.{" "}
         <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.
       </p>

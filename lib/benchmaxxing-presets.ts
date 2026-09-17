@@ -16,6 +16,8 @@ export type BenchmaxxingOverviewRow = {
   tagged: boolean;
   /** CR-43.3: the published tag level (strong = top 10 %, weak = next 10 %), for the expandable row. */
   level: "strong" | "weak" | null;
+  /** CR-65.6: 80 % bootstrap interval of the score, for models inside a tag band; null elsewhere. */
+  interval?: { lower: number; upper: number } | null;
 };
 
 export type BenchmaxxingPreset = "featured" | "signals" | "all";

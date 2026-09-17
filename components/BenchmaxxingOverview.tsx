@@ -96,7 +96,7 @@ function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenRe
   </>;
 }
 
-export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, minComparisons, tagMinComparisons, minTopics }: {
+export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, tagAverage, minComparisons, tagMinComparisons, minTopics }: {
   rows: BenchmaxxingOverviewRow[];
   onOpenReport: (id: string) => void;
   preset: BenchmaxxingPreset;
@@ -106,6 +106,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   showAll: boolean;
   onShowAll: (value: boolean) => void;
   taggedCount: number;
+  tagAverage: number | null;
   minComparisons: number;
   tagMinComparisons: number;
   minTopics: number;
@@ -116,9 +117,8 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   // CR-21.2 → CR-63.5: the bar spans 0 → the highest signal of every scored model, one scale for all tabs, so a
   // model's bar keeps its length when the list changes.
   const maxScore = Math.max(1e-9, ...rows.map((row) => row.score));
-  // CR-63.4: the tag cut-offs as they fall today (tags are ranks, so the scores are read from the rows).
-  const lowest = (level: "strong" | "weak") => { const s = rows.filter((r) => r.level === level).map((r) => r.score); return s.length ? Math.min(...s) : null; };
-  const strongFrom = lowest("strong"), weakFrom = lowest("weak");
+  // CR-65.6: tags are no longer a contiguous score band, so the InfoTip names the rule and today's catalog average instead.
+  const average = tagAverage;
   const heading = BENCHMAXXING_PRESETS.find((p) => p.key === preset)!.heading;
   return <section className="bh-panel p-5" aria-label="Benchmaxxing overview">
     <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
@@ -138,7 +138,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, 0–100, adjusted for the model’s level (mid-table models jump more by chance) and for coverage. The tags are ranks among models with at least 10 related comparisons: the top 10 % carry the strong ⚠ tag{strongFrom != null ? ` (today a signal of ${strongFrom.toFixed(1)} or more)` : ""}, the next 10 % the weak △ tag{weakFrom != null ? ` (today from ${weakFrom.toFixed(1)})` : ""} — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Within-topic percentile spread, 0–100, adjusted for the model’s level (mid-table models jump more by chance) and for coverage. The tags are ranks among models with at least 10 related comparisons — the top 10 % can carry the strong ⚠ tag, the next 10 % the weak △ tag — and a model is tagged only when its 80 % bootstrap interval (its benchmarks resampled within each topic) lies above the catalog average{average != null ? ` (today ${average.toFixed(1)})` : ""}, so a high but uncertain signal stays untagged — the same tags as on the Overview table. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
           <th scope="col" className="hidden text-left md:table-cell">Related comparisons</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not unevenness within a topic.</InfoTip></th>

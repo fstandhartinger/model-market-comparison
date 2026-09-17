@@ -70,6 +70,8 @@ export interface BenchmaxxingReport {
   rule: { minComparisons: number; minTopics: number };
   shrinkage?: { priorMean: number; k: number };
   jumps: { category: string; from: string; to: string; magnitude: number }[];
+  /** CR-65.6: set by benchmaxxingSignals for models inside a tag band. */
+  interval?: { lower: number; upper: number; level: number; replicates: number } | null;
 }
 export const BENCHMAXX_MIN_COMPARISONS: number;
 export const BENCHMAXX_TAG_MIN_COMPARISONS: number;
@@ -84,6 +86,9 @@ export function percentileFor(axis: BenchmarkView['axes'][number], modelId: stri
 export function groupedRadarProfile(view: BenchmarkView, modelId: string): BenchmaxxingReport['profile'];
 export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minMeasured?: number; minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
 export function benchmaxxingPrior(view: BenchmarkView): { mean: number | null; shrink: number; eligible: number };
-export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; weak: Set<string> };
-export function benchmaxxingFamilySignals(view: BenchmarkView): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; taggedFamilies: Set<string>; weak: Set<string>; weakFamilies: Set<string>; representatives: Map<string, string>; variantsOf: (id: string) => number };
+export const BENCHMAXX_BOOTSTRAP_REPLICATES: number;
+export const BENCHMAXX_INTERVAL: number;
+export function benchmaxxingInterval(view: BenchmarkView, modelId: string, opts?: { replicates?: number; level?: number }): { lower: number; upper: number; level: number; replicates: number } | null;
+export function benchmaxxingSignals(view: BenchmarkView, modelIds?: Iterable<string> | null): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; weak: Set<string>; average: number | null };
+export function benchmaxxingFamilySignals(view: BenchmarkView): { reports: [string, BenchmaxxingReport][]; tagged: Set<string>; taggedFamilies: Set<string>; weak: Set<string>; weakFamilies: Set<string>; representatives: Map<string, string>; variantsOf: (id: string) => number; average: number | null };
 export function isCapabilityAxis(axis: { kind?: string; category?: string }): boolean;
