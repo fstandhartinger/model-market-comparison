@@ -433,10 +433,15 @@ The laptop supervisor appended CR-20260917 (verbatim in `03-CHANGE-REQUESTS-VERB
 | CR-70.1 | Thin-evidence models sorted in place among all models (no separate section/group) | open | | | Filed 2026-09-17 ~12:40 UTC by Claude Code (Florian chat); before launch if it fits |
 | CR-70.2 | Visible uncertainty marker on thin rows (badge + tooltip with benchmark count, range if available, accessible, 390 px, legend) | open | | | Filed 2026-09-17 ~12:40 UTC by Claude Code (Florian chat); before launch if it fits |
 | CR-70.3 | Same thin definition + marker in charts/Compare; regression tests for in-place sorting | open | | | Filed 2026-09-17 ~12:40 UTC by Claude Code (Florian chat); before launch if it fits |
-| CR-71.1 | Benchmaxxing: remove "Strongest signals" mode/preset | open | | | Filed 2026-09-17 ~13:22 UTC by Claude Code (Florian chat); PRIORITY before launch with CR-69 |
+| CR-71.1 | Benchmaxxing: remove "Strongest signals" mode/preset | in-progress | | Union Alpha iteration 20260917T153003Z stopped 17:32 UTC; carried into the CR-74 launch sprint. | Filed 2026-09-17 ~13:22 UTC by Claude Code (Florian chat); PRIORITY before launch with CR-69 |
 | CR-71.2 | Benchmaxxing: Featured models as default view | open | | | Filed 2026-09-17 ~13:22 UTC by Claude Code (Florian chat); PRIORITY before launch with CR-69 |
 | CR-71.3 | Benchmaxxing tags by absolute score: >+5 weak, >=+10 strong (keep min-comparisons + interval>0 guards) | open | | | Filed 2026-09-17 ~13:22 UTC by Claude Code (Florian chat); PRIORITY before launch with CR-69 |
 | CR-71.4 | Benchmaxxing table: several rows expandable at once (compare radars in the table) | open | | | Filed 2026-09-17 ~13:22 UTC by Claude Code (Florian chat); PRIORITY before launch with CR-69 |
+| CR-74.1 | Benchmaxxing tags 3 levels: light ≥ +3, medium ≥ +6, very strong ≥ +12 (guards n ≥ 10, interval > 0); distinct Overview pills + legend | open | | | Filed 2026-09-17 ~17:40 UTC (Florian, launch sprint); supersedes CR-71.3 thresholds |
+| CR-74.2 | Benchmaxxing modes Featured (default, all rows) · Top 50 · All scored; no "Show all axes" checkbox; multi-expand | open | | | Filed 2026-09-17 ~17:40 UTC (Florian, launch sprint) |
+| CR-74.3 | No "Insufficient evidence" section: thin models sorted in place with uncertainty badge (= CR-70) | open | | | Filed 2026-09-17 ~17:40 UTC (Florian, launch sprint) |
+| CR-74.4 | Main Composite with marginal Benchmaxxing penalty (smallest w flipping Astra/Fable) + Options checkbox (default on) | open | | | Filed 2026-09-17 ~17:40 UTC (Florian, launch sprint) |
+| CR-74.5 | Overview advanced mode: popovers don't shift the row; all Options shown inline | open | | | Filed 2026-09-17 ~17:40 UTC (Florian, launch sprint) |
 - **2026-09-13 · iteration 22 · codex-luna · review gate** — reviewed all changes after
   `REVIEW-20260913T085002Z.md` through `c88e83b`, against the verbatim requirements, brief,
   Hermes addendum and design directives.
