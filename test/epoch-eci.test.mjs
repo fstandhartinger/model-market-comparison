@@ -36,3 +36,22 @@ test("Epoch snapshot keeps every general row and only refits models with two sof
   assert.equal(snapshot.models[1].software, null);
   assert.equal(parseBenchmarkCatalog('var e={x:{id:`x`,title:`X`,domains:[`Software engineering`]}};export{e as t};')[0].title, "X");
 });
+
+test("the Epoch benchmark catalog chunk is rediscovered when its build hash changes", async () => {
+  const { discoverBenchmarkCatalog, isBenchmarkCatalogChunk } = await import("../lib/epoch-eci.mjs");
+  const catalog = 'const e={swe:{id:"swe-bench-verified",title:"SWE-Bench verified",domains:["Software engineering"]}};export{e as t};';
+  const site = {
+    "https://epoch.ai/eci": '<script type="module" src="/_astro/client.AAA.js"></script><script src="/_astro/Chart.BBB.js"></script>',
+    "https://epoch.ai/_astro/client.AAA.js": 'import"./vendor.CCC.js";',
+    "https://epoch.ai/_astro/Chart.BBB.js": 'import{t}from"./GenericBenchmarkChart.DDD.js";',
+    "https://epoch.ai/_astro/GenericBenchmarkChart.DDD.js": 'import{t as e}from"./benchmarks.NEWHASH.js";const s="Software engineering domains";',
+    "https://epoch.ai/_astro/benchmarks.NEWHASH.js": catalog,
+  };
+  const requested = [];
+  const fetchText = async (url) => { requested.push(url); if (!(url in site)) throw Object.assign(new Error("404"), { status: 404 }); return site[url]; };
+  const found = await discoverBenchmarkCatalog(fetchText);
+  assert.equal(found.url, "https://epoch.ai/_astro/benchmarks.NEWHASH.js");
+  assert.ok(requested.every((url) => url === "https://epoch.ai/eci" || url.startsWith("https://epoch.ai/_astro/")));
+  assert.equal(isBenchmarkCatalogChunk("GenericBenchmarkChart.DDD.js", site["https://epoch.ai/_astro/GenericBenchmarkChart.DDD.js"]), false);
+  await assert.rejects(discoverBenchmarkCatalog(async (url) => { if (url.endsWith("/eci")) return "<html></html>"; throw new Error("404"); }), /not found/);
+});

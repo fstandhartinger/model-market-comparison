@@ -5,7 +5,7 @@ import { readFile, writeFile, rename } from "node:fs/promises";
 import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
-import { ECI_URLS, parseCsv, parseBenchmarkCatalog, buildEciSnapshot } from "../lib/epoch-eci.mjs";
+import { ECI_URLS, parseCsv, parseBenchmarkCatalog, buildEciSnapshot, discoverBenchmarkCatalog } from "../lib/epoch-eci.mjs";
 
 const root = join(dirname(fileURLToPath(import.meta.url)), "..");
 const output = join(root, "data/raw/epoch-eci.json");
@@ -13,7 +13,7 @@ const retrievedAt = new Date().toISOString();
 
 async function fetchText(url) {
   const response = await fetch(url, { headers: { "user-agent": "BenchmarkHeaven/1.0 (public research data refresh)" } });
-  if (!response.ok) throw new Error(`${url}: HTTP ${response.status}`);
+  if (!response.ok) throw Object.assign(new Error(`${url}: HTTP ${response.status}`), { status: response.status });
   return response.text();
 }
 
@@ -23,14 +23,25 @@ const required = (rows, name, fields) => {
 };
 
 async function main() {
-  const [generalText, performanceText, difficultyText, catalogText] = await Promise.all(Object.values(ECI_URLS).map(fetchText));
+  const urls = { ...ECI_URLS };
+  const [generalText, performanceText, difficultyText] = await Promise.all([urls.general, urls.performance, urls.difficulties].map(fetchText));
+  let catalogText;
+  try { catalogText = await fetchText(urls.benchmark_catalog); }
+  catch (error) {
+    if (error.status !== 404) throw error;
+    // The pinned chunk name is a build hash; find the current one instead of failing the refresh.
+    const found = await discoverBenchmarkCatalog(fetchText);
+    console.log(`Epoch benchmark catalog moved: ${urls.benchmark_catalog} → ${found.url} (${found.requests} requests)`);
+    urls.benchmark_catalog = found.url;
+    catalogText = found.text;
+  }
   const generalRows = parseCsv(generalText), performanceRows = parseCsv(performanceText), difficultyRows = parseCsv(difficultyText);
   required(generalRows, "general", ["Model", "eci", "eci_ci_low", "eci_ci_high"]);
   required(performanceRows, "performance", ["model", "benchmark", "performance"]);
   required(difficultyRows, "difficulty", ["benchmark_name", "edi", "estimated_slope_scaled"]);
   const snapshot = buildEciSnapshot({
     generalRows, performanceRows, difficultyRows, benchmarkCatalog: parseBenchmarkCatalog(catalogText),
-    collectedAt: retrievedAt,
+    collectedAt: retrievedAt, urls,
     hashes: { general: sha256(generalText), performance: sha256(performanceText), difficulties: sha256(difficultyText), benchmark_catalog: sha256(catalogText) },
   });
   const temporary = `${output}.tmp-${process.pid}`;
