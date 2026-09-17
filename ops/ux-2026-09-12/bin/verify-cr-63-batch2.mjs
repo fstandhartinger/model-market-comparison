@@ -44,9 +44,14 @@ try {
     await page.getByRole('button', { name: 'All scored' }).click(); await page.waitForTimeout(400);
     const sameInAll = await page.locator(`[data-row-id="${inSignals.id}"] [data-signal-frac]`).first().getAttribute('data-signal-frac').catch(() => null);
     const nameLines = await page.locator('section[aria-label="Benchmaxxing overview"] tbody th button[aria-pressed] span').first().evaluate((el) => Math.round(el.getBoundingClientRect().height / parseFloat(getComputedStyle(el).lineHeight)));
-    check(`CR-63.4 ${tag}: opens on Strongest signals with flagged rows; two-sentence intro`, pressed === 'Strongest signals' && flagged >= 1 && /^The more jagged a model's results across related benchmarks, the more benchmaxxed it looks\. A high signal is a screening flag, not proof of leakage\./.test(intro), { pressed, flagged, intro });
+    // Re-pinned 2026-09-17 (iteration 101): CR-71.2 replaced CR-63.4(a)'s "Strongest signals" default with Featured
+    // models and CR-71.1 deleted that preset, so the old assertion could no longer pass — and its `getByRole` click
+    // below would have hung. CR-63.4(b) survives as written: a short intro under the h1 that keeps the caveat.
+    check(`CR-63.4 ${tag}: opens on Featured models (CR-71.2); short intro keeping the screening-flag caveat`,
+      pressed === 'Featured models' && /screening flag, not proof of leakage/.test(intro) && intro.split('.').filter((x) => x.trim()).length <= 4,
+      { pressed, flagged, intro });
     check(`CR-63.5 ${tag}: one bar scale across tabs, no stray A letter, short name lines`, inSignals.frac && inSignals.frac === sameInAll && letters === 0 && nameLines <= 3, { inSignals, sameInAll, letters, nameLines });
-    await page.getByRole('button', { name: 'Strongest signals' }).click(); await page.waitForTimeout(300);
+    await page.getByRole('button', { name: 'Featured models' }).click(); await page.waitForTimeout(300);
     await page.screenshot({ path: `${OUT}/benchmaxxing-${w}-${scheme}.png` });
 
     await page.goto(`${BASE}/models/claude-opus-5`, { waitUntil: 'domcontentloaded', timeout: 90000 }); await settle(page);

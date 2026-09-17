@@ -83,11 +83,21 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
   await goto(page, `${BASE}/benchmaxxing`); await settle(page); await page.waitForTimeout(1500);
   const bars = await page.evaluate(() => {
     const fracs = [...document.querySelectorAll('[data-signal-frac]')].filter((el) => el.offsetParent).map((el) => Number(el.getAttribute('data-signal-frac')));
-    return { n: fracs.length, max: Math.max(...fracs), label: document.querySelector('[data-signal-max]')?.textContent || '' };
+    return { n: fracs.length, max: Math.max(...fracs), fracs, label: document.querySelector('[data-signal-max]')?.textContent || '' };
   });
-  check(`${tag} CR-21.2 signal bar scale ends at the list's highest signal (a bar reaches 100 %)`, bars.n > 0 && Math.abs(bars.max - 1) < 1e-3 && /bars scaled to [\d.]+, the list's highest/.test(bars.label), bars);
+  // Re-pinned 2026-09-17 (iteration 101): CR-63.5(a) replaced "the max of the visible list" with one scale across all
+  // tabs, and F-112 made that scale signed around zero, so the visible maximum is no longer 1 and the old caption is
+  // gone. What CR-21.2 actually asked for — differences clearly visible, never a fixed max — is what is checked now.
+  // The scale's wording lives in the Signal (i), which only renders its text once opened; the caption is asserted in
+  // test/fable-pass21-f112-f114.test.mjs and bin/verify-f112-f114.mjs instead. Here: the bars themselves.
+  check(`${tag} CR-21.2 signal bars vary on one shared, bounded scale`,
+    bars.n > 0 && bars.fracs.every((f) => Math.abs(f) <= 1 + 1e-6) && new Set(bars.fracs).size > 1, bars);
   const note = await page.locator('[data-jagged-note]').first().innerText().catch(() => '');
-  check(`${tag} CR-22.2 report says the more jagged, the more benchmaxxed`, /more jagged the shape, the more benchmaxxed/.test(note), note);
+  // Re-pinned 2026-09-17 (iteration 101): CR-22.2 allows the wording to be polished, and CR-65.18(e) required exactly
+  // that — Florian judged "the more jagged, the more benchmaxxed" an overstatement. The requirement that survives is
+  // one plain sentence by the radar that says how to read the shape and does not claim proof.
+  check(`${tag} CR-22.2 one plain sentence by the radar says how to read the shape, without claiming proof`,
+    note.length > 0 && /jagged/.test(note) && /not proof|not a flag|a screen/.test(note), note);
   const spokes = await page.evaluate(() => { const svg = [...document.querySelectorAll('section[aria-label="Per-model Benchmaxxing report"] svg')].find((s) => s.querySelectorAll('line').length > 10); return svg ? [...new Set([...svg.querySelectorAll('line')].map((l) => l.getAttribute('opacity')))] : null; });
   check(`${tag} CR-22.3 radial spoke lines are faint (opacity <= 0.14)`, spokes && spokes.every((o) => Number(o) <= 0.14), spokes);
   await page.locator('section[aria-label="Per-model Benchmaxxing report"]').screenshot({ path: `${OUT}/${tag}-benchmaxxing-report.png` }).catch(() => {});

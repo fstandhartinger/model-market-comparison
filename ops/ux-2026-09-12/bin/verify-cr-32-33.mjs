@@ -49,7 +49,10 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
 
   // CR-33.1/33.2: column chart above the table, sorted, own picker, no fake zeros.
   const chart = page.locator('[data-shortlist-columns]');
-  const cols = await chart.evaluate((el) => [...el.querySelectorAll('[data-col]')].map((c) => ({ id: c.dataset.col, noData: !!c.dataset.noData, v: c.querySelector('span')?.textContent }))).catch(() => []);
+  // Re-pinned 2026-09-17 (iteration 101): the first <span> inside a column is the bar, not the label — on desktop since
+  // the value moved above the bar, and F-93 added a second (row) layout below md. Take the first span that has text.
+  const cols = await chart.evaluate((el) => [...el.querySelectorAll('[data-col]')].map((c) => ({ id: c.dataset.col, noData: !!c.dataset.noData,
+    v: [...c.querySelectorAll('span')].map((x) => (x.textContent || '').trim()).find((t) => t) }))).catch(() => []);
   const vals = cols.filter((c) => !c.noData).map((c) => parseFloat(c.v));
   const above = await page.evaluate(() => { const c = document.querySelector('[data-shortlist-columns]'), t = document.querySelector('#benchmarks .bh-matrix-wrap'); return !!c && !!t && c.getBoundingClientRect().top < t.getBoundingClientRect().top; });
   check(`${tag} CR-33.1 column chart of the shortlist sits above the table, sorted high → low, values labelled`, cols.length >= 5 && above && vals.every((v, i) => i === 0 || vals[i - 1] >= v) && vals.every(Number.isFinite), { n: cols.length, above, first: vals.slice(0, 4) });
@@ -88,8 +91,11 @@ for (const theme of ['light', 'dark']) for (const [kind, viewport] of [['desktop
 
   // CR-21.2 re-check after the visible-rows fix.
   await goto(page, `${BASE}/benchmaxxing`); await settle(page);
-  const bars = await page.evaluate(() => { const f = [...document.querySelectorAll('[data-signal-frac]')].filter((el) => el.offsetParent).map((el) => Number(el.getAttribute('data-signal-frac'))); return { n: f.length, max: Math.max(...f) }; });
-  check(`${tag} CR-21.2 a signal bar among the rows on screen reaches full width`, bars.n > 0 && Math.abs(bars.max - 1) < 1e-3, bars);
+  const bars = await page.evaluate(() => { const f = [...document.querySelectorAll('[data-signal-frac]')].filter((el) => el.offsetParent).map((el) => Number(el.getAttribute('data-signal-frac'))); return { n: f.length, max: Math.max(...f), fracs: f }; });
+  // Re-pinned 2026-09-17 (iteration 101): see verify-cr-19-25.mjs — CR-63.5(a) and F-112 made the scale catalog-wide
+  // and signed, so the on-screen maximum is no longer 1. The visible bars must still differ and stay inside the scale.
+  check(`${tag} CR-21.2 signal bars among the rows on screen vary inside one bounded scale`,
+    bars.n > 0 && bars.fracs.every((f) => Math.abs(f) <= 1 + 1e-6) && new Set(bars.fracs).size > 1, bars);
   check(`${tag} no page errors`, !errors.length, errors);
   await context.close();
 }

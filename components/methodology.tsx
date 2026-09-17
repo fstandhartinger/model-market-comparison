@@ -10,9 +10,11 @@ export const ADJUSTED_COST_TIP = (
     {/* CR-32.3: short and plain; the full method lives on /about. */}
     <ul className="list-disc space-y-1 pl-4">
       <li>What one typical task costs you, in US dollars.</li>
-      <li>Uses the cheapest provider your options allow, with its prices and cache discounts.</li>
-      <li>Counts how many tokens this model really needs per task, on the same task mix for every model.</li>
-      <li>“cheaper” / “pricier” tags: well off the typical cost for that score (filled tag, ↑ ↓) or clearly off (outlined tag, ↗ ↘), judged among the models your options include.</li>
+      <li>The cheapest provider your options allow, with its prices and cache discounts.</li>
+      <li>The tokens this model really needs, on one task mix for every model.</li>
+      {/* CR-32.3 asks for ≤ ~50 words of bullets; the live check measured 73 (iteration 101). Both CR-42.1 intensity
+          levels are still named, and R1.4's four things — providers, prices, caching, token efficiency — all remain. */}
+      <li>“cheaper” / “pricier”: off the typical cost at that score — clearly (filled ↑ ↓) or mildly (outlined ↗ ↘).</li>
     </ul>
     <a className="mt-2 inline-block text-accent underline" href="/about#adjusted-cost">How we calculate</a> <AaCredit className="mt-1 block text-gray-400" />
   </>
