@@ -34,3 +34,23 @@ test('the built dataset has no two OpenRouter offers with the same model, provid
   }
   assert.deepEqual(dups, []);
 });
+
+test('CR-65.15: per-token prices become per-1M prices without float artefacts and keep the source precision', async () => {
+  const { perMillion } = await import('../lib/openrouter-endpoints.mjs');
+  assert.equal(perMillion('0.00000095526'), 0.95526);
+  assert.equal(perMillion('0.0000002'), 0.2);
+  assert.equal(perMillion('0.0000000416666666666667'), 0.0416666666666667);
+  assert.equal(perMillion('0.000015'), 15);
+  assert.equal(perMillion('0'), 0);
+  assert.equal(perMillion('1'), 1000000);
+  assert.equal(perMillion('.0000025'), 2.5);
+  assert.equal(perMillion('2.5e-6'), 2.5);
+  assert.equal(perMillion(0.0000003), 0.3);
+  for (const bad of [null, undefined, '', 'n/a', '-']) assert.equal(perMillion(bad), null);
+  const { readFile } = await import('node:fs/promises');
+  const dataset = JSON.parse(await readFile(new URL('../data/dataset.json', import.meta.url), 'utf8'));
+  const artefacts = dataset.models.flatMap((m) => (m.offers || []).filter((o) => o.source === 'OpenRouter')
+    .flatMap((o) => ['input_per_1m', 'output_per_1m', 'cache_read_per_1m', 'cache_write_per_1m'].map((k) => o[k])))
+    .filter((v) => typeof v === 'number' && /(?:0{6,}|9{6,})\d$/.test(String(v)));
+  assert.deepEqual(artefacts.slice(0, 5), []);
+});

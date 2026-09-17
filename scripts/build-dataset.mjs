@@ -7,7 +7,7 @@ import { createHash } from "node:crypto";
 import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { aaSpeed } from "../lib/aa-speed.mjs";
-import { collapseDuplicateEndpoints } from "../lib/openrouter-endpoints.mjs";
+import { collapseDuplicateEndpoints, perMillion } from "../lib/openrouter-endpoints.mjs";
 import { deterministicFamilyRepresentative } from "../lib/family-representative.mjs";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -450,6 +450,7 @@ function num(x) {
   return Number.isFinite(n) ? n : null;
 }
 
+
 function offerRunsInEu(offer, meta = {}) {
   if (typeof offer.eu_hosted === "boolean") return offer.eu_hosted;
   const notes = offer.notes || "";
@@ -712,12 +713,12 @@ async function build() {
         source: "OpenRouter",
         provider: e.provider_name || "Unknown",
         platform: "OpenRouter",
-        input_per_1m: override ? override.input_per_1m : (inP != null ? inP * 1e6 : null),
-        output_per_1m: override ? override.output_per_1m : (outP != null ? outP * 1e6 : null),
+        input_per_1m: override ? override.input_per_1m : (perMillion(e.pricing?.prompt)),
+        output_per_1m: override ? override.output_per_1m : (perMillion(e.pricing?.completion)),
         ...(override ? { notes: `Price override: ${override.reason}` } : {}),
-        cache_read_per_1m: num(e.pricing?.input_cache_read) != null ? num(e.pricing.input_cache_read) * 1e6 : null,
-        cache_write_per_1m: num(e.pricing?.input_cache_write) != null ? num(e.pricing.input_cache_write) * 1e6 : null,
-        internal_reasoning_per_1m: num(e.pricing?.internal_reasoning) != null ? num(e.pricing.internal_reasoning) * 1e6 : null,
+        cache_read_per_1m: perMillion(e.pricing?.input_cache_read),
+        cache_write_per_1m: perMillion(e.pricing?.input_cache_write),
+        internal_reasoning_per_1m: perMillion(e.pricing?.internal_reasoning),
         region: euRoute ? "eu" : "global",
         unit: "per_1m_token",
         or_model_id: m.id,
@@ -733,9 +734,9 @@ async function build() {
         // CR-66.5: several physical endpoints behind this provider tag; the cheapest is published.
         ...(physicalEndpoints > 1 ? { physical_endpoints: physicalEndpoints } : {}),
         ...(alternates.length ? { alternate_prices: alternates.map((a) => ({
-          input_per_1m: num(a.pricing?.prompt) != null ? num(a.pricing.prompt) * 1e6 : null,
-          output_per_1m: num(a.pricing?.completion) != null ? num(a.pricing.completion) * 1e6 : null,
-          cache_read_per_1m: num(a.pricing?.input_cache_read) != null ? num(a.pricing.input_cache_read) * 1e6 : null,
+          input_per_1m: perMillion(a.pricing?.prompt),
+          output_per_1m: perMillion(a.pricing?.completion),
+          cache_read_per_1m: perMillion(a.pricing?.input_cache_read),
         })) } : {}),
       });
     }
