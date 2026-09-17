@@ -148,3 +148,15 @@ test('CR-66.8: a critic PASS with an unbound finding retries the round with anot
     assert.equal(refused.errors.length, 2);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+
+test('CR-67.3: one malformed answer from a paid worker earns one retry; timeouts, repeats and free routes stay excluded', async () => {
+  const { excludedWorkerModels } = await import('../ops/daily/gauntlet.mjs');
+  const excluded = excludedWorkerModels([
+    { model: 'chutes/moonshotai/Kimi-K3-TEE', reason: 'Malformed producer audit row' },
+    { model: 'deepseek/deepseek-v4-flash-0731', reason: 'The operation was aborted due to timeout' },
+    { model: 'z-ai/glm-5.3-flash', reason: 'JSON mode returned malformed JSON' },
+    { model: 'deepseek/deepseek-v4.1-flash', reason: 'Malformed producer audit: missing rows array' },
+    { model: 'deepseek/deepseek-v4.1-flash', reason: 'Malformed critic output: not JSON' },
+  ]);
+  assert.deepEqual(excluded.sort(), ['chutes/moonshotai/Kimi-K3-TEE', 'deepseek/deepseek-v4-flash-0731', 'deepseek/deepseek-v4.1-flash']);
+});

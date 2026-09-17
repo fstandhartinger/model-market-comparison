@@ -90,6 +90,24 @@ function validateRows(rows) {
   return ids;
 }
 
+// CR-67.3 (2026-09-17): the 09:16 run excluded every scheduled producer after one glitch each (Kimi K3 malformed row,
+// DeepSeek timeout, GLM malformed JSON, DeepSeek missing rows) and failed on "no viable worker" at the fifth contract.
+// A malformed answer from a paid OpenRouter worker is rejected locally and costs seconds, so it earns exactly one retry
+// per run; a second malformed answer, any other failure (timeouts, transport) and every failed free router route
+// (`chutes/…`, slow max-effort calls — see 1c394a3) stay excluded for the rest of the run.
+const MALFORMED_OUTPUT = /malformed/i;
+export function excludedWorkerModels(records) {
+  const malformed = new Map();
+  const excluded = new Set();
+  for (const record of records) {
+    if (typeof record?.model !== 'string') continue;
+    if (!MALFORMED_OUTPUT.test(record.reason ?? '') || record.model.startsWith('chutes/')) { excluded.add(record.model); continue; }
+    malformed.set(record.model, (malformed.get(record.model) ?? 0) + 1);
+    if (malformed.get(record.model) >= 2) excluded.add(record.model);
+  }
+  return [...excluded];
+}
+
 export async function defaultRunner(args) {
   const state = process.env.BH_STATE;
   const failedFile = state ? join(state, 'unavailable-models.jsonl') : null;
@@ -101,7 +119,7 @@ export async function defaultRunner(args) {
   }
   let failed = [];
   if (failedFile) {
-    try { failed = (await readFile(failedFile, 'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse).map((r) => r.model); }
+    try { failed = excludedWorkerModels((await readFile(failedFile, 'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse)); }
     catch (error) { if (error.code !== 'ENOENT') throw error; }
   }
   try {
