@@ -96,7 +96,7 @@ function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenRe
   </>;
 }
 
-export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, minComparisons, minTopics }: {
+export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, minComparisons, tagMinComparisons, minTopics }: {
   rows: BenchmaxxingOverviewRow[];
   onOpenReport: (id: string) => void;
   preset: BenchmaxxingPreset;
@@ -107,6 +107,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   onShowAll: (value: boolean) => void;
   taggedCount: number;
   minComparisons: number;
+  tagMinComparisons: number;
   minTopics: number;
 }) {
   const listed = presetRows(rows, preset);
@@ -125,7 +126,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <h2 className="text-xl font-semibold">{heading}</h2>
         <p className="bh-muted mt-2 max-w-3xl text-sm">A signal highlights models whose results jump between related benchmarks. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
       </div>
-      <div className="rounded-lg border border-line px-4 !py-2 text-sm"><b>{taggedCount}</b> models carry the strong tag <span className="bh-muted">· coverage floor: {minComparisons} comparisons in {minTopics} topics</span></div>
+      <div className="rounded-lg border border-line px-4 !py-2 text-sm"><b>{taggedCount}</b> models carry the strong tag <span className="bh-muted">· scored from {minComparisons} comparisons in {minTopics} topics; a tag needs {tagMinComparisons}</span></div>
     </div>
     <div role="group" aria-label="Model list preset" className="mt-4 flex flex-wrap gap-2">
       {BENCHMAXXING_PRESETS.map((p) => <button key={p.key} type="button" aria-pressed={preset === p.key} onClick={() => onPreset(p.key)}

@@ -72,6 +72,9 @@ export interface BenchmaxxingReport {
   jumps: { category: string; from: string; to: string; magnitude: number }[];
 }
 export const BENCHMAXX_MIN_COMPARISONS: number;
+export const BENCHMAXX_TAG_MIN_COMPARISONS: number;
+export const BENCHMAXX_LEVEL_MIN_MODELS: number;
+export const BENCHMAXX_LEVEL_FLOOR: number;
 export const BENCHMAXX_MIN_TOPICS: number;
 export const BENCHMAXX_MIN_SHRINK: number;
 export const BENCHMAXX_MAX_SHRINK: number;
