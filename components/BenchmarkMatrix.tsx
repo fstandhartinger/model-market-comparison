@@ -234,7 +234,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
                 <span>{g.label}</span><span className="bh-muted tabular text-xs font-normal">{g.rows.length} benchmarks</span>
               </button>} />
             {open && g.rows.map(({ row, vals, basis }) => {
-              const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter);
+              const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter);
               return <tr key={row.id}>
                 <th scope="row" className="bh-matrix-stub">
                   {/* F-100 (pass 18): the harness sits on the name line, so two rows of one benchmark read apart at a glance. */}
@@ -252,7 +252,7 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
                     ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
                     : <Link href={cellHref(row, ids[j], ids, pinned != null)} className="bh-matrix-link" title={row.bestOf ? `Best recorded result: ${variantLabel(row, ids[j])}` : undefined} data-variant={row.bestOf ? variantLabel(row, ids[j]) : undefined}>
                       {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
-                      <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†<span className="sr-only"> self-reported by the developer</span></sup>}</span>
+                      <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†<span className="sr-only"> self-reported by the developer</span></sup>}{basis[j] === 3 && <sup className="bh-muted" title="Preliminary: announced, not yet independently measured. Shown only; never enters a score or a ranking">‡<span className="sr-only"> preliminary, not yet independently measured</span></sup>}</span>
                       {win[j] && <span className="sr-only"> (best in row)</span>}
                       {row.bestOf && <span className="sr-only"> (best recorded result: {variantLabel(row, ids[j])})</span>}
                     </Link>}

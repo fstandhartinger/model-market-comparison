@@ -100,3 +100,16 @@ test('on the committed dataset: every merged value is its picked run\'s raw valu
   // every raw run of a merged board is represented, none survives as its own row
   for (const [r] of bestRows) for (const x of r.bestOf.variants) assert.ok(!merged.rows.some((m) => m.id === x.id));
 });
+
+test('CR-65.10: best-of prefers a measured result over a higher self-reported or preliminary one', () => {
+  const c = [
+    cand(row('bench', '1', 'Claude Code'), { a: [40, 0], b: [55, 3], d: [10, 1] }),
+    cand(row('bench', '1', 'Codex'), { a: [70, 1], b: [35, 1], d: [12, 3] }),
+  ];
+  mergeBestOf(c, TAX);
+  const m = c[0].byModel;
+  assert.deepEqual(m.get('a'), [40, 0], 'measured beats a higher self-reported value');
+  assert.deepEqual(m.get('b'), [35, 1], 'self-reported beats a higher preliminary value');
+  assert.deepEqual(m.get('d'), [10, 1], 'preliminary never wins');
+  assert.equal(c[0].row.saturation, null);
+});

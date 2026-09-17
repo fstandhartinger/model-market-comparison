@@ -152,7 +152,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
         {groups.map((g) => <tbody key={g.id}>
           <CategoryHeader label={<span className="inline-flex min-h-8 items-center">{g.label}</span>} composite={categoryComposite(g.rows, ids.length)} columns={ids.length} />
           {g.rows.map(({ row, vals, basis }) => {
-            const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals, row.higherBetter), odd = rowOutliers(vals, row.higherBetter);
+            const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter), odd = rowOutliers(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter);
             // F-102: the board a row belongs to, so the published count can be checked against the table itself.
             return <tr key={row.id} data-board={boardId(row)} data-boards={row.boards ? JSON.stringify(row.boards) : undefined} data-best-of={row.bestOf ? "1" : undefined}>
               <th scope="row" className="bh-matrix-stub"><span className="bh-matrix-bench bh-matrix-bench-inline">{row.name}{row.cohort && <span className="bh-matrix-cohort">{row.cohort}</span>}
@@ -170,7 +170,7 @@ export function SimpleBenchmarks({ matrix: headline, data, ids: listIds }: { mat
                   ? <span className="bh-matrix-missing"><span aria-hidden="true">—</span><span className="sr-only">No result</span></span>
                   : <Link href={cellHref(row, ids[j], ids, true)} className="bh-matrix-link" title={row.bestOf ? `Best recorded result: ${variantLabel(row, ids[j])}` : undefined} data-variant={row.bestOf ? variantLabel(row, ids[j]) : undefined}>
                     {bars[j] != null && <span aria-hidden="true" className={`bh-matrix-bar ${win[j] ? "is-best" : ""}`} style={{ width: `${Math.max(3, bars[j]! * 100)}%` }} />}
-                    <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}</span>
+                    <span className={`relative tabular ${win[j] ? "font-bold" : ""}`}>{formatValue(v, row.unit)}{basis[j] === 1 && <sup className="bh-muted" title="Self-reported by the developer">†</sup>}{basis[j] === 3 && <sup className="bh-muted" title="Preliminary: announced, not yet independently measured. Shown only; never enters a score or a ranking">‡</sup>}</span>
                     {win[j] && <span className="sr-only"> (best in row)</span>}
                     {row.bestOf && <span className="sr-only"> (best recorded result: {variantLabel(row, ids[j])})</span>}
                     {odd[j] && <span className="bh-outlier-tag" data-kind={odd[j]} title={odd[j] === "top" ? "Clearly ahead: its lead over the next model is at least twice the spread of the models in between" : "Clearly behind: its gap to the next model is at least twice the spread of the models in between"}>{odd[j]}<span className="sr-only">{odd[j] === "top" ? ": clearly ahead of the other models in this row" : ": clearly behind the other models in this row"}</span></span>}

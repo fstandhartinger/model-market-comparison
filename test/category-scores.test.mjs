@@ -43,3 +43,27 @@ test('a model scores only with a result on every anchor; fractions count as perc
   assert.equal(scores.has('partial'), false); // no SciCode result
   assert.equal(scores.has('oldOnly'), false); // only the retired Terminal-Bench version
 });
+test('CR-65.10: only measured results enter a category score; a preliminary anchor changes nobody else', () => {
+  const withBasis = { rows: matrix.rows, values: {
+    full: [[1, 0.6, 0], [2, 80, 0], [3, 0.9, 0]],
+    announced: [[1, 0.73, 3], [2, 90, 0]], // Terminal-Bench from a launch chart
+    vendor: [[1, 0.5, 1], [2, 60, 0]],
+  } };
+  const { scores } = computeCategoryScores(withBasis, anchors);
+  assert.deepEqual(scores.get('full'), { cat_coding: 70 });
+  assert.equal(scores.has('announced'), false);
+  assert.equal(scores.has('vendor'), false);
+  const without = computeCategoryScores({ rows: matrix.rows, values: { full: withBasis.values.full, vendor: withBasis.values.vendor } }, anchors);
+  assert.deepEqual(Object.fromEntries(without.scores), Object.fromEntries(scores));
+  // A preliminary result does not decide which version counts as the anchor either.
+  assert.deepEqual(resolveAnchors(withBasis, anchors)[0].rows.map((r) => r.version), ['4.0', '1.0']);
+});
+test('CR-65.10: the latest-score pick ranks measured, then self-reported, then preliminary — never the higher value', async () => {
+  const { latestScores } = await import('../lib/benchmark-view.mjs');
+  const obs = (id, basis, value, date) => ({ id, modelId: 'm', subjectId: 'm', basis, value, date });
+  const pick = (rows) => latestScores(rows, 'all')[0].id;
+  assert.equal(pick([obs('p', 'preliminary', 73, '2026-09-16'), obs('s', 'self_reported', 60, '2026-09-01')]), 's');
+  assert.equal(pick([obs('p', 'preliminary', 73, '2026-09-16'), obs('m', 'measured', 50, '2026-09-01')]), 'm');
+  assert.equal(pick([obs('m', 'measured', 50, '2026-09-01'), obs('p', 'preliminary', 73, '2026-09-16')]), 'm');
+  assert.equal(latestScores([obs('p', 'preliminary', 73, '2026-09-16')]).length, 0, 'measured-only consumers never see it');
+});

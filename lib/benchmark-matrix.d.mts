@@ -56,7 +56,7 @@ export interface BenchmarkMatrix {
   groups: { id: string; label: string }[];
   tags: Record<string, { label: string; tip: string }>;
   rows: MatrixRow[];
-  /** modelId → [row index, value, basis (0 measured, 1 self-reported, 2 other)] */
+  /** modelId → [row index, value, basis (0 measured, 1 self-reported, 2 other, 3 preliminary — display only, CR-65.10)] */
   values: Record<string, [number, number, number][]>;
   generatedAt: string;
   freshnessDefaults: FreshnessDefaults;

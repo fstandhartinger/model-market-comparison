@@ -8,7 +8,7 @@ export async function GET(request: Request) {
   const benchmarkId = q.get("benchmark_id"), modelId = q.get("model_id"), basis = q.get("basis");
   const offset = Number(q.get("offset") ?? 0), limit = Number(q.get("limit") ?? 100);
   if (!Number.isSafeInteger(offset) || offset < 0 || !Number.isSafeInteger(limit) || limit < 1 || limit > 500
-      || basis !== null && !["measured", "self_reported", "derived"].includes(basis)) return NextResponse.json({ error: "Invalid pagination or basis; limit must be 1–500" }, { status: 400 });
+      || basis !== null && !["measured", "self_reported", "derived", "preliminary"].includes(basis)) return NextResponse.json({ error: "Invalid pagination or basis; limit must be 1–500" }, { status: 400 });
   const dataset = await getDataset(), r = dataset.benchmark_results;
   if (benchmarkId && !r.registry.some((e) => e.id === benchmarkId)) return NextResponse.json({ error: "Unknown benchmark version; use a complete registry id" }, { status: 404 });
   if (modelId && !dataset.models.some((m) => m.id === modelId)) return NextResponse.json({ error: "Unknown exact model id" }, { status: 404 });

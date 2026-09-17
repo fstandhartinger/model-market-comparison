@@ -18,7 +18,7 @@ export interface EfficiencyProvenance {
   source: string;
   url: string;
   collected_at: string;
-  basis: "measured" | "self_reported" | "derived" | "assumed";
+  basis: "measured" | "self_reported" | "derived" | "assumed" | "preliminary";
   source_basis?: "measured" | "self_reported" | "derived" | "assumed";
   scope?: string;
   formula?: string;
