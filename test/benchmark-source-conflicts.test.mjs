@@ -48,3 +48,10 @@ test('build check: no two measured rows of one source map to one model with diff
   assert.deepEqual([...groups].filter(([, v]) => v.size > 1).map(([k]) => k), []);
   assert.ok(!dataset.benchmark_results.historical.estimates.some((e) => e.benchmark_id.startsWith('mazur-elimination-game') && e.model_id === 'gemini-2.5-pro::default'));
 });
+
+test('CR-65.15 (D10): Harvey LAB-AA and Vals HLAB each say they are not the same run as the other', async () => {
+  const registry = JSON.parse(await readFile(new URL('../data/raw/benchmarks/registry.json', import.meta.url), 'utf8'));
+  const byId = (id) => registry.entries.find((e) => e.id === id);
+  assert.match(byId('aa-harvey-lab::snapshot-2026-09-10').one_sentence_description, /not the same run or scale as Vals AI's HLAB row/);
+  assert.match(byId('vals-index-hlab::2').one_sentence_description, /not comparable with Artificial Analysis' Harvey LAB-AA row/);
+});
