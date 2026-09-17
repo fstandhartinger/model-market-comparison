@@ -309,7 +309,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     if (full) {
       await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 6_000_000);
       // Same reason, same bound: on 17 Sep each paid producer call took 2–5 min (1 min on 16 Sep) and this step ran past 45 min.
-      await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 6_000_000);
+      // 140 min (was 100): the free max-effort critic needs 100–270 s per review; the 06:07 run of 17 Sep was killed at
+      // 100 min. Live review (~25 min) + this + build/gate/publish (~5 min) still fits gated-run's 3 h limit.
+      await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 8_400_000);
     }
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);

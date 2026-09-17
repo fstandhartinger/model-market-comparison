@@ -156,7 +156,10 @@ export function selectModelForWorker(catalog, dataset, options = {}) {
   try { return selectModel(catalog, dataset, options); }
   catch (error) {
     if (options.scheduled && options.critic && options.excludeModels?.length && error.message === 'No supported viable worker model found') {
-      return selectModel(catalog, dataset, { ...options, excludeModels: [] });
+      // 2026-09-17 (CR-67.3): a failed free router route stays excluded. Re-offering it cost the 06:07 run three
+      // 300 s router timeouts and ~20 slow max-effort critic calls, and the benchmark step ran out of time.
+      const freeIds = new Set((options.freeRouter ?? []).map((c) => c.id));
+      return selectModel(catalog, dataset, { ...options, excludeModels: options.excludeModels.filter((id) => freeIds.has(id)) });
     }
     throw error;
   }

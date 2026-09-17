@@ -129,7 +129,9 @@ export async function defaultRunner(args) {
 async function recordInvalidModel(meta, role, reason, runner) {
   if (!process.env.BH_STATE || runner !== defaultRunner) return;
   await mkdir(process.env.BH_STATE, { recursive: true });
-  await appendFile(join(process.env.BH_STATE, 'unavailable-models.jsonl'), JSON.stringify({ model: meta.actual_model, role, at: new Date().toISOString(), reason }) + '\n');
+  // The selector excludes by the requested id: a router route answers as `moonshotai/Kimi-K3-TEE` but is selected as
+  // `chutes/moonshotai/Kimi-K3-TEE`, so recording only the answering model never excluded it (2026-09-17).
+  await appendFile(join(process.env.BH_STATE, 'unavailable-models.jsonl'), JSON.stringify({ model: meta.requested_model ?? meta.actual_model, actual_model: meta.actual_model, role, at: new Date().toISOString(), reason }) + '\n');
 }
 
 // Owner-side receipt verification: the sidecar hash must match the out file bytes.

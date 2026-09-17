@@ -48,3 +48,16 @@ test('CR-66.3: the daily run report pairs the free producer with a different-fam
   assert.deepEqual([pair.producer.id, pair.critic.id], ['chutes/moonshotai/Kimi-K3-TEE', 'deepseek/deepseek-v4-flash-0731']);
   assert.equal(selectProducerCritic({ free_router: [], free_verified: [], cheap_verified: [...paid, { id: 'z-ai/glm-5.3-flash', family: 'z-ai', aa_intelligence_index: 41.9, input_per_1m: 0.09, output_per_1m: 0.3 }] }).producer.id, 'deepseek/deepseek-v4-flash-0731');
 });
+
+test('CR-67.3: the critic fallback re-offers excluded paid models but never a free route that already failed in this run', () => {
+  const freeRouter = freeRouterCandidates(dataset, healthy);
+  const deepseek = { id: 'deepseek/deepseek-v4-flash-0731', pricing: { prompt: '0.00000006', completion: '0.00000012' } };
+  const data = { models: [...dataset.models, { ...aa('deepseek-v4-flash-0731::default', 34.5), aa_metadata: { openrouter_api_id: deepseek.id } }] };
+  // Producer GLM (z-ai); Kimi (free) and DeepSeek (paid) both failed earlier in the run → DeepSeek is retried, not Kimi.
+  const critic = selectModelForWorker([...catalog, deepseek], data, { scheduled: true, critic: true, freeRouter, producers: ['z-ai/glm-5.3-flash'],
+    excludeModels: ['chutes/moonshotai/Kimi-K3-TEE', deepseek.id] });
+  assert.equal(critic.id, deepseek.id);
+  // Only the failed free route left as a critic candidate: fail closed instead of another slow retry.
+  assert.throws(() => selectModelForWorker(catalog, dataset, { scheduled: true, critic: true, freeRouter, producers: ['z-ai/glm-5.3-flash'],
+    excludeModels: ['chutes/moonshotai/Kimi-K3-TEE'] }), /No supported viable/);
+});
