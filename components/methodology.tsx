@@ -39,10 +39,11 @@ export function scoreTip(score: ScoreKey): React.ReactNode {
   }
   // CR-25.6: a category composite is our own average of that category's fixed anchor benchmarks.
   if (score.startsWith("cat_")) {
-    return <>The average of this category&apos;s anchor benchmarks, on a 0–100 scale. The anchor set is fixed, so every
-      model&apos;s number covers the same benchmarks: a model is only scored when it has a result on <em>all</em> of them —
-      otherwise the cell stays empty instead of averaging a smaller, easier set. Benchmarks are counted at their newest
-      published version. <a className="text-accent underline" href="/about#score">How we calculate</a>
+    return <>The weighted average of this category&apos;s anchor benchmarks, on a 0–100 scale; a saturated anchor counts
+      half. The anchor set is fixed, so every model&apos;s number covers the same benchmarks: a model is only scored when
+      it has a result on <em>all</em> of them — otherwise the cell stays empty instead of averaging a smaller, easier set.
+      Benchmarks are counted at their newest published version. Compare models within one category only: each category
+      has its own anchors, so a 60 in Coding and a 60 in Science are not the same level. <a className="text-accent underline" href="/about#category-scores">How we calculate</a>
       <AaCredit className="mt-1 block text-gray-400" /> <EpochCredit className="block text-gray-400" /></>;
   }
   if (score === "epoch_eci" || score === "epoch_eci_software") {

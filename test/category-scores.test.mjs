@@ -67,3 +67,25 @@ test('CR-65.10: the latest-score pick ranks measured, then self-reported, then p
   assert.equal(pick([obs('m', 'measured', 50, '2026-09-01'), obs('p', 'preliminary', 73, '2026-09-16')]), 'm');
   assert.equal(latestScores([obs('p', 'preliminary', 73, '2026-09-16')]).length, 0, 'measured-only consumers never see it');
 });
+
+test('CR-65.16: the published method texts match the category-score and composite code', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const read = async (p) => readFile(new URL(`../${p}`, import.meta.url), 'utf8');
+  const about = (await read('app/about/page.tsx')).replace(/\s+/g, ' ');
+  const tip = (await read('components/methodology.tsx')).replace(/\s+/g, ' ');
+  const note = JSON.parse(await read('data/category-score-anchors.json')).note;
+  assert.doesNotMatch(about, /plain average of that category/);
+  assert.match(about, /<b>weighted average<\/b> of that category&apos;s <b>anchor benchmarks<\/b>, on a 0–100 scale: a saturated anchor counts at half the weight/);
+  assert.match(about, /compare models within one category, not a Coding score with a Science score/);
+  assert.match(about, /does not change the composite, which uses ranks only/);
+  assert.match(about, /deprecated ones included/);
+  assert.match(tip, /The weighted average of this category&apos;s anchor benchmarks, on a 0–100 scale; a saturated anchor counts half/);
+  assert.doesNotMatch(note, /picks the one with the widest coverage/);
+  assert.match(note, /picks the newest version/);
+  // The texts describe what the code does.
+  const { SATURATED_WEIGHT } = await import('../lib/benchmark-matrix.mjs');
+  assert.equal(SATURATED_WEIGHT, 0.5);
+  const { newestRow } = await import('../lib/category-scores.mjs');
+  const counts = new Map([[0, 300], [1, 40]]);
+  assert.equal(newestRow([{ index: 0, version: '2.1' }, { index: 1, version: '4.0' }], counts).index, 1, 'newest version wins over wider coverage');
+});

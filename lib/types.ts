@@ -304,8 +304,8 @@ export const SCORE_LABELS: Record<ScoreKey, string> = {
   epoch_eci_software: "Epoch AI — Software Engineering ECI",
   designarena_frontend: "DesignArena — Agentic Web Dev (Frontend) Elo",
   designarena_fullstack: "DesignArena — Agentic Web Dev (Full-Stack) Elo",
-  cat_coding: "Category composite — Coding (average of the category's anchor benchmarks, 0–100)",
-  cat_agentic: "Category composite — Agentic & tool use (average of the category's anchor benchmarks, 0–100)",
-  cat_science: "Category composite — Science (average of the category's anchor benchmarks, 0–100)",
-  cat_long_context: "Category composite — Long context (average of the category's anchor benchmarks, 0–100)",
+  cat_coding: "Category composite — Coding (weighted average of the category's anchor benchmarks, 0–100)",
+  cat_agentic: "Category composite — Agentic & tool use (weighted average of the category's anchor benchmarks, 0–100)",
+  cat_science: "Category composite — Science (weighted average of the category's anchor benchmarks, 0–100)",
+  cat_long_context: "Category composite — Long context (weighted average of the category's anchor benchmarks, 0–100)",
 };

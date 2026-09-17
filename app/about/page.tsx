@@ -194,7 +194,9 @@ export default async function AboutPage() {
         DesignArena Full-Stack. AA values are clamped to
         0–100. A DesignArena board qualifies at an app-selected minimum of 200 battles, aligned with
         the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the
-        expected score against a fixed Elo 1000 opponent.
+        expected score against a fixed Elo 1000 opponent. That conversion keeps every model in the same order, so it
+        does not change the composite, which uses ranks only. Percentiles are taken over every model row in the
+        catalogue, deprecated ones included, so hiding deprecated models with a filter does not move anyone&apos;s score.
       </p>
       {/* CR-65.1: which slots may be shared inside a model family. */}
       <p className="mt-3 text-sm text-gray-400" data-family-scope>
@@ -227,13 +229,16 @@ export default async function AboutPage() {
       <h4 id="category-scores" className="mt-4 mb-2 font-semibold">Category scores</h4>
       <p className="text-sm text-gray-400">
         Besides the composite you can pick a <b>category score</b> — Coding, Agentic &amp; tool use, Science or
-        Long context. Each is the plain average of that category&apos;s <b>anchor benchmarks</b>, on a 0–100 scale.
+        Long context. Each is the <b>weighted average</b> of that category&apos;s <b>anchor benchmarks</b>, on a 0–100 scale:
+        a saturated anchor counts at half the weight of the others (see Saturated below).
         The anchor set is fixed and published here, so two models&apos; category scores always cover the same
         benchmarks; a model is scored only when it has a result on every anchor, otherwise it has no score for that
         category rather than an average over an easier subset. Each benchmark counts at its newest published version.
         A category is only offered when at least two of its benchmarks are on a 0–100-style, higher-is-better scale
         and are measured for at least 60 % of the featured model families — which is why Reasoning and Vision, with
-        one qualifying benchmark each today, have no category score.
+        one qualifying benchmark each today, have no category score. Category scores are raw benchmark results, not
+        percentiles, and every category has its own anchors — compare models within one category, not a Coding score
+        with a Science score.
       </p>
       <ul className="mt-2 list-disc pl-5 text-sm text-gray-400" data-category-anchors>
         {(ds.category_scores?.categories ?? []).map((c) => <li key={c.key}><b>{c.label}</b>: {c.rows.map((r) => r.name).join(", ")}</li>)}
