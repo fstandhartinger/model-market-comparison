@@ -41,9 +41,10 @@ export interface SettingsState {
   priceMode: PriceMode;    // adjusted $/task (default) vs raw fixed-blend list prices
   inputWeight: number;     // raw mode's fixed input:output blend; persists while adjusted
   ioBasis: IoBasis;        // CR-65.8: adjusted mode's workload — one common I/O ratio (default) or each model's OpenRouter usage
+  includeBenchmaxxing: boolean; // CR-74.4: the Main Composite includes the marginal Benchmaxxing penalty (on by default)
 }
 
-export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND, ioBasis: DEFAULT_IO_BASIS };
+export const SETTINGS_DEFAULTS: SettingsState = { score: DEFAULT_SCORE, collapse: true, featured: true, hideDeprecated: true, hostedIn: [...REGION_BUCKETS], providerBasedIn: [...REGION_BUCKETS], labBasedIn: [...REGION_BUCKETS], labs: [], openOnly: false, minScore: 86, minScoreTouched: false, simpleMaxCost: null, advancedMinScore: 0, featuredTouched: false, teeOnly: false, allowDataTraining: false, isCompany: false, maxCost: null, minIntelligence: null, minCoding: null, providersExcluded: [], families: [], priceMode: "adjusted", inputWeight: DEFAULT_BLEND, ioBasis: DEFAULT_IO_BASIS, includeBenchmaxxing: true };
 
 const BLEND_VALUES = new Set(FIXED_BLENDS.map((b) => b.value));
 export const isBlendValue = (n: number) => BLEND_VALUES.has(n);
@@ -90,6 +91,8 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
   if (raw.priceMode === "adjusted" || raw.priceMode === "raw") out.priceMode = raw.priceMode;
   if (typeof raw.inputWeight === "number" && BLEND_VALUES.has(raw.inputWeight)) out.inputWeight = raw.inputWeight;
   if (raw.ioBasis === "common" || raw.ioBasis === "usage") out.ioBasis = raw.ioBasis;
+  // CR-74.4: added without a key bump — a payload without it loads with the default (on).
+  if (bool(raw.includeBenchmaxxing)) out.includeBenchmaxxing = raw.includeBenchmaxxing;
   return out;
 }
 
@@ -97,7 +100,7 @@ export function sanitizeSettings(input: unknown): Partial<SettingsState> {
 function sharedFiltersActive(s: SettingsState): boolean {
   return !!(s.providersExcluded.length || s.families.length || s.labs.length || s.featuredTouched || !s.collapse || !s.hideDeprecated
     || !allRegions(s.hostedIn) || !allRegions(s.providerBasedIn) || !allRegions(s.labBasedIn) || s.openOnly || s.teeOnly || s.allowDataTraining || s.isCompany
-    || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND || s.ioBasis !== DEFAULT_IO_BASIS);
+    || s.priceMode !== "adjusted" || s.inputWeight !== DEFAULT_BLEND || s.ioBasis !== DEFAULT_IO_BASIS || !s.includeBenchmaxxing);
 }
 
 /** What non-Simple views apply beyond their defaults; drives Advanced's "· filtered". */

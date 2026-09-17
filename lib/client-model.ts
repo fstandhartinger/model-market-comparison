@@ -1,5 +1,5 @@
 import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } from "./types";
-import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
+import { benchmaxxingAdjustedComposite, compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
 import { deterministicFamilyRepresentative } from "./family-representative.mjs";
 import type { BenchmarkComparison } from "./benchmark-comparison.mjs";
 
@@ -89,6 +89,11 @@ export interface ClientModel {
     cat_long_context: number | null;
   };
   composite_base: number | null;
+  /** CR-74.4: the Main Composite before the Benchmaxxing penalty; `scores.composite` carries the penalty (default on),
+   *  and the client restores this value when the Options checkbox is off (lib/composite-setting.ts). */
+  composite_raw?: number | null;
+  /** CR-74.4: the family's Benchmaxxing signal the penalty used (null = unscored, no penalty). */
+  composite_signal?: number | null;
   composite_coverage: number;
   /** Composite slots filled by an attached (family- or product-scope) value; see F-41. */
   composite_attached: number;
@@ -172,7 +177,9 @@ function offerKey(platform: string, provider: string) {
   return `${platform}::${provider}`;
 }
 
-export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBenchmaxxing> = {}): ClientData {
+/** CR-74.4: `signals` = each model's Benchmaxxing signal for the composite penalty (lib/composite-signals.ts); a
+ *  model without one falls back to its `benchmaxxing` score, else no penalty. */
+export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBenchmaxxing> = {}, signals: ReadonlyMap<string, number | null> | null = null): ClientData {
   const offersByFamily: Record<string, ClientOffer[]> = {};
   const offersByModel: Record<string, ClientOffer[]> = {};
   const familyOfferKeys = new Map<string, Set<string>>();
@@ -373,7 +380,9 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
   });
   const { scores: composites, baseScores } = computeCompositeScoreDetails(compositeInputs);
   for (const m of models) {
-    m.scores.composite = composites.get(m.id) ?? 50;
+    m.composite_raw = composites.get(m.id) ?? 50;
+    m.composite_signal = signals?.get(m.id) ?? benchmaxxing[m.id]?.score ?? null;
+    m.scores.composite = benchmaxxingAdjustedComposite(m.composite_raw, m.composite_signal, true);
     m.composite_base = baseScores.get(m.id) ?? 50;
     m.composite_coverage = coverage.get(m.id) ?? 0;
     m.composite_attached = Math.min(7 - m.composite_coverage, Object.keys(m.composite_attachments).length);

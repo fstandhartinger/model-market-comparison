@@ -1,6 +1,7 @@
 import { NextResponse } from "next/server";
 import { getDataset, cheapestOffers, modelCost, scoreOf } from "../../../lib/data";
 import { clientData } from "../../../lib/client-model";
+import { compositeBenchmaxxingSignals } from "../../../lib/composite-signals";
 import type { ScoreKey } from "../../../lib/types";
 
 export const dynamic = "force-dynamic";
@@ -11,7 +12,7 @@ export async function GET(req: Request) {
   const hasBenchmark = searchParams.get("hasBenchmark") === "1";
   const score = (searchParams.get("score") as ScoreKey) || "aa_coding_index";
   const ds = await getDataset();
-  const clientById = new Map(clientData(ds).models.map((model) => [model.id, model]));
+  const clientById = new Map(clientData(ds, {}, await compositeBenchmaxxingSignals()).models.map((model) => [model.id, model]));
 
   let models = ds.models;
   if (featured) models = models.filter((m) => m.featured);
@@ -27,6 +28,9 @@ export async function GET(req: Request) {
     open_weights: m.open_weights,
     featured: m.featured,
     score: score === "composite" ? (clientById.get(m.id)?.scores.composite ?? 50) : scoreOf(m, score),
+    // CR-74.4: `score` (composite) includes the marginal Benchmaxxing penalty, as on the site by default.
+    composite_unpenalised: clientById.get(m.id)?.composite_raw ?? 50,
+    benchmaxxing_signal: clientById.get(m.id)?.composite_signal ?? null,
     composite_base: clientById.get(m.id)?.composite_base ?? 50,
     composite_coverage: clientById.get(m.id)?.composite_coverage ?? 0,
     benchmarks: m.benchmarks,

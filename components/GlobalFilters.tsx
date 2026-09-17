@@ -8,6 +8,7 @@ import { InfoTip } from "./InfoTip";
 import { MultiCombobox, type ComboItem } from "./MultiCombobox";
 import { defaultMinFor, DEFAULT_BLEND, FIXED_BLENDS } from "../lib/cost";
 import { SETTINGS_DEFAULTS } from "../lib/settings-state";
+import { BENCHMAXX_COMPOSITE_WEIGHT } from "../lib/composite.mjs";
 import { REGION_BUCKETS, labBucket } from "../lib/regions.mjs";
 import { providerCompanies } from "../lib/provider-company.mjs";
 import { FILTER_PRESETS, matchingFilterPreset, pickFilters, resolveFilterPatch } from "../lib/presets.mjs";
@@ -136,6 +137,7 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
     s.setOpenOnly(false); s.setTeeOnly(false); s.setAllowDataTraining(false); s.setIsCompany(false);
     s.setMaxCost(null); s.setMinIntelligence(null); s.setMinCoding(null);
     s.resetMinScore(); s.setSimpleMaxCost(null); s.setAdvancedMinScore(0); s.setPriceMode("adjusted"); s.setInputWeight(DEFAULT_BLEND);
+    s.setIncludeBenchmaxxing(true);
   };
   // F-40: "Min score" edits the floor of the view on screen — Simple's on the Simple home view,
   // the Advanced floor everywhere else (Advanced, Charts, Compare, the EU table read it).
@@ -166,6 +168,16 @@ function FiltersSheet({ providers, families }: { providers: ProviderInfo[]; fami
               variant, with deprecated models left out. It is recomputed from the chart on every
               data refresh, so it follows new releases on its own. Turn it off to see every
               tracked model. <a className="text-accent" href="/about#featured">The current list</a>.
+            </InfoTip>
+          </span>
+          {/* CR-74.4: the marginal Benchmaxxing penalty in the Main Composite, on by default. */}
+          <span className="inline-flex items-center">
+            <Toggle label="Include Benchmaxxing signal in the score" on={s.includeBenchmaxxing} set={s.setIncludeBenchmaxxing} />
+            <InfoTip title="Benchmaxxing signal in the score" label="the Benchmaxxing score setting">
+              On by default: the Benchmark Heaven Score loses {BENCHMAXX_COMPOSITE_WEIGHT} point per point of a
+              positive Benchmaxxing signal (a model that does better on headline benchmarks than on held-out ones).
+              A negative or missing signal changes nothing. Turn it off for the plain composite.{" "}
+              <a className="text-accent" href="/about#score">How we calculate</a>.
             </InfoTip>
           </span>
         </Section>

@@ -4,6 +4,7 @@ import { getBenchmarkView } from "./benchmark-data";
 import { benchmaxxingFamilySignals, scoreBenchmaxxing } from "./benchmax.mjs";
 import { buildBenchmarkComparison } from "./benchmark-comparison.mjs";
 import { getBenchmarkMatrixPage } from "./benchmark-matrix-data";
+import { compositeBenchmaxxingSignals } from "./composite-signals";
 import { importantMatrix } from "./benchmark-matrix.mjs";
 import { selectBenchmarkView, selectFamilyBenchmarkView } from "./benchmark-view.mjs";
 import { defaultComparePicks, withRadarPercentiles } from "./radar.mjs";
@@ -28,7 +29,8 @@ export async function pageDataVersion(): Promise<string> {
 
 async function build(key: PageDataKey): Promise<unknown> {
   const ds = await getDataset();
-  if (key === "catalog") return clientData(ds);
+  // CR-74.4: the catalog composite carries the Benchmaxxing penalty (the Options default).
+  if (key === "catalog") return clientData(ds, {}, await compositeBenchmaxxingSignals());
   if (key === "filters") {
     // The Options sheet's provider and model lists (every page's layout used to inline them, ~80 KB).
     const providers: ProviderInfo[] = ds.providers.map((p) => ({
@@ -50,7 +52,7 @@ async function build(key: PageDataKey): Promise<unknown> {
     const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(view.models.filter((m) => familyScore.has(m.family ?? m.id))
       .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: tagged.has(m.id), level: tagged.has(m.id) ? "strong" : weak.has(m.id) ? "weak" : null,
         reportId: representatives.get(m.family ?? m.id) ?? m.id }]));
-    const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
+    const data = { ...clientData(ds, benchmaxxing, await compositeBenchmaxxingSignals()), comparison: buildBenchmarkComparison(view) };
     // CR-7.1: the simple Benchmarks section gets only the "Important" rows, not the full matrix.
     return { data, matrix: importantMatrix((await getBenchmarkMatrixPage()).matrix) };
   }
