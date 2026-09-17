@@ -8,6 +8,7 @@ import type { BenchmaxxingReportData } from "./BenchmaxxingReport";
 import { interpretBenchmaxxing } from "../lib/benchmaxxing-interpretation.mjs";
 
 import { BENCHMAXXING_PRESETS, presetLimit, presetRows, type BenchmaxxingOverviewRow, type BenchmaxxingPreset, type CompositeOf } from "../lib/benchmaxxing-presets";
+import { signalBarDomain, signalBarGeometry, type SignalBarDomain } from "../lib/signal-bar.mjs";
 import { BENCHMAXX_LEVELS, BENCHMAXX_TAG_MIN_COMPARISONS, BENCHMAXX_TAG_RULE_TEXT, BENCHMAXX_UNCERTAIN_MARK, BENCHMAXX_UNCERTAIN_TEXT, benchmaxxingThresholdText, type BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
 
 /** CR-15.2 → CR-74.2: the table's model list is a named, changeable preset (lib/benchmaxxing-presets): Featured models
@@ -54,11 +55,12 @@ function QuickLook({ row, onOpenReport }: { row: BenchmaxxingOverviewRow; onOpen
 function baseName(name: string) { const i = name.indexOf(" ("); return i > 0 && name.endsWith(")") ? name.slice(0, i) : name; }
 function variantOf(name: string) { const i = name.indexOf(" ("); return i > 0 && name.endsWith(")") ? name.slice(i + 2, -1).split(", ").join(" · ") : ""; }
 
-function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenReport }: { rows: BenchmaxxingOverviewRow[]; maxScore: number; selected: string[]; onSelect: (id: string) => void; expanded: Set<string>; onExpand: (id: string, open: boolean) => void; onOpenReport: (id: string) => void }) {
+function Rows({ rows, domain, selected, onSelect, expanded, onExpand, onOpenReport }: { rows: BenchmaxxingOverviewRow[]; domain: SignalBarDomain; selected: string[]; onSelect: (id: string) => void; expanded: Set<string>; onExpand: (id: string, open: boolean) => void; onOpenReport: (id: string) => void }) {
   return <>
     {rows.map((row) => {
       const slot = selected.indexOf(row.id);
       const open = expanded.has(row.id);
+      const bar = signalBarGeometry(row.score, domain);
       const panelId = `bmx-quick-${row.id.replace(/[^a-zA-Z0-9_-]/g, "_")}`;
       return <Fragment key={row.id}><tr className={`cursor-pointer ${slot >= 0 ? "bg-accent/10" : "hover:bg-accent/5"}`} onClick={() => onSelect(row.id)} data-row-id={row.id}>
         <th scope="row" className="!py-2 text-left align-middle font-medium">
@@ -77,10 +79,15 @@ function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenRe
           </span>
         </th>
         <td className="!py-2 align-middle">
-          {/* CR-21.2: the bar spans 0 → the highest signal in this list, so differences stay visible. */}
-          <div className="bh-magnitude-bar bh-magnitude-warn !text-left" data-signal-frac={(row.score / maxScore).toFixed(4)}>
+          {/* CR-21.2 → F-112: the bar diverges around a shared zero line on one catalog-wide scale, so a negative
+              signal draws its own bar to the left instead of leaving the row blank. */}
+          <div className="bh-magnitude-bar bh-magnitude-warn bh-magnitude-diverge !text-left" data-signal-frac={bar.fraction.toFixed(4)} data-signal-sign={bar.sign}>
             <div className="bh-magnitude-track" aria-hidden="true">
-              <div className="bh-magnitude-fill" style={{ width: `${Math.max(0, Math.min(1, row.score / maxScore)) * 100}%` }} />
+              <span className="bh-magnitude-zero" style={{ left: `${domain.zero * 100}%` }} title="zero — no sign" data-signal-zero />
+              {bar.sign !== "zero" && <div className="bh-magnitude-fill" data-sign={bar.sign}
+                style={bar.sign === "pos"
+                  ? { left: `${domain.zero * 100}%`, width: `${bar.width * 100}%` }
+                  : { right: `${(1 - domain.zero) * 100}%`, width: `${bar.width * 100}%` }} />}
             </div>
             <span className="relative z-[1] block"><SignalValue score={row.score} level={row.level} uncertain={row.uncertain ?? null} /></span>
           </div>
@@ -123,40 +130,45 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   const limit = presetLimit(preset);
   const visible = showAll ? listed : listed.slice(0, limit);
   const taggedCount = BENCHMAXX_LEVELS.reduce((sum, x) => sum + (levelCounts[x.level] ?? 0), 0);
-  // CR-21.2 → CR-63.5: the bar spans 0 → the highest signal of every scored model, one scale for all tabs, so a
-  // model's bar keeps its length when the list changes.
-  const maxScore = Math.max(1e-9, ...rows.map((row) => row.score));
+  // CR-21.2 → CR-63.5 → F-112: one scale for all three presets, taken from every scored model in the catalog, so a
+  // model's bar keeps its length and its position when the list changes. The domain is signed and always contains
+  // zero: a negative signal draws to the left of the shared zero line instead of leaving the row blank.
+  const domain = signalBarDomain(rows.map((row) => row.score));
   // CR-77.1: the tag level follows the published score alone; the InfoTip names that rule and the uncertainty marker.
   const heading = BENCHMAXXING_PRESETS.find((p) => p.key === preset)!.heading;
   return <section className="bh-panel p-5" aria-label="Benchmaxxing overview">
-    <div className="grid gap-5 md:grid-cols-[1fr_auto] md:items-start">
-      <div>
-        <h2 className="text-xl font-semibold">{heading}</h2>
-        <p className="bh-muted mt-2 max-w-3xl text-sm">Plus means a model ranks higher on famous public benchmarks than on held-out ones of the same topic (questions nobody can train for); zero means no sign. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
-      </div>
-      <div className="rounded-lg border border-line px-4 !py-2 text-sm">{taggedCount ? <>Tagged: {[...BENCHMAXX_LEVELS].reverse().map((x, k) => <Fragment key={x.level}>{k ? ", " : ""}<b>{levelCounts[x.level] ?? 0}</b> {x.label}</Fragment>)}{uncertainCount ? <span className="bh-muted" data-bmx-uncertain-count> · <b>{uncertainCount}</b> marked {BENCHMAXX_UNCERTAIN_MARK} uncertain</span> : null}</> : <b data-bmx-none-flagged>No model reaches a tag level</b>} <span className="bh-muted">· scored from n = {minComparisons} in {minTopics} topics; {BENCHMAXX_TAG_RULE_TEXT}</span></div>
-    </div>
+    <h2 className="text-xl font-semibold">{heading}</h2>
+    {/* F-114: one explainer per page. What the signal means is said once, in the page intro above; this line only
+        tells the reader how to drive the table. */}
+    <p className="bh-muted mt-2 max-w-3xl text-sm" data-bmx-instruction>Select a row to open its report below, or ▸ for a quick look.</p>
     <div role="group" aria-label="Model list preset" className="mt-4 flex flex-wrap gap-2">
       {BENCHMAXXING_PRESETS.map((p) => <button key={p.key} type="button" aria-pressed={preset === p.key} onClick={() => onPreset(p.key)}
         className={`bh-chip min-h-9 rounded-full border px-3 text-sm ${preset === p.key ? "border-accent bg-accent/15 font-semibold text-accent" : "border-line bh-muted"}`}>{p.label}</button>)}
     </div>
-    {/* CR-74.1: the three tag levels with their thresholds; CR-77.2: the uncertainty marker instead of the old guards. */}
-    <p className="bh-muted mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" data-bmx-level-legend><span className="font-semibold">Tags:</span>
-      {BENCHMAXX_LEVELS.map((x) => <span key={x.level} className="inline-flex items-center gap-1"><span className="bh-signal-pill" data-level={x.level} aria-hidden="true">{x.mark}</span>{x.label} ≥ +{x.min}</span>)}
-      <span>· {BENCHMAXX_TAG_RULE_TEXT}</span>
-      <span className="inline-flex items-center gap-1"><span className="bh-bmx-uncertain" aria-hidden="true">{BENCHMAXX_UNCERTAIN_MARK}</span>{BENCHMAXX_UNCERTAIN_TEXT.replace(`${BENCHMAXX_UNCERTAIN_MARK} `, "")}</span></p>
+    {/* F-114: the status line in the reader's order — what carries a tag, at which threshold, then the rule. It is
+        also CR-74.1's legend and CR-77.2's uncertainty line: the counts and the levels were two stacked rows saying
+        the same three words, and on a phone they pushed the first data row off the screen. */}
+    <p className="bh-muted mt-3 flex flex-wrap items-center gap-x-3 gap-y-1 text-xs" data-bmx-level-legend>
+      <span className="font-semibold">Tagged:</span>
+      {taggedCount
+        ? [...BENCHMAXX_LEVELS].reverse().map((x) => <span key={x.level} className="inline-flex items-center gap-1">
+            <span className="bh-signal-pill" data-level={x.level} aria-hidden="true">{x.mark}</span><b>{levelCounts[x.level] ?? 0}</b> {x.label} ≥ +{x.min}</span>)
+        : <b data-bmx-none-flagged>no model reaches a tag level</b>}
+      {uncertainCount ? <span className="inline-flex items-center gap-1" data-bmx-uncertain-count title={BENCHMAXX_UNCERTAIN_TEXT}>
+        <span className="bh-bmx-uncertain" aria-hidden="true">{BENCHMAXX_UNCERTAIN_MARK}</span><b>{uncertainCount}</b> marked uncertain</span> : null}
+      <span>— {BENCHMAXX_TAG_RULE_TEXT}</span></p>
     <div className="bh-table-wrap mt-4">
       <table className="bh-table w-full table-fixed text-sm">
         <caption className="sr-only">{heading}; select a row to show its report</caption>
         <colgroup><col className="w-[44%] md:w-[28%]" /><col className="w-[22%] md:w-[14%]" /><col className="hidden md:table-column md:w-[20%]" /><col className="w-[34%] md:w-[18%]" /><col className="hidden md:table-column md:w-[20%]" /></colgroup>
         <thead><tr>
           <th scope="col" className="text-left">Model</th>
-          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Average signed gap, in percentile points, between public headline benchmarks and held-out benchmarks of the same topic (each pair ranked among the models both cover), pulled toward zero when few boards are compared. Plus = better on famous public tests than on tests nobody can train for. Tags have three levels on the score shown ({benchmaxxingThresholdText()}) and follow that score alone — the same tags as on the Overview table. A tag built on fewer than {BENCHMAXX_TAG_MIN_COMPARISONS} comparisons, or whose 80 % bootstrap interval (its headline and held-out boards resampled) reaches below zero, is still shown but marked {BENCHMAXX_UNCERTAIN_MARK} uncertain, with the reason in its tooltip. It is a screening flag, not proof of leakage or intent. <span data-signal-max>Bars run from 0 to {maxScore.toFixed(1)}, the highest signal of any scored model, in every list; a score at or below zero has no bar.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
+          <th scope="col" className="text-left">Signal <InfoTip title="Benchmaxxing signal" label="the Signal column">Average signed gap, in percentile points, between public headline benchmarks and held-out benchmarks of the same topic (each pair ranked among the models both cover), pulled toward zero when few boards are compared. Plus = better on famous public tests than on tests nobody can train for. Tags have three levels on the score shown ({benchmaxxingThresholdText()}) and follow that score alone — the same tags as on the Overview table. A tag built on fewer than {BENCHMAXX_TAG_MIN_COMPARISONS} comparisons, or whose 80 % bootstrap interval (its headline and held-out boards resampled) reaches below zero, is still shown but marked {BENCHMAXX_UNCERTAIN_MARK} uncertain, with the reason in its tooltip. It is a screening flag, not proof of leakage or intent. A model is scored once it has at least {minComparisons} comparisons in {minTopics} topics. <span data-signal-max>Bars share one catalog-wide scale in every list, from {domain.min.toFixed(1)} to +{domain.max.toFixed(1)}, and diverge around the zero line: plus grows to the right, minus to the left.</span> <a href="/about#benchmaxxing" className="text-accent underline">How the signal works</a></InfoTip></th>
           <th scope="col" className="hidden text-left md:table-cell">Boards compared (n)</th>
           <th scope="col" className="text-left">Measured</th>
           <th scope="col" className="hidden text-left md:table-cell">Domain specialization <InfoTip title="Domain specialization" label="the Domain specialization column">Disclosed for context and deliberately not added to the Benchmaxxing signal. Consistently strong coding and weak writing is specialisation, not a headline-over-held-out gap.</InfoTip></th>
         </tr></thead>
-        <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={toggleExpanded} onOpenReport={onOpenReport} /></tbody>
+        <tbody><Rows rows={visible} domain={domain} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={toggleExpanded} onOpenReport={onOpenReport} /></tbody>
       </table>
     </div>
     {!listed.length ? <p className="bh-empty mt-4">No scored model in this preset.</p> : null}

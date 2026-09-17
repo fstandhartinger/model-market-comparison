@@ -238,6 +238,14 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 .bh-bmx-tag .bh-bmx-uncertain { margin-left: 3px; color: inherit; opacity: .75; font-size: 10px; }
 .bh-legend-stripe { display: inline-block; width: 28px; height: 10px; vertical-align: middle; border-radius: 2px; background: repeating-linear-gradient(135deg, rgb(var(--accent) / .6) 0 4px, transparent 4px 8px); }
 .bh-magnitude-warn .bh-magnitude-fill { background: rgb(var(--warn) / .8); }
+/* F-112 (re-judged in iteration 101 for CR-69's signed score): the Benchmaxxing Signal bar diverges around a shared
+   zero line instead of running 0 → max. Over half the rows of the default Featured list score below zero, and on a
+   0 → max bar every one of them drew nothing. The track keeps its 4 px band; the zero line is the reference mark
+   F-112 asked for, now at zero rather than at the catalog average, because a signed score's neutral point is zero. */
+.bh-magnitude-diverge .bh-magnitude-track { overflow: visible; }
+.bh-magnitude-diverge .bh-magnitude-fill { position: absolute; top: 0; min-width: 2px; }
+.bh-magnitude-diverge .bh-magnitude-fill[data-sign="neg"] { background: var(--muted); opacity: .5; }
+.bh-magnitude-zero { position: absolute; top: -3px; bottom: -3px; width: 1px; background: var(--control-border); opacity: .75; }
 .bh-row-chevron { display: inline-block; width: 12px; color: var(--muted); font-size: 17px; line-height: 12px; opacity: .5; transition: color .15s ease, opacity .15s ease, transform .15s ease; }
 .bh-ranking-row:hover .bh-row-chevron, .bh-row-chevron.is-open { color: rgb(var(--accent)); opacity: 1; }
 .bh-row-chevron.is-open { transform: rotate(90deg); }
