@@ -293,7 +293,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       report.warnings.push(`fetch-github-copilot-catalog skipped: ${error.message.slice(0, 300)}`);
       console.warn(`WARN fetch-github-copilot-catalog: keeping the previous snapshot`);
     }
-    await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 3_600_000);
+    // 17 Sep: 100 min, not 60. Normal runs take 9–18 min; with a slow paid producer and the only eligible
+    // different-family critic timing out (dry run 17 Sep 01:21, killed at 60 min in the last of 7 contracts), the
+    // bounded retries need longer. The 3 h run cap still holds; CR-66.3 (free worker chain) is the real fix.
+    await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 6_000_000);
     await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 3_600_000);
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
