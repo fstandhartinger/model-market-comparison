@@ -676,7 +676,7 @@ function BenchmaxxingTag({ id, name, level, score }: { id: string; name: string;
   const value = score != null ? score.toFixed(1) : null;
   return <Link href={href} className="bh-bmx-tag ml-2" data-level={level}
     aria-label={`Benchmaxxing signal, ${level}${value ? ` (${value})` : ""} — open the report for ${name}`}
-    title={`Benchmaxxing signal ${level}${value ? ` ${value}` : ""}: ${level === "strong" ? "top 10 %" : "top 10–20 %"} of scored models by topic-local inconsistency — a screening flag, not evidence of intent. Opens the radar.`}
+    title={`Benchmaxxing signal ${level}${value ? ` ${value}` : ""}: ${level === "strong" ? "top 10 %" : "top 10–20 %"} of scored models with n ≥ 10, ranked by how much higher they place on famous public benchmarks than on held-out ones of the same topic, with the gap above zero when resampled — a screening flag, not evidence of intent. Opens the radar.`}
     onClick={(e) => e.stopPropagation()}
     onKeyDown={(e) => {
       if (e.key === "Enter") e.stopPropagation();

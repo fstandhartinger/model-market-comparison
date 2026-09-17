@@ -96,7 +96,7 @@ function Rows({ rows, maxScore, selected, onSelect, expanded, onExpand, onOpenRe
   </>;
 }
 
-export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, tagAverage, minComparisons, tagMinComparisons, minTopics }: {
+export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelect, onOpenReport, showAll, onShowAll, taggedCount, weakCount = 0, tagAverage, minComparisons, tagMinComparisons, minTopics }: {
   rows: BenchmaxxingOverviewRow[];
   onOpenReport: (id: string) => void;
   preset: BenchmaxxingPreset;
@@ -106,6 +106,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
   showAll: boolean;
   onShowAll: (value: boolean) => void;
   taggedCount: number;
+  weakCount?: number;
   tagAverage: number | null;
   minComparisons: number;
   tagMinComparisons: number;
@@ -125,7 +126,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <h2 className="text-xl font-semibold">{heading}</h2>
         <p className="bh-muted mt-2 max-w-3xl text-sm">Plus means a model ranks higher on famous public benchmarks than on held-out ones of the same topic (questions nobody can train for); zero means no sign. It is a screening flag—not proof of leakage, contamination, or intent. Select a row to open its report below, or ▸ for a quick look.</p>
       </div>
-      <div className="rounded-lg border border-line px-4 !py-2 text-sm">{taggedCount ? <><b>{taggedCount}</b> models carry the strong tag</> : <b data-bmx-none-flagged>No model is credibly flagged</b>} <span className="bh-muted">· scored from n = {minComparisons} in {minTopics} topics; a tag needs n ≥ {tagMinComparisons}</span></div>
+      <div className="rounded-lg border border-line px-4 !py-2 text-sm">{taggedCount + weakCount ? <><b>{taggedCount}</b> models carry the strong tag{weakCount ? <>, <b>{weakCount}</b> the weak tag</> : null}</> : <b data-bmx-none-flagged>No model is credibly flagged</b>} <span className="bh-muted">· scored from n = {minComparisons} in {minTopics} topics; a tag needs n ≥ {tagMinComparisons}</span></div>
     </div>
     <div role="group" aria-label="Model list preset" className="mt-4 flex flex-wrap gap-2">
       {BENCHMAXXING_PRESETS.map((p) => <button key={p.key} type="button" aria-pressed={preset === p.key} onClick={() => onPreset(p.key)}
@@ -145,7 +146,7 @@ export function BenchmaxxingOverview({ rows, preset, onPreset, selected, onSelec
         <tbody><Rows rows={visible} maxScore={maxScore} selected={selected} onSelect={onSelect} expanded={expanded} onExpand={setExpanded} onOpenReport={onOpenReport} /></tbody>
       </table>
     </div>
-    {!listed.length ? <p className="bh-empty mt-4">{preset === "signals" ? "No model is credibly flagged: no score in the top band stays above zero when its benchmarks are resampled." : "No scored model in this preset."}</p> : null}
+    {!listed.length ? <p className="bh-empty mt-4">{preset === "signals" ? (weakCount ? "No model carries the strong tag; see All scored for the weak △ tags." : "No model is credibly flagged: no score in the top band stays above zero when its benchmarks are resampled.") : "No scored model in this preset."}</p> : null}
     {listed.length > 10 ? <button type="button" className="bh-button mt-4" onClick={() => onShowAll(!showAll)} aria-expanded={showAll}>{showAll ? "Show first 10" : `Show all ${listed.length} in this list`}</button> : null}
   </section>;
 }
