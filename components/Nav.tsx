@@ -28,7 +28,9 @@ function BetaTag() {
       onClick={() => setOpen((o) => !o)}
       // Keyboard focus opens the note; a tap also focuses the button, and opening there would let the click close it again.
       onFocus={(e) => { if (e.currentTarget.matches(":focus-visible")) setOpen(true); }} onBlur={() => setOpen(false)}>
-      BETA<span className="hidden md:inline">&nbsp;— Work in progress</span>
+      {/* The long form used to appear at md (768 px), where the header then needed ~808 px and the
+          whole page scrolled sideways (measured 768–819 px). It fits from ~820 px, so it starts there. */}
+      BETA<span className="hidden min-[830px]:inline">&nbsp;— Work in progress</span>
     </button>
     {open && <span id="bh-beta-note" role="tooltip" className="absolute left-0 top-full z-50 mt-2 w-60 rounded-lg border border-line bg-[var(--surface)] p-2.5 text-xs font-normal text-[var(--text)] shadow-xl">{BETA_NOTE}</span>}
   </span>;

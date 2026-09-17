@@ -284,7 +284,10 @@ details[open] > .bh-collapsible-grid { display: grid; }
 .bh-hero::before { content: ""; position: absolute; inset: -24px -16px 0; background: radial-gradient(ellipse at 90% 0, rgb(var(--accent) / .08), transparent 60%); pointer-events: none; }
 .bh-hero > * { position: relative; }
 .bh-display { font-family: var(--brand-serif); font-size: clamp(26px, 2.6vw, 38px); font-weight: 400; line-height: 1.1; letter-spacing: -.035em; max-width: 1100px; }
-.bh-display span { color: rgb(var(--accent2)); }
+.bh-display .bh-display-accent { color: rgb(var(--accent2)); }
+/* CR-72.1: each hero sentence is its own block, so the two never share a line box and each one
+   balances its own lines; the non-breaking space in lib/typography.ts keeps the last word company. */
+.bh-display-line { display: block; text-wrap: balance; }
 .bh-hero > p:not(.bh-eyebrow) { margin-top: 10px; max-width: 900px; line-height: 1.55; font-size: 13px; }
 .bh-page-head > h1, main > div > h1 { font-family: var(--brand-serif); font-weight: 400; letter-spacing: -.035em; }
 .bh-footer { border-top: 1px solid rgb(var(--line)); }
@@ -295,7 +298,9 @@ details[open] > .bh-collapsible-grid { display: grid; }
 @media (max-width: 639px) {
   .bh-wordmark { font-size: 20px; }
   .bh-hero { padding: 2px 0 8px; }
-  .bh-display { font-size: 19px; line-height: 1.1; }
+  /* CR-72.1: the claim fits one line down to ~360 px instead of wrapping a single word;
+     below that it wraps with at least two words on the last line. */
+  .bh-display { font-size: clamp(17px, 5vw, 19px); line-height: 1.12; }
   .bh-hero > p:not(.bh-eyebrow) { margin-top: 8px; font-size: 12px; line-height: 1.35; }
   .bh-stat-row { gap: 8px; }
   .bh-stat-row > .card { padding: 6px 10px; }

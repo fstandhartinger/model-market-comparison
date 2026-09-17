@@ -2,7 +2,8 @@ import { getDataset } from "../lib/data";
 import { getBenchmarkMatrixPage } from "../lib/benchmark-matrix-data";
 import { HomeModeLoader } from "../components/deferred/HomeModeLoader";
 import { pageDataVersion } from "../lib/page-data";
-import { previewMetadata } from "../lib/seo";
+import { BRAND_CLAIM, BRAND_LINE, previewMetadata } from "../lib/seo";
+import { noWidow } from "../lib/typography";
 
 
 export const metadata = previewMetadata({ path: "/", title: "Benchmark Heaven",
@@ -27,7 +28,13 @@ export default async function Home() {
           must be visible on the first screen. R3.1 claim decided in DESIGN-DIRECTIVES.md. */}
       <section className="bh-hero mb-4">
         {/* CR-10.1 (Florian 2026-09-15): verbatim, with his capitalisation ("Every Benchmark. Actual Costs."). */}
-        <h1 className="bh-display">The most detailed cost–capability analysis in AI.<br /><span>Every model. Every Benchmark. Actual Costs.</span></h1>
+        {/* CR-72.1: one block per sentence instead of a manual line break, each balanced and widow-free, so neither
+            sentence strands its last word on a line in mobile portrait. Copy comes from the same
+            constants as the link previews. */}
+        <h1 className="bh-display">
+          <span className="bh-display-line">{noWidow(BRAND_CLAIM)}</span>
+          <span className="bh-display-line bh-display-accent">{noWidow(BRAND_LINE)}</span>
+        </h1>
         <p className="bh-hero-line mt-2 text-sm text-gray-400">
           <span className="tabular">{results.toLocaleString()}</span> results · <span className="tabular">{benchmarks}</span> benchmarks · <span className="tabular">{ds.counts.models.toLocaleString()}</span> models · <span className="whitespace-nowrap">updated {updated}</span>
         </p>

@@ -13,7 +13,12 @@ test("layout metadata uses the accepted brand copy in every preview field", () =
   assert.match(src, /BRAND_CLAIM = "The most detailed cost–capability analysis in AI\."/);
   assert.match(src, /BRAND_LINE = "Every model\. Every Benchmark\. Actual Costs\."/);
   const hero = read("app/page.tsx");
-  assert.ok(hero.includes("The most detailed cost–capability analysis in AI.<br /><span>Every model. Every Benchmark. Actual Costs.</span>"), "preview copy must match the hero");
+  // CR-72.1: the hero renders the same two constants the previews use, one block per sentence.
+  assert.match(hero, /noWidow\(BRAND_CLAIM\)/, "hero claim comes from the shared constant");
+  assert.match(hero, /noWidow\(BRAND_LINE\)/, "hero line comes from the shared constant");
+  const seo = read("lib/seo.ts");
+  assert.match(seo, /BRAND_CLAIM = "The most detailed cost–capability analysis in AI\."/);
+  assert.match(seo, /BRAND_LINE = "Every model\. Every Benchmark\. Actual Costs\."/);
   for (const key of ["description:", "openGraph:", "twitter:"]) assert.ok(src.includes(key));
   assert.equal((src.match(/\$\{BRAND_CLAIM\} \$\{BRAND_LINE\}/g) || []).length, 4, "description, og description, og alt, twitter description");
 });
