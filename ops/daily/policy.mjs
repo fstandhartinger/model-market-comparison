@@ -239,6 +239,42 @@ export function selectProducerCritic(catalog, { maxUsdPerMtok = MAX_WORKER_USD_P
   return { producer, critic };
 }
 
+// --- CR-66.7: run scopes ----------------------------------------------------
+// `full` collects every source. `prices` refreshes OpenRouter and the provider catalogs only; every benchmark
+// and efficiency snapshot keeps its own date, so a price change can publish in minutes, not after a full run.
+export const DAILY_SCOPES = ['full', 'prices'];
+// Sources the dataset dates; `full` needs all of them from today.
+export const DAILY_FRESH_SOURCES = ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v1_5', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci'];
+export const PRICES_SCOPE_FRESH_SOURCES = ['openrouter'];
+// Raw files a prices run must never change: benchmark results, benchmark-derived snapshots and efficiency observations.
+export const PRICES_SCOPE_FORBIDDEN = [/^data\/raw\/benchmarks\//, /^data\/raw\/(artificialanalysis|designarena|epoch-eci|epoch-hub-provenance|openrouter-benchmarks|lumina-ledger)\.json$/,
+  /^data\/raw\/aa-/, /^data\/raw\/[a-z-]*efficiency\.json$/];
+
+export function parseScope(value = 'full') {
+  if (!DAILY_SCOPES.includes(value)) throw new Error(`Unknown daily scope "${value}" (expected ${DAILY_SCOPES.join(' or ')})`);
+  return value;
+}
+
+/** Freshness errors for a finished build: `full` — every dated source is today's; `prices` — OpenRouter is today's
+ *  and every other dated source is unchanged from the published dataset (kept with its own date, never re-dated). */
+export function sourceFreshnessErrors({ scope = 'full', day, before, after }) {
+  const errors = [];
+  const date = (ds, key) => ds?.sources?.[key] ?? null;
+  const fresh = scope === 'prices' ? PRICES_SCOPE_FRESH_SOURCES : DAILY_FRESH_SOURCES;
+  for (const key of fresh) if (String(date(after, key) ?? '').slice(0, 10) !== day) errors.push(`Source ${key} is not today's collector run (${date(after, key)})`);
+  if (scope === 'prices') {
+    for (const key of DAILY_FRESH_SOURCES.filter((k) => !fresh.includes(k))) {
+      if (date(after, key) !== date(before, key)) errors.push(`Source ${key} changed in a prices-only run (${date(before, key)} → ${date(after, key)})`);
+    }
+  }
+  return errors;
+}
+
+/** Changed paths a prices run may not publish (benchmark and efficiency sources). */
+export function pricesScopeViolations(paths) {
+  return paths.filter((path) => PRICES_SCOPE_FORBIDDEN.some((re) => re.test(String(path))));
+}
+
 // --- Staging / commit scope / publication -----------------------------------
 // Parse `git status --porcelain=v1` output. Handles modified/added/deleted/
 // untracked and `R  old -> new` renames, including C-quoted paths. Returned
