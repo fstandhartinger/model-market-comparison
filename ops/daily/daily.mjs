@@ -12,6 +12,7 @@ import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
 import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
 import { staleSources, updateCollectorHealth } from './source-health.mjs';
+import { profileRunDir } from './profile-run.mjs';
 const exec = promisify(execFile);
 // How long publication waits for the other writer's checkout to become clean before it gives up for the day.
 // Overridable for tests; the shell entry point allows 3 h in total, so 30 min is affordable.
@@ -67,13 +68,13 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     try {
       const { stdout, stderr } = await exec(file, args, { cwd, env, timeout, killSignal: 'SIGTERM', maxBuffer: 32_000_000 });
       await writeFile(join(reports, `${name.replace(/[^a-z0-9-]/gi, '-')}.log`), redact(stdout + stderr));
-      report.steps.push({ name, ok: true, duration_ms: Date.now() - begin });
+      report.steps.push({ name, ok: true, duration_ms: Date.now() - begin, started_at: new Date(begin).toISOString(), finished_at: new Date().toISOString() });
       console.log(`OK ${name}`);
       return stdout.trimEnd();
     } catch (error) {
       const detail = redact([error.stdout, error.stderr, error.message].filter(Boolean).join('\n'));
       await writeFile(join(reports, `${name.replace(/[^a-z0-9-]/gi, '-')}.log`), detail);
-      report.steps.push({ name, ok: false, duration_ms: Date.now() - begin, error: detail.slice(-3000) });
+      report.steps.push({ name, ok: false, duration_ms: Date.now() - begin, started_at: new Date(begin).toISOString(), finished_at: new Date().toISOString(), error: detail.slice(-3000) });
       throw new Error(`${name} FAILED: ${detail.slice(-1800)}`);
     }
   };
@@ -447,6 +448,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   ].join('\n') + '\n';
   await writeFile(join(home, 'last-summary.txt'), summary);
   await writeFile(join(reports, 'summary.txt'), summary);
+  // CR-73.1: every run profiles itself — stage and worker timing next to the report that
+  // produced it, so a change to the pipeline can be compared against the run before it.
+  try {
+    const timing = await profileRunDir(runDir, report);
+    await writeJSONAtomic(join(reports, 'profile.json'), timing);
+    report.profile = { wall_min: timing.run.wall_min, worker_calls: timing.workers.calls, worker_min: timing.workers.serial_min,
+      worker_share_of_wall: timing.workers.share_of_wall, worker_concurrency: timing.workers.concurrency,
+      failed_worker_min: timing.workers.failed_min, top_stages: timing.critical_path.slice(0, 5) };
+  } catch (error) { report.profile = { error: redact(String(error.message)) }; }
   await writeJSONAtomic(join(reports, 'run-report.json'), report);
   const context = { status_ok: report.exit_code === 0, rc: report.exit_code, top5: top5 ? { current: top5 } : null, datasets: { before: slim(before), after: slim(after) } };
   await writeJSONAtomic(join(reports, 'notify-context.json'), context);
