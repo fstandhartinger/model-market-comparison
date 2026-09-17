@@ -1,4 +1,5 @@
-// Iteration 91: CR-65.3 (one-sided projection), CR-65.4 (insufficient-evidence band), CR-65.10 (preliminary basis) — live, 1440/390, light/dark.
+// Iteration 91: CR-65.3 (one-sided projection), CR-65.4 (insufficient-evidence band), CR-65.10 (preliminary basis),
+// CR-65.13 (OpenRouter default reasoning effort), CR-65.6 (bootstrap-gated tags) — live, 1440/390, light/dark.
 // Usage: node verify-cr-65-iter91.mjs <base> <outdir> [expected-revision-prefix]
 import { createRequire } from 'node:module';
 import { readFileSync } from 'node:fs';
@@ -31,6 +32,20 @@ check('CR-65.3: gpt-5.6-luna::non-reasoning (raised 55.2 → 64.5 before) keeps 
 // CR-65.10: the API accepts the new basis filter (no preliminary rows are published yet).
 const prelim = await json('/api/benchmark-scores?basis=preliminary&limit=5');
 check('CR-65.10: /api/benchmark-scores accepts basis=preliminary', Array.isArray(prelim.observations), { status: prelim.status, total: prelim.total });
+
+// CR-65.13: OpenRouter's GPQA/τ² runs are not on the three non-reasoning rows; DeepSeek V4 Flash's run sits on ::high.
+const orOn = async (id) => ((await json(`/api/benchmark-scores?model_id=${encodeURIComponent(id)}&limit=500`)).observations || []).filter((o) => o.benchmark_id.startsWith('openrouter-')).map((o) => o.benchmark_id.split('::')[0]);
+const nonReasoning = {};
+for (const id of ['deepseek-v4-flash::non-reasoning', 'gemini-2.5-flash::non-reasoning', 'qwen3.5-35b-a3b::non-reasoning']) nonReasoning[id] = await orOn(id);
+const flashHigh = await orOn('deepseek-v4-flash::high');
+check('CR-65.13: no OpenRouter run on the non-reasoning rows; DeepSeek V4 Flash GPQA/τ² on ::high', Object.values(nonReasoning).every((l) => l.length === 0) && flashHigh.includes('openrouter-gpqa-diamond') && flashHigh.includes('openrouter-tau2-bench-airline'), { nonReasoning, flashHigh });
+
+// CR-65.6: every tagged row carries an interval whose lower end is above the catalog average; GPT-6 Astra untagged.
+const bmx = await json('/api/page-data/benchmaxxing');
+const taggedRows = (bmx.rows || []).filter((r) => r.level);
+check('CR-65.6: tagged Benchmaxxing rows have an 80 % interval above the catalog average; GPT-6 Astra untagged',
+  typeof bmx.tagAverage === 'number' && taggedRows.length > 0 && taggedRows.every((r) => r.interval && r.interval.lower > bmx.tagAverage) && !(bmx.rows || []).some((r) => r.id.startsWith('gpt-6-astra') && r.level),
+  { average: bmx.tagAverage, tagged: taggedRows.map((r) => `${r.id}:${r.level}:${r.interval?.lower?.toFixed(1)}`) });
 
 // The first 30 composite rows of the Overview's default order hold no thin row while measured rows remain.
 const current = [...local.values()].filter((m) => !m.deprecated);
@@ -72,10 +87,17 @@ try {
     await page.screenshot({ path: `${OUT}/model-adjusted-${w}-${scheme}.png` });
     check(`CR-65.3 ${tag}: model page says "adjusted from" for a lowered row`, /^adjusted from \d+(\.\d)?/.test(adj), adj);
 
+    // CR-65.6: /benchmaxxing opens on the tagged models; their pills carry a level.
+    await page.goto(`${BASE}/benchmaxxing`, { waitUntil: 'domcontentloaded' }); await settle(page);
+    const pills = await page.locator('table .bh-signal-pill').evaluateAll((els) => els.map((e) => e.getAttribute('data-level')));
+    await page.screenshot({ path: `${OUT}/benchmaxxing-${w}-${scheme}.png` });
+    check(`CR-65.6 ${tag}: /benchmaxxing lists the gated tags (strong/weak pills, at most ${taggedRows.length})`, pills.length > 0 && pills.length <= taggedRows.length && pills.every((l) => l === 'strong' || l === 'weak'), { pills });
+
     // /about copy.
     await page.goto(`${BASE}/about`, { waitUntil: 'domcontentloaded' }); await settle(page);
     const about = await page.locator('main').innerText();
     check(`CR-65.3/65.4 ${tag}: /about describes the one-sided adjustment and the evidence band`, /better-measured model is never moved/.test(about) && /insufficient evidence/.test(about) && !/smallest symmetric amount/.test(about), '');
+    check(`CR-65.6 ${tag}: /about names the bootstrap interval rule`, /80 % bootstrap\s+interval/.test(about) && /lies above the catalog average/.test(about), '');
 
     check(`${tag}: no page errors`, errors.length === 0, errors.slice(0, 3));
     await ctx.close();
