@@ -37,7 +37,7 @@ test('CR-67.4: prefetches, assets, APIs, bots, non-GET and GPC/DNT requests are 
 
 test('CR-67.4: unknown routes fold into one row and deep paths are truncated', () => {
   assert.equal(normalisePath('/wp-login.php'), null);
-  assert.equal(normalisePath('/wp-admin/setup'), '(other)');
+  assert.equal(normalisePath('/wp-admin/setup'), '(unknown route)');
   assert.equal(normalisePath('/models/a/b/c/d'), '/models/a/b');
   assert.equal(normalisePath('/benchmarks/'), '/benchmarks');
 });
@@ -102,6 +102,10 @@ test('CR-67.4: the operator report returns aggregates, folds rows below 3 and ha
     ? Array.from({ length: 27 }, (_, i) => ({ path: `/p${i}`, views: 100 - i, visits: 1 })) : [] }), 7);
   assert.equal(many.top_pages.length, 26);
   assert.deepEqual(many.top_pages.at(-1), { path: '(other)', views: 75 + 74, visits: 2 });
+  // The stored unknown-route bucket keeps its own name, so it never collides with the report's "(other)" row.
+  const mixed = await visitReport(async (sql) => ({ rows: sql.includes('GROUP BY path')
+    ? [{ path: normalisePath('/wp-admin/x'), views: 10, visits: 8 }, { path: '/', views: 9, visits: 7 }, { path: '/rare', views: 1, visits: 1 }] : [] }), 7);
+  assert.deepEqual(mixed.top_pages.map((r) => r.path), ['(unknown route)', '/', '(other)']);
 });
 
 test('CR-67.4/67.6: the site ships no client analytics, so no consent banner is needed', () => {
