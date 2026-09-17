@@ -1,10 +1,42 @@
 "use client";
-import { useEffect, useId, useRef, useState } from "react";
+import { useEffect, useId, useRef, useState, useSyncExternalStore } from "react";
 import { createPortal } from "react-dom";
 
 const FOCUSABLE = 'a[href], button:not([disabled]), input:not([disabled]), select:not([disabled]), textarea:not([disabled]), [tabindex]:not([tabindex="-1"])';
 /** Long enough to cross the 8 px gap between the (i) and its panel, short enough not to feel sticky. */
 const CLOSE_DELAY_MS = 300;
+
+/** F-111 (Fable pass 20): one shared `(hover: hover) and (pointer: fine)` subscription for every (i) on the page.
+ *  Each InfoTip used to add its own listener; a phone full-page screenshot flips the query back and forth, and dozens of
+ *  synchronous updates in one burst hit React's update-depth limit (#185). Now a change is read once per animation frame
+ *  and subscribers are told only when the value really changed. */
+const PRECISE_QUERY = "(hover: hover) and (pointer: fine)";
+let preciseValue = false;
+let preciseFrame: number | null = null;
+let preciseMq: MediaQueryList | null = null;
+const preciseListeners = new Set<() => void>();
+const onPreciseChange = () => {
+  if (preciseFrame != null) return;
+  preciseFrame = window.requestAnimationFrame(() => {
+    preciseFrame = null;
+    const next = preciseMq?.matches ?? false;
+    if (next === preciseValue) return;
+    preciseValue = next;
+    preciseListeners.forEach((fn) => fn());
+  });
+};
+const subscribePrecise = (fn: () => void) => {
+  if (!preciseMq) { preciseMq = window.matchMedia(PRECISE_QUERY); preciseValue = preciseMq.matches; preciseMq.addEventListener("change", onPreciseChange); }
+  preciseListeners.add(fn);
+  return () => {
+    preciseListeners.delete(fn);
+    if (!preciseListeners.size && preciseMq) {
+      preciseMq.removeEventListener("change", onPreciseChange); preciseMq = null;
+      if (preciseFrame != null) { window.cancelAnimationFrame(preciseFrame); preciseFrame = null; }
+    }
+  };
+};
+const getPrecise = () => (preciseMq ? preciseValue : window.matchMedia(PRECISE_QUERY).matches);
 
 const tabbables = (root: ParentNode) => [...root.querySelectorAll<HTMLElement>(FOCUSABLE)]
   .filter((el) => el.getClientRects().length > 0 && !el.closest("[inert], [aria-hidden='true']"));
@@ -15,7 +47,7 @@ const tabbables = (root: ParentNode) => [...root.querySelectorAll<HTMLElement>(F
  *  Which one appears is decided by the input device, not by a width breakpoint: a
  *  hover panel is unreachable without a pointer, and a modal is the wrong weight
  *  for a mouse. `(hover: hover) and (pointer: fine)` is the only reliable signal for
- *  that. The media query is read after mount so SSR and the first client render agree.
+ *  that. The media query is read through a shared external store whose server snapshot is `false`, so SSR and hydration agree.
  *
  *  CR-53 (user report 2026-09-16: "the information window doesn't stay open"): many panels
  *  hold links (How we calculate, AA/Epoch credits), so on pointer devices the panel is a real
@@ -32,7 +64,7 @@ const tabbables = (root: ParentNode) => [...root.querySelectorAll<HTMLElement>(F
  *  labelled non-modal `role="dialog"`. Touch keeps the modal with its ✕, which a tap on
  *  the backdrop or Escape also closes. */
 export function InfoTip({ title, children, label }: { title: string; children: React.ReactNode; label?: string }) {
-  const [precise, setPrecise] = useState(false);
+  const precise = useSyncExternalStore(subscribePrecise, getPrecise, () => false);
   const [open, setOpen] = useState(false);
   const [interactive, setInteractive] = useState(false);
   const dialog = useRef<HTMLDialogElement>(null);
@@ -45,14 +77,6 @@ export function InfoTip({ title, children, label }: { title: string; children: R
   const quietFocus = useRef(false);
   const [tooltipPosition, setTooltipPosition] = useState<{ left: number; top: number } | null>(null);
   const id = useId();
-
-  useEffect(() => {
-    const mq = window.matchMedia("(hover: hover) and (pointer: fine)");
-    const apply = () => setPrecise(mq.matches);
-    apply();
-    mq.addEventListener("change", apply);
-    return () => mq.removeEventListener("change", apply);
-  }, []);
 
   useEffect(() => { if (open && !precise) dialog.current?.showModal(); }, [open, precise]);
 
