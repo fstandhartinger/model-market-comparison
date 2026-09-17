@@ -126,6 +126,8 @@ and the counts line under it keeps the page honest (P4).
 
 ### F-107 [judgment] — Compare radar: one convention, percentile among current models; native scale as the toggle (CR-65.17)
 
+*Status 2026-09-17 (iteration 93, Claude Opus 5): implemented in `9671d17`, live on both hosts, `bin/verify-iter93-fable20.mjs` 62/62 per host (`/opt/benchmarkheaven/state/ux-evidence/iter93/live/`). Kept the "Full scale" unzoom checkbox beside the new control; sentence says "models measured on that benchmark". Needs a non-implementer verifier.*
+
 *Where:* `lib/radar.mjs` (`radarScale`, `scaleNote`, `radarWindow`), `components/BenchmarkRadar.tsx` (`seriesFor`,
 `SimpleRadar` ring labels, the "Full 0–100 scale" checkbox, the InfoTip and "How to read this chart" copy, the exact-values
 table), `lib/benchmax.mjs` (`percentileFor` — reuse, do not copy), tests in `test/radar*.test.mjs`.
@@ -156,6 +158,8 @@ at p ≥ 95 on AA Intelligence Index (live DOM check); a screenshot at 1440/390 
 prefix; the "Show exact radar values" table lists both numbers; `npm test` and `tsc` green.
 
 ### F-108 [judgment] — Benchmaxxing radar tells the story: zero ring, labels, the model's average as reference, honest copy (CR-65.18)
+
+*Status 2026-09-17 (iteration 93): implemented in `9671d17`; in Compare's two-series Detailed radar the average labels sit in one line under the chart instead of on the spoke. Needs a non-implementer verifier.*
 
 *Where:* `components/TopicRadar.tsx` (geometry, rings, labels, the `Other` sector), `components/BenchmaxxingReport.tsx`
 (the `data-jagged-note` line, the axes sentence, series average), `lib/benchmax.mjs` `groupedRadarProfile` (axis order of
@@ -197,6 +201,8 @@ strings; the signal values themselves are unchanged (this directive touches pres
 
 ### F-109 [mechanical] — Overview footnote: two sentences visible, the legend behind a disclosure
 
+*Status 2026-09-17 (iteration 93): implemented in `39416bd` (legend rows use the marks' own classes; Benchmaxxing definitions say "among the most uneven" instead of "top 10 %", since CR-65.6 tags need a bootstrap interval, not a rank). Needs a non-implementer verifier.*
+
 *Where:* `components/ModelExplorer.tsx` (the footnote paragraph under the table, CR-63.7/63.8 text), `app/globals.css`.
 
 *What:* Visible, one short paragraph: "Underlined prices open their inputs and sources · How we calculate adjusted cost.
@@ -217,6 +223,8 @@ at 1440; light/dark.
 
 ### F-110 [mechanical] — Benchmarks table group header stacks on narrow widths
 
+*Status 2026-09-17 (iteration 93): implemented in `39416bd`. Needs a non-implementer verifier.*
+
 *Where:* `components/ScoreRows.tsx` (`bh-cat-head`, `bh-cat-basis`, the count span), `app/globals.css`.
 
 *What:* Below 640 px the group row's stub renders three stacked lines: the group name (uppercase, as now), then "7
@@ -227,6 +235,8 @@ inline count beside the name at ≥ 640 px). No element may overlap; the sticky 
 and the basis text are both present; desktop unchanged.
 
 ### F-111 [mechanical, low] — Media-query listener must not loop
+
+*Status 2026-09-17 (iteration 93): implemented in `963881e` — InfoTip was the listener (every (i) subscribed on its own); now one shared `useSyncExternalStore` subscription coalesced per animation frame. Full-page phone screenshot: 1 error per width before (`/opt/benchmarkheaven/state/ux-evidence/iter93/f111-before/`), 0 after on both hosts. Needs a non-implementer verifier.*
 
 *Where:* the `MediaQueryList` listener that the stack in `check-error.json` enters through in the layout chunk — find it
 with a non-minified build: `next dev`, then `node ops/ux-2026-09-12/bin/check-fable-pass20-error.mjs http://127.0.0.1:3000 <out>`
