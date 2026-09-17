@@ -841,3 +841,15 @@ Florian, 17 Sep 2026 ~17:30 UTC, verbatim (German):
 > ... wir müssen jetzt auf jeden Fall noch ein paar Themen fertig bekommen, mindestens das mit den Änderungen bei Benchmaxxing und den "Insufficient evidence" Modellen (nicht mehr in eigenem Abschnitt).
 > Eventuell kannst du Dinge auch effizient in mehrere Subagenten aufteilen und parallel erledigen lassen, z.b. je Thema ein Subagent, dann der Subagent (Opus 5) ggf noch beliebig viele Subagenten mit kostenlosen oder günstigen opencode Modellen, damit wir da möglichst schnell voran kommen.
 > Vielleicht können wir für die Beschleunigung auch noch den Gauntlet Loop vorübergehend (für die nächsten paar Stunden) etwas weniger streng gestalten.
+
+
+## CR-20260917i — Home page: plain-language section headers, green-line caption, "Capability Score" column → CR-75
+(Filed as CR-20260917i/CR-75 because CR-20260917g/h and CR-73/74 were already used by the daily-efficiency request and the launch sprint.)
+Florian, 17 Sep 2026 ~17:45 UTC, verbatim (English), with a 390 px screenshot of benchmarkheaven.com Simple mode:
+
+> one more important change request: a friend told me he didn't immediately understand the page that opens when naviagating to benchmarkheaven.com. I think the reason is we are lacking simle explanatory headers/captions above the section with the pareto chart and the section with the model list and capcbility score and cost columns.
+> I guess these headers would say something like (please find better phrasing if needed):
+> - "Strongest model for each price"
+> - "Most capable models and their actual costs"
+> And maybe directly below the pareto chart a short sentence saying something like: "all models on the green line are leading by capability in their cost class" (or better phrased if you have a good idea - it should be short and easy to grasp)
+> And I think that column that just shows "Score" currently, and below that in parentheses "(Composite)" - maybe we can rename "Score" to "Capability Score" and instead of just "Composite" show that full title "Benchmark Heaven Main Composite Score)", maybe in two lines - or if you think that's too much text, maybe just "Main Composite Score".

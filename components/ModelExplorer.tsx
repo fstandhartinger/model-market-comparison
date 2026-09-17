@@ -342,7 +342,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
           behind each one while it is moved. Advanced keeps the full toolbar. */}
       {/* F-13: the sliders and the value map form one card now; ShortlistControls owns the layout. */}
-      {/* CR-73.1: plain-language section headers, so a first-time visitor knows what each block answers. */}
+      {/* CR-75.1: plain-language section headers, so a first-time visitor knows what each block answers. */}
       {simple && <SectionHeader title="The most capable model at every price" caption="Set a minimum score and a budget — see who wins." />}
       {simple && (
         <ShortlistControls
@@ -446,7 +446,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             {/* F-46 (Fable pass 6): the Adjusted Cost header ("ADJUSTED / COST ▼" + (i)) needs
                 86 px of content room; at 27 % of a 356 px phone table the (i) overflowed the
                 card by 4 px. Model gives up 4 %, Cost takes it. */}
-            {/* CR-73.3: "CAPABILITY SCORE (i)" needs the widest word plus the (i) on one line, so on phones Score
+            {/* CR-75.3: "CAPABILITY SCORE (i)" needs the widest word plus the (i) on one line, so on phones Score
                 takes 4 % from Model and the headers drop their letter-spacing below md. */}
             <col className="w-[38%] md:w-[30%]" />
             <col className="w-[31%] md:w-[13%]" />
@@ -458,7 +458,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           <thead><tr>
             <Th label="Model" k="name" />
             <Th label="Org" k="org" hideBelowMd />
-            {/* CR-73.3: the column says what the number measures; the Composite's full name sits in the tooltip title. */}
+            {/* CR-75.3: the column says what the number measures; the Composite's full name sits in the tooltip title. */}
             <Th label="Capability Score" k="score" right sub={score === "composite" ? "Main Composite Score" : SCORE_SHORT_LABELS[score]} info={<InfoTip title={score === "composite" ? "Capability Score — Benchmark Heaven Main Composite Score" : `Capability Score — ${SCORE_LABELS[score]}`} label="the Capability Score column">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">{scoreLabel(score, data.sourceDates)}</span></InfoTip>} />
             <Th label="Adjusted Cost" k="cost" right sub="modeled $/task" info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
             <Th label="# benchmarks" k="benchmarks" right hideBelowMd />

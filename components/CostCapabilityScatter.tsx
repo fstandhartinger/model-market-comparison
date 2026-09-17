@@ -264,7 +264,7 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      {/* CR-73.2: the home page says what the green line means, in words, right under the chart. */}
+      {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
       {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption>Models on the green line are the most capable in their price range.</p>}
       {advanced && !wide && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · {logCostAxis ? "log scale" : "linear scale"}</span></div>}
     </div>;

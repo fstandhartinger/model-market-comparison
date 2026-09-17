@@ -661,3 +661,9 @@ Evidence and reference implementation (Python, reproduces the live view): `~/job
 - **CR-74.4** Main Composite − w·max(0, Benchmaxxing signal) with the smallest round w that makes GPT-6 Astra #1 over Claude Fable 5.1 (capped small; document all top-20 rank changes). Options checkbox "Include Benchmaxxing signal in the score" (default on, persisted), applied everywhere the composite is used; /about explains it.
 - **CR-74.5** Overview advanced mode: opening "Better than a model ▾" / "Evidence ▾" does not shift the row; advanced mode shows all header Options inline.
 - Gauntlet for this sprint (Florian allowed, a few hours): one independent Claude review per deploy + tests/typecheck/build + live Playwright screenshots (1440/390, light/dark).
+
+
+## CR-20260917i checklist — home page explainers (CR-75), Claude Code homepage-explainers job, 17 Sep ~18:20 UTC
+- **CR-75.1** Section headers: "The most capable model at every price" (+ one-line caption "Set a minimum score and a budget — see who wins.") above the slider/value-map card in Simple and Guided; "Most capable models and what they really cost" above the model table in Simple, Guided and Advanced. ≤ 2 lines at 390 px.
+- **CR-75.2** Directly under the home value map: "Models on the green line are the most capable in their price range." (only while the Pareto line is shown); the small top line no longer repeats "green line = Pareto"; data attribution (Artificial Analysis, Epoch AI CC BY) stays visible. Charts page wording unchanged.
+- **CR-75.3** Table column "Score (Composite)" → "Capability Score" with subline "(Main Composite Score)" (other selected scores keep their short name); (i) tooltip title names "Benchmark Heaven Main Composite Score". Header ≤ 2 label lines at 390 px, no overflow. og:title unchanged.
