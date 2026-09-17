@@ -217,7 +217,7 @@ async function mapLimit(items, limit, fn) {
   return out;
 }
 
-async function fetchOpenRouter() {
+async function fetchOpenRouter({ efficiency = true } = {}) {
   console.log("→ OpenRouter model catalog …");
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, 'openrouter.json'), 'utf8')); }
@@ -331,6 +331,8 @@ async function fetchOpenRouter() {
   console.log(`  wrote ${enriched.length} OpenRouter models with provider endpoints`);
   // Four model pages in rotation, then the global fallback. New observations
   // retain their own dates and never imply a fresh full-population scrape.
+  // CR-66.7: a prices-only run (`or-prices`) keeps the efficiency observations with their own dates.
+  if (!efficiency) return;
   for (const script of ["fetch-openrouter-efficiency.mjs", "fetch-chutes-efficiency.mjs"]) {
     const { stdout, stderr } = await promisify(execFile)(process.execPath, [join(__dirname, script)], { timeout: 600000, maxBuffer: 2000000 });
     process.stdout.write(stdout);
@@ -344,6 +346,8 @@ async function main() {
   if (!which || which === "aa") await fetchArtificialAnalysis();
   if (!which || which === "da") await fetchDesignArena();
   if (!which || which === "or") await fetchOpenRouter();
+  if (which === "or-prices") await fetchOpenRouter({ efficiency: false });
+  if (which && !["aa", "da", "or", "or-prices"].includes(which)) throw new Error(`Unknown source ${which}`);
   console.log("✓ live fetch complete");
 }
 

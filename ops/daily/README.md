@@ -15,6 +15,13 @@ publishes, and the verdict is stored in `run-report.json` (`gate`). OpenRouter i
 60 s re-check are recorded as dated withdrawals in `data/raw/openrouter.json` (`withdrawals`, never priced) and listed in the
 summary; only more than max(10 models, 2 %) or 5 % of endpoints fails the run (CR-66.1).
 
+`--scope prices` (CR-66.7) is the partial run for price changes: OpenRouter models/endpoints (without the usage/cache
+pages) and the provider catalogs only; no workers, no source review, no benchmark refresh. Build, tests, typecheck,
+prerender and the publish gate run as usual. OpenRouter must be today's capture and every benchmark and efficiency source
+must keep the date it had (`sourceFreshnessErrors`); a commit that touches a benchmark or efficiency file is refused
+(`pricesScopeViolations`). The price watch starts it as `gated-run.sh --price-drift --scope prices` (`run.sh` passes the
+flag through).
+
 A dry run performs collection, source review, dataset generation, production build,
 unit tests, typecheck and prerender checks in an isolated work directory. It suppresses
 Git publication and Telegram sends. Inspect the printed run directory and summary.
