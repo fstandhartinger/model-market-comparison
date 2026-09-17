@@ -266,9 +266,9 @@ export default async function AboutPage() {
         measured model and is no worse in any shared slot, the less-covered model is lowered to 0.1 points
         below it; the better-measured model is never moved, so adding a thinly measured row cannot change a
         well-measured score. The unadjusted base and any adjustment are shown separately in model details,
-        and the model page says &ldquo;adjusted from&rdquo; when the change exceeds one point. Ranked by the
-        composite, models with fewer than three of the seven inputs (exact or attached) sit in an
-        &ldquo;insufficient evidence&rdquo; band below every measured model and show their input count. A model with no
+        and the model page says &ldquo;adjusted from&rdquo; when the change exceeds one point. Models with fewer
+        than three of the seven inputs (exact or attached) are ranked by their score like every other model, but
+        carry a &ldquo;Thin data&rdquo; badge with their input count: treat their position as uncertain. A model with no
         reliable observed slot receives the neutral fallback 50; its zero evidence coverage stays
         distinct from a measured score and is excluded from capability charts. The <b>#benchmarks</b>
         column counts the distinct versioned benchmarks a model has a usable result for, which is a

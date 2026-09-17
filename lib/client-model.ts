@@ -152,20 +152,22 @@ export function isThinComposite(model: Pick<ClientModel, "composite_coverage" | 
   return model.composite_coverage + model.composite_attached < 3;
 }
 
-/** CR-65.4 (data & math gauntlet C5): ranked by the Composite, rows with fewer than three of seven inputs sit in
- *  an "insufficient evidence" band below every measured row, in either direction; inside each band the value
- *  decides. Other scores are single measurements and sort by value only. Missing values sink as before. */
+/** CR-65.4 (data & math gauntlet C5), reversed by CR-74.3 (= CR-70): every row sorts by its value alone, in either
+ *  direction — thin Composites (isThinComposite) are no longer demoted into a separate band; the table marks them
+ *  with a "Thin data" badge instead. Missing values sink as before. The model argument stays for call sites. */
 export function compareByScore(
-  a: { m: Pick<ClientModel, "composite_coverage" | "composite_attached">; sc: number | null | undefined },
-  b: { m: Pick<ClientModel, "composite_coverage" | "composite_attached">; sc: number | null | undefined },
-  score: ScoreKey,
+  a: { m?: Pick<ClientModel, "composite_coverage" | "composite_attached">; sc: number | null | undefined },
+  b: { m?: Pick<ClientModel, "composite_coverage" | "composite_attached">; sc: number | null | undefined },
+  _score: ScoreKey,
   dir: 1 | -1,
 ): number {
-  if (score === "composite") {
-    const band = Number(isThinComposite(a.m)) - Number(isThinComposite(b.m));
-    if (band) return band;
-  }
   return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
+}
+
+/** CR-74.3: the uncertainty sentence behind the "Thin data" badge (title, screen readers). It counts the Composite
+ *  inputs behind the score, not benchmark_count: a model can have many results outside the seven Composite slots. */
+export function thinCompositeNote(model: Pick<ClientModel, "composite_coverage" | "composite_attached">): string {
+  return `Based on only ${model.composite_coverage + model.composite_attached} of 7 Composite inputs — treat this rank as uncertain`;
 }
 
 function offerKey(platform: string, provider: string) {
