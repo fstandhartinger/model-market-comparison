@@ -2,12 +2,13 @@ import type { Dataset, ModelRow, ScoreKey, TokenEfficiency, EfficiencyDataset } 
 import { compositeEvidenceCount, computeCompositeScoreDetails } from "./composite.mjs";
 import { deterministicFamilyRepresentative } from "./family-representative.mjs";
 import type { BenchmarkComparison } from "./benchmark-comparison.mjs";
+import type { BenchmaxxingLevel } from "./benchmaxxing-levels.mjs";
 
 export interface ClientBenchmaxxing {
   score: number | null;
   signal: boolean;
-  /** CR-42.2: 'strong' = the tag (top BENCHMAXX_TAG_SHARE), 'weak' = the next band up to BENCHMAXX_WEAK_SHARE. */
-  level?: "strong" | "weak" | null;
+  /** CR-74.1: the published tag level (lib/benchmaxxing-levels.mjs): light ≥ +3, medium ≥ +6, strong ≥ +12, guards applied. */
+  level?: BenchmaxxingLevel | null;
   /** F-104: the family's scored representative — the Benchmaxxing report whose score the tag shows. */
   reportId?: string;
 }
@@ -105,7 +106,7 @@ export interface ClientModel {
   /** Coverage-aware topic-local inconsistency signal. Estimates are never used. */
   benchmaxxing_score?: number | null;
   benchmaxxing_signal?: boolean;
-  benchmaxxing_level?: "strong" | "weak" | null;
+  benchmaxxing_level?: BenchmaxxingLevel | null;
   benchmaxxing_report_id?: string;
 }
 
@@ -246,7 +247,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
       copilot_multiplier: m.copilot?.multiplier ?? null,
       copilot_usd_per_request: m.copilot?.usd_per_request ?? null,
       ...(Object.prototype.hasOwnProperty.call(benchmaxxing, m.id)
-        ? { benchmaxxing_score: benchmaxxing[m.id].score, benchmaxxing_signal: benchmaxxing[m.id].signal, benchmaxxing_level: benchmaxxing[m.id].level ?? (benchmaxxing[m.id].signal ? "strong" : null), benchmaxxing_report_id: benchmaxxing[m.id].reportId ?? m.id }
+        ? { benchmaxxing_score: benchmaxxing[m.id].score, benchmaxxing_signal: benchmaxxing[m.id].signal, benchmaxxing_level: benchmaxxing[m.id].level ?? null, benchmaxxing_report_id: benchmaxxing[m.id].reportId ?? m.id }
         : {}),
     };
   });

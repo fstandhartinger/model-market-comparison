@@ -165,7 +165,9 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
 .bh-alert { color: rgb(var(--warn)); background: rgb(var(--warn) / .08); }
 /* CR-15.3: a Benchmaxxing signal above the warning threshold is a pill with an icon, not colour alone. */
 .bh-signal-pill { display: inline-flex; align-items: center; gap: 4px; border: 1px solid rgb(var(--warn) / .55); border-radius: 999px; padding: 1px 8px; background: rgb(var(--warn) / .16); color: rgb(var(--warn)); font-weight: 700; line-height: 1.5; white-space: nowrap; }
-.bh-signal-pill[data-level="weak"] { border-style: dashed; background: transparent; font-weight: 600; }
+/* CR-74.1: three levels — light = dashed muted outline, medium = amber tint (the base style), very strong = solid red. */
+.bh-signal-pill[data-level="light"] { border-style: dashed; border-color: var(--control-border); background: transparent; color: var(--muted); font-weight: 600; }
+.bh-signal-pill[data-level="strong"] { border-color: var(--negative); background: var(--negative); color: rgb(var(--panel)); }
 .bh-signal-pill[data-large] { gap: 8px; padding: 4px 16px; font-size: 40px; line-height: 1.15; }
 /* CR-15.1: cost cell tag for a model notably cheap or pricey for its score (arrow + words, not colour alone). */
 .bh-value-tag { display: inline-flex; align-items: center; gap: 2px; margin-top: 0; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 600; line-height: 16px; white-space: nowrap; }
@@ -184,7 +186,9 @@ button:disabled, select:disabled { cursor: not-allowed; opacity: .55; }
    (strong) — under its own class so value-tag checks never count it. It is a link: hover underlines the words, the
    focus ring is the site's accent outline. Below 1024 px it drops the score, like the value tags drop their words. */
 .bh-bmx-tag { display: inline-flex; align-items: center; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; line-height: 16px; vertical-align: middle; text-decoration: none; color: rgb(var(--warn)); background: rgb(var(--warn) / .14); font-weight: 500; }
-.bh-bmx-tag[data-level="strong"] { color: rgb(var(--panel)); background: rgb(var(--warn)); font-weight: 700; }
+/* CR-74.1: light = muted dashed outline ("Benchmaxxing?"), medium = warn tint (base), very strong = solid red, bold. */
+.bh-bmx-tag[data-level="light"] { color: var(--muted); background: transparent; box-shadow: inset 0 0 0 1px var(--control-border); }
+.bh-bmx-tag[data-level="strong"] { color: rgb(var(--panel)); background: var(--negative); font-weight: 700; }
 .bh-bmx-tag:hover .bh-bmx-words { text-decoration: underline; }
 .bh-bmx-tag:focus-visible { outline: 2px solid rgb(var(--accent)); outline-offset: 2px; }
 @media (max-width: 1023px) { .bh-bmx-tag { padding: 0 4px; } .bh-bmx-tag .bh-bmx-score { display: none; } }

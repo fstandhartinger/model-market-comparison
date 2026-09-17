@@ -3,6 +3,7 @@ import Link from "next/link";
 import { previewMetadata } from "../../../lib/seo";
 import { benchmaxxingByFamily } from "../../../lib/page-data";
 import { SignalValue } from "../../../components/SignalValue";
+import { benchmaxxingLevelInfo } from "../../../lib/benchmaxxing-levels.mjs";
 import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
 import { num, pct, orgColor, usdPerM } from "../../../lib/format";
@@ -129,7 +130,7 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
           {clientModel.scores.composite != null && clientModel.composite_base != null && Math.abs(clientModel.scores.composite - clientModel.composite_base) > 1
             && <p className="text-xs text-gray-500" data-bh-composite-adjusted title="A better-measured model with results at least as good on every input this model has keeps the higher score">adjusted from {num(clientModel.composite_base)}: a better-measured model that is at least as good on each of these inputs ranks above it</p>}
           {bmx?.score != null && bmx.level && <p className="mt-2 text-sm" data-bh-model-benchmaxxing>
-            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} /> <span className="bh-muted">· {bmx.level}</span>{" "}
+            <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} /> <span className="bh-muted">· {benchmaxxingLevelInfo(bmx.level)?.label}</span>{" "}
             <Link href={`/benchmaxxing?model=${encodeURIComponent(bmx.reportId)}#radar`} className="text-accent underline">report →</Link>
           </p>}
           <MiniRadar axes={radarAxes.map(({ label, value }) => ({ label, value }))} />

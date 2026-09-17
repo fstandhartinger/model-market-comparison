@@ -16,6 +16,7 @@ import { ShortlistControls } from "./ShortlistControls";
 import { CostCapabilityScatter } from "./CostCapabilityScatter";
 import { SubscriptionsPanel } from "./SubscriptionsPanel";
 import { preferredVariantIds, collapsedName, selectableModels } from "../lib/variants";
+import { BENCHMAXX_GUARD_TEXT, BENCHMAXX_LEVELS, benchmaxxingLevelInfo, benchmaxxingThresholdText, type BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
 import { capShortlist } from "../lib/shortlist.mjs";
 import { SIMPLE_LIMIT, SIMPLE_SCORE_CHOICES, activeCostMeasure, costMeasureChoices, derivedMinScore, topCandidates } from "../lib/value-map.mjs";
 import { FIXED_BLENDS } from "../lib/effective-cost.mjs";
@@ -325,8 +326,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5">
       {showThin && <><dt><span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 inputs</dd></>}
-      {showBmx && <><dt data-bh-tag-legend="benchmaxxing"><span className="bh-bmx-tag" data-level="strong">⚠&nbsp;Benchmaxxing</span></dt><dd>Ranks clearly higher on famous public benchmarks than on held-out ones; opens the model&apos;s radar</dd>
-        <dt><span className="bh-bmx-tag" data-level="weak">△&nbsp;Benchmaxxing</span></dt><dd>Same lean, less clearly; a screening flag, not proof</dd></>}
+      {/* CR-74.1: one legend line per Benchmaxxing level, strongest first, with its threshold and the guards. */}
+      {showBmx && <>{[...BENCHMAXX_LEVELS].reverse().map((x, k) => <Fragment key={x.level}><dt data-bh-tag-legend={k === 0 ? "benchmaxxing" : undefined}><span className="bh-bmx-tag" data-level={x.level}><BenchmaxxingTagFace level={x.level} /></span></dt><dd>{x.title}: signal ≥ +{x.min}{k === 0 ? "; ranks higher on famous public benchmarks than on held-out ones; opens the model's radar" : ""}</dd></Fragment>)}
+        <dt className="sr-only">Guards</dt><dd className="col-start-2 text-gray-400">Every level {BENCHMAXX_GUARD_TEXT}; a screening flag, not proof</dd></>}
       <dt data-bh-tag-legend="value"><span className="bh-value-tag" data-kind="cheap" data-level="strong">↓ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="strong">↑ pricier</span></dt><dd>Cost well below / above models with a similar score in this list</dd>
       <dt><span className="bh-value-tag" data-kind="cheap" data-level="weak">↘ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="weak">↗ pricier</span></dt><dd>Somewhat below / above</dd>
     </dl>
@@ -668,21 +670,27 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   );
 }
 
-/** F-104 / CR-42.2 + CR-48.1: the Benchmaxxing tag is a real link to the model's radar, in the F-103 emphasis
- *  vocabulary (solid = strong, tint = weak). It never expands the row: click/Enter bubble as a click and are
- *  stopped here; Space (which does not activate links natively) navigates too. */
-function BenchmaxxingTag({ id, name, level, score }: { id: string; name: string; level: "strong" | "weak"; score: number | null }) {
+/** CR-74.1: the tag's visible face — light "Benchmaxxing?", medium "⚠ Benchmaxxing", very strong "⚠⚠ Benchmaxxing". */
+function BenchmaxxingTagFace({ level, value = null }: { level: BenchmaxxingLevel; value?: string | null }) {
+  return <>{level !== "light" && <span aria-hidden="true">{benchmaxxingLevelInfo(level)!.mark}&nbsp;</span>}<span className="bh-bmx-words">Benchmaxxing{level === "light" ? "?" : ""}</span>{value && <span className="bh-bmx-score">&nbsp;{value}</span>}</>;
+}
+
+/** F-104 / CR-42.2 + CR-48.1: the Benchmaxxing tag is a real link to the model's radar. CR-74.1: three levels (light,
+ *  medium, very strong). It never expands the row: click/Enter bubble as a click and are stopped here; Space (which
+ *  does not activate links natively) navigates too. */
+function BenchmaxxingTag({ id, name, level, score }: { id: string; name: string; level: BenchmaxxingLevel; score: number | null }) {
   const href = `/benchmaxxing?model=${encodeURIComponent(id)}#radar`;
   const value = score != null ? score.toFixed(1) : null;
+  const info = benchmaxxingLevelInfo(level)!;
   return <Link href={href} className="bh-bmx-tag ml-2" data-level={level}
-    aria-label={`Benchmaxxing signal, ${level}${value ? ` (${value})` : ""} — open the report for ${name}`}
-    title={`Benchmaxxing signal ${level}${value ? ` ${value}` : ""}: strong at a score of +10 or more, weak above +5, on models with n ≥ 10, ranked by how much higher they place on famous public benchmarks than on held-out ones of the same topic, with the gap above zero when resampled — a screening flag, not evidence of intent. Opens the radar.`}
+    aria-label={`Benchmaxxing signal, ${info.label}${value ? ` (${value})` : ""} — open the report for ${name}`}
+    title={`${info.title} Benchmaxxing signal${value ? ` ${value}` : ""} (${benchmaxxingThresholdText()}; a tag ${BENCHMAXX_GUARD_TEXT}): ranks higher on famous public benchmarks than on held-out ones of the same topic — a screening flag, not evidence of intent. Opens the radar.`}
     onClick={(e) => e.stopPropagation()}
     onKeyDown={(e) => {
       if (e.key === "Enter") e.stopPropagation();
       if (e.key === " ") { e.preventDefault(); e.stopPropagation(); e.currentTarget.click(); }
     }}>
-    <span aria-hidden="true">{level === "strong" ? "⚠" : "△"}&nbsp;</span><span className="bh-bmx-words">Benchmaxxing</span>{value && <span className="bh-bmx-score">&nbsp;{value}</span>}
+    <BenchmaxxingTagFace level={level} value={value} />
   </Link>;
 }
 

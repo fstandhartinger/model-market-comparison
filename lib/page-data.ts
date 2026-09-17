@@ -8,6 +8,8 @@ import { importantMatrix } from "./benchmark-matrix.mjs";
 import { selectBenchmarkView, selectFamilyBenchmarkView } from "./benchmark-view.mjs";
 import { defaultComparePicks, withRadarPercentiles } from "./radar.mjs";
 import { DEFAULT_BENCHMAXXING_PRESET, presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets";
+import { preferredVariantIds } from "./variants";
+import { BENCHMAXX_LEVELS, type BenchmaxxingLevel } from "./benchmaxxing-levels.mjs";
 
 /**
  * CR-62.1 (Florian 2026-09-16): link-preview crawlers (X, WhatsApp, Telegram, Facebook) give up on pages
@@ -45,10 +47,10 @@ async function build(key: PageDataKey): Promise<unknown> {
     // Overview carries the same tag as the dedicated Benchmaxxing page (one shared implementation
     // over the whole catalog). CR-21.1: the verdict belongs to the model (family), so every reasoning
     // variant shows its family's score and tag.
-    const { reports, tagged, weak, representatives } = benchmaxxingFamilySignals(view);
+    const { reports, levels, representatives } = benchmaxxingFamilySignals(view);
     const familyScore = new Map(reports.map(([id, report]) => [view.models.find((m) => m.id === id)?.family ?? id, report.score ?? null]));
     const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(view.models.filter((m) => familyScore.has(m.family ?? m.id))
-      .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: tagged.has(m.id), level: tagged.has(m.id) ? "strong" : weak.has(m.id) ? "weak" : null,
+      .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: levels.has(m.id), level: levels.get(m.id) ?? null,
         reportId: representatives.get(m.family ?? m.id) ?? m.id }]));
     const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
     // CR-7.1: the simple Benchmarks section gets only the "Important" rows, not the full matrix.
@@ -65,15 +67,25 @@ async function build(key: PageDataKey): Promise<unknown> {
     return { initialView, initialPicks: initialView.picks ?? [] };
   }
   // benchmaxxing
-  const compositeById = new Map(clientData(ds).models.map((m) => [m.id, m.scores.composite]));
+  const clientModels = clientData(ds).models;
+  const compositeById = new Map(clientModels.map((m) => [m.id, m.scores.composite]));
+  // CR-74.2: a row's composite is its family's Main Composite exactly as the collapsed Overview shows it (the
+  // preferred variant for the composite); null when that variant has no composite input, so Top 50 skips it.
+  const preferred = preferredVariantIds(clientModels, "composite");
+  const clientById = new Map(clientModels.map((m) => [m.id, m]));
+  const familyComposite = (id: string) => {
+    const m = clientById.get(id);
+    const shown = m ? clientById.get(preferred.get(m.family_key) ?? m.id) : undefined;
+    return shown && shown.composite_coverage > 0 ? shown.scores.composite ?? null : null;
+  };
   // CR-21.1: one row per model family (its most-covered scored variant); the tag is the family's verdict.
-  const { reports, tagged, taggedFamilies, weak, weakFamilies, average } = benchmaxxingFamilySignals(view);
+  const { reports, levels, familyLevels, average } = benchmaxxingFamilySignals(view);
   const reportsById = new Map(view.models.map((m) => [m.id, scoreBenchmaxxing(view, m.id)]));
   const models = view.models.map((m) => {
     const report = reportsById.get(m.id)!;
     return { id: m.id, name: m.name, org: m.org, composite: compositeById.get(m.id) ?? null,
-      coverageAxes: report.profile.measured, totalAxes: report.profile.total, tagged: tagged.has(m.id),
-      level: tagged.has(m.id) ? "strong" as const : weak.has(m.id) ? "weak" as const : null };
+      coverageAxes: report.profile.measured, totalAxes: report.profile.total, tagged: levels.has(m.id),
+      level: levels.get(m.id) ?? null };
   }).sort((a, b) => b.coverageAxes - a.coverageAxes || (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name));
   const byId = new Map(models.map((m) => [m.id, m]));
   const scored = reports.map(([id, report]) => ({ model: byId.get(id), report })).filter((item): item is { model: (typeof models)[number]; report: ReturnType<typeof scoreBenchmaxxing> } => Boolean(item.model && item.report.status === "scored"));
@@ -83,28 +95,30 @@ async function build(key: PageDataKey): Promise<unknown> {
   const rows: BenchmaxxingOverviewRow[] = scored.map(({ model, report }) => ({
     id: model.id, name: model.name, org: model.org, score: report.score!, comparisons: report.comparisons, topics: report.topics,
     measured: report.profile.measured, total: report.profile.total, domainSpecialization: report.domainSpecialization,
-    composite: model.composite, featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ""), tagged: tagged.has(model.id),
-    level: tagged.has(model.id) ? "strong" : weak.has(model.id) ? "weak" : null,
+    composite: familyComposite(model.id), featured: featuredFamilies.has(view.models.find((m) => m.id === model.id)?.family ?? ""), tagged: levels.has(model.id),
+    level: levels.get(model.id) ?? null,
     interval: report.interval ? { lower: report.interval.lower, upper: report.interval.upper } : null,
   }));
-  // The report opens on the first row of the default preset (CR-63.4: the strongest signal).
+  // The report opens on the first row of the default preset (CR-74.2: Featured, highest composite first).
   const defaultModel = presetRows(rows, DEFAULT_BENCHMAXXING_PRESET)[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
   const initial = defaultModel ? { id: defaultModel.id, report: scoreBenchmaxxing(view, defaultModel.id) } : null;
-  return { rows, models, initial, taggedCount: taggedFamilies.size, weakCount: weakFamilies.size, tagAverage: average };
+  // CR-74.1: tagged families per level, for the summary box.
+  const levelCounts = Object.fromEntries(BENCHMAXX_LEVELS.map((x) => [x.level, [...familyLevels.values()].filter((l) => l === x.level).length])) as Record<BenchmaxxingLevel, number>;
+  return { rows, models, initial, levelCounts, tagAverage: average };
 }
 
 /** CR-63.14: each model family's Benchmaxxing verdict (score, tag level, report model), built once per dataset
  *  version with the same function as the Overview tags. */
-let familySignals: { version: string; value: Promise<Map<string, { score: number | null; level: "strong" | "weak" | null; reportId: string }>> } | null = null;
+let familySignals: { version: string; value: Promise<Map<string, { score: number | null; level: BenchmaxxingLevel | null; reportId: string }>> } | null = null;
 export async function benchmaxxingByFamily() {
   const version = await pageDataVersion();
   if (!familySignals || familySignals.version !== version) {
     familySignals = { version, value: getBenchmarkView().then((view) => {
-      const { reports, taggedFamilies, weakFamilies, representatives } = benchmaxxingFamilySignals(view);
-      const out = new Map<string, { score: number | null; level: "strong" | "weak" | null; reportId: string }>();
+      const { reports, familyLevels, representatives } = benchmaxxingFamilySignals(view);
+      const out = new Map<string, { score: number | null; level: BenchmaxxingLevel | null; reportId: string }>();
       for (const [id, report] of reports) {
         const family = view.models.find((m) => m.id === id)?.family ?? id;
-        out.set(family, { score: report.score ?? null, level: taggedFamilies.has(family) ? "strong" : weakFamilies.has(family) ? "weak" : null, reportId: representatives.get(family) ?? id });
+        out.set(family, { score: report.score ?? null, level: familyLevels.get(family) ?? null, reportId: representatives.get(family) ?? id });
       }
       return out;
     }) };

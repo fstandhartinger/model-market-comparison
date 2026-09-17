@@ -18,5 +18,6 @@ test('CR-21.1: one Benchmaxxing row per model family; variants share the verdict
   // The representative is the variant with the most measured axes among the family's scored variants.
   const byFam = new Map();
   for (const [id, r] of reports) byFam.set(familyOf.get(id), r.profile.measured);
-  assert.ok(taggedFamilies.size >= 1 && taggedFamilies.size <= Math.ceil(reports.length * 0.1) + 1);
+  // CR-74.1: absolute thresholds, no rank share any more — only that some family is tagged and fewer than all are.
+  assert.ok(taggedFamilies.size >= 1 && taggedFamilies.size < reports.length);
 });

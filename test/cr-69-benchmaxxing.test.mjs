@@ -107,14 +107,17 @@ const HIGH = ['glm-5.2::max', 'minimax-m3::default', 'mimo-v2.5::default', 'ling
 test('CR-69.3 regression (17 Sep view): expected tags; frontier models named by Florian stay untagged', () => {
   const fam = benchmaxxingFamilySignals(fixtureView);
   const familyOf = (id) => id.split('::')[0];
-  assert.deepEqual([...fam.taggedFamilies].sort(), ['minimax-m2.7', 'nemotron-3-ultra-550b-a55b', 'qwen3.5-122b-a10b', 'qwen3.5-397b-a17b', 'qwen3.6-27b', 'qwen3.6-35b-a3b'].sort());
-  assert.deepEqual([...fam.weakFamilies].sort(), ['gemini-3.1-pro-preview', 'kimi-k2.6', 'mimo-v2.5-pro', 'mistral-medium-3.5', 'qwen3-coder-next', 'qwen3.7-max'].sort());
+  // CR-74.1: three levels (light ≥ +3, medium ≥ +6, very strong ≥ +12 on the one-decimal score), guards unchanged.
+  const at = (level) => [...fam.familyLevels].filter(([, l]) => l === level).map(([f]) => f).sort();
+  assert.deepEqual(at('strong'), ['minimax-m2.7', 'qwen3.5-122b-a10b', 'qwen3.5-397b-a17b', 'qwen3.6-35b-a3b']);
+  assert.deepEqual(at('medium'), ['gemini-3.1-pro-preview', 'kimi-k2.6', 'mimo-v2.5-pro', 'mistral-medium-3.5', 'nemotron-3-ultra-550b-a55b', 'qwen3-coder-next', 'qwen3.6-27b']);
+  assert.deepEqual(at('light'), ['gemini-3.8-flash', 'qwen3.7-max']);
   for (const id of ['gpt-6-astra::max', 'claude-opus-5::max', 'gpt-5.6-sol::max', 'claude-fable-5.1::max', 'kimi-k3::max']) {
-    assert.ok(!fam.taggedFamilies.has(familyOf(id)) && !fam.weakFamilies.has(familyOf(id)), `${id} untagged`);
+    assert.ok(!fam.taggedFamilies.has(familyOf(id)), `${id} untagged`);
   }
   const astra = scoreBenchmaxxing(fixtureView, 'gpt-6-astra::max');
   assert.ok(Math.abs(astra.score - -7.0) < 0.2, `GPT-6 Astra ${astra.score}`);
-  for (const [, r] of fam.reports) if (fam.tagged.has(r.profile.modelId) || fam.weak.has(r.profile.modelId)) assert.ok(r.interval.lower > 0);
+  for (const [, r] of fam.reports) if (fam.tagged.has(r.profile.modelId)) assert.ok(r.interval.lower > 0);
 });
 
 test("CR-69.3 regression (17 Sep view): Florian's LOW models score below his HIGH models", () => {
@@ -130,6 +133,6 @@ test("CR-69.3 regression (17 Sep view): Florian's LOW models score below his HIG
 test('CR-69.3: with no model credibly above zero nothing is tagged', () => {
   // Every board orders the models identically: no gap anywhere, so no tag (not a fixed share).
   const v = catalog(() => 50, { noise: 0 });
-  const { tagged, weak } = benchmaxxingSignals(v);
-  assert.equal(tagged.size + weak.size, 0);
+  const { tagged, levels } = benchmaxxingSignals(v);
+  assert.equal(tagged.size + levels.size, 0);
 });

@@ -1,0 +1,10 @@
+export type BenchmaxxingLevel = 'light' | 'medium' | 'strong';
+export type BenchmaxxingLevelInfo = { level: BenchmaxxingLevel; min: number; label: string; mark: string; title: string };
+export const BENCHMAXX_LIGHT_THRESHOLD: number;
+export const BENCHMAXX_MEDIUM_THRESHOLD: number;
+export const BENCHMAXX_STRONG_THRESHOLD: number;
+export const BENCHMAXX_GUARD_TEXT: string;
+export const BENCHMAXX_LEVELS: readonly BenchmaxxingLevelInfo[];
+export function benchmaxxingLevelFor(score: number | null | undefined): BenchmaxxingLevel | null;
+export function benchmaxxingLevelInfo(level: BenchmaxxingLevel | null | undefined): BenchmaxxingLevelInfo | null;
+export function benchmaxxingThresholdText(): string;

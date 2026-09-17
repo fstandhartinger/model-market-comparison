@@ -3,8 +3,9 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { TopicRadar } from './TopicRadar';
 import { SignalValue } from './SignalValue';
 import { formatRadarValue } from '../lib/radar.mjs';
+import type { BenchmaxxingLevel } from '../lib/benchmaxxing-levels.mjs';
 
-export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean; level?: 'strong' | 'weak' | null };
+export type BenchmaxxingModel = { id: string; name: string; org: string; composite: number | null; coverageAxes: number; totalAxes: number; tagged: boolean; level?: BenchmaxxingLevel | null };
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean; tier?: string; side?: 'headline' | 'heldout' | null };
 type Pair = { category: string; headline: { id: string; name: string }; heldout: { id: string; name: string }; headlinePercentile: number; heldoutPercentile: number; gap: number; cohort: number };
 export type BenchmaxxingReportData = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number };
@@ -30,7 +31,7 @@ function Drivers({ report }: { report: BenchmaxxingReportData }) {
   </div>;
 }
 
-function SignalCard({ name, slot, compare, report, level }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData; level?: 'strong' | 'weak' | null }) {
+function SignalCard({ name, slot, compare, report, level }: { name: string; slot: number; compare: boolean; report: BenchmaxxingReportData; level?: BenchmaxxingLevel | null }) {
   return <aside className="rounded-xl border border-line p-4" style={compare ? { borderLeft: `3px solid ${SERIES[slot].color}` } : undefined}>
     <p className="text-xs font-semibold uppercase tracking-wide text-gray-400">{compare ? `${String.fromCharCode(65 + slot)} · ` : ''}Benchmaxxing signal</p>
     {compare && <p className="mt-1 truncate text-sm font-medium">{name}</p>}
@@ -47,7 +48,7 @@ function SignalCard({ name, slot, compare, report, level }: { name: string; slot
 export function BenchmaxxingReport({ models, ids, initial, compare, onToggleCompare, focusOnReady = false, onFocused }: { models: BenchmaxxingModel[]; ids: string[]; initial: { id: string; report: BenchmaxxingReportData } | null; compare: boolean; onToggleCompare: () => void; focusOnReady?: boolean; onFocused?: () => void }) {
   const sectionRef = useRef<HTMLElement>(null);
   const [reports, setReports] = useState<Record<string, BenchmaxxingReportData | null>>(initial ? { [initial.id]: initial.report } : {});
-  const [loading, setLoading] = useState(false), [showAllAxes, setShowAllAxes] = useState(false);
+  const [loading, setLoading] = useState(false);
   useEffect(() => {
     const missing = ids.filter((id) => !(id in reports));
     if (!missing.length) return;
@@ -60,8 +61,8 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
   const grouped = useMemo(() => shown[0]?.report?.profile.axes.reduce<Record<string, Axis[]>>((out, axis) => { (out[axis.category] ||= []).push(axis); return out; }, {}) ?? {}, [shown[0]?.report]);
   // Every profile lists the same axes in the same topic order; align by id all the same.
   const byId = shown.map((s) => new Map((s.report?.profile.axes ?? []).map((a) => [a.id, a])));
-  const allAxes = shown[0]?.report?.profile.axes ?? [];
-  const radarAxes = showAllAxes ? allAxes : allAxes.filter((a) => byId.some((m) => { const x = m.get(a.id); return x && !x.missing; }));
+  // CR-74.2: the radar always shows the axes at least one shown model has a result for (the "Show all axes" box is gone).
+  const radarAxes = (shown[0]?.report?.profile.axes ?? []).filter((a) => byId.some((m) => { const x = m.get(a.id); return x && !x.missing; }));
   const series = shown.map((s, k) => ({ id: s.id, name: s.name, color: SERIES[k].color, dash: SERIES[k].dash, points: radarAxes.map((a) => {
     const x = byId[k].get(a.id);
     return { value: x && !x.missing ? x.value : null, label: !x || x.missing || x.value == null ? 'No measured score' : `${formatRadarValue(x.nativeValue, x.unit)} · percentile ${Math.round(x.value)}${x.observedDate ? ` · observed ${x.observedDate}` : ''}` };
@@ -83,8 +84,7 @@ export function BenchmaxxingReport({ models, ids, initial, compare, onToggleComp
     {!shown.length ? <p className="bh-muted mt-5">No model selected.</p> : loading && !ready ? <p className="bh-muted mt-5">Calculating measured-score profile…</p> : !ready ? <p className="bh-muted mt-5">Report unavailable.</p> : <div className={`mt-5 grid grid-cols-1 gap-6 ${compare ? '' : 'lg:grid-cols-[minmax(0,1fr)_300px]'}`}>
       <div>
         <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
-          {compare ? <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Chart legend">{series.map((s, k) => <li key={s.id} className="flex items-center gap-2"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg>{String.fromCharCode(65 + k)} · {s.name}</li>)}</ul> : <span className="bh-muted text-xs">{radarAxes.length} measured axes shown{showAllAxes ? ` · ${allAxes.length} total` : ''}</span>}
-          <label className="flex items-center gap-2 text-xs"><input type="checkbox" checked={showAllAxes} onChange={(e) => setShowAllAxes(e.target.checked)} />Show all {allAxes.length} axes</label>
+          {compare ? <ul className="flex flex-wrap gap-x-4 gap-y-1 text-sm" aria-label="Chart legend">{series.map((s, k) => <li key={s.id} className="flex items-center gap-2"><svg width="24" height="10" aria-hidden="true"><line x1="0" y1="5" x2="24" y2="5" stroke={s.color} strokeWidth="3" strokeDasharray={s.dash} /></svg>{String.fromCharCode(65 + k)} · {s.name}</li>)}</ul> : <span className="bh-muted text-xs">{radarAxes.length} measured axes shown</span>}
         </div>
         <p className="mb-2 text-sm font-medium" data-jagged-note>The score compares headline boards (● filled) with held-out boards (○ hollow) of the same topic; greyed points are boards the score does not use. A jagged shape between topics is specialisation, not a flag — a flag is a screen, not proof.</p>
         <TopicRadar markSides axes={radarAxes} series={series} label="Many-axis radar, ordered clockwise by related benchmark topic; gaps indicate missing measured scores. Each point is focusable and announces its value." />

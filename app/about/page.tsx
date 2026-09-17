@@ -198,8 +198,9 @@ export default async function AboutPage() {
         boards and legal, finance and medical specialist boards are left out. For every headline/held-out pair in the same
         topic (for example GPQA Diamond against CritPt in science), the model is ranked among the models that took both tests,
         and the score is the average of how much higher it ranks on the headline test, in percentile points. With few pairs
-        the score is pulled toward zero. Warning thresholds are weak: above +5; strong: +10 or more.
-        Both need at least ten comparisons and a gap that stays above zero when its benchmarks are resampled.
+        the score is pulled toward zero. Tags come in three levels on the published score (one decimal): <b>light</b> from
+        +3.0, <b>medium</b> from +6.0 and <b>very strong</b> from +12.0. Every level needs at least ten comparisons and a
+        gap that stays above zero when its benchmarks are resampled.
       </p>
       <p className="mt-2 text-sm text-gray-400">
         How to read it: plus means better on famous public tests than on tests nobody can train for, minus the other way

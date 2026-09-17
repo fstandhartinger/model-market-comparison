@@ -15,9 +15,10 @@ test("CR-43.3 / CR-69.4: topics rank by lean toward headline boards and skip top
 
 test("CR-43.3 / CR-69.4: the headline follows the published tag level, the detail names real topics with a sign", () => {
   const strong = interpretBenchmaxxing(report, "strong");
-  assert.match(strong.headline, /^Strong signal/);
+  assert.match(strong.headline, /^Very strong signal: .*\+12 or more/); // CR-74.1: three levels
   assert.equal(strong.detail, "Leans most toward headline boards: Math (23 percentile points higher on headline boards). Least: Agentic (13 percentile points higher on held-out boards).");
-  assert.match(interpretBenchmaxxing(report, "weak").headline, /^Weak signal/);
+  assert.match(interpretBenchmaxxing(report, "medium").headline, /^Medium signal: .*from \+6 to below \+12/);
+  assert.match(interpretBenchmaxxing(report, "light").headline, /^Light signal: .*from \+3 to below \+6/);
   assert.match(interpretBenchmaxxing(report, null).headline, /^No tag/);
   assert.match(interpretBenchmaxxing({ ...report, score: -7 }, null).headline, /^No tag: no sign/);
   assert.match(strong.caveat, /not proof/);

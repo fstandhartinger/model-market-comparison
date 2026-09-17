@@ -1,24 +1,26 @@
 "use client";
 import { useEffect, useRef, useState } from "react";
 import { BenchmaxxingOverview } from "./BenchmaxxingOverview";
-import { DEFAULT_BENCHMAXXING_PRESET, presetRows, presetShowing, type BenchmaxxingOverviewRow, type BenchmaxxingPreset } from "../lib/benchmaxxing-presets";
+import { DEFAULT_BENCHMAXXING_PRESET, presetRows, presetShowing, type BenchmaxxingOverviewRow, type BenchmaxxingPreset, type CompositeOf } from "../lib/benchmaxxing-presets";
+import type { BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
 import { BenchmaxxingReport, type BenchmaxxingModel, type BenchmaxxingReportData } from "./BenchmaxxingReport";
 
 /** CR-15.2/15.4 (Florian 2026-09-15): master-detail. The table (a changeable preset, Featured by
  *  default) is the master; the report follows the selected row. Compare mode keeps model A and
  *  takes the next selected row as B. `?model=` deep links (one or two) keep working. */
-export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, weakCount = 0, tagAverage, minComparisons, tagMinComparisons, minTopics }: {
+export function BenchmaxxingWorkbench({ rows, models, initial, levelCounts, tagAverage, minComparisons, tagMinComparisons, minTopics, compositeOf }: {
   rows: BenchmaxxingOverviewRow[];
   models: BenchmaxxingModel[];
   initial: { id: string; report: BenchmaxxingReportData } | null;
-  taggedCount: number;
-  /** CR-69.3: weak-tagged families, so the "no model credibly flagged" state accounts for both levels. */
-  weakCount?: number;
+  /** CR-74.1: tagged families per level. */
+  levelCounts: Record<BenchmaxxingLevel, number>;
   /** CR-65.6: catalog average of the signal; a tag needs its interval above it. */
   tagAverage: number | null;
   minComparisons: number;
   tagMinComparisons: number;
   minTopics: number;
+  /** CR-74.2: the composite the presets rank by (default row.composite); the CR-74.4 toggle passes the penalised one. */
+  compositeOf?: CompositeOf;
 }) {
   const [preset, setPreset] = useState<BenchmaxxingPreset>(DEFAULT_BENCHMAXXING_PRESET);
   const [showAll, setShowAll] = useState(false);
@@ -34,14 +36,14 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, weak
       if (!wanted.length) return;
       const unique = [...new Set(wanted)].slice(0, 2);
       setIds(unique); setCompare(unique.length === 2);
-      const place = presetShowing(rows, unique[0], DEFAULT_BENCHMAXXING_PRESET);
+      const place = presetShowing(rows, unique[0], DEFAULT_BENCHMAXXING_PRESET, compositeOf);
       if (place) { setPreset(place.preset); setShowAll(place.showAll); }
       if (location.hash === "#radar") setFocusRadar(true);
     };
     fromUrl();
     window.addEventListener("popstate", fromUrl);
     return () => window.removeEventListener("popstate", fromUrl);
-  }, [models, rows]);
+  }, [models, rows, compositeOf]);
   useEffect(() => {
     if (!touched.current) return;
     const q = new URLSearchParams(location.search); q.delete("model"); ids.forEach((id) => q.append("model", id));
@@ -64,12 +66,12 @@ export function BenchmaxxingWorkbench({ rows, models, initial, taggedCount, weak
     if (compare) { setCompare(false); setIds((old) => old.slice(0, 1)); return; }
     setCompare(true);
     // Start with the next model of the current list, so the side-by-side view is never empty.
-    setIds((old) => { const next = presetRows(rows, preset).find((r) => r.id !== old[0]); return next ? [old[0], next.id] : old; });
+    setIds((old) => { const next = presetRows(rows, preset, compositeOf).find((r) => r.id !== old[0]); return next ? [old[0], next.id] : old; });
   };
 
   return <>
     <BenchmaxxingOverview rows={rows} preset={preset} onPreset={(p) => { setPreset(p); setShowAll(false); }} selected={ids} onSelect={select} onOpenReport={openReport}
-      showAll={showAll} onShowAll={setShowAll} taggedCount={taggedCount} weakCount={weakCount} tagAverage={tagAverage} minComparisons={minComparisons} tagMinComparisons={tagMinComparisons} minTopics={minTopics} />
+      showAll={showAll} onShowAll={setShowAll} levelCounts={levelCounts} compositeOf={compositeOf} tagAverage={tagAverage} minComparisons={minComparisons} tagMinComparisons={tagMinComparisons} minTopics={minTopics} />
     <BenchmaxxingReport models={models} ids={ids} initial={initial} compare={compare} onToggleCompare={toggleCompare} focusOnReady={focusRadar} onFocused={() => setFocusRadar(false)} />
   </>;
 }
