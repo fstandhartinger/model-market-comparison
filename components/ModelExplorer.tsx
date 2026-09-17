@@ -309,14 +309,21 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // F-14: Org, # benchmarks and # providers drop out on phones (hidden below md); their
   // six-column layout and widths return at md. ('hidden' alone would also hide at md+ in a
   // different cascade order — 'hidden md:table-cell' is the standard responsive pairing.)
+  // CR-79.1 (Florian via Hermes, 17 Sep 2026: "Fix the headers"): on a phone the header cells are ~100 px wide, and
+  // "CAPABILITY SCORE" in uppercase is wider than that — at 360 px it already spilled 4 px past its cell, and with the
+  // phone's larger-text setting (1.3×, where the cell does NOT grow because its width is a percentage of the viewport)
+  // the labels ran 30–38 px outside their columns and lost their last letters. Three changes, none of which hides the
+  // header or touches the desktop layout: below md the labels drop the uppercasing (the same words, ~12 % narrower)
+  // and the cells use px-2 instead of px-3; and the label may break inside a word as a last resort (`break-words`
+  // needs `min-w-0` on the flex chain to apply), so text can never leave its own cell at any text scale.
   const Th = ({ label, k, right, sub, info, hideBelowMd }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode; hideBelowMd?: boolean }) => (
-    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`${hideBelowMd ? "hidden md:table-cell " : ""}px-3 py-2 text-xs font-semibold uppercase tracking-normal md:tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
-      <span className={`inline-flex items-center gap-0.5 ${right ? "justify-end" : ""}`}>
-        <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-normal md:tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
+    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`${hideBelowMd ? "hidden md:table-cell " : ""}px-2 py-2 md:px-3 text-xs font-semibold normal-case md:uppercase tracking-normal md:tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
+      <span className={`flex min-w-0 flex-wrap items-center gap-0.5 ${right ? "justify-end" : ""}`}>
+        <button type="button" onClick={() => onSort(k)} className="min-w-0 break-words text-inherit normal-case md:uppercase tracking-normal md:tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
         {info}
       </span>
       {/* R1.2: the active score name rides along underneath, so the header follows the selector. */}
-      {sub && <span className="block text-[10px] font-normal normal-case tracking-normal text-gray-500">({sub})</span>}
+      {sub && <span className="block break-words text-[10px] font-normal normal-case tracking-normal text-gray-500">({sub})</span>}
     </th>
   );
 

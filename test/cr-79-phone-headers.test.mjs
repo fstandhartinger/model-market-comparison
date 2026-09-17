@@ -1,0 +1,30 @@
+import test from 'node:test';
+import assert from 'node:assert/strict';
+import { readFileSync } from 'node:fs';
+
+// CR-79 (Florian via Hermes, 17 Sep 2026: "Fix the headers"): on a phone the model table's column headers ran
+// outside their cells and lost letters — worst with the phone's larger-text setting, because the header cell's
+// width is a percentage of the viewport and does not grow with the text. The header must never be hidden, and
+// its primary names must stay readable.
+const src = readFileSync(new URL('../components/ModelExplorer.tsx', import.meta.url), 'utf8');
+const th = src.slice(src.indexOf('const Th = ({ label, k, right, sub, info, hideBelowMd }'), src.indexOf('// CR-63.7: one legend'));
+
+test('CR-79.1: the phone header label can shrink and, as a last resort, break inside a word', () => {
+  assert.match(th, /className="min-w-0 break-words text-inherit/, 'the sort button may shrink and break');
+  assert.match(th, /<span className=\{`flex min-w-0 flex-wrap items-center/, 'its flex parent allows the shrink (min-w-0) and wraps the (i)');
+  assert.match(th, /\{sub && <span className="block break-words/, 'the sub-label breaks too');
+});
+
+test('CR-79.1: phones get the narrower label treatment, desktop keeps its own', () => {
+  assert.match(th, /px-2 py-2 md:px-3/, 'tighter cell padding below md, unchanged at md+');
+  assert.match(th, /normal-case md:uppercase/, 'no uppercasing on phones (same words, ~12 % narrower); uppercase returns at md');
+  assert.match(th, /tracking-normal md:tracking-wide/, 'letter-spacing unchanged from CR-75.3');
+});
+
+test('CR-79.2: the header is never hidden as a workaround, and sorting stays keyboard-operable', () => {
+  assert.ok(!/thead[^>]*hidden/.test(src), 'no hidden thead');
+  assert.match(th, /aria-sort=\{sort === k \? \(asc \? "ascending" : "descending"\) : "none"\}/, 'aria-sort preserved');
+  assert.match(th, /<button type="button" onClick=\{\(\) => onSort\(k\)\}/, 'a real button, so touch and keyboard both sort');
+  // Only the three phone columns exist below md; Org / #benchmarks / #providers stay md-only (F-14), not the rest.
+  assert.equal((th.match(/hidden md:table-cell/g) || []).length, 1, 'one hideBelowMd branch, unchanged');
+});
