@@ -173,7 +173,7 @@ test("missing slots inherit the model's mean observed percentile", () => {
   assert.equal(scores.get("target"), 75);
 });
 
-test("the mean-imputed base stays exact while the symmetric projection fixes a coverage inversion", () => {
+test("the mean-imputed base stays exact while the one-sided projection fixes a coverage inversion", () => {
   const rows = [
     { id: "common-low", scores: { aa_coding_index: 0, aa_intelligence_index: 0 } },
     { id: "sparse", scores: { aa_coding_index: 10, aa_intelligence_index: 10 } },
@@ -497,4 +497,29 @@ test("CR-65.2 live catalog: deleting a model's DesignArena or Coding Agent resul
     const mean = deltas.reduce((a, b) => a + b, 0) / deltas.length;
     assert.ok(deltas.length >= 10 && Math.abs(mean) < 2, `${keys.join("+")}: mean change ${mean.toFixed(2)} over ${deltas.length} models`);
   }
+});
+
+test("CR-65.3: adding a thin dominated row never changes any other row's final score", () => {
+  // Every value of the added rows repeats an existing value, so no distribution or linking table changes.
+  const rows = Array.from({ length: 12 }, (_, i) => ({
+    id: `m${i}`,
+    scores: { aa_intelligence_index: 10 + i * 5, aa_coding_index: 5 + i * 6, ...(i % 3 === 0 ? {} : { aa_coding_agent: 20 + i * 4 }) },
+  }));
+  // "dominator": good coder, weakest intelligence → a low mean.
+  rows.push({ id: "dominator", scores: { aa_coding_index: rows[6].scores.aa_coding_index, aa_intelligence_index: rows[0].scores.aa_intelligence_index } });
+  const before = computeCompositeScoreDetails(rows).scores;
+  // Thin row: one coding value below the dominator's, so its own mean sits above the dominator's base.
+  const thin = { id: "thin", scores: { aa_coding_index: rows[5].scores.aa_coding_index } };
+  const { scores: after, baseScores } = computeCompositeScoreDetails([...rows, thin]);
+  assert.ok(baseScores.get("thin") > baseScores.get("dominator"), "fixture must violate the ordering before projection");
+  for (const row of rows) assert.ok(Math.abs(after.get(row.id) - before.get(row.id)) < 1e-12, row.id);
+  assert.ok(Math.abs(after.get("dominator") - baseScores.get("dominator")) < 1e-12, "the dominator is not raised");
+  assert.ok(after.get("thin") <= after.get("dominator") - 0.1 + 1e-9);
+});
+
+test("CR-65.3: the projection never raises a score on the live catalog", async () => {
+  const { clientData } = await import("../lib/client-model.ts");
+  const ds = JSON.parse(await readFile(new URL("../data/dataset.json", import.meta.url), "utf8"));
+  const data = clientData(ds, {});
+  for (const m of data.models) assert.ok(m.scores.composite <= m.composite_base + 1e-9, `${m.id} raised ${m.composite_base} → ${m.scores.composite}`);
 });

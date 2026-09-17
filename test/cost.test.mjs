@@ -240,6 +240,19 @@ test('F-41: thin Composite counts exact plus attached inputs', () => {
     assert.equal(model.composite_attached, Math.min(7 - model.composite_coverage, Object.keys(model.composite_attachments).length), model.id);
   }
 });
+test('CR-65.4: ranked by the Composite, a thin row never sorts above a row with at least 3 inputs', () => {
+  const thin = { m: { composite_coverage: 1, composite_attached: 0 }, sc: 99 };
+  const full = { m: { composite_coverage: 3, composite_attached: 0 }, sc: 40 };
+  for (const dir of [1, -1]) assert.deepEqual([thin, full].sort((a, b) => client.compareByScore(a, b, 'composite', dir)), [full, thin]);
+  // Another score sorts by value only.
+  assert.deepEqual([full, thin].sort((a, b) => client.compareByScore(a, b, 'aa_intelligence_index', -1)), [thin, full]);
+  // Live catalog, the Overview's default order (score descending): the first thin row closes the measured band.
+  const rows = client.clientData(dataset).models.filter((m) => !m.deprecated).map((m) => ({ m, sc: m.scores.composite }))
+    .sort((a, b) => client.compareByScore(a, b, 'composite', -1));
+  const firstThin = rows.findIndex((x) => client.isThinComposite(x.m));
+  assert.ok(firstThin > 30, `first thin row at ${firstThin}`);
+  assert.ok(rows.slice(firstThin).every((x) => client.isThinComposite(x.m)));
+});
 test('adjusted "as used on OpenRouter" uses per-model OR ratio before global or AA proxy',()=>{
   assert.equal(cost.modelCost(model,telemetryData,null,adjusted),0.023);
   const p=cost.modelPrice(model,telemetryData,null,adjusted);

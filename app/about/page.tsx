@@ -209,9 +209,12 @@ export default async function AboutPage() {
         mean observed percentile, producing a base score exactly equal to the mean of its available
         percentiles. A final dominance-safe projection then prevents missing data from reversing an
         otherwise unambiguous comparison: when one model covers every reliable slot of another
-        measured model and is no worse in any shared slot, the catalog scores are adjusted by the
-        smallest symmetric amount needed to keep the dominating model at least 0.1 points ahead. The
-        unadjusted base and any adjustment are shown separately in model details. A model with no
+        measured model and is no worse in any shared slot, the less-covered model is lowered to 0.1 points
+        below it; the better-measured model is never moved, so adding a thinly measured row cannot change a
+        well-measured score. The unadjusted base and any adjustment are shown separately in model details,
+        and the model page says &ldquo;adjusted from&rdquo; when the change exceeds one point. Ranked by the
+        composite, models with fewer than three of the seven inputs (exact or attached) sit in an
+        &ldquo;insufficient evidence&rdquo; band below every measured model and show their input count. A model with no
         reliable observed slot receives the neutral fallback 50; its zero evidence coverage stays
         distinct from a measured score and is excluded from capability charts. The <b>#benchmarks</b>
         column counts the distinct versioned benchmarks a model has a usable result for, which is a

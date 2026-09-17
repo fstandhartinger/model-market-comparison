@@ -152,6 +152,22 @@ export function isThinComposite(model: Pick<ClientModel, "composite_coverage" | 
   return model.composite_coverage + model.composite_attached < 3;
 }
 
+/** CR-65.4 (data & math gauntlet C5): ranked by the Composite, rows with fewer than three of seven inputs sit in
+ *  an "insufficient evidence" band below every measured row, in either direction; inside each band the value
+ *  decides. Other scores are single measurements and sort by value only. Missing values sink as before. */
+export function compareByScore(
+  a: { m: Pick<ClientModel, "composite_coverage" | "composite_attached">; sc: number | null | undefined },
+  b: { m: Pick<ClientModel, "composite_coverage" | "composite_attached">; sc: number | null | undefined },
+  score: ScoreKey,
+  dir: 1 | -1,
+): number {
+  if (score === "composite") {
+    const band = Number(isThinComposite(a.m)) - Number(isThinComposite(b.m));
+    if (band) return band;
+  }
+  return dir * ((a.sc ?? -Infinity) - (b.sc ?? -Infinity));
+}
+
 function offerKey(platform: string, provider: string) {
   return `${platform}::${provider}`;
 }
