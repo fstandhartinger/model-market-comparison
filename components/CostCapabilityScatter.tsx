@@ -270,12 +270,13 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           </ScatterChart>
         </ResponsiveContainer>
       </div>
-      {/* CR-76.1 (Florian 2026-09-17): the value map never said what its axes are. One quiet line under the plot,
-          on every compact variant — home, advanced and the charts board — naming both: up is capability, right is
-          the cheaper side of the adjusted cost per task. Tick numbers alone left that to be guessed. */}
+      {/* CR-76.1 (Florian 2026-09-17): the value map never said what its axes are — only bare tick numbers. One quiet
+          line under the plot, on every compact variant (home, advanced, charts board), naming both. The direction is
+          not repeated here: the header above the map already reads "cheaper → right", and at 390 px this row has to
+          stay on one line. */}
       <div className="flex flex-wrap justify-between gap-x-3 text-[11px] text-gray-500" data-bh-value-map-axes>
         <span data-bh-axis-y>↑ Capability · {SCORE_SHORT_LABELS[score]}</span>
-        <span data-bh-axis-x>Adjusted cost per task · cheaper →{logCostAxis ? " · log scale" : ""}</span>
+        <span data-bh-axis-x>→ Adjusted cost per task{logCostAxis ? " · log scale" : ""}</span>
       </div>
       {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
       {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}

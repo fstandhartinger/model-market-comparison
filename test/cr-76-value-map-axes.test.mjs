@@ -11,7 +11,9 @@ const src = readFileSync(new URL('../components/CostCapabilityScatter.tsx', impo
 test('CR-76.1: the compact value map labels both axes, under the plot, in every compact variant', () => {
   const block = src.slice(src.indexOf('data-bh-value-map-axes'), src.indexOf('data-bh-pareto-caption'));
   assert.match(block, /data-bh-axis-y>↑ Capability/, 'the Y axis is named capability, with its direction');
-  assert.match(block, /data-bh-axis-x>Adjusted cost per task · cheaper →/, 'the X axis is named, with the cheaper side');
+  assert.match(block, /data-bh-axis-x>→ Adjusted cost per task/, 'the X axis is named');
+  // The direction lives in the map's own header line, so the caption stays one line at 390 px.
+  assert.match(src, /cheaper → right/, 'the header still says which way is cheaper');
   // Not hidden behind a mode: the row is rendered unconditionally in the compact branch.
   assert.ok(!/\{advanced && .*data-bh-value-map-axes/.test(src), 'no mode guard on the axis row');
   assert.ok(!src.includes('{advanced && !wide && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span>'),
