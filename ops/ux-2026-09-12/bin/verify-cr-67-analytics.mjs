@@ -63,7 +63,7 @@ for (const ctxDef of [
   await page.goto(`${BASE}/privacy`, { waitUntil: 'networkidle' });
   const text = await page.locator('article').innerText();
   check(`${ctxDef.name}: privacy has a visitor statistics section`, await page.locator('#visitor-statistics').count() === 1);
-  for (const phrase of ['13 months', 'Global Privacy Control', 'cannot count unique visitors', 'Hetzner Online GmbH', 'Art. 6(1)(f) GDPR', '§ 25 TDDDG', 'without path or query']) {
+  for (const phrase of ['13 months', 'Global Privacy Control', 'cannot count unique visitors', 'Hetzner Online GmbH', 'fewer than 3', 'Art. 6(1)(f) GDPR', '§ 25 TDDDG', 'without path or query']) {
     check(`${ctxDef.name}: privacy mentions "${phrase}"`, text.includes(phrase));
   }
   check(`${ctxDef.name}: privacy no longer claims no analytics`, !/We use no analytics/i.test(text));
@@ -75,13 +75,17 @@ await b.close();
 // ── Counting works: one document load from an external referrer increments views and visits ────
 if (TOKEN && before?.body) {
   const marker = `verify-cr67-${Date.now()}.example`;
-  await fetch(`${BASE}/terms`, { headers: { 'user-agent': CHROME, 'sec-fetch-dest': 'document', referer: `https://${marker}/x?y=1` } });
-  await fetch(`${BASE}/terms`, { headers: { 'user-agent': CHROME, 'sec-fetch-dest': 'document', 'sec-gpc': '1', referer: `https://gpc-${marker}/` } });
-  await fetch(`${BASE}/terms`, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; Googlebot/2.1)', 'sec-fetch-dest': 'document', referer: `https://bot-${marker}/` } });
+  // Three of each: the report folds rows below 3, so a counted GPC/bot load would show up as its own row.
+  for (let i = 0; i < 3; i++) {
+    await fetch(`${BASE}/terms`, { headers: { 'user-agent': CHROME, 'sec-fetch-dest': 'document', referer: `https://${marker}/x?y=1` } });
+    await fetch(`${BASE}/terms`, { headers: { 'user-agent': CHROME, 'sec-fetch-dest': 'document', 'sec-gpc': '1', referer: `https://gpc-${marker}/` } });
+    await fetch(`${BASE}/terms`, { headers: { 'user-agent': 'Mozilla/5.0 (compatible; Googlebot/2.1)', 'sec-fetch-dest': 'document', referer: `https://bot-${marker}/` } });
+  }
   const after = await report(); // the route flushes pending totals first
   const refs = after.body?.top_referrers ?? [];
   const hit = refs.find((r) => r.referrer_host === marker);
-  check('a real page load is counted with the referrer host only', hit?.visits === 1, JSON.stringify(hit ?? null));
+  check('real page loads are counted with the referrer host only', hit?.visits === 3, JSON.stringify(hit ?? null));
+  check('rows below 3 are folded in the report', (after.body?.top_referrers ?? []).every((r) => r.visits >= 3 || r.referrer_host.startsWith('(other')));
   check('GPC and bot loads are not counted', !refs.some((r) => r.referrer_host.includes(`-${marker}`)));
   check('total views grew', (after.body?.totals.views ?? 0) > before.body.totals.views, `${before.body.totals.views} → ${after.body?.totals.views}`);
 }

@@ -1,7 +1,7 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFileSync } from 'node:fs';
-import { classifyRequest, createAccumulator, flushRows, normalisePath, visitReport, VISIT_STATS_SCHEMA_SQL } from '../lib/visit-stats.mjs';
+import { applyRetention, classifyRequest, createAccumulator, flushRows, normalisePath, visitReport, VISIT_STATS_SCHEMA_SQL } from '../lib/visit-stats.mjs';
 
 const CHROME = 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/140.0.0.0 Safari/537.36';
 const req = (url, headers = {}, method = 'GET') => ({
@@ -22,6 +22,7 @@ test('CR-67.4: same-site page loads are views, not visits', () => {
 test('CR-67.4: prefetches, assets, APIs, bots, non-GET and GPC/DNT requests are not counted', () => {
   assert.equal(classifyRequest(req('https://benchmarkheaven.com/about?_rsc=abc', { 'sec-fetch-dest': 'empty' })), null);
   assert.equal(classifyRequest(req('https://benchmarkheaven.com/about', { 'sec-purpose': 'prefetch;prerender' })), null);
+  assert.equal(classifyRequest(req('https://benchmarkheaven.com/about', { 'sec-purpose': '', purpose: 'prefetch' })), null);
   assert.equal(classifyRequest(req('https://benchmarkheaven.com/_next/static/chunk.js')), null);
   assert.equal(classifyRequest(req('https://benchmarkheaven.com/api/meta')), null);
   assert.equal(classifyRequest(req('https://benchmarkheaven.com/logo.png')), null);
@@ -54,8 +55,16 @@ test('CR-67.4: the accumulator keeps daily totals only and restores a failed flu
   ]);
   assert.equal(acc.size(), 0);
   acc.add({ path: '/', referrerHost: 'x.com', visit: false }, t);
-  acc.restore(rows);
+  acc.restore(rows, t);
   assert.deepEqual(acc.take()[0], { day: '2026-09-17', path: '/', referrerHost: 'x.com', views: 3, visits: 1 });
+  // A write that keeps failing: totals older than yesterday are dropped instead of piling up in memory.
+  acc.restore(rows, t + 3 * 86_400_000);
+  assert.equal(acc.size(), 0);
+  // At the key cap, existing rows still count and new rows are skipped.
+  acc.add({ path: '/', referrerHost: '', visit: true }, t, 1);
+  acc.add({ path: '/', referrerHost: '', visit: true }, t, 1);
+  acc.add({ path: '/about', referrerHost: '', visit: true }, t, 1);
+  assert.deepEqual(acc.take().map((r) => [r.path, r.views]), [['/', 2]]);
 });
 
 test('CR-67.4: stored schema and flush carry no identifier, IP or user agent', async () => {
@@ -66,18 +75,24 @@ test('CR-67.4: stored schema and flush carry no identifier, IP or user agent', a
     [{ day: '2026-09-17', path: '/', referrerHost: '', views: 2, visits: 1 }]);
   assert.match(calls[0].sql, /ON CONFLICT \(day, path, referrer_host\)/);
   assert.deepEqual(calls[0].params, ['2026-09-17', '/', '', 2, 1]);
-  assert.match(calls[1].sql, /DELETE FROM bh_visit_daily WHERE day < \(current_date - interval '13 months'\)/);
+  await flushRows(async () => { throw new Error('no query for an empty batch'); }, []);
+  // Retention is its own statement, run on a timer whether or not there were page loads.
+  await applyRetention(async (sql) => { calls.push({ sql }); });
+  assert.match(calls.at(-1).sql, /DELETE FROM bh_visit_daily WHERE day < \(current_date - interval '13 months'\)/);
 });
 
-test('CR-67.4: the operator report returns aggregates and no unique-visitor figure', async () => {
+test('CR-67.4: the operator report returns aggregates, folds rows below 3 and has no unique-visitor figure', async () => {
   const report = await visitReport(async (sql) => ({
-    rows: sql.includes('GROUP BY day') ? [{ day: '2026-09-17', views: 5, visits: 2 }]
-      : sql.includes('GROUP BY path') ? [{ path: '/', views: 5, visits: 2 }] : [{ referrer_host: 'x.com', visits: 1 }],
+    rows: sql.includes('GROUP BY day') ? [{ day: '2026-09-17', views: 9, visits: 6 }]
+      : sql.includes('GROUP BY path') ? [{ path: '/', views: 7, visits: 5 }, { path: '/rare', views: 1, visits: 1 }, { path: '/rare2', views: 1, visits: 0 }]
+      : [{ referrer_host: 'x.com', visits: 3 }, { referrer_host: 'private.example', visits: 1 }, { referrer_host: 'y.org', visits: 2 }],
   }), 7);
   assert.equal(report.days, 7);
   assert.equal(report.unique_visitors, null);
-  assert.deepEqual(report.totals, { views: 5, visits: 2 });
-  assert.deepEqual(Object.keys(report.top_referrers[0]), ['referrer_host', 'visits']);
+  assert.deepEqual(report.totals, { views: 9, visits: 6 });
+  assert.deepEqual(report.top_pages, [{ path: '/', views: 7, visits: 5 }, { path: '(other, each below 3)', views: 2, visits: 1 }]);
+  assert.deepEqual(report.top_referrers, [{ referrer_host: 'x.com', visits: 3 }, { referrer_host: '(other, each below 3)', visits: 3 }]);
+  assert.ok(!JSON.stringify(report).includes('private.example'));
 });
 
 test('CR-67.4/67.6: the site ships no client analytics, so no consent banner is needed', () => {

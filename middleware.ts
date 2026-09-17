@@ -5,7 +5,7 @@ export function middleware(req: NextRequest) {
   const path = req.nextUrl.pathname;
   if (!path.startsWith("/api/")) {
     // CR-67.4: aggregate page counts from the request itself; see lib/visit-stats.mjs.
-    countRequest(req);
+    try { countRequest(req); } catch { /* statistics must never break a page */ }
     return NextResponse.next();
   }
   // Make every /api/* route a public, read-only, CORS-enabled JSON API so other

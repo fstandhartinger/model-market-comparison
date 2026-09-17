@@ -23,24 +23,34 @@ export default function PrivacyPage() {
       statistics</a> below. We use no tracking or advertising of any kind.</p>
 
     <h2 id="visitor-statistics" className="mt-6 mb-2 font-semibold">Visitor statistics</h2>
-    <p>To see which pages are read and how people find the site, our server counts the page requests it delivers. For each
-      day it stores only totals: the number of page loads (opening or reloading a page; moving between pages inside the
-      site is not counted), the number of visits (page loads that did not come from another page of this site), the requested page (without query parameters) and the host name of the website that linked to
-      it (for example <code>news.ycombinator.com</code>, from the Referer header, without path or query). Your browser type
-      is checked only to leave out automated visitors and is not stored.</p>
+    <p>To see which pages are read and how people find the site, our server counts the page loads it delivers. For each
+      day it stores only totals per page and referring website: the number of page loads (opening or reloading a page;
+      moving between pages inside the site is not counted), the number of visits (page loads that did not come from
+      another page of this site), the requested page (without query parameters) and the host name of the website that
+      linked to it (for example <code>news.ycombinator.com</code>, without path or query).</p>
     <ul className="mt-2 list-disc space-y-1 pl-5">
-      <li><strong>No device access:</strong> we set no cookie, use no local storage, run no tracking script or pixel and
-        read nothing from your device for this. Only information your browser sends with every page request is used, so no
-        consent is needed under § 25 TDDDG and there is no cookie banner.</li>
-      <li><strong>No identifiers:</strong> your IP address is not used, and no ID, hash or fingerprint is created. We
-        therefore cannot count unique visitors and cannot tell whether two page views came from the same person.
-        Statistics are never linked to accounts.</li>
+      <li><strong>What is used:</strong> only HTTP headers your browser sends with the page request itself — the Referer
+        header (reduced to the host name), the User-Agent header (read in full, only to leave out automated clients, and
+        not stored), the Accept, Sec-Fetch-Dest and Sec-Purpose/Purpose headers (to tell a page load from a prefetch or a
+        file request) and the Global Privacy Control / Do Not Track signals. These are processed in memory; only the daily
+        totals are kept.</li>
+      <li><strong>No device access and no identifiers:</strong> the statistics set no cookie, use no local storage, add no
+        script, pixel or extra request, and do not use your IP address. No ID, hash or fingerprint is created, so we
+        cannot count unique visitors or tell whether two page loads came from the same person, and statistics are never
+        linked to accounts. In our assessment no consent is required under § 25 TDDDG for this, so there is no cookie
+        banner.</li>
       <li><strong>Purpose and legal basis:</strong> understanding which content is useful and planning capacity; our
         legitimate interest under Art. 6(1)(f) GDPR.</li>
-      <li><strong>Where and how long:</strong> on our own server and database at Hetzner Online GmbH in the European Union;
-        no analytics provider or other recipient is involved. Daily totals are deleted after 13 months.</li>
-      <li><strong>Objection:</strong> if your browser sends a Global Privacy Control or Do Not Track signal, your page views
-        are not counted. You can also object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>.</li>
+      <li><strong>Where and who:</strong> the totals are kept in our own database on servers of Hetzner Online GmbH in the
+        European Union, which acts as our hosting processor. No analytics provider is involved and nothing is passed to
+        anyone else. Our internal report only shows pages and referring websites with at least 3 page loads; those with
+        fewer than 3 are combined.</li>
+      <li><strong>Retention:</strong> daily totals are deleted after 13 months (checked at least hourly). Totals not yet
+        written are held in server memory, normally for about a minute and never for more than two days.</li>
+      <li><strong>Objection:</strong> if your browser sends a Global Privacy Control or Do Not Track signal, your page loads
+        are not counted at all. As the stored totals cannot be traced back to you, we cannot find or remove past counts of
+        a single person; you can still object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>,
+        and we will answer and explain how to switch on one of these signals.</li>
     </ul>
 
     <h2 className="mt-6 mb-2 font-semibold">Accounts (Sign in with Google)</h2>
