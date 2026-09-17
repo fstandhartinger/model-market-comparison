@@ -6,7 +6,7 @@ import { ACCOUNTS_SCHEMA_SQL } from "./accounts-schema.mjs";
 let pool: Pool | null = null;
 let ready: Promise<unknown> | null = null;
 
-const privateHost = (host: string) =>
+export const privateHost = (host: string) =>
   host === "localhost" || host === "127.0.0.1" || /^10\./.test(host) || /^192\.168\./.test(host) || /^172\.(1[6-9]|2\d|3[01])\./.test(host);
 
 function accountsPool(): Pool | null {

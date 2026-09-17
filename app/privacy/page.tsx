@@ -3,11 +3,12 @@ import Link from "next/link";
 
 export const metadata: Metadata = { title: "Privacy policy" };
 
-// CR-5.5: written for what the site actually does — no analytics or advertising, optional Google sign-in.
+// CR-5.5: written for what the site actually does — no advertising, optional Google sign-in.
+// CR-67.7: aggregate server-side visitor statistics (lib/visit-stats.mjs; decision record CR-67.5-CONSENT-DECISION.md).
 export default function PrivacyPage() {
   return <article className="max-w-3xl text-sm leading-relaxed text-gray-300">
     <h1 className="text-2xl font-bold text-inherit">Privacy policy</h1>
-    <p className="bh-muted mt-1">Last updated: September 14, 2026</p>
+    <p className="bh-muted mt-1">Last updated: September 17, 2026</p>
 
     <h2 className="mt-6 mb-2 font-semibold">Who is responsible</h2>
     <p>productivity-boost.com Betriebs UG (haftungsbeschränkt) &amp; Co. KG, Reichenbergerstr. 2, 94036 Passau, Germany,
@@ -17,8 +18,30 @@ export default function PrivacyPage() {
     <h2 className="mt-6 mb-2 font-semibold">Using the site without an account</h2>
     <p>You can use every comparison without signing in. Your filters, settings and saved presets are then kept in your
       browser&apos;s local storage and are not sent to us. To deliver pages, our server necessarily processes technical request
-      data such as your IP address, the requested page and your browser type; this is used only to run and secure the service
-      (Art. 6(1)(f) GDPR). We use no analytics, tracking or advertising cookies.</p>
+      data such as your IP address, the requested page and your browser type; this is used to run and secure the service
+      (Art. 6(1)(f) GDPR) and, without your IP address, for the aggregate <a className="text-accent" href="#visitor-statistics">visitor
+      statistics</a> below. We use no tracking or advertising of any kind.</p>
+
+    <h2 id="visitor-statistics" className="mt-6 mb-2 font-semibold">Visitor statistics</h2>
+    <p>To see which pages are read and how people find the site, our server counts the page requests it delivers. For each
+      day it stores only totals: the number of page loads (opening or reloading a page; moving between pages inside the
+      site is not counted), the number of visits (page loads that did not come from another page of this site), the requested page (without query parameters) and the host name of the website that linked to
+      it (for example <code>news.ycombinator.com</code>, from the Referer header, without path or query). Your browser type
+      is checked only to leave out automated visitors and is not stored.</p>
+    <ul className="mt-2 list-disc space-y-1 pl-5">
+      <li><strong>No device access:</strong> we set no cookie, use no local storage, run no tracking script or pixel and
+        read nothing from your device for this. Only information your browser sends with every page request is used, so no
+        consent is needed under § 25 TDDDG and there is no cookie banner.</li>
+      <li><strong>No identifiers:</strong> your IP address is not used, and no ID, hash or fingerprint is created. We
+        therefore cannot count unique visitors and cannot tell whether two page views came from the same person.
+        Statistics are never linked to accounts.</li>
+      <li><strong>Purpose and legal basis:</strong> understanding which content is useful and planning capacity; our
+        legitimate interest under Art. 6(1)(f) GDPR.</li>
+      <li><strong>Where and how long:</strong> on our own server and database at Hetzner Online GmbH in the European Union;
+        no analytics provider or other recipient is involved. Daily totals are deleted after 13 months.</li>
+      <li><strong>Objection:</strong> if your browser sends a Global Privacy Control or Do Not Track signal, your page views
+        are not counted. You can also object by email to <a className="text-accent" href="mailto:info@productivity-boost.com">info@productivity-boost.com</a>.</li>
+    </ul>
 
     <h2 className="mt-6 mb-2 font-semibold">Accounts (Sign in with Google)</h2>
     <p>If you choose to sign in, Google shares your Google account ID, email address, name and profile picture link with us.
