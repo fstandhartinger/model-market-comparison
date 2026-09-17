@@ -37,6 +37,22 @@ credited below, the rest is marked open.
 
 ---
 
+## Review gate 20260917T005002Z — seeding correction
+
+2026-09-17: CR-66.1–CR-66.9 were specified in the brief but absent from the ledger. Seeded below as open before review changes. Runner label is `opencode-kimi`; actual reviewing model is Union Alpha (`openrouter/stealth/union-alpha`), not Kimi. No implementation is self-verified.
+
+| ID | Requirement (short) | Status | Evidence | Notes |
+|---|---|---|---|---|
+| CR-66.1 | Bounded OpenRouter withdrawals and recovery | open | 04-CR-BRIEF.md CR-66 | Requires tests and unattended scheduled publication. |
+| CR-66.2 | Explicit hash-bound publication gate with adequate timeout | open | 04-CR-BRIEF.md CR-66 | Requires fail/missing/PASS verdict tests and scheduled publication. |
+| CR-66.3 | Qualified free producer/critic routes before paid fallback | open | 04-CR-BRIEF.md CR-66 | Requires different-family selection and zero-paid-call scheduled receipt. |
+| CR-66.4 | Isolate test evidence from production source captures | open | 04-CR-BRIEF.md CR-66 | Requires clean manifest and step-environment test. |
+| CR-66.5 | Deterministic identity for duplicate provider endpoint tags | open | 04-CR-BRIEF.md CR-66 | Requires unambiguous offer provenance and fixture. |
+| CR-66.6 | Daily notifications through notify only | open | 04-CR-BRIEF.md CR-66 | Requires deduplicated stub test; no direct Telegram requests. |
+| CR-66.7 | Prices-only refresh scope | open | 04-CR-BRIEF.md CR-66 | Requires preserved benchmark dates and bounded successful publication. |
+| CR-66.8 | Retry unbound critic PASS with another critic | open | 04-CR-BRIEF.md CR-66 | Requires bounded retry fixture. |
+| CR-66.9 | Stale secondary sources in summary and run report | open | 04-CR-BRIEF.md CR-66 | Requires last-good-date failure fixture. |
+
 ## Ledger
 
 | ID | Requirement (short) | Status | Evidence | Notes |
