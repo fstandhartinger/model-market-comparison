@@ -1,0 +1,19 @@
+[
+  {
+    "id": "aa-analystagent::snapshot-2026-09-10",
+    "version": "snapshot-2026-09-10",
+    "version_guard": "No public version was verified: this identity freezes the observed methodology/source snapshot. Review task set, harness, judges, metric and configuration before importing any later result; a changed protocol needs a new identity.",
+    "scoring": {
+      "metric": "pass^5: task correct in all five runs, with numeric checks and LLM judging",
+      "unit": "fraction",
+      "range": [
+        0,
+        1
+      ],
+      "higher_better": true,
+      "notes": "Values retain this source implementation and score convention; different harnesses, subsets, judge revisions and versions must remain separate. AA source field: analystAgent. Keep raw units; do not normalize before phase-05 validation."
+    },
+    "description": "Tests analyst tasks using agentic Python execution across fourteen domains.",
+    "maintainer": "Artificial Analysis"
+  }
+]

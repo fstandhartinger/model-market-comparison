@@ -1,0 +1,34 @@
+{
+  "artifact_id": "protocol-aa-analystagent-snapshot-2026-09-10",
+  "artifact_sha256": "19db292d775f93e82431bd739ab45986dd7b120b8a5e10f37961448d6e4ec98f",
+  "round": 3,
+  "verdict": "revise",
+  "coverage_checked": [
+    "aa-analystagent::snapshot-2026-09-10",
+    "c1"
+  ],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "f1",
+      "severity": "major",
+      "location": "row aa-analystagent::snapshot-2026-09-10, field scoring.metric",
+      "evidence": "Primary source excerpt states: \"Each question is run with 5 independent repeats. The leaderboard score is pass^5 —\". It also refers only to a \"grader at scoring time\" without specifying LLM judging. The row's metric says: \"pass^5: task correct in all five runs, with numeric checks and LLM judging\", adding unsupported details about numeric checks and LLM judging.",
+      "repair": "Remove the unsupported phrase 'with numeric checks and LLM judging' from the metric description, or provide verifiable evidence from the full protocol that these details are part of the scoring definition. The metric should reflect exactly what the cited protocol supports (pass^5 with 5 independent repeats)."
+    },
+    {
+      "id": "f2",
+      "severity": "minor",
+      "location": "row aa-analystagent::snapshot-2026-09-10, fields scoring.unit and scoring.range",
+      "evidence": "The source excerpt says only \"The leaderboard score is pass^5 —\" and does not explicitly state the unit, range, or that higher is better. The row asserts unit 'fraction', range [0,1], and higher_better true. These are plausible inferences from 'pass^5' but are not directly present in the supplied primary evidence.",
+      "repair": "Either confirm the unit and range from the full protocol text, or annotate that they are inferred from the pass^5 convention and are not explicitly stated in the cited excerpt."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The source excerpt is truncated at 'pass^5 —'; the full protocol could contain additional scoring details such as numeric checks or LLM judging that are currently unsupported by the excerpt.",
+    "The scoring note 'AA source field: analystAgent' could not be verified against the source excerpt, which uses the name 'AA-AnalystAgent'; the mapping may depend on an untranscribed API field.",
+    "Unit and range for pass^5 are implied by the convention but not explicitly stated in the truncated excerpt."
+  ],
+  "missing_evidence": []
+}

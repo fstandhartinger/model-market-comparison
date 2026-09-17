@@ -1,0 +1,30 @@
+{
+  "artifact_id": "protocol-vals-index-finance-agent-2",
+  "artifact_sha256": "cff2366bec03b4a90864c0c94a22baf157420862bf416619074ef584cd35280b",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vals-index-finance-agent::2",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "vals-index-finance-agent::2",
+      "severity": "major",
+      "location": "scoring.notes",
+      "evidence": "Source 1 supports the Finance Agent v2 description 'Multi-step financial reasoning tasks,' the version '2,' and the 5/13/2026 update 'Finance now uses the Finance Agent v2 index subset, averaging three runs per model.' However, the supplied primary excerpt contains no statement that 'Vals AI publishes accuracy with a standard error per model' or that the benchmark is an 'independent evaluator, secondary benchmark, not a Composite input.' These clauses are unsupported by the captured evidence, and the 'not a Composite input' wording conflicts with the source's presentation of Finance Agent v2 as a component of the Vals Index.",
+      "repair": "Remove the unsupported clauses from scoring.notes, or replace them with source-backed text such as: 'Finance sector component; the index uses the Finance Agent v2 index subset, averaging three runs per model; Finance Agent v2 is described as multi-step financial reasoning tasks.'"
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "The Source 1 capture is a bounded excerpt; absence of the quoted notes phrases could reflect omitted page content, but I cannot assume unseen content.",
+    "I cannot independently recompute or verify row hashes, source hashes, or transport/qualification hashes; those owner checks are out of scope for this review.",
+    "Range [0,100] and higher_better are inferred from the source's use of 'ACCURACY' with percent values; the excerpt does not explicitly state the range or higher-better orientation."
+  ],
+  "missing_evidence": [
+    "Primary source wording supporting 'Vals AI publishes accuracy with a standard error per model'.",
+    "Primary source wording supporting 'independent evaluator, secondary benchmark, not a Composite input'."
+  ]
+}

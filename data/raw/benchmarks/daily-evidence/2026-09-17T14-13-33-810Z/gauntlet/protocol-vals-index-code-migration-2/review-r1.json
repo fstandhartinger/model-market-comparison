@@ -1,0 +1,29 @@
+{
+  "artifact_id": "protocol-vals-index-code-migration-2",
+  "artifact_sha256": "0101a7a7d017efde5d7fb19a1d643eb9b8de1a420f69b2d787b681bbe28f2741",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vals-index-code-migration::2",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "F1",
+      "severity": "minor",
+      "location": "scoring.notes in row vals-index-code-migration::2",
+      "evidence": "Source 1 says Code Migration is 'Porting projects to another language, including COBOL modernization' and that the index uses '50 of the 120 CLI migration tasks, plus all 10 COBOL tasks, weighted 75% CLI and 25% COBOL'. It does not state that Vals AI publishes 'accuracy with a standard error per model', nor that the benchmark is an 'independent evaluator, secondary benchmark, not a Composite input'.",
+      "repair": "Remove or source the assertions about standard error, independent evaluator, secondary benchmark, and composite-input status. Retain only the source-supported facts: Coding sector component, fixed subset of 50 CLI plus 10 COBOL tasks, 75/25 weighting, and not the full standalone run."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "Could not independently recompute hashes or retrieve the full pages; review used only the supplied excerpt and owner-provided row hash.",
+    "The range [0,100] and higher_better=true are inferred from percent accuracy and ranking language, not explicitly stated in the excerpt."
+  ],
+  "missing_evidence": [
+    "Source text confirming that Vals AI publishes Code Migration accuracy with a standard error per model.",
+    "Source text confirming that Code Migration is an independent evaluator, secondary benchmark, and not a Composite input."
+  ]
+}

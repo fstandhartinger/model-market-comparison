@@ -1,0 +1,19 @@
+[
+  {
+    "id": "vals-index-vibe-code-bench::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "scoring": {
+      "metric": "Vibe Code Bench accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Coding sector component; private benchmark. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+    },
+    "description": "End-to-end app-building tasks.",
+    "maintainer": "Vals AI"
+  }
+]

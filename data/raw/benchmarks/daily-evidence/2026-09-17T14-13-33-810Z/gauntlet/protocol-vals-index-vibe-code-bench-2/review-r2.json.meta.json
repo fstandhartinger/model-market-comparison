@@ -1,0 +1,65 @@
+{
+  "started_at": "2026-09-17T14:56:53.806Z",
+  "mode": "critic",
+  "requested_model": "deepseek/deepseek-v4-flash-0731",
+  "producers": [
+    "z-ai/glm-5.3-flash"
+  ],
+  "qualification": {
+    "id": "deepseek/deepseek-v4-flash-0731",
+    "family": "deepseek",
+    "free": false,
+    "input_per_1m": 0.06,
+    "output_per_1m": 0.12,
+    "context": 1310720,
+    "aa_intelligence_index": 34.5,
+    "aa_source": "exact_id_and_variants",
+    "matched_model_ids": [
+      "deepseek-v4-flash-0731::max"
+    ],
+    "aa_variant_scores": [
+      {
+        "id": "deepseek-v4-flash-0731::max",
+        "index": 34.5
+      }
+    ]
+  },
+  "input_sha256": "868e4b77bc9b3cb959a7c8ae5eb83763b617948c0818109e05524aae83373032",
+  "reasoning": {
+    "effort": "low",
+    "exclude": true
+  },
+  "response_format_mode": null,
+  "response_schema_sha256": null,
+  "images": [],
+  "actual_model": "deepseek/deepseek-v4-flash-0731",
+  "usage": {
+    "prompt_tokens": 3059,
+    "completion_tokens": 11742,
+    "total_tokens": 14801,
+    "cost": 0.0015432813,
+    "is_byok": false,
+    "prompt_tokens_details": {
+      "cached_tokens": 2968,
+      "cache_write_tokens": 0,
+      "audio_tokens": 0,
+      "video_tokens": 0
+    },
+    "cost_details": {
+      "upstream_inference_cost": 0.00155887,
+      "upstream_inference_prompt_cost": 0.00003241,
+      "upstream_inference_completions_cost": 0.00152646
+    },
+    "completion_tokens_details": {
+      "reasoning_tokens": 11317,
+      "image_tokens": 0,
+      "audio_tokens": 0
+    }
+  },
+  "finish_reason": "stop",
+  "price_context": "OpenRouter catalog reference prices; usage.cost records the actual charge when returned.",
+  "provider": "OpenInference",
+  "session_id": null,
+  "finished_at": "2026-09-17T15:05:10.687Z",
+  "output_sha256": "f6c4078b82a4dd6ece6235ec52067936bf9494d3b53b15e098cf3ca4992b650e"
+}

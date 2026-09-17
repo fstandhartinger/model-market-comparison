@@ -1,0 +1,141 @@
+{
+  "artifact_id": "protocol-vals-index-finance-agent-2",
+  "rounds_used": 2,
+  "rows": {
+    "total": 1,
+    "accepted": [],
+    "quarantined": [
+      "vals-index-finance-agent::2"
+    ]
+  },
+  "producer_flagged": [],
+  "criteria": [
+    "c1"
+  ],
+  "coverage": {
+    "producer": null,
+    "critic": [
+      {
+        "round": 2,
+        "verdict": "revise",
+        "coverage_complete": true,
+        "missing_rows": [],
+        "missing_criteria": []
+      }
+    ],
+    "final": {
+      "rows_covered": 0,
+      "criteria_covered": 0,
+      "complete": false
+    }
+  },
+  "receipts": [
+    {
+      "round": 2,
+      "role": "producer",
+      "reused_from_round": null,
+      "model": "z-ai/glm-5.3-flash",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-17T14-13-33-810Z/gauntlet/protocol-vals-index-finance-agent-2/producer-r2.json",
+      "output_sha256": "6173530bbd4abac87606c924f7549c068aa6fc51916799be5be882dd482ba3ff",
+      "qualification": {
+        "id": "z-ai/glm-5.3-flash",
+        "family": "z-ai",
+        "free": false,
+        "input_per_1m": 0.09,
+        "output_per_1m": 0.3,
+        "context": 1310720,
+        "aa_intelligence_index": 41.9,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "glm-5.3-flash::default"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "glm-5.3-flash::default",
+            "index": 41.9
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 2669,
+        "completion_tokens": 148,
+        "total_tokens": 2817,
+        "cost": 0.0004620033,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 64,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00046667,
+          "upstream_inference_prompt_cost": 0.00039267,
+          "upstream_inference_completions_cost": 0.000074
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 64,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    },
+    {
+      "round": 2,
+      "role": "critic",
+      "model": "deepseek/deepseek-v4-flash-0731",
+      "out": "data/raw/benchmarks/daily-evidence/2026-09-17T14-13-33-810Z/gauntlet/protocol-vals-index-finance-agent-2/review-r2.json",
+      "output_sha256": "d5b301f252c7ba7cf600532cc819a893771f94dd7044afee592080283effc169",
+      "qualification": {
+        "id": "deepseek/deepseek-v4-flash-0731",
+        "family": "deepseek",
+        "free": false,
+        "input_per_1m": 0.06,
+        "output_per_1m": 0.12,
+        "context": 1310720,
+        "aa_intelligence_index": 34.5,
+        "aa_source": "exact_id_and_variants",
+        "matched_model_ids": [
+          "deepseek-v4-flash-0731::max"
+        ],
+        "aa_variant_scores": [
+          {
+            "id": "deepseek-v4-flash-0731::max",
+            "index": 34.5
+          }
+        ]
+      },
+      "usage": {
+        "prompt_tokens": 3054,
+        "completion_tokens": 6899,
+        "total_tokens": 9953,
+        "cost": 0.0009265905,
+        "is_byok": false,
+        "prompt_tokens_details": {
+          "cached_tokens": 2627,
+          "cache_write_tokens": 0,
+          "audio_tokens": 0,
+          "video_tokens": 0
+        },
+        "cost_details": {
+          "upstream_inference_cost": 0.00093595,
+          "upstream_inference_prompt_cost": 0.00003908,
+          "upstream_inference_completions_cost": 0.00089687
+        },
+        "completion_tokens_details": {
+          "reasoning_tokens": 6374,
+          "image_tokens": 0,
+          "audio_tokens": 0
+        }
+      },
+      "reasoning": {
+        "effort": "low",
+        "exclude": true
+      }
+    }
+  ]
+}

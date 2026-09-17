@@ -1,0 +1,17 @@
+{
+  "artifact_id": "protocol-vals-index-emb-2",
+  "artifact_sha256": "0e089384dde2a7ef228e6b009792dcedf97f7e8297370b1ed41ac901cd4e7ad9",
+  "round": 3,
+  "verdict": "pass",
+  "coverage_checked": ["vals-index-emb::2", "c1"],
+  "errors_found": 0,
+  "findings": [],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot recompute the owner's row SHA-256 (818e9dc0...) or re-fetch the live page; row binding rests on the owner's qualification and supplied hashes.",
+    "The scoring.notes claims about 'standard error per model' and 'independent evaluator, secondary benchmark, not a Composite input' are not explicitly stated in the provided Vals Index excerpt; they do not contradict it either.",
+    "The metric label 'Excel Modeling Benchmark accuracy' is an inferred mapping from the page's ACCURACY section and the 'Excel Modeling Benchmark' listing; the source does not literally spell out 'accuracy' with that suffix.",
+    "The range [0,100] and higher_better true are reasonable inferences for percent accuracy and are not contradicted by the source."
+  ],
+  "missing_evidence": []
+}

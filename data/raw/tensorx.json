@@ -1,10 +1,20 @@
 {
   "source": "TensorX — tensorx.ai/pricing (first-party, public)",
   "region": "eu (Ireland)",
-  "collected_at": "2026-09-16",
+  "collected_at": "2026-09-17",
   "listing_url": "https://tensorx.ai/pricing/",
   "method": "scripts/fetch-tensorx-catalog.mjs: one GET of the server-rendered pricing table; columns located by header (Model Name, Context, Input Price, Cache Read, Output Price), native USD per 1M tokens; rows without both token prices (embeddings) omitted; curated names kept by api_model_id or normalized slug tail; new slugs mapping=derived; rows no longer listed are dropped. EU-sovereign (Dublin HQ, EU regions, zero data retention). See tensorx.method.md.",
   "models": [
+    {
+      "model_name": "Qwen3.8 2.4T A95B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 2.5,
+      "output_per_1m_usd": 6,
+      "cache_read_per_1m_usd": 0.63,
+      "region": "eu",
+      "notes": "tensorx.ai/pricing qwen/qwen3.8-2.4t-a95b; 256K ctx",
+      "api_model_id": "qwen/qwen3.8-2.4t-a95b"
+    },
     {
       "model_name": "GLM 5.3",
       "provider_org": "Z.ai",
@@ -34,16 +44,6 @@
       "region": "eu",
       "notes": "tensorx.ai/pricing z-ai/glm-5.3-flash; 1M ctx",
       "api_model_id": "z-ai/glm-5.3-flash"
-    },
-    {
-      "model_name": "Qwen3.8 2.4T A95B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 2.5,
-      "output_per_1m_usd": 6,
-      "cache_read_per_1m_usd": 0.63,
-      "region": "eu",
-      "notes": "tensorx.ai/pricing qwen/qwen3.8-2.4t-a95b; 256K ctx",
-      "api_model_id": "qwen/qwen3.8-2.4t-a95b"
     },
     {
       "model_name": "Qwen3.8 Flash Next",
@@ -187,7 +187,7 @@
       "api_model_id": "qwen/qwen3-235b-a22b-2507"
     }
   ],
-  "response_sha256": "a39944319264f8a21792476319790cfa36226219c6fe862746e770ac55e27f82",
+  "response_sha256": "806b86f618a12744af6f062c1d5db11b36c8d33ff3112a2f99d5fea03c8f663e",
   "skipped": [
     "qwen/qwen3-embedding-8b"
   ],

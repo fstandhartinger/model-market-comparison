@@ -1,18 +1,8 @@
 {
   "source": "Chutes — llm.chutes.ai/v1/models (first-party, public catalog)",
-  "collected_at": "2026-09-16",
+  "collected_at": "2026-09-17",
   "method": "scripts/fetch-chutes-catalog.mjs: one GET of the public catalog; prices are price.{input,output,input_cache_read}.usd per 1M tokens; curated model_name/provider_org carried over by exact tee_model_id; new ids marked mapping=derived. See chutes.method.md.",
   "models": [
-    {
-      "model_name": "gemma-4-31B",
-      "provider_org": "Google",
-      "input_per_1m_usd": 0.12,
-      "output_per_1m_usd": 0.37,
-      "cache_read_per_1m_usd": 0.012,
-      "context_length": 131072,
-      "confidential_compute": true,
-      "tee_model_id": "google/gemma-4-31B-turbo-TEE"
-    },
     {
       "model_name": "Qwen3.5-397B-A17B",
       "provider_org": "Alibaba",
@@ -26,23 +16,23 @@
     {
       "model_name": "Qwen3.8 27B",
       "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.32,
-      "output_per_1m_usd": 2.5,
-      "cache_read_per_1m_usd": 0.032,
+      "input_per_1m_usd": 0.24,
+      "output_per_1m_usd": 2.2,
+      "cache_read_per_1m_usd": 0.024,
       "confidential_compute": true,
       "context_length": 262144,
       "tee_model_id": "Qwen/Qwen3.8-27B-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai | 2026-09-08: price cut 0.35/2.75->0.32/2.50, cache-read 0.032 (live llm.chutes.ai)"
     },
     {
-      "model_name": "Qwen3.6-27B",
-      "provider_org": "Alibaba",
-      "input_per_1m_usd": 0.3,
-      "output_per_1m_usd": 2,
-      "cache_read_per_1m_usd": 0.03,
-      "context_length": 262144,
+      "model_name": "gemma-4-31B",
+      "provider_org": "Google",
+      "input_per_1m_usd": 0.12,
+      "output_per_1m_usd": 0.37,
+      "cache_read_per_1m_usd": 0.012,
+      "context_length": 131072,
       "confidential_compute": true,
-      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+      "tee_model_id": "google/gemma-4-31B-turbo-TEE"
     },
     {
       "model_name": "DeepSeek-V3.2",
@@ -55,6 +45,16 @@
       "tee_model_id": "deepseek-ai/DeepSeek-V3.2-TEE"
     },
     {
+      "model_name": "Qwen3.6-27B",
+      "provider_org": "Alibaba",
+      "input_per_1m_usd": 0.3,
+      "output_per_1m_usd": 2,
+      "cache_read_per_1m_usd": 0.03,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "Qwen/Qwen3.6-27B-TEE"
+    },
+    {
       "model_name": "GLM-5.1",
       "provider_org": "Z.ai",
       "input_per_1m_usd": 0.98,
@@ -63,6 +63,17 @@
       "context_length": 202752,
       "confidential_compute": true,
       "tee_model_id": "zai-org/GLM-5.1-TEE"
+    },
+    {
+      "model_name": "Kimi-K2.6",
+      "provider_org": "Moonshot AI",
+      "input_per_1m_usd": 0.5,
+      "output_per_1m_usd": 2.85,
+      "cache_read_per_1m_usd": 0.05,
+      "context_length": 262144,
+      "confidential_compute": true,
+      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
+      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
     },
     {
       "model_name": "DeepSeek V4 Flash 0731",
@@ -74,17 +85,6 @@
       "context_length": 1048576,
       "tee_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731-TEE",
       "notes": "Added 2026-08-26 from llm.chutes.ai"
-    },
-    {
-      "model_name": "Kimi-K2.6",
-      "provider_org": "Moonshot AI",
-      "input_per_1m_usd": 0.58,
-      "output_per_1m_usd": 3.4,
-      "cache_read_per_1m_usd": 0.058,
-      "context_length": 262144,
-      "confidential_compute": true,
-      "tee_model_id": "moonshotai/Kimi-K2.6-TEE",
-      "notes": "2026-08-26: price cut 0.66/3.5->0.58/3.4 (live llm.chutes.ai)."
     },
     {
       "model_name": "GLM-5.2",
@@ -150,10 +150,13 @@
       "notes": "Added 2026-08-26 from llm.chutes.ai (root nvidia/Nemotron-3-Nano-Omni-30B-A3B-Reasoning-BF16)"
     }
   ],
-  "response_sha256": "d16805d56d2d483ce89bbbb0c5a7f88f014b63a2b2373976fbebb76e32406865",
+  "response_sha256": "fbdeca340ac46c74e54532fcbf9e56d83108963c906795291e9eb217bec95947",
   "diff": {
     "added": [],
     "removed": [],
-    "price_changed": []
+    "price_changed": [
+      "Qwen/Qwen3.8-27B-TEE",
+      "moonshotai/Kimi-K2.6-TEE"
+    ]
   }
 }

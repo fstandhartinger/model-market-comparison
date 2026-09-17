@@ -48,7 +48,7 @@
       "cache_read_per_1m_eur": 0.03,
       "cache_read_per_1m_usd": 0.03,
       "context_length": 1048576,
-      "status": "production",
+      "status": "experimental",
       "eu_hosted": true,
       "hosting_class": "sovereign_germany",
       "region": "eu",
@@ -119,12 +119,12 @@
       "output_per_1m_usd": 4.15,
       "cache_read_per_1m_eur": 0.2,
       "cache_read_per_1m_usd": 0.23,
-      "context_length": 131072,
-      "status": "production",
+      "context_length": 1000000,
+      "status": "deprecated",
       "eu_hosted": true,
       "hosting_class": "sovereign_germany",
       "region": "eu",
-      "notes": "trustedtokens.eu/api/service/models Qwen/Qwen3.5-397B-A17B-FP8; 131072 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
+      "notes": "trustedtokens.eu/api/service/models Qwen/Qwen3.5-397B-A17B-FP8; 1000000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "Qwen3.6 35B A3B FP8",
@@ -138,29 +138,11 @@
       "cache_read_per_1m_eur": 0.05,
       "cache_read_per_1m_usd": 0.06,
       "context_length": 262144,
-      "status": "experimental",
+      "status": "unknown",
       "eu_hosted": true,
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "notes": "trustedtokens.eu/api/service/models Qwen/Qwen3.6-35B-A3B-FP8; 262144 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
-    },
-    {
-      "model_name": "DeepSeek V4 Flash 0731",
-      "provider_org": "DeepSeek",
-      "api_model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-      "model_id": "deepseek-ai/DeepSeek-V4-Flash-0731",
-      "input_per_1m_eur": 0.15,
-      "output_per_1m_eur": 0.3,
-      "input_per_1m_usd": 0.17,
-      "output_per_1m_usd": 0.35,
-      "cache_read_per_1m_eur": 0.03,
-      "cache_read_per_1m_usd": 0.03,
-      "context_length": 400000,
-      "status": "experimental",
-      "eu_hosted": true,
-      "hosting_class": "sovereign_germany",
-      "region": "eu",
-      "notes": "trustedtokens.eu/api/service/models deepseek-ai/DeepSeek-V4-Flash-0731; 400000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "DeepSeek V4.1 Flash",
@@ -179,24 +161,6 @@
       "hosting_class": "sovereign_germany",
       "region": "eu",
       "notes": "trustedtokens.eu/api/service/models deepseek-ai/DeepSeek-V4.1-Flash; 1048576 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
-    },
-    {
-      "model_name": "DeepSeek V4 Pro 0813",
-      "provider_org": "DeepSeek",
-      "api_model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
-      "model_id": "deepseek-ai/DeepSeek-V4-Pro-0813",
-      "input_per_1m_eur": 2.25,
-      "output_per_1m_eur": 6.75,
-      "input_per_1m_usd": 2.6,
-      "output_per_1m_usd": 7.79,
-      "cache_read_per_1m_eur": 0.45,
-      "cache_read_per_1m_usd": 0.52,
-      "context_length": 200000,
-      "status": "experimental",
-      "eu_hosted": true,
-      "hosting_class": "sovereign_germany",
-      "region": "eu",
-      "notes": "trustedtokens.eu/api/service/models deepseek-ai/DeepSeek-V4-Pro-0813; 200000 ctx; TNG-operated GPU inference in Germany; business accounts priced with included monthly credit (see trustedtokens.method.md)"
     },
     {
       "model_name": "NVIDIA Nemotron 3.5 Lightning 30B A3B",
@@ -224,11 +188,11 @@
       "input_per_1m_eur": 0.4,
       "output_per_1m_eur": 2.7,
       "input_per_1m_usd": 0.46,
-      "output_per_1m_usd": 3.12,
+      "output_per_1m_usd": 3.11,
       "cache_read_per_1m_eur": 0.08,
       "cache_read_per_1m_usd": 0.09,
       "context_length": 1000000,
-      "status": "experimental",
+      "status": "production",
       "eu_hosted": true,
       "hosting_class": "sovereign_germany",
       "region": "eu",
@@ -236,22 +200,25 @@
     }
   ],
   "source": "TrustedTokens — trustedtokens.eu/api/service/models (first-party, public; the endpoint the /models page itself loads)",
-  "collected_at": "2026-09-16",
-  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-09-16): one unauthenticated GET of /api/service/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
+  "collected_at": "2026-09-17",
+  "method": "scripts/fetch-trustedtokens-catalog.mjs (2026-09-17): one unauthenticated GET of /api/service/models plus the ECB daily EUR/USD rate; EUR per-token prices normalized to EUR per 1M tokens (USD = EUR × ECB rate, nearest cent); rows without both token prices skipped; lifecycle from the catalog's attributes (deprecated kept); hosting audited sovereign Germany (see trustedtokens.method.md).",
   "currency": "EUR",
-  "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-09-15: 1 EUR = 1.1539 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
+  "currency_note": "Native prices are EUR per token without VAT, shown here per 1M tokens; USD = EUR × ECB 2026-09-16: 1 EUR = 1.1537 USD, rounded to the nearest cent. Access is B2B: plans include monthly usage credit (Starter €50 / Pro €200 / Enterprise €2,000, all without VAT, marked indicative) against which these per-token prices are billed.",
   "usd_normalization": {
     "status": "applied",
-    "eur_to_usd": 1.1539,
-    "fx_rate_date": "2026-09-15",
+    "eur_to_usd": 1.1537,
+    "fx_rate_date": "2026-09-16",
     "source": "https://www.ecb.europa.eu/stats/eurofxref/eurofxref-daily.xml",
     "rounding": "nearest USD cent"
   },
-  "response_sha256": "9fb658041800edf8cd821a3a5bd31bc7852708617ff9976e91800c3dd4879f23",
+  "response_sha256": "43ce9930a3e675b210de88000633921ca91dce696712ef5f88d5a39a36b0123a",
   "skipped": [],
   "diff": {
     "added": [],
-    "removed": [],
+    "removed": [
+      "deepseek-ai/DeepSeek-V4-Flash-0731",
+      "deepseek-ai/DeepSeek-V4-Pro-0813"
+    ],
     "eur_price_changed": []
   }
 }

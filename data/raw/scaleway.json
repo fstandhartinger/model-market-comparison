@@ -1,8 +1,8 @@
 {
   "source": "Scaleway Generative APIs — scaleway.com/en/pricing/model-as-a-service (first-party, public)",
   "region": "eu (Paris)",
-  "collected_at": "2026-09-16",
-  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1539 published 2026-09-15 (latest available on 2026-09-16).",
+  "collected_at": "2026-09-17",
+  "currency_note": "Source prices are EUR/1M; converted to USD using the ECB reference rate EUR/USD = 1.1537 published 2026-09-16 (latest available on 2026-09-17).",
   "method": "scripts/fetch-scaleway-catalog.mjs: one GET of the pricing page, reading the page's own structured catalog (__NEXT_DATA__ … catalogProducts.generativeApis.models); fr-par perMillionTokens input/output (and cached input) EUR prices from {units,nanos}; models without the chat task or without both token prices (embeddings, audio transcription) omitted; USD = EUR × ECB daily reference rate, rounded to cents; curated names kept by API slug; new slugs mapping=derived. EU-sovereign Paris region, ZDR by default. See scaleway.method.md.",
   "models": [
     {
@@ -139,8 +139,8 @@
       "notes": "€0.15/€0.60; gpt-oss-120b; status general_availability"
     }
   ],
-  "fx_eur_usd": 1.1539,
-  "response_sha256": "7411c778a0d11a0644c46369273423cc53a2280a121029c685942d74e04293ca",
+  "fx_eur_usd": 1.1537,
+  "response_sha256": "0b962138bac4158f79aa9d271675f481c24a895791530fadaf2ab6ff37d4836a",
   "skipped": [
     "whisper-large-v3",
     "qwen3-embedding-8b",

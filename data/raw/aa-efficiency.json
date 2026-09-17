@@ -3,7 +3,7 @@
   "basis": "measured",
   "interpretation": "benchmark_proxy",
   "caveat": "AA Intelligence Index benchmark token accounting. Ratios are BENCHMARK PROXIES, never typical user I/O usage; usage ratios must come from OpenRouter/Chutes sources.",
-  "collected_at": "2026-09-16T07:29:45.549Z",
+  "collected_at": "2026-09-17T13:36:41.896Z",
   "source_url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
   "data_fields": {
     "tokens_per_task": "intelligenceIndexOutputTokensPerTask {reasoning, answer, output} (measured)",
@@ -13,18 +13,18 @@
   "attempts": [
     {
       "url": "https://artificialanalysis.ai/models/gpt-5-6-sol",
-      "fetched_at": "2026-09-16T07:29:44.945Z",
+      "fetched_at": "2026-09-17T13:36:41.739Z",
       "http_status": 200,
-      "bytes": 3614429,
-      "sha256": "425623773f6dd955fe20e54e340f82d11079b0aea9252e2099762b4ab1b6f7c9"
+      "bytes": 3613625,
+      "sha256": "02506217ccd483123711387bc8b16a0c45a5cd874f791ad4b1e33940e83a3169"
     }
   ],
   "coverage": {
-    "published_rows": 155,
-    "scored_denominator": 642,
+    "published_rows": 156,
+    "scored_denominator": 643,
     "denominator_source": "Leaderboard rows carrying a finite intelligenceIndex inside the same model-page Flight payload"
   },
-  "count": 155,
+  "count": 156,
   "rows": [
     {
       "source_id": "8decf027-5114-4721-9ee1-81c0552980a0",
@@ -602,7 +602,7 @@
       "source_id": "dbe7c625-3100-4463-b479-a228c41f75dd",
       "slug": "deepseek-v4-1-flash",
       "name": "DeepSeek V4.1 Flash (Reasoning, Max Effort)",
-      "variant": null,
+      "variant": "max",
       "tokens_per_task": {
         "reasoning": 62669.56218734425,
         "answer": 25904.436307344844,
@@ -645,7 +645,7 @@
     {
       "source_id": "d8ddb241-b3e4-4c25-a6a3-72eb1b30c541",
       "slug": "deepseek-v4-flash-0420",
-      "name": "DeepSeek V4 Flash (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Flash 0420 (Reasoning, Max Effort)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 40555.079938171075,
@@ -667,7 +667,7 @@
     {
       "source_id": "89a2c945-1fab-4ee4-9f45-83a9f46cb221",
       "slug": "deepseek-v4-flash-0420-high",
-      "name": "DeepSeek V4 Flash (Reasoning, High Effort)",
+      "name": "DeepSeek V4 Flash 0420 (Reasoning, High Effort)",
       "variant": "high",
       "tokens_per_task": {
         "reasoning": 26378.58633168231,
@@ -689,7 +689,7 @@
     {
       "source_id": "7707a46f-895f-4247-b7a8-ddab87c9a11d",
       "slug": "deepseek-v4-flash-vision",
-      "name": "DeepSeek V4 Flash Vision (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Flash 0731 Vision (Reasoning, Max Effort)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 45903.93874192563,
@@ -733,7 +733,7 @@
     {
       "source_id": "bf220674-68bd-43cc-a1b8-ce5ed4d2f18d",
       "slug": "deepseek-v4-pro-0424",
-      "name": "DeepSeek V4 Pro (Reasoning, Max Effort)",
+      "name": "DeepSeek V4 Pro 0424 (Reasoning, Max Effort)",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 32731.610839445308,
@@ -1129,7 +1129,7 @@
     {
       "source_id": "19496b81-9f41-4214-a77a-1df803b3c5ae",
       "slug": "glm-5-3-flash",
-      "name": "GLM-5.3-Flash",
+      "name": "GLM 5.3 Flash",
       "variant": "max",
       "tokens_per_task": {
         "reasoning": 46649.4851844942,
@@ -2315,6 +2315,28 @@
       }
     },
     {
+      "source_id": "6d6fa1c9-b833-40b2-8a58-fa810e24a84e",
+      "slug": "ling-3-0-flash-fin",
+      "name": "Ling-3.0-flash-Fin",
+      "variant": null,
+      "tokens_per_task": {
+        "reasoning": 43178.6808771672,
+        "answer": 23519.397643418808,
+        "output": 66698.07852058602
+      },
+      "canonical_token_counts": {
+        "input": 4712319247,
+        "output": 248534210,
+        "answer": 55975173,
+        "reasoning": 192559037
+      },
+      "derived": {
+        "basis": "derived",
+        "input_output_ratio": 18.960445111359117,
+        "reasoning_output_share": 0.6473751843366871
+      }
+    },
+    {
       "source_id": "433d5c5d-3092-4026-9727-1587ca07915d",
       "slug": "ling-3-0-flash-vl",
       "name": "Ling-3.0-flash-VL",
@@ -3000,7 +3022,7 @@
       "source_id": "f9739750-6d42-450f-ba1e-2f76c869b4fe",
       "slug": "quasar-438b",
       "name": "Quasar 438B (max, based on GLM-5.2)",
-      "variant": null,
+      "variant": "max",
       "tokens_per_task": {
         "reasoning": 53379.13260879439,
         "answer": 19143.32045347732,

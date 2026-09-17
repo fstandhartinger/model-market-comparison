@@ -1,0 +1,19 @@
+[
+  {
+    "id": "vals-index-cost::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "scoring": {
+      "metric": "Cost per test",
+      "unit": "USD",
+      "range": [
+        0,
+        null
+      ],
+      "higher_better": false,
+      "notes": "Separate published metric from the overall Vals Index row, not a capability score and not a Composite input."
+    },
+    "description": "Vals AI's published USD cost per test for each model on the Vals Index v2.",
+    "maintainer": "Vals AI"
+  }
+]

@@ -1,9 +1,9 @@
 {
   "source": "IONOS AI Model Hub",
   "region": "eu (Germany)",
-  "collected_at": "2026-09-16",
+  "collected_at": "2026-09-17",
   "currency_note": "USD fields use IONOS' official localized USD price table at https://cloud.ionos.com/prices; EUR source prices are preserved in notes and are not converted locally.",
-  "method": "scripts/fetch-ionos-catalog.mjs (2026-09-16): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
+  "method": "scripts/fetch-ionos-catalog.mjs (2026-09-17): one GET each of the server-rendered IONOS Cloud price pages https://cloud.ionos.com/prices (official localized USD, used for the price fields) and https://cloud.ionos.de/preise (original EUR, recorded as \"€in/€out\" at the start of each row's notes); every AI Model Hub table with an input- and an output-token price is included (Large language models, Vision-Language Models, Code Models); embedding, reranker and image tables are out of scope. Curated rows kept by catalog_name, normalized name or the page name in the notes; new rows mapping=derived; rows no longer listed are dropped. OpenAI-compatible pay-per-use, EU-sovereign (DE). See ionos.method.md.",
   "models": [
     {
       "model_name": "Qwen3.5 9B",
@@ -97,8 +97,8 @@
     }
   ],
   "response_sha256": {
-    "usd": "3c00618a83a45f75b0dec6f4af1621df687a3923511b643e372703e1fc6fade1",
-    "eur": "66226a494089f08ca2c49ea3663a4d86db62821c60eb7b60e9712282cc938ec8"
+    "usd": "62e6cba9ad29b6a1cbac684b0bbd0ec0c8e029b87ea9283778fd835c1dcc906e",
+    "eur": "f36995d5c920bef35b5e51f83f86a8af8e115b772b6c2717f5478a29ee6903d2"
   },
   "eur_missing": [],
   "diff": {

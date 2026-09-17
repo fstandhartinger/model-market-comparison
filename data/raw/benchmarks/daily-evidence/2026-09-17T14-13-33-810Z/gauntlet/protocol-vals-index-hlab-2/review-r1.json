@@ -1,0 +1,31 @@
+{
+  "artifact_id": "protocol-vals-index-hlab-2",
+  "artifact_sha256": "08170cec6c0d00e1195e3dee00ef24d45c2d09a25af05262c56346a5b30915de",
+  "round": 1,
+  "verdict": "revise",
+  "coverage_checked": ["vals-index-hlab::2", "c1"],
+  "errors_found": 2,
+  "findings": [
+    {
+      "id": "vals-index-hlab::2",
+      "severity": "minor",
+      "location": "row=vals-index-hlab::2, field=scoring.notes",
+      "evidence": "Supplied primary excerpt from vals.ai/benchmarks/vals_index contains no text about 'standard error per model', 'independent evaluator', 'secondary benchmark', or 'not a Composite input'. The excerpt only identifies HLAB as 'Harvey’s Legal Agent Benchmark, long-horizon legal work product creation' and says the Vals Index version is 2. The row's scoring.notes asserts those unsupported descriptors.",
+      "repair": "Remove unsupported prose from scoring.notes, or supply a primary-source excerpt that establishes the standard-error publication and evaluator/benchmark-status claims."
+    },
+    {
+      "id": "vals-index-hlab::2",
+      "severity": "minor",
+      "location": "row=vals-index-hlab::2, field=description",
+      "evidence": "The row's description adds 'not comparable with Artificial Analysis' Harvey LAB-AA row'. The supplied primary evidence from vals.ai/benchmarks/vals_index does not mention Artificial Analysis or 'Harvey LAB-AA' at all, so this comparison is unsupported by the captured source.",
+      "repair": "Remove the external 'Artificial Analysis' comparison, or add a source excerpt that actually states this non-comparability."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "I cannot execute the owner's hash, transport, or qualification checks; I rely on the supplied hashes and receipt.",
+    "The primary source excerpt is bounded; unsupported assertions could exist elsewhere on the full page, but the captured excerpt is the only primary evidence in scope for this review.",
+    "The core identity/version/metric/units/description in the row do appear consistent with the Vals Index v2 excerpt; the failures concern unsupported extra claims, not the required c1 continuity fields."
+  ],
+  "missing_evidence": []
+}

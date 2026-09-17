@@ -1,0 +1,19 @@
+[
+  {
+    "id": "vals-index-hlab::2",
+    "version": "2",
+    "version_guard": "Require metadata.benchmark \"Vals Index\" and metadata.version \"2\".",
+    "scoring": {
+      "metric": "HLAB accuracy",
+      "unit": "percent",
+      "range": [
+        0,
+        100
+      ],
+      "higher_better": true,
+      "notes": "Legal sector component. Vals AI publishes accuracy with a standard error per model; independent evaluator, secondary benchmark, not a Composite input."
+    },
+    "description": "Long-horizon legal work product creation. Vals AI's run of Harvey's Legal Agent Benchmark, reported as accuracy — not comparable with Artificial Analysis' Harvey LAB-AA row.",
+    "maintainer": "Vals AI"
+  }
+]

@@ -1,0 +1,27 @@
+{
+  "artifact_id": "protocol-vals-index-vibe-code-bench-2",
+  "artifact_sha256": "e0aec714774adff4d640632d77eea2ee41b13de700b705286eab7889704f8ee5",
+  "round": 2,
+  "verdict": "revise",
+  "coverage_checked": [
+    "vals-index-vibe-code-bench::2",
+    "c1"
+  ],
+  "errors_found": 1,
+  "findings": [
+    {
+      "id": "finding-1",
+      "severity": "minor",
+      "location": "row vals-index-vibe-code-bench::2, scoring.notes",
+      "evidence": "The primary excerpt identifies Vibe Code Bench in the Vals Index coding bucket as 'End-to-end app-building tasks' and states each benchmark column is that benchmark's own published standalone score. It does not supply the assertions 'Vals AI publishes accuracy with a standard error per model', 'independent evaluator', 'secondary benchmark', or 'not a Composite input'.",
+      "repair": "Remove the unsupported assertions from scoring.notes, or provide primary evidence that establishes them. Keep only the fields verifiable from the source excerpt: identity Vibe Code Bench, version 2, metric accuracy, unit percent, and description 'End-to-end app-building tasks'."
+    }
+  ],
+  "fixed": [],
+  "uncertainties": [
+    "No executable metadata object was supplied, so the metadata.benchmark/metadata.version guard could not be executed; only source text 'Vals Index' and 'Version 2' were compared.",
+    "Range [0,100] and higher_better=true are inferred from percent-accuracy language rather than stated verbatim in the excerpt.",
+    "Owner-provided hashes and transport checks could not be independently executed; source and row hashes are accepted as binding."
+  ],
+  "missing_evidence": []
+}
