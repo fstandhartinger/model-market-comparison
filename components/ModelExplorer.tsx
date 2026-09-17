@@ -579,15 +579,18 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                                 </tr>
                               );
                             })}
-                            {m.composite_base != null && m.scores.composite != null
-                              && Math.abs(m.scores.composite - m.composite_base) >= 0.05 && <>
+                            {/* CR-74.4: the dominance rows compare the pre-penalty composite; the penalty has its own row. */}
+                            {m.composite_raw != null && m.scores.composite != null && m.composite_raw - m.scores.composite >= 0.05
+                              && <tr title="Lowered for a positive Benchmaxxing signal; switch off with Include Benchmaxxing signal in the score (Options)"><td className="py-0.5 text-gray-400">Benchmaxxing penalty</td><td className="py-0.5 text-right tabular">−{num(m.composite_raw - m.scores.composite, 1)}</td></tr>}
+                            {m.composite_base != null && (m.composite_raw ?? m.scores.composite) != null
+                              && Math.abs((m.composite_raw ?? m.scores.composite)! - m.composite_base) >= 0.05 && <>
                               <tr title="Mean of observed per-slot percentiles after the model's own mean is used for missing slots">
                                 <td className="py-0.5 text-gray-400">Mean-imputed base</td>
                                 <td className="py-0.5 text-right tabular">{num(m.composite_base, 1)}</td>
                               </tr>
                               <tr title="Lowers this row just below a better-measured model that is at least as good on every input this row has (the other model is never raised)">
                                 <td className="py-0.5 text-gray-400">Dominance adjustment</td>
-                                <td className="py-0.5 text-right tabular">{m.scores.composite > m.composite_base ? "+" : ""}{num(m.scores.composite - m.composite_base, 1)}</td>
+                                <td className="py-0.5 text-right tabular">{(m.composite_raw ?? m.scores.composite)! > m.composite_base ? "+" : ""}{num((m.composite_raw ?? m.scores.composite)! - m.composite_base, 1)}</td>
                               </tr>
                             </>}
                             <tr><td className="py-0.5 text-gray-400">Composite evidence</td><td className="py-0.5 text-right tabular font-medium">{m.composite_coverage} exact{m.composite_attached ? ` + ${m.composite_attached} attached` : ""} / 7</td></tr>

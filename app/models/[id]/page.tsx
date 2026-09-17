@@ -8,6 +8,8 @@ import { notFound } from "next/navigation";
 import { getDataset } from "../../../lib/data";
 import { num, pct, orgColor, usdPerM } from "../../../lib/format";
 import { clientData } from "../../../lib/client-model";
+import { compositeBenchmaxxingSignals } from "../../../lib/composite-signals";
+import { CompositeScoreValue } from "../../../components/CompositeScoreValue";
 import { cacheHitBaseline } from "../../../lib/effective-cost.mjs";
 import { ModelDetailOffers } from "../../../components/ModelDetailOffers";
 
@@ -46,7 +48,7 @@ export async function generateMetadata({ params }: { params: Promise<{ id: strin
 export default async function ModelDetail({ params }: { params: Promise<{ id: string }> }) {
   const { id } = await params;
   const ds = await getDataset();
-  const data = clientData(ds);
+  const data = clientData(ds, {}, await compositeBenchmaxxingSignals()); // CR-74.4
   const model = ds.models.find((m) => m.id === decodeURIComponent(id) || m.family_key === decodeURIComponent(id));
   if (!model) notFound();
 
@@ -125,10 +127,11 @@ export default async function ModelDetail({ params }: { params: Promise<{ id: st
             <h2 className="font-semibold">Composite</h2>
             <span className="text-xs text-gray-500">{clientModel.composite_coverage + clientModel.composite_attached} of 7 inputs{clientModel.composite_attached ? ` · ${clientModel.composite_attached} from the model family` : ""}<span className="block text-right">6 radar axes: DesignArena&apos;s two boards share one</span></span>
           </div>
-          <p className="text-4xl font-bold tabular">{num(clientModel.scores.composite)}</p>
+          {/* CR-74.4: the number follows the "Include Benchmaxxing signal in the score" option. */}
+          <CompositeScoreValue raw={clientModel.composite_raw ?? clientModel.scores.composite} signal={clientModel.composite_signal ?? null} />
           {/* CR-65.3: a dominance adjustment above one point is disclosed where the number is. */}
-          {clientModel.scores.composite != null && clientModel.composite_base != null && Math.abs(clientModel.scores.composite - clientModel.composite_base) > 1
-            && <p className="text-xs text-gray-500" data-bh-composite-adjusted title="A better-measured model with results at least as good on every input this model has keeps the higher score">adjusted from {num(clientModel.composite_base)}: a better-measured model that is at least as good on each of these inputs ranks above it</p>}
+          {clientModel.composite_raw != null && clientModel.composite_base != null && Math.abs(clientModel.composite_raw - clientModel.composite_base) > 1
+            && <p className="text-xs text-gray-500" data-bh-composite-adjusted title="A better-measured model with results at least as good on every input this model has keeps the higher score">dominance-adjusted from {num(clientModel.composite_base)}: a better-measured model that is at least as good on each of these inputs ranks above it</p>}
           {bmx?.score != null && bmx.level && <p className="mt-2 text-sm" data-bh-model-benchmaxxing>
             <span className="bh-muted">Benchmaxxing signal</span> <SignalValue score={bmx.score} level={bmx.level} /> <span className="bh-muted">· {benchmaxxingLevelInfo(bmx.level)?.label}</span>{" "}
             <Link href={`/benchmaxxing?model=${encodeURIComponent(bmx.reportId)}#radar`} className="text-accent underline">report →</Link>

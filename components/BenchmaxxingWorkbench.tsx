@@ -1,5 +1,7 @@
 "use client";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { useSettings } from "./SettingsContext";
+import { benchmaxxingCompositeOf } from "../lib/composite-setting";
 import { BenchmaxxingOverview } from "./BenchmaxxingOverview";
 import { DEFAULT_BENCHMAXXING_PRESET, presetRows, presetShowing, type BenchmaxxingOverviewRow, type BenchmaxxingPreset, type CompositeOf } from "../lib/benchmaxxing-presets";
 import type { BenchmaxxingLevel } from "../lib/benchmaxxing-levels.mjs";
@@ -8,7 +10,7 @@ import { BenchmaxxingReport, type BenchmaxxingModel, type BenchmaxxingReportData
 /** CR-15.2/15.4 (Florian 2026-09-15): master-detail. The table (a changeable preset, Featured by
  *  default) is the master; the report follows the selected row. Compare mode keeps model A and
  *  takes the next selected row as B. `?model=` deep links (one or two) keep working. */
-export function BenchmaxxingWorkbench({ rows, models, initial, levelCounts, tagAverage, minComparisons, tagMinComparisons, minTopics, compositeOf }: {
+export function BenchmaxxingWorkbench({ rows, models, initial, levelCounts, tagAverage, minComparisons, tagMinComparisons, minTopics, compositeOf: compositeOfProp }: {
   rows: BenchmaxxingOverviewRow[];
   models: BenchmaxxingModel[];
   initial: { id: string; report: BenchmaxxingReportData } | null;
@@ -22,6 +24,9 @@ export function BenchmaxxingWorkbench({ rows, models, initial, levelCounts, tagA
   /** CR-74.2: the composite the presets rank by (default row.composite); the CR-74.4 toggle passes the penalised one. */
   compositeOf?: CompositeOf;
 }) {
+  // CR-74.4: Top 50 / Featured order follow the Options checkbox "Include Benchmaxxing signal in the score".
+  const { includeBenchmaxxing } = useSettings();
+  const compositeOf = useMemo(() => compositeOfProp ?? benchmaxxingCompositeOf(includeBenchmaxxing), [compositeOfProp, includeBenchmaxxing]);
   const [preset, setPreset] = useState<BenchmaxxingPreset>(DEFAULT_BENCHMAXXING_PRESET);
   const [showAll, setShowAll] = useState(false);
   const [ids, setIds] = useState<string[]>(initial ? [initial.id] : []);

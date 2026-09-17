@@ -4,10 +4,12 @@ import { getBenchmarkView } from "./benchmark-data";
 import { benchmaxxingFamilySignals, scoreBenchmaxxing } from "./benchmax.mjs";
 import { buildBenchmarkComparison } from "./benchmark-comparison.mjs";
 import { getBenchmarkMatrixPage } from "./benchmark-matrix-data";
+import { compositeBenchmaxxingSignals } from "./composite-signals";
 import { importantMatrix } from "./benchmark-matrix.mjs";
 import { selectBenchmarkView, selectFamilyBenchmarkView } from "./benchmark-view.mjs";
 import { defaultComparePicks, withRadarPercentiles } from "./radar.mjs";
 import { DEFAULT_BENCHMAXXING_PRESET, presetRows, type BenchmaxxingOverviewRow } from "./benchmaxxing-presets";
+import { benchmaxxingCompositeOf } from "./composite-setting";
 import { preferredVariantIds } from "./variants";
 import { BENCHMAXX_LEVELS, type BenchmaxxingLevel } from "./benchmaxxing-levels.mjs";
 
@@ -30,7 +32,8 @@ export async function pageDataVersion(): Promise<string> {
 
 async function build(key: PageDataKey): Promise<unknown> {
   const ds = await getDataset();
-  if (key === "catalog") return clientData(ds);
+  // CR-74.4: the catalog composite carries the Benchmaxxing penalty (the Options default).
+  if (key === "catalog") return clientData(ds, {}, await compositeBenchmaxxingSignals());
   if (key === "filters") {
     // The Options sheet's provider and model lists (every page's layout used to inline them, ~80 KB).
     const providers: ProviderInfo[] = ds.providers.map((p) => ({
@@ -52,7 +55,7 @@ async function build(key: PageDataKey): Promise<unknown> {
     const benchmaxxing: Record<string, ClientBenchmaxxing> = Object.fromEntries(view.models.filter((m) => familyScore.has(m.family ?? m.id))
       .map((m) => [m.id, { score: familyScore.get(m.family ?? m.id) ?? null, signal: levels.has(m.id), level: levels.get(m.id) ?? null,
         reportId: representatives.get(m.family ?? m.id) ?? m.id }]));
-    const data = { ...clientData(ds, benchmaxxing), comparison: buildBenchmarkComparison(view) };
+    const data = { ...clientData(ds, benchmaxxing, await compositeBenchmaxxingSignals()), comparison: buildBenchmarkComparison(view) };
     // CR-7.1: the simple Benchmarks section gets only the "Important" rows, not the full matrix.
     return { data, matrix: importantMatrix((await getBenchmarkMatrixPage()).matrix) };
   }
@@ -100,7 +103,7 @@ async function build(key: PageDataKey): Promise<unknown> {
     interval: report.interval ? { lower: report.interval.lower, upper: report.interval.upper } : null,
   }));
   // The report opens on the first row of the default preset (CR-74.2: Featured, highest composite first).
-  const defaultModel = presetRows(rows, DEFAULT_BENCHMAXXING_PRESET)[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
+  const defaultModel = presetRows(rows, DEFAULT_BENCHMAXXING_PRESET, benchmaxxingCompositeOf(true))[0] ?? [...models].filter((m) => m.coverageAxes >= 40).sort((a, b) => (b.composite ?? -Infinity) - (a.composite ?? -Infinity) || a.name.localeCompare(b.name))[0] ?? models[0];
   const initial = defaultModel ? { id: defaultModel.id, report: scoreBenchmaxxing(view, defaultModel.id) } : null;
   // CR-74.1: tagged families per level, for the summary box.
   const levelCounts = Object.fromEntries(BENCHMAXX_LEVELS.map((x) => [x.level, [...familyLevels.values()].filter((l) => l === x.level).length])) as Record<BenchmaxxingLevel, number>;

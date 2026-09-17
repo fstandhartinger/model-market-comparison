@@ -3,6 +3,7 @@ import { AaCredit } from '../../components/AaCredit';
 import { EpochCredit } from '../../components/EpochCredit';
 import { previewMetadata } from "../../lib/seo";
 import { BENCHMAXX_TIER_TABLE } from "../../lib/benchmax.mjs";
+import { BENCHMAXX_COMPOSITE_WEIGHT } from "../../lib/composite.mjs";
 import { getBenchmarkView } from "../../lib/benchmark-data";
 
 
@@ -267,13 +268,21 @@ export default async function AboutPage() {
         measured model and is no worse in any shared slot, the less-covered model is lowered to 0.1 points
         below it; the better-measured model is never moved, so adding a thinly measured row cannot change a
         well-measured score. The unadjusted base and any adjustment are shown separately in model details,
-        and the model page says &ldquo;adjusted from&rdquo; when the change exceeds one point. Models with fewer
+        and the model page says &ldquo;dominance-adjusted from&rdquo; when the change exceeds one point. Models with fewer
         than three of the seven inputs (exact or attached) are ranked by their score like every other model, but
         carry a &ldquo;Thin data&rdquo; badge with their input count: treat their position as uncertain. A model with no
         reliable observed slot receives the neutral fallback 50; its zero evidence coverage stays
         distinct from a measured score and is excluded from capability charts. The <b>#benchmarks</b>
         column counts the distinct versioned benchmarks a model has a usable result for, which is a
         broader set than the seven composite slots.
+      </p>
+      {/* CR-74.4 (Florian 2026-09-17): the marginal Benchmaxxing penalty. */}
+      <p className="mt-3 text-sm text-gray-400" data-bh-composite-benchmaxxing-about>
+        The score takes the <a className="text-accent underline" href="#benchmaxxing">Benchmaxxing signal</a> into account, marginally:
+        a model whose headline benchmarks run ahead of its held-out ones loses {BENCHMAXX_COMPOSITE_WEIGHT} point per percentile point of that
+        positive signal (w = {BENCHMAXX_COMPOSITE_WEIGHT}, applied after the steps above); a negative or missing signal earns no bonus. The weight is kept marginal: it is the smallest
+        round value at which the signal changes the #1 spot on the 17 September 2026 data. The Options checkbox
+        &ldquo;Include Benchmaxxing signal in the score&rdquo; (on by default) switches it off everywhere the score is used.
       </p>
 
       {/* CR-25.6: the category composites offered as selectable scores. */}

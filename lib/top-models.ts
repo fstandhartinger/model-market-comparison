@@ -6,7 +6,7 @@ import { preferredVariantIds } from "./variants";
 import type { PresetCandidate } from "./presets.mjs";
 
 /** CR-1.2: the slim model record the Benchmarks page ships instead of the full client catalog. */
-export type MatrixModel = Pick<ClientModel, "id" | "family_key" | "family_name" | "display_name" | "org" | "variant" | "open_weights" | "featured" | "deprecated" | "scores" | "composite_coverage" | "benchmark_count"> & {
+export type MatrixModel = Pick<ClientModel, "id" | "family_key" | "family_name" | "display_name" | "org" | "variant" | "open_weights" | "featured" | "deprecated" | "scores" | "composite_raw" | "composite_coverage" | "benchmark_count"> & {
   /** Same family rule as `selectableModels` (computed over the whole catalog on the server). */
   family_alive: boolean;
   /** Adjusted $/task at the AA reference list price; used only when no filter restricts routes (as `modelPrice`). */

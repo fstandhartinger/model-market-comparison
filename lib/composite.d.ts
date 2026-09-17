@@ -26,3 +26,9 @@ export function computeCompositeScoreDetails(
   rows: CompositeInput[],
   options?: { minDesignArenaBattles?: number },
 ): { scores: Map<string, number>; baseScores: Map<string, number> };
+/** CR-74.4: points removed per point of positive Benchmaxxing signal, and its documented upper bound. */
+export const BENCHMAXX_COMPOSITE_WEIGHT: number;
+export const BENCHMAXX_COMPOSITE_WEIGHT_CAP: number;
+/** CR-74.4: `composite − w·max(0, signal)` (0…100); identity when `include` is false or the signal is null / ≤ 0. */
+export function benchmaxxingAdjustedComposite(composite: number, signal: number | null | undefined, include?: boolean): number;
+export function benchmaxxingAdjustedComposite(composite: number | null | undefined, signal: number | null | undefined, include?: boolean): number | null;

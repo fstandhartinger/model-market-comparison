@@ -4,6 +4,7 @@ import { getDataset } from "./data";
 import { getBenchmarkView } from "./benchmark-data";
 import { buildBenchmarkMatrix, type BenchmarkMatrix } from "./benchmark-matrix.mjs";
 import { clientData } from "./client-model";
+import { compositeBenchmaxxingSignals } from "./composite-signals";
 import { DEFAULT_PRICE_SETTINGS, isEuOffer, offerPrice, priceContext } from "./cost";
 import { selectableModels } from "./variants";
 import { isFreeRoute } from "./free-route.mjs";
@@ -17,12 +18,12 @@ export async function getBenchmarkMatrixPage() {
   const dataset = await getDataset();
   if (cached?.dataset === dataset) return cached.value;
   const matrix = buildBenchmarkMatrix(await getBenchmarkView(), dataset, taxonomy, caveats);
-  const cd = clientData(dataset);
+  const cd = clientData(dataset, {}, await compositeBenchmaxxingSignals()); // CR-74.4: penalised composite, raw kept
   const alive = new Set(selectableModels(cd.models, true).map((m) => m.family_key));
   const withValues = new Set(Object.keys(matrix.values));
   const models = cd.models.filter((m) => withValues.has(m.id)).map((m) => ({
     id: m.id, family_key: m.family_key, family_name: m.family_name, display_name: m.display_name, org: m.org, variant: m.variant,
-    open_weights: m.open_weights, featured: m.featured, deprecated: m.deprecated, scores: m.scores,
+    open_weights: m.open_weights, featured: m.featured, deprecated: m.deprecated, scores: m.scores, composite_raw: m.composite_raw,
     composite_coverage: m.composite_coverage, benchmark_count: m.benchmark_count, family_alive: alive.has(m.family_key),
   }));
   const offers: Record<string, MatrixOffer[]> = {};

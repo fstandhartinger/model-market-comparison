@@ -1,5 +1,7 @@
 "use client";
-import { useCallback, useEffect, useState, type ReactNode } from "react";
+import { useCallback, useEffect, useMemo, useState, type ReactNode } from "react";
+import { useSettings } from "../SettingsContext";
+import { withCompositeSetting } from "../../lib/composite-setting";
 
 // CR-62.1: one request per key and dataset version for the whole browser session; pages that share a
 // payload (Charts, Scatter, Providers, EU …) reuse it, and the versioned URL is HTTP-cacheable.
@@ -24,8 +26,11 @@ export function PageData<T>({ dataKey, version, label, children }: { dataKey: st
     load(dataKey, version).then((data) => { if (live) setState({ data: data as T, error: false }); }, () => { if (live) setState({ data: null, error: true }); });
     return () => { live = false; };
   }, [dataKey, version, attempt]);
+  // CR-74.4: every page payload follows the "Include Benchmaxxing signal in the score" option (payloads ship it on).
+  const { includeBenchmaxxing } = useSettings();
+  const data = useMemo(() => state.data && withCompositeSetting(state.data, includeBenchmaxxing), [state.data, includeBenchmaxxing]);
   const retry = useCallback(() => { setState({ data: null, error: false }); setAttempt((a) => a + 1); }, []);
-  if (state.data) return <>{children(state.data)}</>;
+  if (data) return <>{children(data)}</>;
   // The placeholder keeps the footer below the first screen, so the content arriving is not a layout shift.
   return <div className="bh-deferred min-h-[85vh]" aria-busy={!state.error} aria-live="polite">
     {state.error
