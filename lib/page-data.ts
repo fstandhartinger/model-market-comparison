@@ -20,7 +20,7 @@ import { BENCHMAXX_LEVELS, type BenchmaxxingLevel } from "./benchmaxxing-levels.
  * `/api/page-data/<key>?v=<dataset version>`; the pages keep their server-rendered head and hero.
  * The payloads are exactly the props the pages used to pass, built by the same functions.
  */
-export const PAGE_DATA_SHAPE = "cr77";
+export const PAGE_DATA_SHAPE = "cr78";
 export const PAGE_DATA_KEYS = ["home", "catalog", "benchmarks", "ranking", "compare", "benchmaxxing", "filters"] as const;
 export type PageDataKey = (typeof PAGE_DATA_KEYS)[number];
 export const isPageDataKey = (key: string): key is PageDataKey => (PAGE_DATA_KEYS as readonly string[]).includes(key);

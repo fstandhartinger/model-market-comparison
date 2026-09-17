@@ -2,7 +2,7 @@ import { getDataset } from "../../lib/data";
 import { AaCredit } from '../../components/AaCredit';
 import { EpochCredit } from '../../components/EpochCredit';
 import { previewMetadata } from "../../lib/seo";
-import { BENCHMAXX_TIER_TABLE } from "../../lib/benchmax.mjs";
+import { BENCHMAXX_TIER_TABLE, BENCHMAXX_JAGGEDNESS_WEIGHT, benchmaxxingPrior } from "../../lib/benchmax.mjs";
 import { BENCHMAXX_COMPOSITE_WEIGHT } from "../../lib/composite.mjs";
 import { getBenchmarkView } from "../../lib/benchmark-data";
 
@@ -26,6 +26,8 @@ export default async function AboutPage() {
     const names = [...new Set(rows.map((b) => b.name))];
     return names.length === 1 ? names[0] : names[0].replace(/\s+v?\d+(\.\d+)*(?=\s*\(|$)/, "");
   };
+  // CR-78.2: the catalog average the jaggedness part is measured against, from today's data — never a hand-typed number.
+  const jaggednessMean = benchmaxxingPrior(view).jaggednessMean;
   const tierLabel: Record<string, string> = { headline: "Headline", heldout: "Held-out", domain: "Domain (not used)", secondary: "Secondary (not used)", aggregate: "Index (not used)", judged: "Judged (not used)" };
   const tierOrder = ["headline", "heldout", "domain", "secondary", "aggregate", "judged"];
   const tierRows = Object.entries(BENCHMAXX_TIER_TABLE.tiers).map(([key, t]) => ({ key, name: registryName(key), ...t }))
@@ -208,12 +210,23 @@ export default async function AboutPage() {
         questions are private, brand-new or newer than the models; indexes built from other boards, judge- or vote-graded
         boards and legal, finance and medical specialist boards are left out. For every headline/held-out pair in the same
         topic (for example GPQA Diamond against CritPt in science), the model is ranked among the models that took both tests,
-        and the score is the average of how much higher it ranks on the headline test, in percentile points. With few pairs
-        the score is pulled toward zero. Tags come in three levels on the published score (one decimal): <b>light</b> from
+        and the <b>first part</b> of the score is the average of how much higher it ranks on the headline test, in percentile
+        points. With few pairs that part is pulled toward zero. Tags come in three levels on the published score (one decimal): <b>light</b> from
         +3.0, <b>medium</b> from +6.0 and <b>very strong</b> from +12.0, and the level follows that score alone. How much
         evidence stands behind a tag is shown next to it, never used to hide it: a tag built on fewer than ten comparisons,
         or one whose gap does not stay above zero when its benchmarks are resampled, is marked <b>◔ uncertain</b> and says
         which of the two it is.
+      </p>
+      {/* CR-78.2 (Florian, 17 Sep 2026): the published score has a second part — the within-topic jaggedness the radar shows. */}
+      <p className="mt-2 text-sm text-gray-400" data-bh-benchmaxxing-jaggedness>
+        The <b>second part</b> is how jagged the model looks <i>inside</i> one topic. Two boards that test the same thing should
+        put a model in roughly the same place; when they do not — strong on one coding board, weak on the next, strong on the
+        one after — the shape looks targeted even if its headline and held-out boards happen to average out. For every topic we
+        take the mean distance between the model&apos;s ranks on two of its boards, in percentile points, weigh the topics by how
+        many independent comparisons each contributes, and compare the result with the catalog average
+        {jaggednessMean == null ? "" : ` (${jaggednessMean.toFixed(1)} points today)`}. At weight {BENCHMAXX_JAGGEDNESS_WEIGHT} a model
+        that is one standard deviation more uneven than the catalog gains about 1.3 points, and an unusually consistent model
+        loses about as much. Being jagged <i>between</i> topics still counts for nothing: that is specialisation.
       </p>
       <p className="mt-2 text-sm text-gray-400">
         How to read it: plus means better on famous public tests than on tests nobody can train for, minus the other way
@@ -222,7 +235,13 @@ export default async function AboutPage() {
         minus one; a score needs n ≥ 6 and pairs in at least two topics; the pull toward zero is n / (n + k) with k estimated
         from the catalog (how much score variance falls as n grows, clamped to 6–50); the interval resamples the model&apos;s
         headline and held-out boards separately, 400 times, and a tag whose 80 % interval reaches below zero is marked
-        uncertain rather than dropped (Florian, 17 Sep 2026). It is a screen, not proof: a positive gap fits benchmark-targeted training, but
+        uncertain rather than dropped (Florian, 17 Sep 2026); the jaggedness part shifts that interval with the score, so what
+        the interval quantifies is the gap part&apos;s sampling uncertainty. We also simulated a catalog in which nobody targets
+        benchmarks — the same boards, the same coverage, the same capability levels, and every bit of today&apos;s unevenness
+        assumed to be noise: the gap alone would still tag 17 % of models there, and the two parts together 20 %, with the extra
+        tags falling on mid-table models, because ranks are bounded and a model in the middle of the field has the most room to
+        spread. That is the price of the second part, and the reason it is weighted at {BENCHMAXX_JAGGEDNESS_WEIGHT} rather than 1.
+        It is a screen, not proof: a positive gap fits benchmark-targeted training, but
         it also fits a model that is simply weaker at long agent work, which several held-out boards lean toward. Model
         names, labs, openness and prices are never inputs; a tier is decided from benchmark facts alone.{" "}
         <a href="/benchmaxxing" className="text-accent">See the flagged models and their radars</a>.

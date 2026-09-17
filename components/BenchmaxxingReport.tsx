@@ -10,11 +10,29 @@ export type BenchmaxxingModel = { id: string; name: string; org: string; composi
 type Axis = { id: string; name: string; version: string; category: string; value: number | null; nativeValue?: number | null; observedDate?: string | null; unit: string; missing: boolean; tier?: string; side?: 'headline' | 'heldout' | null };
 type Pair = { category: string; headline: { id: string; name: string }; heldout: { id: string; name: string }; headlinePercentile: number; heldoutPercentile: number; gap: number; cohort: number };
 export type BenchmaxxingReportData = { status: 'scored' | 'insufficient-coverage'; score: number | null; coverage: number; domainSpecialization: number | null; profile: { axes: Axis[]; measured: number; total: number }; comparisons: number; topics: number; rule: { minComparisons: number; minTopics: number };
-  rawScore?: number | null; headlineBoards?: number; heldoutBoards?: number; pairCount?: number; drivers?: { positive: Pair[]; negative: Pair[] }; shrinkage?: { priorMean: number; k: number }; interval?: { lower: number; upper: number; level: number } | null };
+  rawScore?: number | null; headlineBoards?: number; heldoutBoards?: number; pairCount?: number; drivers?: { positive: Pair[]; negative: Pair[] }; shrinkage?: { priorMean: number; k: number }; interval?: { lower: number; upper: number; level: number } | null;
+  /** CR-78.1: the two halves of the published score — the headline vs held-out gap and the centred within-topic jaggedness. */
+  parts?: { gap: number; jaggedness: number | null; jaggednessMean: number | null; jaggednessTerm: number; jaggednessWeight: number; jaggednessComparisons: number;
+    jaggednessTopics: { category: string; measured: number; pairs: number; df: number; spread: number }[] } };
 
 const SERIES = [{ color: '#35a7ff', dash: undefined }, { color: '#f5b65b', dash: '7 4' }];
 
 const signed = (x: number) => `${x > 0 ? '+' : ''}${x.toFixed(1)}`;
+
+/** CR-78.2 (Florian 2026-09-17): the second half of the published score — how unevenly the model ranks across
+ *  boards that test the same thing. Named here with its own number, the catalog average it is measured against and
+ *  the weight, so a reader can add the two parts up to the score above. */
+function Jaggedness({ report }: { report: BenchmaxxingReportData }) {
+  const p = report.parts;
+  if (!p || p.jaggedness == null || p.jaggednessMean == null) return null;
+  const worst = p.jaggednessTopics[0];
+  return <p className="bh-muted text-xs" data-bmx-jaggedness>
+    Within-topic jaggedness {p.jaggedness.toFixed(1)} vs the catalog average {p.jaggednessMean.toFixed(1)} — the mean distance between two boards of the same topic,
+    in percentile points, over {p.jaggednessComparisons} {p.jaggednessComparisons === 1 ? 'degree' : 'degrees'} of freedom.
+    {worst ? ` Its boards disagree most in ${worst.category} (${worst.spread.toFixed(1)} points over ${worst.pairs} ${worst.pairs === 1 ? 'pair' : 'pairs'}).` : ''}
+    {' '}At weight {p.jaggednessWeight} that adds <span className="tabular font-semibold">{signed(p.jaggednessTerm)}</span> to the gap part {signed(p.gap)} — together the score {signed(p.gap + p.jaggednessTerm)}.
+  </p>;
+}
 
 /** CR-68.3 / CR-69.4: the pairs that move the score most, both ways, with the numbers behind the shrunk score. */
 function Drivers({ report }: { report: BenchmaxxingReportData }) {
@@ -28,6 +46,7 @@ function Drivers({ report }: { report: BenchmaxxingReportData }) {
     {list(d.positive, 'Better on the headline board')}
     {list(d.negative, 'Better on the held-out board')}
     <p className="bh-muted text-xs" data-bmx-drivers-math>Mean gap {report.rawScore == null ? '—' : signed(report.rawScore)} over {report.pairCount} pairs · n = {report.comparisons} ({report.headlineBoards} headline + {report.heldoutBoards} held-out boards − 1){report.shrinkage ? ` · pulled toward 0 by n / (n + k), k = ${report.shrinkage.k.toFixed(1)}` : ''}{report.interval ? ` · ${Math.round(report.interval.level * 100)} % interval ${signed(report.interval.lower)} … ${signed(report.interval.upper)}` : ''}.</p>
+    <Jaggedness report={report} />
     <p className="bh-muted text-xs">Differences between topics (strong at coding, weaker at maths) are specialisation and are not counted, so a radar that is jagged between topics is not a flag.{report.domainSpecialization != null ? ` This model's specialisation: ${report.domainSpecialization.toFixed(1)} percentile points between its best and weakest topic.` : ''}</p>
   </div>;
 }
@@ -40,7 +59,8 @@ function SignalCard({ name, slot, compare, report, level, uncertain = null }: { 
       <p className="mt-2"><SignalValue score={report.score ?? 0} level={level} uncertain={uncertain} large /></p>
       {/* CR-77.2: the tag follows the score; thin evidence is stated here, not used to hide the tag. */}
       {uncertain && <p className="bh-muted mt-2 text-sm" data-bmx-report-uncertain>{uncertain}.</p>}
-      <p className="bh-muted mt-2 text-sm">Plus = ranks higher on famous public benchmarks than on held-out ones nobody can train for; minus = the other way round; zero = no sign. Percentile points, same topic only.</p>
+      {/* CR-78.2: the score has two parts and the page says so wherever it prints the number. */}
+      <p className="bh-muted mt-2 text-sm">Two parts, added. <strong className="font-medium">The gap:</strong> plus = ranks higher on famous public benchmarks than on held-out ones nobody can train for; minus = the other way round; zero = no sign. <strong className="font-medium">The jaggedness:</strong> how unevenly it ranks across boards that test the same thing, measured against the catalog average. Percentile points, same topic only.</p>
       <Drivers report={report} />
     </> : <><p className="mt-3 text-lg font-semibold">Not enough coverage</p><p className="bh-muted mt-2 text-sm">{report.profile.measured}/{report.profile.total} measured axes; n = {report.comparisons} headline/held-out boards in {report.topics} {report.topics === 1 ? 'topic' : 'topics'} — a score needs n ≥ {report.rule.minComparisons} in {report.rule.minTopics} topics. No score is synthesized from missing results.</p></>}
   </aside>;

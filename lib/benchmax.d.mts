@@ -67,10 +67,26 @@ export interface BenchmaxxingPair {
   gap: number;
   cohort: number;
 }
+export interface BenchmaxxingTopicJaggedness { category: string; measured: number; pairs: number; df: number; spread: number }
+export interface BenchmaxxingParts {
+  /** CR-69.2: the mean signed headline − held-out gap, shrunk toward zero. */
+  gap: number;
+  /** CR-78.1: the model's within-topic jaggedness; null when no topic has two comparable boards. */
+  jaggedness: number | null;
+  /** The catalog mean of that jaggedness over the scored models; null for a catalog without one. */
+  jaggednessMean: number | null;
+  /** jaggednessWeight × (jaggedness − jaggednessMean); 0 when either is unavailable. */
+  jaggednessTerm: number;
+  jaggednessWeight: number;
+  jaggednessComparisons: number;
+  jaggednessTopics: BenchmaxxingTopicJaggedness[];
+}
 export interface BenchmaxxingReport {
   status: 'scored' | 'insufficient-coverage';
-  /** CR-69.2: mean signed headline − held-out gap, shrunk toward zero; null below the coverage rule. */
+  /** CR-78.1: the published score — the shrunk headline − held-out gap plus the centred within-topic
+   *  jaggedness term; null below the coverage rule. `parts` carries both halves. */
   score: number | null;
+  parts?: BenchmaxxingParts;
   rawScore: number | null;
   coverage: number;
   profile: { modelId: string; axes: RadarAxis[]; measured: number; total: number };
@@ -103,7 +119,9 @@ export function percentileFor(axis: BenchmarkView['axes'][number], modelId: stri
 export function percentileCohortSize(axis: BenchmarkView['axes'][number]): number;
 export function groupedRadarProfile(view: BenchmarkView, modelId: string): BenchmaxxingReport['profile'];
 export function scoreBenchmaxxing(view: BenchmarkView, modelId: string, opts?: { minComparisons?: number; minTopics?: number }): BenchmaxxingReport;
-export function benchmaxxingPrior(view: BenchmarkView): { mean: number; catalogMean: number | null; shrink: number; eligible: number };
+export function benchmaxxingPrior(view: BenchmarkView): { mean: number; catalogMean: number | null; shrink: number; jaggednessMean: number | null; jaggednessWeight: number; eligible: number };
+export const BENCHMAXX_JAGGEDNESS_WEIGHT: number;
+export function topicJaggedness(view: BenchmarkView, modelId: string): { jaggedness: number | null; comparisons: number; topics: BenchmaxxingTopicJaggedness[] };
 export const BENCHMAXX_BOOTSTRAP_REPLICATES: number;
 export const BENCHMAXX_INTERVAL: number;
 export function benchmaxxingInterval(view: BenchmarkView, modelId: string, opts?: { replicates?: number; level?: number }): { lower: number; upper: number; level: number; replicates: number } | null;

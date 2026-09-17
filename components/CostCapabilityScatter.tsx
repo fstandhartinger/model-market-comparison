@@ -270,10 +270,16 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
           </ScatterChart>
         </ResponsiveContainer>
       </div>
+      {/* CR-76.1 (Florian 2026-09-17): the value map never said what its axes are. One quiet line under the plot,
+          on every compact variant — home, advanced and the charts board — naming both: up is capability, right is
+          the cheaper side of the adjusted cost per task. Tick numbers alone left that to be guessed. */}
+      <div className="flex flex-wrap justify-between gap-x-3 text-[11px] text-gray-500" data-bh-value-map-axes>
+        <span data-bh-axis-y>↑ Capability · {SCORE_SHORT_LABELS[score]}</span>
+        <span data-bh-axis-x>Adjusted cost per task · cheaper →{logCostAxis ? " · log scale" : ""}</span>
+      </div>
       {/* CR-75.2: the home page says what the green line means, in words, right under the chart. */}
       {/* CR-77.3: the sentence stays as Florian phrased it; the small tolerance is named in its tooltip and on /about. */}
       {!advanced && mapPrefs.pareto && pareto.length > 0 && <p className="mt-1 text-xs text-gray-400" data-bh-pareto-caption title={FRONTIER_GRACE_NOTE}>Models on the green line are the most capable in their price range.</p>}
-      {advanced && !wide && <div className="flex justify-between text-[11px] text-gray-500"><span>{SCORE_SHORT_LABELS[score]} ↑</span><span>Adjusted cost · {logCostAxis ? "log scale" : "linear scale"}</span></div>}
     </div>;
   }
 
@@ -299,10 +305,11 @@ export function CostCapabilityScatter({ data, compact = false, advanced = false,
               ticks={logX ? logTicks(xMin, xMax) : undefined}
               allowDataOverflow interval={0} minTickGap={1} tickMargin={10}
               tickFormatter={(v) => costTick(v)} stroke="#8a93a3" fontSize={12}>
-              <Label value={costAxisCaption(`lowest ${priceLabel(priceSettings)}`)} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
+              {/* CR-76.2: the full chart names the same two axes as the compact map, in the same words. */}
+              <Label value={`Adjusted cost per task · ${costAxisCaption(`lowest ${priceLabel(priceSettings)}`)}`} position="bottom" offset={32} fill="#8a93a3" fontSize={12} />
             </XAxis>
             <YAxis type="number" dataKey="y" name="Capability" stroke="#8a93a3" fontSize={12} domain={isElo ? ["auto", "auto"] : yFull.domain} ticks={isElo ? undefined : yFull.ticks} allowDataOverflow={false}>
-              <Label value={scoreChartLabel(score, data.sourceDates)} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
+              <Label value={`Capability · ${scoreChartLabel(score, data.sourceDates)}`} angle={-90} position="left" offset={10} fill="#8a93a3" fontSize={12} style={{ textAnchor: "middle" }} />
             </YAxis>
             <ZAxis type="number" dataKey="z" range={[60, 60]} />
             <Customized component={<AttractiveQuadrant gradientId="bh-quadrant-full" fontSize={11} />} />

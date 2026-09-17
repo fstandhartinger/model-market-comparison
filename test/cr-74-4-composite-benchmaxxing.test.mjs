@@ -90,15 +90,23 @@ async function overview() {
   return { ds, cd, on: rank(withCompositeSetting(cd, true)), off: rank(withCompositeSetting(cd, false)) };
 }
 
-test("CR-74.4: on the 2026-09-17 data GPT-6 Astra is #1 with the option on; off keeps Claude Fable 5.1 first", async (t) => {
+// CR-78.1 (Florian 2026-09-17 ~22:20 UTC, newer than CR-74.4) mixed within-topic jaggedness into the Benchmaxxing
+// score. Claude Fable 5.1's family signal fell from +1.30 to −0.09, so it no longer carries a positive signal and the
+// marginal penalty — unchanged, w = 1, checkbox on by default — no longer separates the two: the top pair is Claude
+// Fable 5.1 then GPT-6 Astra whether the option is on or off. CR-74.4 asked for the opposite order, and the mechanism
+// that produced it is intact; only the data moved. Recorded in PROGRESS.md and sent to Florian (X7) to overrule.
+test("CR-74.4 + CR-78.1: with the blended signal neither of the top two is penalised, so the option no longer flips them", async (t) => {
   const { ds, cd, on, off } = await overview();
   if (!String(ds.generated_at).startsWith("2026-09-17")) return t.skip(`calibrated on the 2026-09-17 snapshot; dataset is ${ds.generated_at}`);
-  assert.deepEqual(on.slice(0, 2), ["gpt-6-astra", "claude-fable-5.1"]);
+  assert.deepEqual(on.slice(0, 2), ["claude-fable-5.1", "gpt-6-astra"]);
   assert.deepEqual(off.slice(0, 2), ["claude-fable-5.1", "gpt-6-astra"]);
-  // Minimal: half the weight would not flip the pair.
   const fable = cd.models.find((m) => m.id === "claude-fable-5.1::max"), astra = cd.models.find((m) => m.id === "gpt-6-astra::max");
-  const half = (m) => m.composite_raw - (BENCHMAXX_COMPOSITE_WEIGHT / 2) * Math.max(0, m.composite_signal ?? 0);
-  assert.ok(half(fable) > half(astra), "w is not larger than needed by a factor of two");
+  for (const m of [fable, astra]) {
+    assert.ok(!((m.composite_signal ?? 0) > 0), `${m.id} has no positive Benchmaxxing signal (${m.composite_signal})`);
+    assert.equal(benchmaxxingAdjustedComposite(m.composite_raw, m.composite_signal, true), m.composite_raw, `${m.id} unpenalised`);
+  }
+  // The penalty itself is untouched: a model with a positive signal still loses w per point.
+  assert.ok(BENCHMAXX_COMPOSITE_WEIGHT > 0);
 });
 
 test("CR-74.4: every catalog model's penalty equals w·max(0, its family signal)", async () => {

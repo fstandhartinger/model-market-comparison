@@ -76,7 +76,10 @@ test('CR-69.2: aggregate, judged, domain and secondary boards never enter a pair
   const base = catalog((tier) => (tier === 'headline' ? 70 : 40));
   const withNoise = catalog((tier) => (tier === 'headline' ? 70 : 40), { extraAxes: noisy });
   const a = scoreBenchmaxxing(base, 'm'), b = scoreBenchmaxxing(withNoise, 'm');
-  assert.equal(b.score, a.score);
+  // CR-78.1 narrows this guarantee to the part it was written for: the headline − held-out gap. The jaggedness part
+  // asks whether boards of one topic agree about a model, which every capability board of that topic can answer, so
+  // it reads the same boards the radar draws (that is the measure Florian's simulation was run on and accepted).
+  assert.equal(b.parts.gap, a.parts.gap);
   for (const axis of withNoise.axes.filter((x) => x.id.startsWith('noise-'))) assert.equal(benchmaxxingSide(axis), null, axis.id);
   const used = new Set([...b.drivers.positive, ...b.drivers.negative].flatMap((p) => [p.headline.id, p.heldout.id]));
   assert.ok(![...used].some((id) => id.startsWith('noise-')));
@@ -111,21 +114,26 @@ test('CR-69.3 regression (17 Sep view): expected tags; frontier models named by 
   // CR-77.1 (Florian 2026-09-17): the score alone decides — the old n ≥ 10 and interval-above-zero guards no longer
   // suppress a tag, so every family reaching a threshold on this fixture is listed here (DeepSeek V4.1 Flash,
   // Gemini 3.7 Flash, Muse Spark 1.1 and 1.2 among them); their thin evidence is reported, not hidden.
+  // CR-78.1 (Florian 2026-09-17, newer): the published score adds 0.3 × (within-topic jaggedness − the catalog mean),
+  // so these lists are the blended ones. Against the CR-77 lists: Muse Spark 1.1 and Step 3.7 Flash move up to very
+  // strong, MiniMax-M2.7 down to medium, Gemini 3.5 Flash-Lite / Gemma-4-26B / Qwen3.7 Max up to medium, Kimi K2.5 down
+  // to light, Gemini 3.6 Flash gains a light tag, and Celeris-1, Claude Sonnet 4.5 and Mercury-2 lose theirs.
   const at = (level) => [...fam.familyLevels].filter(([, l]) => l === level).map(([f]) => f).sort();
-  assert.deepEqual(at('strong'), ['minimax-m2.7', 'qwen3.5-122b-a10b', 'qwen3.5-397b-a17b', 'qwen3.6-35b-a3b']);
-  assert.deepEqual(at('medium'), ['deepseek-v4.1-flash', 'gemini-3.1-pro-preview', 'gemini-3.7-flash', 'gemma-3-4b-instruct',
-    'glm-4.7', 'grok-4.3', 'kimi-k2.5', 'kimi-k2.6', 'ling-3.0-flash-vl', 'mimo-v2.5', 'mimo-v2.5-pro', 'mistral-medium-3.5',
-    'muse-spark-1.1', 'muse-spark-1.2', 'nemotron-3-ultra-550b-a55b', 'qwen3-coder-next', 'qwen3-next-80b-a3b-thinking',
-    'qwen3.5-9b', 'qwen3.6-27b', 'solar-pro-3', 'step-3.7-flash']);
-  assert.deepEqual(at('light'), ['celeris-1', 'claude-sonnet-4.5', 'deepseek-v4-flash-vision', 'gemini-3.5-flash-lite',
-    'gemini-3.8-flash', 'gemma-4-26b-a4b-it', 'gemma-4-31b-it', 'grok-4.6', 'hy3', 'ling-3.0-tiny', 'magistral-small-1.2',
-    'mercury-2', 'minimax-m3', 'muse-glimmer', 'nemotron-3-super-120b-a12b', 'nex-n2-pro', 'qwen3-235b-a22b-thinking-2507',
-    'qwen3.6-plus', 'qwen3.7-max', 'ring-2.6-1t', 'trinity-large-thinking']);
+  assert.deepEqual(at('strong'), ['muse-spark-1.1', 'qwen3.5-122b-a10b', 'qwen3.5-397b-a17b', 'qwen3.6-35b-a3b', 'step-3.7-flash']);
+  assert.deepEqual(at('medium'), ['deepseek-v4.1-flash', 'gemini-3.1-pro-preview', 'gemini-3.5-flash-lite', 'gemini-3.7-flash',
+    'gemma-3-4b-instruct', 'gemma-4-26b-a4b-it', 'glm-4.7', 'grok-4.3', 'kimi-k2.6', 'ling-3.0-flash-vl', 'mimo-v2.5',
+    'mimo-v2.5-pro', 'minimax-m2.7', 'mistral-medium-3.5', 'muse-spark-1.2', 'nemotron-3-ultra-550b-a55b', 'qwen3-coder-next',
+    'qwen3-next-80b-a3b-thinking', 'qwen3.5-9b', 'qwen3.6-27b', 'qwen3.7-max', 'solar-pro-3']);
+  assert.deepEqual(at('light'), ['deepseek-v4-flash-vision', 'gemini-3.6-flash', 'gemini-3.8-flash', 'gemma-4-31b-it',
+    'grok-4.6', 'hy3', 'kimi-k2.5', 'ling-3.0-tiny', 'magistral-small-1.2', 'minimax-m3', 'muse-glimmer',
+    'nemotron-3-super-120b-a12b', 'nex-n2-pro', 'qwen3-235b-a22b-thinking-2507', 'qwen3.6-plus', 'ring-2.6-1t',
+    'trinity-large-thinking']);
   for (const id of ['gpt-6-astra::max', 'claude-opus-5::max', 'gpt-5.6-sol::max', 'claude-fable-5.1::max', 'kimi-k3::max']) {
     assert.ok(!fam.taggedFamilies.has(familyOf(id)), `${id} untagged`);
   }
   const astra = scoreBenchmaxxing(fixtureView, 'gpt-6-astra::max');
-  assert.ok(Math.abs(astra.score - -7.0) < 0.2, `GPT-6 Astra ${astra.score}`);
+  assert.ok(Math.abs(astra.parts.gap - -7.0) < 0.2, `GPT-6 Astra gap part ${astra.parts.gap}`);
+  assert.ok(Math.abs(astra.score - -5.8) < 0.2, `GPT-6 Astra published score ${astra.score}`);
   // CR-77.2: a tag that misses one of the old guards is marked uncertain instead of being dropped.
   for (const [id, r] of fam.reports) {
     if (!fam.tagged.has(id)) continue;
