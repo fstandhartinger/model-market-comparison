@@ -853,3 +853,25 @@ Florian, 17 Sep 2026 ~17:45 UTC, verbatim (English), with a 390 px screenshot of
 > - "Most capable models and their actual costs"
 > And maybe directly below the pareto chart a short sentence saying something like: "all models on the green line are leading by capability in their cost class" (or better phrased if you have a good idea - it should be short and easy to grasp)
 > And I think that column that just shows "Score" currently, and below that in parentheses "(Composite)" - maybe we can rename "Score" to "Capability Score" and instead of just "Composite" show that full title "Benchmark Heaven Main Composite Score)", maybe in two lines - or if you think that's too much text, maybe just "Main Composite Score".
+
+
+## CR-20260917i — Value map needs subtle axis labels → CR-76
+Florian, Claude Code chat, 17 Sep 2026 ~21:55 UTC, verbatim:
+
+> Wenn du das hast, vielleicht kannst du auch noch eine kleine subtile Achsbeschriftung beim Pareto Chart auf der Overvieseite einbauen, man sieht im Moment am Diagramm nicht, dass die eine Achse capability und die andere cost per task ist.
+
+(English: add small, subtle axis labels to the value map on the Overview page — right now you cannot see that one axis is capability and the other is cost per task.)
+
+
+## CR-20260917j — Benchmaxxing tags follow the score; Pareto line with a grace band → CR-77
+Florian, Claude Code chat, 17 Sep 2026 ~21:40 UTC, verbatim:
+
+> Noch eine dringende änderung:
+> In der benchmaxxing Tabelle ist "DeepSeek V4.1 Flash" gelistet mit einem Benchmaxxing Signal von +6.4, aber es wird Benchmaxxing warning tag angezeigt. Es müsste der medium tag angezeigt werden (? light ≥ +3, ⚠ medium ≥ +6, ⚠⚠ very strong ≥ +12)
+> Da steht auch noch "each needs ≥ 10 comparisons and an interval above zero" - liegt es daran? Wenn ja, ich glaube wir sollten es trotzdem ändern, ich würde den benchmaxxing tag gerne bei DeepSeek V4.1 Flash sehen.
+> Wenn ich auf Top 50 umschalte fällt das gleiche Problem auch bei Gemini 3.7 Flash und Muse Spark 1.2 auf und bei DeepSeek V4.1 Flash auch noch mal, sowie Muse Spark 1.1 und weiteren Modellen.
+> Behebe das mit Priorität.
+> Und dann: lass uns im pareto chart auf der startseite auch Fable 5.1 teil der Linie sein, es hat fast exakt den gleichen Score wie GPT-6 Astra, lass uns einen gewissen Grace-Delta-Abstand akzeptieren für die Linie, sodass auch Fable 5.1 mit Teil der Linie ist.
+> Erledige das sofort, informiere mich vie /notify-telegram wenn es live ist.
+
+(English: the Benchmaxxing tag must follow the score alone — DeepSeek V4.1 Flash at +6.4 must carry the medium tag, and the same for Gemini 3.7 Flash, Muse Spark 1.1/1.2 and the other models in Top 50 that reach a threshold but are held back by the "≥ 10 comparisons and an interval above zero" guards. And: the homepage Pareto line must accept a grace delta on the capability axis so Claude Fable 5.1, which is only 0.13 points behind GPT-6 Astra, is part of the green line.)
