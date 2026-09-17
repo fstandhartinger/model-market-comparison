@@ -31,6 +31,14 @@ if [ -f "$STATE/running" ]; then
   echo "$(date -u +%FT%TZ) stale running marker (pid $pid gone) — clearing"; rm -f "$STATE/running"
 fi
 
+# 2026-09-17: the daily refresh publishes from this checkout and aborts if main moves or the tree is dirty
+# during its run (05:17 → up to 3 h, plus manual recovery runs). Start nothing while it holds its lock.
+DAILY_LOCK=/opt/benchmarkheaven-daily/state/run.lock
+if [ -e "$DAILY_LOCK" ] && ! flock -n "$DAILY_LOCK" true 2>/dev/null; then
+  echo "$(date -u +%FT%TZ) daily refresh running (run.lock held) — not starting an iteration"
+  exit 0
+fi
+
 # Idle: pick up newer versions of these scripts and the brief, but only fast-forward and
 # only on a clean worktree, so an interrupted iteration's work is never clobbered.
 if [ -z "$(git -C "$REPO" status --porcelain 2>/dev/null)" ]; then
