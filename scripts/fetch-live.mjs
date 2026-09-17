@@ -11,7 +11,7 @@ import { writeJSONAtomic } from "../lib/snapshot.mjs";
 import { refreshAaEfficiency } from "./fetch-aa-efficiency.mjs";
 import { execFile } from "node:child_process";
 import { promisify } from "node:util";
-import { assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
+import { assertApprovedIdentityCoverage, assertIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentity, planOpenRouterWithdrawals } from '../lib/live-source.mjs';
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const RAW = join(__dirname, "..", "data", "raw");
@@ -219,17 +219,25 @@ async function mapLimit(items, limit, fn) {
 
 async function fetchOpenRouter() {
   console.log("→ OpenRouter model catalog …");
-  const catalog = await getJSON("https://openrouter.ai/api/v1/models");
-  const models = catalog.data || [];
   let previous = {};
   try { previous = JSON.parse(await readFile(join(RAW, 'openrouter.json'), 'utf8')); }
   catch (error) { if (error.code !== 'ENOENT') throw error; }
-  let approvals = {};
-  try { approvals = JSON.parse(await readFile(join(RAW, 'source-change-approvals.json'), 'utf8')); }
-  catch (error) { if (error.code !== 'ENOENT') throw error; }
-  assertApprovedIdentityCoverage(previous.models, models, (m) => m.id, 'OpenRouter catalog', { approval: approvals.openrouter_catalog });
+  // CR-66.1: an absent identity is re-checked once after ≥ 60 s before it counts
+  // as a dated withdrawal; only a removal above the bounds stops the run.
+  const recheckMs = Number(process.env.BH_OR_WITHDRAWAL_RECHECK_MS ?? 60_000);
+  const loadCatalog = async () => {
+    const models = (await getJSON("https://openrouter.ai/api/v1/models")).data || [];
+    assertIdentityCoverage([], models, (m) => m.id, 'OpenRouter catalog');
+    return models;
+  };
+  let models = await loadCatalog();
+  const absentFrom = (list) => { const ids = new Set(list.map((m) => m.id)); return (previous.models || []).filter((m) => !ids.has(m.id)).length; };
+  if (absentFrom(models)) {
+    console.log(`  ${absentFrom(models)} prior catalog ids absent; re-checking in ${recheckMs / 1000} s`);
+    await sleep(recheckMs);
+    models = await loadCatalog();
+  }
   const previousById = new Map((previous.models || []).map((m) => [m.id, m]));
-  const sourceApprovals = approvals.openrouter_endpoints || [];
   console.log(`  ${models.length} models in catalog`);
 
   // Fetch per-provider endpoints for every model (concurrency limited) so we can
@@ -237,26 +245,47 @@ async function fetchOpenRouter() {
   // provider list); that's fine.
   console.log("  fetching per-provider endpoints …");
   let done = 0;
-  const enriched = await mapLimit(models, 10, async (m) => {
-    const id = m.id; // e.g. "moonshotai/kimi-k2"
+  const endpointsById = new Map(), statusById = new Map();
+  const loadEndpoints = async (id) => {
     const endpointUrl = `https://openrouter.ai/api/v1/models/${id}/endpoints`;
     let endpoints, endpointStatus;
     try { endpoints = (await getJSON(endpointUrl)).data?.endpoints; }
     catch (error) {
       // Moving aliases/router SKUs have no per-provider resource. An explicit 404
-      // can establish absence only where no known good endpoints would be lost.
-      if (error.status !== 404 || previousById.get(id)?.endpoints?.length) throw error;
+      // for a model that had endpoints withdraws all of them (bounded below).
+      if (error.status !== 404) throw error;
       endpoints = [];
       endpointStatus = { status: 'not_published', http_status: 404, url: endpointUrl, collected_at: new Date().toISOString() };
     }
-    // Several bounded approvals may coexist for a model. Select only the receipt
-    // bound to this complete current identity set; an older approval must never
-    // mask a newer withdrawal (or make a different change look reviewed).
-    const endpointApproval = selectOpenRouterEndpointApproval(sourceApprovals, id, endpoints);
-    try { assertOpenRouterEndpointCoverage(previousById.get(id)?.endpoints, endpoints, { approval: endpointApproval }); }
+    try { assertOpenRouterEndpointCoverage([], endpoints); }
     catch (error) { throw new Error(`${id}: ${error.message}`); }
+    endpointsById.set(id, endpoints);
+    if (endpointStatus) statusById.set(id, endpointStatus); else statusById.delete(id);
+  };
+  const lostEndpoints = (id) => {
+    const now = new Set(endpointsById.get(id).map(endpointIdentity));
+    return (previousById.get(id)?.endpoints || []).some((e) => !now.has(endpointIdentity(e)));
+  };
+  await mapLimit(models, 10, async (m) => {
+    await loadEndpoints(m.id);
     done++;
     if (done % 50 === 0) console.log(`    ${done}/${models.length}`);
+  });
+  const recheck = models.filter((m) => lostEndpoints(m.id)).map((m) => m.id);
+  if (recheck.length) {
+    console.log(`  ${recheck.length} models lost prior endpoints; re-checking in ${recheckMs / 1000} s`);
+    await sleep(recheckMs);
+    await mapLimit(recheck, 10, loadEndpoints);
+  }
+  const date = new Date().toISOString().slice(0, 10);
+  const plan = planOpenRouterWithdrawals({ previous, models, endpointsById, date });
+  if (plan.error) throw new Error(plan.error);
+  for (const m of plan.run.withdrawn_models) console.log(`  withdrawn model ${m.id} (${date})`);
+  for (const e of plan.run.withdrawn_endpoints) console.log(`  withdrawn endpoint ${e.model_id} ${e.identity} (${date})`);
+  for (const r of [...plan.run.restored_models, ...plan.run.restored_endpoints]) console.log(`  restored ${r.model_id ?? r.id}${r.identity ? ` ${r.identity}` : ''} (withdrawn ${r.withdrawn_at})`);
+  const enriched = models.map((m) => {
+    const endpoints = endpointsById.get(m.id);
+    const endpointStatus = statusById.get(m.id);
     return {
       id: m.id,
       ...(endpointStatus ? { endpoint_status: endpointStatus } : {}),
@@ -294,6 +323,10 @@ async function fetchOpenRouter() {
     collected_at: new Date().toISOString().slice(0, 10),
     count: enriched.length,
     models: enriched,
+    // Identities OpenRouter no longer lists, with the date they first went missing.
+    // Never priced; an identity that returns moves back into `models`.
+    withdrawals: plan.withdrawals,
+    withdrawal_run: plan.run,
   });
   console.log(`  wrote ${enriched.length} OpenRouter models with provider endpoints`);
   // Four model pages in rotation, then the global fallback. New observations

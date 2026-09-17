@@ -114,6 +114,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await writeJSONAtomic(join(reports, 'worker-catalog.json'), catalog);
     await writeJSONAtomic(join(reports, 'workers.json'), report.workers);
     for (const source of ['aa', 'da', 'or']) await command(`fetch-${source}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
+    // CR-66.1: bounded OpenRouter withdrawals publish; the run report names every one with its date.
+    report.openrouter_withdrawals = (await readJSON(join(work, 'data/raw/openrouter.json'))).withdrawal_run ?? null;
     await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
     await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
     // CR-35.5: rebuild the Epoch hub-provenance sidecar from the newest captured metadata CSV
@@ -362,6 +364,16 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     `Modelle mit Abschluss: ${[...new Set(calls.filter((r) => r.status === 'complete').map((r) => r.actual_model))].filter(Boolean).join(', ') || 'keine'}; gemeldete Kosten: $${report.worker_calls.returned_cost_usd.toFixed(4)} (${report.worker_calls.calls_without_returned_cost} Aufrufe ohne Kostenangabe).`,
     `Schritte: ${report.steps.filter((s) => s.ok).length} erfolgreich; ${report.steps.filter((s) => !s.ok).length} fehlgeschlagen.`,
     `Publikation: ${report.published ? report.commit : dryRun ? 'Testlauf' : 'keine'}; Live-Pruefung: ${report.live_verified ? 'OK' : 'nicht erfolgt'}.`,
+    ...(() => {
+      const w = report.openrouter_withdrawals;
+      if (!w) return [];
+      const lines = [...w.withdrawn_models.map((m) => m.id), ...w.withdrawn_endpoints.map((e) => `${e.model_id} ${e.identity}`)];
+      const back = [...w.restored_models.map((m) => m.id), ...w.restored_endpoints.map((e) => `${e.model_id} ${e.identity}`)];
+      return [
+        ...(lines.length ? [`OpenRouter zurueckgezogen (${w.date}): ${lines.length} — ${lines.slice(0, 20).join('; ')}${lines.length > 20 ? ' …' : ''}`] : []),
+        ...(back.length ? [`OpenRouter wieder da: ${back.join('; ')}`] : []),
+      ];
+    })(),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';
   await writeFile(join(home, 'last-summary.txt'), summary);

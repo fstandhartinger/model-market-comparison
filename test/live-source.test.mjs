@@ -6,7 +6,7 @@ import { join } from 'node:path';
 import { gunzipSync } from 'node:zlib';
 import { spawnSync } from 'node:child_process';
 import { createHash } from 'node:crypto';
-import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
+import { assertIdentityCoverage, assertApprovedIdentityCoverage, assertOpenRouterEndpointCoverage, assertMeasuredFields, captureLiveSource, endpointIdentityDigest, identityDigest, planOpenRouterWithdrawals, selectOpenRouterEndpointApproval } from '../lib/live-source.mjs';
 
 test('catalog shrink, empty, malformed and duplicate identities fail before publication', () => {
   const previous = [{ id: 'one' }, { id: 'two' }];
@@ -157,9 +157,9 @@ test('actual OpenRouter collector exits nonzero and leaves good file untouched o
     const hook = join(directory, 'synthetic-fetch.mjs');
     for (const endpointResponse of ["Response.json({data:{}})", "Response.json({error:{message:'fixture absent'}},{status:404})"]) {
       await writeFile(hook, `globalThis.fetch=async (url)=>String(url).endsWith('/endpoints') ? ${endpointResponse} : Response.json({data:[{id:'fixture/model'}]});`);
-      const result = spawnSync(process.execPath, ['--import', hook, join(directory, 'scripts/fetch-live.mjs'), 'or'], { cwd: directory, encoding: 'utf8', timeout: 10000 });
+      const result = spawnSync(process.execPath, ['--import', hook, join(directory, 'scripts/fetch-live.mjs'), 'or'], { cwd: directory, encoding: 'utf8', timeout: 10000, env: { ...process.env, BH_OR_WITHDRAWAL_RECHECK_MS: '0' } });
       assert.equal(result.status, 1, result.stderr);
-      assert.match(result.stderr, /endpoints: invalid response|HTTP 404/);
+      assert.match(result.stderr, /endpoints: invalid response|1 of 1 prior endpoints absent/);
       assert.equal(await readFile(target, 'utf8'), old);
     }
     // A restricted host may finish already dispatched calls but must not
@@ -173,5 +173,76 @@ test('actual OpenRouter collector exits nonzero and leaves good file untouched o
       assert.ok(Number(await readFile(countFile, 'utf8')) <= 10, 'no new requests after the host is stopped');
       assert.equal(await readFile(target, 'utf8'), old);
     }
+  } finally { await rm(directory, { recursive: true, force: true }); }
+});
+
+// CR-66.1: fixture of the real failure mode (11-17 Sep): OpenRouter retires a few ids or endpoints every day.
+const orFixture = (n, perModel = 3) => Array.from({ length: n }, (_, i) => ({ id: `lab/model-${i}`, name: `Model ${i}`,
+  endpoints: Array.from({ length: perModel }, (_, j) => ({ provider_name: `P${j}`, tag: `p${j}`, quantization: 'fp8', pricing: { prompt: '0.000001', completion: '0.000002' } })) }));
+const endpointsOf = (models) => new Map(models.map((m) => [m.id, m.endpoints]));
+
+test('CR-66.1: bounded OpenRouter removals become dated withdrawals, large ones fail', () => {
+  const prior = orFixture(100);
+  const previous = { collected_at: '2026-09-16', models: prior };
+  const models = prior.slice(5).map((m, i) => (i < 2 ? { ...m, endpoints: m.endpoints.slice(1) } : m));
+  const plan = planOpenRouterWithdrawals({ previous, models, endpointsById: endpointsOf(models), date: '2026-09-17' });
+  assert.equal(plan.error, null);
+  assert.deepEqual(plan.run.withdrawn_models.map((m) => [m.id, m.withdrawn_at, m.last_seen]), [0, 1, 2, 3, 4].map((i) => [`lab/model-${i}`, '2026-09-17', '2026-09-16']));
+  assert.deepEqual(plan.run.withdrawn_endpoints.map((e) => [e.model_id, e.identity, e.withdrawn_at]), [['lab/model-5', 'P0/p0/fp8', '2026-09-17'], ['lab/model-6', 'P0/p0/fp8', '2026-09-17']]);
+  assert.equal(plan.withdrawals.models.length, 5);
+  assert.equal(plan.withdrawals.endpoints.length, 2);
+
+  const shrunk = prior.slice(60);
+  assert.match(planOpenRouterWithdrawals({ previous, models: shrunk, endpointsById: endpointsOf(shrunk), date: '2026-09-17' }).error, /60 models absent \(limit 10\)/);
+  const stripped = prior.map((m, i) => (i < 20 ? { ...m, endpoints: [] } : m)); // 60 of 300 endpoints = 20 % > 5 %
+  assert.match(planOpenRouterWithdrawals({ previous, models: stripped, endpointsById: endpointsOf(stripped), date: '2026-09-17' }).error, /60 of 300 prior endpoints absent \(limit 15\)/);
+
+  // Next day: one withdrawn model and one withdrawn endpoint return; the rest keep their first withdrawal date.
+  const next = { collected_at: '2026-09-17', models, withdrawals: plan.withdrawals };
+  const back = [prior[0], ...models.map((m) => (m.id === 'lab/model-5' ? prior[5] : m))];
+  const later = planOpenRouterWithdrawals({ previous: next, models: back, endpointsById: endpointsOf(back), date: '2026-09-18' });
+  assert.equal(later.error, null);
+  assert.deepEqual(later.run.restored_models.map((m) => [m.id, m.withdrawn_at]), [['lab/model-0', '2026-09-17']]);
+  assert.deepEqual(later.run.restored_endpoints.map((e) => [e.model_id, e.identity]), [['lab/model-5', 'P0/p0/fp8']]);
+  assert.deepEqual(later.withdrawals.models.map((m) => [m.id, m.withdrawn_at]), [1, 2, 3, 4].map((i) => [`lab/model-${i}`, '2026-09-17']));
+  assert.deepEqual(later.withdrawals.endpoints.map((e) => e.model_id), ['lab/model-6']);
+  assert.equal(later.run.withdrawn_models.length + later.run.withdrawn_endpoints.length, 0, 'carried withdrawals do not count against the next run');
+});
+
+test('CR-66.1: the actual collector re-checks, publishes bounded withdrawals and still fails a large removal', async () => {
+  const directory = await mkdtemp(join(tmpdir(), 'bh-withdrawal-collector-'));
+  try {
+    await cp('lib', join(directory, 'lib'), { recursive: true });
+    await mkdir(join(directory, 'scripts'));
+    for (const file of ['fetch-live.mjs', 'fetch-aa-efficiency.mjs']) await cp(join('scripts', file), join(directory, 'scripts', file));
+    await mkdir(join(directory, 'data/raw'), { recursive: true });
+    const target = join(directory, 'data/raw/openrouter.json');
+    const prior = orFixture(40, 2);
+    const old = JSON.stringify({ collected_at: '2026-09-16', models: prior });
+    const run = async (catalog, endpoints) => {
+      await writeFile(target, old);
+      const hook = join(directory, 'synthetic-fetch.mjs');
+      await writeFile(hook, `const catalog=${JSON.stringify(catalog)};const endpoints=${JSON.stringify(endpoints)};
+globalThis.fetch=async(url)=>{url=String(url);if(url.endsWith('/api/v1/models'))return Response.json({data:catalog.map((id)=>({id,name:id}))});
+const id=url.replace('https://openrouter.ai/api/v1/models/','').replace('/endpoints','');return Response.json({data:{endpoints:endpoints[id]}});};`);
+      // Efficiency sub-collectors are out of scope here: stub them.
+      for (const file of ['fetch-openrouter-efficiency.mjs', 'fetch-chutes-efficiency.mjs']) await writeFile(join(directory, 'scripts', file), '');
+      return spawnSync(process.execPath, ['--import', hook, join(directory, 'scripts/fetch-live.mjs'), 'or'], { cwd: directory, encoding: 'utf8', timeout: 20000, env: { ...process.env, BH_OR_WITHDRAWAL_RECHECK_MS: '0', BH_EVIDENCE_DIR: '' } });
+    };
+    const kept = prior.slice(5);
+    const endpoints = Object.fromEntries(kept.map((m, i) => [m.id, i < 2 ? m.endpoints.slice(1) : m.endpoints]));
+    const ok = await run(kept.map((m) => m.id), endpoints);
+    assert.equal(ok.status, 0, ok.stderr);
+    assert.match(ok.stdout, /re-checking in 0 s/);
+    const written = JSON.parse(await readFile(target, 'utf8'));
+    assert.equal(written.models.length, 35);
+    assert.deepEqual(written.withdrawals.models.map((m) => m.id), prior.slice(0, 5).map((m) => m.id));
+    assert.equal(written.withdrawals.endpoints.length, 2);
+    assert.ok(written.withdrawals.models.every((m) => /^\d{4}-\d{2}-\d{2}$/.test(m.withdrawn_at)));
+
+    const fail = await run(prior.slice(20).map((m) => m.id), Object.fromEntries(prior.map((m) => [m.id, m.endpoints])));
+    assert.equal(fail.status, 1);
+    assert.match(fail.stderr, /20 models absent \(limit 10\)/);
+    assert.equal(await readFile(target, 'utf8'), old);
   } finally { await rm(directory, { recursive: true, force: true }); }
 });

@@ -35,6 +35,7 @@ import { parseAaEfficiency } from '../../lib/aa-efficiency.mjs';
 import { CODING_AGENT_URL, parseCodingAgents } from '../../lib/aa-coding-agents.mjs';
 import { parseOpenRouterPage, parseOpenRouterCache, parseOpenRouterRankings } from '../../lib/openrouter-efficiency.mjs';
 import { parseChutesUsage } from '../../lib/chutes-efficiency.mjs';
+import { endpointIdentity } from '../../lib/live-source.mjs';
 
 const RAW_DEFAULT = join(dirname(fileURLToPath(import.meta.url)), '..', '..', 'data', 'raw');
 const AA_API_URL = 'https://artificialanalysis.ai/api/v2/data/llms/models';
@@ -284,18 +285,30 @@ async function verifyOr(rawDir, src, runStart, rows) {
     fail(`or identity coverage: staged ${staged.models?.length} vs source ${catalog.length} models`);
   }
   const byId = new Map(catalog.map((m, i) => [m?.id, { model: m, index: i }]));
+  const withdrawals = staged.withdrawals || { models: [], endpoints: [] };
+  const withdrawnEndpoints = new Set(withdrawals.endpoints.map((e) => `${e.model_id} ${e.identity}`));
+  for (const m of withdrawals.models) if (byId.has(m.id)) fail(`or withdrawal ${m.id} is still in the captured catalog`);
+  for (const id of prior.keys()) {
+    if (!byId.has(id) && !withdrawals.models.some((m) => m.id === id)) fail(`or prior model ${id} absent from catalog without a dated withdrawal`);
+  }
   const out = [];
   for (const sm of staged.models) {
     const hit = byId.get(sm?.id);
     if (!hit) fail(`or staged model absent from captured catalog: ${sm?.id}`);
     const epReceipt = src.getLast(orEndpointsURL(sm.id));
     if (!epReceipt) fail(`Missing endpoint response ${sm.id}`);
-    const unavailable = epReceipt.status === 404 && !(prior.get(sm.id)?.endpoints?.length);
+    // CR-66.1: a 404 may drop prior endpoints only as dated withdrawals of every one of them.
+    const unavailable = epReceipt.status === 404 && (prior.get(sm.id)?.endpoints || []).every((e) => withdrawnEndpoints.has(`${sm.id} ${endpointIdentity(e)}`));
     if (!unavailable && epReceipt.status !== 200) fail(`Endpoint HTTP ${epReceipt.status}: ${sm.id}`);
     const endpoints = unavailable ? [] : jbody(epReceipt, `or endpoints ${sm.id}`).data?.endpoints;
     if (unavailable) eq(sm.endpoint_status, { status: 'not_published', http_status: 404, url: epReceipt.url, collected_at: sm.endpoint_status?.collected_at }, `or ${sm.id} absent endpoints status`);
     if (!Array.isArray(endpoints)) fail(`or endpoints ${sm.id}: source data.endpoints is not an array`);
     eq(omit(sm, ['endpoint_status']), orModelProjection(hit.model, endpoints), `or ${sm.id} catalog+endpoints projection (price units $/token strings, provider tags exact)`);
+    const current = new Set(endpoints.map(endpointIdentity));
+    for (const e of prior.get(sm.id)?.endpoints || []) {
+      if (!current.has(endpointIdentity(e)) && !withdrawnEndpoints.has(`${sm.id} ${endpointIdentity(e)}`)) fail(`or ${sm.id}: prior endpoint ${endpointIdentity(e)} absent without a dated withdrawal`);
+    }
+    for (const key of withdrawnEndpoints) if (key.startsWith(`${sm.id} `) && current.has(key.slice(sm.id.length + 1))) fail(`or ${sm.id}: withdrawn endpoint ${key} is still published`);
     out.push({ staged: sm, extract: { catalog_model: hit.model, catalog_source: loc(catalogReceipt), endpoints, endpoint_http_status: epReceipt.status, previous_endpoint_count: prior.get(sm.id)?.endpoints?.length ?? 0 }, source: loc(epReceipt), pointer: `catalog $.data[${hit.index}] + ${epReceipt.url}` });
   }
   rows.set('or', out);
