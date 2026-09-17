@@ -12,6 +12,10 @@ mkdir -p "$STATE" /opt/benchmarkheaven/logs/ux
 exec 9>"$STATE/tick.lock"; flock -n 9 || exit 0
 [ -f "$STATE/finished" ] && exit 0
 
+# Launch sprint pause (Claude Code, 17 Sep 2026): a separate sprint job owns the repo until this time.
+if [ -f "$STATE/paused-until" ] && [ "$(date +%s)" -lt "$(cat "$STATE/paused-until")" ]; then
+  echo "$(date -u +%FT%TZ) paused for launch sprint until $(date -u -d @$(cat "$STATE/paused-until") +%H:%MZ)"; exit 0
+fi
 # An iteration is still running?
 if [ -f "$STATE/running" ]; then
   pid=$(awk '{print $4}' "$STATE/running")

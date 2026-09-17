@@ -12,6 +12,8 @@ MODE="${1:-work}"; AVOID="${2:-}"
 STATE=/opt/benchmarkheaven/state/ux
 mkdir -p "$STATE"
 CLAUDE_MAX=70      # QUOTA-CONTINUITY.md (Florian 2026-09-12): no new Claude unit at >=70% on either window
+# Florian 2026-09-17 ~17:30 UTC: launch focus — allow Claude up to 85% until the weekly reset (19 Sep 05:00 UTC), then back to 70.
+[ "$(date +%s)" -lt "$(date -d "2026-09-19 05:00 UTC" +%s)" ] && CLAUDE_MAX=85
 CODEX_START_MAX=75 # do not START a Codex run above this (a run consumes several %)
 
 J="$(python3 "$HOME/.claude/skills/agent-limits/limits.py" --json 2>/dev/null || echo '{}')"
