@@ -3879,7 +3879,7 @@ Live verifier `bin/verify-cr-65-iter91.mjs` (API + 1440/390 light/dark, Advanced
 price), 65.11 (labels only), 65.14, 65.15, 65.16, 65.17, 65.18; CR-60.2 (now unblocked by 65.10); CR-66.x.
 
 
-## Iteration 92 — 2026-09-17 01:05 → ~03:50 UTC (claude-opus, work): CR-66 pipeline P0/P1, CR-65.15/65.16
+## Iteration 92 — 2026-09-17 01:05 → 03:55 UTC (claude-opus, work): CR-66 pipeline P0/P1, CR-65.15/65.16
 
 One-writer check: no foreign writer in this repo (the only other agent processes had their cwd elsewhere). Gates before every
 push: `npx tsc --noEmit`, `npm test` (663 pass at the end), `npm run data:build`, `npm run build` (prebuild guard) for app/data
@@ -3901,7 +3901,14 @@ source-row conflicts withheld `29bd6de`, Harvey disambiguation `1d66102`.
   withdrawals), then the step was killed at its 60 min timeout: the paid producer DeepSeek V4 Flash 0731 took 2–8 min per call
   and the only eligible different-family critic GLM-5.3 Flash timed out once and hit `length` once (normal: 9–18 min).
   `1923469`: review-live timeout 100 min (3 h run cap unchanged). Real fix is CR-66.3 (free worker chain), deferred.
-- Dry run 3 (02:25): see result below.
+- Dry run 3 (02:25, with the Epoch fix and 100 min live review): all collectors OK, live review OK in 27 min with no worker
+  failure, then refresh-benchmarks was killed at its own 60 min timeout (paid producer 2–5 min per call; 16 Sep: 23.5 min
+  for the whole step). Its RETAINED lines (Vals sub-boards, AA Analyst Agent, score batches quarantined; LiveBench's hashed
+  `main.ac6b12ef.js` now 404) are the normal non-fatal path. `a3a08ce`: refresh-benchmarks timeout 100 min as well.
+  Build/test/prerender after the refresh were therefore not exercised by a dry run today (they pass locally on the same code).
+  **Risk for the 05:17 run:** with today's slow paid workers the run may need ~2.5 h of its 3 h cap; if it fails, the 07:17
+  catch-up runs and the gate's finalize alerts on the second failure. CR-66.3 is the fix and should be the next pipeline item.
+  Logs: `iter92-cr66/iter92-dryrun{2,3}.log`.
 
 **Out-of-repo changes (not versioned; backups next to the files):** `/opt/benchmarkheaven-daily/gate/gate.mjs` (hooks reuse an
 explicit stage-1 result / PASS verdict bound to the same dataset and commit; `.bak-before-cr66-2-20260917`), `gate/lib.mjs`
@@ -3916,6 +3923,6 @@ explicit stage-1 result / PASS verdict bound to the same dataset and commit; `.b
 - CR-65.15 D6: conflicting rows are withheld (not mapped to a snapshot) — the source gives no way to tell the two apart.
 - CR-66.3 deferred on launch day: changing the unattended worker transport a few hours before the 05:17 run was the larger risk.
 
-**Still open from CR-66:** 66.3 (free producer/critic chain — now also the main reliability risk, see dry run 2), 66.7 (prices-only
+**Still open from CR-66:** 66.3 (free producer/critic chain — now the main reliability risk, see dry runs 2 and 3; LiveBench's renamed JS chunk is a second, non-fatal Epoch-style break), 66.7 (prices-only
 scope). All CR-66 "implemented" rows still need one unattended scheduled run that publishes. **CR-65:** 65.7, 65.9, 65.11, 65.14,
 65.15 (D9 only), 65.17, 65.18.
