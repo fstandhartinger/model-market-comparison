@@ -151,7 +151,9 @@ export async function refreshBenchmarks({ runDir } = {}) {
   const codingFile = join(evidenceDir, 'aa-coding-agents-v1.5.json');
   await cp('data/raw/aa-coding-agents-v1.5.json', codingFile);
   lock.coding['1.5'] = { file: codingFile, sha256: sha256(await readFile(codingFile)) };
-  checks.push({ id: 'aa-coding-agent-index::1.5', status: 'updated', rows: coding.rows.length });
+  // CR-67.2: when the live contract was withheld, this is the restored published snapshot, not a fresh update.
+  const codingRetained = (liveReview.gauntlet?.retained_contracts ?? []).some((r) => r.dataset === 'aa_coding_v15');
+  checks.push({ id: 'aa-coding-agent-index::1.5', status: codingRetained ? 'retained_after_dispute' : 'updated', rows: coding.rows.length, ...(codingRetained ? { collected_at: coding.collected_at } : {}) });
   // CR-34.2/34.3: OpenRouter's own runs are a dated snapshot board, like Real-SWE and DeepSWE:
   // their ingested values stay bound to the registry-dated capture in the ingestion lock, and a
   // newer capture becomes a new dated registry identity in a reviewed change, never a silent

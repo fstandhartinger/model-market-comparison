@@ -259,10 +259,12 @@ export function parseScope(value = 'full') {
 
 /** Freshness errors for a finished build: `full` — every dated source is today's; `prices` — OpenRouter is today's
  *  and every other dated source is unchanged from the published dataset (kept with its own date, never re-dated). */
-export function sourceFreshnessErrors({ scope = 'full', day, before, after }) {
+export function sourceFreshnessErrors({ scope = 'full', day, before, after, retained = [] }) {
   const errors = [];
   const date = (ds, key) => ds?.sources?.[key] ?? null;
-  const fresh = scope === 'prices' ? PRICES_SCOPE_FRESH_SOURCES : DAILY_FRESH_SOURCES;
+  // CR-67.2: a source whose live contract was withheld keeps its published date instead of today's.
+  const fresh = (scope === 'prices' ? PRICES_SCOPE_FRESH_SOURCES : DAILY_FRESH_SOURCES).filter((k) => !retained.includes(k));
+  for (const key of retained) if (date(after, key) !== date(before, key)) errors.push(`Source ${key} was withheld but its date changed (${date(before, key)} → ${date(after, key)})`);
   for (const key of fresh) if (String(date(after, key) ?? '').slice(0, 10) !== day) errors.push(`Source ${key} is not today's collector run (${date(after, key)})`);
   if (scope === 'prices') {
     for (const key of DAILY_FRESH_SOURCES.filter((k) => !fresh.includes(k))) {

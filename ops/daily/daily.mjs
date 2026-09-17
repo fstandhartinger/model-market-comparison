@@ -318,7 +318,10 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.'], work, 600_000, isolatedEnvironment);
     await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs'], work, 600_000, isolatedEnvironment);
     after = await readJSON(join(work, 'data/dataset.json'));
-    const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after }); // `scope` is the commit scope below
+    // CR-67.2: a withheld live contract (prior snapshot kept) is named in the report and keeps its published date.
+    const live = await readJSON(join(reports, 'live-step-result.json')).catch(() => null);
+    report.retained_contracts = live?.gauntlet?.retained_contracts ?? [];
+    const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after, retained: report.retained_contracts.map((r) => r.source) }); // `scope` is the commit scope below
     if (stale.length) throw new Error(stale.join('; '));
     top5 = JSON.parse(await command('top5', process.execPath, ['scripts/top5.mjs', '5']));
     await writeJSONAtomic(join(reports, 'dataset-after.json'), after);
@@ -426,6 +429,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
         ...(back.length ? [`OpenRouter wieder da: ${back.join('; ')}`] : []),
       ];
     })(),
+    ...(report.retained_contracts?.length ? [`Zurueckgehalten (Quelle strittig, alter Stand bleibt): ${report.retained_contracts.map((r) => `${r.dataset} (${r.restored.map((f) => `${f.file} vom ${String(f.retained_collected_at).slice(0, 10)}`).join(', ')}; ${String(r.reasons?.[0] ?? '').slice(0, 200)})`).join('; ')}`] : []),
     ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'})`).join('; ')}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';

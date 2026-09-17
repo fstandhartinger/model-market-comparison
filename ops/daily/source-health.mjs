@@ -12,7 +12,7 @@ import { join } from 'node:path';
 /** Statuses written by ops/daily/refresh-benchmarks.mjs, by what they mean for freshness. */
 export const STATUS_KIND = {
   checked_unchanged: 'ok', updated: 'ok', candidate: 'ok', vendor_candidate: 'ok', collected: 'ok', state_appended: 'ok', state_retained: 'ok',
-  retained_after_failure: 'failing', source_unreachable_or_manual: 'failing',
+  retained_after_failure: 'failing', retained_after_dispute: 'failing', source_unreachable_or_manual: 'failing',
   source_changed_retained: 'attention', contested: 'attention',
   retained_manual_snapshot: 'manual', manual_required: 'manual', source_reachable_protocol_date_retained: 'no_adapter',
 };

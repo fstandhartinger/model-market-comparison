@@ -6,6 +6,7 @@ import { resolve, join, dirname } from 'node:path';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
 import { reviewLive, RULES } from './review-live.mjs';
 import { reviewArtifact, sha256 } from './gauntlet.mjs';
+import { planRejectedContract, retainPriorSnapshot } from './live-retention.mjs';
 
 const [step, directory] = process.argv.slice(2);
 if (!directory || !['live', 'benchmarks'].includes(step)) throw new Error('Usage: node ops/daily/phase-step.mjs live|benchmarks RUN_DIR');
@@ -27,6 +28,7 @@ try {
     const verifier = await readFile('ops/daily/review-live.mjs', 'utf8');
     const aaEfficiencyParser = await readFile('lib/aa-efficiency.mjs', 'utf8');
     const reviewed = [];
+    const retained = []; // CR-67.2: withheld secondary contracts (prior snapshot kept)
     // All numeric records were compared against complete, hash-verified source
     // bodies above. LLM review covers the adapter contract and explicit examples,
     // not a false claim that a model manually inspected thousands of numbers.
@@ -66,13 +68,21 @@ try {
         ] });
       reviewed.push({ dataset: dataset.dataset, programmatic_rows: allRows.length, example_rows: examples.map((r) => r.row_id), ...review });
       await writeJSONAtomic(join(runDir, 'reports', 'live-gauntlet-progress.json'), { total_contracts: manifest.datasets.length, reviewed });
-      if (!review.accepted || review.fingerprints.length !== 1 || review.quarantined.length) throw new Error(`Live source contract rejected ${dataset.dataset}: ${review.errors.join('; ')}`);
+      if (!review.accepted || review.fingerprints.length !== 1 || review.quarantined.length) {
+        const plan = planRejectedContract(dataset.dataset, retained);
+        if (plan.action !== 'retain') throw new Error(`Live source contract rejected ${dataset.dataset}: ${review.errors.join('; ')} (${plan.reason})`);
+        // CR-67.2: never overrule the review — withhold this dataset's fresh capture and keep the published snapshot.
+        retained.push(await retainPriorSnapshot({ runDir, rawDir: resolve('data/raw'), dataset: dataset.dataset, errors: review.errors }));
+        await writeJSONAtomic(join(runDir, 'reports', 'live-gauntlet-progress.json'), { total_contracts: manifest.datasets.length, reviewed, retained });
+        console.warn(`live gauntlet ${dataset.dataset}: contract NOT accepted — previous snapshot retained (${review.errors.join('; ').slice(0, 300)})`);
+        continue;
+      }
       console.log(`live gauntlet ${dataset.dataset}: contract accepted; ${allRows.length} rows verified against primary bodies; ${examples.length} explicit model examples`);
     }
     const covered = reviewed.reduce((n, r) => n + r.programmatic_rows, 0);
     if (covered !== manifest.coverage.required_rows) throw new Error('Live verification did not cover every source row');
     result = { ok: true, deterministic: verified.report, gauntlet: { contracts: reviewed.length, programmatically_verified_rows: covered,
-      model_reviewed_examples: reviewed.flatMap((r) => r.example_rows), complete: true,
+      model_reviewed_examples: reviewed.flatMap((r) => r.example_rows), complete: true, retained_contracts: retained,
       coverage_note: 'All rows verified programmatically against complete captured primary bodies. Different-model gauntlet verifies adapter contracts and explicit examples. No claim of full manual LLM numeric inspection.',
       reviews: reviewed.map((r) => ({ dataset: r.dataset, manifest: r.manifest })) } };
 
