@@ -204624,7 +204624,7 @@
       "subject": {
         "source_id": "Gemini 2.5 Pro",
         "name": "Gemini 2.5 Pro",
-        "model_id": "gemini-2.5-pro::default",
+        "model_id": null,
         "variant": null,
         "harness": null
       },
@@ -204641,7 +204641,7 @@
       },
       "protocol": "TrueSkill mean (μ), with σ uncertainty reported separately; source row: [\"23\",\"Gemini 2.5 Pro\",\"4.468\",\"0.293\",\"4.468\",\"274\",\"149.714\",\"0.546\"]",
       "comparison_key": null,
-      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
+      "join_note": "Withheld: the source lists gemini-2.5-pro::default 2 times with different values (4.468, 3.697); no row is attributed until the source disambiguates them."
     },
     {
       "id": "public:94154bda6ed1e91eda0fb098",
@@ -204938,7 +204938,7 @@
       "subject": {
         "source_id": "Gemini 2.5 Pro",
         "name": "Gemini 2.5 Pro",
-        "model_id": "gemini-2.5-pro::default",
+        "model_id": null,
         "variant": null,
         "harness": null
       },
@@ -204955,7 +204955,7 @@
       },
       "protocol": "TrueSkill mean (μ), with σ uncertainty reported separately; source row: [\"36\",\"Gemini 2.5 Pro\",\"3.697\",\"0.221\",\"3.697\",\"481\",\"226.571\",\"0.471\"]",
       "comparison_key": null,
-      "join_note": "Exact display name, unique default catalog configuration; no effort alias inference."
+      "join_note": "Withheld: the source lists gemini-2.5-pro::default 2 times with different values (4.468, 3.697); no row is attributed until the source disambiguates them."
     },
     {
       "id": "public:621f2d54955543f2a50ab55c",
@@ -424436,6 +424436,22 @@
       "benchmark_id": "vending-bench::2",
       "source_id": "https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf#Claude Opus 4.8",
       "reason": "Claude Opus 4.8 / Vending-Bench 2 (final balance): no line carries the benchmark name with exactly one matching value (https://www-cdn.anthropic.com/57a52ea7d8f0e54e8a542e908266086df425cdf5/Claude%20Fable%205%20&%20Claude%20Mythos%205%20System%20Card.pdf)"
+    },
+    {
+      "benchmark_id": "mazur-elimination-game::snapshot-2026-09-10",
+      "source_id": "Gemini 2.5 Pro",
+      "reason": "Withheld: the source lists gemini-2.5-pro::default 2 times with different values (4.468, 3.697); no row is attributed until the source disambiguates them.",
+      "withheld": true,
+      "locator": "markdown_table; source row 124; Gemini 2.5 Pro; field value",
+      "model_id": "gemini-2.5-pro::default"
+    },
+    {
+      "benchmark_id": "mazur-elimination-game::snapshot-2026-09-10",
+      "source_id": "Gemini 2.5 Pro",
+      "reason": "Withheld: the source lists gemini-2.5-pro::default 2 times with different values (4.468, 3.697); no row is attributed until the source disambiguates them.",
+      "withheld": true,
+      "locator": "markdown_table; source row 137; Gemini 2.5 Pro; field value",
+      "model_id": "gemini-2.5-pro::default"
     }
   ],
   "details": {

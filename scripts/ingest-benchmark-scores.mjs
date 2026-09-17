@@ -4,7 +4,7 @@ import { readFile } from 'node:fs/promises';
 import { createHash } from 'node:crypto';
 import { gunzipSync } from 'node:zlib';
 import { writeJSONAtomic } from '../lib/snapshot.mjs';
-import { validateBenchmarkScores } from '../lib/benchmark-scores.mjs';
+import { validateBenchmarkScores, withholdConflictingSourceRows } from '../lib/benchmark-scores.mjs';
 import { verifyScoreEvidence } from '../lib/benchmark-score-evidence.mjs';
 import { parseRealSwe, buildRealSweSnapshot } from '../lib/realswe.mjs';
 import { buildOpenRouterBenchmarkObservations, BENCHMARK_IDS as OPENROUTER_BENCHMARKS } from '../lib/openrouter-benchmark-scores.mjs';
@@ -197,6 +197,7 @@ for (const path of ['data/raw/benchmarks/public-observations.json', 'data/raw/be
 }
 for (const e of registry.entries) if (!collections.some((c) => c.benchmark_id === e.id)) collections.push({ benchmark_id: e.id,
   status: 'manual_required', source_url: e.primary_url, reason: e.how_to_collect.locator });
+rejected.push(...withholdConflictingSourceRows(observations));
 const snapshot = { schema_version: 1, observations, missing, collections, rejected, ...(Object.keys(details).length ? { details } : {}) };
 validateBenchmarkScores(snapshot, registry, new Set(models.map((m) => m.id)));
 if (!process.argv.includes('--draft')) await verifyScoreEvidence(snapshot, registry, { approvals: await read('data/raw/benchmarks/score-approvals.json') });
