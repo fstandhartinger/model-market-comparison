@@ -419,6 +419,12 @@ export async function reviewArtifact({
             quarantined.push({ id: rowId, round, reason: flag ? `producer ${flag.status}: ${flag.note}` : 'critic finding (blocker/major) without clean re-review' });
           }
           current = current.filter((row) => !drops.has(row.id));
+        } else if (review.verdict === 'pass') {
+          // CR-66.8: a PASS whose findings cannot be bound to rows is an unusable answer from this critic,
+          // not a reason to abort: exclude it and give the round to the next critic (bounded by maxRounds).
+          errors.push(`round ${round}: critic ${critic.meta.actual_model} returned pass without a bounded row-level revision${artifactWide ? ' (artifact-wide finding)' : ''}${missingRows.length ? `; uncovered rows ${missingRows.join(',')}` : ''}${missingCriteria.length ? `; uncovered criteria ${missingCriteria.join(',')}` : ''}; retrying with another critic`);
+          await recordInvalidModel(critic.meta, 'critic', 'Pass without a bounded row-level revision', runner);
+          if (round === maxRounds) terminalError = new Error('review cannot be revised safely');
         } else {
           errors.push(`round ${round}: ${review.verdict} without a bounded row-level revision${artifactWide ? ' (artifact-wide finding)' : ''}${missingRows.length ? `; uncovered rows ${missingRows.join(',')}` : ''}${missingCriteria.length ? `; uncovered criteria ${missingCriteria.join(',')}` : ''}`);
           if (round === maxRounds || (!missingRows.length && !missingCriteria.length)) terminalError = new Error('review cannot be revised safely');

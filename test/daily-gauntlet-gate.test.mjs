@@ -113,3 +113,38 @@ test('a critic transport retry reuses an unchanged, hash-verified producer audit
     assert.equal(result.manifest.receipts.find((r) => r.round === 2 && r.role === 'producer').reused_from_round, 1);
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
+
+test('CR-66.8: a critic PASS with an unbound finding retries the round with another critic instead of aborting', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-gauntlet-unbound-pass-'));
+  let critics = 0, alwaysUnbound = false;
+  try {
+    const runner = async (args) => {
+      await mockRunner(args);
+      const path = args[args.indexOf('--out') + 1];
+      const meta = JSON.parse(await readFile(path + '.meta.json', 'utf8'));
+      let body;
+      if (args.includes('--critic')) {
+        const review = JSON.parse(await readFile(path, 'utf8'));
+        if (++critics === 1 || alwaysUnbound) {
+          // Round 1 critic: "pass", but a major finding that names no row (the 14 and 16 Sep aborts).
+          Object.assign(review, { errors_found: 1, findings: [{ id: 'F1', severity: 'major', location: 'overall', evidence: 'values look plausible but formatting differs', repair: 'none' }] });
+        } else meta.actual_model = meta.qualification.id = 'qwen/fixture-critic';
+        body = JSON.stringify(review) + '\n';
+      } else body = JSON.stringify({ rows: [{ id: 'fixture:1', status: 'match', note: 'Fixture value matches primary input' }] }) + '\n';
+      await writeFile(path, body);
+      meta.output_sha256 = sha256(body);
+      await writeFile(path + '.meta.json', JSON.stringify(meta));
+    };
+    const result = await reviewArtifact({ runDir: dir, artifactId: 'unbound-pass', rows, sources, criteria: ['Verify source value'], runner });
+    assert.equal(critics, 2);
+    assert.equal(result.accepted, true);
+    assert.match(result.errors[0], /round 1: critic z-ai\/fixture returned pass without a bounded row-level revision \(artifact-wide finding\); retrying with another critic/);
+    assert.equal(result.fingerprints[0].critic_model, 'qwen/fixture-critic');
+
+    // Every critic doing it: bounded by maxRounds, then refused (never accepted).
+    alwaysUnbound = true;
+    const refused = await reviewArtifact({ runDir: dir, artifactId: 'unbound-pass-all', rows, sources, criteria: ['Verify source value'], maxRounds: 2, runner });
+    assert.equal(refused.accepted, false);
+    assert.equal(refused.errors.length, 2);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
