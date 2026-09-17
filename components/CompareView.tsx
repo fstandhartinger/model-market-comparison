@@ -13,7 +13,7 @@ import { preferredVariantIds, collapseModels, selectableModels } from "../lib/va
 
 const METRICS: { key: ScoreKey | "cost"; label: string; lowerBetter?: boolean; digits?: number }[] = [
   { key: "designarena_fullstack", label: "DesignArena Full-Stack Elo", digits: 0 },
-  { key: "designarena_frontend", label: "DesignArena Frontend Elo", digits: 0 },
+  { key: "designarena_frontend", label: "DesignArena Web Apps (agentic) Elo", digits: 0 },
   { key: "aa_coding_index", label: "AA Coding Index", digits: 1 },
   { key: "aa_coding_agent", label: "AA Coding Agent Index", digits: 1 },
   { key: "aa_intelligence_index", label: "AA Intelligence Index", digits: 1 },

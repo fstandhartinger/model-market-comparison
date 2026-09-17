@@ -31,7 +31,7 @@ const SCORE_ROWS: { key: keyof ClientData["models"][number]["scores"]; label: st
   { key: "aa_intelligence_index", label: "AA Intelligence", dp: 1 },
   { key: "epoch_eci", label: "Epoch ECI", dp: 1 },
   { key: "epoch_eci_software", label: "Epoch Software ECI", dp: 1 },
-  { key: "designarena_frontend", label: "DA Frontend Elo", dp: 0 },
+  { key: "designarena_frontend", label: "DA Web Apps Elo", dp: 0 },
   { key: "designarena_fullstack", label: "DA Full-Stack Elo", dp: 0 },
 ];
 

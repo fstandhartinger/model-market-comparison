@@ -252,7 +252,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
   });
 
   // Seven conceptual slots: three AA indices, two Epoch ECI indices, plus separate,
-  // reliability-gated DesignArena Frontend and Full-Stack values. Each observed source value is
+  // reliability-gated DesignArena Web Apps (agentic) and Full-Stack values. Each observed source value is
   // percentile-normalized; every missing slot inherits the model's mean observed
   // percentile. An evidence-free row receives 50 but keeps coverage 0 so it cannot
   // masquerade as a measured family representative.
@@ -293,7 +293,7 @@ export function clientData(ds: Dataset, benchmaxxing: Record<string, ClientBench
     aa_intelligence_index: "AA Intelligence",
     epoch_eci: "Epoch ECI",
     epoch_eci_software: "Software ECI",
-    designarena_frontend: "DesignArena Frontend",
+    designarena_frontend: "DesignArena Web Apps (agentic)",
     designarena_fullstack: "DesignArena Full-Stack",
   };
   const attachmentMaps = new Map<string, Partial<Record<CompositeSlot, CompositeAttachment>>>();

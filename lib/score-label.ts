@@ -9,6 +9,6 @@ export function scoreVersion(key: ScoreKey, dates?: Record<string, string>) {
 }
 export function scoreLabel(key: ScoreKey, dates?: Record<string, string>) { return `${SCORE_LABELS[key]} · ${scoreVersion(key, dates)}`; }
 export function scoreChartLabel(key: ScoreKey, dates?: Record<string, string>) {
-  const labels = { composite: 'Composite · 7 fixed inputs, ECI', aa_coding_index: 'AA Coding', aa_coding_agent: 'AA Coding Agent', aa_intelligence_index: 'AA Intelligence', epoch_eci: 'Epoch ECI', epoch_eci_software: 'Epoch Software ECI', designarena_frontend: 'DA Frontend Elo', designarena_fullstack: 'DA Full-Stack Elo', cat_coding: 'Coding composite', cat_agentic: 'Agentic composite', cat_science: 'Science composite', cat_long_context: 'Long-context composite' };
+  const labels = { composite: 'Composite · 7 fixed inputs, ECI', aa_coding_index: 'AA Coding', aa_coding_agent: 'AA Coding Agent', aa_intelligence_index: 'AA Intelligence', epoch_eci: 'Epoch ECI', epoch_eci_software: 'Epoch Software ECI', designarena_frontend: 'DA Web Apps Elo', designarena_fullstack: 'DA Full-Stack Elo', cat_coding: 'Coding composite', cat_agentic: 'Agentic composite', cat_science: 'Science composite', cat_long_context: 'Long-context composite' };
   return key === 'composite' ? labels[key] : `${labels[key]} · ${scoreVersion(key, dates).replace('unversioned snapshot', 'snapshot')}`;
 }

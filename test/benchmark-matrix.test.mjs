@@ -223,3 +223,15 @@ test('CR-63.6: small values keep one decimal count; formatNative names Elo and m
   assert.equal(formatNative(1625, 'Elo'), '1,625 Elo');
   assert.equal(formatNative(null, 'Elo'), '—');
 });
+
+test('CR-65.15: the DesignArena frontend board is labelled Web Apps (agentic) and links its exact board', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const files = ['lib/types.ts', 'lib/client-model.ts', 'lib/benchmark-view.mjs', 'lib/headline-history.mjs', 'lib/score-label.ts', 'components/CompareView.tsx', 'components/ModelExplorer.tsx', 'components/CompositeNote.tsx', 'app/about/page.tsx'];
+  for (const file of files) {
+    const text = await readFile(new URL(`../${file}`, import.meta.url), 'utf8');
+    assert.doesNotMatch(text, /DesignArena Frontend|DA Frontend|Web Dev Frontend|\(Frontend\) Elo/, `${file} still calls the Web Apps board "Frontend"`);
+  }
+  const view = await readFile(new URL('../lib/benchmark-view.mjs', import.meta.url), 'utf8');
+  assert.match(view, /'DesignArena Web Apps \(agentic\)'/);
+  assert.match(view, /designarena\.ai\/leaderboard\/\$\{key === 'frontend' \? 'webapps' : 'fullstack'\}/);
+});

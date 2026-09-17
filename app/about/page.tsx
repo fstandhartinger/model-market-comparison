@@ -51,7 +51,7 @@ export default async function AboutPage() {
         <li><b>ArtificialAnalysis</b> — Intelligence &amp; Coding indices plus sub-benchmarks (LiveCodeBench, SciCode, Terminal-Bench Hard, τ²-Bench, GPQA, MMLU-Pro) via the v2 API.</li>
         <li><b>AA Coding Agent Index</b> — Composite retains v1.4, last collected {ds.sources.aa_coding_agents}. AA now publishes v1.5 with different benchmark components. We collect it separately and do not mix the versions.</li>
         <li>Some AA licensing and model identifiers are retained from earlier source publications. Their original dates are recorded per field in the downloadable dataset.</li>
-        <li><b>DesignArena</b> (Arcada Labs) — Agentic Web Dev Frontend &amp; Full-Stack Elo leaderboards, read from
+        <li><b>DesignArena</b> (Arcada Labs) — agentic Web Apps &amp; Full-Stack Elo leaderboards, read from
           the site&apos;s own public leaderboard endpoint. DesignArena publishes no API documentation or data licence,
           so this is not an official feed and we do not present it as one. We show these two boards and collect
           nothing further from this source; that scope is recorded in the repository and would only change with the
@@ -190,8 +190,11 @@ export default async function AboutPage() {
         scale through the models measured on both: a result that ranks at the same position among those
         models as a given AA Intelligence percentile counts as that percentile. Differences at the top are
         rank differences, so 99 against 97 is not a 2 % capability gap. The composite uses seven slots: AA Coding, source-matched AA Coding Agent, AA
-        Intelligence, Epoch general ECI, Epoch Software Engineering ECI, DesignArena Frontend and
-        DesignArena Full-Stack. AA values are clamped to
+        Intelligence, Epoch general ECI, Epoch Software Engineering ECI, DesignArena Web Apps (agentic) and
+        DesignArena Full-Stack. The DesignArena inputs are its agentic{" "}
+        <a className="text-accent underline" href="https://www.designarena.ai/leaderboard/webapps">Web Apps</a> and{" "}
+        <a className="text-accent underline" href="https://www.designarena.ai/leaderboard/fullstack">Full-Stack</a> boards; the page
+        DesignArena calls Frontend is a different, broader board with its own ratings. AA values are clamped to
         0–100. A DesignArena board qualifies at an app-selected minimum of 200 battles, aligned with
         the source&apos;s typical preliminary/reliability threshold; its Elo is converted to the
         expected score against a fixed Elo 1000 opponent. That conversion keeps every model in the same order, so it
@@ -339,7 +342,7 @@ export default async function AboutPage() {
         rather than a plain average. The same rule governs the selectable category scores in
         <code> data/category-score-anchors.json</code>; a judged benchmark may not be an anchor at all, and the
         build fails rather than silently changing a published score if one is ever reclassified. None of the seven
-        slots of the Benchmark Heaven Main Composite is saturated today; two of them (DesignArena Frontend and
+        slots of the Benchmark Heaven Main Composite is saturated today; two of them (DesignArena Web Apps and
         Full-Stack) are preference scores, and they enter as their own separate, percentile-normalised slots rather
         than averaged into task accuracy.
       </p>
