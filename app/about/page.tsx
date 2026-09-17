@@ -45,6 +45,19 @@ export default async function AboutPage() {
         <a href="mailto:info@productivity-boost.com" className="text-accent">info@productivity-boost.com</a> and we will act promptly.
       </p>
 
+      <h2 id="agents" className="mt-6 mb-2 font-semibold">For agents</h2>
+      <p className="text-sm text-gray-400">
+        Two ways in. <b>Headless or server-side</b>: the public HTTP API — no key, CORS open, documented in{" "}
+        <a href="https://github.com/fstandhartinger/model-market-comparison/blob/main/API.md#for-agents-webmcp" className="text-accent">API.md</a>.{" "}
+        <b>In a browser tab</b>: in browsers with WebMCP (<code>navigator.modelContext</code>), every page of this site registers three
+        read-only tools — <code>search_benchmarks</code>, <code>get_benchmark_results</code> and <code>get_model_benchmark_summary</code>.
+        They work only while a benchmarkheaven.com tab is open and the browser supports WebMCP; they are not a remote MCP server.
+        They return published results only: the value in the benchmark&apos;s own unit, its basis (measured, self-reported, derived,
+        preliminary), benchmark version and the source with its retrieval date. A missing result is <code>null</code>, never an
+        estimate. At most 25 benchmarks, 50 results or 10 models per call, with cursors for more. The tools send no cookies,
+        store nothing and cannot change anything; other sites cannot use them from an embedded frame.
+      </p>
+
       <h2 id="sources" className="mt-6 mb-2 font-semibold">Sources</h2>
       <ul className="space-y-2 text-sm text-gray-300">
         <li><b>OpenRouter</b> — model catalog and per-provider endpoint pricing (live API).</li>
