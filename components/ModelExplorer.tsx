@@ -310,9 +310,9 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   // six-column layout and widths return at md. ('hidden' alone would also hide at md+ in a
   // different cascade order — 'hidden md:table-cell' is the standard responsive pairing.)
   const Th = ({ label, k, right, sub, info, hideBelowMd }: { label: string; k: SortKey; right?: boolean; sub?: string; info?: React.ReactNode; hideBelowMd?: boolean }) => (
-    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`${hideBelowMd ? "hidden md:table-cell " : ""}px-3 py-2 text-xs font-semibold uppercase tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
+    <th aria-sort={sort === k ? (asc ? "ascending" : "descending") : "none"} className={`${hideBelowMd ? "hidden md:table-cell " : ""}px-3 py-2 text-xs font-semibold uppercase tracking-normal md:tracking-wide ${right ? "text-right" : "text-left"} ${sort === k ? "text-accent" : "text-gray-400"}`}>
       <span className={`inline-flex items-center gap-0.5 ${right ? "justify-end" : ""}`}>
-        <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
+        <button type="button" onClick={() => onSort(k)} className="text-inherit uppercase tracking-normal md:tracking-wide focus-visible:outline focus-visible:outline-accent">{label}{sort === k ? (asc ? " ▲" : " ▼") : ""}</button>
         {info}
       </span>
       {/* R1.2: the active score name rides along underneath, so the header follows the selector. */}
@@ -342,6 +342,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
       {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
           behind each one while it is moved. Advanced keeps the full toolbar. */}
       {/* F-13: the sliders and the value map form one card now; ShortlistControls owns the layout. */}
+      {/* CR-73.1: plain-language section headers, so a first-time visitor knows what each block answers. */}
+      {simple && <SectionHeader title="The most capable model at every price" caption="Set a minimum score and a budget — see who wins." />}
       {simple && (
         <ShortlistControls
           scores={pool.map((x) => x.sc).filter((v): v is number => v != null)}
@@ -431,6 +433,7 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
         </div>
       )}
 
+      <SectionHeader title="Most capable models and what they really cost" />
       <div className="card overflow-x-auto">
         {/* F-14: no fixed minimum width. On phones exactly three columns carry the width
             (Model 46 % / Score 27 % / Adjusted Cost 27 %, the hidden columns sit at 0 %);
@@ -443,8 +446,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             {/* F-46 (Fable pass 6): the Adjusted Cost header ("ADJUSTED / COST ▼" + (i)) needs
                 86 px of content room; at 27 % of a 356 px phone table the (i) overflowed the
                 card by 4 px. Model gives up 4 %, Cost takes it. */}
-            <col className="w-[42%] md:w-[30%]" />
-            <col className="w-[27%] md:w-[13%]" />
+            {/* CR-73.3: "CAPABILITY SCORE (i)" needs the widest word plus the (i) on one line, so on phones Score
+                takes 4 % from Model and the headers drop their letter-spacing below md. */}
+            <col className="w-[38%] md:w-[30%]" />
+            <col className="w-[31%] md:w-[13%]" />
             <col className="w-[31%] md:w-[12%]" />
             <col className="w-0 md:w-[17%]" />
             <col className="w-0 md:w-[14%]" />
@@ -453,7 +458,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           <thead><tr>
             <Th label="Model" k="name" />
             <Th label="Org" k="org" hideBelowMd />
-            <Th label="Score" k="score" right sub={SCORE_SHORT_LABELS[score]} info={<InfoTip title={`Score — ${SCORE_LABELS[score]}`} label="the Score column">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">{scoreLabel(score, data.sourceDates)}</span></InfoTip>} />
+            {/* CR-73.3: the column says what the number measures; the Composite's full name sits in the tooltip title. */}
+            <Th label="Capability Score" k="score" right sub={score === "composite" ? "Main Composite Score" : SCORE_SHORT_LABELS[score]} info={<InfoTip title={score === "composite" ? "Capability Score — Benchmark Heaven Main Composite Score" : `Capability Score — ${SCORE_LABELS[score]}`} label="the Capability Score column">{scoreTip(score)}<span className="mt-2 block text-xs text-gray-500">{scoreLabel(score, data.sourceDates)}</span></InfoTip>} />
             <Th label="Adjusted Cost" k="cost" right sub="modeled $/task" info={<InfoTip title="Adjusted Cost" label="the Adjusted Cost column">{ADJUSTED_COST_TIP}</InfoTip>} />
             <Th label="# benchmarks" k="benchmarks" right hideBelowMd />
             <Th label="# providers" k="providers" right hideBelowMd />
@@ -713,4 +719,11 @@ function capabilityTag(v: ValueSignal | undefined, cost: number | null, sc: numb
   const words = up ? "more capable" : "less capable";
   const why = `${strong ? "Well" : "Somewhat"} ${up ? "above" : "below"} the capability typical for ${cost != null ? `a $${cost < 1 ? cost.toPrecision(2) : cost.toFixed(2)} cost` : "its cost"}: its ${num(sc, 1)} score usually costs about ${ratio} ${up ? "more" : "less"}. Same signal as the ${ratio} ${up ? "cheaper" : "pricier"} tag shown when sorted by score, among ${v.n} priced models with your settings (log cost fitted against score).`;
   return <span className="bh-value-tag" data-kind={v.kind} data-level={v.level} data-framing="capability" title={`${words} for its price. ${why}`}><span aria-hidden="true">{up ? (strong ? "↑" : "↗") : (strong ? "↓" : "↘")}</span><span className="bh-vt-full">{words}</span><span className="sr-only">{strong ? "Notably" : "Slightly"} {words} for its price: {why}</span></span>;
+}
+
+function SectionHeader({ title, caption }: { title: string; caption?: string }) {
+  return <div className="mb-2 px-1" data-bh-section-header>
+    <h2 className="text-lg font-semibold leading-snug tracking-tight text-gray-100 sm:text-xl">{title}</h2>
+    {caption && <p className="bh-muted text-xs sm:text-sm">{caption}</p>}
+  </div>;
 }
