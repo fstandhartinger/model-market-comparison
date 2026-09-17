@@ -228,10 +228,10 @@ export function BenchmarkMatrix({ matrix, filterData, initial }: { matrix: Matri
           </tr></thead>
           <tbody><ScoreRowPair score={score} valuesFor={valuesFor} /></tbody>
           {groups.map((g) => { const open = !closed.has(g.id); return <tbody key={g.id}>
-            <CategoryHeader columns={ids.length} composite={categoryComposite(g.rows, ids.length)} label={
+            <CategoryHeader columns={ids.length} count={g.rows.length} composite={categoryComposite(g.rows, ids.length)} label={
               <button type="button" aria-expanded={open} onClick={() => toggle(g.id)}>
                 <svg aria-hidden="true" width="12" height="12" viewBox="0 0 12 12" className={open ? "rotate-90" : ""}><path d="M4 2l4 4-4 4" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round" /></svg>
-                <span>{g.label}</span><span className="bh-muted tabular text-xs font-normal">{g.rows.length} benchmarks</span>
+                <span>{g.label}</span><span className="bh-cat-count bh-muted tabular text-xs font-normal">{g.rows.length} benchmarks</span>
               </button>} />
             {open && g.rows.map(({ row, vals, basis }) => {
               const bars = rowBars(vals, row.higherBetter, row.unit), win = rowWinners(vals.map((v, j) => (basis[j] === 3 ? null : v)), row.higherBetter);

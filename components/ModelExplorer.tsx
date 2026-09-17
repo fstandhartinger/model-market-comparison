@@ -317,9 +317,21 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
     </th>
   );
 
-  // CR-63.7: one legend for both tag families, in Simple and Advanced.
-  const tagLegend = <>{rows.some((x) => x.m.benchmaxxing_level) && <>{" · "}<span data-bh-tag-legend="benchmaxxing"><b>⚠ Benchmaxxing</b> (solid) marks the top 10 % of scored models by unevenness between related benchmarks, <b>△</b> (tint) the next 10 % — a screening flag, not proof of leakage; the tag opens the model&apos;s radar. <Link className="text-accent underline" href="/benchmaxxing">What Benchmaxxing means →</Link></span></>}
-        {" · "}<span data-bh-tag-legend="value"><b>↓ cheaper</b> / <b>↑ pricier</b> (filled, straight arrow) = cost well below / above what models with a similar score cost in this list; <b>↘</b> / <b>↗</b> (outlined, slanted) = somewhat. The ratio is measured against the models in the current view, so Simple and Advanced can show different ratios.</span></>;
+  // CR-63.7: one legend for both tag families, in Simple and Advanced. F-109 (Fable pass 20): one line per mark,
+  // behind a collapsed disclosure, so the visible footnote stays at two sentences.
+  const showThin = score === "composite" && rows.some((x) => isThinComposite(x.m));
+  const showBmx = rows.some((x) => x.m.benchmaxxing_level);
+  const tagLegend = <details className="bh-legend mt-1" data-bh-legend>
+    <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
+    <dl className="mt-2 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5">
+      {showThin && <><dt><span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 inputs</dd></>}
+      {showBmx && <><dt data-bh-tag-legend="benchmaxxing"><span className="bh-bmx-tag" data-level="strong">⚠&nbsp;Benchmaxxing</span></dt><dd>Among the most uneven across related benchmarks; opens the model&apos;s radar</dd>
+        <dt><span className="bh-bmx-tag" data-level="weak">△&nbsp;Benchmaxxing</span></dt><dd>Uneven, less clearly; a screening flag, not proof</dd></>}
+      <dt data-bh-tag-legend="value"><span className="bh-value-tag" data-kind="cheap" data-level="strong">↓ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="strong">↑ pricier</span></dt><dd>Cost well below / above models with a similar score in this list</dd>
+      <dt><span className="bh-value-tag" data-kind="cheap" data-level="weak">↘ cheaper</span> <span className="bh-value-tag" data-kind="pricey" data-level="weak">↗ pricier</span></dt><dd>Somewhat below / above</dd>
+    </dl>
+    <p className="mt-2">Ratios compare against the models in the current view, so Simple and Advanced can differ.{showBmx && <> <Link className="text-accent underline" href="/benchmaxxing">What Benchmaxxing means →</Link></>}</p>
+  </details>;
   return (
     <div>
       {/* R5.3–R5.5: Simple mode asks two questions with sliders and shows the distribution
@@ -640,10 +652,10 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
           price hint, the Benchmaxxing screening note (only when a displayed row carries
           the signal) and the measured-task-tokens note with " · ". */}
       <p className="mt-3 text-xs text-gray-500">
-        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span> · Only models with measured task-token usage are ranked here; Advanced can relax that.</span>{score === "composite" && rows.some((x) => isThinComposite(x.m)) && <span> · Striped score = built on fewer than 3 of 7 inputs</span>}{tagLegend}</> : <><PriceAssumptions inline />
-          {tagLegend}
+        {simple ? <><span>Underlined prices open their inputs and sources · </span><Link className="text-accent underline" href="/about#adjusted-cost">How we calculate adjusted cost</Link><span>. Only models with measured task-token usage are ranked here; Advanced can relax that.</span></> : <><PriceAssumptions inline />
           {s.priceMode === "adjusted" && measuredTasksOnly && <>{" · "}Models without AA task-token measurements are excluded from this ranking. Turn off “Measured task tokens only” to include their assumed task costs.</>}</>}
       </p>
+      <div className="text-xs text-gray-500">{tagLegend}</div>
       {/* CR-63.1 (Florian 2026-09-16: "benchmaxxing tab should be moved up in priority"): a one-line teaser in the style of the row below. */}
       <p className="card mt-4 px-4 py-3 text-sm" data-bh-benchmaxxing-teaser>
         <span aria-hidden="true" className="text-warn">⚠ </span><strong>Benchmaxxing check.</strong>{" "}

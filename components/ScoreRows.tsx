@@ -48,7 +48,7 @@ export function ScoreRowPair({ score, valuesFor }: { score: ScoreKey; valuesFor:
 /** A category header that is also that category's composite (see `categoryComposite`).
  *  F-98: when the average had to leave judged rows out, or weighs a saturated row half, the header's
  *  own (i) text says so in one clause — no extra column, no new colour. */
-export function CategoryHeader({ label, composite, columns }: { label: ReactNode; composite: CompositeSummary; columns: number }) {
+export function CategoryHeader({ label, composite, columns, count }: { label: ReactNode; composite: CompositeSummary; columns: number; count?: number }) {
   const n = composite.rows.length;
   const clauses = [
     composite.saturated?.length ? `saturated benchmarks weigh half (${composite.saturated.map((r) => r.name).join(", ")})` : null,
@@ -62,7 +62,7 @@ export function CategoryHeader({ label, composite, columns }: { label: ReactNode
   return <tr className="bh-matrix-group">
     <th scope="rowgroup" className="bh-matrix-stub" title={basis}>
       <span className="bh-cat-head">{label}</span>
-      <span className="bh-cat-basis">{/* CR-63.16: say what the number counts ("7 benchmarks · 2 feed the group score"). */}{n >= COMPOSITE_MIN_ROWS ? `${n} feed the group score${composite.saturated?.length ? " (weighted)" : ""}` : "no group score"}<span className="sr-only">. {basis}</span></span>
+      <span className="bh-cat-basis">{/* CR-63.16: say what the number counts ("7 benchmarks · 2 feed the group score"). F-110: below 640 px the count joins this line. */}{count != null && <span className="bh-cat-count-narrow">{count} benchmarks · </span>}{n >= COMPOSITE_MIN_ROWS ? `${n} feed the group score${composite.saturated?.length ? " (weighted)" : ""}` : "no group score"}<span className="sr-only">. {basis}</span></span>
     </th>
     {Array.from({ length: columns }, (_, j) => { const v = composite.values[j]; return <td key={j} className={`bh-cat-cell ${j === 0 ? "bh-matrix-lead" : ""}`}>
       {v == null ? <span className="sr-only">No category composite</span>
