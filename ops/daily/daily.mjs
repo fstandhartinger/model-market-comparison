@@ -297,7 +297,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // different-family critic timing out (dry run 17 Sep 01:21, killed at 60 min in the last of 7 contracts), the
     // bounded retries need longer. The 3 h run cap still holds; CR-66.3 (free worker chain) is the real fix.
     await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 6_000_000);
-    await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 3_600_000);
+    // Same reason, same bound: on 17 Sep each paid producer call took 2–5 min (1 min on 16 Sep) and this step ran past 45 min.
+    await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 6_000_000);
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
     await command('npm-build', 'npm', ['run', 'build'], work, 1_200_000, isolatedEnvironment);
