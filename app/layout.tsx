@@ -7,6 +7,7 @@ import { GlobalFilters } from "../components/GlobalFilters";
 import { pageDataVersion } from "../lib/page-data";
 import { AaCredit } from "../components/AaCredit";
 import { EpochCredit } from "../components/EpochCredit";
+import { WebMcpTools } from "../components/WebMcpTools";
 
 const BRAND_CLAIM = "The most detailed cost–capability analysis in AI.";
 const BRAND_LINE = "Every model. Every Benchmark. Actual Costs.";
@@ -38,6 +39,8 @@ export default async function RootLayout({ children }: { children: React.ReactNo
         <SettingsProvider>
           <AccountProvider>
           <Nav />
+          {/* CR-56: read-only WebMCP tools; renders nothing, registers only where the browser supports it. */}
+          <WebMcpTools />
           {/* CR-62.1: the Options sheet fetches its provider and model lists after the page shell. */}
           <GlobalFilters version={await pageDataVersion()} />
           <main id="main-content" tabIndex={-1} className="mx-auto max-w-[1400px] px-4 py-6">{children}</main>

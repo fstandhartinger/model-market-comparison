@@ -372,3 +372,24 @@ so `cat_science = (CritPt + 0.5 × GPQA Diamond) / 1.5` — published `cat_scien
 points lower than in builds before 2026-09-16; the other three category scores are unchanged. A
 preference/judge score may not be an anchor at all and the build fails rather than redefine a score
 silently. The weight and the rule live in `data/category-score-anchors.json` (`saturation_weight`).
+
+## For agents: WebMCP (2026-09-17, CR-56)
+
+Two routes. **Headless / server-side agents** use the HTTP endpoints above. **Agents driving a browser** can use
+WebMCP: on every page, in browsers that expose `navigator.modelContext.registerTool` (top-level page only; the site
+sends `Permissions-Policy: tools=(self)`, so cross-origin frames get nothing), the site registers three read-only tools
+(`annotations.readOnlyHint: true`). They need an open benchmarkheaven.com tab and a WebMCP-capable browser; without
+support nothing is registered and the page is unchanged. The tools call the public GET endpoints above
+(`/api/benchmarks`, `/api/benchmark-scores`) with `credentials: "omit"`, so they return the same published data.
+
+| Tool | Input (JSON Schema, no extra fields) | Output |
+|---|---|---|
+| `search_benchmarks` | `query?` (≤ 100 chars), `category?`, `limit?` 1–25 (default 10), `cursor?` | `benchmarks[]`: `benchmark_id` (exact versioned id), `name`, `family`, `version`, `category`, `metric`, `unit`, `higher_is_better`, `range`, `maintainer`, `status`, `superseded_by`, `source_url`, `last_verified`, `models_with_results`; `total`, `next_cursor` |
+| `get_benchmark_results` | `benchmark_id` (exact), `model_ids?` (≤ 10 exact catalog ids), `limit?` 1–50 (default 25), `cursor?` (without `model_ids`) | `benchmark` (as above) and `results[]` (or `models[]` per requested id): `model_id` (null for an unmatched source subject), `source_subject`, `variant`, `harness`, `value` (native unit), `unit`, `basis`, `protocol`, `source {url, retrieved_at, published_at, locator}` |
+| `get_model_benchmark_summary` | `model_id` (exact, variant included, e.g. `kimi-k3::max`), `benchmark_ids?` (≤ 25), `limit?` 1–50 | `results[]` as above plus `benchmark_name`, `benchmark_version`, `higher_is_better`; a requested benchmark without a result: `{ value: null, status: "no_published_result" }` |
+
+Each call returns `{ content: [{ type: "text", text: <JSON> }], structuredContent: <JSON>, isError }`. The JSON has
+`ok: true`, or `ok: false` with `error.code` `invalid_input`, `not_found` (unknown exact id) or `unavailable`. Example:
+`get_model_benchmark_summary({ "model_id": "claude-opus-5::max", "benchmark_ids": ["aa-gpqa-diamond::snapshot-2026-09-10"] })`.
+Freshness is per result (`source.retrieved_at`) and per benchmark (`last_verified`); the daily refresh runs at 05:17 UTC.
+No account, cookies, tracking or write actions. Implementation: `lib/webmcp-tools.mjs`, `components/WebMcpTools.tsx`.
