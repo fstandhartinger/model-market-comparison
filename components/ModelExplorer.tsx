@@ -1,7 +1,7 @@
 "use client";
 import { Fragment, useEffect, useMemo, useState, type ReactNode } from "react";
 import Link from "next/link";
-import { compareByScore, hasScoreEvidence, isThinComposite, type ClientData } from "../lib/client-model";
+import { compareByScore, hasScoreEvidence, isThinComposite, thinCompositeNote, type ClientData } from "../lib/client-model";
 import { SCORE_PICKER_LABELS, SCORE_LABELS, SCORE_SHORT_LABELS, type ScoreKey } from "../lib/types";
 import { scoreLabel, scoreVersion } from "../lib/score-label";
 import { usdPerM, num, orgColor } from "../lib/format";
@@ -325,7 +325,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
   const tagLegend = <details className="bh-legend mt-1" data-bh-legend>
     <summary className="cursor-pointer select-none text-gray-400 hover:text-inherit">Legend: marks and tags</summary>
     <dl className="mt-2 grid grid-cols-[auto_1fr] items-center gap-x-3 gap-y-1.5">
-      {showThin && <><dt><span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 inputs</dd></>}
+      {/* CR-74.3: thin rows sort in place; the badge (and the hatched bar) mark the uncertain rank. */}
+      {showThin && <><dt data-bh-tag-legend="thin"><span className="bh-thin-tag"><span aria-hidden="true">◔</span>&nbsp;Thin data</span> <span className="bh-legend-stripe" aria-label="Striped score bar" role="img" /></dt><dd>Score built on fewer than 3 of 7 Composite inputs (◔ 2/7 = 2 of 7); ranked with everyone else, but its position is uncertain</dd></>}
       {/* CR-74.1: one legend line per Benchmaxxing level, strongest first, with its threshold and the guards. */}
       {showBmx && <>{[...BENCHMAXX_LEVELS].reverse().map((x, k) => <Fragment key={x.level}><dt data-bh-tag-legend={k === 0 ? "benchmaxxing" : undefined}><span className="bh-bmx-tag" data-level={x.level}><BenchmaxxingTagFace level={x.level} /></span></dt><dd>{x.title}: signal ≥ +{x.min}{k === 0 ? "; ranks higher on famous public benchmarks than on held-out ones; opens the model's radar" : ""}</dd></Fragment>)}
         <dt className="sr-only">Guards</dt><dd className="col-start-2 text-gray-400">Every level {BENCHMAXX_GUARD_TEXT}; a screening flag, not proof</dd></>}
@@ -452,11 +453,8 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
             <Th label="# providers" k="providers" right hideBelowMd />
           </tr></thead>
           <tbody>
-            {rows.map(({ m, sc, hasEvidence, price, cheap, ncheap }, rowIndex) => {
+            {rows.map(({ m, sc, hasEvidence, price, cheap, ncheap }) => {
               const isOpen = expanded === m.id;
-              // CR-65.4: ranked by the Composite, thin rows follow in their own labelled band.
-              const bandStart = sort === "score" && score === "composite" && isThinComposite(m)
-                && (rowIndex === 0 || !isThinComposite(rows[rowIndex - 1].m));
               const ctx = priceContext(m, data, priceSettings);
               const channelRanking = rankedOffers(data.offersByModel[m.id], offerScope, ctx);
               const channelRankByKey = new Map(channelRanking.map((offer, index) => [offer.key, index + 1]));
@@ -476,11 +474,6 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
               });
               return (
               <Fragment key={m.id}>
-              {bandStart && <tr data-evidence-band="insufficient">
-                <td colSpan={6} className="border-t border-line px-3 pb-1 pt-3 text-[11px] text-gray-500">
-                  <span className="font-semibold uppercase tracking-wide">Insufficient evidence</span> · fewer than 3 of 7 Composite inputs, so these rank below every measured model
-                </td>
-              </tr>}
               <tr className="bh-ranking-row cursor-pointer hover:bg-white/5" onClick={() => setExpanded(isOpen ? null : m.id)}
                 data-model-id={m.id} data-cost={price.value ?? undefined} data-score={hasEvidence && sc != null ? sc : undefined}>
                 {/* F-14: on phones the name may wrap (md:truncate restores the single-line look
@@ -510,11 +503,16 @@ export function ModelExplorer({ data, limit, defaultSort, defaultAsc, simple, gu
                   const attached = composite ? m.composite_attached : 0;
                   const thin = composite && isThinComposite(m);
                   const evidence = `${exact} exact + ${attached} attached of 7 Composite inputs`;
-                  const valueNum = <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={thin ? `Composite built on ${exact + attached} of 7 inputs` : undefined}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>;
+                  const note = thin ? thinCompositeNote(m) : undefined;
+                  const valueNum = <span className={`block text-right font-semibold ${thin ? "text-gray-500" : ""}`} title={note}>{num(sc, score.startsWith("designarena") ? 0 : 1)}</span>;
                   const capTag = priceFraming ? capabilityTag(valueById.get(m.id), price.value, sc) : null;
                   return <MagnitudeBar frac={sc / maxScoreVal} tone="score" thin={thin}>
                     {capTag ? <span className="bh-cost-line flex items-center justify-end gap-1.5 whitespace-nowrap">{capTag}{valueNum}</span> : valueNum}
-                    {thin && <span className="block whitespace-nowrap text-right text-[10px] text-gray-500" data-composite-inputs>{exact + attached}/7 inputs</span>}
+                    {/* CR-74.3: thin rows sort in place and carry this badge instead of a separate band; below 1024 px it
+                        shrinks to "◔ 2/7", the full sentence stays in title and sr-only. */}
+                    {thin && <span className="mt-0.5 flex justify-end"><span className="bh-thin-tag" data-thin-evidence data-composite-inputs={exact + attached} title={note}>
+                      <span aria-hidden="true">◔</span><span className="bh-thin-full" aria-hidden="true">&nbsp;Thin data · {exact + attached}/7</span><span className="bh-thin-compact" aria-hidden="true">&nbsp;{exact + attached}/7</span><span className="sr-only">{note}</span>
+                    </span></span>}
                     {exact < 7 && !simple && <span className="mt-1 flex justify-end gap-0.5" title={evidence} aria-label={evidence} role="img">
                       {Array.from({ length: 7 }, (_, i) => <span key={i} aria-hidden="true" className={`h-1 w-1 rounded-[1px] border ${i < exact ? "border-accent bg-accent" : i < exact + attached ? "border-accent bg-accent/40" : "border-line bg-transparent"}`} />)}
                     </span>}

@@ -240,18 +240,22 @@ test('F-41: thin Composite counts exact plus attached inputs', () => {
     assert.equal(model.composite_attached, Math.min(7 - model.composite_coverage, Object.keys(model.composite_attachments).length), model.id);
   }
 });
-test('CR-65.4: ranked by the Composite, a thin row never sorts above a row with at least 3 inputs', () => {
+// CR-74.3 (= CR-70): replaces the CR-65.4 test that demoted thin rows into an "insufficient evidence" band. Florian
+// reversed that decision; the thin definition (isThinComposite, tested above) is unchanged, only the ordering and marker.
+test('CR-74.3: thin Composite rows sort in place by value in both directions and carry the uncertainty note', () => {
   const thin = { m: { composite_coverage: 1, composite_attached: 0 }, sc: 99 };
   const full = { m: { composite_coverage: 3, composite_attached: 0 }, sc: 40 };
-  for (const dir of [1, -1]) assert.deepEqual([thin, full].sort((a, b) => client.compareByScore(a, b, 'composite', dir)), [full, thin]);
-  // Another score sorts by value only.
+  assert.deepEqual([full, thin].sort((a, b) => client.compareByScore(a, b, 'composite', -1)), [thin, full]);
+  assert.deepEqual([thin, full].sort((a, b) => client.compareByScore(a, b, 'composite', 1)), [full, thin]);
   assert.deepEqual([full, thin].sort((a, b) => client.compareByScore(a, b, 'aa_intelligence_index', -1)), [thin, full]);
-  // Live catalog, the Overview's default order (score descending): the first thin row closes the measured band.
-  const rows = client.clientData(dataset).models.filter((m) => !m.deprecated).map((m) => ({ m, sc: m.scores.composite }))
+  assert.equal(client.isThinComposite(thin.m), true);
+  assert.equal(client.isThinComposite(full.m), false);
+  assert.match(client.thinCompositeNote(thin.m), /^Based on only 1 of 7 Composite inputs — treat this rank as uncertain$/);
+  // Live catalog, the Overview's default order (score descending): strictly by value, thin rows interleaved, none dropped.
+  const rows = client.clientData(dataset).models.filter((m) => !m.deprecated && m.scores.composite != null).map((m) => ({ m, sc: m.scores.composite }))
     .sort((a, b) => client.compareByScore(a, b, 'composite', -1));
-  const firstThin = rows.findIndex((x) => client.isThinComposite(x.m));
-  assert.ok(firstThin > 30, `first thin row at ${firstThin}`);
-  assert.ok(rows.slice(firstThin).every((x) => client.isThinComposite(x.m)));
+  for (let i = 1; i < rows.length; i++) assert.ok(rows[i - 1].sc >= rows[i].sc, `order break at ${i}`);
+  assert.ok(rows.some((x) => client.isThinComposite(x.m)), 'the live catalog still has thin rows to mark');
 });
 test('adjusted "as used on OpenRouter" uses per-model OR ratio before global or AA proxy',()=>{
   // CR-65.9: 0.023 before, plus the write surcharge — 25 % of 20,000 input tokens written at $2.50 vs $2 input.

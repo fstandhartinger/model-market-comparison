@@ -228,6 +228,10 @@ table.dtable tbody tr:hover { background: rgb(var(--accent) / .04); }
 .bh-magnitude-cost .bh-magnitude-fill { background: var(--muted); opacity: .72; }
 /* F-25: thin evidence (a Composite on fewer than three of seven inputs) gets a hatched bar. */
 .bh-magnitude-thin .bh-magnitude-fill { background: repeating-linear-gradient(135deg, rgb(var(--accent) / .6) 0 4px, transparent 4px 8px); }
+/* CR-74.3: thin rows sort in place; a muted outlined pill marks the uncertain rank (text + icon, not colour only). */
+.bh-thin-tag { display: inline-flex; align-items: center; white-space: nowrap; border-radius: 999px; padding: 0 6px; font-size: 10px; font-weight: 500; line-height: 14px; vertical-align: middle; color: var(--muted); border: 1px dashed var(--control-border); background: rgb(var(--line) / .2); cursor: help; }
+.bh-thin-tag .bh-thin-compact { display: none; }
+@media (max-width: 1023px) { .bh-thin-tag { padding: 0 4px; } .bh-thin-tag .bh-thin-full { display: none; } .bh-thin-tag .bh-thin-compact { display: inline; } }
 .bh-legend-stripe { display: inline-block; width: 28px; height: 10px; vertical-align: middle; border-radius: 2px; background: repeating-linear-gradient(135deg, rgb(var(--accent) / .6) 0 4px, transparent 4px 8px); }
 .bh-magnitude-warn .bh-magnitude-fill { background: rgb(var(--warn) / .8); }
 .bh-row-chevron { display: inline-block; width: 12px; color: var(--muted); font-size: 17px; line-height: 12px; opacity: .5; transition: color .15s ease, opacity .15s ease, transform .15s ease; }
