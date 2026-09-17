@@ -8,7 +8,7 @@ import { mkdtemp, mkdir, readFile, writeFile, rm } from 'node:fs/promises';
 import { join } from 'node:path';
 import { tmpdir } from 'node:os';
 import { reviewArtifact, sha256 } from '../ops/daily/gauntlet.mjs';
-import { MAX_RETAINED_CONTRACTS, planRejectedContract, retainPriorSnapshot } from '../ops/daily/live-retention.mjs';
+import { MAX_RETAINED_CONTRACTS, planRejectedContract, retainPriorSnapshot, reviewerUnavailable } from '../ops/daily/live-retention.mjs';
 import { DAILY_FRESH_SOURCES, sourceFreshnessErrors } from '../ops/daily/policy.mjs';
 
 // Today's two example rows, as staged (values verbatim from the retained capture of run 2026-09-17T05-17-01).
@@ -70,13 +70,78 @@ test('CR-67.1/67.2: the dispute still rejects the contract, and the run withhold
   } finally { await rm(dir, { recursive: true, force: true }); }
 });
 
-test('CR-67.2: core contracts and a second dispute still fail the run closed', () => {
+test('CR-67.2: core contracts still fail the run closed; every retainable contract may be withheld (17 Sep)', () => {
   for (const core of ['aa', 'da', 'or', 'unknown']) assert.equal(planRejectedContract(core).action, 'fail', core);
   // 17 Sep 05:49 run: the or_efficiency critic asked for cache prices the source does not publish (it read the prompt/completion
   // prices as cache prices). Efficiency datasets are retainable like aa_coding_v15 — withheld, never accepted.
   for (const [dataset, source] of [['or_efficiency', 'openrouter_efficiency'], ['aa_efficiency', 'aa_efficiency'], ['chutes_efficiency', 'chutes_efficiency']]) {
     assert.deepEqual([planRejectedContract(dataset).action, planRejectedContract(dataset).source], ['retain', source]);
   }
-  assert.equal(MAX_RETAINED_CONTRACTS, 1);
-  assert.equal(planRejectedContract('aa_coding_v15', [{ dataset: 'aa_coding_v15' }]).action, 'fail');
+  // 17 Sep 09:16 run: or_efficiency was the second disputed contract after aa_efficiency and failed the whole day.
+  assert.equal(MAX_RETAINED_CONTRACTS, 4);
+  assert.equal(planRejectedContract('or_efficiency', [{ dataset: 'aa_efficiency' }]).action, 'retain');
+  assert.equal(planRejectedContract('chutes_efficiency', [{ dataset: 'a' }, { dataset: 'b' }, { dataset: 'c' }, { dataset: 'd' }]).action, 'fail');
+});
+
+// 17 Sep 09:16 run, or_efficiency: "round 1 glm-5.3-flash malformed JSON; round 2 malformed producer audit; round 3 no supported viable worker".
+async function malformedRunner(args) {
+  const out = args[args.indexOf('--out') + 1];
+  const body = 'Sure! Here is my review: {"verdict": pass'; // not JSON
+  await writeFile(out, body);
+  const model = args.includes('--critic') ? 'z-ai/glm-5.3-flash' : 'moonshotai/kimi-k3';
+  await writeFile(out + '.meta.json', JSON.stringify({ actual_model: model, output_sha256: sha256(body), qualification: { id: model, aa_intelligence_index: 40, input_per_1m: 0.1, output_per_1m: 0.3 } }));
+}
+
+test('17 Sep: reviewer models that only return malformed output fall back to the deterministic verification', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-live-fallback-'));
+  try {
+    const content = JSON.stringify({ cache_hit_rate: 0.42 });
+    const review = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-or_efficiency', rows: [{ id: 'or_efficiency', mapping: 'cache hit rate' }],
+      sources: [{ url: 'https://openrouter.ai/x', sha256: sha256(content), locator: 'x', content }], criteria: ['mapping'], runner: malformedRunner, maxRounds: 3 });
+    assert.equal(review.accepted, false);
+    assert.deepEqual(review.producer_disputed, []);
+    assert.equal(reviewerUnavailable(review), true);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+});
+
+test('17 Sep: a substantive objection is never treated as an unavailable reviewer', async () => {
+  const dir = await mkdtemp(join(tmpdir(), 'bh-live-fallback-'));
+  try {
+    const content = JSON.stringify(example15);
+    // Producer flags the row, then the critic answers malformed: the producer's dispute must survive.
+    const flaggedThenMalformed = async (args) => (args.includes('--critic') ? malformedRunner(args) : disputeRunner(args));
+    const review = await reviewArtifact({ runDir: dir, artifactId: 'live-contract-aa_coding_v15', rows: [{ id: 'aa_coding_v15', mapping: 'mean' }],
+      sources: [{ url: 'https://artificialanalysis.ai/x', sha256: sha256(content), locator: 'x', content }], criteria: ['mapping'], runner: flaggedThenMalformed, maxRounds: 1 });
+    assert.deepEqual(review.producer_disputed, ['aa_coding_v15']);
+    assert.equal(reviewerUnavailable(review), false);
+  } finally { await rm(dir, { recursive: true, force: true }); }
+  // An objection inside an answer the strict parser rejects (errors_found miscounted) still counts as an objection.
+  const dir2 = await mkdtemp(join(tmpdir(), 'bh-live-fallback-'));
+  try {
+    const miscounted = async (args) => {
+      if (!args.includes('--critic')) return malformedRunner(args);
+      const out = args[args.indexOf('--out') + 1];
+      const body = JSON.stringify({ verdict: 'revise', errors_found: 2, findings: [{ id: 'f1', severity: 'major', location: 'x', evidence: 'cache price is not published' }] });
+      await writeFile(out, body);
+      await writeFile(out + '.meta.json', JSON.stringify({ actual_model: 'z-ai/glm-5.3-flash', output_sha256: sha256(body), qualification: { id: 'z-ai/glm-5.3-flash', aa_intelligence_index: 40, input_per_1m: 0.1, output_per_1m: 0.3 } }));
+    };
+    const good = async (args) => {
+      if (args.includes('--critic')) return miscounted(args);
+      const out = args[args.indexOf('--out') + 1];
+      const body = JSON.stringify({ rows: [{ id: 'or_efficiency', status: 'match', note: 'ok' }] });
+      await writeFile(out, body);
+      await writeFile(out + '.meta.json', JSON.stringify({ actual_model: 'moonshotai/kimi-k3', output_sha256: sha256(body), qualification: { id: 'moonshotai/kimi-k3', aa_intelligence_index: 40, input_per_1m: 0.1, output_per_1m: 0.3 } }));
+    };
+    const content = JSON.stringify({ cache_hit_rate: 0.42 });
+    const review = await reviewArtifact({ runDir: dir2, artifactId: 'live-contract-or_efficiency', rows: [{ id: 'or_efficiency', mapping: 'cache hit rate' }],
+      sources: [{ url: 'https://openrouter.ai/x', sha256: sha256(content), locator: 'x', content }], criteria: ['mapping'], runner: good, maxRounds: 3 });
+    assert.equal(review.accepted, false);
+    assert.ok(review.objections > 0);
+    assert.equal(reviewerUnavailable(review), false);
+  } finally { await rm(dir2, { recursive: true, force: true }); }
+  // A terminal setup error in round 1 (HTTP 429/401, unqualified worker) is not a format failure: no fallback.
+  assert.equal(reviewerUnavailable({ accepted: false, errors: ['round 1: HTTP 429'], reviews: [], quarantined: [], manifest: { rounds_used: 1 } }), false);
+  assert.equal(reviewerUnavailable({ accepted: false, errors: ['round 1: fail'], reviews: [{ verdict: 'fail', errors_found: 1 }], quarantined: [], manifest: { rounds_used: 3 } }), false);
+  assert.equal(reviewerUnavailable({ accepted: false, errors: ['x'], reviews: [{ verdict: 'pass', errors_found: 0, findings: [{ severity: 'major' }] }], quarantined: [], manifest: { rounds_used: 3 } }), false);
+  assert.equal(reviewerUnavailable({ accepted: true, errors: [], reviews: [], quarantined: [] }), false);
 });

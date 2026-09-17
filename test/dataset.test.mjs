@@ -701,6 +701,13 @@ test("AA rows receive only their exact OpenRouter SKU or a repository-verified r
 
 test("all published providers have metadata and no generated normalization ghosts remain", () => {
   for (const provider of ds.providers.filter((row) => !row.coming_soon)) {
+    // 17 Sep 2026: a provider new to OpenRouter publishes marked unverified instead of failing the daily run.
+    if (provider.metadata_unverified) {
+      assert.ok(!providerMeta.providers[provider.provider], `${provider.provider}: curated metadata exists but the row is marked unverified`);
+      assert.deepEqual([provider.eu_hosted, provider.non_us, provider.eu_dedicated], [false, false, false], provider.provider);
+      for (const model of ds.models) for (const offer of model.offers.filter((o) => o.provider === provider.provider)) assert.equal(offer.eu_hosted, false, `${model.id} @ ${provider.provider}`);
+      continue;
+    }
     assert.ok(providerMeta.providers[provider.provider], provider.provider);
   }
   const ghosts = ds.models.filter((model) => !model.aa_model_id && !model.coding_agent_results?.length

@@ -323,6 +323,14 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // CR-67.2: a withheld live contract (prior snapshot kept) is named in the report and keeps its published date.
     const live = await readJSON(join(reports, 'live-step-result.json')).catch(() => null);
     report.retained_contracts = live?.gauntlet?.retained_contracts ?? [];
+    report.deterministic_fallback_contracts = live?.gauntlet?.deterministic_fallback_contracts ?? [];
+    report.unverified_providers = (after.providers ?? []).filter((p) => p.metadata_unverified).map((p) => p.provider);
+    // Plain notices for the daily digest (gate.mjs finalize appends them): what published in a degraded but honest way.
+    report.notices = [
+      ...report.unverified_providers.map((p) => `New provider "${p}" published without verified metadata (not in EU/non-US filters) — add it to data/raw/provider-meta.json`),
+      ...report.retained_contracts.map((r) => `${r.dataset}: today's capture withheld after a review dispute; previous snapshot kept with its date`),
+      ...report.deterministic_fallback_contracts.map((r) => `${r.dataset}: reviewer models gave no usable answer; accepted on the full-row source verification`),
+    ];
     const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after, retained: report.retained_contracts.map((r) => r.source) }); // `scope` is the commit scope below
     if (stale.length) throw new Error(stale.join('; '));
     top5 = JSON.parse(await command('top5', process.execPath, ['scripts/top5.mjs', '5']));
@@ -432,6 +440,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       ];
     })(),
     ...(report.retained_contracts?.length ? [`Zurueckgehalten (Quelle strittig, alter Stand bleibt): ${report.retained_contracts.map((r) => `${r.dataset} (${r.restored.map((f) => `${f.file} vom ${String(f.retained_collected_at).slice(0, 10)}`).join(', ')}; ${String(r.reasons?.[0] ?? '').slice(0, 200)})`).join('; ')}`] : []),
+    ...(report.deterministic_fallback_contracts?.length ? [`Ohne Modellpruefung (Pruefer-Antwort unbrauchbar, deterministische Vollpruefung gilt): ${report.deterministic_fallback_contracts.map((r) => r.dataset).join(', ')}`] : []),
+    ...(report.unverified_providers?.length ? [`Neue Anbieter ohne gepruefte Metadaten (nicht in EU-/Nicht-US-Filtern): ${report.unverified_providers.join(', ')}`] : []),
     ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'})`).join('; ')}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';

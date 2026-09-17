@@ -260,6 +260,27 @@ export function parseReview(text, { artifactId, artifactSha256, round }) {
   return review;
 }
 
+/**
+ * 17 Sep 2026: an answer that fails the strict parsers can still carry a real objection (a `revise` verdict with a miscounted
+ * errors_found, a mismatch row next to an invented row id). Lenient read, used only to keep such an answer from counting as
+ * "reviewer unavailable": true when the text parses as JSON and shows any non-pass verdict, finding, missing evidence, error
+ * count or non-match producer status. Unparseable text carries no detectable signal.
+ */
+export function objectionSignal(text) {
+  let value = null;
+  const raw = String(text ?? '');
+  for (const candidate of [stripFences(raw), raw.slice(raw.indexOf('{'), raw.lastIndexOf('}') + 1)]) {
+    try { value = JSON.parse(candidate); break; } catch { /* try the next reading */ }
+  }
+  if (!value || typeof value !== 'object') return false;
+  const rows = Array.isArray(value) ? value : Array.isArray(value.rows) ? value.rows : value.rows && typeof value.rows === 'object' ? Object.values(value.rows) : [];
+  if (rows.some((row) => row && typeof row === 'object' && row.status !== undefined && row.status !== 'match')) return true;
+  if (Array.isArray(value)) return false;
+  if (value.verdict !== undefined && value.verdict !== 'pass') return true;
+  if (Number(value.errors_found) > 0) return true;
+  return ['findings', 'missing_evidence'].some((key) => Array.isArray(value[key]) ? value[key].length > 0 : value[key] != null && typeof value[key] !== 'object' ? Boolean(value[key]) : false);
+}
+
 function parseProducerAudit(text, rowIds) {
   let audit;
   try { audit = JSON.parse(stripFences(text)); }
@@ -322,6 +343,8 @@ export async function reviewArtifact({
   let current = [...(Array.isArray(rows) ? rows : [])];
   let cachedProducer = null;
   let acceptedRound = null, producerFlagged = new Map(), terminalError = null, attemptsUsed = 0;
+  const producerDisputed = new Set(); // every row a parsed producer audit flagged in any round (kept even if the critic then fails)
+  let objections = 0; // answers rejected by the strict parsers that still carried an objection (see objectionSignal)
 
   if (!current.length) {
     const manifest = {
@@ -373,12 +396,13 @@ export async function reviewArtifact({
         await runner(['--json', '--file', packetPath, '--out', producerOut, PRODUCER_TASK]);
         producer = await readWorkerReceipt(producerOut);
         try { auditFlagged = parseProducerAudit(producer.text, rowIds); }
-        catch (error) { await recordInvalidModel(producer.meta, 'producer', error.message, runner); throw error; }
+        catch (error) { if (objectionSignal(producer.text)) objections++; await recordInvalidModel(producer.meta, 'producer', error.message, runner); throw error; }
         // Reuse only an undisputed audit of this exact immutable artifact within
         // this invocation. Criteria and sources remain frozen. A changed artifact
         // or producer disagreement requires fresh production, never a relabelled receipt.
         if (!auditFlagged.size) cachedProducer = { artifactSha256, evidenceSha256, out: producerOut, round };
       }
+      for (const rowId of auditFlagged.keys()) producerDisputed.add(rowId);
       if (!producers.includes(producer.meta.actual_model)) producers.push(producer.meta.actual_model);
       receipts.push({ round, role: 'producer', reused_from_round: reusedFrom, model: producer.meta.actual_model, out: repoRelative(producerOut), output_sha256: producer.meta.output_sha256, qualification: producer.meta.qualification, usage: reusedFrom ? null : producer.meta.usage, reasoning: producer.meta.reasoning });
 
@@ -395,12 +419,13 @@ export async function reviewArtifact({
       }
       let review;
       try { review = parseReview(critic.text, { artifactId: id, artifactSha256, round }); }
-      catch (error) { await recordInvalidModel(critic.meta, 'critic', error.message, runner); throw error; }
+      catch (error) { if (objectionSignal(critic.text)) objections++; await recordInvalidModel(critic.meta, 'critic', error.message, runner); throw error; }
       receipts.push({ round, role: 'critic', model: critic.meta.actual_model, out: repoRelative(criticOut), output_sha256: critic.meta.output_sha256, qualification: critic.meta.qualification, usage: critic.meta.usage, reasoning: critic.meta.reasoning });
 
       // 5. Strict coverage: every row id and every criterion id must be checked.
       const requiredCoverage = new Set([...rowIds, ...criteriaNorm.map((c) => c.id)]);
       if (review.coverage_checked.some((v) => !requiredCoverage.has(v))) {
+        if (objectionSignal(critic.text)) objections++;
         await recordInvalidModel(critic.meta, 'critic', 'Invented coverage IDs', runner);
         throw new Error('Critic invented coverage IDs');
       }
@@ -501,5 +526,5 @@ export async function reviewArtifact({
     receipts,
   };
   await writeJSONAtomic(join(dir, 'coverage-manifest.json'), manifest);
-  return { accepted, reviews, fingerprints, quarantined, manifest, errors };
+  return { accepted, reviews, fingerprints, quarantined, manifest, errors, producer_disputed: [...producerDisputed], objections };
 }

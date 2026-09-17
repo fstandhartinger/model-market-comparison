@@ -2,6 +2,7 @@
 // Merge all raw data sources into a single normalized dataset.json.
 // Output shape is documented in data/SCHEMA.md and consumed by the DB seeder
 // (scripts/seed-db.mjs) and as the app's bundled fallback dataset.
+import { stickyAaFamilyKey } from "../lib/aa-identity.mjs";
 import { readFile, writeFile } from "node:fs/promises";
 import { cacheReadPriceOutliers } from "../lib/effective-cost.mjs";
 import { createHash } from "node:crypto";
@@ -507,6 +508,21 @@ async function build() {
   // for its exact OpenRouter id. Never infer those fields from the lab name.
   const aaOrCandidates = new Map();
   const aaHfCandidates = new Map();
+  // AA renames keep the published id (lib/aa-identity.mjs, 17 Sep 2026).
+  const aaNaturalKey = (m) => {
+    const meta = m.metadata || {};
+    const named = normalizeFamily(m.name, m.model_creator?.name);
+    const routed = meta.openrouter_api_id ? normalizeFamily(meta.openrouter_api_id, m.model_creator?.name) : null;
+    return routed && /(?:^|-)(?:thinking|instruct)(?:-|$)/.test(routed.familyKey) ? routed.familyKey : named.familyKey;
+  };
+  const publishedAa = new Map(); // AA UUID → { family_key, display_name } as last published
+  try {
+    const published = JSON.parse(await readFile(OUT, "utf8"));
+    for (const row of published.models || []) if (row.aa_model_id && row.family_key) publishedAa.set(row.aa_model_id, { family_key: row.family_key, display_name: row.display_name });
+  } catch { /* first build: nothing published yet */ }
+  const stickyRowIds = new Set();
+  const naturalRowIds = new Map(aa.models.map((m) => [`${aaNaturalKey(m)}::${detectVariant(m.name)}`, m.id]));
+  const aaRenames = [];
   for (const m of aa.models) {
     const meta = m.metadata || {};
     const hfCorrection = AA_HF_URL_CORRECTIONS[m.id] || null;
@@ -517,9 +533,16 @@ async function build() {
     // OpenRouter exposes it as the product id. Thinking/Instruct are priced as
     // distinct SKUs, so use that exact identity when the source provides it.
     const routeDefinesProduct = routed && /(?:^|-)(?:thinking|instruct)(?:-|$)/.test(routed.familyKey);
-    const familyKey = routeDefinesProduct ? routed.familyKey : named.familyKey;
+    let familyKey = routeDefinesProduct ? routed.familyKey : named.familyKey;
     const org = named.org;
     const variant = detectVariant(m.name);
+    // Only a rename by AA sticks: the published name differs. Our own normalization/alias changes and a route-defined
+    // Thinking/Instruct product still take effect; an id already taken this build falls back to the natural key.
+    const published = publishedAa.get(m.id);
+    if (published && published.display_name !== m.name && !routeDefinesProduct && !stickyRowIds.has(`${published.family_key}::${variant}`)) {
+      const stickyKey = stickyAaFamilyKey({ aaId: m.id, naturalKey: familyKey, variant, publishedKey: published.family_key, naturalRowIds });
+      if (stickyKey !== familyKey) { aaRenames.push(`${m.name}: ${familyKey} → ${stickyKey}`); familyKey = stickyKey; stickyRowIds.add(`${stickyKey}::${variant}`); }
+    }
     const rowId = `${familyKey}::${variant}`;
     const ev = m.evaluations || {};
     const pr = m.pricing || {};
@@ -592,6 +615,7 @@ async function build() {
       aaHfCandidates.get(hfId).add(familyKey);
     }
   }
+  if (aaRenames.length) console.warn(`! AA renamed ${aaRenames.length} published model(s); kept their published ids: ${aaRenames.join("; ")}`);
 
   // Use an AA → OpenRouter join only when all AA rows agree on one product
   // identity. Known upstream ambiguities (for example GPT-5.2 vs Codex and
@@ -1050,9 +1074,9 @@ async function build() {
     }
     const bestByProviderScope = new Map();
     for (const offer of fam.offers) {
-      const meta = (providerMeta.providers || {})[offer.provider] || {};
-      offer.eu_hosted = offerRunsInEu(offer, meta);
-      offer.non_us = !!meta.non_us;
+      const meta = (providerMeta.providers || {})[offer.provider];
+      offer.eu_hosted = meta ? offerRunsInEu(offer, meta) : false; // unverified provider: never in the EU filter
+      offer.non_us = !!meta?.non_us;
       // Keep separate OpenRouter model SKUs until attaching to an exact AA row;
       // e.g. Qwen Instruct and Thinking have different prices under one family.
       // Keep the raw id here (":free" included): OpenRouter lists free and paid
@@ -1223,10 +1247,16 @@ async function build() {
       website: m.website !== undefined ? m.website : (m.url || null),
     };
   }).sort((a, b) => b.model_count - a.model_count);
-  const missingProviderMeta = providers.filter((provider) => !pmeta[provider.provider]).map((provider) => provider.provider);
-  if (missingProviderMeta.length) {
-    throw new Error(`Missing provider metadata: ${missingProviderMeta.sort().join(", ")}`);
+  // 17 Sep 2026: a provider new to OpenRouter (e.g. "Near AI") used to throw here and cost the whole day's refresh.
+  // Its offers now publish with metadata marked unverified: excluded from the EU-hosted/non-US filters (the offers
+  // were already forced out of them above), and named in the build output and the daily digest until it is curated.
+  const missingProviderMeta = providers.filter((provider) => !pmeta[provider.provider]).map((provider) => provider.provider).sort();
+  for (const provider of providers) {
+    if (pmeta[provider.provider]) continue;
+    Object.assign(provider, { eu_hosted: false, non_us: false, eu_dedicated: false, hyperscaler: false, country: null, website: null, metadata_unverified: true,
+      note: "New provider: location, ownership and data handling not yet verified. Excluded from the EU-hosted and non-US filters until checked." });
   }
+  if (missingProviderMeta.length) console.warn(`! Unverified provider metadata (offers published, excluded from EU/non-US filters): ${missingProviderMeta.join(", ")}`);
   // Surface providers from the metadata that have no priced offers yet (e.g. TrustedRouter, still launching).
   for (const [name, m] of Object.entries(pmeta)) {
     if (!m.coming_soon) continue;
@@ -1251,7 +1281,15 @@ async function build() {
     epochEci,
     modelRows,
   });
-  const benchmark_results = buildBenchmarkResults(benchmarkScores, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null, headlineObservations);
+  // 17 Sep 2026: AA renamed "DeepSeek V4 Pro" to "DeepSeek V4 Pro 0424" (new slug, same AA UUID), so stored score rows named
+  // a catalog id this build no longer has and the whole day's build threw. Score rows are keyed to the catalog id of the
+  // build that ingested them; after the evidence check above, re-key them through the stable AA UUID, and withhold (with a
+  // warning) only rows whose model can no longer be resolved at all.
+  const { reconcileScoreModelIds } = await import("../lib/benchmark-scores.mjs");
+  const reconciled = reconcileScoreModelIds(benchmarkScores, modelRows);
+  if (reconciled.remapped.length) console.warn(`! Benchmark score rows re-keyed to renamed catalog ids: ${reconciled.remapped.join(", ")}`);
+  if (reconciled.withheld.length) console.warn(`! Benchmark score rows withheld (model no longer in the catalog): ${reconciled.withheld.length} — ${reconciled.withheld.slice(0, 10).join(", ")}`);
+  const benchmark_results = buildBenchmarkResults(reconciled.snapshot, benchmarkRegistry, modelRows, benchmarkHistory.states.length ? benchmarkHistory : null, headlineObservations);
   // CR-64: what each benchmark measures (capability / cost / efficiency), so analyses can select by kind.
   benchmark_results.benchmark_kinds = (await readData("benchmark-taxonomy.json")).benchmark_kinds;
   // CR-65.7: benchmarks scored by a vote or a judge model (data/benchmark-caveats.json), so analyses that need
