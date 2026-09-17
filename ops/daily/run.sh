@@ -11,10 +11,8 @@ exec > >(tee -a "$BH_DAILY_HOME/cron.log") 2>&1
 for secrets_file in "$HOME/.config/dev-secrets.env" /root/.config/dev-secrets.env; do
   if [[ -r "$secrets_file" ]]; then set +u; source "$secrets_file"; set -u; break; fi
 done
-if [[ -r /etc/profile.d/telegram.sh ]]; then set +u; source /etc/profile.d/telegram.sh; set -u; fi
 export ARTIFICIAL_ANALYSIS_API_KEY="${ARTIFICIAL_ANALYSIS_API_KEY:-${ARTIF_ANALYSIS_API_KEY:-}}"
 export OPEN_ROUTER_API_KEY="${OPEN_ROUTER_API_KEY:-${OPENROUTER_API_KEY:-}}"
-export TG_BOT_TOKEN TG_CHAT_ID
 export PATH="$HOME/.hermes/node/bin:$HOME/.local/bin:/usr/local/bin:/usr/bin:/bin"
 unset OPENAI_API_KEY OPENAI_BASE_URL OPENAI_API_BASE CODEX_API_KEY
 started_at=$(date -u +%FT%TZ)

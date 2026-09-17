@@ -1,8 +1,8 @@
 #!/usr/bin/env node
-// ops/daily/notify.mjs — quiet-by-default Telegram notifier for the daily run.
+// ops/daily/notify.mjs — quiet-by-default notifier for the daily run (sends through ~/bin/notify now).
 //
 // Policy lives in ./policy.mjs (pure, tested); this module owns IO: state
-// files, the Telegram send, and the dedup rule that a notification key is
+// files, the notify send, and the dedup rule that a notification key is
 // persisted ONLY after a send genuinely succeeded. Missing credentials never
 // produce a "sent" record, so a later run with working credentials still
 // delivers the event. Sends that FAIL (transport or credentials) are kept as
@@ -25,11 +25,14 @@
 import { mkdir, readFile, stat, writeFile, rename, rm, utimes, open } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
+import { execFile } from 'node:child_process';
+import { promisify } from 'node:util';
 import { parseJsonTolerant, planNotifications } from './policy.mjs';
 
 export const DEFAULT_HOME = '/opt/benchmarkheaven-daily';
 const FALLBACK_FRESH_MS = 3 * 60 * 60 * 1000;
-const TG_TIMEOUT_MS = 30_000;
+const NOTIFY_TIMEOUT_MS = 60_000;
+const execFileAsync = promisify(execFile);
 
 // --- small atomic JSON helper (state writes must never half-land) ----------
 async function writeJsonAtomic(path, value) {
@@ -66,27 +69,18 @@ export async function readNotifyState(stateDir) {
   };
 }
 
-// --- Telegram ----------------------------------------------------------------
-// Returns { sent, reason? }; never throws — a transport failure must be loud
-// in the log but must not mask the daily run's own exit code. Error text is
-// sanitized: it must never contain the bot token (fetch errors can embed the
-// full request URL, which includes it).
-export async function sendTelegram(text, { token, chatId, fetchImpl = fetch } = {}) {
-  if (!token || !chatId) return { sent: false, reason: 'missing_credentials' };
+// --- delivery -----------------------------------------------------------------
+// CR-66.6: every message goes through `~/bin/notify now` (the one way jobs on Sandy message Florian:
+// dedup, daily cap, logging); no Telegram request is made from here. Returns { sent, reason? } and
+// never throws — a failed send must not mask the daily run's own exit code.
+export const notifyBinary = (env = process.env) => env.BH_NOTIFY || join(env.HOME || '/home/flori', 'bin/notify');
+
+export async function sendNotify(text, { bin = notifyBinary(), execImpl = execFileAsync } = {}) {
   try {
-    const response = await fetchImpl(`https://api.telegram.org/bot${token}/sendMessage`, {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ chat_id: chatId, text: String(text).slice(0, 4000) }),
-      signal: AbortSignal.timeout(TG_TIMEOUT_MS),
-    });
-    const body = await response.json().catch(() => null);
-    if (!response.ok || body?.ok !== true) return { sent: false, reason: `telegram_http_${response.status}` };
+    await execImpl(bin, ['now', String(text).slice(0, 4000)], { timeout: NOTIFY_TIMEOUT_MS });
     return { sent: true };
   } catch (error) {
-    let reason = `transport:${error && error.message ? error.message : 'unknown error'}`;
-    if (token) reason = reason.split(token).join('[redacted]');
-    return { sent: false, reason };
+    return { sent: false, reason: error?.code === 'ENOENT' ? 'notify_missing' : `notify_failed:${String(error?.message || 'unknown error').slice(0, 200)}` };
   }
 }
 
@@ -96,7 +90,7 @@ export async function sendTelegram(text, { token, chatId, fetchImpl = fetch } = 
 //            reports/notify-context.json (datasets inlined, not paths).
 export async function executeNotifications({
   context, stateDir, dryRun = false,
-  env = process.env, fetchImpl = fetch, now = Date.now(),
+  env = process.env, execImpl, now = Date.now(),
 } = {}) {
   if (!context || typeof context.status_ok !== 'boolean') throw new Error('notify context with boolean status_ok is required');
   const state = await readNotifyState(stateDir);
@@ -116,9 +110,12 @@ export async function executeNotifications({
     kind: p.kind ?? 'pending', key: p.key ?? null, text: p.text, onSent: p.onSent ?? null, pending: true,
   }));
   const pendingKeys = new Set(pendingReplay.map((p) => p.key).filter((k) => typeof k === 'string' && k));
+  // CR-66.6: failure alerts are no longer sent from here; the publish gate's finalize sends `notify now`
+  // on the second consecutive failure. The streak and escalation request are still kept below.
+  for (const s of plan.sends.filter((s) => s.kind === 'failure')) plan.skips.push({ kind: 'failure', key: s.key, reason: 'reported by the publish gate finalize' });
   const sends = [
     ...pendingReplay,
-    ...plan.sends.filter((s) => !(typeof s.key === 'string' && pendingKeys.has(s.key))),
+    ...plan.sends.filter((s) => s.kind !== 'failure' && !(typeof s.key === 'string' && pendingKeys.has(s.key))),
   ];
   for (const s of sends) console.log(`notify: plan send ${s.kind} [${s.key}]${s.pending ? ' (retry)' : ''}`);
   for (const s of plan.skips) console.log(`notify: skip ${s.kind}${s.key ? ` [${s.key}]` : ''} (${s.reason})`);
@@ -128,7 +125,7 @@ export async function executeNotifications({
   const notifiedAdditions = {};
   let failureStampMs = null;
   for (const send of sends) {
-    const result = await sendTelegram(send.text, { token: env.TG_BOT_TOKEN, chatId: env.TG_CHAT_ID, fetchImpl });
+    const result = await sendNotify(send.text, { bin: notifyBinary(env), ...(execImpl ? { execImpl } : {}) });
     if (result.sent) {
       console.log(`notify: sent ${send.kind} [${send.key}]`);
       sent.push(send.kind);

@@ -49,11 +49,12 @@ providers; router aliases then carry a dated `endpoint_status`. Exact unique pub
 methodology/version changes require review. An owner-approved source-list exception expires and binds both complete identity sets; it cannot excuse another missing row or malformed response. Atomic individual writes are supplemented
 by staging the entire daily transaction before publication.
 
-Telegram is quiet by default: a new top-five family, a new major family with AA >=55,
-a newly comparable self-report divergence of >=10 percentage points, or a failure at
-most weekly. Fraction scores are converted to percentage points; arbitrary units are
-not. First-run state is seeded quietly. Failed data-event sends remain pending; failure alerts retry only while the failure persists, through the weekly gate. Recovery drops stale unsent failure alerts. Three consecutive
-run failures create an escalation request. An operator may then use `escalate.sh`;
+Notifications are quiet by default and go only through `~/bin/notify now` (CR-66.6; no direct Telegram
+request): a new top-five family, a new major family with AA >=55, or a newly comparable self-report divergence
+of >=10 percentage points. Fraction scores are converted to percentage points; arbitrary units are not. First-run
+state is seeded quietly. Failed sends remain pending and are retried; dedup keys are written only after a send.
+Failures are not reported from here: the publish gate's `finalize` sends `notify now` on the second consecutive
+failure. Three consecutive run failures still create an escalation request. An operator may then use `escalate.sh`;
 that path checks ChatGPT subscription authentication and unsets API-key overrides.
 Astra is absent from ordinary daily runs.
 

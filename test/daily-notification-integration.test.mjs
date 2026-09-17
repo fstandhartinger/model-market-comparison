@@ -32,63 +32,86 @@ test('one new major family with several reasoning variants creates one notable e
   assert.equal(found[0].index, 58);
 });
 
-test('an eligible event whose send fails is still delivered after the next snapshot becomes the baseline', async () => {
+// CR-66.6: a stub `notify` binary records its arguments; nothing talks to Telegram directly.
+async function stubNotify(dir, { fail = false } = {}) {
+  const { writeFile, chmod } = await import('node:fs/promises');
+  const { join } = await import('node:path');
+  const bin = join(dir, 'notify'), log = join(dir, 'notify-calls.jsonl');
+  await writeFile(bin, `#!/usr/bin/env node\nrequire('node:fs').appendFileSync(${JSON.stringify(log)}, JSON.stringify(process.argv.slice(2)) + '\\n');\nprocess.exit(${fail ? 1 : 0});\n`);
+  await chmod(bin, 0o755);
+  const calls = async () => { try { return (await (await import('node:fs/promises')).readFile(log, 'utf8')).trim().split('\n').filter(Boolean).map(JSON.parse); } catch { return []; } };
+  return { bin, calls };
+}
+
+test('an eligible event whose notify send fails is still delivered after the next snapshot becomes the baseline', async () => {
   const { executeNotifications } = await import('../ops/daily/notify.mjs');
   const { mkdtemp, rm } = await import('node:fs/promises');
   const { tmpdir } = await import('node:os');
   const { join } = await import('node:path');
   const stateDir = await mkdtemp(join(tmpdir(), 'bh-notify-retry-'));
   try {
-    const initial = await executeNotifications({ stateDir, context: { status_ok: true, top5: { previous, current } }, env: {}, now: 1_800_000_000_000 });
+    const broken = await stubNotify(join(stateDir), { fail: true });
+    const initial = await executeNotifications({ stateDir, context: { status_ok: true, top5: { previous, current } }, env: { BH_NOTIFY: broken.bin }, now: 1_800_000_000_000 });
     assert.equal(initial.failed.length, 1);
-    let requests = 0;
-    const next = await executeNotifications({ stateDir, context: { status_ok: true, top5: { previous: current, current } }, env: { TG_BOT_TOKEN: 'synthetic', TG_CHAT_ID: 'synthetic' }, now: 1_800_086_400_000, fetchImpl: async () => { requests++; return Response.json({ ok: true }); } });
-    assert.equal(requests, 1);
+    const working = await stubNotify(await mkdtemp(join(tmpdir(), 'bh-notify-ok-')));
+    const next = await executeNotifications({ stateDir, context: { status_ok: true, top5: { previous: current, current } }, env: { BH_NOTIFY: working.bin }, now: 1_800_086_400_000 });
     assert.equal(next.sent.includes('top5-entrant'), true);
+    const calls = await working.calls();
+    assert.equal(calls.length, 1);
+    assert.equal(calls[0][0], 'now');
+    // Same event again: deduplicated, notify is not called a second time.
+    await executeNotifications({ stateDir, context: { status_ok: true, top5: { previous, current } }, env: { BH_NOTIFY: working.bin }, now: 1_800_172_800_000 });
+    assert.equal((await working.calls()).length, 1);
   } finally { await rm(stateDir, { recursive: true, force: true }); }
 });
 
-test('Telegram transport errors cannot put credentials into logs', async () => {
-  const { sendTelegram } = await import('../ops/daily/notify.mjs');
-  const token = 'synthetic-secret-token';
-  const result = await sendTelegram('fixture', { token, chatId: 'fixture', fetchImpl: async () => { throw new Error(`failed URL https://api.telegram.org/bot${token}/sendMessage`); } });
-  assert.equal(result.sent, false);
-  assert.equal(result.reason.includes(token), false);
+test('CR-66.6: no direct Telegram request remains in ops/daily; a missing notify binary is a failed send, not a crash', async () => {
+  const { readdir, readFile } = await import('node:fs/promises');
+  for (const file of await readdir(new URL('../ops/daily/', import.meta.url))) {
+    if (!/\.(mjs|sh|py)$/.test(file)) continue;
+    const text = await readFile(new URL(`../ops/daily/${file}`, import.meta.url), 'utf8');
+    assert.equal(/api\.telegram\.org|TG_BOT_TOKEN/.test(text), false, `${file} must go through ~/bin/notify`);
+  }
+  const { sendNotify } = await import('../ops/daily/notify.mjs');
+  const result = await sendNotify('fixture', { bin: '/nonexistent/notify' });
+  assert.deepEqual(result, { sent: false, reason: 'notify_missing' });
 });
 
-test('failure delivery retries through the weekly gate and three failures request escalation', async () => {
+test('failures send nothing from the daily notifier (the publish gate alerts) but three failures still request escalation', async () => {
   const { executeNotifications } = await import('../ops/daily/notify.mjs');
   const { mkdtemp, readFile, rm } = await import('node:fs/promises');
   const { tmpdir } = await import('node:os');
   const { join } = await import('node:path');
   const stateDir = await mkdtemp(join(tmpdir(), 'bh-failure-retry-'));
   const start = 1_800_000_000_000, day = 86_400_000;
-  let delivered = 0;
-  const base = { stateDir, context: { status_ok: false, rc: 1 }, env: { TG_BOT_TOKEN: 'fixture', TG_CHAT_ID: 'fixture' }, fetchImpl: async () => { delivered++; return Response.json({ ok: true }); } };
   try {
-    assert.equal((await executeNotifications({ ...base, env: {}, now: start })).failed.length, 1);
-    assert.equal((await executeNotifications({ ...base, now: start + day })).sent.filter((s) => s === 'failure').length, 1);
-    await executeNotifications({ ...base, now: start + 2 * day });
-    assert.equal(delivered, 1);
+    const stub = await stubNotify(stateDir);
+    const base = { stateDir, context: { status_ok: false, rc: 1 }, env: { BH_NOTIFY: stub.bin } };
+    for (let i = 0; i < 3; i++) {
+      const result = await executeNotifications({ ...base, now: start + i * day });
+      assert.equal(result.sent.length, 0);
+      assert.ok(result.plan.skips.some((s) => s.kind === 'failure'));
+    }
+    assert.equal((await stub.calls()).length, 0);
     assert.equal(JSON.parse(await readFile(join(stateDir, 'escalation-request.json'))).streak, 3);
-    await executeNotifications({ ...base, now: start + 8 * day - 1 });
-    assert.equal(delivered, 1);
-    await executeNotifications({ ...base, now: start + 8 * day });
-    assert.equal(delivered, 2);
+    const state = JSON.parse(await readFile(join(stateDir, 'daily-state.json')));
+    assert.deepEqual(state.pending, []);
+    assert.equal(state.failure_streak, 3);
   } finally { await rm(stateDir, { recursive: true, force: true }); }
 });
 
-test('recovery drops an unsent stale failure alert without a Telegram message', async () => {
+test('recovery resets the failure streak without a message', async () => {
   const { executeNotifications } = await import('../ops/daily/notify.mjs');
   const { mkdtemp, readFile, rm } = await import('node:fs/promises');
   const { tmpdir } = await import('node:os');
   const { join } = await import('node:path');
   const stateDir = await mkdtemp(join(tmpdir(), 'bh-failure-recovery-'));
-  let delivered = 0;
   try {
-    await executeNotifications({ stateDir, context: { status_ok: false, rc: 1 }, env: {}, now: 1_800_000_000_000 });
-    const result = await executeNotifications({ stateDir, context: { status_ok: true }, env: { TG_BOT_TOKEN: 'fixture', TG_CHAT_ID: 'fixture' }, now: 1_800_086_400_000, fetchImpl: async () => { delivered++; return Response.json({ ok: true }); } });
-    assert.equal(delivered, 0); assert.equal(result.sent.length, 0);
+    const stub = await stubNotify(stateDir);
+    await executeNotifications({ stateDir, context: { status_ok: false, rc: 1 }, env: { BH_NOTIFY: stub.bin }, now: 1_800_000_000_000 });
+    const result = await executeNotifications({ stateDir, context: { status_ok: true }, env: { BH_NOTIFY: stub.bin }, now: 1_800_086_400_000 });
+    assert.equal(result.sent.length, 0);
+    assert.equal((await stub.calls()).length, 0);
     const state = JSON.parse(await readFile(join(stateDir, 'daily-state.json')));
     assert.deepEqual(state.pending, []); assert.equal(state.failure_streak, 0);
   } finally { await rm(stateDir, { recursive: true, force: true }); }
