@@ -116,6 +116,38 @@ test('CR-65.12 live: Nova Micro shows no OpenRouter GPQA Diamond or τ² value',
   assert.deepEqual(estimates.map((e) => e.id), []);
 });
 
+test('CR-65.13: a run without a stated effort joins OpenRouter\'s default effort and never a non-reasoning configuration', () => {
+  const fam = (key, variants, over = {}) => variants.map((v) => ({ id: `${key}::${v}`, family_key: key, display_name: `${key} (${v})`, variant: v,
+    deprecated: v !== 'non-reasoning', benchmarks: {}, offers: [offer(`vendor/${key}`)], ...over }));
+  const catalog = (key, reasoning, params = []) => ({ id: `vendor/${key}`, canonical_slug: `vendor/${key}-20260101`, reasoning, supported_parameters: params });
+  const run = (models, cat, over = {}) => buildOpenRouterBenchmarkObservations({ own_data: [row({ model_permaslug: `vendor/${models[0].family_key}`, ...over })] }, models, SOURCE, VERSION, cat);
+  // DeepSeek V4 Flash: the reasoning rows are retired, the active row is non-reasoning, OpenRouter's default effort is "high".
+  const flash = run(fam('flash', ['high', 'max', 'non-reasoning']), [catalog('flash', { mandatory: false, default_effort: 'high' })]);
+  assert.deepEqual(flash.observations.map((o) => o.subject.model_id), ['flash::high', 'flash::high']);
+  assert.match(scores(flash)[0].protocol, /default reasoning effort "high"/);
+  // Gemini 2.5 Flash: only a non-reasoning row, and the model can reason with no published default → unjoined, with a reason.
+  const gem = run(fam('gem', ['non-reasoning']), [catalog('gem', { mandatory: false }, ['reasoning'])]);
+  assert.deepEqual(gem.observations.map((o) => o.subject.model_id), [null, null]);
+  assert.match(gem.unmatched[0].reason, /non-reasoning, so the run is not attached/);
+  // A model that cannot reason still attaches to its non-reasoning row; without a catalog nothing changes.
+  assert.deepEqual(run(fam('plain', ['non-reasoning']), [catalog('plain', undefined, ['temperature'])]).observations.map((o) => o.subject.model_id), ['plain::non-reasoning', 'plain::non-reasoning']);
+  assert.deepEqual(scores(build([row()])).map((o) => o.subject.model_id), ['claude-x::high']);
+  // A default effort the family has no configuration for falls back to the representative, as before.
+  const other = run(fam('multi', ['max', 'low'], { deprecated: false }), [catalog('multi', { default_effort: 'medium' })]);
+  assert.equal(scores(other)[0].subject.model_id, 'multi::max');
+});
+
+test('CR-65.13 live: no OpenRouter run sits on the non-reasoning rows of DeepSeek V4 Flash, Gemini 2.5 Flash or Qwen3.5-35B-A3B', async () => {
+  const ds = JSON.parse(await readFile('data/dataset.json', 'utf8'));
+  const hits = ds.benchmark_results.observations.filter((o) => o.benchmark_id.startsWith('openrouter-')
+    && ['deepseek-v4-flash::non-reasoning', 'gemini-2.5-flash::non-reasoning', 'qwen3.5-35b-a3b::non-reasoning'].includes(o.subject.model_id));
+  assert.deepEqual(hits.map((o) => o.id), []);
+  assert.ok(ds.benchmark_results.observations.some((o) => o.id === 'openrouter:deepseek/deepseek-v4-flash-20260423|gpqa_diamond' && o.subject.model_id === 'deepseek-v4-flash::high'));
+  // Re-attached or unjoined runs are still published, so retained states give them no "no longer published" estimate.
+  const estimates = ds.benchmark_results.historical.estimates.filter((e) => e.benchmark_id.startsWith('openrouter-') && /deepseek-v4-flash|gemini-2.5-flash|qwen3.5-35b|gpt-5/.test(e.model_id ?? ''));
+  assert.deepEqual(estimates.map((e) => e.id), []);
+});
+
 test('the live dataset carries the OpenRouter boards, separate from same-named boards of other maintainers', async () => {
   const ds = JSON.parse(await readFile('data/dataset.json', 'utf8'));
   validateBenchmarkScores(ds.benchmark_results, { entries: ds.benchmark_results.registry });

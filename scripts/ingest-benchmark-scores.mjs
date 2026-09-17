@@ -139,7 +139,7 @@ for (const version of ['1.4', '1.5']) {
   const or = buildOpenRouterBenchmarkObservations(snapshot, models, {
     url: spec.source_url, retrieved_at: spec.retrieved_at, published_at: null,
     sha256: spec.source_sha256, file: spec.source_file,
-  }, version);
+  }, version, (await read('data/raw/openrouter.json')).models); // CR-65.13: default reasoning effort per permaslug
   observations.push(...or.observations);
   // A row whose permaslug resolves to no catalog offer never becomes an observation.
   // A row whose published effort is not a catalog configuration does become an observation,
