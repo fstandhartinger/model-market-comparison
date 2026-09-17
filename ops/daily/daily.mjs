@@ -7,7 +7,7 @@ import { dirname, join, resolve, sep } from 'node:path';
 import { fileURLToPath, pathToFileURL } from 'node:url';
 import { createHash } from 'node:crypto';
 import { writeJSONAtomic } from '../../lib/snapshot.mjs';
-import { COMMIT_TRAILER, assessCommitScope, parseStatusPorcelain, selectProducerCritic } from './policy.mjs';
+import { COMMIT_TRAILER, assessCommitScope, parseScope, parseStatusPorcelain, pricesScopeViolations, selectProducerCritic, sourceFreshnessErrors } from './policy.mjs';
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
 import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
@@ -47,15 +47,18 @@ export function isolatedStepEnvironment(environment) {
   return env;
 }
 
-export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily', runDir, dryRun = false } = {}) {
+export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily', runDir, dryRun = false, scope = 'full' } = {}) {
   repo = resolve(repo); home = resolve(home);
+  // CR-66.7: `prices` refreshes OpenRouter and the provider catalogs only (see policy.mjs).
+  scope = parseScope(scope);
+  const full = scope === 'full';
   const started = new Date().toISOString(), day = started.slice(0, 10);
   runDir = resolve(runDir || join(home, 'runs', `${started.replace(/[:.]/g, '-')}-${process.pid}`));
   const work = join(runDir, 'work'), reports = join(runDir, 'reports');
   await mkdir(reports, { recursive: true });
   await mkdir(join(runDir, 'sources'), { recursive: true });
   await mkdir(home, { recursive: true });
-  const report = { started_at: started, run_dir: runDir, dry_run: dryRun, steps: [], published: false, exit_code: 1 };
+  const report = { started_at: started, run_dir: runDir, dry_run: dryRun, scope, steps: [], published: false, exit_code: 1 };
   let before, after, top5 = null;
   const environment = { ...process.env, BH_EVIDENCE_DIR: join(runDir, 'sources'), BH_STATE: join(runDir, 'workers'), BH_WORKER_MAX_PRICE_PER_1M: '4', BH_WORKER_REASONING_EFFORT: 'low', BH_WORKER_DISABLE_OPTIONAL_REASONING: '0' };
   for (const key of ['OPENAI_API_KEY', 'OPENAI_BASE_URL', 'OPENAI_API_BASE', 'CODEX_API_KEY']) delete environment[key];
@@ -80,7 +83,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   // evidence (tests used to append /fixture/ captures to sources/live-manifest.jsonl).
   const isolatedEnvironment = isolatedStepEnvironment(environment);
   const status = async (name, cwd) => parseStatusPorcelain(await git(name, ['status', '--porcelain=v1', '--untracked-files=all'], cwd));
-  console.log(`Benchmark Heaven daily ${started}: ${runDir}${dryRun ? ' (dry run)' : ''}`);
+  console.log(`Benchmark Heaven daily ${started}: ${runDir}${dryRun ? ' (dry run)' : ''}${full ? '' : ` (scope ${scope})`}`);
   try {
     if (await git('branch', ['branch', '--show-current']) !== 'main') throw new Error('Daily publication requires the main checkout');
     // 2026-09-16: publication needs a clean checkout, but the UX workstream writes to this repo all day
@@ -122,23 +125,28 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     } else await command('npm-ci', 'npm', ['ci', '--no-audit', '--no-fund'], work, 900_000);
     await cp(join(work, 'data/raw'), join(runDir, 'before/raw'), { recursive: true });
     const legacy = hash(await readFile(join(work, 'data/raw/aa-coding-agents.json')));
-    const catalog = JSON.parse(await command('worker-catalog', process.execPath, ['ops/rebuild-2026-09/bin/pick-worker-models.mjs', '--json']));
-    report.workers = selectProducerCritic(catalog);
-    await writeJSONAtomic(join(reports, 'worker-catalog.json'), catalog);
-    await writeJSONAtomic(join(reports, 'workers.json'), report.workers);
-    for (const source of ['aa', 'da', 'or']) await command(`fetch-${source}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
+    // Workers only review benchmark sources; a prices run has none to review (the publish gate checks the offers).
+    if (full) {
+      const catalog = JSON.parse(await command('worker-catalog', process.execPath, ['ops/rebuild-2026-09/bin/pick-worker-models.mjs', '--json']));
+      report.workers = selectProducerCritic(catalog);
+      await writeJSONAtomic(join(reports, 'worker-catalog.json'), catalog);
+      await writeJSONAtomic(join(reports, 'workers.json'), report.workers);
+    }
+    for (const source of full ? ['aa', 'da', 'or'] : ['or-prices']) await command(`fetch-${source.replace('-prices', '')}`, process.execPath, ['scripts/fetch-live.mjs', source], work, 1_800_000);
     // CR-66.1: bounded OpenRouter withdrawals publish; the run report names every one with its date.
     report.openrouter_withdrawals = (await readJSON(join(work, 'data/raw/openrouter.json'))).withdrawal_run ?? null;
-    await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
-    await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
-    // CR-35.5: rebuild the Epoch hub-provenance sidecar from the newest captured metadata CSV
-    // (non-fatal — provenance only, never blocks publication).
-    try {
-      await command('build-epoch-provenance', process.execPath, ['scripts/build-epoch-provenance.mjs']);
-    } catch (error) {
-      report.warnings = report.warnings || [];
-      report.warnings.push(`build-epoch-provenance skipped: ${error.message.slice(0, 300)}`);
-      console.warn(`WARN build-epoch-provenance: keeping the previous snapshot`);
+    if (full) {
+      await command('fetch-coding-v1.5', process.execPath, ['scripts/fetch-aa-coding-agents.mjs']);
+      await command('fetch-epoch-eci', process.execPath, ['scripts/fetch-epoch-eci.mjs']);
+      // CR-35.5: rebuild the Epoch hub-provenance sidecar from the newest captured metadata CSV
+      // (non-fatal — provenance only, never blocks publication).
+      try {
+        await command('build-epoch-provenance', process.execPath, ['scripts/build-epoch-provenance.mjs']);
+      } catch (error) {
+        report.warnings = report.warnings || [];
+        report.warnings.push(`build-epoch-provenance skipped: ${error.message.slice(0, 300)}`);
+        console.warn(`WARN build-epoch-provenance: keeping the previous snapshot`);
+      }
     }
     // R4.10: refresh the OpenRouter provider data-policy table daily. Deliberately
     // non-fatal: it drives one filter, and the collector hard-fails on any layout change
@@ -152,23 +160,25 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       report.warnings.push(`fetch-data-policy skipped: ${error.message.slice(0, 300)}`);
       console.warn(`WARN fetch-data-policy: keeping the previous snapshot`);
     }
-    // CR-34.1: OpenRouter Benchmarks API (raw capture; non-fatal — a key or terms change must
-    // never block the price/benchmark publication; the previous snapshot stays).
-    try {
-      await command('fetch-openrouter-benchmarks', process.execPath, ['scripts/fetch-openrouter-benchmarks.mjs']);
-    } catch (error) {
-      report.warnings = report.warnings || [];
-      report.warnings.push(`fetch-openrouter-benchmarks skipped: ${error.message.slice(0, 300)}`);
-      console.warn(`WARN fetch-openrouter-benchmarks: keeping the previous snapshot`);
-    }
-    // CR-37.2: Lumina Bench ledger as a discovery/provenance feed (no values). Non-fatal: a manifest change
-    // that needs a decision keeps the previous snapshot and writes a pending-review candidate.
-    try {
-      await command('fetch-lumina-ledger', process.execPath, ['scripts/fetch-lumina-ledger.mjs']);
-    } catch (error) {
-      report.warnings = report.warnings || [];
-      report.warnings.push(`fetch-lumina-ledger: ${error.message.slice(0, 300)}`);
-      console.warn(`WARN fetch-lumina-ledger: keeping the previous snapshot`);
+    if (full) {
+      // CR-34.1: OpenRouter Benchmarks API (raw capture; non-fatal — a key or terms change must
+      // never block the price/benchmark publication; the previous snapshot stays).
+      try {
+        await command('fetch-openrouter-benchmarks', process.execPath, ['scripts/fetch-openrouter-benchmarks.mjs']);
+      } catch (error) {
+        report.warnings = report.warnings || [];
+        report.warnings.push(`fetch-openrouter-benchmarks skipped: ${error.message.slice(0, 300)}`);
+        console.warn(`WARN fetch-openrouter-benchmarks: keeping the previous snapshot`);
+      }
+      // CR-37.2: Lumina Bench ledger as a discovery/provenance feed (no values). Non-fatal: a manifest change
+      // that needs a decision keeps the previous snapshot and writes a pending-review candidate.
+      try {
+        await command('fetch-lumina-ledger', process.execPath, ['scripts/fetch-lumina-ledger.mjs']);
+      } catch (error) {
+        report.warnings = report.warnings || [];
+        report.warnings.push(`fetch-lumina-ledger: ${error.message.slice(0, 300)}`);
+        console.warn(`WARN fetch-lumina-ledger: keeping the previous snapshot`);
+      }
     }
     // R9.1: provider-meta is hand-curated; its date comes from a cross-check of `country` against the table
     // just fetched (dated by that table). New disagreements exit non-zero → a warning, curated values stay.
@@ -296,9 +306,11 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     // 17 Sep: 100 min, not 60. Normal runs take 9–18 min; with a slow paid producer and the only eligible
     // different-family critic timing out (dry run 17 Sep 01:21, killed at 60 min in the last of 7 contracts), the
     // bounded retries need longer. The 3 h run cap still holds; CR-66.3 (free worker chain) is the real fix.
-    await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 6_000_000);
-    // Same reason, same bound: on 17 Sep each paid producer call took 2–5 min (1 min on 16 Sep) and this step ran past 45 min.
-    await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 6_000_000);
+    if (full) {
+      await command('review-live', process.execPath, ['ops/daily/phase-step.mjs', 'live', runDir], work, 6_000_000);
+      // Same reason, same bound: on 17 Sep each paid producer call took 2–5 min (1 min on 16 Sep) and this step ran past 45 min.
+      await command('refresh-benchmarks', process.execPath, ['ops/daily/phase-step.mjs', 'benchmarks', runDir], work, 6_000_000);
+    }
     if (hash(await readFile(join(work, 'data/raw/aa-coding-agents.json'))) !== legacy) throw new Error('Legacy Coding Agent v1.4 changed: refusing publication');
     await command('build-dataset', process.execPath, ['scripts/build-dataset.mjs']);
     await command('npm-build', 'npm', ['run', 'build'], work, 1_200_000, isolatedEnvironment);
@@ -306,9 +318,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     await command('typecheck', 'npx', ['tsc', '--noEmit', '-p', '.'], work, 600_000, isolatedEnvironment);
     await command('prerender', process.execPath, ['--test', 'test/production/prerender.mjs'], work, 600_000, isolatedEnvironment);
     after = await readJSON(join(work, 'data/dataset.json'));
-    for (const key of ['artificialanalysis', 'designarena', 'openrouter', 'aa_coding_agents_v1_5', 'aa_efficiency', 'openrouter_efficiency', 'chutes_efficiency', 'epoch_eci']) {
-      if (after.sources[key]?.slice(0, 10) !== day) throw new Error(`Source ${key} is not today's collector run (${after.sources[key]})`);
-    }
+    const stale = sourceFreshnessErrors({ scope: report.scope, day, before, after }); // `scope` is the commit scope below
+    if (stale.length) throw new Error(stale.join('; '));
     top5 = JSON.parse(await command('top5', process.execPath, ['scripts/top5.mjs', '5']));
     await writeJSONAtomic(join(reports, 'dataset-after.json'), after);
     const changed = [];
@@ -322,6 +333,8 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
     const extra = await readJSON(join(reports, 'commit-paths.json')).catch((e) => { if (e.code === 'ENOENT') return {}; throw e; });
     const scope = assessCommitScope(changed, extra.extra_allowed || []);
     if (!scope.ok) throw new Error(`Daily commit scope rejected: ${scope.rejected.join(', ')}`);
+    const outsidePrices = full ? [] : pricesScopeViolations(scope.allowed);
+    if (outsidePrices.length) throw new Error(`Prices-only run changed benchmark or efficiency sources: ${outsidePrices.slice(0, 10).join(', ')}`);
     report.changed_paths = scope.allowed;
     if (!dryRun && scope.allowed.length) {
       await git('stage-data', ['add', '--', ...scope.allowed], work);
@@ -332,7 +345,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
       const gated = await gatedPublish({
         home, work, runDir, env: isolatedEnvironment,
         commit: async () => {
-          await git('commit-data', ['-c', `user.name=${userName}`, '-c', `user.email=${userEmail}`, 'commit', '-m', `Refresh Benchmark Heaven data ${day}\n\nSource-backed daily gauntlet and build/tests/typecheck passed.\n\n${COMMIT_TRAILER}`], work);
+          await git('commit-data', ['-c', `user.name=${userName}`, '-c', `user.email=${userEmail}`, 'commit', '-m', full ? `Refresh Benchmark Heaven data ${day}\n\nSource-backed daily gauntlet and build/tests/typecheck passed.\n\n${COMMIT_TRAILER}` : `Refresh Benchmark Heaven prices ${day}\n\nPrices-only run: OpenRouter and provider catalogs; benchmark and efficiency sources unchanged. Build/tests/typecheck and the publish gate passed.\n\n${COMMIT_TRAILER}`], work);
           return git('candidate-commit', ['rev-parse', 'HEAD'], work);
         },
         push: async () => {
@@ -397,9 +410,9 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   } catch (error) { report.stale_sources = null; console.error(`SOURCE HEALTH FAILED: ${redact(error.message)}`); }
   const summary = [
     `STATUS: ${report.exit_code === 0 ? 'ok' : 'problem'}`,
-    `Benchmark Heaven ${day}${dryRun ? ' — vollstaendiger Testlauf ohne Push/Telegram' : ''}`,
+    `Benchmark Heaven ${day}${full ? '' : ' — nur Preise (OpenRouter, Anbieterkataloge)'}${dryRun ? ' — vollstaendiger Testlauf ohne Push/Telegram' : ''}`,
     `Lauf: ${runDir}`,
-    report.workers ? `Erste Auswahl: ${report.workers.producer.id}; Kritiker: ${report.workers.critic.id}` : 'Worker-Auswahl nicht abgeschlossen.',
+    report.workers ? `Erste Auswahl: ${report.workers.producer.id}; Kritiker: ${report.workers.critic.id}` : full ? 'Worker-Auswahl nicht abgeschlossen.' : 'Keine Worker (Preislauf).',
     `Modelle mit Abschluss: ${[...new Set(calls.filter((r) => r.status === 'complete').map((r) => r.actual_model))].filter(Boolean).join(', ') || 'keine'}; gemeldete Kosten: $${report.worker_calls.returned_cost_usd.toFixed(4)} (${report.worker_calls.calls_without_returned_cost} Aufrufe ohne Kostenangabe).`,
     `Schritte: ${report.steps.filter((s) => s.ok).length} erfolgreich; ${report.steps.filter((s) => !s.ok).length} fehlgeschlagen.`,
     `Publikation: ${report.published ? report.commit : dryRun ? 'Testlauf' : 'keine'}; Live-Pruefung: ${report.live_verified ? 'OK' : 'nicht erfolgt'}.`,
@@ -428,6 +441,6 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
 
 if (process.argv[1] && import.meta.url === pathToFileURL(resolve(process.argv[1])).href) {
   const argv = process.argv.slice(2), option = (key) => { const index = argv.indexOf(key); if (index < 0) return undefined; if (!argv[index + 1] || argv[index + 1].startsWith('--')) throw new Error(`Missing ${key} value`); return argv[index + 1]; };
-  runDaily({ repo: option('--repo'), home: option('--home'), runDir: option('--run-dir'), dryRun: argv.includes('--dry-run') })
+  runDaily({ repo: option('--repo'), home: option('--home'), runDir: option('--run-dir'), dryRun: argv.includes('--dry-run'), scope: option('--scope') ?? 'full' })
     .then((result) => { process.exitCode = result.exit_code; }).catch((error) => { console.error(`DAILY FATAL: ${redact(error.message)}`); process.exitCode = 1; });
 }
