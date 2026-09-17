@@ -33,3 +33,32 @@ test('CR-38.5: failing since, consecutive failed runs and last OK per source; bo
   assert.match(md, /new-kind/);
   assert.throws(() => sourceHealth([]), /No benchmark-step reports/);
 });
+
+test('CR-66.9: a collector failing 3 days in a row is named with its last good date; benchmark sources too', async () => {
+  const { updateCollectorHealth, staleSources } = await import('../ops/daily/source-health.mjs');
+  let state = { collectors: {} };
+  state = updateCollectorHealth(state, [{ name: 'fetch-nebius-catalog', ok: true }, { name: 'fetch-mistral-catalog', ok: true }, { name: 'npm-test', ok: false }], '2026-09-13');
+  assert.equal(state.collectors['npm-test'], undefined, 'only collector steps are tracked');
+  for (const day of ['2026-09-14', '2026-09-15', '2026-09-16']) {
+    state = updateCollectorHealth(state, [{ name: 'fetch-nebius-catalog', ok: false, error: 'Command failed: node x\nError: HTTP 503' }, { name: 'fetch-mistral-catalog', ok: true }], day);
+    const stale = staleSources({ collectors: state.collectors, day });
+    if (day < '2026-09-16') assert.deepEqual(stale, [], `${day}: not yet 3 days`);
+    else assert.deepEqual(stale, [{ id: 'fetch-nebius-catalog', kind: 'collector', last_ok: '2026-09-13', failing_since: '2026-09-14', reason: 'Error: HTTP 503' }]);
+  }
+  state = updateCollectorHealth(state, [{ name: 'fetch-nebius-catalog', ok: true }], '2026-09-17');
+  assert.deepEqual(staleSources({ collectors: state.collectors, day: '2026-09-17' }), [], 'recovery clears it');
+  const benchmarks = { sources: [
+    { id: 'vals-index', kind: 'failing', last_ok: '2026-09-12T05:00:00Z', failing_since: '2026-09-13T05:00:00Z', reason: 'HTTP 403' },
+    { id: 'lmarena', kind: 'failing', last_ok: '2026-09-16T05:00:00Z', failing_since: '2026-09-17T05:00:00Z', reason: 'timeout' },
+    { id: 'swe-bench', kind: 'ok', last_ok: '2026-09-01T05:00:00Z' },
+  ] };
+  assert.deepEqual(staleSources({ benchmarks, day: '2026-09-17' }).map((s) => [s.id, s.last_ok]), [['vals-index', '2026-09-12']]);
+});
+
+test('CR-66.9: daily.mjs writes stale sources into the run report and the summary', async () => {
+  const { readFile } = await import('node:fs/promises');
+  const src = await readFile(new URL('../ops/daily/daily.mjs', import.meta.url), 'utf8');
+  assert.match(src, /report\.stale_sources = staleSources\(/);
+  assert.match(src, /Veraltete Quellen \(>= 3 Tage\)/);
+  assert.ok(src.indexOf('report.stale_sources = staleSources(') < src.indexOf("writeJSONAtomic(join(reports, 'run-report.json'), report)"));
+});

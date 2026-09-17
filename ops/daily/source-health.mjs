@@ -73,6 +73,41 @@ export function healthMarkdown(health) {
   return lines.join('\n') + '\n';
 }
 
+// CR-66.9: the daily run's secondary collectors (provider catalogs, data policy, Epoch provenance …) are
+// non-fatal: a failure keeps the old snapshot. Their last good day is kept across runs so a source that has
+// been failing for 3+ days is named in the run summary instead of staying invisible.
+export const COLLECTOR_STEP = /^(fetch-|build-epoch-provenance$|check-provider-meta$)/;
+const dayDiff = (a, b) => Math.round((Date.parse(`${a}T00:00:00Z`) - Date.parse(`${b}T00:00:00Z`)) / 86_400_000);
+
+/** state: { collectors: { name: { last_ok, failing_since, last_error } } }; steps: daily report.steps. */
+export function updateCollectorHealth(state, steps, day) {
+  const collectors = { ...(state?.collectors || {}) };
+  for (const step of steps || []) {
+    if (!COLLECTOR_STEP.test(step.name)) continue;
+    const prior = collectors[step.name] || { last_ok: null, failing_since: null, last_error: null };
+    collectors[step.name] = step.ok
+      ? { last_ok: day, failing_since: null, last_error: null }
+      : { last_ok: prior.last_ok, failing_since: prior.failing_since ?? day, last_error: reasonLine(step.error) };
+  }
+  return { collectors };
+}
+
+/** Sources whose newest good data is at least `maxAgeDays` old: failing collectors and failing benchmark sources. */
+export function staleSources({ collectors = {}, benchmarks = null, day, maxAgeDays = 3 }) {
+  const out = [];
+  for (const [name, c] of Object.entries(collectors)) {
+    if (!c.failing_since) continue;
+    const since = c.last_ok ?? c.failing_since;
+    if (dayDiff(day, since) >= maxAgeDays) out.push({ id: name, kind: 'collector', last_ok: c.last_ok, failing_since: c.failing_since, reason: c.last_error });
+  }
+  for (const s of benchmarks?.sources || []) {
+    if (s.kind !== 'failing') continue;
+    const since = (s.last_ok ?? s.failing_since ?? '').slice(0, 10);
+    if (since && dayDiff(day, since) >= maxAgeDays) out.push({ id: s.id, kind: 'benchmark', last_ok: s.last_ok?.slice(0, 10) ?? null, failing_since: s.failing_since?.slice(0, 10) ?? null, reason: s.reason });
+  }
+  return out.sort((a, b) => (a.last_ok ?? '').localeCompare(b.last_ok ?? '') || a.id.localeCompare(b.id));
+}
+
 async function loadReports({ runsDir, repoRoot = '.' }) {
   const reports = [];
   const tryJson = async (p) => { try { return JSON.parse(await readFile(p, 'utf8')); } catch { return null; } };

@@ -11,6 +11,7 @@ import { COMMIT_TRAILER, assessCommitScope, parseStatusPorcelain, selectProducer
 import { executeNotifications } from './notify.mjs';
 import { compactPublishedRun } from './compact-run.mjs';
 import { GATE_TIMEOUT_MS, gatedPublish } from './publish-gate.mjs';
+import { staleSources, updateCollectorHealth } from './source-health.mjs';
 const exec = promisify(execFile);
 // How long publication waits for the other writer's checkout to become clean before it gives up for the day.
 // Overridable for tests; the shell entry point allows 3 h in total, so 30 min is affordable.
@@ -381,6 +382,15 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
   if (after) report.dataset_sha256 = hash(await readFile(join(work, 'data/dataset.json')));
   try { report.storage = await compactPublishedRun({ runDir, published: report.published, liveVerified: report.live_verified, dryRun }); }
   catch (error) { report.storage = { applied: false, error: redact(error.message) }; console.error(`DAILY STORAGE CLEANUP FAILED: ${report.storage.error}`); }
+  // CR-66.9: name secondary sources whose last good data is 3+ days old.
+  try {
+    const statePath = join(home, 'state', 'collector-health.json');
+    const previous = await readJSON(statePath).catch(() => ({ collectors: {} }));
+    const health = updateCollectorHealth(previous, report.steps, day);
+    if (!dryRun) await writeJSONAtomic(statePath, health);
+    const benchmarks = await readJSON(join(reports, 'source-health.json')).catch(() => null);
+    report.stale_sources = staleSources({ collectors: health.collectors, benchmarks, day });
+  } catch (error) { report.stale_sources = null; console.error(`SOURCE HEALTH FAILED: ${redact(error.message)}`); }
   const summary = [
     `STATUS: ${report.exit_code === 0 ? 'ok' : 'problem'}`,
     `Benchmark Heaven ${day}${dryRun ? ' — vollstaendiger Testlauf ohne Push/Telegram' : ''}`,
@@ -399,6 +409,7 @@ export async function runDaily({ repo = ROOT, home = '/opt/benchmarkheaven-daily
         ...(back.length ? [`OpenRouter wieder da: ${back.join('; ')}`] : []),
       ];
     })(),
+    ...(report.stale_sources?.length ? [`Veraltete Quellen (>= 3 Tage): ${report.stale_sources.length} — ${report.stale_sources.map((x) => `${x.id} (zuletzt gut: ${x.last_ok ?? 'nie'})`).join('; ')}`] : []),
     report.error ? `FEHLER: ${report.error.split('\n').filter(Boolean).at(-1).slice(0, 800)}` : 'Build, Tests, Typpruefung und Quellpruefung erfolgreich.',
   ].join('\n') + '\n';
   await writeFile(join(home, 'last-summary.txt'), summary);
